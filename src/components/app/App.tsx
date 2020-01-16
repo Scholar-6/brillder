@@ -2,11 +2,10 @@ import React from 'react';
 import './app.css';
 import { Switch, Route } from 'react-router-dom';
 import MainPage from '../mainPage/mainPage';
-import { useMediaQuery, createMuiTheme, ThemeProvider, Color } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import CreateBrickPage from '../createBrickPage/createBrickPage';
 
 const App: React.FC = () => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
   const theme = React.useMemo(
     () =>
       createMuiTheme({
@@ -16,13 +15,17 @@ const App: React.FC = () => {
           }
         }
       }),
-    [prefersDarkMode],
+    [],
   );
 
   return (
     <ThemeProvider theme={theme}>
       <Switch>
-        <Route path="/gg">
+        <Route path="/brick-create">
+          <CreateBrickPage />
+        </Route>
+        <Route path="/brick/build"></Route>
+        <Route path="/">
           <MainPage />
         </Route>
       </Switch>
