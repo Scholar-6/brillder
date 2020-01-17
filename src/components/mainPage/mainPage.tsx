@@ -35,7 +35,7 @@ const MainPage: React.FC = () => {
       
       <Grid container item xs={12} justify="center">
         <Box bgcolor="primary.main" className="bigButton">
-          <Link to="/brick">
+          <Link to="/brick-create">
             <div className="link-title">CREATE</div>
             <div className="link-description">Just build a brick...</div>
           </Link>
