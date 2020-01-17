@@ -65,10 +65,14 @@ class EditorRowComponent extends Component<ProFormaProps> {
           </Grid>
         </Grid>
 
-        <Grid container direction="row" className="row">
-          <Grid container item xs={3}></Grid>
-          <Grid container item xs={5} sm={4} md={3} lg={2}>
-            <Box className="center-text-box" bgcolor="primary.main"><b>PRO FORMA</b></Box>
+        <Grid container direction="row">
+          <Grid container item xs={12} sm={10} md={6} lg={5}>
+            <Grid container direction="row" className="row">
+              <Grid container item xs={4}></Grid>
+              <Grid container item xs={7}>
+                <Box className="center-text-box" bgcolor="primary.main"><b>PRO FORMA</b></Box>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </div>
