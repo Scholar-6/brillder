@@ -80,7 +80,12 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                 </div>
               </Grid>
               <Grid container item xs={7}>
-                <input value={this.state.subject} onChange={this.handleInputChange} placeholder="e.g. History" />
+                <input
+                  name="subject"
+                  value={this.state.subject}
+                  onChange={this.handleInputChange}
+                  maxLength={30}
+                  placeholder="e.g. History" />
               </Grid>
             </Grid>
             <Grid container direction="row" className="row">
@@ -90,7 +95,12 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                 </div>
               </Grid>
               <Grid container item xs={7}>
-                <input name="" value={this.state.topic} onChange={this.handleInputChange} placeholder="e.g. Italy 1918 - 1939" />
+                <input
+                  name="topic"
+                  value={this.state.topic}
+                  onChange={this.handleInputChange}
+                  maxLength={30}
+                  placeholder="e.g. Italy 1918 - 1939" />
               </Grid>
             </Grid>
             <Grid container direction="row" className="row">
@@ -100,7 +110,12 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                 </div>
               </Grid>
               <Grid container item xs={7}>
-                <input value={this.state.subTopic} onChange={this.handleInputChange} placeholder="e.g. Rise of Rascism" />
+                <input
+                  name="subTopic"
+                  value={this.state.subTopic}
+                  onChange={this.handleInputChange}
+                  maxLength={30}
+                  placeholder="e.g. Rise of Rascism" />
               </Grid>
             </Grid>
             <Grid container direction="row" className="row">
@@ -110,7 +125,12 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                 </div>
               </Grid>
               <Grid container item xs={7}>
-                <input value={this.state.alternativeTopics} onChange={this.handleInputChange} placeholder="e.g. 20th century Dictators" />
+                <input
+                  name="alternativeTopics"
+                  value={this.state.alternativeTopics}
+                  onChange={this.handleInputChange}
+                  maxLength={30}
+                  placeholder="e.g. 20th century Dictators" />
               </Grid>
             </Grid>
             <Grid container direction="row" className="row">
@@ -124,6 +144,7 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                   name="proposedTitle"
                   value={this.state.proposedTitle}
                   onChange={this.handleInputChange}
+                  maxLength={30}
                   placeholder="e.g. The Italo-Abyssinian Wars" />
               </Grid>
             </Grid>
@@ -138,6 +159,7 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                   name="investigationBrief"
                   value={this.state.investigationBrief}
                   onChange={this.handleTextareaChange}
+                  maxLength={100}
                   placeholder="In less than 100 words, explain to the student what is going to be explored in the investigation"></textarea>
               </Grid>
             </Grid>
@@ -152,6 +174,7 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                   name="preparationBrief"
                   value={this.state.preparationBrief}
                   onChange={this.handleTextareaChange}
+                  maxLength={150}
                   placeholder="In less than 150 (including links), set a relevant task or tasks which the student can do independently before starting the investigation. Preparation should take 5, 10 or 15 minutes depending on whether the investigation is 20, 40 or 60 minutes long."></textarea>
               </Grid>
             </Grid>
