@@ -1,6 +1,6 @@
 import types from './types';
 import axios from 'axios';
-import { AnyAction, Action, Dispatch } from 'redux';
+import { Action, Dispatch } from 'redux';
 
 const fetchUsernameSuccess = (username:string) => {
   return {
@@ -11,7 +11,7 @@ const fetchUsernameSuccess = (username:string) => {
 
 const fetchUsernameFailure = (errorMessage:string) => {
   return {
-    type: types.FETCH_USERNAME_SUCCESS,
+    type: types.FETCH_USERNAME_FAILURE,
     error: errorMessage
   } as Action
 }
@@ -20,7 +20,6 @@ const fetchUsername = () => {
   return function (dispatch: Dispatch) {
     return axios.get('https://jsonplaceholder.typicode.com/users')
       .then(response => {
-        console.log(response);
         // hardcode username for now
         dispatch(fetchUsernameSuccess('Joe'));
       })

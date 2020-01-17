@@ -1,10 +1,10 @@
 import types from './types';
 
-const initialState = {
-  numOf: 10
+const MainPageInitialState = {
+  username: ''
 }
 
-export default (state = initialState, action: any) => {
+export default (state = MainPageInitialState, action: any) => {
   switch (action.type) {
     case types.CREATE_BRICK: return {
       good: true,

@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
+import React, { Component } from 'react';
 import './mainPage.scss';
-import { connect, ConnectedProps  } from 'react-redux';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Box, Grid } from '@material-ui/core';
 import actions from '../../redux/actions';
@@ -22,13 +22,16 @@ const connector = connect(
   mapDispatch
 )
 
-type PropsFromRedux = ConnectedProps<typeof connector>
+class MainPage extends Component {
+  constructor(props: any) {
+    super(props)
+    props.fetchUsername();
+    
+  }
 
-type Props = PropsFromRedux & {
-}
-
-function MainPage (props: Props) {
-  return (
+  render() {
+    const props = this.props as any;
+    return (
     <Grid
       container
       direction="row"
@@ -36,7 +39,7 @@ function MainPage (props: Props) {
       className="mainPage"
       alignItems="center">
       <Grid container item xs={12} justify="center">
-        <div className="client-name">Welcome</div>
+        <div className="client-name">Welcome {props.username}</div>
       </Grid>
 
       <Grid container item xs={12} justify="center">
@@ -76,7 +79,8 @@ function MainPage (props: Props) {
         </Box>
       </Grid>
     </Grid>
-  )
+    )
+  }
 }
 
 export default connector(MainPage)
