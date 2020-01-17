@@ -1,4 +1,4 @@
-import types from './types';
+import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
 
@@ -29,13 +29,6 @@ const fetchUsername = () => {
   }
 }
 
-function createBrick() {
-  return {
-    type: types.CREATE_BRICK
-  };
-}
-
 export default {
-  createBrick,
-  fetchUsername
+  fetchUsername,
 }

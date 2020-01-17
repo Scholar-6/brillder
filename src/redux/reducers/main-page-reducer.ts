@@ -1,14 +1,11 @@
-import types from './types';
+import types from '../types';
 
-const MainPageInitialState = {
+const ProFormInitialState = {
   username: ''
 }
 
-export default (state = MainPageInitialState, action: any) => {
+export default (state = ProFormInitialState, action: any) => {
   switch (action.type) {
-    case types.CREATE_BRICK: return {
-      good: true,
-    }
     case types.FETCH_USERNAME_FAILURE:
       return {
         loading: false,

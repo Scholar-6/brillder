@@ -3,13 +3,13 @@ import './app.css';
 import { Switch, Route } from 'react-router-dom';
 import MainPage from '../mainPage/mainPage';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-import CreateBrickPage from '../createBrickPage/createBrickPage';
 import { Provider } from 'react-redux';
 import {createStore, applyMiddleware, Reducer} from 'redux';
-import reducer from '../../redux/reducers';
+import reducer from '../../redux/reducers/index';
 import thunkMiddleware from 'redux-thunk';
+import ProFormaPage from '../proFormaPage/proFormaPage';
 
-const store = createStore(reducer as Reducer, applyMiddleware(thunkMiddleware));
+const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
 const App: React.FC = () => {
   const theme = React.useMemo(
@@ -29,7 +29,7 @@ const App: React.FC = () => {
       <ThemeProvider theme={theme}>
         <Switch>
           <Route path="/brick-create">
-            <CreateBrickPage />
+            <ProFormaPage />
           </Route>
           <Route path="/brick/build"></Route>
           <Route path="/">

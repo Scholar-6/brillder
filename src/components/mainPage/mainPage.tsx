@@ -3,11 +3,11 @@ import './mainPage.scss';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Box, Grid } from '@material-ui/core';
-import actions from '../../redux/actions';
+import actions from '../../redux/actions/mainPageActions';
 
 const mapState = (state: any) => {
   return {
-    username: state.username as string
+    username: state.mainPage.username as string
   }
 }
 
@@ -26,7 +26,6 @@ class MainPage extends Component {
   constructor(props: any) {
     super(props)
     props.fetchUsername();
-    
   }
 
   render() {
@@ -38,6 +37,7 @@ class MainPage extends Component {
       justify="center"
       className="mainPage"
       alignItems="center">
+
       <Grid container item xs={12} justify="center">
         <div className="client-name">Welcome {props.username}</div>
       </Grid>
