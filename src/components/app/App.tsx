@@ -4,6 +4,11 @@ import { Switch, Route } from 'react-router-dom';
 import MainPage from '../mainPage/mainPage';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import CreateBrickPage from '../createBrickPage/createBrickPage';
+import { Provider } from 'react-redux';
+import {createStore} from 'redux';
+import reducer from '../../redux/reducers';
+
+const store = createStore(reducer);
 
 const App: React.FC = () => {
   const theme = React.useMemo(
@@ -19,17 +24,19 @@ const App: React.FC = () => {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <Switch>
-        <Route path="/brick-create">
-          <CreateBrickPage />
-        </Route>
-        <Route path="/brick/build"></Route>
-        <Route path="/">
-          <MainPage />
-        </Route>
-      </Switch>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Switch>
+          <Route path="/brick-create">
+            <CreateBrickPage />
+          </Route>
+          <Route path="/brick/build"></Route>
+          <Route path="/">
+            <MainPage />
+          </Route>
+        </Switch>
+      </ThemeProvider>
+    </Provider>
   );
 }
 

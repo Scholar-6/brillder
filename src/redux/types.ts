@@ -1,0 +1,7 @@
+const CREATE_BRICK = 'CREATE_BRICK';
+const CREATE_BRICK2 = 'CREATE_BRICK2';
+
+export default {
+  CREATE_BRICK,
+  CREATE_BRICK2
+}
