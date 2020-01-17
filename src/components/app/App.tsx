@@ -5,10 +5,11 @@ import MainPage from '../mainPage/mainPage';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import CreateBrickPage from '../createBrickPage/createBrickPage';
 import { Provider } from 'react-redux';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware, Reducer} from 'redux';
 import reducer from '../../redux/reducers';
+import thunkMiddleware from 'redux-thunk';
 
-const store = createStore(reducer);
+const store = createStore(reducer as Reducer, applyMiddleware(thunkMiddleware));
 
 const App: React.FC = () => {
   const theme = React.useMemo(

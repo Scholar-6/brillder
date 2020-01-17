@@ -16,14 +16,17 @@
     "@types/react-redux": "^7.1.6",
     "@types/react-router-dom": "^5.1.3",
     "@types/redux": "^3.6.0",
+    "axios": "^0.19.1",
     "material-ui": "^0.20.2",
     "node-sass": "^4.13.0",
+    "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "typescript": "^3.7.4"
   },
   "scripts": {
@@ -46,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/prop-types": "^15.7.3"
   }
 }
