@@ -6,6 +6,7 @@ import BuildPageHeaderComponent from './header/pageHeader';
 import actions from '../../redux/actions/proFormActions';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import HorizontalStepper from './horizontalStepper/horizontalStepper';
 
 type InvestigationBuildProps = {}
 
@@ -83,8 +84,16 @@ class InvestigationBuildPage extends Component<InvestigationBuildProps, Investig
             <div className="odd">S</div>
             <div className="even">V</div>
           </Grid>
-          <Grid container className="page-content" item xs={8} sm={10}>
-            Investigation build page
+          <Grid container item xs={8} sm={10}>
+            <Grid container direction="row">
+              <Grid container justify="center" item xs={12}>
+                <HorizontalStepper />
+              </Grid>
+            </Grid>
+            <br/>
+            <div>
+              Investigation build page
+            </div>
           </Grid>
           <Grid container className="right-sidebar sidebar" item xs={2} sm={1}>
             <div>&lt;&lt;</div>
