@@ -8,6 +8,7 @@ import {createStore, applyMiddleware, Reducer} from 'redux';
 import reducer from '../../redux/reducers/index';
 import thunkMiddleware from 'redux-thunk';
 import ProFormaPage from '../proFormaPage/proFormaPage';
+import InvestigationBuildPage from '../investigationBuildPage/investigationBuildPage';
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
@@ -31,7 +32,9 @@ const App: React.FC = () => {
           <Route path="/brick-create">
             <ProFormaPage />
           </Route>
-          <Route path="/brick/build"></Route>
+          <Route path="/brick-build">
+            <InvestigationBuildPage />
+          </Route>
           <Route path="/">
             <MainPage />
           </Route>

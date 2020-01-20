@@ -1,7 +1,13 @@
 import types from '../types';
 
 const MainPageInitialState = {
-  data: null,
+  data: {
+    author: '',
+    editor: '',
+    comissionTime: '',
+    subTitle: '',
+    title: ''
+  },
 }
 
 export default (state = MainPageInitialState, action: any) => {

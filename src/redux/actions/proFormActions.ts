@@ -21,9 +21,13 @@ const fetchBrickBuildData = () => {
     return axios.get('https://jsonplaceholder.typicode.com/users')
       .then(response => {
         var data = {
+          subject: 'Geography',
+          topic: 'Desertification',
+          title: 'Exfoliatioin and Erosion in Arid Environments',
           author: 'E. Pound',
           editor: 'R. Unstead',
           comissionTime: '40 minutes',
+          iteration: 1
         }
         // hardcode data for now
         dispatch(fetchProFormaDataSuccess(data));
