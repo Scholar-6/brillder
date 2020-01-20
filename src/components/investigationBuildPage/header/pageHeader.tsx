@@ -36,7 +36,6 @@ class BuildPageHeaderComponent extends Component<InvestigationBuildProps, Invest
 
   render() {
     const {data} = this.props;
-    console.log(data);
     return (
       <div className="page-header">
         <Grid container direction="row">
