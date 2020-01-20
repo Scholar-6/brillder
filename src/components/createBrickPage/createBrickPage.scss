@@ -1,0 +1,56 @@
+
+.create-brick-page {
+  margin: 10px;
+  
+  .row {
+    padding-left: 10px;
+    padding-top: 10px;
+    width: 100%;
+  }
+  
+  .text-box {
+    margin-right: 10px;
+    padding: 5px;
+    color: white;
+    width: 100%;
+    height: 24px;
+  }
+
+  .right {
+    text-align: right;
+  }
+  
+  .center-text-box {
+    text-align: center;
+    padding: 5px;
+    color: white;
+    width: 100%;
+  }
+
+  textarea, input {
+    border: 2px solid #0B3A7E;
+    width: 100%;
+    padding: 5px 10px 5px 10px;
+  }
+
+  textarea {
+    height: 100px;
+  }
+  
+  ::placeholder {
+    color: #aaa;
+    opacity: 1; /* Firefox */
+    font-weight: 500;
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: #aaa;
+   font-weight: 500;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+   color: #aaa;
+   font-weight: 500;
+  }
+}
+
