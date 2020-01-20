@@ -1,18 +1,45 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './mainPage.scss';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Box, Grid } from '@material-ui/core';
+import actions from '../../redux/actions/mainPageActions';
 
-const MainPage: React.FC = () => {
-  return (
+const mapState = (state: any) => {
+  return {
+    username: state.mainPage.username as string
+  }
+}
+
+const mapDispatch = (dispatch: any) => {
+  return {
+    fetchUsername: () => dispatch(actions.fetchUsername())
+  }
+}
+
+const connector = connect(
+  mapState,
+  mapDispatch
+)
+
+class MainPage extends Component {
+  constructor(props: any) {
+    super(props)
+    props.fetchUsername();
+  }
+
+  render() {
+    const props = this.props as any;
+    return (
     <Grid
       container
       direction="row"
       justify="center"
       className="mainPage"
       alignItems="center">
+
       <Grid container item xs={12} justify="center">
-        <div className="client-name">Welcome Joe</div>
+        <div className="client-name">Welcome {props.username}</div>
       </Grid>
 
       <Grid container item xs={12} justify="center">
@@ -23,7 +50,7 @@ const MainPage: React.FC = () => {
           </Link>
         </Box>
       </Grid>
-      
+
       <Grid container item xs={12} justify="center">
         <Box bgcolor="primary.main" className="bigButton">
           <Link to="/brick">
@@ -32,7 +59,7 @@ const MainPage: React.FC = () => {
           </Link>
         </Box>
       </Grid>
-      
+
       <Grid container item xs={12} justify="center">
         <Box bgcolor="primary.main" className="bigButton">
           <Link to="/brick-create">
@@ -52,7 +79,8 @@ const MainPage: React.FC = () => {
         </Box>
       </Grid>
     </Grid>
-  );
+    )
+  }
 }
 
-export default MainPage;
+export default connector(MainPage)
