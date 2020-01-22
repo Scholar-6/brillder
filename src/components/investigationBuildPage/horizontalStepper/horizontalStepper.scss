@@ -1,0 +1,50 @@
+
+.stepper {
+  padding: 8px 20px 2px 0px !important;
+  overflow-y: hidden;
+  overflow-x: auto;
+
+  .MuiStep-alternativeLabel {
+    padding: 0 5px 0 5px;
+  }
+
+  .circle {
+    font-size: 28px;
+  }
+
+  .circle-round {
+    border-radius: 34px;
+    border: 1px solid #0B3B7F;
+  }
+  
+}
+
+.question {
+  width: 80%;
+  border: 1px solid gray;
+  padding: 5px 5px 5px 10px;
+
+  .rect {
+    font-size: 44px;
+  }
+
+  .question-title {
+    font-size: 18px;
+    margin-left: 8px;
+  }
+
+  .black-box {
+    margin: 10px 0 10px 0;
+    padding: 5px;
+    background: #333;
+    color:white;
+  }
+
+  .grey-button {
+    background: #ccc;
+    border-radius: 0;
+    margin: 4px 0 4px 0;
+    min-width: 65%;
+    text-transform:none;
+  }
+}

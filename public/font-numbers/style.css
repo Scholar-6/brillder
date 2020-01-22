@@ -1,15 +1,27 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?t0t65');
+  src:  url('fonts/icomoon.eot?t0t65#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?t0t65') format('truetype'),
+    url('fonts/icomoon.woff?t0t65') format('woff'),
+    url('fonts/icomoon.svg?t0t65#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-raw-blue-1:before {
@@ -92,8 +104,6 @@ code {
   content: "\e913";
   color: #0b3b7f;
 }
-
-
 .icon-rect-blue-1:before {
   content: "\e914";
   color: #0b3b7f;
