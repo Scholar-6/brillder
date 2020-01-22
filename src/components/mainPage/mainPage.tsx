@@ -31,16 +31,10 @@ class MainPage extends Component {
   render() {
     const props = this.props as any;
     return (
-    <Grid
-      container
-      direction="row"
-      justify="center"
-      className="mainPage"
-      alignItems="center">
-
-      <Grid container item xs={12} justify="center">
-        <div className="client-name">Welcome {props.username}</div>
-      </Grid>
+      <Grid container direction="row" justify="center" className="mainPage" alignItems="center">
+        <Grid container item xs={12} justify="center">
+          <div className="client-name">Welcome {props.username}</div>
+        </Grid>
 
       <Grid container item xs={12} justify="center">
         <Box bgcolor="primary.main" className="bigButton">
@@ -51,34 +45,35 @@ class MainPage extends Component {
         </Box>
       </Grid>
 
-      <Grid container item xs={12} justify="center">
-        <Box bgcolor="primary.main" className="bigButton">
-          <Link to="/brick">
-            <div className="link-title">APPLY</div>
-            <div className="link-description">Suggest what we want...</div>
-          </Link>
-        </Box>
-      </Grid>
+        <Grid container item xs={12} justify="center">
+          <Box bgcolor="primary.main" className="bigButton">
+            <Link to="/brick">
+              <div className="link-title">APPLY</div>
+              <div className="link-description">Suggest what we want...</div>
+            </Link>
+          </Box>
+        </Grid>
 
-      <Grid container item xs={12} justify="center">
-        <Box bgcolor="primary.main" className="bigButton">
-          <Link to="/brick-create">
-            <div className="link-title">CREATE</div>
-            <div className="link-description">Just build a brick...</div>
-          </Link>
-        </Box>
-      </Grid>
 
-      <Grid container item xs={12} justify="center">
-        <Box bgcolor="primary.main" className="bigButton">
-          <Link to="/brick">
-            <div className="link-title">BACK TO WORK</div>
-            <div className="link-description">For current projects,</div>
-            <div className="link-description">editors and authors...</div>
-          </Link>
-        </Box>
+        <Grid container item xs={12} justify="center">
+          <Box bgcolor="primary.main" className="bigButton">
+            <Link to="/brick-create">
+              <div className="link-title">CREATE</div>
+              <div className="link-description">Just build a brick...</div>
+            </Link>
+          </Box>
+        </Grid>
+
+        <Grid container item xs={12} justify="center">
+          <Box bgcolor="primary.main" className="bigButton">
+            <Link to="/brick">
+              <div className="link-title">BACK TO WORK</div>
+              <div className="link-description">For current projects,</div>
+              <div className="link-description">editors and authors...</div>
+            </Link>
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
     )
   }
 }
