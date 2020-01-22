@@ -70,7 +70,7 @@ class BricksListPage extends Component<any, any> {
     let bricksList = []
     for (let [i, brick] of this.state.bricks.entries()) {
       bricksList.push(
-        <Grid container item xs={4} lg={2} justify="center">
+        <Grid container item xs={6} md={4} lg={3} justify="center">
           <Box className="brick-container">
             <div className="link-description">Title: {brick.title}</div>
             <Link className="update-button" to={"/brick-create/" + brick.id}>Update</Link>
