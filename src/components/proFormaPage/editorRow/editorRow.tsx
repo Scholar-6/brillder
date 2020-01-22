@@ -35,7 +35,7 @@ class EditorRowComponent extends Component<ProFormaProps> {
     return (
       <div>
         <Grid container direction="row">
-          <Grid container item xs={12} sm={7} md={5} lg={3}>
+          <Grid container item xs={12} sm={7} md={5} lg={4}>
             <Grid container direction="row">
               <Grid container item xs={3} className="row">
                 <Box className="text-box" bgcolor="primary.main"><div>Editor:</div></Box>
@@ -50,7 +50,7 @@ class EditorRowComponent extends Component<ProFormaProps> {
           </Grid>
         </Grid>
         <Grid container direction="row">
-          <Grid container item xs={12} sm={7} md={5} lg={3}>
+          <Grid container item xs={12} sm={7} md={5} lg={4}>
             <Grid container direction="row">
               <Grid container item xs={3} className="row">
                 <Box className="text-box" bgcolor="primary.main">Author:</Box>
@@ -66,7 +66,7 @@ class EditorRowComponent extends Component<ProFormaProps> {
         </Grid>
 
         <Grid container direction="row">
-          <Grid container item xs={12} sm={12} md={12} lg={10}>
+          <Grid container item xs={12} sm={12} md={10} lg={8}>
             <Grid container direction="row" className="row">
               <Grid container item xs={4}></Grid>
               <Grid container item xs={8} sm={5}>

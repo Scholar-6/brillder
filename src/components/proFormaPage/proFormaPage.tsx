@@ -69,7 +69,7 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
         <EditorRowComponent />
         <form onSubmit={this.handleSubmit}>
           <Grid container direction="row">
-            <Grid container item xs={12} sm={12} md={12} lg={10}>
+            <Grid container item xs={12} sm={12} md={10} lg={8}>
               <Grid container direction="row" className="row">
                 <Grid container item xs={4}>
                   <div className="fullWidth">
