@@ -69,7 +69,6 @@ class BricksListPage extends Component<any, any> {
   createBricksList = () => {
     let bricksList = []
     for (let [i, brick] of this.state.bricks.entries()) {
-      console.log(i, brick); 
       bricksList.push(
         <Grid container item xs={4} lg={2} justify="center">
           <Box className="brick-container">
