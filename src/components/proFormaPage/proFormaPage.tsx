@@ -72,14 +72,14 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
         <EditorRowComponent />
 
         <Grid container direction="row">
-          <Grid container item xs={12} sm={10} md={6} lg={5}>
+          <Grid container item xs={12} sm={12} md={12} lg={10}>
             <Grid container direction="row" className="row">
               <Grid container item xs={4}>
                 <div className="fullWidth">
                   <Box className="right left-box" bgcolor="primary.main">Subject</Box>
                 </div>
               </Grid>
-              <Grid container item xs={7}>
+              <Grid container item xs={8} sm={5}>
                 <input
                   name="subject"
                   value={this.state.subject}
@@ -94,7 +94,7 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                   <Box className="right left-box" bgcolor="primary.main">Topic</Box>
                 </div>
               </Grid>
-              <Grid container item xs={7}>
+              <Grid container item xs={8} sm={5}>
                 <input
                   name="topic"
                   value={this.state.topic}
@@ -109,7 +109,7 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                   <Box className="right left-box" bgcolor="primary.main">Sub-topic</Box>
                 </div>
               </Grid>
-              <Grid container item xs={7}>
+              <Grid container item xs={8} sm={5}>
                 <input
                   name="subTopic"
                   value={this.state.subTopic}
@@ -124,7 +124,7 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                   <Box className="right left-box" height="auto" bgcolor="primary.main">Alternative Topics</Box>
                 </div>
               </Grid>
-              <Grid container item xs={7}>
+              <Grid container item xs={8} sm={5}>
                 <input
                   name="alternativeTopics"
                   value={this.state.alternativeTopics}
@@ -139,7 +139,7 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                   <Box className="right left-box" bgcolor="primary.main">Proposed Title</Box>
                 </div>
               </Grid>
-              <Grid container item xs={7}>
+              <Grid container item xs={8} sm={5}>
                 <input
                   name="proposedTitle"
                   value={this.state.proposedTitle}
