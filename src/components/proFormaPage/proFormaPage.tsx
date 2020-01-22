@@ -161,7 +161,6 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                     name="investigationBrief"
                     value={this.state.investigationBrief}
                     onChange={this.handleTextareaChange}
-                    maxLength={100}
                     required
                     placeholder="In less than 100 words, explain to the student what is going to be explored in the investigation"></textarea>
                 </Grid>
@@ -177,7 +176,6 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
                     name="preparationBrief"
                     value={this.state.preparationBrief}
                     onChange={this.handleTextareaChange}
-                    maxLength={150}
                     required
                     placeholder="In less than 150 (including links), set a relevant task or tasks which the student can do independently before starting the investigation. Preparation should take 5, 10 or 15 minutes depending on whether the investigation is 20, 40 or 60 minutes long."></textarea>
                 </Grid>
