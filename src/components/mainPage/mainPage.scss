@@ -1,7 +1,7 @@
 
 
 
-@media only screen and (max-width: 1800px) and (min-width: 600px)  {
+@media only screen and (min-width: 600px)  {
   .mainPage {
 
     .client-name {
@@ -35,7 +35,7 @@
   }
 }
 
-@media only screen and (max-width: 599px) and (min-width: 100px) {
+@media only screen and (max-width: 599px) {
   .mainPage {
     .client-name {
       width: 90%;
