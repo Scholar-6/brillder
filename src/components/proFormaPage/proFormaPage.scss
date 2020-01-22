@@ -63,72 +63,64 @@
   
 }
 
-@media only screen and (max-width: 320px) and (min-width: 271px)  {
+@media only screen and (max-width: 1800px) and (min-width: 1200px)  {
   .text-box {
-    font-size: 12px;
+    font-size: 18px;
   }
 
   .center-text-box {
-    font-size: 12px;
+    font-size: 18px;
+  }
+
+  .left-box {
+    font-size: 18px;
   }
 }
 
-@media only screen and (max-width: 490px) and (min-width: 441px)  {
+@media only screen and (max-width: 1199px) and (min-width: 900px)  {
+  .text-box {
+    font-size: 16px;
+  }
+
+  .center-text-box {
+    font-size: 16px;
+  }
+
+  .left-box {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 899px) and (min-width: 600px)  {
+  .text-box {
+    font-size: 14px;
+  }
+
+  .center-text-box {
+    font-size: 14px;
+  }
+  
   .left-box {
     font-size: 14px;
   }
-}
-
-@media only screen and (max-width: 440px) and (min-width: 271px)  {
-  .left-box {
-    font-size: 12px;
-  }
-}
-
-@media only screen and (max-width: 270px) and (min-width: 231px)  {
-  .text-box {
-    font-size: 10px;
-  }
-
-  .center-text-box {
-    font-size: 12px;
-  }
-
-  .left-box {
-    font-size: 12px;
-  }
-}
-
-@media only screen and (max-width: 230px) and (min-width: 100px)  {
-  .text-box {
-    font-size: 8px;
-  }
-
-  .center-text-box {
-    font-size: 10px;
-  }
-  
-  .left-box {
-    font-size: 12px;
-  }
   
 }
 
-@media only screen and (max-width: 205px) and (min-width: 100px)  {
+@media only screen and (max-width: 599px) {
   .text-box {
-    font-size: 8px;
+    font-size: 12px;
   }
 
   .center-text-box {
-    font-size: 8px;
+    font-size: 12px;
   }
 
   .left-box {
-    font-size: 6px;
+    font-size: 12px;
     padding: 5px 5px 5px 2px !important;
   }
 
   textarea, input, .left-box {
-    font-size: 8px;
+    font-size: 12px;
   }
 }
