@@ -44,7 +44,7 @@ class MainPage extends Component {
 
       <Grid container item xs={12} justify="center">
         <Box bgcolor="primary.main" className="bigButton">
-          <Link to="/brick">
+          <Link to="/bricks-list">
             <div className="link-title">VIEW</div>
             <div className="link-description">See what we want...</div>
           </Link>
