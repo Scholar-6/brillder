@@ -1,6 +1,7 @@
 import { RouteComponentProps } from 'react-router-dom';
 
 export interface ProFormaProps extends RouteComponentProps<any> {
+  data: ProFormaSubmitData,
   fetchProForm: Function,
   submitProForm: Function,
 }
