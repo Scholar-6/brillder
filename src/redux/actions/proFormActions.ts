@@ -38,6 +38,16 @@ const fetchBrickBuildData = () => {
   }
 }
 
+const submitBrickBuildData = (data:any) => {
+  return function (proFormData: any, gg: any, hh:any) {
+    return axios.post('', proFormData).then(response => {
+    })
+    .catch(error => {
+    })
+  }
+}
+
 export default {
   fetchBrickBuildData,
+  submitBrickBuildData,
 }
