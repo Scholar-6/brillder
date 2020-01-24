@@ -29,39 +29,6 @@ class ProFormaPage extends Component<ProFormaProps, ProFormaState> {
     super(props)
     const {brickId} = props.match.params;
     props.fetchProForm(brickId);
-    this.state = {
-      subject: '',
-      topic: '',
-      subTopic: '',
-      proposedTitle: '',
-      alternativeTopics: '',
-      investigationBrief: '',
-      preparationBrief: ''
-    }
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleTextareaChange = this.handleTextareaChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    let stateChange = {} as any;
-    let name = event.target.name;
-    stateChange[name] = event.target.value;
-    this.setState(stateChange);
-  }
-
-  handleTextareaChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    let stateChange = {} as any;
-    let name = event.target.name;
-    stateChange[name] = event.target.value;
-    this.setState(stateChange);
-  }
-
-  handleSubmit(event: any) {
-    event.preventDefault();
-    this.props.submitProForm(this.state);
-    this.props.history.push("/brick-build");
   }
 
   render() {

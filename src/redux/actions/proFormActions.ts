@@ -1,6 +1,7 @@
 import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
+import host from '../../hostname';
 
 const fetchProFormaDataSuccess = (data:any) => {
   return {
@@ -20,7 +21,7 @@ const fetchBrickBuildData = (brickId: string = '') => {
   return function (dispatch: Dispatch) {
     return axios.get('https://jsonplaceholder.typicode.com/users')
       .then(() => {
-        var data = {
+        var data = {  
           //subject: 'Geography',
           //topic: 'Desertification',
           //title: 'Exfoliatioin and Erosion in Arid Environments',
@@ -43,10 +44,18 @@ const fetchBrickBuildData = (brickId: string = '') => {
 }
 
 const submitBrickBuildData = (data:any) => {
-  return function (proFormData: any, gg: any, hh:any) {
-    return axios.post('', proFormData).then(response => {
+  console.log("submit", data)
+  return function (dispatch: Dispatch) {
+    var config = {
+      //mode: 'no-cors',
+      //headers: {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*'}
+    };
+
+    return axios.get('http://35.177.96.218/brick', config).then(response => {
+      console.log(response);
     })
     .catch(error => {
+      console.log(error)
     })
   }
 }
