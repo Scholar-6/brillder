@@ -29,7 +29,7 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
       subject: data.subject,
       topic: data.topic,
       subTopic: data.subTopic,
-      proposedTitle: data.proposedTitle,
+      title: data.title,
       alternativeTopics: data.alternativeTopics,
       investigationBrief: data.investigationBrief,
       preparationBrief: data.preparationBrief
@@ -138,8 +138,8 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
               </Grid>
               <Grid container item xs={8} sm={5}>
                 <input
-                  name="proposedTitle"
-                  value={this.state.proposedTitle}
+                  name="title"
+                  value={this.state.title}
                   onChange={this.handleInputChange}
                   maxLength={30}
                   required

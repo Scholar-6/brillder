@@ -11,7 +11,7 @@ export type ProFormaState = {
   topic: string,
   subTopic: string,
   alternativeTopics: string,
-  proposedTitle: string,
+  title: string,
   investigationBrief: string,
   preparationBrief: string,
 }
@@ -21,7 +21,7 @@ export type ProFormaSubmitData = {
   topic: string,
   subTopic: string,
   alternativeTopics: string,
-  proposedTitle: string,
+  title: string,
   investigationBrief: string,
   preparationBrief: string,
 }
