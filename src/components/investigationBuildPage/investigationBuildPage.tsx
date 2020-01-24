@@ -1,14 +1,18 @@
 import './investigationBuildPage.scss';
 import React, { Component } from 'react';
-import { Box, Grid, Slider } from '@material-ui/core';
+import { Grid, Slider } from '@material-ui/core';
 import { connect } from 'react-redux';
 import BuildPageHeaderComponent from './header/pageHeader';
 import actions from '../../redux/actions/proFormActions';
+import brickActions from '../../redux/actions/brickActions';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import HorizontalStepper from './horizontalStepper/horizontalStepper';
+import { RouteComponentProps } from 'react-router-dom';
 
-type InvestigationBuildProps = {}
+interface InvestigationBuildProps extends RouteComponentProps<any> {
+
+}
 
 type InvestigationBuildState = {
   subject: string,
@@ -28,6 +32,7 @@ const mapState = (state: any) => {
 
 const mapDispatch = (dispatch: any) => {
   return {
+    fetchBrick: (brickId: number) => dispatch(brickActions.fetchBrick(brickId)),
     fetchProForma: () => dispatch(actions.fetchBrickBuildData())
   }
 }
@@ -51,9 +56,12 @@ class InvestigationBuildPage extends Component<InvestigationBuildProps, Investig
       preparationBrief: ''
     }
 
+    const {brickId} = this.props.match.params;
+
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
     props.fetchProForma();
+    props.fetchBrick(brickId);
   }
 
   handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -91,9 +99,6 @@ class InvestigationBuildPage extends Component<InvestigationBuildProps, Investig
               </Grid>
             </Grid>
             <br/>
-            <div>
-              Investigation build page
-            </div>
           </Grid>
           <Grid container className="right-sidebar sidebar" item xs={2} sm={1}>
             <div>&lt;&lt;</div>

@@ -26,15 +26,28 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
   constructor(props: ProFormaComponentProps) {
     super(props)
     const {brick} = this.props;
-    let state = {
-      subject: brick.subject,
-      topic: brick.topic,
-      subTopic: brick.subTopic,
-      title: brick.title,
-      alternativeTopics: brick.alternativeTopics,
-      investigationBrief: brick.investigationBrief,
-      preparationBrief: brick.preparationBrief
-    } as ProFormaState;
+    let state: ProFormaState;
+    if (brick) {
+      state = {
+        subject: brick.subject,
+        topic: brick.topic,
+        subTopic: brick.subTopic,
+        title: brick.title,
+        alternativeTopics: brick.alternativeTopics,
+        investigationBrief: brick.investigationBrief,
+        preparationBrief: brick.preparationBrief
+      } as ProFormaState;
+    } else {
+      state = {
+        subject: '',
+        topic: '',
+        subTopic: '',
+        title: '',
+        alternativeTopics: '',
+        investigationBrief: '',
+        preparationBrief: ''
+      } as ProFormaState;
+    }
 
     if (brick) {
       state.id = brick.id
@@ -64,12 +77,12 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
   handleSubmit(event: any) {
     event.preventDefault();
     this.props.parent.submitProForm(this.state);
-    //this.props.parent.history.push("/brick-build");
   }
 
   render() {
     if (this.props.parent.submitted === true) {
-      this.props.parent.history.push("/brick-build");
+      const {brickId} = this.props.parent.match.params;
+      this.props.parent.history.push("/brick/build/" + brickId);
     }
 
     return (

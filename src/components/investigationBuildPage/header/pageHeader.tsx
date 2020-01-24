@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { Brick } from '../../proFormaPage/model';
 
 type InvestigationBuildProps = {
+  brick: Brick,
   data: {
-    subject: string,
-    topic: string,
-    title: string,
     editor: string,
     author: string,
     iteration: string
@@ -25,7 +24,8 @@ type InvestigationBuildState = {
 
 const mapState = (state: any) => {
   return {
-    data: state.proForm.data
+    data: state,
+    brick: state.brick.brick
   }
 }
 
@@ -35,7 +35,10 @@ class BuildPageHeaderComponent extends Component<InvestigationBuildProps, Invest
   }
 
   render() {
-    const {data} = this.props;
+    const {brick, data} = this.props;
+    if (!brick) {
+      return "";
+    }
     return (
       <div className="page-header">
         <Grid container direction="row">
@@ -43,7 +46,7 @@ class BuildPageHeaderComponent extends Component<InvestigationBuildProps, Invest
             <div>Subject:</div>
           </Grid>
           <Grid container item xs={4} sm={8} lg={9}>
-            <div>{data.subject}</div>
+            <div>{brick.subject}</div>
           </Grid>
           <Grid container item xs={2} sm={1} lg={1}>
             <div><b>Author:</b></div>
@@ -57,7 +60,7 @@ class BuildPageHeaderComponent extends Component<InvestigationBuildProps, Invest
             <div>Topic:</div>
           </Grid>
           <Grid container item xs={4} sm={8} lg={9}>
-            <div>{data.topic}</div>
+            <div>{brick.topic}</div>
           </Grid>
           <Grid container item xs={2} sm={1} lg={1}>
             <div>Editor:</div>
@@ -71,7 +74,7 @@ class BuildPageHeaderComponent extends Component<InvestigationBuildProps, Invest
             <div>Title:</div>
           </Grid>
           <Grid container item xs={4} sm={8} lg={9}>
-            <div>{data.title}</div>
+            <div>{brick.title}</div>
           </Grid>
           <Grid container item xs={2} sm={1} lg={1}>
             <div>Iteration:</div>
