@@ -32,7 +32,7 @@ const App: React.FC = () => {
         <Switch>
           <Route path="/brick-create" exact component={ProFormaPage}></Route>
           <Route path="/brick-create/:brickId" exact component={ProFormaPage}></Route>
-          <Route path="/brick-build" component={InvestigationBuildPage}></Route>
+          <Route path="/brick/build/:brickId" component={InvestigationBuildPage}></Route>
           <Route path="/bricks-list">
             <BricksListPage />
           </Route>

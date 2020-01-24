@@ -77,12 +77,12 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
   handleSubmit(event: any) {
     event.preventDefault();
     this.props.parent.submitProForm(this.state);
-    //this.props.parent.history.push("/brick-build");
   }
 
   render() {
     if (this.props.parent.submitted === true) {
-      this.props.parent.history.push("/brick-build");
+      const {brickId} = this.props.parent.match.params;
+      this.props.parent.history.push("/brick/build/" + brickId);
     }
 
     return (
