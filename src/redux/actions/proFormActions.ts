@@ -19,7 +19,7 @@ const fetchProFormaDataFailure = (errorMessage:string) => {
 
 const fetchBrickBuildData = (brickId: string = '') => {
   return function (dispatch: Dispatch) {
-    return axios.get('http://35.177.96.218/brick')
+    return axios.get(host.BACKEND_HOST + '/brick')
       .then(() => {
         var data = {  
           //subject: 'Geography',
@@ -44,21 +44,12 @@ const fetchBrickBuildData = (brickId: string = '') => {
 }
 
 const submitBrickBuildData = (data:any) => {
-  console.log("submit", data)
   return function (dispatch: Dispatch) {
     data.type = 1;
-    var config = {
-      //mode: 'no-cors',
-      //headers: {'Access-Control-Allow-Origin': '*'}
-    };
+    return axios.post(host.BACKEND_HOST + '/brick', data).then(response => {
 
-    console.log(66)
-
-    return axios.post('http://35.177.96.218/brick', data, config).then(response => {
-      console.log("44", response);
     })
     .catch(error => {
-      console.log(55, error)
     })
   }
 }
