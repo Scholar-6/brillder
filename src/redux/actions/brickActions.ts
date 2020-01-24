@@ -3,32 +3,30 @@ import axios from 'axios';
 import { Action, Dispatch } from 'redux';
 import host from '../../hostname';
 
-const fetchBricksSuccess = (data:any) => {
+const fetchBrickSuccess = (data:any) => {
   return {
-    type: types.FETCH_BRICKS_SUCCESS,
+    type: types.FETCH_BRICK_SUCCESS,
     payload: data
   } as Action
 }
 
-const fetchBricksFailure = (errorMessage:string) => {
+const fetchBrickFailure = (errorMessage:string) => {
   return {
-    type: types.FETCH_BRICKS_FAILURE,
+    type: types.FETCH_BRICK_FAILURE,
     error: errorMessage
   } as Action
 }
 
-const fetchBricks = () => {
+const fetchBrick = (id: number) => {
   return function (dispatch: Dispatch) {
-    return axios.get(host.BACKEND_HOST + '/brick')
+    return axios.get(host.BACKEND_HOST + '/brick/' + id)
       .then((res) => {
-        dispatch(fetchBricksSuccess(res.data));
+        dispatch(fetchBrickSuccess(res.data));
       })
       .catch(error => {
-        dispatch(fetchBricksFailure(error.message));
+        dispatch(fetchBrickFailure(error.message));
       });
   }
 }
 
-export default {
-  fetchBricks
-}
+export default { fetchBrick }

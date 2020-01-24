@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Box, Grid } from '@material-ui/core';
-import actions from '../../redux/actions/brickActions';
+import actions from '../../redux/actions/bricksActions';
 
 const mapState = (state: any) => {
   return {
-    bricks: state.brick.bricks
+    bricks: state.bricks.bricks
   }
 }
 

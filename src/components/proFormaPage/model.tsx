@@ -4,9 +4,11 @@ export interface ProFormaProps extends RouteComponentProps<any> {
   submitted: boolean,
   data: ProFormaSubmitData,
   bricks: Brick[],
+  brick: Brick,
   fetchProForm: Function,
   submitProForm: Function,
   fetchBricks: Function,
+  fetchBrick: Function,
 }
 
 export type Brick = {

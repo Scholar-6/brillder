@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions/proFormActions';
 import brickActions from '../../redux/actions/brickActions';
+import bricksActions from '../../redux/actions/bricksActions';
 import EditorRowComponent from './editorRow/editorRow';
 import { ProFormaProps, ProFormaSubmitData } from './model';
 import ProFormComponent from './proForm/proForm';
@@ -11,7 +12,8 @@ const mapState = (state: any) => {
   return {
     submitted: state.proForm.submitted,
     data: state.proForm.data,
-    bricks: state.brick.bricks,
+    bricks: state.bricks.bricks,
+    brick: state.brick.brick,
   }
 }
 
@@ -19,7 +21,8 @@ const mapDispatch = (dispatch: any) => {
   return {
     fetchProForm: (brickId: string) => dispatch(actions.fetchBrickBuildData(brickId)),
     submitProForm: (data:ProFormaSubmitData) =>  dispatch(actions.submitBrickBuildData(data)),
-    fetchBricks: () => dispatch(brickActions.fetchBricks()),
+    fetchBricks: () => dispatch(bricksActions.fetchBricks()),
+    fetchBrick: (brickId: number) => dispatch(brickActions.fetchBrick(brickId)),
   }
 }
 
@@ -31,19 +34,18 @@ const connector = connect(
 class ProFormaPage extends Component<ProFormaProps, any> {
   constructor(props: ProFormaProps) {
     super(props)
-    const {brickId} = props.match.params;
+    const brickId:number = props.match.params.brickId;
     props.fetchProForm(brickId);
     if (brickId) {
-      this.props.fetchBricks();
+      this.props.fetchBrick(brickId);
     }
   }
 
   render() {
-    console.log(55);
     let brick = null;
     const {brickId} = this.props.match.params;
     if (brickId) {
-      brick = this.props.bricks.find(b => b.id == brickId);
+      brick = this.props.brick;
     }
 
     if (this.props.data == null) {

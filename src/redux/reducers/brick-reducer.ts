@@ -1,19 +1,19 @@
 import types from '../types';
 
-const MainPageInitialState = {
-  bricks: [],
+const BrickInitialState = {
+  brick: null,
 }
 
-export default (state = MainPageInitialState, action: any) => {
+export default (state = BrickInitialState, action: any) => {
   switch (action.type) {
-    case types.FETCH_BRICKS_FAILURE:
+    case types.FETCH_BRICK_FAILURE:
       return {
-        bricks: [],
+        brick: null,
         error: action.payload
       }
-    case types.FETCH_BRICKS_SUCCESS:
+    case types.FETCH_BRICK_SUCCESS:
       return {
-        bricks: action.payload,
+        brick: action.payload,
         error: ''
       }
     default: return state;
