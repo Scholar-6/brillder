@@ -1,6 +1,7 @@
 import { RouteComponentProps } from 'react-router-dom';
 
 export interface ProFormaProps extends RouteComponentProps<any> {
+  submitted: boolean,
   data: ProFormaSubmitData,
   bricks: Brick[],
   fetchProForm: Function,

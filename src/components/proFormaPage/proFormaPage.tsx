@@ -9,6 +9,7 @@ import ProFormComponent from './proForm/proForm';
 
 const mapState = (state: any) => {
   return {
+    submitted: state.proForm.submitted,
     data: state.proForm.data,
     bricks: state.brick.bricks,
   }
@@ -38,6 +39,7 @@ class ProFormaPage extends Component<ProFormaProps, any> {
   }
 
   render() {
+    console.log(55);
     let brick = null;
     const {brickId} = this.props.match.params;
     if (brickId) {

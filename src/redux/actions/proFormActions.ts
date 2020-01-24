@@ -43,13 +43,27 @@ const fetchBrickBuildData = (brickId: string = '') => {
   }
 }
 
+const submitProFormaSuccess = () => {
+  return {
+    type: types.SUBMIT_PRO_FORMA_SUCCESS,
+  } as Action
+}
+
+const submitProFormaFailure = (errorMessage:string) => {
+  return {
+    type: types.SUBMIT_PRO_FORMA_FAILURE,
+    error: errorMessage
+  } as Action
+}
+
 const submitBrickBuildData = (data:any) => {
   return function (dispatch: Dispatch) {
     data.type = 1;
     return axios.post(host.BACKEND_HOST + '/brick', data).then(response => {
-
+      dispatch(submitProFormaSuccess());
     })
     .catch(error => {
+      dispatch(submitProFormaFailure(error.message))
     })
   }
 }

@@ -63,12 +63,17 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
 
   handleSubmit(event: any) {
     event.preventDefault();
-    
+    console.log(55)
     this.props.parent.submitProForm(this.state);
     //this.props.parent.history.push("/brick-build");
   }
 
   render() {
+    console.log(this.props.parent);
+    if (this.props.parent.submitted === true) {
+      this.props.parent.history.push("/brick-build");
+    }
+
     return (
       <form onSubmit={this.handleSubmit}>
         <Grid container direction="row">
