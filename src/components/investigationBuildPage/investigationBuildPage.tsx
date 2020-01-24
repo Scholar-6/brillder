@@ -45,7 +45,6 @@ const connector = connect(
 class InvestigationBuildPage extends Component<InvestigationBuildProps, InvestigationBuildState> {
   constructor(props: any) {
     super(props)
-    console.log(props)
     props.fetchProForma();
     this.state = {
       subject: '',
@@ -80,7 +79,6 @@ class InvestigationBuildPage extends Component<InvestigationBuildProps, Investig
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="investigation-build-page">
         <BuildPageHeaderComponent />

@@ -102,7 +102,7 @@ export default function HorizontalLinearStepper() {
           }
           return (
             <Step key={index}>
-              <StepButton icon={IconStep()} onClick={handleStep(step, index)} />
+              <StepButton icon={IconStep()} onClick={handleStep(step, index - 1)} />
             </Step>
           )
         })}
