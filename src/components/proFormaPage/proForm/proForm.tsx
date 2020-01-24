@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Box, Grid, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions/proFormActions';
-import { ProFormaProps, ProFormaState, ProFormaSubmitData } from '../model';
+import { ProFormaProps, ProFormaState, ProFormaSubmitData, Brick } from '../model';
 
 interface ProFormaComponentProps {
-  parent: ProFormaProps
+  parent: ProFormaProps,
+  brick: Brick,
 }
 
 const mapState = (state: any) => {
@@ -24,16 +25,22 @@ const mapDispatch = (dispatch: any) => {
 class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState> {
   constructor(props: ProFormaComponentProps) {
     super(props)
-    const {data} = this.props.parent;
-    this.state = {
-      subject: data.subject,
-      topic: data.topic,
-      subTopic: data.subTopic,
-      title: data.title,
-      alternativeTopics: data.alternativeTopics,
-      investigationBrief: data.investigationBrief,
-      preparationBrief: data.preparationBrief
+    const {brick} = this.props;
+    let state = {
+      subject: brick.subject,
+      topic: brick.topic,
+      subTopic: brick.subTopic,
+      title: brick.title,
+      alternativeTopics: brick.alternativeTopics,
+      investigationBrief: brick.investigationBrief,
+      preparationBrief: brick.preparationBrief
+    } as ProFormaState;
+
+    if (brick) {
+      state.id = brick.id
     }
+
+    this.state = state;
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
@@ -56,7 +63,7 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
 
   handleSubmit(event: any) {
     event.preventDefault();
-    console.log(this.props)
+    
     this.props.parent.submitProForm(this.state);
     //this.props.parent.history.push("/brick-build");
   }
