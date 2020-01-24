@@ -9,6 +9,7 @@ import reducer from '../../redux/reducers/index';
 import thunkMiddleware from 'redux-thunk';
 import ProFormaPage from '../proFormaPage/proFormaPage';
 import InvestigationBuildPage from '../investigationBuildPage/investigationBuildPage';
+import BricksListPage from '../bricksListPage/bricksListPage';
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
@@ -29,14 +30,14 @@ const App: React.FC = () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route path="/brick-create">
-            <ProFormaPage />
-          </Route>
-          <Route path="/brick-build">
-            <InvestigationBuildPage />
+          <Route path="/brick-create" exact component={ProFormaPage}></Route>
+          <Route path="/brick-create/:brickId" exact component={ProFormaPage}></Route>
+          <Route path="/brick-build" component={InvestigationBuildPage}></Route>
+          <Route path="/bricks-list">
+            <BricksListPage />
           </Route>
           <Route path="/">
-            <MainPage />
+            <MainPage />  
           </Route>
         </Switch>
       </ThemeProvider>
