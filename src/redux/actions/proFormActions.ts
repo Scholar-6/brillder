@@ -16,18 +16,22 @@ const fetchProFormaDataFailure = (errorMessage:string) => {
   } as Action
 }
 
-const fetchBrickBuildData = () => {
+const fetchBrickBuildData = (brickId: string = '') => {
   return function (dispatch: Dispatch) {
     return axios.get('https://jsonplaceholder.typicode.com/users')
-      .then(response => {
+      .then(() => {
         var data = {
-          subject: 'Geography',
-          topic: 'Desertification',
-          title: 'Exfoliatioin and Erosion in Arid Environments',
+          //subject: 'Geography',
+          //topic: 'Desertification',
+          //title: 'Exfoliatioin and Erosion in Arid Environments',
           author: 'E. Pound',
           editor: 'R. Unstead',
           comissionTime: '40 minutes',
-          iteration: 1
+          //iteration: 1
+        } as any;
+        if (brickId) {
+          data.subject = 'Test'
+          data.topic = 'Test'
         }
         // hardcode data for now
         dispatch(fetchProFormaDataSuccess(data));
@@ -38,6 +42,16 @@ const fetchBrickBuildData = () => {
   }
 }
 
+const submitBrickBuildData = (data:any) => {
+  return function (proFormData: any, gg: any, hh:any) {
+    return axios.post('', proFormData).then(response => {
+    })
+    .catch(error => {
+    })
+  }
+}
+
 export default {
   fetchBrickBuildData,
+  submitBrickBuildData
 }

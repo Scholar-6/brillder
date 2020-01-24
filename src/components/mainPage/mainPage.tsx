@@ -36,14 +36,14 @@ class MainPage extends Component {
           <div className="client-name">Welcome {props.username}</div>
         </Grid>
 
-        <Grid container item xs={12} justify="center">
-          <Box bgcolor="primary.main" className="bigButton">
-            <Link to="/brick">
-              <div className="link-title">VIEW</div>
-              <div className="link-description">See what we want...</div>
-            </Link>
-          </Box>
-        </Grid>
+      <Grid container item xs={12} justify="center">
+        <Box bgcolor="primary.main" className="bigButton">
+          <Link to="/bricks-list">
+            <div className="link-title">VIEW</div>
+            <div className="link-description">See what we want...</div>
+          </Link>
+        </Box>
+      </Grid>
 
         <Grid container item xs={12} justify="center">
           <Box bgcolor="primary.main" className="bigButton">
@@ -53,6 +53,7 @@ class MainPage extends Component {
             </Link>
           </Box>
         </Grid>
+
 
         <Grid container item xs={12} justify="center">
           <Box bgcolor="primary.main" className="bigButton">
