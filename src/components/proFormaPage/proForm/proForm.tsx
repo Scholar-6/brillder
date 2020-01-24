@@ -26,15 +26,28 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
   constructor(props: ProFormaComponentProps) {
     super(props)
     const {brick} = this.props;
-    let state = {
-      subject: brick.subject,
-      topic: brick.topic,
-      subTopic: brick.subTopic,
-      title: brick.title,
-      alternativeTopics: brick.alternativeTopics,
-      investigationBrief: brick.investigationBrief,
-      preparationBrief: brick.preparationBrief
-    } as ProFormaState;
+    let state: ProFormaState;
+    if (brick) {
+      state = {
+        subject: brick.subject,
+        topic: brick.topic,
+        subTopic: brick.subTopic,
+        title: brick.title,
+        alternativeTopics: brick.alternativeTopics,
+        investigationBrief: brick.investigationBrief,
+        preparationBrief: brick.preparationBrief
+      } as ProFormaState;
+    } else {
+      state = {
+        subject: '',
+        topic: '',
+        subTopic: '',
+        title: '',
+        alternativeTopics: '',
+        investigationBrief: '',
+        preparationBrief: ''
+      } as ProFormaState;
+    }
 
     if (brick) {
       state.id = brick.id
