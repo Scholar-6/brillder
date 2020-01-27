@@ -1,4 +1,5 @@
 export default {
-    BOX: 'box',
-  }
+  BOX: 'box',
+  CARD: 'card'
+}
   

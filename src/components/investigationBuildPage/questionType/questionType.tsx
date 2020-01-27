@@ -20,7 +20,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({ history, questionType, 
   typeArray = typeArray.map(SplitByCapitalLetters)
 
   function addQuestion() {
-    history.push(`/build/investigation/question-component/${questionNumber}`);
+    history.push(`/build/investigation/question/${questionNumber}/type/`);
   }
 
   return (

@@ -1,9 +1,6 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import AppBar from '@material-ui/core/AppBar';
 
 import './investigationBuildPage.scss'
 import BuildPageHeaderComponent from './header/pageHeader';
@@ -11,9 +8,8 @@ import QuestionComponent from './questionComponent';
 import QuestionTypePage from './questionType/questionType';
 import { Grid } from '@material-ui/core';
 import DragBox from './DragBox';
-import CircleIconNumber from './circleIcon';
 import BuildFotter from './build-fotter';
-import { QuestionType } from '../model/question';
+import DragTabs from './dragTabs/dragTabs';
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -57,32 +53,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
           <Grid container direction="row">
             <Grid xs={1} sm={2} item md={3}></Grid>
             <Grid container justify="center" item xs={10} sm={8} md={6}>
-              <AppBar position="static" color="default">
-                <Tabs
-                  variant="fullWidth"
-                  indicatorColor="primary"
-                  value={value}
-                  onChange={changeQuestion}
-                  textColor="primary"
-                  aria-label="icon tabs example"
-                >
-                  {
-                    questions.map((question, i) => {
-                      return (
-                        <Tab key={i} icon={<CircleIconNumber number={question as number} customClass="tab-icon" />} />
-                      );
-                    })
-                  }
-                  <Tab label="New Question" value={questions.length}/>
-                </Tabs>
-              </AppBar>
+              <DragTabs questions={questions} />
               <Switch>
                 <Route exac path='/build/investigation/question-component/:questionId'>
                   <QuestionComponent type={1} />
                 </Route>
                 <Route
                   exec path='/build/investigation/question/:questionId'
-                  component={() => <QuestionTypePage history={history} questionType={questionType} questionNumber={value + 1}/>} >
+                  component={() => <QuestionTypePage history={history} questionType={questionType} questionNumber={value + 1} />} >
                 </Route>
               </Switch>
             </Grid>
