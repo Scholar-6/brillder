@@ -2,42 +2,34 @@ import React, { useState, useCallback } from 'react';
 import DragTab from './dragTab';
 import update from 'immutability-helper';
 
-import './dragTabs.scss';
+import './DragableTabs.scss';
 
 interface DragTabsProps {
   questions: number[],
 }
 
-const DragTabs: React.FC<DragTabsProps> = ({ questions }) => {
+const DragableTabs: React.FC<DragTabsProps> = ({ questions }) => {
   const [cards, setCards] = useState([
     {
       id: 1,
-      text: '1',
     },
     {
       id: 2,
-      text: '2',
     },
     {
       id: 3,
-      text: '3',
     },
     {
       id: 4,
-      text: 'Create some examples',
     },
     {
       id: 5,
-      text:
-        'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
     },
     {
       id: 6,
-      text: '???',
     },
     {
       id: 7,
-      text: 'PROFIT',
     },
   ])
 
@@ -70,9 +62,9 @@ const DragTabs: React.FC<DragTabsProps> = ({ questions }) => {
 
   return (
     <div className="drag-tabs">
-      <div>{cards.map((card, i) => renderCard(card, i))}</div>
+      {cards.map((card, i) => renderCard({id: card.id, text: ''}, i))}
     </div>
   )
 }
 
-export default DragTabs
+export default DragableTabs

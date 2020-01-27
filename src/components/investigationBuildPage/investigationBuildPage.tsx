@@ -9,7 +9,7 @@ import QuestionTypePage from './questionType/questionType';
 import { Grid } from '@material-ui/core';
 import DragBox from './DragBox';
 import BuildFotter from './build-fotter';
-import DragTabs from './dragTabs/dragTabs';
+import DragableTabs from './dragTabs/dragableTabs';
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -53,7 +53,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
           <Grid container direction="row">
             <Grid xs={1} sm={2} item md={3}></Grid>
             <Grid container justify="center" item xs={10} sm={8} md={6}>
-              <DragTabs questions={questions} />
+              <DragableTabs questions={questions} />
               <Switch>
                 <Route exac path='/build/investigation/question-component/:questionId'>
                   <QuestionComponent type={1} />
