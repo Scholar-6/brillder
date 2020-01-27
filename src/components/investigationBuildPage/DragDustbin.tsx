@@ -3,12 +3,10 @@ import { useDrop } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 
 const style: React.CSSProperties = {
-  height: '12rem',
-  width: '12rem',
-  marginRight: '1.5rem',
-  marginBottom: '1.5rem',
+  height: '1rem',
+  width: '100%',
   color: 'white',
-  padding: '1rem',
+  padding: '30px',
   textAlign: 'center',
   fontSize: '1rem',
   lineHeight: 'normal',
@@ -25,7 +23,7 @@ function selectBackgroundColor(isActive: boolean, canDrop: boolean) {
   } else if (canDrop) {
     return 'darkkhaki'
   } else {
-    return '#222'
+    return '#E5E5E5'
   }
 }
 
@@ -46,10 +44,10 @@ const Dustbin: React.FC<DustbinProps> = ({ allowedDropEffect }) => {
   const backgroundColor = selectBackgroundColor(isActive, canDrop)
   return (
     <div ref={drop} style={{ ...style, backgroundColor }}>
-      {`Works with ${allowedDropEffect} drop effect`}
+      {`Drag component here`}
       <br />
       <br />
-      {isActive ? 'Release to drop' : 'Drag a box here'}
+      {isActive ? 'Release to drop' : 'Drag component here'}
     </div>
   )
 }

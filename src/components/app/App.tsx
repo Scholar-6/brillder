@@ -1,30 +1,32 @@
 import React from 'react';
-import './app.css';
 import { Switch, Route } from 'react-router-dom';
-import MainPage from '../mainPage/mainPage';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { Provider } from 'react-redux';
-import {createStore, applyMiddleware, Reducer} from 'redux';
-import reducer from '../../redux/reducers/index';
+import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import ProFormaPage from '../proFormaPage/proFormaPage';
-import BricksListPage from '../bricksListPage/bricksListPage';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend'
+
+import './app.css';
+import '../../font-numbers/style.css'
+import MainPage from '../mainPage/mainPage';
+import reducer from '../../redux/reducers/index';
+import ProFormaPage from '../proFormaPage/proFormaPage';
+import BricksListPage from '../bricksListPage/bricksListPage';
 import InvestigationBuildPage from '../investigationBuildPage/investigationBuildPage'
+
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
 const App: React.FC = () => {
-  const theme = React.useMemo(
-    () =>
-      createMuiTheme({
-        palette: {
-          primary: {
-            main: "#0B3A7E"
-          }
+  const theme = React.useMemo(() =>
+    createMuiTheme({
+      palette: {
+        primary: {
+          main: "#0B3A7E"
         }
-      }),
+      }
+    }),
     [],
   );
 
@@ -33,7 +35,7 @@ const App: React.FC = () => {
       <ThemeProvider theme={theme}>
         <Switch>
           <DndProvider backend={Backend}>
-            <Route path="/" exact component={InvestigationBuildPage}></Route>
+            <Route path="/build" component={InvestigationBuildPage}></Route>
           </DndProvider>
           <Route path="/brick-create" exact component={ProFormaPage}></Route>
           <Route path="/brick-create/:brickId" exact component={ProFormaPage}></Route>
@@ -42,7 +44,7 @@ const App: React.FC = () => {
             <BricksListPage />
           </Route>
           <Route path="/">
-            <MainPage />  
+            <MainPage />
           </Route>
         </Switch>
       </ThemeProvider>

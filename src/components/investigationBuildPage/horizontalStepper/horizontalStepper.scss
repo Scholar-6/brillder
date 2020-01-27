@@ -16,7 +16,6 @@
     border-radius: 34px;
     border: 1px solid #0B3B7F;
   }
-  
 }
 
 .question {
@@ -46,5 +45,10 @@
     margin: 4px 0 4px 0;
     min-width: 65%;
     text-transform:none;
+  }
+
+  .drop-box {
+    margin-top: 5px;
+    border: 1px dashed black;
   }
 }

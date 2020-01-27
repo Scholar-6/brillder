@@ -1,12 +1,14 @@
 import React from 'react';
-import './horizontalStepper.scss'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import StepButton from '@material-ui/core/StepButton';
-import { Grid } from '@material-ui/core';
+
+import './horizontalStepper.scss'
+import ShortAnswer from './shortAnswer/shortAnswer';
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,12 +35,6 @@ const CustomFilledNumberIcon = (step:any) => () => (
   </span>
 );
 
-const RectFilledNumberIcon = (step:any) => () => (
-  <span className={"rect icon-filled-rect-blue-" + step}>
-    <span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span>
-  </span>
-);
-
 function getSteps(numOfSteps:number) {
   const steps:any[] = [];
   for (let i = 0; i < numOfSteps; i++) {
@@ -51,21 +47,6 @@ function createStep():any {
   return {
     isClicked: false,
     isCompleted: false
-  }
-}
-
-function getStepContent(step: number) {
-  switch (step) {
-    case 0:
-      return 'Select campaign settings...';
-    case 1:
-      return 'What is an ad group anyways?';
-    case 2:
-      return 'This is the bit I really care about!';
-    case 3:
-      return 'wfwef'
-    default:
-      return 'Unknown step';
   }
 }
 
@@ -86,8 +67,6 @@ export default function HorizontalLinearStepper() {
     setActiveStep(index);
     step.isClicked = true; 
   };
-
-  let currentIcon = RectFilledNumberIcon(activeStep + 1);
 
   return (
     <div className={classes.root}>
@@ -116,39 +95,7 @@ export default function HorizontalLinearStepper() {
           </div>
         ) : (
           <div>
-            <Grid container direction="row">
-              <Grid xs={1} sm={2} item md={3}></Grid>
-              <Grid container justify="center" item xs={10} sm={8} md={6} className="question">
-                <Grid container direction="row">
-                  {currentIcon()}
-                  <div className="question-title">Geomorfology</div>
-                </Grid>
-                <Grid container direction="row" className="black-box">
-                  Read the following extract from a geological survey of Western Australia:
-                </Grid>
-                <Grid container direction="row">
-                  When you work with a locum tenens placement firm led by doctors, you know your experience will be a great one. The most extensive network of top-quality doctors and hospitals. The most innovative customer services—from travel to payroll to credentialing. The best clinical and personal fit. It’s why we can say we deliver better doctors to the hospitals we partner with than any other LT firm. With Locum Connections, you have the confidence of knowing we understand what it takes for each assignment to be a success for doctor and hospital alike.
-                </Grid>
-                <Grid container direction="row" className="black-box">
-                  Read the following extract from a geological survey of Western Australia:
-                </Grid>
-                <Grid container direction="row">
-                  <Grid container justify="center">
-                    <Button className="grey-button">Lorem ipsum</Button>
-                  </Grid>
-                </Grid>
-                <Grid container direction="row">
-                  <Grid container justify="center">
-                    <Button className="grey-button">Lorem ipsum</Button>
-                  </Grid>
-                </Grid>
-                <Grid container direction="row">
-                  <Grid container justify="center">
-                    <Button className="grey-button">Lorem ipsum</Button>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
+            <ShortAnswer activeStep={activeStep} />
             <div>
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                 Back
