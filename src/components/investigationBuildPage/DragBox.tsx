@@ -6,8 +6,6 @@ const style: React.CSSProperties = {
   border: '1px dashed gray',
   backgroundColor: 'white',
   padding: '0.5rem 1rem',
-  marginRight: '1.5rem',
-  marginBottom: '1.5rem',
   float: 'left',
 }
 
@@ -21,7 +19,7 @@ interface DropResult {
   name: string
 }
 
-const Box: React.FC<BoxProps> = ({ name }) => {
+const DragBox: React.FC<BoxProps> = ({ name }) => {
   const item = { name, type: ItemTypes.BOX }
   const [{ opacity }, drag] = useDrag({
     item,
@@ -54,4 +52,4 @@ const Box: React.FC<BoxProps> = ({ name }) => {
     </div>
   )
 }
-export default Box
+export default DragBox
