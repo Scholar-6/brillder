@@ -1,6 +1,4 @@
-.question-type-sub-page {
-  margin-top: 20px;
-  margin-bottom: 20px;
+.question-type {
 
   .card-description {
     text-align: center;
@@ -23,5 +21,11 @@
   
   .tab-icon {
     font-size: 30px;
+  }
+
+  .tab-panel {
+    padding: 0;
+    border: 1px solid grey;
+    border-top: none;
   }
 }

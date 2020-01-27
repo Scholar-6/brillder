@@ -1,15 +1,19 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
 import { Route, Switch } from 'react-router-dom';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import AppBar from '@material-ui/core/AppBar';
 
 import './investigationBuildPage.scss'
 import BuildPageHeaderComponent from './header/pageHeader';
 import QuestionComponent from './questionComponent';
 import QuestionTypePage from './questionType/questionType';
-import { Grid, Slider } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import DragBox from './DragBox';
+import CircleIconNumber from './circleIcon';
+import BuildFotter from './build-fotter';
+import { QuestionType } from '../model/question';
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -17,13 +21,30 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
   fetchProForma: Function
 }
 
-const InvestigationBuildPage: React.FC<InvestigationBuildProps> = () => {
+const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: any) => {
+  const [value, setValue] = React.useState(0);
+  let questions = [1]
+  var questionType = questions[value];
+
+  const createNewQuestion = (questionNumber: number) => {
+    // add new question
+  }
+
+  const changeQuestion = (event: React.ChangeEvent<{}>, newValue: number) => {
+    console.log(newValue, questions.length);
+    if (newValue >= questions.length) {
+      createNewQuestion(newValue);
+    }
+    setValue(newValue);
+  }
+
+  console.log(questions)
   return (
     <div className="investigation-build-page">
       <BuildPageHeaderComponent />
       <Grid container direction="row">
         <Grid container className="left-sidebar sidebar" justify="center" item xs={2} sm={1}>
-          <Route exac path={`/build/investigation/question/component`}>
+          <Route exac path='/build/investigation/question-component/:questionId'>
             <div>>></div>
             <DragBox name="T" />
             <DragBox name="P" />
@@ -34,19 +55,41 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = () => {
         </Grid>
         <Grid container item xs={8} sm={10}>
           <Grid container direction="row">
-            <Switch>
-              <Route exac path={`/build/investigation/question/component`}>
-                <QuestionComponent type={1} />
-              </Route>
-              <Route
-                path={`/build/investigation/question`}
-                exac component={QuestionTypePage}>
-              </Route>
-            </Switch>
+            <Grid xs={1} sm={2} item md={3}></Grid>
+            <Grid container justify="center" item xs={10} sm={8} md={6}>
+              <AppBar position="static" color="default">
+                <Tabs
+                  variant="fullWidth"
+                  indicatorColor="primary"
+                  value={value}
+                  onChange={changeQuestion}
+                  textColor="primary"
+                  aria-label="icon tabs example"
+                >
+                  {
+                    questions.map((question, i) => {
+                      return (
+                        <Tab key={i} icon={<CircleIconNumber number={question as number} customClass="tab-icon" />} />
+                      );
+                    })
+                  }
+                  <Tab label="New Question" value={questions.length}/>
+                </Tabs>
+              </AppBar>
+              <Switch>
+                <Route exac path='/build/investigation/question-component/:questionId'>
+                  <QuestionComponent type={1} />
+                </Route>
+                <Route
+                  exec path='/build/investigation/question/:questionId'
+                  component={() => <QuestionTypePage history={history} questionType={questionType} questionNumber={value + 1}/>} >
+                </Route>
+              </Switch>
+            </Grid>
           </Grid>
         </Grid>
         <Grid container className="right-sidebar sidebar" item xs={2} sm={1}>
-          <Route exac path={`/build/investigation/question/component`}>
+          <Route exac path='/build/investigation/question-component/:questionId'>
             <div>&lt;&lt;</div>
             <div className="odd">Q</div>
             <div className="even small">MULTIPLE CHOICE</div>
@@ -60,25 +103,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = () => {
           </Route>
         </Grid>
       </Grid>
-      <Grid container direction="row" className="page-fotter">
-        <Grid container item xs={4} sm={7} md={8} lg={9}></Grid>
-        <Grid container item xs={7} sm={4} md={3} lg={2}>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item>
-              <RemoveIcon className="white" color="inherit" />
-            </Grid>
-            <Grid item xs>
-              <Slider className="white" aria-labelledby="continuous-slider" />
-            </Grid>
-            <Grid item>
-              <AddIcon className="white" color="inherit" />
-            </Grid>
-            <Grid item className="percentages">
-              55 %
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+      <br></br>
+      <BuildFotter />
     </div>
   )
 }

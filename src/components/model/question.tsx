@@ -12,6 +12,7 @@ export const QuestionType = {
 }
 
 export enum QuestionTypeEnum {
+    None = 0,
     ShortAnswer = 1,
     ChooseOne = 2,
     ChooseServeral = 3,
