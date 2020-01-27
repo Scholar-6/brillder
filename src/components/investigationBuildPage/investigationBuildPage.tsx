@@ -9,7 +9,7 @@ import BuildPageHeaderComponent from './header/pageHeader';
 import actions from '../../redux/actions/proFormActions';
 import brickActions from '../../redux/actions/brickActions';
 import QuestionComponent from './questionComponent';
-import QuestionTypePage from './questionType';
+import QuestionTypePage from './questionType/questionType';
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -68,8 +68,9 @@ class InvestigationBuildPage extends Component<InvestigationBuildProps, Investig
           <Route exac path={`/build/investigation/question/component`}>
             <QuestionComponent type={1} />
           </Route>
-          <Route exac path={`/build/investigation/question`}>
-            <QuestionTypePage />
+          <Route 
+            path={`/build/investigation/question`}
+            exac component={QuestionTypePage}>
           </Route>
         </Switch>
       </div>

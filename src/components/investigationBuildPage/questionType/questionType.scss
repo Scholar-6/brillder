@@ -1,0 +1,23 @@
+.question-type-sub-page {
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  .card-description {
+    text-align: center;
+  }
+
+  .question-container {
+    margin: 5px 10px 5px 18px;
+    padding: 4px 10px 10px 10px;
+    border: 2px solid #0B3A7E;
+
+    .link-description {
+      text-align: center;
+      margin: 10px 0;
+    }
+  }
+  
+  .question-container:hover {
+    cursor: pointer;
+  }
+}

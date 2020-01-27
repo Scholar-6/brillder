@@ -5,10 +5,10 @@ import { Grid, Slider } from '@material-ui/core';
 
 import DragBox from './DragBox'
 import HorizontalStepper from './horizontalStepper/horizontalStepper';
-import {QuestionType} from '../model/question';
+import {QuestionTypeEnum} from '../model/question';
 
 export interface QuestionProps {
-  type: QuestionType
+  type: QuestionTypeEnum
 }
 
 const QuestionComponent: React.FC<QuestionProps> = ({ type }) => {
