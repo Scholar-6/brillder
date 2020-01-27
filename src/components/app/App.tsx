@@ -8,11 +8,10 @@ import {createStore, applyMiddleware, Reducer} from 'redux';
 import reducer from '../../redux/reducers/index';
 import thunkMiddleware from 'redux-thunk';
 import ProFormaPage from '../proFormaPage/proFormaPage';
-import InvestigationBuildPage from '../investigationBuildPage/investigationBuildPage';
 import BricksListPage from '../bricksListPage/bricksListPage';
-import Example from '../example/example'
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend'
+import InvestigationBuildPage from '../investigationBuildPage/investigationBuildPage'
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
@@ -33,11 +32,9 @@ const App: React.FC = () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route path="/">
-            <DndProvider backend={Backend}>
-            <Example />
-            </DndProvider>
-          </Route>
+          <DndProvider backend={Backend}>
+            <Route path="/" exact component={InvestigationBuildPage}></Route>
+          </DndProvider>
           <Route path="/brick-create" exact component={ProFormaPage}></Route>
           <Route path="/brick-create/:brickId" exact component={ProFormaPage}></Route>
           <Route path="/brick/build/:brickId" component={InvestigationBuildPage}></Route>
