@@ -31,7 +31,10 @@ const CustomNumberIcon = (step:any) => () => (
 
 const CustomFilledNumberIcon = (step:any) => () => (
   <span className={"circle icon-filled-circle-blue-" + step}>
-    <span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span>
+    <span className="path1"></span>
+      <span className="path2"></span><span className="path3"></span><span className="path4"></span>
+      <span className="path5"></span><span className="path6">
+    </span>
   </span>
 );
 
