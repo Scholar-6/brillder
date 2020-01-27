@@ -35,7 +35,7 @@ const App: React.FC = () => {
       <ThemeProvider theme={theme}>
         <Switch>
           <DndProvider backend={Backend}>
-            <Route path="/build" component={InvestigationBuildPage}></Route>
+            <Route path="/build/investigation" component={InvestigationBuildPage}></Route>
           </DndProvider>
           <Route path="/brick-create" exact component={ProFormaPage}></Route>
           <Route path="/brick-create/:brickId" exact component={ProFormaPage}></Route>
