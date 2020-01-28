@@ -8,7 +8,7 @@ import update from 'immutability-helper';
 
 import './investigationBuildPage.scss'
 import BuildPageHeaderComponent from './header/pageHeader';
-import QuestionComponent from './questionComponent';
+import BuildQuestionComponent from './buildQuestions/buildQuestionComponent';
 import QuestionTypePage from './questionType/questionType';
 import DragBox from './DragBox';
 import BuildFotter from './build-fotter';
@@ -132,10 +132,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
                   removeQuestion={removeQuestion} />
                 <Switch>
                   <Route exac path='/build/investigation/question-component'>
-                    <QuestionComponent type={1} />
+                    <BuildQuestionComponent history={history} type={activeQuestion.type} />
                   </Route>
                   <Route exac path='/build/investigation/question-component/:questionId'>
-                    <QuestionComponent type={1} />
+                    <BuildQuestionComponent history={history} type={activeQuestion.type} />
                   </Route>
                   <Route
                     exec path='/build/investigation/question/:questionId'
@@ -148,20 +148,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
                 </Switch>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid container className="right-sidebar sidebar" item xs={2} sm={1}>
-            <Route exac path='/build/investigation/question-component/:questionId'>
-              <div>&lt;&lt;</div>
-              <div className="odd">Q</div>
-              <div className="even small">MULTIPLE CHOICE</div>
-              <div className="odd small">SORT</div>
-              <div className="even small">WORD FILL</div>
-              <div className="odd small">HIGHLIGHT</div>
-              <div className="even small">ALIGN</div>
-              <div className="odd small">SHUFFLE</div>
-              <div className="even small">PICTURE POINT</div>
-              <div className="odd small">JUMBLE</div>
-            </Route>
           </Grid>
         </Grid>
         <br></br>

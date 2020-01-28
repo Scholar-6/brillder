@@ -19,9 +19,7 @@ const HorizontalLinearStepper = ({activeStep}: CardProps) => {
   let currentIcon = RectFilledNumberIcon(activeStep + 1);
 
   return (
-    <Grid container direction="row">
-      <Grid xs={1} sm={2} item md={3}></Grid>
-      <Grid container justify="center" item xs={10} sm={8} md={6} className="question">
+    <div>
         <Grid container direction="row">
           {currentIcon()}
           <div className="question-title">Geomorfology</div>
@@ -32,8 +30,7 @@ const HorizontalLinearStepper = ({activeStep}: CardProps) => {
         <Grid container direction="row" className="drop-box">
           <Dustbin allowedDropEffect="any" />
         </Grid>
-      </Grid>
-    </Grid>
+    </div>
   );
 }
 

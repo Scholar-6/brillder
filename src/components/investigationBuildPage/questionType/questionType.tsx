@@ -36,7 +36,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuesti
             }
 
             return (
-              <Grid xs={3} item key={i}>
+              <Grid xs={6} sm={4} md={4} item key={i}>
                 <Box className={`question-container ${className}`} onClick={() => setType(type)}>
                   <div className="link-description">
                     {SplitByCapitalLetters(typeName)}
