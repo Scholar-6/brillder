@@ -38,6 +38,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
   return (
     <div className="investigation-build-page">
       <BuildPageHeaderComponent />
+      <br></br>
+      <br></br>
       <Grid container direction="row">
         <Grid container className="left-sidebar sidebar" justify="center" item xs={2} sm={1}>
           <Route exac path='/build/investigation/question-component/:questionId'>
@@ -55,11 +57,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
             <Grid container justify="center" item xs={10} sm={8} md={6}>
               <DragableTabs questions={questions} />
               <Switch>
+                <Route exac path='/build/investigation/question-component'>
+                  <QuestionComponent type={1} />
+                </Route>
                 <Route exac path='/build/investigation/question-component/:questionId'>
                   <QuestionComponent type={1} />
                 </Route>
                 <Route
                   exec path='/build/investigation/question/:questionId'
+                  component={() => <QuestionTypePage history={history} questionType={questionType} questionNumber={value + 1} />} >
+                </Route>
+                <Route
+                  exec path='/build/investigation/question'
                   component={() => <QuestionTypePage history={history} questionType={questionType} questionNumber={value + 1} />} >
                 </Route>
               </Switch>

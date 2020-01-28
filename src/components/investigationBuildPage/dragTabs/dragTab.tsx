@@ -1,14 +1,9 @@
 import React, { useRef } from 'react'
-import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
+import { useDrag, useDrop } from 'react-dnd'
 import ItemTypes from '../ItemTypes'
 import CircleIconNumber from '../circleIcon'
 
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  backgroundColor: 'white',
-  cursor: 'move',
-}
+const style = {}
 
 export interface CardProps {
   id: any
@@ -47,8 +42,9 @@ const DragTab: React.FC<CardProps> = ({ id, text, index, moveCard }) => {
 
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
+
   return (
-    <div ref={ref} style={{ ...style, opacity }}>
+    <div className="draggable-tab" ref={ref} style={{ ...style, opacity }}>
       <CircleIconNumber number={id} customClass="" />
     </div>
   )
