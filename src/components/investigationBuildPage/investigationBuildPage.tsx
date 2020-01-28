@@ -13,7 +13,7 @@ import QuestionTypePage from './questionType/questionType';
 import DragBox from './DragBox';
 import BuildFotter from './build-fotter';
 import DragableTabs from './dragTabs/dragableTabs';
-import { Question } from '../model/question';
+import { Question, QuestionTypeEnum } from '../model/question';
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -22,9 +22,13 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: any) => {
-  const [value, setValue] = React.useState(0);
   const [questions, setQuestions] = React.useState([{ id: 1, type: 0, active: true }] as Question[])
-  var questionType = questions[value].type;
+
+  let activeQuestion = questions.find(q => q.active == true) as Question;
+  if (!activeQuestion) {
+    console.log('Can`t find active question');
+    activeQuestion = {} as Question;
+  }
 
   const createNewQuestion = () => {
     const updatedQuestions = questions.slice();
@@ -47,6 +51,20 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
     )
   }
 
+  const setQuestionType = (type: QuestionTypeEnum) => {
+    if (!activeQuestion) {
+      alert('Can`t set question type');
+      return;
+    }
+    var index = questions.indexOf(activeQuestion);
+    console.log("set question type ",  type);
+    setQuestions(
+      update(questions, {
+        [index]: { type: { $set: type } }
+      }),
+    )
+  }
+
   const removeQuestion = (index: number) => {
     if (questions.length === 1) {
       alert("You can`t delete last question");
@@ -55,26 +73,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
     if (index !== 0) {
       setQuestions(
         update(questions, {
-          $splice: [
-            [index, 1]
-          ],
-          0: {
-            active: {
-              $set: true
-            }
-          }
+          $splice: [[index, 1]],
+          0: { active: { $set: true } }
         }),
       )
     } else {
       setQuestions(
         update(questions, {
-          $splice: [
-            [index, 1]
-          ],
+          $splice: [[index, 1]],
           [questions.length - 1]: {
-            active: {
-              $set: true
-            }
+            active: { $set: true }
           }
         }),
       )
@@ -94,17 +102,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
       }));
     }
   }
-
-  /*
-  const changeQuestion = (event: React.ChangeEvent<{}>, newValue: number) => {
-    if (newValue >= questions.length) {
-      createNewQuestion();
-    }
-    setValue(newValue);
-  }
-  */
-
-  const activeQuestion = questions.find(q => q.active == true);
+  console.log(questions)
 
   return (
     <DndProvider backend={Backend}>
@@ -140,11 +138,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
                   </Route>
                   <Route
                     exec path='/build/investigation/question/:questionId'
-                    component={() => <QuestionTypePage history={history} questionType={questionType} questionNumber={value + 1} />} >
+                    component={() => <QuestionTypePage setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
                   </Route>
                   <Route
                     exec path='/build/investigation/question'
-                    component={() => <QuestionTypePage history={history} questionType={questionType} questionNumber={value + 1} />} >
+                    component={() => <QuestionTypePage setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
                   </Route>
                 </Switch>
               </Grid>

@@ -21,4 +21,8 @@
     cursor: pointer;
     background: grey;
   }
+
+  .question-container.active {
+    background: #aaa;
+  }
 }

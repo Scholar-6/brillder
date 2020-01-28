@@ -2,25 +2,23 @@ import React from 'react'
 import { Grid, Box } from '@material-ui/core';
 
 import './questionType.scss';
-import { QuestionType } from '../../model/question';
+import { QuestionType, QuestionTypeEnum } from '../../model/question';
 
 
 export interface QuestionTypeProps {
-  history: any,
-  questionType: number,
-  questionNumber: number
+  questionType: QuestionTypeEnum,
+  setQuestionType: Function
 }
 
 function SplitByCapitalLetters(element: string): string {
   return element.split(/(?=[A-Z])/).join(" ");
 }
 
-const QuestionTypePage: React.FC<QuestionTypeProps> = ({ history, questionType, questionNumber }: QuestionTypeProps) => {
+const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuestionType }: QuestionTypeProps) => {
   let typeArray: string[] = Object.keys(QuestionType);
-  typeArray = typeArray.map(SplitByCapitalLetters)
 
-  function addQuestion() {
-    history.push(`/build/investigation/question/${questionNumber}/type/`);
+  const setType = (type: QuestionTypeEnum) => {
+    setQuestionType(type);
   }
 
   return (
@@ -30,11 +28,19 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({ history, questionType, 
       </Grid>
       <Grid container direction="row">
         {
-          typeArray.map((item, i) => {
+          typeArray.map((typeName, i) => {
+            const type = QuestionType[typeName] as QuestionTypeEnum;
+            let className = "";
+            if (type === questionType) {
+              className = "active";
+            }
+
             return (
               <Grid xs={3} item key={i}>
-                <Box className="question-container" onClick={addQuestion}>
-                  <div className="link-description">{item}</div>
+                <Box className={`question-container ${className}`} onClick={() => setType(type)}>
+                  <div className="link-description">
+                    {SplitByCapitalLetters(typeName)}
+                  </div>
                 </Box>
               </Grid>
             );
