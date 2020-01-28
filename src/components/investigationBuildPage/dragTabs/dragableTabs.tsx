@@ -31,45 +31,42 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface DragTabsProps {
-  questions: number[],
+interface Question {
+  id: number,
+  active: boolean,
+  type: number
 }
 
-const DragableTabs: React.FC<DragTabsProps> = ({ questions }) => {
-  const active = 0;
-  const [cards, setCards] = useState([
-    { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 },// { id: 5 }, { id: 6 }, { id: 7 },{ id: 8 },{ id: 9 },{ id: 10 } //,{ id: 11 },{ id: 12 },{ id: 13 },{ id: 14 },{ id: 15 },
-  ])
+interface DragTabsProps {
+  questions: Question[],
+  createNewQuestion: Function,
+  moveQuestions: Function,
+  selectQuestion: Function,
+  removeQuestion: Function
+}
 
-  const moveCard = useCallback(
-    (dragIndex: number, hoverIndex: number) => {
-      const dragCard = cards[dragIndex]
-      setCards(
-        update(cards, {
-          $splice: [
-            [dragIndex, 1],
-            [hoverIndex, 0, dragCard],
-          ],
-        }),
-      )
-    },
-    [cards],
-  )
+const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, moveQuestions, selectQuestion, removeQuestion }) => {
 
-  const renderCard = (id: number, index: number) => {
+  const moveCard = (dragIndex: number, hoverIndex: number) => {
+    const dragCard = questions[dragIndex]
+    moveQuestions(dragIndex, hoverIndex, dragCard);
+  }
+
+  const renderQuestionTab = (question: Question, index: number) => {
     let titleClassNames = "drag-tile";
-    let isActive = index == active;
-    if (isActive) {
+    if (question.active) {
       titleClassNames += " active";
     }
 
     return (
-      <GridListTile className={titleClassNames} style={{ border: '1px solid black' }} key={id}>
+      <GridListTile className={titleClassNames} style={{ border: '1px solid black' }} key={index}>
         <DragTab
           index={index}
-          id={id}
-          active={isActive}
+          id={question.id}
+          active={question.active}
           moveCard={moveCard}
+          selectQuestion={selectQuestion}
+          removeQuestion={removeQuestion}
         />
       </GridListTile>
     )
@@ -77,21 +74,21 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions }) => {
 
   const classes = useStyles();
 
-  let columns = cards.length + 2;
+  let columns = questions.length + 2;
 
   if (columns > 10) {
     columns = 10;
   }
 
   const addQuestion = () => {
-    console.log("add question to the end");
+    createNewQuestion();
   }
 
   return (
     <div className={classes.root + " drag-tabs"}>
       <GridList cellHeight={40} className={classes.gridList} cols={columns}>
         {
-          cards.map((card, i) => renderCard(card.id, i))
+          questions.map((question, i) => renderQuestionTab(question, i))
         }
         <GridListTile onClick={addQuestion} className={"drag-tile"} cols={2} style={{ border: '1px solid black' }}>
           <LastTab></LastTab>

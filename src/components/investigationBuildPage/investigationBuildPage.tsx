@@ -10,7 +10,8 @@ import { Grid } from '@material-ui/core';
 import DragBox from './DragBox';
 import BuildFotter from './build-fotter';
 import DragableTabs from './dragTabs/dragableTabs';
-
+import update from 'immutability-helper';
+import { Question } from '../model/question';
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   fetchBrick: Function,
@@ -19,22 +20,89 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: any) => {
   const [value, setValue] = React.useState(0);
-  let questions = [1]
-  var questionType = questions[value];
+  const [questions, setQuestions] = React.useState([{ id: 1, type: 0, active: true }] as Question[])
+  var questionType = questions[value].type;
 
-  const createNewQuestion = (questionNumber: number) => {
-    // add new question
+  const createNewQuestion = () => {
+    const updatedQuestions = questions.slice();
+    updatedQuestions.forEach(q => q.active = false);
+    updatedQuestions.push({ id: questions.length + 1, type: 0, active: true });
+
+    setQuestions(update(questions, {
+      $set: updatedQuestions,
+    }));
   }
 
+  const moveQuestions = (dragIndex: number, hoverIndex: number, dragQuestion: any) => {
+    setQuestions(
+      update(questions, {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, dragQuestion],
+        ],
+      }),
+    )
+  }
+
+  const removeQuestion = (index: number) => {
+    if (questions.length === 1) {
+      alert("You can`t delete last question");
+      return;
+    }
+    if (index !== 0) {
+      setQuestions(
+        update(questions, {
+          $splice: [
+            [index, 1]
+          ],
+          0: {
+            active: {
+              $set: true
+            }
+          }
+        }),
+      )
+    } else {
+      setQuestions(
+        update(questions, {
+          $splice: [
+            [index, 1]
+          ],
+          [questions.length - 1]: {
+            active: {
+              $set: true
+            }
+          }
+        }),
+      )
+    }
+  }
+
+  const selectQuestion = (index: number) => {
+    const updatedQuestions = questions.slice();
+    updatedQuestions.forEach(q => q.active = false);
+
+    let selectedQuestion = updatedQuestions[index];
+    if (selectedQuestion) {
+      selectedQuestion.active = true;
+
+      setQuestions(update(questions, {
+        $set: updatedQuestions,
+      }));
+    }
+  }
+
+  /*
   const changeQuestion = (event: React.ChangeEvent<{}>, newValue: number) => {
-    console.log(newValue, questions.length);
     if (newValue >= questions.length) {
-      createNewQuestion(newValue);
+      createNewQuestion();
     }
     setValue(newValue);
   }
+  */
 
-  console.log(questions)
+  const activeQuestion = questions.find(q => q.active == true);
+
   return (
     <div className="investigation-build-page">
       <BuildPageHeaderComponent />
@@ -55,7 +123,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
           <Grid container direction="row">
             <Grid xs={1} sm={2} item md={3}></Grid>
             <Grid container justify="center" item xs={10} sm={8} md={6}>
-              <DragableTabs questions={questions} />
+              <DragableTabs
+                questions={questions} createNewQuestion={createNewQuestion}
+                moveQuestions={moveQuestions} selectQuestion={selectQuestion}
+                removeQuestion={removeQuestion} />
               <Switch>
                 <Route exac path='/build/investigation/question-component'>
                   <QuestionComponent type={1} />

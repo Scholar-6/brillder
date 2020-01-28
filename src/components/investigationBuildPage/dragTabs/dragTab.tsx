@@ -9,16 +9,18 @@ export interface DragTabProps {
   id: any
   index: number,
   active: boolean,
-  moveCard: (dragIndex: number, hoverIndex: number) => void
+  moveCard: (dragIndex: number, hoverIndex: number) => void,
+  selectQuestion: Function,
+  removeQuestion: Function
 }
 
 interface DragItem {
   index: number
   id: string
-  type: string
+  type: string,
 }
 
-const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard }) => {
+const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard, selectQuestion, removeQuestion }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [, drop] = useDrop({
     accept: ItemTypes.CARD,
@@ -44,21 +46,20 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard }) => {
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
 
-  const removeQuestion = (event: React.ChangeEvent<any>) => {
-    event.preventDefault();
-    console.log("remove question");
+  const removeTab = (event: React.ChangeEvent<any>) => {
+    event.stopPropagation();
+    removeQuestion(index);
   }
 
-  const activateQuestion = (event: React.ChangeEvent<any>) => {
-    event.preventDefault();
-    console.log("activate question");
+  const activateTab = (event: React.ChangeEvent<any>) => {
+    selectQuestion(index);
   }
 
   return (
-    <div className="draggable-tab" onClick={activateQuestion} ref={ref} style={{ ...style, opacity }}>
-      <CircleIconNumber number={id} customClass="" />
+    <div className="draggable-tab" onClick={activateTab} ref={ref} style={{ ...style, opacity }}>
+      <CircleIconNumber number={index+1} customClass="" />
       {
-        active == true && <ClearIcon className="remove-icon" onClick={removeQuestion} />
+        active == true && <ClearIcon className="remove-icon" onClick={removeTab} />
       }
     </div>
   )
