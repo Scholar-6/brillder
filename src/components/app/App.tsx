@@ -4,8 +4,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { DndProvider } from 'react-dnd';
-import Backend from 'react-dnd-html5-backend'
+
 
 import './app.css';
 import '../../font-numbers/style.css'
@@ -34,9 +33,7 @@ const App: React.FC = () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Switch>
-          <DndProvider backend={Backend}>
-            <Route path="/build/investigation" component={InvestigationBuildPage}></Route>
-          </DndProvider>
+          <Route path="/build/investigation" component={InvestigationBuildPage}></Route>
           <Route path="/brick-create" exact component={ProFormaPage}></Route>
           <Route path="/brick-create/:brickId" exact component={ProFormaPage}></Route>
           <Route path="/brick/build/:brickId" component={InvestigationBuildPage}></Route>
