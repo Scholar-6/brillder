@@ -36,8 +36,9 @@ interface DragTabsProps {
 }
 
 const DragableTabs: React.FC<DragTabsProps> = ({ questions }) => {
+  const active = 0;
   const [cards, setCards] = useState([
-    { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 },{ id: 8 },{ id: 9 },{ id: 10 } //,{ id: 11 },{ id: 12 },{ id: 13 },{ id: 14 },{ id: 15 },
+    { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 },// { id: 5 }, { id: 6 }, { id: 7 },{ id: 8 },{ id: 9 },{ id: 10 } //,{ id: 11 },{ id: 12 },{ id: 13 },{ id: 14 },{ id: 15 },
   ])
 
   const moveCard = useCallback(
@@ -56,13 +57,18 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions }) => {
   )
 
   const renderCard = (id: number, index: number) => {
+    let titleClassNames = "drag-tile";
+    let isActive = index == active;
+    if (isActive) {
+      titleClassNames += " active";
+    }
+
     return (
-      <GridListTile style={{ border: '1px solid black' }} key={id}>
+      <GridListTile className={titleClassNames} style={{ border: '1px solid black' }} key={id}>
         <DragTab
-          key={id}
           index={index}
           id={id}
-          active={false}
+          active={isActive}
           moveCard={moveCard}
         />
       </GridListTile>
@@ -77,13 +83,17 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions }) => {
     columns = 10;
   }
 
+  const addQuestion = () => {
+    console.log("add question to the end");
+  }
+
   return (
     <div className={classes.root + " drag-tabs"}>
       <GridList cellHeight={40} className={classes.gridList} cols={columns}>
         {
           cards.map((card, i) => renderCard(card.id, i))
         }
-        <GridListTile cols={2} style={{ border: '1px solid black' }}>
+        <GridListTile onClick={addQuestion} className={"drag-tile"} cols={2} style={{ border: '1px solid black' }}>
           <LastTab></LastTab>
         </GridListTile>
       </GridList>

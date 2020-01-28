@@ -3,7 +3,6 @@ import { useDrag, useDrop } from 'react-dnd'
 import ItemTypes from '../ItemTypes'
 import CircleIconNumber from '../circleIcon'
 import ClearIcon from '@material-ui/icons/Clear';
-
 const style = {}
 
 export interface DragTabProps {
@@ -18,6 +17,7 @@ interface DragItem {
   id: string
   type: string
 }
+
 const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [, drop] = useDrop({
@@ -44,14 +44,22 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard }) => {
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
 
-  const removeQuestion = (event: any) => {
+  const removeQuestion = (event: React.ChangeEvent<any>) => {
+    event.preventDefault();
     console.log("remove question");
   }
 
+  const activateQuestion = (event: React.ChangeEvent<any>) => {
+    event.preventDefault();
+    console.log("activate question");
+  }
+
   return (
-    <div className="draggable-tab" ref={ref} style={{ ...style, opacity }}>
+    <div className="draggable-tab" onClick={activateQuestion} ref={ref} style={{ ...style, opacity }}>
       <CircleIconNumber number={id} customClass="" />
-      <ClearIcon className="remove-icon" onClick={removeQuestion}/>
+      {
+        active == true && <ClearIcon className="remove-icon" onClick={removeQuestion} />
+      }
     </div>
   )
 }
