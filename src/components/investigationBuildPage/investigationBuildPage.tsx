@@ -29,7 +29,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
     console.log('Can`t find active question');
     activeQuestion = {} as Question;
   }
-
+  
   const createNewQuestion = () => {
     const updatedQuestions = questions.slice();
     updatedQuestions.forEach(q => q.active = false);
@@ -63,6 +63,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
         [index]: { type: { $set: type } }
       }),
     )
+
+    history.push(`/build/investigation/question-component/${index + 1}`);
   }
 
   const removeQuestion = (index: number) => {
@@ -102,7 +104,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
       }));
     }
   }
-  console.log(questions)
 
   return (
     <DndProvider backend={Backend}>
