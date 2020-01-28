@@ -6,6 +6,7 @@ import GridList from '@material-ui/core/GridList';
 
 import './DragableTabs.scss';
 import DragTab from './dragTab';
+import LastTab from './lastTab';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,27 +37,7 @@ interface DragTabsProps {
 
 const DragableTabs: React.FC<DragTabsProps> = ({ questions }) => {
   const [cards, setCards] = useState([
-    {
-      id: 1,
-    },
-    {
-      id: 2,
-    },
-    {
-      id: 3,
-    },
-    {
-      id: 4,
-    },
-    {
-      id: 5,
-    },
-    {
-      id: 6,
-    },
-    {
-      id: 7,
-    },
+    { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 },{ id: 8 },{ id: 9 },{ id: 10 } //,{ id: 11 },{ id: 12 },{ id: 13 },{ id: 14 },{ id: 15 },
   ])
 
   const moveCard = useCallback(
@@ -74,15 +55,14 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions }) => {
     [cards],
   )
 
-
-  const renderCard = (card: { id: number; text: string }, index: number) => {
+  const renderCard = (id: number, index: number) => {
     return (
-      <GridListTile style={{border: '1px solid black'}} key={card.id}>
-        <DragTab  
-          key={card.id}
+      <GridListTile style={{ border: '1px solid black' }} key={id}>
+        <DragTab
+          key={id}
           index={index}
-          id={card.id}
-          text={card.id.toString()}
+          id={id}
+          active={false}
           moveCard={moveCard}
         />
       </GridListTile>
@@ -91,12 +71,21 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions }) => {
 
   const classes = useStyles();
 
+  let columns = cards.length + 2;
+
+  if (columns > 10) {
+    columns = 10;
+  }
+
   return (
     <div className={classes.root + " drag-tabs"}>
-      <GridList cellHeight={40} className={classes.gridList} cols={cards.length}>
+      <GridList cellHeight={40} className={classes.gridList} cols={columns}>
         {
-          cards.map((card, i) => renderCard({id: card.id, text: ''}, i))
+          cards.map((card, i) => renderCard(card.id, i))
         }
+        <GridListTile cols={2} style={{ border: '1px solid black' }}>
+          <LastTab></LastTab>
+        </GridListTile>
       </GridList>
     </div>
   )
