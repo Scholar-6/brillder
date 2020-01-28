@@ -51,7 +51,7 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard, selectQu
     removeQuestion(index);
   }
 
-  const activateTab = (event: React.ChangeEvent<any>) => {
+  const activateTab = () => {
     selectQuestion(index);
   }
 

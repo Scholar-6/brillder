@@ -26,7 +26,6 @@ class MainPage extends Component {
   constructor(props: any) {
     super(props)
     props.fetchUsername();
-    console.log(54)
   }
 
   render() {

@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from 'react';
-import update from 'immutability-helper';
+import React from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridList from '@material-ui/core/GridList';
