@@ -15,6 +15,8 @@ export interface QuestionProps {
 }
 
 const BuildQuestionComponent: React.FC<QuestionProps> = ({ type, history }) => {
+  console.log(QuestionType, QuestionTypeEnum)
+  document.title = QuestionTypeEnum[type];
   const renderQuestion = () => {
     switch (type) {
       case (QuestionTypeEnum.ShortAnswer):
@@ -26,9 +28,10 @@ const BuildQuestionComponent: React.FC<QuestionProps> = ({ type, history }) => {
   }
 
   return (
+    <div style={{width: '100%'}}>
     <Grid container justify="center" className="build-question-column" item xs={12}>
       <Grid container direction="row">
-        <Grid container item xs={4} sm={3} md={2} className="left-sidebar sidebar">
+        <Grid container item xs={4} sm={3} md={2} className="left-sidebar">
           <DragBox name="Text" />
           <DragBox name="Hint" />
           <DragBox name="Quote" />
@@ -49,6 +52,12 @@ const BuildQuestionComponent: React.FC<QuestionProps> = ({ type, history }) => {
         </Grid>
       </Grid>
     </Grid>
+    <div className="build-question-fotter">
+        Saved at 5:19pm
+        <button>Save Anyway</button>
+        Time Spent Building brick: 4hrs
+      </div>
+    </div>
   );
 }
 

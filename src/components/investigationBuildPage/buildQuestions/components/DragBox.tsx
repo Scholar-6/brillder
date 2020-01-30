@@ -1,13 +1,11 @@
 import React from 'react'
-import ItemTypes from '../../ItemTypes'
 import { useDrag, DragSourceMonitor } from 'react-dnd'
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 
-const style: React.CSSProperties = {
-  border: '1px dashed gray',
-  backgroundColor: 'white',
-  width: '100%',
-  float: 'left',
-}
+import './DragBox.scss';
+import ItemTypes from '../../ItemTypes'
+import { Grid } from '@material-ui/core';
+
 
 export interface BoxProps {
   name: string
@@ -47,9 +45,10 @@ const DragBox: React.FC<BoxProps> = ({ name }) => {
   })
 
   return (
-    <div ref={drag} style={{ ...style, opacity }}>
-      {name}
-    </div>
+    <Grid container item xs={12} ref={drag} className="drag-box-item" style={{ opacity }}>
+      <div>{name}</div>
+      <DragIndicatorIcon />
+    </Grid>
   )
 }
 export default DragBox

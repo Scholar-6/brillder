@@ -6,7 +6,7 @@ export interface LastTabProps {
 const LastTab: React.FC<any> = () => {
   return (
     <div className="last-tab">
-      New Question
+      + New Question
     </div>
   )
 }

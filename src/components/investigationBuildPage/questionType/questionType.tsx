@@ -17,6 +17,8 @@ function SplitByCapitalLetters(element: string): string {
 const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuestionType }: QuestionTypeProps) => {
   let typeArray: string[] = Object.keys(QuestionType);
 
+  document.title = "Select First Question Type";
+
   const setType = (type: QuestionTypeEnum) => {
     setQuestionType(type);
   }
