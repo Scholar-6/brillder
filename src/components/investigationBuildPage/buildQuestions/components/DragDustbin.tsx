@@ -1,17 +1,8 @@
 import React from 'react'
 import { useDrop } from 'react-dnd'
-import ItemTypes from './ItemTypes'
 
-const style: React.CSSProperties = {
-  height: '1rem',
-  width: '100%',
-  color: 'white',
-  padding: '30px',
-  textAlign: 'center',
-  fontSize: '1rem',
-  lineHeight: 'normal',
-  float: 'left',
-}
+import './DragDustbin.scss'
+import ItemTypes from '../../ItemTypes'
 
 export interface DustbinProps {
   allowedDropEffect: string
@@ -43,11 +34,8 @@ const Dustbin: React.FC<DustbinProps> = ({ allowedDropEffect }) => {
   const isActive = canDrop && isOver
   const backgroundColor = selectBackgroundColor(isActive, canDrop)
   return (
-    <div ref={drop} style={{ ...style, backgroundColor }}>
+    <div ref={drop} className="drop-box-item" style={{ backgroundColor }}>
       {`Drag component here`}
-      <br />
-      <br />
-      {isActive ? 'Release to drop' : 'Drag component here'}
     </div>
   )
 }

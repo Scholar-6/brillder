@@ -10,7 +10,6 @@ import './investigationBuildPage.scss'
 import BuildPageHeaderComponent from './header/pageHeader';
 import BuildQuestionComponent from './buildQuestions/buildQuestionComponent';
 import QuestionTypePage from './questionType/questionType';
-import DragBox from './DragBox';
 import BuildFotter from './build-fotter';
 import DragableTabs from './dragTabs/dragableTabs';
 import { Question, QuestionTypeEnum } from '../model/question';
@@ -29,7 +28,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
     console.log('Can`t find active question');
     activeQuestion = {} as Question;
   }
-  
+
   const createNewQuestion = () => {
     const updatedQuestions = questions.slice();
     updatedQuestions.forEach(q => q.active = false);
@@ -57,7 +56,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
       return;
     }
     var index = questions.indexOf(activeQuestion);
-    console.log("set question type ",  type);
+    console.log("set question type ", type);
     setQuestions(
       update(questions, {
         [index]: { type: { $set: type } }
@@ -112,46 +111,30 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
         <br></br>
         <br></br>
         <Grid container direction="row">
-          <Grid container className="left-sidebar sidebar" justify="center" item xs={2} sm={1}>
-            <Route exac path='/build/investigation/question-component/:questionId'>
-              <div>>></div>
-              <DragBox name="T" />
-              <DragBox name="P" />
-              <DragBox name="R" />
-              <DragBox name="S" />
-              <DragBox name="V" />
-            </Route>
-          </Grid>
-          <Grid container item xs={8} sm={10}>
-            <Grid container direction="row">
-              <Grid xs={1} sm={2} item md={3}></Grid>
-              <Grid container justify="center" item xs={10} sm={8} md={6}>
-                <DragableTabs
-                  questions={questions} createNewQuestion={createNewQuestion}
-                  moveQuestions={moveQuestions} selectQuestion={selectQuestion}
-                  removeQuestion={removeQuestion} />
-                <Switch>
-                  <Route exac path='/build/investigation/question-component'>
-                    <BuildQuestionComponent history={history} type={activeQuestion.type} />
-                  </Route>
-                  <Route exac path='/build/investigation/question-component/:questionId'>
-                    <BuildQuestionComponent history={history} type={activeQuestion.type} />
-                  </Route>
-                  <Route
-                    exec path='/build/investigation/question/:questionId'
-                    component={() => <QuestionTypePage setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
-                  </Route>
-                  <Route
-                    exec path='/build/investigation/question'
-                    component={() => <QuestionTypePage setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
-                  </Route>
-                </Switch>
-              </Grid>
-            </Grid>
+          <Grid xs={1} item></Grid>
+          <Grid container justify="center" item xs={10}>
+            <DragableTabs
+              questions={questions} createNewQuestion={createNewQuestion}
+              moveQuestions={moveQuestions} selectQuestion={selectQuestion}
+              removeQuestion={removeQuestion} />
+            <Switch>
+              <Route exac path='/build/investigation/question-component'>
+                <BuildQuestionComponent history={history} type={activeQuestion.type} />
+              </Route>
+              <Route exac path='/build/investigation/question-component/:questionId'>
+                <BuildQuestionComponent history={history} type={activeQuestion.type} />
+              </Route>
+              <Route
+                exec path='/build/investigation/question/:questionId'
+                component={() => <QuestionTypePage setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
+              </Route>
+              <Route
+                exec path='/build/investigation/question'
+                component={() => <QuestionTypePage setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
+              </Route>
+            </Switch>
           </Grid>
         </Grid>
-        <br></br>
-        <BuildFotter />
       </div>
     </DndProvider>
   )

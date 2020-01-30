@@ -1,11 +1,11 @@
 import React from 'react'
-import ItemTypes from './ItemTypes'
+import ItemTypes from '../../ItemTypes'
 import { useDrag, DragSourceMonitor } from 'react-dnd'
 
 const style: React.CSSProperties = {
   border: '1px dashed gray',
   backgroundColor: 'white',
-  padding: '0.5rem 1rem',
+  width: '100%',
   float: 'left',
 }
 

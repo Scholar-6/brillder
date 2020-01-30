@@ -3,3 +3,67 @@
   border: 1px solid grey;
   border-top: none;
 }
+
+.left-sidebar {
+  margin-top: 30px !important;
+  height: 250px !important;
+
+  div {
+    width: 100%;
+    background: #e5e5e5;
+    text-align: center;
+  }
+}
+
+.right-sidebar {
+
+  div {
+    margin-left: 10px;
+    margin-right: -20px;
+
+    button {
+      margin: 5px;
+      padding: 6px;
+      border-radius: 8px;
+      width: 100%;
+      background: white;
+    }
+  }
+}
+
+@media only screen and (max-width: 1800px) and (min-width: 1200px)  {
+  .left-sidebar {
+    div {
+      margin-left: -70px;
+      min-width: 140px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1199px) and (min-width: 900px)  {
+  .left-sidebar {
+    div {
+      margin-left: -70px;
+      min-width: 140px;
+    }
+  }
+}
+
+@media only screen and (max-width: 899px) and (min-width: 600px)  {
+  .left-sidebar {
+    div {
+      margin-left: -40px;
+      max-width: 150px;
+    }
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .left-sidebar {
+    div {
+      margin-left: -20px;
+      min-width: 70px;
+      max-width: 110px;
+    }
+  }
+}

@@ -1,67 +1,34 @@
 
 .investigation-build-page {
-    .page-header {
-      background: #b2b2b2;
-    }
-  
-    .MuiStepConnector-root {
-      opacity: 0;
-    }
-  
-    .sidebar {
-      div {
-        padding: 0;
-        width: 100%;
-        background: #e5e5e5;
-        text-align: center;
-        font-size: 40px;
-        font-weight: bold;
-      }
-    }
-  
-    .left-sidebar {
-      .even {
-        background: #84bae6
-      }
-      .odd {
-        background: #b2d6f0
-      }
-    }
-  
-    .right-sidebar {
-      .even {
-        background: #f5b4c8
-      }
-      .odd {
-        background: #fad2dd
-      }
-  
-      .small {
-        font-size: 20px;
-      }
-    }
-  
-    .page-fotter {
-      background: #b2b2b2;
-      padding: 20px;
-  
-      .white {
-        color: white;
-      }
-  
-      .percentages {
-        color: white;
-        height: 44px;
-      }
-    
-      .MuiSlider-thumb {
-        color: #0a3a7e;
-      }
+  .page-header {
+    background: #b2b2b2;
+  }
+
+  .MuiStepConnector-root {
+    opacity: 0;
+  }
+
+  .page-fotter {
+    background: #b2b2b2;
+    padding: 20px;
+
+    .white {
+      color: white;
     }
 
-    .tab-panel {
-      padding: 0;
-      border: 1px solid grey;
-      border-top: none;
+    .percentages {
+      color: white;
+      height: 44px;
+    }
+  
+    .MuiSlider-thumb {
+      color: #0a3a7e;
     }
   }
+
+  .tab-panel {
+    padding: 0;
+    border: 1px solid grey;
+    border-top: none;
+  }
+}

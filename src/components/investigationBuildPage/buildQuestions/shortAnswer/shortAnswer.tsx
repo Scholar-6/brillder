@@ -1,7 +1,8 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 
-import Dustbin from '../../DragDustbin'
+import './shortAnswer.scss';
+import Dustbin from '../components/DragDustbin';
 
 type CardProps = {
   activeStep: number,
@@ -15,21 +16,22 @@ const RectFilledNumberIcon = (step: any) => () => (
   </span>
 );
 
-const HorizontalLinearStepper = ({activeStep}: CardProps) => {
+const HorizontalLinearStepper = ({ activeStep }: CardProps) => {
   let currentIcon = RectFilledNumberIcon(activeStep + 1);
 
   return (
-    <div>
-        <Grid container direction="row">
-          {currentIcon()}
-          <div className="question-title">Geomorfology</div>
-        </Grid>
-        <Grid container direction="row" className="drop-box">
-          <Dustbin allowedDropEffect="any" />
-        </Grid>
-        <Grid container direction="row" className="drop-box">
-          <Dustbin allowedDropEffect="any" />
-        </Grid>
+    <div className="short-answer">
+      <Grid container direction="row" className="drop-box">
+        <Dustbin allowedDropEffect="any" />
+      </Grid>
+      <Grid container direction="row" className="drop-box">
+        <div className="input-box">
+          <input placeholder="Enter correct answer" />
+        </div>
+      </Grid>
+      <Grid container direction="row" className="drop-box">
+        <Dustbin allowedDropEffect="any" />
+      </Grid>
     </div>
   );
 }
