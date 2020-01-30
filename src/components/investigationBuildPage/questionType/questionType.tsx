@@ -7,6 +7,7 @@ import { QuestionType, QuestionTypeEnum } from '../../model/question';
 
 export interface QuestionTypeProps {
   questionType: QuestionTypeEnum,
+  history: any,
   setQuestionType: Function
 }
 
@@ -14,7 +15,10 @@ function SplitByCapitalLetters(element: string): string {
   return element.split(/(?=[A-Z])/).join(" ");
 }
 
-const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuestionType }: QuestionTypeProps) => {
+const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuestionType, history }: QuestionTypeProps) => {
+  if (questionType != null) {
+    //history.push('/build/investigation/question-component/');
+  }
   let typeArray: string[] = Object.keys(QuestionType);
 
   document.title = "Select First Question Type";

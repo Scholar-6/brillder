@@ -1,4 +1,23 @@
 
+export enum QuestionComponentTypeEnum{
+  None = 0,
+  Text = 1,
+  Hint = 2,
+  Quote = 3,
+  Image = 4,
+  Sound = 5,
+  Equation = 6
+}
+
+export const QuestionComponentType = {
+  None: QuestionComponentTypeEnum.None,
+  Text: QuestionComponentTypeEnum.Text,
+  Hint: QuestionComponentTypeEnum.Hint,
+  Quote: QuestionComponentTypeEnum.Quote,
+  Image: QuestionComponentTypeEnum.Image,
+  Sound: QuestionComponentTypeEnum.Sound,
+  Equation: QuestionComponentTypeEnum.Equation
+} as any
 
 export enum QuestionTypeEnum {
   None = 0,

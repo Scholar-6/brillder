@@ -5,7 +5,7 @@ import './DragDustbin.scss'
 import ItemTypes from '../../ItemTypes'
 
 export interface DustbinProps {
-  allowedDropEffect: string
+  index: number
 }
 
 function selectBackgroundColor(isActive: boolean, canDrop: boolean) {
@@ -18,12 +18,12 @@ function selectBackgroundColor(isActive: boolean, canDrop: boolean) {
   }
 }
 
-const Dustbin: React.FC<DustbinProps> = ({ allowedDropEffect }) => {
+const Dustbin: React.FC<DustbinProps> = ({ index }) => {
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: ItemTypes.BOX,
     drop: () => ({
-      name: `${allowedDropEffect} Dustbin`,
-      allowedDropEffect,
+      value: index,
+      allowedDropEffect: "any",
     }),
     collect: (monitor: any) => ({
       isOver: monitor.isOver(),
