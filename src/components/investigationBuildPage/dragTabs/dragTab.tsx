@@ -3,6 +3,7 @@ import { useDrag, useDrop } from 'react-dnd'
 import ItemTypes from '../ItemTypes'
 import CircleIconNumber from '../circleIcon'
 import ClearIcon from '@material-ui/icons/Clear';
+import { Grid } from '@material-ui/core';
 const style = {}
 
 export interface DragTabProps {
@@ -57,10 +58,17 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard, selectQu
 
   return (
     <div className="draggable-tab" onClick={activateTab} ref={ref} style={{ ...style, opacity }}>
-      <CircleIconNumber number={index+1} customClass="" />
-      {
-        active == true && <ClearIcon className="remove-icon" onClick={removeTab} />
-      }
+      <Grid container direction="row">
+        <Grid item xs={8}>
+          <CircleIconNumber number={index + 1} customClass="" />
+        </Grid>
+
+        <Grid item xs={4}>
+          {
+            active == true && <ClearIcon className="remove-icon" onClick={removeTab} />
+          }
+        </Grid>
+      </Grid>
     </div>
   )
 }

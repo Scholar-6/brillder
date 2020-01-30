@@ -7,11 +7,9 @@ import './DragableTabs.scss';
 import DragTab from './dragTab';
 import LastTab from './lastTab';
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      border: '1px solid black',
       width: '100%',
       display: 'flex',
       flexWrap: 'wrap',
@@ -74,10 +72,6 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
   const classes = useStyles();
 
   let columns = questions.length + 2;
-
-  if (columns > 10) {
-    columns = 10;
-  }
 
   const addQuestion = () => {
     createNewQuestion();
