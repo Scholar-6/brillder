@@ -6,18 +6,13 @@ import './DragBox.scss';
 import ItemTypes from '../../ItemTypes'
 import { Grid } from '@material-ui/core';
 import { QuestionComponentTypeEnum } from '../../../model/question';
+import { DropResult } from './interfaces';
 
 
 export interface BoxProps {
   name: string,
   value: QuestionComponentTypeEnum,
   onDrop: Function,
-}
-
-interface DropResult {
-  allowedDropEffect: string
-  dropEffect: string
-  value: number,
 }
 
 const DragBox: React.FC<BoxProps> = ({ name, onDrop, value }) => {

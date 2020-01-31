@@ -4,6 +4,7 @@ import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 
 import ItemTypes from '../../ItemTypes'
 import { QuestionComponentTypeEnum } from '../../../model/question';
+import DragAndDropBox from '../components/DragAndDropBox';
 
 
 export interface DragShortAnswerProps {
