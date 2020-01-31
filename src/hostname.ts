@@ -1,3 +1,3 @@
-const BACKEND_HOST = "http://35.177.96.218";
+const BACKEND_HOST = "api.scholar6.org";
 
 export default { BACKEND_HOST }
