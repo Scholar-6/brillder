@@ -56,10 +56,11 @@ const submitProFormaFailure = (errorMessage:string) => {
   } as Action
 }
 
-const submitBrickBuildData = (data:any) => {
+const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
-    data.type = 1;
-    return axios.post(host.BACKEND_HOST + '/brick', data).then(response => {
+    brick.type = 1;
+    brick.questions = "[{type: 1, action: 0}]"
+    return axios.post(host.BACKEND_HOST + '/brick', brick).then(response => {
       dispatch(submitProFormaSuccess());
     })
     .catch(error => {
@@ -70,5 +71,5 @@ const submitBrickBuildData = (data:any) => {
 
 export default {
   fetchBrickBuildData,
-  submitBrickBuildData
+  saveBrick,
 }

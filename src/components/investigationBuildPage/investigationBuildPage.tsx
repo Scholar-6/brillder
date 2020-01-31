@@ -5,6 +5,7 @@ import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend'
 import { Grid } from '@material-ui/core';
 import update from 'immutability-helper';
+import { connect } from 'react-redux';
 
 import './investigationBuildPage.scss'
 import BuildPageHeaderComponent from './header/pageHeader';
@@ -12,15 +13,22 @@ import BuildQuestionComponent from './buildQuestions/buildQuestionComponent';
 import QuestionTypePage from './questionType/questionType';
 import DragableTabs from './dragTabs/dragableTabs';
 import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from '../model/question';
+import actions from '../../redux/actions/brickActions';
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
-  fetchBrick: Function,
-  fetchProForma: Function
+  brick: any
+  fetchBrick(brickId: number):void
+  saveBrick():void
 }
 
-const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props: any) => {
+const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   var {brickId} = props.match.params;
+
+  if (!props.brick) {
+    props.fetchBrick(brickId);
+  }
+
   const {history} = props;
   const getNewQuestion = (type: number, active: boolean) => {
     return {
@@ -31,7 +39,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props: any) =
       ]
     } as Question;
   }
-
 
   const [questions, setQuestions] = React.useState([getNewQuestion(QuestionTypeEnum.None, true)] as Question[])
 
@@ -149,6 +156,17 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props: any) =
     )
   }
 
+  if (!props.brick) {
+    return <div>...Loading...</div>
+  }
+
+  const {brick} = props;
+  console.log(brick);
+  if (brick.questions) {
+    var res = brick.questions.json()
+    console.log(res)
+  }
+
   return (
     <DndProvider backend={Backend}>
       <div className="investigation-build-page">
@@ -165,6 +183,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props: any) =
             <Switch>
               <Route exac path='/brick/:brickId/build/investigation/question-component'>
                 <BuildQuestionComponent
+                  brickId={brickId}
                   history={history}
                   question={activeQuestion}
                   setQuestionComponentType={setQuestionComponentType}
@@ -172,6 +191,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props: any) =
               </Route>
               <Route exac path='/brick/:brickId/build/investigation/question-component/:questionId'>
                 <BuildQuestionComponent
+                  brickId={brickId}
                   history={history}
                   question={activeQuestion}
                   setQuestionComponentType={setQuestionComponentType}
@@ -193,4 +213,24 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props: any) =
   )
 }
 
-export default InvestigationBuildPage
+const mapState = (state: any) => {
+  return {
+    submitted: state.proForm.submitted,
+    data: state.proForm.data,
+    bricks: state.bricks.bricks,
+    brick: state.brick.brick,
+  }
+}
+
+const mapDispatch = (dispatch: any) => {
+  return {
+    fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
+  }
+}
+
+const connector = connect(
+  mapState,
+  mapDispatch
+)
+
+export default connector(InvestigationBuildPage)

@@ -20,7 +20,7 @@ const mapState = (state: any) => {
 const mapDispatch = (dispatch: any) => {
   return {
     fetchProForm: (brickId: string) => dispatch(actions.fetchBrickBuildData(brickId)),
-    submitProForm: (data:ProFormaSubmitData) =>  dispatch(actions.submitBrickBuildData(data)),
+    submitProForm: (data:ProFormaSubmitData) =>  dispatch(actions.saveBrick(data)),
     fetchBricks: () => dispatch(bricksActions.fetchBricks()),
     fetchBrick: (brickId: number) => dispatch(brickActions.fetchBrick(brickId)),
   }

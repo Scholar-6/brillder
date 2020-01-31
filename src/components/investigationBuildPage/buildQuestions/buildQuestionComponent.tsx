@@ -10,13 +10,14 @@ import DragBox from './components/DragBox';
 
 
 export interface QuestionProps {
-  question: Question,
-  history: any,
-  setQuestionComponentType: Function,
-  swapComponents: Function,
+  brickId: number
+  question: Question
+  history: any
+  setQuestionComponentType: Function
+  swapComponents: Function
 }
 
-const BuildQuestionComponent: React.FC<QuestionProps> = ({ question, history, setQuestionComponentType, swapComponents }) => {
+const BuildQuestionComponent: React.FC<QuestionProps> = ({ brickId, question, history, setQuestionComponentType, swapComponents }) => {
   const {type} = question;
   document.title = QuestionTypeEnum[type];
   const renderQuestion = () => {
@@ -24,7 +25,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = ({ question, history, se
       case (QuestionTypeEnum.ShortAnswer):
         return <ShortAnswer activeStep={1} question={question} swapComponents={swapComponents} />
       default:
-        history.push('/build/investigation/question');
+        history.push(`/brick/${brickId}/build/investigation/question`);
     }
     return "";
   }

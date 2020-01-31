@@ -18,7 +18,7 @@ const mapState = (state: any) => {
 const mapDispatch = (dispatch: any) => {
   return {
     fetchProForm: () => dispatch(actions.fetchBrickBuildData()),
-    submitProForm: (data: ProFormaSubmitData) => dispatch(actions.submitBrickBuildData(data)),
+    submitProForm: (data: ProFormaSubmitData) => dispatch(actions.saveBrick(data)),
   }
 }
 
