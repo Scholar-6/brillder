@@ -118,7 +118,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
   }
 
   const setQuestionComponentType = (type: any, dropBox: any) => {
-    console.log(type, dropBox)
     if (dropBox.value == QuestionComponentTypeEnum.Component) {
       return;
     }
@@ -132,7 +131,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
   }
 
   const swapComponents = (drag: any, drop: any) => {
-    console.log(drag, drag);
     const index = getQuestionIndex(activeQuestion);
     const components  = Object.assign([], activeQuestion.components) as any[];
     const tempComp = components[drag.index];
