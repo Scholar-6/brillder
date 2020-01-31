@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SoundComponent: React.FC<any> = ({ }) => {
+const SoundComponent: React.FC<any> = () => {
   return <p>Sound Component</p>
 }
 

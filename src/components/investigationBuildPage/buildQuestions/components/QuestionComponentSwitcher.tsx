@@ -18,7 +18,6 @@ export interface DragAndBoxProps {
 
 const SwitchQuestionComponent: React.FC<any> = ({ type, index, swapComponents, uniqueComponent }) => {
   const renderEmptyComponent = () => <span>Drag component here</span>
-  console.log(55, type);
 
   switch (type) {
     case QuestionComponentTypeEnum.Text:

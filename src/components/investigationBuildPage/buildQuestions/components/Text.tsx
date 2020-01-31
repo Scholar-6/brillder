@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TextComponent: React.FC<any> = ({ }) => {
+const TextComponent: React.FC<any> = () => {
   return <p>Text Component</p>
 }
 
