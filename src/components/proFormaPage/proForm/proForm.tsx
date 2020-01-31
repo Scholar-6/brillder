@@ -82,7 +82,7 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
   render() {
     if (this.props.parent.submitted === true) {
       const {brickId} = this.props.parent.match.params;
-      this.props.parent.history.push("/brick/build/" + brickId);
+      this.props.parent.history.push(`/brick/${brickId}/build/investigation/question`);
     }
 
     return (

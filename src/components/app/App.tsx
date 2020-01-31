@@ -33,10 +33,9 @@ const App: React.FC = () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route path="/build/investigation" component={InvestigationBuildPage}></Route>
+          <Route path="/brick/:brickId" component={InvestigationBuildPage}></Route>
           <Route path="/brick-create" exact component={ProFormaPage}></Route>
           <Route path="/brick-create/:brickId" exact component={ProFormaPage}></Route>
-          <Route path="/brick/build/:brickId" component={InvestigationBuildPage}></Route>
           <Route path="/bricks-list">
             <BricksListPage />
           </Route>

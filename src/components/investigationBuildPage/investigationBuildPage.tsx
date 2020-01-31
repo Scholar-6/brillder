@@ -19,7 +19,9 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
   fetchProForma: Function
 }
 
-const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: any) => {
+const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props: any) => {
+  var {brickId} = props.match.params;
+  const {history} = props;
   const getNewQuestion = (type: number, active: boolean) => {
     return {
       type,
@@ -29,6 +31,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
       ]
     } as Question;
   }
+
 
   const [questions, setQuestions] = React.useState([getNewQuestion(QuestionTypeEnum.None, true)] as Question[])
 
@@ -76,7 +79,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
       }),
     )
 
-    history.push(`/build/investigation/question-component/${index + 1}`);
+    history.push(`/brick/${brickId}/build/investigation/question-component/${index + 1}`);
   }
 
   const removeQuestion = (index: number) => {
@@ -160,14 +163,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
               moveQuestions={moveQuestions} selectQuestion={selectQuestion}
               removeQuestion={removeQuestion} />
             <Switch>
-              <Route exac path='/build/investigation/question-component'>
+              <Route exac path='/brick/:brickId/build/investigation/question-component'>
                 <BuildQuestionComponent
                   history={history}
                   question={activeQuestion}
                   setQuestionComponentType={setQuestionComponentType}
                   swapComponents={swapComponents} />
               </Route>
-              <Route exac path='/build/investigation/question-component/:questionId'>
+              <Route exac path='/brick/:brickId/build/investigation/question-component/:questionId'>
                 <BuildQuestionComponent
                   history={history}
                   question={activeQuestion}
@@ -175,11 +178,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
                   swapComponents={swapComponents} />
               </Route>
               <Route
-                exec path='/build/investigation/question/:questionId'
+                exec path='/brick/:brickId/build/investigation/question/:questionId'
                 component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
               </Route>
               <Route
-                exec path='/build/investigation/question'
+                exec path='/brick/:brickId/build/investigation/question'
                 component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
               </Route>
             </Switch>
