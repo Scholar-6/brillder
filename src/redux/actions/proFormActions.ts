@@ -59,7 +59,6 @@ const submitProFormaFailure = (errorMessage:string) => {
 const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
     brick.type = 1;
-    brick.questions = "[{type: 1, action: 0}]"
     return axios.post(host.BACKEND_HOST + '/brick', brick).then(response => {
       dispatch(submitProFormaSuccess());
     })

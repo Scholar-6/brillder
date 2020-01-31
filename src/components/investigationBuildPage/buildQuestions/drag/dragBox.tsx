@@ -2,7 +2,7 @@ import React from 'react'
 import { useDrag, DragSourceMonitor } from 'react-dnd'
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 
-import './DragBox.scss';
+import './dragBox.scss';
 import ItemTypes from '../../ItemTypes'
 import { Grid } from '@material-ui/core';
 import { QuestionComponentTypeEnum } from '../../../model/question';

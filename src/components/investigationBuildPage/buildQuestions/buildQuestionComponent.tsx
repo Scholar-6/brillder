@@ -6,7 +6,7 @@ import ShortAnswer from './shortAnswer/shortAnswer';
 
 import './buildQuestionComponent.scss'
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question } from '../../model/question';
-import DragBox from './components/DragBox';
+import DragBox from './drag/dragBox';
 
 
 export interface QuestionProps {

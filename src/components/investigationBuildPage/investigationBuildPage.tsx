@@ -161,10 +161,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   }
 
   const {brick} = props;
-  console.log(brick);
   if (brick.questions) {
     var res = brick.questions.json()
-    console.log(res)
   }
 
   return (
