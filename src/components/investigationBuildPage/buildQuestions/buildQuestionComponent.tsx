@@ -1,9 +1,7 @@
 import React from 'react'
-
 import { Grid } from '@material-ui/core';
 
-import ShortAnswer from './shortAnswer/shortAnswer';
-
+import QuestionComponents from './questionComponents/questionComponents';
 import './buildQuestionComponent.scss'
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question } from '../../model/question';
 import DragBox from './drag/dragBox';
@@ -20,15 +18,6 @@ export interface QuestionProps {
 const BuildQuestionComponent: React.FC<QuestionProps> = ({ brickId, question, history, setQuestionComponentType, swapComponents }) => {
   const {type} = question;
   document.title = QuestionTypeEnum[type];
-  const renderQuestion = () => {
-    switch (type) {
-      case (QuestionTypeEnum.ShortAnswer):
-        return <ShortAnswer activeStep={1} question={question} swapComponents={swapComponents} />
-      default:
-        history.push(`/brick/${brickId}/build/investigation/question`);
-    }
-    return "";
-  }
 
   const setDropBoxItem = (dragBoxType:QuestionTypeEnum, dropBoxNumber:number) => {
     setQuestionComponentType(dragBoxType, dropBoxNumber);
@@ -47,9 +36,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = ({ brickId, question, hi
           <DragBox onDrop={setDropBoxItem} name="Equation" value={QuestionComponentTypeEnum.Equation} />
         </Grid>
         <Grid container item xs={5} sm={6} md={8}>
-          {
-            renderQuestion()
-          }
+          <QuestionComponents brickId={brickId} history={history} question={question} swapComponents={swapComponents} />
         </Grid>
         <Grid container item xs={3} sm={3} md={2} className="right-sidebar">
           <div>

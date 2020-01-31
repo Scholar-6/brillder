@@ -2,11 +2,10 @@ import React from 'react'
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 
 
-export interface DragShortAnswerProps {
-  value: string,
+export interface MissingWordComponentProps {
 }
 
-const DraggableShortAnswer: React.FC<DragShortAnswerProps> = () => {
+const MissingWordComponent: React.FC<MissingWordComponentProps> = () => {
   return (
     <div className="input-box ">
       <DragIndicatorIcon />
@@ -16,4 +15,5 @@ const DraggableShortAnswer: React.FC<DragShortAnswerProps> = () => {
     </div>
   )
 }
-export default DraggableShortAnswer
+
+export default MissingWordComponent

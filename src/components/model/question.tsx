@@ -26,7 +26,7 @@ export enum QuestionTypeEnum {
   None = 0,
   ShortAnswer = 1,
   ChooseOne = 2,
-  ChooseServeral = 3,
+  ChooseSeveral = 3,
   VerticalShuffle = 4,
   HorizontalShuffle = 5,
   PairMatch = 6,
@@ -39,7 +39,7 @@ export enum QuestionTypeEnum {
 export const QuestionType = {
   ShortAnswer: QuestionTypeEnum.ShortAnswer,
   ChooseOne: QuestionTypeEnum.ChooseOne,
-  ChooseServeral: QuestionTypeEnum.ChooseServeral,
+  ChooseSeveral: QuestionTypeEnum.ChooseSeveral,
   VerticalShuffle: QuestionTypeEnum.VerticalShuffle,
   HorizontalShuffle: QuestionTypeEnum.HorizontalShuffle,
   PairMatch: QuestionTypeEnum.PairMatch,
