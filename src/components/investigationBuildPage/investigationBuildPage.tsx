@@ -10,9 +10,8 @@ import './investigationBuildPage.scss'
 import BuildPageHeaderComponent from './header/pageHeader';
 import BuildQuestionComponent from './buildQuestions/buildQuestionComponent';
 import QuestionTypePage from './questionType/questionType';
-import BuildFotter from './build-fotter';
 import DragableTabs from './dragTabs/dragableTabs';
-import { Question, QuestionTypeEnum } from '../model/question';
+import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from '../model/question';
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -21,7 +20,21 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: any) => {
-  const [questions, setQuestions] = React.useState([{ id: 1, type: 0, active: true }] as Question[])
+  const getNewQuestion = (type: number, active: boolean) => {
+    return {
+      type,
+      active,
+      components: [
+        {type: 0}, {type: QuestionComponentTypeEnum.Component}, {type: 0}
+      ]
+    } as Question;
+  }
+
+  const [questions, setQuestions] = React.useState([getNewQuestion(QuestionTypeEnum.None, true)] as Question[])
+
+  const getQuestionIndex = (question: Question) => {
+    return questions.indexOf(question);
+  }
 
   let activeQuestion = questions.find(q => q.active == true) as Question;
   if (!activeQuestion) {
@@ -32,7 +45,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
   const createNewQuestion = () => {
     const updatedQuestions = questions.slice();
     updatedQuestions.forEach(q => q.active = false);
-    updatedQuestions.push({ id: questions.length + 1, type: 0, active: true });
+    updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
 
     setQuestions(update(questions, {
       $set: updatedQuestions,
@@ -55,11 +68,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
       alert('Can`t set question type');
       return;
     }
-    var index = questions.indexOf(activeQuestion);
-    console.log("set question type ", type);
+    var index = getQuestionIndex(activeQuestion);
+
     setQuestions(
       update(questions, {
-        [index]: { type: { $set: type } }
+        [index]: {  type: { $set: type } }
       }),
     )
 
@@ -104,6 +117,33 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
     }
   }
 
+  const setQuestionComponentType = (type: any, compNumber: any) => {
+    const index = getQuestionIndex(activeQuestion);
+    const question = Object.assign({}, activeQuestion) as Question;
+    question.components[compNumber].type = type;
+
+    setQuestions(
+      update(questions, { [index]: { $set: question } }),
+    )
+  }
+
+  const swapComponents = (dragNumber: number, dropNumber: number) => {
+    console.log(dragNumber, dropNumber)
+    const index = getQuestionIndex(activeQuestion);
+    const components  = Object.assign([], activeQuestion.components) as any[];
+    const tempComp = components[dragNumber];
+    components[dragNumber] = components[dropNumber];
+    components[dropNumber] = tempComp;
+    
+    setQuestions(
+      update(questions, {
+        [index]: {
+          components: { $set: components}
+        }
+      }),
+    )
+  }
+
   return (
     <DndProvider backend={Backend}>
       <div className="investigation-build-page">
@@ -119,10 +159,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
               removeQuestion={removeQuestion} />
             <Switch>
               <Route exac path='/build/investigation/question-component'>
-                <BuildQuestionComponent history={history} type={activeQuestion.type} />
+                <BuildQuestionComponent
+                  history={history}
+                  question={activeQuestion}
+                  setQuestionComponentType={setQuestionComponentType}
+                  swapComponents={swapComponents} />
               </Route>
               <Route exac path='/build/investigation/question-component/:questionId'>
-                <BuildQuestionComponent history={history} type={activeQuestion.type} />
+                <BuildQuestionComponent
+                  history={history}
+                  question={activeQuestion}
+                  setQuestionComponentType={setQuestionComponentType}
+                  swapComponents={swapComponents} />
               </Route>
               <Route
                 exec path='/build/investigation/question/:questionId'

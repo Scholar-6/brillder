@@ -6,7 +6,9 @@ export enum QuestionComponentTypeEnum{
   Quote = 3,
   Image = 4,
   Sound = 5,
-  Equation = 6
+  Equation = 6,
+
+  Component= 127,
 }
 
 export const QuestionComponentType = {
@@ -16,7 +18,8 @@ export const QuestionComponentType = {
   Quote: QuestionComponentTypeEnum.Quote,
   Image: QuestionComponentTypeEnum.Image,
   Sound: QuestionComponentTypeEnum.Sound,
-  Equation: QuestionComponentTypeEnum.Equation
+  Equation: QuestionComponentTypeEnum.Equation,
+  Component: QuestionComponentTypeEnum.Component,
 } as any
 
 export enum QuestionTypeEnum {
@@ -49,5 +52,6 @@ export const QuestionType = {
 export interface Question {
   id: number,
   active: boolean,
-  type: number
+  type: number,
+  components: any[]
 }

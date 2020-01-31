@@ -5,29 +5,32 @@ import { Grid } from '@material-ui/core';
 import ShortAnswer from './shortAnswer/shortAnswer';
 
 import './buildQuestionComponent.scss'
-import { QuestionTypeEnum, QuestionType, QuestionComponentType, QuestionComponentTypeEnum } from '../../model/question';
+import { QuestionTypeEnum, QuestionComponentTypeEnum, Question } from '../../model/question';
 import DragBox from './components/DragBox';
 
 
 export interface QuestionProps {
-  type: QuestionTypeEnum,
+  question: Question,
   history: any,
+  setQuestionComponentType: Function,
+  swapComponents: Function,
 }
 
-const BuildQuestionComponent: React.FC<QuestionProps> = ({ type, history }) => {
+const BuildQuestionComponent: React.FC<QuestionProps> = ({ question, history, setQuestionComponentType, swapComponents }) => {
+  const {type} = question;
   document.title = QuestionTypeEnum[type];
   const renderQuestion = () => {
     switch (type) {
       case (QuestionTypeEnum.ShortAnswer):
-        return <ShortAnswer activeStep={1} />
+        return <ShortAnswer activeStep={1} question={question} swapComponents={swapComponents} />
       default:
         history.push('/build/investigation/question');
     }
     return "";
   }
 
-  const setDropBoxItem = (dropBox:any, dragBox:any) => {
-    console.log(dropBox, dragBox);
+  const setDropBoxItem = (dragBoxType:QuestionTypeEnum, dropBoxNumber:number) => {
+    setQuestionComponentType(dragBoxType, dropBoxNumber);
   }
 
   return (

@@ -3,25 +3,78 @@ import { Grid } from '@material-ui/core';
 
 import './shortAnswer.scss';
 import Dustbin from '../components/DragDustbin';
+import { Question, QuestionComponentTypeEnum } from '../../../model/question';
+import DraggableShortAnswer from './draggableAnswer';
 
 type CardProps = {
   activeStep: number,
+  question: Question,
+  swapComponents: Function,
 }
 
-const HorizontalLinearStepper = ({ activeStep }: CardProps) => {
+const HorizontalLinearStepper = ({ activeStep, question, swapComponents }: CardProps) => {
+  console.log(question.components)
+  const renderDropBox = (component: any, index: number) => {
+
+    switch (component.type) {
+      case QuestionComponentTypeEnum.Text:
+        return (
+          <div className="box">
+            <p>Text Component</p>
+          </div>
+        )
+      case QuestionComponentTypeEnum.Image:
+        return (
+          <div className="box">
+            <p>Image Component</p>
+          </div>
+        )
+      case QuestionComponentTypeEnum.Hint:
+        return (
+          <div className="box">
+            <p>Hint Component</p>
+          </div>
+        )
+      case QuestionComponentTypeEnum.Quote:
+        return (
+          <div className="box">
+            <p>Quote Component</p>
+          </div>
+        )
+      case QuestionComponentTypeEnum.Sound:
+        return (
+          <div className="box">
+            <p>Sound Component</p>
+          </div>
+        )
+      case QuestionComponentTypeEnum.Equation:
+        return (
+          <div className="box">
+            <p>Equation Component</p>
+          </div>
+        )
+      case QuestionComponentTypeEnum.Component:
+        return (
+          <DraggableShortAnswer index={index} value="" onDrop={swapComponents} />
+        )
+      default:
+        return <Dustbin index={index} />
+    }
+  }
+
   return (
     <div className="short-answer">
-      <Grid container direction="row" className="drop-box">
-        <Dustbin index={0} />
-      </Grid>
-      <Grid container direction="row" className="drop-box">
-        <div className="input-box">
-          <input placeholder="Enter correct answer" />
-        </div>
-      </Grid>
-      <Grid container direction="row" className="drop-box">
-        <Dustbin index={2} />
-      </Grid>
+      {
+        question.components.map((comp, i) => {
+          return (
+            <Grid key={i} container direction="row" className="drop-box">
+              {
+                renderDropBox(comp, i)
+              }
+            </Grid>
+          )
+        })
+      }
     </div>
   );
 }

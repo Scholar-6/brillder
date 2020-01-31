@@ -3,10 +3,15 @@
   width: 100%;
 
   .drop-box {
+    min-height: 81px;
+    .box {
+      border: 1px dashed black;
+      width: 100%;
+    }
     .input-box {
       margin: 4px 0;
       width: 100%;
-      padding: 20px 40px 40px 40px;
+      padding: 0px 40px 40px 40px;
       border: 1px dashed black;
       text-align: center;
 
