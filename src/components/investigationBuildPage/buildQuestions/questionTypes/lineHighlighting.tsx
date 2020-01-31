@@ -10,7 +10,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = () => {
     <div className="input-box ">
       <DragIndicatorIcon />
       <div>
-        <input placeholder="Enter correct answer" />
+        LineHighlightingComponent
       </div>
     </div>
   )

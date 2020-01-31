@@ -10,7 +10,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = () => {
     <div className="input-box ">
       <DragIndicatorIcon />
       <div>
-        <input placeholder="Enter correct answer" />
+        MissingWordComponent
       </div>
     </div>
   )

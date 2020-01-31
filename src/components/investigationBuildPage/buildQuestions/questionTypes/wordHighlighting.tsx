@@ -10,7 +10,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = () => {
     <div className="input-box ">
       <DragIndicatorIcon />
       <div>
-        <input placeholder="Enter correct answer" />
+        WordHighlightingComponent
       </div>
     </div>
   )

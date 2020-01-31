@@ -10,7 +10,7 @@ const CategoriseComponent: React.FC<CategoriseProps> = () => {
     <div className="input-box ">
       <DragIndicatorIcon />
       <div>
-        <input placeholder="Enter correct answer" />
+        Categorise Component
       </div>
     </div>
   )

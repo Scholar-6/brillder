@@ -10,7 +10,7 @@ const ChooseSeveralComponent: React.FC<ChooseSeveralProps> = () => {
     <div className="input-box ">
       <DragIndicatorIcon />
       <div>
-        <input placeholder="Enter correct answer" />
+        ChooseSeveralComponent
       </div>
     </div>
   )

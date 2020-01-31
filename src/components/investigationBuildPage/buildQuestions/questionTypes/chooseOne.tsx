@@ -11,7 +11,7 @@ const ChooseOneComponent: React.FC<ChooseOneProps> = () => {
     <div className="input-box ">
       <DragIndicatorIcon />
       <div>
-        <input placeholder="Enter correct answer" />
+        ChooseOneProps
       </div>
     </div>
   )

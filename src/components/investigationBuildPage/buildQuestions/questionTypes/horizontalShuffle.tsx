@@ -10,7 +10,7 @@ const HorizontalShuffleComponent: React.FC<HorizontalShuffleProps> = () => {
     <div className="input-box ">
       <DragIndicatorIcon />
       <div>
-        <input placeholder="Enter correct answer" />
+        HorizontalShuffleComponent
       </div>
     </div>
   )

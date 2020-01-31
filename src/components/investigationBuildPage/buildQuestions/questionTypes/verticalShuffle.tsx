@@ -11,7 +11,7 @@ const VerticalShuffleComponent: React.FC<VerticalShuffleProps> = () => {
     <div className="input-box ">
       <DragIndicatorIcon />
       <div>
-        <input placeholder="Enter correct answer" />
+        VerticalShuffleComponent
       </div>
     </div>
   )

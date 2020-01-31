@@ -10,7 +10,7 @@ const PairMatchComponent: React.FC<PairMatchComponentProps> = () => {
     <div className="input-box ">
       <DragIndicatorIcon />
       <div>
-        <input placeholder="Enter correct answer" />
+        PairMatchComponent
       </div>
     </div>
   )
