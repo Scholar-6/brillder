@@ -31,4 +31,11 @@
     border: 1px solid grey;
     border-top: none;
   }
+
+  .drag-and-drop-box {
+    min-height: 81px;
+    border: 1px dashed black;
+    background: white;
+    margin: 4px 0;
+  }
 }

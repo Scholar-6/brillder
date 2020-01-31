@@ -1,16 +1,10 @@
 import React, {useRef} from 'react'
 import { useDrop, useDrag, DragSourceMonitor } from 'react-dnd'
 
-import './DragDustbin.scss'
 import ItemTypes from '../../ItemTypes'
 import { QuestionComponentTypeEnum } from '../../../model/question'
+import { DropResult } from './interfaces'
 
-
-interface DropResult {
- allowedDropEffect: string
-  dropEffect: string
-  value: number,
-}
 
 function selectBackgroundColor(isActive: boolean, canDrop: boolean) {
   if (isActive) {
@@ -23,24 +17,24 @@ function selectBackgroundColor(isActive: boolean, canDrop: boolean) {
 }
 
 export interface DragAndBoxProps {
-    index: number
-    value: QuestionComponentTypeEnum
-    onDrop: Function
-    component: Function
-  }
+  index: number
+  value: QuestionComponentTypeEnum
+  onDrop: Function
+  component: Function
+}
 
 const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, component }) => {
   const ref = useRef<HTMLDivElement>(null)  
    
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: ItemTypes.BOX,
-    drop: () => ({ value: index, allowedDropEffect: "any" }),
+    drop: () => ({ index, value, allowedDropEffect: "any" }),
     collect: (monitor: any) => (
       { isOver: monitor.isOver(), canDrop: monitor.canDrop() }
     ),
   })
 
-  const item = { name, type: ItemTypes.BOX }
+  const item = { name: "", type: ItemTypes.BOX }
   const [{ opacity }, drag] = useDrag({
     item,
     end(item: { name: string } | undefined, monitor: DragSourceMonitor) {
@@ -50,7 +44,7 @@ const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, compo
           dropResult.allowedDropEffect === 'any' ||
           dropResult.allowedDropEffect === dropResult.dropEffect
         if (isDropAllowed) {
-          onDrop(value, dropResult.value);
+          onDrop({index, value}, {index: dropResult.index, value: dropResult.value});
         } else {
           alert(`You cannot ${dropResult.dropEffect} an item into the ${dropResult.value}`);
         }
@@ -62,11 +56,14 @@ const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, compo
   })
 
   const isActive = canDrop && isOver
-  const backgroundColor = selectBackgroundColor(isActive, canDrop)
+  let backgroundColor = selectBackgroundColor(isActive, canDrop)
+  if (value != QuestionComponentTypeEnum.None) {
+    backgroundColor = 'white';
+  }
   drag(drop(ref))
 
   return (
-    <div ref={ref} className="drop-box-item" style={{ backgroundColor, opacity }}>
+    <div ref={ref} className="drag-and-drop-box" style={{ backgroundColor, width: '100%', opacity }}>
       {component()}
     </div>
   )

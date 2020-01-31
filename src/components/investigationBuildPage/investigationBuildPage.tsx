@@ -117,22 +117,27 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
     }
   }
 
-  const setQuestionComponentType = (type: any, compNumber: any) => {
+  const setQuestionComponentType = (type: any, dropBox: any) => {
+    console.log(type, dropBox)
+    if (dropBox.value == QuestionComponentTypeEnum.Component) {
+      return;
+    }
     const index = getQuestionIndex(activeQuestion);
     const question = Object.assign({}, activeQuestion) as Question;
-    question.components[compNumber].type = type;
+    question.components[dropBox.index].type = type;
 
     setQuestions(
       update(questions, { [index]: { $set: question } }),
     )
   }
 
-  const swapComponents = (dragNumber: number, dropNumber: number) => {
+  const swapComponents = (drag: any, drop: any) => {
+    console.log(drag, drag);
     const index = getQuestionIndex(activeQuestion);
     const components  = Object.assign([], activeQuestion.components) as any[];
-    const tempComp = components[dragNumber];
-    components[dragNumber] = components[dropNumber];
-    components[dropNumber] = tempComp;
+    const tempComp = components[drag.index];
+    components[drag.index] = components[drop.index];
+    components[drop.index] = tempComp;
     
     setQuestions(
       update(questions, {

@@ -2,9 +2,9 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 
 import './shortAnswer.scss';
-import Dustbin from '../components/DragDustbin';
 import { Question, QuestionComponentTypeEnum } from '../../../model/question';
 import DraggableShortAnswer from './draggableAnswer';
+import DragAndDropBox from '../components/DragAndDropBox';
 
 type CardProps = {
   activeStep: number,
@@ -13,51 +13,71 @@ type CardProps = {
 }
 
 const HorizontalLinearStepper = ({ activeStep, question, swapComponents }: CardProps) => {
+  const renderEmptyComponent = () => <span>Drag component here</span>
+
+  const renderTextComponent = () => {
+    return (
+      <div className="box">
+        <p>Text Component</p>
+      </div>
+    )
+  }
+
+  const renderImageComponent = () => {
+    return (
+      <div className="box">
+        <p>Image Component</p>
+      </div>
+    )
+  }
+
+  const renderHintComponent = () => {
+    return (
+      <div className="box">
+        <p>Hint Component</p>
+      </div>
+    )
+  }
+
+  const renderQuoteComponent = () => {
+    return (
+      <div className="box">
+        <p>Quote Component</p>
+      </div>
+    )
+  }
+
+  const renderSoundComponent = () => {
+    return (
+      <p>Sound Component</p>
+    )
+  }
+
+  const renderEquationComponent = () => {
+    return (
+      <p>Equation Component</p>
+    )
+  }
+
   const renderDropBox = (component: any, index: number) => {
 
     switch (component.type) {
       case QuestionComponentTypeEnum.Text:
-        return (
-          <div className="box">
-            <p>Text Component</p>
-          </div>
-        )
+        return <DragAndDropBox index={index} value={component.type} onDrop={swapComponents} component={renderTextComponent} />
       case QuestionComponentTypeEnum.Image:
-        return (
-          <div className="box">
-            <p>Image Component</p>
-          </div>
-        )
+        return <DragAndDropBox index={index} value={component.type} onDrop={swapComponents} component={renderImageComponent} />
       case QuestionComponentTypeEnum.Hint:
-        return (
-          <div className="box">
-            <p>Hint Component</p>
-          </div>
-        )
+        return <DragAndDropBox index={index} value={component.type} onDrop={swapComponents} component={renderHintComponent} />
       case QuestionComponentTypeEnum.Quote:
-        return (
-          <div className="box">
-            <p>Quote Component</p>
-          </div>
-        )
+        return <DragAndDropBox index={index} value={component.type} onDrop={swapComponents} component={renderQuoteComponent} />
       case QuestionComponentTypeEnum.Sound:
-        return (
-          <div className="box">
-            <p>Sound Component</p>
-          </div>
-        )
+        return <DragAndDropBox index={index} value={component.type} onDrop={swapComponents} component={renderSoundComponent} />
       case QuestionComponentTypeEnum.Equation:
-        return (
-          <div className="box">
-            <p>Equation Component</p>
-          </div>
-        )
+        return <DragAndDropBox index={index} value={component.type} onDrop={swapComponents} component={renderEquationComponent} />
       case QuestionComponentTypeEnum.Component:
-        return (
-          <DraggableShortAnswer index={index} value="" onDrop={swapComponents} />
-        )
+        return <DragAndDropBox index={index} value={component.type} onDrop={swapComponents} component={DraggableShortAnswer} />
       default:
-        return <Dustbin index={index} />
+        return <DragAndDropBox index={index} value={QuestionComponentTypeEnum.None} onDrop={swapComponents} component={renderEmptyComponent} />
     }
   }
 

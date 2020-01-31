@@ -4,15 +4,11 @@
 
   .drop-box {
     min-height: 81px;
-    .box {
-      border: 1px dashed black;
-      width: 100%;
-    }
+
     .input-box {
       margin: 4px 0;
       width: 100%;
-      padding: 0px 40px 40px 40px;
-      border: 1px dashed black;
+      padding: 0px 0px 40px 0px;
       text-align: center;
 
       input {

@@ -26,7 +26,7 @@ const DragBox: React.FC<BoxProps> = ({ name, onDrop, value }) => {
           dropResult.allowedDropEffect === 'any' ||
           dropResult.allowedDropEffect === dropResult.dropEffect
         if (isDropAllowed) {
-          onDrop(value, dropResult.value);
+          onDrop(value, {value: dropResult.value, index: dropResult.index});
         } else {
           alert(`You cannot ${dropResult.dropEffect} an item into the ${dropResult.value}`);
         }

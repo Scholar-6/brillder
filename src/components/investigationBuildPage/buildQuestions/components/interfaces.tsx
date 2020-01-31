@@ -4,6 +4,7 @@ export interface DragItem {
 }
   
 export interface DropResult {
+  index: number
   value: number
   dropEffect: string
   allowedDropEffect: string
