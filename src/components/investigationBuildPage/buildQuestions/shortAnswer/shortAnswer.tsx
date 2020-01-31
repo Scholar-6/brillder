@@ -13,7 +13,6 @@ type CardProps = {
 }
 
 const HorizontalLinearStepper = ({ activeStep, question, swapComponents }: CardProps) => {
-  console.log(question.components)
   const renderDropBox = (component: any, index: number) => {
 
     switch (component.type) {

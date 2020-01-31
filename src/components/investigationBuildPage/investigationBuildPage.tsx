@@ -128,7 +128,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = ({ history }: 
   }
 
   const swapComponents = (dragNumber: number, dropNumber: number) => {
-    console.log(dragNumber, dropNumber)
     const index = getQuestionIndex(activeQuestion);
     const components  = Object.assign([], activeQuestion.components) as any[];
     const tempComp = components[dragNumber];
