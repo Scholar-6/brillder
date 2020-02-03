@@ -8,39 +8,6 @@
     opacity: 0;
   }
 
-  .sidebar {
-    div {
-      padding: 20px 0 20px 0;
-      width: 100%;
-      background: #e5e5e5;
-      text-align: center;
-      font-size: 40px;
-      font-weight: bold;
-    }
-  }
-
-  .left-sidebar {
-    .even {
-      background: #84bae6
-    }
-    .odd {
-      background: #b2d6f0
-    }
-  }
-
-  .right-sidebar {
-    .even {
-      background: #f5b4c8
-    }
-    .odd {
-      background: #fad2dd
-    }
-
-    .small {
-      font-size: 20px;
-    }
-  }
-
   .page-fotter {
     background: #b2b2b2;
     padding: 20px;
@@ -57,5 +24,18 @@
     .MuiSlider-thumb {
       color: #0a3a7e;
     }
+  }
+
+  .tab-panel {
+    padding: 0;
+    border: 1px solid grey;
+    border-top: none;
+  }
+
+  .drag-and-drop-box {
+    min-height: 81px;
+    border: 1px dashed black;
+    background: white;
+    margin: 4px 0;
   }
 }

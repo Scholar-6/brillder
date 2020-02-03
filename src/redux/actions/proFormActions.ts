@@ -1,6 +1,7 @@
 import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
+import host from '../../hostname';
 
 const fetchProFormaDataSuccess = (data:any) => {
   return {
@@ -18,9 +19,9 @@ const fetchProFormaDataFailure = (errorMessage:string) => {
 
 const fetchBrickBuildData = (brickId: string = '') => {
   return function (dispatch: Dispatch) {
-    return axios.get('https://jsonplaceholder.typicode.com/users')
+    return axios.get(host.BACKEND_HOST + '/brick')
       .then(() => {
-        var data = {
+        var data = {  
           //subject: 'Geography',
           //topic: 'Desertification',
           //title: 'Exfoliatioin and Erosion in Arid Environments',
@@ -42,16 +43,32 @@ const fetchBrickBuildData = (brickId: string = '') => {
   }
 }
 
-const submitBrickBuildData = (data:any) => {
-  return function (proFormData: any, gg: any, hh:any) {
-    return axios.post('', proFormData).then(response => {
+const submitProFormaSuccess = () => {
+  return {
+    type: types.SUBMIT_PRO_FORMA_SUCCESS,
+  } as Action
+}
+
+const submitProFormaFailure = (errorMessage:string) => {
+  return {
+    type: types.SUBMIT_PRO_FORMA_FAILURE,
+    error: errorMessage
+  } as Action
+}
+
+const saveBrick = (brick:any) => {
+  return function (dispatch: Dispatch) {
+    brick.type = 1;
+    return axios.post(host.BACKEND_HOST + '/brick', brick).then(response => {
+      dispatch(submitProFormaSuccess());
     })
     .catch(error => {
+      dispatch(submitProFormaFailure(error.message))
     })
   }
 }
 
 export default {
   fetchBrickBuildData,
-  submitBrickBuildData
+  saveBrick,
 }
