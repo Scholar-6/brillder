@@ -46,17 +46,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   if (!props.brick) {
     return <div>...Loading...</div>
   }
-  
-  const {brick} = props;
-  if (brick.synthesis && loaded == false) {
-    var res = JSON.parse(brick.synthesis);
-    setQuestions(
-      update(questions, { $set: res }),
-    )
-    setStatus(
-      update(loaded, { $set: true })
-    )
-  }
 
   const getQuestionIndex = (question: Question) => {
     return questions.indexOf(question);
@@ -171,6 +160,17 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       }),
     )
   }
+    
+  const {brick} = props;
+  if (brick.synthesis && loaded == false) {
+    var res = JSON.parse(brick.synthesis);
+    setQuestions(
+      update(questions, { $set: res }),
+    )
+    setStatus(
+      update(loaded, { $set: true })
+    )
+  }
 
   const saveBrick = () => {
     brick.synthesis = JSON.stringify(questions);
@@ -179,18 +179,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
   const updateComponent = (component: any, number:number) => {
     const index = getQuestionIndex(activeQuestion);
+    let newComponent = Object.assign({}, component)
 
     setQuestions(
       update(questions, {
         [index]: {
           components: {
-            [number]: { $set: component }
+            [number]: { $set: newComponent }
           }
         }
       })
     )
   }
-
   return (
     <DndProvider backend={Backend}>
       <div className="investigation-build-page">

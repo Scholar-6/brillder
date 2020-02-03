@@ -1,6 +1,6 @@
 import React from 'react'
+import update from 'immutability-helper';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
-
 
 export interface ShortAnswerProps {
   data: any
@@ -8,10 +8,11 @@ export interface ShortAnswerProps {
 }
 
 const ShortAnswerComponent: React.FC<ShortAnswerProps> = ({data, updateComponent}) => {
+  let value = ""
   if (data.value) {
-    data.value = "";
+    value = data.value;
   }
-  const setValue = (event: any) => {
+  const changed = (event: any) => {
     data.value = event.target.value;
     updateComponent(data);
   }
@@ -19,7 +20,7 @@ const ShortAnswerComponent: React.FC<ShortAnswerProps> = ({data, updateComponent
     <div className="input-box">
       <DragIndicatorIcon />
       <div>
-        <input value={data.value} onChange={setValue} placeholder="Enter correct answer" />
+        <input value={value} onChange={changed} placeholder="Enter correct answer" />
       </div>
     </div>
   )
