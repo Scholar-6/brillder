@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Box, Grid, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions/proFormActions';
-import { ProFormaProps, ProFormaState, ProFormaSubmitData } from '../model';
+import { ProFormaProps, ProFormaState, ProFormaSubmitData, Brick } from '../model';
 
 interface ProFormaComponentProps {
-  parent: ProFormaProps
+  parent: ProFormaProps,
+  brick: Brick,
 }
 
 const mapState = (state: any) => {
@@ -17,23 +18,42 @@ const mapState = (state: any) => {
 const mapDispatch = (dispatch: any) => {
   return {
     fetchProForm: () => dispatch(actions.fetchBrickBuildData()),
-    submitProForm: (data: ProFormaSubmitData) => dispatch(actions.submitBrickBuildData(data)),
+    submitProForm: (data: ProFormaSubmitData) => dispatch(actions.saveBrick(data)),
   }
 }
 
 class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState> {
   constructor(props: ProFormaComponentProps) {
     super(props)
-    const {data} = this.props.parent;
-    this.state = {
-      subject: data.subject,
-      topic: data.topic,
-      subTopic: data.subTopic,
-      proposedTitle: data.proposedTitle,
-      alternativeTopics: data.alternativeTopics,
-      investigationBrief: data.investigationBrief,
-      preparationBrief: data.preparationBrief
+    const {brick} = this.props;
+    let state: ProFormaState;
+    if (brick) {
+      state = {
+        subject: brick.subject,
+        topic: brick.topic,
+        subTopic: brick.subTopic,
+        title: brick.title,
+        alternativeTopics: brick.alternativeTopics,
+        investigationBrief: brick.investigationBrief,
+        preparationBrief: brick.preparationBrief
+      } as ProFormaState;
+    } else {
+      state = {
+        subject: '',
+        topic: '',
+        subTopic: '',
+        title: '',
+        alternativeTopics: '',
+        investigationBrief: '',
+        preparationBrief: ''
+      } as ProFormaState;
     }
+
+    if (brick) {
+      state.id = brick.id
+    }
+
+    this.state = state;
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
@@ -57,10 +77,14 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
   handleSubmit(event: any) {
     event.preventDefault();
     this.props.parent.submitProForm(this.state);
-    this.props.parent.history.push("/brick-build");
   }
 
   render() {
+    if (this.props.parent.submitted === true) {
+      const {brickId} = this.props.parent.match.params;
+      this.props.parent.history.push(`/brick/${brickId}/build/investigation/question`);
+    }
+
     return (
       <form onSubmit={this.handleSubmit}>
         <Grid container direction="row">
@@ -137,8 +161,8 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
               </Grid>
               <Grid container item xs={8} sm={5}>
                 <input
-                  name="proposedTitle"
-                  value={this.state.proposedTitle}
+                  name="title"
+                  value={this.state.title}
                   onChange={this.handleInputChange}
                   maxLength={30}
                   required

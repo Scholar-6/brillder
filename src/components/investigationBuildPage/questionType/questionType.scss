@@ -1,0 +1,31 @@
+.question-type {
+  border: 1px solid grey;
+  border-top: none;
+  width: 100%;
+
+  .card-description {
+    text-align: center;
+  }
+
+  .question-container {
+    margin: 5px 10px 5px 18px;
+    height: 60px;
+
+    padding: 4px 10px 10px 10px;
+    border: 2px solid #0B3A7E;
+
+    .link-description {
+      text-align: center;
+      margin: 10px 0;
+    }
+  }
+  
+  .question-container:hover {
+    cursor: pointer;
+    background: grey;
+  }
+
+  .question-container.active {
+    background: #aaa;
+  }
+}

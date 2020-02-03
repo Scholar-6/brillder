@@ -1,10 +1,16 @@
 import types from '../types';
 
-const MainPageInitialState = {
-  data: null,
+interface ProFormState {
+  data: any,
+  error?: string,
+  submitted?: boolean
 }
 
-export default (state = MainPageInitialState, action: any) => {
+const ProFormPageInitialState = {
+  data: null,
+} as ProFormState;
+
+export default (state = ProFormPageInitialState, action: any) => {
   switch (action.type) {
     case types.FETCH_PRO_FORMA_FAILURE:
       return {
@@ -15,6 +21,16 @@ export default (state = MainPageInitialState, action: any) => {
       return {
         data: action.payload,
         error: ''
+      }
+    case types.SUBMIT_PRO_FORMA_FAILURE:
+      return {
+        error: action.payload
+      }
+    case types.SUBMIT_PRO_FORMA_SUCCESS:
+      return {
+        submitted: true,
+        data: state.data,
+        error: action.payload
       }
     default: return state;
   }

@@ -1,3 +1,3 @@
-const BACKEND_HOST = "localhost:3000";
+const BACKEND_HOST = "http://api.scholar6.org";
 
 export default { BACKEND_HOST }
