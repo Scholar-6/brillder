@@ -20,36 +20,48 @@ type QuestionComponentsProps = {
   brickId: number
   question: Question
   swapComponents: Function
+  updateComponent(component: any, index: number):void
 }
 
-const QuestionComponents = ({ history, brickId, question, swapComponents }: QuestionComponentsProps) => {
+const QuestionComponents = ({ history, brickId, question, swapComponents, updateComponent }: QuestionComponentsProps) => {
   const renderDropBox = (component: any, index: number) => {
-    const {type} = question;
-    switch (type) {
-      case (QuestionTypeEnum.ShortAnswer):
-        return <SwitchQuestionComponent type={component.type} index={index} swapComponents={swapComponents} uniqueComponent={ShortAnswerComponent} />
-      case (QuestionTypeEnum.Categorise):
-        return <SwitchQuestionComponent type={component.type} index={index} swapComponents={swapComponents} uniqueComponent={CategoriseComponent} />
-      case (QuestionTypeEnum.ChooseOne):
-        return <SwitchQuestionComponent type={component.type} index={index} swapComponents={swapComponents} uniqueComponent={ChooseOneComponent} />
-      case (QuestionTypeEnum.ChooseSeveral):
-        return <SwitchQuestionComponent type={component.type} index={index} swapComponents={swapComponents} uniqueComponent={ChooseSeveralComponent} />
-      case (QuestionTypeEnum.HorizontalShuffle):
-        return <SwitchQuestionComponent type={component.type} index={index} swapComponents={swapComponents} uniqueComponent={HorizontalShuffleComponent} />
-      case (QuestionTypeEnum.LineHighlighting):
-        return <SwitchQuestionComponent type={component.type} index={index} swapComponents={swapComponents} uniqueComponent={LineHighlightingComponent} />
-      case (QuestionTypeEnum.MissingWord):
-        return <SwitchQuestionComponent type={component.type} index={index} swapComponents={swapComponents} uniqueComponent={MissingWordComponent} />
-      case (QuestionTypeEnum.PairMatch):
-        return <SwitchQuestionComponent type={component.type} index={index} swapComponents={swapComponents} uniqueComponent={PairMatchComponent} />
-      case (QuestionTypeEnum.VerticalShuffle):
-        return <SwitchQuestionComponent type={component.type} index={index} swapComponents={swapComponents} uniqueComponent={VerticalShuffleComponent} />
-      case (QuestionTypeEnum.WordHighlighting):
-        return <SwitchQuestionComponent type={component.type} index={index} swapComponents={swapComponents} uniqueComponent={WordHighlightingComponent} />
-      default:
-        history.push(`/brick/${brickId}/build/investigation/question`);
-        return <div>...Loading...</div>
+    const updatingComponent = (compData:any) => {
+      updateComponent(compData, index);
     }
+
+    const {type} = question;
+    let uniqueComponent:any;
+    if (type == QuestionTypeEnum.ShortAnswer) {
+      uniqueComponent = ShortAnswerComponent;
+    } else if (type == QuestionTypeEnum.Categorise) {
+      uniqueComponent = CategoriseComponent;
+    } else if (type == QuestionTypeEnum.ChooseOne) {
+      uniqueComponent = ChooseOneComponent;
+    } else if (type == QuestionTypeEnum.ChooseSeveral) {
+      uniqueComponent = ChooseSeveralComponent;
+    } else if (type == QuestionTypeEnum.HorizontalShuffle) {
+      uniqueComponent = HorizontalShuffleComponent;
+    } else if (type == QuestionTypeEnum.LineHighlighting) {
+      uniqueComponent = LineHighlightingComponent;
+    } else if (type == QuestionTypeEnum.MissingWord) {
+      uniqueComponent = MissingWordComponent;
+    } else if (type == QuestionTypeEnum.PairMatch) {
+      uniqueComponent = PairMatchComponent;
+    } else if (type == QuestionTypeEnum.VerticalShuffle) {
+      uniqueComponent = VerticalShuffleComponent;
+    } else if (type == QuestionTypeEnum.WordHighlighting) {
+      uniqueComponent = WordHighlightingComponent;
+    } else {
+      history.push(`/brick/${brickId}/build/investigation/question`);
+      return <div>...Loading...</div>
+    }
+    return <SwitchQuestionComponent
+      type={component.type}
+      index={index}
+      swapComponents={swapComponents}
+      component={component}
+      updateComponent={updatingComponent}
+      uniqueComponent={uniqueComponent} />
   }
 
   return (

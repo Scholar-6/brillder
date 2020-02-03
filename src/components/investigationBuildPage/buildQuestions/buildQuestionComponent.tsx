@@ -13,47 +13,55 @@ export interface QuestionProps {
   history: any
   setQuestionComponentType: Function
   swapComponents: Function
-  saveBrick: Function
+  saveBrick(): void
+  updateComponent(component: any, index:number): void
 }
 
-const BuildQuestionComponent: React.FC<QuestionProps> = ({ brickId, question, history, setQuestionComponentType, swapComponents, saveBrick }) => {
-  const {type} = question;
+const BuildQuestionComponent: React.FC<QuestionProps> = (
+  { brickId, question, history, setQuestionComponentType, swapComponents, saveBrick, updateComponent }
+) => {
+  const { type } = question;
   document.title = QuestionTypeEnum[type];
 
-  const setDropBoxItem = (dragBoxType:QuestionTypeEnum, dropBoxNumber:number) => {
+  const setDropBoxItem = (dragBoxType: QuestionTypeEnum, dropBoxNumber: number) => {
     setQuestionComponentType(dragBoxType, dropBoxNumber);
   }
 
-  const saveQuestion = () => {
+  const submitBrick = () => {
     saveBrick();
+    history.push("/");
+  }
+
+  const move = () => {
+    history.push("/");
   }
 
   return (
-    <div style={{width: '100%'}}>
-    <Grid container justify="center" className="build-question-column" item xs={12}>
-      <Grid container direction="row">
-        <Grid container item xs={4} sm={3} md={2} className="left-sidebar">
-          <DragBox onDrop={setDropBoxItem} name="Text" value={QuestionComponentTypeEnum.Text} />
-          <DragBox onDrop={setDropBoxItem} name="Hint" value={QuestionComponentTypeEnum.Hint} />
-          <DragBox onDrop={setDropBoxItem} name="Quote" value={QuestionComponentTypeEnum.Quote} />  
-          <DragBox onDrop={setDropBoxItem} name="Image" value={QuestionComponentTypeEnum.Image} />
-          <DragBox onDrop={setDropBoxItem} name="Sound" value={QuestionComponentTypeEnum.Sound} />
-          <DragBox onDrop={setDropBoxItem} name="Equation" value={QuestionComponentTypeEnum.Equation} />
-        </Grid>
-        <Grid container item xs={5} sm={6} md={8}>
-          <QuestionComponents brickId={brickId} history={history} question={question} swapComponents={swapComponents} />
-        </Grid>
-        <Grid container item xs={3} sm={3} md={2} className="right-sidebar">
-          <div>
-            <button>Come back later</button>
-            <button>Submit brick</button>
-          </div>
+    <div style={{ width: '100%' }}>
+      <Grid container justify="center" className="build-question-column" item xs={12}>
+        <Grid container direction="row">
+          <Grid container item xs={4} sm={3} md={2} className="left-sidebar">
+            <DragBox onDrop={setDropBoxItem} name="Text" value={QuestionComponentTypeEnum.Text} />
+            <DragBox onDrop={setDropBoxItem} name="Hint" value={QuestionComponentTypeEnum.Hint} />
+            <DragBox onDrop={setDropBoxItem} name="Quote" value={QuestionComponentTypeEnum.Quote} />
+            <DragBox onDrop={setDropBoxItem} name="Image" value={QuestionComponentTypeEnum.Image} />
+            <DragBox onDrop={setDropBoxItem} name="Sound" value={QuestionComponentTypeEnum.Sound} />
+            <DragBox onDrop={setDropBoxItem} name="Equation" value={QuestionComponentTypeEnum.Equation} />
+          </Grid>
+          <Grid container item xs={5} sm={6} md={8}>
+            <QuestionComponents brickId={brickId} history={history} question={question} swapComponents={swapComponents} updateComponent={updateComponent} />
+          </Grid>
+          <Grid container item xs={3} sm={3} md={2} className="right-sidebar">
+            <div>
+              <button onClick={move}>Come back later</button>
+              <button onClick={submitBrick}>Submit brick</button>
+            </div>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
-    <div className="build-question-fotter">
+      <div className="build-question-fotter">
         Saved at 5:19pm
-        <button onClick={saveQuestion}>Save Anyway</button>
+      <button onClick={saveBrick}>Save Anyway</button>
         Time Spent Building brick: 4hrs
       </div>
     </div>
