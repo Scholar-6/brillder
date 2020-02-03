@@ -13,14 +13,19 @@ export interface QuestionProps {
   history: any
   setQuestionComponentType: Function
   swapComponents: Function
+  saveBrick: Function
 }
 
-const BuildQuestionComponent: React.FC<QuestionProps> = ({ brickId, question, history, setQuestionComponentType, swapComponents }) => {
+const BuildQuestionComponent: React.FC<QuestionProps> = ({ brickId, question, history, setQuestionComponentType, swapComponents, saveBrick }) => {
   const {type} = question;
   document.title = QuestionTypeEnum[type];
 
   const setDropBoxItem = (dragBoxType:QuestionTypeEnum, dropBoxNumber:number) => {
     setQuestionComponentType(dragBoxType, dropBoxNumber);
+  }
+
+  const saveQuestion = () => {
+    saveBrick();
   }
 
   return (
@@ -48,7 +53,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = ({ brickId, question, hi
     </Grid>
     <div className="build-question-fotter">
         Saved at 5:19pm
-        <button>Save Anyway</button>
+        <button onClick={saveQuestion}>Save Anyway</button>
         Time Spent Building brick: 4hrs
       </div>
     </div>
