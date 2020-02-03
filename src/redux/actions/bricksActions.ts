@@ -19,7 +19,7 @@ const fetchBricksFailure = (errorMessage:string) => {
 
 const fetchBricks = () => {
   return function (dispatch: Dispatch) {
-    return axios.get(host.BACKEND_HOST + '/brick')
+    return axios.get(host.BACKEND_HOST + '/bricks')
       .then((res) => {
         dispatch(fetchBricksSuccess(res.data));
       })
