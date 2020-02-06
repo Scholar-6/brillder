@@ -5,9 +5,9 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const editorConfiguration = {
+  toolbar: ['bold']
 };
 
-console.log(ClassicEditor)
 const TextComponent: React.FC<any> = () => {
   return (<CKEditor
     editor={ ClassicEditor }
