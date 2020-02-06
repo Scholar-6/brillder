@@ -19,6 +19,8 @@ const fetchBrickFailure = (errorMessage:string) => {
 
 const fetchBrick = (id: number) => {
   return function (dispatch: Dispatch) {
+    dispatch(fetchBrickSuccess({ }));
+    /*
     return axios.get(host.BACKEND_HOST + '/brick/' + id)
       .then((res) => {
         dispatch(fetchBrickSuccess(res.data));
@@ -26,6 +28,7 @@ const fetchBrick = (id: number) => {
       .catch(error => {
         dispatch(fetchBrickFailure(error.message));
       });
+      */
   }
 }
 
