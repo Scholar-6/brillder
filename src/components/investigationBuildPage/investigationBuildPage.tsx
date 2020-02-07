@@ -19,7 +19,7 @@ import actions from '../../redux/actions/brickActions';
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any
   fetchBrick(brickId: number):void
-  saveBrick():void
+  saveBrick(brick:any):void
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
@@ -41,6 +41,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   }
 
   const [questions, setQuestions] = React.useState([getNewQuestion(QuestionTypeEnum.None, true)] as Question[])
+  const [loaded, setStatus] = React.useState(false as boolean)
+
+  if (!props.brick) {
+    return <div>...Loading...</div>
+  }
 
   const getQuestionIndex = (question: Question) => {
     return questions.indexOf(question);
@@ -155,16 +160,37 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       }),
     )
   }
-
-  if (!props.brick) {
-    return <div>...Loading...</div>
-  }
-
+    
   const {brick} = props;
-  if (brick.questions) {
-    var res = brick.questions.json()
+  if (brick.synthesis && loaded == false) {
+    var res = JSON.parse(brick.synthesis);
+    setQuestions(
+      update(questions, { $set: res }),
+    )
+    setStatus(
+      update(loaded, { $set: true })
+    )
   }
 
+  const saveBrick = () => {
+    brick.synthesis = JSON.stringify(questions);
+    props.saveBrick(brick);
+  }
+
+  const updateComponent = (component: any, number:number) => {
+    const index = getQuestionIndex(activeQuestion);
+    let newComponent = Object.assign({}, component)
+
+    setQuestions(
+      update(questions, {
+        [index]: {
+          components: {
+            [number]: { $set: newComponent }
+          }
+        }
+      })
+    )
+  }
   return (
     <DndProvider backend={Backend}>
       <div className="investigation-build-page">
@@ -185,7 +211,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
                   history={history}
                   question={activeQuestion}
                   setQuestionComponentType={setQuestionComponentType}
-                  swapComponents={swapComponents} />
+                  swapComponents={swapComponents}
+                  updateComponent={updateComponent}
+                  saveBrick={saveBrick}/>
               </Route>
               <Route exac path='/brick/:brickId/build/investigation/question-component/:questionId'>
                 <BuildQuestionComponent
@@ -193,7 +221,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
                   history={history}
                   question={activeQuestion}
                   setQuestionComponentType={setQuestionComponentType}
-                  swapComponents={swapComponents} />
+                  swapComponents={swapComponents}
+                  updateComponent={updateComponent}
+                  saveBrick={saveBrick}/>
               </Route>
               <Route
                 exec path='/brick/:brickId/build/investigation/question/:questionId'
@@ -223,6 +253,7 @@ const mapState = (state: any) => {
 const mapDispatch = (dispatch: any) => {
   return {
     fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
+    saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   }
 }
 

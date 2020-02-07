@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Box, Grid, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions/proFormActions';
+import brickActions from '../../../redux/actions/brickActions';
 import { ProFormaProps, ProFormaState, ProFormaSubmitData, Brick } from '../model';
 
 interface ProFormaComponentProps {
@@ -18,7 +19,7 @@ const mapState = (state: any) => {
 const mapDispatch = (dispatch: any) => {
   return {
     fetchProForm: () => dispatch(actions.fetchBrickBuildData()),
-    submitProForm: (data: ProFormaSubmitData) => dispatch(actions.saveBrick(data)),
+    submitProForm: (data: ProFormaSubmitData) => dispatch(brickActions.saveBrick(data)),
   }
 }
 

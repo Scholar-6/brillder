@@ -19,11 +19,13 @@ function selectBackgroundColor(isActive: boolean, canDrop: boolean) {
 export interface DragAndBoxProps {
   index: number
   value: QuestionComponentTypeEnum
+  data: any
   onDrop: Function
   component: Function
+  updateComponent(component:any):void
 }
 
-const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, component }) => {
+const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, data, component, updateComponent }) => {
   const ref = useRef<HTMLDivElement>(null)  
    
   const [{ canDrop, isOver }, drop] = useDrop({
@@ -64,7 +66,7 @@ const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, compo
 
   return (
     <div ref={ref} className="drag-and-drop-box" style={{ backgroundColor, width: '100%', opacity }}>
-      {component()}
+      {component({data, updateComponent})}
     </div>
   )
 }
