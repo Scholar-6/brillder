@@ -29,4 +29,30 @@ const fetchBrick = (id: number) => {
   }
 }
 
-export default { fetchBrick }
+const saveBrickSuccess = () => {
+  return {
+    type: types.SUBMIT_PRO_FORMA_SUCCESS,
+  } as Action
+}
+
+const saveBrickFailure = (errorMessage:string) => {
+  return {
+    type: types.SUBMIT_PRO_FORMA_FAILURE,
+    error: errorMessage
+  } as Action
+}
+
+
+const saveBrick = (brick:any) => {
+  return function (dispatch: Dispatch) {
+    brick.type = 1;
+    return axios.post(host.BACKEND_HOST + '/brick', brick).then(response => {
+      dispatch(saveBrickSuccess());
+    })
+    .catch(error => {
+      dispatch(saveBrickFailure(error.message))
+    })
+  }
+}
+
+export default { fetchBrick, saveBrick }

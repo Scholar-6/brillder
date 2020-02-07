@@ -2,6 +2,7 @@ import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
 import host from '../../hostname';
+import { Brick } from '../../model/brick';
 
 const fetchProFormaDataSuccess = (data:any) => {
   return {
@@ -22,13 +23,9 @@ const fetchBrickBuildData = (brickId: string = '') => {
     return axios.get(host.BACKEND_HOST + '/brick')
       .then(() => {
         var data = {  
-          //subject: 'Geography',
-          //topic: 'Desertification',
-          //title: 'Exfoliatioin and Erosion in Arid Environments',
           author: 'E. Pound',
           editor: 'R. Unstead',
           comissionTime: '40 minutes',
-          //iteration: 1
         } as any;
         if (brickId) {
           data.subject = 'Test'
@@ -43,32 +40,6 @@ const fetchBrickBuildData = (brickId: string = '') => {
   }
 }
 
-const submitProFormaSuccess = () => {
-  return {
-    type: types.SUBMIT_PRO_FORMA_SUCCESS,
-  } as Action
-}
-
-const submitProFormaFailure = (errorMessage:string) => {
-  return {
-    type: types.SUBMIT_PRO_FORMA_FAILURE,
-    error: errorMessage
-  } as Action
-}
-
-const saveBrick = (brick:any) => {
-  return function (dispatch: Dispatch) {
-    brick.type = 1;
-    return axios.post(host.BACKEND_HOST + '/brick', brick).then(response => {
-      dispatch(submitProFormaSuccess());
-    })
-    .catch(error => {
-      dispatch(submitProFormaFailure(error.message))
-    })
-  }
-}
-
 export default {
-  fetchBrickBuildData,
-  saveBrick,
+  fetchBrickBuildData
 }

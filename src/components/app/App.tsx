@@ -13,6 +13,8 @@ import reducer from '../../redux/reducers/index';
 import ProFormaPage from '../proFormaPage/proFormaPage';
 import BricksListPage from '../bricksListPage/bricksListPage';
 import InvestigationBuildPage from '../investigationBuildPage/investigationBuildPage'
+import LoginPage from '../loginPage/loginPage';
+import RegisterPage from '../registerPage/registerPage';
 
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
@@ -39,6 +41,8 @@ const App: React.FC = () => {
           <Route path="/bricks-list">
             <BricksListPage />
           </Route>
+          <Route path="/login" exact component={LoginPage}></Route>
+          <Route path="/register" exact component={RegisterPage}></Route>
           <Route path="/">
             <MainPage />
           </Route>
