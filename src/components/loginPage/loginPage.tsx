@@ -29,7 +29,7 @@ function LoginPage(props:any) {
       return;
     }
   
-    axios.post(host.BACKEND_HOST + '/auth/login', {email, password}).then(resp => {
+    axios.post(host.BACKEND_HOST + '/auth/login', {email, password}, {withCredentials: true}).then(resp => {
       const {data} = resp;
       if (data.errors) {
         alert(data.errors[0].msg);
