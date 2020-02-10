@@ -226,8 +226,8 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
             <Grid container direction="row" className="row">
               <Grid container item xs={4}></Grid>
               <Grid container item xs={8}>
-              <Button type="button" variant="contained" color="primary" onClick={this.goBack}>Back</Button>
-              <Button type="submit" variant="contained" color="primary">Save / Update</Button>
+                <Button className="back-button" type="button" variant="contained" color="primary" onClick={this.goBack}>Back</Button>
+                <Button type="submit" variant="contained" color="primary">Save / Update</Button>
               </Grid>
             </Grid>
           </Grid>
