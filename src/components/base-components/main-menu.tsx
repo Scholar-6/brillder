@@ -45,7 +45,7 @@ function MainMenu(props: any) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            News
+            Menu
           </Typography>
           <Button color="inherit" onClick={props.logout}>Logout</Button>
         </Toolbar>
