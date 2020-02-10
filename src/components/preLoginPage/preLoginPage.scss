@@ -22,8 +22,17 @@ html, body, #root {
 .pre-login-page {
     height: 100%;
     background-color: #111f33;
+
     .login-container {
         width:450px;
+
+        .login-logo {
+            font-size: 20px;
+            text-align: center;
+            color: #0076B4;
+            padding: 5px 20px;
+            margin-bottom: 30px;
+        }
         
         .user-type-btn {
             padding: 0 16px;

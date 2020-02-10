@@ -10,6 +10,9 @@ function PreLoginPage(props: any) {
   return (
     <Grid className="pre-login-page" container item justify="center" alignItems="center">
       <div className="login-container">
+        <div className="login-logo">
+          <img src="/images/lflogo.png" alt="lol"/>
+        </div>
         <Grid container direction="row">
           <Grid container item xs={12} justify="center">
             <Button onClick={() => signIn(1)} className="user-type-btn">
