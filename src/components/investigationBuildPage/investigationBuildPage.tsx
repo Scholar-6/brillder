@@ -162,8 +162,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   }
     
   const {brick} = props;
-  if (brick.synthesis && loaded == false) {
-    var res = JSON.parse(brick.synthesis);
+  if (brick.questions && loaded == false) {
+    var res = JSON.parse(brick.questions);
     setQuestions(
       update(questions, { $set: res }),
     )
@@ -243,7 +243,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
 const mapState = (state: any) => {
   return {
-    submitted: state.proForm.submitted,
     data: state.proForm.data,
     bricks: state.bricks.bricks,
     brick: state.brick.brick,

@@ -20,7 +20,7 @@ const fetchProFormaDataFailure = (errorMessage:string) => {
 
 const fetchBrickBuildData = (brickId: string = '') => {
   return function (dispatch: Dispatch) {
-    return axios.get(host.BACKEND_HOST + '/brick')
+    return axios.get(`${host.BACKEND_HOST}/brick/${brickId}`, {withCredentials: true})
       .then(() => {
         var data = {  
           author: 'E. Pound',
