@@ -15,6 +15,7 @@ import BricksListPage from '../bricksListPage/bricksListPage';
 import InvestigationBuildPage from '../investigationBuildPage/investigationBuildPage'
 import LoginPage from '../loginPage/loginPage';
 import RegisterPage from '../registerPage/registerPage';
+import PreLoginPage from '../preLoginPage/preLoginPage';
 
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
@@ -35,6 +36,7 @@ const App: React.FC = () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Switch>
+          <Route path="/pre-login" component={PreLoginPage}></Route>
           <Route path="/brick/:brickId" component={InvestigationBuildPage}></Route>
           <Route path="/brick-create" exact component={ProFormaPage}></Route>
           <Route path="/brick-create/:brickId" exact component={ProFormaPage}></Route>
