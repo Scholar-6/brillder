@@ -160,6 +160,20 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       }),
     )
   }
+
+  const addComponent = () => {
+    const index = getQuestionIndex(activeQuestion);
+    const components  = Object.assign([], activeQuestion.components) as any[];
+    components.push({type: 0});
+
+    setQuestions(
+      update(questions, {
+        [index]: {
+          components: { $set: components}
+        }
+      }),
+    )
+  }
     
   const {brick} = props;
   if (brick.questions && loaded == false) {
@@ -213,6 +227,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
                   setQuestionComponentType={setQuestionComponentType}
                   swapComponents={swapComponents}
                   updateComponent={updateComponent}
+                  addComponent={addComponent}
                   saveBrick={saveBrick}/>
               </Route>
               <Route exac path='/brick/:brickId/build/investigation/question-component/:questionId'>
@@ -223,6 +238,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
                   setQuestionComponentType={setQuestionComponentType}
                   swapComponents={swapComponents}
                   updateComponent={updateComponent}
+                  addComponent={addComponent}
                   saveBrick={saveBrick}/>
               </Route>
               <Route

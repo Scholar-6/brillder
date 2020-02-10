@@ -5,6 +5,16 @@
   .drop-box {
     min-height: 81px;
   }
+
+  .add-dropbox {
+    .add-dropbox-button {
+      width: 100%;
+      border: 1px black solid;
+      text-transform: none;
+      border-radius: 0;
+    }
+    margin-bottom: 10px;  
+  }
 }
 
 @media only screen and (min-width: 1200px)  {

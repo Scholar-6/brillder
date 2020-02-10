@@ -12,13 +12,14 @@ export interface QuestionProps {
   question: Question
   history: any
   setQuestionComponentType: Function
+  addComponent: Function
   swapComponents: Function
   saveBrick(): void
   updateComponent(component: any, index:number): void
 }
 
 const BuildQuestionComponent: React.FC<QuestionProps> = (
-  { brickId, question, history, setQuestionComponentType, swapComponents, saveBrick, updateComponent }
+  { brickId, question, history, setQuestionComponentType, swapComponents, saveBrick, updateComponent, addComponent }
 ) => {
   const { type } = question;
   document.title = QuestionTypeEnum[type];
@@ -49,7 +50,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
             <DragBox onDrop={setDropBoxItem} name="Equation" value={QuestionComponentTypeEnum.Equation} />
           </Grid>
           <Grid container item xs={5} sm={6} md={8}>
-            <QuestionComponents brickId={brickId} history={history} question={question} swapComponents={swapComponents} updateComponent={updateComponent} />
+            <QuestionComponents brickId={brickId} history={history} question={question} swapComponents={swapComponents} updateComponent={updateComponent} addComponent={addComponent} />
           </Grid>
           <Grid container item xs={3} sm={3} md={2} className="right-sidebar">
             <div>
