@@ -1,20 +1,20 @@
 import types from '../types';
 
 interface AccountState {
-  loggedIn: boolean
+  isAuthenticated: boolean
   error: string
 }
 
 const AccountInitialState: AccountState = {
-  loggedIn: false,
+  isAuthenticated: false,
   error: ""
 }
 
 export default (state = AccountInitialState, action: any) => {
   switch (action.type) {
-    case types.REGISTER_SUCCESS:
-      return { } as AccountState
-    case types.REGISTTER_FAILURE:
+    case types.LOGIN_SUCCESS:
+      return { isAuthenticated: true } as AccountState
+    case types.LOGIN_FAILURE:
       return { error: action.error } as AccountState
     default: return state;
   }

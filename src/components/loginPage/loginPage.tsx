@@ -3,15 +3,27 @@ import { Grid, TextField } from "@material-ui/core";
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import axios from 'axios';
-import host from '../../hostname';
+import actions from '../../redux/actions/auth';
+import './loginPage.scss';
+import { Redirect } from "react-router-dom";
 
+const mapState = (state: any) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated ,
+  }
+}
 
-function LoginPage(props:any) {
+const mapDispatch = (dispatch: any) => {
+  return {
+    login: (model: any) => dispatch(actions.login(model)),
+  }
+}
+
+const connector = connect(mapState, mapDispatch)
+
+function LoginPage(props: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  console.log(props)
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -28,57 +40,56 @@ function LoginPage(props:any) {
       alert(res);
       return;
     }
-  
-    axios.post(host.BACKEND_HOST + '/auth/login', {email, password}, {withCredentials: true}).then(resp => {
-      const {data} = resp;
-      if (data.errors) {
-        alert(data.errors[0].msg);
-        return;
-      }
-      if (data.msg) {
-        alert(data.msg);
-        return;
-      }
-      console.log(data);
 
-      alert('Login successful')
-      props.history.push('/')
-    }).catch(e => {
-      console.log(e);
-      alert('Connection problem');
-    });
+    props.login();
+  }
+
+  if (props.isAuthenticated) {
+    props.history.push("/");
   }
 
   return (
-    <div className="Login">
-      <Grid container direction="row" justify="center" className="mainPage" alignItems="center">
-        <Grid container item xs={3}></Grid>
-        <Grid container item xs={6}>
-          <Card style={{margin: '40px 0 0 0'}}>
-            <form onSubmit={handleSubmit}>
-              <TextField
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                style={{margin:'20px 30px 5px 30px'}}
-                required
-                label="Email" />
-              <br></br>
-              <TextField
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                style={{margin:'5px 30px 5px 30px'}}
-                required
-                label="Password" />
-              <br></br>
-              <Button type="submit">Sign in</Button>
-            </form>
-          </Card>           
+    <Grid className="login-page" container item justify="center" alignItems="center">
+      <div className="login-container">
+        <div className="login-logo">
+          <img src="/images/lflogo.png" alt="lol" />
+        </div>
+        <Grid container direction="row">
+          <Grid container item xs={12} justify="center">
+            <Card className="login-card">
+              <h1>Sign in with email</h1>
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  className="login-field"
+                  required
+                  label="Email" />
+                <br />
+                <TextField
+                  type="password"
+                  value={password}
+                  className="login-field password"
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                  label="Password" />
+                <br />
+                <Grid container direction="row" justify="flex-end" alignItems="center">
+                  <Button variant="contained" color="primary" className="sign-in-button" type="submit">Sign in</Button>
+                </Grid>
+              </form>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+        <Grid container direction="row">
+          <Grid container item xs={12} justify="center">
+            <img className="fotter" src="/images/brillder-2-logo.png" /><br />
+          </Grid>
+        </Grid>
+      </div>
+    </Grid>
   );
 }
 
-export default LoginPage
+export default connector(LoginPage);

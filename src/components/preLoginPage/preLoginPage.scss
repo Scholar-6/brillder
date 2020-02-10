@@ -26,6 +26,47 @@ html, body, #root {
     .login-container {
         width:450px;
 
+        .google-button {
+            background-color: white;
+            text-transform: none;
+            border-radius: 2px;
+            padding: 8px 16px;
+            color: grey;
+            margin-bottom: 38px;
+            width: 188px;
+
+            .google-icon {
+                height: 18px;
+            }
+
+            .google-button-text {
+                padding-left: 10px;
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+
+        .email-button {
+            background-color: #db4437;
+            text-transform: none;
+            border-radius: 2px;
+            padding: 8px 16px;
+            color: grey;
+            margin-bottom: 12px;
+            width: 188px;
+
+            .email-icon {
+                height: 18px;
+            }
+
+            .email-button-text {
+                padding-left: 10px;
+                color: white;
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+
         .login-logo {
             font-size: 20px;
             text-align: center;
@@ -42,6 +83,7 @@ html, body, #root {
             text-transform: none;
             margin-bottom: 10px;
             border-radius: 2px;
+            width: 240px;
             
             img {
                 width: 75px;
