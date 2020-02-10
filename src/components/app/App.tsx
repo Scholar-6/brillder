@@ -36,7 +36,7 @@ const App: React.FC = () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route path="/play/pallet" component={PreLoginPage}></Route>
+          <Route path="/pre-login" component={PreLoginPage}></Route>
           <Route path="/brick/:brickId" component={InvestigationBuildPage}></Route>
           <Route path="/brick-create" exact component={ProFormaPage}></Route>
           <Route path="/brick-create/:brickId" exact component={ProFormaPage}></Route>
