@@ -20,6 +20,7 @@ export type Brick = {
   title: string,
   investigationBrief: string,
   preparationBrief: string,
+  openQuestion: string,
 }
   
 export interface ProFormaState {
@@ -31,6 +32,7 @@ export interface ProFormaState {
   title: string,
   investigationBrief: string,
   preparationBrief: string,
+  openQuestion: string,
 }
 
 export type ProFormaSubmitData = {

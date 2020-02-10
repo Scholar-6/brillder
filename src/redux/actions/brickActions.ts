@@ -19,7 +19,7 @@ const fetchBrickFailure = (errorMessage:string) => {
 
 const fetchBrick = (id: number) => {
   return function (dispatch: Dispatch) {
-    return axios.get(host.BACKEND_HOST + '/brick/' + id)
+    return axios.get(host.BACKEND_HOST + '/brick/' + id, {withCredentials: true})
       .then((res) => {
         dispatch(fetchBrickSuccess(res.data));
       })
@@ -46,7 +46,7 @@ const saveBrickFailure = (errorMessage:string) => {
 const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
     brick.type = 1;
-    return axios.post(host.BACKEND_HOST + '/brick', brick).then(response => {
+    return axios.post(host.BACKEND_HOST + '/brick', brick, {withCredentials: true}).then(response => {
       dispatch(saveBrickSuccess());
     })
     .catch(error => {
