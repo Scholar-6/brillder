@@ -27,10 +27,7 @@ const mapDispatch = (dispatch: any) => {
   }
 }
 
-const connector = connect(
-  mapState,
-  mapDispatch
-)
+const connector = connect(mapState, mapDispatch);
 
 class ProFormaPage extends Component<ProFormaProps, any> {
   constructor(props: ProFormaProps) {

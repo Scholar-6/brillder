@@ -27,4 +27,16 @@ const login = (model:any) => {
   }
 }
 
-export default { login }
+const logoutSuccess = () => {
+  return {
+    type: types.LOGOUT_SUCCESS,
+  } as Action
+}
+
+const logout = () => {
+  return function (dispatch: Dispatch) {
+    dispatch(logoutSuccess());
+  }
+}
+
+export default { login, logout }

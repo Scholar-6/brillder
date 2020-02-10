@@ -1,7 +1,23 @@
 import React from "react";
+import { connect } from 'react-redux';
+import actions from '../../redux/actions/auth';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Button, Typography, IconButton } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
+
+const mapState = (state: any) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+  }
+}
+
+const mapDispatch = (dispatch: any) => {
+  return {
+    logout: () => dispatch(actions.logout()),
+  }
+}
+
+const connector = connect(mapState, mapDispatch);
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,11 +47,11 @@ function MainMenu(props: any) {
           <Typography variant="h6" className={classes.title}>
             News
           </Typography>
-          <Button color="inherit">Logout</Button>
+          <Button color="inherit" onClick={props.logout}>Logout</Button>
         </Toolbar>
       </AppBar>
     </div>
   );
 }
 
-export default MainMenu
+export default connector(MainMenu);
