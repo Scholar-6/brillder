@@ -1,5 +1,6 @@
 import React from 'react'
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
+import DeleteIcon from '@material-ui/icons/Delete';
 import './shortAnswer.scss'
 
 export interface ShortAnswerProps {
@@ -21,10 +22,15 @@ const ShortAnswerComponent: React.FC<ShortAnswerProps> = ({data, updateComponent
     updateComponent(data);
   }
 
+  const removeFromList = (index: number) => {
+    data.list.splice(index, 1);
+    updateComponent(data);
+  }
+
   const renderShortAnswer = (shortAnswer: any, key: number) => {
     return (
       <div className="short-answer-box" key={key}>
-        <i className="fa fa-trash" aria-hidden="true"></i>
+        <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} />
         <input value={shortAnswer.value} onChange={(event) => changed(shortAnswer, event)} placeholder="Enter short answer..." />
       </div>
     );
