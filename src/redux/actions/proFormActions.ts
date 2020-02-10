@@ -4,14 +4,14 @@ import { Action, Dispatch } from 'redux';
 import host from '../../hostname';
 import { Brick } from '../../model/brick';
 
-const fetchProFormaDataSuccess = (data:any) => {
+const fetchProFormaDataSuccess = (data: any) => {
   return {
     type: types.FETCH_PRO_FORMA_SUCCESS,
     payload: data
   } as Action
 }
 
-const fetchProFormaDataFailure = (errorMessage:string) => {
+const fetchProFormaDataFailure = (errorMessage: string) => {
   return {
     type: types.FETCH_PRO_FORMA_FAILURE,
     error: errorMessage
@@ -20,23 +20,17 @@ const fetchProFormaDataFailure = (errorMessage:string) => {
 
 const fetchBrickBuildData = (brickId: string = '') => {
   return function (dispatch: Dispatch) {
-    return axios.get(`${host.BACKEND_HOST}/brick/${brickId}`, {withCredentials: true})
-      .then(() => {
-        var data = {  
-          author: 'E. Pound',
-          editor: 'R. Unstead',
-          comissionTime: '40 minutes',
-        } as any;
-        if (brickId) {
-          data.subject = 'Test'
-          data.topic = 'Test'
-        }
-        // hardcode data for now
-        dispatch(fetchProFormaDataSuccess(data));
-      })
-      .catch(error => {
-        dispatch(fetchProFormaDataFailure(error.message));
-      });
+    var data = {
+      author: 'E. Pound',
+      editor: 'R. Unstead',
+      comissionTime: '40 minutes',
+    } as any;
+    if (brickId) {
+      data.subject = 'Test'
+      data.topic = 'Test'
+    }
+    // hardcode data for now
+    dispatch(fetchProFormaDataSuccess(data));
   }
 }
 
