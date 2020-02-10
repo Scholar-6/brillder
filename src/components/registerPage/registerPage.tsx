@@ -55,7 +55,7 @@ function RegisterPage(props:any) {
         <Grid container direction="row">
           <Grid container item xs={12} justify="center">
             <Card className="login-card">
-              <h1>Sign in with email</h1>
+              <h1>Sign up with email</h1>
               <form onSubmit={handleSubmit}>
               <TextField
                 type="email"
