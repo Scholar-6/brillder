@@ -36,7 +36,8 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
         title: brick.title,
         alternativeTopics: brick.alternativeTopics,
         investigationBrief: brick.investigationBrief,
-        preparationBrief: brick.preparationBrief
+        preparationBrief: brick.preparationBrief,
+        openQuestion: brick.openQuestion,
       } as ProFormaState;
     } else {
       state = {
@@ -46,7 +47,8 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
         title: '',
         alternativeTopics: '',
         investigationBrief: '',
-        preparationBrief: ''
+        preparationBrief: '',
+        openQuestion: '',
       } as ProFormaState;
     }
 
@@ -152,6 +154,22 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
                   maxLength={30}
                   required
                   placeholder="e.g. 20th century Dictators" />
+              </Grid>
+            </Grid>
+            <Grid container direction="row" className="row">
+              <Grid container item xs={4}>
+                <div className="fullWidth">
+                  <Box className="right left-box" height="auto" bgcolor="primary.main">Open Question</Box>
+                </div>
+              </Grid>
+              <Grid container item xs={8} sm={5}>
+                <input
+                  name="openQuestion"
+                  value={this.state.openQuestion}
+                  onChange={this.handleInputChange}
+                  maxLength={30}
+                  required
+                  placeholder="" />
               </Grid>
             </Grid>
             <Grid container direction="row" className="row">
