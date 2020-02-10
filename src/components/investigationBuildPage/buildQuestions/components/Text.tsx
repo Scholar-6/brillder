@@ -17,7 +17,6 @@ const TextComponent: React.FC<any> = () => {
     } }
     onChange={ ( event: any, editor:any ) => {
         const data = editor.getData();
-        console.log(data);
     } }
     onBlur={ ( event: any, editor: any ) => {
     } }

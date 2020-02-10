@@ -11,8 +11,6 @@ function RegisterPage(props:any) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  console.log(props)
-
   const validateForm = () => {
     if (email.length > 0 && password.length > 0 && confirmPassword.length > 0) {
       if (password != confirmPassword) {
