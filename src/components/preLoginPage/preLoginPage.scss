@@ -1,0 +1,53 @@
+
+.rotate-90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.rotate-180 {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+html, body, #root {
+    height: 100%
+}
+
+.pre-login-page {
+    height: 100%;
+    background-color: #111f33;
+    .login-container {
+        width:450px;
+        
+        .user-type-btn {
+            padding: 0 16px;
+            background-color: white;
+            font-size: 30px !important;
+            font-family: Montserrat;
+            text-transform: none;
+            margin-bottom: 10px;
+            border-radius: 2px;
+            
+            img {
+                width: 75px;
+                height: 75px;
+                margin: 10px;
+            }
+
+            .user-type-name {
+               margin-left: 20px;
+               margin-right: 10px;
+            }
+        }
+        .fotter {
+            width:50%;
+            margin-top: 0px;
+        }
+    }
+}
