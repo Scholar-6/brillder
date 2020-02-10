@@ -1,6 +1,6 @@
 import React from 'react'
-import update from 'immutability-helper';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
+import './shortAnswer.scss'
 
 export interface ShortAnswerProps {
   data: any
@@ -8,19 +8,36 @@ export interface ShortAnswerProps {
 }
 
 const ShortAnswerComponent: React.FC<ShortAnswerProps> = ({data, updateComponent}) => {
-  let value = ""
-  if (data.value) {
-    value = data.value;
+  if (!data.list) {
+    data.list = [{value: ""}];
   }
-  const changed = (event: any) => {
-    data.value = event.target.value;
+  const changed = (shortAnswer: any, event: any) => {
+    shortAnswer.value = event.target.value;
     updateComponent(data);
   }
+
+  const addShortAnswer = () => {
+    data.list.push({ value: ""});
+    updateComponent(data);
+  }
+
+  const renderShortAnswer = (shortAnswer: any, key: number) => {
+    return (
+      <div className="short-answer-box" key={key}>
+        <i className="fa fa-trash" aria-hidden="true"></i>
+        <input value={shortAnswer.value} onChange={(event) => changed(shortAnswer, event)} placeholder="Enter short answer..." />
+      </div>
+    );
+  }
+
   return (
-    <div className="input-box">
-      <DragIndicatorIcon />
-      <div>
-        <input value={value} onChange={changed} placeholder="Enter correct answer" />
+    <div className="short-answer">
+      <DragIndicatorIcon className="rotate-90" />
+      {
+          data.list.map((shortAnswer:any, i:number) => renderShortAnswer(shortAnswer, i))
+      }
+      <div className="button-box">
+        <button className="add-answer-button" onClick={addShortAnswer}>+ Add Short Answer</button>
       </div>
     </div>
   )

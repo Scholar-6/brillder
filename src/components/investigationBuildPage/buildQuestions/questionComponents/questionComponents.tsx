@@ -65,7 +65,7 @@ const QuestionComponents = ({ history, brickId, question, swapComponents, update
   }
 
   return (
-    <div className="short-answer">
+    <div className="questions">
       {
         question.components.map((comp, i) => {
           return (
