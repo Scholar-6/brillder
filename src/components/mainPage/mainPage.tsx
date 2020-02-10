@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Box, Grid } from '@material-ui/core';
 import actions from '../../redux/actions/mainPageActions';
+import MainMenu from '../base-components/main-menu';
 
 const mapState = (state: any) => {
   return {
@@ -32,18 +33,19 @@ class MainPage extends Component {
     const props = this.props as any;
     return (
       <Grid container direction="row" justify="center" className="mainPage" alignItems="center">
+        <MainMenu></MainMenu>
         <Grid container item xs={12} justify="center">
           <div className="client-name">Welcome {props.username}</div>
         </Grid>
 
-      <Grid container item xs={12} justify="center">
-        <Box bgcolor="primary.main" className="bigButton">
-          <Link to="/bricks-list">
-            <div className="link-title">VIEW</div>
-            <div className="link-description">See what we want...</div>
-          </Link>
-        </Box>
-      </Grid>
+        <Grid container item xs={12} justify="center">
+          <Box bgcolor="primary.main" className="bigButton">
+            <Link to="/bricks-list">
+              <div className="link-title">VIEW</div>
+              <div className="link-description">See what we want...</div>
+            </Link>
+          </Box>
+        </Grid>
 
         <Grid container item xs={12} justify="center">
           <Box bgcolor="primary.main" className="bigButton">
