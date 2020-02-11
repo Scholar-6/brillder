@@ -19,7 +19,17 @@ const loginFailure = (errorMessage:string) => {
 const login = (model:any) => {
   return function (dispatch: Dispatch) {
     return axios.post(host.BACKEND_HOST + '/auth/login', model, {withCredentials: true}).then(response => {
-      dispatch(loginSuccess());
+      const {data} = response;
+      if (data == "OK") {
+        dispatch(loginSuccess());
+      }
+      let {msg} = data;
+      if (!msg) {
+        const {errors} = data;
+        msg = errors[0].msg
+      }
+      alert(msg);
+      dispatch(loginFailure(msg))
     })
     .catch(error => {
       dispatch(loginFailure(error.message))

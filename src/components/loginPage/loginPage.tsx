@@ -9,7 +9,8 @@ import { Redirect } from "react-router-dom";
 
 const mapState = (state: any) => {
   return {
-    isAuthenticated: state.auth.isAuthenticated ,
+    error: state.auth.error,
+    isAuthenticated: state.auth.isAuthenticated,
   }
 }
 
