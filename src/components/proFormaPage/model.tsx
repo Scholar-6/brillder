@@ -1,4 +1,5 @@
 import { RouteComponentProps } from 'react-router-dom';
+import { Brick } from '../../model/brick';
 
 export interface ProFormaProps extends RouteComponentProps<any> {
   submitted: boolean,
@@ -11,18 +12,6 @@ export interface ProFormaProps extends RouteComponentProps<any> {
   fetchBrick: Function,
 }
 
-export type Brick = {
-  id: number,
-  subject: string,
-  topic: string,
-  subTopic: string,
-  alternativeTopics: string,
-  title: string,
-  investigationBrief: string,
-  preparationBrief: string,
-  openQuestion: string,
-}
-  
 export interface ProFormaState {
   id: number,
   subject: string,
@@ -33,6 +22,7 @@ export interface ProFormaState {
   investigationBrief: string,
   preparationBrief: string,
   openQuestion: string,
+  alternativeSubject: string,
 }
 
 export type ProFormaSubmitData = {
@@ -43,4 +33,6 @@ export type ProFormaSubmitData = {
   title: string,
   investigationBrief: string,
   preparationBrief: string,
+  openQuestion: string,
+  alternativeSubject: string,
 }

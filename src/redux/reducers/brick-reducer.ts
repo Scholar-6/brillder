@@ -16,6 +16,11 @@ export default (state = BrickInitialState, action: any) => {
         brick: action.payload,
         error: ''
       }
+    case types.SUBMIT_PRO_FORMA_SUCCESS:
+      return {
+        brick: action.payload,
+        error: ''
+      }
     default: return state;
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { Brick } from '../../proFormaPage/model';
+import { Brick } from '../../../model/brick';
 
 type InvestigationBuildProps = {
   brick: Brick,

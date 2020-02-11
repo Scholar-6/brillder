@@ -7,6 +7,8 @@ export interface Brick {
   alternativeTopics: string
   investigationBrief: string
   preparationBrief: string
+  openQuestion: string
+  alternativeSubject: string
   type: number
   questions: any[]
 }

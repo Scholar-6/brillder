@@ -34,12 +34,25 @@ class ProFormaPage extends Component<ProFormaProps, any> {
     super(props)
     const brickId: number = props.match.params.brickId;
     props.fetchProForm(brickId);
+
     if (brickId) {
       this.props.fetchBrick(brickId);
+    }
+    
+    this.moveToInvestigationBuild = this.moveToInvestigationBuild.bind(this);
+  }
+
+  moveToInvestigationBuild() {
+    if (this.props.submitted === true) {
+      const {id} = this.props.brick;
+      if (id) {
+        this.props.history.push(`/brick/${id}/build/investigation/question`);
+      }
     }
   }
 
   render() {
+    this.moveToInvestigationBuild();
     let brick = null;
     const { brickId } = this.props.match.params;
     if (brickId) {
