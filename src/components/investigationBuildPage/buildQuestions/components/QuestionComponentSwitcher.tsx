@@ -26,8 +26,6 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({ type, index, s
     innerComponent = TextComponent;
   } else if (type == QuestionComponentTypeEnum.Image) {
     innerComponent = ImageComponent;
-  } else if (type == QuestionComponentTypeEnum.Hint) {
-    innerComponent = HintComponent;
   } else if (type == QuestionComponentTypeEnum.Quote) {
     innerComponent = QuoteComponent;
   } else if (type == QuestionComponentTypeEnum.Sound) {
