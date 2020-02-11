@@ -6,7 +6,6 @@ import './preLoginPage.scss'
 
 function PreLoginPage(props: any) {
   const [userType, setUserType] = React.useState(0)
-  console.log(props)
   const selectLoginType = (number: number) => {
     setUserType(update(userType, { $set: number }));
   }

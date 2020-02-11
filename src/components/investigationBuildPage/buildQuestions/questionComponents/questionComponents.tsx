@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 
 import './questionComponents.scss';
 import { Question, QuestionTypeEnum } from '../../../model/question';
@@ -20,10 +20,11 @@ type QuestionComponentsProps = {
   brickId: number
   question: Question
   swapComponents: Function
+  addComponent: Function
   updateComponent(component: any, index: number):void
 }
 
-const QuestionComponents = ({ history, brickId, question, swapComponents, updateComponent }: QuestionComponentsProps) => {
+const QuestionComponents = ({ history, brickId, question, swapComponents, updateComponent, addComponent }: QuestionComponentsProps) => {
   const renderDropBox = (component: any, index: number) => {
     const updatingComponent = (compData:any) => {
       updateComponent(compData, index);
@@ -64,8 +65,13 @@ const QuestionComponents = ({ history, brickId, question, swapComponents, update
       uniqueComponent={uniqueComponent} />
   }
 
+  const addQuestionComponent = () => {
+    // update question
+    addComponent();
+  }
+
   return (
-    <div className="short-answer">
+    <div className="questions">
       {
         question.components.map((comp, i) => {
           return (
@@ -77,6 +83,11 @@ const QuestionComponents = ({ history, brickId, question, swapComponents, update
           )
         })
       }
+      <Grid container direction="row" className="add-dropbox">
+        <Button className="add-dropbox-button" onClick={addQuestionComponent}>
+          + Question Component
+        </Button>
+      </Grid>
     </div>
   );
 }

@@ -61,6 +61,11 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.goBack = this.goBack.bind(this);
+  }
+
+  goBack() {
+    this.props.parent.history.goBack();
   }
 
   handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -221,6 +226,7 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
             <Grid container direction="row" className="row">
               <Grid container item xs={4}></Grid>
               <Grid container item xs={8}>
+                <Button className="back-button" type="button" variant="contained" color="primary" onClick={this.goBack}>Back</Button>
                 <Button type="submit" variant="contained" color="primary">Save / Update</Button>
               </Grid>
             </Grid>

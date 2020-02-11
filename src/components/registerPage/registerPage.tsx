@@ -11,8 +11,6 @@ function RegisterPage(props:any) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  console.log(props)
-
   const validateForm = () => {
     if (email.length > 0 && password.length > 0 && confirmPassword.length > 0) {
       if (password != confirmPassword) {
@@ -49,42 +47,54 @@ function RegisterPage(props:any) {
   }
 
   return (
-    <div className="Login">
-      <Grid container direction="row" justify="center" className="mainPage" alignItems="center">
-        <Grid container item xs={3}></Grid>
-        <Grid container item xs={6}>
-          <Card style={{margin: '40px 0 0 0'}}>
-            <form onSubmit={handleSubmit}>
+    <Grid className="login-page" container item justify="center" alignItems="center">
+      <div className="login-container">
+        <div className="login-logo">
+          <img src="/images/lflogo.png" alt="lol" />
+        </div>
+        <Grid container direction="row">
+          <Grid container item xs={12} justify="center">
+            <Card className="login-card">
+              <h1>Sign up with email</h1>
+              <form onSubmit={handleSubmit}>
               <TextField
                 type="email"
                 value={email}
+                className="login-field"
                 onChange={e => setEmail(e.target.value)}
-                style={{margin:'20px 30px 5px 30px'}}
                 required
                 label="Email" />
               <br></br>
               <TextField
                 type="password"
                 value={password}
+                className="login-field"
                 onChange={e => setPassword(e.target.value)}
-                style={{margin:'5px 30px 5px 30px'}}
                 required
                 label="Password" />
               <br></br>
               <TextField
                 type="password"
                 value={confirmPassword}
+                className="login-field password"
                 onChange={e => setConfirmPassword(e.target.value)}
-                style={{margin:'5px 30px 20px 30px'}}
                 required
                 label="Confirm Password" />
               <br></br>
-              <Button type="submit">Sign up</Button>
+              <Grid container direction="row" justify="flex-end" alignItems="center">
+                <Button variant="contained" color="primary" className="sign-in-button" type="submit">Sign up</Button>
+              </Grid>
             </form>
-          </Card>           
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+        <Grid container direction="row">
+          <Grid container item xs={12} justify="center">
+            <img className="fotter" src="/images/brillder-2-logo.png" /><br />
+          </Grid>
+        </Grid>
+      </div>
+    </Grid>
   );
 }
 

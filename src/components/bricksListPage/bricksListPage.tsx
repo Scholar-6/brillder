@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Box, Grid } from '@material-ui/core';
+
 import actions from '../../redux/actions/bricksActions';
+import MainMenu from '../base-components/main-menu';
 
 const mapState = (state: any) => {
   return {
@@ -46,6 +48,7 @@ class BricksListPage extends Component<any, any> {
   render() {
     return (
       <div className="bricks-list-page">
+        <MainMenu></MainMenu>
         <Grid container direction="row" className="mainPage">
           <Grid container item xs={12} justify="center">
             List of Bricks

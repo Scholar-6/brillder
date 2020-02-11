@@ -48,6 +48,10 @@ function LoginPage(props: any) {
     props.history.push("/");
   }
 
+  const toRegister = () => {
+    props.history.push('/register');
+  }
+
   return (
     <Grid className="login-page" container item justify="center" alignItems="center">
       <div className="login-container">
@@ -76,6 +80,7 @@ function LoginPage(props: any) {
                   label="Password" />
                 <br />
                 <Grid container direction="row" justify="flex-end" alignItems="center">
+                  <Button variant="contained" color="primary" className="sign-in-button" onClick={toRegister}>Sign up</Button>
                   <Button variant="contained" color="primary" className="sign-in-button" type="submit">Sign in</Button>
                 </Grid>
               </form>
