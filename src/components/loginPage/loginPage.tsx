@@ -41,7 +41,7 @@ function LoginPage(props: any) {
       return;
     }
 
-    props.login();
+    props.login({email, password});
   }
 
   if (props.isAuthenticated) {
