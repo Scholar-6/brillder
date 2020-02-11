@@ -22,6 +22,7 @@ const login = (model:any) => {
       const {data} = response;
       if (data == "OK") {
         dispatch(loginSuccess());
+        return;
       }
       let {msg} = data;
       if (!msg) {
