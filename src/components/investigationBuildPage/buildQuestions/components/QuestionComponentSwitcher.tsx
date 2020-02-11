@@ -1,5 +1,5 @@
 import React from 'react'
-import { QuestionComponentTypeEnum, Question } from '../../../model/question'
+import { QuestionComponentTypeEnum } from '../../../model/question'
 import DragAndDropBox from '../drag/dragAndDropBox'
 import TextComponent from './Text'
 import ImageComponent from './Image'
@@ -20,24 +20,26 @@ export interface SwitchQuestionProps {
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({ type, index, swapComponents, component, updateComponent, uniqueComponent }) => {
   const renderEmptyComponent = () => <span>Drag component here</span>
 
-  switch (type) {
-    case QuestionComponentTypeEnum.Text:
-      return <DragAndDropBox index={index} value={type} onDrop={swapComponents} data={component} updateComponent={updateComponent} component={TextComponent} />
-    case QuestionComponentTypeEnum.Image:
-      return <DragAndDropBox index={index} value={type} onDrop={swapComponents} data={component} updateComponent={updateComponent} component={ImageComponent} />
-    case QuestionComponentTypeEnum.Hint:
-      return <DragAndDropBox index={index} value={type} onDrop={swapComponents} data={component} updateComponent={updateComponent} component={HintComponent} />
-    case QuestionComponentTypeEnum.Quote:
-      return <DragAndDropBox index={index} value={type} onDrop={swapComponents} data={component} updateComponent={updateComponent} component={QuoteComponent} />
-    case QuestionComponentTypeEnum.Sound:
-      return <DragAndDropBox index={index} value={type} onDrop={swapComponents} data={component} updateComponent={updateComponent} component={SoundComponent} />
-    case QuestionComponentTypeEnum.Equation:
-      return <DragAndDropBox index={index} value={type} onDrop={swapComponents} data={component} updateComponent={updateComponent} component={EquationComponent} />
-    case QuestionComponentTypeEnum.Component:
-      return <DragAndDropBox index={index} value={type} onDrop={swapComponents} data={component} updateComponent={updateComponent} component={uniqueComponent} />
-    default:
-      return <DragAndDropBox index={index} value={QuestionComponentTypeEnum.None} data={component} onDrop={swapComponents} updateComponent={updateComponent} component={renderEmptyComponent} />
+  let innerComponent = renderEmptyComponent as any;
+  let value = type;
+  if (type == QuestionComponentTypeEnum.Text) {
+    innerComponent = TextComponent;
+  } else if (type == QuestionComponentTypeEnum.Image) {
+    innerComponent = ImageComponent;
+  } else if (type == QuestionComponentTypeEnum.Hint) {
+    innerComponent = HintComponent;
+  } else if (type == QuestionComponentTypeEnum.Quote) {
+    innerComponent = QuoteComponent;
+  } else if (type == QuestionComponentTypeEnum.Sound) {
+    innerComponent = SoundComponent;
+  } else if (type == QuestionComponentTypeEnum.Equation) {
+    innerComponent = EquationComponent;
+  } else if (type == QuestionComponentTypeEnum.Component) {
+    innerComponent = uniqueComponent;
   }
+  return (
+    <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} updateComponent={updateComponent} component={innerComponent} />
+  )
 }
 
 export default SwitchQuestionComponent
