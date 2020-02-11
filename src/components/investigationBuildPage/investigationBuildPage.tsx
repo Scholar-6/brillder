@@ -216,8 +216,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
         <br></br>
         <br></br>
         <Grid container direction="row" alignItems="flex-start">
-          <Grid xs={1} item></Grid>
-          <Grid container justify="center" item xs={10} md={10} lg={6}>
+          <Grid container justify="center" item xs={10} sm={10} md={7} lg={8} className="question-container">
             <DragableTabs
               questions={questions} createNewQuestion={createNewQuestion}
               moveQuestions={moveQuestions} selectQuestion={selectQuestion}
@@ -255,8 +254,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
               </Route>
             </Switch>
           </Grid>
-          <Hidden only={['lg']}>
-            <Grid container justify="center" lg={4}>
+          <Hidden only={['xs', 'sm']}>
+            <Grid container justify="center" md={5} lg={4}>
               <Device name="iphone-5s" use="iphone-5s" color="gold" url="http://front.scholar6.org/" />
             </Grid>
           </Hidden>
