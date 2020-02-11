@@ -20,7 +20,6 @@ import PreLoginPage from '../preLoginPage/preLoginPage';
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
-
 const App: React.FC = () => {
   const theme = React.useMemo(() =>
     createMuiTheme({

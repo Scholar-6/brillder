@@ -6,6 +6,9 @@ import Backend from 'react-dnd-html5-backend'
 import { Grid } from '@material-ui/core';
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
+import Hidden from '@material-ui/core/Hidden';
+// @ts-ignore
+import Device from "react-device-frame";
 
 import './investigationBuildPage.scss'
 import BuildPageHeaderComponent from './header/pageHeader';
@@ -205,15 +208,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       })
     )
   }
+
   return (
     <DndProvider backend={Backend}>
       <div className="investigation-build-page">
         <BuildPageHeaderComponent />
         <br></br>
         <br></br>
-        <Grid container direction="row">
+        <Grid container direction="row" alignItems="flex-start">
           <Grid xs={1} item></Grid>
-          <Grid container justify="center" item xs={10}>
+          <Grid container justify="center" item xs={10} md={10} lg={6}>
             <DragableTabs
               questions={questions} createNewQuestion={createNewQuestion}
               moveQuestions={moveQuestions} selectQuestion={selectQuestion}
@@ -251,6 +255,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
               </Route>
             </Switch>
           </Grid>
+          <Hidden only={['lg']}>
+            <Grid container justify="center" lg={4}>
+              <Device name="iphone-5s" use="iphone-5s" color="gold" url="http://front.scholar6.org/" />
+            </Grid>
+          </Hidden>
         </Grid>
       </div>
     </DndProvider>
