@@ -43,7 +43,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
         <Grid container direction="row">
           <Grid container item xs={4} sm={3} md={2} className="left-sidebar">
             <DragBox onDrop={setDropBoxItem} name="Text" value={QuestionComponentTypeEnum.Text} />
-            <DragBox onDrop={setDropBoxItem} name="Hint" value={QuestionComponentTypeEnum.Hint} />
             <DragBox onDrop={setDropBoxItem} name="Quote" value={QuestionComponentTypeEnum.Quote} />
             <DragBox onDrop={setDropBoxItem} name="Image" value={QuestionComponentTypeEnum.Image} />
             <DragBox onDrop={setDropBoxItem} name="Sound" value={QuestionComponentTypeEnum.Sound} />

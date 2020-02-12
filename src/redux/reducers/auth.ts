@@ -15,7 +15,7 @@ export default (state = AccountInitialState, action: any) => {
     case types.LOGIN_SUCCESS:
       return { isAuthenticated: true } as AuthState
     case types.LOGIN_FAILURE:
-      return { error: action.error } as AuthState
+      return { isAuthenticated: false, error: action.error } as AuthState
     case types.LOGOUT_SUCCESS:
       return { isAuthenticated: false } as AuthState
     default: return state;

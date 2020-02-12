@@ -8,6 +8,10 @@ To run project run next commands:
 ### `npm install`
 ### `npm start`
 
+## Run StoryBook
+
+### `npm run storybook`
+
 ## Available Scripts
 
 In the project directory, you can run:

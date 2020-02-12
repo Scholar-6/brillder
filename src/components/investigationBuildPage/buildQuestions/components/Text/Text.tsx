@@ -1,7 +1,7 @@
 import React from 'react'
-/// <reference path="../@types/@ckeditor/ckeditor5-react/index.d.ts" />
+// @ts-ignore 
 import CKEditor from '@ckeditor/ckeditor5-react'; 
-/// <reference path="../@types/@ckeditor/ckeditor5-build-classic/index.d.ts" />
+// @ts-ignore 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const editorConfiguration = {

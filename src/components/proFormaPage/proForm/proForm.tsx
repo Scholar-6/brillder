@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Box, Grid, Button } from '@material-ui/core';
+// @ts-ignore
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions/proFormActions';
 import brickActions from '../../../redux/actions/brickActions';
-import { ProFormaProps, ProFormaState, ProFormaSubmitData, Brick } from '../model';
+import { ProFormaProps, ProFormaState, ProFormaSubmitData } from '../model';
+import { Brick } from '../../../model/brick'
 
 interface ProFormaComponentProps {
   parent: ProFormaProps,
@@ -38,6 +40,7 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
         investigationBrief: brick.investigationBrief,
         preparationBrief: brick.preparationBrief,
         openQuestion: brick.openQuestion,
+        alternativeSubject: brick.alternativeSubject,
       } as ProFormaState;
     } else {
       state = {
@@ -49,6 +52,7 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
         investigationBrief: '',
         preparationBrief: '',
         openQuestion: '',
+        alternativeSubject: '',
       } as ProFormaState;
     }
 
@@ -88,11 +92,6 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
   }
 
   render() {
-    if (this.props.parent.submitted === true) {
-      const {brickId} = this.props.parent.match.params;
-      this.props.parent.history.push(`/brick/${brickId}/build/investigation/question`);
-    }
-
     return (
       <form onSubmit={this.handleSubmit}>
         <Grid container direction="row">
@@ -159,6 +158,22 @@ class ProFormaComponent extends Component<ProFormaComponentProps, ProFormaState>
                   maxLength={30}
                   required
                   placeholder="e.g. 20th century Dictators" />
+              </Grid>
+            </Grid>
+            <Grid container direction="row" className="row">
+              <Grid container item xs={4}>
+                <div className="fullWidth">
+                  <Box className="right left-box" height="auto" bgcolor="primary.main">Alternative Subject</Box>
+                </div>
+              </Grid>
+              <Grid container item xs={8} sm={5}>
+                <input
+                  name="alternativeSubject"
+                  value={this.state.alternativeSubject}
+                  onChange={this.handleInputChange}
+                  maxLength={30}
+                  required
+                  placeholder="" />
               </Grid>
             </Grid>
             <Grid container direction="row" className="row">

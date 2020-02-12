@@ -2,6 +2,7 @@ import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
 import host from '../../hostname';
+import { Brick } from '../../model/brick';
 
 const fetchBrickSuccess = (data:any) => {
   return {
@@ -29,9 +30,10 @@ const fetchBrick = (id: number) => {
   }
 }
 
-const saveBrickSuccess = () => {
+const saveBrickSuccess = (brick: Brick) => {
   return {
     type: types.SUBMIT_PRO_FORMA_SUCCESS,
+    payload: brick,
   } as Action
 }
 
@@ -47,7 +49,8 @@ const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
     brick.type = 1;
     return axios.post(host.BACKEND_HOST + '/brick', brick, {withCredentials: true}).then(response => {
-      dispatch(saveBrickSuccess());
+      const brick = response.data as Brick;
+      dispatch(saveBrickSuccess(brick));
     })
     .catch(error => {
       dispatch(saveBrickFailure(error.message))

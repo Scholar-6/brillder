@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+// @ts-ignore
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
@@ -19,7 +20,6 @@ import RegisterPage from '../registerPage/registerPage';
 import PreLoginPage from '../preLoginPage/preLoginPage';
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
-
 
 const App: React.FC = () => {
   const theme = React.useMemo(() =>

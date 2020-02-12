@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Grid, TextField } from "@material-ui/core";
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
+// @ts-ignore
 import { connect } from 'react-redux';
 import actions from '../../redux/actions/auth';
 import './loginPage.scss';
@@ -9,7 +10,8 @@ import { Redirect } from "react-router-dom";
 
 const mapState = (state: any) => {
   return {
-    isAuthenticated: state.auth.isAuthenticated ,
+    error: state.auth.error,
+    isAuthenticated: state.auth.isAuthenticated,
   }
 }
 
@@ -41,7 +43,7 @@ function LoginPage(props: any) {
       return;
     }
 
-    props.login();
+    props.login({email, password});
   }
 
   if (props.isAuthenticated) {
