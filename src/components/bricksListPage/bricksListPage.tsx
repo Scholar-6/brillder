@@ -1,5 +1,6 @@
 import './bricksListPage.scss';
 import React, { Component } from 'react';
+// @ts-ignore
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Box, Grid } from '@material-ui/core';

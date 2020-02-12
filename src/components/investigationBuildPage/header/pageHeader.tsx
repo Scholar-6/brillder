@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
+// @ts-ignore
 import { connect } from 'react-redux';
 import { Brick } from '../../../model/brick';
 

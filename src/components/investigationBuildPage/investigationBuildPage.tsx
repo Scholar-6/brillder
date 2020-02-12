@@ -5,6 +5,7 @@ import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend'
 import { Grid } from '@material-ui/core';
 import update from 'immutability-helper';
+// @ts-ignore
 import { connect } from 'react-redux';
 import Hidden from '@material-ui/core/Hidden';
 // @ts-ignore

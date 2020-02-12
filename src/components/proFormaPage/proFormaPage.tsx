@@ -1,5 +1,6 @@
 import './proFormaPage.scss';
 import React, { Component } from 'react';
+// @ts-ignore
 import { connect } from 'react-redux';
 import actions from '../../redux/actions/proFormActions';
 import brickActions from '../../redux/actions/brickActions';

@@ -1,11 +1,10 @@
 import React from 'react'
 import { QuestionComponentTypeEnum } from '../../../model/question'
 import DragAndDropBox from '../drag/dragAndDropBox'
-import TextComponent from './Text'
+import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'
-import HintComponent from './Hint'
-import QuoteComponent from './Quote'
-import SoundComponent from './Sound'
+import QuoteComponent from './Quote/Quote'
+import SoundComponent from './Sound/Sound'
 import EquationComponent from './Equation/Equation'
 
 export interface SwitchQuestionProps {

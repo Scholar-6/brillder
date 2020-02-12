@@ -1,4 +1,5 @@
 import React from "react";
+// @ts-ignore
 import { connect } from 'react-redux';
 import actions from '../../redux/actions/auth';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';

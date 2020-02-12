@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Box, Grid } from '@material-ui/core';
+// @ts-ignore
 import { connect } from 'react-redux';
 
 type ProFormaProps = {
