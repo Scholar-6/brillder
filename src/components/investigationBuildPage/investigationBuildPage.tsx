@@ -256,7 +256,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
           </Grid>
           <Hidden only={['xs', 'sm']}>
             <Grid container justify="center" md={5} lg={4}>
-              <Device name="iphone-5s" use="iphone-5s" color="gold" url="http://front.scholar6.org/" />
+              <Device name="iphone-5s" use="iphone-5s" color="grey" url="http://front.scholar6.org/" />
             </Grid>
           </Hidden>
         </Grid>

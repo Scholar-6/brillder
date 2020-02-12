@@ -42,3 +42,26 @@
     margin: 4px 0;
   }
 }
+
+.grey .screen {
+    background: grey !important;
+    background: -webkit-gradient(linear, left top, left bottom, from(grey), to(#ebdac7)) !important;
+    background: linear-gradient(to bottom, grey 0%, #ebdac7 100%) !important;
+}
+
+.grey {
+  background: grey !important;
+}
+
+.marvel-device.iphone5s:before {
+  background: grey !important;
+}
+
+.marvel-device.iphone5s {
+  padding: 105px 22px;
+  padding-top: 50px;
+  padding-right: 22px;
+  padding-bottom: 95px;
+  padding-left: 22px;
+  background: grey !important;
+}
