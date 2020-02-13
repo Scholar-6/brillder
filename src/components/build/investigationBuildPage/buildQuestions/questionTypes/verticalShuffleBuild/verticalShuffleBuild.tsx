@@ -6,7 +6,7 @@ export interface VerticalShuffleProps {
   value: string,
 }
 
-const VerticalShuffleComponent: React.FC<VerticalShuffleProps> = () => {
+const VerticalShuffleBuildComponent: React.FC<VerticalShuffleProps> = () => {
   return (
     <div className="input-box">
       <DragIndicatorIcon />
@@ -17,4 +17,4 @@ const VerticalShuffleComponent: React.FC<VerticalShuffleProps> = () => {
   )
 }
 
-export default VerticalShuffleComponent
+export default VerticalShuffleBuildComponent

@@ -1,14 +1,16 @@
 import React from 'react'
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import DeleteIcon from '@material-ui/icons/Delete';
-import './shortAnswer.scss'
 
-export interface ShortAnswerProps {
+import './shortAnswerBuild.scss'
+
+
+export interface ShortAnswerBuildProps {
   data: any
   updateComponent(component:any):void
 }
 
-const ShortAnswerComponent: React.FC<ShortAnswerProps> = ({data, updateComponent}) => {
+const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({data, updateComponent}) => {
   if (!data.list) {
     data.list = [{value: ""}];
   }
@@ -37,10 +39,10 @@ const ShortAnswerComponent: React.FC<ShortAnswerProps> = ({data, updateComponent
   }
 
   return (
-    <div className="short-answer">
+    <div className="short-answer-build">
       <DragIndicatorIcon className="rotate-90" />
       {
-          data.list.map((shortAnswer:any, i:number) => renderShortAnswer(shortAnswer, i))
+        data.list.map((shortAnswer:any, i:number) => renderShortAnswer(shortAnswer, i))
       }
       <div className="button-box">
         <button className="add-answer-button" onClick={addShortAnswer}>+ Add Short Answer</button>
@@ -49,4 +51,4 @@ const ShortAnswerComponent: React.FC<ShortAnswerProps> = ({data, updateComponent
   )
 }
 
-export default ShortAnswerComponent
+export default ShortAnswerBuildComponent

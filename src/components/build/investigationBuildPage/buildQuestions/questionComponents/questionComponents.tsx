@@ -2,18 +2,19 @@ import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 
 import './questionComponents.scss';
-import ShortAnswerComponent from '../questionTypes/shortAnswer';
+import ShortAnswerComponent from '../questionTypes/shortAnswerBuild/shortAnswerBuild';
 import SwitchQuestionComponent from '../components/QuestionComponentSwitcher';
-import CategoriseComponent from '../questionTypes/categorise';
-import ChooseOneComponent from '../questionTypes/chooseOne';
-import ChooseSeveralComponent from '../questionTypes/chooseSeveral';
-import HorizontalShuffleComponent from '../questionTypes/horizontalShuffle';
-import LineHighlightingComponent from '../questionTypes/lineHighlighting';
-import MissingWordComponent from '../questionTypes/missingWord';
-import PairMatchComponent from '../questionTypes/pairMatch';
-import VerticalShuffleComponent from '../questionTypes/verticalShuffle';
+import CategoriseComponent from '../questionTypes/categoriseBuild';
+import ChooseOneComponent from '../questionTypes/chooseOneBuild/chooseOneBuild';
+import ChooseSeveralComponent from '../questionTypes/chooseSeveralBuild/chooseSeveralBuild';
+import HorizontalShuffleComponent from '../questionTypes/horizontalShuffleBuild';
+import LineHighlightingComponent from '../questionTypes/lineHighlightingBuild';
+import MissingWordComponent from '../questionTypes/missingWordBuild';
+import PairMatchComponent from '../questionTypes/pairMatchBuild/pairMatchBuild';
+import VerticalShuffleComponent from '../questionTypes/verticalShuffleBuild/verticalShuffleBuild';
 import WordHighlightingComponent from '../questionTypes/wordHighlighting';
 import { Question, QuestionTypeEnum } from 'components/model/question';
+
 
 type QuestionComponentsProps = {
   history: any
@@ -32,25 +33,25 @@ const QuestionComponents = ({ history, brickId, question, swapComponents, update
 
     const {type} = question;
     let uniqueComponent:any;
-    if (type == QuestionTypeEnum.ShortAnswer) {
+    if (type === QuestionTypeEnum.ShortAnswer) {
       uniqueComponent = ShortAnswerComponent;
-    } else if (type == QuestionTypeEnum.Categorise) {
+    } else if (type === QuestionTypeEnum.Categorise) {
       uniqueComponent = CategoriseComponent;
-    } else if (type == QuestionTypeEnum.ChooseOne) {
+    } else if (type === QuestionTypeEnum.ChooseOne) {
       uniqueComponent = ChooseOneComponent;
-    } else if (type == QuestionTypeEnum.ChooseSeveral) {
+    } else if (type === QuestionTypeEnum.ChooseSeveral) {
       uniqueComponent = ChooseSeveralComponent;
-    } else if (type == QuestionTypeEnum.HorizontalShuffle) {
+    } else if (type === QuestionTypeEnum.HorizontalShuffle) {
       uniqueComponent = HorizontalShuffleComponent;
-    } else if (type == QuestionTypeEnum.LineHighlighting) {
+    } else if (type === QuestionTypeEnum.LineHighlighting) {
       uniqueComponent = LineHighlightingComponent;
-    } else if (type == QuestionTypeEnum.MissingWord) {
+    } else if (type === QuestionTypeEnum.MissingWord) {
       uniqueComponent = MissingWordComponent;
-    } else if (type == QuestionTypeEnum.PairMatch) {
+    } else if (type === QuestionTypeEnum.PairMatch) {
       uniqueComponent = PairMatchComponent;
-    } else if (type == QuestionTypeEnum.VerticalShuffle) {
+    } else if (type === QuestionTypeEnum.VerticalShuffle) {
       uniqueComponent = VerticalShuffleComponent;
-    } else if (type == QuestionTypeEnum.WordHighlighting) {
+    } else if (type === QuestionTypeEnum.WordHighlighting) {
       uniqueComponent = WordHighlightingComponent;
     } else {
       history.push(`/build/brick/${brickId}/build/investigation/question`);

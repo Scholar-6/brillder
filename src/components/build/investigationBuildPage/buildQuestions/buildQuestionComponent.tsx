@@ -74,11 +74,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
           </Grid>
         </Grid>
       </Grid>
-      <div className="build-question-fotter">
-        Saved at 5:19pm
-      <button onClick={saveBrick}>Save Anyway</button>
-        Time Spent Building brick: 4hrs
-      </div>
     </div>
   );
 }

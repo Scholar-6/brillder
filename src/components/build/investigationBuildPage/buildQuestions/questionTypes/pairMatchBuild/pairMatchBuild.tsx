@@ -2,10 +2,10 @@ import React from 'react'
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 
 
-export interface PairMatchComponentProps {
+export interface PairMatchBuildComponentProps {
 }
 
-const PairMatchComponent: React.FC<PairMatchComponentProps> = () => {
+const PairMatchBuildComponent: React.FC<PairMatchBuildComponentProps> = () => {
   return (
     <div className="input-box ">
       <DragIndicatorIcon />
@@ -16,4 +16,4 @@ const PairMatchComponent: React.FC<PairMatchComponentProps> = () => {
   )
 }
 
-export default PairMatchComponent
+export default PairMatchBuildComponent

@@ -41,7 +41,6 @@ const App: React.FC = () => {
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    console.log(44);
     history.push("/pre-login");
     return Promise.reject(error);
   });

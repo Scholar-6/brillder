@@ -3,23 +3,24 @@ import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox'; 
 
-import './chooseOne.scss'
+import './chooseSeveralBuild.scss'
 
-interface ChooseOneAnswer {
+
+interface ChooseSeveralAnswer {
   checked: boolean
   value: string
 }
 
-interface ChooseOneData {
-  list: ChooseOneAnswer[]
+export interface ChooseSeveralData {
+  list: ChooseSeveralAnswer[]
 }
 
-export interface ChooseOneProps {
-  data: ChooseOneData
+export interface ChooseSeveralBuildProps {
+  data: ChooseSeveralData
   updateComponent(component:any):void
 }
 
-const ChooseOneComponent: React.FC<ChooseOneProps> = ({data, updateComponent}) => {
+const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, updateComponent}) => {
   const newAnswer = () => {
     return {value: "", checked: false };
   }
@@ -36,12 +37,9 @@ const ChooseOneComponent: React.FC<ChooseOneProps> = ({data, updateComponent}) =
     updateComponent(data);
   }
 
-  const onChecked = (event:any) => {
-    const index = event.target.value;
-    for (let answer of data.list) {
-      answer.checked = false;
-    }
-    data.list[index].checked = true;
+  const onChecked = (event:React.ChangeEvent<HTMLInputElement>) => {
+    const index = parseInt(event.target.value);
+    data.list[index].checked = event.target.checked;
     updateComponent(data);
   }
 
@@ -52,7 +50,7 @@ const ChooseOneComponent: React.FC<ChooseOneProps> = ({data, updateComponent}) =
 
   const renderAnswer = (answer: any, key: number) => {
     return (
-      <div className="choose-one-box" key={key}>
+      <div className="choose-several-box" key={key}>
         <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} />
         <Checkbox className="left-ckeckbox" checked={answer.checked} onChange={onChecked} value={key} />
         <input value={answer.value} onChange={(event) => changed(answer, event)} placeholder="Enter answer..." />
@@ -61,7 +59,7 @@ const ChooseOneComponent: React.FC<ChooseOneProps> = ({data, updateComponent}) =
   }
 
   return (
-    <div className="choose-one">
+    <div className="choose-several-build">
       <DragIndicatorIcon className="rotate-90" />
       {
         data.list.map((answer:any, i:number) => renderAnswer(answer, i))
@@ -73,4 +71,4 @@ const ChooseOneComponent: React.FC<ChooseOneProps> = ({data, updateComponent}) =
   )
 }
 
-export default ChooseOneComponent
+export default ChooseSeveralBuildComponent

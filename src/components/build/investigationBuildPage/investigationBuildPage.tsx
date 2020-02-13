@@ -22,24 +22,24 @@ import actions from '../../../redux/actions/brickActions';
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any
-  fetchBrick(brickId: number):void
-  saveBrick(brick:any):void
+  fetchBrick(brickId: number): void
+  saveBrick(brick: any): void
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
-  var {brickId} = props.match.params;
+  var { brickId } = props.match.params;
 
   if (!props.brick) {
     props.fetchBrick(brickId);
   }
 
-  const {history} = props;
+  const { history } = props;
   const getNewQuestion = (type: number, active: boolean) => {
     return {
       type,
       active,
       components: [
-        {type: 0}, {type: QuestionComponentTypeEnum.Component}, {type: 0}
+        { type: 0 }, { type: QuestionComponentTypeEnum.Component }, { type: 0 }
       ]
     } as Question;
   }
@@ -91,7 +91,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
     setQuestions(
       update(questions, {
-        [index]: {  type: { $set: type } }
+        [index]: { type: { $set: type } }
       }),
     )
 
@@ -151,15 +151,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
   const swapComponents = (drag: any, drop: any) => {
     const index = getQuestionIndex(activeQuestion);
-    const components  = Object.assign([], activeQuestion.components) as any[];
+    const components = Object.assign([], activeQuestion.components) as any[];
     const tempComp = components[drag.index];
     components[drag.index] = components[drop.index];
     components[drop.index] = tempComp;
-    
+
     setQuestions(
       update(questions, {
         [index]: {
-          components: { $set: components}
+          components: { $set: components }
         }
       }),
     )
@@ -167,20 +167,24 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
   const addComponent = () => {
     const index = getQuestionIndex(activeQuestion);
-    const components  = Object.assign([], activeQuestion.components) as any[];
-    components.push({type: 0});
+    const components = Object.assign([], activeQuestion.components) as any[];
+    components.push({ type: 0 });
 
     setQuestions(
       update(questions, {
         [index]: {
-          components: { $set: components}
+          components: { $set: components }
         }
       }),
     )
   }
-    
-  const {brick} = props;
+
+  const { brick } = props;
   if (brick.questions && loaded == false) {
+    for (let question in brick.questions) {
+      question = brick.questions;
+    }
+    /*
     var res = JSON.parse(brick.questions);
     setQuestions(
       update(questions, { $set: res }),
@@ -188,6 +192,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     setStatus(
       update(loaded, { $set: true })
     )
+    */
   }
 
   const saveBrick = () => {
@@ -195,7 +200,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     props.saveBrick(brick);
   }
 
-  const updateComponent = (component: any, number:number) => {
+  const updateComponent = (component: any, number: number) => {
     const index = getQuestionIndex(activeQuestion);
     let newComponent = Object.assign({}, component)
 
@@ -217,43 +222,47 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
         <br></br>
         <br></br>
         <Grid container direction="row" alignItems="flex-start">
-          <Grid container justify="center" item xs={12} sm={12} md={7} lg={8} className="question-container">
-            <DragableTabs
-              questions={questions} createNewQuestion={createNewQuestion}
-              moveQuestions={moveQuestions} selectQuestion={selectQuestion}
-              removeQuestion={removeQuestion} />
-            <Switch>
-              <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
-                <BuildQuestionComponent
-                  brickId={brickId}
-                  history={history}
-                  question={activeQuestion}
-                  setQuestionComponentType={setQuestionComponentType}
-                  swapComponents={swapComponents}
-                  updateComponent={updateComponent}
-                  addComponent={addComponent}
-                  saveBrick={saveBrick}/>
-              </Route>
-              <Route exac path='/build/brick/:brickId/build/investigation/question-component/:questionId'>
-                <BuildQuestionComponent
-                  brickId={brickId}
-                  history={history}
-                  question={activeQuestion}
-                  setQuestionComponentType={setQuestionComponentType}
-                  swapComponents={swapComponents}
-                  updateComponent={updateComponent}
-                  addComponent={addComponent}
-                  saveBrick={saveBrick}/>
-              </Route>
-              <Route
-                exec path='/build/brick/:brickId/build/investigation/question/:questionId'
-                component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
-              </Route>
-              <Route
-                exec path='/build/brick/:brickId/build/investigation/question'
-                component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
-              </Route>
-            </Switch>
+          <Grid container item xs={12} sm={12} md={7} lg={8} className="question-container">
+            <Grid container direction="row" justify="center" alignItems="flex-start">
+              <Grid container item xs={12} sm={12} md={12} lg={9}>
+                <DragableTabs
+                  questions={questions} createNewQuestion={createNewQuestion}
+                  moveQuestions={moveQuestions} selectQuestion={selectQuestion}
+                  removeQuestion={removeQuestion} />
+                <Switch>
+                  <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
+                    <BuildQuestionComponent
+                      brickId={brickId}
+                      history={history}
+                      question={activeQuestion}
+                      setQuestionComponentType={setQuestionComponentType}
+                      swapComponents={swapComponents}
+                      updateComponent={updateComponent}
+                      addComponent={addComponent}
+                      saveBrick={saveBrick} />
+                  </Route>
+                  <Route exac path='/build/brick/:brickId/build/investigation/question-component/:questionId'>
+                    <BuildQuestionComponent
+                      brickId={brickId}
+                      history={history}
+                      question={activeQuestion}
+                      setQuestionComponentType={setQuestionComponentType}
+                      swapComponents={swapComponents}
+                      updateComponent={updateComponent}
+                      addComponent={addComponent}
+                      saveBrick={saveBrick} />
+                  </Route>
+                  <Route
+                    exec path='/build/brick/:brickId/build/investigation/question/:questionId'
+                    component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
+                  </Route>
+                  <Route
+                    exec path='/build/brick/:brickId/build/investigation/question'
+                    component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
+                  </Route>
+                </Switch>
+              </Grid>
+            </Grid>
           </Grid>
           <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
             <Hidden only={['xs', 'sm']}>
