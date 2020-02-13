@@ -53,7 +53,7 @@ const QuestionComponents = ({ history, brickId, question, swapComponents, update
     } else if (type == QuestionTypeEnum.WordHighlighting) {
       uniqueComponent = WordHighlightingComponent;
     } else {
-      history.push(`/brick/${brickId}/build/investigation/question`);
+      history.push(`/build/brick/${brickId}/build/investigation/question`);
       return <div>...Loading...</div>
     }
     return <SwitchQuestionComponent

@@ -30,31 +30,46 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
 
   const submitBrick = () => {
     saveBrick();
-    history.push("/");
+    history.push("/build");
   }
 
   const move = () => {
-    history.push("/");
+    history.push("/build");
   }
 
   return (
     <div style={{ width: '100%' }}>
       <Grid container justify="center" className="build-question-column" item xs={12}>
+        <Grid container direction="row" className="first-row">
+          <Grid container item xs={5} sm={6}></Grid>
+          <Grid container item xs={4} sm={3}>Build Time: 0hrs15mins.</Grid>
+          <Grid container item xs={3} sm={3}>Saved at 17:51</Grid>
+        </Grid>
         <Grid container direction="row">
-          <Grid container item xs={4} sm={3} md={2} className="left-sidebar">
+          <Grid container item xs={4} sm={3} md={3} className="left-sidebar">
             <DragBox onDrop={setDropBoxItem} name="Text" value={QuestionComponentTypeEnum.Text} />
             <DragBox onDrop={setDropBoxItem} name="Quote" value={QuestionComponentTypeEnum.Quote} />
             <DragBox onDrop={setDropBoxItem} name="Image" value={QuestionComponentTypeEnum.Image} />
             <DragBox onDrop={setDropBoxItem} name="Sound" value={QuestionComponentTypeEnum.Sound} />
             <DragBox onDrop={setDropBoxItem} name="Equation" value={QuestionComponentTypeEnum.Equation} />
           </Grid>
-          <Grid container item xs={5} sm={6} md={8}>
+          <Grid container item xs={5} sm={6} md={6} className="question-components-list">
             <QuestionComponents brickId={brickId} history={history} question={question} swapComponents={swapComponents} updateComponent={updateComponent} addComponent={addComponent} />
           </Grid>
-          <Grid container item xs={3} sm={3} md={2} className="right-sidebar">
+          <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
             <div>
-              <button onClick={move}>Come back later</button>
-              <button onClick={submitBrick}>Submit brick</button>
+              <button onClick={submitBrick}>Review and Submit</button>
+            </div>
+            <Grid justify="center" container direction="row">
+              <Grid container item sm={6}>
+                <p>Is the Order in the brick sequence of this Question important?</p>
+              </Grid>
+            </Grid>
+            <div>
+              <p>Lock changes to this question?</p>
+            </div>
+            <div>
+              <p>Add New Question</p>
             </div>
           </Grid>
         </Grid>

@@ -47,7 +47,7 @@ class ProFormaPage extends Component<ProFormaProps, any> {
     if (this.props.submitted === true) {
       const {id} = this.props.brick;
       if (id) {
-        this.props.history.push(`/brick/${id}/build/investigation/question`);
+        this.props.history.push(`/build/brick/${id}/build/investigation/question`);
       }
     }
   }

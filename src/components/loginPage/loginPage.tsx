@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions/auth';
 import './loginPage.scss';
 import { Redirect } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const mapState = (state: any) => {
   return {
@@ -26,6 +27,18 @@ const connector = connect(mapState, mapDispatch)
 function LoginPage(props: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  function getQueryParam(param: string) {
+    var url_string =  window.location.href;
+    var url = new URL(url_string);
+    return url.searchParams.get(param);
+  }
+
+  const type = getQueryParam('userType');
+  if (!type) {
+    return <Redirect to="/pre-login" />
+  }
+  const userType = parseInt(type) as number;
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -47,7 +60,7 @@ function LoginPage(props: any) {
   }
 
   if (props.isAuthenticated) {
-    props.history.push("/");
+    props.history.push("/build");
   }
 
   const toRegister = () => {
@@ -82,7 +95,9 @@ function LoginPage(props: any) {
                   label="Password" />
                 <br />
                 <Grid container direction="row" justify="flex-end" alignItems="center">
-                  <Button variant="contained" color="primary" className="sign-in-button" onClick={toRegister}>Sign up</Button>
+                  {
+                    userType === 1 ? <Button variant="contained" color="primary" className="sign-in-button" onClick={toRegister}>Sign up</Button> : ""
+                  }
                   <Button variant="contained" color="primary" className="sign-in-button" type="submit">Sign in</Button>
                 </Grid>
               </form>

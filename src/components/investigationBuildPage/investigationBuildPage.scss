@@ -1,7 +1,8 @@
 
 .investigation-build-page {
   .question-container {
-    padding-left: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   .page-header {
     background: #b2b2b2;
@@ -44,17 +45,22 @@
 }
 
 .grey .screen {
-    background: grey !important;
+    background: #E2E3E4 !important;
     background: -webkit-gradient(linear, left top, left bottom, from(grey), to(#ebdac7)) !important;
     background: linear-gradient(to bottom, grey 0%, #ebdac7 100%) !important;
 }
 
-.grey {
-  background: grey !important;
+.marvel-device.iphone5s:before,
+.top-bar, .bottom-bar {
+  background: white !important;
 }
 
-.marvel-device.iphone5s:before {
-  background: grey !important;
+.grey, .volume, .camera, .sleep {
+  background: #E2E3E4 !important;
+}
+
+.home {
+  box-shadow: inset 0 0 0 4px #E2E3E4 !important;
 }
 
 .marvel-device.iphone5s {
@@ -63,5 +69,5 @@
   padding-right: 22px;
   padding-bottom: 95px;
   padding-left: 22px;
-  background: grey !important;
+  background: #E2E3E4 !important;
 }

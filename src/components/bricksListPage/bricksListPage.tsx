@@ -38,7 +38,7 @@ class BricksListPage extends Component<any, any> {
         <Grid container item xs={6} key={i} md={4} lg={3} justify="center">
           <Box className="brick-container">
             <div className="link-description">Title: {brick.title}</div>
-            <Link className="update-button" to={"/brick-create/" + brick.id}>Update</Link>
+            <Link className="update-button" to={"/build/brick-create/" + brick.id}>Update</Link>
           </Box>
         </Grid>
       )
