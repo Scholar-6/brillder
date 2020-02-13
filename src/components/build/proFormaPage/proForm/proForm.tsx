@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Box, Grid, Button } from '@material-ui/core';
 // @ts-ignore
 import { connect } from 'react-redux';
-import actions from '../../../redux/actions/proFormActions';
-import brickActions from '../../../redux/actions/brickActions';
+import actions from 'redux/actions/proFormActions';
+import brickActions from 'redux/actions/brickActions';
 import { ProFormaProps, ProFormaState, ProFormaSubmitData } from '../model';
-import { Brick } from '../../../model/brick'
+import { Brick } from 'model/brick'
 
 interface ProFormaComponentProps {
   parent: ProFormaProps,

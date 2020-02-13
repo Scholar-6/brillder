@@ -1,5 +1,7 @@
 import { RouteComponentProps } from 'react-router-dom';
-import { Brick } from '../../model/brick';
+
+import { Brick } from 'model/brick';
+
 
 export interface ProFormaProps extends RouteComponentProps<any> {
   submitted: boolean,

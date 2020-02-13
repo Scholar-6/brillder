@@ -16,8 +16,8 @@ import BuildPageHeaderComponent from './header/pageHeader';
 import BuildQuestionComponent from './buildQuestions/buildQuestionComponent';
 import QuestionTypePage from './questionType/questionType';
 import DragableTabs from './dragTabs/dragableTabs';
-import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from '../model/question';
-import actions from '../../redux/actions/brickActions';
+import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'components/model/question';
+import actions from '../../../redux/actions/brickActions';
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {

@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Box } from '@material-ui/core';
 
 import './questionType.scss';
-import { QuestionType, QuestionTypeEnum } from '../../model/question';
+import { QuestionType, QuestionTypeEnum } from 'components/model/question';
 
 
 export interface QuestionTypeProps {

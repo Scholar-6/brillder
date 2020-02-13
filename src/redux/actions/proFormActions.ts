@@ -2,7 +2,7 @@ import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
 import host from '../../hostname';
-import { Brick } from '../../model/brick';
+import { Brick } from 'model/brick';
 
 const fetchProFormaDataSuccess = (data: any) => {
   return {

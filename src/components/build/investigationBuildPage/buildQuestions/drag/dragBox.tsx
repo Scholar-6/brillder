@@ -5,7 +5,7 @@ import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import './dragBox.scss';
 import ItemTypes from '../../ItemTypes'
 import { Grid } from '@material-ui/core';
-import { QuestionComponentTypeEnum } from '../../../model/question';
+import { QuestionComponentTypeEnum } from 'components/model/question';
 import { DropResult } from './interfaces';
 
 

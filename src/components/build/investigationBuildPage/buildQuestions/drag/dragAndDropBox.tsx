@@ -2,7 +2,7 @@ import React, {useRef} from 'react'
 import { useDrop, useDrag, DragSourceMonitor } from 'react-dnd'
 
 import ItemTypes from '../../ItemTypes'
-import { QuestionComponentTypeEnum } from '../../../model/question'
+import { QuestionComponentTypeEnum } from 'components/model/question';
 import { DropResult } from './interfaces'
 
 

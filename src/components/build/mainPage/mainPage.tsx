@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import './mainPage.scss';
 // @ts-ignore
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Box, Grid } from '@material-ui/core';
-import actions from '../../redux/actions/mainPageActions';
+
+import './mainPage.scss';
+import actions from 'redux/actions/mainPageActions';
 import MainMenu from '../base-components/main-menu';
+
 
 const mapState = (state: any) => {
   return {

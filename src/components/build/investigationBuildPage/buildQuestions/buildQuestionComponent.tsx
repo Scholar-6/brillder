@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 
 import QuestionComponents from './questionComponents/questionComponents';
 import './buildQuestionComponent.scss'
-import { QuestionTypeEnum, QuestionComponentTypeEnum, Question } from '../../model/question';
+import { QuestionTypeEnum, QuestionComponentTypeEnum, Question } from '../../../model/question';
 import DragBox from './drag/dragBox';
 
 

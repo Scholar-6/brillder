@@ -2,9 +2,9 @@ import './proFormaPage.scss';
 import React, { Component } from 'react';
 // @ts-ignore
 import { connect } from 'react-redux';
-import actions from '../../redux/actions/proFormActions';
-import brickActions from '../../redux/actions/brickActions';
-import bricksActions from '../../redux/actions/bricksActions';
+import actions from 'redux/actions/proFormActions';
+import brickActions from 'redux/actions/brickActions';
+import bricksActions from 'redux/actions/bricksActions';
 import EditorRowComponent from './editorRow/editorRow';
 import { ProFormaProps, ProFormaSubmitData } from './model';
 import ProFormComponent from './proForm/proForm';

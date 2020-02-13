@@ -1,11 +1,13 @@
 import React from 'react'
-import { QuestionComponentTypeEnum } from '../../../model/question'
+
+import { QuestionComponentTypeEnum } from 'components/model/question';
 import DragAndDropBox from '../drag/dragAndDropBox'
 import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'
 import SoundComponent from './Sound/Sound'
 import EquationComponent from './Equation/Equation'
+
 
 export interface SwitchQuestionProps {
   type: QuestionComponentTypeEnum

@@ -2,7 +2,6 @@ import React from 'react';
 import { Grid, Button } from '@material-ui/core';
 
 import './questionComponents.scss';
-import { Question, QuestionTypeEnum } from '../../../model/question';
 import ShortAnswerComponent from '../questionTypes/shortAnswer';
 import SwitchQuestionComponent from '../components/QuestionComponentSwitcher';
 import CategoriseComponent from '../questionTypes/categorise';
@@ -14,6 +13,7 @@ import MissingWordComponent from '../questionTypes/missingWord';
 import PairMatchComponent from '../questionTypes/pairMatch';
 import VerticalShuffleComponent from '../questionTypes/verticalShuffle';
 import WordHighlightingComponent from '../questionTypes/wordHighlighting';
+import { Question, QuestionTypeEnum } from 'components/model/question';
 
 type QuestionComponentsProps = {
   history: any

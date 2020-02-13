@@ -11,11 +11,11 @@ import '../../font-numbers/style.css'
 import reducer from '../../redux/reducers/index';
 import PrivateRoute from './privateRoute';
 
-import NewBrick from '../newBrick/newBrick';
-import MainPage from '../mainPage/mainPage';
-import ProFormaPage from '../proFormaPage/proFormaPage';
-import BricksListPage from '../bricksListPage/bricksListPage';
-import InvestigationBuildPage from '../investigationBuildPage/investigationBuildPage'
+import NewBrick from '../build/newBrick/newBrick';
+import MainPage from '../build/mainPage/mainPage';
+import ProFormaPage from '../build/proFormaPage/proFormaPage';
+import BricksListPage from '../build/bricksListPage/bricksListPage';
+import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
 import LoginPage from '../loginPage/loginPage';
 import RegisterPage from '../registerPage/registerPage';
 import PreLoginPage from '../preLoginPage/preLoginPage';
