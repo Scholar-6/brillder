@@ -40,8 +40,6 @@ function LoginPage(props: any) {
   }
   const userType = parseInt(type) as number;
 
-
-
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
       return true;
