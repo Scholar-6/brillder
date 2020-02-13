@@ -41,7 +41,7 @@ class MainPage extends Component {
 
         <Grid container item xs={12} justify="center">
           <Box bgcolor="primary.main" className="bigButton">
-            <Link to="/bricks-list">
+            <Link to="/build/bricks-list">
               <div className="link-title">VIEW</div>
               <div className="link-description">See what we want...</div>
             </Link>
@@ -50,7 +50,7 @@ class MainPage extends Component {
 
         <Grid container item xs={12} justify="center">
           <Box bgcolor="primary.main" className="bigButton">
-            <Link to="/brick">
+            <Link to="/build">
               <div className="link-title">APPLY</div>
               <div className="link-description">Suggest what we want...</div>
             </Link>
@@ -60,7 +60,7 @@ class MainPage extends Component {
 
         <Grid container item xs={12} justify="center">
           <Box bgcolor="primary.main" className="bigButton">
-            <Link to="/brick-create">
+            <Link to="/build/brick-create">
               <div className="link-title">CREATE</div>
               <div className="link-description">Just build a brick...</div>
             </Link>
@@ -69,7 +69,7 @@ class MainPage extends Component {
 
         <Grid container item xs={12} justify="center">
           <Box bgcolor="primary.main" className="bigButton">
-            <Link to="/brick">
+            <Link to="/build">
               <div className="link-title">BACK TO WORK</div>
               <div className="link-description">For current projects,</div>
               <div className="link-description">editors and authors...</div>

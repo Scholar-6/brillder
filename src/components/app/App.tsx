@@ -37,14 +37,15 @@ const App: React.FC = () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route path="/build/new-brick" component={NewBrick}></Route>
-          <Route path="/pre-login" component={PreLoginPage}></Route>
-          <Route path="/brick/:brickId" component={InvestigationBuildPage}/>
-          <PrivateRoute path="/brick-create" exact component={ProFormaPage}/>
-          <PrivateRoute path="/brick-create/:brickId" exact component={ProFormaPage}/>
-          <PrivateRoute path="/bricks-list" component={BricksListPage}/>
-          <Route path="/login" exact component={LoginPage}></Route>
-          <Route path="/register" exact component={RegisterPage}></Route>
+          <PrivateRoute path="/build/new-brick" component={NewBrick} />
+          <PrivateRoute path="/build/brick/:brickId" component={InvestigationBuildPage}/>
+          <PrivateRoute path="/build/brick-create" exact component={ProFormaPage}/>
+          <PrivateRoute path="/build/brick-create/:brickId" exact component={ProFormaPage}/>
+          <PrivateRoute path="/build/bricks-list" component={BricksListPage}/>
+          <Route path="/pre-login" component={PreLoginPage} />
+          <Route path="/login" exact component={LoginPage} />
+          <Route path="/register" exact component={RegisterPage} />
+          <PrivateRoute path="/build" component={MainPage} />
           <PrivateRoute path="/" component={MainPage} />
         </Switch>
       </ThemeProvider>

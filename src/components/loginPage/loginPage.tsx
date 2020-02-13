@@ -60,7 +60,7 @@ function LoginPage(props: any) {
   }
 
   if (props.isAuthenticated) {
-    props.history.push("/");
+    props.history.push("/build");
   }
 
   const toRegister = () => {

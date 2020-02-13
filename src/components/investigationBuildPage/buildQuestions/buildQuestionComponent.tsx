@@ -30,11 +30,11 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
 
   const submitBrick = () => {
     saveBrick();
-    history.push("/");
+    history.push("/build");
   }
 
   const move = () => {
-    history.push("/");
+    history.push("/build");
   }
 
   return (
