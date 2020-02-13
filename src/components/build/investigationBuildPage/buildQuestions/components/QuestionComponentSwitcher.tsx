@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Hint from '../../../base-components/Hint/Hint';
+
 import { QuestionComponentTypeEnum } from 'components/model/question';
 import DragAndDropBox from '../drag/dragAndDropBox'
 import TextComponent from './Text/Text'
@@ -35,6 +37,12 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({ type, index, s
     innerComponent = EquationComponent;
   } else if (type == QuestionComponentTypeEnum.Component) {
     innerComponent = uniqueComponent;
+    return (
+      <div className="unique-component-wrapper">
+        <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} updateComponent={updateComponent} component={innerComponent} />
+        <Hint></Hint>
+      </div>
+    )
   }
   return (
     <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} updateComponent={updateComponent} component={innerComponent} />

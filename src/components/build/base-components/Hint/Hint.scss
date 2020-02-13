@@ -1,0 +1,26 @@
+
+.hint-component {
+  width: 99%;
+
+  color: black;
+  border: 1px dashed black;
+
+  .hint-input-text {
+    text-align: center;
+    width: 100%;
+    margin: 3px;
+    padding: 8px 0;
+    border: 1px solid black;
+  }
+
+  .hint-type {
+    padding: 10px 0 10px 5px;
+
+    .question-mark {
+      font-weight: bold;
+      color: white;
+      padding: 4px 7px;
+      background: #C22229;
+    }
+  }
+}

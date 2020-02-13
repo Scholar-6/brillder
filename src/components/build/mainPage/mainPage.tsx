@@ -6,7 +6,7 @@ import { Box, Grid } from '@material-ui/core';
 
 import './mainPage.scss';
 import actions from 'redux/actions/mainPageActions';
-import MainMenu from '../base-components/main-menu';
+import MainMenu from '../base-components/main-menu/main-menu';
 
 
 const mapState = (state: any) => {

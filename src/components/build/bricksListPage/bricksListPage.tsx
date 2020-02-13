@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Box, Grid } from '@material-ui/core';
 
 import actions from 'redux/actions/bricksActions';
-import MainMenu from '../base-components/main-menu';
+import MainMenu from '../base-components/main-menu/main-menu';
 
 const mapState = (state: any) => {
   return {

@@ -65,7 +65,7 @@ const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, data,
   drag(drop(ref))
 
   return (
-    <div ref={ref} className="drag-and-drop-box" style={{ backgroundColor, width: '100%', opacity }}>
+    <div ref={ref} className="drag-and-drop-box" style={{ backgroundColor, width: '99%', opacity }}>
       {component({data, updateComponent})}
     </div>
   )

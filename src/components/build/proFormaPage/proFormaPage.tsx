@@ -8,7 +8,7 @@ import bricksActions from 'redux/actions/bricksActions';
 import EditorRowComponent from './editorRow/editorRow';
 import { ProFormaProps, ProFormaSubmitData } from './model';
 import ProFormComponent from './proForm/proForm';
-import MainMenu from '../base-components/main-menu';
+import MainMenu from '../base-components/main-menu/main-menu';
 
 const mapState = (state: any) => {
   return {
