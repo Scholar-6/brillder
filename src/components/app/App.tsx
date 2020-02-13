@@ -1,15 +1,18 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 // @ts-ignore
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 import './app.css';
 import '../../font-numbers/style.css'
 import reducer from '../../redux/reducers/index';
 import PrivateRoute from './privateRoute';
+import { hostname } from 'os';
 
 import NewBrick from '../build/newBrick/newBrick';
 import MainPage from '../build/mainPage/mainPage';
@@ -24,6 +27,8 @@ import PreLoginPage from '../preLoginPage/preLoginPage';
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
 const App: React.FC = () => {
+  let history = useHistory();
+
   const theme = React.useMemo(() =>
     createMuiTheme({
       palette: {
@@ -33,20 +38,28 @@ const App: React.FC = () => {
     [],
   );
 
+  axios.interceptors.response.use(function (response) {
+    return response;
+  }, function (error) {
+    console.log(44);
+    history.push("/pre-login");
+    return Promise.reject(error);
+  });
+
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Switch>
-          <PrivateRoute path="/build/new-brick" component={NewBrick} />
-          <PrivateRoute path="/build/brick/:brickId" component={InvestigationBuildPage}/>
-          <PrivateRoute path="/build/brick-create" exact component={ProFormaPage}/>
-          <PrivateRoute path="/build/brick-create/:brickId" exact component={ProFormaPage}/>
-          <PrivateRoute path="/build/bricks-list" component={BricksListPage}/>
+          <Route path="/build/new-brick" component={NewBrick} />
+          <Route path="/build/brick/:brickId" component={InvestigationBuildPage}/>
+          <Route path="/build/brick-create" exact component={ProFormaPage}/>
+          <Route path="/build/brick-create/:brickId" exact component={ProFormaPage}/>
+          <Route path="/build/bricks-list" component={BricksListPage}/>
           <Route path="/pre-login" component={PreLoginPage} />
           <Route path="/login" exact component={LoginPage} />
           <Route path="/register" exact component={RegisterPage} />
-          <PrivateRoute path="/build" component={MainPage} />
-          <PrivateRoute path="/" component={MainPage} />
+          <Route path="/build" component={MainPage} />
+          <Route path="/" component={MainPage} />
         </Switch>
       </ThemeProvider>
     </Provider>
