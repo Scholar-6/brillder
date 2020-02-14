@@ -20,6 +20,12 @@ import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'component
 import actions from '../../../redux/actions/brickActions';
 
 
+interface ApiQuestion {
+  id?: number
+  contentBlocks: string
+  type: number
+}
+
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any
   fetchBrick(brickId: number): void
@@ -39,7 +45,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       type,
       active,
       components: [
-        { type: 0 }, { type: QuestionComponentTypeEnum.Component }, { type: 0 }
+        { type: 0 },
+        { type: QuestionComponentTypeEnum.Component },
+        { type: 0 }
       ]
     } as Question;
   }
@@ -66,9 +74,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     updatedQuestions.forEach(q => q.active = false);
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
 
-    setQuestions(update(questions, {
-      $set: updatedQuestions,
-    }));
+    setQuestions(update(questions, { $set: updatedQuestions }));
   }
 
   const moveQuestions = (dragIndex: number, hoverIndex: number, dragQuestion: any) => {
@@ -149,6 +155,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     )
   }
 
+  const setQuestionHint = (hintState: any) => {
+    const index = getQuestionIndex(activeQuestion);
+    const question = Object.assign({}, activeQuestion) as Question;
+
+    setQuestions(
+      update(questions, { [index]: { $set: question } }),
+    )
+  }
+
   const swapComponents = (drag: any, drop: any) => {
     const index = getQuestionIndex(activeQuestion);
     const components = Object.assign([], activeQuestion.components) as any[];
@@ -181,22 +196,46 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
   const { brick } = props;
   if (brick.questions && loaded == false) {
-    for (let question in brick.questions) {
-      question = brick.questions;
+    const parsedQuestions: Question[] = [];
+    for (const question of brick.questions) {
+      try {
+        const parsedQuestion = JSON.parse(question.contentBlocks);
+        if (parsedQuestion.components) {
+          let q = {
+            id: question.id,
+            type: question.type,
+            components: parsedQuestion.components
+          } as Question;
+          parsedQuestions.push(q);
+        }
+      }
+      catch (e) {
+      }
     }
-    /*
-    var res = JSON.parse(brick.questions);
-    setQuestions(
-      update(questions, { $set: res }),
-    )
-    setStatus(
-      update(loaded, { $set: true })
-    )
-    */
+    if (parsedQuestions.length > 0) {
+      parsedQuestions[0].active = true;
+      setQuestions(update(questions, { $set: parsedQuestions }));
+      setStatus(
+        update(loaded, { $set: true })
+      )
+    }
   }
 
   const saveBrick = () => {
-    brick.synthesis = JSON.stringify(questions);
+    brick.questions = [];
+    for (let question of questions) {
+      let questionObject = {
+        components: question.components,
+        hint: ""
+      }
+      let apiQuestion = {type: question.type, contentBlocks: JSON.stringify(questionObject), } as ApiQuestion;
+      if (question.id) {
+        apiQuestion.id = question.id;
+        apiQuestion.type = question.type;
+      }
+      brick.questions.push(apiQuestion);
+    }
+    console.log(brick)
     props.saveBrick(brick);
   }
 
@@ -266,7 +305,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
           </Grid>
           <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
             <Hidden only={['xs', 'sm']}>
-              <Grid container justify="center" md={5} lg={4}>
+              <Grid container justify="center" item md={5} lg={4}>
                 <Device name="iphone-5s" use="iphone-5s" color="grey" url="http://front.scholar6.org/" />
               </Grid>
             </Hidden>

@@ -56,7 +56,7 @@ const HintComponent: React.FC<HintProps> = (props) => {
 
   return (
     <div className="hint-component">
-      <Grid container justify="space-between" xs={12}>
+      <Grid container justify="space-between" item xs={12}>
         <span className="hint-type">Hint Type* <span className="question-mark">?</span></span>
         <FormControlLabel
           control= {
@@ -71,7 +71,7 @@ const HintComponent: React.FC<HintProps> = (props) => {
           label="Each Answer"
         />
       </Grid>
-      <Grid container justify="space-between" xs={12}>
+      <Grid container justify="space-between" item xs={12}>
         <input className="hint-input-text" value={state.hint} onChange={onHintChanged} placeholder="Enter Hint..."></input>
       </Grid>
     </div>

@@ -40,7 +40,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
 
   const submitBrick = () => {
     saveBrick();
-    history.push("/build");
+    //history.push("/build");
   }
 
   let typeArray: string[] = Object.keys(QuestionType);

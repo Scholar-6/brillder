@@ -1,5 +1,4 @@
 import React from 'react'
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import './shortAnswerBuild.scss'
@@ -40,7 +39,6 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({data, updat
 
   return (
     <div className="short-answer-build">
-      <DragIndicatorIcon className="rotate-90" />
       {
         data.list.map((shortAnswer:any, i:number) => renderShortAnswer(shortAnswer, i))
       }

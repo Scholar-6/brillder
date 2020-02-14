@@ -1,21 +1,19 @@
-.choose-one-build {
+.horizontal-shuffle-build {
   text-align: center;
-
-  .choose-one-box {
+  
+  p {
+    margin: 0;
+  }
+  
+  .horizontal-shuffle-box {
     position: relative;
     margin: 3px 5px;
-
+  
     .right-top-icon {
       position: absolute;
       top: 2px;
       right: 0;
       cursor: pointer;
-    }
-
-    .left-ckeckbox {
-      position: absolute;
-      left: 0;
-      top: 5px;
     }
 
     .right-top-icon:hover {
@@ -25,13 +23,11 @@
     input {
       width: 100%;
       height: 55px;
-      box-sizing: border-box;
-      padding: 0 38px;
       text-align: center;
       border: 1px solid black;
     }
   }
-  
+    
   .button-box {
     margin: 3px 5px;
     .add-answer-button {
