@@ -2,9 +2,43 @@
   min-height: 400px;
   border: 2px solid black;
   border-top: none;
+  font-size: 14px;
+  padding-bottom: 25px;
+  color: black;
 
   .unique-component-wrapper {
     width: 100%;
+  }
+
+  .MuiFormControlLabel-label {
+    font-size: 14px !important;
+  }
+
+  .no-margin {
+    margin: 0 !important;
+  }
+
+  .right-button-container {
+    padding-left: 5px !important;
+    padding-right: 20px !important;
+  }
+
+  .round-button-container {
+    display: inline;
+
+    .round-button {
+      border-radius: 120px;
+      border: 2px solid black !important;
+      padding: 8px !important;
+      padding-top: 6px !important;
+      width: 40px !important;
+      height: 40px !important;
+    }
+  }
+
+  .important-text-container {
+    text-align: left;
+    color: black;
   }
 
   .first-row {
@@ -32,7 +66,7 @@
   }
 
   .right-sidebar {
-    div {
+    .question-button-container {
       margin-left: 10px;
       width: 90%;
   
@@ -63,6 +97,10 @@
       background: white;
     }
   }
+
+  .question-type-select {
+    border: 1px solid black;
+  }
   
   button:hover {
     cursor: pointer;
@@ -78,6 +116,10 @@
         }
       }
     }
+
+    .left-button-container {
+      padding-left: 30px !important;
+    }
   }
   
   @media only screen and (max-width: 1199px) and (min-width: 960px)  {
@@ -89,6 +131,10 @@
           width: 78%;
         }
       }
+    }
+
+    .left-button-container {
+      padding-left: 15px !important;
     }
   }
   
@@ -102,6 +148,10 @@
         }
       }
     }
+
+    .left-button-container {
+      padding-left: 15px !important;
+    }
   }
   
   @media only screen and (max-width: 599px) {
@@ -114,6 +164,9 @@
           width: 70%;
         }
       }
+    }
+    .left-button-container {
+      padding-left: 15px !important;
     }
   }
 }
