@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 // @ts-ignore
 import { Provider } from 'react-redux';
@@ -11,8 +11,6 @@ import { useHistory } from 'react-router-dom';
 import './app.css';
 import '../../font-numbers/style.css'
 import reducer from '../../redux/reducers/index';
-import PrivateRoute from './privateRoute';
-import { hostname } from 'os';
 
 import NewBrick from '../build/newBrick/newBrick';
 import MainPage from '../build/mainPage/mainPage';
