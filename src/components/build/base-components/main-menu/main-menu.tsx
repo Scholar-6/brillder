@@ -1,12 +1,13 @@
 import React from "react";
-// @ts-ignore
-import { connect } from 'react-redux';
-import actions from 'redux/actions/auth';
+import { useHistory } from 'react-router-dom';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Button, Typography, IconButton } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
+// @ts-ignore
+import { connect } from 'react-redux';
 
 import './main-menu.scss'
+import actions from 'redux/actions/auth';
 
 
 const mapState = (state: any) => {
@@ -39,7 +40,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 function MainMenu(props: any) {
+  const history = useHistory();
   const classes = useStyles();
+
+  const logout = () => {
+    props.logout();
+    history.push('/pre-login');
+  }
 
   return (
     <div className={classes.root}>
@@ -51,7 +58,7 @@ function MainMenu(props: any) {
           <Typography variant="h6" className={classes.title}>
             Menu
           </Typography>
-          <Button color="inherit" onClick={props.logout}>Logout</Button>
+          <Button color="inherit" onClick={logout}>Logout</Button>
         </Toolbar>
       </AppBar>
     </div>
