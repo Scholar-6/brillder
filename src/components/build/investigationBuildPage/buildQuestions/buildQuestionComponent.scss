@@ -14,6 +14,10 @@
     font-size: 14px !important;
   }
 
+  .question-lock-container {
+    margin-bottom: 7px;
+  }
+
   .no-margin {
     margin: 0 !important;
   }
@@ -50,6 +54,8 @@
   .question-components-list {
     max-height: 700px;
     overflow-y: auto;
+    border: 1px solid black;
+    padding: 2px 0px 0px 2px;
   }
 
   .left-sidebar {

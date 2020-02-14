@@ -40,7 +40,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({ type, index, s
     return (
       <div className="unique-component-wrapper">
         <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} updateComponent={updateComponent} component={innerComponent} />
-        <Hint></Hint>
+        <Hint allAnswers={false} eachAnswer={false} hint="" onChange={() => {}}></Hint>
       </div>
     )
   }

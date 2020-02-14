@@ -6,7 +6,7 @@
   border: 1px dashed black;
 
   .hint-input-text {
-    text-align: center;
+    text-align: center !important;
     width: 100%;
     margin: 3px;
     padding: 8px 0;
@@ -14,7 +14,7 @@
   }
 
   .hint-type {
-    padding: 10px 0 10px 5px;
+    padding: 13px 0 10px 5px;
 
     .question-mark {
       font-weight: bold;

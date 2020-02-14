@@ -43,10 +43,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
     history.push("/build");
   }
 
-  const move = () => {
-    history.push("/build");
-  }
-
   let typeArray: string[] = Object.keys(QuestionType);
 
   return (
@@ -75,7 +71,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
               </div>
               <div className="no-margin">
                 <Grid container justify="center" direction="row">
-                  <Grid item sm={10} md={10} lg={8} className="important-text-container">
+                  <Grid item sm={10} md={10} lg={9} className="important-text-container">
                     <p>Is the Order in the brick sequence of this Question important?</p>
                   </Grid>
                 </Grid>
@@ -113,29 +109,30 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 alignItems="flex-end"
               >
                 <div>
-                 <FormControlLabel
-                  value="start"
-                  control={
-                    <div className="round-button-container left-button-container">
-                      <IconButton className="round-button" aria-label="next">
-                        <LockIcon />
-                      </IconButton>
-                    </div>
-                  }
-                  label="Lock changes to this question?"
-                />
-                <FormControlLabel
-                  value="start"
-                  control={
-                    <div className="round-button-container right-button-container">
-                      <IconButton className="round-button" aria-label="next">
-                        <ArrowForwardIosIcon />
-                      </IconButton>
-                    </div>
-                  }
-                  label="Add New Question"
-                  labelPlacement="start"
-                />
+                  <FormControlLabel
+                    value="start"
+                    className="question-lock-container"
+                    control={
+                      <div className="round-button-container left-button-container">
+                        <IconButton className="round-button" aria-label="next">
+                          <LockIcon />
+                        </IconButton>
+                      </div>
+                    }
+                    label="Lock changes to this question?"
+                  />
+                  <FormControlLabel
+                    value="start"
+                    control={
+                      <div className="round-button-container right-button-container">
+                        <IconButton className="round-button" aria-label="next">
+                          <ArrowForwardIosIcon />
+                        </IconButton>
+                      </div>
+                    }
+                    label="Add New Question"
+                    labelPlacement="start"
+                  />
                 </div>
               </Grid>
             </Grid>
