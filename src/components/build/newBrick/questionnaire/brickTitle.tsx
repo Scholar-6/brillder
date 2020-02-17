@@ -15,7 +15,7 @@ function BrickTitle() {
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
-            <h1 style={{marginTop: '30px'}}>Define and amplify your audience.</h1>
+            <h1 className="only-tutorial-header">Define and amplify your audience.</h1>
             <Input className="audience-inputs" placeholder="Enter Proposed Title Here..." />
             <Input className="audience-inputs" placeholder="Enter Sub-Topic(s)..." />
             <Input className="audience-inputs" placeholder="Enter Alternative Topic(s)..." />
@@ -24,7 +24,7 @@ function BrickTitle() {
         </Grid>
         <Hidden only={['xs', 'sm']}>
           <Grid container justify="center" item md={5} lg={4}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin} />
+            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
           </Grid>
         </Hidden>
       </Grid>

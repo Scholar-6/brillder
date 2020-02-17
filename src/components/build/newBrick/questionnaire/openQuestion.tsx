@@ -10,18 +10,18 @@ import { NewBrickStep } from "../model";
 
 function OpenQuestion() {
   return (
-    <div className="tutorial-page">
+    <div className="tutorial-page" >
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
-            <h1 style={{marginTop: '30px'}}>Every brick should engage and inspire : 'No profit grows where is no ta'en'.  What core question(s) will challenge users?</h1>
-            <Input className="audience-inputs" placeholder="Enter Alternative Topic(s)..." />
+            <h1 className="only-tutorial-header">Every brick should engage and inspire : 'No profit grows where is no pleasure ta'en'. What open question(s) will challenge users?</h1>
+            <Input className="audience-inputs" placeholder="Enter Open Question(s)..." />
             <NextButton step={NewBrickStep.OpenQuestion} canSubmit={true} />
           </div>
         </Grid>
         <Hidden only={['xs', 'sm']}>
           <Grid container justify="center" item md={5} lg={4}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin} />
+            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
           </Grid>
         </Hidden>
       </Grid>

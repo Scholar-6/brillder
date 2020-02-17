@@ -5,7 +5,6 @@ import Device from "react-device-frame";
 import { Hidden } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
-import './welcome.scss';
 import { NewBrickStep } from "../model";
 
 
@@ -29,7 +28,7 @@ function Welcome() {
         </Grid>
         <Hidden only={['xs', 'sm']}>
           <Grid container justify="center" item md={5} lg={4}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin} />
+            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
           </Grid>
         </Hidden>
       </Grid>
