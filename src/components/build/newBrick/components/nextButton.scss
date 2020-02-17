@@ -1,15 +1,16 @@
 .tutorial-page {
-  .round-button-container {
+  .tutorial-next-container {
     padding: 15px !important;
     padding-right: 25px !important;
   
-    .round-button {
-      border-radius: 120px;
-      border: 2px solid black !important;
-      padding: 8px !important;
+    .tutorial-next-button {
+      margin: 23px !important;
       padding-top: 6px !important;
-      width: 40px !important;
-      height: 40px !important;
+      color: #b44438;
+
+      .tutorial-next-icon {
+        font-size: 60px;
+      }
     }
   }
 }

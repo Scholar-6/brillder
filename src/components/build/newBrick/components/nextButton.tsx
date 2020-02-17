@@ -35,10 +35,10 @@ function NextButton({ step }: any) {
       direction="row"
       justify="flex-end"
       alignItems="flex-start"
-      className="round-button-container"
+      className="tutorial-next-container"
     >
-      <IconButton className="round-button" onClick={next} aria-label="next">
-        <ArrowForwardIosIcon />
+      <IconButton className="tutorial-next-button" onClick={next} aria-label="next">
+        <ArrowForwardIosIcon className="tutorial-next-icon" />
       </IconButton>
     </Grid>
   );

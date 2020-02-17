@@ -1,8 +1,11 @@
 .tutorial-page {
   margin-top: 30px;
+  height: 100%;
 
   .left-card {
     width: 90%;
-    border: 2px solid black;
+    border: 1px solid grey;
+    max-width: 600px;
+    border-radius: 4px;
   }
 }
