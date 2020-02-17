@@ -1,5 +1,4 @@
 import React from 'react'
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox'; 
 
@@ -63,7 +62,6 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({data, updateCom
 
   return (
     <div className="choose-one-build">
-      <DragIndicatorIcon className="rotate-90" />
       {
         data.list.map((answer:any, i:number) => renderAnswer(answer, i))
       }
