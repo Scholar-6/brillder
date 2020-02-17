@@ -4,10 +4,8 @@ html, body, #root {
 
 .pre-login-page {
     height: 100%;
-    background-color: #111f33;
 
-    .login-container {
-        width:450px;
+    background-color: #06215C;
 
         .google-button {
             background-color: white;
@@ -57,16 +55,23 @@ html, body, #root {
             padding: 5px 20px;
             margin-bottom: 30px;
         }
+
+        .user-type-btn:hover {
+            background-color: #c94f42;
+        }
         
         .user-type-btn {
             padding: 0 16px;
-            background-color: white;
+            background-color:#A84D3F;
+            color: white;
             font-size: 30px !important;
-            font-family: Montserrat;
-            text-transform: none;
             margin-bottom: 10px;
-            border-radius: 2px;
+            border-radius: 10px;
             width: 240px;
+
+            span {
+                font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+            }
             
             img {
                 width: 75px;
@@ -82,6 +87,5 @@ html, body, #root {
         .fotter {
             width:50%;
             margin-top: 0px;
-        }
     }
 }

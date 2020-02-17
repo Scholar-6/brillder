@@ -23,15 +23,16 @@ function PreLoginPage(props: any) {
 
   if (userType == 0) {
     return (
-      <Grid className="pre-login-page" container item justify="center" alignItems="center">
-        <div className="login-container">
-          <div className="login-logo">
-            <img src="/images/lflogo.png" alt="lol" />
-          </div>
+      <Grid className="pre-login-page" style={{height: '100%'}} container item justify="center" alignItems="center">
+        <Grid container style={{height: '100%'}} justify="center" item xs={6} alignItems="center">
+          <Grid container style={{height: '70%', borderRight: "2px solid white"}} justify="center" item xs={12} alignItems="center">
+            <img src="/images/BrixLogo.png" style={{height: '80%'}} />
+          </Grid>
+        </Grid>
+        <Grid container item xs={6}>
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
               <Button onClick={() => selectLoginType(LoginType.Student)} className="user-type-btn">
-                <img src="/images/lflogo.png" className="user-type-img" />
                 <span className="user-type-name">Student</span>
               </Button>
             </Grid>
@@ -39,7 +40,6 @@ function PreLoginPage(props: any) {
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
               <Button onClick={() => selectLoginType(LoginType.Teacher)} className="user-type-btn">
-                <img src="/images/lflogo.png" className="user-type-img rotate-180" />
                 <span className="user-type-name">Teacher</span>
               </Button>
             </Grid>
@@ -47,17 +47,11 @@ function PreLoginPage(props: any) {
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
               <Button onClick={() => selectLoginType(LoginType.Builder)} className="user-type-btn">
-                <img src="/images/lflogo.png" className="user-type-img rotate-90" />
                 <span className="user-type-name">Builder</span>
               </Button>
             </Grid>
           </Grid>
-          <Grid container direction="row">
-            <Grid container item xs={12} justify="center">
-              <img className="fotter" src="/images/brillder-2-logo.png" /><br />
-            </Grid>
-          </Grid>
-        </div>
+        </Grid>
       </Grid>
     );
   } else {
