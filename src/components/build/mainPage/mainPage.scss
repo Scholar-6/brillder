@@ -1,35 +1,80 @@
+.mainPage {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  font-family: "Century Gothic Regular";
 
+  .main-page-center-container {
+    width: 100%;
+  }
 
+  .bigButton {
+    background-color:#A84D3F;
+    text-align: center;
+    width: 100%;
+  }
 
-@media only screen and (min-width: 600px)  {
+  .bigButton:hover {
+    background-color: #c94f42;  
+  }
+
+  .link-title {
+    color:white;
+  }
+
+  .link-description {
+    color: #ddd;
+    margin: 4px 0 4px 0;
+    font-family: "Century Gothic Regular";
+  }
+  a:-webkit-any-link {
+    text-decoration: none;
+  }
+}
+
+@media only screen and (min-width: 1200px)  {
   .mainPage {
-
-    .client-name {
-      width: 240px;
-      text-align: left;
-      margin-top: 14px;
-      margin-bottom: 5px;
-      font-weight: 600;
-      color: #133D67;
-    }
-  
     .bigButton {
-      margin: 5px 10px 5px 10px;
-  
-      width: 240px;
-      text-align: center;
+      margin: 20px;
+      padding: 30px 0px;
+      border-radius: 20px;
   
       .link-title {
-        color:white;
         font-size: 24px;
       }
       .link-description {
-        margin: 4px 0 4px 0;
-        font-weight: 600;
-        color: #65B5F2;
+        font-size: 18px;
       }
-      a:-webkit-any-link {
-        text-decoration: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 1199px) and (min-width: 900px)  {
+  .mainPage {
+    .bigButton {
+      margin: 20px;
+      padding: 30px 0px;
+      border-radius: 20px;
+  
+      .link-title {
+        font-size: 24px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 899px) and (min-width: 600px)  {
+  .mainPage {
+    .bigButton {
+      margin: 20px;
+      padding: 25px 0px;
+      border-radius: 20px;
+  
+      .link-title {
+        font-size: 18px;
+      }
+      .link-description {
+        font-size: 14px;
       }
     }
   }
@@ -37,37 +82,16 @@
 
 @media only screen and (max-width: 599px) {
   .mainPage {
-    .client-name {
-      width: 90%;
-      text-align: left;
-      margin-top: 4px;
-      margin-bottom: 5px;
-      font-weight: 600;
-      font-size: 20px;
-      color: #133D67;
-    }
-
     .bigButton {
-      margin: 10px 10px 10px 10px;
-      padding-top: 10px;
-      padding-bottom: 10px;
-  
-      width: 90%;
-      text-align: center;
+      margin: 10px;
+      padding: 20px 0px;
+      border-radius: 15px;
   
       .link-title {
-        padding-bottom: 15px;
-        color:white;
-        font-size: 34px;
+        font-size: 15px;
       }
       .link-description {
-        margin: 4px 0 4px 0;
-        font-weight: 500;
-        font-size: 20px;
-        color: #65B5F2;
-      }
-      a:-webkit-any-link {
-        text-decoration: none;
+        font-size: 11px;
       }
     }
   }
