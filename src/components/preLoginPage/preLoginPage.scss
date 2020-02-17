@@ -18,7 +18,7 @@ html, body, #root {
 
             .pre-login-text {
                 color: white;
-                font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+                font-family: 'Century Gothic Regular';
                 font-size: 18px;
             }
         }
@@ -89,7 +89,7 @@ html, body, #root {
             width: 58%;
 
             span {
-                font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+                font-family: "Century Gothic Regular";
             }
             
             img {
@@ -119,7 +119,8 @@ html, body, #root {
     }
 
     .user-type-btn {
-        font-size: 18px !important;
+        padding: 20px 0 !important;
+        font-size: 24px !important;
     }
 }
 
@@ -132,6 +133,7 @@ html, body, #root {
     }
 
     .user-type-btn {
+        padding: 20px 0 !important;
         font-size: 17px !important;
     }
 }
@@ -144,6 +146,7 @@ html, body, #root {
         }
     }
     .user-type-btn {
+        padding: 15px 0 !important;
         font-size: 14px !important;
     }
     .pre-login-text {
