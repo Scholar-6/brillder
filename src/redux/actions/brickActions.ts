@@ -1,7 +1,6 @@
 import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
-import host from '../../hostname';
 import { Brick } from 'model/brick';
 
 const fetchBrickSuccess = (data:any) => {
@@ -20,7 +19,7 @@ const fetchBrickFailure = (errorMessage:string) => {
 
 const fetchBrick = (id: number) => {
   return function (dispatch: Dispatch) {
-    return axios.get(host.BACKEND_HOST + '/brick/' + id, {withCredentials: true})
+    return axios.get(process.env.REACT_APP_BACKEND_HOST + '/brick/' + id, {withCredentials: true})
       .then((res) => {
         dispatch(fetchBrickSuccess(res.data));
       })
@@ -48,7 +47,7 @@ const saveBrickFailure = (errorMessage:string) => {
 const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
     brick.type = 1;
-    return axios.post(host.BACKEND_HOST + '/brick', brick, {withCredentials: true}).then(response => {
+    return axios.post(process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true}).then(response => {
       const brick = response.data as Brick;
       dispatch(saveBrickSuccess(brick));
     })

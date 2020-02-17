@@ -3,7 +3,6 @@ import update from 'immutability-helper';
 import { Button, Grid } from "@material-ui/core";
 
 import './preLoginPage.scss'
-import host from '../../hostname';
 
 
 enum LoginType {
@@ -79,7 +78,7 @@ function PreLoginPage(props: any) {
           </Grid>
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
-              <Button className="google-button" href={host.BACKEND_HOST + '/auth/google'}>
+              <Button className="google-button" href={process.env.REACT_APP_BACKEND_HOST + '/auth/google'}>
                 <img className="google-icon" alt="" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"/>
                 <span className="google-button-text">Sign in with Google</span>
               </Button>

@@ -19,6 +19,7 @@ import { Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus } fro
 import actions from '../../../redux/actions/brickActions';
 import { HintState } from '../base-components/Hint/Hint';
 
+
 interface ApiQuestion {
   id?: number
   contentBlocks: string
@@ -202,9 +203,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   const { brick } = props;
   if (brick.questions && loaded == false) {
     const parsedQuestions: Question[] = [];
-    console.log(brick.questions)
     for (const question of brick.questions) {
-      console.log(question)
       try {
         const parsedQuestion = JSON.parse(question.contentBlocks);
         if (parsedQuestion.components) {
@@ -243,7 +242,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       }
       brick.questions.push(apiQuestion);
     }
-    console.log(brick)
     props.saveBrick(brick);
   }
 

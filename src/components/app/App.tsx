@@ -22,6 +22,8 @@ import RegisterPage from '../registerPage/registerPage';
 import PreLoginPage from '../preLoginPage/preLoginPage';
 
 
+console.log(process.env.REACT_APP_BACKEND_HOST)
+
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
 const App: React.FC = () => {

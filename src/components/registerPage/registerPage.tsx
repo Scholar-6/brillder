@@ -3,7 +3,6 @@ import { Grid, TextField } from "@material-ui/core";
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import host from '../../hostname';
 
 
 function RegisterPage(props:any) {
@@ -30,7 +29,7 @@ function RegisterPage(props:any) {
       return;
     }
   
-    axios.post(host.BACKEND_HOST + '/auth/SignUp', {email, password, confirmPassword}).then(resp => {
+    axios.post(process.env.REACT_APP_BACKEND_HOST + '/auth/SignUp', {email, password, confirmPassword}).then(resp => {
       const {data} = resp;
       if (data.errors) {
         alert(data.errors[0].msg);
