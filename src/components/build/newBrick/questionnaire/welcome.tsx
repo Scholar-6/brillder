@@ -24,7 +24,7 @@ function Welcome() {
             </Grid>
             <h2>Welcome to Brix.</h2>
             <h1>Start Building</h1>
-            <NextButton step={NewBrickStep.Welcome} />
+            <NextButton step={NewBrickStep.Welcome} canSubmit={true} />
           </div>
         </Grid>
         <Hidden only={['xs', 'sm']}>

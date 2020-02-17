@@ -8,24 +8,26 @@ import { NewBrickStep } from "../model";
 import './nextButton.scss';
 
 
-function NextButton({ step }: any) {
+function NextButton({ step, canSubmit }: any) {
   const history = useHistory()
   const url = "/build/new-brick"
 
   const next = () => {
-    switch (step) {
-      case NewBrickStep.Welcome:
-        return history.push(`${url}/choose-subject`);
-      case NewBrickStep.ChooseSubject:
-        return history.push(`${url}/brick-title`);
-      case NewBrickStep.BrickTitle:
-        return history.push(`${url}/open-question`);
-      case NewBrickStep.OpenQuestion:
-        return history.push(`${url}/length`);
-      case NewBrickStep.BrickLength:
-        return history.push(`${url}/brief-prep`);
-      case NewBrickStep.BriefPrep:
-        return ""
+    if (canSubmit == true) {
+      switch (step) {
+        case NewBrickStep.Welcome:
+          return history.push(`${url}/choose-subject`);
+        case NewBrickStep.ChooseSubject:
+          return history.push(`${url}/brick-title`);
+        case NewBrickStep.BrickTitle:
+          return history.push(`${url}/open-question`);
+        case NewBrickStep.OpenQuestion:
+          return history.push(`${url}/length`);
+        case NewBrickStep.BrickLength:
+          return history.push(`${url}/brief-prep`);
+        case NewBrickStep.BriefPrep:
+          return ""
+      }
     }
   }
 

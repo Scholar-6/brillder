@@ -110,7 +110,7 @@ function ChooseSubject() {
               <MenuItem value={Subject.Spanish}>Spanish</MenuItem>
               <MenuItem value={Subject.Theology}>Theology/Philosophy</MenuItem>
             </Select>
-            <NextButton step={NewBrickStep.Welcome} />
+            <NextButton step={NewBrickStep.ChooseSubject} canSubmit={subject != Subject.None} />
           </div>
         </Grid>
         <Hidden only={['xs', 'sm']}>
