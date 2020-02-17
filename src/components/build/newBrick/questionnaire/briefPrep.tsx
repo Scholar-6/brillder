@@ -16,7 +16,7 @@ function BriefPrep() {
           <div className="left-card">
             <h1 className="only-tutorial-header">What do you want users to think more deeply about?</h1>
             <input style={{ width: '90%', border: '2px solid black', height: '70px', textAlign: 'center' }} placeholder="Enter Brief here..."></input>
-            <Input style={{ margin: '20px 0 0 0', width: '90%' }} maxLength="100" placeholder="Insert Link(s) Here..." />
+            <Input style={{ margin: '20px 0 0 0', width: '90%' }} placeholder="Insert Link(s) Here..." />
 
             <Grid container direction="row" alignItems="center" style={{ height: "300px" }}>
               <Grid container justify="center" item xs={3}>
