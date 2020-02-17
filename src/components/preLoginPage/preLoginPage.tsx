@@ -24,30 +24,37 @@ function PreLoginPage(props: any) {
   if (userType == 0) {
     return (
       <Grid className="pre-login-page" style={{height: '100%'}} container item justify="center" alignItems="center">
-        <Grid container style={{height: '100%'}} justify="center" item xs={6} alignItems="center">
-          <Grid container style={{height: '70%', borderRight: "2px solid white"}} justify="center" item xs={12} alignItems="center">
-            <img src="/images/BrixLogo.png" style={{height: '80%'}} />
+        <Grid container className="pre-login-image-container" justify="center" item xs={6} alignItems="center">
+          <Grid container className="pre-login-image-container2" justify="center" item xs={12} alignItems="center">
+            <Grid container className="pre-login-image-container3" justify="center" style={{position: "relative"}}>
+              <img src="/images/BrixLogo.png" className="pre-login-image" />
+              <Grid container direction="row" justify="center" className="pre-login-text" style={{position: "absolute", bottom: 0}}>
+                <p>
+                  A &nbsp; S C H O O L A R &nbsp; 6 &nbsp; T E C H &nbsp; P R O D U C T
+                </p>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
         <Grid container item xs={6}>
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
               <Button onClick={() => selectLoginType(LoginType.Student)} className="user-type-btn">
-                <span className="user-type-name">Student</span>
+                <span className="user-type-name">S t u d e n t</span>
               </Button>
             </Grid>
           </Grid>
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
               <Button onClick={() => selectLoginType(LoginType.Teacher)} className="user-type-btn">
-                <span className="user-type-name">Teacher</span>
+                <span className="user-type-name">T e a c h e r</span>
               </Button>
             </Grid>
           </Grid>
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
               <Button onClick={() => selectLoginType(LoginType.Builder)} className="user-type-btn">
-                <span className="user-type-name">Builder</span>
+                <span className="user-type-name">B u i l d e r</span>
               </Button>
             </Grid>
           </Grid>

@@ -5,6 +5,25 @@ html, body, #root {
 .pre-login-page {
     height: 100%;
 
+    .pre-login-image-container {
+        height: 100%;
+        .pre-login-image-container2 {
+            border-right: 2px solid white;
+
+            .pre-login-image {
+                height: 90%;
+                padding-bottom: 20px;
+                margin-bottom: 30px;
+            }
+
+            .pre-login-text {
+                color: white;
+                font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+                font-size: 18px;
+            }
+        }
+    }
+
     background-color: #06215C;
 
         .google-button {
@@ -61,13 +80,13 @@ html, body, #root {
         }
         
         .user-type-btn {
-            padding: 0 16px;
+            padding: 20px 24px;
             background-color:#A84D3F;
-            color: white;
-            font-size: 30px !important;
+            color: #eee;
             margin-bottom: 10px;
             border-radius: 10px;
-            width: 240px;
+            font-weight: 200 !important;
+            width: 58%;
 
             span {
                 font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
@@ -87,5 +106,65 @@ html, body, #root {
         .fotter {
             width:50%;
             margin-top: 0px;
+    }
+}
+
+
+@media only screen and (min-width: 1200px)  {
+    .pre-login-image-container2 {
+        height: 70%;
+        .pre-login-image-container3 {
+           height: 80%;
+        }
+    }
+
+    .user-type-btn {
+        font-size: 18px !important;
+    }
+}
+
+@media only screen and (max-width: 1199px) and (min-width: 900px)  {
+    .pre-login-image-container2 {
+        height: 70%;
+        .pre-login-image-container3 {
+            height: 80%;
+        }
+    }
+
+    .user-type-btn {
+        font-size: 17px !important;
+    }
+}
+
+@media only screen and (max-width: 899px) and (min-width: 600px)  {
+    .pre-login-image-container2 {
+        height: 70%;
+        .pre-login-image-container3 {
+            height: 80%;
+        }
+    }
+    .user-type-btn {
+        font-size: 14px !important;
+    }
+    .pre-login-text {
+        font-size: 12px !important;
+    }
+}
+
+@media only screen and (max-width: 599px) {
+    .pre-login-image-container2 {
+        height: 70%;
+        .pre-login-image-container3 {
+            height: 50%;
+        }
+    }
+
+    .user-type-btn {
+        padding: 10px 14px !important;
+        font-size: 12px !important;
+    }
+
+    .pre-login-text {
+        font-size: 9px !important;
     }
 }
