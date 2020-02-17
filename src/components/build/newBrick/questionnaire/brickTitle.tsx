@@ -8,6 +8,7 @@ import NextButton from '../components/nextButton'
 import { NewBrickStep } from "../model";
 
 
+
 function BrickTitle() {
   return (
     <div className="tutorial-page">
