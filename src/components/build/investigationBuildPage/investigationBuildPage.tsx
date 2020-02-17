@@ -12,13 +12,12 @@ import Hidden from '@material-ui/core/Hidden';
 import Device from "react-device-frame";
 
 import './investigationBuildPage.scss'
-import BuildPageHeaderComponent from './header/pageHeader';
 import BuildQuestionComponent from './buildQuestions/buildQuestionComponent';
 import QuestionTypePage from './questionType/questionType';
 import DragableTabs from './dragTabs/dragableTabs';
-import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'components/model/question';
+import { Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus } from 'components/model/question';
 import actions from '../../../redux/actions/brickActions';
-
+import { HintState } from '../base-components/Hint/Hint';
 
 interface ApiQuestion {
   id?: number
@@ -44,6 +43,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     return {
       type,
       active,
+      hint: {
+        value: '',
+        status: HintStatus.None
+      },
       components: [
         { type: 0 },
         { type: QuestionComponentTypeEnum.Component },
@@ -155,9 +158,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     )
   }
 
-  const setQuestionHint = (hintState: any) => {
+  const setQuestionHint = (hintState: HintState) => {
     const index = getQuestionIndex(activeQuestion);
     const question = Object.assign({}, activeQuestion) as Question;
+    question.hint.value = hintState.value;
+    question.hint.status = hintState.status;
 
     setQuestions(
       update(questions, { [index]: { $set: question } }),
@@ -197,13 +202,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   const { brick } = props;
   if (brick.questions && loaded == false) {
     const parsedQuestions: Question[] = [];
+    console.log(brick.questions)
     for (const question of brick.questions) {
+      console.log(question)
       try {
         const parsedQuestion = JSON.parse(question.contentBlocks);
         if (parsedQuestion.components) {
           let q = {
             id: question.id,
             type: question.type,
+            hint: parsedQuestion.hint,
             components: parsedQuestion.components
           } as Question;
           parsedQuestions.push(q);
@@ -226,9 +234,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     for (let question of questions) {
       let questionObject = {
         components: question.components,
-        hint: ""
+        hint: question.hint
       }
-      let apiQuestion = {type: question.type, contentBlocks: JSON.stringify(questionObject), } as ApiQuestion;
+      let apiQuestion = { type: question.type, contentBlocks: JSON.stringify(questionObject), } as ApiQuestion;
       if (question.id) {
         apiQuestion.id = question.id;
         apiQuestion.type = question.type;
@@ -254,11 +262,24 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     )
   }
 
+  const renderBuildQuestion = () => {
+    return (
+      <BuildQuestionComponent
+        brickId={brickId}
+        history={history}
+        question={activeQuestion}
+        setQuestionComponentType={setQuestionComponentType}
+        swapComponents={swapComponents}
+        updateComponent={updateComponent}
+        addComponent={addComponent}
+        setQuestionHint={setQuestionHint}
+        saveBrick={saveBrick} />
+    );
+  }
+
   return (
     <DndProvider backend={Backend}>
       <div className="investigation-build-page">
-        <BuildPageHeaderComponent />
-        <br></br>
         <br></br>
         <Grid container direction="row" alignItems="flex-start">
           <Grid container item xs={12} sm={12} md={7} lg={8} className="question-container">
@@ -270,26 +291,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
                   removeQuestion={removeQuestion} />
                 <Switch>
                   <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
-                    <BuildQuestionComponent
-                      brickId={brickId}
-                      history={history}
-                      question={activeQuestion}
-                      setQuestionComponentType={setQuestionComponentType}
-                      swapComponents={swapComponents}
-                      updateComponent={updateComponent}
-                      addComponent={addComponent}
-                      saveBrick={saveBrick} />
+                    {renderBuildQuestion}
                   </Route>
                   <Route exac path='/build/brick/:brickId/build/investigation/question-component/:questionId'>
-                    <BuildQuestionComponent
-                      brickId={brickId}
-                      history={history}
-                      question={activeQuestion}
-                      setQuestionComponentType={setQuestionComponentType}
-                      swapComponents={swapComponents}
-                      updateComponent={updateComponent}
-                      addComponent={addComponent}
-                      saveBrick={saveBrick} />
+                    {renderBuildQuestion}
                   </Route>
                   <Route
                     exec path='/build/brick/:brickId/build/investigation/question/:questionId'

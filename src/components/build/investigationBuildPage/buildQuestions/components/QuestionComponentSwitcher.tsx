@@ -1,8 +1,8 @@
 import React from 'react'
 
-import Hint from '../../../base-components/Hint/Hint';
+import HintComponent, { HintState } from '../../../base-components/Hint/Hint';
 
-import { QuestionComponentTypeEnum } from 'components/model/question';
+import { QuestionComponentTypeEnum, Hint } from 'components/model/question';
 import DragAndDropBox from '../drag/dragAndDropBox'
 import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'
@@ -16,11 +16,22 @@ export interface SwitchQuestionProps {
   index: number
   uniqueComponent: any
   component: any
-  updateComponent(component:any):void
+  hint: Hint
+  updateComponent(component: any): void
   swapComponents: Function
+  setQuestionHint(hintState: HintState): void
 }
 
-const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({ type, index, swapComponents, component, updateComponent, uniqueComponent }) => {
+const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
+  type,
+  index,
+  component,
+  hint,
+  swapComponents,
+  setQuestionHint,
+  updateComponent,
+  uniqueComponent }) => {
+
   const renderEmptyComponent = () => <span>Drag component here</span>
 
   let innerComponent = renderEmptyComponent as any;
@@ -40,7 +51,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({ type, index, s
     return (
       <div className="unique-component-wrapper">
         <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} updateComponent={updateComponent} component={innerComponent} />
-        <Hint allAnswers={false} eachAnswer={false} hint="" onChange={() => {}}></Hint>
+        <HintComponent status={hint.status} value={hint.value} onChange={setQuestionHint}/>
       </div>
     )
   }

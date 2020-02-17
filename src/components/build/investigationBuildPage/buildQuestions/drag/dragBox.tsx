@@ -1,6 +1,5 @@
 import React from 'react'
 import { useDrag, DragSourceMonitor } from 'react-dnd'
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 
 import './dragBox.scss';
 import ItemTypes from '../../ItemTypes'
@@ -40,7 +39,6 @@ const DragBox: React.FC<BoxProps> = ({ name, onDrop, value }) => {
   return (
     <Grid container item xs={12} ref={drag} className="drag-box-item" style={{ opacity }}>
       <div>{name}</div>
-      <DragIndicatorIcon />
     </Grid>
   )
 }

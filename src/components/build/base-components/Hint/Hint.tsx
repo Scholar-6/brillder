@@ -2,56 +2,57 @@
 import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox'; 
 
-import './Hint.scss';
 import { Grid, FormControlLabel } from '@material-ui/core';
 
-interface HintState {
-  allAnswers: boolean,
-  eachAnswer: boolean,
-  hint: string
+import './Hint.scss';
+
+
+export enum HintStatus {
+  None,
+  All,
+  Each
+}
+
+export interface HintState {
+  status: HintStatus
+  value: string
 }
 
 export interface HintProps {
-  allAnswers: boolean,
-  eachAnswer: boolean,
-  hint: string,
+  status?: HintStatus,
+  value?: string,
   onChange(state: HintState): void
 }
 
-const HintComponent: React.FC<HintProps> = (props) => {
+const HintComponent: React.FC<HintProps> = ({onChange, ...props}) => {
   let initState = {
-    allAnswers: false,
-    eachAnswer: false,
-    hint: ""
+    status: HintStatus.None,
+    value: ''
   } as HintState;
 
-  if (props.hint) {
-    initState.hint = props.hint
+  if (props.value) {
+    initState.value = props.value;
   }
 
-  if (props.allAnswers) {
-    initState.allAnswers = props.allAnswers;
-  }
-
-  if (props.eachAnswer) {
-    initState.eachAnswer = props.eachAnswer;
+  if (props.status) {
+    initState.status = props.status;
   }
 
   const [state, setState] = React.useState(initState);
 
   const allChecked = () => {
-    setState({...state, allAnswers: true, eachAnswer: false});
-    props.onChange({...state, allAnswers: true, eachAnswer: false});
+    setState({...state, status: HintStatus.All});
+    onChange({...state, status: HintStatus.All});
   }
 
   const eachChecked = () => {
-    setState({...state, allAnswers: false, eachAnswer: true});
-    props.onChange({...state, allAnswers: false, eachAnswer: true});
+    setState({...state, status: HintStatus.Each});
+    onChange({...state, status: HintStatus.Each});
   }
 
   const onHintChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState({...state, hint: event.target.value});
-    props.onChange({...state, hint: event.target.value});
+    setState({...state, value: event.target.value});
+    onChange({...state, value: event.target.value});
   }
 
   return (
@@ -60,19 +61,19 @@ const HintComponent: React.FC<HintProps> = (props) => {
         <span className="hint-type">Hint Type* <span className="question-mark">?</span></span>
         <FormControlLabel
           control= {
-            <Checkbox checked={state.allAnswers} onChange={allChecked} value="allAnswers" />
+            <Checkbox checked={state.status == HintStatus.All} onChange={allChecked} value="allAnswers" />
           }
           label="All Answers"
         />
         <FormControlLabel
           control= {
-            <Checkbox checked={state.eachAnswer} onChange={eachChecked} value="eachAnswer" />
+            <Checkbox checked={state.status == HintStatus.Each} onChange={eachChecked} value="eachAnswer" />
           }
           label="Each Answer"
         />
       </Grid>
       <Grid container justify="space-between" item xs={12}>
-        <input className="hint-input-text" value={state.hint} onChange={onHintChanged} placeholder="Enter Hint..."></input>
+        <input className="hint-input-text" value={state.value} onChange={onHintChanged} placeholder="Enter Hint..."></input>
       </Grid>
     </div>
   );

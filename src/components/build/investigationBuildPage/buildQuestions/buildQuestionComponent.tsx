@@ -11,6 +11,7 @@ import './buildQuestionComponent.scss'
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../model/question';
 import DragBox from './drag/dragBox';
 import IOSSwitch from 'components/build/base-components/IOSSwitch/IOSSwitch';
+import { HintState } from 'components/build/base-components/Hint/Hint';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -26,10 +27,11 @@ export interface QuestionProps {
   swapComponents: Function
   saveBrick(): void
   updateComponent(component: any, index: number): void
+  setQuestionHint(hintState: HintState): void
 }
 
 const BuildQuestionComponent: React.FC<QuestionProps> = (
-  { brickId, question, history, setQuestionComponentType, swapComponents, saveBrick, updateComponent, addComponent }
+  { brickId, question, history, setQuestionComponentType, swapComponents, setQuestionHint, saveBrick, updateComponent, addComponent }
 ) => {
   const { type } = question;
   document.title = QuestionTypeEnum[type];
@@ -63,7 +65,14 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
               <DragBox onDrop={setDropBoxItem} name="Equation" value={QuestionComponentTypeEnum.Equation} />
             </Grid>
             <Grid container item xs={5} sm={6} md={6} className="question-components-list">
-              <QuestionComponents brickId={brickId} history={history} question={question} swapComponents={swapComponents} updateComponent={updateComponent} addComponent={addComponent} />
+              <QuestionComponents
+                brickId={brickId}
+                history={history}
+                question={question}
+                swapComponents={swapComponents}
+                updateComponent={updateComponent}
+                addComponent={addComponent}
+                setQuestionHint={setQuestionHint}/>
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
               <div className="question-button-container">

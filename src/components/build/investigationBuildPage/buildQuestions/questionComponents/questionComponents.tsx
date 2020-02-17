@@ -14,6 +14,7 @@ import PairMatchComponent from '../questionTypes/pairMatchBuild/pairMatchBuild';
 import VerticalShuffleComponent from '../questionTypes/verticalShuffleBuild/verticalShuffleBuild';
 import WordHighlightingComponent from '../questionTypes/wordHighlighting';
 import { Question, QuestionTypeEnum } from 'components/model/question';
+import { HintState } from 'components/build/base-components/Hint/Hint';
 
 
 type QuestionComponentsProps = {
@@ -23,9 +24,10 @@ type QuestionComponentsProps = {
   swapComponents: Function
   addComponent: Function
   updateComponent(component: any, index: number):void
+  setQuestionHint(hintState: HintState): void
 }
 
-const QuestionComponents = ({ history, brickId, question, swapComponents, updateComponent, addComponent }: QuestionComponentsProps) => {
+const QuestionComponents = ({ history, brickId, question, swapComponents, setQuestionHint, updateComponent, addComponent }: QuestionComponentsProps) => {
   const renderDropBox = (component: any, index: number) => {
     const updatingComponent = (compData:any) => {
       updateComponent(compData, index);
@@ -63,6 +65,8 @@ const QuestionComponents = ({ history, brickId, question, swapComponents, update
       swapComponents={swapComponents}
       component={component}
       updateComponent={updatingComponent}
+      hint={question.hint}
+      setQuestionHint={setQuestionHint}
       uniqueComponent={uniqueComponent} />
   }
 
