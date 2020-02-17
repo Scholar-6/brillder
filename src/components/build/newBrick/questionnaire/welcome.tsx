@@ -29,7 +29,7 @@ function Welcome() {
         </Grid>
         <Hidden only={['xs', 'sm']}>
           <Grid container justify="center" item md={5} lg={4}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url="http://front.scholar6.org/" />
+            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin} />
           </Grid>
         </Hidden>
       </Grid>

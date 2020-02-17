@@ -7,5 +7,11 @@
     border: 1px solid grey;
     max-width: 600px;
     border-radius: 4px;
+    text-align: center;
+
+    .audience-inputs {
+      display: block !important;
+      margin: 10px 20px !important;
+    }
   }
 }

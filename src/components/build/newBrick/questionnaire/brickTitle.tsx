@@ -16,15 +16,15 @@ function BrickTitle() {
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
             <h1 style={{marginTop: '30px'}}>Define and amplify your audience.</h1>
-            <Input style={{display: 'block'}} placeholder="Enter Proposed Title Here..." />
-            <Input placeholder="Enter Sub-Topic(s)..." />
-            <Input placeholder="Enter Alternative Topic(s)..." />
+            <Input className="audience-inputs" placeholder="Enter Proposed Title Here..." />
+            <Input className="audience-inputs" placeholder="Enter Sub-Topic(s)..." />
+            <Input className="audience-inputs" placeholder="Enter Alternative Topic(s)..." />
             <NextButton step={NewBrickStep.BrickTitle} canSubmit={true} />
           </div>
         </Grid>
         <Hidden only={['xs', 'sm']}>
           <Grid container justify="center" item md={5} lg={4}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url="http://front.scholar6.org/" />
+            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin} />
           </Grid>
         </Hidden>
       </Grid>

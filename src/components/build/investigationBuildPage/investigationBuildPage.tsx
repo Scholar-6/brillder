@@ -309,7 +309,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
           <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
             <Hidden only={['xs', 'sm']}>
               <Grid container justify="center" item md={5} lg={4}>
-                <Device name="iphone-5s" use="iphone-5s" color="grey" url="http://front.scholar6.org/" />
+                <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin} />
               </Grid>
             </Hidden>
           </Route>
