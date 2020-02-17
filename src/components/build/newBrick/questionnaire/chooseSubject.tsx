@@ -84,7 +84,7 @@ function ChooseSubject() {
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
-            <h1 style={{ marginTop: '30px' }}>What kind of knowledge do you want to share?</h1>
+            <h1 className="only-tutorial-header">What kind of knowledge do you want to share?</h1>
             <Select
               placeholder="Subject"
               labelId="customized-select-label"
@@ -93,7 +93,7 @@ function ChooseSubject() {
               onChange={handleChange}
               input={<BootstrapInput />}
             >
-              <MenuItem value={Subject.None}>Placeholder</MenuItem>
+              <MenuItem value={Subject.None} disabled>Choose Subject</MenuItem>
               <MenuItem value={Subject.ArtAndDesign}>Art & Design</MenuItem>
               <MenuItem value={Subject.Biology}>Biology</MenuItem>
               <MenuItem value={Subject.Chemistry}>Chemistry</MenuItem>
@@ -115,7 +115,7 @@ function ChooseSubject() {
         </Grid>
         <Hidden only={['xs', 'sm']}>
           <Grid container justify="center" item md={5} lg={4}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin} />
+            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
           </Grid>
         </Hidden>
       </Grid>

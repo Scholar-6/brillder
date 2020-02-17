@@ -20,9 +20,8 @@ import InvestigationBuildPage from '../build/investigationBuildPage/investigatio
 import LoginPage from '../loginPage/loginPage';
 import RegisterPage from '../registerPage/registerPage';
 import PreLoginPage from '../preLoginPage/preLoginPage';
+import LogoPage from '../logoPage/logoPage';
 
-
-console.log(process.env.REACT_APP_BACKEND_HOST)
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
@@ -58,6 +57,8 @@ const App: React.FC = () => {
           <Route path="/login" exact component={LoginPage} />
           <Route path="/register" exact component={RegisterPage} />
           <Route path="/build" component={MainPage} />
+          <Route path="/logo-page" component={LogoPage} />
+
           <Route path="/" component={MainPage} />
         </Switch>
       </ThemeProvider>

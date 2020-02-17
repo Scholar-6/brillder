@@ -1,5 +1,4 @@
 .tutorial-page {
-  margin-top: 30px;
   height: 100%;
 
   .left-card {
@@ -8,6 +7,10 @@
     max-width: 600px;
     border-radius: 4px;
     text-align: center;
+
+    .only-tutorial-header {
+      margin: 30px 20px;
+    }
 
     .audience-inputs {
       display: block !important;
