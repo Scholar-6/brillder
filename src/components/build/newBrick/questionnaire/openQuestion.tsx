@@ -8,15 +8,21 @@ import { Hidden } from "@material-ui/core";
 import { NewBrickStep } from "../model";
 
 
-function OpenQuestion() {
+function OpenQuestion({selectedQuestion, saveOpenQuestion}: any) {
+  const [openQuestion, setQuestion] = React.useState(selectedQuestion);
+  
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setQuestion(event.target.value as number);
+  };
+
   return (
     <div className="tutorial-page" >
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
             <h1 className="only-tutorial-header">Every brick should engage and inspire : 'No profit grows where is no pleasure ta'en'. What open question(s) will challenge users?</h1>
-            <Input className="audience-inputs" placeholder="Enter Open Question(s)..." />
-            <NextButton step={NewBrickStep.OpenQuestion} canSubmit={true} />
+            <Input className="audience-inputs" value={openQuestion} onChange={handleChange} placeholder="Enter Open Question(s)..." />
+            <NextButton step={NewBrickStep.OpenQuestion} canSubmit={true} onSubmit={saveOpenQuestion} data={openQuestion} />
           </div>
         </Grid>
         <Hidden only={['xs', 'sm']}>

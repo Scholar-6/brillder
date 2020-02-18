@@ -8,12 +8,15 @@ import { NewBrickStep } from "../model";
 import './nextButton.scss';
 
 
-function NextButton({ step, canSubmit }: any) {
+function NextButton({ step, canSubmit, onSubmit, data }: any) {
   const history = useHistory()
   const url = "/build/new-brick"
 
   const next = () => {
     if (canSubmit == true) {
+      if (onSubmit) {
+        onSubmit(data);
+      }
       switch (step) {
         case NewBrickStep.Welcome:
           return history.push(`${url}/choose-subject`);
