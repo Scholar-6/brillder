@@ -16,5 +16,34 @@
       display: block !important;
       margin: 10px 20px !important;
     }
+
+    .length-description {
+      text-align: left;
+      margin-left: 20px;
+      font-size: 18px;
+      color: black;
+      font-weight: bold;
+    }
+
+    .brick-length-image {
+      border: 1px solid black;
+      margin: 12px 20px 15px 20px;
+      height: 150px;
+      width: 100%;
+    }
+
+    .brick-length-image:hover {
+      background: grey;
+    }
+
+    .brick-length-image.active {
+      background: #555;
+    }
+
+    .bottom-time-description {
+      font-weight: bold;
+      color: black;
+      font-size: 16px;
+    }
   }
 }

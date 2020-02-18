@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions/auth';
 import './loginPage.scss';
 import { Redirect } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+
 
 const mapState = (state: any) => {
   return {

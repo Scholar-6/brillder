@@ -5,7 +5,7 @@ import { Hidden } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Select from '@material-ui/core/Select';
 import InputBase from '@material-ui/core/InputBase';
-import { createStyles, makeStyles, withStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import './chooseSubject.scss';
@@ -70,12 +70,10 @@ const BootstrapInput = withStyles((theme: Theme) =>
   }),
 )(InputBase);
 
-function ChooseSubject() {
-  const [subject, setSubject] = React.useState(0);
-
+function ChooseSubject({saveSubject, selectedSubject}:any) {
+  const [subject, setSubject] = React.useState(selectedSubject);
   
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    console.log(event.target.value)
     setSubject(event.target.value as number);
   };
 
@@ -110,7 +108,7 @@ function ChooseSubject() {
               <MenuItem value={Subject.Spanish}>Spanish</MenuItem>
               <MenuItem value={Subject.Theology}>Theology/Philosophy</MenuItem>
             </Select>
-            <NextButton step={NewBrickStep.ChooseSubject} canSubmit={subject != Subject.None} />
+            <NextButton step={NewBrickStep.ChooseSubject} canSubmit={subject != Subject.None} onSubmit={saveSubject} data={subject} />
           </div>
         </Grid>
         <Hidden only={['xs', 'sm']}>
