@@ -32,6 +32,7 @@ function BrickLength({length, saveBrickLength}: any) {
             <Grid container direction="row">
               <Grid container item xs={4} className="brick-length-image-container">
                 <img
+                  alt="20min-icon"
                   src="/images/20min-icon-black.png"
                   className={"brick-length-image " + ((brickLength === BrickLengthEnum.S20min) ? "active" : "")}
                   onClick={() => setBrickLength(BrickLengthEnum.S20min)} />
@@ -41,6 +42,7 @@ function BrickLength({length, saveBrickLength}: any) {
               </Grid>
               <Grid container item xs={4} className="brick-length-image-container">
                 <img
+                  alt="40min-icon"
                   src="/images/40min-icon-black.png"
                   className={"brick-length-image " + ((brickLength === BrickLengthEnum.S40min) ? "active" : "")}
                   onClick={() => setBrickLength(BrickLengthEnum.S40min)} />
@@ -50,6 +52,7 @@ function BrickLength({length, saveBrickLength}: any) {
               </Grid>
               <Grid container item xs={4} className="brick-length-image-container">
                 <img
+                  alt="60min-icon"
                   src="/images/60min-icon-black.png"
                   className={"brick-length-image " + ((brickLength === BrickLengthEnum.S60min) ? "active" : "")}
                   onClick={() => setBrickLength(BrickLengthEnum.S60min)} />
