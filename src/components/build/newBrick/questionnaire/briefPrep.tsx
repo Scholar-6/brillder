@@ -25,7 +25,13 @@ function BriefPrep() {
               <Grid container justify="center" item xs={9}>
                 <div style={{ height: "250px", width: "90%", border: "1px solid black" }}>
                   <Grid container direction="row" alignItems="center" style={{ height: "100%" }}>
-                    <Grid container justify="center" item xs={12}>Video</Grid></Grid>
+                    <Grid container justify="center" item xs={12}>
+                      <iframe width="420" height="315"
+                        title="Video Preview"
+                        src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                      </iframe>
+                    </Grid>
+                  </Grid>
                 </div>
               </Grid>
             </Grid>

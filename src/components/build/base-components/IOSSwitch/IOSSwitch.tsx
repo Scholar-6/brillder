@@ -67,7 +67,7 @@ const IOSSwitch = withStyles((theme: Theme) =>
 });
 
 export default function CustomizedSwitches() {
-  const [state, setState] = React.useState({
+  const [state] = React.useState({
     checked: true,
   });
 

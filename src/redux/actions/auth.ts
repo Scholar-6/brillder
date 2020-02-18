@@ -19,7 +19,7 @@ const login = (model:any) => {
   return function (dispatch: Dispatch) {
     return axios.post(process.env.REACT_APP_BACKEND_HOST + '/auth/login', model, {withCredentials: true}).then(response => {
       const {data} = response;
-      if (data == "OK") {
+      if (data === "OK") {
         dispatch(loginSuccess());
         return;
       }
@@ -54,7 +54,7 @@ const logout = () => {
   return function (dispatch: Dispatch) {
     return axios.post(process.env.REACT_APP_BACKEND_HOST + '/auth/logout', {}, {withCredentials: true}).then(response => {
       const {data} = response;
-      if (data == "OK") {
+      if (data === "OK") {
         dispatch(logoutSuccess());
         return;
       }

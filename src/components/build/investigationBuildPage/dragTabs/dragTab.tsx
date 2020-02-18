@@ -65,7 +65,7 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard, selectQu
 
         <Grid item xs={4}>
           {
-            active == true && <ClearIcon className="remove-icon" onClick={removeTab} />
+            active === true && <ClearIcon className="remove-icon" onClick={removeTab} />
           }
         </Grid>
       </Grid>

@@ -67,7 +67,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     return questions.indexOf(question);
   }
 
-  let activeQuestion = questions.find(q => q.active == true) as Question;
+  let activeQuestion = questions.find(q => q.active === true) as Question;
   if (!activeQuestion) {
     console.log('Can`t find active question');
     activeQuestion = {} as Question;
@@ -147,7 +147,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   }
 
   const setQuestionComponentType = (type: any, dropBox: any) => {
-    if (dropBox.value == QuestionComponentTypeEnum.Component) {
+    if (dropBox.value === QuestionComponentTypeEnum.Component) {
       return;
     }
     const index = getQuestionIndex(activeQuestion);
@@ -201,7 +201,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   }
 
   const { brick } = props;
-  if (brick.questions && loaded == false) {
+  if (brick.questions && loaded === false) {
     const parsedQuestions: Question[] = [];
     for (const question of brick.questions) {
       try {

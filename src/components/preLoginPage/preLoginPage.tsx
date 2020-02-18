@@ -21,13 +21,13 @@ function PreLoginPage(props: any) {
     props.history.push('/login?userType=' + userType)
   }
 
-  if (userType == 0) {
+  if (userType === 0) {
     return (
       <Grid className="pre-login-page" style={{height: '100%'}} container item justify="center" alignItems="center">
         <Grid container className="pre-login-image-container" justify="center" item xs={6} alignItems="center">
           <Grid container className="pre-login-image-container2" justify="center" item xs={12} alignItems="center">
             <Grid container className="pre-login-image-container3" justify="center" style={{position: "relative"}}>
-              <img src="/images/BrixLogo.png" className="pre-login-image" />
+              <img alt="Logo" src="/images/BrixLogo.png" className="pre-login-image" />
               <Grid container direction="row" justify="center" className="pre-login-text" style={{position: "absolute", bottom: 0}}>
                 <p>
                   A &nbsp; S C H O L A R &nbsp; 6 &nbsp; T E C H &nbsp; P R O D U C T
@@ -67,7 +67,7 @@ function PreLoginPage(props: any) {
       <Grid className="pre-login-page" container item justify="center" alignItems="center">
         <div className="login-container">
           <div className="login-logo">
-            <img src="/images/lflogo.png" alt="lol" />
+            <img src="/images/lflogo.png" alt="logo" />
           </div>
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
@@ -80,14 +80,14 @@ function PreLoginPage(props: any) {
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
               <Button className="google-button" href={process.env.REACT_APP_BACKEND_HOST + '/auth/google'}>
-                <img className="google-icon" alt="" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"/>
+                <img alt="google-icon" className="google-icon" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"/>
                 <span className="google-button-text">Sign in with Google</span>
               </Button>
             </Grid>
           </Grid>
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
-              <img className="fotter" src="/images/brillder-2-logo.png" /><br />
+              <img alt="fotter-logo" className="fotter" src="/images/brillder-2-logo.png" /><br />
             </Grid>
           </Grid>
         </div>

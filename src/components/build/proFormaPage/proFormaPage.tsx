@@ -2,7 +2,6 @@ import './proFormaPage.scss';
 import React, { Component } from 'react';
 // @ts-ignore
 import { connect } from 'react-redux';
-import actions from 'redux/actions/proFormActions';
 import brickActions from 'redux/actions/brickActions';
 import bricksActions from 'redux/actions/bricksActions';
 import EditorRowComponent from './editorRow/editorRow';
@@ -21,7 +20,6 @@ const mapState = (state: any) => {
 
 const mapDispatch = (dispatch: any) => {
   return {
-    fetchProForm: (brickId: string) => dispatch(actions.fetchBrickBuildData(brickId)),
     submitProForm: (data: ProFormaSubmitData) => dispatch(brickActions.saveBrick(data)),
     fetchBricks: () => dispatch(bricksActions.fetchBricks()),
     fetchBrick: (brickId: number) => dispatch(brickActions.fetchBrick(brickId)),
@@ -34,7 +32,6 @@ class ProFormaPage extends Component<ProFormaProps, any> {
   constructor(props: ProFormaProps) {
     super(props)
     const brickId: number = props.match.params.brickId;
-    props.fetchProForm(brickId);
 
     if (brickId) {
       this.props.fetchBrick(brickId);
