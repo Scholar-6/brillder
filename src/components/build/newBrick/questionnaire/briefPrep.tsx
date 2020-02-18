@@ -8,15 +8,33 @@ import NextButton from '../components/nextButton'
 import { NewBrickStep } from "../model";
 
 
-function BriefPrep() {
+function BriefPrep({parentState, saveBriefPrep}:any) {
+  const [state, setState] = React.useState({ links: '', preparationBrief: parentState.preparationBrief});
+
+  const setBriefPrep = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setState({...state, preparationBrief: event.target.value} as any)
+  }
+
+  const setLinks = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setState({...state, links: event.target.value} as any)
+  }
+
   return (
     <div className="tutorial-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
             <h1 className="only-tutorial-header">What do you want users to think more deeply about?</h1>
-            <input style={{ width: '90%', border: '2px solid black', height: '70px', textAlign: 'center' }} placeholder="Enter Brief here..."></input>
-            <Input style={{ margin: '20px 0 0 0', width: '90%' }} placeholder="Insert Link(s) Here..." />
+            <input
+              value={state.preparationBrief}
+              onChange={setBriefPrep}
+              style={{ width: '90%', border: '2px solid black', height: '70px', textAlign: 'center' }}
+              placeholder="Enter Brief here..."></input>
+            <Input
+              value={state.links}
+              onChange={setLinks}
+              style={{ margin: '20px 0 0 0', width: '90%' }}
+              placeholder="Insert Link(s) Here..." />
 
             <Grid container direction="row" alignItems="center" style={{ height: "300px" }}>
               <Grid container justify="center" item xs={3}>
@@ -28,14 +46,14 @@ function BriefPrep() {
                     <Grid container justify="center" item xs={12}>
                       <iframe width="420" height="315"
                         title="Video Preview"
-                        src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                        src={state.links.split(' ')[0]}>
                       </iframe>
                     </Grid>
                   </Grid>
                 </div>
               </Grid>
             </Grid>
-            <NextButton step={NewBrickStep.BriefPrep} canSubmit={true} />
+            <NextButton step={NewBrickStep.BriefPrep} canSubmit={true} onSubmit={saveBriefPrep} data={state} />
           </div>
         </Grid>
         <Hidden only={['xs', 'sm']}>

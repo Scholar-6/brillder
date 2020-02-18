@@ -14,7 +14,6 @@ import reducer from '../../redux/reducers/index';
 
 import NewBrick from '../build/newBrick/newBrick';
 import MainPage from '../build/mainPage/mainPage';
-import ProFormaPage from '../build/proFormaPage/proFormaPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
 import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
 import LoginPage from '../loginPage/loginPage';
@@ -50,8 +49,6 @@ const App: React.FC = () => {
         <Switch>
           <Route path="/build/new-brick" component={NewBrick} />
           <Route path="/build/brick/:brickId" component={InvestigationBuildPage}/>
-          <Route path="/build/brick-create" exact component={ProFormaPage}/>
-          <Route path="/build/brick-create/:brickId" exact component={ProFormaPage}/>
           <Route path="/build/bricks-list" component={BricksListPage}/>
           <Route path="/pre-login" component={PreLoginPage} />
           <Route path="/login" exact component={LoginPage} />
