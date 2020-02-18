@@ -1,7 +1,6 @@
 import React, { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import ItemTypes from '../ItemTypes'
-import CircleIconNumber from '../circleIcon'
 import ClearIcon from '@material-ui/icons/Clear';
 import { Grid } from '@material-ui/core';
 const style = {}
@@ -59,7 +58,7 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard, selectQu
   return (
     <div className="draggable-tab" onClick={activateTab} ref={ref} style={{ ...style, opacity }}>
       <Grid container direction="row">
-        <Grid item xs={10} style={{color: 'black', fontFamily: 'Century Gothic Regular'}}>
+        <Grid item xs={10} style={{color: 'black', fontFamily: 'Century Gothic Regular' }}>
           {index + 1}
         </Grid>
 
