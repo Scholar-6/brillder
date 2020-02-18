@@ -2,6 +2,9 @@ import React from "react";
 import { Route, Switch } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
+// @ts-ignore
+import { connect } from 'react-redux';
+import actions from '../../../redux/actions/brickActions';
 import './newBrick.scss';
 import Welcome from './questionnaire/welcome';
 import ChooseSubject from './questionnaire/chooseSubject';
@@ -11,7 +14,8 @@ import BrickLength from './questionnaire/brickLength';
 import BriefPrep from './questionnaire/briefPrep';
 
 
-function NewBrick() {
+function NewBrick(props: any) {
+  console.log(props)
   const [state, setBrick] = React.useState({
     subject: '0',
     brickLength: 0,
@@ -23,6 +27,7 @@ function NewBrick() {
     preparationBrief: '',
     openQuestion: '',
     alternativeSubject: '',
+    links: [],
   });
 
   const setSubject = (subject: string) => {
@@ -41,6 +46,16 @@ function NewBrick() {
     setBrick({...state, brickLength} as any);
   }
 
+  const setBriefPrep = (data: any) => {
+    let brick = {...state, preparationBrief: data.preparationBrief, links: data.links.split(" ")} as any
+    setBrick(brick)
+    props.saveBrick(brick);
+  }
+
+  if (props.brick != null) {
+    props.history.push(`/build/brick/${props.brick.id}/build/investigation/question`);
+  }
+
   return (
     <MuiThemeProvider>
       <Switch>
@@ -57,10 +72,30 @@ function NewBrick() {
         <Route path='/build/new-brick/length'>
           <BrickLength length={state.brickLength} saveBrickLength={setBrickLength} />
         </Route>
-        <Route path='/build/new-brick/brief-prep' component={BriefPrep}></Route>
+        <Route path='/build/new-brick/brief-prep'>
+          <BriefPrep parentState={state} saveBriefPrep={setBriefPrep} />
+        </Route>
       </Switch>
     </MuiThemeProvider>
   );
 }
 
-export default NewBrick
+const mapState = (state: any) => {
+  return {
+    brick: state.brick.brick,
+  }
+}
+
+const mapDispatch = (dispatch: any) => {
+  return {
+    fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
+    saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
+  }
+}
+
+const connector = connect(
+  mapState,
+  mapDispatch
+)
+
+export default connector(NewBrick)
