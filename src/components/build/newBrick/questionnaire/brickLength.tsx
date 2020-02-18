@@ -30,7 +30,7 @@ function BrickLength({length, saveBrickLength}: any) {
             <h1 className="only-tutorial-header">20 minute bricks offer a snapshot of a topic while 60 minute ones are opportunities to really get stuck in.  You can always shorten or extend later.</h1>
             <h2 className="length-description">Choose Brick Length.</h2>
             <Grid container direction="row">
-              <Grid container item xs={4}>
+              <Grid container item xs={4} className="brick-length-image-container">
                 <img
                   src="/images/20min-icon-black.png"
                   className={"brick-length-image " + ((brickLength === BrickLengthEnum.S20min) ? "active" : "")}
@@ -39,7 +39,7 @@ function BrickLength({length, saveBrickLength}: any) {
                   20mins
                 </Grid>
               </Grid>
-              <Grid container item xs={4}>
+              <Grid container item xs={4} className="brick-length-image-container">
                 <img
                   src="/images/40min-icon-black.png"
                   className={"brick-length-image " + ((brickLength === BrickLengthEnum.S40min) ? "active" : "")}
@@ -48,7 +48,7 @@ function BrickLength({length, saveBrickLength}: any) {
                   40mins
                 </Grid>
               </Grid>
-              <Grid container item xs={4}>
+              <Grid container item xs={4} className="brick-length-image-container">
                 <img
                   src="/images/60min-icon-black.png"
                   className={"brick-length-image " + ((brickLength === BrickLengthEnum.S60min) ? "active" : "")}

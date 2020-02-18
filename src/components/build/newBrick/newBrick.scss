@@ -25,21 +25,25 @@
       font-weight: bold;
     }
 
-    .brick-length-image {
-      border: 1px solid black;
-      margin: 12px 20px 15px 20px;
-      height: 150px;
-      width: 100%;
+    .brick-length-image-container {
+      padding: 12px 20px 15px 20px;
+      .brick-length-image {
+        border: 1px solid black;
+        border-radius: 6px;
+        width: 100%;
+      }
+
+      .brick-length-image:hover {
+        background: #BBB;
+      }
+  
+      .brick-length-image.active {
+        background: #DFDFDF;
+      }
+  
     }
 
-    .brick-length-image:hover {
-      background: grey;
-    }
-
-    .brick-length-image.active {
-      background: #555;
-    }
-
+    
     .bottom-time-description {
       font-weight: bold;
       color: black;
