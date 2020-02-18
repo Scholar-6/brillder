@@ -1,5 +1,7 @@
 .tutorial-page {
   height: 100%;
+  font-family: 'Century Gothic Regular';
+  color: black;
 
   .left-card {
     width: 90%;
@@ -43,11 +45,30 @@
   
     }
 
-    
     .bottom-time-description {
       font-weight: bold;
       color: black;
       font-size: 16px;
+    }
+
+    .tutorial-logo-container {
+      padding-top: 40px;
+    }
+
+    .tutorial-logo-text {
+      color: black;
+      font-size: 16px;
+    }
+
+    .welcome-upper-text {
+      font-size: 23px;
+      margin-top: 40px;
+    }
+    .welcome-bottom-text {
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: bold;
+      color: black;
     }
   }
 }
