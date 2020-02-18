@@ -59,11 +59,11 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard, selectQu
   return (
     <div className="draggable-tab" onClick={activateTab} ref={ref} style={{ ...style, opacity }}>
       <Grid container direction="row">
-        <Grid item xs={8}>
-          <CircleIconNumber number={index + 1} customClass="" />
+        <Grid item xs={10} style={{color: 'black', fontFamily: 'Century Gothic Regular'}}>
+          {index + 1}
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid item style={{position: 'absolute', right: 0}}>
           {
             active === true && <ClearIcon className="remove-icon" onClick={removeTab} />
           }
