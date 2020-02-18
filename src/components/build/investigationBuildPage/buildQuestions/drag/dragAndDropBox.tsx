@@ -59,7 +59,7 @@ const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, data,
 
   const isActive = canDrop && isOver
   let backgroundColor = selectBackgroundColor(isActive, canDrop)
-  if (value != QuestionComponentTypeEnum.None) {
+  if (value !== QuestionComponentTypeEnum.None) {
     backgroundColor = 'white';
   }
   drag(drop(ref))

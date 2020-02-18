@@ -14,6 +14,7 @@ import BriefPrep from './questionnaire/briefPrep';
 function NewBrick() {
   const [state, setBrick] = React.useState({
     subject: '0',
+    brickLength: 0,
     topic: '',
     subTopic: '',
     alternativeTopics: '',
@@ -36,6 +37,10 @@ function NewBrick() {
     setBrick({...state, openQuestion } as any);
   }
 
+  const setBrickLength = (brickLength: number) => {
+    setBrick({...state, brickLength} as any);
+  }
+
   return (
     <MuiThemeProvider>
       <Switch>
@@ -49,7 +54,9 @@ function NewBrick() {
         <Route path='/build/new-brick/open-question'>
           <OpenQuestion selectedQuestion={state.openQuestion} saveOpenQuestion={setOpenQuestion} />
         </Route>
-        <Route path='/build/new-brick/length' component={BrickLength}></Route>
+        <Route path='/build/new-brick/length'>
+          <BrickLength length={state.brickLength} saveBrickLength={setBrickLength} />
+        </Route>
         <Route path='/build/new-brick/brief-prep' component={BriefPrep}></Route>
       </Switch>
     </MuiThemeProvider>

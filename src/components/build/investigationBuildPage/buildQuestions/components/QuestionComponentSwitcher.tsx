@@ -36,17 +36,17 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
 
   let innerComponent = renderEmptyComponent as any;
   let value = type;
-  if (type == QuestionComponentTypeEnum.Text) {
+  if (type === QuestionComponentTypeEnum.Text) {
     innerComponent = TextComponent;
-  } else if (type == QuestionComponentTypeEnum.Image) {
+  } else if (type === QuestionComponentTypeEnum.Image) {
     innerComponent = ImageComponent;
-  } else if (type == QuestionComponentTypeEnum.Quote) {
+  } else if (type === QuestionComponentTypeEnum.Quote) {
     innerComponent = QuoteComponent;
-  } else if (type == QuestionComponentTypeEnum.Sound) {
+  } else if (type === QuestionComponentTypeEnum.Sound) {
     innerComponent = SoundComponent;
-  } else if (type == QuestionComponentTypeEnum.Equation) {
+  } else if (type === QuestionComponentTypeEnum.Equation) {
     innerComponent = EquationComponent;
-  } else if (type == QuestionComponentTypeEnum.Component) {
+  } else if (type === QuestionComponentTypeEnum.Component) {
     innerComponent = uniqueComponent;
     return (
       <div className="unique-component-wrapper">

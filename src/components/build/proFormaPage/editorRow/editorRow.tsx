@@ -20,9 +20,6 @@ const mapState = (state: any) => {
 const connector = connect(mapState)
 
 class EditorRowComponent extends Component<ProFormaProps> {
-  constructor(props: any) {
-    super(props)
-  }
   render() {
     let editorName = '';
     let authorName = '';

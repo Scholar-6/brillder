@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // @ts-ignore
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Box, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import './mainPage.scss';
 import actions from 'redux/actions/mainPageActions';
@@ -27,10 +27,6 @@ const connector = connect(
 )
 
 class MainPage extends Component {
-  constructor(props: any) {
-    super(props)
-  }
-
   render() {
     return (
       <div className="mainPage">

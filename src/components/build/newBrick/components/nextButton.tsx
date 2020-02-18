@@ -13,7 +13,7 @@ function NextButton({ step, canSubmit, onSubmit, data }: any) {
   const url = "/build/new-brick"
 
   const next = () => {
-    if (canSubmit == true) {
+    if (canSubmit === true) {
       if (onSubmit) {
         onSubmit(data);
       }

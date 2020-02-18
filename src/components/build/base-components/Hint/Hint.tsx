@@ -61,13 +61,13 @@ const HintComponent: React.FC<HintProps> = ({onChange, ...props}) => {
         <span className="hint-type">Hint Type* <span className="question-mark">?</span></span>
         <FormControlLabel
           control= {
-            <Checkbox checked={state.status == HintStatus.All} onChange={allChecked} value="allAnswers" />
+            <Checkbox checked={state.status === HintStatus.All} onChange={allChecked} value="allAnswers" />
           }
           label="All Answers"
         />
         <FormControlLabel
           control= {
-            <Checkbox checked={state.status == HintStatus.Each} onChange={eachChecked} value="eachAnswer" />
+            <Checkbox checked={state.status === HintStatus.Each} onChange={eachChecked} value="eachAnswer" />
           }
           label="Each Answer"
         />
