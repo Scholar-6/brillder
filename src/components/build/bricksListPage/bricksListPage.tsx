@@ -50,7 +50,7 @@ class BricksListPage extends Component<any, any> {
     return (
       <div className="bricks-list-page">
         <MainMenu></MainMenu>
-        <Grid container direction="row" className="mainPage">
+        <Grid container direction="row">
           <Grid container item xs={12} justify="center">
             List of Bricks
           </Grid>
