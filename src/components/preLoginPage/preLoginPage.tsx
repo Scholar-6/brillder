@@ -72,7 +72,7 @@ function PreLoginPage(props: any) {
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
               <Button className="email-button" onClick={moveToLogin}>
-                <img className="email-icon" alt="" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/mail.svg" />
+                <img className="email-icon" alt="mail" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/mail.svg" />
                 <span className="email-button-text">Sign in with email</span>
               </Button>
             </Grid>
@@ -87,7 +87,7 @@ function PreLoginPage(props: any) {
           </Grid>
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
-              <img alt="fotter-logo" className="fotter" src="/images/brillder-2-logo.png" /><br />
+              <img alt="fotter-logo" className="fotter-image" src="/images/brillder-2-logo.png" /><br />
             </Grid>
           </Grid>
         </div>

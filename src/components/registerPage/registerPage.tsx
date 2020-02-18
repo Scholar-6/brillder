@@ -89,7 +89,7 @@ function RegisterPage(props:any) {
         </Grid>
         <Grid container direction="row">
           <Grid container item xs={12} justify="center">
-            <img alt="fotter-logo" className="fotter" src="/images/brillder-2-logo.png" /><br />
+            <img alt="fotter-logo" className="fotter-image" src="/images/brillder-2-logo.png" /><br />
           </Grid>
         </Grid>
       </div>

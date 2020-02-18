@@ -103,10 +103,10 @@ html, body, #root {
                margin-right: 10px;
             }
         }
-        .fotter {
+        .fotter-image {
             width:50%;
             margin-top: 0px;
-    }
+       }
 }
 
 
@@ -164,10 +164,17 @@ html, body, #root {
 
     .user-type-btn {
         padding: 10px 0px !important;
-        font-size: 12px !important;
+        font-size: 9px !important;
+
+        .user-type-name {
+            padding: 0 !important;
+        }
     }
 
     .pre-login-text {
         font-size: 8px !important;
+    }
+    .fotter-image {
+        max-height: 100px;
     }
 }
