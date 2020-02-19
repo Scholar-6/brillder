@@ -15,4 +15,4 @@ deploy:
   repo: ivanromakh/brillder # Add your username/project_name here
   target_branch: gh-pages # Tell Travis to deploy on the gh-pages branch
   on:
-    branch: master # Tell Travis to trigger a deploy only when we push to master
+    branch: development # Tell Travis to trigger a deploy only when we push to master
