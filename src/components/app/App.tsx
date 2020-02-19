@@ -25,7 +25,6 @@ import LogoPage from '../logoPage/logoPage';
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
 const App: React.FC = () => {
-  let history = useHistory();
 
   const theme = React.useMemo(() =>
     createMuiTheme({
@@ -39,7 +38,6 @@ const App: React.FC = () => {
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    history.push("/pre-login");
     return Promise.reject(error);
   });
 
