@@ -11,44 +11,13 @@
     text-align: center;
 
     .only-tutorial-header {
-      margin: 30px 20px;
+      margin: 30px 5px;
+      p {margin: 0}
     }
 
     .audience-inputs {
       display: block !important;
       margin: 10px 20px !important;
-    }
-
-    .length-description {
-      text-align: left;
-      margin-left: 20px;
-      font-size: 18px;
-      color: black;
-      font-weight: bold;
-    }
-
-    .brick-length-image-container {
-      padding: 12px 20px 15px 20px;
-      .brick-length-image {
-        border: 1px solid black;
-        border-radius: 6px;
-        width: 100%;
-      }
-
-      .brick-length-image:hover {
-        background: #BBB;
-      }
-  
-      .brick-length-image.active {
-        background: #DFDFDF;
-      }
-  
-    }
-
-    .bottom-time-description {
-      font-weight: bold;
-      color: black;
-      font-size: 16px;
     }
 
     .tutorial-logo-container {
@@ -72,3 +41,28 @@
     }
   }
 }
+
+@media only screen and (min-width: 1280px)  {
+  .only-tutorial-header {
+    font-size: 26px;
+  }
+}
+
+@media only screen and (max-width: 1279px) and (min-width: 900px)  {
+  .only-tutorial-header {
+    font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: 899px) and (min-width: 600px)  {
+  .only-tutorial-header {
+    font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .only-tutorial-header {
+    font-size: 14px;
+  }
+}
+

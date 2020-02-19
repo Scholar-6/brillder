@@ -5,7 +5,8 @@ import { Grid } from "@material-ui/core";
 import Device from "react-device-frame";
 import { Hidden } from "@material-ui/core";
 
-import NextButton from '../components/nextButton'
+import './brickLength.scss';
+import NextButton from '../components/nextButton';
 import { NewBrickStep } from "../model";
 
 enum BrickLengthEnum {
@@ -27,7 +28,11 @@ function BrickLength({length, saveBrickLength}: any) {
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
-            <h1 className="only-tutorial-header">20 minute bricks offer a snapshot of a topic while 60 minute ones are opportunities to really get stuck in.  You can always shorten or extend later.</h1>
+            <h1 className="only-tutorial-header-length">
+              20 minute bricks offer a snapshot of a topic while
+              60 minute ones are opportunities to really get stuck in.
+              You can always shorten or extend later.
+            </h1>
             <h2 className="length-description">Choose Brick Length.</h2>
             <Grid container direction="row">
               <Grid container item xs={4} className="brick-length-image-container">
