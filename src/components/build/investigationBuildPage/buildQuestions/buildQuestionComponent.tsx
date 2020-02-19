@@ -28,10 +28,11 @@ export interface QuestionProps {
   saveBrick(): void
   updateComponent(component: any, index: number): void
   setQuestionHint(hintState: HintState): void
+  setQuestionType(type: QuestionTypeEnum):void
 }
 
 const BuildQuestionComponent: React.FC<QuestionProps> = (
-  { brickId, question, history, setQuestionComponentType, swapComponents, setQuestionHint, saveBrick, updateComponent, addComponent }
+  { brickId, question, history, setQuestionComponentType, swapComponents, setQuestionType, setQuestionHint, saveBrick, updateComponent, addComponent }
 ) => {
   const { type } = question;
   document.title = QuestionTypeEnum[type];
@@ -99,6 +100,9 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                         name: 'age',
                         id: 'age-native-simple',
                       }}
+                      onChange={(e) => {
+                        setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
+                      }}
                     >
                       {
                         typeArray.map((typeName, i) => {
@@ -106,7 +110,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                           return <option key={i} value={type}>{SplitByCapitalLetters(typeName)}</option>
                         })
                       }
-                      <option value={10}>Short Answer</option>
                     </Select>
                   </Grid>
                 </Grid>
