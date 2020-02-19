@@ -9,6 +9,7 @@ import './Text.scss'
 export interface TextComponentProps {
   index: number,
   data: any,
+  cleanComponent(): void
   updateComponent(component: any, index: number): void
 }
 
@@ -16,7 +17,7 @@ const editorConfiguration = {
   toolbar: ['bold']
 };
 
-const TextComponent: React.FC<TextComponentProps> = ({index, data, updateComponent}) => {
+const TextComponent: React.FC<TextComponentProps> = ({index, data, cleanComponent, updateComponent}) => {
   if (!data.value) {
     data.value = "";
   }
@@ -27,15 +28,9 @@ const TextComponent: React.FC<TextComponentProps> = ({index, data, updateCompone
         editor={ClassicEditor}
         data={data.value}
         config={editorConfiguration}
-        onInit={(editor: any) => {
-        }}
         onChange={(event: any, editor: any) => {
           data.value = editor.getData();
           updateComponent(data, index);
-        }}
-        onBlur={(event: any, editor: any) => {
-        }}
-        onFocus={(event: any, editor: any) => {
         }}
       />
     </div>

@@ -5,21 +5,10 @@
     position: relative;
     margin: 3px 5px;
 
-    .right-top-icon {
-      position: absolute;
-      top: 2px;
-      right: 0;
-      cursor: pointer;
-    }
-
     .left-ckeckbox {
       position: absolute;
       left: 0;
       top: 5px;
-    }
-
-    .right-top-icon:hover {
-      color: red;
     }
 
     input {

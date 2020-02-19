@@ -323,7 +323,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
 const mapState = (state: any) => {
   return {
-    data: state.proForm.data,
     bricks: state.bricks.bricks,
     brick: state.brick.brick,
   }
