@@ -12,6 +12,16 @@ code {
     monospace;
 }
 
+@font-face {
+  font-family: 'Century Gothic Regular';
+  src: url('./assets/fonts/CenturyGothic/CenturyGothic.eot');
+  src: url('./assets/fonts/CenturyGothic/CenturyGothic.eot?#iefix') format('embedded-opentype'),
+  url('./assets/fonts/CenturyGothic/CenturyGothic.woff') format('woff'),
+  url('./assets/fonts/CenturyGothic/CenturyGothic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .rotate-90 {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);

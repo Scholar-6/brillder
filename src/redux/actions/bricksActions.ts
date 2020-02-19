@@ -1,7 +1,7 @@
 import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
-import host from '../../hostname';
+
 
 const fetchBricksSuccess = (data:any) => {
   return {
@@ -19,7 +19,7 @@ const fetchBricksFailure = (errorMessage:string) => {
 
 const fetchBricks = () => {
   return function (dispatch: Dispatch) {
-    return axios.get(host.BACKEND_HOST + '/bricks', {withCredentials: true})
+    return axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks', {withCredentials: true})
       .then((res) => {
         dispatch(fetchBricksSuccess(res.data));
       })

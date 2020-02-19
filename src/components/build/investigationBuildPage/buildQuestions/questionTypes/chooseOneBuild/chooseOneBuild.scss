@@ -1,0 +1,42 @@
+.choose-one-build {
+  text-align: center;
+
+  .choose-one-box {
+    position: relative;
+    margin: 3px 5px;
+
+    .right-top-icon {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      cursor: pointer;
+    }
+
+    .left-ckeckbox {
+      position: absolute;
+      left: 0;
+      top: 5px;
+    }
+
+    .right-top-icon:hover {
+      color: red;
+    }
+
+    input {
+      width: 100%;
+      height: 55px;
+      box-sizing: border-box;
+      padding: 0 38px;
+      text-align: center;
+      border: 1px solid black;
+    }
+  }
+  
+  .button-box {
+    margin: 3px 5px;
+    .add-answer-button {
+      width: 100%;
+      height: 55px;
+    }
+  }
+}

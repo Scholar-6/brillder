@@ -1,7 +1,6 @@
 import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
-import host from '../../hostname';
 
 const loginSuccess = () => {
   return {
@@ -18,9 +17,9 @@ const loginFailure = (errorMessage:string) => {
 
 const login = (model:any) => {
   return function (dispatch: Dispatch) {
-    return axios.post(host.BACKEND_HOST + '/auth/login', model, {withCredentials: true}).then(response => {
+    return axios.post(process.env.REACT_APP_BACKEND_HOST + '/auth/login', model, {withCredentials: true}).then(response => {
       const {data} = response;
-      if (data == "OK") {
+      if (data === "OK") {
         dispatch(loginSuccess());
         return;
       }
@@ -44,9 +43,32 @@ const logoutSuccess = () => {
   } as Action
 }
 
+const logoutFailure = (errorMessage:string) => {
+  return {
+    type: types.LOGOUT_FAILURE,
+    error: errorMessage
+  } as Action
+}
+
 const logout = () => {
   return function (dispatch: Dispatch) {
-    dispatch(logoutSuccess());
+    return axios.post(process.env.REACT_APP_BACKEND_HOST + '/auth/logout', {}, {withCredentials: true}).then(response => {
+      const {data} = response;
+      if (data === "OK") {
+        dispatch(logoutSuccess());
+        return;
+      }
+      let {msg} = data;
+      if (!msg) {
+        const {errors} = data;
+        msg = errors[0].msg
+      }
+      alert(msg);
+      dispatch(logoutFailure(msg))
+    })
+    .catch(error => {
+      dispatch(logoutFailure(error.message))
+    })
   }
 }
 

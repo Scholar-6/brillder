@@ -47,9 +47,21 @@ export const QuestionType = {
   LineHighlighting: QuestionTypeEnum.LineHighlighting
 } as any
 
+export enum HintStatus {
+  None,
+  All,
+  Each
+}
+
+export interface Hint {
+  value: string,
+  status: HintStatus
+}
+
 export interface Question {
   id: number,
   active: boolean,
   type: number,
+  hint: Hint
   components: any[]
 }
