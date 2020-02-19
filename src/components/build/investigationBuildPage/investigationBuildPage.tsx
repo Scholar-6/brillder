@@ -99,14 +99,25 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     }
     var index = getQuestionIndex(activeQuestion);
 
+    justSetQuestionType(type);
+    history.push(`/build/brick/${brickId}/build/investigation/question-component/${index + 1}`);
+  }
+
+  const justSetQuestionType = (type: QuestionTypeEnum) => {
+    if (!activeQuestion) {
+      alert('Can`t set question type');
+      return;
+    }
+    var index = getQuestionIndex(activeQuestion);
+    console.log(type)
     setQuestions(
       update(questions, {
         [index]: { type: { $set: type } }
       }),
-    )
-
-    history.push(`/build/brick/${brickId}/build/investigation/question-component/${index + 1}`);
+    );
   }
+
+  console.log(activeQuestion)
 
   const removeQuestion = (index: number) => {
     if (questions.length === 1) {
@@ -271,6 +282,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
         updateComponent={updateComponent}
         addComponent={addComponent}
         setQuestionHint={setQuestionHint}
+        setQuestionType={justSetQuestionType}
         saveBrick={saveBrick} />
     );
   }
