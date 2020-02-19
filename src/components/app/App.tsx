@@ -1,12 +1,11 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 // @ts-ignore
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
 
 import './app.css';
 import '../../font-numbers/style.css'
@@ -44,7 +43,6 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Switch>
           <Route path="/build/new-brick" component={NewBrick} />
           <Route path="/build/brick/:brickId" component={InvestigationBuildPage}/>
           <Route path="/build/bricks-list" component={BricksListPage}/>
@@ -53,9 +51,7 @@ const App: React.FC = () => {
           <Route path="/register" exact component={RegisterPage} />
           <Route path="/build" component={MainPage} />
           <Route path="/logo-page" component={LogoPage} />
-
           <Route path="/" component={MainPage} />
-        </Switch>
       </ThemeProvider>
     </Provider>
   );
