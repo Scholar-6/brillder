@@ -22,10 +22,11 @@ export interface DragAndBoxProps {
   data: any
   onDrop: Function
   component: Function
-  updateComponent(component:any):void
+  cleanComponent(): void
+  updateComponent(component:any, index:number):void
 }
 
-const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, data, component, updateComponent }) => {
+const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, data, component, cleanComponent, updateComponent }) => {
   const ref = useRef<HTMLDivElement>(null)  
    
   const [{ canDrop, isOver }, drop] = useDrop({
@@ -66,7 +67,7 @@ const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, data,
 
   return (
     <div ref={ref} className="drag-and-drop-box" style={{ backgroundColor, width: '99%', opacity }}>
-      {component({data, updateComponent})}
+      {component({data, cleanComponent, updateComponent})}
     </div>
   )
 }

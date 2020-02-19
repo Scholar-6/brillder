@@ -1,5 +1,17 @@
 
 .investigation-build-page {
+  .right-top-icon {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .right-top-icon:hover {
+    color: red;
+  }
+
   .question-container {
     padding-left: 10px;
     padding-right: 10px;

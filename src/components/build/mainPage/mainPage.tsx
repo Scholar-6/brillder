@@ -5,20 +5,15 @@ import { Link } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 
 import './mainPage.scss';
-import actions from 'redux/actions/mainPageActions';
 import MainMenu from '../base-components/main-menu/main-menu';
 
 
 const mapState = (state: any) => {
-  return {
-    username: state.mainPage.username as string
-  }
+  return { }
 }
 
 const mapDispatch = (dispatch: any) => {
-  return {
-    fetchUsername: () => dispatch(actions.fetchUsername())
-  }
+  return { }
 }
 
 const connector = connect(
