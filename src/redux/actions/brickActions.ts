@@ -47,10 +47,11 @@ const saveBrickFailure = (errorMessage:string) => {
 
 const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
-    console.log('save brick')
+    console.log('save brick', brick)
     brick.type = 1;
     return axios.post(process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true}).then(response => {
       const brick = response.data as Brick;
+      console.log("response", brick);
       dispatch(saveBrickSuccess(brick));
     })
     .catch(error => {

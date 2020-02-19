@@ -109,15 +109,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       return;
     }
     var index = getQuestionIndex(activeQuestion);
-    console.log(type)
     setQuestions(
       update(questions, {
         [index]: { type: { $set: type } }
       }),
     );
   }
-
-  console.log(activeQuestion)
 
   const removeQuestion = (index: number) => {
     if (questions.length === 1) {
@@ -283,6 +280,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
         addComponent={addComponent}
         setQuestionHint={setQuestionHint}
         setQuestionType={justSetQuestionType}
+        createNewQuestion={createNewQuestion}
         saveBrick={saveBrick} />
     );
   }
