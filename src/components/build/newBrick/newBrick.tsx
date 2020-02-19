@@ -58,7 +58,6 @@ function NewBrick(props: any) {
 
   return (
     <MuiThemeProvider>
-      <Switch>
         <Route path='/build/new-brick/welcome'><Welcome/></Route>
         <Route path='/build/new-brick/choose-subject'>
           <ChooseSubject saveSubject={setSubject} selectedSubject={state.subject}/>
@@ -75,7 +74,6 @@ function NewBrick(props: any) {
         <Route path='/build/new-brick/brief-prep'>
           <BriefPrep parentState={state} saveBriefPrep={setBriefPrep} />
         </Route>
-      </Switch>
     </MuiThemeProvider>
   );
 }
