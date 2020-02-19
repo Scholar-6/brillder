@@ -29,10 +29,14 @@ export interface QuestionProps {
   updateComponent(component: any, index: number): void
   setQuestionHint(hintState: HintState): void
   setQuestionType(type: QuestionTypeEnum):void
+  createNewQuestion():void
 }
 
 const BuildQuestionComponent: React.FC<QuestionProps> = (
-  { brickId, question, history, setQuestionComponentType, swapComponents, setQuestionType, setQuestionHint, saveBrick, updateComponent, addComponent }
+  { brickId, question, history, setQuestionComponentType,
+    swapComponents, setQuestionType, setQuestionHint,
+    saveBrick, updateComponent, addComponent, createNewQuestion
+  }
 ) => {
   const { type } = question;
   document.title = QuestionTypeEnum[type];
@@ -123,18 +127,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 <div>
                   <FormControlLabel
                     value="start"
-                    className="question-lock-container"
-                    control={
-                      <div className="round-button-container left-button-container">
-                        <IconButton className="round-button" aria-label="next">
-                          <LockIcon />
-                        </IconButton>
-                      </div>
-                    }
-                    label="Lock changes to this question?"
-                  />
-                  <FormControlLabel
-                    value="start"
                     control={
                       <div className="round-button-container right-button-container">
                         <IconButton className="round-button" aria-label="next">
@@ -142,6 +134,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                         </IconButton>
                       </div>
                     }
+                    onClick={createNewQuestion}
                     label="Add New Question"
                     labelPlacement="start"
                   />

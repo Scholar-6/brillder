@@ -4,9 +4,9 @@
   color: black;
 
   .left-card {
-    width: 90%;
+    width: 70%;
     border: 1px solid grey;
-    max-width: 600px;
+    max-width: 640px;
     border-radius: 4px;
     text-align: center;
 
@@ -57,7 +57,7 @@
 
     .tutorial-logo-text {
       color: black;
-      font-size: 16px;
+      font-size: 14px;
     }
 
     .welcome-upper-text {
@@ -67,7 +67,7 @@
     .welcome-bottom-text {
       margin-bottom: 30px;
       font-size: 28px;
-      font-weight: bold;
+      font-family: 'Century Gothic Bold';
       color: black;
     }
   }
