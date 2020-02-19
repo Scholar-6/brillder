@@ -6,9 +6,7 @@ html, body, #root {
     height: 100%;
 
     .pre-login-image-container {
-        height: 100%;
         .pre-login-image-container2 {
-            border-right: 2px solid white;
 
             .pre-login-image {
                 height: 90%;
@@ -25,7 +23,6 @@ html, body, #root {
     }
 
     background-color: #06215C;
-
         .google-button {
             background-color: white;
             text-transform: none;
@@ -86,7 +83,8 @@ html, body, #root {
             margin-bottom: 10px;
             border-radius: 10px;
             font-weight: 200 !important;
-            width: 58%;
+            width: 50%;
+            font-size: 2vw;
 
             span {
                 font-family: "Century Gothic Regular";
@@ -107,75 +105,122 @@ html, body, #root {
             width:50%;
             margin-top: 0px;
        }
-}
 
+    @media only screen and (min-width: 1280px)  {
+        .pre-login-image-container {
+            height: 100%;
 
-@media only screen and (min-width: 1200px)  {
-    .pre-login-image-container2 {
-        height: 70%;
-        .pre-login-image-container3 {
-           height: 80%;
+            .pre-login-image-container2 {
+                height: 70%;
+                border-right: 2px solid white;
+
+                .pre-login-image-container3 {
+                   height: 80%;
+                }
+            }
+        }
+    
+        .user-type-btn {
+            padding: 20px 0 !important;
+            height: 100px;
+            margin-bottom: 25px !important;
         }
     }
+    
+    @media only screen and (max-width: 1279px) and (min-width: 960px)  {
+        .pre-login-image-container {
+            height: 100%;
+           .pre-login-image-container2 {
+               height: 70%;
+               border-right: 2px solid white;
 
-    .user-type-btn {
-        padding: 20px 0 !important;
-        font-size: 24px !important;
-    }
-}
-
-@media only screen and (max-width: 1199px) and (min-width: 900px)  {
-    .pre-login-image-container2 {
-        height: 70%;
-        .pre-login-image-container3 {
-            height: 80%;
+               .pre-login-image-container3 {
+                   height: 70%;
+               }
+           }
+       }
+    
+        .user-type-btn {
+            padding: 20px 0 !important;
+            margin-bottom: 18px !important;
         }
     }
+    
+    @media only screen and (max-width: 959px) and (min-width: 600px)  {
+        .pre-login-image-container {
+            height: 100%;
+            .pre-login-image-container2 {
+                height: 70%;
+                border-right: 2px solid white;
 
-    .user-type-btn {
-        padding: 20px 0 !important;
-        font-size: 17px !important;
-    }
-}
-
-@media only screen and (max-width: 899px) and (min-width: 600px)  {
-    .pre-login-image-container2 {
-        height: 70%;
-        .pre-login-image-container3 {
-            height: 80%;
+                .pre-login-image-container3 {
+                    height: 50%;
+                }
+            }
+        }
+        .user-type-btn {
+            padding: 15px 0 !important;
+        }
+        .pre-login-text {
+            font-size: 12px !important;
         }
     }
-    .user-type-btn {
-        padding: 15px 0 !important;
-        font-size: 14px !important;
-    }
-    .pre-login-text {
-        font-size: 12px !important;
-    }
-}
-
-@media only screen and (max-width: 599px) {
-    .pre-login-image-container2 {
-        height: 50%;
-        .pre-login-image-container3 {
-            height: 50%;
+    
+    @media only screen and (max-width: 599px) {
+        .pre-login-image-container {
+            height: 45%;
+           .pre-login-image-container2 {
+                height:85%;
+                .pre-login-image-container3 {
+                    height: 100%;
+                    
+                   .pre-login-image {
+                        height: 90% !important;
+                        padding-bottom: 0px !important;
+                        margin-bottom: 0px !important;
+                    }
+                }
+            }
         }
-    }
 
-    .user-type-btn {
-        padding: 10px 0px !important;
-        font-size: 9px !important;
+        .pre-login-button-container {
+            height: 55%;
 
-        .user-type-name {
+            > div {
+                height: 100%;
+                > div {
+                    height: 100%;
+                    > div {
+                        height: 33%;
+                        > div {
+                            height: 100%;
+                            > button {
+                                height: 82% !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    
+        .user-type-btn {
+            width: 85%;
+            height: 20% !important;
             padding: 0 !important;
-            margin: 0 !important;
+            border-radius: 20px !important;
+            font-size: 7vw;
+    
+            .user-type-name {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
         }
-    }
-
-    .pre-login-text {
-        font-size: 8px !important;
-    }
-    .fotter-image {
-        max-height: 100px;
+    
+        .pre-login-text {
+            font-size: 4.4vw !important;
+        }
+        .fotter-image {
+            max-height: 100px;
+        }
     }
 }
