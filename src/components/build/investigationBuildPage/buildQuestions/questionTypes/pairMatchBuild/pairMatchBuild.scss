@@ -1,0 +1,64 @@
+.pair-match-build {
+  text-align: center;
+
+  p {
+    margin: 0;
+  }
+
+  .pair-match-option {
+    margin-left: 6px;
+    margin-top: 2px;
+    width: 100%;
+  
+    .right-top-icon {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      cursor: pointer;
+    }
+
+    .right-top-icon:hover {
+      color: red;
+    }
+
+    input {
+      width: 100%;
+      height: 55px;
+      text-align: center;
+      border: 1px solid black;
+    }
+  }
+
+  .pair-match-answer {
+    margin-top: 2px;
+    margin-right: 7px;
+    width: 100%;
+    position: relative;
+
+    .right-top-icon {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      cursor: pointer;
+    }
+
+    .right-top-icon:hover {
+      color: red;
+    }
+
+    input {
+      width: 100%;
+      height: 55px;
+      text-align: center;
+      border: 1px solid black;
+    }
+  }
+  
+  .button-box {
+    margin: 3px 5px;
+    .add-answer-button {
+      width: 100%;
+      height: 55px;
+    }
+  }
+}

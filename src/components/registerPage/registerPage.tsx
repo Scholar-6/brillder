@@ -3,7 +3,6 @@ import { Grid, TextField } from "@material-ui/core";
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import host from '../../hostname';
 
 
 function RegisterPage(props:any) {
@@ -13,7 +12,7 @@ function RegisterPage(props:any) {
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0 && confirmPassword.length > 0) {
-      if (password != confirmPassword) {
+      if (password !== confirmPassword) {
         return "Passwords not match";
       }
       return true;
@@ -25,12 +24,12 @@ function RegisterPage(props:any) {
     event.preventDefault();
 
     let res = validateForm();
-    if (res != true) {
+    if (res !== true) {
       alert(res);
       return;
     }
   
-    axios.post(host.BACKEND_HOST + '/auth/SignUp', {email, password, confirmPassword}).then(resp => {
+    axios.post(process.env.REACT_APP_BACKEND_HOST + '/auth/SignUp', {email, password, confirmPassword}).then(resp => {
       const {data} = resp;
       if (data.errors) {
         alert(data.errors[0].msg);
@@ -50,7 +49,7 @@ function RegisterPage(props:any) {
     <Grid className="login-page" container item justify="center" alignItems="center">
       <div className="login-container">
         <div className="login-logo">
-          <img src="/images/lflogo.png" alt="lol" />
+          <img src="/images/lflogo.png" alt="logo" />
         </div>
         <Grid container direction="row">
           <Grid container item xs={12} justify="center">
@@ -90,7 +89,7 @@ function RegisterPage(props:any) {
         </Grid>
         <Grid container direction="row">
           <Grid container item xs={12} justify="center">
-            <img className="fotter" src="/images/brillder-2-logo.png" /><br />
+            <img alt="fotter-logo" className="fotter-image" src="/images/brillder-2-logo.png" /><br />
           </Grid>
         </Grid>
       </div>

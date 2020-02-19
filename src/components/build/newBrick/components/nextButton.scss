@@ -1,0 +1,21 @@
+.tutorial-page {
+  .tutorial-next-container {
+    padding: 15px !important;
+    padding-right: 25px !important;
+  
+    .tutorial-next-button {
+      margin: 23px !important;
+      padding-top: 6px !important;
+      color: #b44438;
+
+      span {
+        width: 70px !important;
+        height: 70px !important;
+      }
+
+      .tutorial-next-icon {
+        font-size: 60px;
+      }
+    }
+  }
+}

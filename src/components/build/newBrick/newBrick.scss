@@ -1,0 +1,74 @@
+.tutorial-page {
+  height: 100%;
+  font-family: 'Century Gothic Regular';
+  color: black;
+
+  .left-card {
+    width: 90%;
+    border: 1px solid grey;
+    max-width: 600px;
+    border-radius: 4px;
+    text-align: center;
+
+    .only-tutorial-header {
+      margin: 30px 20px;
+    }
+
+    .audience-inputs {
+      display: block !important;
+      margin: 10px 20px !important;
+    }
+
+    .length-description {
+      text-align: left;
+      margin-left: 20px;
+      font-size: 18px;
+      color: black;
+      font-weight: bold;
+    }
+
+    .brick-length-image-container {
+      padding: 12px 20px 15px 20px;
+      .brick-length-image {
+        border: 1px solid black;
+        border-radius: 6px;
+        width: 100%;
+      }
+
+      .brick-length-image:hover {
+        background: #BBB;
+      }
+  
+      .brick-length-image.active {
+        background: #DFDFDF;
+      }
+  
+    }
+
+    .bottom-time-description {
+      font-weight: bold;
+      color: black;
+      font-size: 16px;
+    }
+
+    .tutorial-logo-container {
+      padding-top: 40px;
+    }
+
+    .tutorial-logo-text {
+      color: black;
+      font-size: 16px;
+    }
+
+    .welcome-upper-text {
+      font-size: 23px;
+      margin-top: 40px;
+    }
+    .welcome-bottom-text {
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: bold;
+      color: black;
+    }
+  }
+}

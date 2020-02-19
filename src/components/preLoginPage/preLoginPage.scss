@@ -4,10 +4,27 @@ html, body, #root {
 
 .pre-login-page {
     height: 100%;
-    background-color: #111f33;
 
-    .login-container {
-        width:450px;
+    .pre-login-image-container {
+        height: 100%;
+        .pre-login-image-container2 {
+            border-right: 2px solid white;
+
+            .pre-login-image {
+                height: 90%;
+                padding-bottom: 20px;
+                margin-bottom: 30px;
+            }
+
+            .pre-login-text {
+                color: white;
+                font-family: 'Century Gothic Regular';
+                font-size: 18px;
+            }
+        }
+    }
+
+    background-color: #06215C;
 
         .google-button {
             background-color: white;
@@ -57,16 +74,23 @@ html, body, #root {
             padding: 5px 20px;
             margin-bottom: 30px;
         }
+
+        .user-type-btn:hover {
+            background-color: #c94f42;
+        }
         
         .user-type-btn {
-            padding: 0 16px;
-            background-color: white;
-            font-size: 30px !important;
-            font-family: Montserrat;
-            text-transform: none;
+            padding: 20px 24px;
+            background-color:#A84D3F;
+            color: #eee;
             margin-bottom: 10px;
-            border-radius: 2px;
-            width: 240px;
+            border-radius: 10px;
+            font-weight: 200 !important;
+            width: 58%;
+
+            span {
+                font-family: "Century Gothic Regular";
+            }
             
             img {
                 width: 75px;
@@ -79,9 +103,79 @@ html, body, #root {
                margin-right: 10px;
             }
         }
-        .fotter {
+        .fotter-image {
             width:50%;
             margin-top: 0px;
+       }
+}
+
+
+@media only screen and (min-width: 1200px)  {
+    .pre-login-image-container2 {
+        height: 70%;
+        .pre-login-image-container3 {
+           height: 80%;
         }
+    }
+
+    .user-type-btn {
+        padding: 20px 0 !important;
+        font-size: 24px !important;
+    }
+}
+
+@media only screen and (max-width: 1199px) and (min-width: 900px)  {
+    .pre-login-image-container2 {
+        height: 70%;
+        .pre-login-image-container3 {
+            height: 80%;
+        }
+    }
+
+    .user-type-btn {
+        padding: 20px 0 !important;
+        font-size: 17px !important;
+    }
+}
+
+@media only screen and (max-width: 899px) and (min-width: 600px)  {
+    .pre-login-image-container2 {
+        height: 70%;
+        .pre-login-image-container3 {
+            height: 80%;
+        }
+    }
+    .user-type-btn {
+        padding: 15px 0 !important;
+        font-size: 14px !important;
+    }
+    .pre-login-text {
+        font-size: 12px !important;
+    }
+}
+
+@media only screen and (max-width: 599px) {
+    .pre-login-image-container2 {
+        height: 50%;
+        .pre-login-image-container3 {
+            height: 50%;
+        }
+    }
+
+    .user-type-btn {
+        padding: 10px 0px !important;
+        font-size: 9px !important;
+
+        .user-type-name {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    }
+
+    .pre-login-text {
+        font-size: 8px !important;
+    }
+    .fotter-image {
+        max-height: 100px;
     }
 }
