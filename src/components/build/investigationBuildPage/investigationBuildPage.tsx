@@ -297,29 +297,27 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
                   questions={questions} createNewQuestion={createNewQuestion}
                   moveQuestions={moveQuestions} selectQuestion={selectQuestion}
                   removeQuestion={removeQuestion} />
-                <Switch>
-                  <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
-                    {renderBuildQuestion}
-                  </Route>
-                  <Route exac path='/build/brick/:brickId/build/investigation/question-component/:questionId'>
-                    {renderBuildQuestion}
-                  </Route>
-                  <Route
-                    exec path='/build/brick/:brickId/build/investigation/question/:questionId'
-                    component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
-                  </Route>
-                  <Route
-                    exec path='/build/brick/:brickId/build/investigation/question'
-                    component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
-                  </Route>
-                </Switch>
+                <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
+                  {renderBuildQuestion}
+                </Route>
+                <Route exac path='/build/brick/:brickId/build/investigation/question-component/:questionId'>
+                  {renderBuildQuestion}
+                </Route>
+                <Route
+                  exec path='/build/brick/:brickId/build/investigation/question/:questionId'
+                  component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
+                </Route>
+                <Route
+                  exec path='/build/brick/:brickId/build/investigation/question'
+                  component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
+                </Route>
               </Grid>
             </Grid>
           </Grid>
           <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
             <Hidden only={['xs', 'sm']}>
-                <Grid container justify="center" item md={5} lg={4}>
-              <Grid container direction="row" alignItems="center">
+              <Grid container justify="center" item md={5} lg={4}>
+                <Grid container direction="row" alignItems="center">
                   <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
                 </Grid>
               </Grid>
