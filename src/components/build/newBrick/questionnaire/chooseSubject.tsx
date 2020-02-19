@@ -27,7 +27,8 @@ enum Subject {
   Psychology,
   Sociology,
   Spanish,
-  Theology
+  Theology,
+  Classics,
 }
 
 const BootstrapInput = withStyles((theme: Theme) =>
@@ -95,7 +96,7 @@ function ChooseSubject({saveSubject, selectedSubject}:any) {
               <MenuItem value={Subject.ArtAndDesign}>Art & Design</MenuItem>
               <MenuItem value={Subject.Biology}>Biology</MenuItem>
               <MenuItem value={Subject.Chemistry}>Chemistry</MenuItem>
-              <MenuItem className="align-center" disabled>Classics</MenuItem>
+              <MenuItem value={Subject.Classics}>Classics</MenuItem>
               <MenuItem value={Subject.EnglishLiterature}>English Literature</MenuItem>
               <MenuItem value={Subject.French}>French</MenuItem>
               <MenuItem value={Subject.Geography}>Geography</MenuItem>

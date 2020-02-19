@@ -20,7 +20,11 @@ function OpenQuestion({selectedQuestion, saveOpenQuestion}: any) {
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
-            <h1 className="only-tutorial-header">Every brick should engage and inspire : 'No profit grows where is no pleasure ta'en'. What open question(s) will challenge users?</h1>
+            <h1 className="only-tutorial-header">
+              <p>Every brick should engage and inspire:</p>
+              <p>'No profit grows where is no pleasure ta'en'.</p> 
+              <p>What open question(s) will challenge users?</p>
+            </h1>
             <Input className="audience-inputs" value={openQuestion} onChange={handleChange} placeholder="Enter Open Question(s)..." />
             <NextButton step={NewBrickStep.OpenQuestion} canSubmit={true} onSubmit={saveOpenQuestion} data={openQuestion} />
           </div>
