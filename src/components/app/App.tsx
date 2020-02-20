@@ -15,8 +15,8 @@ import LoginPage from '../loginPage/loginPage';
 import RegisterPage from '../registerPage/registerPage';
 import PreLoginPage from '../preLoginPage/preLoginPage';
 import LogoPage from '../logoPage/logoPage';
-import actions from '../../redux/actions/auth';
 import AuthRoute from './AuthRoute';
+import PrivateRoute from './privateRoute';
 
 const App: React.FC = (props: any) => {
   let history = useHistory();
@@ -46,15 +46,15 @@ const App: React.FC = (props: any) => {
   return (
     <ThemeProvider theme={theme}>
       <Switch>
-        <Route path="/build/new-brick" component={NewBrick} />
-        <Route path="/build/brick/:brickId" component={InvestigationBuildPage} />
-        <Route path="/build/bricks-list" component={BricksListPage} />
+        <PrivateRoute path="/build/new-brick" component={NewBrick} />
+        <PrivateRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
+        <PrivateRoute path="/build/bricks-list" component={BricksListPage} />
         <AuthRoute path="/pre-login" component={PreLoginPage} />
         <AuthRoute path="/login" exact component={LoginPage} />
         <AuthRoute path="/register" exact component={RegisterPage} />
-        <Route path="/build" component={MainPage} />
-        <Route path="/logo-page" component={LogoPage} />
-        <Route path="/" component={MainPage} />
+        <PrivateRoute path="/build" component={MainPage} />
+        <PrivateRoute path="/logo-page" component={LogoPage} />
+        <PrivateRoute path="/" component={MainPage} />
       </Switch>
     </ThemeProvider>
   );

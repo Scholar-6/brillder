@@ -4,7 +4,6 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 
 const AuthRoute: React.FC<any> = ({ component: Component, ...rest }) => {
-  console.log(rest);
   if (!rest.isAuthenticated) {
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   }
