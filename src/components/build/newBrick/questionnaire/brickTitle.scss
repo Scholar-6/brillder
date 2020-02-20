@@ -3,28 +3,32 @@
   display: block !important;
 }
 
-.choose-subject-page {
+.brick-title-page {
+  .audience-inputs {
+    width: 90% !important;
+  }
+
   @media only screen and (min-width: 1280px)  {
     .only-tutorial-header {
-      font-size: 1.81vw !important;
+      font-size: 2.5vw !important;
     }
   }
   
   @media only screen and (max-width: 1279px) and (min-width: 960px)  {
     .only-tutorial-header {
-      font-size: 1.61vw !important;
+      font-size: 2.2vw !important;
     }
   }
   
   @media only screen and (max-width: 959px) and (min-width: 600px)  {
     .only-tutorial-header {
-      font-size: 2.76vw !important;
+      font-size: 3.76vw !important;
     }
   }
   
   @media only screen and (max-width: 599px) {
     .only-tutorial-header {
-      font-size: 2.73vw !important;
+      font-size: 3.73vw !important;
     }
   }
 }

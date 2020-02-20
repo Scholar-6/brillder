@@ -29,8 +29,8 @@ function BrickLength({length, saveBrickLength}: any) {
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
             <h1 className="only-tutorial-header-length">
-              20 minute bricks offer a snapshot of a topic while
-              60 minute ones are opportunities to really get stuck in.
+              <p>20 minute bricks offer a snapshot of a topic while</p>
+              <p>60 min. ones are opportunities to really get stuck in.</p>
               <p>You can always shorten or extend later.</p>
             </h1>
             <h2 className="length-description">Choose Brick Length.</h2>
