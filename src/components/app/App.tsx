@@ -53,7 +53,7 @@ const App: React.FC = (props: any) => {
         <AuthRoute path="/login" exact component={LoginPage} />
         <AuthRoute path="/register" exact component={RegisterPage} />
         <PrivateRoute path="/build" component={MainPage} />
-        <PrivateRoute path="/logo-page" component={LogoPage} />
+        <Route path="/logo-page" component={LogoPage} />
         <PrivateRoute path="/" component={MainPage} />
       </Switch>
     </ThemeProvider>
