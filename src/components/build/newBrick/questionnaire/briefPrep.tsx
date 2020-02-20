@@ -24,7 +24,7 @@ function BriefPrep({parentState, saveBriefPrep}:any) {
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
-            <h1 className="only-tutorial-header">What do you want users to think more deeply about?</h1>
+            <h1 className="only-tutorial-header">What do you want users to get out of this brick?</h1>
             <input
               value={state.preparationBrief}
               onChange={setBriefPrep}
