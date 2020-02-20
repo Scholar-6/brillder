@@ -31,8 +31,10 @@
     .bottom-time-description {
       font-weight: bold;
       color: #495057;
-      font-size: 16px;
       margin-top: 10px;
+    }
+    .length-description {
+      font-size: 16px;
     }
   }
 
@@ -56,12 +58,17 @@
 
     .length-description {
       margin-left: 72px !important;
-      font-size: 20px;
     }
     .only-tutorial-header-length {
       font-size: 1.8vw;
       p {
         text-align: center;
+      }
+      p:nth-child(1) {
+        font-size: 1.88vw !important;
+      }
+      p:nth-child(2) {
+        font-size: 1.8vw !important;
       }
     }
   }
@@ -85,6 +92,12 @@
     }
     .only-tutorial-header-length {
       font-size: 1.5VW;
+      p:nth-child(1) {
+        font-size: 1.57vw !important;
+      }
+      p:nth-child(2) {
+        font-size: 1.5vw !important;
+      }
     }
   }
   
@@ -102,11 +115,17 @@
     }
 
     .length-description {
-      margin-left: 72px !important;
+      margin-left: 35px !important;
       font-size: 17px;
     }
     .only-tutorial-header-length {
       font-size: 2.6VW;
+      p:nth-child(1) {
+        font-size: 2.72vw !important;
+      }
+      p:nth-child(2) {
+        font-size: 2.6vw !important;
+      }
     }
   }
   
@@ -125,9 +144,16 @@
 
     .length-description {
       font-size: 13px;
+      margin-left: 35px !important;
     }
     .only-tutorial-header-length {
       font-size: 2.5VW;
+      p:nth-child(1) {
+        font-size: 2.72vw !important;
+      }
+      p:nth-child(2) {
+        font-size: 2.6vw !important;
+      }
     }
   }
 }

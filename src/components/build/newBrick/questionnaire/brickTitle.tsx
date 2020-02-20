@@ -6,7 +6,7 @@ import { Hidden } from "@material-ui/core";
 
 import NextButton from '../components/nextButton'
 import { NewBrickStep } from "../model";
-
+import './brickTitle.scss';
 
 
 function BrickTitle({parentState, saveTitles}: any) {
@@ -29,14 +29,16 @@ function BrickTitle({parentState, saveTitles}: any) {
   };
 
   return (
-    <div className="tutorial-page">
+    <div className="tutorial-page brick-title-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
             <h1 className="only-tutorial-header">Define and amplify your audience.</h1>
-            <Input className="audience-inputs" value={titles.title} onChange={(onTitleChange)} placeholder="Enter Proposed Title Here..." />
-            <Input className="audience-inputs" value={titles.subTopic} onChange={onSubTopicChange} placeholder="Enter Sub-Topic(s)..." />
-            <Input className="audience-inputs" value={titles.alternativeTopics} onChange={onAltTopicChange} placeholder="Enter Alternative Topic(s)..." />
+            <Grid container justify="center" item xs={12}>
+              <Input className="audience-inputs" value={titles.title} onChange={(onTitleChange)} placeholder="Enter Proposed Title Here..." />
+              <Input className="audience-inputs" value={titles.subTopic} onChange={onSubTopicChange} placeholder="Enter Sub-Topic(s)..." />
+              <Input className="audience-inputs" value={titles.alternativeTopics} onChange={onAltTopicChange} placeholder="Enter Alternative Topic(s)..." />
+            </Grid>
             <NextButton step={NewBrickStep.BrickTitle} canSubmit={true} onSubmit={saveTitles} data={titles} />
           </div>
         </Grid>
