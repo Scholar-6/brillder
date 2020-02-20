@@ -297,20 +297,22 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
                   questions={questions} createNewQuestion={createNewQuestion}
                   moveQuestions={moveQuestions} selectQuestion={selectQuestion}
                   removeQuestion={removeQuestion} />
-                <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
-                  {renderBuildQuestion}
-                </Route>
-                <Route exac path='/build/brick/:brickId/build/investigation/question-component/:questionId'>
-                  {renderBuildQuestion}
-                </Route>
-                <Route
-                  exec path='/build/brick/:brickId/build/investigation/question/:questionId'
-                  component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
-                </Route>
-                <Route
-                  exec path='/build/brick/:brickId/build/investigation/question'
-                  component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
-                </Route>
+                <Switch>
+                  <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
+                    {renderBuildQuestion}
+                  </Route>
+                  <Route exac path='/build/brick/:brickId/build/investigation/question-component/:questionId'>
+                    {renderBuildQuestion}
+                  </Route>
+                  <Route
+                    exec path='/build/brick/:brickId/build/investigation/question/:questionId'
+                    component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
+                  </Route>
+                  <Route
+                    exec path='/build/brick/:brickId/build/investigation/question'
+                    component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
+                  </Route>
+                </Switch>
               </Grid>
             </Grid>
           </Grid>
