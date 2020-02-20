@@ -26,7 +26,7 @@ function BriefPrep({parentState, saveBriefPrep}:any) {
           <div className="left-card">
             <h1 className="only-tutorial-header">
               <p>What do you want users to get out of this brick?</p>
-              <p>Enter Brief and links to any Preparatory Materials</p>
+              <p>Enter Brief and links to any Preparatory Materials.</p>
             </h1>
             <input
               value={state.preparationBrief}
