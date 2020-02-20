@@ -93,6 +93,7 @@ const isAuthorized = () => {
       dispatch(authorizedSuccess());
     })
     .catch(error => {
+      console.log(44);
       dispatch(authorizedFailure(error.message));
     });
   }

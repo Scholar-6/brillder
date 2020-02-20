@@ -31,23 +31,23 @@ function NewBrick(props: any) {
   });
 
   const setSubject = (subject: string) => {
-    setBrick({...state, subject } as any);
+    setBrick({ ...state, subject } as any);
   }
 
   const setTitles = (titles: any) => {
-    setBrick({...state, ...titles});
+    setBrick({ ...state, ...titles });
   }
 
   const setOpenQuestion = (openQuestion: string) => {
-    setBrick({...state, openQuestion } as any);
+    setBrick({ ...state, openQuestion } as any);
   }
 
   const setBrickLength = (brickLength: number) => {
-    setBrick({...state, brickLength} as any);
+    setBrick({ ...state, brickLength } as any);
   }
 
   const setBriefPrep = (data: any) => {
-    let brick = {...state, preparationBrief: data.preparationBrief, links: data.links.split(" ")} as any
+    let brick = { ...state, preparationBrief: data.preparationBrief, links: data.links.split(" ") } as any
     setBrick(brick)
     props.saveBrick(brick);
   }
@@ -58,22 +58,22 @@ function NewBrick(props: any) {
 
   return (
     <MuiThemeProvider>
-        <Route path='/build/new-brick/welcome'><Welcome/></Route>
-        <Route path='/build/new-brick/choose-subject'>
-          <ChooseSubject saveSubject={setSubject} selectedSubject={state.subject}/>
-        </Route>
-        <Route path='/build/new-brick/brick-title'>
-          <BrickTitle parentState={state} saveTitles={setTitles} />
-          </Route>
-        <Route path='/build/new-brick/open-question'>
-          <OpenQuestion selectedQuestion={state.openQuestion} saveOpenQuestion={setOpenQuestion} />
-        </Route>
-        <Route path='/build/new-brick/length'>
-          <BrickLength length={state.brickLength} saveBrickLength={setBrickLength} />
-        </Route>
-        <Route path='/build/new-brick/brief-prep'>
-          <BriefPrep parentState={state} saveBriefPrep={setBriefPrep} />
-        </Route>
+      <Route path='/build/new-brick/welcome'><Welcome /></Route>
+      <Route path='/build/new-brick/choose-subject'>
+        <ChooseSubject saveSubject={setSubject} selectedSubject={state.subject} />
+      </Route>
+      <Route path='/build/new-brick/brick-title'>
+        <BrickTitle parentState={state} saveTitles={setTitles} />
+      </Route>
+      <Route path='/build/new-brick/open-question'>
+        <OpenQuestion selectedQuestion={state.openQuestion} saveOpenQuestion={setOpenQuestion} />
+      </Route>
+      <Route path='/build/new-brick/length'>
+        <BrickLength length={state.brickLength} saveBrickLength={setBrickLength} />
+      </Route>
+      <Route path='/build/new-brick/brief-prep'>
+        <BriefPrep parentState={state} saveBriefPrep={setBriefPrep} />
+      </Route>
     </MuiThemeProvider>
   );
 }
