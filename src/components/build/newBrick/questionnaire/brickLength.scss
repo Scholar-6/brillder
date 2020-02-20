@@ -17,14 +17,15 @@
         border: 1px solid black;
         border-radius: 6px;
         width: 100%;
+        background: #06215C;
       }
 
       .brick-length-image:hover {
-        background: #BBB;
+        opacity: 0.9;
       }
   
       .brick-length-image.active {
-        background: #DFDFDF;
+        opacity: 0.8;
       }
     }
 
@@ -42,11 +43,20 @@
   }
   
   @media only screen and (min-width: 1280px)  {
-    .brick-length-image-container {
-      padding: 12px 40px 15px 40px;
+    .brick-length-image-container1 {
+      padding: 12px 20px 15px 72px;
+    }
+
+    .brick-length-image-container2 {
+      padding: 12px 46px 15px 46px;
+    }
+
+    .brick-length-image-container3 {
+      padding: 12px 72px 15px 20px;
     }
 
     .length-description {
+      margin-left: 72px !important;
       font-size: 20px;
     }
     .only-tutorial-header-length {
@@ -55,12 +65,21 @@
   }
   
   @media only screen and (max-width: 1279px) and (min-width: 960px)  {
-    .brick-length-image-container {
-      padding: 12px 20px 15px 20px;
+    .brick-length-image-container1 {
+      padding: 12px 10px 15px 35px;
+    }
+
+    .brick-length-image-container2 {
+      padding: 12px 22px 15px 22px;
+    }
+
+    .brick-length-image-container3 {
+      padding: 12px 35px 15px 10px;
     }
 
     .length-description {
-      font-size: 10px;
+      margin-left: 35px !important;
+      font-size: 14px;
     }
     .only-tutorial-header-length {
       font-size: 15px;
@@ -68,11 +87,20 @@
   }
   
   @media only screen and (max-width: 959px) and (min-width: 600px)  {
-    .brick-length-image-container {
-      padding: 12px 30px 15px 30px;
+    .brick-length-image-container1 {
+      padding: 12px 10px 15px 35px;
+    }
+
+    .brick-length-image-container2 {
+      padding: 12px 22px 15px 22px;
+    }
+
+    .brick-length-image-container3 {
+      padding: 12px 35px 15px 10px;
     }
 
     .length-description {
+      margin-left: 72px !important;
       font-size: 17px;
     }
     .only-tutorial-header-length {
@@ -81,8 +109,16 @@
   }
   
   @media only screen and (max-width: 599px) {
-    .brick-length-image-container {
-      padding: 12px 20px 15px 20px;
+    .brick-length-image-container1 {
+      padding: 12px 10px 15px 35px;
+    }
+
+    .brick-length-image-container2 {
+      padding: 12px 22px 15px 22px;
+    }
+
+    .brick-length-image-container3 {
+      padding: 12px 35px 15px 10px;
     }
 
     .length-description {
