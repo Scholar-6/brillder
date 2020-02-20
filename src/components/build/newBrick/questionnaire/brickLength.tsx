@@ -35,30 +35,30 @@ function BrickLength({length, saveBrickLength}: any) {
             </h1>
             <h2 className="length-description">Choose Brick Length.</h2>
             <Grid container direction="row">
-              <Grid container item xs={4} className="brick-length-image-container">
+              <Grid container item xs={4} className="brick-length-image-container brick-length-image-container1">
                 <img
                   alt="20min-icon"
-                  src="/images/20min-icon-black.png"
+                  src="/images/20min-icon-red.png"
                   className={"brick-length-image " + ((brickLength === BrickLengthEnum.S20min) ? "active" : "")}
                   onClick={() => setBrickLength(BrickLengthEnum.S20min)} />
                 <Grid container direction="row" justify="center" className="bottom-time-description">
                   20mins
                 </Grid>
               </Grid>
-              <Grid container item xs={4} className="brick-length-image-container">
+              <Grid container item xs={4} className="brick-length-image-container brick-length-image-container2">
                 <img
                   alt="40min-icon"
-                  src="/images/40min-icon-black.png"
+                  src="/images/40min-icon-red.png"
                   className={"brick-length-image " + ((brickLength === BrickLengthEnum.S40min) ? "active" : "")}
                   onClick={() => setBrickLength(BrickLengthEnum.S40min)} />
                 <Grid container direction="row" justify="center" className="bottom-time-description">
                   40mins
                 </Grid>
               </Grid>
-              <Grid container item xs={4} className="brick-length-image-container">
+              <Grid container item xs={4} className="brick-length-image-container brick-length-image-container3">
                 <img
                   alt="60min-icon"
-                  src="/images/60min-icon-black.png"
+                  src="/images/60min-icon-red.png"
                   className={"brick-length-image " + ((brickLength === BrickLengthEnum.S60min) ? "active" : "")}
                   onClick={() => setBrickLength(BrickLengthEnum.S60min)} />
                 <Grid container direction="row" justify="center" className="bottom-time-description">
