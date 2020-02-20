@@ -31,7 +31,7 @@ function BrickLength({length, saveBrickLength}: any) {
             <h1 className="only-tutorial-header-length">
               20 minute bricks offer a snapshot of a topic while
               60 minute ones are opportunities to really get stuck in.
-              You can always shorten or extend later.
+              <p>You can always shorten or extend later.</p>
             </h1>
             <h2 className="length-description">Choose Brick Length.</h2>
             <Grid container direction="row">
