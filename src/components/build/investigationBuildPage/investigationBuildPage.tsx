@@ -97,8 +97,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       alert('Can`t set question type');
       return;
     }
-    var index = getQuestionIndex(activeQuestion);
-
     justSetQuestionType(type);
     history.push(`/build/brick/${brickId}/build/investigation/question-component`);
   }
@@ -315,15 +313,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
             <Hidden only={['xs', 'sm']}>
               <Grid container justify="center" item md={5} lg={4}>
-                <Grid container direction="row" alignItems="center">
+                <Grid container direction="row" justify="center" alignItems="center">
                   <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
                 </Grid>
               </Grid>
             </Hidden>
-          </Route>
         </Grid>
       </div>
     </DndProvider>
