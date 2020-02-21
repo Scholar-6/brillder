@@ -14,7 +14,7 @@ import Device from "react-device-frame";
 import './investigationBuildPage.scss'
 import BuildQuestionComponent from './buildQuestions/buildQuestionComponent';
 import QuestionTypePage from './questionType/questionType';
-import DragableTabs from './dragTabs/DragableTabs';
+import DragableTabs from './dragTabs/dragableTabs';
 import { Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus } from 'components/model/question';
 import actions from '../../../redux/actions/brickActions';
 import { HintState } from '../baseComponents/Hint/Hint';
