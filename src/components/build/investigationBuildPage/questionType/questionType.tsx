@@ -15,9 +15,13 @@ function SplitByCapitalLetters(element: string): string {
   return element.split(/(?=[A-Z])/).join(" ");
 }
 
+function getTextPreview(type: string) {
+  return SplitByCapitalLetters(type).toUpperCase();
+}
+
 const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuestionType, history }: QuestionTypeProps) => {
   if (questionType != null) {
-    //history.push('/build/investigation/question-component/');
+    // history.push('build/brick/2/build/investigation/question-component/1');
   }
   let typeArray: string[] = Object.keys(QuestionType);
 
@@ -45,7 +49,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuesti
               <Grid item xs={6} sm={4} md={4} key={i}>
                 <Box className={`question-container ${className}`} onClick={() => setType(type)}>
                   <div className="link-description">
-                    {SplitByCapitalLetters(typeName)}
+                    {getTextPreview(typeName)}
                   </div>
                 </Box>
               </Grid>
