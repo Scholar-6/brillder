@@ -288,10 +288,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   return (
     <DndProvider backend={Backend}>
       <div className="investigation-build-page">
-        <br></br>
-        <Grid container direction="row" alignItems="center">
+        <Grid container direction="row" alignItems="center" style={{height: '100%'}}>
           <Grid container item xs={12} sm={12} md={7} lg={8} className="question-container">
-            <Grid container direction="row" justify="center" alignItems="flex-start">
+            <Grid container direction="row" justify="center" alignItems="center">
               <Grid container item xs={12} sm={12} md={12} lg={9}>
                 <DragableTabs
                   questions={questions} createNewQuestion={createNewQuestion}
