@@ -17,7 +17,7 @@ import QuestionTypePage from './questionType/questionType';
 import DragableTabs from './dragTabs/dragableTabs';
 import { Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus } from 'components/model/question';
 import actions from '../../../redux/actions/brickActions';
-import { HintState } from '../base-components/Hint/Hint';
+import { HintState } from '../baseComponents/Hint/Hint';
 
 
 interface ApiQuestion {

@@ -8,7 +8,7 @@ import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'
 import SoundComponent from './Sound/Sound'
 import EquationComponent from './Equation/Equation'
-import HintComponent, { HintState } from '../../../base-components/Hint/Hint';
+import HintComponent, { HintState } from '../../../baseComponents/Hint/Hint';
 
 
 export interface SwitchQuestionProps {

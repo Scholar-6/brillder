@@ -9,8 +9,8 @@ import QuestionComponents from './questionComponents/questionComponents';
 import './buildQuestionComponent.scss'
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../model/question';
 import DragBox from './drag/dragBox';
-import IOSSwitch from 'components/build/base-components/IOSSwitch/IOSSwitch';
-import { HintState } from 'components/build/base-components/Hint/Hint';
+import IOSSwitch from 'components/build/baseComponents/IOSSwitch/IOSSwitch';
+import { HintState } from 'components/build/baseComponents/Hint/Hint';
 
 
 function SplitByCapitalLetters(element: string): string {
