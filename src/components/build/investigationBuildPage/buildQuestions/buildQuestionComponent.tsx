@@ -4,7 +4,6 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import LockIcon from '@material-ui/icons/Lock';
 
 import QuestionComponents from './questionComponents/questionComponents';
 import './buildQuestionComponent.scss'
