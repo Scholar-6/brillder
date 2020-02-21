@@ -83,7 +83,7 @@ function ChooseSubject({saveSubject, selectedSubject}:any) {
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
-            <h1 className="only-tutorial-header">What kind of knowledge do you want to share?</h1>
+            <h1 className="only-tutorial-header">Choose a subject for your brick</h1>
             <Select
               placeholder="Subject"
               labelId="customized-select-label"
