@@ -79,7 +79,7 @@ function ChooseSubject({saveSubject, selectedSubject}:any) {
   };
 
   return (
-    <div className="tutorial-page">
+    <div className="tutorial-page choose-subject-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">

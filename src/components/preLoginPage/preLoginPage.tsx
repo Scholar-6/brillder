@@ -1,6 +1,7 @@
 import React from "react";
 import update from 'immutability-helper';
 import { Button, Grid } from "@material-ui/core";
+import Snackbar from '@material-ui/core/Snackbar';
 
 import './preLoginPage.scss'
 
@@ -12,16 +13,30 @@ enum LoginType {
 }
 
 function PreLoginPage(props: any) {
-  const [userType, setUserType] = React.useState(0)
+  const [userType, setUserType] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
   const selectLoginType = (type: LoginType) => {
     setUserType(update(userType, { $set: type }));
+  }
+
+  const openMessage = () => {
+    setOpen(update(open, {$set: true}))
+  }
+
+  const handleClose = () => {
+    setOpen(update(open, {$set: false}))
   }
 
   const moveToLogin = () => {
     props.history.push('/login?userType=' + userType)
   }
 
-  if (userType === 0) {
+  let name = '';
+  if (userType == LoginType.Student) {
+    name = 'Student';
+  }
+
+  if (userType === 0 || userType === LoginType.Student) {
     return (
       <Grid className="pre-login-page" style={{ height: '100%' }} container item justify="center">
         <Grid container className="pre-login-image-container" justify="center" item xs={12} sm={6} alignItems="center">
@@ -41,7 +56,7 @@ function PreLoginPage(props: any) {
             <div style={{ width: "100%" }}>
               <Grid container direction="row">
                 <Grid container item xs={12} justify="center">
-                  <Button onClick={() => selectLoginType(LoginType.Student)} className="user-type-btn">
+                  <Button onClick={() =>  { selectLoginType(LoginType.Student); openMessage(); }} className="user-type-btn">
                     <span className="user-type-name">S t u d e n t</span>
                   </Button>
                 </Grid>
@@ -55,7 +70,7 @@ function PreLoginPage(props: any) {
               </Grid>
               <Grid container direction="row">
                 <Grid container item xs={12} justify="center">
-                  <Button onClick={() => selectLoginType(LoginType.Builder)} className="user-type-btn">
+                  <Button onClick={() => { selectLoginType(LoginType.Builder); openMessage(); }} className="user-type-btn">
                     <span className="user-type-name">B u i l d e r</span>
                   </Button>
                 </Grid>
@@ -63,6 +78,20 @@ function PreLoginPage(props: any) {
             </div>
           </Grid>
         </Grid>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          message={`Sorry, you can't log in as a ${name} yet. Please log in as a teacher.`}
+          action={
+            <React.Fragment>
+            </React.Fragment>
+          }
+        />
       </Grid>
     );
   } else {

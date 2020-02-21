@@ -6,6 +6,7 @@ import Device from "react-device-frame";
 import { Hidden } from "@material-ui/core";
 
 import { NewBrickStep } from "../model";
+import './openQuestion.scss';
 
 
 function OpenQuestion({selectedQuestion, saveOpenQuestion}: any) {
@@ -16,7 +17,7 @@ function OpenQuestion({selectedQuestion, saveOpenQuestion}: any) {
   };
 
   return (
-    <div className="tutorial-page" >
+    <div className="tutorial-page open-question-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
@@ -25,7 +26,9 @@ function OpenQuestion({selectedQuestion, saveOpenQuestion}: any) {
               <p>'No profit grows where is no pleasure ta'en'.</p> 
               <p>What open question(s) will challenge users?</p>
             </h1>
-            <Input className="audience-inputs" value={openQuestion} onChange={handleChange} placeholder="Enter Open Question(s)..." />
+            <Grid container justify="center" item xs={12}>
+              <Input className="audience-inputs" value={openQuestion} onChange={handleChange} placeholder="Enter Open Question(s)..." />
+            </Grid>
             <NextButton step={NewBrickStep.OpenQuestion} canSubmit={true} onSubmit={saveOpenQuestion} data={openQuestion} />
           </div>
         </Grid>
