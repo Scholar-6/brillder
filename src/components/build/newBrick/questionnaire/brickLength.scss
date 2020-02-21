@@ -1,0 +1,160 @@
+
+.tutorial-page {
+  height: 100%;
+  font-family: 'Century Gothic Regular';
+  color: black;
+
+  .left-card {
+    .length-description {
+      text-align: left;
+      margin-left: 20px;
+      color: #495057;
+      font-weight: bold;
+    }
+
+    .brick-length-image-container {
+      .brick-length-image {
+        border-radius: 6px;
+        width: 100%;
+        background: #06215C;
+      }
+
+      .brick-length-image:hover {
+        opacity: 0.9;
+      }
+  
+      .brick-length-image.active {
+        opacity: 0.8;
+      }
+    }
+
+    .bottom-time-description {
+      font-weight: bold;
+      color: #495057;
+      margin-top: 10px;
+    }
+    .length-description {
+      font-size: 16px;
+    }
+  }
+
+  .only-tutorial-header-length {
+    margin: 30px 10px;
+    p {margin: 0}
+  }
+  
+  @media only screen and (min-width: 1280px)  {
+    .brick-length-image-container1 {
+      padding: 12px 20px 15px 72px;
+    }
+
+    .brick-length-image-container2 {
+      padding: 12px 46px 15px 46px;
+    }
+
+    .brick-length-image-container3 {
+      padding: 12px 72px 15px 20px;
+    }
+
+    .length-description {
+      margin-left: 72px !important;
+    }
+    .only-tutorial-header-length {
+      font-size: 1.8vw;
+      p {
+        text-align: center;
+      }
+      p:nth-child(1) {
+        font-size: 1.88vw !important;
+      }
+      p:nth-child(2) {
+        font-size: 1.8vw !important;
+      }
+    }
+  }
+  
+  @media only screen and (max-width: 1279px) and (min-width: 960px)  {
+    .brick-length-image-container1 {
+      padding: 12px 10px 15px 35px;
+    }
+
+    .brick-length-image-container2 {
+      padding: 12px 22px 15px 22px;
+    }
+
+    .brick-length-image-container3 {
+      padding: 12px 35px 15px 10px;
+    }
+
+    .length-description {
+      margin-left: 35px !important;
+      font-size: 14px;
+    }
+    .only-tutorial-header-length {
+      font-size: 1.5VW;
+      p:nth-child(1) {
+        font-size: 1.57vw !important;
+      }
+      p:nth-child(2) {
+        font-size: 1.5vw !important;
+      }
+    }
+  }
+  
+  @media only screen and (max-width: 959px) and (min-width: 600px)  {
+    .brick-length-image-container1 {
+      padding: 12px 10px 15px 35px;
+    }
+
+    .brick-length-image-container2 {
+      padding: 12px 22px 15px 22px;
+    }
+
+    .brick-length-image-container3 {
+      padding: 12px 35px 15px 10px;
+    }
+
+    .length-description {
+      margin-left: 35px !important;
+      font-size: 17px;
+    }
+    .only-tutorial-header-length {
+      font-size: 2.6VW;
+      p:nth-child(1) {
+        font-size: 2.72vw !important;
+      }
+      p:nth-child(2) {
+        font-size: 2.6vw !important;
+      }
+    }
+  }
+  
+  @media only screen and (max-width: 599px) {
+    .brick-length-image-container1 {
+      padding: 12px 10px 15px 35px;
+    }
+
+    .brick-length-image-container2 {
+      padding: 12px 22px 15px 22px;
+    }
+
+    .brick-length-image-container3 {
+      padding: 12px 35px 15px 10px;
+    }
+
+    .length-description {
+      font-size: 13px;
+      margin-left: 35px !important;
+    }
+    .only-tutorial-header-length {
+      font-size: 2.5VW;
+      p:nth-child(1) {
+        font-size: 2.72vw !important;
+      }
+      p:nth-child(2) {
+        font-size: 2.6vw !important;
+      }
+    }
+  }
+}
+

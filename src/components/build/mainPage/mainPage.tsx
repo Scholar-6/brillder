@@ -5,20 +5,15 @@ import { Link } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 
 import './mainPage.scss';
-import actions from 'redux/actions/mainPageActions';
 import MainMenu from '../base-components/main-menu/main-menu';
 
 
 const mapState = (state: any) => {
-  return {
-    username: state.mainPage.username as string
-  }
+  return { }
 }
 
 const mapDispatch = (dispatch: any) => {
-  return {
-    fetchUsername: () => dispatch(actions.fetchUsername())
-  }
+  return { }
 }
 
 const connector = connect(
@@ -43,12 +38,6 @@ class MainPage extends Component {
               </Grid>
             </Grid>
             <Grid container direction="row" justify="center" alignItems="center">
-              <Grid container item xs={6} sm={5} md={4} lg={3} justify="center">
-                <Link to="/build" className="bigButton">
-                  <div className="link-title">A P P L Y</div>
-                  <div className="link-description">S u g g e s t &nbsp; a &nbsp; b r i c k</div>
-                </Link>
-              </Grid>
               <Grid container item xs={6} sm={5} md={4} lg={3} justify="center">
                 <Link to="/build/new-brick/welcome" className="bigButton">
                   <div className="link-title">C R E A T E</div>

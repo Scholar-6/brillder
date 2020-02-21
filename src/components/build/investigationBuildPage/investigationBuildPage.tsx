@@ -1,6 +1,6 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router-dom';
-import { Route, Switch } from 'react-router-dom';
+import { RouteComponentProps, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend'
 import { Grid } from '@material-ui/core';
@@ -99,13 +99,21 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     }
     var index = getQuestionIndex(activeQuestion);
 
+    justSetQuestionType(type);
+    history.push(`/build/brick/${brickId}/build/investigation/question-component/${index + 1}`);
+  }
+
+  const justSetQuestionType = (type: QuestionTypeEnum) => {
+    if (!activeQuestion) {
+      alert('Can`t set question type');
+      return;
+    }
+    var index = getQuestionIndex(activeQuestion);
     setQuestions(
       update(questions, {
         [index]: { type: { $set: type } }
       }),
-    )
-
-    history.push(`/build/brick/${brickId}/build/investigation/question-component/${index + 1}`);
+    );
   }
 
   const removeQuestion = (index: number) => {
@@ -271,6 +279,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
         updateComponent={updateComponent}
         addComponent={addComponent}
         setQuestionHint={setQuestionHint}
+        setQuestionType={justSetQuestionType}
+        createNewQuestion={createNewQuestion}
         saveBrick={saveBrick} />
     );
   }
@@ -308,8 +318,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
           </Grid>
           <Route exac path='/build/brick/:brickId/build/investigation/question-component'>
             <Hidden only={['xs', 'sm']}>
-                <Grid container justify="center" item md={5} lg={4}>
-              <Grid container direction="row" alignItems="center">
+              <Grid container justify="center" item md={5} lg={4}>
+                <Grid container direction="row" alignItems="center">
                   <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
                 </Grid>
               </Grid>
@@ -323,7 +333,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
 const mapState = (state: any) => {
   return {
-    data: state.proForm.data,
     bricks: state.bricks.bricks,
     brick: state.brick.brick,
   }

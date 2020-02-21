@@ -1,6 +1,5 @@
 import React from 'react'
-
-import HintComponent, { HintState } from '../../../base-components/Hint/Hint';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { QuestionComponentTypeEnum, Hint } from 'components/model/question';
 import DragAndDropBox from '../drag/dragAndDropBox'
@@ -9,6 +8,7 @@ import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'
 import SoundComponent from './Sound/Sound'
 import EquationComponent from './Equation/Equation'
+import HintComponent, { HintState } from '../../../base-components/Hint/Hint';
 
 
 export interface SwitchQuestionProps {
@@ -17,7 +17,7 @@ export interface SwitchQuestionProps {
   uniqueComponent: any
   component: any
   hint: Hint
-  updateComponent(component: any): void
+  updateComponent(component: any, index: number): void
   swapComponents: Function
   setQuestionHint(hintState: HintState): void
 }
@@ -30,9 +30,14 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   swapComponents,
   setQuestionHint,
   updateComponent,
-  uniqueComponent }) => {
+  uniqueComponent
+}) => {
 
   const renderEmptyComponent = () => <span>Drag component here</span>
+
+  const cleanComponent = () => {
+    updateComponent({ type: 0 }, index);
+  }
 
   let innerComponent = renderEmptyComponent as any;
   let value = type;
@@ -50,14 +55,22 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     innerComponent = uniqueComponent;
     return (
       <div className="unique-component-wrapper">
-        <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} updateComponent={updateComponent} component={innerComponent} />
+        <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} cleanComponent={() => {}} updateComponent={updateComponent} component={innerComponent} />
         <HintComponent status={hint.status} value={hint.value} onChange={setQuestionHint}/>
       </div>
     )
   }
+  if (innerComponent !== renderEmptyComponent) {
+    return (
+      <div style={{position: 'relative', width: '100%'}}>
+        <DeleteIcon className="right-top-icon" style={{right: '2px', top: '7px'}} onClick={cleanComponent} />
+        <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} cleanComponent={cleanComponent} updateComponent={updateComponent} component={innerComponent} />
+      </div>
+    );
+  }
   return (
-    <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} updateComponent={updateComponent} component={innerComponent} />
-  )
+    <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} cleanComponent={cleanComponent} updateComponent={updateComponent} component={innerComponent} />
+  );
 }
 
 export default SwitchQuestionComponent
