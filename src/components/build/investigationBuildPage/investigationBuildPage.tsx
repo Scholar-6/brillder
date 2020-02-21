@@ -100,7 +100,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     var index = getQuestionIndex(activeQuestion);
 
     justSetQuestionType(type);
-    history.push(`/build/brick/${brickId}/build/investigation/question-component/${index + 1}`);
+    history.push(`/build/brick/${brickId}/build/investigation/question-component`);
   }
 
   const justSetQuestionType = (type: QuestionTypeEnum) => {

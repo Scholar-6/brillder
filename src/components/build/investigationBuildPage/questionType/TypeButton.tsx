@@ -8,9 +8,10 @@ export interface TypeButtonProps {
   isActive: boolean,
   activeType: QuestionTypeEnum,
   questionType: QuestionTypeEnum,
+  setType(e: any): void,
 }
 
-const QuestionTypePage: React.FC<TypeButtonProps> = ({ labels, activeType, questionType }) => {
+const QuestionTypePage: React.FC<TypeButtonProps> = ({ labels, activeType, questionType, setType }) => {
   const renderLabel = (label: string, i:number) => {
     return (
       <Grid container justify="center" direction="row" key={i} className="link-description">
@@ -24,7 +25,7 @@ const QuestionTypePage: React.FC<TypeButtonProps> = ({ labels, activeType, quest
     className = "active";
   }
   return (
-    <Box className={`question-container ${className}`}>
+    <Box className={`question-container ${className}`} onClick={() => setType(questionType) }>
       <Grid container justify="center" style={{height: '100%'}} alignContent="center">
         {
           labels.map((label:string, i:number) => renderLabel(label, i + 1))
