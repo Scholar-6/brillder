@@ -9,6 +9,7 @@
   }
 
   .drag-tile {
+    padding: 1px;
     margin-left: 1px;
     cursor: pointer;
     height: 42px;
@@ -26,17 +27,27 @@
   }
 
   .drag-tile-container:first-child {
+    .drag-tile {
+      margin: 0;
+    }
+  }
+
+  .drag-tile-container.pre-active {
+    .drag-tile {
+      margin-right: 1px;
+    }
+  }
+
+  .drag-tile-container.active {
     border-bottom: 0;
     .drag-tile {
+      background: white;
+      border-bottom: none;
       height: 43px;
       margin: 0;
     }
   }
 
-  .drag-tile.active {
-    background: white;
-    border-bottom: none;
-  }
   .draggable-tab {
     display: inline-block;
     cursor: pointer;
