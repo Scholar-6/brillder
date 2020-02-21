@@ -6,7 +6,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 // @ts-ignore
 import { connect } from 'react-redux';
 
-import './main-menu.scss'
+import './mainMenu.scss'
 import actions from 'redux/actions/auth';
 
 
