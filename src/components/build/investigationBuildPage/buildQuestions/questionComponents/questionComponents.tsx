@@ -12,7 +12,7 @@ import LineHighlightingComponent from '../questionTypes/lineHighlightingBuild';
 import MissingWordComponent from '../questionTypes/missingWordBuild';
 import PairMatchComponent from '../questionTypes/pairMatchBuild/pairMatchBuild';
 import VerticalShuffleComponent from '../questionTypes/verticalShuffleBuild/verticalShuffleBuild';
-import WordHighlightingComponent from '../questionTypes/wordHighlighting';
+import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHighlighting';
 import { Question, QuestionTypeEnum } from 'components/model/question';
 import { HintState } from 'components/build/base-components/Hint/Hint';
 

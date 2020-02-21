@@ -2,3 +2,29 @@
   text-align: center !important;
   display: block !important;
 }
+
+.choose-subject-page {
+  @media only screen and (min-width: 1280px)  {
+    .only-tutorial-header {
+      font-size: 1.81vw !important;
+    }
+  }
+  
+  @media only screen and (max-width: 1279px) and (min-width: 960px)  {
+    .only-tutorial-header {
+      font-size: 1.61vw !important;
+    }
+  }
+  
+  @media only screen and (max-width: 959px) and (min-width: 600px)  {
+    .only-tutorial-header {
+      font-size: 2.76vw !important;
+    }
+  }
+  
+  @media only screen and (max-width: 599px) {
+    .only-tutorial-header {
+      font-size: 2.73vw !important;
+    }
+  }
+}

@@ -6,7 +6,7 @@ import { Hidden } from "@material-ui/core";
 
 import NextButton from '../components/nextButton'
 import { NewBrickStep } from "../model";
-
+import './briefPrep.scss';
 
 function BriefPrep({parentState, saveBriefPrep}:any) {
   const [state, setState] = React.useState({ links: '', preparationBrief: parentState.preparationBrief});
@@ -20,11 +20,14 @@ function BriefPrep({parentState, saveBriefPrep}:any) {
   }
 
   return (
-    <div className="tutorial-page">
+    <div className="tutorial-page brief-prep-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
-            <h1 className="only-tutorial-header">What do you want users to think more deeply about?</h1>
+            <h1 className="only-tutorial-header">
+              <p>What do you want users to get out of this brick?</p>
+              <p>Enter Brief and links to any Preparatory Materials.</p>
+            </h1>
             <input
               value={state.preparationBrief}
               onChange={setBriefPrep}
