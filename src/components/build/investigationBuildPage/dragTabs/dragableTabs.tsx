@@ -86,11 +86,6 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
     createNewQuestion();
   }
 
-  let label = "+ New Question";
-  if (columns > 2) {
-    label = "+";
-  }
-
   return (
     <div className={classes.root + " drag-tabs"}>
       <GridList cellHeight={40} className={classes.gridList} cols={columns}>
@@ -99,7 +94,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
         }
         <GridListTile onClick={addQuestion} className={"drag-tile-container"} cols={1}>
           <div className={"drag-tile"} style={{marginLeft: '1px', height: '42px'}}>
-            <LastTab label={label}></LastTab>
+            <LastTab columns={columns}></LastTab>
           </div>
         </GridListTile>
       </GridList>

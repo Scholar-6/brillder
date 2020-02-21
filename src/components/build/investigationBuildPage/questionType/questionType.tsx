@@ -14,14 +14,6 @@ export interface QuestionTypeProps {
   setQuestionType: Function
 }
 
-function SplitByCapitalLetters(element: string): string {
-  return element.split(/(?=[A-Z])/).join(" ");
-}
-
-function getTextPreview(type: string) {
-  return SplitByCapitalLetters(type).toUpperCase();
-}
-
 const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuestionType, history, brickId, questionId }: QuestionTypeProps) => {
   if (questionType !== QuestionTypeEnum.None && questionId) {
     history.push(`/build/brick/${brickId}/build/investigation/question-component/${questionId}`);
