@@ -4,8 +4,8 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridList from '@material-ui/core/GridList';
 
 import './DragableTabs.scss';
-import DragTab from './dragTab';
-import LastTab from './lastTab';
+import DragTab from './DragTab';
+import LastTab from './LastTab';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
     gridList: {
       width: '100%',
       flexWrap: 'nowrap',
+      margin: '0 !important',
       transform: 'translateZ(0)',
     },
     gridListTile: {
@@ -56,25 +57,32 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
     }
 
     return (
-      <GridListTile className={titleClassNames} style={{ border: '1px solid black' }} key={index}>
-        <DragTab
-          index={index}
-          id={question.id}
-          active={question.active}
-          moveCard={moveCard}
-          selectQuestion={selectQuestion}
-          removeQuestion={removeQuestion}
-        />
+      <GridListTile className="drag-tile-container" key={index}>
+        <div className={titleClassNames}>
+          <DragTab
+            index={index}
+            id={question.id}
+            active={question.active}
+            moveCard={moveCard}
+            selectQuestion={selectQuestion}
+            removeQuestion={removeQuestion}
+          />
+        </div>
       </GridListTile>
     )
   }
 
   const classes = useStyles();
 
-  let columns = questions.length + 2;
+  let columns = questions.length + 1;
 
   const addQuestion = () => {
     createNewQuestion();
+  }
+
+  let label = "+ New Question";
+  if (columns > 2) {
+    label = "+";
   }
 
   return (
@@ -83,8 +91,10 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
         {
           questions.map((question, i) => renderQuestionTab(question, i))
         }
-        <GridListTile onClick={addQuestion} className={"drag-tile"} cols={2} style={{ border: '1px solid black' }}>
-          <LastTab></LastTab>
+        <GridListTile onClick={addQuestion} className={"drag-tile-container"} cols={1}>
+          <div className={"drag-tile"} style={{marginLeft: '1px', height: '42px'}}>
+            <LastTab label={label}></LastTab>
+          </div>
         </GridListTile>
       </GridList>
     </div>
