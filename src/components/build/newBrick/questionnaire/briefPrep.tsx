@@ -8,15 +8,45 @@ import NextButton from '../components/nextButton'
 import { NewBrickStep } from "../model";
 import './briefPrep.scss';
 
-function BriefPrep({parentState, saveBriefPrep}:any) {
-  const [state, setState] = React.useState({ links: '', preparationBrief: parentState.preparationBrief});
+function BriefPrep({ parentState, saveBriefPrep }: any) {
+  const [state, setState] = React.useState({ links: '', preparationBrief: parentState.preparationBrief });
 
   const setBriefPrep = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setState({...state, preparationBrief: event.target.value} as any)
+    setState({ ...state, preparationBrief: event.target.value } as any)
   }
 
   const setLinks = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setState({...state, links: event.target.value} as any)
+    setState({ ...state, links: event.target.value } as any)
+  }
+
+  const renderPreview = () => {
+    const expression = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?/gi;
+    const regex = new RegExp(expression);
+    const link = state.links.split(' ')[0];
+    
+    if (link.match(regex)) {
+      return (
+        <Grid container direction="row" alignItems="center" style={{ height: "300px" }}>
+          <Grid container justify="center" item xs={3}>
+            <h1>Video / Text Preview</h1>
+          </Grid>
+          <Grid container justify="center" item xs={9}>
+            <div style={{ height: "250px", width: "90%" }}>
+              <Grid container direction="row" alignItems="center" style={{ height: "100%" }}>
+                <Grid container justify="center" item xs={12}>
+                  <iframe width="420" height="315"
+                    title="Video Preview"
+                    src={state.links.split(' ')[0]}>
+                  </iframe>
+                </Grid>
+              </Grid>
+            </div>
+          </Grid>
+        </Grid>
+      )
+    } else {
+      return "";
+    }
   }
 
   return (
@@ -39,23 +69,7 @@ function BriefPrep({parentState, saveBriefPrep}:any) {
               style={{ margin: '20px 0 0 0', width: '90%' }}
               placeholder="Insert Link(s) Here..." />
 
-            <Grid container direction="row" alignItems="center" style={{ height: "300px" }}>
-              <Grid container justify="center" item xs={3}>
-                <h1>Video / Text Preview</h1>
-              </Grid>
-              <Grid container justify="center" item xs={9}>
-                <div style={{ height: "250px", width: "90%", border: "1px solid black" }}>
-                  <Grid container direction="row" alignItems="center" style={{ height: "100%" }}>
-                    <Grid container justify="center" item xs={12}>
-                      <iframe width="420" height="315"
-                        title="Video Preview"
-                        src={state.links.split(' ')[0]}>
-                      </iframe>
-                    </Grid>
-                  </Grid>
-                </div>
-              </Grid>
-            </Grid>
+            {renderPreview()}
             <NextButton step={NewBrickStep.BriefPrep} canSubmit={true} onSubmit={saveBriefPrep} data={state} />
           </div>
         </Grid>
