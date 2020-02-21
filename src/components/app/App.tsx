@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 import './app.css';
-import '../../font-numbers/style.css'
+import '../../assets/fonts/icomoon/style.css';
 
 import NewBrick from '../build/newBrick/newBrick';
 import MainPage from '../build/mainPage/mainPage';
@@ -16,7 +16,7 @@ import RegisterPage from '../registerPage/registerPage';
 import PreLoginPage from '../preLoginPage/preLoginPage';
 import LogoPage from '../logoPage/logoPage';
 import AuthRoute from './AuthRoute';
-import PrivateRoute from './privateRoute';
+import PrivateRoute from './PrivateRoute';
 
 const App: React.FC = (props: any) => {
   let history = useHistory();
