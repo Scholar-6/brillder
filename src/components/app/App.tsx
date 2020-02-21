@@ -16,7 +16,7 @@ import RegisterPage from '../registerPage/registerPage';
 import PreLoginPage from '../preLoginPage/preLoginPage';
 import LogoPage from '../logoPage/logoPage';
 import AuthRoute from './AuthRoute';
-import PrivateRoute from './privateRoute';
+import PrivateRoute from './PrivateRoute';
 
 const App: React.FC = (props: any) => {
   let history = useHistory();
