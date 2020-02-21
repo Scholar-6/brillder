@@ -32,7 +32,7 @@ function PreLoginPage(props: any) {
   }
 
   let name = '';
-  if (userType == LoginType.Student) {
+  if (userType === LoginType.Student) {
     name = 'Student';
   }
 
