@@ -305,11 +305,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
                   </Route>
                   <Route
                     exec path='/build/brick/:brickId/build/investigation/question/:questionId'
-                    component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
+                    component={() => <QuestionTypePage history={history} brickId={brickId} questionId={activeQuestion.id} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
                   </Route>
                   <Route
                     exec path='/build/brick/:brickId/build/investigation/question'
-                    component={() => <QuestionTypePage history={history} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
+                    component={() => <QuestionTypePage history={history} brickId={brickId} questionId={activeQuestion.id} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
                   </Route>
                 </Switch>
               </Grid>
