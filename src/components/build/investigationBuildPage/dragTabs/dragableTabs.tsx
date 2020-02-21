@@ -4,8 +4,8 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridList from '@material-ui/core/GridList';
 
 import './DragableTabs.scss';
-import DragTab from './DragTab';
-import LastTab from './LastTab';
+import DragTab from './dragTab';
+import LastTab from './lastTab';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
