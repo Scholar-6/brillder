@@ -10,16 +10,6 @@ export enum QuestionComponentTypeEnum{
   Component= 127,
 }
 
-export const QuestionComponentType = {
-  None: QuestionComponentTypeEnum.None,
-  Text: QuestionComponentTypeEnum.Text,
-  Quote: QuestionComponentTypeEnum.Quote,
-  Image: QuestionComponentTypeEnum.Image,
-  Sound: QuestionComponentTypeEnum.Sound,
-  Equation: QuestionComponentTypeEnum.Equation,
-  Component: QuestionComponentTypeEnum.Component,
-} as any
-
 export enum QuestionTypeEnum {
   None = 0,
   ShortAnswer = 1,
@@ -31,7 +21,8 @@ export enum QuestionTypeEnum {
   Categorise = 7,
   MissingWord = 8,
   WordHighlighting = 9,
-  LineHighlighting = 10
+  LineHighlighting = 10,
+  Sort = 11,
 }
 
 export const QuestionType = {
@@ -44,7 +35,8 @@ export const QuestionType = {
   Categorise: QuestionTypeEnum.Categorise,
   MissingWord: QuestionTypeEnum.MissingWord,
   WordHighlighting: QuestionTypeEnum.WordHighlighting,
-  LineHighlighting: QuestionTypeEnum.LineHighlighting
+  LineHighlighting: QuestionTypeEnum.LineHighlighting,
+  Sort: QuestionTypeEnum.Sort,
 } as any
 
 export enum HintStatus {
