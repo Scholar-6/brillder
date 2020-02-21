@@ -3,6 +3,7 @@ import { Grid, Box } from '@material-ui/core';
 
 import './questionType.scss';
 import { QuestionType, QuestionTypeEnum } from 'components/model/question';
+import TypeButton from './TypeButton'
 
 
 export interface QuestionTypeProps {
@@ -37,25 +38,42 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuesti
         Choose question type...
       </Grid>
       <Grid container direction="row">
-        {
-          typeArray.map((typeName, i) => {
-            const type = QuestionType[typeName] as QuestionTypeEnum;
-            let className = "";
-            if (type === questionType) {
-              className = "active";
-            }
-
-            return (
-              <Grid item xs={6} sm={4} md={4} key={i}>
-                <Box className={`question-container ${className}`} onClick={() => setType(type)}>
-                  <div className="link-description">
-                    {getTextPreview(typeName)}
-                  </div>
-                </Box>
-              </Grid>
-            );
-          })
-        }
+        <Grid item xs={4}>
+          <TypeButton activeType={questionType} questionType={QuestionTypeEnum.ChooseOne} labels={["S H O R T", "A N S W E R"]} isActive={false} />
+        </Grid>
+        <Grid item xs={4}>
+          <TypeButton activeType={questionType} questionType={QuestionTypeEnum.ChooseOne} labels={["C H O O S E", "O N E"]} isActive={false} />
+        </Grid>
+        <Grid item xs={4}>
+          <TypeButton activeType={questionType} questionType={QuestionTypeEnum.ChooseOne} labels={["C H O O S E", "S E V E R A L"]} isActive={false} />
+        </Grid>
+      </Grid>
+      <Grid container direction="row">
+        <Grid item xs={6}>
+          <TypeButton activeType={questionType} questionType={QuestionTypeEnum.ChooseOne} labels={["V E R T I C A L", "S H U F F L E"]} isActive={false} />
+        </Grid>
+        <Grid item xs={6}>
+          <TypeButton activeType={questionType} questionType={QuestionTypeEnum.ChooseOne} labels={["H O R I Z O N T A L", "S H U F F L E"]} isActive={false} />
+        </Grid>
+      </Grid>
+      <Grid container direction="row">
+        <Grid item xs={4}>
+          <TypeButton activeType={questionType} questionType={QuestionTypeEnum.ChooseOne} labels={["P A I R", "M A T C H"]} isActive={false} />
+        </Grid>
+        <Grid item xs={4}>
+          <TypeButton activeType={questionType} questionType={QuestionTypeEnum.ChooseOne} labels={["S O R T", "( C A T E G . )"]} isActive={false} />
+        </Grid>
+        <Grid item xs={4}>
+          <TypeButton activeType={questionType} questionType={QuestionTypeEnum.ChooseOne} labels={["M I S S I N G", "W O R D"]} isActive={false} />
+        </Grid>
+      </Grid>
+      <Grid container direction="row">
+        <Grid item xs={6}>
+          <TypeButton activeType={questionType} questionType={QuestionTypeEnum.ChooseOne} labels={["W O R D", "H I G H L I G H T I N G"]} isActive={false} />
+        </Grid>
+        <Grid item xs={6}>
+          <TypeButton activeType={questionType} questionType={QuestionTypeEnum.ChooseOne} labels={["L I N E", "H I G H L I G H T I N G"]} isActive={false} />
+        </Grid>
       </Grid>
     </div>
   );
