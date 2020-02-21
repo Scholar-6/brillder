@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 
 import './mainPage.scss';
-import MainMenu from '../base-components/main-menu/main-menu';
+import MainMenu from '../baseComponents/mainMenu/MainMenu';
 
 
 const mapState = (state: any) => {

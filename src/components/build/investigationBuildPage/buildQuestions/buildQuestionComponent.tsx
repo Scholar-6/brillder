@@ -4,14 +4,13 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import LockIcon from '@material-ui/icons/Lock';
 
 import QuestionComponents from './questionComponents/questionComponents';
 import './buildQuestionComponent.scss'
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../model/question';
 import DragBox from './drag/dragBox';
-import IOSSwitch from 'components/build/base-components/IOSSwitch/IOSSwitch';
-import { HintState } from 'components/build/base-components/Hint/Hint';
+import IOSSwitch from 'components/build/baseComponents/IOSSwitch/IOSSwitch';
+import { HintState } from 'components/build/baseComponents/Hint/Hint';
 
 
 function SplitByCapitalLetters(element: string): string {
