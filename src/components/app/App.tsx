@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 import './app.css';
-import '../../font-numbers/style.css';
+import '../assets/css/fontnumbers.css';
 
 import NewBrick from '../build/newBrick/newBrick';
 import MainPage from '../build/mainPage/mainPage';
