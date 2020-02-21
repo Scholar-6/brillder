@@ -50,15 +50,21 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
     moveQuestions(dragIndex, hoverIndex, dragCard);
   }
 
-  const renderQuestionTab = (question: Question, index: number) => {
-    let titleClassNames = "drag-tile";
+  const renderQuestionTab = (questions: Question[], question: Question, index: number) => {
+    let titleClassNames = "drag-tile-container";
+    
     if (question.active) {
       titleClassNames += " active";
     }
 
+    let nextQuestion = questions[index + 1];
+    if (nextQuestion && nextQuestion.active) {
+      titleClassNames += " pre-active";
+    }
+
     return (
-      <GridListTile className="drag-tile-container" key={index}>
-        <div className={titleClassNames}>
+      <GridListTile className={titleClassNames} key={index}>
+        <div className="drag-tile">
           <DragTab
             index={index}
             id={question.id}
@@ -89,7 +95,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
     <div className={classes.root + " drag-tabs"}>
       <GridList cellHeight={40} className={classes.gridList} cols={columns}>
         {
-          questions.map((question, i) => renderQuestionTab(question, i))
+          questions.map((question, i) => renderQuestionTab(questions, question, i))
         }
         <GridListTile onClick={addQuestion} className={"drag-tile-container"} cols={1}>
           <div className={"drag-tile"} style={{marginLeft: '1px', height: '42px'}}>
