@@ -106,7 +106,7 @@ function LoginPage(props: any) {
         </Grid>
         <Grid container direction="row">
           <Grid container item xs={12} justify="center">
-            <img alt="" className="fotter-image" src="/images/brillder-2-logo.png" />
+            <img alt="" className="footer-image" src="/images/brillder-2-logo.png" />
             <br />
           </Grid>
         </Grid>
