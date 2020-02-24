@@ -19,7 +19,6 @@ const fetchBrickFailure = (errorMessage:string) => {
 
 const fetchBrick = (id: number) => {
   return function (dispatch: Dispatch) {
-    console.log('fetch brick')
     return axios.get(process.env.REACT_APP_BACKEND_HOST + '/brick/' + id, {withCredentials: true})
       .then((res) => {
         dispatch(fetchBrickSuccess(res.data));
@@ -47,11 +46,9 @@ const saveBrickFailure = (errorMessage:string) => {
 
 const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
-    console.log('save brick', brick)
     brick.type = 1;
     return axios.post(process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true}).then(response => {
       const brick = response.data as Brick;
-      console.log("response", brick);
       dispatch(saveBrickSuccess(brick));
     })
     .catch(error => {

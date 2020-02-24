@@ -15,7 +15,6 @@ import BriefPrep from './questionnaire/briefPrep';
 
 
 function NewBrick(props: any) {
-  console.log(props)
   const [state, setBrick] = React.useState({
     subject: '0',
     brickLength: 0,

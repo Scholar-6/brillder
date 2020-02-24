@@ -87,13 +87,10 @@ const logout = () => {
 
 const isAuthorized = () => {
   return function (dispatch: Dispatch) {
-    console.log(55);
     return axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks', {withCredentials: true}).then(response => {
-      console.log(response)
       dispatch(authorizedSuccess());
     })
     .catch(error => {
-      console.log(44);
       dispatch(authorizedFailure(error.message));
     });
   }
