@@ -16,7 +16,7 @@
   }
 
   .card-description {
-    text-align: center;
+    text-align: center; 
   }
 
   .question-container {
@@ -24,7 +24,7 @@
     color: $color-light-red1;
     margin: 0.6vw 0.6vw 0.6vw 0.6vw;
     border-radius: 1.1vw;
-    height: 12vh;
+    height: 15vh;
     font-size: 1.2vw;
     padding: 0;
     font-family: "Century Gothic Regular";
@@ -59,7 +59,9 @@
   }
 
   @media only screen and (min-width: 1280px)  {
-  
+    .set-type-icon {
+      font-size: 5vhx;
+    }
   }
   
   @media only screen and (max-width: 1279px) and (min-width: 960px)  {
