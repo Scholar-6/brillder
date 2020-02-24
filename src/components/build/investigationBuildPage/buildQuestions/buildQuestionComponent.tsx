@@ -80,7 +80,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
               <div className="question-button-container">
-                <button onClick={submitBrick}>Review and Submit</button>
+                <button onClick={submitBrick}>R E V I E W & S U B M I T</button>
               </div>
               <div className="no-margin">
                 <Grid container justify="center" direction="row">
