@@ -16,18 +16,21 @@ export enum HintStatus {
 export interface HintState {
   status: HintStatus
   value: string
+  list: string[]
 }
 
 export interface HintProps {
   status?: HintStatus,
   value?: string,
+  count?: number,
   onChange(state: HintState): void
 }
 
 const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
   let initState = {
     status: HintStatus.None,
-    value: ''
+    value: '',
+    list: []
   } as HintState;
 
   if (props.value) {
@@ -55,11 +58,35 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
     onChange({ ...state, value: event.target.value });
   }
 
+  const onHintListChanged = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    onChange({ ...state, value: event.target.value });
+  }
+
+  const renderHintInputs = () => {
+    if (state.status == HintStatus.All || !props.count || props.count === 1) {
+      return (
+        <Grid container item xs={12}>
+          <input className="hint-input-text" value={state.value} onChange={onHintChanged} placeholder="Enter Hint..."></input>
+        </Grid>
+      );
+    }
+    const answerHints:any[] = [];
+
+    for (let i = 0; i < props.count; i++) {
+      answerHints.push(
+        <Grid container item xs={12}>
+          <input className="hint-input-text" value={state.list[i]} onChange={onHintChanged} placeholder="Enter Hint..."></input>
+        </Grid>
+      );
+    }
+    return answerHints;
+  }
+
   return (
     <div className="hint-component">
       <Grid container direction="row">
         <Grid container item xs={2} alignContent="center">
-          <Grid style={{ width: '100%' }} justify="center">
+          <Grid className="hint-type-text" style={{ width: '100%' }} justify="center">
             <div>H I N T</div>
             <div>T Y P E</div>
           </Grid>
@@ -67,7 +94,7 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
         <Grid container item xs={2} alignContent="center" justify="flex-start">
           <span className="hint-type"><span className="question-mark">?</span></span>
         </Grid>
-        <Grid container item xs={4}>
+        <Grid container item xs={4} justify="flex-end">
           <FormControlLabel
             control={
               <Checkbox checked={state.status === HintStatus.Each} onChange={eachChecked} value="eachAnswer" />
@@ -76,7 +103,7 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
             label="Each Answer"
           />
         </Grid>
-        <Grid container item xs={4}>
+        <Grid container item xs={4} justify="flex-end">
           <FormControlLabel
             control={
               <Checkbox checked={state.status === HintStatus.All} onChange={allChecked} value="allAnswers" />
@@ -85,11 +112,8 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
             label="All Answers"
           />
         </Grid>
-        
       </Grid>
-      <Grid container justify="space-between" item xs={12}>
-        <input className="hint-input-text" value={state.value} onChange={onHintChanged} placeholder="Enter Hint..."></input>
-      </Grid>
+      {renderHintInputs()}
     </div>
   );
 }
