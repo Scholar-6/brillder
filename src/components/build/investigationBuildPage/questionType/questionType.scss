@@ -12,7 +12,7 @@
   width: 100%;
 
   .inner-question-type {
-    padding: 2vh 4vh 2vh 4vh;
+    padding: 6vh 4vh 2vh 4vh;
   }
 
   .card-description {
@@ -22,15 +22,18 @@
   .question-container {
     background: $color-light-grey;
     color: $color-light-red1;
-    margin: 5px 10px 5px 18px;
-    border-radius: 10px;
+    margin: 0.6vw 0.6vw 0.6vw 0.6vw;
+    border-radius: 1.1vw;
     height: 12vh;
     font-size: 1.2vw;
     padding: 0;
+    font-family: "Century Gothic Regular";
+    font-weight: bold;
 
     .link-description {
       text-align: center;
       margin: 0;
+      line-height: 1.15;
     }
   }
   
@@ -74,6 +77,11 @@
   @media only screen and (max-width: 599px) {
     .question-container {
       font-size: 2.3vw !important;
+    }
+
+    .question-container {
+      margin: 7px 7px 7px 12px !important;
+      border-radius: 8px;
     }
   }
 }
