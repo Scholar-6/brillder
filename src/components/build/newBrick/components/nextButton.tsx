@@ -19,8 +19,6 @@ function NextButton({ step, canSubmit, onSubmit, data }: any) {
       }
       switch (step) {
         case NewBrickStep.Welcome:
-          return history.push(`${url}/choose-subject`);
-        case NewBrickStep.ChooseSubject:
           return history.push(`${url}/brick-title`);
         case NewBrickStep.BrickTitle:
           return history.push(`${url}/open-question`);
