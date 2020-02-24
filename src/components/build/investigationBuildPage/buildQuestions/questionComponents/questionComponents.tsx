@@ -13,7 +13,6 @@ import MissingWordComponent from '../questionTypes/missingWordBuild';
 import PairMatchComponent from '../questionTypes/pairMatchBuild/pairMatchBuild';
 import VerticalShuffleComponent from '../questionTypes/verticalShuffleBuild/verticalShuffleBuild';
 import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHighlighting';
-import SortComponent from '../questionTypes/sortBuild';
 import { Question, QuestionTypeEnum } from 'components/model/question';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 
@@ -56,8 +55,6 @@ const QuestionComponents = ({ history, brickId, question, swapComponents, setQue
       uniqueComponent = VerticalShuffleComponent;
     } else if (type === QuestionTypeEnum.WordHighlighting) {
       uniqueComponent = WordHighlightingComponent;
-    } else if (type === QuestionTypeEnum.Sort) {
-      uniqueComponent = SortComponent;
     } else {
       history.push(`/build/brick/${brickId}/build/investigation/question`);
       return <div>...Loading...</div>

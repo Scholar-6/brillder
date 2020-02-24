@@ -22,7 +22,6 @@ export enum QuestionTypeEnum {
   MissingWord = 8,
   WordHighlighting = 9,
   LineHighlighting = 10,
-  Sort = 11,
 }
 
 export const QuestionType = {
@@ -36,7 +35,6 @@ export const QuestionType = {
   MissingWord: QuestionTypeEnum.MissingWord,
   WordHighlighting: QuestionTypeEnum.WordHighlighting,
   LineHighlighting: QuestionTypeEnum.LineHighlighting,
-  Sort: QuestionTypeEnum.Sort,
 } as any
 
 export enum HintStatus {
