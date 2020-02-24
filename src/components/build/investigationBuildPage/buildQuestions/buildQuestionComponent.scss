@@ -57,7 +57,12 @@
     max-height: 700px;
     overflow-y: auto;
     border: 1px solid black;
-    padding: 2px 0px 0px 2px;
+    border-radius: 7px;
+    padding: 0px 4px 2px 4px;
+  }
+
+  .drop-box-text {
+    font-size: 0.85vw;
   }
 
   .left-sidebar {
@@ -134,12 +139,18 @@
     .left-button-container {
       padding-left: 15px !important;
     }
+    .drop-box-text {
+      font-size: 1.6vw;
+    }
   }
   
   @media only screen and (max-width: 599px) {
 
     .left-button-container {
       padding-left: 15px !important;
+    }
+    .drop-box-text {
+      font-size: 1.3vw;
     }
   }
 }

@@ -3,27 +3,55 @@
 
   .drop-box {
     min-height: 81px;
+    height: auto;
+    margin-top: 2px;
+    border-radius: 5px;
+    padding: 3px 4px 3px 4px;
+    background-color: #d9d9d9;
   }
 
   .add-dropbox {
+    margin: 2px 0 2px 0 !important;
     .add-dropbox-button {
       width: 100%;
-      border: 1px black solid;
+      border: none;
+      border-radius: 5px;
       text-transform: none;
-      border-radius: 0;
+      background: #B54439;
+      color: white;
+      font-size: 0.7vw;
+      height: 60px;
+      font-family: 'Century Gothic Regular';
     }
     margin-bottom: 10px;  
   }
-}
 
-@media only screen and (min-width: 1200px)  {
-}
-
-@media only screen and (max-width: 1199px) and (min-width: 900px)  {
-}
-
-@media only screen and (max-width: 899px) and (min-width: 600px)  {
-}
-
-@media only screen and (max-width: 599px) {
+  
+  @media only screen and (min-width: 1280px)  {
+  }
+  
+  @media only screen and (max-width: 1279px) and (min-width: 960px)  {
+    .add-dropbox {
+      .add-dropbox-button {
+        font-size: 0.8vw;
+      }
+    }
+  }
+  
+  @media only screen and (max-width: 959px) and (min-width: 600px)  {
+    .add-dropbox {
+      .add-dropbox-button {
+        font-size: 1.4vw !important;
+      }
+    }
+  }
+  
+  @media only screen and (max-width: 599px) {
+    .add-dropbox {
+      .add-dropbox-button {
+        font-size: 1vw;
+        height: 35px;
+      }
+    }
+  }
 }

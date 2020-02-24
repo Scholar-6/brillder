@@ -1,17 +1,17 @@
-
 .investigation-build-page {
   height: 100%;
 
   .right-top-icon {
     position: absolute;
-    top: 2px;
-    right: 0;
+    top: 18px;
+    right: 5px;
     cursor: pointer;
+    color: red;
     z-index: 2;
   }
 
   .right-top-icon:hover {
-    color: red;
+    opacity: 0.5;
   }
 
   .question-container {
@@ -51,10 +51,9 @@
   }
 
   .drag-and-drop-box {
-    min-height: 81px;
-    border: 1px dashed black;
-    background: white;
-    margin: 4px 0;
+    min-height: 120px;
+    border-radius: 5px;
+    margin: 0;
   }
 }
 

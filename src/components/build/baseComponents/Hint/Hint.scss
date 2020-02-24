@@ -1,18 +1,24 @@
 
 .hint-component {
-  width: 99%;
+  width: 100%;
 
   color: black;
-  border: 1px dashed black;
+  background:white;
+  border-radius: 5px;
 
   .hint-input-text {
     text-align: center !important;
     width: 100%;
     margin: 3px;
     padding: 8px 0;
-    border: 1px solid black;
+    border: none;
+    border-top: 1px solid #d9d9d9;
+    height: 60px;
+    margin: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
-
+  
   .hint-type {
     padding: 13px 0 10px 5px;
 

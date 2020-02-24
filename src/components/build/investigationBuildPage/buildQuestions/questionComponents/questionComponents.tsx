@@ -90,7 +90,7 @@ const QuestionComponents = ({ history, brickId, question, swapComponents, setQue
       }
       <Grid container direction="row" className="add-dropbox">
         <Button className="add-dropbox-button" onClick={addQuestionComponent}>
-          + Question Component
+          + &nbsp;&nbsp; Q &nbsp; U &nbsp; E &nbsp; S &nbsp; T &nbsp; I &nbsp; O &nbsp; N &nbsp; &nbsp; C &nbsp; O &nbsp; M &nbsp; P &nbsp; O &nbsp; N &nbsp; E &nbsp; N &nbsp; T
         </Button>
       </Grid>
     </div>
