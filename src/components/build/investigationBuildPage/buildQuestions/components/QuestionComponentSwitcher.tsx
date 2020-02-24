@@ -45,6 +45,14 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     updateComponent({ type: 0 }, index);
   }
 
+  const getNumberOfAnswers = (data: any) => {
+    let count = 1;
+    if (data.list && data.list.length) {
+      return data.list.length;
+    }
+    return count;
+  }
+
   let innerComponent = renderEmptyComponent as any;
   let value = type;
   if (type === QuestionComponentTypeEnum.Text) {
@@ -59,10 +67,11 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     innerComponent = EquationComponent;
   } else if (type === QuestionComponentTypeEnum.Component) {
     innerComponent = uniqueComponent;
+    const numberOfAnswers = getNumberOfAnswers(component);
     return (
       <div className="unique-component-wrapper">
         <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} cleanComponent={() => {}} updateComponent={updateComponent} component={innerComponent} />
-        <HintComponent status={hint.status} value={hint.value} onChange={setQuestionHint}/>
+        <HintComponent status={hint.status} value={hint.value} count={numberOfAnswers} onChange={setQuestionHint}/>
       </div>
     )
   }

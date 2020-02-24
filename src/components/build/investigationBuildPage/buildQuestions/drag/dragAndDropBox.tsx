@@ -54,7 +54,7 @@ const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, data,
       }
     },
     collect: (monitor: any) => ({
-      opacity: monitor.isDragging() ? 0.4 : 1,
+      opacity: monitor.isDragging() ? 0.9 : 1,
     }),
   })
 

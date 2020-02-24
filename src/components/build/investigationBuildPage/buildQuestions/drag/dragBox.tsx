@@ -32,7 +32,7 @@ const DragBox: React.FC<BoxProps> = ({ name, onDrop, value }) => {
       }
     },
     collect: (monitor: any) => ({
-      opacity: monitor.isDragging() ? 0.4 : 1,
+      opacity: monitor.isDragging() ? 0.9 : 1,
     }),
   })
 

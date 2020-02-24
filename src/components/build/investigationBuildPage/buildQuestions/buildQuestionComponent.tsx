@@ -1,7 +1,7 @@
 import React from 'react'
-import { Grid, Select } from '@material-ui/core';
+import { Grid, Select, FormControl } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { IconButton } from "material-ui";
+import { IconButton, MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
@@ -95,9 +95,8 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 </Grid>
                 <Grid justify="center" container direction="row">
                   <Grid container justify="center" item sm={12}>
+                  <FormControl variant="outlined">
                     <Select
-                      className="question-type-select"
-                      native
                       value={type}
                       inputProps={{
                         name: 'age',
@@ -110,10 +109,11 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                       {
                         typeArray.map((typeName, i) => {
                           const type = QuestionType[typeName] as QuestionTypeEnum;
-                          return <option key={i} value={type}>{SplitByCapitalLetters(typeName)}</option>
+                          return <MenuItem key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
                         })
                       }
                     </Select>
+                    </FormControl>
                   </Grid>
                 </Grid>
               </div>
