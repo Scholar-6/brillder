@@ -13,10 +13,22 @@
     }
 
     .brick-length-image-container {
+      .brick-length-60-image {
+        background-image: url('/images/60min-icon-red.png');
+      }
+      .brick-length-40-image {
+        background-image: url('/images/40min-icon-red.png');
+      }
+      .brick-length-20-image {
+        background-image: url('/images/20min-icon-red.png');
+      }
       .brick-length-image {
         border-radius: 6px;
         width: 100%;
-        background: #06215C;
+        background-color: #06215C;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        padding-top: 100%;
       }
 
       .brick-length-image:hover {
@@ -24,8 +36,16 @@
       }
   
       .brick-length-image.active {
-        opacity: 0.8;
-        filter: brightness(1);
+        background-color: #A84C3F;
+      }
+      .brick-length-20-image.active {
+        background-image: url('/images/20min-icon-white.png');
+      }
+      .brick-length-40-image.active {
+        background-image: url('/images/40min-icon-white.png');
+      }
+      .brick-length-60-image.active {
+        background-image: url('/images/40min-icon-white.png');
       }
     }
 
