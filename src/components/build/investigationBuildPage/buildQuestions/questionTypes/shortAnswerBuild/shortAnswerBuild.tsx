@@ -1,7 +1,8 @@
 import React from 'react'
-import DeleteIcon from '@material-ui/icons/Delete';
+import CloseIcon from '@material-ui/icons/Close';
 
 import './shortAnswerBuild.scss'
+import { Button } from '@material-ui/core';
 
 
 export interface ShortAnswerBuildProps {
@@ -31,8 +32,8 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({data, updat
   const renderShortAnswer = (shortAnswer: any, key: number) => {
     return (
       <div className="short-answer-box" key={key}>
-        <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} />
-        <input value={shortAnswer.value} onChange={(event) => changed(shortAnswer, event)} placeholder="Enter short answer..." />
+        <CloseIcon className="right-top-icon" onClick={() => removeFromList(key)} />
+        <input value={shortAnswer.value} onChange={(event) => changed(shortAnswer, event)} placeholder="Enter Short Answer..." />
       </div>
     );
   }
@@ -43,7 +44,9 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({data, updat
         data.list.map((shortAnswer:any, i:number) => renderShortAnswer(shortAnswer, i))
       }
       <div className="button-box">
-        <button className="add-answer-button" onClick={addShortAnswer}>+ Add Short Answer</button>
+        <Button className="add-answer-button" onClick={addShortAnswer}>
+          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; S &nbsp; H &nbsp; O &nbsp; R &nbsp; T &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
+        </Button>
       </div>
     </div>
   )

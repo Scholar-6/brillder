@@ -9,6 +9,7 @@ import QuoteComponent from './Quote/Quote'
 import SoundComponent from './Sound/Sound'
 import EquationComponent from './Equation/Equation'
 import HintComponent, { HintState } from '../../../baseComponents/Hint/Hint';
+import { Grid } from '@material-ui/core';
 
 
 export interface SwitchQuestionProps {
@@ -33,7 +34,12 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   uniqueComponent
 }) => {
 
-  const renderEmptyComponent = () => <span>Drag component here</span>
+  const renderEmptyComponent = () => 
+    <Grid container style={{height:'100%'}} justify="center" alignContent="center">
+      <span className="drop-box-text" style={{color: '#838384', textAlign: 'justify'}}>
+        D &nbsp; R &nbsp; A &nbsp; G &nbsp; &nbsp; C &nbsp; O &nbsp; M &nbsp; P &nbsp; O &nbsp; N &nbsp; E &nbsp; N &nbsp; T &nbsp; &nbsp; H &nbsp; E &nbsp; R &nbsp; E
+        </span>
+    </Grid>
 
   const cleanComponent = () => {
     updateComponent({ type: 0 }, index);

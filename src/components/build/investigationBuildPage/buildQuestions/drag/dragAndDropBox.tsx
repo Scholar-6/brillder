@@ -12,7 +12,7 @@ function selectBackgroundColor(isActive: boolean, canDrop: boolean) {
   } else if (canDrop) {
     return 'darkkhaki'
   } else {
-    return '#E5E5E5'
+    return '#d9d9d9'
   }
 }
 
@@ -61,12 +61,12 @@ const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, data,
   const isActive = canDrop && isOver
   let backgroundColor = selectBackgroundColor(isActive, canDrop)
   if (value !== QuestionComponentTypeEnum.None) {
-    backgroundColor = 'white';
+    backgroundColor = '#d9d9d9';
   }
   drag(drop(ref))
 
   return (
-    <div ref={ref} className="drag-and-drop-box" style={{ backgroundColor, width: '99%', opacity }}>
+    <div ref={ref} className="drag-and-drop-box" style={{ backgroundColor, width: '100%', opacity }}>
       {component({data, cleanComponent, updateComponent})}
     </div>
   )
