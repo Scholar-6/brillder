@@ -27,15 +27,16 @@ export interface QuestionProps {
   createNewQuestion(): void
   getQuestionIndex(question: Question): number
   setQuestionComponents(index:number, components: any[]): void
+  toggleLock(): void
+  locked: boolean
 }
 
 const BuildQuestionComponent: React.FC<QuestionProps> = (
   {
-    brickId, question, history, setQuestionType, getQuestionIndex,
-    saveBrick, updateComponent, createNewQuestion, setQuestion, setQuestionComponents
+    brickId, question, history, setQuestionType, getQuestionIndex, toggleLock, locked,
+    saveBrick, updateComponent, createNewQuestion, setQuestion, setQuestionComponents,
   }
 ) => {
-  const [state, setState] = React.useState({locked: false});
   const { type } = question;
   document.title = QuestionTypeEnum[type];
 
@@ -44,7 +45,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
   }
 
   const setQuestionComponentType = (type: any, dropBox: any) => {
-    if (state.locked) { return; }
     if (dropBox.value === QuestionComponentTypeEnum.Component) {
       return;
     }
@@ -74,7 +74,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
   }
 
   const setQuestionHint = (hintState: HintState) => {
-    if (state.locked) { return; }
     const index = getQuestionIndex(question);
     const updatedQuestion = Object.assign({}, question) as Question;
     updatedQuestion.hint.value = hintState.value;
@@ -89,10 +88,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
   }
 
   let typeArray: string[] = Object.keys(QuestionType);
-
-  const toggleLock = () => {
-    setState({...state, locked: !state.locked});
-  }
 
   return (
     <MuiThemeProvider >
@@ -147,7 +142,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   </FormControl>
                 </Grid>
               </Grid>
-              <LockComponent locked={state.locked} onChange={toggleLock} />
+              <LockComponent locked={locked} onChange={toggleLock} />
               <Grid
                 container
                 direction="row"
