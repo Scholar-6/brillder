@@ -94,12 +94,14 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
       <div style={{ width: '100%' }}>
         <Grid container justify="center" className="build-question-column" item xs={12}>
           <Grid container direction="row">
-            <Grid container item xs={4} sm={3} md={3} className="left-sidebar">
-              <DragBox onDrop={setDropBoxItem} name="Text" value={QuestionComponentTypeEnum.Text} />
-              <DragBox onDrop={setDropBoxItem} name="Quote" value={QuestionComponentTypeEnum.Quote} />
-              <DragBox onDrop={setDropBoxItem} name="Image" value={QuestionComponentTypeEnum.Image} />
-              <DragBox onDrop={setDropBoxItem} name="Sound" value={QuestionComponentTypeEnum.Sound} />
-              <DragBox onDrop={setDropBoxItem} name="Equation" value={QuestionComponentTypeEnum.Equation} />
+            <Grid container item xs={4} sm={3} md={3} alignItems="center" style={{height: "100%", paddingBottom: "25px"}}>
+              <Grid container item xs={12} className="left-sidebar" alignItems="center">
+              <DragBox onDrop={setDropBoxItem} name="T" fontSize="2.4vw" value={QuestionComponentTypeEnum.Text} />
+              <DragBox onDrop={setDropBoxItem} name="“ ”" fontSize="2.8vw" value={QuestionComponentTypeEnum.Quote} />
+              <DragBox onDrop={setDropBoxItem} name="jpg." fontSize="1.7vw" value={QuestionComponentTypeEnum.Image} />
+              <DragBox onDrop={setDropBoxItem} name="Sound" isImage={true} src="/images/soundicon.png" value={QuestionComponentTypeEnum.Sound} />
+              <DragBox onDrop={setDropBoxItem} name="E Q N" fontSize="1.6vw" value={QuestionComponentTypeEnum.Equation} />
+              </Grid>
             </Grid>
             <Grid container item xs={5} sm={6} md={6} className="question-components-list">
               <QuestionComponents
@@ -112,13 +114,15 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 setQuestionHint={setQuestionHint} />
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
-              <div className="question-button-container">
+              <Grid container direction="row" justify="center">
+              <Grid container item xs={10} className="question-button-container">
                 <Button onClick={submitBrick}>
                   <div>R E V I E W</div>
                   <div>&</div>
                   <div>S U B M I T</div>
                 </Button>
-              </div>
+              </Grid>
+              </Grid>
               <Grid container direction="row" alignItems="flex-end">
                 <Grid container justify="center" item sm={12}>
                   <FormControl variant="outlined">
