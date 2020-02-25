@@ -289,7 +289,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
         <Grid container direction="row" alignItems="center" style={{height: '100%'}}>
           <Grid container item xs={12} sm={12} md={7} lg={8} className="question-container">
             <Grid container direction="row" justify="center" alignItems="center">
-              <Grid container item xs={12} sm={12} md={12} lg={9}>
+              <Grid container item xs={12} sm={12} md={12} lg={9} style={{margin: '10px 0 10px 0'}}>
                 <DragableTabs
                   questions={questions} createNewQuestion={createNewQuestion}
                   moveQuestions={moveQuestions} selectQuestion={selectQuestion}

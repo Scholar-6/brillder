@@ -1,11 +1,12 @@
 .build-question-column {
+  padding-top: 3.2vh;
+
   min-height: 400px;
   border: 1px solid grey;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   border-top: none;
   font-size: 14px;
-  padding-bottom: 25px;
   color: black;
 
   .unique-component-wrapper {
@@ -20,21 +21,26 @@
     margin: 0 !important;
   }
 
-  .right-button-container {
-    padding-left: 5px !important;
-    padding-right: 20px !important;
-  }
-
   .round-button-container {
     display: inline;
+    padding-right: 1.5vw;
+    padding-bottom: 0.9vw;
 
-    .round-button {
-      border-radius: 120px;
-      border: 2px solid black !important;
-      padding: 8px !important;
+    .new-question-button {
+      margin: 0 !important;
       padding-top: 6px !important;
-      width: 40px !important;
-      height: 40px !important;
+      color: #b44438;
+
+      div {
+        span {
+          height: 60px !important;
+          width: 60px !important;
+        }
+      }
+    
+      .new-question-icon {
+        font-size: 50px;
+      }
     }
   }
 
@@ -55,6 +61,7 @@
     border: 1px solid black;
     border-radius: 7px;
     padding: 0px 4px 2px 4px;
+    margin-bottom: 25px;
   }
 
   .drop-box-text {
@@ -80,6 +87,7 @@
 
   .right-sidebar {
     .question-button-container {
+      margin-top: 3vh;
       margin-left: 10px;
       width: 90%;
   
@@ -87,8 +95,11 @@
         margin: 5px;
         padding: 15px;
         border-radius: 0;
-        background: #B2B2B2;
-        border-color: black;
+        display:block;
+        border: 2px solid #AD3D32;
+        border-radius: 5px;
+        background: white;
+        color: #AD3D32;
         width: 90%;
       }
     }
@@ -125,6 +136,11 @@
     .left-button-container {
       padding-left: 15px !important;
     }
+
+    .round-button-container {
+      padding-right: 2.4vw !important;
+      padding-bottom: 1.7vw !important;
+    }
   }
   
   @media only screen and (max-width: 959px) and (min-width: 600px)  {
@@ -133,6 +149,11 @@
     }
     .drop-box-text {
       font-size: 1.6vw;
+    }
+
+    .round-button-container {
+      padding-right: 3vw !important;
+      padding-bottom: 2.1vw !important;
     }
   }
   
@@ -143,6 +164,11 @@
     }
     .drop-box-text {
       font-size: 1.3vw;
+    }
+
+    .round-button-container {
+      padding-right: 4vw !important;
+      padding-bottom: 3vw !important;
     }
   }
 }
