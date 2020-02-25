@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions/auth';
 import './loginPage.scss';
 import { Redirect } from "react-router-dom";
+import {UserType} from '../model/userTypeModel';
 
 
 const mapState = (state: any) => {
@@ -36,9 +37,9 @@ function LoginPage(props: any) {
 
   const type = getQueryParam('userType');
   if (!type) {
-    return <Redirect to="/pre-login" />
+    return <Redirect to="/choose-user" />
   }
-  const userType = parseInt(type) as number;
+  const userType = parseInt(type) as UserType;
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -96,7 +97,7 @@ function LoginPage(props: any) {
                 <br />
                 <Grid container direction="row" justify="flex-end" alignItems="center">
                   {
-                    userType === 1 ? <Button variant="contained" color="primary" className="sign-in-button" onClick={toRegister}>Sign up</Button> : ""
+                    userType === UserType.Student ? <Button variant="contained" color="primary" className="sign-in-button" onClick={toRegister}>Sign up</Button> : ""
                   }
                   <Button variant="contained" color="primary" className="sign-in-button" type="submit">Sign in</Button>
                 </Grid>

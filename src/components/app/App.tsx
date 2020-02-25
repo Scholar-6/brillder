@@ -13,7 +13,8 @@ import BricksListPage from '../build/bricksListPage/bricksListPage';
 import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
 import LoginPage from '../loginPage/loginPage';
 import RegisterPage from '../registerPage/registerPage';
-import PreLoginPage from '../preLoginPage/preLoginPage';
+import ChooseLoginPage from '../chooseLoginPage/ChooseLoginPage';
+import ChooseUserPage from '../chooseUserPage/ChooseUserPage';
 import LogoPage from '../logoPage/logoPage';
 import AuthRoute from './AuthRoute';
 import PrivateRoute from './PrivateRoute';
@@ -24,7 +25,7 @@ const App: React.FC = (props: any) => {
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    history.push("/pre-login");
+    history.push("/choose-user");
     return Promise.reject(error);
   });
 
@@ -49,9 +50,12 @@ const App: React.FC = (props: any) => {
         <PrivateRoute path="/build/new-brick" component={NewBrick} />
         <PrivateRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
         <PrivateRoute path="/build/bricks-list" component={BricksListPage} />
-        <AuthRoute path="/pre-login" component={PreLoginPage} />
+
+        <AuthRoute path="/choose-login" component={ChooseLoginPage} />
+        <AuthRoute path="/choose-user" component={ChooseUserPage} />
         <AuthRoute path="/login" exact component={LoginPage} />
         <AuthRoute path="/register" exact component={RegisterPage} />
+
         <PrivateRoute path="/build" component={MainPage} />
         <Route path="/logo-page" component={LogoPage} />
         <PrivateRoute path="/" component={MainPage} />

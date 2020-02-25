@@ -7,7 +7,7 @@ const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
   if (rest.isAuthenticated) {
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   }
-  return <Redirect to={{ pathname: '/pre-login' }} />
+  return <Redirect to={{ pathname: '/choose-user' }} />
 }
 
 const mapState = (state: any) => {

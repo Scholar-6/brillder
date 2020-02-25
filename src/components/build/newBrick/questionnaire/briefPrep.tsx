@@ -1,3 +1,5 @@
+/*eslint no-useless-escape: "off"*/
+
 import React from "react";
 import { Grid, Input } from "@material-ui/core";
 // @ts-ignore
@@ -20,7 +22,7 @@ function BriefPrep({ parentState, saveBriefPrep }: any) {
   }
 
   const renderPreview = () => {
-    const expression = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?/gi;
+    const expression = /^(http:\/\/\.|https:\/\/\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?/gi;
     const regex = new RegExp(expression);
     const link = state.links.split(' ')[0];
     

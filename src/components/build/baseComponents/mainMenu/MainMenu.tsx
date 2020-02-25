@@ -45,7 +45,7 @@ function MainMenu(props: any) {
 
   const logout = () => {
     props.logout();
-    history.push('/pre-login');
+    history.push('/choose-user');
   }
 
   return (
