@@ -55,8 +55,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     } as Question;
   }
 
-  const [questions, setQuestions] = React.useState([getNewQuestion(QuestionTypeEnum.None, true)] as Question[])
-  const [loaded, setStatus] = React.useState(false as boolean)
+  const [questions, setQuestions] = React.useState([getNewQuestion(QuestionTypeEnum.None, true)] as Question[]);
+  const [loaded, setStatus] = React.useState(false as boolean);
+  const [locked, setLock] = React.useState(false as boolean);
 
   if (!props.brick) {
     return <div>...Loading...</div>
@@ -81,17 +82,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   }
 
   const moveQuestions = (dragIndex: number, hoverIndex: number, dragQuestion: any) => {
+    if (locked) { return; }
     setQuestions(
       update(questions, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, dragQuestion],
-        ],
+        $splice: [[dragIndex, 1], [hoverIndex, 0, dragQuestion]],
       }),
     )
   }
 
   const setQuestionType = (type: QuestionTypeEnum) => {
+    if (locked) { return; }
     if (!activeQuestion) {
       alert('Can`t set question type');
       return;
@@ -101,6 +101,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   }
 
   const justSetQuestionType = (type: QuestionTypeEnum) => {
+    if (locked) { return; }
     if (!activeQuestion) {
       alert('Can`t set question type');
       return;
@@ -114,6 +115,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   }
 
   const removeQuestion = (index: number) => {
+    if (locked) { return; }
     if (questions.length === 1) {
       alert("You can`t delete last question");
       return;
@@ -151,11 +153,17 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     }
   }
 
+  const toggleLock = () => {
+    setLock(!locked);
+  }
+
   const setQuestion = (index:number, question: Question) => {
+    if (locked) { return; }
     setQuestions(update(questions, { [index]: { $set: question } }));
   }
 
   const setComponents = (index:number, components: any[]) => {
+    if (locked) { return; }
     setQuestions(
       update(questions, {[index]: { components: { $set: components } } })
     );
@@ -205,6 +213,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   }
 
   const updateComponent = (component: any, number: number) => {
+    if (locked) { return; }
     const index = getQuestionIndex(activeQuestion);
     let newComponent = Object.assign({}, component)
 
@@ -227,6 +236,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
         getQuestionIndex={getQuestionIndex}
         setQuestionComponents={setComponents}
         setQuestion={setQuestion}
+        toggleLock={toggleLock}
+        locked={locked}
         setQuestionType={justSetQuestionType}
         createNewQuestion={createNewQuestion}
         saveBrick={saveBrick} />
