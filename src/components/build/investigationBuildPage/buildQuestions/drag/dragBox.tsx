@@ -14,10 +14,11 @@ export interface BoxProps {
   isImage?: boolean,
   src?: string,
   fontSize?: string,
+  marginTop?: any,
   onDrop: Function,
 }
 
-const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, src }) => {
+const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, src, marginTop }) => {
   const item = { name, type: ItemTypes.BOX }
   const [{ opacity }, drag] = useDrag({
     item,
@@ -47,7 +48,7 @@ const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, s
   }
 
   return (
-    <Grid container item xs={12} ref={drag} className="drag-box-item" style={{ opacity, fontSize: fontSize }}>
+    <Grid container item xs={12} ref={drag} className="drag-box-item" style={{ opacity, fontSize: fontSize, marginTop }}>
       {renderContent()}
     </Grid>
   )

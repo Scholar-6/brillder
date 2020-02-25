@@ -97,9 +97,9 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
             <Grid container item xs={4} sm={3} md={3} alignItems="center" style={{height: "100%", paddingBottom: "25px"}}>
               <Grid container item xs={12} className="left-sidebar" alignItems="center">
               <DragBox onDrop={setDropBoxItem} name="T" fontSize="2.4vw" value={QuestionComponentTypeEnum.Text} />
-              <DragBox onDrop={setDropBoxItem} name="“ ”" fontSize="2.8vw" value={QuestionComponentTypeEnum.Quote} />
+              <DragBox onDrop={setDropBoxItem} name="“ ”" fontSize="2.8vw" marginTop="1vw" value={QuestionComponentTypeEnum.Quote} />
               <DragBox onDrop={setDropBoxItem} name="jpg." fontSize="1.7vw" value={QuestionComponentTypeEnum.Image} />
-              <DragBox onDrop={setDropBoxItem} name="Sound" isImage={true} src="/images/soundicon.png" value={QuestionComponentTypeEnum.Sound} />
+              <DragBox onDrop={setDropBoxItem} name="Sound" isImage={true} src="/images/soundicon.png" marginTop="0.4vw" value={QuestionComponentTypeEnum.Sound} />
               <DragBox onDrop={setDropBoxItem} name="E Q N" fontSize="1.6vw" value={QuestionComponentTypeEnum.Equation} />
               </Grid>
             </Grid>
