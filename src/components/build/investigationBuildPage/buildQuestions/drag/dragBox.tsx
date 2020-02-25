@@ -11,10 +11,13 @@ import { DropResult } from './interfaces';
 export interface BoxProps {
   name: string,
   value: QuestionComponentTypeEnum,
+  isImage?: boolean,
+  src?: string,
+  fontSize?: string,
   onDrop: Function,
 }
 
-const DragBox: React.FC<BoxProps> = ({ name, onDrop, value }) => {
+const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, src }) => {
   const item = { name, type: ItemTypes.BOX }
   const [{ opacity }, drag] = useDrag({
     item,
@@ -36,9 +39,16 @@ const DragBox: React.FC<BoxProps> = ({ name, onDrop, value }) => {
     }),
   })
 
+  const renderContent = () => {
+    if (isImage) {
+      return <div><img alt="" style={{width: '35%'}} src={src} /></div>
+    }
+    return <div>{name}</div>
+  }
+
   return (
-    <Grid container item xs={12} ref={drag} className="drag-box-item" style={{ opacity }}>
-      <div>{name}</div>
+    <Grid container item xs={12} ref={drag} className="drag-box-item" style={{ opacity, fontSize: fontSize }}>
+      {renderContent()}
     </Grid>
   )
 }

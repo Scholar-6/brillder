@@ -38,6 +38,15 @@ code {
   font-style: normal;
 }
 
+@font-face {
+  font-family: "SuperclarendonW00-Bold";
+  src: url("./assets/fonts/SuperclarendonBold/6f59d156169e00fd75a16156f6857977.eot");
+  src: url("./assets/fonts/SuperclarendonBold/6f59d156169e00fd75a16156f6857977.eot?#iefix") format("embedded-opentype"),
+  url("./assets/fonts/SuperclarendonBold/6f59d156169e00fd75a16156f6857977.woff2") format("woff2"),
+  url("./assets/fonts/SuperclarendonBold/6f59d156169e00fd75a16156f6857977.woff") format("woff"),
+  url("./assets/fonts/SuperclarendonBold/6f59d156169e00fd75a16156f6857977.ttf") format("truetype"),
+  url("./assets/fonts/SuperclarendonBold/6f59d156169e00fd75a16156f6857977.svg#SuperclarendonW00-Bold") format("svg"); }
+
 .rotate-90 {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
