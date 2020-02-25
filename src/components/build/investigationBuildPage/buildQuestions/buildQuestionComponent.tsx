@@ -8,8 +8,8 @@ import QuestionComponents from './questionComponents/questionComponents';
 import './buildQuestionComponent.scss'
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../model/question';
 import DragBox from './drag/dragBox';
-import IOSSwitch from 'components/build/baseComponents/IOSSwitch/IOSSwitch';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
+import LockComponent from './lock/Lock';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -36,6 +36,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
     saveBrick, updateComponent, addComponent, createNewQuestion
   }
 ) => {
+  const [state, setState] = React.useState({locked: false});
   const { type } = question;
   document.title = QuestionTypeEnum[type];
 
@@ -49,6 +50,10 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
   }
 
   let typeArray: string[] = Object.keys(QuestionType);
+
+  const toggleLock = () => {
+    setState({...state, locked: !state.locked});
+  }
 
   return (
     <MuiThemeProvider >
@@ -80,41 +85,30 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   <div>S U B M I T</div>
                 </Button>
               </div>
-              <div className="no-margin">
-                <Grid container justify="center" direction="row">
-                  <Grid item sm={10} md={10} lg={9} className="important-text-container">
-                    <p>Is the Order in the brick sequence of this Question important?</p>
-                  </Grid>
+              <Grid container direction="row" alignItems="flex-end">
+                <Grid container justify="center" item sm={12}>
+                  <FormControl variant="outlined">
+                    <Select
+                      value={type}
+                      inputProps={{
+                        name: 'age',
+                        id: 'age-native-simple',
+                      }}
+                      onChange={(e) => {
+                        setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
+                      }}
+                    >
+                      {
+                        typeArray.map((typeName, i) => {
+                          const type = QuestionType[typeName] as QuestionTypeEnum;
+                          return <MenuItem key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
+                        })
+                      }
+                    </Select>
+                  </FormControl>
                 </Grid>
-                <Grid justify="center" container direction="row">
-                  <Grid container justify="center" item sm={12}>
-                    <IOSSwitch />
-                  </Grid>
-                </Grid>
-                <Grid justify="center" container direction="row">
-                  <Grid container justify="center" item sm={12}>
-                    <FormControl variant="outlined">
-                      <Select
-                        value={type}
-                        inputProps={{
-                          name: 'age',
-                          id: 'age-native-simple',
-                        }}
-                        onChange={(e) => {
-                          setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
-                        }}
-                      >
-                        {
-                          typeArray.map((typeName, i) => {
-                            const type = QuestionType[typeName] as QuestionTypeEnum;
-                            return <MenuItem key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
-                          })
-                        }
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-              </div>
+              </Grid>
+              <LockComponent locked={state.locked} onChange={toggleLock} />
               <Grid
                 container
                 direction="row"
@@ -122,7 +116,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 alignItems="flex-end"
               >
                 <div className="round-button-container right-button-container">
-                  <IconButton className="new-question-button" aria-label="next">
+                  <IconButton className="new-question-button" aria-label="next" onClick={createNewQuestion}>
                     <ArrowForwardIosIcon className="new-question-icon" />
                   </IconButton>
                 </div>
