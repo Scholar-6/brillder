@@ -1,9 +1,8 @@
 import React from 'react'
-import { Grid, Select, FormControl } from '@material-ui/core';
+import { Grid, Select, FormControl, Button } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton, MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import QuestionComponents from './questionComponents/questionComponents';
 import './buildQuestionComponent.scss'
@@ -27,8 +26,8 @@ export interface QuestionProps {
   saveBrick(): void
   updateComponent(component: any, index: number): void
   setQuestionHint(hintState: HintState): void
-  setQuestionType(type: QuestionTypeEnum):void
-  createNewQuestion():void
+  setQuestionType(type: QuestionTypeEnum): void
+  createNewQuestion(): void
 }
 
 const BuildQuestionComponent: React.FC<QuestionProps> = (
@@ -55,11 +54,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
     <MuiThemeProvider >
       <div style={{ width: '100%' }}>
         <Grid container justify="center" className="build-question-column" item xs={12}>
-          <Grid container direction="row" className="first-row">
-            <Grid container item xs={5} sm={6}></Grid>
-            <Grid container item xs={4} sm={3}>Build Time: 0hrs15mins.</Grid>
-            <Grid container item xs={3} sm={3} justify="center">Saved at 17:51</Grid>
-          </Grid>
           <Grid container direction="row">
             <Grid container item xs={4} sm={3} md={3} className="left-sidebar">
               <DragBox onDrop={setDropBoxItem} name="Text" value={QuestionComponentTypeEnum.Text} />
@@ -76,11 +70,15 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 swapComponents={swapComponents}
                 updateComponent={updateComponent}
                 addComponent={addComponent}
-                setQuestionHint={setQuestionHint}/>
+                setQuestionHint={setQuestionHint} />
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
               <div className="question-button-container">
-                <button onClick={submitBrick}>R E V I E W & S U B M I T</button>
+                <Button onClick={submitBrick}>
+                  <div>R E V I E W</div>
+                  <div>&</div>
+                  <div>S U B M I T</div>
+                </Button>
               </div>
               <div className="no-margin">
                 <Grid container justify="center" direction="row">
@@ -95,24 +93,24 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 </Grid>
                 <Grid justify="center" container direction="row">
                   <Grid container justify="center" item sm={12}>
-                  <FormControl variant="outlined">
-                    <Select
-                      value={type}
-                      inputProps={{
-                        name: 'age',
-                        id: 'age-native-simple',
-                      }}
-                      onChange={(e) => {
-                        setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
-                      }}
-                    >
-                      {
-                        typeArray.map((typeName, i) => {
-                          const type = QuestionType[typeName] as QuestionTypeEnum;
-                          return <MenuItem key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
-                        })
-                      }
-                    </Select>
+                    <FormControl variant="outlined">
+                      <Select
+                        value={type}
+                        inputProps={{
+                          name: 'age',
+                          id: 'age-native-simple',
+                        }}
+                        onChange={(e) => {
+                          setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
+                        }}
+                      >
+                        {
+                          typeArray.map((typeName, i) => {
+                            const type = QuestionType[typeName] as QuestionTypeEnum;
+                            return <MenuItem key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
+                          })
+                        }
+                      </Select>
                     </FormControl>
                   </Grid>
                 </Grid>
@@ -120,23 +118,13 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
               <Grid
                 container
                 direction="row"
-                justify="center"
+                justify="flex-end"
                 alignItems="flex-end"
               >
-                <div>
-                  <FormControlLabel
-                    value="start"
-                    control={
-                      <div className="round-button-container right-button-container">
-                        <IconButton className="round-button" aria-label="next">
-                          <ArrowForwardIosIcon />
-                        </IconButton>
-                      </div>
-                    }
-                    onClick={createNewQuestion}
-                    label="Add New Question"
-                    labelPlacement="start"
-                  />
+                <div className="round-button-container right-button-container">
+                  <IconButton className="new-question-button" aria-label="next">
+                    <ArrowForwardIosIcon className="new-question-icon" />
+                  </IconButton>
                 </div>
               </Grid>
             </Grid>
