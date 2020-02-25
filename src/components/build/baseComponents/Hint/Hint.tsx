@@ -63,7 +63,7 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
   }
 
   const renderHintInputs = () => {
-    if (state.status == HintStatus.All || !props.count || props.count === 1) {
+    if (state.status === HintStatus.All || !props.count || props.count === 1) {
       return (
         <Grid container item xs={12}>
           <input className="hint-input-text" value={state.value} onChange={onHintChanged} placeholder="Enter Hint..."></input>

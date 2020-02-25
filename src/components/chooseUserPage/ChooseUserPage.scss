@@ -1,0 +1,187 @@
+.choose-user-page {
+  height: 100%;
+  background-color: #06215C;
+
+  .pre-login-image-container {
+    .pre-login-image-container2 {
+
+      .pre-login-image {
+        height: 90%;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+
+      .pre-login-text {
+        color: white;
+        font-family: 'Century Gothic Regular';
+        font-size: 18px;
+      }
+    }
+  }
+
+
+  .user-type-btn:hover {
+    background-color: #c94f42;
+  }
+
+  .user-type-btn {
+    padding: 20px 24px;
+    background-color: #A84D3F;
+    color: #eee;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-weight: 200 !important;
+    width: 50%;
+    font-size: 2vw;
+
+    span {
+      font-family: "Century Gothic Regular";
+    }
+
+    img {
+      width: 75px;
+      height: 75px;
+      margin: 10px;
+    }
+
+    .user-type-name {
+      margin-left: 20px;
+      margin-right: 10px;
+      line-height: 1 !important;
+    }
+  }
+
+  .footer-image {
+    width: 50%;
+    margin-top: 0px;
+  }
+
+  @media only screen and (min-width: 1280px) {
+    .pre-login-image-container {
+      height: 100%;
+
+      .pre-login-image-container2 {
+        height: 70%;
+        border-right: 2px solid white;
+
+        .pre-login-image-container3 {
+          height: 80%;
+        }
+      }
+    }
+
+    .user-type-btn {
+      padding: 20px 0 !important;
+      height: 100px;
+      margin-bottom: 25px !important;
+    }
+  }
+
+  @media only screen and (max-width: 1279px) and (min-width: 960px) {
+    .pre-login-image-container {
+      height: 100%;
+
+      .pre-login-image-container2 {
+        height: 70%;
+        border-right: 2px solid white;
+
+        .pre-login-image-container3 {
+          height: 70%;
+        }
+      }
+    }
+
+    .user-type-btn {
+      padding: 20px 0 !important;
+      margin-bottom: 18px !important;
+    }
+  }
+
+  @media only screen and (max-width: 959px) and (min-width: 600px) {
+    .pre-login-image-container {
+      height: 100%;
+
+      .pre-login-image-container2 {
+        height: 70%;
+        border-right: 2px solid white;
+
+        .pre-login-image-container3 {
+          height: 50%;
+        }
+      }
+    }
+
+    .user-type-btn {
+      padding: 15px 0 !important;
+    }
+
+    .pre-login-text {
+      font-size: 12px !important;
+    }
+  }
+
+  @media only screen and (max-width: 599px) {
+    .pre-login-image-container {
+      height: 45%;
+
+      .pre-login-image-container2 {
+        height: 85%;
+
+        .pre-login-image-container3 {
+          height: 100%;
+
+          .pre-login-image {
+            height: 90% !important;
+            padding-bottom: 0px !important;
+            margin-bottom: 0px !important;
+          }
+        }
+      }
+    }
+
+    .pre-login-button-container {
+      height: 55%;
+
+      >div {
+        height: 100%;
+
+        >div {
+          height: 100%;
+
+          >div {
+            height: 33%;
+
+            >div {
+              height: 100%;
+
+              >button {
+                height: 82% !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .user-type-btn {
+      width: 85%;
+      height: 20% !important;
+      padding: 0 !important;
+      border-radius: 20px !important;
+      font-size: 7vw;
+
+      .user-type-name {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+    }
+
+    .pre-login-text {
+      font-size: 4.4vw !important;
+    }
+
+    .footer-image {
+      max-height: 100px;
+    }
+  }
+}
