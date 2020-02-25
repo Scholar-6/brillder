@@ -17,7 +17,6 @@ import QuestionTypePage from './questionType/questionType';
 import DragableTabs from './dragTabs/dragableTabs';
 import { Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus } from 'components/model/question';
 import actions from '../../../redux/actions/brickActions';
-import { HintState } from '../baseComponents/Hint/Hint';
 
 
 interface ApiQuestion {
@@ -152,58 +151,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     }
   }
 
-  const setQuestionComponentType = (type: any, dropBox: any) => {
-    if (dropBox.value === QuestionComponentTypeEnum.Component) {
-      return;
-    }
-    const index = getQuestionIndex(activeQuestion);
-    const question = Object.assign({}, activeQuestion) as Question;
-    question.components[dropBox.index].type = type;
-
-    setQuestions(
-      update(questions, { [index]: { $set: question } }),
-    )
+  const setQuestion = (index:number, question: Question) => {
+    setQuestions(update(questions, { [index]: { $set: question } }));
   }
 
-  const setQuestionHint = (hintState: HintState) => {
-    const index = getQuestionIndex(activeQuestion);
-    const question = Object.assign({}, activeQuestion) as Question;
-    question.hint.value = hintState.value;
-    question.hint.status = hintState.status;
-
+  const setComponents = (index:number, components: any[]) => {
     setQuestions(
-      update(questions, { [index]: { $set: question } }),
-    )
-  }
-
-  const swapComponents = (drag: any, drop: any) => {
-    const index = getQuestionIndex(activeQuestion);
-    const components = Object.assign([], activeQuestion.components) as any[];
-    const tempComp = components[drag.index];
-    components[drag.index] = components[drop.index];
-    components[drop.index] = tempComp;
-
-    setQuestions(
-      update(questions, {
-        [index]: {
-          components: { $set: components }
-        }
-      }),
-    )
-  }
-
-  const addComponent = () => {
-    const index = getQuestionIndex(activeQuestion);
-    const components = Object.assign([], activeQuestion.components) as any[];
-    components.push({ type: 0 });
-
-    setQuestions(
-      update(questions, {
-        [index]: {
-          components: { $set: components }
-        }
-      }),
-    )
+      update(questions, {[index]: { components: { $set: components } } })
+    );
   }
 
   const { brick } = props;
@@ -228,9 +183,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     if (parsedQuestions.length > 0) {
       parsedQuestions[0].active = true;
       setQuestions(update(questions, { $set: parsedQuestions }));
-      setStatus(
-        update(loaded, { $set: true })
-      )
+      setStatus(update(loaded, { $set: true }))
     }
   }
 
@@ -258,9 +211,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     setQuestions(
       update(questions, {
         [index]: {
-          components: {
-            [number]: { $set: newComponent }
-          }
+          components: { [number]: { $set: newComponent } }
         }
       })
     )
@@ -272,11 +223,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
         brickId={brickId}
         history={history}
         question={activeQuestion}
-        setQuestionComponentType={setQuestionComponentType}
-        swapComponents={swapComponents}
         updateComponent={updateComponent}
-        addComponent={addComponent}
-        setQuestionHint={setQuestionHint}
+        getQuestionIndex={getQuestionIndex}
+        setQuestionComponents={setComponents}
+        setQuestion={setQuestion}
         setQuestionType={justSetQuestionType}
         createNewQuestion={createNewQuestion}
         saveBrick={saveBrick} />

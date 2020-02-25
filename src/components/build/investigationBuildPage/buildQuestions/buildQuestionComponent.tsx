@@ -20,20 +20,19 @@ export interface QuestionProps {
   brickId: number
   question: Question
   history: any
-  setQuestionComponentType: Function
-  addComponent: Function
-  swapComponents: Function
   saveBrick(): void
+  setQuestion(index:number, question: Question): void
   updateComponent(component: any, index: number): void
-  setQuestionHint(hintState: HintState): void
   setQuestionType(type: QuestionTypeEnum): void
   createNewQuestion(): void
+  getQuestionIndex(question: Question): number
+  setQuestionComponents(index:number, components: any[]): void
 }
 
 const BuildQuestionComponent: React.FC<QuestionProps> = (
-  { brickId, question, history, setQuestionComponentType,
-    swapComponents, setQuestionType, setQuestionHint,
-    saveBrick, updateComponent, addComponent, createNewQuestion
+  {
+    brickId, question, history, setQuestionType, getQuestionIndex,
+    saveBrick, updateComponent, createNewQuestion, setQuestion, setQuestionComponents
   }
 ) => {
   const [state, setState] = React.useState({locked: false});
@@ -42,6 +41,46 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
 
   const setDropBoxItem = (dragBoxType: QuestionTypeEnum, dropBoxNumber: number) => {
     setQuestionComponentType(dragBoxType, dropBoxNumber);
+  }
+
+  const setQuestionComponentType = (type: any, dropBox: any) => {
+    if (state.locked) { return; }
+    if (dropBox.value === QuestionComponentTypeEnum.Component) {
+      return;
+    }
+    const index = getQuestionIndex(question);
+    const updatedQuestion = Object.assign({}, question) as Question;
+    updatedQuestion.components[dropBox.index].type = type;
+
+    setQuestion(index, updatedQuestion);
+  }
+
+  const swapComponents = (drag: any, drop: any) => {
+    const index = getQuestionIndex(question);
+    const components = Object.assign([], question.components) as any[];
+    const tempComp = components[drag.index];
+    components[drag.index] = components[drop.index];
+    components[drop.index] = tempComp;
+
+    setQuestionComponents(index, components);
+  }
+
+  const addComponent = () => {
+    const index = getQuestionIndex(question);
+    const components = Object.assign([], question.components) as any[];
+    components.push({ type: 0 });
+
+    setQuestionComponents(index, components);
+  }
+
+  const setQuestionHint = (hintState: HintState) => {
+    if (state.locked) { return; }
+    const index = getQuestionIndex(question);
+    const updatedQuestion = Object.assign({}, question) as Question;
+    updatedQuestion.hint.value = hintState.value;
+    updatedQuestion.hint.status = hintState.status;
+
+    setQuestion(index, updatedQuestion);
   }
 
   const submitBrick = () => {
