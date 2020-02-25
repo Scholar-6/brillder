@@ -1,0 +1,29 @@
+.word-highlight-build {
+  position: relative;
+
+  .pencil-icon-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .hightlight-area {
+    width: 100%;
+    background: white;
+    text-align: left;
+    min-height: 75px;
+    border: 1px solid grey;
+    padding: 0;
+    margin: 0;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .input-container {
+    padding-right: 2px;
+  }
+}
