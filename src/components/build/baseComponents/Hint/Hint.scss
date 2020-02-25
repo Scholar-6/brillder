@@ -18,6 +18,11 @@
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
   }
+
+  .hint-type-text {
+    font-family: 'Century Gothic Regular';
+    color: #757576;
+  }
   
   .hint-type {
     padding: 13px 0 10px 5px;
@@ -33,8 +38,6 @@
   .MuiFormControlLabel-root {
     margin: 0 !important;
   }
-
-  
 
   @media only screen and (min-width: 1200px)  {
     .MuiTypography-root {
