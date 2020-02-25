@@ -31,12 +31,7 @@ function PreLoginPage(props: any) {
     props.history.push('/login?userType=' + userType)
   }
 
-  let name = '';
-  if (userType === LoginType.Student) {
-    name = 'Student';
-  }
-
-  if (userType === 0 || userType === LoginType.Student) {
+  if (userType === 0 || userType === LoginType.Student || userType === LoginType.Teacher) {
     return (
       <Grid className="pre-login-page" style={{ height: '100%' }} container item justify="center">
         <Grid container className="pre-login-image-container" justify="center" item xs={12} sm={6} alignItems="center">
@@ -63,14 +58,14 @@ function PreLoginPage(props: any) {
               </Grid>
               <Grid container direction="row">
                 <Grid container item xs={12} justify="center">
-                  <Button onClick={() => selectLoginType(LoginType.Teacher)} className="user-type-btn">
+                  <Button onClick={() => { selectLoginType(LoginType.Teacher); openMessage(); }} className="user-type-btn">
                     <span className="user-type-name">T e a c h e r</span>
                   </Button>
                 </Grid>
               </Grid>
               <Grid container direction="row">
                 <Grid container item xs={12} justify="center">
-                  <Button onClick={() => { selectLoginType(LoginType.Builder); openMessage(); }} className="user-type-btn">
+                  <Button onClick={() => selectLoginType(LoginType.Builder)} className="user-type-btn">
                     <span className="user-type-name">B u i l d e r</span>
                   </Button>
                 </Grid>
@@ -86,7 +81,7 @@ function PreLoginPage(props: any) {
           open={open}
           autoHideDuration={6000}
           onClose={handleClose}
-          message={`Sorry, you can't log in as a ${name} yet. Please log in as a teacher.`}
+          message={`You cannot login as this type of user yet.`}
           action={
             <React.Fragment>
             </React.Fragment>
