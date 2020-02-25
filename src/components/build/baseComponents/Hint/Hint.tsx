@@ -1,8 +1,8 @@
 
 import React from 'react';
-import Checkbox from '@material-ui/core/Checkbox';
-
-import { Grid, FormControlLabel } from '@material-ui/core';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import { Grid } from '@material-ui/core';
 
 import './Hint.scss';
 
@@ -62,6 +62,11 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
     onChange({ ...state, value: event.target.value });
   }
 
+  const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
+    console.log(status, typeof status)
+    setState({...state, status});
+  };
+
   const renderHintInputs = () => {
     if (state.status === HintStatus.All || !props.count || props.count === 1) {
       return (
@@ -70,7 +75,7 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
         </Grid>
       );
     }
-    const answerHints:any[] = [];
+    const answerHints: any[] = [];
 
     for (let i = 0; i < props.count; i++) {
       answerHints.push(
@@ -85,32 +90,24 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
   return (
     <div className="hint-component">
       <Grid container direction="row">
-        <Grid container item xs={2} alignContent="center">
-          <Grid className="hint-type-text" style={{ width: '100%' }} justify="center">
+        <Grid container item xs={3} alignContent="center">
+          <Grid className="hint-type-text" style={{ width: '100%' }}>
             <div>H I N T</div>
             <div>T Y P E</div>
           </Grid>
         </Grid>
-        <Grid container item xs={2} alignContent="center" justify="flex-start">
+        <Grid container item xs={7} justify="flex-start" alignContent="center">
+          <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
+            <ToggleButton value={HintStatus.Each}>
+              Each Answer
+            </ToggleButton>
+            <ToggleButton value={HintStatus.All}>
+              All Answers
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Grid>
+        <Grid container item xs={2} alignContent="center" justify="flex-end">
           <span className="hint-type"><span className="question-mark">?</span></span>
-        </Grid>
-        <Grid container item xs={4} justify="flex-end">
-          <FormControlLabel
-            control={
-              <Checkbox checked={state.status === HintStatus.Each} onChange={eachChecked} value="eachAnswer" />
-            }
-            labelPlacement="start"
-            label="Each Answer"
-          />
-        </Grid>
-        <Grid container item xs={4} justify="flex-end">
-          <FormControlLabel
-            control={
-              <Checkbox checked={state.status === HintStatus.All} onChange={allChecked} value="allAnswers" />
-            }
-            labelPlacement="start"
-            label="All Answers"
-          />
         </Grid>
       </Grid>
       {renderHintInputs()}

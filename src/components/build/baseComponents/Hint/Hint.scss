@@ -22,56 +22,42 @@
   .hint-type-text {
     font-family: 'Century Gothic Regular';
     color: #757576;
+    margin-left: 0.5vw;
+    text-align: left;
   }
-  
+
+  .hint-toggle-group {
+    button {
+      height: 20px !important;
+      font-size: 0.65vw !important;
+      text-transform: none !important;
+    }
+  }
+
   .hint-type {
     padding: 13px 0 10px 5px;
 
     .question-mark {
       font-weight: bold;
+      font-family: 'Century Gothic Regular';
       color: white;
-      padding: 4px 7px;
+      border-radius: 30px;
+      font-size: 15px;
+      padding: 0 5px;
       background: #C22229;
+      margin-right: 0.6vw;
     }
-  }
-
-  .MuiFormControlLabel-root {
-    margin: 0 !important;
   }
 
   @media only screen and (min-width: 1200px)  {
-    .MuiTypography-root {
-      font-size: 0.7vw !important;
-    }
-    .hint-type-text {
-      font-size: 0.7vw !important;
-    }
   }
   
   @media only screen and (max-width: 1199px) and (min-width: 960px)  {
-    .MuiTypography-root {
-      font-size: 1vw !important;
-    }
-    .hint-type-text {
-      font-size: 0.9vw !important;
-    }
   }
   
   @media only screen and (max-width: 959px) and (min-width: 600px)  {
-    .MuiTypography-root {
-      font-size: 1.5vw !important;
-    }
-    .hint-type-text {
-      font-size: 1.3vw !important;
-    }
   }
   
   @media only screen and (max-width: 599px) {
-    .MuiTypography-root {
-      font-size: 2vw !important;
-    }
-    .hint-type-text {
-      font-size: 1.9vw !important;
-    }
   }
 }
