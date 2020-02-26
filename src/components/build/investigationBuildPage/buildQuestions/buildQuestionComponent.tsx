@@ -21,12 +21,12 @@ export interface QuestionProps {
   question: Question
   history: any
   saveBrick(): void
-  setQuestion(index:number, question: Question): void
+  setQuestion(index: number, question: Question): void
   updateComponent(component: any, index: number): void
   setQuestionType(type: QuestionTypeEnum): void
   createNewQuestion(): void
   getQuestionIndex(question: Question): number
-  setQuestionComponents(index:number, components: any[]): void
+  setQuestionComponents(index: number, components: any[]): void
   toggleLock(): void
   locked: boolean
 }
@@ -94,13 +94,43 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
       <div style={{ width: '100%' }}>
         <Grid container justify="center" className="build-question-column" item xs={12}>
           <Grid container direction="row">
-            <Grid container item xs={4} sm={3} md={3} alignItems="center" style={{height: "100%", paddingBottom: "25px"}}>
+            <Grid container item xs={4} sm={3} md={3} alignItems="center" style={{ height: "100%", paddingBottom: "25px" }}>
               <Grid container item xs={12} className="left-sidebar" alignItems="center">
-              <DragBox onDrop={setDropBoxItem} name="T" fontSize="2.4vw" value={QuestionComponentTypeEnum.Text} />
-              <DragBox onDrop={setDropBoxItem} name="“ ”" fontSize="2.8vw" marginTop="1vw" value={QuestionComponentTypeEnum.Quote} />
-              <DragBox onDrop={setDropBoxItem} name="jpg." fontSize="1.7vw" value={QuestionComponentTypeEnum.Image} />
-              <DragBox onDrop={setDropBoxItem} name="Sound" isImage={true} src="/images/soundicon.png" marginTop="0.4vw" value={QuestionComponentTypeEnum.Sound} />
-              <DragBox onDrop={setDropBoxItem} name="E Q N" fontSize="1.6vw" value={QuestionComponentTypeEnum.Equation} />
+                <DragBox
+                  onDrop={setDropBoxItem}
+                  name="T"
+                  fontSize="2.4vw"
+                  label="T E X T"
+                  hoverMarginTop="0.5vw"
+                  value={QuestionComponentTypeEnum.Text} />
+                <DragBox
+                  onDrop={setDropBoxItem}
+                  name="“ ”"
+                  fontSize="2.8vw"
+                  label="Q U O T E"
+                  marginTop="1vw"
+                  hoverMarginTop="-0.65vw"
+                  value={QuestionComponentTypeEnum.Quote} />
+                <DragBox
+                  onDrop={setDropBoxItem}
+                  name="jpg."
+                  fontSize="1.7vw"
+                  label="I M A G E"
+                  hoverMarginTop="1vw"
+                  value={QuestionComponentTypeEnum.Image} />
+                <DragBox
+                  onDrop={setDropBoxItem}
+                  isImage={true} src="/images/soundicon.png"
+                  label="S O U N D"
+                  hoverMarginTop="0.5vw"
+                  value={QuestionComponentTypeEnum.Sound} />
+                <DragBox
+                  onDrop={setDropBoxItem}
+                  name="E Q N"
+                  fontSize="1.6vw"
+                  label="E Q U A T I O N"
+                  hoverMarginTop="0.9vw"
+                  value={QuestionComponentTypeEnum.Equation} />
               </Grid>
             </Grid>
             <Grid container item xs={5} sm={6} md={6} className="question-components-list">
@@ -115,13 +145,13 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
               <Grid container direction="row" justify="center">
-              <Grid container item xs={10} className="question-button-container">
-                <Button onClick={submitBrick}>
-                  <div>R E V I E W</div>
-                  <div>&</div>
-                  <div>S U B M I T</div>
-                </Button>
-              </Grid>
+                <Grid container item xs={10} className="question-button-container">
+                  <Button onClick={submitBrick}>
+                    <div>R E V I E W</div>
+                    <div>&</div>
+                    <div>S U B M I T</div>
+                  </Button>
+                </Grid>
               </Grid>
               <Grid container direction="row" alignItems="flex-end">
                 <Grid container justify="center" item sm={12}>
