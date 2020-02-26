@@ -94,7 +94,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
       <div style={{ width: '100%' }}>
         <Grid container justify="center" className="build-question-column" item xs={12}>
           <Grid container direction="row">
-            <Grid container item xs={4} sm={3} md={3} alignItems="center" style={{ height: "100%", paddingBottom: "25px" }}>
+            <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
               <Grid container item xs={12} className="left-sidebar" alignItems="center">
                 <DragBox
                   onDrop={setDropBoxItem}

@@ -79,12 +79,17 @@
     font-size: 0.85vw;
   }
 
+  .parent-left-sidebar {
+    height: 85%;
+    padding-bottom: 25px;
+  }
+
   .left-sidebar {
     padding-left: 10px;
     padding-right: 10px;
     margin-top: 4px !important;
     margin-bottom: 40px;
-    height: 92% !important;
+    height: 87% !important;
 
     .drag-box-item {
       padding-top: 8px;
