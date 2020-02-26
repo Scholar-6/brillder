@@ -183,7 +183,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 justify="flex-end"
                 alignItems="flex-end"
               >
-                <div className="round-button-container right-button-container">
+                <div className="round-button-container">
                   <IconButton className="new-question-button" aria-label="next" onClick={createNewQuestion}>
                     <ArrowForwardIosIcon className="new-question-icon" />
                   </IconButton>
