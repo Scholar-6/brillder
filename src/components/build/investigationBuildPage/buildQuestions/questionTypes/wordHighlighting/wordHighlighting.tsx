@@ -27,6 +27,9 @@ export interface WordHighlightingProps {
 
 const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, updateComponent }) => {
   const prepareWords = (text: string):Word[] => {
+    if (!text) {
+      return [];
+    }
     let words = text.split(' ');
     return words.map(word => {
       return {text: word, checked: false} as Word;
@@ -59,7 +62,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, upda
         <div className="hightlight-area">
           {
             data.words.map((word, i) =>
-              <div style={{display: 'inline-block', marginRight: '5px', background: word.checked ? 'green' : 'inherit'}} onClick={() => {toggleLight(i)}}>
+              <div key={i} style={{display: 'inline-block', marginRight: '5px', background: word.checked ? 'green' : 'inherit'}} onClick={() => {toggleLight(i)}}>
                 {word.text}
               </div>
             )

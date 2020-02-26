@@ -1,0 +1,47 @@
+.line-highlight-build {
+  position: relative;
+
+  .pencil-icon-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    .active {
+      color: green;
+    }
+  }
+
+  .hightlight-area {
+    width: 100%;
+    background: white;
+    text-align: left;
+    min-height: 75px;
+    border: 1px solid grey;
+    padding: 0;
+    margin: 0;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .input-container {
+    padding-right: 2px;
+  }
+
+  .button-box {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    .add-answer-button {
+      width: 100%;
+      height: 60px;
+      font-size: 0.81vw;
+      border-radius: 4px;
+      background: #002060;
+      color: white;
+      font-family: 'Century Gothic Regular';
+    }
+  }
+}
