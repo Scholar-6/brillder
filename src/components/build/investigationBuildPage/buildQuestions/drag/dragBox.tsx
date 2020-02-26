@@ -1,12 +1,26 @@
-import React from 'react'
+import React, { Fragment, Component } from 'react'
 import { useDrag, DragSourceMonitor } from 'react-dnd'
+import { Grid } from '@material-ui/core';
+import MediaQuery from 'react-responsive';
 
 import './dragBox.scss';
 import ItemTypes from '../../ItemTypes'
-import { Grid } from '@material-ui/core';
 import { QuestionComponentTypeEnum } from 'components/model/question';
 import { DropResult } from './interfaces';
 
+
+const HoverBox = ({ marginTop, label }: any) => {
+  return (
+    <Fragment>
+      <MediaQuery minDeviceWidth={1280}>
+        <div className="drag-box-hover" style={{ marginTop }}>{label}</div>
+      </MediaQuery>
+      <MediaQuery maxDeviceWidth={1280}>
+        <div className="drag-box-hover" style={{ marginTop }}>{label}</div>
+      </MediaQuery>
+    </Fragment>
+  );
+}
 
 export interface BoxProps {
   name?: string,
@@ -31,7 +45,7 @@ const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, s
           dropResult.allowedDropEffect === 'any' ||
           dropResult.allowedDropEffect === dropResult.dropEffect
         if (isDropAllowed) {
-          onDrop(value, {value: dropResult.value, index: dropResult.index});
+          onDrop(value, { value: dropResult.value, index: dropResult.index });
         } else {
           alert(`You cannot ${dropResult.dropEffect} an item into the ${dropResult.value}`);
         }
@@ -45,14 +59,15 @@ const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, s
   const renderContent = () => {
     if (isImage) {
       return <div>
-        <img alt="" style={{width: '35%'}} src={src} />
-        <div className="drag-box-hover" style={{marginTop: hoverMarginTop}}>{label}</div>
+        <img alt="" style={{ width: '35%' }} src={src} />
+        <div className="drag-box-hover" style={{ marginTop: hoverMarginTop }}>{label}</div>
+        <HoverBox label={label} marginTop={hoverMarginTop} />
       </div>
     }
     return (
       <div>
         <div className="drag-box-name">{name}</div>
-        <div className="drag-box-hover" style={{marginTop: hoverMarginTop}}>{label}</div>
+        <HoverBox label={label} marginTop={hoverMarginTop} />
       </div>
     );
   }
@@ -63,4 +78,5 @@ const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, s
     </Grid>
   )
 }
+
 export default DragBox
