@@ -28,7 +28,7 @@ export interface HintProps {
 
 const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
   let initState = {
-    status: HintStatus.None,
+    status: HintStatus.All,
     value: '',
     list: []
   } as HintState;
@@ -43,16 +43,6 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
 
   const [state, setState] = React.useState(initState);
 
-  const allChecked = () => {
-    setState({ ...state, status: HintStatus.All });
-    onChange({ ...state, status: HintStatus.All });
-  }
-
-  const eachChecked = () => {
-    setState({ ...state, status: HintStatus.Each });
-    onChange({ ...state, status: HintStatus.Each });
-  }
-
   const onHintChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, value: event.target.value });
     onChange({ ...state, value: event.target.value });
@@ -63,7 +53,6 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
   }
 
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
-    console.log(status, typeof status)
     setState({...state, status});
   };
 

@@ -1,6 +1,7 @@
 import React from 'react'
-import DeleteIcon from '@material-ui/icons/Delete';
+import CloseIcon from '@material-ui/icons/Close';
 import Checkbox from '@material-ui/core/Checkbox'; 
+import { Button } from '@material-ui/core';
 
 import './chooseSeveralBuild.scss'
 
@@ -24,7 +25,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, u
     return {value: "", checked: false };
   }
   if (!data.list) {
-    data.list = [newAnswer()];
+    data.list = [newAnswer(), newAnswer(), newAnswer()];
   }
   const changed = (answer: any, event: any) => {
     answer.value = event.target.value;
@@ -50,7 +51,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, u
   const renderAnswer = (answer: any, key: number) => {
     return (
       <div className="choose-several-box" key={key}>
-        <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} />
+        <CloseIcon className="right-top-icon" onClick={() => removeFromList(key)} />
         <Checkbox className="left-ckeckbox" checked={answer.checked} onChange={onChecked} value={key} />
         <input value={answer.value} onChange={(event) => changed(answer, event)} placeholder="Enter answer..." />
       </div>
@@ -59,11 +60,14 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, u
 
   return (
     <div className="choose-several-build">
+      <p>Tick correct answers</p>
       {
         data.list.map((answer:any, i:number) => renderAnswer(answer, i))
       }
       <div className="button-box">
-        <button className="add-answer-button" onClick={addAnswer}>+ Add Answer</button>
+        <Button className="add-answer-button" onClick={addAnswer}>
+          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
+        </Button>
       </div>
     </div>
   )

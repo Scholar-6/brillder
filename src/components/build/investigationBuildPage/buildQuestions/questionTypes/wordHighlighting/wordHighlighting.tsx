@@ -1,5 +1,6 @@
 import React from 'react'
 import EditIcon from '@material-ui/icons/Edit';
+import { Button } from '@material-ui/core';
 
 import './wordHighlighting.scss'
 
@@ -53,7 +54,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, upda
         {renderBox()}
       </div>
       <div className="button-box">
-        <button className="add-answer-button" onClick={() => {}}>Convert to Click and Correct?</button>
+        <Button className="add-answer-button" onClick={() => {}}>Convert to Click and Correct?</Button>
       </div>
     </div>
   )

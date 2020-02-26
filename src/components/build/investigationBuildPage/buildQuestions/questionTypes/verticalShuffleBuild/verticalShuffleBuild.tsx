@@ -1,5 +1,6 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Button } from '@material-ui/core';
 
 import './verticalShuffleBuild.scss'
 
@@ -45,7 +46,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({dat
         data.list.map((answer:any, i:number) => renderAnswer(answer, i))
       }
       <div className="button-box">
-        <button className="add-answer-button" onClick={addAnswer}>+ Add Answer</button>
+        <Button className="add-answer-button" onClick={addAnswer}>+ Add Answer</Button>
       </div>
     </div>
   )
