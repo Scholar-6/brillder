@@ -53,7 +53,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({data, updateCom
 
   const renderAnswer = (answer: any, key: number) => {
     return (
-      <div className="choose-one-box" key={key}>
+      <div className="choose-one-box unique-component-box" key={key}>
         <CloseIcon className="right-top-icon" onClick={() => removeFromList(key)} />
         <Checkbox className="left-ckeckbox" checked={answer.checked} onChange={onChecked} value={key} />
         <input value={answer.value} onChange={(event) => changed(answer, event)} placeholder="Enter answer..." />
@@ -62,7 +62,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({data, updateCom
   }
 
   return (
-    <div className="choose-one-build">
+    <div className="choose-one-build unique-component">
       <p>Tick correct answer</p>
       {
         data.list.map((answer:any, i:number) => renderAnswer(answer, i))

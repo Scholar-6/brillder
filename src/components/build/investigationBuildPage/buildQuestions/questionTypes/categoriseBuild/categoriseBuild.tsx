@@ -1,6 +1,7 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox'; 
+import { Button } from '@material-ui/core';
 
 import './categoriseBuild.scss'
 
@@ -63,7 +64,9 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, upda
         data.list.map((answer:any, i:number) => renderAnswer(answer, i))
       }
       <div className="button-box">
-        <button className="add-answer-button" onClick={addAnswer}>+ Add Answer</button>
+        <Button className="add-answer-button" onClick={addAnswer}>
+          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
+        </Button>
       </div>
     </div>
   )

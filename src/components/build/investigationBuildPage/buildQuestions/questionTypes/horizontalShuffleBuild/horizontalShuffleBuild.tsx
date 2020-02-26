@@ -1,5 +1,6 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Button } from '@material-ui/core';
 
 import './horizontalShuffleBuild.scss'
 import { Grid } from '@material-ui/core';
@@ -50,7 +51,9 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({d
         }
       </Grid>
       <div className="button-box">
-        <button className="add-answer-button" onClick={addShortAnswer}>+ Add Answer</button>
+        <Button className="add-answer-button" onClick={addShortAnswer}>
+          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
+        </Button>
       </div>
     </div>
   )

@@ -61,7 +61,9 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ data, updateCo
         data.list.map((answer: any, i: number) => renderAnswer(answer, i))
       }
       <div className="button-box">
-        <Button className="add-answer-button" onClick={addAnswer}>+ Add Pair</Button>
+        <Button className="add-answer-button" onClick={addAnswer}>
+          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; P &nbsp; A &nbsp; I &nbsp; R
+        </Button>
       </div>
     </div>
   )

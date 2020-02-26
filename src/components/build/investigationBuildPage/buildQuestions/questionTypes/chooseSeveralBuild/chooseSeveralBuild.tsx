@@ -50,7 +50,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, u
 
   const renderAnswer = (answer: any, key: number) => {
     return (
-      <div className="choose-several-box" key={key}>
+      <div className="choose-several-box unique-component-box" key={key}>
         <CloseIcon className="right-top-icon" onClick={() => removeFromList(key)} />
         <Checkbox className="left-ckeckbox" checked={answer.checked} onChange={onChecked} value={key} />
         <input value={answer.value} onChange={(event) => changed(answer, event)} placeholder="Enter answer..." />
@@ -59,7 +59,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, u
   }
 
   return (
-    <div className="choose-several-build">
+    <div className="choose-several-build unique-component">
       <p>Tick correct answers</p>
       {
         data.list.map((answer:any, i:number) => renderAnswer(answer, i))
