@@ -31,10 +31,13 @@ export interface BoxProps {
   fontSize?: string,
   marginTop?: any,
   hoverMarginTop?: any,
+  fontFamily?: string,
   onDrop: Function,
 }
 
-const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, src, label, marginTop, hoverMarginTop }) => {
+const DragBox: React.FC<BoxProps> = ({
+  name, onDrop, value, fontSize, isImage, src, label, marginTop, hoverMarginTop, fontFamily
+}) => {
   const item = { name, type: ItemTypes.BOX }
   const [{ opacity }, drag] = useDrag({
     item,
@@ -65,7 +68,7 @@ const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, s
     }
     return (
       <div>
-        <div className="drag-box-name">{name}</div>
+        <div className="drag-box-name" style={{fontFamily}}>{name}</div>
         <HoverBox label={label} marginTop={hoverMarginTop} />
       </div>
     );
