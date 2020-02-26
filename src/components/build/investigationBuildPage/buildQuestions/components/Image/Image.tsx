@@ -5,7 +5,9 @@ import './Image.scss'
 import { Grid } from '@material-ui/core';
 
 const ImageComponent: React.FC<any> = () => {
-  const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
+  const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
+    accept: 'image/jpeg, image/png'
+  });
   
   const files = acceptedFiles.map((file:any) => (
     <li key={file.path}>
