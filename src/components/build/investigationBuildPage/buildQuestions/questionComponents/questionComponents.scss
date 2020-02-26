@@ -1,3 +1,5 @@
+@import "../../../../../variables";
+
 .questions {
   width: 100%;
 
@@ -17,7 +19,7 @@
       border: none;
       border-radius: 5px;
       text-transform: none;
-      background: #B54439;
+      background: $global-orange;
       color: white;
       font-size: 0.7vw;
       height: 60px;

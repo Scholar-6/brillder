@@ -1,4 +1,6 @@
 
+@import "../../../../variables";
+
 .hint-component {
   width: 100%;
 
@@ -44,7 +46,7 @@
       border-radius: 30px;
       font-size: 15px;
       padding: 0 5px;
-      background: #C22229;
+      background: $global-orange;
       margin-right: 0.6vw;
     }
   }

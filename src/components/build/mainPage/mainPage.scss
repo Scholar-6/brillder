@@ -1,3 +1,5 @@
+@import "../../../variables";
+
 .mainPage {
   position: fixed;
   width: 100%;
@@ -9,13 +11,13 @@
   }
 
   .bigButton {
-    background-color:#A84D3F !important;
+    background: $global-orange;
     text-align: center;
     width: 100%;
   }
 
   .bigButton:hover {
-    background-color: #c94f42;  
+    background: $global-orange-hover;  
   }
 
   .link-title {
