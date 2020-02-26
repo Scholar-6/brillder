@@ -52,9 +52,10 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
 
   const renderQuestionTab = (questions: Question[], question: Question, index: number) => {
     let titleClassNames = "drag-tile-container";
-    
+    let cols = 2;
     if (question.active) {
       titleClassNames += " active";
+      cols = 3;
     }
 
     let nextQuestion = questions[index + 1];
@@ -63,7 +64,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
     }
 
     return (
-      <GridListTile className={titleClassNames} key={index}>
+      <GridListTile className={titleClassNames} key={index} cols={cols}>
         <div className="drag-tile">
           <DragTab
             index={index}
@@ -80,7 +81,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
 
   const classes = useStyles();
 
-  let columns = questions.length + 1;
+  let columns = (questions.length * 2) + 3;
 
   const addQuestion = () => {
     createNewQuestion();
@@ -92,7 +93,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
         {
           questions.map((question, i) => renderQuestionTab(questions, question, i))
         }
-        <GridListTile onClick={addQuestion} className={"drag-tile-container"} cols={1}>
+        <GridListTile onClick={addQuestion} className={"drag-tile-container"} cols={2}>
           <div className={"drag-tile"} style={{marginLeft: '1px', height: '42px'}}>
             <LastTab columns={columns}></LastTab>
           </div>
