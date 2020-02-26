@@ -2,6 +2,7 @@
 @import "../../../../variables";
 
 .question-type {
+  position: relative;
   $color-light-grey: #D4D4D4;
   $color-light-red2: #A84C3F;
 
@@ -56,6 +57,27 @@
   
     .set-type-icon {
       font-size: 50px;
+    }
+  }
+
+  .round-button-container {
+    display: inline;
+
+    .new-question-button {
+      margin: 0 !important;
+      padding-top: 6px !important;
+      color: $global-orange;
+
+      div {
+        span {
+          height: 60px !important;
+          width: 60px !important;
+        }
+      }
+
+      .new-question-icon {
+        font-size: 50px;
+      }
     }
   }
 

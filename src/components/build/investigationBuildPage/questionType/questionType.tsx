@@ -70,11 +70,11 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuesti
           </Grid>
         </Grid>
       </div>
-      <Grid justify="flex-end" container direction="row">
-        <IconButton size="medium" className="set-type-button" onClick={() => setQuestionType(type)} aria-label="next">
-          <ArrowForwardIosIcon className="set-type-icon" />
+      <div className="round-button-container" style={{ position: 'absolute', right: 0, bottom: 0 }}>
+        <IconButton className="new-question-button" aria-label="next" onClick={() => setQuestionType(type)}>
+          <ArrowForwardIosIcon className="new-question-icon" />
         </IconButton>
-      </Grid>
+      </div>
     </div>
   );
 }
