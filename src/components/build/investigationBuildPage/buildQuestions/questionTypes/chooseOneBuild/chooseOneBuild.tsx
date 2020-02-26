@@ -1,7 +1,7 @@
 import React from 'react'
 import CloseIcon from '@material-ui/icons/Close';
 import Checkbox from '@material-ui/core/Checkbox'; 
-import { Button } from '@material-ui/core';
+import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
 import './chooseOneBuild.scss'
 
@@ -21,6 +21,8 @@ export interface ChooseOneBuildProps {
 }
 
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({data, updateComponent}) => {
+  const [height, setHeight] = React.useState('0');
+
   const newAnswer = () => {
     return {value: "", checked: false };
   }
@@ -30,11 +32,13 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({data, updateCom
   const changed = (answer: any, event: any) => {
     answer.value = event.target.value;
     updateComponent(data);
+    calculateHeight();
   }
 
   const addAnswer = () => {
     data.list.push(newAnswer());
     updateComponent(data);
+    calculateHeight();
   }
 
   const onChecked = (event:any) => {
@@ -49,6 +53,21 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({data, updateCom
   const removeFromList = (index: number) => {
     data.list.splice(index, 1);
     updateComponent(data);
+    calculateHeight();
+  }
+
+  const calculateHeight = () => {
+    let showButton = true;
+    for (let answer of data.list) {
+      if (answer.value === "") {
+        showButton = false;
+      }
+    }
+    if (showButton === true) {
+      setHeight('auto');
+    } else {
+      setHeight('0');
+    }
   }
 
   const renderAnswer = (answer: any, key: number) => {
@@ -67,11 +86,10 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({data, updateCom
       {
         data.list.map((answer:any, i:number) => renderAnswer(answer, i))
       }
-      <div className="button-box">
-        <Button className="add-answer-button" onClick={addAnswer}>
-          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
-        </Button>
-      </div>
+      <AddAnswerButton
+        addAnswer={addAnswer}
+        height={height}
+        label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
     </div>
   )
 }
