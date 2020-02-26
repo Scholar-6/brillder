@@ -1,8 +1,8 @@
 
+@import "../../../../variables";
 
 .question-type {
   $color-light-grey: #D4D4D4;
-  $color-light-red1: #BA544A;
   $color-light-red2: #A84C3F;
 
   border: 1px solid grey;
@@ -21,7 +21,7 @@
 
   .question-container {
     background: $color-light-grey;
-    color: $color-light-red1;
+    color: $global-orange;
     margin: 0.6vw 0.6vw 0.6vw 0.6vw;
     border-radius: 1.1vw;
     height: 15vh;
@@ -51,7 +51,7 @@
   .set-type-button {
     margin: 0 !important;
     padding-top: 6px !important;
-    color: #b44438;
+    color: $global-orange;
   
     .set-type-icon {
       font-size: 50px;

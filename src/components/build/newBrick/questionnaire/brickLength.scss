@@ -1,3 +1,4 @@
+@import "../../../../variables";
 
 .tutorial-page {
   height: 100%;
@@ -36,7 +37,7 @@
       }
   
       .brick-length-image.active {
-        background-color: #A84C3F;
+        background-color: $global-orange;
       }
       .brick-length-20-image.active {
         background-image: url('/images/20min-icon-white.png');

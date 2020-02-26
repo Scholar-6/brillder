@@ -1,3 +1,5 @@
+@import "../../../../variables";
+
 .tutorial-page {
   .tutorial-next-container {
     padding: 15px !important;
@@ -6,7 +8,7 @@
     .tutorial-next-button {
       margin: 23px !important;
       padding-top: 6px !important;
-      color: #b44438;
+      color: $global-orange;
 
       span {
         width: 70px !important;
