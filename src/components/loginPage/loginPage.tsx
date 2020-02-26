@@ -8,6 +8,7 @@ import actions from '../../redux/actions/auth';
 import './loginPage.scss';
 import { Redirect } from "react-router-dom";
 import {UserType} from '../model/userTypeModel';
+import { isAuthenticated } from "model/brick";
 
 
 const mapState = (state: any) => {
@@ -40,6 +41,7 @@ function LoginPage(props: any) {
     return <Redirect to="/choose-user" />
   }
   const userType = parseInt(type) as UserType;
+  console.log(userType)
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -58,10 +60,6 @@ function LoginPage(props: any) {
     }
 
     props.login({email, password});
-  }
-
-  if (props.isAuthenticated) {
-    props.history.push("/build");
   }
 
   const toRegister = () => {
