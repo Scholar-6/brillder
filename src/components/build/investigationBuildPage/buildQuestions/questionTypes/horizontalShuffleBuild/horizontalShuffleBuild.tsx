@@ -1,6 +1,7 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
+import AnimateHeight from 'react-animate-height';
 
 import './horizontalShuffleBuild.scss'
 import { Grid } from '@material-ui/core';
@@ -12,6 +13,7 @@ export interface VerticalShuffleBuildProps {
 }
 
 const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ data, updateComponent }) => {
+  const [height, setHeight] = React.useState('0');
   if (!data.list) {
     data.list = [{ value: "" }, { value: "" }, { value: "" }];
   }
@@ -19,6 +21,7 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
     shortAnswer.value = event.target.value;
     updateComponent(data);
     console.log('changed')
+    calculateHeight();
   }
 
   const addAnswer = () => {
@@ -41,26 +44,22 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
       </Grid>
     );
   }
-  console.log('render')
 
-  const renderButton = () => {
+  const calculateHeight = () => {
     let showButton = true;
+    let height = 100;
     for (let answer of data.list) {
       console.log(answer)
       if (answer.value === "") {
         showButton = false;
+        height = 0;
       }
     }
     if (showButton === true) {
-      return (
-        <div className="button-box">
-          <Button className="add-answer-button" onClick={addAnswer}>
-            + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
-        </Button>
-        </div>
-      );
+      setHeight('auto');
+    } else {
+      setHeight('0');
     }
-    return "";
   }
 
   return (
@@ -72,7 +71,16 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
           data.list.map((answer: any, i: number) => renderAnswer(answer, i))
         }
       </Grid>
-      {renderButton()}
+      <AnimateHeight
+        duration={500}
+        height={height}
+      >
+        <div className="button-box">
+          <Button className="add-answer-button" onClick={addAnswer}>
+            + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
+        </Button>
+        </div>
+      </AnimateHeight>
     </div>
   )
 }
