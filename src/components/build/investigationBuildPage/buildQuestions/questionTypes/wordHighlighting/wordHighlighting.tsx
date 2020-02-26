@@ -49,12 +49,23 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, upda
   }
 
   const toggleLight = (index:number) => {
+    data.words[index].checked = !data.words[index].checked;
+    updateComponent(data);
   }
 
   const renderBox = () => {
     if (data.mode == WordMode.Edit) {
-      let words = data.text.split(' ');
-      return <div className="hightlight-area">{words.map((word, i) => <div style={{display: 'inline-block', marginRight: '5px'}} onClick={() => {toggleLight(i)}}>{word}</div>)}</div>;
+      return (
+        <div className="hightlight-area">
+          {
+            data.words.map((word, i) =>
+              <div style={{display: 'inline-block', marginRight: '5px', background: word.checked ? 'green' : 'inherit'}} onClick={() => {toggleLight(i)}}>
+                {word.text}
+              </div>
+            )
+          }
+        </div>
+      );
     }
     return (
       <textarea className="words-input" rows={5} value={data.text} onChange={updateText} placeholder="Enter words here..." />

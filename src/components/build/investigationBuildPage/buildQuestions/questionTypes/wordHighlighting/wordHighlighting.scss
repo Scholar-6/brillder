@@ -5,6 +5,10 @@
     position: absolute;
     top: 0;
     right: 0;
+
+    .active {
+      color: green;
+    }
   }
 
   .hightlight-area {
