@@ -16,7 +16,7 @@ export interface QuestionTypeProps {
 }
 
 const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuestionType, history, brickId, questionId }: QuestionTypeProps) => {
-  if (questionType !== QuestionTypeEnum.None && questionId) {
+  if (questionType !== QuestionTypeEnum.None) {
     history.push(`/build/brick/${brickId}/build/investigation/question-component/${questionId}`);
   }
 
