@@ -60,11 +60,11 @@ function BriefPrep({ parentState, saveBriefPrep }: any) {
               <p>What do you want users to get out of this brick?</p>
               <p>Enter Brief and links to any Preparatory Materials.</p>
             </h1>
-            <input
+            <textarea
               value={state.preparationBrief}
               onChange={setBriefPrep}
               style={{ width: '90%', border: '2px solid black', height: '70px', textAlign: 'center' }}
-              placeholder="Enter Brief here..."></input>
+              placeholder="Enter Brief here..." />
             <Input
               value={state.links}
               onChange={setLinks}
