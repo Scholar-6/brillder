@@ -108,7 +108,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   name="“ ”"
                   fontSize="2.8vw"
                   label="Q U O T E"
-                  marginTop="1vw"
+                  marginTop="0vw"
                   hoverMarginTop="-0.65vw"
                   value={QuestionComponentTypeEnum.Quote} />
                 <DragBox
@@ -122,6 +122,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   onDrop={setDropBoxItem}
                   isImage={true} src="/images/soundicon.png"
                   label="S O U N D"
+                  marginTop="-0.2vw"
                   hoverMarginTop="0.5vw"
                   value={QuestionComponentTypeEnum.Sound} />
                 <DragBox
@@ -129,6 +130,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   name="E Q N"
                   fontSize="1.6vw"
                   label="E Q U A T I O N"
+                  fontFamily="Century Gothic Bold"
                   hoverMarginTop="0.9vw"
                   value={QuestionComponentTypeEnum.Equation} />
               </Grid>
