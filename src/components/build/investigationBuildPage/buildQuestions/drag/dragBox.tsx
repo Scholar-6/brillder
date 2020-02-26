@@ -9,16 +9,18 @@ import { DropResult } from './interfaces';
 
 
 export interface BoxProps {
-  name: string,
+  name?: string,
   value: QuestionComponentTypeEnum,
   isImage?: boolean,
+  label?: string,
   src?: string,
   fontSize?: string,
   marginTop?: any,
+  hoverMarginTop?: any,
   onDrop: Function,
 }
 
-const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, src, marginTop }) => {
+const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, src, label, marginTop, hoverMarginTop }) => {
   const item = { name, type: ItemTypes.BOX }
   const [{ opacity }, drag] = useDrag({
     item,
@@ -42,9 +44,17 @@ const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, s
 
   const renderContent = () => {
     if (isImage) {
-      return <div><img alt="" style={{width: '35%'}} src={src} /></div>
+      return <div>
+        <img alt="" style={{width: '35%'}} src={src} />
+        <div className="drag-box-hover" style={{marginTop: hoverMarginTop}}>{label}</div>
+      </div>
     }
-    return <div>{name}</div>
+    return (
+      <div>
+        <div className="drag-box-name">{name}</div>
+        <div className="drag-box-hover" style={{marginTop: hoverMarginTop}}>{label}</div>
+      </div>
+    );
   }
 
   return (

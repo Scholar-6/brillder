@@ -95,6 +95,12 @@
     }
   }
 
+  .left-sidebar:hover {
+    .drag-box-hover {
+      opacity: 1;
+    }
+  }
+
   .right-sidebar {
     .question-button-container {
       margin-top: 3vh;
