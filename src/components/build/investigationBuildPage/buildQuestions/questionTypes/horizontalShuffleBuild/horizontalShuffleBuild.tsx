@@ -1,7 +1,6 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Button } from '@material-ui/core';
-import AnimateHeight from 'react-animate-height';
+import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
 import './horizontalShuffleBuild.scss'
 import { Grid } from '@material-ui/core';
@@ -20,18 +19,19 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
   const changed = (shortAnswer: any, event: any) => {
     shortAnswer.value = event.target.value;
     updateComponent(data);
-    console.log('changed')
     calculateHeight();
   }
 
   const addAnswer = () => {
     data.list.push({ value: "" });
     updateComponent(data);
+    calculateHeight();
   }
 
   const removeFromList = (index: number) => {
     data.list.splice(index, 1);
     updateComponent(data);
+    calculateHeight();
   }
 
   const renderAnswer = (answer: any, key: number) => {
@@ -47,12 +47,9 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
 
   const calculateHeight = () => {
     let showButton = true;
-    let height = 100;
     for (let answer of data.list) {
-      console.log(answer)
       if (answer.value === "") {
         showButton = false;
-        height = 0;
       }
     }
     if (showButton === true) {
@@ -71,16 +68,10 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
           data.list.map((answer: any, i: number) => renderAnswer(answer, i))
         }
       </Grid>
-      <AnimateHeight
-        duration={500}
+      <AddAnswerButton
+        addAnswer={addAnswer}
         height={height}
-      >
-        <div className="button-box">
-          <Button className="add-answer-button" onClick={addAnswer}>
-            + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
-        </Button>
-        </div>
-      </AnimateHeight>
+        label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
     </div>
   )
 }
