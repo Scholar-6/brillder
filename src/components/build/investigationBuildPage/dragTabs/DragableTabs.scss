@@ -1,3 +1,6 @@
+$tab-radius: 0.3vw;
+$distance: 0.13vw;
+
 .drag-tabs {
   display: inline-block;
   width: 100%;
@@ -8,11 +11,11 @@
     padding: 0 !important;
     border-bottom: 1px solid grey;
     height: 100% !important;
+    padding-left: $distance !important;
   }
 
   .drag-tile {
     padding: 1px;
-    margin-left: 1px;
     cursor: pointer;
     height: 100%;
     background-color: #BFBFBF;
@@ -21,27 +24,27 @@
     border-left: 1px solid grey;
   }
   .drag-tile:first-child {
-    border-top-left-radius: 2px;
+    border-top-left-radius: $tab-radius;
   }
   .drag-tile:last-child {
     border-right: 1px solid grey;
-    border-top-right-radius: 2px;
+    border-top-right-radius: $tab-radius;
   }
 
   .drag-tile-container:first-child {
-    .drag-tile {
-      margin: 0;
-    }
+    padding: 0 !important;
   }
 
   .drag-tile-container.pre-active {
     .drag-tile {
-      margin-right: 1px;
+      margin-right: $distance;
     }
   }
 
   .drag-tile-container.active {
     border-bottom: 0;
+    padding: 0 !important;
+
     .drag-tile {
       background: white;
       border-bottom: none;
@@ -63,10 +66,9 @@
   }
 
   .last-tab {
-    margin-top: 10px;
     text-align: center;
     color: black;
-    font-size: 16px;
+    font-size: 1vw;
     background-color: #BFBFBF;
     font-family: 'Century Gothic Regular';
   }

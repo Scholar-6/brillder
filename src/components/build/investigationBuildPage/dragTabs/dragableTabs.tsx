@@ -95,7 +95,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
           questions.map((question, i) => renderQuestionTab(questions, question, i))
         }
         <GridListTile onClick={addQuestion} className={"drag-tile-container"} cols={2}>
-          <Grid className={"drag-tile"} alignContent="center">
+          <Grid className={"drag-tile"} container alignContent="center" justify="center">
             <LastTab columns={columns}></LastTab>
           </Grid>
         </GridListTile>
