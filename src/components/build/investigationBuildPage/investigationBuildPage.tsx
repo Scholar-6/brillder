@@ -153,15 +153,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     setLock(!locked);
   }
 
-  const setQuestion = (index:number, question: Question) => {
+  const setQuestion = (index: number, question: Question) => {
     if (locked) { return; }
     setQuestions(update(questions, { [index]: { $set: question } }));
   }
 
-  const setComponents = (index:number, components: any[]) => {
+  const setComponents = (index: number, components: any[]) => {
     if (locked) { return; }
     setQuestions(
-      update(questions, {[index]: { components: { $set: components } } })
+      update(questions, { [index]: { components: { $set: components } } })
     );
   }
 
@@ -189,7 +189,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       catch (e) {
       }
     }
-    console.log(brickId, brick.id, parsedQuestions);
     if (parsedQuestions.length > 0) {
       parsedQuestions[0].active = true;
       setQuestions(update(questions, { $set: parsedQuestions }));
@@ -249,10 +248,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   return (
     <DndProvider backend={Backend}>
       <div className="investigation-build-page">
-        <Grid container direction="row" alignItems="center" style={{height: '100%'}}>
-          <Grid container item xs={12} sm={12} md={7} lg={8} className="question-container">
-            <Grid container direction="row" justify="center" alignItems="center">
-              <Grid container item xs={12} sm={12} md={12} lg={9} style={{margin: '10px 0 10px 0'}}>
+        <Grid container direction="row" alignItems="center" style={{ height: '100%' }}>
+          <Grid container item xs={12} sm={12} md={7} lg={8} alignItems="center" style={{ height: '100%'}} className="question-container">
+            <Grid container direction="row" justify="center" alignItems="center" style={{ height: '100%' }}>
+              <Grid container item xs={12} sm={12} md={12} lg={9} style={{ height: '90%' }}>
                 <DragableTabs
                   questions={questions} createNewQuestion={createNewQuestion}
                   moveQuestions={moveQuestions} selectQuestion={selectQuestion}
@@ -276,11 +275,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
               </Grid>
             </Grid>
           </Grid>
-            <Hidden only={['xs', 'sm']}>
-              <Grid container justify="center" item md={5} lg={4}>
-                <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
-              </Grid>
-            </Hidden>
+          <Hidden only={['xs', 'sm']}>
+            <Grid container justify="center" item md={5} lg={4}>
+              <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+            </Grid>
+          </Hidden>
         </Grid>
       </div>
     </DndProvider>
