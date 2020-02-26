@@ -2,46 +2,47 @@ import React from 'react'
 import EditIcon from '@material-ui/icons/Edit';
 import { Button } from '@material-ui/core';
 
-import './wordHighlighting.scss'
+import './LineHighlightingBuild.scss'
 
-export enum WordMode {
+enum LineMode {
   Input,
   Edit,
 }
 
-export interface Word {
+export interface Line {
   text: string,
   checked: boolean,
 }
 
-export interface WordHighlightingData {
+export interface LineHighlightingData {
   text: string;
-  words: Word[];
-  mode: WordMode;
+  lines: Line[];
+  mode: LineMode;
 }
 
-export interface WordHighlightingProps {
-  data: WordHighlightingData
+export interface LineHighlightingProps {
+  data: LineHighlightingData
   updateComponent(component: any): void
 }
 
-const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, updateComponent }) => {
-  const prepareWords = (text: string):Word[] => {
+const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ data, updateComponent }) => {
+  const prepareLines = (text: string):Line[] => {
     if (!text) {
       return [];
     }
-    let words = text.split(' ');
-    return words.map(word => {
-      return {text: word, checked: false} as Word;
+    console.log(text)
+    let lines = text.split('\n');
+    return lines.map(line => {
+      return {text: line, checked: false} as Line;
     });
   }
 
   const switchMode = () => {
-    if (data.mode == WordMode.Edit) {
-      data.mode = WordMode.Input;
+    if (data.mode == LineMode.Edit) {
+      data.mode = LineMode.Input;
     } else {
-      data.mode = WordMode.Edit;
-      data.words = prepareWords(data.text);
+      data.mode = LineMode.Edit;
+      data.lines = prepareLines(data.text);
     }
     updateComponent(data);
   }
@@ -52,18 +53,18 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, upda
   }
 
   const toggleLight = (index:number) => {
-    data.words[index].checked = !data.words[index].checked;
+    data.lines[index].checked = !data.lines[index].checked;
     updateComponent(data);
   }
 
   const renderBox = () => {
-    if (data.mode == WordMode.Edit) {
+    if (data.mode == LineMode.Edit) {
       return (
         <div className="hightlight-area">
           {
-            data.words.map((word, i) =>
-              <div key={i} style={{display: 'inline-block', marginRight: '5px', background: word.checked ? 'green' : 'inherit'}} onClick={() => {toggleLight(i)}}>
-                {word.text}
+            data.lines.map((line, i) =>
+              <div key={i} style={{background: line.checked ? 'green' : 'inherit'}} onClick={() => {toggleLight(i)}}>
+                {line.text}
               </div>
             )
           }
@@ -71,15 +72,15 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, upda
       );
     }
     return (
-      <textarea className="words-input" rows={5} value={data.text} onChange={updateText} placeholder="Enter words here..." />
+      <textarea className="lines-input" rows={5} value={data.text} onChange={updateText} placeholder="Enter lines here..." />
     );
   }
 
   return (
-    <div className="word-highlight-build">
+    <div className="line-highlight-build">
       <div className="component-title">
         <div>Enter/Paste Text Below.</div>
-        <div>Use Highlighter Icon to click correct word(s).</div>
+        <div>Use Highlighter Icon to click correct line(s).</div>
       </div>
       <div className="pencil-icon-container">
         <EditIcon className={data.mode ? "active" : ""} onClick={switchMode} />
@@ -94,4 +95,4 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, upda
   )
 }
 
-export default WordHighlightingComponent
+export default LineHighlightingComponent
