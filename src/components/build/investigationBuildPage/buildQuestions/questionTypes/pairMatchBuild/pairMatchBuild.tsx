@@ -1,8 +1,9 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import './pairMatchBuild.scss'
-import { Grid } from '@material-ui/core';
 
 
 export interface PairMatchBuildProps {
@@ -60,7 +61,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ data, updateCo
         data.list.map((answer: any, i: number) => renderAnswer(answer, i))
       }
       <div className="button-box">
-        <button className="add-answer-button" onClick={addAnswer}>+ Add Pair</button>
+        <Button className="add-answer-button" onClick={addAnswer}>+ Add Pair</Button>
       </div>
     </div>
   )
