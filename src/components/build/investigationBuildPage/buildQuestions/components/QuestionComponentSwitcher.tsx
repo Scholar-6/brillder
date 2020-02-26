@@ -37,8 +37,8 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   const renderEmptyComponent = () => 
     <Grid container style={{height:'100%'}} justify="center" alignContent="center">
       <span className="drop-box-text" style={{color: '#838384', textAlign: 'justify'}}>
-        D &nbsp; R &nbsp; A &nbsp; G &nbsp; &nbsp; C &nbsp; O &nbsp; M &nbsp; P &nbsp; O &nbsp; N &nbsp; E &nbsp; N &nbsp; T &nbsp; &nbsp; H &nbsp; E &nbsp; R &nbsp; E
-        </span>
+        Drag Component Here
+      </span>
     </Grid>
 
   const cleanComponent = () => {
