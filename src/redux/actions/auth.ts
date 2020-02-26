@@ -88,7 +88,6 @@ const logout = () => {
 const isAuthorized = () => {
   return function (dispatch: Dispatch) {
     return axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks', {withCredentials: true}).then(response => {
-      console.log(response)
       if (response.data) {
         dispatch(authorizedSuccess());
       } else {

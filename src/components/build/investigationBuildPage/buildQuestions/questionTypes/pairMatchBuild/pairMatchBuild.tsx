@@ -1,7 +1,7 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Button } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
+import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
 import './pairMatchBuild.scss'
 
@@ -12,27 +12,47 @@ export interface PairMatchBuildProps {
 }
 
 const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ data, updateComponent }) => {
+  const [height, setHeight] = React.useState('0');
+
   if (!data.list) {
-    data.list = [{ value: "" }];
+    data.list = [{ value: "" }, { value: "" }, { value: "" }];
   }
   const optionChanged = (answer: any, event: any) => {
     answer.option = event.target.value;
     updateComponent(data);
+    calculateHeight();
   }
 
   const answerChanged = (answer: any, event: any) => {
     answer.value = event.target.value;
     updateComponent(data);
+    calculateHeight();
   }
 
   const addAnswer = () => {
     data.list.push({ value: "" });
     updateComponent(data);
+    calculateHeight();
   }
 
   const removeFromList = (index: number) => {
     data.list.splice(index, 1);
     updateComponent(data);
+    calculateHeight();
+  }
+
+  const calculateHeight = () => {
+    let showButton = true;
+    for (let answer of data.list) {
+      if (answer.value === "") {
+        showButton = false;
+      }
+    }
+    if (showButton === true) {
+      setHeight('auto');
+    } else {
+      setHeight('0');
+    }
   }
 
   const renderAnswer = (answer: any, key: number) => {
@@ -40,7 +60,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ data, updateCo
       <Grid container direction="row">
         <Grid container item xs={6} key={key}>
           <div className="pair-match-option" key={key}>
-            <input value={answer.option} onChange={(event) => optionChanged(answer, event)} placeholder={"Enter Answer " + (key + 1) + "..."} />
+            <input value={answer.option} onChange={(event) => optionChanged(answer, event)} placeholder={"Enter Option " + (key + 1) + "..."} />
           </div>
         </Grid>
         <Grid container item xs={6} key={key}>
@@ -60,11 +80,10 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ data, updateCo
       {
         data.list.map((answer: any, i: number) => renderAnswer(answer, i))
       }
-      <div className="button-box">
-        <Button className="add-answer-button" onClick={addAnswer}>
-          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; P &nbsp; A &nbsp; I &nbsp; R
-        </Button>
-      </div>
+      <AddAnswerButton
+        addAnswer={addAnswer}
+        height={height}
+        label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
     </div>
   )
 }

@@ -41,7 +41,6 @@ function LoginPage(props: any) {
     return <Redirect to="/choose-user" />
   }
   const userType = parseInt(type) as UserType;
-  console.log(userType)
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
