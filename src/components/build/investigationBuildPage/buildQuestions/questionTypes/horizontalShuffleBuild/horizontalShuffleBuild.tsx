@@ -8,20 +8,21 @@ import { Grid } from '@material-ui/core';
 
 export interface VerticalShuffleBuildProps {
   data: any
-  updateComponent(component:any):void
+  updateComponent(component: any): void
 }
 
-const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({data, updateComponent}) => {
+const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ data, updateComponent }) => {
   if (!data.list) {
-    data.list = [{value: ""}];
+    data.list = [{ value: "" }, { value: "" }, { value: "" }];
   }
   const changed = (shortAnswer: any, event: any) => {
     shortAnswer.value = event.target.value;
     updateComponent(data);
+    console.log('changed')
   }
 
-  const addShortAnswer = () => {
-    data.list.push({ value: ""});
+  const addAnswer = () => {
+    data.list.push({ value: "" });
     updateComponent(data);
   }
 
@@ -40,21 +41,38 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({d
       </Grid>
     );
   }
+  console.log('render')
+
+  const renderButton = () => {
+    let showButton = true;
+    for (let answer of data.list) {
+      console.log(answer)
+      if (answer.value === "") {
+        showButton = false;
+      }
+    }
+    if (showButton === true) {
+      return (
+        <div className="button-box">
+          <Button className="add-answer-button" onClick={addAnswer}>
+            + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
+        </Button>
+        </div>
+      );
+    }
+    return "";
+  }
 
   return (
     <div className="horizontal-shuffle-build">
-      <p style={{marginTop: '6px'}}>Enter Answers below in order.</p>
-      <p style={{marginBottom: '6px'}}>These will be randomised in the Play Interface.</p>
+      <p style={{ marginTop: '6px' }}>Enter Answers below in order.</p>
+      <p style={{ marginBottom: '6px' }}>These will be randomised in the Play Interface.</p>
       <Grid container direction="row">
         {
-          data.list.map((answer:any, i:number) => renderAnswer(answer, i))
+          data.list.map((answer: any, i: number) => renderAnswer(answer, i))
         }
       </Grid>
-      <div className="button-box">
-        <Button className="add-answer-button" onClick={addShortAnswer}>
-          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
-        </Button>
-      </div>
+      {renderButton()}
     </div>
   )
 }
