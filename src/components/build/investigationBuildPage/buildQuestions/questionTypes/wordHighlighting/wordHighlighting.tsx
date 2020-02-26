@@ -4,14 +4,20 @@ import { Button } from '@material-ui/core';
 
 import './wordHighlighting.scss'
 
-export interface Word {
+export enum WordMode {
+  Input,
+  Edit,
+}
 
+export interface Word {
+  text: string,
+  checked: boolean,
 }
 
 export interface WordHighlightingData {
   text: string;
-  word: Word;
-  mode: boolean;
+  words: Word[];
+  mode: WordMode;
 }
 
 export interface WordHighlightingProps {
@@ -20,9 +26,20 @@ export interface WordHighlightingProps {
 }
 
 const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, updateComponent }) => {
+  const prepareWords = (text: string):Word[] => {
+    let words = text.split(' ');
+    return words.map(word => {
+      return {text: word, checked: false} as Word;
+    });
+  }
 
   const switchMode = () => {
-    data.mode = !data.mode;
+    if (data.mode == WordMode.Edit) {
+      data.mode = WordMode.Input;
+    } else {
+      data.mode = WordMode.Edit;
+      data.words = prepareWords(data.text);
+    }
     updateComponent(data);
   }
 
@@ -31,10 +48,13 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, upda
     updateComponent(data);
   }
 
+  const toggleLight = (index:number) => {
+  }
+
   const renderBox = () => {
-    if (data.mode) {
+    if (data.mode == WordMode.Edit) {
       let words = data.text.split(' ');
-      return <div className="hightlight-area">{words.map((word, i) => <div>{word}</div>)}</div>;
+      return <div className="hightlight-area">{words.map((word, i) => <div style={{display: 'inline-block', marginRight: '5px'}} onClick={() => {toggleLight(i)}}>{word}</div>)}</div>;
     }
     return (
       <textarea className="words-input" rows={5} value={data.text} onChange={updateText} placeholder="Enter words here..." />
