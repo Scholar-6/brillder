@@ -6,6 +6,7 @@ import GridList from '@material-ui/core/GridList';
 import './DragableTabs.scss';
 import DragTab from './dragTab';
 import LastTab from './lastTab';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -94,9 +95,9 @@ const DragableTabs: React.FC<DragTabsProps> = ({ questions, createNewQuestion, m
           questions.map((question, i) => renderQuestionTab(questions, question, i))
         }
         <GridListTile onClick={addQuestion} className={"drag-tile-container"} cols={2}>
-          <div className={"drag-tile"} style={{marginLeft: '1px', height: '42px'}}>
+          <Grid className={"drag-tile"} alignContent="center">
             <LastTab columns={columns}></LastTab>
-          </div>
+          </Grid>
         </GridListTile>
       </GridList>
     </div>
