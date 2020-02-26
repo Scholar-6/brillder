@@ -34,7 +34,7 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   var { brickId } = props.match.params;
 
-  if (!props.brick) {
+  if (!props.brick || props.brick.id != brickId) {
     props.fetchBrick(brickId);
   }
 
@@ -83,11 +83,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
   const moveQuestions = (dragIndex: number, hoverIndex: number, dragQuestion: any) => {
     if (locked) { return; }
-    setQuestions(
-      update(questions, {
-        $splice: [[dragIndex, 1], [hoverIndex, 0, dragQuestion]],
-      }),
-    )
+    setQuestions(update(questions, { $splice: [[dragIndex, 1], [hoverIndex, 0, dragQuestion]] }))
   }
 
   const setQuestionType = (type: QuestionTypeEnum) => {
@@ -170,6 +166,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   }
 
   const { brick } = props;
+
+  if (brick.id != brickId) {
+    return <div>...Loading...</div>
+  }
+
   if (brick.questions && loaded === false) {
     const parsedQuestions: Question[] = [];
     for (const question of brick.questions) {
@@ -188,6 +189,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       catch (e) {
       }
     }
+    console.log(brickId, brick.id, parsedQuestions);
     if (parsedQuestions.length > 0) {
       parsedQuestions[0].active = true;
       setQuestions(update(questions, { $set: parsedQuestions }));
