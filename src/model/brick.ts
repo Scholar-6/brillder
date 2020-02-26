@@ -12,3 +12,9 @@ export interface Brick {
   type: number
   questions: any[]
 }
+
+export enum isAuthenticated {
+  None,
+  True,
+  False
+}
