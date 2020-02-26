@@ -56,9 +56,9 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard, selectQu
   }
 
   return (
-    <div className="draggable-tab" onClick={activateTab} ref={ref} style={{ ...style, opacity }}>
-      <Grid container direction="row">
-        <Grid item xs={10} style={{color: 'black', fontFamily: 'Century Gothic Regular' }}>
+    <div className="draggable-tab" onClick={activateTab} ref={ref} style={{ ...style, height: '100%', opacity }}>
+      <Grid container direction="row" alignContent="center" style={{height: '95%'}}>
+        <Grid item xs={10}  style={{color: 'black', fontFamily: 'Century Gothic Regular' }}>
           {index + 1}
         </Grid>
 

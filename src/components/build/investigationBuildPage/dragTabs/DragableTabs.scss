@@ -7,6 +7,7 @@
   .drag-tile-container {
     padding: 0 !important;
     border-bottom: 1px solid grey;
+    height: 100% !important;
   }
 
   .drag-tile {
@@ -44,7 +45,7 @@
     .drag-tile {
       background: white;
       border-bottom: none;
-      height: 43px;
+      height: 100%;
       margin: 0;
     }
   }
@@ -53,8 +54,7 @@
     display: inline-block;
     cursor: pointer;
     text-align: center;
-    padding: 6px 0;
-    font-size: 24px;
+    font-size: 1.5vw;
     width: 100%;
 
     .remove-icon:hover {
