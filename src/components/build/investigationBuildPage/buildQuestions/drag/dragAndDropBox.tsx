@@ -21,13 +21,15 @@ export interface DragAndBoxProps {
   value: QuestionComponentTypeEnum
   data: any
   onDrop: Function
-  component: Function
+  component: React.FC<any>,
   cleanComponent(): void
   updateComponent(component:any, index:number):void
 }
 
 const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, data, component, cleanComponent, updateComponent }) => {
-  const ref = useRef<HTMLDivElement>(null)  
+  const ref = useRef<HTMLDivElement>(null)
+
+  let UniqueComponent = component;
    
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: ItemTypes.BOX,
@@ -67,7 +69,7 @@ const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, data,
 
   return (
     <div ref={ref} className="drag-and-drop-box" style={{ backgroundColor, width: '100%', opacity }}>
-      {component({data, cleanComponent, updateComponent})}
+      <UniqueComponent data={data} cleanComponent={cleanComponent} updateComponent={updateComponent} />
     </div>
   )
 }
