@@ -91,7 +91,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
 
   return (
     <MuiThemeProvider >
-      <div style={{ width: '100%' }}>
+      <div style={{ width: '100%', height: '94%' }}>
         <Grid container justify="center" className="build-question-column" item xs={12}>
           <Grid container direction="row">
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
