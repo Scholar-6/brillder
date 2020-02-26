@@ -46,7 +46,9 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({dat
         data.list.map((answer:any, i:number) => renderAnswer(answer, i))
       }
       <div className="button-box">
-        <Button className="add-answer-button" onClick={addAnswer}>+ Add Answer</Button>
+        <Button className="add-answer-button" onClick={addAnswer}>
+          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
+        </Button>
       </div>
     </div>
   )

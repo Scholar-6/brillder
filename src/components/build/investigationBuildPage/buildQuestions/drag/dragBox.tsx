@@ -60,7 +60,6 @@ const DragBox: React.FC<BoxProps> = ({ name, onDrop, value, fontSize, isImage, s
     if (isImage) {
       return <div>
         <img alt="" style={{ width: '35%' }} src={src} />
-        <div className="drag-box-hover" style={{ marginTop: hoverMarginTop }}>{label}</div>
         <HoverBox label={label} marginTop={hoverMarginTop} />
       </div>
     }

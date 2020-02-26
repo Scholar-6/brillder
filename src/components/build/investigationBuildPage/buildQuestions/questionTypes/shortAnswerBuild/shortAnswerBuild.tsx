@@ -31,7 +31,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({data, updat
 
   const renderShortAnswer = (shortAnswer: any, key: number) => {
     return (
-      <div className="short-answer-box" key={key}>
+      <div className="short-answer-box unique-component-box" key={key}>
         <CloseIcon className="right-top-icon" onClick={() => removeFromList(key)} />
         <input value={shortAnswer.value} onChange={(event) => changed(shortAnswer, event)} placeholder="Enter Short Answer..." />
       </div>
@@ -39,7 +39,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({data, updat
   }
 
   return (
-    <div className="short-answer-build">
+    <div className="short-answer-build unique-component">
       {
         data.list.map((shortAnswer:any, i:number) => renderShortAnswer(shortAnswer, i))
       }
