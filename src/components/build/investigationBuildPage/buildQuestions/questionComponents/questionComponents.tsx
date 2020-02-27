@@ -9,7 +9,7 @@ import ChooseOneComponent from '../questionTypes/chooseOneBuild/chooseOneBuild';
 import ChooseSeveralComponent from '../questionTypes/chooseSeveralBuild/chooseSeveralBuild';
 import HorizontalShuffleComponent from '../questionTypes/horizontalShuffleBuild/horizontalShuffleBuild';
 import LineHighlightingComponent from '../questionTypes/lineHighlightingBuild/LineHighlightingBuild';
-import MissingWordComponent from '../questionTypes/missingWordBuild';
+import MissingWordComponent from '../questionTypes/missingWordBuild/MissingWordBuild';
 import PairMatchComponent from '../questionTypes/pairMatchBuild/pairMatchBuild';
 import VerticalShuffleComponent from '../questionTypes/verticalShuffleBuild/verticalShuffleBuild';
 import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHighlighting';
