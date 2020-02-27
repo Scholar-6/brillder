@@ -7,3 +7,7 @@
 .dropzone:hover {
     border: 2px dashed #6BB6F1;
 }
+
+.dropzone.disabled {
+    background: #EBEBE4;
+}

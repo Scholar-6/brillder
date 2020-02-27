@@ -22,13 +22,13 @@ const ImageComponent: React.FC<ImageProps> = ({locked}) => {
 
   return (
     <div>
-      <div {...getRootProps({className: 'dropzone'})}>
+      <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
         <input {...getInputProps()} />
         <Grid container justify="center" alignContent="center" style={{height:'100%'}}>
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <p>Drag 'n' drop image here, or click to select image</p>
         </Grid>
       </div>
-      {files}
+      {files[0]}
     </div>
   );
 }
