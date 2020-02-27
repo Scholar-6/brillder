@@ -13,9 +13,10 @@ export interface QuestionTypeProps {
   brickId: number,
   questionId: number,
   setQuestionType: Function
+  setPreviousQuestion(): void
 }
 
-const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuestionType, history, brickId, questionId }: QuestionTypeProps) => {
+const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, history, brickId, questionId, setQuestionType, setPreviousQuestion }: QuestionTypeProps) => {
   if (questionType !== QuestionTypeEnum.None) {
     history.push(`/build/brick/${brickId}/build/investigation/question-component/${questionId}`);
   }
@@ -73,6 +74,11 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, setQuesti
       <div className="round-button-container" style={{ position: 'absolute', right: 0, bottom: 0 }}>
         <IconButton className="new-question-button" aria-label="next" onClick={() => setQuestionType(type)}>
           <ArrowForwardIosIcon className="new-question-icon" />
+        </IconButton>
+      </div>
+      <div className="round-button-container" style={{ position: 'absolute', left: 0, bottom: 0 }}>
+        <IconButton className="new-question-button" aria-label="next" onClick={setPreviousQuestion}>
+          <ArrowForwardIosIcon className="new-question-icon rotate-180" />
         </IconButton>
       </div>
     </div>
