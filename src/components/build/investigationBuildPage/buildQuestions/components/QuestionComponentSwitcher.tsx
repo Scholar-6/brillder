@@ -18,16 +18,14 @@ export interface SwitchQuestionProps {
   uniqueComponent: any
   component: any
   hint: Hint
+  locked: boolean
   updateComponent(component: any, index: number): void
   swapComponents: Function
   setQuestionHint(hintState: HintState): void
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
-  type,
-  index,
-  component,
-  hint,
+  type, index, component, hint, locked,
   swapComponents,
   setQuestionHint,
   updateComponent,
@@ -70,7 +68,15 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     const numberOfAnswers = getNumberOfAnswers(component);
     return (
       <div className="unique-component-wrapper">
-        <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} cleanComponent={() => {}} updateComponent={updateComponent} component={innerComponent} />
+        <DragAndDropBox
+          locked={locked}
+          index={index}
+          value={value}
+          data={component}
+          onDrop={swapComponents}
+          cleanComponent={() => {}}
+          updateComponent={updateComponent}
+          component={innerComponent} />
         <HintComponent status={hint.status} value={hint.value} count={numberOfAnswers} onChange={setQuestionHint}/>
       </div>
     )
@@ -79,12 +85,28 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     return (
       <div style={{position: 'relative', width: '100%'}}>
         <DeleteIcon className="right-top-icon" style={{right: '2px', top: '7px'}} onClick={cleanComponent} />
-        <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} cleanComponent={cleanComponent} updateComponent={updateComponent} component={innerComponent} />
+        <DragAndDropBox
+          locked={locked}
+          index={index}
+          value={value}
+          data={component}
+          onDrop={swapComponents}
+          cleanComponent={cleanComponent}
+          updateComponent={updateComponent}
+          component={innerComponent} />
       </div>
     );
   }
   return (
-    <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} cleanComponent={cleanComponent} updateComponent={updateComponent} component={innerComponent} />
+    <DragAndDropBox
+      locked={locked}
+      index={index}
+      value={value}
+      data={component}
+      onDrop={swapComponents}
+      cleanComponent={cleanComponent}
+      updateComponent={updateComponent}
+      component={innerComponent} />
   );
 }
 

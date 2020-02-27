@@ -4,9 +4,14 @@ import {useDropzone} from 'react-dropzone';
 import './Image.scss'
 import { Grid } from '@material-ui/core';
 
-const ImageComponent: React.FC<any> = () => {
+interface ImageProps {
+  locked: boolean
+}
+
+const ImageComponent: React.FC<ImageProps> = ({locked}) => {
   const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
-    accept: 'image/jpeg, image/png'
+    accept: 'image/jpeg, image/png',
+    disabled: locked
   });
   
   const files = acceptedFiles.map((file:any) => (

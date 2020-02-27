@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
@@ -6,29 +6,38 @@ import './verticalShuffleBuild.scss'
 
 
 export interface VerticalShuffleBuildProps {
+  locked: boolean
   data: any
   updateComponent(component:any):void
 }
 
-const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({data, updateComponent}) => {
+const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({locked, data, updateComponent}) => {
   const [height, setHeight] = React.useState('0');
+
+  useEffect(() => {
+    calculateHeight();
+  });
 
   if (!data.list) {
     data.list = [{value: ""}, {value: ""}, {value: ""}];
   }
+
   const changed = (answer: any, event: any) => {
+    if (locked) { return; }
     answer.value = event.target.value;
     updateComponent(data);
     calculateHeight();
   }
 
   const addAnswer = () => {
+    if (locked) { return; }
     data.list.push({ value: ""});
     updateComponent(data);
     calculateHeight();
   }
 
   const removeFromList = (index: number) => {
+    if (locked) { return; }
     data.list.splice(index, 1);
     updateComponent(data);
     calculateHeight();
@@ -41,11 +50,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({dat
         showButton = false;
       }
     }
-    if (showButton === true) {
-      setHeight('auto');
-    } else {
-      setHeight('0');
-    }
+    showButton === true ? setHeight('auto') : setHeight('0');
   }
 
   const renderAnswer = (answer: any, key: number) => {

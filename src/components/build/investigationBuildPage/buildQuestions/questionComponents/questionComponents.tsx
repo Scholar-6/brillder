@@ -18,16 +18,17 @@ import { HintState } from 'components/build/baseComponents/Hint/Hint';
 
 
 type QuestionComponentsProps = {
+  locked: boolean
   history: any
   brickId: number
   question: Question
   swapComponents: Function
-  addComponent: Function
+  addComponent(): void
   updateComponent(component: any, index: number):void
   setQuestionHint(hintState: HintState): void
 }
 
-const QuestionComponents = ({ history, brickId, question, swapComponents, setQuestionHint, updateComponent, addComponent }: QuestionComponentsProps) => {
+const QuestionComponents = ({ locked, history, brickId, question, swapComponents, setQuestionHint, updateComponent, addComponent }: QuestionComponentsProps) => {
   const renderDropBox = (component: any, index: number) => {
     const updatingComponent = (compData:any) => {
       updateComponent(compData, index);
@@ -62,6 +63,7 @@ const QuestionComponents = ({ history, brickId, question, swapComponents, setQue
     return <SwitchQuestionComponent
       type={component.type}
       index={index}
+      locked={locked}
       swapComponents={swapComponents}
       component={component}
       updateComponent={updatingComponent}
@@ -71,7 +73,6 @@ const QuestionComponents = ({ history, brickId, question, swapComponents, setQue
   }
 
   const addQuestionComponent = () => {
-    // update question
     addComponent();
   }
 
@@ -81,9 +82,7 @@ const QuestionComponents = ({ history, brickId, question, swapComponents, setQue
         question.components.map((comp, i) => {
           return (
             <Grid key={i} container direction="row" className="drop-box">
-              {
-                renderDropBox(comp, i)
-              }
+              {renderDropBox(comp, i)}
             </Grid>
           )
         })

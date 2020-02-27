@@ -7,8 +7,9 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './Text.scss'
 
 export interface TextComponentProps {
-  index: number,
-  data: any,
+  locked: boolean
+  index: number
+  data: any
   cleanComponent(): void
   updateComponent(component: any, index: number): void
 }
@@ -17,7 +18,7 @@ const editorConfiguration = {
   toolbar: ['bold']
 };
 
-const TextComponent: React.FC<TextComponentProps> = ({index, data, cleanComponent, updateComponent}) => {
+const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, cleanComponent, updateComponent}) => {
   if (!data.value) {
     data.value = "";
   }
@@ -27,8 +28,9 @@ const TextComponent: React.FC<TextComponentProps> = ({index, data, cleanComponen
       <CKEditor
         editor={ClassicEditor}
         data={data.value}
+        disabled={locked}
         config={editorConfiguration}
-        onChange={(event: any, editor: any) => {
+        onChange={(e: any, editor: any) => {
           data.value = editor.getData();
           updateComponent(data, index);
         }}
