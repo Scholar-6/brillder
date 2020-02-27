@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { isAuthenticated } from 'model/brick';
 
 const AuthRoute: React.FC<any> = ({ component: Component, ...rest }) => {
-  if (rest.isAuthenticated == isAuthenticated.None || rest.isAuthenticated == isAuthenticated.False) {
+  if (rest.isAuthenticated === isAuthenticated.None || rest.isAuthenticated === isAuthenticated.False) {
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else {
     return <Redirect to={{ pathname: '/build' }} />

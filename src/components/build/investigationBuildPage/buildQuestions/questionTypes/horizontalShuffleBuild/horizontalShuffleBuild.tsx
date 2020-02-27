@@ -79,6 +79,7 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
         }
       </Grid>
       <AddAnswerButton
+        locked={locked}
         addAnswer={addAnswer}
         height={height}
         label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />

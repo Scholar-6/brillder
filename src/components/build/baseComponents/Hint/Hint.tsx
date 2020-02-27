@@ -50,10 +50,11 @@ const HintComponent: React.FC<HintProps> = ({ onChange, locked, ...props }) => {
     onChange({ ...state, value: event.target.value });
   }
 
+  /*
   const onHintListChanged = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     if (locked) { return; }
     onChange({ ...state, value: event.target.value });
-  }
+  }*/
 
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
     if (locked) { return; }
