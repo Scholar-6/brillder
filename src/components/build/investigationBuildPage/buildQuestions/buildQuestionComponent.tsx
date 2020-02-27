@@ -174,6 +174,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 <Grid container justify="center" item sm={12}>
                   <FormControl variant="outlined">
                     <Select
+                      disabled={locked}
                       value={type}
                       inputProps={{
                         name: 'age',
