@@ -59,6 +59,7 @@ const DragAndDropBox: React.FC<DragAndBoxProps> = ({ locked, value, index, onDro
     collect: (monitor: any) => ({
       opacity: monitor.isDragging() ? 0.9 : 1,
     }),
+    canDrag: (monitor: any) => !locked
   })
 
   const isActive = canDrop && isOver
