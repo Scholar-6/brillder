@@ -20,13 +20,14 @@ export interface HintState {
 }
 
 export interface HintProps {
+  locked: boolean
   status?: HintStatus,
   value?: string,
   count?: number,
   onChange(state: HintState): void
 }
 
-const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
+const HintComponent: React.FC<HintProps> = ({ onChange, locked, ...props }) => {
   let initState = {
     status: HintStatus.All,
     value: '',
@@ -44,15 +45,18 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
   const [state, setState] = React.useState(initState);
 
   const onHintChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (locked) { return; }
     setState({ ...state, value: event.target.value });
     onChange({ ...state, value: event.target.value });
   }
 
   const onHintListChanged = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    if (locked) { return; }
     onChange({ ...state, value: event.target.value });
   }
 
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
+    if (locked) { return; }
     setState({...state, status});
   };
 
@@ -60,7 +64,7 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
     if (state.status === HintStatus.All || !props.count || props.count === 1) {
       return (
         <Grid container item xs={12}>
-          <input className="hint-input-text" value={state.value} onChange={onHintChanged} placeholder="Enter Hint..."></input>
+          <input disabled={locked} className="hint-input-text" value={state.value} onChange={onHintChanged} placeholder="Enter Hint..."></input>
         </Grid>
       );
     }
@@ -69,7 +73,7 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
     for (let i = 0; i < props.count; i++) {
       answerHints.push(
         <Grid container item xs={12}>
-          <input className="hint-input-text" value={state.list[i]} onChange={onHintChanged} placeholder="Enter Hint..."></input>
+          <input disabled={locked} className="hint-input-text" value={state.list[i]} onChange={onHintChanged} placeholder="Enter Hint..."></input>
         </Grid>
       );
     }
@@ -87,10 +91,10 @@ const HintComponent: React.FC<HintProps> = ({ onChange, ...props }) => {
         </Grid>
         <Grid container item xs={7} justify="flex-start" alignContent="center">
           <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
-            <ToggleButton value={HintStatus.Each}>
+            <ToggleButton disabled={locked} value={HintStatus.Each}>
               Each Answer
             </ToggleButton>
-            <ToggleButton value={HintStatus.All}>
+            <ToggleButton disabled={locked} value={HintStatus.All}>
               All Answers
             </ToggleButton>
           </ToggleButtonGroup>

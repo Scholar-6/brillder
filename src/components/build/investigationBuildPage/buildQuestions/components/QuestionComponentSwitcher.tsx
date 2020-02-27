@@ -77,7 +77,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           cleanComponent={() => {}}
           updateComponent={updateComponent}
           component={innerComponent} />
-        <HintComponent status={hint.status} value={hint.value} count={numberOfAnswers} onChange={setQuestionHint}/>
+        <HintComponent status={hint.status} locked={locked} value={hint.value} count={numberOfAnswers} onChange={setQuestionHint}/>
       </div>
     )
   }
