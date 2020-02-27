@@ -256,6 +256,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     );
   }
 
+  const renderQuestionComponent = () => {
+    return (
+    <QuestionTypePage
+      history={history}
+      brickId={brickId}
+      questionId={activeQuestion.id}
+      setQuestionType={setQuestionType}
+      setPreviousQuestion={setPreviousQuestion}
+      questionType={activeQuestion.type} />
+    );
+  }
+
   return (
     <DndProvider backend={Backend}>
       <div className="investigation-build-page">
@@ -274,13 +286,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
                   <Route exac path='/build/brick/:brickId/build/investigation/question-component/:questionId'>
                     {renderBuildQuestion}
                   </Route>
-                  <Route
-                    exec path='/build/brick/:brickId/build/investigation/question/:questionId'
-                    component={() => <QuestionTypePage history={history} brickId={brickId} questionId={activeQuestion.id} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
+                  <Route exec path='/build/brick/:brickId/build/investigation/question/:questionId'>
+                    {renderQuestionComponent}
                   </Route>
-                  <Route
-                    exec path='/build/brick/:brickId/build/investigation/question'
-                    component={() => <QuestionTypePage history={history} brickId={brickId} questionId={activeQuestion.id} setQuestionType={setQuestionType} questionType={activeQuestion.type} />} >
+                  <Route exec path='/build/brick/:brickId/build/investigation/question'>
+                    {renderQuestionComponent}
                   </Route>
                 </Switch>
               </Grid>
