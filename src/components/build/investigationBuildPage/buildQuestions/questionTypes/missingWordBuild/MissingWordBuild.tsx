@@ -30,7 +30,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
   const newChoice = () => ({ before: "", answers: [newAnswer(), newAnswer(), newAnswer()], after: "" })
 
   if (!data.choices) {
-    data.choices = [newChoice(), newChoice()];
+    data.choices = [newChoice()];
   }
 
   const answerChanged = (answer: any, event: any) => {
@@ -110,7 +110,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
       }
       <div className="button-box">
         <Button disabled={locked} className="add-answer-button" onClick={addChoice}>
-          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; C &nbsp; H &nbsp; O &nbsp; I &nbsp; S &nbsp; E
+          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; M &nbsp; I &nbsp; S &nbsp; S &nbsp; I &nbsp; N &nbsp; G &nbsp; &nbsp; W &nbsp; O &nbsp; R &nbsp; D
         </Button>
       </div>
     </div>
