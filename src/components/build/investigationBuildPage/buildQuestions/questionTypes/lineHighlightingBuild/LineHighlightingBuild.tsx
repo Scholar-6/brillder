@@ -21,16 +21,15 @@ export interface LineHighlightingData {
 }
 
 export interface LineHighlightingProps {
+  locked: boolean
   data: LineHighlightingData
   updateComponent(component: any): void
 }
 
-const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ data, updateComponent }) => {
+const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, data, updateComponent }) => {
   const prepareLines = (text: string):Line[] => {
-    if (!text) {
-      return [];
-    }
-    console.log(text)
+    if (!text) { return []; }
+
     let lines = text.split('\n');
     return lines.map(line => {
       return {text: line, checked: false} as Line;
@@ -38,6 +37,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ data, upda
   }
 
   const switchMode = () => {
+    if (locked) { return; }
     if (data.mode == LineMode.Edit) {
       data.mode = LineMode.Input;
     } else {
@@ -48,11 +48,13 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ data, upda
   }
 
   const updateText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (locked) { return; }
     data.text = e.target.value;
     updateComponent(data);
   }
 
   const toggleLight = (index:number) => {
+    if (locked) { return; }
     data.lines[index].checked = !data.lines[index].checked;
     updateComponent(data);
   }
@@ -72,7 +74,12 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ data, upda
       );
     }
     return (
-      <textarea className="lines-input" rows={5} value={data.text} onChange={updateText} placeholder="Enter lines here..." />
+      <textarea
+        disabled={locked}
+        className="lines-input"
+        rows={5}
+        value={data.text}
+        onChange={updateText} placeholder="Enter lines here..." />
     );
   }
 

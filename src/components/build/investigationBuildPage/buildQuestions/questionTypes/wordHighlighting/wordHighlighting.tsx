@@ -21,11 +21,12 @@ export interface WordHighlightingData {
 }
 
 export interface WordHighlightingProps {
+  locked: boolean
   data: WordHighlightingData
   updateComponent(component: any): void
 }
 
-const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, updateComponent }) => {
+const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, data, updateComponent }) => {
   const prepareWords = (text: string):Word[] => {
     if (!text) {
       return [];
@@ -37,6 +38,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, upda
   }
 
   const switchMode = () => {
+    if (locked) { return; }
     if (data.mode == WordMode.Edit) {
       data.mode = WordMode.Input;
     } else {
@@ -47,11 +49,13 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, upda
   }
 
   const updateText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (locked) { return; }
     data.text = e.target.value;
     updateComponent(data);
   }
 
   const toggleLight = (index:number) => {
+    if (locked) { return; }
     data.words[index].checked = !data.words[index].checked;
     updateComponent(data);
   }
@@ -71,7 +75,13 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ data, upda
       );
     }
     return (
-      <textarea className="words-input" rows={5} value={data.text} onChange={updateText} placeholder="Enter words here..." />
+      <textarea
+        disabled={locked}
+        className="words-input"
+        rows={5}
+        value={data.text}
+        onChange={updateText}
+        placeholder="Enter words here..." />
     );
   }
 

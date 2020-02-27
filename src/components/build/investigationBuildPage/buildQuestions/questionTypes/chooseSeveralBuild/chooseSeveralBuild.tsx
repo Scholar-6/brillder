@@ -82,7 +82,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
       <div className="choose-several-box unique-component-box" key={key}>
         <CloseIcon className="right-top-icon" onClick={() => removeFromList(key)} />
         <Checkbox className="left-ckeckbox" disabled={locked} checked={answer.checked} onChange={onChecked} value={key} />
-        <input value={answer.value} onChange={(event) => changed(answer, event)} placeholder="Enter answer..." />
+        <input disabled={locked} value={answer.value} onChange={(event) => changed(answer, event)} placeholder="Enter answer..." />
       </div>
     );
   }

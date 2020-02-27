@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Grid } from '@material-ui/core';
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
@@ -7,35 +7,45 @@ import './pairMatchBuild.scss'
 
 
 export interface PairMatchBuildProps {
+  locked: boolean
   data: any
   updateComponent(component: any): void
 }
 
-const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ data, updateComponent }) => {
+const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, updateComponent }) => {
   const [height, setHeight] = React.useState('0');
+
+  useEffect(() => {
+    calculateHeight();
+  });
 
   if (!data.list) {
     data.list = [{ value: "" }, { value: "" }, { value: "" }];
   }
+
   const optionChanged = (answer: any, event: any) => {
+    if (locked) { return; }
     answer.option = event.target.value;
     updateComponent(data);
     calculateHeight();
   }
 
   const answerChanged = (answer: any, event: any) => {
+    if (locked) { return; }
     answer.value = event.target.value;
     updateComponent(data);
     calculateHeight();
   }
 
   const addAnswer = () => {
+    if (locked) { return; }
     data.list.push({ value: "" });
     updateComponent(data);
     calculateHeight();
   }
 
   const removeFromList = (index: number) => {
+    if (locked) { return; }
     data.list.splice(index, 1);
     updateComponent(data);
     calculateHeight();
@@ -60,13 +70,21 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ data, updateCo
       <Grid container direction="row">
         <Grid container item xs={6} key={key}>
           <div className="pair-match-option" key={key}>
-            <input value={answer.option} onChange={(event) => optionChanged(answer, event)} placeholder={"Enter Option " + (key + 1) + "..."} />
+            <input
+              disabled={locked}
+              value={answer.option}
+              onChange={(event) => optionChanged(answer, event)}
+              placeholder={"Enter Option " + (key + 1) + "..."} />
           </div>
         </Grid>
         <Grid container item xs={6} key={key}>
           <div className="pair-match-answer" key={key}>
-            <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} />
-            <input value={answer.value} onChange={(event) => answerChanged(answer, event)} placeholder={"Enter Answer " + (key + 1) + "..."} />
+            <DeleteIcon className="right-top-icon" style={{right: '1%'}} onClick={() => removeFromList(key)} />
+            <input
+              disabled={locked}
+              value={answer.value}
+              onChange={(event) => answerChanged(answer, event)}
+              placeholder={"Enter Answer " + (key + 1) + "..."} />
           </div>
         </Grid>
       </Grid>
