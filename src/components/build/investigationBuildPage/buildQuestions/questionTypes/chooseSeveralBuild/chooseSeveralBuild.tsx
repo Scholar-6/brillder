@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import CloseIcon from '@material-ui/icons/Close';
 import Checkbox from '@material-ui/core/Checkbox'; 
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
@@ -16,12 +16,17 @@ export interface ChooseSeveralData {
 }
 
 export interface ChooseSeveralBuildProps {
+  locked: boolean
   data: ChooseSeveralData
   updateComponent(component:any):void
 }
 
-const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, updateComponent}) => {
+const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked, data, updateComponent}) => {
   const [height, setHeight] = React.useState('0');
+
+  useEffect(() => {
+    calculateHeight();
+  });
 
   const newAnswer = () => {
     return {value: "", checked: false };
@@ -30,18 +35,21 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, u
     data.list = [newAnswer(), newAnswer(), newAnswer()];
   }
   const changed = (answer: any, event: any) => {
+    if (locked) { return; }
     answer.value = event.target.value;
     updateComponent(data);
     calculateHeight();
   }
 
   const addAnswer = () => {
+    if (locked) { return; }
     data.list.push(newAnswer());
     updateComponent(data);
     calculateHeight();
   }
 
   const onChecked = (event:React.ChangeEvent<HTMLInputElement>) => {
+    if (locked) { return; }
     const index = parseInt(event.target.value);
     data.list[index].checked = event.target.checked;
     updateComponent(data);
@@ -49,6 +57,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, u
   }
 
   const removeFromList = (index: number) => {
+    if (locked) { return; }
     data.list.splice(index, 1);
     updateComponent(data);
     calculateHeight();
@@ -72,7 +81,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, u
     return (
       <div className="choose-several-box unique-component-box" key={key}>
         <CloseIcon className="right-top-icon" onClick={() => removeFromList(key)} />
-        <Checkbox className="left-ckeckbox" checked={answer.checked} onChange={onChecked} value={key} />
+        <Checkbox className="left-ckeckbox" disabled={locked} checked={answer.checked} onChange={onChecked} value={key} />
         <input value={answer.value} onChange={(event) => changed(answer, event)} placeholder="Enter answer..." />
       </div>
     );

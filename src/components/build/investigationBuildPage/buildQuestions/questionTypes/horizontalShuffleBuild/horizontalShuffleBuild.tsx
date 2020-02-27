@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
@@ -7,28 +7,38 @@ import { Grid } from '@material-ui/core';
 
 
 export interface VerticalShuffleBuildProps {
+  locked: boolean
   data: any
   updateComponent(component: any): void
 }
 
-const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ data, updateComponent }) => {
+const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ locked, data, updateComponent }) => {
   const [height, setHeight] = React.useState('0');
+  
+  useEffect(() => {
+    calculateHeight();
+  });
+  
   if (!data.list) {
     data.list = [{ value: "" }, { value: "" }, { value: "" }];
   }
+
   const changed = (shortAnswer: any, event: any) => {
+    if (locked) { return; }
     shortAnswer.value = event.target.value;
     updateComponent(data);
     calculateHeight();
   }
 
   const addAnswer = () => {
+    if (locked) { return; }
     data.list.push({ value: "" });
     updateComponent(data);
     calculateHeight();
   }
 
   const removeFromList = (index: number) => {
+    if (locked) { return; }
     data.list.splice(index, 1);
     updateComponent(data);
     calculateHeight();

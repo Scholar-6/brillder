@@ -5,26 +5,38 @@ import { Button } from '@material-ui/core';
 import './shortAnswerBuild.scss'
 
 
+interface ShortAnswerItem {
+  value: string
+}
+
+interface ShrortAnswerData {
+  list: ShortAnswerItem[]
+}
+
 export interface ShortAnswerBuildProps {
-  data: any
+  data: ShrortAnswerData
+  locked: boolean
   updateComponent(component:any):void
 }
 
-const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({data, updateComponent}) => {
+const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, data, updateComponent}) => {
   if (!data.list) {
     data.list = [{value: ""}];
   }
   const changed = (shortAnswer: any, event: any) => {
+    if (locked) { return; }
     shortAnswer.value = event.target.value;
     updateComponent(data);
   }
 
   const addShortAnswer = () => {
+    if (locked) { return; }
     data.list.push({ value: ""});
     updateComponent(data);
   }
 
   const removeFromList = (index: number) => {
+    if (locked) { return; }
     data.list.splice(index, 1);
     updateComponent(data);
   }

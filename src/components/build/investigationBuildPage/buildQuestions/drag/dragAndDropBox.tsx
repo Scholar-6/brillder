@@ -17,6 +17,7 @@ function selectBackgroundColor(isActive: boolean, canDrop: boolean) {
 }
 
 export interface DragAndBoxProps {
+  locked: boolean
   index: number
   value: QuestionComponentTypeEnum
   data: any
@@ -26,7 +27,7 @@ export interface DragAndBoxProps {
   updateComponent(component:any, index:number):void
 }
 
-const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, data, component, cleanComponent, updateComponent }) => {
+const DragAndDropBox: React.FC<DragAndBoxProps> = ({ locked, value, index, onDrop, data, component, cleanComponent, updateComponent }) => {
   const ref = useRef<HTMLDivElement>(null)
 
   let UniqueComponent = component;
@@ -69,7 +70,7 @@ const DragAndDropBox: React.FC<DragAndBoxProps> = ({ value, index, onDrop, data,
 
   return (
     <div ref={ref} className="drag-and-drop-box" style={{ backgroundColor, width: '100%', opacity }}>
-      <UniqueComponent data={data} cleanComponent={cleanComponent} updateComponent={updateComponent} />
+      <UniqueComponent locked={locked} data={data} cleanComponent={cleanComponent} updateComponent={updateComponent} />
     </div>
   )
 }

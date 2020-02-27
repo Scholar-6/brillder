@@ -47,6 +47,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
   }
 
   const setQuestionComponentType = (type: any, dropBox: any) => {
+    if (locked) { return; }
     if (dropBox.value === QuestionComponentTypeEnum.Component) {
       return;
     }
@@ -58,6 +59,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
   }
 
   const swapComponents = (drag: any, drop: any) => {
+    if (locked) { return; }
     const index = getQuestionIndex(question);
     const components = Object.assign([], question.components) as any[];
     const tempComp = components[drag.index];
@@ -68,6 +70,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
   }
 
   const addComponent = () => {
+    if (locked) { return; }
     const index = getQuestionIndex(question);
     const components = Object.assign([], question.components) as any[];
     components.push({ type: 0 });
@@ -75,6 +78,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
   }
 
   const setQuestionHint = (hintState: HintState) => {
+    if (locked) { return; }
     const index = getQuestionIndex(question);
     const updatedQuestion = Object.assign({}, question) as Question;
     updatedQuestion.hint.value = hintState.value;
@@ -142,6 +146,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
             </Grid>
             <Grid container item xs={5} sm={6} md={6} className="question-components-list">
               <QuestionComponents
+                locked={locked}
                 brickId={brickId}
                 history={history}
                 question={question}
