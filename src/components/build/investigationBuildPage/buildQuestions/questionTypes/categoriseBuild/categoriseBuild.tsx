@@ -1,59 +1,86 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
-import Checkbox from '@material-ui/core/Checkbox'; 
 import { Button } from '@material-ui/core';
 
 import './categoriseBuild.scss'
 
 
-interface ChooseSeveralAnswer {
-  checked: boolean
+interface Answer {
   value: string
 }
 
+interface SortCategory {
+  name: string
+  answers: Answer[]
+}
+
 export interface ChooseSeveralData {
-  list: ChooseSeveralAnswer[]
+  categories: SortCategory[]
 }
 
 export interface ChooseSeveralBuildProps {
   data: ChooseSeveralData
-  updateComponent(component:any):void
+  updateComponent(component: any): void
 }
 
-const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, updateComponent}) => {
-  const newAnswer = () => {
-    return {value: "", checked: false };
+const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ data, updateComponent }) => {
+  const newAnswer = () => ({ value: "" });
+  const newCategory = () => ({ name: "", answers: [newAnswer()] })
+
+  if (!data.categories) {
+    data.categories = [newCategory(), newCategory()];
   }
-  if (!data.list) {
-    data.list = [newAnswer()];
-  }
-  const changed = (answer: any, event: any) => {
+
+  const answerChanged = (answer: any, event: any) => {
     answer.value = event.target.value;
     updateComponent(data);
   }
 
-  const addAnswer = () => {
-    data.list.push(newAnswer());
+  const addAnswer = (category: SortCategory) => {
+    category.answers.push(newAnswer());
     updateComponent(data);
   }
 
-  const onChecked = (event:React.ChangeEvent<HTMLInputElement>) => {
-    const index = parseInt(event.target.value);
-    data.list[index].checked = event.target.checked;
+  const removeAnswer = (category: SortCategory, index: number) => {
+    category.answers.splice(index, 1);
     updateComponent(data);
   }
 
-  const removeFromList = (index: number) => {
-    data.list.splice(index, 1);
+  const categoryChanged = (category: any, event: any) => {
+    category.name = event.target.value;
     updateComponent(data);
   }
 
-  const renderAnswer = (answer: any, key: number) => {
+  const addCategory = () => {
+    data.categories.push(newCategory());
+    updateComponent(data);
+  }
+
+  const removeCategory = (index: number) => {
+    data.categories.splice(index, 1);
+    updateComponent(data);
+  }
+
+  const renderCategory = (category: SortCategory, key: number) => {
     return (
       <div className="choose-several-box" key={key}>
-        <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} />
-        <Checkbox className="left-ckeckbox" checked={answer.checked} onChange={onChecked} value={key} />
-        <input value={answer.value} onChange={(event) => changed(answer, event)} placeholder="Enter answer..." />
+        <DeleteIcon className="right-top-icon" onClick={() => removeCategory(key)} />
+        <input value={category.name} onChange={(event) => categoryChanged(category, event)} placeholder="Enter category heading..." />
+        {
+          category.answers.map((answer, key) => {
+            return (
+              <div style={{position: 'relative'}} key={key}>
+                <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(category, key)} />
+                <input value={answer.value} onChange={(event: any) => { answerChanged(answer, event) }} placeholder="Enter answer..." />
+              </div>
+            );
+          })
+        }
+        <div className="button-box">
+          <Button className="add-answer-button" onClick={() => { addAnswer(category) }}>
+            + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
+          </Button>
+        </div>
       </div>
     );
   }
@@ -61,11 +88,11 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({data, upda
   return (
     <div className="choose-several-build">
       {
-        data.list.map((answer:any, i:number) => renderAnswer(answer, i))
+        data.categories.map((category, i) => renderCategory(category, i))
       }
       <div className="button-box">
-        <Button className="add-answer-button" onClick={addAnswer}>
-          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
+        <Button className="add-answer-button" onClick={addCategory}>
+          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; C &nbsp; A &nbsp; T &nbsp; E &nbsp; G &nbsp; O &nbsp; R &nbsp; Y
         </Button>
       </div>
     </div>
