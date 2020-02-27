@@ -45,7 +45,11 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
     return (
       <div className="short-answer-box unique-component-box" key={key}>
         <CloseIcon className="right-top-icon" onClick={() => removeFromList(key)} />
-        <input value={shortAnswer.value} onChange={(event) => changed(shortAnswer, event)} placeholder="Enter Short Answer..." />
+        <input
+          disabled={locked}
+          value={shortAnswer.value}
+          onChange={(event) => changed(shortAnswer, event)}
+          placeholder="Enter Short Answer..." />
       </div>
     );
   }

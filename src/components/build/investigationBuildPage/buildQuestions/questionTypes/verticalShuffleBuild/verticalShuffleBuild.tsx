@@ -57,7 +57,11 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({loc
     return (
       <div className="short-answer-box" key={key}>
         <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} />
-        <input value={answer.value} onChange={(event) => changed(answer, event)} placeholder={"Enter Answer " + (key + 1) + "..."} />
+        <input
+          disabled={locked}
+          value={answer.value}
+          onChange={(event) => changed(answer, event)}
+          placeholder={"Enter Answer " + (key + 1) + "..."} />
       </div>
     );
   }
