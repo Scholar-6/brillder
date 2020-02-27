@@ -19,11 +19,12 @@ export interface ChooseSeveralData {
 }
 
 export interface ChooseSeveralBuildProps {
+  locked: boolean
   data: ChooseSeveralData
   updateComponent(component: any): void
 }
 
-const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ data, updateComponent }) => {
+const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ locked, data, updateComponent }) => {
   const newAnswer = () => ({ value: "" });
   const newCategory = () => ({ name: "", answers: [newAnswer()] })
 
@@ -65,19 +66,19 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ data, upd
     return (
       <div className="choose-several-box" key={key}>
         <DeleteIcon className="right-top-icon" onClick={() => removeCategory(key)} />
-        <input value={category.name} onChange={(event) => categoryChanged(category, event)} placeholder="Enter category heading..." />
+        <input disabled={locked} value={category.name} onChange={(event) => categoryChanged(category, event)} placeholder="Enter category heading..." />
         {
           category.answers.map((answer, key) => {
             return (
               <div style={{position: 'relative'}} key={key}>
                 <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(category, key)} />
-                <input value={answer.value} onChange={(event: any) => { answerChanged(answer, event) }} placeholder="Enter answer..." />
+                <input disabled={locked} value={answer.value} onChange={(event: any) => { answerChanged(answer, event) }} placeholder="Enter answer..." />
               </div>
             );
           })
         }
         <div className="button-box">
-          <Button className="add-answer-button" onClick={() => { addAnswer(category) }}>
+          <Button disabled={locked} className="add-answer-button" onClick={() => { addAnswer(category) }}>
             + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
           </Button>
         </div>
@@ -91,7 +92,7 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ data, upd
         data.categories.map((category, i) => renderCategory(category, i))
       }
       <div className="button-box">
-        <Button className="add-answer-button" onClick={addCategory}>
+        <Button disabled={locked} className="add-answer-button" onClick={addCategory}>
           + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; C &nbsp; A &nbsp; T &nbsp; E &nbsp; G &nbsp; O &nbsp; R &nbsp; Y
         </Button>
       </div>
