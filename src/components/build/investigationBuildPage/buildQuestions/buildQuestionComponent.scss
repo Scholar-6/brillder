@@ -6,6 +6,18 @@
     width: 15px;
   }
 
+  input {
+    border-radius: 0.2vw;
+    margin-bottom: 1px;
+    margin-top: 1px;
+  }
+
+  textarea {
+    border-radius: 0.2vw;
+    margin-bottom: 1px;
+    margin-top: 1px;
+  }
+
   ::-webkit-scrollbar-thumb {
     background: grey;
     border-radius: 7px;
