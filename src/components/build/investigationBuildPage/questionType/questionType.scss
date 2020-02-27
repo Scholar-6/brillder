@@ -65,14 +65,13 @@
 
     .new-question-button {
       margin: 0 !important;
-      padding-top: 6px !important;
+      
+      padding: 0 !important;
       color: $global-orange;
 
-      div {
-        span {
-          height: 60px !important;
-          width: 60px !important;
-        }
+      span {
+        height: 60px !important;
+        width: 60px !important;
       }
 
       .new-question-icon {

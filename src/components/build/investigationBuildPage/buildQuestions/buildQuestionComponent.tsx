@@ -27,14 +27,16 @@ export interface QuestionProps {
   createNewQuestion(): void
   getQuestionIndex(question: Question): number
   setQuestionComponents(index: number, components: any[]): void
+  setPreviousQuestion(): void
   toggleLock(): void
   locked: boolean
 }
 
 const BuildQuestionComponent: React.FC<QuestionProps> = (
   {
-    brickId, question, history, setQuestionType, getQuestionIndex, toggleLock, locked,
-    saveBrick, updateComponent, createNewQuestion, setQuestion, setQuestionComponents,
+    brickId, question, history, setQuestionType, getQuestionIndex, toggleLock, 
+    saveBrick, updateComponent, createNewQuestion, setQuestion,
+    setQuestionComponents, locked, setPreviousQuestion
   }
 ) => {
   const { type } = question;
@@ -69,7 +71,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
     const index = getQuestionIndex(question);
     const components = Object.assign([], question.components) as any[];
     components.push({ type: 0 });
-
     setQuestionComponents(index, components);
   }
 
@@ -78,7 +79,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
     const updatedQuestion = Object.assign({}, question) as Question;
     updatedQuestion.hint.value = hintState.value;
     updatedQuestion.hint.status = hintState.status;
-
     setQuestion(index, updatedQuestion);
   }
 
@@ -91,8 +91,13 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
 
   return (
     <MuiThemeProvider >
-      <div style={{ width: '100%', height: '94%' }}>
+      <div className="build-question-page" style={{width: '100%', height: '94%'}}>
         <Grid container justify="center" className="build-question-column" item xs={12}>
+        <div className="prev-button-container">
+          <IconButton className="new-question-button" aria-label="next" onClick={setPreviousQuestion}>
+            <ArrowForwardIosIcon className="new-question-icon rotate-180" />
+          </IconButton>
+        </div>
           <Grid container direction="row">
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
               <Grid container item xs={12} className="left-sidebar" alignItems="center">

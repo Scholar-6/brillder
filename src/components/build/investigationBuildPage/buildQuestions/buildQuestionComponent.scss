@@ -1,6 +1,7 @@
 @import "../../../../variables";
 
-.build-question-column {
+
+.build-question-page {
   ::-webkit-scrollbar {
     width: 15px;
   }
@@ -10,31 +11,10 @@
     border-radius: 7px;
   }
 
-  padding-top: 3.2vh;
-
-  border: 1px solid grey;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  border-top: none;
-  font-size: 14px;
-  color: black;
-
-  .unique-component-wrapper {
-    width: 100%;
-  }
-
-  .question-lock-container {
-    margin-bottom: 7px;
-  }
-
-  .no-margin {
-    margin: 0 !important;
-  }
-
-  .round-button-container {
-    display: inline;
-    margin-right: 13px;
-    margin-bottom: 3px;
+  .prev-button-container {
+    position: absolute;
+    bottom: 2px;
+    left: 0;
 
     .new-question-button {
       margin: 0 !important;
@@ -49,140 +29,192 @@
       }
 
       .new-question-icon {
+        margin-left: -10px !important;
         font-size: 50px;
+        path {
+          width: 25.25 !important;
+          height: 41.67 !important;
+        }
       }
     }
   }
 
-  .important-text-container {
-    text-align: left;
+  .build-question-column {
+  position: relative;
+
+    padding-top: 3.2vh;
+
+    border: 1px solid grey;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top: none;
+    font-size: 14px;
     color: black;
-  }
 
-  .first-row {
-    color: black;
-    margin-top: 5px;
-    margin-bottom: 10px;
-  }
-
-  .question-components-list {
-    max-height: 38vw;
-    overflow-y: auto;
-    border: 1px solid black;
-    border-radius: 7px;
-    padding: 0px 4px 2px 4px;
-    margin-bottom: 25px;
-  }
-
-  .drop-box-text {
-    font-size: 1.35vw;
-  }
-
-  .parent-left-sidebar {
-    height: 85%;
-    padding-bottom: 25px;
-  }
-
-  .left-sidebar {
-    margin-top: 3vh;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom: 40px;
-    height: 87% !important;
-
-    .drag-box-item {
-      padding-top: 8px;
+    .unique-component-wrapper {
       width: 100%;
-      text-align: center;
+    }
 
-      div {
-        width: 100%;
+    .question-lock-container {
+      margin-bottom: 7px;
+    }
+
+    .no-margin {
+      margin: 0 !important;
+    }
+
+    .round-button-container {
+      display: inline;
+      margin: 0 13px 3px 0;
+
+      .new-question-button {
+        padding-top: 6px !important;
+        color: $global-orange;
+
+        div {
+          span {
+            height: 60px !important;
+            width: 60px !important;
+          }
+        }
+
+        .new-question-icon {
+          margin-left: -2px !important;
+          font-size: 50px;
+        }
       }
     }
-  }
 
-  .left-sidebar:hover {
-    .drag-box-hover {
-      opacity: 1;
+    .important-text-container {
+      text-align: left;
+      color: black;
     }
-  }
 
-  .right-sidebar {
-    .question-button-container {
+    .first-row {
+      color: black;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+
+    .question-components-list {
+      max-height: 38vw;
+      overflow-y: auto;
+      border: 1px solid black;
+      border-radius: 7px;
+      padding: 0px 4px 2px 4px;
+      margin-bottom: 25px;
+    }
+
+    .drop-box-text {
+      font-size: 1.35vw;
+    }
+
+    .parent-left-sidebar {
+      height: 85%;
+      padding-bottom: 25px;
+    }
+
+    .left-sidebar {
       margin-top: 3vh;
-      margin-left: 10px;
-      width: 90%;
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-bottom: 40px;
+      height: 87% !important;
+
+      .drag-box-item {
+        padding-top: 8px;
+        width: 100%;
+        text-align: center;
+
+        div {
+          width: 100%;
+        }
+      }
+    }
+
+    .left-sidebar:hover {
+      .drag-box-hover {
+        opacity: 1;
+      }
+    }
+
+    .right-sidebar {
+      .question-button-container {
+        margin-top: 3vh;
+        margin-left: 10px;
+        width: 90%;
+
+        button {
+          line-height: 1.3 !important;
+          margin: 5px;
+          padding: 0px;
+          border-radius: 0;
+          display: block;
+          border: 2px solid $global-orange;
+          border-radius: 10px;
+          background: white;
+          color: $global-orange;
+          width: 90%;
+          font-family: 'Century Gothic Regular';
+          font-size: 1.1vw;
+        }
+      }
+
+      .order-text-container {
+        text-align: center;
+
+        div {
+          max-width: 140px;
+        }
+      }
+    }
+
+    .build-question-footer {
+      text-align: center;
 
       button {
-        line-height: 1.3 !important;
         margin: 5px;
-        padding: 0px;
-        border-radius: 0;
-        display: block;
-        border: 2px solid $global-orange;
-        border-radius: 10px;
+        padding: 6px;
+        border-radius: 8px;
         background: white;
-        color: $global-orange;
-        width: 90%;
-        font-family: 'Century Gothic Regular';
-        font-size: 1.1vw;
       }
     }
 
-    .order-text-container {
-      text-align: center;
+    button:hover {
+      cursor: pointer;
+    }
 
-      div {
-        max-width: 140px;
+    @media only screen and (min-width: 1200px) {
+      .left-button-container {
+        padding-left: 30px !important;
       }
     }
-  }
 
-  .build-question-footer {
-    text-align: center;
-
-    button {
-      margin: 5px;
-      padding: 6px;
-      border-radius: 8px;
-      background: white;
-    }
-  }
-
-  button:hover {
-    cursor: pointer;
-  }
-
-  @media only screen and (min-width: 1200px) {
-    .left-button-container {
-      padding-left: 30px !important;
-    }
-  }
-
-  @media only screen and (max-width: 1199px) and (min-width: 960px) {
-    .left-button-container {
-      padding-left: 15px !important;
-    }
-  }
-
-  @media only screen and (max-width: 959px) and (min-width: 600px) {
-    .left-button-container {
-      padding-left: 15px !important;
+    @media only screen and (max-width: 1199px) and (min-width: 960px) {
+      .left-button-container {
+        padding-left: 15px !important;
+      }
     }
 
-    .drop-box-text {
-      font-size: 1.6vw;
+    @media only screen and (max-width: 959px) and (min-width: 600px) {
+      .left-button-container {
+        padding-left: 15px !important;
+      }
+
+      .drop-box-text {
+        font-size: 1.6vw;
+      }
     }
-  }
 
-  @media only screen and (max-width: 599px) {
+    @media only screen and (max-width: 599px) {
 
-    .left-button-container {
-      padding-left: 15px !important;
-    }
+      .left-button-container {
+        padding-left: 15px !important;
+      }
 
-    .drop-box-text {
-      font-size: 1.3vw;
+      .drop-box-text {
+        font-size: 1.3vw;
+      }
     }
   }
 }
