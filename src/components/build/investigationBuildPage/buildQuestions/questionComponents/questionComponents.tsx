@@ -88,7 +88,7 @@ const QuestionComponents = ({ locked, history, brickId, question, swapComponents
         })
       }
       <Grid container direction="row" className="add-dropbox">
-        <Button className="add-dropbox-button" onClick={addQuestionComponent}>
+        <Button disabled={locked} className="add-dropbox-button" onClick={addQuestionComponent}>
           + &nbsp;&nbsp; Q &nbsp; U &nbsp; E &nbsp; S &nbsp; T &nbsp; I &nbsp; O &nbsp; N &nbsp; &nbsp; C &nbsp; O &nbsp; M &nbsp; P &nbsp; O &nbsp; N &nbsp; E &nbsp; N &nbsp; T
         </Button>
       </Grid>
