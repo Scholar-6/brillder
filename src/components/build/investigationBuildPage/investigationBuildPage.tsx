@@ -32,9 +32,9 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
-  var { brickId } = props.match.params;
+  const brickId = parseInt(props.match.params.brickId);
 
-  if (!props.brick || props.brick.id != brickId) {
+  if (!props.brick || props.brick.id !== brickId) {
     props.fetchBrick(brickId);
   }
 
@@ -176,7 +176,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
   const { brick } = props;
 
-  if (brick.id != brickId) {
+  console.log(typeof brick.id, typeof brickId)
+  if (brick.id !== brickId) {
     return <div>...Loading...</div>
   }
 

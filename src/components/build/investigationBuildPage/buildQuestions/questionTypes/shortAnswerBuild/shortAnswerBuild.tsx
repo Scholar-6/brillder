@@ -60,7 +60,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
         data.list.map((shortAnswer:any, i:number) => renderShortAnswer(shortAnswer, i))
       }
       <div className="button-box">
-        <Button className="add-answer-button" onClick={addShortAnswer}>
+        <Button disabled={locked} className="add-answer-button" onClick={addShortAnswer}>
           + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; S &nbsp; H &nbsp; O &nbsp; R &nbsp; T &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
         </Button>
       </div>

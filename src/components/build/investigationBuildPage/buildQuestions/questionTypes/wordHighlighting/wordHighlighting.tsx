@@ -39,7 +39,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
 
   const switchMode = () => {
     if (locked) { return; }
-    if (data.mode == WordMode.Edit) {
+    if (data.mode === WordMode.Edit) {
       data.mode = WordMode.Input;
     } else {
       data.mode = WordMode.Edit;
@@ -61,7 +61,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
   }
 
   const renderBox = () => {
-    if (data.mode == WordMode.Edit) {
+    if (data.mode === WordMode.Edit) {
       return (
         <div className="hightlight-area">
           {
@@ -98,7 +98,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
         {renderBox()}
       </div>
       <div className="button-box">
-        <Button className="add-answer-button" onClick={() => {}}>Convert to Click and Correct?</Button>
+        <Button disabled={locked} className="add-answer-button" onClick={() => {}}>Convert to Click and Correct?</Button>
       </div>
     </div>
   )

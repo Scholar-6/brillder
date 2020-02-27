@@ -8,7 +8,6 @@ import actions from '../../redux/actions/auth';
 import './loginPage.scss';
 import { Redirect } from "react-router-dom";
 import {UserType} from '../model/userTypeModel';
-import { isAuthenticated } from "model/brick";
 
 
 const mapState = (state: any) => {

@@ -74,6 +74,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({loc
         data.list.map((answer:any, i:number) => renderAnswer(answer, i))
       }
       <AddAnswerButton
+        locked={locked}
         addAnswer={addAnswer}
         height={height}
         label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; P &nbsp; A &nbsp; I &nbsp; R" />

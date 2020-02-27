@@ -38,7 +38,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
 
   const switchMode = () => {
     if (locked) { return; }
-    if (data.mode == LineMode.Edit) {
+    if (data.mode === LineMode.Edit) {
       data.mode = LineMode.Input;
     } else {
       data.mode = LineMode.Edit;
@@ -60,7 +60,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
   }
 
   const renderBox = () => {
-    if (data.mode == LineMode.Edit) {
+    if (data.mode === LineMode.Edit) {
       return (
         <div className="hightlight-area">
           {
