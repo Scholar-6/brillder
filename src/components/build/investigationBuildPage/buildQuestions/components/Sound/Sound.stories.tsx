@@ -3,4 +3,4 @@ import * as React from 'react';
 import Sound from "./Sound";
 
 storiesOf("QuestionComponent", module)
-  .add("Sound", () => <Sound/>);
+  .add("Sound", () => <Sound locked={false}/>);

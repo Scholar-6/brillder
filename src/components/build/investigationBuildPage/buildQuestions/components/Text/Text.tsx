@@ -10,7 +10,6 @@ export interface TextComponentProps {
   locked: boolean
   index: number
   data: any
-  cleanComponent(): void
   updateComponent(component: any, index: number): void
 }
 
@@ -18,7 +17,7 @@ const editorConfiguration = {
   toolbar: ['bold']
 };
 
-const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, cleanComponent, updateComponent}) => {
+const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updateComponent}) => {
   if (!data.value) {
     data.value = "";
   }

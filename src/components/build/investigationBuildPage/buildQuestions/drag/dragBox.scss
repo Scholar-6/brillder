@@ -1,6 +1,7 @@
 @import "../../../../../variables";
 
 .drag-box-item {
+  cursor: pointer;
   width: 100%;
   color: $global-orange;
   font-family: 'SuperclarendonW00-Bold';
