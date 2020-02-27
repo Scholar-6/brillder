@@ -27,7 +27,7 @@ export interface MissingWordComponentProps {
 
 const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, data, updateComponent }) => {
   const newAnswer = () => ({ before: "", value: "" });
-  const newChoice = () => ({ before: "", answers: [newAnswer()], after: "" })
+  const newChoice = () => ({ before: "", answers: [newAnswer(), newAnswer(), newAnswer()], after: "" })
 
   if (!data.choices) {
     data.choices = [newChoice(), newChoice()];
