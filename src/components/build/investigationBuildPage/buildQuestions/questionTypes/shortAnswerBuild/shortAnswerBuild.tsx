@@ -1,5 +1,5 @@
 import React from 'react'
-import CloseIcon from '@material-ui/icons/Close';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
 
 import './shortAnswerBuild.scss'
@@ -44,7 +44,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
   const renderShortAnswer = (shortAnswer: any, key: number) => {
     return (
       <div className="short-answer-box unique-component-box" key={key}>
-        <CloseIcon className="right-top-icon" onClick={() => removeFromList(key)} />
+        <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} />
         <input
           disabled={locked}
           value={shortAnswer.value}

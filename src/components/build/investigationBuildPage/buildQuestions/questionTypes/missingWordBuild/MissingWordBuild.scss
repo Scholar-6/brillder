@@ -1,0 +1,44 @@
+.missing-word-build {
+  textarea {
+    width: 89%;
+    padding: 0;
+    padding-left: 1%;
+    padding-right: 10%;
+    min-height: 55px;
+  }
+  text-align: center;
+
+  .choose-several-box {
+    position: relative;
+    margin: 0px 3px 0px 0px;
+
+    .left-ckeckbox {
+      position: absolute;
+      left: 0;
+      top: 7px;
+    }
+
+    input {
+      width: 84%;
+      height: 55px;
+      text-align: center;
+      border: 1px solid black;
+      padding-right: 8%;
+      padding-left: 8%;
+    }
+  }
+  
+  .button-box {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    .add-answer-button {
+      width: 100%;
+      height: 60px;
+      font-size: 0.81vw;
+      border-radius: 4px;
+      background: #002060;
+      color: white;
+      font-family: 'Century Gothic Regular';
+    }
+  }
+}
