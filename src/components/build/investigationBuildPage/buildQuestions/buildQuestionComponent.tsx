@@ -107,6 +107,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
               <Grid container item xs={12} className="left-sidebar" alignItems="center">
                 <DragBox
                   onDrop={setDropBoxItem}
+                  locked={locked}
                   name="T"
                   fontSize="2.4vw"
                   label="T E X T"
@@ -114,6 +115,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   value={QuestionComponentTypeEnum.Text} />
                 <DragBox
                   onDrop={setDropBoxItem}
+                  locked={locked}
                   name="“ ”"
                   fontSize="2.8vw"
                   label="Q U O T E"
@@ -122,6 +124,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   value={QuestionComponentTypeEnum.Quote} />
                 <DragBox
                   onDrop={setDropBoxItem}
+                  locked={locked}
                   name="jpg."
                   fontSize="1.7vw"
                   label="I M A G E"
@@ -129,6 +132,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   value={QuestionComponentTypeEnum.Image} />
                 <DragBox
                   onDrop={setDropBoxItem}
+                  locked={locked}
                   isImage={true} src="/images/soundicon.png"
                   label="S O U N D"
                   marginTop="-0.2vw"
@@ -136,6 +140,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   value={QuestionComponentTypeEnum.Sound} />
                 <DragBox
                   onDrop={setDropBoxItem}
+                  locked={locked}
                   name="E Q N"
                   fontSize="1.6vw"
                   label="E Q U A T I O N"

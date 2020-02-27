@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react'
+import React, { Fragment } from 'react'
 import { useDrag, DragSourceMonitor } from 'react-dnd'
 import { Grid } from '@material-ui/core';
 import MediaQuery from 'react-responsive';
@@ -23,6 +23,7 @@ const HoverBox = ({ marginTop, label }: any) => {
 }
 
 export interface BoxProps {
+  locked: boolean,
   name?: string,
   value: QuestionComponentTypeEnum,
   isImage?: boolean,
@@ -36,7 +37,7 @@ export interface BoxProps {
 }
 
 const DragBox: React.FC<BoxProps> = ({
-  name, onDrop, value, fontSize, isImage, src, label, marginTop, hoverMarginTop, fontFamily
+  name, onDrop, value, fontSize, isImage, src, label, marginTop, hoverMarginTop, fontFamily, locked
 }) => {
   const item = { name, type: ItemTypes.BOX }
   const [{ opacity }, drag] = useDrag({
@@ -57,6 +58,7 @@ const DragBox: React.FC<BoxProps> = ({
     collect: (monitor: any) => ({
       opacity: monitor.isDragging() ? 0.9 : 1,
     }),
+    canDrag: (monitor: any) => !locked
   })
 
   const renderContent = () => {
