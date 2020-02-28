@@ -48,7 +48,9 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
     return (
       <Grid container item xs={4} key={key}>
         <div className="horizontal-shuffle-box">
-          <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} />
+          {
+            (data.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
+          }
           <input disabled={locked} value={answer.value} onChange={(event) => changed(answer, event)} placeholder={"Enter Answer " + (key + 1) + "..."} />
         </div>
       </Grid>

@@ -38,7 +38,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   const renderEmptyComponent = () => 
     <Grid container style={{height:'100%', position: 'relative'}} justify="center" alignContent="center">
       {
-        (componentCount >= 3) ? <DeleteIcon className="right-top-drop-icon" onClick={() => {removeComponent(index)}} /> : ""
+        (componentCount > 3) ? <DeleteIcon className="right-top-drop-icon" onClick={() => {removeComponent(index)}} /> : ""
       }
       <span className="drop-box-text" style={{color: '#838384', textAlign: 'justify'}}>
         Drag Component Here
