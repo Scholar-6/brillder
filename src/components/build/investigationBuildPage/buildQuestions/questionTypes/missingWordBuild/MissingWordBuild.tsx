@@ -77,12 +77,16 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
           disabled={locked}
           rows={3}
           placeholder="Text before choice..."></textarea>
-        <DeleteIcon className="right-top-icon" onClick={() => removeChoice(key)} />
+        {
+          (choice.answers.length > 1) ? <DeleteIcon className="right-top-icon" onClick={() => removeChoice(key)} /> : ""
+        }
         {
           choice.answers.map((answer, key) => {
             return (
               <div style={{position: 'relative'}} key={key}>
-                <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, key)} />
+                {
+                  (choice.answers.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, key)} /> : ""
+                }
                 <input disabled={locked} value={answer.value} onChange={(event: any) => { answerChanged(answer, event) }} placeholder="Enter Answer..." />
               </div>
             );

@@ -75,7 +75,9 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
         </Grid>
         <Grid container item xs={6}>
           <div className="pair-match-answer">
-            <DeleteIcon className="right-top-icon" style={{right: '1%'}} onClick={() => removeFromList(key)} />
+            {
+              (data.list.length > 3) ? <DeleteIcon className="right-top-icon" style={{right: '1%'}} onClick={() => removeFromList(key)} /> : ""
+            }
             <input
               disabled={locked}
               value={answer.value}
@@ -98,7 +100,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
         locked={locked}
         addAnswer={addAnswer}
         height={height}
-        label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; P &nbsp; A &nbsp; I &nbsp; R" />
+        label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
     </div>
   )
 }
