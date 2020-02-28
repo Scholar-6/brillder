@@ -83,6 +83,19 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     }
   }
 
+  const setNextQuestion = () => {
+    const index = getQuestionIndex(activeQuestion);
+    let lastIndex = questions.length - 1;
+    if (index < lastIndex) {
+      const updatedQuestions = questions.slice();
+      updatedQuestions.forEach(q => q.active = false);
+      updatedQuestions[index + 1].active = true;
+      setQuestions(update(questions, { $set: updatedQuestions }));
+    } else {
+      createNewQuestion();
+    }
+  }
+
   const createNewQuestion = () => {
     const updatedQuestions = questions.slice();
     updatedQuestions.forEach(q => q.active = false);
@@ -251,7 +264,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
         locked={locked}
         setQuestionType={justSetQuestionType}
         setPreviousQuestion={setPreviousQuestion}
-        createNewQuestion={createNewQuestion}
+        nextOrNewQuestion={setNextQuestion}
         saveBrick={saveBrick} />
     );
   }
