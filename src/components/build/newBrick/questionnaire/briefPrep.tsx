@@ -64,7 +64,7 @@ function BriefPrep({ parentState, saveBriefPrep }: any) {
               value={state.preparationBrief}
               onChange={setBriefPrep}
               style={{ width: '90%', border: '2px solid black', height: '70px', textAlign: 'center' }}
-              placeholder="Enter Brief here..." />
+              placeholder="Enter Brief Here..." />
             <Input
               value={state.links}
               onChange={setLinks}

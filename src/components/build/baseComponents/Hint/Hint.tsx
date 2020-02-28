@@ -92,10 +92,10 @@ const HintComponent: React.FC<HintProps> = ({ onChange, locked, ...props }) => {
         </Grid>
         <Grid container item xs={7} justify="flex-start" alignContent="center">
           <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
-            <ToggleButton disabled={locked} value={HintStatus.Each}>
+            <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.Each}>
               Each Answer
             </ToggleButton>
-            <ToggleButton disabled={locked} value={HintStatus.All}>
+            <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.All}>
               All Answers
             </ToggleButton>
           </ToggleButtonGroup>
