@@ -90,6 +90,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
     const index = getQuestionIndex(question);
     const updatedQuestion = Object.assign({}, question) as Question;
     updatedQuestion.hint.value = hintState.value;
+    updatedQuestion.hint.list = hintState.list;
     updatedQuestion.hint.status = hintState.status;
     setQuestion(index, updatedQuestion);
   }

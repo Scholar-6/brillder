@@ -43,7 +43,7 @@ const QuestionComponents = ({
     let uniqueComponent:any;
     if (type === QuestionTypeEnum.ShortAnswer) {
       uniqueComponent = ShortAnswerComponent;
-    } else if (type === QuestionTypeEnum.Categorise) {
+    } else if (type === QuestionTypeEnum.Sort) {
       uniqueComponent = CategoriseComponent;
     } else if (type === QuestionTypeEnum.ChooseOne) {
       uniqueComponent = ChooseOneComponent;
