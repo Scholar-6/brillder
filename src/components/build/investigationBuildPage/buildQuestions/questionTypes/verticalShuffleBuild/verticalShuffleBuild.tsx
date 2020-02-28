@@ -56,7 +56,9 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({loc
   const renderAnswer = (answer: any, key: number) => {
     return (
       <div className="short-answer-box" key={key}>
-        <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} />
+        {
+          (data.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
+        }
         <input
           disabled={locked}
           value={answer.value}

@@ -78,7 +78,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
           rows={3}
           placeholder="Text before choice..."></textarea>
         {
-          (choice.answers.length > 1) ? <DeleteIcon className="right-top-icon" onClick={() => removeChoice(key)} /> : ""
+          (data.choices.length > 1) ? <DeleteIcon className="right-top-icon" onClick={() => removeChoice(key)} /> : ""
         }
         {
           choice.answers.map((answer, key) => {
