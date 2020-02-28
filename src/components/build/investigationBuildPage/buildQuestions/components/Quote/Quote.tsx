@@ -24,16 +24,7 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, upd
 
   return (
     <div className="question-build-text-editor">
-      <CKEditor
-        editor={ClassicEditor}
-        data={data.value}
-        disabled={locked}
-        config={editorConfiguration}
-        onChange={(e: any, editor: any) => {
-          data.value = editor.getData();
-          updateComponent(data, index);
-        }}
-      />
+      <input placeholder="Enter Quote Here..."/>
     </div>
   );
 }
