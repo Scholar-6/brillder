@@ -5,6 +5,7 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { Grid } from '@material-ui/core';
 
 import './Hint.scss';
+import { listenerCount } from 'cluster';
 
 
 export enum HintStatus {
@@ -42,6 +43,8 @@ const HintComponent: React.FC<HintProps> = ({ onChange, locked, ...props }) => {
     initState.status = props.status;
   }
 
+  console.log(initState.status);
+
   const [state, setState] = React.useState(initState);
 
   const onHintChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,11 +53,11 @@ const HintComponent: React.FC<HintProps> = ({ onChange, locked, ...props }) => {
     onChange({ ...state, value: event.target.value });
   }
 
-  /*
   const onHintListChanged = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     if (locked) { return; }
-    onChange({ ...state, value: event.target.value });
-  }*/
+
+    //onChange({ ...state, list: event.target.value });
+  }
 
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
     if (locked) { return; }
@@ -71,10 +74,28 @@ const HintComponent: React.FC<HintProps> = ({ onChange, locked, ...props }) => {
     }
     const answerHints: any[] = [];
 
+    if (state.list.length < props.count) {
+      let list = state.list;
+      for (let i = 0; i < props.count; i++) {
+        if (state.list.length < props.count) {
+          list.push('');
+          
+        } else {
+          setState({...state, list});
+          return <div>...Preparing hints...</div>
+        }
+      }
+    }
+
     for (let i = 0; i < props.count; i++) {
       answerHints.push(
-        <Grid container item xs={12}>
-          <input disabled={locked} className="hint-input-text" value={state.list[i]} onChange={onHintChanged} placeholder="Enter Hint..."></input>
+        <Grid key={i} container item xs={12}>
+          <input
+            disabled={locked}
+            className="hint-input-text"
+            value={state.list[i]}
+            onChange={(e) => {onHintListChanged(e, i)}}
+            placeholder="Enter Hint..."/>
         </Grid>
       );
     }

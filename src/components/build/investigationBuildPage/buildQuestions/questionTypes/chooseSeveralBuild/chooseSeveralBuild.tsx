@@ -22,7 +22,7 @@ export interface ChooseSeveralBuildProps {
 }
 
 const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked, data, updateComponent}) => {
-  const [height, setHeight] = React.useState('0');
+  const [height, setHeight] = React.useState('0%');
 
   useEffect(() => {
     calculateHeight();
@@ -70,11 +70,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
         showButton = false;
       }
     }
-    if (showButton === true) {
-      setHeight('auto');
-    } else {
-      setHeight('0');
-    }
+    showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
   const renderAnswer = (answer: any, key: number) => {
