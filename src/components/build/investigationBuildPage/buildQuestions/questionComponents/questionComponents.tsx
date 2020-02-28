@@ -69,6 +69,7 @@ const QuestionComponents = ({
       type={component.type}
       index={index}
       locked={locked}
+      componentCount={question.components.length}
       swapComponents={swapComponents}
       component={component}
       updateComponent={updatingComponent}
