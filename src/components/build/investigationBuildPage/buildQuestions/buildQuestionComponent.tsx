@@ -77,6 +77,14 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
     setQuestionComponents(index, components);
   }
 
+  const removeComponent = (componentIndex:number) => {
+    if (locked) { return; }
+    const index = getQuestionIndex(question);
+    const components = Object.assign([], question.components) as any[];
+    components.splice(componentIndex, 1);
+    setQuestionComponents(index, components);
+  }
+
   const setQuestionHint = (hintState: HintState) => {
     if (locked) { return; }
     const index = getQuestionIndex(question);
@@ -158,6 +166,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 swapComponents={swapComponents}
                 updateComponent={updateComponent}
                 addComponent={addComponent}
+                removeComponent={removeComponent}
                 setQuestionHint={setQuestionHint} />
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">

@@ -149,9 +149,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       setQuestions(
         update(questions, {
           $splice: [[index, 1]],
-          [questions.length - 1]: {
-            active: { $set: true }
-          }
+          [questions.length - 1]: { active: { $set: true } }
         }),
       )
     }
@@ -189,7 +187,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
   const { brick } = props;
 
-  console.log(typeof brick.id, typeof brickId)
   if (brick.id !== brickId) {
     return <div>...Loading...</div>
   }

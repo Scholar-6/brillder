@@ -22,6 +22,7 @@ export interface SwitchQuestionProps {
   updateComponent(component: any, index: number): void
   swapComponents: Function
   setQuestionHint(hintState: HintState): void
+  removeComponent(componentIndex: number): void
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
@@ -29,11 +30,13 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   swapComponents,
   setQuestionHint,
   updateComponent,
-  uniqueComponent
+  uniqueComponent,
+  removeComponent
 }) => {
 
   const renderEmptyComponent = () => 
-    <Grid container style={{height:'100%'}} justify="center" alignContent="center">
+    <Grid container style={{height:'100%', position: 'relative'}} justify="center" alignContent="center">
+      <DeleteIcon className="right-top-drop-icon" onClick={() => {removeComponent(index)}} />
       <span className="drop-box-text" style={{color: '#838384', textAlign: 'justify'}}>
         Drag Component Here
       </span>

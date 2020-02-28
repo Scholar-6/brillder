@@ -3,6 +3,19 @@
 .investigation-build-page {
   height: 100%;
 
+  .right-top-drop-icon {
+    position: absolute;
+    top: 8px;
+    right: 1px;
+    cursor: pointer;
+    color: $global-orange;
+    z-index: 2;
+  }
+
+  .right-top-drop-icon:hover {
+    opacity: 0.5;
+  }
+
   .right-top-icon {
     position: absolute;
     top: 18px;
