@@ -1,5 +1,5 @@
 import React, {useEffect } from 'react'
-import CloseIcon from '@material-ui/icons/Close';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox'; 
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
@@ -78,7 +78,9 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({locked, data, u
   const renderAnswer = (answer: any, key: number) => {
     return (
       <div className="choose-one-box unique-component-box" key={key}>
-        <CloseIcon className="right-top-icon" onClick={() => removeFromList(key)} />
+        {
+          (data.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
+        }
         <Checkbox className="left-ckeckbox" disabled={locked} checked={answer.checked} onChange={onChecked} value={key} />
         <input disabled={locked} value={answer.value} onChange={(event) => changed(answer, event)} placeholder="Enter Answer..." />
       </div>
