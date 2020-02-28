@@ -19,6 +19,7 @@ export interface SwitchQuestionProps {
   component: any
   hint: Hint
   locked: boolean
+  componentCount: number
   updateComponent(component: any, index: number): void
   swapComponents: Function
   setQuestionHint(hintState: HintState): void
@@ -26,7 +27,7 @@ export interface SwitchQuestionProps {
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
-  type, index, component, hint, locked,
+  type, index, component, hint, locked, componentCount,
   swapComponents,
   setQuestionHint,
   updateComponent,
@@ -36,7 +37,9 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
 
   const renderEmptyComponent = () => 
     <Grid container style={{height:'100%', position: 'relative'}} justify="center" alignContent="center">
-      <DeleteIcon className="right-top-drop-icon" onClick={() => {removeComponent(index)}} />
+      {
+        (componentCount >= 3) ? <DeleteIcon className="right-top-drop-icon" onClick={() => {removeComponent(index)}} /> : ""
+      }
       <span className="drop-box-text" style={{color: '#838384', textAlign: 'justify'}}>
         Drag Component Here
       </span>
