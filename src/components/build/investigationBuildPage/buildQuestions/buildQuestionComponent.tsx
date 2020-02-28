@@ -24,7 +24,7 @@ export interface QuestionProps {
   setQuestion(index: number, question: Question): void
   updateComponent(component: any, index: number): void
   setQuestionType(type: QuestionTypeEnum): void
-  createNewQuestion(): void
+  nextOrNewQuestion(): void
   getQuestionIndex(question: Question): number
   setQuestionComponents(index: number, components: any[]): void
   setPreviousQuestion(): void
@@ -35,7 +35,7 @@ export interface QuestionProps {
 const BuildQuestionComponent: React.FC<QuestionProps> = (
   {
     brickId, question, history, setQuestionType, getQuestionIndex, toggleLock, 
-    saveBrick, updateComponent, createNewQuestion, setQuestion,
+    saveBrick, updateComponent, nextOrNewQuestion, setQuestion,
     setQuestionComponents, locked, setPreviousQuestion
   }
 ) => {
@@ -203,7 +203,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 alignItems="flex-end"
               >
                 <div className="round-button-container">
-                  <IconButton className="new-question-button" aria-label="next" onClick={createNewQuestion}>
+                  <IconButton className="new-question-button" aria-label="next" onClick={nextOrNewQuestion}>
                     <ArrowForwardIosIcon className="new-question-icon" />
                   </IconButton>
                 </div>
