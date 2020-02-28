@@ -5,7 +5,6 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { Grid } from '@material-ui/core';
 
 import './Hint.scss';
-import { listenerCount } from 'cluster';
 
 
 export enum HintStatus {
@@ -22,6 +21,7 @@ export interface HintState {
 
 export interface HintProps {
   locked: boolean
+  list: string[]
   status?: HintStatus,
   value?: string,
   count?: number,
@@ -39,11 +39,13 @@ const HintComponent: React.FC<HintProps> = ({ onChange, locked, ...props }) => {
     initState.value = props.value;
   }
 
+  if (props.list) {
+    initState.list = props.list;
+  }
+
   if (props.status) {
     initState.status = props.status;
   }
-
-  console.log(initState.status);
 
   const [state, setState] = React.useState(initState);
 
@@ -55,13 +57,15 @@ const HintComponent: React.FC<HintProps> = ({ onChange, locked, ...props }) => {
 
   const onHintListChanged = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     if (locked) { return; }
-
-    //onChange({ ...state, list: event.target.value });
+    let {list} = state;
+    list[index] = event.target.value;
+    onChange({ ...state, list });
   }
 
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
     if (locked) { return; }
     setState({...state, status});
+    onChange({...state, status});
   };
 
   const renderHintInputs = () => {

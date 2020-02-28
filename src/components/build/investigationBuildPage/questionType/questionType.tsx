@@ -56,7 +56,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, history, 
             <TypeButton activeType={type} questionType={QuestionTypeEnum.PairMatch} setType={setCurrentType} labels={["P A I R", "M A T C H"]} isActive={false} />
           </Grid>
           <Grid item xs={4}>
-            <TypeButton activeType={type} questionType={QuestionTypeEnum.Categorise} setType={setCurrentType} labels={["S O R T"]} isActive={false} />
+            <TypeButton activeType={type} questionType={QuestionTypeEnum.Sort} setType={setCurrentType} labels={["S O R T"]} isActive={false} />
           </Grid>
           <Grid item xs={4}>
             <TypeButton activeType={type} questionType={QuestionTypeEnum.MissingWord} setType={setCurrentType} labels={["M I S S I N G", "W O R D"]} isActive={false} />
