@@ -66,13 +66,13 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ locked, d
     return (
       <div className="choose-several-box" key={key}>
         <DeleteIcon className="right-top-icon" onClick={() => removeCategory(key)} />
-        <input disabled={locked} value={category.name} onChange={(event) => categoryChanged(category, event)} placeholder="Enter category heading..." />
+        <input disabled={locked} value={category.name} onChange={(event) => categoryChanged(category, event)} placeholder="Enter Category Heading..." />
         {
           category.answers.map((answer, key) => {
             return (
               <div style={{position: 'relative'}} key={key}>
                 <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(category, key)} />
-                <input disabled={locked} value={answer.value} onChange={(event: any) => { answerChanged(answer, event) }} placeholder="Enter answer..." />
+                <input disabled={locked} value={answer.value} onChange={(event: any) => { answerChanged(answer, event) }} placeholder="Enter Answer..." />
               </div>
             );
           })

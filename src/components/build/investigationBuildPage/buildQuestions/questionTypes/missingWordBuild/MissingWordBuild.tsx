@@ -83,7 +83,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
             return (
               <div style={{position: 'relative'}} key={key}>
                 <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, key)} />
-                <input disabled={locked} value={answer.value} onChange={(event: any) => { answerChanged(answer, event) }} placeholder="Enter answer..." />
+                <input disabled={locked} value={answer.value} onChange={(event: any) => { answerChanged(answer, event) }} placeholder="Enter Answer..." />
               </div>
             );
           })

@@ -81,7 +81,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
         rows={5}
         value={data.text}
         onChange={updateText}
-        placeholder="Enter words here..." />
+        placeholder="Enter Words Here..." />
     );
   }
 

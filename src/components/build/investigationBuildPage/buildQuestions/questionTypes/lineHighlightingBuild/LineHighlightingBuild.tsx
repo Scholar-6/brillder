@@ -61,6 +61,10 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
 
   const renderBox = () => {
     if (data.mode === LineMode.Edit) {
+      if (!data.lines) {
+        switchMode();
+        return <div>...Switching mode...</div>;
+      }
       return (
         <div className="hightlight-area">
           {
@@ -79,7 +83,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
         className="lines-input"
         rows={5}
         value={data.text}
-        onChange={updateText} placeholder="Enter lines here..." />
+        onChange={updateText} placeholder="Enter Lines Here..." />
     );
   }
 
