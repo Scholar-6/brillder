@@ -22,9 +22,14 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, upd
     data.value = "";
   }
 
+  const onChange = (e: any) => {
+    data.value = e.target.value;
+    updateComponent(data, index);
+  }
+
   return (
     <div className="question-build-text-editor">
-      <input placeholder="Enter Quote Here..."/>
+      <input value={data.value} disabled={locked} onChange={onChange} placeholder="Enter Quote Here..."/>
     </div>
   );
 }
