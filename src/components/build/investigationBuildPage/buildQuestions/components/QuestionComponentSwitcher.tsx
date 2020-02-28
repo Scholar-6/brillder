@@ -71,7 +71,12 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     innerComponent = EquationComponent;
   } else if (type === QuestionComponentTypeEnum.Component) {
     innerComponent = uniqueComponent;
-    const numberOfAnswers = getNumberOfAnswers(component);
+    let numberOfAnswers = getNumberOfAnswers(component);
+    if (uniqueComponent.name === "MissingWordComponent") {
+      if (component.choices) {
+        numberOfAnswers = component.choices.length;
+      }
+    }
     return (
       <div className="unique-component-wrapper">
         <DragAndDropBox
