@@ -76,6 +76,10 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
       if (component.choices) {
         numberOfAnswers = component.choices.length;
       }
+    } else if (uniqueComponent.name === "CategoriseBuildComponent") {
+      if (component.categories) {
+        numberOfAnswers = component.categories.length;
+      }
     }
     return (
       <div className="unique-component-wrapper">
