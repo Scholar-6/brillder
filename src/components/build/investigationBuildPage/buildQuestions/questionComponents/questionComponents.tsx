@@ -26,9 +26,14 @@ type QuestionComponentsProps = {
   addComponent(): void
   updateComponent(component: any, index: number):void
   setQuestionHint(hintState: HintState): void
+  removeComponent(componentIndex: number):void
 }
 
-const QuestionComponents = ({ locked, history, brickId, question, swapComponents, setQuestionHint, updateComponent, addComponent }: QuestionComponentsProps) => {
+const QuestionComponents = ({
+  locked, history, brickId, question,
+  swapComponents, setQuestionHint, updateComponent,
+  addComponent, removeComponent
+}: QuestionComponentsProps) => {
   const renderDropBox = (component: any, index: number) => {
     const updatingComponent = (compData:any) => {
       updateComponent(compData, index);
@@ -68,6 +73,7 @@ const QuestionComponents = ({ locked, history, brickId, question, swapComponents
       component={component}
       updateComponent={updatingComponent}
       hint={question.hint}
+      removeComponent={removeComponent}
       setQuestionHint={setQuestionHint}
       uniqueComponent={uniqueComponent} />
   }
