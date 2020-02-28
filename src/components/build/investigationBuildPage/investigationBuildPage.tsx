@@ -109,28 +109,39 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     setQuestions(update(questions, { $splice: [[dragIndex, 1], [hoverIndex, 0, dragQuestion]] }))
   }
 
-  const setQuestionType = (type: QuestionTypeEnum) => {
+  const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
     if (locked) { return; }
-    if (!activeQuestion) {
-      alert('Can`t set question type');
-      return;
-    }
-    justSetQuestionType(type);
+    setQuestionType(type);
     history.push(`/build/brick/${brickId}/build/investigation/question-component`);
   }
 
-  const justSetQuestionType = (type: QuestionTypeEnum) => {
+  const setQuestionType = (type: QuestionTypeEnum) => {
     if (locked) { return; }
-    if (!activeQuestion) {
-      alert('Can`t set question type');
-      return;
-    }
     var index = getQuestionIndex(activeQuestion);
     setQuestions(
       update(questions, {
         [index]: { type: { $set: type } }
       }),
     );
+  }
+
+  const chooseOneToChooseSeveral = (type: QuestionTypeEnum) => {
+    const index = getQuestionIndex(activeQuestion);
+    const component = activeQuestion.components.find(c => c.type === QuestionComponentTypeEnum.Component);
+    for (const answer of component.list) {
+      answer.checked = false;
+    }
+    activeQuestion.type = type;
+    const question = Object.assign({}, activeQuestion);
+    setQuestion(index, question);
+  }
+  
+  const convertQuestionTypes = (type: QuestionTypeEnum) => {
+    if (type == QuestionTypeEnum.ChooseOne || type == QuestionTypeEnum.ChooseSeveral) {
+      chooseOneToChooseSeveral(type);
+    } else {
+      setQuestionType(type);
+    }
   }
 
   const removeQuestion = (index: number) => {
@@ -220,7 +231,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   const saveBrick = () => {
     brick.questions = [];
     for (let question of questions) {
-      console.log(question);
       let questionObject = {
         components: question.components,
         hint: question.hint
@@ -261,7 +271,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
         setQuestion={setQuestion}
         toggleLock={toggleLock}
         locked={locked}
-        setQuestionType={justSetQuestionType}
+        setQuestionType={convertQuestionTypes}
         setPreviousQuestion={setPreviousQuestion}
         nextOrNewQuestion={setNextQuestion}
         saveBrick={saveBrick} />
@@ -274,7 +284,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       history={history}
       brickId={brickId}
       questionId={activeQuestion.id}
-      setQuestionType={setQuestionType}
+      setQuestionType={setQuestionTypeAndMove}
       setPreviousQuestion={setPreviousQuestion}
       questionType={activeQuestion.type} />
     );

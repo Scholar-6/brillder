@@ -19,8 +19,13 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
     calculateHeight();
   });
 
+  const newAnswer = () => ({ value: "" });
+
   if (!data.list) {
-    data.list = [{ value: "" }, { value: "" }, { value: "" }];
+    data.list = [newAnswer(), newAnswer(), newAnswer()];
+  } else if (data.list.length < 3) {
+    data.list.push(newAnswer());
+    updateComponent(data);
   }
 
   const optionChanged = (answer: any, event: any) => {
@@ -39,7 +44,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
 
   const addAnswer = () => {
     if (locked) { return; }
-    data.list.push({ value: "" });
+    data.list.push(newAnswer());
     updateComponent(data);
     calculateHeight();
   }

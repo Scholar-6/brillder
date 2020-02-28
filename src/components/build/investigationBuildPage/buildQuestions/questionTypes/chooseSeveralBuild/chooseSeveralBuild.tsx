@@ -28,11 +28,13 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
     calculateHeight();
   });
 
-  const newAnswer = () => {
-    return {value: "", checked: false };
-  }
+  const newAnswer = () => ({value: "", checked: false });
+
   if (!data.list) {
     data.list = [newAnswer(), newAnswer(), newAnswer()];
+  } else if (data.list.length < 3) {
+    data.list.push(newAnswer());
+    updateComponent(data);
   }
   const changed = (answer: any, event: any) => {
     if (locked) { return; }
