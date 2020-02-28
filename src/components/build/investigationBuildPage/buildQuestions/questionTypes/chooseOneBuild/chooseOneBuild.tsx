@@ -28,12 +28,16 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({locked, data, u
     calculateHeight();
   });
 
-  const newAnswer = () => {
-    return {value: "", checked: false };
-  }
+  const newAnswer = () => ({value: "", checked: false });
+
   if (!data.list) {
     data.list = [newAnswer(), newAnswer(), newAnswer()];
+    updateComponent(data);
+  } else if (data.list.length < 3) {
+    data.list.push(newAnswer());
+    updateComponent(data);
   }
+
   const changed = (answer: any, event: any) => {
     if (locked) { return; }
     answer.value = event.target.value;

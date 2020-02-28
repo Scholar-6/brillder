@@ -18,8 +18,13 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({loc
     calculateHeight();
   });
 
+  const newAnswer = () => ({value: ""});
+  
   if (!data.list) {
-    data.list = [{value: ""}, {value: ""}, {value: ""}];
+    data.list = [newAnswer(), newAnswer(), newAnswer()];
+  } else if (data.list.length < 3) {
+    data.list.push(newAnswer());
+    updateComponent(data);
   }
 
   const changed = (answer: any, event: any) => {

@@ -18,9 +18,14 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
   useEffect(() => {
     calculateHeight();
   });
+
+  const newAnswer = () => ({ value: "" });
   
   if (!data.list) {
-    data.list = [{ value: "" }, { value: "" }, { value: "" }];
+    data.list = [newAnswer(), newAnswer(), newAnswer()];
+  } else if (data.list.length < 3) {
+    data.list.push(newAnswer());
+    updateComponent(data);
   }
 
   const changed = (shortAnswer: any, event: any) => {
