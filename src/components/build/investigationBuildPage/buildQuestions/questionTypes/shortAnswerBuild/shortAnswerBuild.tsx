@@ -44,7 +44,9 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
   const renderShortAnswer = (shortAnswer: any, key: number) => {
     return (
       <div className="short-answer-box unique-component-box" key={key}>
-        <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} />
+        {
+          (data.list.length > 1) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
+        }
         <input
           disabled={locked}
           value={shortAnswer.value}
