@@ -12,7 +12,7 @@ export interface VerticalShuffleBuildProps {
 }
 
 const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({locked, data, updateComponent}) => {
-  const [height, setHeight] = React.useState('0');
+  const [height, setHeight] = React.useState('0%');
 
   useEffect(() => {
     calculateHeight();
@@ -50,7 +50,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({loc
         showButton = false;
       }
     }
-    showButton === true ? setHeight('auto') : setHeight('0');
+    showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
   const renderAnswer = (answer: any, key: number) => {

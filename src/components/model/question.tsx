@@ -45,6 +45,7 @@ export enum HintStatus {
 
 export interface Hint {
   value: string,
+  list: string[],
   status: HintStatus
 }
 

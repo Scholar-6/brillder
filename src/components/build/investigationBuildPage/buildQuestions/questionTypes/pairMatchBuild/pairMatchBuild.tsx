@@ -13,7 +13,7 @@ export interface PairMatchBuildProps {
 }
 
 const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, updateComponent }) => {
-  const [height, setHeight] = React.useState('0');
+  const [height, setHeight] = React.useState('0%');
 
   useEffect(() => {
     calculateHeight();
@@ -58,18 +58,14 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
         showButton = false;
       }
     }
-    if (showButton === true) {
-      setHeight('auto');
-    } else {
-      setHeight('0');
-    }
+    showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
   const renderAnswer = (answer: any, key: number) => {
     return (
-      <Grid container direction="row">
-        <Grid container item xs={6} key={key}>
-          <div className="pair-match-option" key={key}>
+      <Grid key={key} container direction="row">
+        <Grid container item xs={6}>
+          <div className="pair-match-option">
             <input
               disabled={locked}
               value={answer.option}
@@ -77,8 +73,8 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
               placeholder={"Enter Option " + (key + 1) + "..."} />
           </div>
         </Grid>
-        <Grid container item xs={6} key={key}>
-          <div className="pair-match-answer" key={key}>
+        <Grid container item xs={6}>
+          <div className="pair-match-answer">
             <DeleteIcon className="right-top-icon" style={{right: '1%'}} onClick={() => removeFromList(key)} />
             <input
               disabled={locked}

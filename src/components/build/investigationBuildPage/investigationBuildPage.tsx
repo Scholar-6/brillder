@@ -45,6 +45,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
       active,
       hint: {
         value: '',
+        list: [] as string[],
         status: HintStatus.None
       },
       components: [
@@ -219,6 +220,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   const saveBrick = () => {
     brick.questions = [];
     for (let question of questions) {
+      console.log(question);
       let questionObject = {
         components: question.components,
         hint: question.hint
