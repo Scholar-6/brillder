@@ -1,5 +1,10 @@
 .question-build-text-editor {
   position: relative;
+  font-size: 0.68vw !important;
+
+  .ck-icon {
+    font-size: 0.6vw !important;
+  }
 
   strong {
     font-weight: bold !important;

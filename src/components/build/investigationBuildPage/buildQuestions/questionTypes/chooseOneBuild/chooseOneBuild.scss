@@ -1,3 +1,5 @@
+@import "../../../../../../variables";
+
 .choose-one-build {
   text-align: center;
 
@@ -7,8 +9,15 @@
 
     .left-ckeckbox {
       position: absolute;
-      left: 0;
-      top: 7px;
+      padding: 0.45vw;
+      left: 0.1vw;
+      top: 0.5vw;
+      span {
+        svg {
+          height: $bin-size !important;
+          width: $bin-size !important;
+        }
+      }
     }
 
     input {

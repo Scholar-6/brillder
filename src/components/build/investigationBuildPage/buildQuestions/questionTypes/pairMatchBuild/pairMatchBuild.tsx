@@ -96,8 +96,10 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
 
   return (
     <div className="pair-match-build">
-      <p style={{ marginTop: '6px' }}>Enter Pairs below, eg. 1 (Option A), I (Answer A).</p>
-      <p style={{ marginBottom: '6px' }}>Order will be randomised in the Play Interface.</p>
+      <div className="component-title">
+        <div>Enter Pairs below, eg. 1 (Option A), I (Answer A).</div>
+        <div>Order will be randomised in the Play Interface.</div>
+      </div>
       {
         data.list.map((answer: any, i: number) => renderAnswer(answer, i))
       }

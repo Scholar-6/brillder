@@ -18,8 +18,10 @@
 
   .right-top-icon {
     position: absolute;
-    top: 18px;
-    right: 5px;
+    top: 1vw;
+    height: $bin-size;
+    width: $bin-size;
+    right: 0.1vw;
     cursor: pointer;
     color: $global-orange;
     z-index: 2;
@@ -48,9 +50,9 @@
   }
 
   .drag-and-drop-box {
-    min-height: 120px;
-    border-radius: 5px;
+    min-height: 6vw;
     margin: 0;
+    border-radius: $global-drop-border-radius;
   }
 
   .button-box {
@@ -59,7 +61,7 @@
       height: 2.8vw;
       padding: 0 !important;
       font-size: 0.81vw;
-      border-radius: 4px;
+      border-radius: $global-drop-border-radius;
       background: #002060;
       color: white;
       font-family: 'Century Gothic Regular';

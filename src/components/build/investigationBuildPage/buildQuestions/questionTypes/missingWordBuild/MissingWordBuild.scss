@@ -1,3 +1,5 @@
+@import "../../../../../../variables";
+
 .missing-word-build {
   textarea {
     width: 89%;
@@ -14,8 +16,15 @@
 
     .left-ckeckbox {
       position: absolute;
-      left: 0;
-      top: 7px;
+      padding: 0.45vw;
+      left: 0.1vw;
+      top: 0.5vw;
+      span {
+        svg {
+          height: $bin-size !important;
+          width: $bin-size !important;
+        }
+      }
     }
 
     input {

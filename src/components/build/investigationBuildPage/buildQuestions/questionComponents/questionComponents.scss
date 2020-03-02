@@ -4,11 +4,9 @@
   width: 100%;
 
   .drop-box {
-    min-height: 81px;
-    height: auto;
-    margin-top: 2px;
-    border-radius: 5px;
-    padding: 0.1vw 4px 0.1vw 4px;
+    margin-top: 0.1vw;
+    border-radius: $global-drop-border-radius;
+    padding: 0.2vw 0.2vw 0.2vw 0.2vw;
     background-color: #d9d9d9;
   }
 
@@ -17,13 +15,13 @@
     .add-dropbox-button {
       width: 100%;
       border: none;
-      border-radius: 5px;
       text-transform: none;
       background: $global-orange;
       color: white;
       font-size: 0.7vw;
-      height: 60px;
+      height: 2.8vw;
       font-family: 'Century Gothic Regular';
+      border-radius: $global-drop-border-radius;
     }
     margin-bottom: 10px;  
   }

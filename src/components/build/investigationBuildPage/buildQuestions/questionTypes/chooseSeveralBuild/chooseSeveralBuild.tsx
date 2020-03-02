@@ -89,7 +89,9 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
 
   return (
     <div className="choose-several-build unique-component">
-      <p>Tick correct answers</p>
+      <div className="component-title">
+        <div>Tick correct answers</div>
+      </div>
       {
         data.list.map((answer:any, i:number) => renderAnswer(answer, i))
       }

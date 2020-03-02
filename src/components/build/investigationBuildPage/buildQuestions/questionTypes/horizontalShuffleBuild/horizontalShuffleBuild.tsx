@@ -74,8 +74,10 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
 
   return (
     <div className="horizontal-shuffle-build">
-      <p style={{ marginTop: '6px' }}>Enter Answers below in order.</p>
-      <p style={{ marginBottom: '6px' }}>These will be randomised in the Play Interface.</p>
+      <div className="component-title">
+        <div>Enter Answers below in order.</div>
+        <div>These will be randomised in the Play Interface.</div>
+      </div>
       <Grid container direction="row">
         {
           data.list.map((answer: any, i: number) => renderAnswer(answer, i))
