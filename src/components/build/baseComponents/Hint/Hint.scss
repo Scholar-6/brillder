@@ -17,6 +17,8 @@
     border-top: 1px solid #d9d9d9;
     height: 60px;
     margin: 0;
+    font-size: $base-lg-text-size;
+
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
   }
@@ -26,12 +28,13 @@
     color: $global-light-text-grey;
     margin-left: 0.5vw;
     text-align: left;
+    font-size: $base-lg-text-size;
   }
 
   .hint-toggle-group {
     button {
       height: 1vw !important;
-      font-size: 0.65vw !important;
+      font-size: $base-lg-text-size !important;
       text-transform: none !important;
     }
   }
@@ -44,7 +47,7 @@
       font-family: 'Century Gothic Regular';
       color: white;
       border-radius: 30px;
-      font-size: 15px;
+      font-size: 0.78vw;
       padding: 0 5px;
       background: $global-orange;
       margin-right: 0.6vw;
