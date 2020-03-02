@@ -52,6 +52,31 @@
     border-radius: 5px;
     margin: 0;
   }
+
+  .button-box {
+    .add-answer-button {
+      width: 100%;
+      height: 2.8vw;
+      padding: 0 !important;
+      font-size: 0.81vw;
+      border-radius: 4px;
+      background: #002060;
+      color: white;
+      font-family: 'Century Gothic Regular';
+    }
+  }
+
+  @media only screen and (max-width: 959px) {
+    .add-answer-button {
+      font-size: 1.61vw !important;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .add-answer-button {
+      font-size: 1.11vw !important;
+    }
+  }
 }
 
 .grey .screen {

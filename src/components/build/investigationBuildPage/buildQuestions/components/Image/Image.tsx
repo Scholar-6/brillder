@@ -25,7 +25,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked}) => {
       <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
         <input {...getInputProps()} />
         <Grid container justify="center" alignContent="center" style={{height:'100%'}}>
-          <p>Drag 'n' drop image here, or click to select image</p>
+          <p>Drag Image Here | Click to Select Image</p>
         </Grid>
       </div>
       {files[0]}

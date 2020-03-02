@@ -25,7 +25,7 @@ const SoundComponent: React.FC<SoundProps> = ({locked}) => {
       <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
         <input {...getInputProps()} />
         <Grid container justify="center" alignContent="center" style={{height:'100%'}}>
-          <p>Drag 'n' drop sound file here, or click to select file</p>
+          <p>Drag Sound File Here | Click to Select Sound File</p>
         </Grid>
       </div>
       {files[0]}
