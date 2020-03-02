@@ -137,7 +137,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   }
   
   const convertQuestionTypes = (type: QuestionTypeEnum) => {
-    if (type == QuestionTypeEnum.ChooseOne || type == QuestionTypeEnum.ChooseSeveral) {
+    if (type === QuestionTypeEnum.ChooseOne || type === QuestionTypeEnum.ChooseSeveral) {
       chooseOneToChooseSeveral(type);
     } else {
       setQuestionType(type);
