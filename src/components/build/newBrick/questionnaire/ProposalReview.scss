@@ -1,8 +1,13 @@
+@import "../../../../variables";
+
 .proposal-card {
+  padding-top: 6vh;
+  
   font-family: "Libaration Sans V2";
   h1 {
+    color: black;
     font-size: 2vw;
-    margin-bottom: 4vh;
+    margin-bottom: 5vh;
   }
   p {
     margin-top: 3vh;
@@ -27,5 +32,9 @@
     margin-left: 1.53vw;
     font-weight: normal;
     text-transform: capitalize;
+  }
+
+  .proposal-button {
+    color: $global-orange;
   }
 }

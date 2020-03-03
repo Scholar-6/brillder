@@ -27,7 +27,7 @@ function Welcome() {
                   <h2 className="tutorial-logo-text">A &nbsp; S C H O L A R &nbsp; 6 &nbsp; T E C H &nbsp; P R O D U C T </h2>
                   <h2 className="welcome-upper-text">Welcome to Brix.</h2>
                   <h1 className="welcome-bottom-text">Start Building </h1>
-                  <div style={{ position: "absolute", top: '10px', right: 0 }}>
+                  <div style={{ position: "absolute", top: '23px', right: 0 }}>
                     <NextButton step={NewBrickStep.Welcome} canSubmit={true} />
                   </div>
                 </Grid>

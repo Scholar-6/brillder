@@ -33,7 +33,7 @@ function BrickTitle({ parentState, saveTitles }: any) {
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
-            <h1 className="only-tutorial-header">Define and amplify your audience.</h1>
+            <h1 className="only-tutorial-header">What is your brick about?</h1>
             <Grid container justify="center" item xs={12}>
               <Input className="audience-inputs" value={titles.title} onChange={(onTitleChange)} placeholder="Enter Proposed Title Here..." />
               <Input className="audience-inputs" value={titles.subTopic} onChange={onSubTopicChange} placeholder="Enter Sub-Topic(s)..." />

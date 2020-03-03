@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import Device from "react-device-frame";
 import { Hidden } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { IconButton } from "material-ui";
 
 import actions from '../../../../redux/actions/brickActions';
 import { Brick } from "model/brick";
@@ -47,6 +49,23 @@ function ProposalReview(props: ProposalProps) {
                 <p className="openQuestion">{brick.preparationBrief}</p>
                 <p>4. Create an engaging and relevant preparatory task.</p>
                 <p>5. Brick Length: <span className="brickLength">{brick.brickLength}</span></p>
+                <Grid
+                  container
+                  direction="row"
+                  alignItems="flex-start"
+                  className="tutorial-next-container"
+                >
+                  <Grid container xs={6} justify="flex-start">
+                    <IconButton className="proposal-button rotate-180" onClick={() => { }} aria-label="next">
+                      <ArrowForwardIosIcon className="tutorial-next-icon" />
+                    </IconButton>
+                  </Grid>
+                  <Grid container xs={6} justify="flex-end">
+                    <IconButton className="proposal-button" onClick={() => { }} aria-label="next">
+                      <ArrowForwardIosIcon className="tutorial-next-icon" />
+                    </IconButton>
+                  </Grid>
+                </Grid>
               </div>
             </Grid>
           </Grid>

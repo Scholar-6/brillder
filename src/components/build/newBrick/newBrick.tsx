@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 import actions from '../../../redux/actions/brickActions';
 import './newBrick.scss';
 import Welcome from './questionnaire/welcome';
-import ChooseSubject from './questionnaire/chooseSubject';
 import BrickTitle from './questionnaire/brickTitle';
 import OpenQuestion from './questionnaire/openQuestion';
 import BrickLength, { BrickLengthEnum } from './questionnaire/brickLength';
-import BriefPrep from './questionnaire/briefPrep';
+import Brief from './questionnaire/brief';
+import Prep from './questionnaire/prep';
 import ProposalReview from './questionnaire/ProposalReview';
 
 
@@ -29,10 +29,6 @@ function NewBrick(props: any) {
     alternativeSubject: '',
     links: [],
   });
-
-  const setSubject = (subject: string) => {
-    setBrick({ ...state, subject } as any);
-  }
 
   const setTitles = (titles: any) => {
     setBrick({ ...state, ...titles });
@@ -54,10 +50,18 @@ function NewBrick(props: any) {
     setBrick({ ...state, brickLength } as any);
   }
 
-  const setBriefPrep = (data: any) => {
-    let brick = { ...state, preparationBrief: data.preparationBrief, links: data.links.split(" ") } as any
+  const setBrief = (data:any) => {
+    let brick = { ...state, preparationBrief: data.preparationBrief } as any
+    setBrick(brick)
+  }
+
+  const saveBrick = (data: any) => {
+    let brick = { ...state, brickLength: data } as any
     setBrick(brick)
     props.saveBrick(brick);
+  }
+
+  const setPrep = (data: any) => {
   }
 
   if (props.brick != null) {
@@ -70,20 +74,20 @@ function NewBrick(props: any) {
     <MuiThemeProvider>
       <div style={{width: '100%', height: '100%'}}>
         <Route path='/build/new-brick/welcome'><Welcome /></Route>
-        <Route path='/build/new-brick/choose-subject'>
-          <ChooseSubject saveSubject={setSubject} selectedSubject={state.subject} />
-        </Route>
         <Route path='/build/new-brick/brick-title'>
           <BrickTitle parentState={state} saveTitles={setTitles} />
         </Route>
         <Route path='/build/new-brick/open-question'>
           <OpenQuestion selectedQuestion={state.openQuestion} saveOpenQuestion={setOpenQuestion} />
         </Route>
-        <Route path='/build/new-brick/length'>
-          <BrickLength length={state.brickLength} saveBrickLength={setBrickLength} />
+        <Route path='/build/new-brick/brief'>
+          <Brief parentState={state} setBrief={setBrief} />
         </Route>
-        <Route path='/build/new-brick/brief-prep'>
-          <BriefPrep parentState={state} saveBriefPrep={setBriefPrep} />
+        <Route path='/build/new-brick/prep'>
+          <Prep parentState={state} setPrep={setPrep} />
+        </Route>
+        <Route path='/build/new-brick/length'>
+          <BrickLength length={state.brickLength} saveBrick={saveBrick} />
         </Route>
         <Route path="/build/new-brick/proposal/:brickId" component={ProposalReview}></Route>
       </div>

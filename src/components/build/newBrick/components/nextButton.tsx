@@ -23,10 +23,12 @@ function NextButton({ step, canSubmit, onSubmit, data }: any) {
         case NewBrickStep.BrickTitle:
           return history.push(`${url}/open-question`);
         case NewBrickStep.OpenQuestion:
+          return history.push(`${url}/brief`);
+        case NewBrickStep.Brief:
+          return history.push(`${url}/prep`);
+        case NewBrickStep.Prep:
           return history.push(`${url}/length`);
         case NewBrickStep.BrickLength:
-          return history.push(`${url}/brief-prep`);
-        case NewBrickStep.BriefPrep:
           return "";
       }
     }
