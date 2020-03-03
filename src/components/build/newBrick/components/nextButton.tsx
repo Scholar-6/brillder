@@ -27,7 +27,7 @@ function NextButton({ step, canSubmit, onSubmit, data }: any) {
         case NewBrickStep.BrickLength:
           return history.push(`${url}/brief-prep`);
         case NewBrickStep.BriefPrep:
-          return ""
+          return "";
       }
     }
   }

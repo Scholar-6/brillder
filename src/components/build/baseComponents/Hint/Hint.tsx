@@ -48,7 +48,7 @@ const HintComponent: React.FC<HintProps> = ({ onChange, locked, ...props }) => {
   }
 
   const [state, setState] = React.useState(initState);
-  if (state.status != initState.status) {
+  if (state.status !== initState.status) {
     setState(initState);
   }
 

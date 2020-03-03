@@ -25,7 +25,7 @@ function BriefPrep({ parentState, saveBriefPrep }: any) {
     const expression = /^(http:\/\/\.|https:\/\/\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?/gi;
     const regex = new RegExp(expression);
     const link = state.links.split(' ')[0];
-    
+
     if (link.match(regex)) {
       return (
         <Grid container direction="row" alignItems="center" style={{ height: "300px" }}>
@@ -76,8 +76,10 @@ function BriefPrep({ parentState, saveBriefPrep }: any) {
           </div>
         </Grid>
         <Hidden only={['xs', 'sm']}>
-          <Grid container justify="center" item md={5} lg={4}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+          <Grid container justify="center" item md={5} lg={4} style={{ height: "70%" }}>
+            <div style={{ position: "relative", width: '58%', paddingTop: '100%' }}>
+              <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+            </div>
           </Grid>
         </Hidden>
       </Grid>
