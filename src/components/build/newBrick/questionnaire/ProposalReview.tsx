@@ -15,16 +15,16 @@ interface ProposalProps {
   brick: Brick
   history: any
   match: any
-  fetchBrick(brickId:number):void
+  fetchBrick(brickId: number): void
 }
 
 function ProposalReview(props: ProposalProps) {
   if (!props.brick) {
-    let {brickId} = props.match.params;
+    let { brickId } = props.match.params;
     props.fetchBrick(brickId);
     return <div>...Loading brick...</div>
   }
-  const {brick} = props;
+  const { brick } = props;
   console.log(brick);
   return (
     <div className="tutorial-page">
@@ -52,9 +52,9 @@ function ProposalReview(props: ProposalProps) {
           </Grid>
         </Grid>
         <Hidden only={['xs', 'sm']}>
-            <div style={{ right: "5%", position: "fixed", width: '19.3%', paddingTop: '33.3%' }}>
-              <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
-            </div>
+          <div style={{ right: "5%", position: "fixed", width: '19.3%', paddingTop: '33.3%' }}>
+            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+          </div>
         </Hidden>
       </Grid>
     </div>
