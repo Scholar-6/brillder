@@ -139,6 +139,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
   const convertQuestionTypes = (type: QuestionTypeEnum) => {
     if (type === QuestionTypeEnum.ChooseOne || type === QuestionTypeEnum.ChooseSeveral) {
       chooseOneToChooseSeveral(type);
+    } else if (type === QuestionTypeEnum.Sort) {
+      const index = getQuestionIndex(activeQuestion);
+      activeQuestion.type = type;
+      const question = Object.assign({}, activeQuestion);
+      question.hint = { status: HintStatus.All, value: question.hint.value, list: [] };
+      setQuestion(index, question);
     } else {
       setQuestionType(type);
     }
