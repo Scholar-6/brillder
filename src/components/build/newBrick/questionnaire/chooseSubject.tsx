@@ -71,9 +71,9 @@ const BootstrapInput = withStyles((theme: Theme) =>
   }),
 )(InputBase);
 
-function ChooseSubject({saveSubject, selectedSubject}:any) {
+function ChooseSubject({ saveSubject, selectedSubject }: any) {
   const [subject, setSubject] = React.useState(selectedSubject);
-  
+
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSubject(event.target.value as number);
   };
@@ -88,7 +88,7 @@ function ChooseSubject({saveSubject, selectedSubject}:any) {
               placeholder="Subject"
               labelId="customized-select-label"
               value={subject}
-              style={{width: '90%'}}
+              style={{ width: '90%' }}
               onChange={handleChange}
               input={<BootstrapInput />}
             >
@@ -113,8 +113,10 @@ function ChooseSubject({saveSubject, selectedSubject}:any) {
           </div>
         </Grid>
         <Hidden only={['xs', 'sm']}>
-          <Grid container justify="center" item md={5} lg={4}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+          <Grid container justify="center" item md={5} lg={4} style={{ height: "70%" }}>
+            <div style={{ position: "relative", width: '58%', paddingTop: '100%' }}>
+              <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+            </div>
           </Grid>
         </Hidden>
       </Grid>

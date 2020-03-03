@@ -9,6 +9,7 @@ export interface Brick {
   preparationBrief: string
   openQuestion: string
   alternativeSubject: string
+  brickLength: number
   type: number
   questions: any[]
 }

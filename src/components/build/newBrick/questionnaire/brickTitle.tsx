@@ -9,7 +9,7 @@ import { NewBrickStep } from "../model";
 import './brickTitle.scss';
 
 
-function BrickTitle({parentState, saveTitles}: any) {
+function BrickTitle({ parentState, saveTitles }: any) {
   const [titles, setTitles] = React.useState({
     title: parentState.title,
     subTopic: parentState.subTopic,
@@ -17,15 +17,15 @@ function BrickTitle({parentState, saveTitles}: any) {
   });
 
   const onTitleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTitles({...titles, title: event.target.value} as any);
+    setTitles({ ...titles, title: event.target.value } as any);
   };
 
   const onSubTopicChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTitles({...titles, subTopic: event.target.value} as any);
+    setTitles({ ...titles, subTopic: event.target.value } as any);
   };
 
   const onAltTopicChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTitles({...titles, alternativeTopics: event.target.value} as any);
+    setTitles({ ...titles, alternativeTopics: event.target.value } as any);
   };
 
   return (
@@ -43,8 +43,10 @@ function BrickTitle({parentState, saveTitles}: any) {
           </div>
         </Grid>
         <Hidden only={['xs', 'sm']}>
-          <Grid container justify="center" item md={5} lg={4}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+          <Grid container justify="center" item md={5} lg={4} style={{ height: "70%" }}>
+            <div style={{ position: "relative", width: '58%', paddingTop: '100%' }}>
+              <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+            </div>
           </Grid>
         </Hidden>
       </Grid>

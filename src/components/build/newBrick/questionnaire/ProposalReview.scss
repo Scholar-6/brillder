@@ -1,0 +1,31 @@
+.proposal-card {
+  font-family: "Libaration Sans V2";
+  h1 {
+    font-size: 2vw;
+    margin-bottom: 4vh;
+  }
+  p {
+    margin-top: 3vh;
+    margin-left: 0.7vw;
+    font-size: 1vw;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 0;
+  }
+  .proposal-titles {
+    text-align: left;
+    margin-left: 3.1vw;
+    text-transform: capitalize;
+    font-size: 1vw;
+  }
+  .grey-line {
+    margin-top: 0;
+    margin-left: 1.53vw;
+  }
+  .openQuestion {
+    margin: 0;
+    margin-left: 1.53vw;
+    font-weight: normal;
+    text-transform: capitalize;
+  }
+}

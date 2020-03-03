@@ -135,7 +135,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     const question = Object.assign({}, activeQuestion);
     setQuestion(index, question);
   }
-  
+
   const convertQuestionTypes = (type: QuestionTypeEnum) => {
     if (type === QuestionTypeEnum.ChooseOne || type === QuestionTypeEnum.ChooseSeveral) {
       chooseOneToChooseSeveral(type);
@@ -286,13 +286,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
   const renderQuestionComponent = () => {
     return (
-    <QuestionTypePage
-      history={history}
-      brickId={brickId}
-      questionId={activeQuestion.id}
-      setQuestionType={setQuestionTypeAndMove}
-      setPreviousQuestion={setPreviousQuestion}
-      questionType={activeQuestion.type} />
+      <QuestionTypePage
+        history={history}
+        brickId={brickId}
+        questionId={activeQuestion.id}
+        setQuestionType={setQuestionTypeAndMove}
+        setPreviousQuestion={setPreviousQuestion}
+        questionType={activeQuestion.type} />
     );
   }
 
@@ -300,7 +300,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
     <DndProvider backend={Backend}>
       <div className="investigation-build-page">
         <Grid container direction="row" alignItems="center" style={{ height: '100%' }}>
-          <Grid container item xs={12} sm={12} md={7} lg={8} alignItems="center" style={{ height: '100%'}} className="question-container">
+          <Grid container item xs={12} sm={12} md={7} lg={8} alignItems="center" style={{ height: '100%' }} className="question-container">
             <Grid container direction="row" justify="center" alignItems="center" style={{ height: '100%' }}>
               <Grid container item xs={12} sm={12} md={12} lg={9} style={{ height: '90%' }}>
                 <DragableTabs
@@ -325,8 +325,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
             </Grid>
           </Grid>
           <Hidden only={['xs', 'sm']}>
-            <Grid container justify="center" item md={5} lg={4}>
-              <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+            <Grid container justify="center" item md={5} lg={4} style={{ height: "70%" }}>
+              <div style={{ position: "relative", width: '58%', paddingTop: '100%' }}>
+                <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+              </div>
             </Grid>
           </Hidden>
         </Grid>

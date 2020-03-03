@@ -36,8 +36,10 @@ function Welcome() {
           </Grid>
         </Grid>
         <Hidden only={['xs', 'sm']}>
-          <Grid container justify="center" item md={5} lg={4}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+          <Grid container justify="center" item md={5} lg={4} style={{ height: "70%" }}>
+            <div style={{ position: "relative", width: '58%', paddingTop: '100%' }}>
+              <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+            </div>
           </Grid>
         </Hidden>
       </Grid>

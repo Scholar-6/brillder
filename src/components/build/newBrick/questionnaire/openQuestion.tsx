@@ -9,9 +9,9 @@ import { NewBrickStep } from "../model";
 import './openQuestion.scss';
 
 
-function OpenQuestion({selectedQuestion, saveOpenQuestion}: any) {
+function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
   const [openQuestion, setQuestion] = React.useState(selectedQuestion);
-  
+
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setQuestion(event.target.value as number);
   };
@@ -23,7 +23,7 @@ function OpenQuestion({selectedQuestion, saveOpenQuestion}: any) {
           <div className="left-card">
             <h1 className="only-tutorial-header">
               <p>Every brick should engage and inspire:</p>
-              <p>'No profit grows where is no pleasure ta'en'.</p> 
+              <p>'No profit grows where is no pleasure ta'en'.</p>
               <p>What open question(s) will challenge users?</p>
             </h1>
             <Grid container justify="center" item xs={12}>
@@ -33,8 +33,10 @@ function OpenQuestion({selectedQuestion, saveOpenQuestion}: any) {
           </div>
         </Grid>
         <Hidden only={['xs', 'sm']}>
-          <Grid container justify="center" item md={5} lg={4}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+          <Grid container justify="center" item md={5} lg={4} style={{ height: "70%" }}>
+            <div style={{ position: "relative", width: '58%', paddingTop: '100%' }}>
+              <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+            </div>
           </Grid>
         </Hidden>
       </Grid>
