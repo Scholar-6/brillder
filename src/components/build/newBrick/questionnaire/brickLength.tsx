@@ -7,7 +7,10 @@ import { Hidden } from "@material-ui/core";
 
 import './brickLength.scss';
 import NextButton from '../components/nextButton';
+
+import PreviousButton from '../components/previousButton';
 import { NewBrickStep } from "../model";
+
 
 export enum BrickLengthEnum {
   None = 0,
@@ -16,7 +19,7 @@ export enum BrickLengthEnum {
   S60min
 }
 
-function BrickLength({ length, saveBrickLength }: any) {
+function BrickLength({ length, saveBrick }: any) {
   let presectedLength = 0;
   if (length === 20) {
     presectedLength = BrickLengthEnum.S20min;
@@ -37,8 +40,8 @@ function BrickLength({ length, saveBrickLength }: any) {
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <div className="left-card">
             <h1 className="only-tutorial-header-length">
-              <p>20 minute bricks offer a snapshot of a topic while</p>
-              <p>60 min. ones are opportunities to really get stuck in.</p>
+              <p>20 minute are a taster. 40 minutes are a meal.</p>
+              <p> 60 minutes are a feast.</p>
               <p>You can always shorten or extend later.</p>
             </h1>
             <h2 className="length-description">Choose Brick Length.</h2>
@@ -68,7 +71,18 @@ function BrickLength({ length, saveBrickLength }: any) {
                 </Grid>
               </Grid>
             </Grid>
-            <NextButton step={NewBrickStep.BrickLength} canSubmit={brickLength !== BrickLengthEnum.None} onSubmit={saveBrickLength} data={brickLength} />
+            <Grid
+              container
+              direction="row"
+              justify="flex-end"
+              alignItems="flex-start"
+              className="tutorial-next-container"
+            >
+              <PreviousButton to="/build/new-brick/brief" />
+              <Grid container justify="flex-end" item xs={6}>
+              <NextButton step={NewBrickStep.BrickLength} canSubmit={brickLength !== BrickLengthEnum.None} onSubmit={saveBrick} data={brickLength} />
+              </Grid>
+            </Grid>
           </div>
         </Grid>
         <Hidden only={['xs', 'sm']}>
