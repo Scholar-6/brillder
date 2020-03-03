@@ -118,14 +118,16 @@
   }
 
   .sensor {
-    left: 1vw !important;
-    width: 1vw !important;
-    top: 1vw !important;
-    height: 1vw !important;
+    width: 0.6vw !important;
+    top: 2.15vw !important;
+    left: 50% !important;
+    height: 0.6vw !important;
+    margin-left: -3vw !important;
+    border-radius: 100% !important;
   }
 
   .volume, .volume::before, .volume::after {
-    width: 1vw !important;
+    width: 0.2vw !important;
   }
 
   .top-bar, .sleep {
@@ -133,32 +135,35 @@
   }
 
   .volume {
-    left: -1vw !important;
-    top: 1vw !important;
-    height: 1vw !important;
+    left: -0.2vw !important;
+    top: 7.2vw !important;
+    height: 2vw !important;
   }
 
   .volume::before {
-    top: 1vw !important;
-    height: 1vw !important;
+    top: -3.2vw !important;
+    height: 1.5vw !important;
   }
 
   .volume::after {
-    top: 1vw !important;
-    height: 1vw !important;
+    top: 3vw !important;
+    height: 2vw !important;
   }
 
   .speaker {
-    width: 1vw !important;
-    margin-left: 1vw !important;
-    height: 1vw !important;
-    top: 1vw !important;
+    width: 2.6vw !important;
+    margin-left: -1.2vw !important;
+    height: 0.3vw !important;
+    top: 2.3vw !important;
+    border-radius: 1vw !important;
   }
 
   .camera {
-    top: 1vw !important;
-    height: 1vw !important;
-    width: 1vw !important;
+    top: 1.2vw !important;
+    height: 0.5vw !important;
+    margin-left: -0.25vw !important;
+    width: 0.5vw !important;
+    border-radius: 100% !important;
   }
 }
 
