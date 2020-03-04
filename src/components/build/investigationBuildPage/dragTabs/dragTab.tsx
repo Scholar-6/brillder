@@ -21,31 +21,6 @@ interface DragItem {
 }
 
 const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard, selectQuestion, removeQuestion }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const [, drop] = useDrop({
-    accept: ItemTypes.CARD,
-    hover(item: DragItem) {
-      if (!ref.current) { return }
-      const dragIndex = item.index
-      const hoverIndex = index
-
-      if (dragIndex === hoverIndex) { return }
-
-      moveCard(dragIndex, hoverIndex)
-      item.index = hoverIndex
-    },
-  })
-
-  const [{ isDragging }, drag] = useDrag({
-    item: { type: ItemTypes.CARD, id, index },
-    collect: (monitor: any) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  })
-
-  const opacity = isDragging ? 0 : 1
-  drag(drop(ref))
-
   const removeTab = (event: React.ChangeEvent<any>) => {
     event.stopPropagation();
     removeQuestion(index);
@@ -56,7 +31,7 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard, selectQu
   }
 
   return (
-    <div className="draggable-tab" onClick={activateTab} ref={ref} style={{ ...style, height: '100%', opacity }}>
+    <div className="draggable-tab" onClick={activateTab} style={{ ...style, height: '100%' }}>
       <Grid container direction="row" alignContent="center" style={{height: '95%'}}>
         <Grid item xs={10}  style={{color: 'black', fontFamily: 'Century Gothic Regular' }}>
           {index + 1}
