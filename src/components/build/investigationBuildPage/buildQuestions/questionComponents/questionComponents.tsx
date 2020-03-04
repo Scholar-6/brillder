@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
-import { Grid, Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import './questionComponents.scss';
 import ShortAnswerComponent from '../questionTypes/shortAnswerBuild/shortAnswerBuild';
@@ -17,12 +17,6 @@ import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHig
 import { Question, QuestionTypeEnum } from 'components/model/question';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 
-let DRAG_ID: number = 1;
-
-function createId() {
-  DRAG_ID += 1;
-  return DRAG_ID;
-}
 
 interface ItemType {
   id: number;
@@ -35,21 +29,38 @@ type QuestionComponentsProps = {
   brickId: number
   question: Question
   swapComponents: Function
-  addComponent(): void
+  removeComponent(index:number):void
   updateComponent(component: any, index: number): void
   setQuestionHint(hintState: HintState): void
-  removeComponent(componentIndex: number): void
 }
 
 const QuestionComponents = ({
   locked, history, brickId, question,
-  swapComponents, setQuestionHint, updateComponent,
-  addComponent, removeComponent
+  swapComponents, setQuestionHint, updateComponent, removeComponent
 }: QuestionComponentsProps) => {
-  const [components, setComponents] = useState(question.components);
+  let componentsCopy = Object.assign([], question.components) as any[]
+  const [questionId, setQuestionId] = useState(question.id);
+  const [components, setComponents] = useState(componentsCopy);
+
+
+  if (questionId !== question.id) {
+    setQuestionId(question.id);
+    let compsCopy = Object.assign([], question.components);
+    setComponents(compsCopy);
+  }
+
+  const removeInnerComponent = (componentIndex:number) => {
+    if (locked) { return; }
+    const comps = Object.assign([], components) as any[];
+    comps.splice(componentIndex, 1);
+    setComponents(comps);
+    removeComponent(componentIndex);
+  }
 
   const renderDropBox = (component: any, index: number) => {
     const updatingComponent = (compData: any) => {
+      components[index] = compData;
+      setComponents(components);
       updateComponent(compData, index);
     }
 
@@ -79,22 +90,17 @@ const QuestionComponents = ({
       history.push(`/build/brick/${brickId}/build/investigation/question`);
       return <div>...Loading...</div>
     }
+
     return <SwitchQuestionComponent
       type={component.type}
       index={index}
       locked={locked}
-      componentCount={question.components.length}
-      swapComponents={swapComponents}
       component={component}
       updateComponent={updatingComponent}
       hint={question.hint}
-      removeComponent={removeComponent}
+      removeComponent={removeInnerComponent}
       setQuestionHint={setQuestionHint}
       uniqueComponent={uniqueComponent} />
-  }
-
-  const addQuestionComponent = () => {
-    addComponent();
   }
 
   return (
@@ -103,9 +109,7 @@ const QuestionComponents = ({
         list={components}
         group={{ name: "cloning-group-name", pull: "clone" }}
         setList={setComponents}
-        clone={item => {
-          console.log(55);
-        }}>
+        clone={item => { }}>
         {
           components.map((comp, i) => (
             <Grid key={i} container direction="row" className="drop-box">
@@ -114,11 +118,6 @@ const QuestionComponents = ({
           ))
         }
       </ReactSortable>
-      <Grid container direction="row" className="add-dropbox">
-        <Button disabled={locked} className="add-dropbox-button" onClick={addQuestionComponent}>
-          + &nbsp;&nbsp; Q &nbsp; U &nbsp; E &nbsp; S &nbsp; T &nbsp; I &nbsp; O &nbsp; N &nbsp; &nbsp; C &nbsp; O &nbsp; M &nbsp; P &nbsp; O &nbsp; N &nbsp; E &nbsp; N &nbsp; T
-        </Button>
-      </Grid>
     </div>
   );
 }
