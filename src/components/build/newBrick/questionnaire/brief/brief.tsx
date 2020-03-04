@@ -21,8 +21,9 @@ function BriefComponent({ parentState, saveBrief }: any) {
   return (
     <div className="tutorial-page brief-prep-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
+      <Grid container item xs={6} justify="center">
+          <Grid container item xs={8}>
         <div className="left-card">
-          <div style={{position: 'absolute', top: 0, right: 0, width: '100%', height: '100%'}}>
             <h1 className="only-tutorial-header">
               <p>Outline the purpose of this brick</p>
             </h1>
@@ -33,8 +34,9 @@ function BriefComponent({ parentState, saveBrief }: any) {
               placeholder="Enter Brief Here..." />
             <PreviousButton to="/build/new-brick/open-question" />
             <NextButton step={NewBrickStep.Brief} canSubmit={true} data={brief} onSubmit={saveBrief} />
-          </div>
         </div>
+        </Grid>
+        </Grid>
         <Hidden only={['xs', 'sm']}>
           <div style={{ right: "5%", position: "fixed", width: '19.3%', paddingTop: '33.3%' }}>
             <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />

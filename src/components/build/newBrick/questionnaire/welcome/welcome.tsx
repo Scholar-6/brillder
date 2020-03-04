@@ -29,8 +29,8 @@ function Welcome() {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid container direction="row" alignItems="flex-end" style={{height: '40%'}}>
-              <Grid item xs={12} style={{ position: "relative" }}>
+            <Grid container direction="row" style={{height: '40%', paddingTop: '13%'}}>
+              <Grid item xs={12} style={{ position: "relative", height: '100%' }}>
                 <h2 className="tutorial-logo-text">
                   A &nbsp; S C H O L A R &nbsp; 6 &nbsp; T E C H &nbsp; P R O D U C T
                 </h2>
