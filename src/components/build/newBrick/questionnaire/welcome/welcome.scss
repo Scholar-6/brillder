@@ -1,0 +1,59 @@
+@import '../../../../../variables';
+
+.welcome-page {
+  .left-card {
+    position: fixed;
+    width: 30%;
+    padding-top: 33.3%;
+    left: 14%;
+
+    .tutorial-logo-container {
+      padding-top: 10%;
+      height: 60%;
+
+      img {
+        height: 17vw; 
+      }
+    }
+
+    .tutorial-logo-text {
+      color: black;
+      font-size: 1.08vw;
+    }
+
+    .welcome-upper-text {
+      font-size: 1.8vw;
+      margin-top: 40px;
+    }
+    .welcome-bottom-text {
+      margin-bottom: 5%;
+      font-size: 2.15vw;
+      font-family: 'Century Gothic Bold';
+      color: black;
+    }
+    .welcome-next-container {
+      position: absolute;
+      bottom: 5%;
+      right: 19%;
+      padding: 0px !important;
+      padding-right: 0 !important;
+    
+      .welcome-next-button {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 20% !important;
+        height: 20% !important;
+        color: $global-orange;
+  
+        span {
+          width: 500% !important;
+          height: 100% !important;
+        }
+  
+        .welcome-next-icon {
+          font-size: 5vw;
+        }
+      }
+    }
+  }
+}

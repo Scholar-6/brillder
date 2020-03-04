@@ -1,16 +1,15 @@
-@import "../../../../variables";
+@import "../../../../../variables";
 
 .proposal-card {
   padding-top: 6vh;
   
   font-family: "Libaration Sans V2";
   h1 {
-    color: black;
     font-size: 2vw;
-    margin-bottom: 5vh;
+    margin-bottom: 5% !important;
   }
   p {
-    margin-top: 3vh;
+    margin-top: 3% !important;
     margin-left: 0.7vw;
     font-size: 1vw;
     font-weight: bold;

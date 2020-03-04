@@ -6,10 +6,9 @@ import Device from "react-device-frame";
 import { Hidden } from "@material-ui/core";
 
 import './brickLength.scss';
-import NextButton from '../components/nextButton';
-
-import PreviousButton from '../components/previousButton';
-import { NewBrickStep } from "../model";
+import NextButton from '../../components/nextButton';
+import PreviousButton from '../../components/previousButton';
+import { NewBrickStep } from "../../model";
 
 
 export enum BrickLengthEnum {
@@ -37,8 +36,8 @@ function BrickLength({ length, saveBrick }: any) {
   return (
     <div className="tutorial-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
-        <Grid container justify="center" item xs={12} md={7} lg={8}>
-          <div className="left-card">
+        <div className="left-card">
+          <div style={{position: 'absolute', top: 0, right: 0, width: '100%', height: '100%'}}>
             <h1 className="only-tutorial-header-length">
               <p>20 minute are a taster. 40 minutes are a meal.</p>
               <p> 60 minutes are a feast.</p>
@@ -71,20 +70,14 @@ function BrickLength({ length, saveBrick }: any) {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid
-              container
-              direction="row"
-              justify="flex-end"
-              alignItems="flex-start"
-              className="tutorial-next-container"
-            >
-              <PreviousButton to="/build/new-brick/brief" />
-              <Grid container justify="flex-end" item xs={6}>
-              <NextButton step={NewBrickStep.BrickLength} canSubmit={brickLength !== BrickLengthEnum.None} onSubmit={saveBrick} data={brickLength} />
-              </Grid>
-            </Grid>
+            <PreviousButton to="/build/new-brick/prep" />
+            <NextButton
+              step={NewBrickStep.BrickLength}
+              canSubmit={brickLength !== BrickLengthEnum.None}
+              onSubmit={saveBrick}
+              data={brickLength} />
           </div>
-        </Grid>
+        </div>
         <Hidden only={['xs', 'sm']}>
           <div style={{ right: "5%", position: "fixed", width: '19.3%', paddingTop: '33.3%' }}>
             <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />

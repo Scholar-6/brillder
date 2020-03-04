@@ -1,14 +1,13 @@
 @import "../../../../variables";
 
 .tutorial-page {
-  .tutorial-next-container {
+  .tutorial-prev-container {
     position: absolute;
     bottom: 1%;
-    right: 7%;
     padding: 0px !important;
     padding-right: 0 !important;
 
-    .tutorial-next-button {
+    .tutorial-prev-button {
       padding: 0 !important;
       margin: 0 !important;
       width: 20% !important;
@@ -16,11 +15,11 @@
       color: $global-orange;
 
       span {
-        width: 500% !important;
+        width: 550% !important;
         height: 100% !important;
       }
 
-      .tutorial-next-icon {
+      .tutorial-prev-icon {
         font-size: 5vw;
       }
     }

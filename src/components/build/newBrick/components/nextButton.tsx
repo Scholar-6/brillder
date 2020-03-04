@@ -2,13 +2,12 @@ import React from "react";
 import { useHistory } from 'react-router-dom';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton } from "material-ui";
-import { Grid } from "@material-ui/core";
 
 import { NewBrickStep } from "../model";
 import './nextButton.scss';
 
 
-function NextButton({ step, canSubmit, onSubmit, data }: any) {
+function NextButton({ step, canSubmit, onSubmit, data, brickId }: any) {
   const history = useHistory()
   const url = "/build/new-brick"
 
@@ -30,22 +29,18 @@ function NextButton({ step, canSubmit, onSubmit, data }: any) {
           return history.push(`${url}/length`);
         case NewBrickStep.BrickLength:
           return "";
+        case NewBrickStep.ProposalReview:
+          return history.push(`/build/brick/${brickId}/build/investigation/question`)
       }
     }
   }
 
   return (
-    <Grid
-      container
-      direction="row"
-      justify="flex-end"
-      alignItems="flex-start"
-      className="tutorial-next-container"
-    >
+    <div className="tutorial-next-container">
       <IconButton className="tutorial-next-button" onClick={next} aria-label="next">
         <ArrowForwardIosIcon className="tutorial-next-icon" />
       </IconButton>
-    </Grid>
+    </div>
   );
 }
 

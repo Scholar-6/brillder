@@ -1,0 +1,21 @@
+.align-center {
+  text-align: center !important;
+  display: block !important;
+}
+
+.brick-title-page {
+  .left-card {
+    position: fixed;
+    width: 30%;
+    padding-top: 33.3%;
+    left: 14%;
+  }
+  .audience-inputs {
+    width: 100% !important;
+    font-size: 1.4vw;
+  }
+  .only-tutorial-header {
+    font-size: 2vw;
+    margin-bottom: 15% !important;
+  }
+}
