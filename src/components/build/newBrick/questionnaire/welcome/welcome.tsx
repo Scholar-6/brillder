@@ -2,10 +2,10 @@ import React from "react";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton } from "material-ui";
 // @ts-ignore
-import Device from "react-device-frame";
 import { Hidden } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { useHistory } from 'react-router-dom';
+import PhonePreview from 'components/build/baseComponents/phonePreview/PhonePreview';
 
 import './welcome.scss';
 
@@ -29,8 +29,8 @@ function Welcome() {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid container direction="row" alignItems="flex-end" style={{height: '40%'}}>
-              <Grid item xs={12} style={{ position: "relative" }}>
+            <Grid container direction="row" style={{height: '40%', paddingTop: '13%'}}>
+              <Grid item xs={12} style={{ position: "relative", height: '100%' }}>
                 <h2 className="tutorial-logo-text">
                   A &nbsp; S C H O L A R &nbsp; 6 &nbsp; T E C H &nbsp; P R O D U C T
                 </h2>
@@ -46,9 +46,7 @@ function Welcome() {
           </div>
         </div>
         <Hidden only={['xs', 'sm']}>
-          <div style={{ right: "5%", position: "fixed", width: '19.3%', paddingTop: '33.3%' }}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
-          </div>
+          <PhonePreview link={window.location.origin + '/logo-page'} />
         </Hidden>
       </Grid>
     </div>
