@@ -2,10 +2,11 @@ import React from 'react'
 import { Grid, Select, FormControl, Button } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton, MenuItem } from "material-ui";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { ReactSortable } from "react-sortablejs";
 
 import QuestionComponents from './questionComponents/questionComponents';
-import './buildQuestionComponent.scss'
+import './buildQuestionComponent.scss';
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../model/question';
 import DragBox from './drag/dragBox';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
@@ -39,6 +40,13 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
     setQuestionComponents, locked, setPreviousQuestion
   }
 ) => {
+  const [componentTypes, setComponentType] = React.useState([
+    {id: 1, type: QuestionComponentTypeEnum.Text},
+    {id: 2, type: QuestionComponentTypeEnum.Quote},
+    {id: 3, type: QuestionComponentTypeEnum.Image},
+    {id: 4, type: QuestionComponentTypeEnum.Sound},
+    {id: 5, type: QuestionComponentTypeEnum.Equation},
+  ]);
   const { type } = question;
   document.title = QuestionTypeEnum[type];
 
@@ -102,6 +110,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
 
   let typeArray: string[] = Object.keys(QuestionType);
 
+
   return (
     <MuiThemeProvider >
       <div className="build-question-page" style={{width: '100%', height: '94%'}}>
@@ -114,6 +123,12 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
           <Grid container direction="row">
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
               <Grid container item xs={12} className="left-sidebar" alignItems="center">
+                <ReactSortable
+                  list={componentTypes}
+                  group={{ name: "cloning-group-name", pull: "clone" }}
+                  setList={setComponentType}
+                  sort={false}
+                  >
                 <DragBox
                   onDrop={setDropBoxItem}
                   locked={locked}
@@ -156,6 +171,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   fontFamily="Century Gothic Bold"
                   hoverMarginTop="0.9vw"
                   value={QuestionComponentTypeEnum.Equation} />
+                </ReactSortable>
               </Grid>
             </Grid>
             <Grid container item xs={5} sm={6} md={6} className="question-components-list">

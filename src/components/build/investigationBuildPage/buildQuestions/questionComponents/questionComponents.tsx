@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { Grid, Button } from '@material-ui/core';
 
@@ -16,6 +16,13 @@ import VerticalShuffleComponent from '../questionTypes/verticalShuffleBuild/vert
 import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHighlighting';
 import { Question, QuestionTypeEnum } from 'components/model/question';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
+
+let DRAG_ID: number = 1;
+
+function createId() {
+  DRAG_ID += 1;
+  return DRAG_ID;
+}
 
 interface ItemType {
   id: number;
@@ -92,7 +99,13 @@ const QuestionComponents = ({
 
   return (
     <div className="questions">
-      <ReactSortable list={components} setList={setComponents}>
+      <ReactSortable
+        list={components}
+        group={{ name: "cloning-group-name", pull: "clone" }}
+        setList={setComponents}
+        clone={item => {
+          console.log(55);
+        }}>
         {
           components.map((comp, i) => (
             <Grid key={i} container direction="row" className="drop-box">
