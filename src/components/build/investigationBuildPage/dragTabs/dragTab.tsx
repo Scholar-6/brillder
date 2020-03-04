@@ -1,6 +1,4 @@
-import React, { useRef } from 'react'
-import { useDrag, useDrop } from 'react-dnd'
-import ItemTypes from '../ItemTypes'
+import React from 'react'
 import ClearIcon from '@material-ui/icons/Clear';
 import { Grid } from '@material-ui/core';
 const style = {}
