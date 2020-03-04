@@ -6,13 +6,13 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { connect } from 'react-redux';
 import actions from '../../../redux/actions/brickActions';
 import './newBrick.scss';
-import Welcome from './questionnaire/welcome';
-import BrickTitle from './questionnaire/brickTitle';
-import OpenQuestion from './questionnaire/openQuestion';
-import BrickLength, { BrickLengthEnum } from './questionnaire/brickLength';
-import Brief from './questionnaire/brief';
-import Prep from './questionnaire/prep';
-import ProposalReview from './questionnaire/ProposalReview';
+import Welcome from './questionnaire/welcome/welcome';
+import BrickTitle from './questionnaire/brickTitle/brickTitle';
+import OpenQuestion from './questionnaire/openQuestion/openQuestion';
+import BrickLength, { BrickLengthEnum } from './questionnaire/brickLength/brickLength';
+import Brief from './questionnaire/brief/brief';
+import Prep from './questionnaire/prep/prep';
+import ProposalReview from './questionnaire/proposalReview/ProposalReview';
 
 
 function NewBrick(props: any) {
@@ -29,6 +29,8 @@ function NewBrick(props: any) {
     alternativeSubject: '',
     links: [],
   });
+
+  const [saved, setSaved] = React.useState(false);
 
   const setTitles = (titles: any) => {
     setBrick({ ...state, ...titles });
@@ -57,15 +59,15 @@ function NewBrick(props: any) {
 
   const saveBrick = (data: any) => {
     let brick = { ...state, brickLength: data } as any
-    setBrick(brick)
+    setBrick(brick);
+    setSaved(true);
     props.saveBrick(brick);
   }
 
-  const setPrep = (data: any) => {
-  }
+  const setPrep = (data: any) => { }
 
   if (props.brick != null) {
-    if (props.location.pathname.indexOf('/build/new-brick/proposal/') === -1) {
+    if (props.location.pathname.indexOf('/build/new-brick/proposal/') === -1 && saved === true) {
       props.history.push(`/build/new-brick/proposal/${props.brick.id}`);
     }
   }

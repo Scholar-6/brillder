@@ -2,21 +2,26 @@
 
 .tutorial-page {
   .tutorial-next-container {
+    position: absolute;
+    bottom: 1%;
+    right: 7%;
     padding: 0px !important;
-    padding-right: 25px !important;
-  
+    padding-right: 0 !important;
+
     .tutorial-next-button {
-      margin: 23px !important;
-      padding-top: 6px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 20% !important;
+      height: 20% !important;
       color: $global-orange;
 
       span {
-        width: 70px !important;
-        height: 70px !important;
+        width: 500% !important;
+        height: 100% !important;
       }
 
       .tutorial-next-icon {
-        font-size: 60px;
+        font-size: 5vw;
       }
     }
   }

@@ -1,0 +1,27 @@
+@import "../../../../variables";
+
+.tutorial-page {
+  .tutorial-prev-container {
+    position: absolute;
+    bottom: 1%;
+    padding: 0px !important;
+    padding-right: 0 !important;
+
+    .tutorial-prev-button {
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 20% !important;
+      height: 20% !important;
+      color: $global-orange;
+
+      span {
+        width: 550% !important;
+        height: 100% !important;
+      }
+
+      .tutorial-prev-icon {
+        font-size: 5vw;
+      }
+    }
+  }
+}

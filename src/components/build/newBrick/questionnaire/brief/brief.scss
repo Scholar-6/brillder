@@ -1,0 +1,22 @@
+.brief-prep-page {
+  .left-card {
+    position: fixed;
+    width: 40%;
+    padding-top: 33.3%;
+    left: 10%;
+
+    textarea {
+      margin-top: 8%;
+      height: 30% !important;
+    }
+
+    .only-tutorial-header {
+      p:nth-child(1) {
+        font-size: 1.86vw !important;
+      }
+      p:nth-child(2) {
+        font-size: 1.81vw !important;
+      }
+    }
+  }
+}
