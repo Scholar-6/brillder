@@ -7,14 +7,12 @@ import { Grid } from '@material-ui/core';
 import update from 'immutability-helper';
 // @ts-ignore
 import { connect } from 'react-redux';
-import Hidden from '@material-ui/core/Hidden';
-// @ts-ignore
-import Device from "react-device-frame";
 
 import './investigationBuildPage.scss'
 import BuildQuestionComponent from './buildQuestions/buildQuestionComponent';
 import QuestionTypePage from './questionType/questionType';
 import DragableTabs from './dragTabs/dragableTabs';
+import PhonePreview from 'components/build/baseComponents/phonePreview/PhonePreview';
 import { Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus } from 'components/model/question';
 import actions from '../../../redux/actions/brickActions';
 
@@ -324,11 +322,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Hidden only={['xs', 'sm']}>
-            <div style={{ right: "5%", position: "fixed", width: '19.3%', paddingTop: '33.3%' }}>
-              <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
-            </div>
-          </Hidden>
+          <PhonePreview link={window.location.origin + '/logo-page'} />
         </Grid>
       </div>
     </DndProvider>
