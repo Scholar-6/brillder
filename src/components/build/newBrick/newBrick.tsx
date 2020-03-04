@@ -67,7 +67,8 @@ function NewBrick(props: any) {
     props.saveBrick(brick);
   }
 
-  const setPrep = (data: any) => { }
+  const setPrep = (data: any) => {
+  }
 
   if (props.brick != null) {
     if (props.location.pathname.indexOf('/build/new-brick/proposal/') === -1 && saved === true) {
