@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { FC, useState } from "react";
+import { ReactSortable } from "react-sortablejs";
 import { Grid, Button } from '@material-ui/core';
 
 import './questionComponents.scss';
@@ -16,6 +17,10 @@ import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHig
 import { Question, QuestionTypeEnum } from 'components/model/question';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 
+interface ItemType {
+  id: number;
+  name: string;
+}
 
 type QuestionComponentsProps = {
   locked: boolean
@@ -24,9 +29,9 @@ type QuestionComponentsProps = {
   question: Question
   swapComponents: Function
   addComponent(): void
-  updateComponent(component: any, index: number):void
+  updateComponent(component: any, index: number): void
   setQuestionHint(hintState: HintState): void
-  removeComponent(componentIndex: number):void
+  removeComponent(componentIndex: number): void
 }
 
 const QuestionComponents = ({
@@ -34,13 +39,15 @@ const QuestionComponents = ({
   swapComponents, setQuestionHint, updateComponent,
   addComponent, removeComponent
 }: QuestionComponentsProps) => {
+  const [components, setComponents] = useState(question.components);
+
   const renderDropBox = (component: any, index: number) => {
-    const updatingComponent = (compData:any) => {
+    const updatingComponent = (compData: any) => {
       updateComponent(compData, index);
     }
 
-    const {type} = question;
-    let uniqueComponent:any;
+    const { type } = question;
+    let uniqueComponent: any;
     if (type === QuestionTypeEnum.ShortAnswer) {
       uniqueComponent = ShortAnswerComponent;
     } else if (type === QuestionTypeEnum.Sort) {
@@ -85,15 +92,15 @@ const QuestionComponents = ({
 
   return (
     <div className="questions">
-      {
-        question.components.map((comp, i) => {
-          return (
+      <ReactSortable list={components} setList={setComponents}>
+        {
+          components.map((comp, i) => (
             <Grid key={i} container direction="row" className="drop-box">
               {renderDropBox(comp, i)}
             </Grid>
-          )
-        })
-      }
+          ))
+        }
+      </ReactSortable>
       <Grid container direction="row" className="add-dropbox">
         <Button disabled={locked} className="add-dropbox-button" onClick={addQuestionComponent}>
           + &nbsp;&nbsp; Q &nbsp; U &nbsp; E &nbsp; S &nbsp; T &nbsp; I &nbsp; O &nbsp; N &nbsp; &nbsp; C &nbsp; O &nbsp; M &nbsp; P &nbsp; O &nbsp; N &nbsp; E &nbsp; N &nbsp; T
