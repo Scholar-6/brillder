@@ -1,14 +1,12 @@
 /*eslint no-useless-escape: "off"*/
 import React from "react";
 import { Grid } from "@material-ui/core";
-// @ts-ignore
-import Device from "react-device-frame";
-import { Hidden } from "@material-ui/core";
 
 import NextButton from '../../components/nextButton';
 import PreviousButton from '../../components/previousButton';
 import { NewBrickStep } from "../../model";
 import './prep.scss';
+import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
 function PrepComponent({ parentState, setPrep }: any) {
   const [state, setState] = React.useState({ prep: '' });
@@ -36,11 +34,7 @@ function PrepComponent({ parentState, setPrep }: any) {
             </div>
           </Grid>
         </Grid>
-        <Hidden only={['xs', 'sm']}>
-          <div style={{ right: "5%", position: "fixed", width: '19.3%', paddingTop: '33.3%' }}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
-          </div>
-        </Hidden>
+        <PhonePreview link={window.location.origin + '/logo-page'} />
       </Grid>
     </div>
   );
