@@ -28,49 +28,10 @@ export interface DragAndBoxProps {
 }
 
 const DragAndDropBox: React.FC<DragAndBoxProps> = ({ locked, value, index, onDrop, data, component, cleanComponent, updateComponent }) => {
-  const ref = useRef<HTMLDivElement>(null)
-
   let UniqueComponent = component;
-   
-  const [{ canDrop, isOver }, drop] = useDrop({
-    accept: ItemTypes.BOX,
-    drop: () => ({ index, value, allowedDropEffect: "any" }),
-    collect: (monitor: any) => (
-      { isOver: monitor.isOver(), canDrop: monitor.canDrop() }
-    ),
-  })
-
-  const item = { name: "", type: ItemTypes.BOX }
-  const [{ opacity }, drag] = useDrag({
-    item,
-    end(item: { name: string } | undefined, monitor: DragSourceMonitor) {
-      const dropResult: DropResult = monitor.getDropResult()
-      if (item && dropResult) {
-        const isDropAllowed =
-          dropResult.allowedDropEffect === 'any' ||
-          dropResult.allowedDropEffect === dropResult.dropEffect
-        if (isDropAllowed) {
-          onDrop({index, value}, {index: dropResult.index, value: dropResult.value});
-        } else {
-          alert(`You cannot ${dropResult.dropEffect} an item into the ${dropResult.value}`);
-        }
-      }
-    },
-    collect: (monitor: any) => ({
-      opacity: monitor.isDragging() ? 0.9 : 1,
-    }),
-    canDrag: (monitor: any) => !locked
-  })
-
-  const isActive = canDrop && isOver
-  let backgroundColor = selectBackgroundColor(isActive, canDrop)
-  if (value !== QuestionComponentTypeEnum.None) {
-    backgroundColor = '#d9d9d9';
-  }
-  drag(drop(ref))
 
   return (
-    <div ref={ref} className="drag-and-drop-box" style={{ backgroundColor, width: '100%', opacity }}>
+    <div className="drag-and-drop-box" style={{ width: '100%' }}>
       <UniqueComponent locked={locked} data={data} cleanComponent={cleanComponent} updateComponent={updateComponent} />
     </div>
   )
