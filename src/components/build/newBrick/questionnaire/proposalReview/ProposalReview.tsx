@@ -29,7 +29,7 @@ function ProposalReview(props: ProposalProps) {
   return (
     <div className="tutorial-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
-        <Grid container item xs={6} justify="center">
+        <Grid container item xs={8} justify="center">
           <Grid container item xs={8}>
             <div className="left-card proposal-card">
               <h1 className="only-tutorial-header">Y O U R &nbsp; P R O P O S A L</h1>

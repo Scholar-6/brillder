@@ -18,7 +18,7 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
   return (
     <div className="tutorial-page open-question-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
-        <Grid container item xs={6} justify="center">
+        <Grid container item xs={8} justify="center">
           <Grid container item xs={8}>
             <div className="left-card">
               <h1 className="only-tutorial-header">
