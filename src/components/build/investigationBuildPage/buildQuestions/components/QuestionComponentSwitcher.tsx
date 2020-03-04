@@ -2,14 +2,12 @@ import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { QuestionComponentTypeEnum, Hint } from 'components/model/question';
-import DragAndDropBox from '../drag/dragAndDropBox'
 import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'
 import SoundComponent from './Sound/Sound'
 import EquationComponent from './Equation/Equation'
 import HintComponent, { HintState } from '../../../baseComponents/Hint/Hint';
-import { Grid } from '@material-ui/core';
 
 
 export interface SwitchQuestionProps {
@@ -19,36 +17,18 @@ export interface SwitchQuestionProps {
   component: any
   hint: Hint
   locked: boolean
-  componentCount: number
   updateComponent(component: any, index: number): void
-  swapComponents: Function
   setQuestionHint(hintState: HintState): void
   removeComponent(componentIndex: number): void
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
-  type, index, component, hint, locked, componentCount,
-  swapComponents,
+  type, index, component, hint, locked,
   setQuestionHint,
   updateComponent,
   uniqueComponent,
   removeComponent
 }) => {
-
-  const renderEmptyComponent = () => 
-    <Grid container style={{height:'100%', position: 'relative'}} justify="center" alignContent="center">
-      {
-        (componentCount > 3) ? <DeleteIcon className="right-top-drop-icon" onClick={() => {removeComponent(index)}} /> : ""
-      }
-      <span className="drop-box-text" style={{color: '#838384', textAlign: 'justify'}}>
-        Drag Component Here
-      </span>
-    </Grid>
-
-  const cleanComponent = () => {
-    updateComponent({ type: 0 }, index);
-  }
-
   const getNumberOfAnswers = (data: any) => {
     let count = 1;
     if (data.list && data.list.length) {
@@ -57,20 +37,21 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     return count;
   }
 
-  let innerComponent = renderEmptyComponent as any;
-  let value = type;
-  if (type === QuestionComponentTypeEnum.Text) {
-    innerComponent = TextComponent;
+  let InnerComponent = {} as any;
+  if (type === QuestionComponentTypeEnum.None) {
+    InnerComponent = TextComponent;
+  } else if (type === QuestionComponentTypeEnum.Text) {
+    InnerComponent = TextComponent;
   } else if (type === QuestionComponentTypeEnum.Image) {
-    innerComponent = ImageComponent;
+    InnerComponent = ImageComponent;
   } else if (type === QuestionComponentTypeEnum.Quote) {
-    innerComponent = QuoteComponent;
+    InnerComponent = QuoteComponent;
   } else if (type === QuestionComponentTypeEnum.Sound) {
-    innerComponent = SoundComponent;
+    InnerComponent = SoundComponent;
   } else if (type === QuestionComponentTypeEnum.Equation) {
-    innerComponent = EquationComponent;
+    InnerComponent = EquationComponent;
   } else if (type === QuestionComponentTypeEnum.Component) {
-    innerComponent = uniqueComponent;
+    InnerComponent = uniqueComponent;
     let numberOfAnswers = getNumberOfAnswers(component);
     if (uniqueComponent.name === "MissingWordComponent") {
       if (component.choices) {
@@ -83,45 +64,25 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     }
     return (
       <div className="unique-component-wrapper">
-        <DragAndDropBox
+        <InnerComponent
           locked={locked}
-          index={index}
-          value={value}
           data={component}
-          onDrop={swapComponents}
-          cleanComponent={() => {}}
-          updateComponent={updateComponent}
-          component={innerComponent} />
+          updateComponent={updateComponent} />
         <HintComponent status={hint.status} locked={locked} value={hint.value} list={hint.list} count={numberOfAnswers} onChange={setQuestionHint}/>
       </div>
     )
   }
-  if (innerComponent !== renderEmptyComponent) {
-    return (
-      <div style={{position: 'relative', width: '100%'}}>
-        <DeleteIcon className="right-top-icon" style={{right: '2px', top: '7px'}} onClick={cleanComponent} />
-        <DragAndDropBox
-          locked={locked}
-          index={index}
-          value={value}
-          data={component}
-          onDrop={swapComponents}
-          cleanComponent={cleanComponent}
-          updateComponent={updateComponent}
-          component={innerComponent} />
-      </div>
-    );
-  }
   return (
-    <DragAndDropBox
-      locked={locked}
-      index={index}
-      value={value}
-      data={component}
-      onDrop={swapComponents}
-      cleanComponent={cleanComponent}
-      updateComponent={updateComponent}
-      component={innerComponent} />
+    <div style={{position: 'relative', width: '100%'}}>
+      <DeleteIcon
+        className="right-top-icon"
+        style={{right: '2px', top: '7px'}}
+        onClick={() => removeComponent(index)} />
+      <InnerComponent
+        locked={locked}
+        data={component}
+        updateComponent={updateComponent} />
+    </div>
   );
 }
 

@@ -30,13 +30,14 @@ export interface QuestionProps {
   setQuestionComponents(index: number, components: any[]): void
   setPreviousQuestion(): void
   toggleLock(): void
+  removeComponent(index:number): void
   locked: boolean
 }
 
 const BuildQuestionComponent: React.FC<QuestionProps> = (
   {
     brickId, question, history, setQuestionType, getQuestionIndex, toggleLock, 
-    saveBrick, updateComponent, nextOrNewQuestion, setQuestion,
+    saveBrick, updateComponent, nextOrNewQuestion, setQuestion, removeComponent,
     setQuestionComponents, locked, setPreviousQuestion
   }
 ) => {
@@ -74,22 +75,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
     components[drag.index] = components[drop.index];
     components[drop.index] = tempComp;
 
-    setQuestionComponents(index, components);
-  }
-
-  const addComponent = () => {
-    if (locked) { return; }
-    const index = getQuestionIndex(question);
-    const components = Object.assign([], question.components) as any[];
-    components.push({ type: 0 });
-    setQuestionComponents(index, components);
-  }
-
-  const removeComponent = (componentIndex:number) => {
-    if (locked) { return; }
-    const index = getQuestionIndex(question);
-    const components = Object.assign([], question.components) as any[];
-    components.splice(componentIndex, 1);
     setQuestionComponents(index, components);
   }
 
@@ -180,10 +165,9 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 brickId={brickId}
                 history={history}
                 question={question}
+                removeComponent={removeComponent}
                 swapComponents={swapComponents}
                 updateComponent={updateComponent}
-                addComponent={addComponent}
-                removeComponent={removeComponent}
                 setQuestionHint={setQuestionHint} />
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">

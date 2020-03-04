@@ -251,16 +251,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
 
   const updateComponent = (component: any, number: number) => {
     if (locked) { return; }
+    console.log(44)
     const index = getQuestionIndex(activeQuestion);
     let newComponent = Object.assign({}, component)
+    questions[index].components[number] = newComponent;
+    setQuestions(questions);
+  }
 
-    setQuestions(
-      update(questions, {
-        [index]: {
-          components: { [number]: { $set: newComponent } }
-        }
-      })
-    )
+  const removeComponent = (number:number) => {
+    if (locked) { return; }
+    const index = getQuestionIndex(activeQuestion);
+    questions[index].components.splice(number, 1);
+    setQuestions(questions);
   }
 
   const renderBuildQuestion = () => {
@@ -270,6 +272,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = (props) => {
         history={history}
         question={activeQuestion}
         updateComponent={updateComponent}
+        removeComponent={removeComponent}
         getQuestionIndex={getQuestionIndex}
         setQuestionComponents={setComponents}
         setQuestion={setQuestion}

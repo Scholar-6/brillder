@@ -4,7 +4,6 @@ import './Equation.scss'
 export interface EquationComponentProps {
   index: number,
   data: any,
-  cleanComponent(): void
   updateComponent(component: any, index: number): void
 }
 

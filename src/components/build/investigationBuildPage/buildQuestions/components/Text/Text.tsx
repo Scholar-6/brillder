@@ -13,14 +13,12 @@ export interface TextComponentProps {
   updateComponent(component: any, index: number): void
 }
 
-const editorConfiguration = {
-  toolbar: ['bold']
-};
-
 const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updateComponent}) => {
   if (!data.value) {
     data.value = "";
   }
+
+  let isBuilding = true;
 
   return (
     <div className="question-build-text-editor">
@@ -28,10 +26,16 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updat
         editor={ClassicEditor}
         data={data.value}
         disabled={locked}
-        config={editorConfiguration}
+        config={{toolbar: ['bold']}}
         onChange={(e: any, editor: any) => {
-          data.value = editor.getData();
-          updateComponent(data, index);
+          if (isBuilding) {
+            isBuilding= false;
+            return;
+          }
+          let value = editor.getData();
+          let comp = Object.assign({}, data);
+          comp.value = value;
+          updateComponent(comp, index);
         }}
       />
     </div>
