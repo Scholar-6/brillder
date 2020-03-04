@@ -1,8 +1,6 @@
 @import "../../../../../variables";
 
 .proposal-card {
-  padding-top: 6vh;
-
   position: relative;
   padding-bottom: 20%;
   width: 100%;
@@ -44,5 +42,17 @@
 
   .proposal-button {
     color: $global-orange;
+  }
+}
+
+@media only screen and (max-width: 959px) and (min-width: 600px) {
+  .proposal-card {
+    width: 80% !important;
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .proposal-card {
+    width: 80% !important;
   }
 }

@@ -10,6 +10,18 @@
 
   .only-tutorial-header {
     font-size: 1.3vw !important;
-    margin-bottom: 15% !important;
+    margin-bottom: 5% !important;
+  }
+
+  @media only screen and (max-width: 959px) and (min-width: 600px) {
+    .left-card {
+      width: 70% !important;
+    }
+  }
+
+  @media only screen and (max-width: 599px) {
+    .left-card {
+      width: 70% !important;
+    }
   }
 }
