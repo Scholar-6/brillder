@@ -1,9 +1,6 @@
 import React from "react";
 // @ts-ignore
 import { connect } from 'react-redux';
-// @ts-ignore
-import Device from "react-device-frame";
-import { Hidden } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
 import actions from '../../../../../redux/actions/brickActions';
@@ -12,6 +9,7 @@ import './ProposalReview.scss';
 import { NewBrickStep } from "../../model";
 import NextButton from '../../components/nextButton';
 import PreviousButton from '../../components/previousButton';
+import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
 
 interface ProposalProps {
@@ -53,11 +51,7 @@ function ProposalReview(props: ProposalProps) {
             </div>
           </Grid>
         </Grid>
-        <Hidden only={['xs', 'sm']}>
-          <div style={{ right: "5%", position: "fixed", width: '19.3%', paddingTop: '33.3%' }}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
-          </div>
-        </Hidden>
+        <PhonePreview link={window.location.origin + '/logo-page'} />
       </Grid>
     </div>
   );

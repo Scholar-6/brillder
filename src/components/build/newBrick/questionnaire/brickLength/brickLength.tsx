@@ -1,14 +1,11 @@
 
 import React from "react";
 import { Grid } from "@material-ui/core";
-// @ts-ignore
-import Device from "react-device-frame";
-import { Hidden } from "@material-ui/core";
-
 import './brickLength.scss';
 import NextButton from '../../components/nextButton';
 import PreviousButton from '../../components/previousButton';
 import { NewBrickStep } from "../../model";
+import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
 
 export enum BrickLengthEnum {
@@ -34,7 +31,7 @@ function BrickLength({ length, saveBrick }: any) {
   }
 
   return (
-    <div className="brick-length-page">
+    <div className="tutorial-page brick-length-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container item xs={6} justify="center">
           <Grid container item xs={8}>
@@ -80,11 +77,7 @@ function BrickLength({ length, saveBrick }: any) {
             </div>
           </Grid>
         </Grid>
-        <Hidden only={['xs', 'sm']}>
-          <div style={{ right: "5%", position: "fixed", width: '19.3%', paddingTop: '33.3%' }}>
-            <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
-          </div>
-        </Hidden>
+        <PhonePreview link={window.location.origin + '/logo-page'} />
       </Grid>
     </div>
   );
