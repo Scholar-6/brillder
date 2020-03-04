@@ -28,7 +28,6 @@ function ProposalReview(props: ProposalProps) {
     return <div>...Loading brick...</div>
   }
   const { brick } = props;
-  console.log(brick);
   return (
     <div className="tutorial-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
