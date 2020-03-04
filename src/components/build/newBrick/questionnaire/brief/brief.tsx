@@ -11,11 +11,11 @@ import { NewBrickStep } from "../../model";
 import './brief.scss';
 
 
-function BriefComponent({ parentState, setBrief }: any) {
-  const [state, setState] = React.useState({ links: '', preparationBrief: parentState.preparationBrief });
+function BriefComponent({ parentState, saveBrief }: any) {
+  const [brief, setBrief] = React.useState(parentState.preparationBrief);
 
   const setBriefText = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setState({ ...state, preparationBrief: event.target.value } as any)
+    setBrief(event.target.value as string)
   }
 
   return (
@@ -27,12 +27,12 @@ function BriefComponent({ parentState, setBrief }: any) {
               <p>Outline the purpose of this brick</p>
             </h1>
             <textarea
-              value={state.preparationBrief}
+              value={brief}
               onChange={setBriefText}
               style={{ width: '90%', border: '2px solid black', height: '70px', fontSize: '1.2vw', textAlign: 'left' }}
               placeholder="Enter Brief Here..." />
             <PreviousButton to="/build/new-brick/open-question" />
-            <NextButton step={NewBrickStep.Brief} canSubmit={true} data={state} />
+            <NextButton step={NewBrickStep.Brief} canSubmit={true} data={brief} onSubmit={saveBrief} />
           </div>
         </div>
         <Hidden only={['xs', 'sm']}>

@@ -52,8 +52,8 @@ function NewBrick(props: any) {
     setBrick({ ...state, brickLength } as any);
   }
 
-  const setBrief = (data:any) => {
-    let brick = { ...state, preparationBrief: data.preparationBrief } as any
+  const setBrief = (preparationBrief:string) => {
+    let brick = { ...state, preparationBrief } as any
     setBrick(brick)
   }
 
@@ -61,6 +61,9 @@ function NewBrick(props: any) {
     let brick = { ...state, brickLength: data } as any
     setBrick(brick);
     setSaved(true);
+    if (props.brick) {
+      brick.id = props.brick.id;
+    }
     props.saveBrick(brick);
   }
 
@@ -68,6 +71,7 @@ function NewBrick(props: any) {
 
   if (props.brick != null) {
     if (props.location.pathname.indexOf('/build/new-brick/proposal/') === -1 && saved === true) {
+      setSaved(false);
       props.history.push(`/build/new-brick/proposal/${props.brick.id}`);
     }
   }
@@ -83,7 +87,7 @@ function NewBrick(props: any) {
           <OpenQuestion selectedQuestion={state.openQuestion} saveOpenQuestion={setOpenQuestion} />
         </Route>
         <Route path='/build/new-brick/brief'>
-          <Brief parentState={state} setBrief={setBrief} />
+          <Brief parentState={state} saveBrief={setBrief} />
         </Route>
         <Route path='/build/new-brick/prep'>
           <Prep parentState={state} setPrep={setPrep} />
