@@ -1,11 +1,10 @@
 .prep-page {
   .left-card {
     position: relative;
-    padding-bottom: 24%;
+    padding-bottom: 19%;
     width: 100%;
 
     textarea {
-      margin-top: 8%;
       height: 30% !important;
     }
 
@@ -16,6 +15,18 @@
       p:nth-child(2) {
         font-size: 1.81vw !important;
       }
+    }
+  }
+
+  @media only screen and (max-width: 959px) and (min-width: 600px) {
+    .left-card {
+      width: 70% !important;
+    }
+  }
+
+  @media only screen and (max-width: 599px) {
+    .left-card {
+      width: 80% !important;
     }
   }
 }

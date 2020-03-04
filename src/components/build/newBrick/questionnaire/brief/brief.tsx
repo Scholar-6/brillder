@@ -19,8 +19,8 @@ function BriefComponent({ parentState, saveBrief }: any) {
   return (
     <div className="tutorial-page brief-prep-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
-        <Grid container item xs={8} justify="center">
-          <Grid container item xs={8}>
+        <Grid container justify="center" item xs={12} md={8} lg={8}>
+          <Grid justify="center" container item xs={12} sm={9} md={10} lg={7}>
             <div className="left-card">
               <h1 className="only-tutorial-header">
                 <p>Outline the purpose of this brick</p>
