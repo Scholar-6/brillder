@@ -106,28 +106,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setQuestions(update(questions, { $set: updatedQuestions }));
   };
 
-  const moveQuestions = (
-    dragIndex: number,
-    hoverIndex: number,
-    dragQuestion: any
-  ) => {
-    if (locked) {
-      return;
-    }
-    setQuestions(
-      update(questions, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, dragQuestion]
-        ]
-      })
-    );
-  };
-
   const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
-    if (locked) {
-      return;
-    }
+    if (locked) { return; }
     setQuestionType(type);
     history.push(
       `/build/brick/${brickId}/build/investigation/question-component`
@@ -135,9 +115,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const setQuestionType = (type: QuestionTypeEnum) => {
-    if (locked) {
-      return;
-    }
+    if (locked) { return; }
     var index = getQuestionIndex(activeQuestion);
     setQuestions(
       update(questions, {
@@ -181,9 +159,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const removeQuestion = (index: number) => {
-    if (locked) {
-      return;
-    }
+    if (locked) { return; }
     if (questions.length === 1) {
       alert("You can`t delete last question");
       return;
@@ -226,19 +202,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const setQuestion = (index: number, question: Question) => {
-    if (locked) {
-      return;
-    }
+    if (locked) { return; }
     setQuestions(update(questions, { [index]: { $set: question } }));
-  };
-
-  const setComponents = (index: number, components: any[]) => {
-    if (locked) {
-      return;
-    }
-    setQuestions(
-      update(questions, { [index]: { components: { $set: components } } })
-    );
   };
 
   const { brick } = props;
@@ -272,6 +237,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const saveBrick = () => {
     brick.questions = [];
+    console.log(questions);
     for (let question of questions) {
       let questionObject = {
         components: question.components,
@@ -287,28 +253,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       }
       brick.questions.push(apiQuestion);
     }
+    console.log(brick);
     props.saveBrick(brick);
   };
 
-  const updateComponent = (component: any, number: number) => {
-    if (locked) {
-      return;
-    }
-    console.log(44);
+  const updateComponents = (components: any[]) => {
+    if (locked) { return; }
     const index = getQuestionIndex(activeQuestion);
-    let newComponent = Object.assign({}, component);
-    questions[index].components[number] = newComponent;
+    questions[index].components = components;
     setQuestions(questions);
-  };
-
-  const removeComponent = (number: number) => {
-    if (locked) {
-      return;
-    }
-    const index = getQuestionIndex(activeQuestion);
-    questions[index].components.splice(number, 1);
-    setQuestions(questions);
-  };
+  }
 
   const renderBuildQuestion = () => {
     return (
@@ -316,13 +270,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         brickId={brickId}
         history={history}
         question={activeQuestion}
-        updateComponent={updateComponent}
-        removeComponent={removeComponent}
         getQuestionIndex={getQuestionIndex}
-        setQuestionComponents={setComponents}
         setQuestion={setQuestion}
         toggleLock={toggleLock}
         locked={locked}
+        updateComponents={updateComponents}
         setQuestionType={convertQuestionTypes}
         setPreviousQuestion={setPreviousQuestion}
         nextOrNewQuestion={setNextQuestion}
@@ -347,69 +299,45 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   return (
     <div className="investigation-build-page">
       <Grid
-        container
-        direction="row"
+        container direction="row"
         alignItems="center"
         style={{ height: "100%" }}
       >
         <Grid
           container
-          item
-          xs={12}
-          sm={12}
-          md={7}
-          lg={8}
+          item xs={12} sm={12} md={7} lg={8}
           alignItems="center"
           style={{ height: "100%" }}
           className="question-container"
         >
           <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
+            container direction="row"
+            justify="center" alignItems="center"
             style={{ height: "100%" }}
           >
             <Grid
               container
-              item
-              xs={12}
-              sm={12}
-              md={12}
-              lg={9}
+              item xs={12} sm={12} md={12} lg={9}
               style={{ height: "90%" }}
             >
               <DragableTabs
                 setQuestions={setQuestions}
                 questions={questions}
                 createNewQuestion={createNewQuestion}
-                moveQuestions={moveQuestions}
                 selectQuestion={selectQuestion}
                 removeQuestion={removeQuestion}
               />
               <Switch>
-                <Route
-                  exac
-                  path="/build/brick/:brickId/build/investigation/question-component"
-                >
+                <Route exac path="/build/brick/:brickId/build/investigation/question-component">
                   {renderBuildQuestion}
                 </Route>
-                <Route
-                  exac
-                  path="/build/brick/:brickId/build/investigation/question-component/:questionId"
-                >
+                <Route exac path="/build/brick/:brickId/build/investigation/question-component/:questionId">
                   {renderBuildQuestion}
                 </Route>
-                <Route
-                  exec
-                  path="/build/brick/:brickId/build/investigation/question/:questionId"
-                >
+                <Route exec path="/build/brick/:brickId/build/investigation/question/:questionId">
                   {renderQuestionComponent}
                 </Route>
-                <Route
-                  exec
-                  path="/build/brick/:brickId/build/investigation/question"
-                >
+                <Route exec path="/build/brick/:brickId/build/investigation/question">
                   {renderQuestionComponent}
                 </Route>
               </Switch>

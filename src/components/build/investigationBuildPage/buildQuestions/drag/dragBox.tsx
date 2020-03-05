@@ -30,7 +30,6 @@ export interface BoxProps {
   marginTop?: any,
   hoverMarginTop?: any,
   fontFamily?: string,
-  onDrop: Function,
 }
 
 const DragBox: React.FC<BoxProps> = ({

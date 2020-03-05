@@ -40,22 +40,15 @@ interface Question {
 interface DragTabsProps {
   questions: Question[],
   createNewQuestion: Function,
-  moveQuestions: Function,
   setQuestions(questions: any): void
   selectQuestion: Function,
   removeQuestion: Function
 } 
 
 const DragableTabs: React.FC<DragTabsProps> = ({
-  questions, createNewQuestion, moveQuestions, selectQuestion,
+  questions, createNewQuestion, selectQuestion,
   removeQuestion, setQuestions,
 }) => {
-
-  const moveCard = (dragIndex: number, hoverIndex: number) => {
-    const dragCard = questions[dragIndex]
-    moveQuestions(dragIndex, hoverIndex, dragCard);
-  }
-
   const renderQuestionTab = (questions: Question[], question: Question, index: number, comlumns: number) => {
     let titleClassNames = "drag-tile-container";
     let cols = 2;
@@ -69,7 +62,10 @@ const DragableTabs: React.FC<DragTabsProps> = ({
       titleClassNames += " pre-active";
     }
 
-    let width = (100 * 2) / (comlumns - 3);
+    let width = (100 * 2) / (comlumns - 2);
+    if (question.active) {
+      width = (100 * 3) / (comlumns - 2);
+    }
 
     return (
       <GridListTile className={titleClassNames} key={index} cols={cols} style={{display:'inline-block', width: `${width}%`}}>
@@ -78,7 +74,6 @@ const DragableTabs: React.FC<DragTabsProps> = ({
             index={index}
             id={question.id}
             active={question.active}
-            moveCard={moveCard}
             selectQuestion={selectQuestion}
             removeQuestion={removeQuestion}
           />
@@ -95,15 +90,13 @@ const DragableTabs: React.FC<DragTabsProps> = ({
     createNewQuestion();
   }
 
-  console.log(questions);
-
   return (
     <div className={classes.root + " drag-tabs"}>
       <GridList cellHeight={40} className={classes.gridList} cols={columns}>
         <ReactSortable
           list={questions}
           style={{width: '100%', padding: 0, height: '100%'}}
-          group="cloning-group"
+          group="tabs-group"
           setList={setQuestions}>
           {
             questions.map((question, i) => renderQuestionTab(questions, question, i, columns))
