@@ -24,15 +24,19 @@ function PrepComponent({ parentState, setPrep }: any) {
               <h1 className="only-tutorial-header">
                 <p>Prep</p>
               </h1>
-              <CKEditor
-                editor={ClassicEditor}
-                data={prepState}
-                config={{ toolbar: ['bold', 'link'] }}
-                onChange={(e: any, editor: any) => {
-                  let value = editor.getData();
-                  setPrepState(value)
-                }}
-              />
+              <Grid justify="center" container item xs={12}>
+                <div style={{ width: '90%' }}>
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={prepState}
+                    config={{ toolbar: ['bold', 'link'] }}
+                    onChange={(e: any, editor: any) => {
+                      let value = editor.getData();
+                      setPrepState(value)
+                    }}
+                  />
+                </div>
+              </Grid>
               <PreviousButton to="/build/new-brick/brief" />
               <NextButton step={NewBrickStep.Prep} canSubmit={true} data={prepState} />
             </div>
