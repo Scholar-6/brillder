@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       flexWrap: 'nowrap',
       margin: '0 !important',
+      overflow: 'hidden',
       transform: 'translateZ(0)',
     },
     gridListTile: {
@@ -95,15 +96,15 @@ const DragableTabs: React.FC<DragTabsProps> = ({
       <GridList cellHeight={40} className={classes.gridList} cols={columns}>
         <ReactSortable
           list={questions}
-          style={{width: '100%', padding: 0, height: '100%'}}
+          style={{width: '100%', marginTop: '+1px', padding: 0, height: '100% '}}
           group="tabs-group"
           setList={setQuestions}>
           {
             questions.map((question, i) => renderQuestionTab(questions, question, i, columns))
           }
         </ReactSortable>
-        <GridListTile onClick={addQuestion} className={"drag-tile-container"} cols={2}>
-          <Grid className={"drag-tile"} container alignContent="center" justify="center">
+        <GridListTile onClick={addQuestion} className={"drag-last-tile-container"} cols={2}>
+          <Grid className={"drag-tile drag-tile-last"} container alignContent="center" justify="center">
             <LastTab columns={columns}></LastTab>
           </Grid>
         </GridListTile>
