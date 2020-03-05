@@ -1,17 +1,31 @@
 $tab-radius: 0.3vw;
 $distance: 0.13vw;
 
+$tile-height: 100%;
+
 .drag-tabs {
   display: inline-block;
   width: 100%;
   height: 6%;
   border-bottom: none;
 
+  .drag-last-tile-container {
+    padding: 0 !important;
+    border-bottom: 1px solid grey;
+    margin-top: 1px !important;
+    height: 100% !important;
+    padding-left: $distance !important;
+  }
+
   .drag-tile-container {
     padding: 0 !important;
     border-bottom: 1px solid grey;
-    height: 98% !important;
+    height: calc(100% - 2px) !important;
     padding-left: $distance !important;
+  }
+
+  .drag-tile-last {
+    height: 100% !important;
   }
 
   .drag-tile {
@@ -42,13 +56,14 @@ $distance: 0.13vw;
   }
 
   .drag-tile-container.active {
+    height: calc(100% - 2px) !important;
     border-bottom: 0;
     padding: 0 !important;
 
     .drag-tile {
       background: white;
       border-bottom: none;
-      height: 100%;
+      height: $tile-height;
       margin: 0;
     }
   }
