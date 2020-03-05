@@ -104,7 +104,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
           }
         </ReactSortable>
         <GridListTile onClick={addQuestion} className={"drag-last-tile-container"} cols={2}>
-          <Grid className={"drag-tile drag-tile-last"} container alignContent="center" justify="center">
+          <Grid className={"drag-tile"} container alignContent="center" justify="center">
             <LastTab columns={columns}></LastTab>
           </Grid>
         </GridListTile>

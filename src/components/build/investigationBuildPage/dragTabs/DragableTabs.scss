@@ -13,8 +13,11 @@ $tile-height: 100%;
     padding: 0 !important;
     border-bottom: 1px solid grey;
     margin-top: 1px !important;
-    height: 100% !important;
+    height: calc(100% - 1px) !important;
     padding-left: $distance !important;
+    .drag-tile {
+      border-bottom: 0 !important;
+    }
   }
 
   .drag-tile-container {
@@ -22,10 +25,6 @@ $tile-height: 100%;
     border-bottom: 1px solid grey;
     height: calc(100% - 2px) !important;
     padding-left: $distance !important;
-  }
-
-  .drag-tile-last {
-    height: 100% !important;
   }
 
   .drag-tile {
@@ -58,13 +57,9 @@ $tile-height: 100%;
   .drag-tile-container.active {
     height: calc(100% - 2px) !important;
     border-bottom: 0;
-    padding: 0 !important;
 
     .drag-tile {
       background: white;
-      border-bottom: none;
-      height: $tile-height;
-      margin: 0;
     }
   }
 
