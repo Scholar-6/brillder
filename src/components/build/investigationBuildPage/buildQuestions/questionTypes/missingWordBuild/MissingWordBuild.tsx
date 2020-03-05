@@ -33,39 +33,46 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
     data.choices = [newChoice()];
   }
 
+  const [state, setState] = React.useState(data);
+
+  const update = () => {
+    setState(Object.assign({}, state));
+    updateComponent(state);
+  }
+
   const answerChanged = (answer: any, event: any) => {
     answer.value = event.target.value;
-    updateComponent(data);
+    update();
   }
 
   const addAnswer = (choice: MissingChoice) => {
     choice.answers.push(newAnswer());
-    updateComponent(data);
+    update();
   }
 
   const removeAnswer = (choice: MissingChoice, index: number) => {
     choice.answers.splice(index, 1);
-    updateComponent(data);
+    update();
   }
 
   const addChoice = () => {
-    data.choices.push(newChoice());
-    updateComponent(data);
+    state.choices.push(newChoice());
+    update();
   }
 
   const removeChoice = (index: number) => {
-    data.choices.splice(index, 1);
-    updateComponent(data);
+    state.choices.splice(index, 1);
+    update();
   }
 
   const beforeChanged = (choice: MissingChoice, event: any) => {
     choice.before = event.target.value;
-    updateComponent(data);
+    update();
   }
 
   const afterChanged = (choice: MissingChoice, event: any) => {
     choice.after = event.target.value;
-    updateComponent(data);
+    update();
   }
 
   const renderChoice = (choice: MissingChoice, key: number) => {
@@ -78,7 +85,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
           rows={3}
           placeholder="Text before choice..."></textarea>
         {
-          (data.choices.length > 1) ? <DeleteIcon className="right-top-icon" onClick={() => removeChoice(key)} /> : ""
+          (state.choices.length > 1) ? <DeleteIcon className="right-top-icon" onClick={() => removeChoice(key)} /> : ""
         }
         {
           choice.answers.map((answer, key) => {
@@ -110,7 +117,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
   return (
     <div className="missing-word-build">
       {
-        data.choices.map((choice, i) => renderChoice(choice, i))
+        state.choices.map((choice, i) => renderChoice(choice, i))
       }
       <div className="button-box">
         <Button disabled={locked} className="add-answer-button" onClick={addChoice}>

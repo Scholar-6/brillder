@@ -23,29 +23,37 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
   if (!data.list) {
     data.list = [{value: ""}];
   }
+
+  const [state, setState] = React.useState(data);
+
+  const update = () => {
+    setState(Object.assign({}, state));
+    updateComponent(state);
+  }
+
   const changed = (shortAnswer: any, event: any) => {
     if (locked) { return; }
     shortAnswer.value = event.target.value;
-    updateComponent(data);
+    update();
   }
 
   const addShortAnswer = () => {
     if (locked) { return; }
-    data.list.push({ value: ""});
-    updateComponent(data);
+    state.list.push({ value: ""});
+    update();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
-    data.list.splice(index, 1);
-    updateComponent(data);
+    state.list.splice(index, 1);
+    update();
   }
 
   const renderShortAnswer = (shortAnswer: any, key: number) => {
     return (
       <div className="short-answer-box unique-component-box" key={key}>
         {
-          (data.list.length > 1) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
+          (state.list.length > 1) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
         }
         <input
           disabled={locked}
@@ -59,7 +67,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
   return (
     <div className="short-answer-build unique-component">
       {
-        data.list.map((shortAnswer:any, i:number) => renderShortAnswer(shortAnswer, i))
+        state.list.map((shortAnswer:any, i:number) => renderShortAnswer(shortAnswer, i))
       }
       <div className="button-box">
         <Button disabled={locked} className="add-answer-button" onClick={addShortAnswer}>

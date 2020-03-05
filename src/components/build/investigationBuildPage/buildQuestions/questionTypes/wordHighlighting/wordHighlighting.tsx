@@ -27,6 +27,13 @@ export interface WordHighlightingProps {
 }
 
 const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, data, updateComponent }) => {
+  const [state, setState] = React.useState(data);
+
+  const update = () => {
+    setState(Object.assign({}, state));
+    updateComponent(state);
+  }
+
   const prepareWords = (text: string):Word[] => {
     if (!text) {
       return [];
@@ -39,33 +46,33 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
 
   const switchMode = () => {
     if (locked) { return; }
-    if (data.mode === WordMode.Edit) {
-      data.mode = WordMode.Input;
+    if (state.mode === WordMode.Edit) {
+      state.mode = WordMode.Input;
     } else {
-      data.mode = WordMode.Edit;
-      data.words = prepareWords(data.text);
+      state.mode = WordMode.Edit;
+      state.words = prepareWords(state.text);
     }
-    updateComponent(data);
+    update();
   }
 
   const updateText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (locked) { return; }
-    data.text = e.target.value;
-    updateComponent(data);
+    state.text = e.target.value;
+    update();
   }
 
   const toggleLight = (index:number) => {
     if (locked) { return; }
-    data.words[index].checked = !data.words[index].checked;
-    updateComponent(data);
+    state.words[index].checked = !state.words[index].checked;
+    update();
   }
 
   const renderBox = () => {
-    if (data.mode === WordMode.Edit) {
+    if (state.mode === WordMode.Edit) {
       return (
         <div className="hightlight-area">
           {
-            data.words.map((word, i) =>
+            state.words.map((word, i) =>
               <div key={i} style={{display: 'inline-block', marginRight: '5px', background: word.checked ? 'green' : 'inherit'}} onClick={() => {toggleLight(i)}}>
                 {word.text}
               </div>
@@ -79,7 +86,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
         disabled={locked}
         className="words-input"
         rows={5}
-        value={data.text}
+        value={state.text}
         onChange={updateText}
         placeholder="Enter Words Here..." />
     );
@@ -92,7 +99,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
         <div>Use Highlighter Icon to click correct word(s).</div>
       </div>
       <div className="pencil-icon-container">
-        <EditIcon className={data.mode ? "active" : ""} onClick={switchMode} />
+        <EditIcon className={state.mode ? "active" : ""} onClick={switchMode} />
       </div>
       <div className="input-container">
         {renderBox()}

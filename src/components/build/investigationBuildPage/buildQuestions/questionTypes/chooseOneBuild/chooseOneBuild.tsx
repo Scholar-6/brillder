@@ -24,54 +24,55 @@ export interface ChooseOneBuildProps {
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({locked, data, updateComponent}) => {
   const [height, setHeight] = React.useState('0%');
 
-  useEffect(() => {
-    calculateHeight();
-  });
+  useEffect(() => calculateHeight());
 
   const newAnswer = () => ({value: "", checked: false });
 
   if (!data.list) {
     data.list = [newAnswer(), newAnswer(), newAnswer()];
-    updateComponent(data);
   } else if (data.list.length < 3) {
     data.list.push(newAnswer());
-    updateComponent(data);
+  }
+
+  const [state, setState] = React.useState(data);
+
+  const update = () => {
+    setState(Object.assign({}, state));
+    updateComponent(state);
+    calculateHeight();
   }
 
   const changed = (answer: any, event: any) => {
     if (locked) { return; }
     answer.value = event.target.value;
-    updateComponent(data);
-    calculateHeight();
+    update();
   }
 
   const addAnswer = () => {
     if (locked) { return; }
-    data.list.push(newAnswer());
-    updateComponent(data);
-    calculateHeight();
+    state.list.push(newAnswer());
+    update();
   }
 
   const onChecked = (event:any) => {
     if (locked) { return; }
     const index = event.target.value;
-    for (let answer of data.list) {
+    for (let answer of state.list) {
       answer.checked = false;
     }
-    data.list[index].checked = true;
-    updateComponent(data);
+    state.list[index].checked = true;
+    update();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
-    data.list.splice(index, 1);
-    updateComponent(data);
-    calculateHeight();
+    state.list.splice(index, 1);
+    update();
   }
 
   const calculateHeight = () => {
     let showButton = true;
-    for (let answer of data.list) {
+    for (let answer of state.list) {
       if (answer.value === "") {
         showButton = false;
       }
@@ -83,7 +84,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({locked, data, u
     return (
       <div className="choose-one-box unique-component-box" key={key}>
         {
-          (data.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
+          (state.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
         }
         <Checkbox className="left-ckeckbox" disabled={locked} checked={answer.checked} onChange={onChecked} value={key} />
         <input disabled={locked} value={answer.value} onChange={(event) => changed(answer, event)} placeholder="Enter Answer..." />
@@ -97,7 +98,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({locked, data, u
         <div>Tick correct answer</div>
       </div>
       {
-        data.list.map((answer:any, i:number) => renderAnswer(answer, i))
+        state.list.map((answer:any, i:number) => renderAnswer(answer, i))
       }
       <AddAnswerButton
         locked={locked}

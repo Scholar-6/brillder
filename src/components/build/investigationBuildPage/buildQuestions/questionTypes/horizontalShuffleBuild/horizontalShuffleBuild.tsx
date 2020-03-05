@@ -15,9 +15,7 @@ export interface VerticalShuffleBuildProps {
 const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ locked, data, updateComponent }) => {
   const [height, setHeight] = React.useState('0%');
   
-  useEffect(() => {
-    calculateHeight();
-  });
+  useEffect(() => calculateHeight());
 
   const newAnswer = () => ({ value: "" });
   
@@ -28,25 +26,30 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
     updateComponent(data);
   }
 
+  const [state, setState] = React.useState(data);
+
+  const update = () => {
+    setState(Object.assign({}, state));
+    updateComponent(state);
+    calculateHeight();
+  }
+
   const changed = (shortAnswer: any, event: any) => {
     if (locked) { return; }
     shortAnswer.value = event.target.value;
-    updateComponent(data);
-    calculateHeight();
+    update();
   }
 
   const addAnswer = () => {
     if (locked) { return; }
-    data.list.push({ value: "" });
-    updateComponent(data);
-    calculateHeight();
+    state.list.push({ value: "" });
+    update();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
-    data.list.splice(index, 1);
-    updateComponent(data);
-    calculateHeight();
+    state.list.splice(index, 1);
+    update();
   }
 
   const renderAnswer = (answer: any, key: number) => {
@@ -54,7 +57,7 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
       <Grid container item xs={4} key={key}>
         <div className="horizontal-shuffle-box">
           {
-            (data.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
+            (state.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
           }
           <input disabled={locked} value={answer.value} onChange={(event) => changed(answer, event)} placeholder={"Enter Answer " + (key + 1) + "..."} />
         </div>
@@ -64,7 +67,7 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
 
   const calculateHeight = () => {
     let showButton = true;
-    for (let answer of data.list) {
+    for (let answer of state.list) {
       if (answer.value === "") {
         showButton = false;
       }
@@ -80,7 +83,7 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
       </div>
       <Grid container direction="row">
         {
-          data.list.map((answer: any, i: number) => renderAnswer(answer, i))
+          state.list.map((answer: any, i: number) => renderAnswer(answer, i))
         }
       </Grid>
       <AddAnswerButton
