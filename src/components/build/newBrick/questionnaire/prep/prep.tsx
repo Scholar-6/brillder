@@ -1,6 +1,10 @@
 /*eslint no-useless-escape: "off"*/
 import React from "react";
 import { Grid } from "@material-ui/core";
+// @ts-ignore 
+import CKEditor from '@ckeditor/ckeditor5-react';
+// @ts-ignore 
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import NextButton from '../../components/nextButton';
 import PreviousButton from '../../components/previousButton';
@@ -9,11 +13,7 @@ import './prep.scss';
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
 function PrepComponent({ parentState, setPrep }: any) {
-  const [state, setState] = React.useState({ prep: '' });
-
-  const setPrepLinks = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setState({ ...state, prep: event.target.value as string } as any)
-  }
+  const [prepState, setPrepState] = React.useState('');
 
   return (
     <div className="tutorial-page prep-page">
@@ -24,13 +24,17 @@ function PrepComponent({ parentState, setPrep }: any) {
               <h1 className="only-tutorial-header">
                 <p>Prep</p>
               </h1>
-              <textarea
-                value={state.prep}
-                onChange={setPrepLinks}
-                style={{ width: '90%', border: '2px solid black', height: '70px', fontSize: '1.2vw', textAlign: 'left' }}
-                placeholder="Enter Prep Here..." />
+              <CKEditor
+                editor={ClassicEditor}
+                data={prepState}
+                config={{ toolbar: ['bold', 'link'] }}
+                onChange={(e: any, editor: any) => {
+                  let value = editor.getData();
+                  setPrepState(value)
+                }}
+              />
               <PreviousButton to="/build/new-brick/brief" />
-              <NextButton step={NewBrickStep.Prep} canSubmit={true} data={state} />
+              <NextButton step={NewBrickStep.Prep} canSubmit={true} data={prepState} />
             </div>
           </Grid>
         </Grid>

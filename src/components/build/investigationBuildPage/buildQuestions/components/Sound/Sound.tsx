@@ -1,7 +1,5 @@
 import React from 'react'
 import {useDropzone} from 'react-dropzone';
-// @ts-ignore
-import Recorder from 'react-mp3-recorder'
 
 import './Sound.scss';
 import { Grid } from '@material-ui/core';
@@ -22,18 +20,6 @@ const SoundComponent: React.FC<SoundProps> = ({locked}) => {
     </li>
   ));
 
-  const onStop = (blob:any) => {
-    console.log(blob);
-  }
-
-  const onRecordingComplete = (blob:any) => {
-    console.log('recording', blob)
-  }
- 
-  const onRecordingError = (err:any) => {
-    console.log('recording error', err)
-  }
-
   return (
     <div>
       <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
@@ -44,9 +30,6 @@ const SoundComponent: React.FC<SoundProps> = ({locked}) => {
         
       </div>
       {files[0]}
-      <Grid container justify="center" alignContent="center" style={{height:'20%'}}>
-          <Recorder onRecordingComplete={onRecordingComplete} onRecordingError={onRecordingError} />
-        </Grid>
     </div>
   );
 }
