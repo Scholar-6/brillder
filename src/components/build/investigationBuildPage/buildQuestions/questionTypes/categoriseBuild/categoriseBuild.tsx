@@ -32,41 +32,48 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ locked, d
     data.categories = [newCategory(), newCategory()];
   }
 
+  const [state, setState] = React.useState(data);
+
+  const update = () => {
+    setState(Object.assign({}, state));
+    updateComponent(state);
+  }
+
   const answerChanged = (answer: any, event: any) => {
     answer.value = event.target.value;
-    updateComponent(data);
+    update();
   }
 
   const addAnswer = (category: SortCategory) => {
     category.answers.push(newAnswer());
-    updateComponent(data);
+    update();
   }
 
   const removeAnswer = (category: SortCategory, index: number) => {
     category.answers.splice(index, 1);
-    updateComponent(data);
+    update();
   }
 
   const categoryChanged = (category: any, event: any) => {
     category.name = event.target.value;
-    updateComponent(data);
+    update();
   }
 
   const addCategory = () => {
-    data.categories.push(newCategory());
-    updateComponent(data);
+    state.categories.push(newCategory());
+    update();
   }
 
   const removeCategory = (index: number) => {
-    data.categories.splice(index, 1);
-    updateComponent(data);
+    state.categories.splice(index, 1);
+    update();
   }
 
   const renderCategory = (category: SortCategory, key: number) => {
     return (
       <div className="choose-several-box" key={key}>
         {
-          (data.categories.length > 2) ? <DeleteIcon className="right-top-icon" onClick={() => removeCategory(key)} /> : ""
+          (state.categories.length > 2) ? <DeleteIcon className="right-top-icon" onClick={() => removeCategory(key)} /> : ""
         }
         <input disabled={locked} value={category.name} onChange={(event) => categoryChanged(category, event)} placeholder="Enter Category Heading..." />
         {
@@ -93,7 +100,7 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ locked, d
   return (
     <div className="choose-several-build">
       {
-        data.categories.map((category, i) => renderCategory(category, i))
+        state.categories.map((category, i) => renderCategory(category, i))
       }
       <div className="button-box">
         <Button disabled={locked} className="add-answer-button" onClick={addCategory}>

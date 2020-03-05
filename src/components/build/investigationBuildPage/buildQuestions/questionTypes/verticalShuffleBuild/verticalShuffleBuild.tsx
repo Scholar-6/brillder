@@ -14,9 +14,7 @@ export interface VerticalShuffleBuildProps {
 const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({locked, data, updateComponent}) => {
   const [height, setHeight] = React.useState('0%');
 
-  useEffect(() => {
-    calculateHeight();
-  });
+  useEffect(() => calculateHeight());
 
   const newAnswer = () => ({value: ""});
   
@@ -27,30 +25,35 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({loc
     updateComponent(data);
   }
 
+  const [state, setState] = React.useState(data);
+
+  const update = () => {
+    setState(Object.assign({}, state));
+    updateComponent(state);
+    calculateHeight();
+  }
+
   const changed = (answer: any, event: any) => {
     if (locked) { return; }
     answer.value = event.target.value;
-    updateComponent(data);
-    calculateHeight();
+    update();
   }
 
   const addAnswer = () => {
     if (locked) { return; }
-    data.list.push({ value: ""});
-    updateComponent(data);
-    calculateHeight();
+    state.list.push({ value: ""});
+    update();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
-    data.list.splice(index, 1);
-    updateComponent(data);
-    calculateHeight();
+    state.list.splice(index, 1);
+    update();
   }
 
   const calculateHeight = () => {
     let showButton = true;
-    for (let answer of data.list) {
+    for (let answer of state.list) {
       if (answer.value === "") {
         showButton = false;
       }
@@ -62,7 +65,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({loc
     return (
       <div className="short-answer-box" key={key}>
         {
-          (data.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
+          (state.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
         }
         <input
           disabled={locked}
@@ -80,7 +83,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({loc
         <div>These will be randomised in the Play Interface.</div>
       </div>
       {
-        data.list.map((answer:any, i:number) => renderAnswer(answer, i))
+        state.list.map((answer:any, i:number) => renderAnswer(answer, i))
       }
       <AddAnswerButton
         locked={locked}

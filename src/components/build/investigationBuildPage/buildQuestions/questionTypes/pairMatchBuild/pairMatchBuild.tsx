@@ -15,11 +15,9 @@ export interface PairMatchBuildProps {
 const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, updateComponent }) => {
   const [height, setHeight] = React.useState('0%');
 
-  useEffect(() => {
-    calculateHeight();
-  });
+  useEffect(() => calculateHeight());
 
-  const newAnswer = () => ({ value: "" });
+  const newAnswer = () => ({ option: "", value: "" });
 
   if (!data.list) {
     data.list = [newAnswer(), newAnswer(), newAnswer()];
@@ -28,37 +26,41 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
     updateComponent(data);
   }
 
+  const [state, setState] = React.useState(data);
+
+  const update = () => {
+    setState(Object.assign({}, state));
+    updateComponent(state);
+    calculateHeight();
+  }
+
   const optionChanged = (answer: any, event: any) => {
     if (locked) { return; }
     answer.option = event.target.value;
-    updateComponent(data);
-    calculateHeight();
+    update();
   }
 
   const answerChanged = (answer: any, event: any) => {
     if (locked) { return; }
     answer.value = event.target.value;
-    updateComponent(data);
-    calculateHeight();
+    update();
   }
 
   const addAnswer = () => {
     if (locked) { return; }
-    data.list.push(newAnswer());
-    updateComponent(data);
-    calculateHeight();
+    state.list.push(newAnswer());
+    update();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
-    data.list.splice(index, 1);
-    updateComponent(data);
-    calculateHeight();
+    state.list.splice(index, 1);
+    update();
   }
 
   const calculateHeight = () => {
     let showButton = true;
-    for (let answer of data.list) {
+    for (let answer of state.list) {
       if (answer.value === "") {
         showButton = false;
       }
@@ -81,7 +83,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
         <Grid container item xs={6}>
           <div className="pair-match-answer">
             {
-              (data.list.length > 3) ? <DeleteIcon className="right-top-icon" style={{right: '1%'}} onClick={() => removeFromList(key)} /> : ""
+              (state.list.length > 3) ? <DeleteIcon className="right-top-icon" style={{right: '1%'}} onClick={() => removeFromList(key)} /> : ""
             }
             <input
               disabled={locked}
@@ -101,7 +103,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
         <div>Order will be randomised in the Play Interface.</div>
       </div>
       {
-        data.list.map((answer: any, i: number) => renderAnswer(answer, i))
+        state.list.map((answer: any, i: number) => renderAnswer(answer, i))
       }
       <AddAnswerButton
         locked={locked}

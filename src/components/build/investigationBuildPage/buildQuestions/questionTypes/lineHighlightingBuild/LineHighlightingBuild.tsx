@@ -27,6 +27,13 @@ export interface LineHighlightingProps {
 }
 
 const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, data, updateComponent }) => {
+  const [state, setState] = React.useState(data);
+
+  const update = () => {
+    setState(Object.assign({}, state));
+    updateComponent(state);
+  }
+
   const prepareLines = (text: string):Line[] => {
     if (!text) { return []; }
 
@@ -38,37 +45,37 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
 
   const switchMode = () => {
     if (locked) { return; }
-    if (data.mode === LineMode.Edit) {
-      data.mode = LineMode.Input;
+    if (state.mode === LineMode.Edit) {
+      state.mode = LineMode.Input;
     } else {
-      data.mode = LineMode.Edit;
-      data.lines = prepareLines(data.text);
+      state.mode = LineMode.Edit;
+      state.lines = prepareLines(state.text);
     }
-    updateComponent(data);
+    update();
   }
 
   const updateText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (locked) { return; }
-    data.text = e.target.value;
-    updateComponent(data);
+    state.text = e.target.value;
+    update();
   }
 
   const toggleLight = (index:number) => {
     if (locked) { return; }
-    data.lines[index].checked = !data.lines[index].checked;
-    updateComponent(data);
+    state.lines[index].checked = !state.lines[index].checked;
+    update();
   }
 
   const renderBox = () => {
-    if (data.mode === LineMode.Edit) {
-      if (!data.lines) {
+    if (state.mode === LineMode.Edit) {
+      if (!state.lines) {
         switchMode();
         return <div>...Switching mode...</div>;
       }
       return (
         <div className="hightlight-area">
           {
-            data.lines.map((line, i) =>
+            state.lines.map((line, i) =>
               <div key={i} style={{background: line.checked ? 'green' : 'inherit'}} onClick={() => {toggleLight(i)}}>
                 {line.text}
               </div>
@@ -82,7 +89,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
         disabled={locked}
         className="lines-input"
         rows={5}
-        value={data.text}
+        value={state.text}
         onChange={updateText} placeholder="Enter Lines Here..." />
     );
   }
@@ -94,7 +101,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
         <div>Use Highlighter Icon to click correct line(s).</div>
       </div>
       <div className="pencil-icon-container">
-        <EditIcon className={data.mode ? "active" : ""} onClick={switchMode} />
+        <EditIcon className={state.mode ? "active" : ""} onClick={switchMode} />
       </div>
       <div className="input-container">
         {renderBox()}
