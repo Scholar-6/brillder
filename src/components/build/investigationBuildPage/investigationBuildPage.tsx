@@ -237,7 +237,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const saveBrick = () => {
     brick.questions = [];
-    console.log(questions);
     for (let question of questions) {
       let questionObject = {
         components: question.components,
@@ -253,7 +252,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       }
       brick.questions.push(apiQuestion);
     }
-    console.log(brick);
     props.saveBrick(brick);
   };
 
