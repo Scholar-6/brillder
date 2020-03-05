@@ -101,6 +101,7 @@ const QuestionComponents = ({
   }
 
   const setList = (components: any) => {
+    if (locked) { return; }
     setComponents(components);
     updateComponents(components);
   }
@@ -109,6 +110,7 @@ const QuestionComponents = ({
     <div className="questions">
       <ReactSortable
         list={components}
+        animation={150}
         group={{ name: "cloning-group-name", pull: "clone" }}
         setList={setList}>
         {
