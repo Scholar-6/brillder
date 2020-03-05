@@ -28,15 +28,12 @@ type QuestionComponentsProps = {
   history: any
   brickId: number
   question: Question
-  swapComponents: Function
-  removeComponent(index:number):void
-  updateComponent(component: any, index: number): void
+  updateComponents(components: any[]): void
   setQuestionHint(hintState: HintState): void
 }
 
 const QuestionComponents = ({
-  locked, history, brickId, question,
-  swapComponents, setQuestionHint, updateComponent, removeComponent
+  locked, history, brickId, question, updateComponents, setQuestionHint
 }: QuestionComponentsProps) => {
   let componentsCopy = Object.assign([], question.components) as any[]
   const [questionId, setQuestionId] = useState(question.id);
@@ -54,14 +51,14 @@ const QuestionComponents = ({
     const comps = Object.assign([], components) as any[];
     comps.splice(componentIndex, 1);
     setComponents(comps);
-    removeComponent(componentIndex);
+    updateComponents(comps);
   }
 
   const renderDropBox = (component: any, index: number) => {
     const updatingComponent = (compData: any) => {
       components[index] = compData;
       setComponents(components);
-      updateComponent(compData, index);
+      updateComponents(components);
     }
 
     const { type } = question;
@@ -103,13 +100,17 @@ const QuestionComponents = ({
       uniqueComponent={uniqueComponent} />
   }
 
+  const setList = (components: any) => {
+    setComponents(components);
+    updateComponents(components);
+  }
+
   return (
     <div className="questions">
       <ReactSortable
         list={components}
         group={{ name: "cloning-group-name", pull: "clone" }}
-        setList={setComponents}
-        clone={item => { }}>
+        setList={setList}>
         {
           components.map((comp, i) => (
             <Grid key={i} container direction="row" className="drop-box">

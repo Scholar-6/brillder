@@ -7,18 +7,11 @@ export interface DragTabProps {
   id: any
   index: number,
   active: boolean,
-  moveCard: (dragIndex: number, hoverIndex: number) => void,
   selectQuestion: Function,
   removeQuestion: Function
 }
 
-interface DragItem {
-  index: number
-  id: string
-  type: string,
-}
-
-const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard, selectQuestion, removeQuestion }) => {
+const DragTab: React.FC<DragTabProps> = ({ id, index, active, selectQuestion, removeQuestion }) => {
   const removeTab = (event: React.ChangeEvent<any>) => {
     event.stopPropagation();
     removeQuestion(index);
@@ -34,7 +27,6 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, moveCard, selectQu
         <Grid item xs={10}  style={{color: 'black', fontFamily: 'Century Gothic Regular' }}>
           {index + 1}
         </Grid>
-
         <Grid item style={{position: 'absolute', right: 0}}>
           {
             active === true && <ClearIcon className="remove-icon" onClick={removeTab} />

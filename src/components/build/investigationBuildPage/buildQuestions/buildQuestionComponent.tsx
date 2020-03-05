@@ -23,22 +23,20 @@ export interface QuestionProps {
   history: any
   saveBrick(): void
   setQuestion(index: number, question: Question): void
-  updateComponent(component: any, index: number): void
+  updateComponents(components: any[]): void
   setQuestionType(type: QuestionTypeEnum): void
   nextOrNewQuestion(): void
   getQuestionIndex(question: Question): number
-  setQuestionComponents(index: number, components: any[]): void
   setPreviousQuestion(): void
   toggleLock(): void
-  removeComponent(index:number): void
   locked: boolean
 }
 
 const BuildQuestionComponent: React.FC<QuestionProps> = (
   {
     brickId, question, history, setQuestionType, getQuestionIndex, toggleLock, 
-    saveBrick, updateComponent, nextOrNewQuestion, setQuestion, removeComponent,
-    setQuestionComponents, locked, setPreviousQuestion
+    saveBrick, nextOrNewQuestion, setQuestion,
+    locked, setPreviousQuestion, updateComponents
   }
 ) => {
   const [componentTypes, setComponentType] = React.useState([
@@ -50,33 +48,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
   ]);
   const { type } = question;
   document.title = QuestionTypeEnum[type];
-
-  const setDropBoxItem = (dragBoxType: QuestionTypeEnum, dropBoxNumber: number) => {
-    setQuestionComponentType(dragBoxType, dropBoxNumber);
-  }
-
-  const setQuestionComponentType = (type: any, dropBox: any) => {
-    if (locked) { return; }
-    if (dropBox.value === QuestionComponentTypeEnum.Component) {
-      return;
-    }
-    const index = getQuestionIndex(question);
-    const updatedQuestion = Object.assign({}, question) as Question;
-    updatedQuestion.components[dropBox.index].type = type;
-
-    setQuestion(index, updatedQuestion);
-  }
-
-  const swapComponents = (drag: any, drop: any) => {
-    if (locked) { return; }
-    const index = getQuestionIndex(question);
-    const components = Object.assign([], question.components) as any[];
-    const tempComp = components[drag.index];
-    components[drag.index] = components[drop.index];
-    components[drop.index] = tempComp;
-
-    setQuestionComponents(index, components);
-  }
 
   const setQuestionHint = (hintState: HintState) => {
     if (locked) { return; }
@@ -95,7 +66,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
 
   let typeArray: string[] = Object.keys(QuestionType);
 
-
   return (
     <MuiThemeProvider >
       <div className="build-question-page" style={{width: '100%', height: '94%'}}>
@@ -111,48 +81,30 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 <ReactSortable
                   list={componentTypes}
                   group={{ name: "cloning-group-name", pull: "clone" }}
-                  setList={setComponentType}
-                  sort={false}
-                  >
+                  setList={setComponentType} sort={false}>
                 <DragBox
-                  onDrop={setDropBoxItem}
                   locked={locked}
-                  name="T"
-                  fontSize="2.4vw"
-                  label="T E X T"
+                  name="T" fontSize="2.4vw" label="T E X T"
                   hoverMarginTop="0.5vw"
                   value={QuestionComponentTypeEnum.Text} />
                 <DragBox
-                  onDrop={setDropBoxItem}
                   locked={locked}
-                  name="“ ”"
-                  fontSize="2.8vw"
-                  label="Q U O T E"
-                  marginTop="0vw"
-                  hoverMarginTop="-0.65vw"
+                  name="“ ”" fontSize="2.8vw" label="Q U O T E"
+                  marginTop="0vw" hoverMarginTop="-0.65vw"
                   value={QuestionComponentTypeEnum.Quote} />
                 <DragBox
-                  onDrop={setDropBoxItem}
                   locked={locked}
-                  name="jpg."
-                  fontSize="1.7vw"
-                  label="I M A G E"
+                  name="jpg." fontSize="1.7vw" label="I M A G E"
                   hoverMarginTop="1vw"
                   value={QuestionComponentTypeEnum.Image} />
                 <DragBox
-                  onDrop={setDropBoxItem}
                   locked={locked}
                   isImage={true} src="/images/soundicon.png"
-                  label="S O U N D"
-                  marginTop="-0.2vw"
-                  hoverMarginTop="0.5vw"
+                  label="S O U N D" marginTop="-0.2vw" hoverMarginTop="0.5vw"
                   value={QuestionComponentTypeEnum.Sound} />
                 <DragBox
-                  onDrop={setDropBoxItem}
                   locked={locked}
-                  name="E Q N"
-                  fontSize="1.6vw"
-                  label="E Q U A T I O N"
+                  name="E Q N" fontSize="1.6vw" label="E Q U A T I O N"
                   fontFamily="Century Gothic Bold"
                   hoverMarginTop="0.9vw"
                   value={QuestionComponentTypeEnum.Equation} />
@@ -165,9 +117,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 brickId={brickId}
                 history={history}
                 question={question}
-                removeComponent={removeComponent}
-                swapComponents={swapComponents}
-                updateComponent={updateComponent}
+                updateComponents={updateComponents}
                 setQuestionHint={setQuestionHint} />
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
@@ -207,10 +157,8 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
               </Grid>
               <LockComponent locked={locked} onChange={toggleLock} />
               <Grid
-                container
-                direction="row"
-                justify="flex-end"
-                alignItems="flex-end"
+                container direction="row"
+                justify="flex-end" alignItems="flex-end"
               >
                 <div className="round-button-container">
                   <IconButton className="new-question-button" aria-label="next" onClick={nextOrNewQuestion}>
