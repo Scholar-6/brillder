@@ -22,7 +22,7 @@ function PrepComponent({ parentState, setPrep }: any) {
           <Grid justify="center" container item xs={12} sm={9} md={10} lg={7}>
             <div className="left-card">
               <h1 className="only-tutorial-header">
-                <p>Prep</p>
+                <p>Create an engaging and relevant preparatory task for your investigation.</p>
               </h1>
               <Grid justify="center" container item xs={12}>
                 <div style={{ width: '90%' }}>
