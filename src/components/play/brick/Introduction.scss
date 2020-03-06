@@ -1,0 +1,69 @@
+$light-grey: #F4F4F4;
+
+.brick-container {
+  font-family: 'Montserrat';
+  max-width: 800px;
+  width: 100%;
+  text-align: left;
+
+  h3 {
+    color: black;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h1 {
+    color: black;
+    padding: 5px;
+    line-height: 48px;
+    text-transform: capitalize;
+    font-size: 32px;
+  }
+
+  .MuiExpansionPanel-root {
+    background: $light-grey;
+  }
+
+  .MuiExpansionPanel-root.Mui-expanded {
+    margin: 0 !important;
+    margin-bottom: 16px !important;
+  }
+}
+
+.introduction-page {
+  padding: 1vw;
+
+  .begin-row {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: right;
+  }
+
+  .start-brick-button {
+    margin-right: 0px;
+    >span {
+      font-family: 'Montserrat';
+      color: black;
+      font-size: 25px;
+      margin-right: 10px;
+    }
+  }
+}
+
+
+@media only screen and (min-width: 1280px) {}
+
+@media only screen and (max-width: 1279px) and (min-width: 960px) {}
+
+@media only screen and (max-width: 959px) and (min-width: 600px) {}
+
+@media only screen and (max-width: 599px) {
+  .brick-container {
+    text-align: center;
+  }
+}
