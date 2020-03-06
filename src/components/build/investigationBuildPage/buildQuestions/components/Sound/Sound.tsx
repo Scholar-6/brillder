@@ -27,7 +27,6 @@ const SoundComponent: React.FC<SoundProps> = ({locked}) => {
         <Grid container justify="center" alignContent="center" style={{height:'80%'}}>
           <p>Drag Sound File Here | Click to Select Sound File</p>
         </Grid>
-        
       </div>
       {files[0]}
     </div>
