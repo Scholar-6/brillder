@@ -13,7 +13,7 @@ function ChooseUserPage(props: any) {
 
   const selectLoginType = (type: UserType) => {
     setUserType(update(userType, { $set: type }));
-    if (type === UserType.Builder) {
+    if (type === UserType.Builder || type === UserType.Student) {
       props.history.push(`/choose-login?userType=${type}`);
     }
   }
@@ -45,7 +45,7 @@ function ChooseUserPage(props: any) {
           <div style={{ width: "100%" }}>
             <Grid container direction="row">
               <Grid container item xs={12} justify="center">
-                <Button onClick={() => { selectLoginType(UserType.Student); openMessage(); }} className="user-type-btn">
+                <Button onClick={() => { selectLoginType(UserType.Student); }} className="user-type-btn">
                   <span className="user-type-name">S t u d e n t</span>
                 </Button>
               </Grid>
