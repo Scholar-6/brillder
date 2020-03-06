@@ -40,18 +40,6 @@ function NewBrick(props: any) {
     setBrick({ ...state, openQuestion } as any);
   }
 
-  const setBrickLength = (brickLength: number) => {
-    let length = 20;
-    if (brickLength === BrickLengthEnum.S20min) {
-      length = 20;
-    } else if (brickLength === BrickLengthEnum.S40min) {
-      length = 40;
-    } else if (brickLength === BrickLengthEnum.S60min) {
-      length = 60;
-    }
-    setBrick({ ...state, brickLength } as any);
-  }
-
   const setBrief = (preparationBrief:string) => {
     let brick = { ...state, preparationBrief } as any
     setBrick(brick)

@@ -17,17 +17,17 @@ export interface SwitchQuestionProps {
   component: any
   hint: Hint
   locked: boolean
+  canRemove: boolean
   updateComponent(component: any, index: number): void
   setQuestionHint(hintState: HintState): void
   removeComponent(componentIndex: number): void
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
-  type, index, component, hint, locked,
+  type, index, component, hint, locked, canRemove,
   setQuestionHint,
-  updateComponent,
+  updateComponent, removeComponent,
   uniqueComponent,
-  removeComponent
 }) => {
   const getNumberOfAnswers = (data: any) => {
     let count = 1;
@@ -74,10 +74,15 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   }
   return (
     <div style={{position: 'relative', width: '100%'}}>
-      <DeleteIcon
-        className="right-top-icon"
-        style={{right: '2px', top: '7px'}}
-        onClick={() => removeComponent(index)} />
+      {
+        canRemove
+        ?
+          <DeleteIcon
+            className="right-top-icon"
+            style={{right: '2px', top: '7px'}}
+            onClick={() => removeComponent(index)} />
+        : ""
+      }
       <InnerComponent
         locked={locked}
         data={component}

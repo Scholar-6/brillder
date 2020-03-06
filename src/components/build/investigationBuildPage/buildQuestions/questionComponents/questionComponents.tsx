@@ -18,11 +18,6 @@ import { Question, QuestionTypeEnum } from 'components/model/question';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 
 
-interface ItemType {
-  id: number;
-  name: string;
-}
-
 type QuestionComponentsProps = {
   locked: boolean
   history: any
@@ -53,6 +48,8 @@ const QuestionComponents = ({
     setComponents(comps);
     updateComponents(comps);
   }
+
+  let canRemove = (components.length > 3) ? true : false;
 
   const renderDropBox = (component: any, index: number) => {
     const updatingComponent = (compData: any) => {
@@ -95,6 +92,7 @@ const QuestionComponents = ({
       component={component}
       updateComponent={updatingComponent}
       hint={question.hint}
+      canRemove={canRemove}
       removeComponent={removeInnerComponent}
       setQuestionHint={setQuestionHint}
       uniqueComponent={uniqueComponent} />
