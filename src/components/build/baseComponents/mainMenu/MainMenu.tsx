@@ -56,7 +56,7 @@ function MainMenu(props: any) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Menu
+            <img src="/images/lflogo-White.png"/>
           </Typography>
           <Button color="inherit" onClick={logout}>Logout</Button>
         </Toolbar>
