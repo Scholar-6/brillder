@@ -8,6 +8,8 @@ import './app.css';
 import '../../assets/fonts/icomoon/style.css';
 
 import Pallet from '../play/pallet/Pallet';
+import Dashboard from '../manage/dashboard/Dashboard';
+import PlayBrickRouting from '../play/brick/PlayBrickRouting';
 import NewBrick from '../build/newBrick/newBrick';
 import MainPage from '../build/mainPage/mainPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
@@ -49,7 +51,9 @@ const App: React.FC = (props: any) => {
   return (
     <ThemeProvider theme={theme}>
       <Switch>
+        <PrivateRoute path="/play/brick/:brickId" component={PlayBrickRouting} />
         <PrivateRoute path="/play/pallet/:palletName" component={Pallet} />
+        <PrivateRoute path="/manage/dashboard" component={Dashboard} />
 
         <PrivateRoute path="/build/new-brick" component={NewBrick} />
         <PrivateRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />

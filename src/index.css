@@ -58,6 +58,13 @@ code {
   url("./assets/fonts/LiberationSans/4ce6215c47b0f14c8b89bb15c9914150.svg#Liberation Sans V2") format("svg"); /* iOS 4.1- */
 }
 
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 400;
+  font-style: normal;
+  src: url("./assets/fonts/Montserrat/Montserrat-Regular.otf") format('opentype');
+}
+
 .rotate-90 {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);

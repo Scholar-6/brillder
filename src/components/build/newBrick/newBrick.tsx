@@ -9,7 +9,7 @@ import './newBrick.scss';
 import Welcome from './questionnaire/welcome/welcome';
 import BrickTitle from './questionnaire/brickTitle/brickTitle';
 import OpenQuestion from './questionnaire/openQuestion/openQuestion';
-import BrickLength, { BrickLengthEnum } from './questionnaire/brickLength/brickLength';
+import BrickLength from './questionnaire/brickLength/brickLength';
 import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
 import ProposalReview from './questionnaire/proposalReview/ProposalReview';
