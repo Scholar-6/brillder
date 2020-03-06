@@ -4,7 +4,10 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from "react-redux";
 
 import actions from 'redux/actions/brickActions';
-import Introduction from './Introduction';
+import Introduction from './introduction/Introduction';
+import Live from './live/Live';
+
+import './brick.scss';
 
 
 const BrickRouting: React.FC<any> = (props) => {
@@ -17,6 +20,9 @@ const BrickRouting: React.FC<any> = (props) => {
     <Switch>
       <Route exac path="/play/brick/:brickId/intro">
         <Introduction brick={props.brick} />
+      </Route>
+      <Route exac path="/play/brick/:brickId/live">
+        <Live brick={props.brick} />
       </Route>
     </Switch>
   );
