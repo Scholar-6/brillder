@@ -6,43 +6,34 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import './Introduction.scss';
+import './ProvisionalScore.scss';
 import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
 
-interface IntroductionProps {
+interface ProvisionalScoreProps {
   brick: Brick;
 }
 
-interface IntroductionState {
+interface ProvisionalState {
   prepExpanded: boolean;
   briefExpanded: boolean;
   otherExpanded: boolean;
 }
 
-const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
+const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ brick, ...props }) => {
   const history = useHistory();
   const [state, setState] = React.useState({
-    prepExpanded: true,
-    briefExpanded: true,
     otherExpanded: false,
-  } as IntroductionState);
-
-  const toggleBrief = () => {
-    setState({ ...state, briefExpanded: !state.briefExpanded });
-  }
-
-  const togglePrep = () => {
-    setState({ ...state, prepExpanded: !state.prepExpanded });
-  }
+  } as ProvisionalState);
 
   const toggleOther = () => {
     setState({ ...state, otherExpanded: !state.otherExpanded });
   }
 
   const startBrick = () => {
-    history.push(`/play/brick/${brick.id}/live`);
+    history.push(`/play/brick/${brick.id}/synthesis`);
   }
 
   let length = 0;
@@ -58,27 +49,22 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   return (
     <Grid container direction="row" justify="center">
       <div className="brick-container">
-        <div className='introduction-page'>
+        <div className='provisional-score-page'>
           <div>
             <h3>{length} minutes</h3>
-            <h1>{brick.title}</h1>
+            <h1>Provisional Score</h1>
           </div>
-          <ExpansionPanel expanded={state.briefExpanded === true} onChange={toggleBrief}>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <h2>Brief</h2>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Typography>{brick.preparationBrief}</Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-          <ExpansionPanel expanded={state.prepExpanded === true} onChange={togglePrep}>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <h2>Prep</h2>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Typography>{brick.preparationBrief}</Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+          <Grid container justify="center" className="circle-progress-container">
+            <CircularProgress variant="static" className="circle-progress" value={50} />
+            <div className="score-data">
+              <Grid container justify="center" alignContent="center">
+                <div>
+                  <div className="score-precentage">50%</div>
+                  <div className="score-number">5/10</div>
+                </div>
+              </Grid>
+            </div>
+          </Grid>
           <div className="begin-row">
             <FormControlLabel
               className="start-brick-button"
@@ -88,12 +74,12 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   <PlayArrowIcon />
                 </Fab>
               }
-              label="Begin Brick"
+              label="Summary"
             />
           </div>
           <ExpansionPanel expanded={state.otherExpanded === true} onChange={toggleOther}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <h2>Other Information</h2>
+              <h2 style={{fontSize: '15px'}}>Other Information</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <Typography>{brick.preparationBrief}</Typography>
@@ -105,4 +91,4 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   );
 }
 
-export default Introduction;
+export default ProvisionalScore;
