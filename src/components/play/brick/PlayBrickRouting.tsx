@@ -8,6 +8,7 @@ import Introduction from './introduction/Introduction';
 import Live from './live/Live';
 
 import './brick.scss';
+import { Question } from 'components/model/question';
 
 
 const BrickRouting: React.FC<any> = (props) => {
@@ -16,6 +17,26 @@ const BrickRouting: React.FC<any> = (props) => {
     props.fetchBrick(brickId);
     return <div>...Loading brick...</div>
   }
+
+  const parsedQuestions: Question[] = [];
+
+  for (const question of props.brick.questions) {
+    try {
+      const parsedQuestion = JSON.parse(question.contentBlocks);
+      if (parsedQuestion.components) {
+        let q = {
+          id: question.id,
+          type: question.type,
+          hint: parsedQuestion.hint,
+          components: parsedQuestion.components
+        } as Question;
+        parsedQuestions.push(q);
+      }
+    } catch (e) {}
+  }
+
+  props.brick.questions = parsedQuestions;
+  
   return (
     <Switch>
       <Route exac path="/play/brick/:brickId/intro">
