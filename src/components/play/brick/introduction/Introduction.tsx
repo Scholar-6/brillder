@@ -24,8 +24,8 @@ interface IntroductionState {
 const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const history = useHistory();
   const [state, setState] = React.useState({
-    prepExpanded: false,
-    briefExpanded: false,
+    prepExpanded: true,
+    briefExpanded: true,
     otherExpanded: false,
   } as IntroductionState);
 
@@ -45,12 +45,22 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     history.push(`/play/brick/${brick.id}/live`);
   }
 
+  let length = 0;
+  if (brick.brickLength === 1) {
+    length = 20;
+  } else if (brick.brickLength === 2) {
+    length = 40;
+  } else if (brick.brickLength === 3) {
+    length = 60;
+  }
+
+
   return (
     <Grid container direction="row" justify="center">
       <div className="brick-container">
         <div className='introduction-page'>
           <div>
-            <h3>{brick.brickLength} minutes</h3>
+            <h3>{length} minutes</h3>
             <h1>{brick.title}</h1>
           </div>
           <ExpansionPanel expanded={state.briefExpanded === true} onChange={toggleBrief}>

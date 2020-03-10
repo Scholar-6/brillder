@@ -4,11 +4,15 @@ import CreateIcon from '@material-ui/icons/Create';
 import SwipeableViews from 'react-swipeable-views';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
+import update from 'immutability-helper';
 
 import './Live.scss';
 import { Brick } from 'model/brick';
 import CircleIconNumber from 'components/play/components/circleIcon/circleIcon';
+import { Question } from "components/model/question";
+import QuestionLive from './QuestionLive';
+
 
 interface IntroductionProps {
   brick: Brick;
@@ -38,7 +42,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
+const LivePage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   let { questions } = brick;
   const theme = useTheme();
@@ -51,6 +55,17 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   function isStepComplete(step: number) {
     return step < activeStep;
   }
+
+  const next = () => {
+    questions[activeStep].edited = true;
+    setActiveStep(update(activeStep, { $set: activeStep + 1 }));
+  }
+
+  const renderQuestion = (question: Question) => {
+    let isLastOne = (questions.length - 1) === activeStep;
+    return <QuestionLive question={question} isLastOne={isLastOne} next={next} />
+  }
+  console.log(activeStep)
 
   return (
     <Grid container direction="row" justify="center">
@@ -100,19 +115,17 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             })}
           </Stepper>
           <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={activeStep}
             onChangeIndex={handleStep}
           >
-            <TabPanel value={activeStep} index={0} dir={theme.direction}>
-              Item One
-            </TabPanel>
-            <TabPanel value={activeStep} index={1} dir={theme.direction}>
-              Item Two
-            </TabPanel>
-            <TabPanel value={activeStep} index={2} dir={theme.direction}>
-              Item Three
-            </TabPanel>
+            {
+              questions.map((question, index) =>
+                <TabPanel key={index} index={index} value={activeStep} dir={theme.direction}>
+                  {renderQuestion(question)}
+                </TabPanel>
+              )
+            }
           </SwipeableViews>
         </div>
       </div>
@@ -120,4 +133,4 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   );
 }
 
-export default Introduction;
+export default LivePage;
