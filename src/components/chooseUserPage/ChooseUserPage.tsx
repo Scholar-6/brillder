@@ -46,21 +46,21 @@ function ChooseUserPage(props: any) {
             <Grid container direction="row">
               <Grid container item xs={12} justify="center">
                 <Button onClick={() => { selectLoginType(UserType.Student); }} className="user-type-btn">
-                  <span className="user-type-name">S t u d e n t</span>
+                  <span className="user-type-name">L e a r n</span>
                 </Button>
               </Grid>
             </Grid>
             <Grid container direction="row">
               <Grid container item xs={12} justify="center">
                 <Button onClick={() => { selectLoginType(UserType.Teacher); openMessage(); }} className="user-type-btn">
-                  <span className="user-type-name">T e a c h e r</span>
+                  <span className="user-type-name">T e a c h</span>
                 </Button>
               </Grid>
             </Grid>
             <Grid container direction="row">
               <Grid container item xs={12} justify="center">
                 <Button onClick={() => selectLoginType(UserType.Builder)} className="user-type-btn">
-                  <span className="user-type-name">B u i l d e r</span>
+                  <span className="user-type-name">B u i l d</span>
                 </Button>
               </Grid>
             </Grid>
