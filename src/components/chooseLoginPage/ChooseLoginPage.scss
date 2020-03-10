@@ -3,23 +3,6 @@
 .pre-login-page {
   height: 100%;
 
-  .pre-login-image-container {
-    .pre-login-image-container2 {
-
-      .pre-login-image {
-        height: 90%;
-        padding-bottom: 20px;
-        margin-bottom: 30px;
-      }
-
-      .pre-login-text {
-        color: white;
-        font-family: 'Century Gothic Regular';
-        font-size: 18px;
-      }
-    }
-  }
-
   background-color: #06215C;
 
   .google-button {
@@ -77,129 +60,55 @@
   }
 
   @media only screen and (min-width: 1280px) {
-    .pre-login-image-container {
-      height: 100%;
+    .google-button, .email-button {
+      padding: 0.4vw 0.2vw;
+      width: 9.9vw !important;
+      border-radius: 0.14vw !important;
+    }
 
-      .pre-login-image-container2 {
-        height: 70%;
-        border-right: 2px solid white;
-
-        .pre-login-image-container3 {
-          height: 80%;
-        }
+    .login-logo {
+      margin-bottom: 1.54vw;
+      .logo-img {
+        width: 5.1vw;
       }
     }
 
-    .user-type-btn {
-      padding: 20px 0 !important;
-      height: 100px;
-      margin-bottom: 25px !important;
+    .footer-image {
+      width: 12vw;
+    }
+
+    .email-button {
+      margin-bottom: 0.7vw;
+      .email-icon {
+        height: 0.9vw !important;
+      }
+      .email-button-text {
+        padding-left: 0.53vw;
+        font-size: 0.8vw;
+      }
+    }
+
+    .google-button {
+      margin-bottom: 2vw;
+      .google-icon {
+        height: 0.95vw;
+      }
+      .google-button-text {
+        padding-left: 0.53vw;
+        font-size: 0.74vw;
+      }
     }
   }
 
   @media only screen and (max-width: 1279px) and (min-width: 960px) {
-    .pre-login-image-container {
-      height: 100%;
 
-      .pre-login-image-container2 {
-        height: 70%;
-        border-right: 2px solid white;
-
-        .pre-login-image-container3 {
-          height: 70%;
-        }
-      }
-    }
-
-    .user-type-btn {
-      padding: 20px 0 !important;
-      margin-bottom: 18px !important;
-    }
   }
 
   @media only screen and (max-width: 959px) and (min-width: 600px) {
-    .pre-login-image-container {
-      height: 100%;
 
-      .pre-login-image-container2 {
-        height: 70%;
-        border-right: 2px solid white;
-
-        .pre-login-image-container3 {
-          height: 50%;
-        }
-      }
-    }
-
-    .user-type-btn {
-      padding: 15px 0 !important;
-    }
-
-    .pre-login-text {
-      font-size: 12px !important;
-    }
   }
 
   @media only screen and (max-width: 599px) {
-    .pre-login-image-container {
-      height: 45%;
-
-      .pre-login-image-container2 {
-        height: 85%;
-
-        .pre-login-image-container3 {
-          height: 100%;
-
-          .pre-login-image {
-            height: 90% !important;
-            padding-bottom: 0px !important;
-            margin-bottom: 0px !important;
-          }
-        }
-      }
-    }
-
-    .pre-login-button-container {
-      height: 55%;
-
-      >div {
-        height: 100%;
-
-        >div {
-          height: 100%;
-
-          >div {
-            height: 33%;
-
-            >div {
-              height: 100%;
-
-              >button {
-                height: 82% !important;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .user-type-btn {
-      width: 85%;
-      height: 20% !important;
-      padding: 0 !important;
-      border-radius: 20px !important;
-      font-size: 7vw;
-
-      .user-type-name {
-        padding: 0 !important;
-        margin: 0 !important;
-      }
-    }
-
-    .pre-login-text {
-      font-size: 4.4vw !important;
-    }
-
     .footer-image {
       max-height: 100px;
     }
