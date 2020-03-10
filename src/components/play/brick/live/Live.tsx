@@ -12,6 +12,7 @@ import { Brick } from 'model/brick';
 import CircleIconNumber from 'components/play/components/circleIcon/circleIcon';
 import { Question } from "components/model/question";
 import QuestionLive from './QuestionLive';
+import { useHistory } from 'react-router-dom';
 
 
 interface IntroductionProps {
@@ -44,6 +45,8 @@ function TabPanel(props: TabPanelProps) {
 
 const LivePage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const [activeStep, setActiveStep] = React.useState(0);
+  const history = useHistory();
+
   let { questions } = brick;
   const theme = useTheme();
 
@@ -59,13 +62,15 @@ const LivePage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const next = () => {
     questions[activeStep].edited = true;
     setActiveStep(update(activeStep, { $set: activeStep + 1 }));
+    if (activeStep >= questions.length - 1) {
+      history.push(`/play/brick/${brick.id}/provisionalScore`);
+    }
   }
 
   const renderQuestion = (question: Question) => {
     let isLastOne = (questions.length - 1) === activeStep;
     return <QuestionLive question={question} isLastOne={isLastOne} next={next} />
   }
-  console.log(activeStep)
 
   return (
     <Grid container direction="row" justify="center">

@@ -93,7 +93,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           </div>
           <ExpansionPanel expanded={state.otherExpanded === true} onChange={toggleOther}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <h2>Prep</h2>
+              <h2>Other Information</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <Typography>{brick.preparationBrief}</Typography>
