@@ -47,8 +47,6 @@
     }
 
     .user-type-name {
-      margin-left: 20px;
-      margin-right: 10px;
       line-height: 1 !important;
     }
   }
@@ -64,7 +62,7 @@
 
       .pre-login-image-container2 {
         height: 70%;
-        border-right: 2px solid white;
+        border-right: 0.15vw solid white;
 
         .pre-login-image-container3 {
           height: 80%;
@@ -73,9 +71,9 @@
     }
 
     .user-type-btn {
-      padding: 20px 0 !important;
-      height: 100px;
-      margin-bottom: 25px !important;
+      height: 5.2vw;
+      margin-bottom: 1.3vw !important;
+      border-radius: 0.5vw;
     }
   }
 
@@ -97,6 +95,11 @@
       padding: 20px 0 !important;
       margin-bottom: 18px !important;
     }
+
+  }
+
+  .pre-login-text {
+    font-size: 2vw !important;
   }
 
   @media only screen and (max-width: 959px) and (min-width: 600px) {

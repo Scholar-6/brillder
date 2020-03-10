@@ -28,7 +28,7 @@ function ChooseLoginPage(props: any) {
       <Grid className="pre-login-page" container item justify="center" alignItems="center">
         <div className="login-container">
           <div className="login-logo">
-            <img src="/images/lflogo.png" alt="logo" />
+            <img src="/images/lflogo.png" className="logo-img" alt="logo" />
           </div>
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
