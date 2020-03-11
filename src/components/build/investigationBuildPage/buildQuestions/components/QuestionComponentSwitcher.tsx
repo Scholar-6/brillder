@@ -1,7 +1,7 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { QuestionComponentTypeEnum, Hint } from 'components/model/question';
+import { QuestionComponentTypeEnum, Hint, QuestionTypeEnum } from 'components/model/question';
 import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'
@@ -39,8 +39,13 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     return count;
   }
 
-  const onDrop = (type:number) => {
+  const setComponentType = (type:number) => {
     component.type = type;
+    updateComponent(component, index);
+  }
+
+  const setEmptyType = () => {
+    component.type = QuestionTypeEnum.None;
     updateComponent(component, index);
   }
 
@@ -60,7 +65,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
         }
         <DropBox
           locked={locked}
-          onDrop={onDrop} />
+          onDrop={setComponentType} />
       </div>
     );
   } else if (type === QuestionComponentTypeEnum.Text) {
@@ -98,12 +103,12 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   return (
     <div style={{position: 'relative', width: '100%'}}>
       {
-        canRemove
+        !locked
         ?
           <DeleteIcon
             className="right-top-icon"
             style={{right: '2px', top: '7px'}}
-            onClick={() => removeComponent(index)} />
+            onClick={setEmptyType} />
         : ""
       }
       <InnerComponent
