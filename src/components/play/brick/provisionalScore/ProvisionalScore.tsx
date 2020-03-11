@@ -82,7 +82,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ brick, ...props }) 
               <h2 style={{fontSize: '15px'}}>Other Information</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>{brick.preparationBrief}</Typography>
+              <Typography>{brick.brief}</Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </div>

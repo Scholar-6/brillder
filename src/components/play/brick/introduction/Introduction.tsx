@@ -68,7 +68,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <h2>Brief</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>{brick.preparationBrief}</Typography>
+              <Typography>{brick.brief}</Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <ExpansionPanel expanded={state.prepExpanded === true} onChange={togglePrep}>
@@ -76,7 +76,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <h2>Prep</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>{brick.preparationBrief}</Typography>
+              <Typography>{brick.prep}</Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <div className="begin-row">
@@ -96,7 +96,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <h2>Other Information</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>{brick.preparationBrief}</Typography>
+              <Typography>{brick.brief}</Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </div>

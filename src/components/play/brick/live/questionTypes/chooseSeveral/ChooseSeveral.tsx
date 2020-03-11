@@ -19,8 +19,6 @@ const ChooseSeveral: React.FC<ChooseOneProps> = ({ question, component }) => {
     setActive(updatedList);
   }
 
-  console.log(list)
-
   return (
     <Box boxShadow={3} className="choose-one-live">
       {

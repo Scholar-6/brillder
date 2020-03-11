@@ -11,7 +11,6 @@ import './Dashboard.scss';
 
 
 const Dashboard: React.FC<any> = (props) => {
-  console.log(props)
   if (props.bricks.length === 0) {
     props.fetchBricks();
     return <div>...Loading bricks ...</div>
