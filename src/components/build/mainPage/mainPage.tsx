@@ -33,7 +33,7 @@ class MainPage extends Component {
               <Grid container item xs={6} sm={5} md={4} lg={3} justify="center">
                 <Link to="/build/bricks-list" className="bigButton">
                   <div className="link-title">V I E W</div>
-                  <div className="link-description">S e e &nbsp; w h a t &nbsp; w e &nbsp; w a n t</div>
+                  <div className="link-description">S e e &nbsp; w h a t &nbsp; w e &nbsp; h a v e</div>
                 </Link>
               </Grid>
             </Grid>
