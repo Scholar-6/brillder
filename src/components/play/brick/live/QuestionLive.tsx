@@ -52,7 +52,13 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
           question={question}
           component={component} />
       } else if (question.type === QuestionTypeEnum.ChooseOne) {
-        return <ChooseOne key={index} question={question} component={component} />
+        return <ChooseOne
+          ref={this.state.answerRef as React.RefObject<ChooseOne>}
+          key={index}
+          attempt={null}
+          answers={this.props.answers}
+          question={question}
+          component={component} />
       } else if (question.type === QuestionTypeEnum.ChooseSeveral) {
         return <ChooseSeveral key={index} question={question} component={component} />
       }
