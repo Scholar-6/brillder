@@ -18,6 +18,7 @@ const DropBox: React.FC<DropBoxProps> = ({locked, onDrop}) => {
         list={components}
         style={{height: '100%', width: '100%', position: 'absolute', top: 0}}
         group={{ name: "cloning-group-name", pull: "clone" }}
+        onAdd={() => {}}
         setList={(comp:any[], d) => {
           if (locked) { return; }
           if (comp.length > 0) {
