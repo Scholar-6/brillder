@@ -15,7 +15,6 @@ import Prep from './questionnaire/prep/prep';
 import ProposalReview from './questionnaire/proposalReview/ProposalReview';
 import { Brick } from "model/brick";
 
-
 interface NewBrickProps {
   brick: Brick;
   saveBrick(brick: Brick): void;
@@ -23,7 +22,7 @@ interface NewBrickProps {
 }
 
 const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
-  const [state, setBrick] = React.useState({
+  let initState = {
     subject: '0',
     brickLength: 0,
     topic: '',
@@ -34,9 +33,13 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
     brief: '',
     openQuestion: '',
     alternativeSubject: '',
-  } as Brick);
-
-
+  } as Brick;
+  
+  if (brick) {
+    initState = brick;
+  }
+  
+  const [state, setBrick] = React.useState(initState);
   const [saved, setSaved] = React.useState(false);
 
   const setTitles = (titles: any) => {
@@ -72,7 +75,7 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
     setSaved(true);
   }
 
-  if (saved && brick.id) {
+  if (saved && brick && brick.id) {
     history.push(`/build/brick/${brick.id}/build/investigation/question`);
   }
 
@@ -107,18 +110,15 @@ const mapState = (state: any) => {
   return {
     brick: state.brick.brick,
   }
-}
+};
 
 const mapDispatch = (dispatch: any) => {
   return {
     fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
     saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   }
-}
+};
 
-const connector = connect(
-  mapState,
-  mapDispatch
-)
+const connector = connect(mapState, mapDispatch);
 
-export default connector(NewBrick)
+export default connector(NewBrick);
