@@ -1,21 +1,28 @@
 import React from "react";
 import { Route } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-
 // @ts-ignore
 import { connect } from 'react-redux';
+
 import actions from '../../../redux/actions/brickActions';
 import './newBrick.scss';
 import Welcome from './questionnaire/welcome/welcome';
 import BrickTitle from './questionnaire/brickTitle/brickTitle';
 import OpenQuestion from './questionnaire/openQuestion/openQuestion';
-import BrickLength, { BrickLengthEnum } from './questionnaire/brickLength/brickLength';
+import BrickLength from './questionnaire/brickLength/brickLength';
 import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
 import ProposalReview from './questionnaire/proposalReview/ProposalReview';
+import { Brick } from "model/brick";
 
 
-function NewBrick(props: any) {
+interface NewBrickProps {
+  brick: Brick;
+  saveBrick(brick: Brick): void;
+  history: any;
+}
+
+const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
   const [state, setBrick] = React.useState({
     subject: '0',
     brickLength: 0,
@@ -23,12 +30,12 @@ function NewBrick(props: any) {
     subTopic: '',
     alternativeTopics: '',
     title: '',
-    investigationBrief: '',
-    preparationBrief: '',
+    prep: '',
+    brief: '',
     openQuestion: '',
     alternativeSubject: '',
-    links: [],
-  });
+  } as Brick);
+
 
   const [saved, setSaved] = React.useState(false);
 
@@ -40,34 +47,38 @@ function NewBrick(props: any) {
     setBrick({ ...state, openQuestion } as any);
   }
 
-  const setBrief = (preparationBrief:string) => {
-    let brick = { ...state, preparationBrief } as any
+  const setBrief = (brief: string) => {
+    let brick = { ...state, brief } as any
     setBrick(brick)
   }
 
-  const saveBrick = (data: any) => {
-    let brick = { ...state, brickLength: data } as any
+  const setPrep = (prep: string) => {
+    let brick = { ...state, prep } as any
+    setBrick(brick)
+  }
+
+  const setLength = (brickLength: number) => {
+    let brick = { ...state, brickLength } as any
+    setBrick(brick)
+  }
+
+  const saveBrick = () => {
+    let brick = { ...state } as Brick;
     setBrick(brick);
-    setSaved(true);
-    if (props.brick) {
-      brick.id = props.brick.id;
+    if (brick) {
+      brick.id = brick.id;
     }
     props.saveBrick(brick);
+    setSaved(true);
   }
 
-  const setPrep = (data: any) => {
-  }
-
-  if (props.brick != null) {
-    if (props.location.pathname.indexOf('/build/new-brick/proposal/') === -1 && saved === true) {
-      setSaved(false);
-      props.history.push(`/build/new-brick/proposal/${props.brick.id}`);
-    }
+  if (saved && brick.id) {
+    history.push(`/build/brick/${brick.id}/build/investigation/question`);
   }
 
   return (
     <MuiThemeProvider>
-      <div style={{width: '100%', height: '100%'}}>
+      <div style={{ width: '100%', height: '100%' }}>
         <Route path='/build/new-brick/welcome'><Welcome /></Route>
         <Route path='/build/new-brick/brick-title'>
           <BrickTitle parentState={state} saveTitles={setTitles} />
@@ -76,15 +87,17 @@ function NewBrick(props: any) {
           <OpenQuestion selectedQuestion={state.openQuestion} saveOpenQuestion={setOpenQuestion} />
         </Route>
         <Route path='/build/new-brick/brief'>
-          <Brief parentState={state} saveBrief={setBrief} />
+          <Brief parentBrief={state.brief} saveBrief={setBrief} />
         </Route>
         <Route path='/build/new-brick/prep'>
-          <Prep parentState={state} setPrep={setPrep} />
+          <Prep parentPrep={state.prep} savePrep={setPrep} />
         </Route>
         <Route path='/build/new-brick/length'>
-          <BrickLength length={state.brickLength} saveBrick={saveBrick} />
+          <BrickLength length={state.brickLength} saveBrick={setLength} />
         </Route>
-        <Route path="/build/new-brick/proposal/:brickId" component={ProposalReview}></Route>
+        <Route path="/build/new-brick/proposal">
+          <ProposalReview brick={state} saveBrick={saveBrick} />
+        </Route>
       </div>
     </MuiThemeProvider>
   );

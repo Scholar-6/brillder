@@ -9,11 +9,16 @@ import './brief.scss';
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
 
-function BriefComponent({ parentState, saveBrief }: any) {
-  const [brief, setBrief] = React.useState(parentState.preparationBrief);
+interface PrepProps {
+  parentBrief: string;
+  saveBrief(brief: string):void;
+}
 
-  const setBriefText = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setBrief(event.target.value as string)
+const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
+  const [brief, setBrief] = React.useState(parentBrief);
+
+  const setBriefText = (event: React.ChangeEvent<{ value: string }>) => {
+    setBrief(event.target.value)
   }
 
   return (

@@ -1,4 +1,3 @@
-/*eslint no-useless-escape: "off"*/
 import React from "react";
 import { Grid } from "@material-ui/core";
 // @ts-ignore 
@@ -12,8 +11,14 @@ import { NewBrickStep } from "../../model";
 import './prep.scss';
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
-function PrepComponent({ parentState, setPrep }: any) {
-  const [prepState, setPrepState] = React.useState('');
+
+interface PrepProps {
+  parentPrep: string;
+  savePrep(prep: string):void;
+}
+
+const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
+  const [prep, setPrep] = React.useState(parentPrep);
 
   return (
     <div className="tutorial-page prep-page">
@@ -28,17 +33,17 @@ function PrepComponent({ parentState, setPrep }: any) {
                 <div style={{ width: '90%' }}>
                   <CKEditor
                     editor={ClassicEditor}
-                    data={prepState}
+                    data={prep}
                     config={{ toolbar: ['bold', 'link'] }}
                     onChange={(e: any, editor: any) => {
                       let value = editor.getData();
-                      setPrepState(value)
+                      setPrep(value)
                     }}
                   />
                 </div>
               </Grid>
               <PreviousButton to="/build/new-brick/brief" />
-              <NextButton step={NewBrickStep.Prep} canSubmit={true} data={prepState} />
+              <NextButton step={NewBrickStep.Prep} canSubmit={true} data={prep} onSubmit={savePrep} />
             </div>
           </Grid>
         </Grid>
