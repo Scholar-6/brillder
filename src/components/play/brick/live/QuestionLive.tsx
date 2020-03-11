@@ -9,61 +9,92 @@ import ShortAnswer from './questionTypes/shortAnswer/ShortAnswer';
 import ChooseOne from './questionTypes/chooseOne/ChooseOne';
 import ChooseSeveral from './questionTypes/chooseSeveral/ChooseSeveral';
 import './QuestionLive.scss';
+import CompComponent from './questionTypes/comp';
 
 
 interface QuestionProps {
   question: Question;
   isLastOne: boolean;
+  answers: any;
   next(): void;
 }
 
-const QuestionLive: React.FC<QuestionProps> = ({ question, isLastOne, next }) => {
-  const renderUniqueComponent = (component: any, index: number) => {
-    if (question.type === QuestionTypeEnum.ShortAnswer) {
-      return <ShortAnswer key={index} question={question} component={component} />
-    } else if (question.type === QuestionTypeEnum.ChooseOne) {
-      return <ChooseOne key={index} question={question} component={component} />
-    } else if (question.type === QuestionTypeEnum.ChooseSeveral) {
-      return <ChooseSeveral key={index} question={question} component={component} />
+interface QuestionState {
+  answerRef: React.RefObject<CompComponent>
+}
+
+class QuestionLive extends React.Component<QuestionProps, QuestionState> {
+  constructor(props:QuestionProps) {
+    super(props);
+
+    this.state = {
+      answerRef: React.createRef<CompComponent>()
     }
-    return <div key={index}>Unique Component</div>
   }
 
-  const renderComponent = (component: any, index: number) => {
-    if (component.type === QuestionComponentTypeEnum.Text) {
-      return <TextLive key={index} component={component} />
-    } else if (component.type === QuestionComponentTypeEnum.Quote) {
-      return <QuoteLive key={index} component={component} />
-    } else if (component.type === QuestionComponentTypeEnum.Component) {
-      return renderUniqueComponent(component, index);
-    }
-    return <div key={index}></div>
+  getAnswer(): any {
+    return this.state.answerRef.current?.getAnswer();
   }
 
-  let text = "Next - Don't panic, you can always come back"
-  if (isLastOne) {
-    text = "Finished - If you are done you are done"
+  getAttempt() : any {
+    return this.state.answerRef.current?.getAttempt();
   }
 
-  return (
-    <div>
-      {
-        question.components.map((component, index) => renderComponent(component, index))
+  render() {
+    const { question, isLastOne, next } = this.props;
+    const renderUniqueComponent = (component: any, index: number) => {
+      if (question.type === QuestionTypeEnum.ShortAnswer) {
+        return <ShortAnswer
+          ref={this.state.answerRef as React.RefObject<ShortAnswer>}
+          key={index}
+          attempt={null}
+          answers={this.props.answers}
+          question={question}
+          component={component} />
+      } else if (question.type === QuestionTypeEnum.ChooseOne) {
+        return <ChooseOne key={index} question={question} component={component} />
+      } else if (question.type === QuestionTypeEnum.ChooseSeveral) {
+        return <ChooseSeveral key={index} question={question} component={component} />
       }
-      <Grid container direction="row" justify="flex-end">
-        <FormControlLabel
-          className="next-question-button"
-          labelPlacement="start"
-          control={
-            <Fab style={{ background: '#0076B4' }} color="secondary" aria-label="add" onClick={next}>
-              <PlayArrowIcon />
-            </Fab>
-          }
-          label={text}
-        />
-      </Grid>
-    </div>
-  )
+      return <div key={index}>Unique Component</div>
+    }
+
+    const renderComponent = (component: any, index: number) => {
+      if (component.type === QuestionComponentTypeEnum.Text) {
+        return <TextLive key={index} component={component} />
+      } else if (component.type === QuestionComponentTypeEnum.Quote) {
+        return <QuoteLive key={index} component={component} />
+      } else if (component.type === QuestionComponentTypeEnum.Component) {
+        return renderUniqueComponent(component, index);
+      }
+      return <div key={index}></div>
+    }
+
+    let text = "Next - Don't panic, you can always come back"
+    if (isLastOne) {
+      text = "Finished - If you are done you are done"
+    }
+
+    return (
+      <div>
+        {
+          question.components.map((component, index) => renderComponent(component, index))
+        }
+        <Grid container direction="row" justify="flex-end">
+          <FormControlLabel
+            className="next-question-button"
+            labelPlacement="start"
+            control={
+              <Fab style={{ background: '#0076B4' }} color="secondary" aria-label="add" onClick={next}>
+                <PlayArrowIcon />
+              </Fab>
+            }
+            label={text}
+          />
+        </Grid>
+      </div>
+    )
+  }
 }
 
 export default QuestionLive;

@@ -16,8 +16,6 @@ const ChooseOne: React.FC<ChooseOneProps> = ({ question, component }) => {
     setActive(index);
   }
 
-  console.log(activeItem)
-
   return (
     <div className="choose-one-live">
       {

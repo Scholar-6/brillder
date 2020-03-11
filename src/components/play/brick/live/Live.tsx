@@ -45,10 +45,18 @@ function TabPanel(props: TabPanelProps) {
 
 const LivePage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const [activeStep, setActiveStep] = React.useState(0);
+  let initAnswers:any[] = [];
+  brick.questions.forEach(() => initAnswers.push({}));
+  const [answers, setAnswers] = React.useState(initAnswers);
   const history = useHistory();
 
   let { questions } = brick;
   const theme = useTheme();
+
+  let questionRefs:React.RefObject<QuestionLive>[] = [];
+  questions.forEach(() => {
+    questionRefs.push(React.createRef());
+  });
 
   const handleStep = (step: number) => () => {
     questions[activeStep].edited = true;
@@ -59,7 +67,15 @@ const LivePage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     return step < activeStep;
   }
 
+  const setActiveAnswer = () => {
+    const copyAnswers = Object.assign([], answers) as any[];
+    copyAnswers[activeStep] = questionRefs[activeStep].current?.getAnswer();
+    console.log(copyAnswers);
+    setAnswers(copyAnswers);
+  }
+
   const next = () => {
+    setActiveAnswer();
     questions[activeStep].edited = true;
     setActiveStep(update(activeStep, { $set: activeStep + 1 }));
     if (activeStep >= questions.length - 1) {
@@ -67,9 +83,9 @@ const LivePage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     }
   }
 
-  const renderQuestion = (question: Question) => {
+  const renderQuestion = (question: Question, index:number) => {
     let isLastOne = (questions.length - 1) === activeStep;
-    return <QuestionLive question={question} isLastOne={isLastOne} next={next} />
+    return <QuestionLive question={question} answers={answers[index]} isLastOne={isLastOne} next={next} ref={questionRefs[index]} />
   }
 
   return (
@@ -127,7 +143,7 @@ const LivePage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             {
               questions.map((question, index) =>
                 <TabPanel key={index} index={index} value={activeStep} dir={theme.direction}>
-                  {renderQuestion(question)}
+                  {renderQuestion(question, index)}
                 </TabPanel>
               )
             }
