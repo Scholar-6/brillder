@@ -28,9 +28,7 @@ function NextButton({ step, canSubmit, onSubmit, data, brickId }: any) {
         case NewBrickStep.Prep:
           return history.push(`${url}/length`);
         case NewBrickStep.BrickLength:
-          return "";
-        case NewBrickStep.ProposalReview:
-          return history.push(`/build/brick/${brickId}/build/investigation/question`)
+          return history.push(`${url}/proposal`);
       }
     }
   }

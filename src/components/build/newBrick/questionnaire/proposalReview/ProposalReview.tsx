@@ -1,9 +1,6 @@
 import React from "react";
-// @ts-ignore
-import { connect } from 'react-redux';
 import Grid from "@material-ui/core/Grid";
 
-import actions from '../../../../../redux/actions/brickActions';
 import { Brick } from "model/brick";
 import './ProposalReview.scss';
 import { NewBrickStep } from "../../model";
@@ -13,19 +10,11 @@ import PhonePreview from "components/build/baseComponents/phonePreview/PhonePrev
 
 
 interface ProposalProps {
-  brick: Brick
-  history: any
-  match: any
-  fetchBrick(brickId: number): void
+  brick: Brick;
+  saveBrick():void;
 }
 
-function ProposalReview(props: ProposalProps) {
-  if (!props.brick) {
-    let { brickId } = props.match.params;
-    props.fetchBrick(brickId);
-    return <div>...Loading brick...</div>
-  }
-  const { brick } = props;
+const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
   return (
     <div className="tutorial-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
@@ -43,11 +32,12 @@ function ProposalReview(props: ProposalProps) {
               <p className="grey-line">Alternatively, bricks can present a puzzle or a 	challenge 	which over-arches the topic</p>
               <p className="openQuestion">{brick.openQuestion}</p>
               <p>3. Outline the purpose of your brick.</p>
-              <p className="openQuestion">{brick.preparationBrief}</p>
+              <p className="openQuestion">{brick.brief}</p>
               <p>4. Create an engaging and relevant preparatory task.</p>
-              <p>5. Brick Length: <span className="brickLength">{brick.brickLength}</span></p>
+              <p className="openQuestion" dangerouslySetInnerHTML={{ __html: brick.prep}}></p>
+              <p>5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span></p>
               <PreviousButton to="/build/new-brick/length" />
-              <NextButton step={NewBrickStep.ProposalReview} canSubmit={true} brickId={brick.id} />
+              <NextButton step={NewBrickStep.ProposalReview} canSubmit={true} brickId={brick.id} onSubmit={saveBrick} />
             </div>
           </Grid>
         </Grid>
@@ -57,22 +47,4 @@ function ProposalReview(props: ProposalProps) {
   );
 }
 
-
-const mapState = (state: any) => {
-  return {
-    brick: state.brick.brick,
-  }
-};
-
-const mapDispatch = (dispatch: any) => {
-  return {
-    fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
-  }
-};
-
-const connector = connect(
-  mapState,
-  mapDispatch
-);
-
-export default connector(ProposalReview);
+export default ProposalReview;
