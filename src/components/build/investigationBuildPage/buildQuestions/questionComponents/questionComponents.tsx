@@ -61,9 +61,10 @@ const QuestionComponents = ({
 
   const renderDropBox = (component: any, index: number) => {
     const updatingComponent = (compData: any) => {
-      components[index] = compData;
-      setComponents(components);
-      updateComponents(components);
+      let copyComponents = Object.assign([], components) as any[];
+      copyComponents[index] = compData;
+      setComponents(copyComponents);
+      updateComponents(copyComponents);
     }
 
     const { type } = question;
