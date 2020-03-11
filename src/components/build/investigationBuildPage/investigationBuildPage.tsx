@@ -83,6 +83,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       updatedQuestions.forEach(q => (q.active = false));
       updatedQuestions[index - 1].active = true;
       setQuestions(update(questions, { $set: updatedQuestions }));
+    } else {
+      history.push('/build/new-brick/proposal');
     }
   };
 

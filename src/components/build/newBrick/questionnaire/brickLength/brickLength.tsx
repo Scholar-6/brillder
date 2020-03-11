@@ -10,9 +10,9 @@ import PhonePreview from "components/build/baseComponents/phonePreview/PhonePrev
 
 export enum BrickLengthEnum {
   None = 0,
-  S20min,
-  S40min,
-  S60min
+  S20min = 20,
+  S40min = 40,
+  S60min = 60
 }
 
 function BrickLength({ length, saveBrick }: any) {
