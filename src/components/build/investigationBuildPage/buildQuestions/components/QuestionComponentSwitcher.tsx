@@ -7,6 +7,7 @@ import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'
 import SoundComponent from './Sound/Sound'
 import EquationComponent from './Equation/Equation'
+import DropBox from './DropBox';
 import HintComponent, { HintState } from '../../../baseComponents/Hint/Hint';
 
 
@@ -29,6 +30,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   updateComponent, removeComponent,
   uniqueComponent,
 }) => {
+
   const getNumberOfAnswers = (data: any) => {
     let count = 1;
     if (data.list && data.list.length) {
@@ -37,9 +39,30 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     return count;
   }
 
-  let InnerComponent = {} as any;
+  const onDrop = (type:number) => {
+    component.type = type;
+    updateComponent(component, index);
+  }
+
+  let InnerComponent = DropBox as any;
+
   if (type === QuestionComponentTypeEnum.None) {
-    InnerComponent = TextComponent;
+    return (
+      <div style={{position: 'relative', width: '100%'}}>
+        {
+          canRemove
+          ?
+            <DeleteIcon
+              className="right-top-icon"
+              style={{right: '2px', top: '7px'}}
+              onClick={() => removeComponent(index)} />
+          : ""
+        }
+        <DropBox
+          locked={locked}
+          onDrop={onDrop} />
+      </div>
+    );
   } else if (type === QuestionComponentTypeEnum.Text) {
     InnerComponent = TextComponent;
   } else if (type === QuestionComponentTypeEnum.Image) {
