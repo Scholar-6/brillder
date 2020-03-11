@@ -5,8 +5,8 @@ export interface Brick {
   subTopic: string
   title: string
   alternativeTopics: string
-  investigationBrief: string
-  preparationBrief: string
+  brief: string
+  prep: string
   openQuestion: string
   alternativeSubject: string
   brickLength: number
