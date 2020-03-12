@@ -1,6 +1,28 @@
 .synthesis-page {
   padding: 1vw;
 
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  .synthesis-expansion-panel {
+    background: white !important;
+
+    .MuiButtonBase-root {
+      padding-left: 10px;
+      padding-bottom: 14px;
+      .MuiExpansionPanelSummary-content {
+        margin-top: 6px;
+      }
+    }
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+    }
+    margin-bottom: 25px;
+  }
+
   .begin-row {
     margin-top: 15px;
     margin-bottom: 15px;
@@ -11,10 +33,9 @@
     margin-right: 0px;
 
     >span {
-      font-family: 'Montserrat';
       color: black;
-      font-size: 18px;
-      margin-right: 10px;
+      font: 500 16px/24px 'Montserrat';
+      margin-right: 5px;
     }
   }
 

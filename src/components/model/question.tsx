@@ -56,4 +56,5 @@ export interface Question {
   hint: Hint
   components: any[]
   edited?: boolean
+  contentBlocks? : string
 }

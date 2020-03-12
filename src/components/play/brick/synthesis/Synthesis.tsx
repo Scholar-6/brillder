@@ -6,25 +6,31 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import './Synthesis.scss';
 import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
+import OtherInformation from '../baseComponents/OtherInformation';
+import { PlayStatus } from '../model/model';
+
 
 interface ProvisionalScoreProps {
+  status: PlayStatus;
   brick: Brick;
 }
 
 interface ProvisionalState {
-  prepExpanded: boolean;
-  briefExpanded: boolean;
+  synthesisExpanded: boolean;
   otherExpanded: boolean;
 }
 
-const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ brick, ...props }) => {
+const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick }) => {
   const history = useHistory();
+  if (status === PlayStatus.Live) {
+    history.push(`/play/brick/${brick.id}/info`);
+  }
   const [state, setState] = React.useState({
+    synthesisExpanded: false,
     otherExpanded: false,
   } as ProvisionalState);
 
@@ -32,58 +38,49 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ brick, ...props }) 
     setState({ ...state, otherExpanded: !state.otherExpanded });
   }
 
-  const startBrick = () => {
-    history.push(`/play/brick/${brick.id}/synthesis`);
+  const toggleSynthesis = () => {
+    setState({ ...state, synthesisExpanded: !state.synthesisExpanded });
   }
 
-  let length = 0;
-  if (brick.brickLength === 1) {
-    length = 20;
-  } else if (brick.brickLength === 2) {
-    length = 40;
-  } else if (brick.brickLength === 3) {
-    length = 60;
+  const reviewBrick = () => {
+    history.push(`/play/brick/${brick.id}/review`);
   }
 
   return (
     <Grid container direction="row" justify="center">
       <div className="brick-container">
-        <div className='provisional-score-page'>
+        <div className='synthesis-page'>
           <div>
-            <h3>{length} minutes</h3>
+            <h3>{brick.brickLength} minutes</h3>
             <h1>{brick.title}</h1>
           </div>
-          <Grid container justify="center" className="circle-progress-container">
-            <CircularProgress variant="static" className="circle-progress" value={50} />
-            <div className="score-data">
-              <Grid container justify="center" alignContent="center">
-                <div>
-                  <div className="score-precentage">50%</div>
-                  <div className="score-number">5/10</div>
-                </div>
-              </Grid>
-            </div>
-          </Grid>
+          <ExpansionPanel className="synthesis-expansion-panel" expanded={state.synthesisExpanded === true} onChange={toggleSynthesis}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <h2>Synthesis</h2>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography></Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
           <div className="begin-row">
             <FormControlLabel
               className="start-brick-button"
               labelPlacement="start"
               control={
-                <Fab style={{ background: '#0076B4' }} color="secondary" aria-label="add" onClick={startBrick}>
+                <Fab style={{ background: '#0076B4' }} color="secondary" aria-label="add" onClick={reviewBrick}>
                   <PlayArrowIcon />
                 </Fab>
               }
-              label="Summary"
+              label="Review Brick Attempt"
             />
           </div>
-          <ExpansionPanel expanded={state.otherExpanded === true} onChange={toggleOther}>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <h2 style={{fontSize: '15px'}}>Other Information</h2>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Typography>{brick.brief}</Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+          <OtherInformation
+            creator={`${brick.author.firstName} ${brick.author.lastName}`}
+            expanded={state.otherExpanded}
+            toggle={toggleOther}
+            totalUsers={0}
+            averageScore={0}
+            highScore={0}/>
         </div>
       </div>
     </Grid>

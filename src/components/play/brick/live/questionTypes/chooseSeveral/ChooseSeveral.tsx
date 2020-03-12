@@ -2,8 +2,10 @@ import React from 'react';
 
 import './ChooseSeveral.scss';
 import { Question } from "components/model/question";
-import CompComponent, { ComponentAttempt } from '../comp';
+import CompComponent from '../comp';
 import { Button } from '@material-ui/core';
+import {ComponentAttempt} from 'components/play/brick/model/model';
+
 
 interface ChooseOneProps {
   question: Question;
@@ -56,7 +58,7 @@ class ChooseSeveral extends CompComponent {
     // If the question is answered in review phase, add 2 to the mark and not 5.
     let markIncrement = prev ? 2 : 5;
     // set attempt.correct to true if the answer is 0.
-    attempt.correct = (attempt.answer == 0);
+    attempt.correct = (attempt.answer === 0);
     attempt.maxMarks = 5;
     // if the attempt is correct, add the mark increment.
     if (attempt.correct) attempt.marks = markIncrement;

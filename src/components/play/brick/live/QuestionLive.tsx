@@ -3,16 +3,18 @@ import { Fab, Grid, FormControlLabel } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from "components/model/question";
-import TextLive from './comp/TextLive';
-import QuoteLive from './comp/QuoteLive';
+import TextLive from '../comp/TextLive';
+import QuoteLive from '../comp/QuoteLive';
 import ShortAnswer from './questionTypes/shortAnswer/ShortAnswer';
 import ChooseOne from './questionTypes/chooseOne/ChooseOne';
 import ChooseSeveral from './questionTypes/chooseSeveral/ChooseSeveral';
 import './QuestionLive.scss';
 import CompComponent from './questionTypes/comp';
+import { ComponentAttempt } from '../model/model';
 
 
 interface QuestionProps {
+  attempt?: ComponentAttempt;
   question: Question;
   isLastOne: boolean;
   answers: any;
@@ -37,7 +39,6 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
   }
 
   getAttempt() : any {
-    console.log(55, this.state.answerRef.current?.getAttempt())
     return this.state.answerRef.current?.getAttempt();
   }
 
@@ -58,7 +59,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
       return <UniqueComponent
         ref={this.state.answerRef as React.RefObject<any>}
         key={index}
-        attempt={null}
+        attempt={this.props.attempt}
         answers={this.props.answers}
         question={question}
         component={component} />
@@ -85,7 +86,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
         {
           question.components.map((component, index) => renderComponent(component, index))
         }
-        <Grid container direction="row" justify="flex-end">
+        <Grid container direction="row" justify="flex-end" className="next-question-button-container">
           <FormControlLabel
             className="next-question-button"
             labelPlacement="start"

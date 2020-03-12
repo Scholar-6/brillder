@@ -2,8 +2,10 @@ import React from 'react';
 
 import './ChooseOne.scss';
 import { Question } from "components/model/question";
-import CompComponent, { ComponentAttempt } from '../comp';
+import CompComponent from '../comp';
 import { Button } from '@material-ui/core';
+import {ComponentAttempt} from 'components/play/brick/model/model';
+
 
 interface ChooseOneChoice {
   value: string;
@@ -18,7 +20,7 @@ interface ChooseOneComponent {
 interface ChooseOneProps {
   question: Question;
   component: ChooseOneComponent;
-  attempt: any;
+  attempt?: ComponentAttempt;
   answers: number;
 }
 
@@ -55,6 +57,7 @@ class ChooseOne extends CompComponent {
   }
 
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
+    console.log('mark', attempt, prev);
     const {component} = this.props as ChooseOneProps;
     // If the question is answered in review phase, add 2 to the mark and not 5.
     let markIncrement = prev ? 2 : 5;

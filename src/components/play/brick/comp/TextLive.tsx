@@ -1,14 +1,14 @@
 import React from 'react';
 
+import './TextLive.scss';
+
+
 interface TextProps {
   component: any;
 }
 
-
 const TextLive: React.FC<TextProps> = ({ component }) => {
-  return <div
-    style={{font: '500 16px/24px "Montserrat"', color: 'black'}}
-    dangerouslySetInnerHTML={{ __html: component.value}} />;
+  return <div className="text-play" dangerouslySetInnerHTML={{ __html: component.value}} />;
 }
 
 export default TextLive;
