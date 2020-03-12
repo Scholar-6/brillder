@@ -2,13 +2,22 @@ import React from 'react';
 
 import './ChooseOne.scss';
 import { Question } from "components/model/question";
-import CompComponent from '../comp';
+import CompComponent, { ComponentAttempt } from '../comp';
 import { Button } from '@material-ui/core';
 
+interface ChooseOneChoice {
+  value: string;
+  checked: boolean;
+}
+
+interface ChooseOneComponent {
+  type: number;
+  list: ChooseOneChoice[];
+}
 
 interface ChooseOneProps {
   question: Question;
-  component: any;
+  component: ChooseOneComponent;
   attempt: any;
   answers: number;
 }
@@ -45,7 +54,28 @@ class ChooseOne extends CompComponent {
     } else { return 0; }
   }
 
-  mark(attempt: any, prev: any): any {
+  mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
+    const {component} = this.props as ChooseOneProps;
+    // If the question is answered in review phase, add 2 to the mark and not 5.
+    let markIncrement = prev ? 2 : 5;
+    attempt.maxMarks = 5;
+
+    // set attempt.correct to true by answer index.
+    attempt.correct = false;
+    component.list.forEach((choice, index) => {
+      if (attempt.answer === index) {
+        if (choice.checked === true) {
+          attempt.correct = true;
+        }
+      }
+    });
+
+    // if the attempt is correct, add the mark increment.
+    if (attempt.correct) attempt.marks = markIncrement;
+    // if there is an answer given and the program is in the live phase, give the student an extra mark.
+    else if (attempt.answer != null && !prev) attempt.marks = 1;
+    else attempt.marks = 0;
+    return attempt;
   }
 
   render() {

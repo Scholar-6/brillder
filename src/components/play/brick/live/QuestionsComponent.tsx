@@ -15,17 +15,10 @@ import QuestionLive from './QuestionLive';
 import { useHistory } from 'react-router-dom';
 
 
-function shuffle(a: any[]) {
-  for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 interface QuestionsComponentProps {
   brickId: number;
   questions: Question[];
+  updateAttempts(attempt: any, index: number): any;
 }
 
 interface TabPanelProps {
@@ -52,7 +45,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-const QuestionsComponent: React.FC<QuestionsComponentProps> = ({ questions, brickId }) => {
+const QuestionsComponent: React.FC<QuestionsComponentProps> = ({ questions, updateAttempts, brickId }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   let initAnswers: any[] = [];
 
@@ -78,6 +71,8 @@ const QuestionsComponent: React.FC<QuestionsComponentProps> = ({ questions, bric
   const setActiveAnswer = () => {
     const copyAnswers = Object.assign([], answers) as any[];
     copyAnswers[activeStep] = questionRefs[activeStep].current?.getAnswer();
+    let attempt = questionRefs[activeStep].current?.getAttempt();
+    updateAttempts(attempt, activeStep);
     console.log(copyAnswers);
     setAnswers(copyAnswers);
   }
