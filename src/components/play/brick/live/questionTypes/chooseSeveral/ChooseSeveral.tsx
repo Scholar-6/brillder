@@ -2,9 +2,8 @@ import React from 'react';
 
 import './ChooseSeveral.scss';
 import { Question } from "components/model/question";
-import CompComponent from '../comp';
+import CompComponent, { ComponentAttempt } from '../comp';
 import { Button } from '@material-ui/core';
-
 
 interface ChooseOneProps {
   question: Question;
@@ -21,7 +20,7 @@ class ChooseSeveral extends CompComponent {
   constructor(props: ChooseOneProps) {
     super(props);
 
-    let activeItems:number[] = [];
+    let activeItems: number[] = [];
     if (props.answers && props.answers.length > 0) {
       activeItems = props.answers;
     }
@@ -30,11 +29,18 @@ class ChooseSeveral extends CompComponent {
   }
 
   setActiveItem(activeItem: number) {
-    this.setState({ activeItem });
+    let { activeItems } = this.state as ChooseOneState;
+    let found = activeItems.find(i => i === activeItem);
+    if (found) {
+      activeItems.splice(found, 1);
+    } else {
+      activeItems.push(activeItem);
+    }
+    this.setState({ activeItems });
   }
 
-  getAnswer(): string[] {
-    return this.state.activeItem;
+  getAnswer(): number[] {
+    return this.state.activeItems;
   }
 
   getState(entry: number): number {
@@ -45,11 +51,23 @@ class ChooseSeveral extends CompComponent {
     } else { return 0; }
   }
 
-  mark(attempt: any, prev: any): any {
+  mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
+    console.log('mark attempt', attempt)
+    // If the question is answered in review phase, add 2 to the mark and not 5.
+    let markIncrement = prev ? 2 : 5;
+    // set attempt.correct to true if the answer is 0.
+    attempt.correct = (attempt.answer == 0);
+    attempt.maxMarks = 5;
+    // if the attempt is correct, add the mark increment.
+    if (attempt.correct) attempt.marks = markIncrement;
+    // if there is an answer given and the program is in the live phase, give the student an extra mark.
+    else if (attempt.answer != null && !prev) attempt.marks = 1;
+    else attempt.marks = 0;
+    return attempt;
   }
 
   render() {
-    const { activeItem } = this.state;
+    const { activeItems } = this.state as ChooseOneState;
     const { component } = this.props;
 
     return (
@@ -57,7 +75,7 @@ class ChooseSeveral extends CompComponent {
         {
           component.list.map((input: any, index: number) =>
             <Button
-              className={(index === activeItem) ? "choose-choice active" : "choose-choice"}
+              className={(index === activeItems.find(i => i === index)) ? "choose-choice active" : "choose-choice"}
               key={index}
               onClick={() => this.setActiveItem(index)}>
               {input.value}

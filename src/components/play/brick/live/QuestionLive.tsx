@@ -37,32 +37,31 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
   }
 
   getAttempt() : any {
+    console.log(55, this.state.answerRef.current?.getAttempt())
     return this.state.answerRef.current?.getAttempt();
   }
 
   render() {
     const { question, isLastOne, next } = this.props;
     const renderUniqueComponent = (component: any, index: number) => {
+      let UniqueComponent = {} as any;
       if (question.type === QuestionTypeEnum.ShortAnswer) {
-        return <ShortAnswer
-          ref={this.state.answerRef as React.RefObject<ShortAnswer>}
-          key={index}
-          attempt={null}
-          answers={this.props.answers}
-          question={question}
-          component={component} />
+        UniqueComponent = ShortAnswer;
       } else if (question.type === QuestionTypeEnum.ChooseOne) {
-        return <ChooseOne
-          ref={this.state.answerRef as React.RefObject<ChooseOne>}
-          key={index}
-          attempt={null}
-          answers={this.props.answers}
-          question={question}
-          component={component} />
+        UniqueComponent = ChooseOne;
       } else if (question.type === QuestionTypeEnum.ChooseSeveral) {
-        return <ChooseSeveral key={index} question={question} component={component} />
+        UniqueComponent = ChooseSeveral;
       }
-      return <div key={index}>Unique Component</div>
+      if (UniqueComponent === {}) {
+        return <div key={index}>Unique Component</div>
+      }
+      return <UniqueComponent
+        ref={this.state.answerRef as React.RefObject<any>}
+        key={index}
+        attempt={null}
+        answers={this.props.answers}
+        question={question}
+        component={component} />
     }
 
     const renderComponent = (component: any, index: number) => {
