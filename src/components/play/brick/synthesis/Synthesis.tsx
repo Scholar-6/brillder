@@ -27,7 +27,7 @@ interface ProvisionalState {
 const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick }) => {
   const history = useHistory();
   if (status === PlayStatus.Live) {
-    history.push(`/play/brick/${brick.id}/info`);
+    history.push(`/play/brick/${brick.id}/intro`);
   }
   const [state, setState] = React.useState({
     synthesisExpanded: false,
@@ -59,7 +59,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick }) =>
               <h2>Synthesis</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography></Typography>
+              <Typography dangerouslySetInnerHTML={{ __html: brick.synthesis}} />
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <div className="begin-row">

@@ -81,6 +81,27 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
       text = "Finished - If you are done you are done"
     }
 
+    if (this.props.attempt && this.props.attempt.correct === true) {
+      text = "Finish Brick Attempt";
+      return (
+        <div>
+          <div style={{font: "500 16px/24px Montserrat", color: 'black'}}>Question is correct!</div>
+          <Grid container direction="row" justify="flex-end" className="next-question-button-container">
+            <FormControlLabel
+              className="next-question-button"
+              labelPlacement="start"
+              control={
+                <Fab style={{ background: '#0076B4' }} color="secondary" aria-label="add" onClick={next}>
+                  <PlayArrowIcon />
+                </Fab>
+              }
+              label={text}
+            />
+          </Grid>
+        </div>
+      )
+    }
+
     return (
       <div>
         {
