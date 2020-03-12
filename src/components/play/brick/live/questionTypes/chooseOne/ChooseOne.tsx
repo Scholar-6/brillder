@@ -50,14 +50,11 @@ class ChooseOne extends CompComponent {
 
   render() {
     const { activeItem } = this.state;
-    const { component, question } = this.props;
-
-    let width = (100 - 1) / component.list.length;
 
     return (
       <div className="choose-one-live">
         {
-          component.list.map((input: any, index: number) =>
+          this.props.component.list.map((input: any, index: number) =>
             <Button
               className={(index === activeItem) ? "choose-choice active" : "choose-choice"}
               key={index}
