@@ -2,37 +2,71 @@ import React from 'react';
 
 import './ChooseSeveral.scss';
 import { Question } from "components/model/question";
-import { Button, Box } from '@material-ui/core';
+import CompComponent from '../comp';
+import { Button } from '@material-ui/core';
 
 
 interface ChooseOneProps {
   question: Question;
   component: any;
+  attempt: any;
+  answers: number[];
 }
 
-const ChooseSeveral: React.FC<ChooseOneProps> = ({ question, component }) => {
-  const [list, setActive] = React.useState(component.list);
+interface ChooseOneState {
+  activeItems: number[];
+}
 
-  const chooseOne = (index:number) => {
-    let updatedList = Object.assign([], list);
-    updatedList[index].isActive = !updatedList[index].isActive;
-    setActive(updatedList);
+class ChooseSeveral extends CompComponent {
+  constructor(props: ChooseOneProps) {
+    super(props);
+
+    let activeItems:number[] = [];
+    if (props.answers && props.answers.length > 0) {
+      activeItems = props.answers;
+    }
+
+    this.state = { activeItems } as ChooseOneState;
   }
 
-  return (
-    <Box boxShadow={3} className="choose-one-live">
-      {
-        component.list.map((input: any, index: number) =>
-          <Button
-            className={(list[index].isActive === true) ? "choose-choice active" : "choose-choice"}
-            key={index}
-            onClick={() => chooseOne(index)}>
-            {input.value}
-          </Button>
-        )
-      }
-    </Box>
-  );
+  setActiveItem(activeItem: number) {
+    this.setState({ activeItem });
+  }
+
+  getAnswer(): string[] {
+    return this.state.activeItem;
+  }
+
+  getState(entry: number): number {
+    if (this.props.attempt.answer[entry]) {
+      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].answer.toLowerCase().replace(/ /g, '')) {
+        return 1;
+      } else { return -1; }
+    } else { return 0; }
+  }
+
+  mark(attempt: any, prev: any): any {
+  }
+
+  render() {
+    const { activeItem } = this.state;
+    const { component } = this.props;
+
+    return (
+      <div className="choose-one-live">
+        {
+          component.list.map((input: any, index: number) =>
+            <Button
+              className={(index === activeItem) ? "choose-choice active" : "choose-choice"}
+              key={index}
+              onClick={() => this.setActiveItem(index)}>
+              {input.value}
+            </Button>
+          )
+        }
+      </div>
+    );
+  }
 }
 
 export default ChooseSeveral;

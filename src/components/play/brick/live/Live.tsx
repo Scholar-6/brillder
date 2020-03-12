@@ -47,6 +47,7 @@ const LivePage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   let initAnswers:any[] = [];
   brick.questions.forEach(() => initAnswers.push({}));
+  console.log('init')
   const [answers, setAnswers] = React.useState(initAnswers);
   const history = useHistory();
 
