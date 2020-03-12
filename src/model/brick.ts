@@ -1,3 +1,5 @@
+import { Question } from "components/model/question";
+
 export interface Brick {
   id: number
   subject: string
@@ -11,7 +13,7 @@ export interface Brick {
   alternativeSubject: string
   brickLength: number
   type: number
-  questions: any[]
+  questions: Question[]
 }
 
 export enum isAuthenticated {
