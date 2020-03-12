@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Grid, Fab, FormControlLabel } from '@material-ui/core';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -9,7 +10,8 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 import './Introduction.scss';
 import { Brick } from 'model/brick';
-import { useHistory } from 'react-router-dom';
+import OtherInformation from '../baseComponents/OtherInformation';
+
 
 interface IntroductionProps {
   brick: Brick;
@@ -45,22 +47,12 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     history.push(`/play/brick/${brick.id}/live`);
   }
 
-  let length = 0;
-  if (brick.brickLength === 1) {
-    length = 20;
-  } else if (brick.brickLength === 2) {
-    length = 40;
-  } else if (brick.brickLength === 3) {
-    length = 60;
-  }
-
-
   return (
     <Grid container direction="row" justify="center">
       <div className="brick-container">
         <div className='introduction-page'>
           <div>
-            <h3>{length} minutes</h3>
+            <h3>{brick.brickLength} minutes</h3>
             <h1>{brick.title}</h1>
           </div>
           <ExpansionPanel expanded={state.briefExpanded === true} onChange={toggleBrief}>
@@ -76,7 +68,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <h2>Prep</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>{brick.prep}</Typography>
+              <Typography dangerouslySetInnerHTML={{ __html: brick.prep}}></Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <div className="begin-row">
@@ -91,14 +83,13 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               label="Begin Brick"
             />
           </div>
-          <ExpansionPanel expanded={state.otherExpanded === true} onChange={toggleOther}>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <h2>Other Information</h2>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Typography>{brick.brief}</Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+          <OtherInformation
+            creator={`${brick.author.firstName} ${brick.author.lastName}`}
+            expanded={state.otherExpanded}
+            toggle={toggleOther}
+            totalUsers={0}
+            averageScore={0}
+            highScore={0}/>
         </div>
       </div>
     </Grid>
