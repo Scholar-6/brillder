@@ -22,7 +22,7 @@ const LivePage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   let { questions } = brick;
   useEffect(() => {
     questions.forEach(question => {
-      if (question.type === QuestionTypeEnum.ChooseOne) {
+      if (question.type === QuestionTypeEnum.ChooseOne || question.type === QuestionTypeEnum.ChooseSeveral) {
         question.components.forEach(c => {
           if (c.type == QuestionComponentTypeEnum.Component) {
             c.list = shuffle(c.list);
