@@ -58,4 +58,16 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
+## Play Folder Structure
 
+play/brick/live/Live - (React function) which shuffle choices in components and will gather and store data from his children. Not refreshable.
+
+play/brick/live/QuestionsComponent - (React function) which have stepper and swipable tabs with animation from material ui. Refreshing every time question changed.
+(!!! Has reference for all questions !!!)
+
+play/brick/live/QuestionLive (need to rename because will be for review too) - (React Class) component for each Question. Render inner components like text, image ... and unique component like Short Answer, SingleChoice and others.
+(!!! Has reference for unique component (ShortAnswer, ...) !!!)
+
+play/brick/live/comp folder containers basic components like Text Image Quote
+
+play/brick/live/questionTypes - folder container unique (React Class) components like ShortAnswer PairAnswer and others
