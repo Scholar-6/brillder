@@ -12,6 +12,7 @@ import OpenQuestion from './questionnaire/openQuestion/openQuestion';
 import BrickLength from './questionnaire/brickLength/brickLength';
 import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
+import Synthesis from './questionnaire/synthesis/synthesis';
 import ProposalReview from './questionnaire/proposalReview/ProposalReview';
 import { Brick } from "model/brick";
 
@@ -29,9 +30,10 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
     subTopic: '',
     alternativeTopics: '',
     title: '',
-    prep: '',
-    brief: '',
     openQuestion: '',
+    brief: '',
+    prep: '',
+    synthesis: '',
     alternativeSubject: '',
   } as Brick;
   
@@ -47,22 +49,23 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
   }
 
   const setOpenQuestion = (openQuestion: string) => {
-    setBrick({ ...state, openQuestion } as any);
+    setBrick({ ...state, openQuestion } as Brick);
   }
 
   const setBrief = (brief: string) => {
-    let brick = { ...state, brief } as any
-    setBrick(brick)
+    setBrick({ ...state, brief } as Brick)
   }
 
   const setPrep = (prep: string) => {
-    let brick = { ...state, prep } as any
-    setBrick(brick)
+    setBrick({ ...state, prep } as Brick)
+  }
+
+  const setSynthesis = (synthesis: string) => {
+    setBrick({ ...state, synthesis } as Brick)
   }
 
   const setLength = (brickLength: number) => {
-    let brick = { ...state, brickLength } as any
-    setBrick(brick)
+    setBrick({ ...state, brickLength } as Brick)
   }
 
   const saveBrick = () => {
@@ -94,6 +97,9 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
         </Route>
         <Route path='/build/new-brick/prep'>
           <Prep parentPrep={state.prep} savePrep={setPrep} />
+        </Route>
+        <Route path='/build/new-brick/synthesis'>
+          <Synthesis parentSynthesis={state.synthesis} saveSynthesis={setSynthesis} />
         </Route>
         <Route path='/build/new-brick/length'>
           <BrickLength length={state.brickLength} saveBrick={setLength} />
