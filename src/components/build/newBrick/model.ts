@@ -4,6 +4,7 @@ export enum NewBrickStep {
     OpenQuestion = 3,
     Brief = 4,
     Prep = 5,
-    BrickLength = 6,
-    ProposalReview = 7,
+    Synthesis = 6,
+    BrickLength = 7,
+    ProposalReview = 8,
 }
