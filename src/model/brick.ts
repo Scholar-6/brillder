@@ -24,10 +24,11 @@ export interface Brick {
   subTopic: string
   title: string
   alternativeTopics: string
+  alternativeSubject: string
+  openQuestion: string
   brief: string
   prep: string
-  openQuestion: string
-  alternativeSubject: string
+  synthesis: string
   brickLength: number
   type: number
   questions: Question[]
