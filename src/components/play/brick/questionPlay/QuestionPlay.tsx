@@ -17,6 +17,7 @@ import VerticalShuffle from '../questionTypes/vericalShuffle/VerticalShuffle';
 import HorizontalShuffle from '../questionTypes/horizontalShuffle/HorizontalShuffle';
 import PairMatch from '../questionTypes/pairMatch/PairMatch';
 import Sort from '../questionTypes/sort/Sort';
+import MissingWord from '../questionTypes/missingWord/MissingWord';
 
 
 interface QuestionProps {
@@ -69,6 +70,8 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
         UniqueComponent = PairMatch;
       } else if (question.type === QuestionTypeEnum.Sort) {
         UniqueComponent = Sort;
+      } else if (question.type === QuestionTypeEnum.MissingWord) {
+        UniqueComponent = MissingWord;
       }
       if (typeof UniqueComponent === "object") {
         return <div key={index}>Not implemented</div>
