@@ -1,0 +1,37 @@
+
+.pair-match-play {
+  .pair-match-play-option {
+    color: white;
+    font-size: 10px !important;
+    height: 47px;
+    width: 100%;
+    .pair-match-play-option-text {
+      font-size: 10px;
+      line-height: 3;
+    }
+    .pair-match-play-option-icon {
+      display: inline-block;
+    }
+
+    .MuiListItemIcon-root {
+      min-width: 31px !important;
+    }
+
+    .question-hint {
+      margin-right: 20px;
+    }
+  }
+  .pair-match-play-option:nth-child(odd) {background: #0076B4}
+  .pair-match-play-option:nth-child(even) {background: #111f33;}
+
+  .pair-match-play-choice {
+      border: 1px dashed black;
+      font-size: 10px;
+      color: black;
+      margin: 1px;
+      width: 100%;
+      > div {
+        margin: 10px !important;
+      }
+  }
+}
