@@ -60,7 +60,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   }
 
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
-    const {component} = this.props as ChooseOneProps;
+    const {component} = this.props;
     // If the question is answered in review phase, add 2 to the mark and not 5.
     let markIncrement = prev ? 2 : 5;
     attempt.maxMarks = 5;

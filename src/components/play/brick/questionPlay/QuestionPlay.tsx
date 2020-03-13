@@ -2,15 +2,18 @@ import React from 'react';
 import { Fab, Grid, FormControlLabel } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
+import './QuestionPlay.scss';
 import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from "components/model/question";
+import CompComponent from '../questionTypes/Comp';
+import { ComponentAttempt } from '../model/model';
+
 import TextLive from '../comp/TextLive';
 import QuoteLive from '../comp/QuoteLive';
+
 import ShortAnswer from '../questionTypes/shortAnswer/ShortAnswer';
 import ChooseOne from '../questionTypes/chooseOne/ChooseOne';
 import ChooseSeveral from '../questionTypes/chooseSeveral/ChooseSeveral';
-import './QuestionPlay.scss';
-import CompComponent from '../questionTypes/Comp';
-import { ComponentAttempt } from '../model/model';
+import VerticalShuffle from '../questionTypes/vericalShuffle/VerticalShuffle';
 
 
 interface QuestionProps {
@@ -55,9 +58,11 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
         UniqueComponent = ChooseOne;
       } else if (question.type === QuestionTypeEnum.ChooseSeveral) {
         UniqueComponent = ChooseSeveral;
+      } else if (question.type === QuestionTypeEnum.VerticalShuffle) {
+        UniqueComponent = VerticalShuffle;
       }
       if (UniqueComponent === {}) {
-        return <div key={index}>Unique Component</div>
+        return <div key={index}>Not implemented</div>
       }
       return <UniqueComponent
         ref={this.state.answerRef as React.RefObject<any>}

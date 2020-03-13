@@ -159,11 +159,20 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
             }
           }
           c.list = shuffle(c.list);
-          console.log('shuffle')
+        }
+      });
+    } else if (question.type === QuestionTypeEnum.VerticalShuffle) {
+      question.components.forEach(c => {
+        if (c.type === QuestionComponentTypeEnum.Component) {
+          for (let [index, item] of c.list.entries()) {
+            item.index = index;
+          }
+          c.list = shuffle(c.list);
         }
       });
     }
   });
+  console.log('shuffle')
   return shuffleBrick;
 }
 
