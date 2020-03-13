@@ -1,6 +1,5 @@
 
 import React from 'react';
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 
 import './HorizontalShuffle.scss';
 import { Question } from "components/model/question";
