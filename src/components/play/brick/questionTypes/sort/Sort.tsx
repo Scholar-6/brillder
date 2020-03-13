@@ -82,6 +82,16 @@ class Sort extends CompComponent<SortProps, SortState> {
     this.setState({ userCats });
   }
 
+  getState(choice: string) {
+    if (this.props.attempt) {
+      if(this.props.attempt.answer[choice] === this.state.choices[choice]) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+  }
+
   getChoices() {
     var choices:any = {};
     this.props.component.categories.forEach((cat, index) => {
@@ -163,9 +173,15 @@ class Sort extends CompComponent<SortProps, SortState> {
                     cat.choices.map((choice:any, i:number) => (
                       <div className="sortable-item" key={i}>
                         <ListItem>
-                        <ListItemIcon>
-                          <DragIndicatorIcon/>
-                            </ListItemIcon>
+                          <ListItemIcon>
+                            {
+                              this.props.attempt 
+                                ? (this.getState(choice.value) === 1)
+                                  ? <DenimTickRect />
+                                  : <DenimCrossRect />
+                                : <DragIndicatorIcon/>
+                            }
+                          </ListItemIcon>
                           <ListItemText>
                             {choice.value}
                           </ListItemText>
