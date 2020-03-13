@@ -1,0 +1,17 @@
+.missing-word-live {
+  line-height: 50px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline;
+  place-content: center space-evenly;
+
+  .missing-word-choice {
+    display: inline-block;
+    margin-bottom: 20px;
+    .missing-select {
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-top: -3px;
+    }
+  }
+}
