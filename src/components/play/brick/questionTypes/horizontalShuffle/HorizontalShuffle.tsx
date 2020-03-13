@@ -2,7 +2,7 @@
 import React from 'react';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 
-import './VerticalShuffle.scss';
+import './HorizontalShuffle.scss';
 import { Question } from "components/model/question";
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
@@ -11,31 +11,31 @@ import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
 
 
-interface VerticalShuffleChoice {
+interface HorizontalShuffleChoice {
   value: string;
-  index: number;
   checked: boolean;
 }
 
-interface VerticalShuffleComponent {
+interface HorizontalShuffleComponent {
   type: number;
-  list: VerticalShuffleChoice[];
+  list: HorizontalShuffleChoice[];
 }
 
 interface VerticalShuffleProps {
   question: Question;
-  component: VerticalShuffleComponent;
+  component: HorizontalShuffleComponent;
   attempt?: ComponentAttempt;
   answers: number;
 }
 
-interface VerticalShuffleState {
+interface HorizontalShuffleState {
   userAnswers: any[];
 }
 
-class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffleState> {
+class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalShuffleState> {
   constructor(props: VerticalShuffleProps) {
     super(props);
 
@@ -101,39 +101,28 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   render() {
     return (
       <div className="vertical-shuffle-play">
-        <div>
-          {
-            (this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""
-          }
-        </div>
+        {
+          (this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""
+        }
         <ReactSortable
           list={this.state.userAnswers}
           animation={150}
-          style={{display:"inline-block"}}
+          direction="horizontal"
           group={{ name: "cloning-group-name" }}
           setList={(choices) => this.setUserAnswers(choices)}
         >
           {
             this.state.userAnswers.map((answer, i) => (
-              <div style={{display: "block"}} key={i} className="vertical-shuffle-choice">
-                <Grid container direction="row">
-                  <Grid item xs={1} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
-                    <DragIndicatorIcon/>
-                  </Grid>
-                  <Grid item xs={11} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
-                    <Grid container direction="row" justify="center">
-                      {answer.value}
-                    </Grid>
-                    <Grid container direction="row" justify="center">
-                      {
-                        (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && this.props.question.hint.list.length > 0) ?
-                          <span className="question-hint">{answer.hint}</span>
-                          : ""
-                      }
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </div>
+              <Card style={{display: "inline-block", padding: '10px', margin: '2px', fontSize: '10px'}} key={i}>
+                <div style={{display: "block"}}>{answer.value}</div>
+                <div style={{display: "block"}}>
+                  {
+                    (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && this.props.question.hint.list.length > 0) ?
+                      <span className="question-hint">{answer.hint}</span>
+                      : ""
+                  }
+                </div>
+              </Card>
             ))
           }
         </ReactSortable>
@@ -143,4 +132,4 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 }
 
-export default VerticalShuffle;
+export default HorizontalShuffle;
