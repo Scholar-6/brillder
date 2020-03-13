@@ -39,6 +39,9 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
   }
 
   getAttempt() : any {
+    if (this.props.attempt?.correct === true) {
+      return { answer: this.props.attempt.answer, correct: true, marks: 0, maxMarks: this.props.attempt.maxMarks} as ComponentAttempt;
+    }
     return this.state.answerRef.current?.getAttempt();
   }
 

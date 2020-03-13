@@ -1,0 +1,25 @@
+.review-page {
+  .question-hint {
+    background: yellow;
+    font-size: 10px;
+    line-height: 1;
+    margin-top: 2px;
+    background: #fffc7f;
+    color: #000;
+    padding: 2px 5px;
+    border-radius: 1px 2px 3px 4px;
+  }
+
+  .question-hint-global {
+    width: 100%;
+    background: yellow;
+    font: 500 16px/24px 'Montserrat';
+    line-height: 1;
+    background: #fffc7f;
+    color: #000;
+    > div {
+      padding: 2px 5px;
+    }
+    border-radius: 1px 2px 3px 4px;
+  }
+}

@@ -1,10 +1,14 @@
 
 @import '../../../../variables';
 
-.icon-circle-blue {
+.tick-icon {
   font-size: 26px;
   border: 2px solid $black-blue;
   border-radius: 100%;
+}
+
+.filled-tick-icon {
+  font-size: 26px;
 }
 
 .grey-icon {

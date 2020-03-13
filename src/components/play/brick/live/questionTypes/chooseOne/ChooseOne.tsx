@@ -1,10 +1,13 @@
 import React from 'react';
+import { Button } from '@material-ui/core';
 
 import './ChooseOne.scss';
 import { Question } from "components/model/question";
 import CompComponent from '../comp';
-import { Button } from '@material-ui/core';
 import {ComponentAttempt} from 'components/play/brick/model/model';
+import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
+import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
+import ReviewGlobalHint from '../../../baseComponents/ReviewGlobalHint';
 
 
 interface ChooseOneChoice {
@@ -57,7 +60,6 @@ class ChooseOne extends CompComponent {
   }
 
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
-    console.log('mark', attempt, prev);
     const {component} = this.props as ChooseOneProps;
     // If the question is answered in review phase, add 2 to the mark and not 5.
     let markIncrement = prev ? 2 : 5;
@@ -87,15 +89,26 @@ class ChooseOne extends CompComponent {
     return (
       <div className="choose-one-live">
         {
+          (this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""
+        }
+        {
           this.props.component.list.map((input: any, index: number) =>
             <Button
               className={(index === activeItem) ? "choose-choice active" : "choose-choice"}
               key={index}
               onClick={() => this.setActiveItem(index)}>
-              {input.value}
+                <div style={{lineHeight: 1}}>
+                  <div>{input.value}</div>
+                  {
+                    (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && input.hint) ?
+                      <span className="question-hint">{input.hint}</span>
+                      : ""
+                  }
+                </div>
             </Button>
           )
         }
+        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
       </div>
     );
   }
