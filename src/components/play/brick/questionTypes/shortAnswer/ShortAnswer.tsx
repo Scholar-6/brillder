@@ -1,11 +1,11 @@
 import React from 'react';
 import { Question } from "components/model/question";
 import { TextField, Grid } from '@material-ui/core';
-import CompComponent from '../comp';
+import CompComponent from '../Comp';
 
 import './ShortAnswer.scss';
 import { ComponentAttempt } from 'components/play/brick/model/model';
-import ReviewGlobalHint from '../../../baseComponents/ReviewGlobalHint';
+import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 
 

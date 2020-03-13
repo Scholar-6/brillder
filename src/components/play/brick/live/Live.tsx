@@ -8,8 +8,8 @@ import { useHistory } from 'react-router-dom';
 
 import './Live.scss';
 import CircleIconNumber from 'components/play/components/circleIcon/circleIcon';
-import { Question } from "components/model/question";
-import QuestionLive from './QuestionLive';
+import { Question } from 'components/model/question';
+import QuestionLive from '../questionPlay/QuestionPlay';
 import TabPanel from '../baseComponents/QuestionTabPanel';
 
 
@@ -67,8 +67,8 @@ const LivePage: React.FC<LivePageProps> = ({ questions, updateAttempts, finishBr
   }
 
   return (
-    <Grid container direction="row" justify="center">
-      <div className="brick-container live-page">
+    <Grid container direction='row' justify='center'>
+      <div className='brick-container live-page'>
         <Stepper alternativeLabel nonLinear activeStep={activeStep}>
           {questions.map((question, index) => {
             const stepProps: { completed?: boolean } = {};
@@ -90,7 +90,7 @@ const LivePage: React.FC<LivePageProps> = ({ questions, updateAttempts, finishBr
               return (
                 <Step key={index} {...stepProps}>
                   <StepButton
-                    icon={<CreateIcon className="edited-step-icon" />}
+                    icon={<CreateIcon className='edited-step-icon' />}
                     onClick={handleStep(index)}
                     completed={isStepComplete(index)}
                     {...buttonProps}
@@ -102,7 +102,7 @@ const LivePage: React.FC<LivePageProps> = ({ questions, updateAttempts, finishBr
             return (
               <Step key={index} {...stepProps}>
                 <StepButton
-                  icon={<CircleIconNumber customClass="grey-icon" number={index + 1} />}
+                  icon={<CircleIconNumber customClass='grey-icon' number={index + 1} />}
                   onClick={handleStep(index)}
                   completed={isStepComplete(index)}
                   {...buttonProps}

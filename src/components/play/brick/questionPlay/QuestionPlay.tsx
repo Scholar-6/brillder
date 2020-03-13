@@ -5,11 +5,11 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from "components/model/question";
 import TextLive from '../comp/TextLive';
 import QuoteLive from '../comp/QuoteLive';
-import ShortAnswer from './questionTypes/shortAnswer/ShortAnswer';
-import ChooseOne from './questionTypes/chooseOne/ChooseOne';
-import ChooseSeveral from './questionTypes/chooseSeveral/ChooseSeveral';
-import './QuestionLive.scss';
-import CompComponent from './questionTypes/comp';
+import ShortAnswer from '../questionTypes/shortAnswer/ShortAnswer';
+import ChooseOne from '../questionTypes/chooseOne/ChooseOne';
+import ChooseSeveral from '../questionTypes/chooseSeveral/ChooseSeveral';
+import './QuestionPlay.scss';
+import CompComponent from '../questionTypes/Comp';
 import { ComponentAttempt } from '../model/model';
 
 

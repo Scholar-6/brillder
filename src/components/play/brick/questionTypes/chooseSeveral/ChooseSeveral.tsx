@@ -3,7 +3,7 @@ import { Button, Grid } from '@material-ui/core';
 
 import './ChooseSeveral.scss';
 import { Question, HintStatus } from "components/model/question";
-import CompComponent from '../comp';
+import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import DenimTickRect from 'components/play/components/DenimTickRect';
 import DenimCrossRect from 'components/play/components/DenimCrossRect';
