@@ -50,8 +50,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
 
-  if (!props.brick) {
-    let brickId = props.match.params.brickId;
+  const brickId = parseInt(props.match.params.brickId);
+  if (!props.brick || props.brick.id !== brickId) {
     props.fetchBrick(brickId);
     return <div>...Loading brick...</div>
   }
@@ -172,7 +172,6 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
       });
     }
   });
-  console.log('shuffle')
   return shuffleBrick;
 }
 
