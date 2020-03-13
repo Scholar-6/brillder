@@ -10,8 +10,8 @@ import './ReviewPage.scss';
 import CircleIconNumber from 'components/play/components/circleIcon/circleIcon';
 import GreenTickIcon from 'components/play/components/GreenTickIcon';
 import BlueCrossIcon from 'components/play/components/BlueCrossIcon';
-import { Question } from "components/model/question";
-import QuestionLive from '../live/QuestionLive';
+import { Question } from 'components/model/question';
+import QuestionLive from '../questionPlay/QuestionPlay';
 import TabPanel from '../baseComponents/QuestionTabPanel';
 import { PlayStatus, ComponentAttempt } from '../model/model';
 
@@ -82,8 +82,8 @@ const ReviewPage: React.FC<LivePageProps> = (
   }
 
   return (
-    <Grid container direction="row" justify="center">
-      <div className="brick-container review-page live-page">
+    <Grid container direction='row' justify='center'>
+      <div className='brick-container review-page live-page'>
         <Stepper alternativeLabel nonLinear activeStep={activeStep}>
           {questions.map((question, index) => {
             const stepProps: { completed?: boolean } = {};
@@ -119,7 +119,7 @@ const ReviewPage: React.FC<LivePageProps> = (
               return (
                 <Step key={index} {...stepProps}>
                   <StepButton
-                    icon={<CreateIcon className="edited-step-icon" />}
+                    icon={<CreateIcon className='edited-step-icon' />}
                     onClick={handleStep(index)}
                     completed={isStepComplete(index)}
                     {...buttonProps}
@@ -131,7 +131,7 @@ const ReviewPage: React.FC<LivePageProps> = (
             return (
               <Step key={index} {...stepProps}>
                 <StepButton
-                  icon={<CircleIconNumber customClass="grey-icon" number={index + 1} />}
+                  icon={<CircleIconNumber customClass='grey-icon' number={index + 1} />}
                   onClick={handleStep(index)}
                   completed={isStepComplete(index)}
                   {...buttonProps}
