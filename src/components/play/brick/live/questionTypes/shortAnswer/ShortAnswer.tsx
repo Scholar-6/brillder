@@ -20,7 +20,7 @@ interface ShortAnswerState {
   userAnswers: string[]
 }
 
-class ShortAnswer extends CompComponent {
+class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   constructor(props: ShortAnswerProps) {
     super(props);
 
@@ -96,7 +96,7 @@ class ShortAnswer extends CompComponent {
   }
 
   renderEachHint(index: number) {
-    const {hint} = this.props.question as Question;
+    const {hint} = this.props.question;
     if (this.props.attempt?.correct === false && hint.status === HintStatus.Each && hint.list[index]) {
       return <div className="question-hint">{hint.list[index]}</div>;
     }
@@ -104,7 +104,7 @@ class ShortAnswer extends CompComponent {
   }
 
   render() {
-    const { component, question } = this.props;
+    const { component } = this.props;
 
     let width = (100 - 1) / component.list.length;
 

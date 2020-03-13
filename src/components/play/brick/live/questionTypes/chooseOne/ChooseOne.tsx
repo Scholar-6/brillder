@@ -31,7 +31,7 @@ interface ChooseOneState {
   activeItem: number;
 }
 
-class ChooseOne extends CompComponent {
+class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   constructor(props: ChooseOneProps) {
     super(props);
 
@@ -40,20 +40,20 @@ class ChooseOne extends CompComponent {
       activeItem = props.answers;
     }
 
-    this.state = { activeItem } as ChooseOneState;
+    this.state = { activeItem };
   }
 
   setActiveItem(activeItem: number) {
     this.setState({ activeItem });
   }
 
-  getAnswer(): string[] {
+  getAnswer(): number {
     return this.state.activeItem;
   }
 
   getState(entry: number): number {
-    if (this.props.attempt.answer[entry]) {
-      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].answer.toLowerCase().replace(/ /g, '')) {
+    if (this.props.attempt?.answer[entry]) {
+      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')) {
         return 1;
       } else { return -1; }
     } else { return 0; }

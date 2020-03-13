@@ -22,7 +22,7 @@ interface QuestionProps {
 }
 
 interface QuestionState {
-  answerRef: React.RefObject<CompComponent>
+  answerRef: React.RefObject<CompComponent<any, any>>
 }
 
 class QuestionLive extends React.Component<QuestionProps, QuestionState> {
@@ -30,7 +30,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     super(props);
 
     this.state = {
-      answerRef: React.createRef<CompComponent>()
+      answerRef: React.createRef<CompComponent<any, any>>()
     }
   }
 

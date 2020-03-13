@@ -1,39 +1,43 @@
 import React from 'react';
+import { Button, Grid } from '@material-ui/core';
 
 import './ChooseSeveral.scss';
-import { Question } from "components/model/question";
+import { Question, HintStatus } from "components/model/question";
 import CompComponent from '../comp';
-import { Button } from '@material-ui/core';
 import {ComponentAttempt} from 'components/play/brick/model/model';
+import DenimTickRect from 'components/play/components/DenimTickRect';
+import DenimCrossRect from 'components/play/components/DenimCrossRect';
+import ReviewGlobalHint from 'components/play/brick/baseComponents/ReviewGlobalHint';
 
-
-interface ChooseOneProps {
+interface ChooseSeveralProps {
   question: Question;
   component: any;
   attempt: any;
   answers: number[];
 }
 
-interface ChooseOneState {
+interface ChooseSeveralState {
   activeItems: number[];
 }
 
-class ChooseSeveral extends CompComponent {
-  constructor(props: ChooseOneProps) {
+class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState> {
+  constructor(props: ChooseSeveralProps) {
     super(props);
 
     let activeItems: number[] = [];
     if (props.answers && props.answers.length > 0) {
       activeItems = props.answers;
+    } else if (props.attempt?.answer.length > 0) {
+      activeItems = Object.assign([], props.attempt.answer);
     }
 
-    this.state = { activeItems } as ChooseOneState;
+    this.state = { activeItems };
   }
 
   setActiveItem(activeItem: number) {
-    let { activeItems } = this.state as ChooseOneState;
-    let found = activeItems.find(i => i === activeItem);
-    if (found) {
+    let { activeItems } = this.state;
+    let found = activeItems.indexOf(activeItem);
+    if (found >= 0) {  
       activeItems.splice(found, 1);
     } else {
       activeItems.push(activeItem);
@@ -53,36 +57,105 @@ class ChooseSeveral extends CompComponent {
     } else { return 0; }
   }
 
+  markLiveChoices(attempt: ComponentAttempt, markIncrement: number) {
+    const choices = this.props.component.list;
+    for (let [index, choice] of choices.entries()) {
+      const checked = attempt.answer.find((answer:number) => answer === index);
+      if (checked >= 0) {
+        if (choice.checked) {
+          attempt.marks += markIncrement;
+        } else {
+          attempt.marks -= markIncrement;
+          attempt.correct = false;
+        }
+      } else {
+        if (choice.checked) {
+          attempt.marks -= markIncrement;
+          attempt.correct = false;
+        }
+      }
+    }
+  }
+
+  getCorrectAnswers() {
+    let count = 0;
+    for (let item of this.props.component.list) {
+      if (item.checked) {
+        count += 1;
+      }
+    }
+    return count;
+  }
+
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
-    // If the question is answered in review phase, add 2 to the mark and not 5.
-    let markIncrement = prev ? 2 : 5;
-    // set attempt.correct to true if the answer is 0.
-    attempt.correct = (attempt.answer === 0);
-    attempt.maxMarks = 5;
-    // if the attempt is correct, add the mark increment.
-    if (attempt.correct) attempt.marks = markIncrement;
-    // if there is an answer given and the program is in the live phase, give the student an extra mark.
-    else if (attempt.answer != null && !prev) attempt.marks = 1;
-    else attempt.marks = 0;
+    let correctAnswers = this.getCorrectAnswers();
+    const markValue = 5;
+    const markIncrement = prev ? Math.floor(markValue / correctAnswers) : markValue;
+
+    attempt.correct = true;
+    attempt.marks = 0;
+
+    attempt.maxMarks = correctAnswers * markValue;
+    this.markLiveChoices(attempt, markIncrement);
+
+    // Then, if the attempt scored no marks or negative and the program is in live phase, then give the student a mark.
+    if (attempt.marks <= 0 && attempt.answer !== [] && !prev) { attempt.marks = 1; }
+    if (attempt.marks <= 0) {attempt.marks = 0; }
     return attempt;
   }
 
+  renderIcon(input: any, index: number) {
+    if (this.props.attempt) {
+      const {answer} = this.props.attempt;
+      const found = answer.find((a:number) => a === index);
+      if (found >= 0) {
+        return input.checked ? <DenimTickRect /> : <DenimCrossRect />;
+      }
+    }
+    return "";
+  }
+
+  renderButton(input: any, index:number) {
+    let active = this.state.activeItems.find(i => i === index) as number;
+
+    return (
+      <Button
+        className={(active >= 0) ? "choose-choice active" : "choose-choice"}
+        key={index}
+        onClick={() => this.setActiveItem(index)}
+      >
+        <div style={{width: '100%'}}>
+        <Grid container direction="row">
+          <Grid item xs={1}>
+            {this.renderIcon(input, index)}
+          </Grid>
+          <Grid item xs={11}>{input.value}</Grid>
+        </Grid>
+        <Grid container direction="row">
+          <Grid item xs={1}>
+          </Grid>
+          <Grid item xs={11}>
+            {
+              (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && input.hint) ?
+                <span className="question-hint">{input.hint}</span>
+                : ""
+            }
+          </Grid>
+        </Grid>
+        </div>
+      </Button>
+    );
+  }
+
   render() {
-    const { activeItems } = this.state as ChooseOneState;
     const { component } = this.props;
 
     return (
       <div className="choose-one-live">
         {
-          component.list.map((input: any, index: number) =>
-            <Button
-              className={(index === activeItems.find(i => i === index)) ? "choose-choice active" : "choose-choice"}
-              key={index}
-              onClick={() => this.setActiveItem(index)}>
-              {input.value}
-            </Button>
-          )
+          component.list.map((input: any, index: number) => this.renderButton(input, index))
         }
+        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
       </div>
     );
   }

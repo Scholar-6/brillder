@@ -71,9 +71,6 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
   const saveBrick = () => {
     let brick = { ...state } as Brick;
     setBrick(brick);
-    if (brick) {
-      brick.id = brick.id;
-    }
     props.saveBrick(brick);
     setSaved(true);
   }
