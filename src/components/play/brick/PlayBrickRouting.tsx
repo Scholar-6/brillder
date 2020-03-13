@@ -174,14 +174,12 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
     } else if (question.type === QuestionTypeEnum.PairMatch) {
       question.components.forEach(c => {
         if (c.type === QuestionComponentTypeEnum.Component) {
-          console.log(question.hint)
           for (let [index, item] of c.list.entries()) {
             item.index = index;
             item.hint = question.hint.list[index];
           }
           const choices = c.list.map((a:any) => ({ value: a.value, index: a.index}));
           c.choices = shuffle(choices);
-          console.log(c);
         }
       });
     }

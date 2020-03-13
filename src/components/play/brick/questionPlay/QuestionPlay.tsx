@@ -16,6 +16,7 @@ import ChooseSeveral from '../questionTypes/chooseSeveral/ChooseSeveral';
 import VerticalShuffle from '../questionTypes/vericalShuffle/VerticalShuffle';
 import HorizontalShuffle from '../questionTypes/horizontalShuffle/HorizontalShuffle';
 import PairMatch from '../questionTypes/pairMatch/PairMatch';
+import Sort from '../questionTypes/sort/Sort';
 
 
 interface QuestionProps {
@@ -66,6 +67,8 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
         UniqueComponent = HorizontalShuffle;
       } else if (question.type === QuestionTypeEnum.PairMatch) {
         UniqueComponent = PairMatch;
+      } else if (question.type === QuestionTypeEnum.Sort) {
+        UniqueComponent = Sort;
       }
       if (typeof UniqueComponent === "object") {
         return <div key={index}>Not implemented</div>
