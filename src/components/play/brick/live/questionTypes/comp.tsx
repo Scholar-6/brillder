@@ -2,11 +2,13 @@ import React from 'react';
 
 import {ComponentAttempt} from '../../model/model';
 
-class CompComponent extends React.Component<any, any> {
+
+class CompComponent<Props, State> extends React.Component<Props, State> {
   getAnswer() { };
 
   getAttempt(): ComponentAttempt {
-    let att = this.mark({ answer: this.getAnswer(), correct: false, marks: 0, maxMarks: 0 }, this.props.attempt);
+    let props = this.props as any;
+    let att = this.mark({ answer: this.getAnswer(), correct: false, marks: 0, maxMarks: 0 }, props.attempt);
     return att;
   };
 
