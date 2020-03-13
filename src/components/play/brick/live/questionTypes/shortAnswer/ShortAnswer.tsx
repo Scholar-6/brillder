@@ -4,12 +4,15 @@ import { TextField, Grid } from '@material-ui/core';
 import CompComponent from '../comp';
 
 import './ShortAnswer.scss';
+import { ComponentAttempt } from 'components/play/brick/model/model';
+import ReviewGlobalHint from '../../../baseComponents/ReviewGlobalHint';
+import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 
 
 interface ShortAnswerProps {
   question: Question;
   component: any;
-  attempt: any;
+  attempt: ComponentAttempt;
   answers: string[];
 }
 
@@ -24,6 +27,8 @@ class ShortAnswer extends CompComponent {
     let userAnswers: string[] = [];
     if (props.answers) {
       userAnswers = props.answers;
+    } else if (props.attempt?.answer?.length > 0) {
+      props.attempt.answer.forEach((a: string) => userAnswers.push(a));
     } else {
       props.component.list.forEach(() => userAnswers.push(''));
     }
@@ -90,6 +95,14 @@ class ShortAnswer extends CompComponent {
     return attempt;
   }
 
+  renderEachHint(index: number) {
+    const {hint} = this.props.question as Question;
+    if (this.props.attempt?.correct === false && hint.status === HintStatus.Each && hint.list[index]) {
+      return <div className="question-hint">{hint.list[index]}</div>;
+    }
+    return "";
+  }
+
   render() {
     const { component, question } = this.props;
 
@@ -100,15 +113,19 @@ class ShortAnswer extends CompComponent {
         {
           component.list.map((i: any, index: number) =>
             <div key={index} className="short-answer-input" style={{ width: `${width}%` }}>
-              <Grid container justify="center">
-                <TextField
-                  value={this.state.userAnswers[index]}
-                  onChange={e => this.setUserAnswer(e, index)}
-                  label={question.hint.list[index]} />
-              </Grid>
+                <Grid container direction="row" justify="center">
+                  <TextField
+                    value={this.state.userAnswers[index]}
+                    onChange={e => this.setUserAnswer(e, index)}
+                    label="Answer" />
+                </Grid>
+                <Grid container direction="row" justify="center">
+                  {this.renderEachHint(index)}
+                </Grid>
             </div>
           )
         }
+        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
       </div>
     );
   }

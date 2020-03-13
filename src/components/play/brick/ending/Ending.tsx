@@ -1,26 +1,28 @@
+
 import React from 'react';
 import { Grid, Fab, FormControlLabel } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import './ProvisionalScore.scss';
+import './Ending.scss';
 import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
 import OtherInformation from '../baseComponents/OtherInformation';
 import { PlayStatus } from '../model/model';
+import { BrickAttempt } from '../PlayBrickRouting';
 
 
-interface ProvisionalScoreProps {
+interface EndingProps {
   status: PlayStatus;
   brick: Brick;
-  attempts: any[];
+  brickAttempt: BrickAttempt;
 }
 
-interface ProvisionalState {
+interface EndingState {
   otherExpanded: boolean;
 }
 
-const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, attempts }) => {
+const EndingPage: React.FC<EndingProps> = ({ status, brick, brickAttempt }) => {
   const history = useHistory();
   if (status === PlayStatus.Live) {
     history.push(`/play/brick/${brick.id}/intro`);
@@ -28,34 +30,36 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
 
   const [state, setState] = React.useState({
     otherExpanded: false,
-  } as ProvisionalState);
+  } as EndingState);
 
   const toggleOther = () => {
     setState({ ...state, otherExpanded: !state.otherExpanded });
   }
 
-  const startBrick = () => {
-    history.push(`/play/brick/${brick.id}/synthesis`);
+  const endBrick = () => {
+    history.push(`/manage/dashboard`);
   }
-
-  let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
-  let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
 
   return (
     <Grid container direction="row" justify="center">
       <div className="brick-container">
-        <div className='provisional-score-page'>
+        <div className='ending-page'>
           <div>
             <h3>{brick.brickLength} minutes</h3>
-            <h1>Provisional Score</h1>
+            <h1>{brick.title}</h1>
           </div>
           <Grid container justify="center" className="circle-progress-container">
-            <CircularProgress variant="static" className="circle-progress" value={(score * 100) / maxScore} />
+            <CircularProgress
+              variant="static"
+              className="circle-progress"
+              value={(brickAttempt.score * 100) / brickAttempt.maxScore} />
             <div className="score-data">
               <Grid container justify="center" alignContent="center">
                 <div>
-                  <div className="score-precentage">{Math.round((score * 100) / maxScore)}%</div>
-                  <div className="score-number">{score}/{maxScore}</div>
+                  <div className="score-precentage">
+                    {Math.round((brickAttempt.score * 100) / brickAttempt.maxScore)}%
+                  </div>
+                  <div className="score-number">{brickAttempt.score}/{brickAttempt.maxScore}</div>
                 </div>
               </Grid>
             </div>
@@ -65,11 +69,11 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
               className="start-brick-button"
               labelPlacement="start"
               control={
-                <Fab style={{ background: '#0076B4' }} color="secondary" aria-label="add" onClick={startBrick}>
+                <Fab style={{ background: '#0076B4' }} color="secondary" aria-label="add" onClick={endBrick}>
                   <PlayArrowIcon />
                 </Fab>
               }
-              label="Summary"
+              label="Return to Dashboard"
             />
           </div>
           <OtherInformation
@@ -85,4 +89,4 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
   );
 }
 
-export default ProvisionalScore;
+export default EndingPage;

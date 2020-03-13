@@ -54,7 +54,6 @@ class ChooseSeveral extends CompComponent {
   }
 
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
-    console.log('mark attempt', attempt)
     // If the question is answered in review phase, add 2 to the mark and not 5.
     let markIncrement = prev ? 2 : 5;
     // set attempt.correct to true if the answer is 0.

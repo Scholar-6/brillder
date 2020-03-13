@@ -8,6 +8,8 @@ import { useHistory } from 'react-router-dom';
 
 import './ReviewPage.scss';
 import CircleIconNumber from 'components/play/components/circleIcon/circleIcon';
+import GreenTickIcon from 'components/play/components/GreenTickIcon';
+import BlueCrossIcon from 'components/play/components/BlueCrossIcon';
 import { Question } from "components/model/question";
 import QuestionLive from '../live/QuestionLive';
 import TabPanel from '../baseComponents/QuestionTabPanel';
@@ -25,18 +27,16 @@ interface LivePageProps {
 const ReviewPage: React.FC<LivePageProps> = (
   { status, questions, updateAttempts, attempts, finishBrick, brickId }
 ) => {
-  console.log(attempts);
   const history = useHistory();
-  if (status === PlayStatus.Live) {
-    history.push(`/play/brick/${brickId}/intro`);
-  }
-
   const [activeStep, setActiveStep] = React.useState(0);
   let initAnswers: any[] = [];
-
   const [answers, setAnswers] = React.useState(initAnswers);
-
   const theme = useTheme();
+
+  if (status === PlayStatus.Live) {
+    history.push(`/play/brick/${brickId}/intro`);
+    return <div>...Loading...</div>
+  }
 
   let questionRefs: React.RefObject<QuestionLive>[] = [];
   questions.forEach(() => {
@@ -66,34 +66,54 @@ const ReviewPage: React.FC<LivePageProps> = (
     setActiveStep(update(activeStep, { $set: activeStep + 1 }));
     if (activeStep >= questions.length - 1) {
       finishBrick();
-      history.push(`/play/brick/${brickId}/provisionalScore`);
+      history.push(`/play/brick/${brickId}/ending`);
     }
   }
 
   const renderQuestion = (question: Question, attempt: ComponentAttempt, index: number) => {
     let isLastOne = (questions.length - 1) === activeStep;
-    return <QuestionLive question={question} answers={answers[index]} attempt={attempt} isLastOne={isLastOne} next={next} ref={questionRefs[index]} />
+    return <QuestionLive
+      next={next}
+      attempt={attempt}
+      question={question}
+      isLastOne={isLastOne}
+      answers={answers[index]}
+      ref={questionRefs[index]} />
   }
 
   return (
     <Grid container direction="row" justify="center">
-      <div className="brick-container live-page">
+      <div className="brick-container review-page live-page">
         <Stepper alternativeLabel nonLinear activeStep={activeStep}>
           {questions.map((question, index) => {
             const stepProps: { completed?: boolean } = {};
             const buttonProps: { optional?: React.ReactNode } = {};
             if (index === activeStep) {
-              return (
-                <Step key={index} {...stepProps}>
-                  <StepButton
-                    icon={<CircleIconNumber number={index + 1} />}
-                    onClick={handleStep(index)}
-                    completed={isStepComplete(index)}
-                    {...buttonProps}
-                  >
-                  </StepButton>
-                </Step>
-              );
+              if (attempts[index].correct === true) {
+                return (
+                  <Step key={index} {...stepProps}>
+                    <StepButton
+                      icon={<GreenTickIcon />}
+                      onClick={handleStep(index)}
+                      completed={isStepComplete(index)}
+                      {...buttonProps}
+                    >
+                    </StepButton>
+                  </Step>
+                );
+              } else {
+                return (
+                  <Step key={index} {...stepProps}>
+                    <StepButton
+                      icon={<BlueCrossIcon />}
+                      onClick={handleStep(index)}
+                      completed={isStepComplete(index)}
+                      {...buttonProps}
+                    >
+                    </StepButton>
+                  </Step>
+                );
+              }
             }
             if (question.edited) {
               return (
