@@ -161,11 +161,12 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
           c.list = shuffle(c.list);
         }
       });
-    } else if (question.type === QuestionTypeEnum.VerticalShuffle) {
+    } else if (question.type === QuestionTypeEnum.VerticalShuffle || question.type === QuestionTypeEnum.HorizontalShuffle) {
       question.components.forEach(c => {
         if (c.type === QuestionComponentTypeEnum.Component) {
           for (let [index, item] of c.list.entries()) {
             item.index = index;
+            item.hint = question.hint.list[index];
           }
           c.list = shuffle(c.list);
         }

@@ -13,19 +13,20 @@ import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 
 
-interface ChooseOneChoice {
+interface VerticalShuffleChoice {
   value: string;
+  index: number;
   checked: boolean;
 }
 
-interface ChooseOneComponent {
+interface VerticalShuffleComponent {
   type: number;
-  list: ChooseOneChoice[];
+  list: VerticalShuffleChoice[];
 }
 
 interface VerticalShuffleProps {
   question: Question;
-  component: ChooseOneComponent;
+  component: VerticalShuffleComponent;
   attempt?: ComponentAttempt;
   answers: number;
 }
@@ -100,18 +101,21 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   render() {
     return (
       <div className="vertical-shuffle-play">
-        {
-          (this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""
-        }
+        <div>
+          {
+            (this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""
+          }
+        </div>
         <ReactSortable
           list={this.state.userAnswers}
           animation={150}
+          style={{display:"inline-block"}}
           group={{ name: "cloning-group-name" }}
           setList={(choices) => this.setUserAnswers(choices)}
         >
           {
             this.state.userAnswers.map((answer, i) => (
-              <div key={i} className="vertical-shuffle-choice">
+              <div style={{display: "block"}} key={i} className="vertical-shuffle-choice">
                 <Grid container direction="row">
                   <Grid item xs={1} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
                     <DragIndicatorIcon/>
@@ -123,7 +127,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
                     <Grid container direction="row" justify="center">
                       {
                         (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && this.props.question.hint.list.length > 0) ?
-                          <span className="question-hint">{this.props.question.hint.list[i]}</span>
+                          <span className="question-hint">{answer.hint}</span>
                           : ""
                       }
                     </Grid>
