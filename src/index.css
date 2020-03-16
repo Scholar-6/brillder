@@ -63,6 +63,45 @@ code {
   font-weight: 400;
   font-style: normal;
   src: url("./assets/fonts/Montserrat/Montserrat-Regular.otf") format('opentype');
+  font-family: 'Spartan MB Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Spartan MB Regular'), url('./assets/fonts/SpartanMB/SpartanMB-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Spartan MB Thin';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Spartan MB Thin'), url('./assets/fonts/SpartanMB/SpartanMB-Thin.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Spartan MB Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Spartan MB Light'), url('./assets/fonts/SpartanMB/SpartanMB-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Spartan MB SemiBold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Spartan MB SemiBold'), url('./assets/fonts/SpartanMB/SpartanMB-SemiBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Spartan MB Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Spartan MB Bold'), url('./assets/fonts/SpartanMB/SpartanMB-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Spartan MB ExtraBold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Spartan MB ExtraBold'), url('./assets/fonts/SpartanMB/SpartanMB-Extra-Bold.woff') format('woff');
 }
 
 .rotate-90 {

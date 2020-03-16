@@ -3,12 +3,14 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox'; 
 
 import './MissingWordBuild.scss'
 
 
 interface Answer {
   value: string
+  checked: boolean
 }
 
 export interface MissingChoice {
@@ -26,7 +28,7 @@ export interface MissingWordComponentProps {
 }
 
 const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, data, updateComponent }) => {
-  const newAnswer = () => ({ before: "", value: "" });
+  const newAnswer = () => ({ value: "", checked: false });
   const newChoice = () => ({ before: "", answers: [newAnswer(), newAnswer(), newAnswer()], after: "" })
 
   if (!data.choices) {
@@ -75,6 +77,17 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
     update();
   }
 
+  const onChecked = (choice: MissingChoice, event:any) => {
+    if (locked) { return; }
+    const index = event.target.value;
+    for (let answer of choice.answers) {
+      answer.checked = false;
+    }
+    choice.answers[index].checked = true;
+    console.log(choice)
+    update();
+  }
+
   const renderChoice = (choice: MissingChoice, key: number) => {
     return (
       <div className="choose-several-box" key={key}>
@@ -94,6 +107,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
                 {
                   (choice.answers.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, key)} /> : ""
                 }
+                <Checkbox className="left-ckeckbox" disabled={locked} checked={answer.checked} onChange={(e) => onChecked(choice, e)} value={key} />
                 <input disabled={locked} value={answer.value} onChange={(event: any) => { answerChanged(answer, event) }} placeholder="Enter Answer..." />
               </div>
             );

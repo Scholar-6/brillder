@@ -1,52 +1,213 @@
+$dark-blue: #001D55;
+$orange: #B44438;
 
 .bricks-list-page {
-  .brick-container {
-    margin: 5px 10px 5px 18px;
-    padding: 4px 10px 10px 10px;
-    border: 2px solid #0B3A7E;
+  background: $dark-blue;
+  height: 100%;
+  background: #001D55;
+  font-family: 'Spartan MB Regular';
 
-    width: 90%;
-    text-align: left;
+  h1 {
+    padding-top: 2.8vw;
+    padding-bottom: 2.8vw;
+    font-size: 2vw;
+    color: white;
+    font-family: 'Spartan MB Thin';
+  }
 
-    .link-title {
-      color:white;
-      font-size: 24px;
-    }
-    .link-description {
-      margin: 4px 0 12px 0;
-      font-weight: 600;
-      color: black;
-    }
-    a:-webkit-any-link {
-      text-decoration: none;
-    }
+  .bricks-upper-part {
+    min-height: 100%;
+    background: $dark-blue;
+  }
 
-    .update-button {
-      padding: 4px 10px;
-      background: #0B3A7E;
-      color: white;
+  .bricks-sort {
+    margin-left: 1.4vw;
+    margin-right: 1.4vw;
+
+    .sort-and-search-row {
+      padding-bottom: 2.2vw;
+
+      .search-brick {
+        .search-label {
+          color: $orange;
+          z-index: 2;
+          top: -14px;
+          left: 14px;
+          font-size: 24px;
+          font-family: 'Spartan MB Regular';
+        }
+
+        .search-input {
+          background: white;
+          font-size: 24px;
+          font-family: 'Spartan MB Regular';
+          border: red;
+          border-radius: 12px;
+          border: none !important;
+          padding-right: 2px;
+
+          input {
+            padding: 8px 0 12px 16px;
+            width: 17.5vw;
+          }
+        }
+
+        .search-icon {
+          font-size: 2.4vw;
+          color: $orange;
+        }
+
+        .MuiInputLabel-shrink {
+          opacity: 0;
+        }
+      }
+
+      .sort-bricks-by {
+        background: #B44438;
+        padding-top: 4px;
+        padding-bottom: 5px;
+        font-size: 18px;
+        color: white;
+        font-family: 'Spartan MB Regular';
+        border-radius: 12px;
+        width: 100%;
+        text-align: left;
+
+        .sort-by {
+          padding-top: 8px;
+          padding-left: 1vw;
+          padding-right: 3vw;
+        }
+
+        .sort-element {
+          font-family: 'Spartan MB Regular';
+          font-weight: 600;
+          padding-top: 10px;
+          font-size: 16px;
+          color: $dark-blue;
+        }
+
+        .expanded-icon {
+          height: 35px !important;
+          width: 35px !important;
+          color: #DDA9A4;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .bricks-list {
+    min-height: 70%;
+    margin-left: 1.1vw;
+    margin-right: 1.1vw;
+
+    .brick-container {
       cursor: pointer;
-    }
+      margin: 5px 0.3vw 5px 0.3vw;
+      border-radius: 10px;
+      background: #B44438;
+      padding-left: 14px;
+      padding-top: 4px;
 
-    .update-button:hover {
-      text-decoration: none;
-      opacity: 0.5;
+      width: 100%;
+      text-align: left;
+
+      .link-description {
+        font-size: 1.05vw;
+        margin: 4px 0 12px 0;
+        font-weight: 600;
+        color: $dark-blue;
+      }
+
+      .link-info {
+        font-size: 1.05vw;
+        color: $dark-blue;
+        margin-bottom: 12px;
+      }
+    }
+    .brick-container:hover {
+
+    }
+  }
+
+  .brick-list-footer {
+    width: 100%;
+    background: #808EAA;
+    min-height: 30px;
+  }
+}
+
+@media only screen and (min-width: 1280px) {}
+
+@media only screen and (max-width: 1279px) and (min-width: 960px) {
+  .bricks-list-page {
+    .bricks-sort {
+      .sort-and-search-row {
+        .sort-bricks-by {
+          font-size: 12px;
+          .sort-by {
+            padding-top: 5px;
+          }
+          .sort-element {
+            padding-top: 6px;
+            font-size: 12px;
+          }
+
+          .expanded-icon {
+            height: 24px !important;
+            width: 24px !important;
+          }
+        }
+      }
     }
   }
 }
 
-@media only screen and (min-width: 1280px)  {
-  
-}
+@media only screen and (max-width: 959px) and (min-width: 600px) {
+  .bricks-list-page {
+    .bricks-sort {
+      .sort-and-search-row {
+        .sort-bricks-by {
+          font-size: 9px;
+          .sort-by {
+            padding-top: 1px;
+          }
+          .sort-element {
+            padding-top: 2px;
+            font-size: 8px;
+          }
 
-@media only screen and (max-width: 1279px) and (min-width: 960px)  {
-  
-}
-
-@media only screen and (max-width: 959px) and (min-width: 600px)  {
-  
+          .expanded-icon {
+            height: 12px !important;
+            width: 12px !important;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media only screen and (max-width: 599px) {
-  
+  .bricks-list-page {
+    .bricks-sort {
+      .sort-and-search-row {
+        .sort-bricks-by {
+          font-size: 7px;
+          .sort-by {
+            padding-top: 1px;
+          }
+          .sort-element {
+            padding-top: 2px;
+            font-size: 7px;
+          }
+
+          .expanded-icon {
+            height: 10px !important;
+            width: 10px !important;
+          }
+        }
+      }
+    }
+  }
 }
