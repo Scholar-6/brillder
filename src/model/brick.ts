@@ -1,3 +1,12 @@
+export interface Author {
+  email: string
+  firstName: string
+  id: number
+  lastName: string
+  tutorialPassed: boolean
+  type: number
+}
+
 export interface Brick {
   id: number
   subject: string
@@ -13,6 +22,7 @@ export interface Brick {
   brickLength: number
   type: number
   questions: any[]
+  author: Author
 }
 
 export enum isAuthenticated {

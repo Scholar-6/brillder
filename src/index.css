@@ -58,6 +58,48 @@ code {
   url("./assets/fonts/LiberationSans/4ce6215c47b0f14c8b89bb15c9914150.svg#Liberation Sans V2") format("svg"); /* iOS 4.1- */
 }
 
+@font-face {
+  font-family: 'Spartan MB Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Spartan MB Regular'), url('./assets/fonts/SpartanMB/SpartanMB-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Spartan MB Thin';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Spartan MB Thin'), url('./assets/fonts/SpartanMB/SpartanMB-Thin.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Spartan MB Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Spartan MB Light'), url('./assets/fonts/SpartanMB/SpartanMB-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Spartan MB SemiBold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Spartan MB SemiBold'), url('./assets/fonts/SpartanMB/SpartanMB-SemiBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Spartan MB Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Spartan MB Bold'), url('./assets/fonts/SpartanMB/SpartanMB-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Spartan MB ExtraBold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Spartan MB ExtraBold'), url('./assets/fonts/SpartanMB/SpartanMB-Extra-Bold.woff') format('woff');
+}
+
 .rotate-90 {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
