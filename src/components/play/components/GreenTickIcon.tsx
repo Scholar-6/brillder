@@ -1,8 +1,12 @@
 import React from 'react';
 
 
-const CorrectTick: React.FC = () => {
-  return <span className="tick-icon tick-notFilledGreenCircleTick"></span>;
+interface CorrectTickProps {
+  customClass?: string;
+}
+
+const CorrectTick: React.FC<CorrectTickProps> = ({customClass = ""}) => {
+  return <span className={customClass + " tick-icon tick-notFilledGreenCircleTick"}></span>;
 }
 
 export default CorrectTick;

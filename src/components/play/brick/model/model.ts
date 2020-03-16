@@ -6,6 +6,8 @@ export interface ComponentAttempt {
 }
 
 export enum PlayStatus {
+  Intro,
   Live,
-  Review
+  Review,
+  Ending
 }

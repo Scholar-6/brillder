@@ -49,6 +49,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
+  const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
 
   const brickId = parseInt(props.match.params.brickId);
   if (!props.brick || props.brick.id !== brickId) {
@@ -59,6 +60,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const updateAttempts = (attempt:any, index:number) => {
     attempts[index] = attempt;
     setAttempts(attempts);
+    console.log(attempts);
+  }
+
+  const updateReviewAttempts = (attempt:any, index:number) => {
+    let rattempts = Object.assign([], reviewAttempts) as any[];
+    rattempts[index] = attempt;
+    setReviewAttempts(rattempts);
   }
 
   const finishBrick = () => {
@@ -73,20 +81,23 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     };
     setStatus(PlayStatus.Review);
     setBrickAttempt(ba);
+    setReviewAttempts(Object.assign([], attempts));
+    setStatus(PlayStatus.Review);
   }
 
   const finishReview = () => {
-    let score = attempts.reduce((acc, answer) => acc + answer.marks, 0) + brickAttempt.score;
-    let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
+    let score = reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0) + brickAttempt.score;
+    let maxScore = reviewAttempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba : BrickAttempt = {
       brick: props.brick,
       score: score,
       maxScore: maxScore,
       oldScore: brickAttempt.score,
       student: null,
-      answers: attempts
+      answers: reviewAttempts
     };
     setBrickAttempt(ba);
+    setStatus(PlayStatus.Ending);
 
     // saveBrickAttempt;
   }
@@ -97,7 +108,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <Introduction brick={props.brick} />
       </Route>
       <Route exac path="/play/brick/:brickId/live">
-        <Live questions={props.brick.questions} brickId={props.brick.id} updateAttempts={updateAttempts} finishBrick={finishBrick} />
+        <Live status={status} questions={props.brick.questions} brickId={props.brick.id} updateAttempts={updateAttempts} finishBrick={finishBrick} />
       </Route>
       <Route exac path="/play/brick/:brickId/provisionalScore">
         <ProvisionalScore status={status} brick={props.brick} attempts={attempts} />
@@ -110,7 +121,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           status={status}
           questions={props.brick.questions}
           brickId={props.brick.id}
-          updateAttempts={updateAttempts}
+          updateAttempts={updateReviewAttempts}
           attempts={attempts}
           finishBrick={finishReview} />
       </Route>

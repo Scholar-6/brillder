@@ -18,6 +18,7 @@ import HorizontalShuffle from '../questionTypes/horizontalShuffle/HorizontalShuf
 import PairMatch from '../questionTypes/pairMatch/PairMatch';
 import Sort from '../questionTypes/sort/Sort';
 import MissingWord from '../questionTypes/missingWord/MissingWord';
+import LineHighlighting from '../questionTypes/lineHighlighting/LineHighlighting';
 
 
 interface QuestionProps {
@@ -72,6 +73,8 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
         UniqueComponent = Sort;
       } else if (question.type === QuestionTypeEnum.MissingWord) {
         UniqueComponent = MissingWord;
+      } else if (question.type === QuestionTypeEnum.LineHighlighting) {
+        UniqueComponent = LineHighlighting;
       }
       if (typeof UniqueComponent === "object") {
         return <div key={index}>Not implemented</div>
@@ -102,7 +105,6 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     }
 
     if (this.props.attempt && this.props.attempt.correct === true) {
-      text = "Finish Brick Attempt";
       return (
         <div>
           <div style={{font: "500 16px/24px Montserrat", color: 'black'}}>Question is correct!</div>

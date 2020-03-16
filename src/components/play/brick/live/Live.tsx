@@ -4,23 +4,25 @@ import CreateIcon from '@material-ui/icons/Create';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@material-ui/core/styles';
 import update from 'immutability-helper';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 
 import './Live.scss';
 import CircleIconNumber from 'components/play/components/circleIcon/circleIcon';
 import { Question } from 'components/model/question';
 import QuestionLive from '../questionPlay/QuestionPlay';
 import TabPanel from '../baseComponents/QuestionTabPanel';
+import { PlayStatus } from '../model/model';
 
 
 interface LivePageProps {
+  status: PlayStatus;
   brickId: number;
   questions: Question[];
   updateAttempts(attempt: any, index: number): any;
   finishBrick():void;
 }
 
-const LivePage: React.FC<LivePageProps> = ({ questions, updateAttempts, finishBrick, brickId }) => {
+const LivePage: React.FC<LivePageProps> = ({ status, questions, updateAttempts, finishBrick, brickId }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   let initAnswers: any[] = [];
 
@@ -28,6 +30,10 @@ const LivePage: React.FC<LivePageProps> = ({ questions, updateAttempts, finishBr
   const history = useHistory();
 
   const theme = useTheme();
+
+  if (status > PlayStatus.Live) {
+    return <Redirect to={`/play/brick/${brickId}/provisionalScore`} />;
+  }
 
   let questionRefs: React.RefObject<QuestionLive>[] = [];
   questions.forEach(() => {
@@ -56,6 +62,9 @@ const LivePage: React.FC<LivePageProps> = ({ questions, updateAttempts, finishBr
     questions[activeStep].edited = true;
     setActiveStep(update(activeStep, { $set: activeStep + 1 }));
     if (activeStep >= questions.length - 1) {
+      questions.forEach(question => {
+        question.edited = false;
+      });
       finishBrick();
       history.push(`/play/brick/${brickId}/provisionalScore`);
     }
@@ -102,7 +111,7 @@ const LivePage: React.FC<LivePageProps> = ({ questions, updateAttempts, finishBr
             return (
               <Step key={index} {...stepProps}>
                 <StepButton
-                  icon={<CircleIconNumber customClass='grey-icon' number={index + 1} />}
+                  icon={<CircleIconNumber customClass='grey-icon ' number={index + 1} />}
                   onClick={handleStep(index)}
                   completed={isStepComplete(index)}
                   {...buttonProps}

@@ -1,8 +1,12 @@
 import React from 'react';
 
 
-const BlueCrossIcon: React.FC = () => {
-  return <span className="tick-icon tick-NotFilledBlueCircleCross"></span>;
+interface BlueCrossProps {
+  customClass?: string;
+}
+
+const BlueCrossIcon: React.FC<BlueCrossProps> = ({customClass = ""}) => {
+  return <span className={customClass + " tick-icon tick-NotFilledBlueCircleCross"}></span>;
 }
 
 export default BlueCrossIcon;
