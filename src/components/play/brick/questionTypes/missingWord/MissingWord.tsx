@@ -70,9 +70,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     attempt.maxMarks = this.state.choices.length * 5;
 
     this.state.userAnswers.forEach((choice, i) => {
-      console.log(this.state.choices[i].answers, choice.value);
       if (this.state.choices[i].answers[choice.value].checked === true) {
-        console.log('good')
         attempt.marks += markIncrement;
       } else {
         attempt.correct = false;
@@ -99,7 +97,6 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   }
 
   renderSelect(choice: any, index: number) {
-    console.log(this.state.userAnswers[index]);
     return (
       <Select
         className="missing-select"
