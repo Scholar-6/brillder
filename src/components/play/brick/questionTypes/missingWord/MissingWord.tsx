@@ -1,14 +1,13 @@
-import React from 'react';
+import React from "react";
 import { Question } from "components/model/question";
-import { Grid, Select } from '@material-ui/core';
-import MenuItem from '@material-ui/core/MenuItem';
-import CompComponent from '../Comp';
+import { Grid, Select } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
+import CompComponent from "../Comp";
 
-import './MissingWord.scss';
-import { ComponentAttempt } from 'components/play/brick/model/model';
-import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
-
+import "./MissingWord.scss";
+import { ComponentAttempt } from "components/play/brick/model/model";
+import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
+import { HintStatus } from "components/build/baseComponents/Hint/Hint";
 
 interface MissingWordProps {
   question: Question;
@@ -26,13 +25,12 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   constructor(props: MissingWordProps) {
     super(props);
     let userAnswers: any[] = [];
-    console.log(props)
     if (props.answers) {
       userAnswers = props.answers;
     } else if (props.attempt?.answer?.length > 0) {
       props.attempt.answer.forEach((a: number) => userAnswers.push(a));
     } else {
-      props.component.choices.forEach(() => userAnswers.push({value: -1}));
+      props.component.choices.forEach(() => userAnswers.push({ value: -1 }));
     }
 
     this.state = { userAnswers, choices: props.component.choices };
@@ -50,10 +48,17 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
 
   getState(entry: number): number {
     if (this.props.attempt.answer[entry]) {
-      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].answer.toLowerCase().replace(/ /g, '')) {
+      if (
+        this.props.attempt.answer[entry].toLowerCase().replace(/ /g, "") ===
+        this.props.component.list[entry].answer.toLowerCase().replace(/ /g, "")
+      ) {
         return 1;
-      } else { return -1; }
-    } else { return 0; }
+      } else {
+        return -1;
+      }
+    } else {
+      return 0;
+    }
   }
 
   mark(attempt: any, prev: any): any {
@@ -65,20 +70,49 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     attempt.maxMarks = this.state.choices.length * 5;
 
     this.state.userAnswers.forEach((choice, i) => {
-      console.log(this.state.choices[i]);
+      console.log(this.state.choices[i].answers, choice.value);
+      if (this.state.choices[i].answers[choice.value].checked === true) {
+        console.log('good')
+        attempt.marks += markIncrement;
+      } else {
+        attempt.correct = false;
+      }
     });
 
     attempt.answer = this.state.userAnswers;
-    if (attempt.marks === 0 && attempt.answer !== [] && !prev) { attempt.marks = 1; } 
+    if (attempt.marks === 0 && attempt.answer !== [] && !prev) {
+      attempt.marks = 1;
+    }
     return attempt;
   }
 
   renderEachHint(index: number) {
-    const {hint} = this.props.question;
-    if (this.props.attempt?.correct === false && hint.status === HintStatus.Each && hint.list[index]) {
+    const { hint } = this.props.question;
+    if (
+      this.props.attempt?.correct === false &&
+      hint.status === HintStatus.Each &&
+      hint.list[index]
+    ) {
       return <div className="question-hint">{hint.list[index]}</div>;
     }
     return "";
+  }
+
+  renderSelect(choice: any, index: number) {
+    console.log(this.state.userAnswers[index]);
+    return (
+      <Select
+        className="missing-select"
+        value={this.state.userAnswers[index].value}
+        onChange={e => this.setUserAnswer(e, index)}
+      >
+        {choice.answers.map((a: any, i: number) => (
+          <MenuItem key={i} value={i}>
+            {a.value}
+          </MenuItem>
+        ))}
+      </Select>
+    );
   }
 
   render() {
@@ -86,27 +120,22 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
 
     return (
       <div className="missing-word-live">
-        {
-          component.choices.map((choice: any, index: number) =>
-            <div key={index} className="missing-word-choice">
-              <Grid container direction="row" justify="center">
-                {choice.before}
-                <Select className="missing-select" value={this.state.userAnswers[index]} onChange={(e) => this.setUserAnswer(e, index)}>
-                  {
-                    choice.answers.map((a: any, i:number) => (
-                      <MenuItem key={i} value={i}>{a.value}</MenuItem>
-                    ))
-                  }
-                </Select>
-                {choice.after}
-              </Grid>
-              <Grid container direction="row" justify="center">
-                {this.renderEachHint(index)}
-              </Grid>
-            </div>
-          )
-        }
-        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
+        {component.choices.map((choice: any, index: number) => (
+          <div key={index} className="missing-word-choice">
+            <Grid container direction="row" justify="center">
+              {choice.before}
+              {this.renderSelect(choice, index)}
+              {choice.after}
+            </Grid>
+            <Grid container direction="row" justify="center">
+              {this.renderEachHint(index)}
+            </Grid>
+          </div>
+        ))}
+        <ReviewGlobalHint
+          attempt={this.props.attempt}
+          hint={this.props.question.hint}
+        />
       </div>
     );
   }
