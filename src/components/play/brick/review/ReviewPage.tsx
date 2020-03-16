@@ -7,7 +7,6 @@ import update from 'immutability-helper';
 import { useHistory } from 'react-router-dom';
 
 import './ReviewPage.scss';
-import CircleIconNumber from 'components/play/components/circleIcon/circleIcon';
 import GreenTickIcon from 'components/play/components/GreenTickIcon';
 import BlueCrossIcon from 'components/play/components/BlueCrossIcon';
 import { Question } from 'components/model/question';
@@ -15,7 +14,7 @@ import QuestionLive from '../questionPlay/QuestionPlay';
 import TabPanel from '../baseComponents/QuestionTabPanel';
 import { PlayStatus, ComponentAttempt } from '../model/model';
 
-interface LivePageProps {
+interface ReviewPageProps {
   status: PlayStatus;
   brickId: number;
   questions: Question[];
@@ -24,7 +23,7 @@ interface LivePageProps {
   finishBrick():void;
 }
 
-const ReviewPage: React.FC<LivePageProps> = (
+const ReviewPage: React.FC<ReviewPageProps> = (
   { status, questions, updateAttempts, attempts, finishBrick, brickId }
 ) => {
   const history = useHistory();
@@ -36,6 +35,9 @@ const ReviewPage: React.FC<LivePageProps> = (
   if (status === PlayStatus.Live) {
     history.push(`/play/brick/${brickId}/intro`);
     return <div>...Loading...</div>
+  } else if (status === PlayStatus.Ending) {
+    history.push(`/play/brick/${brickId}/ending`);
+    return <div>...Loading...</div>
   }
 
   let questionRefs: React.RefObject<QuestionLive>[] = [];
@@ -44,7 +46,11 @@ const ReviewPage: React.FC<LivePageProps> = (
   });
 
   const handleStep = (step: number) => () => {
-    questions[activeStep].edited = true;
+    const copyAnswers = Object.assign([], answers) as any[];
+    copyAnswers[activeStep] = questionRefs[activeStep].current?.getAnswer();
+    let attempt = questionRefs[activeStep].current?.getAttempt();
+    updateAttempts(attempt, activeStep);
+    setAnswers(copyAnswers);
     setActiveStep(step);
   };
 
@@ -80,6 +86,8 @@ const ReviewPage: React.FC<LivePageProps> = (
       answers={answers[index]}
       ref={questionRefs[index]} />
   }
+
+  console.log(attempts);
 
   return (
     <Grid container direction='row' justify='center'>
@@ -128,17 +136,31 @@ const ReviewPage: React.FC<LivePageProps> = (
                 </Step>
               );
             }
-            return (
-              <Step key={index} {...stepProps}>
-                <StepButton
-                  icon={<CircleIconNumber customClass='grey-icon' number={index + 1} />}
-                  onClick={handleStep(index)}
-                  completed={isStepComplete(index)}
-                  {...buttonProps}
-                >
-                </StepButton>
-              </Step>
-            );
+            if (attempts[index].correct === true) {
+              return (
+                <Step key={index} {...stepProps}>
+                  <StepButton
+                    icon={<GreenTickIcon customClass='grey-icon ' />}
+                    onClick={handleStep(index)}
+                    completed={isStepComplete(index)}
+                    {...buttonProps}
+                  >
+                  </StepButton>
+                </Step>
+              );
+            } else {
+              return (
+                <Step key={index} {...stepProps}>
+                  <StepButton
+                    icon={<BlueCrossIcon customClass='grey-icon ' />}
+                    onClick={handleStep(index)}
+                    completed={isStepComplete(index)}
+                    {...buttonProps}
+                  >
+                  </StepButton>
+                </Step>
+              );
+            }
           })}
         </Stepper>
         <SwipeableViews

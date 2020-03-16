@@ -38,6 +38,8 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     let activeItem = -1;
     if (props.answers >= 0) {
       activeItem = props.answers;
+    } else if (props.attempt && props.attempt.answer >= 0) {
+      activeItem = props.attempt.answer;
     }
 
     this.state = { activeItem };
@@ -85,6 +87,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   render() {
     const { activeItem } = this.state;
+    console.log(activeItem);
 
     return (
       <div className="choose-one-live">
