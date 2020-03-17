@@ -1,0 +1,18 @@
+.choose-one-live {
+  .choose-choice {
+    color: white;
+    text-align: center;
+    text-transform: none !important;
+    border-radius: 0 !important;
+    width: 100%;
+    font-size: 15px;
+  }
+
+  .choose-choice:nth-child(odd) {background: #0076B4}
+  .choose-choice:nth-child(even) {background: #0A3B7E}
+
+  .choose-choice.active {
+    padding-top: 4px;
+    border: 5px solid white;
+  }
+}

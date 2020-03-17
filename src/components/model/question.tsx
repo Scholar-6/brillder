@@ -52,7 +52,9 @@ export interface Hint {
 export interface Question {
   id: number,
   active: boolean,
-  type: number,
+  type: QuestionTypeEnum,
   hint: Hint
   components: any[]
+  edited?: boolean
+  contentBlocks? : string
 }

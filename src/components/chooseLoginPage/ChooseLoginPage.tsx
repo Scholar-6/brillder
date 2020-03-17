@@ -23,7 +23,7 @@ function ChooseLoginPage(props: any) {
 
   const userType = getUserTypeParam('userType');
 
-  if (userType === UserType.Builder) {
+  if (userType === UserType.Builder || userType === UserType.Student) {
     return (
       <Grid className="pre-login-page" container item justify="center" alignItems="center">
         <div className="login-container">

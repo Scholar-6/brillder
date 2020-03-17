@@ -1,0 +1,17 @@
+
+@import '../../../../variables';
+
+.tick-icon {
+  font-size: 26px;
+  border: 2px solid $black-blue;
+  border-radius: 100%;
+}
+
+.filled-tick-icon {
+  font-size: 26px;
+  letter-spacing: 0 !important;
+}
+
+.grey-icon {
+  background: $white-grey;
+}

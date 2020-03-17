@@ -7,6 +7,9 @@ import { useHistory } from 'react-router-dom';
 import './app.css';
 import '../../assets/fonts/icomoon/style.css';
 
+import Pallet from '../play/pallet/Pallet';
+import Dashboard from '../manage/dashboard/Dashboard';
+import PlayBrickRouting from '../play/brick/PlayBrickRouting';
 import NewBrick from '../build/newBrick/newBrick';
 import MainPage from '../build/mainPage/mainPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
@@ -16,6 +19,7 @@ import RegisterPage from '../registerPage/registerPage';
 import ChooseLoginPage from '../chooseLoginPage/ChooseLoginPage';
 import ChooseUserPage from '../chooseUserPage/ChooseUserPage';
 import LogoPage from '../logoPage/logoPage';
+
 import AuthRoute from './AuthRoute';
 import PrivateRoute from './PrivateRoute';
 
@@ -47,6 +51,10 @@ const App: React.FC = (props: any) => {
   return (
     <ThemeProvider theme={theme}>
       <Switch>
+        <PrivateRoute path="/play/brick/:brickId" component={PlayBrickRouting} />
+        <PrivateRoute path="/play/pallet/:palletName" component={Pallet} />
+        <PrivateRoute path="/manage/dashboard" component={Dashboard} />
+
         <PrivateRoute path="/build/new-brick" component={NewBrick} />
         <PrivateRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
         <PrivateRoute path="/build/bricks-list" component={BricksListPage} />
