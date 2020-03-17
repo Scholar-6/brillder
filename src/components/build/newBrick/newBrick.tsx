@@ -19,6 +19,7 @@ import { Brick } from "model/brick";
 interface NewBrickProps {
   brick: Brick;
   saveBrick(brick: Brick): void;
+  createBrick(brick: Brick): void;
   history: any;
 }
 
@@ -71,10 +72,11 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
   const saveBrick = () => {
     let brick = { ...state } as Brick;
     setBrick(brick);
-    if (brick) {
-      brick.id = brick.id;
+    if (brick.id) {
+      props.saveBrick(brick);
+    } else {
+      props.createBrick(brick);
     }
-    props.saveBrick(brick);
     setSaved(true);
   }
 
@@ -122,6 +124,7 @@ const mapDispatch = (dispatch: any) => {
   return {
     fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
     saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
+    createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
   }
 };
 
