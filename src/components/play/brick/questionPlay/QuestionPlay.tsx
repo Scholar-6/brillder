@@ -19,6 +19,7 @@ import PairMatch from '../questionTypes/pairMatch/PairMatch';
 import Sort from '../questionTypes/sort/Sort';
 import MissingWord from '../questionTypes/missingWord/MissingWord';
 import LineHighlighting from '../questionTypes/lineHighlighting/LineHighlighting';
+import WordHighlightingComponent from '../questionTypes/wordHighlighting/WordHighlighting';
 
 
 interface QuestionProps {
@@ -75,10 +76,14 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
         UniqueComponent = MissingWord;
       } else if (question.type === QuestionTypeEnum.LineHighlighting) {
         UniqueComponent = LineHighlighting;
+      } else if (question.type === QuestionTypeEnum.WordHighlighting) {
+        UniqueComponent = WordHighlightingComponent;
       }
+
       if (typeof UniqueComponent === "object") {
         return <div key={index}>Not implemented</div>
       }
+
       return <UniqueComponent
         ref={this.state.answerRef as React.RefObject<any>}
         key={index}

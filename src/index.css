@@ -63,10 +63,6 @@ code {
   font-weight: 400;
   font-style: normal;
   src: url("./assets/fonts/Montserrat/Montserrat-Regular.otf") format('opentype');
-  font-family: 'Spartan MB Regular';
-  font-style: normal;
-  font-weight: normal;
-  src: local('Spartan MB Regular'), url('./assets/fonts/SpartanMB/SpartanMB-Regular.woff') format('woff');
 }
 
 @font-face {
