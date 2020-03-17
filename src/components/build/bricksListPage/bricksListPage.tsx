@@ -63,7 +63,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
   expend(brick: Brick) {
     brick.expanded = !brick.expanded;
-    console.log(this.state.bricks);
     this.setState({ bricks: this.state.bricks });
   }
 
