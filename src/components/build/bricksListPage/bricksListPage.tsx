@@ -52,7 +52,7 @@ class BricksListPage extends Component<BricksListProps, any> {
           <Box className="brick-container" onClick={() => this.move(brick.id)}>
             <div className="link-description">{brick.title}</div>
             <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
-            <div className="link-info">{brick.author.firstName} {brick.author.lastName}</div>
+            <div className="link-info">{brick.author?.firstName} {brick.author?.lastName}</div>
           </Box>
         </Grid>
       );
