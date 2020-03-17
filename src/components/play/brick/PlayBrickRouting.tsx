@@ -15,7 +15,7 @@ import Ending from './ending/Ending';
 import { Brick } from 'model/brick';
 import { ComponentAttempt, PlayStatus } from './model/model';
 import {
-  Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus, QuestionType
+  Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'components/model/question';
 
 

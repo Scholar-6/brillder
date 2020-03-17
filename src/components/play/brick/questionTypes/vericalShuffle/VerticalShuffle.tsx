@@ -81,7 +81,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
             attempt.marks += markIncrement;
           }
           // or the item wasn't correct in the live phase...
-          else if (prev.answer[index] - prev.answer[index-1] != 1) {
+          else if (prev.answer[index] - prev.answer[index-1] !== 1) {
             // increase the marks by 2.
             attempt.marks += markIncrement;
           }

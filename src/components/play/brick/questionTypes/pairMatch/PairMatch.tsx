@@ -10,7 +10,6 @@ import './PairMatch.scss';
 import { Question } from "components/model/question";
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
-import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { ReactSortable } from 'react-sortablejs';
