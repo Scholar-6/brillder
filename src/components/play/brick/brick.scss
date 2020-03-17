@@ -1,0 +1,49 @@
+$light-grey: #F4F4F4;
+
+.MuiExpansionPanelDetails-root {
+  padding-top: 0 !important;
+  .MuiTypography-root {
+    font: 500 16px/24px 'Montserrat';
+  }
+}
+
+.brick-container {
+  font-family: 'Montserrat';
+  max-width: 800px;
+  width: 100%;
+  text-align: left;
+
+  h3 {
+    color: black;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h1 {
+    color: black;
+    padding: 5px;
+    line-height: 48px;
+    text-transform: capitalize;
+    font-size: 32px;
+  }
+
+  .MuiExpansionPanel-root {
+    background: $light-grey;
+  }
+
+  .MuiExpansionPanel-root.Mui-expanded {
+    margin: 0 !important;
+    margin-bottom: 16px !important;
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .brick-container {
+    text-align: center;
+  }
+}

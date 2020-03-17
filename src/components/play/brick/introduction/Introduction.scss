@@ -1,0 +1,24 @@
+.introduction-page {
+  padding: 1vw;
+
+  .begin-row {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: right;
+  }
+
+  .other-header {
+    font-size: 24px !important;
+    font-weight: 400;
+  }
+
+  .start-brick-button {
+    margin-right: 0px;
+    >span {
+      font-family: 'Montserrat';
+      color: black;
+      font-size: 25px;
+      margin-right: 10px;
+    }
+  }
+}

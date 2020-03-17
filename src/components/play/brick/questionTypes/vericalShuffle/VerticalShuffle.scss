@@ -1,0 +1,12 @@
+
+.vertical-shuffle-play {
+  .vertical-shuffle-choice {
+      border: 1px dashed black;
+      color: black;
+      margin: 1px;
+      width: 100%;
+      > div {
+        margin: 10px !important;
+      }
+  }
+}
