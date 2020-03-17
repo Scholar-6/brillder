@@ -60,13 +60,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const updateAttempts = (attempt:any, index:number) => {
     attempts[index] = attempt;
     setAttempts(attempts);
-    console.log(attempts);
   }
 
   const updateReviewAttempts = (attempt:any, index:number) => {
-    let rattempts = Object.assign([], reviewAttempts) as any[];
-    rattempts[index] = attempt;
-    setReviewAttempts(rattempts);
+    reviewAttempts[index] = attempt;
+    setReviewAttempts(reviewAttempts);
   }
 
   const finishBrick = () => {
@@ -90,15 +88,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     let maxScore = reviewAttempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba : BrickAttempt = {
       brick: props.brick,
-      score: score,
-      maxScore: maxScore,
+      score,
+      maxScore,
       oldScore: brickAttempt.score,
       student: null,
       answers: reviewAttempts
     };
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
-
     // saveBrickAttempt;
   }
 

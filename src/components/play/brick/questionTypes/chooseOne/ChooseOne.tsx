@@ -87,7 +87,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   render() {
     const { activeItem } = this.state;
-    console.log(activeItem);
 
     return (
       <div className="choose-one-live">

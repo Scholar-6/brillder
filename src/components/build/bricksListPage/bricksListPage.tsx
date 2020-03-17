@@ -36,7 +36,6 @@ class BricksListPage extends Component<BricksListProps, any> {
   constructor(props: BricksListProps) {
     super(props)
     this.props.fetchBricks();
-    console.log(props)
   }
 
   move(brickId:number) {

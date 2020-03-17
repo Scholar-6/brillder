@@ -70,6 +70,7 @@ const ReviewPage: React.FC<ReviewPageProps> = (
     setActiveAnswer();
     questions[activeStep].edited = true;
     setActiveStep(update(activeStep, { $set: activeStep + 1 }));
+  
     if (activeStep >= questions.length - 1) {
       finishBrick();
       history.push(`/play/brick/${brickId}/ending`);
@@ -86,8 +87,6 @@ const ReviewPage: React.FC<ReviewPageProps> = (
       answers={answers[index]}
       ref={questionRefs[index]} />
   }
-
-  console.log(attempts);
 
   return (
     <Grid container direction='row' justify='center'>
