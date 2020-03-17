@@ -9,7 +9,18 @@
 
   h1 {
     font-size: 2vw;
-    margin-bottom: 5% !important;
+  }
+
+  .edit-proposal {
+    margin-left: 2vw;
+    cursor: pointer;
+    border: 0.18vw solid black;
+    border-radius: 0.4vw;
+    font-size: 1.8vw;
+  }
+
+  .edit-proposal:hover {
+    opacity: 0.7;
   }
 
   p {

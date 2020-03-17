@@ -102,32 +102,45 @@ $orange: #B44438;
     margin-left: 1.1vw;
     margin-right: 1.1vw;
 
+    .main-brick-container {
+      width: 100%;
+      margin: 5px 0.3vw 5px 0.3vw;
+    }
+
     .brick-container {
       cursor: pointer;
-      margin: 5px 0.3vw 5px 0.3vw;
       border-radius: 10px;
       background: #B44438;
       padding-left: 14px;
-      padding-top: 4px;
+      padding-right: 14px;
+      color: $dark-blue;
 
-      width: 100%;
+      width: 90%;
       text-align: left;
 
       .link-description {
         font-size: 1.05vw;
         margin: 4px 0 12px 0;
         font-weight: 600;
-        color: $dark-blue;
       }
 
       .link-info {
         font-size: 1.05vw;
-        color: $dark-blue;
-        margin-bottom: 12px;
+        padding-bottom: 12px;
+      }
+
+      .edit-button {
+        text-align:center;
+        padding-bottom: 8px;
+      }
+
+      .right-color-column {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
       }
     }
-    .brick-container:hover {
-
+    .brick-container.expanded {
+      color: white;
     }
   }
 

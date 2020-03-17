@@ -32,28 +32,71 @@ interface BricksListProps {
   history: any;
 }
 
-class BricksListPage extends Component<BricksListProps, any> {
+interface BricksListState {
+  bricks: Array<Brick>;
+  sortBy: SortBy;
+}
+
+enum SortBy {
+  None,
+  Date,
+  Subject,
+  Popularity,
+  Author,
+  Length,
+}
+
+class BricksListPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props)
     this.props.fetchBricks();
-    console.log(props)
+    this.state = {bricks: props.bricks, sortBy: SortBy.None};
+  }
+
+  componentWillReceiveProps(props:BricksListProps) {
+    this.setState({bricks: props.bricks});
   }
 
   move(brickId:number) {
     this.props.history.push(`/build/brick/${brickId}/build/investigation/question`)
   }
 
+  expend(brick: Brick) {
+    brick.expanded = !brick.expanded;
+    console.log(this.state.bricks);
+    this.setState({ bricks: this.state.bricks });
+  }
+
   createBricksList = () => {
     let bricksList = []
     let i = 0;
-    for (let brick of this.props.bricks) {
+    for (let brick of this.state.bricks) {
       bricksList.push(
-        <Grid container item xs={6} key={i} md={4} lg={3} justify="center">
-          <Box className="brick-container" onClick={() => this.move(brick.id)}>
-            <div className="link-description">{brick.title}</div>
-            <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
-            <div className="link-info">{brick.author?.firstName} {brick.author?.lastName}</div>
-          </Box>
+        <Grid container key={i} item xs={12} sm={6} md={4} lg={3} justify="center">
+          <div className="main-brick-container">
+            <Box className={brick.expanded ? "expanded brick-container" : "brick-container"} style={{paddingRight: 0}} onClick={() => this.expend(brick)}>
+              <Grid container direction="row" style={{padding: 0}}>
+              <Grid item xs={11}>
+                <div className="link-description">{brick.title}</div>
+                <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
+                <div className="link-info">{brick.author?.firstName} {brick.author?.lastName} | DD.MM.YYYY | {brick.brickLength} mins</div>
+                {
+                  brick.expanded
+                    ?
+                      <div className="edit-button">EDIT</div>
+                    : ""
+                }
+                </Grid>
+                <Grid className="right-color-column" style={{background: "green"}} item xs={1}>
+                  <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center">
+                    {
+                      brick.expanded ? "-" : "+"
+                    }
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Box>
+          </div>
         </Grid>
       );
       i++;
@@ -61,7 +104,7 @@ class BricksListPage extends Component<BricksListProps, any> {
     return bricksList
   }
 
-  render() {
+  render() {  
     return (
       <div className="bricks-list-page">
         <div className="bricks-upper-part">
@@ -86,7 +129,7 @@ class BricksListPage extends Component<BricksListProps, any> {
                 <Grid container item xs={2} justify="flex-start"></Grid>
                 <Grid container item xs={10} justify="flex-start">
                   <div style={{ width: "100%" }}>
-                    <Grid container xs={12} className="sort-bricks-by">
+                    <Grid container item xs={12} className="sort-bricks-by">
                       <span className="sort-by">Sort by</span>
                       <span className="sort-element">D A T E</span>
                       <ExpandMoreIcon className="expanded-icon" />
