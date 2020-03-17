@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
+import EditIcon from '@material-ui/icons/Edit';
 
 import { Brick } from "model/brick";
 import './ProposalReview.scss';
@@ -15,13 +16,21 @@ interface ProposalProps {
 }
 
 const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
+  const [mode, setMode] = React.useState(false);
+  const toggleEditMode = () => {
+    setMode(!mode);
+  }
+
   return (
     <div className="tutorial-page">
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={8} lg={8}>
           <Grid justify="center" container item xs={12} sm={9} md={10} lg={7}>
             <div className="left-card proposal-card">
-              <h1 className="only-tutorial-header">Y O U R &nbsp; P R O P O S A L</h1>
+              <Grid container direction="row" justify="center" className="only-tutorial-header" alignContent="center">
+                <h1 >Y O U R &nbsp; P R O P O S A L</h1>
+                <EditIcon className="edit-proposal" onClick={toggleEditMode} />
+              </Grid>
               <p>1. What is your brick about</p>
               <div className="proposal-titles">
                 <div>{brick.title}</div>

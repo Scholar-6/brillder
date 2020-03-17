@@ -23,6 +23,7 @@ export interface Brick {
   type: number
   questions: any[]
   author: Author
+  expanded?: boolean
 }
 
 export enum isAuthenticated {
