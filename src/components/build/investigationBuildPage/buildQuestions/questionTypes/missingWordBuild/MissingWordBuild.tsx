@@ -84,7 +84,6 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
       answer.checked = false;
     }
     choice.answers[index].checked = true;
-    console.log(choice)
     update();
   }
 

@@ -64,7 +64,6 @@ class LineHighlighting extends CompComponent<
     if (attempt.marks === 0 && !prev) {
       attempt.marks = 1;
     }
-    console.log(attempt.marks)
     return attempt;
   }
 

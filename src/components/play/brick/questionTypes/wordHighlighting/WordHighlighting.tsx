@@ -38,7 +38,8 @@ class WordHighlighting extends CompComponent<
     let markIncrement = prev ? 2 : 5;
     attempt.correct = true;
     attempt.marks = 0;
-    attempt.maxMarks = this.state.words.length * 5;
+    let correct = this.state.words.filter(w => w.checked === true);
+    attempt.maxMarks = correct.length * 5;
 
     this.state.words.forEach((word: any, index: number) => {
       if (attempt.answer.indexOf(index) !== -1 && word.checked === true) {
@@ -49,22 +50,13 @@ class WordHighlighting extends CompComponent<
             attempt.marks += markIncrement;
           }
         }
-      } else if (
-        word.checked === false &&
-        attempt.answer.indexOf(index) === -1
-      ) {
-        if (!prev) {
-          attempt.marks += markIncrement;
-        }
+      } else if (word.checked === false && attempt.answer.indexOf(index) === -1) {
       } else {
         attempt.correct = false;
       }
     });
 
-    if (attempt.marks === 0 && !prev) {
-      attempt.marks = 1;
-    }
-    console.log(attempt.marks)
+    if(attempt.marks === 0 && !prev) attempt.marks = 1;
     return attempt;
   }
 
@@ -75,7 +67,6 @@ class WordHighlighting extends CompComponent<
 
   render() {
     const { component } = this.props;
-    console.log(component)
 
     return (
       <div className="word-highlighting-play">
