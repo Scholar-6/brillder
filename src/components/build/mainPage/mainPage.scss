@@ -8,10 +8,31 @@ $border-radius: 2vw;
   position: fixed;
   width: 100%;
   height: 100%;
-  font-family: "Century Gothic Regular";
+  font-family: "Brandon Grotesque Black";
+
+  .welcome-col {
+    width: 35.2vw;
+    padding-top: 16vh;
+    .welcome-box {
+      color:white;
+      letter-spacing: 0.66vw;
+      font-size: 2.58vw;
+      font-family: "Brandon Grotesque Bold";
+      padding-right: 2.9vw;
+      > div {
+        margin-bottom: 2.05vh;
+      }
+
+      .welcome-name {
+        font-weight: 600;
+        font-family: "Brandon Grotesque Thin";
+        color: $orange;
+      }
+        
+    }
+  }
 
   .first-col {
-    margin-left: 35.2vw;
     width: 29.6vw;
     height: 100%;
 
