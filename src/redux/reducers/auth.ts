@@ -1,22 +1,25 @@
 import types from '../types';
 import { isAuthenticated } from 'model/brick';
-
+import { UserLoginType } from 'model/auth';
 
 
 interface AuthState {
   isAuthenticated: isAuthenticated
+  userType: UserLoginType
   error: string
 }
 
 const AccountInitialState: AuthState = {
   isAuthenticated: isAuthenticated.None,
+  userType: UserLoginType.None,
   error: ""
 }
+
 
 export default (state = AccountInitialState, action: any) => {
   switch (action.type) {
     case types.LOGIN_SUCCESS:
-      return { isAuthenticated: isAuthenticated.True } as AuthState
+      return { isAuthenticated: isAuthenticated.True, userType: action.userType } as AuthState
     case types.LOGIN_FAILURE:
       return { isAuthenticated: isAuthenticated.False, error: action.error } as AuthState
     case types.LOGOUT_SUCCESS:

@@ -4,10 +4,12 @@ import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 // @ts-ignore
 import { connect } from 'react-redux';
+import { History } from 'history';
+
 import actions from '../../redux/actions/auth';
 import './loginPage.scss';
 import { Redirect } from "react-router-dom";
-import {UserType} from '../model/userTypeModel';
+import {LoginModel, UserLoginType} from 'model/auth';
 
 
 const mapState = (state: any) => {
@@ -19,13 +21,18 @@ const mapState = (state: any) => {
 
 const mapDispatch = (dispatch: any) => {
   return {
-    login: (model: any) => dispatch(actions.login(model)),
+    login: (model: LoginModel) => dispatch(actions.login(model)),
   }
 }
 
 const connector = connect(mapState, mapDispatch)
 
-function LoginPage(props: any) {
+interface LoginProps {
+  login(mode: LoginModel):void
+  history: History
+}
+
+const LoginPage:React.FC<LoginProps> = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -39,7 +46,7 @@ function LoginPage(props: any) {
   if (!type) {
     return <Redirect to="/choose-user" />
   }
-  const userType = parseInt(type) as UserType;
+  const userType = parseInt(type) as UserLoginType;
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -57,7 +64,7 @@ function LoginPage(props: any) {
       return;
     }
 
-    props.login({email, password});
+    props.login({email, password, userType});
   }
 
   const toRegister = () => {
@@ -93,7 +100,12 @@ function LoginPage(props: any) {
                 <br />
                 <Grid container direction="row" justify="flex-end" alignItems="center">
                   {
-                    userType === UserType.Student ? <Button variant="contained" color="primary" className="sign-in-button" onClick={toRegister}>Sign up</Button> : ""
+                    userType === UserLoginType.Student
+                      ?
+                        <Button variant="contained" color="primary" className="sign-in-button" onClick={toRegister}>
+                          Sign up
+                        </Button>
+                      : ""
                   }
                   <Button variant="contained" color="primary" className="sign-in-button" type="submit">Sign in</Button>
                 </Grid>
