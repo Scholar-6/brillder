@@ -3,18 +3,31 @@ import { Route, Redirect } from "react-router-dom";
 // @ts-ignore
 import { connect } from 'react-redux';
 import { isAuthenticated } from 'model/brick';
+import { UserLoginType } from 'model/auth';
 
-const AuthRoute: React.FC<any> = ({ component: Component, ...rest }) => {
+
+interface AuthRouteProps {
+  component: any,
+  isAuthenticated: isAuthenticated,
+  userType: UserLoginType
+}
+
+const AuthRoute: React.FC<AuthRouteProps> = ({ component: Component, ...rest }) => {
   if (rest.isAuthenticated === isAuthenticated.None || rest.isAuthenticated === isAuthenticated.False) {
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else {
-    return <Redirect to={{ pathname: '/build' }} />
+    if (rest.userType === UserLoginType.Student) {
+      return <Redirect to={{ pathname: '/manage/dashboard' }} />
+    } else {
+      return <Redirect to={{ pathname: '/build' }} />
+    }
   }
 }
 
 const mapState = (state: any) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
+    userType: state.auth.userType
   }
 }
 

@@ -2,18 +2,22 @@ import React from "react";
 import update from 'immutability-helper';
 import { Button, Grid } from "@material-ui/core";
 import Snackbar from '@material-ui/core/Snackbar';
+import { History } from 'history';
 
 import './ChooseUserPage.scss';
-import { UserType } from '../model/userTypeModel';
+import { UserLoginType } from 'model/auth';
 
+interface ChooseUserProps {
+  history: History
+}
 
-function ChooseUserPage(props: any) {
+const ChooseUserPage:React.FC<ChooseUserProps> = (props) => {
   const [userType, setUserType] = React.useState(0);
   const [open, setOpen] = React.useState(false);
 
-  const selectLoginType = (type: UserType) => {
+  const selectLoginType = (type: UserLoginType) => {
     setUserType(update(userType, { $set: type }));
-    if (type === UserType.Builder || type === UserType.Student) {
+    if (type === UserLoginType.Builder || type === UserLoginType.Student) {
       props.history.push(`/choose-login?userType=${type}`);
     }
   }
@@ -45,21 +49,21 @@ function ChooseUserPage(props: any) {
           <div style={{ width: "100%" }}>
             <Grid container direction="row">
               <Grid container item xs={12} justify="center">
-                <Button onClick={() => { selectLoginType(UserType.Student); }} className="user-type-btn">
+                <Button onClick={() => { selectLoginType(UserLoginType.Student); }} className="user-type-btn">
                   <span className="user-type-name">L e a r n</span>
                 </Button>
               </Grid>
             </Grid>
             <Grid container direction="row">
               <Grid container item xs={12} justify="center">
-                <Button onClick={() => { selectLoginType(UserType.Teacher); openMessage(); }} className="user-type-btn">
+                <Button onClick={() => { selectLoginType(UserLoginType.Teacher); openMessage(); }} className="user-type-btn">
                   <span className="user-type-name">T e a c h</span>
                 </Button>
               </Grid>
             </Grid>
             <Grid container direction="row">
               <Grid container item xs={12} justify="center">
-                <Button onClick={() => selectLoginType(UserType.Builder)} className="user-type-btn">
+                <Button onClick={() => selectLoginType(UserLoginType.Builder)} className="user-type-btn">
                   <span className="user-type-name">B u i l d</span>
                 </Button>
               </Grid>

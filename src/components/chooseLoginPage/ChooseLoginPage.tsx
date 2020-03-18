@@ -1,29 +1,34 @@
 import React from "react";
 import { Button, Grid } from "@material-ui/core";
+import { History } from 'history'
 
 import './ChooseLoginPage.scss';
-import { UserType } from '../model/userTypeModel';
+import { UserLoginType } from 'model/auth';
 import { Redirect } from "react-router-dom";
 
 
-function ChooseLoginPage(props: any) {
+interface ChooseLoginProps {
+  history: History
+}
+
+const ChooseLoginPage:React.FC<ChooseLoginProps> = (props) => {
   const moveToLogin = () => {
     props.history.push('/login?userType=' + userType)
   }
 
-  function getUserTypeParam(param: string):UserType {
+  function getUserTypeParam(param: string):UserLoginType {
     var url_string =  window.location.href;
     var url = new URL(url_string);
     let userType = url.searchParams.get(param);
     if (userType) {
       return parseInt(userType);
     }
-    return UserType.None;
+    return UserLoginType.None;
   }
 
   const userType = getUserTypeParam('userType');
 
-  if (userType === UserType.Builder || userType === UserType.Student) {
+  if (userType === UserLoginType.Builder || userType === UserLoginType.Student) {
     return (
       <Grid className="pre-login-page" container item justify="center" alignItems="center">
         <div className="login-container">

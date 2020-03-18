@@ -21,7 +21,10 @@ import ChooseUserPage from '../chooseUserPage/ChooseUserPage';
 import LogoPage from '../logoPage/logoPage';
 
 import AuthRoute from './AuthRoute';
-import PrivateRoute from './PrivateRoute';
+import BuildRoute from './BuildRoute';
+import StudentRoute from './StudentRoute';
+import AuthRedirectRoute from './AuthRedirectRoute';
+
 
 const App: React.FC = (props: any) => {
   let history = useHistory();
@@ -29,7 +32,10 @@ const App: React.FC = (props: any) => {
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    history.push("/choose-user");
+    let {url} = error.response.config;
+    if (url.search('/auth/login/') === -1) {
+      history.push("/choose-user");
+    }
     return Promise.reject(error);
   });
 
@@ -51,22 +57,22 @@ const App: React.FC = (props: any) => {
   return (
     <ThemeProvider theme={theme}>
       <Switch>
-        <PrivateRoute path="/play/brick/:brickId" component={PlayBrickRouting} />
-        <PrivateRoute path="/play/pallet/:palletName" component={Pallet} />
-        <PrivateRoute path="/manage/dashboard" component={Dashboard} />
+        <StudentRoute path="/play/brick/:brickId" component={PlayBrickRouting} />
+        <StudentRoute path="/play/pallet/:palletName" component={Pallet} />
+        <StudentRoute path="/manage/dashboard" component={Dashboard} />
 
-        <PrivateRoute path="/build/new-brick" component={NewBrick} />
-        <PrivateRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
-        <PrivateRoute path="/build/bricks-list" component={BricksListPage} />
+        <BuildRoute path="/build/new-brick" component={NewBrick} />
+        <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
+        <BuildRoute path="/build/bricks-list" component={BricksListPage} />
+        <BuildRoute path="/build" component={MainPage} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
         <AuthRoute path="/choose-user" component={ChooseUserPage} />
         <AuthRoute path="/login" exact component={LoginPage} />
         <AuthRoute path="/register" exact component={RegisterPage} />
 
-        <PrivateRoute path="/build" component={MainPage} />
         <Route path="/logo-page" component={LogoPage} />
-        <PrivateRoute path="/" component={MainPage} />
+        <AuthRedirectRoute />
       </Switch>
     </ThemeProvider>
   );
