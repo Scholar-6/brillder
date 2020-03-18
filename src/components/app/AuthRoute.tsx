@@ -17,7 +17,7 @@ const AuthRoute: React.FC<AuthRouteProps> = ({ component: Component, ...rest }) 
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else {
     if (rest.userType === UserLoginType.Student) {
-      return <Redirect to={{ pathname: '/manage/dashboard' }} />
+      return <Redirect to={{ pathname: '/play/dashboard' }} />
     } else {
       return <Redirect to={{ pathname: '/build' }} />
     }

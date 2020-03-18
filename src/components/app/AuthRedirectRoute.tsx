@@ -24,7 +24,7 @@ const AuthRedirect: React.FC<any> = ({ user, ...rest }) => {
     if (user.type === UserType.Admin || user.type === UserType.Creator || user.type === UserType.Editor) {
       return <Redirect to="/build" />
     } else {
-      return <Redirect to="/manage/dashboard" />
+      return <Redirect to="/play/dashboard" />
     }
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized()
