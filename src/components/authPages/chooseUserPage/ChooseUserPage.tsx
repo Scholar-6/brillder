@@ -36,11 +36,6 @@ const ChooseUserPage:React.FC<ChooseUserProps> = (props) => {
         <Grid container className="pre-login-image-container2" justify="center" item xs={12} alignItems="center">
           <Grid container className="pre-login-image-container3" justify="center" style={{ position: "relative" }}>
             <img alt="Logo" src="/images/BrixLogo.png" className="pre-login-image" />
-            <Grid container direction="row" justify="center" className="pre-login-text" style={{ position: "absolute", bottom: 0 }}>
-              <p>
-                A &nbsp; S C H O L A R &nbsp; 6 &nbsp; T E C H &nbsp; P R O D U C T
-              </p>
-            </Grid>
           </Grid>
         </Grid>
       </Grid>
