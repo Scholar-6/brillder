@@ -30,54 +30,74 @@ const ChooseUserPage:React.FC<ChooseUserProps> = (props) => {
     setOpen(update(open, { $set: false }))
   }
 
-  return (
-    <Grid className="choose-user-page" style={{ height: '100%' }} container item justify="center">
-      <Grid container className="pre-login-image-container" justify="center" item xs={12} sm={6} alignItems="center">
-        <Grid container className="pre-login-image-container2" justify="center" item xs={12} alignItems="center">
-          <Grid container className="pre-login-image-container3" justify="center" style={{ position: "relative" }}>
-            <img alt="Logo" src="/images/BrixLogo.png" className="pre-login-image" />
-          </Grid>
-        </Grid>
+  const renderLogo = () => {
+    return (
+      <Grid container style={{height:'100%'}} justify="center" alignItems="center">
+        <img alt="Logo" src="/images/BrixLogo.png" className="logo-image" />
       </Grid>
-      <Grid container item xs={12} sm={6} className="pre-login-button-container">
-        <Grid container direction="row" justify="center" alignItems="center">
-          <div style={{ width: "100%" }}>
-            <Grid container direction="row">
-              <Grid container item xs={12} justify="center">
-                <Button onClick={() => { selectLoginType(UserLoginType.Student); }} className="user-type-btn">
-                  <span className="user-type-name">L e a r n</span>
-                </Button>
-              </Grid>
+    );
+  }
+
+  const renderButtons = () => {
+    return (
+      <Grid container style={{height:'100%'}} justify="center" alignItems="center">
+        <div style={{width: "100%"}}>
+          <Grid container direction="row">
+            <Grid container item xs={12} justify="center">
+              <Button onClick={() => { selectLoginType(UserLoginType.Student); }} className="user-type-btn">
+                <span className="user-type-name">L e a r n</span>
+              </Button>
             </Grid>
-            <Grid container direction="row">
-              <Grid container item xs={12} justify="center">
-                <Button onClick={() => { selectLoginType(UserLoginType.Teacher); openMessage(); }} className="user-type-btn">
-                  <span className="user-type-name">T e a c h</span>
-                </Button>
-              </Grid>
+          </Grid>
+          <Grid container direction="row">
+            <Grid container item xs={12} justify="center">
+              <Button onClick={() => { selectLoginType(UserLoginType.Teacher); openMessage(); }} className="user-type-btn">
+                <span className="user-type-name">T e a c h</span>
+              </Button>
             </Grid>
-            <Grid container direction="row">
-              <Grid container item xs={12} justify="center">
-                <Button onClick={() => selectLoginType(UserLoginType.Builder)} className="user-type-btn">
-                  <span className="user-type-name">B u i l d</span>
-                </Button>
-              </Grid>
+          </Grid>
+          <Grid container direction="row">
+            <Grid container item xs={12} justify="center">
+              <Button onClick={() => selectLoginType(UserLoginType.Builder)} className="user-type-btn">
+                <span className="user-type-name">B u i l d</span>
+              </Button>
             </Grid>
-          </div>
-        </Grid>
+          </Grid>
+        </div>
+      </Grid>
+    );
+  }
+
+  return (
+    <Grid className="choose-user-page" style={{ height: '100%' }}>
+      <Grid container direction="row" className="first-row">
+        <div className="first-col"></div>
+        <div className="second-col"></div>
+        <div className="third-col"></div>
+      </Grid>
+      <Grid container direction="row" className="second-row">
+        <div className="first-col">
+          {renderLogo()}
+        </div>
+        <div className="second-col">
+          {renderButtons()}
+        </div>
+      </Grid>
+      <Grid container direction="row" className="third-row">
+        <div className="first-col"></div>
+        <div className="second-col"></div>
+        <div className="third-col"></div>
       </Grid>
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
+          vertical: 'bottom', horizontal: 'center',
         }}
         open={open}
         autoHideDuration={1500}
         onClose={handleClose}
         message={`You cannot login as this type of user yet.`}
         action={
-          <React.Fragment>
-          </React.Fragment>
+          <React.Fragment></React.Fragment>
         }
       />
     </Grid>

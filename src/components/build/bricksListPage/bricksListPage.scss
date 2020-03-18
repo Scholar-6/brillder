@@ -1,10 +1,8 @@
-$dark-blue: #001D55;
-$orange: #B44438;
+@import "_variables";
 
 .bricks-list-page {
   background: $dark-blue;
   height: 100%;
-  background: #001D55;
   font-family: 'Spartan MB Regular';
 
   h1 {
@@ -63,7 +61,7 @@ $orange: #B44438;
       }
 
       .sort-bricks-by {
-        background: #B44438;
+        background: $orange;
         padding-top: 4px;
         padding-bottom: 5px;
         font-size: 18px;
@@ -110,7 +108,7 @@ $orange: #B44438;
     .brick-container {
       cursor: pointer;
       border-radius: 10px;
-      background: #B44438;
+      background: $orange;
       padding-left: 14px;
       padding-right: 14px;
       color: $dark-blue;
