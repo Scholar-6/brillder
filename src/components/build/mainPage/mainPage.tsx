@@ -41,8 +41,14 @@ class MainPage extends Component<any, any> {
     const {history} = this.props;
     return (
       <Grid container direction="row" className="mainPage">
+        <div className="welcome-col">
+          <div className="welcome-box">
+            <div>WELCOME</div>
+            <div>TO BRIX,</div>
+            <div className="welcome-name">USER X</div>
+          </div>
+        </div>
         <div className="first-col">
-        <div style={{background: "#B44438 0% 0% no-repeat padding-box"}}></div>
           <div className="first-item">
             <Grid container justify="center" style={{width: "100%"}}>
               <div className="zoom-item view-item" onClick={() => history.push('/build/bricks-list')}>
