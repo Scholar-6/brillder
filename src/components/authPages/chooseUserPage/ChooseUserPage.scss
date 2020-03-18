@@ -1,8 +1,87 @@
 @import "_variables";
+$col-radius: 2vw;
+$col-color: #193366;
 
 .choose-user-page {
   height: 100%;
-  background-color: #06215C;
+  background-color: $dark-blue;
+
+  .first-row {
+    height: 24.95%;
+    .first-col {
+      width: 30.5%;
+      height: 100%;
+      border-bottom-right-radius: $col-radius;
+      background: $col-color;
+    }
+    .second-col {
+      margin-left: 2%;
+      width: 50.1%;
+      height: 100%;
+      border-bottom-right-radius: $col-radius;
+      border-bottom-left-radius: $col-radius;
+      background: $col-color;
+    }
+    .third-col {
+      margin-left: 2%;
+      width: 15.4%;
+      height: 100%;
+      border-bottom-left-radius: $col-radius;
+      background: $col-color;
+    }
+  }
+
+  .second-row {
+    height: 58.4%;
+    margin-top: 3.2vh;
+    .first-col {
+      margin-left: 1.7%;
+      width: 50.1%;
+      height: 100%;
+      border-radius: $col-radius;
+      background: $col-color;
+    }
+    .second-col {
+      margin-left:1.72%;
+      width: 46.48%;
+      height: 100%;
+      border-top-left-radius: $col-radius;
+      border-bottom-left-radius: $col-radius;
+      background: $col-color;
+    }
+  }
+
+  .third-row {
+    height: 9.82%;
+    margin-top: 3.63vh;
+    .first-col {
+      width: 35.25%;
+      height: 100%;
+      border-top-right-radius: $col-radius;
+      background: $col-color;
+    }
+    .second-col {
+      margin-left: 2%;
+      width: 50.1%;
+      height: 100%;
+      border-top-right-radius: $col-radius;
+      border-top-left-radius: $col-radius;
+      background: $col-color;
+    }
+    .third-col {
+      margin-left: 2%;
+      width: 10.65%;
+      height: 100%;
+      border-top-left-radius: $col-radius;
+      background: $col-color;
+    }
+  }
+
+  .logo-image {
+    height: 46.3vh;
+    margin-bottom: 0.5vh;
+    margin-right: 0.8vw;
+  }
 
   .pre-login-image-container {
     .pre-login-image-container2 {
@@ -23,21 +102,28 @@
 
 
   .user-type-btn:hover {
-    background-color: #c94f42;
+    color: white;
+    background: $orange !important;
+    span {
+      font-family: "Brandon Grotesque Bold" !important;
+    }
   }
 
   .user-type-btn {
-    padding: 20px 24px;
-    background-color: $global-orange;
-    color: #eee;
-    margin-bottom: 10px;
-    border-radius: 10px;
+    padding: 2.85vh 0;
+    background-color: $orange;
+    color: $dark-blue;
+    margin-top: 1.55vh;
+    margin-bottom: 1.6vh;
+    margin-right: 3.4vw;
+    border-radius: 0.7vw;
     font-weight: 200 !important;
-    width: 50%;
-    font-size: 2vw;
+    width: 51%;
+    font-size: 2.55vw;
 
     span {
-      font-family: "Century Gothic Regular";
+      font-family: "Brandon Grotesque Light";
+      font-weight: 200 !important;
     }
 
     img {
@@ -48,145 +134,6 @@
 
     .user-type-name {
       line-height: 1 !important;
-    }
-  }
-
-  .footer-image {
-    width: 50%;
-    margin-top: 0px;
-  }
-
-  @media only screen and (min-width: 1280px) {
-    .pre-login-image-container {
-      height: 100%;
-
-      .pre-login-image-container2 {
-        height: 70%;
-        border-right: 0.15vw solid white;
-
-        .pre-login-image-container3 {
-          height: 80%;
-        }
-      }
-    }
-
-    .user-type-btn {
-      height: 7vw;
-      margin-bottom: 1.8vw !important;
-      border-radius: 0.5vw;
-    }
-  }
-
-  @media only screen and (max-width: 1279px) and (min-width: 960px) {
-    .pre-login-image-container {
-      height: 100%;
-
-      .pre-login-image-container2 {
-        height: 70%;
-        border-right: 2px solid white;
-
-        .pre-login-image-container3 {
-          height: 70%;
-        }
-      }
-    }
-
-    .user-type-btn {
-      padding: 20px 0 !important;
-      margin-bottom: 18px !important;
-    }
-
-  }
-
-  .pre-login-text {
-    font-size: 1.25vw !important;
-  }
-
-  @media only screen and (max-width: 959px) and (min-width: 600px) {
-    .pre-login-image-container {
-      height: 100%;
-
-      .pre-login-image-container2 {
-        height: 70%;
-        border-right: 2px solid white;
-
-        .pre-login-image-container3 {
-          height: 50%;
-        }
-      }
-    }
-
-    .user-type-btn {
-      padding: 15px 0 !important;
-    }
-
-    .pre-login-text {
-      font-size: 12px !important;
-    }
-  }
-
-  @media only screen and (max-width: 599px) {
-    .pre-login-image-container {
-      height: 45%;
-
-      .pre-login-image-container2 {
-        height: 85%;
-
-        .pre-login-image-container3 {
-          height: 100%;
-
-          .pre-login-image {
-            height: 90% !important;
-            padding-bottom: 0px !important;
-            margin-bottom: 0px !important;
-          }
-        }
-      }
-    }
-
-    .pre-login-button-container {
-      height: 55%;
-
-      >div {
-        height: 100%;
-
-        >div {
-          height: 100%;
-
-          >div {
-            height: 33%;
-
-            >div {
-              height: 100%;
-
-              >button {
-                height: 82% !important;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .user-type-btn {
-      width: 85%;
-      height: 20% !important;
-      padding: 0 !important;
-      border-radius: 20px !important;
-      font-size: 7vw;
-
-      .user-type-name {
-        padding: 0 !important;
-        margin: 0 !important;
-      }
-    }
-
-    .pre-login-text {
-      font-size: 4.4vw !important;
-    }
-
-    .footer-image {
-      max-height: 100px;
     }
   }
 }
