@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { History } from 'history';
 
-import actions from '../../redux/actions/auth';
+import actions from 'redux/actions/auth';
 import './loginPage.scss';
 import { Redirect } from "react-router-dom";
 import {LoginModel, UserLoginType} from 'model/auth';

@@ -14,10 +14,10 @@ import NewBrick from '../build/newBrick/newBrick';
 import MainPage from '../build/mainPage/mainPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
 import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
-import LoginPage from '../loginPage/loginPage';
-import RegisterPage from '../registerPage/registerPage';
-import ChooseLoginPage from '../chooseLoginPage/ChooseLoginPage';
-import ChooseUserPage from '../chooseUserPage/ChooseUserPage';
+import LoginPage from '../authPages/loginPage/loginPage';
+import RegisterPage from '../authPages/registerPage/registerPage';
+import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
+import ChooseUserPage from '../authPages/chooseUserPage/ChooseUserPage';
 import LogoPage from '../logoPage/logoPage';
 
 import AuthRoute from './AuthRoute';
