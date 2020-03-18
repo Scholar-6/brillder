@@ -3,6 +3,12 @@
 $col-blue: #183265;
 $border-radius: 2vw;
 
+$mobile-col-radius: 8vw;
+$mobile-col-color: #19305F;
+$mobile-background: #001A4E;
+$mobile-arrow-color: #96A0B6;
+  
+
 .mainPage {
   background: $dark-blue;
   position: fixed;
@@ -150,6 +156,125 @@ $border-radius: 2vw;
     }
     .image-top {
       display: inline;
+    }
+  }
+
+  .mobile-main-page-background {
+    background: $mobile-background;
+    height: 100%;
+    width: 100%;
+
+    .first-mobile-row {
+      padding-top: 1.4vh;
+      height: 32.65%;
+      .first-col {
+        width: 12.7%;
+        height: 100%;
+        border-top-right-radius: $mobile-col-radius;
+        border-bottom-right-radius: $mobile-col-radius;
+        background: $mobile-col-color;
+      }
+      .second-col {
+        margin-left: 3.8%;
+        width: 83.5%;
+        height: 100%;
+        border-top-left-radius: $mobile-col-radius;
+        border-bottom-left-radius: $mobile-col-radius;
+        background: $mobile-col-color;
+      }
+    }
+
+    .second-mobile-row {
+      margin-top: 1.81vh;
+      height: 31.1%;
+      .first-col {
+        width: 67%;
+        height: 100%;
+        border-top-right-radius: $mobile-col-radius;
+        border-bottom-right-radius: $mobile-col-radius;
+        background: $mobile-col-color;
+      }
+      .second-col {
+        margin-left: 3.8%;
+        width: 29.2%;
+        height: 100%;
+        border-top-left-radius: $mobile-col-radius;
+        border-bottom-left-radius: $mobile-col-radius;
+        background: $mobile-col-color;
+      }
+    }
+    .third-mobile-row {
+      margin-top: 1.86vh;
+      height: 31.2%;
+      .first-col {
+        width: 38%;
+        height: 100%;
+        border-top-right-radius: $mobile-col-radius;
+        border-bottom-right-radius: $mobile-col-radius;
+        background: $mobile-col-color;
+      }
+      .second-col {
+        margin-left: 4.6%;
+        width: 57.4%;
+        height: 100%;
+        border-top-left-radius: $mobile-col-radius;
+        border-bottom-left-radius: $mobile-col-radius;
+        background: $mobile-col-color;
+      }
+    }
+  }
+
+  .mobile-main-page {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+
+    .mobile-logout-button {
+      margin-top: 3.45vh;
+      margin-right: 9vw;
+      color: white;
+      font: 4vw 'Brandon Grotesque Regular';
+      letter-spacing: 1vw;
+
+      .logout-image {
+        margin-right: 1.6vw;
+        height: 5.6vh;
+        min-height: 100%;
+      }
+    }
+
+    .item-description {
+      text-align: center;
+      padding-top: 0vh;
+      margin-top: -0.4vh;
+      margin-left: 2vw;
+      font: 3vh 'Brandon Grotesque Light';
+      letter-spacing: 1.3vw;
+      color: #BFC5D2;
+    }
+
+    .view-item {
+      padding-top: 7.5vh;
+      .item-image {
+        height: 11.3vh;
+      }
+    }
+
+    .create-item {
+      padding-top: 6.7vh;
+      .item-image {
+        height: 16.9vh;
+      }
+      .item-description {
+        margin-top: 1vh;
+      }
+    }
+    .back-item {
+      padding-top: 6.9vh;
+      .item-image {
+        height: 19.6vh;
+      }
     }
   }
 }
