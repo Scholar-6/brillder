@@ -24,38 +24,35 @@ const connector = connect(
 class MainPage extends Component {
   render() {
     return (
-      <div className="mainPage">
-        <MainMenu></MainMenu>
-
-        <Grid container direction="row" justify="center" style={{ height: "100%" }} alignItems="center">
-          <div className="main-page-center-container">
-            <Grid container direction="row" justify="center" alignItems="center">
-              <Grid container item xs={6} sm={5} md={4} lg={3} justify="center">
-                <Link to="/build/bricks-list" className="bigButton">
-                  <div className="link-title">V I E W</div>
-                  <div className="link-description">S e e &nbsp; w h a t &nbsp; w e &nbsp; h a v e</div>
-                </Link>
-              </Grid>
-            </Grid>
-            <Grid container direction="row" justify="center" alignItems="center">
-              <Grid container item xs={6} sm={5} md={4} lg={3} justify="center">
-                <Link to="/build/new-brick/welcome" className="bigButton">
-                  <div className="link-title">C R E A T E</div>
-                  <div className="link-description">S t a r t &nbsp; b u i l d i n g</div>
-                </Link>
-              </Grid>
-            </Grid>
-            <Grid container direction="row" justify="center" alignItems="center">
-              <Grid container item xs={6} sm={5} md={4} lg={3} justify="center">
-                <Link to="/build" className="bigButton">
-                  <div className="link-title">B A C K &nbsp; T O &nbsp; W O R K</div>
-                  <div className="link-description">O n g o i n g &nbsp; p r o j e c t s</div>
-                </Link>
-              </Grid>
-            </Grid>
+      <Grid container direction="row" className="mainPage">
+        <div className="first-col">
+        <div style={{background: "#B44438 0% 0% no-repeat padding-box"}}></div>
+          <div className="first-item">
+            <div className="view-item">
+              <img alt="Logo" src="/images/main-page/glasses.png" className="item-image" />
+              <div className="item-description">View All Bricks</div>
+            </div>
+            <div className="create-item">
+              <img alt="Logo" src="/images/main-page/create.png" className="item-image" />
+              <div className="item-description">Start Building</div>
+            </div>
+            <div className="back-item">
+              <img alt="Logo" src="/images/main-page/backToWork.png" className="item-image" />
+              <div className="item-description">Back To Work</div>
+            </div>
           </div>
-        </Grid>
-      </div>
+          <div className="second-item"></div>
+        </div>
+        <div className="second-col">
+          <div className="first-item"></div>
+          <div className="second-item"></div>
+        </div>
+        <div className="logout-button">
+          <Grid container alignContent="center">
+            <p>Q</p>
+          </Grid>
+        </div>
+      </Grid>
     )
   }
 }
