@@ -50,24 +50,39 @@ $border-radius: 2vw;
   }
 
   .item-image {
-    height: 5.7vh;
+    height: 10.1vh;
   }
 
   .view-item {
     padding-top: 14.5vh;
   }
+
+  .zoom-item {
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    transform-origin: 50% 75%;
+  }
+
+  .zoom-item:hover {
+    transform: scale(1.4); 
+
+    .item-description {
+      color: white;
+    }
+  }
+
   .create-item {
     padding-top: 8.3vh;
 
     .item-image {
-      height: 8.1vh;
+      height: 14.5vh;
     }
   }
 
   .back-item {
     padding-top: 11.4vh;
     .item-image {
-      height: 7.85vh;
+      height: 14vh;
     }
     .item-description {
       padding-top: 0.9vh;
@@ -84,10 +99,36 @@ $border-radius: 2vw;
   }
 
   .logout-button {
+    cursor: pointer;
     position: fixed;
     top: 2vh;
-    right: 2vw;
+    right: 1.8vw;
     font-size: 1.5vw;
     color: white;
+    font: 1.24vw 'Brandon Grotesque Bold';
+    letter-spacing: 0.25vw;
+
+    .logout-image {
+      margin-right: 0.2vw;
+      height: 3.8vw;
+      min-height: 100%;
+    }
+
+    .image-top {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 99;
+      height: 3.6vw;
+    }
+  }
+  .logout-button:hover {
+    .image-bottom {
+      opacity: 0;
+    }
+    .image-top {
+      display: inline;
+    }
   }
 }
