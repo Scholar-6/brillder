@@ -59,7 +59,7 @@ const App: React.FC = (props: any) => {
       <Switch>
         <StudentRoute path="/play/brick/:brickId" component={PlayBrickRouting} />
         <StudentRoute path="/play/pallet/:palletName" component={Pallet} />
-        <StudentRoute path="/manage/dashboard" component={Dashboard} />
+        <StudentRoute path="/play/dashboard" component={Dashboard} />
 
         <BuildRoute path="/build/new-brick" component={NewBrick} />
         <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />

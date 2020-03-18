@@ -37,7 +37,7 @@ const EndingPage: React.FC<EndingProps> = ({ status, brick, brickAttempt }) => {
   }
 
   const endBrick = () => {
-    history.push(`/manage/dashboard`);
+    history.push(`/play/dashboard`);
   }
 
   return (
