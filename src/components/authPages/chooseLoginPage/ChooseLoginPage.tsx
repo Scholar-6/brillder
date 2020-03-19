@@ -1,10 +1,12 @@
 import React from "react";
-import { Button, Grid } from "@material-ui/core";
 import { History } from 'history'
+import { Redirect } from "react-router-dom";
+import { Button, Grid } from "@material-ui/core";
+import MailIcon from '@material-ui/icons/Mail';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import './ChooseLoginPage.scss';
 import { UserLoginType } from 'model/auth';
-import { Redirect } from "react-router-dom";
 
 
 interface ChooseLoginProps {
@@ -31,31 +33,31 @@ const ChooseLoginPage:React.FC<ChooseLoginProps> = (props) => {
   if (userType === UserLoginType.Builder || userType === UserLoginType.Student) {
     return (
       <Grid className="pre-login-page" container item justify="center" alignItems="center">
-        <div className="login-container">
-          <div className="login-logo">
-            <img src="/images/lflogo.png" className="logo-img" alt="logo" />
+        <div className="back-col">
+          <div className="back-box">
+            <ArrowBackIcon className="back-button" onClick={() => props.history.push('/choose-user')} />
           </div>
-          <Grid container direction="row">
-            <Grid container item xs={12} justify="center">
-              <Button className="email-button" onClick={moveToLogin}>
-                <img className="email-icon" alt="mail" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/mail.svg" />
-                <span className="email-button-text">Sign in with email</span>
-              </Button>
+        </div>
+        <div className="first-col">
+          <div className="first-item">
+          </div>
+          <div className="second-item">
+            <Grid>
+              <img alt="Logo" src="/images/choose-login/logo.png" className="logo-image" />
             </Grid>
-          </Grid>
-          <Grid container direction="row">
-            <Grid container item xs={12} justify="center">
-              <Button className="google-button" href={process.env.REACT_APP_BACKEND_HOST + '/auth/google'}>
-                <img alt="google-icon" className="google-icon" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" />
-                <span className="google-button-text">Sign in with Google</span>
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid container direction="row">
-            <Grid container item xs={12} justify="center">
-              <img alt="footer-logo" className="footer-image" src="/images/brillder-2-logo.png" /><br />
-            </Grid>
-          </Grid>
+            <Button className="email-button" onClick={moveToLogin}>
+              <MailIcon className="email-icon" />
+              <span className="email-button-text">Sign in with email</span>
+            </Button>
+            <Button className="google-button email-button" href={process.env.REACT_APP_BACKEND_HOST + '/auth/google'}>
+              <img alt="google-icon" className="email-icon" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" />
+              <span className="email-button-text">Sign in with Google</span>
+            </Button>
+          </div>
+        </div>
+        <div className="second-col">
+          <div className="first-item"></div>
+          <div className="second-item"></div>
         </div>
       </Grid>
     );
