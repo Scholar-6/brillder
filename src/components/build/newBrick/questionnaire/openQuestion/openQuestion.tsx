@@ -35,7 +35,7 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
                   placeholder="Enter Open Question(s)..." />
               </Grid>
               <PreviousButton to="/build/new-brick/brick-title" />
-              <p className="page-number">1 of 5</p>
+              <p className="page-number">2 of 6</p>
               <NextButton
                 step={NewBrickStep.OpenQuestion}
                 canSubmit={true}
