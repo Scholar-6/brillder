@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Grid, TextField } from "@material-ui/core";
 import Card from '@material-ui/core/Card';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Button from '@material-ui/core/Button';
 // @ts-ignore
 import { connect } from 'react-redux';
@@ -73,32 +74,35 @@ const LoginPage:React.FC<LoginProps> = (props) => {
 
   return (
     <Grid className="login-page" container item justify="center" alignItems="center">
-      <div className="login-container">
-        <div className="login-logo">
-          <img src="/images/lflogo.png" className="logo-img" alt="" />
+        <div className="back-col">
+          <div className="back-box">
+            <ArrowBackIcon className="back-button" onClick={() => props.history.push(`/choose-login?userType=${userType}`)} />
+          </div>
         </div>
-        <Grid container direction="row">
-          <Grid container item xs={12} justify="center">
-            <Card className="login-card">
-              <h1>Sign in with email</h1>
-              <form onSubmit={handleSubmit}>
-                <TextField
+        <div className="first-col">
+          <div className="first-item">
+          </div>
+          <div className="second-item">
+            <Grid>
+              <img alt="Logo" src="/images/choose-login/logo.png" className="logo-image" />
+            </Grid>
+            <form onSubmit={handleSubmit}>
+                <input
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   className="login-field"
                   required
-                  label="Email" />
+                  placeholder="Email" />
                 <br />
-                <TextField
+                <input
                   type="password"
                   value={password}
                   className="login-field password"
                   onChange={e => setPassword(e.target.value)}
                   required
-                  label="Password" />
+                  placeholder="Password"/>
                 <br />
-                <Grid container direction="row" justify="flex-end" alignItems="center">
                   {
                     userType === UserLoginType.Student
                       ?
@@ -108,19 +112,15 @@ const LoginPage:React.FC<LoginProps> = (props) => {
                       : ""
                   }
                   <Button variant="contained" color="primary" className="sign-in-button" type="submit">Sign in</Button>
-                </Grid>
               </form>
-            </Card>
-          </Grid>
-        </Grid>
-        <Grid container direction="row">
-          <Grid container item xs={12} justify="center">
-            <img alt="" className="footer-image" src="/images/brillder-2-logo.png" />
-            <br />
-          </Grid>
-        </Grid>
-      </div>
-    </Grid>
+
+          </div>
+        </div>
+        <div className="second-col">
+          <div className="first-item"></div>
+          <div className="second-item"></div>
+        </div>
+      </Grid>
   );
 }
 
