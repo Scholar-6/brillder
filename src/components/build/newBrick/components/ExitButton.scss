@@ -1,0 +1,19 @@
+@import "_variables";
+
+.new-brick-exit-button {
+  position: fixed;
+  top: 2vh;
+  left: 2vw;
+
+  .text-container {
+    text-align: left;
+    color: $orange;
+
+    .exit-title {
+      font-family: 'Brandon Grotesque Bold';
+    }
+    .exit-description {
+      font-family: 'Brandon Grotesque Light';
+    }
+  }
+}
