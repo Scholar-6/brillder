@@ -82,7 +82,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 {
                   brick.expanded
                     ?
-                      <div className="edit-button">EDIT</div>
+                      <div className="edit-button" onClick={() => this.move(brick.id)}>EDIT</div>
                     : ""
                 }
                 </Grid>

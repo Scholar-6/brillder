@@ -5,7 +5,11 @@
     width: 100%;
 
     textarea {
-      height: 30% !important;
+      width: 80% !important;
+      height: 18vh !important;
+      font-family: 'Brandon Grotesque Regular';
+      border: 1px solid grey !important;
+      border-radius: 0.3vw !important;
     }
 
     .only-tutorial-header {

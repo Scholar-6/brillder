@@ -5,6 +5,7 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 // @ts-ignore 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
+import ExitButton from '../../components/ExitButton';
 import NextButton from '../../components/nextButton';
 import PreviousButton from '../../components/previousButton';
 import { NewBrickStep } from "../../model";
@@ -22,6 +23,7 @@ const SynthesisComponent: React.FC<SynthesisProps> = ({ parentSynthesis, saveSyn
 
   return (
     <div className="tutorial-page prep-page">
+      <ExitButton />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={8} lg={8}>
           <Grid justify="center" container item xs={12} sm={9} md={10} lg={7}>
