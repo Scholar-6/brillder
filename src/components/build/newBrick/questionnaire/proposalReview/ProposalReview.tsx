@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import EditIcon from '@material-ui/icons/Edit';
 
+import ExitButton from '../../components/ExitButton';
 import { Brick } from "model/brick";
 import './ProposalReview.scss';
 import { NewBrickStep } from "../../model";
@@ -16,20 +17,15 @@ interface ProposalProps {
 }
 
 const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
-  const [mode, setMode] = React.useState(false);
-  const toggleEditMode = () => {
-    setMode(!mode);
-  }
-
   return (
     <div className="tutorial-page">
+      <ExitButton />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={8} lg={8}>
-          <Grid justify="center" container item xs={12} sm={9} md={10} lg={7}>
+          <Grid justify="center" container item xs={12} sm={9} md={8} lg={7}>
             <div className="left-card proposal-card">
               <Grid container direction="row" justify="center" className="only-tutorial-header" alignContent="center">
-                <h1 >Y O U R &nbsp; P R O P O S A L</h1>
-                <EditIcon className="edit-proposal" onClick={toggleEditMode} />
+                <h1 >Your Proposal</h1>
               </Grid>
               <p>1. What is your brick about</p>
               <div className="proposal-titles">
@@ -38,12 +34,11 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
                 <div>{brick.alternativeTopics}</div>
               </div>
               <p>2. Ideally, every brick should point to a bigger question.</p>
-              <p className="grey-line">Alternatively, bricks can present a puzzle or a 	challenge 	which over-arches the topic</p>
-              <p className="openQuestion">{brick.openQuestion}</p>
+              <p className="proposal-titles">{brick.openQuestion}</p>
               <p>3. Outline the purpose of your brick.</p>
-              <p className="openQuestion">{brick.brief}</p>
+              <p className="proposal-titles">{brick.brief}</p>
               <p>4. Create an engaging and relevant preparatory task.</p>
-              <p className="openQuestion" dangerouslySetInnerHTML={{ __html: brick.prep}}></p>
+              <p style={{fontWeight: 'normal'}} dangerouslySetInnerHTML={{ __html: brick.prep}}></p>
               <p>5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span></p>
               <PreviousButton to="/build/new-brick/length" />
               <NextButton step={NewBrickStep.ProposalReview} canSubmit={true} brickId={brick.id} onSubmit={saveBrick} />

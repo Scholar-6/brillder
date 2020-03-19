@@ -12,7 +12,8 @@
     .length-description {
       text-align: left;
       margin-left: 20px;
-      color: #495057;
+      color: black;
+      font-family: 'Brandon Grotesque Thin';
       font-weight: bold;
     }
 
@@ -64,18 +65,13 @@
   }
 
   .only-tutorial-header-length {
+    font-family: 'Brandon Grotesque Bold';
     margin: 6% 2%;
-    p {margin: 0}
-    font-size: 1.85vw;
     p {
-      text-align: center;
+      margin: 0;
+      margin-bottom: 0.8vh;
     }
-    p:nth-child(1) {
-      font-size: 1.6vw !important;
-    }
-    p:nth-child(2) {
-      font-size: 1.8vw !important;
-    }
+    font-size: 1.7vw;
   }
   
   @media only screen and (min-width: 1280px)  {
@@ -132,6 +128,10 @@
       margin-left: 35px !important;
       font-size: 17px;
     }
+
+    .only-tutorial-header-length {
+      font-size: 3.2vw;
+    }
   }
   
   @media only screen and (max-width: 599px) {
@@ -153,6 +153,10 @@
     .length-description {
       font-size: 13px;
       margin-left: 35px !important;
+    }
+
+    .only-tutorial-header-length {
+      font-size: 4vw;
     }
   }
 }

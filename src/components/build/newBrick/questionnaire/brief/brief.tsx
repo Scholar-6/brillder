@@ -2,6 +2,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
+import ExitButton from '../../components/ExitButton';
 import NextButton from '../../components/nextButton';
 import PreviousButton from '../../components/previousButton';
 import { NewBrickStep } from "../../model";
@@ -23,9 +24,10 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
 
   return (
     <div className="tutorial-page brief-prep-page">
+      <ExitButton />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={8} lg={8}>
-          <Grid justify="center" container item xs={12} sm={9} md={10} lg={7}>
+          <Grid justify="center" container item xs={12} sm={9} md={7} lg={7}>
             <div className="left-card">
               <h1 className="only-tutorial-header">
                 <p>Outline the purpose of this brick</p>
