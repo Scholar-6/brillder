@@ -11,17 +11,34 @@
   .only-tutorial-header {
     font-size: 1.3vw !important;
     margin-bottom: 5% !important;
+
+    .sub-header {
+      font-size: 1vw;
+      font-family: 'Brandon Grotesque Thin';
+    }
   }
 
   @media only screen and (max-width: 959px) and (min-width: 600px) {
+    .only-tutorial-header {
+      font-size: 2.6vw !important;
+      .sub-header {
+        font-size: 2vw !important;
+      }
+    }
     .left-card {
-      width: 70% !important;
+      width: 80% !important;
     }
   }
 
   @media only screen and (max-width: 599px) {
+    .only-tutorial-header {
+      font-size: 3vw !important;
+      .sub-header {
+        font-size: 2.3vw !important;
+      }
+    }
     .left-card {
-      width: 70% !important;
+      width: 90% !important;
     }
   }
 }

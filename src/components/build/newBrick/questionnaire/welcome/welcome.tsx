@@ -23,9 +23,7 @@ function Welcome() {
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={7} lg={8}>
           <Grid justify="center" container item xs={12} sm={9} md={10} lg={7}>
-            <div>
-              <ExitButton />
-            </div>
+            <ExitButton />
             <div className="left-card">
               <Grid className="tutorial-logo-container" container direction="row" justify="center" alignItems="center">
                 <Grid container direction="row" alignItems="center" justify="center" style={{ height: "100%" }}>

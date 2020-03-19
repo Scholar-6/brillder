@@ -9,9 +9,9 @@ const ExitButton: React.FC = () => {
   const history = useHistory()
 
   return (
-    <div className="new-brick-exit-button">
+    <div className="new-brick-exit-button" onClick={() => history.push('/build')}>
       <Grid container direction="row">
-        <ArrowForwardIosIcon className="tutorial-prev-icon rotate-180" />
+        <ArrowForwardIosIcon className="new-brick-exit-icon rotate-180" />
         <div className="text-container">
           <div className="exit-title">EXIT</div>
           <div className="exit-description">ARE YOU SURE?</div>
