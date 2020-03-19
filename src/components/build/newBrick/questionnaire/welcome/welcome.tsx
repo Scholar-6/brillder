@@ -37,8 +37,8 @@ function Welcome() {
                   <h2 className="tutorial-logo-text">
                     A &nbsp; S C H O L A R &nbsp; 6 &nbsp; T E C H &nbsp; P R O D U C T
                   </h2>
-                  <h2 className="welcome-upper-text">Welcome to Brix.</h2>
-                  <h1 className="welcome-bottom-text">Start Building </h1>
+                  <h2 className="welcome-upper-text" style={{margin: 0}}>Welcome to Brix.</h2>
+                  <h1 className="welcome-bottom-text" style={{margin: 0, marginBottom: '14%'}}>Start Building </h1>
                   <div className="welcome-next-container">
                     <IconButton className="welcome-next-button" onClick={next} aria-label="next">
                       <ArrowForwardIosIcon className="welcome-next-icon" />

@@ -15,7 +15,17 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link }) => {
   return (
     <Hidden only={['xs', 'sm']}>
       <div className="phone-preview">
-        <Device name="iphone-5s" use="iphone-5s" color="grey" url={window.location.origin + '/logo-page'} />
+        <div className="phone">
+          <div className="speaker"></div>
+          <div className="camera"></div>
+          <div className="sensor"></div>
+          <div className="volume volume1"></div>
+          <div className="volume volume2"></div>
+          <div className="volume volume3"></div>
+          <div className="screen">
+            <iframe src="http://front.scholar6.org/logo-page"></iframe>
+          </div>
+        </div>
       </div>
     </Hidden>
   );
