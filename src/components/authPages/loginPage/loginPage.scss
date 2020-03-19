@@ -1,84 +1,94 @@
+@import "_variables";
+
+$col-blue: #183265;
+$border-radius: 2vw;
+$button-radius: 0.4vw;
+
 html, body, #root {
   height: 100%
 }
 
 .login-page {
+  background: $dark-blue;
   height: 100%;
-  background-color: #111f33;
-
-  .login-container {
-      width:450px;
-
-      .login-card {
-        margin-bottom: 20px;
-        padding: 0px 20px 15px 20px;
-
-        h1 {
-          font-size: 32px;
-          font-weight: 500;
-        }
-  
-        .login-field {
-          width: 100%;
-        }
-  
-        .password {
-          margin-bottom: 30px;
-        }
+  .back-col {
+    height: 13.3vh;
+    width: 32.3vw;
+    .back-box {
+      .back-button {
+        width: 4.5vw;
+        height: auto;
+        color: $orange;
       }
-
-      .login-logo {
-          font-size: 20px;
-          text-align: center;
-          color: #0076B4;
-          padding: 5px 20px;
-          margin-bottom: 30px;
-      }
-      
-      .footer-image {
-          width:50%;
-          margin-top: 0px;
-      }
-  }
-
-  @media only screen and (min-width: 1280px) {
-    .login-container {
-      width: 20vw;
-    }
-    .login-card {
-      padding: 0 1vw 1vw 1vw !important;
-    }
-    .login-logo {
-      margin-bottom: 1.54vw;
-      .logo-img {
-        width: 5.1vw;
-      }
-    }
-    .MuiFormLabel-root {
-      font-size: 1vw !important;
-    }
-    .MuiInputBase-root {
-      margin-top: 0.8vw !important;
-    }
-  
-    .footer-image {
-      width: 12vw !important;
-    }
-
-    h1 {
-      font-size: 1.65vw !important;
-      margin-bottom: 1vw;
-      margin-top: 1vw;
-    }
-
-    input {
-      font-size: 0.8vw;
     }
   }
 
-  @media only screen and (max-width: 599px) {
-    .footer-image {
-        max-height: 100px;
+  .first-col {
+    width: 29.6vw;
+    height: 100%;
+
+    .first-item {
+      background: $col-blue;
+      height: 14.7vh;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
     }
+    .second-item {
+      background: $col-blue;
+      margin-top: 4.7vh;
+      height: 80.6vh;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+      text-align: center;
+
+      .logo-image {
+        margin-top: 6.1vh;
+        margin-bottom: 4.2vh;
+        height: 20vh;
+      }
+    }
+  }
+  .second-col {
+    margin-left: 2.7vw;
+    width: 29.7vw;
+    height: 100%;
+
+    .first-item {
+      background: $col-blue;
+      height: 70.9vh;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+    .second-item {
+      background: $col-blue;
+      margin-top: 4.7vh;
+      height: 24.4vh;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
+  }
+
+  .login-field {
+    margin-bottom: 2vh;
+    padding: 2vh 0 2vh 0 !important;
+    color: white;
+    font-family: 'Brandon Grotesque Regular';
+    width: 70%;
+    text-align: center;
+    background: $dark-blue;
+    border: none;
+    padding: 10px;
+    border-radius: $button-radius;
+  }
+
+  ::-webkit-input-placeholder { /* Edge */
+    color: white;
+    opacity: 0.8;
+  }
+
+  .sign-in-button {
+    width: 70%;
+    padding: 1vh 0 1vh 0;
+    margin-bottom: 2vh;
   }
 }
