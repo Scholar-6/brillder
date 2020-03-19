@@ -87,8 +87,23 @@ html, body, #root {
   }
 
   .sign-in-button {
-    width: 70%;
-    padding: 1vh 0 1vh 0;
+    width: 7.5vw;
+    padding: 0.7vh 1vw 0.7vh 1vw;
+    background: $orange;
+    font-weight: normal !important;
+    font-size: 0.9vw;
+    letter-spacing: 0.2vw;
+    font-family: 'Brandon Grotesque Regular';
+    border-radius: 0.7vw;
     margin-bottom: 2vh;
+  }
+
+  .register-button {
+    margin-right: 1vw;
+  }
+
+  .sign-in-button:hover {
+    background: $orange; 
+    opacity: 0.7;
   }
 }
