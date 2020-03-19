@@ -15,13 +15,25 @@
     }
 
     .only-tutorial-header {
+      color: #4A4F56;
+      font-family: 'Brandon Grotesque Bold' !important;
       margin: 2.5vw 1vw;
       p {margin: 0}
     }
 
+    .page-number {
+      position: absolute;
+      bottom: 4vh;
+      width: 100%;
+      text-align: center;
+      color: #ACACAC;
+      font-size: 1.2vw;
+      font-family: 'Brandon Grotesque Regular';
+    }
+
     .audience-inputs {
       display: block !important;
-      margin: 10px 20px !important;
+      margin: 2vh 5.5vw !important;
     }
   }
 }

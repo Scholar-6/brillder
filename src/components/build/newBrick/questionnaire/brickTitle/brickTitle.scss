@@ -4,17 +4,21 @@
 }
 
 .brick-title-page {
+  .MuiInputBase-input {
+    font-family: 'Brandon Grotesque Regular';
+  }
   .left-card {
     position: relative;
     padding-bottom: 14%;
   }
 
   .audience-inputs {
-    width: 100% !important;
+    width: 80% !important;
     font-size: 1.4vw;
   }
 
   .only-tutorial-header {
+    font-family: 'Brandon Grotesque Bold';
     font-size: 2vw;
     margin-bottom: 5% !important;
   }

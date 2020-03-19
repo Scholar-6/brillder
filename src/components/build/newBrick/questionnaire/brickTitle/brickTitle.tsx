@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid, Input } from "@material-ui/core";
 
+import ExitButton from '../../components/ExitButton';
 import NextButton from '../../components/nextButton'
 import { NewBrickStep } from "../../model";
 import './brickTitle.scss';
@@ -28,6 +29,7 @@ function BrickTitle({ parentState, saveTitles }: any) {
 
   return (
     <div className="tutorial-page brick-title-page">
+      <ExitButton />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={8} lg={8}>
           <Grid justify="center" container item xs={12} sm={9} md={10} lg={7}>
@@ -38,6 +40,7 @@ function BrickTitle({ parentState, saveTitles }: any) {
                 <Input className="audience-inputs" value={titles.subTopic} onChange={onSubTopicChange} placeholder="Enter Sub-Topic(s)..." />
                 <Input className="audience-inputs" value={titles.alternativeTopics} onChange={onAltTopicChange} placeholder="Enter Alternative Topic(s)..." />
               </Grid>
+              <p className="page-number">1 of 5</p>
               <NextButton step={NewBrickStep.BrickTitle} canSubmit={true} onSubmit={saveTitles} data={titles} />
             </div>
           </Grid>
