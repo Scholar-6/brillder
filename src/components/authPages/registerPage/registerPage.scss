@@ -40,10 +40,45 @@ html, body, #root {
           margin-top: 0px;
       }
   }
-}
 
-@media only screen and (max-width: 599px) {
-  .footer-image {
-      max-height: 100px;
+  @media only screen and (min-width: 1280px) {
+    .login-container {
+      width: 20vw;
+    }
+    .login-card {
+      padding: 0 1vw 1vw 1vw !important;
+    }
+    .login-logo {
+      margin-bottom: 1.54vw;
+      .logo-img {
+        width: 5.1vw;
+      }
+    }
+    .MuiFormLabel-root {
+      font-size: 1vw !important;
+    }
+    .MuiInputBase-root {
+      margin-top: 0.8vw !important;
+    }
+  
+    .footer-image {
+      width: 12vw !important;
+    }
+
+    h1 {
+      font-size: 1.65vw !important;
+      margin-bottom: 1vw;
+      margin-top: 1vw;
+    }
+
+    input {
+      font-size: 0.8vw;
+    }
+  }
+
+  @media only screen and (max-width: 599px) {
+    .footer-image {
+        max-height: 100px;
+    }
   }
 }

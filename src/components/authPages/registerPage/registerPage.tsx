@@ -4,6 +4,8 @@ import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
+import './registerPage.scss';
+
 
 function RegisterPage(props:any) {
   const [email, setEmail] = useState("");
@@ -46,7 +48,7 @@ function RegisterPage(props:any) {
   }
 
   return (
-    <Grid className="login-page" container item justify="center" alignItems="center">
+    <Grid className="register-page" container item justify="center" alignItems="center">
       <div className="login-container">
         <div className="login-logo">
           <img src="/images/lflogo.png" alt="logo" />
