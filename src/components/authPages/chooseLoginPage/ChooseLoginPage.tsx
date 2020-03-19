@@ -49,8 +49,8 @@ const ChooseLoginPage:React.FC<ChooseLoginProps> = (props) => {
               <MailIcon className="email-icon" />
               <span className="email-button-text">Sign in with email</span>
             </Button>
-            <Button className="google-button email-button" href={process.env.REACT_APP_BACKEND_HOST + '/auth/google'}>
-              <img alt="google-icon" className="email-icon" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" />
+            <Button className="google-button" href={process.env.REACT_APP_BACKEND_HOST + '/auth/google'}>
+              <img alt="google-icon" className="google-icon" src="/images/google-icon.png" />
               <span className="email-button-text">Sign in with Google</span>
             </Button>
           </div>

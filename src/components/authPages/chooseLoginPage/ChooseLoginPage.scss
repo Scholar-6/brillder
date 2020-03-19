@@ -64,7 +64,6 @@ $button-radius: 0.7vw;
     }
   }
   .email-button {
-    margin-left: 0.2vw;
     background: white;
     text-transform: none;
     border-radius: $button-radius;
@@ -72,7 +71,9 @@ $button-radius: 0.7vw;
     font: 2.6vh 'Brandon Grotesque Regular';
     letter-spacing: 0.3vw;
     margin-bottom: 2.7vh;
+    transition: all .2s ease-in-out;
     .email-icon {
+      transition: all .2s ease-in-out;
       margin-right: 2vw;
       width: 2.6vw;
       height: auto;
@@ -81,12 +82,34 @@ $button-radius: 0.7vw;
   }
 
   .google-button {
-    padding: 2.5vh 1vw 2.5vh 1.5vw;
+    padding: 2.9vh 2vw 2.85vh 1.5vw;
+    background: $orange;
+    color: white;
+    text-transform: none;
+    border-radius: $button-radius;
+    font: 2.6vh 'Brandon Grotesque Regular';
+    letter-spacing: 0.3vw;
+    margin-bottom: 2.7vh;
+    .google-icon {
+      transition: all .2s ease-in-out;
+      margin-right: 2vw;
+      width: 1.5vw;
+      height: auto;
+      color: $dark-blue;
+    }
+  }
+
+  .google-button:hover {
+    background: $orange;
+    .google-icon {
+      transform: scale(1.4);
+    }
   }
 
   .email-button:hover {
-    background: $orange;
+    background: $dark-blue;
     opacity: 1;
+    color: white;
     .email-icon {
       color: white;
     }
