@@ -36,6 +36,7 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
                 style={{ width: '90%', border: '2px solid black', height: '70px', fontSize: '1.2vw', textAlign: 'left' }}
                 placeholder="Enter Brief Here..." />
               <PreviousButton to="/build/new-brick/open-question" />
+              <p className="page-number">3 of 6</p>
               <NextButton step={NewBrickStep.Brief} canSubmit={true} data={brief} onSubmit={saveBrief} />
             </div>
           </Grid>

@@ -40,7 +40,7 @@ function BrickTitle({ parentState, saveTitles }: any) {
                 <Input className="audience-inputs" value={titles.subTopic} onChange={onSubTopicChange} placeholder="Enter Sub-Topic(s)..." />
                 <Input className="audience-inputs" value={titles.alternativeTopics} onChange={onAltTopicChange} placeholder="Enter Alternative Topic(s)..." />
               </Grid>
-              <p className="page-number">1 of 5</p>
+              <p className="page-number">1 of 6</p>
               <NextButton step={NewBrickStep.BrickTitle} canSubmit={true} onSubmit={saveTitles} data={titles} />
             </div>
           </Grid>

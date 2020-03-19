@@ -49,7 +49,7 @@ function BrickLength({ length, saveBrick }: any) {
                     onClick={() => setBrickLength(BrickLengthEnum.S20min)}></div>
                   <Grid container direction="row" justify="center" className="bottom-time-description">
                     20mins
-                </Grid>
+                  </Grid>
                 </Grid>
                 <Grid container item xs={4} className="brick-length-image-container brick-length-image-container2">
                   <div
@@ -69,6 +69,7 @@ function BrickLength({ length, saveBrick }: any) {
                 </Grid>
               </Grid>
               <PreviousButton to="/build/new-brick/synthesis" />
+              <p className="page-number">6 of 6</p>
               <NextButton
                 step={NewBrickStep.BrickLength}
                 canSubmit={brickLength !== BrickLengthEnum.None}

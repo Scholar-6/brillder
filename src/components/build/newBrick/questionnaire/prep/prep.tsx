@@ -43,6 +43,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
                 </div>
               </Grid>
               <PreviousButton to="/build/new-brick/brief" />
+              <p className="page-number">4 of 6</p>
               <NextButton step={NewBrickStep.Prep} canSubmit={true} data={prep} onSubmit={savePrep} />
             </div>
           </Grid>
