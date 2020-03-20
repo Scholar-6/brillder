@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Grid, TextField } from "@material-ui/core";
-import Card from "@material-ui/core/Card";
+import { Grid } from "@material-ui/core";
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Button from "@material-ui/core/Button";
 // @ts-ignore
@@ -33,6 +33,7 @@ interface LoginProps {
 }
 
 const LoginPage: React.FC<LoginProps> = props => {
+  const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -109,15 +110,23 @@ const LoginPage: React.FC<LoginProps> = props => {
               placeholder="Email"
             />
             <br />
-            <input
-              type="password"
-              value={password}
-              className="login-field password"
-              onChange={e => setPassword(e.target.value)}
-              required
-              placeholder="Password"
-            />
-            <br />
+            <div className="password-container" style={{marginLeft: '10%', width: "80%"}}>
+              <input
+                type={passwordHidden ? "password" : "text"}
+                value={password}
+                className="login-field password"
+                onChange={e => setPassword(e.target.value)}
+                required
+                style={{
+                  fontSize: (passwordHidden && password) ? '3vw' : '1.5vw' }}
+                placeholder="Password"
+              />
+              <div className="hide-password-icon-container">
+                <Grid container alignContent="center" style={{height: '100%'}} >
+                  <VisibilityIcon className="hide-password-icon" onClick={() => setHidden(!passwordHidden)} />
+                </Grid>
+              </div>
+            </div>
             <div style={{ width: "80%", marginLeft: '10%', textAlign: "right" }}>
               {userType === UserLoginType.Student ? (
                 <Button
