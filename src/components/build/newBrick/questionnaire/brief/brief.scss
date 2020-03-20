@@ -22,6 +22,18 @@
     }
   }
 
+  .typing-text {
+    position: absolute;
+    top: 53%;
+    width: 86.5%;
+    overflow: hidden;
+    text-align: left;
+    left: 1.5vw;
+    font-size: 1.25vw;
+    color: white;
+    font-family: 'Brandon Grotesque Regular';
+  }
+
   @media only screen and (max-width: 959px) and (min-width: 600px) {
     .left-card {
       width: 70% !important;
