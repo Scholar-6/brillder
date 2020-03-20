@@ -52,19 +52,21 @@
     }
 
     .brick-preview-container {
+      overflow: hidden;
       position: relative;
       background: $orange;
       color: $dark-blue;
-      padding: 0 0.75vw 0.3vh 0.75vw;
-      font-size: 0.9vw;
+      padding: 0.3vh 0.75vw 0.3vh 0.75vw;
+      font-size: 1.1vw;
       letter-spacing: 0;
       width: 100%;
       margin-top: 2.3vh;
       border-radius: 0.7vw;
       font-family: 'Brandon Grotesque Regular';
+      line-height: 1;
 
       .brick-title {
-        font-size: 0.8vw;
+        line-height: 1;
         font-family: 'Brandon Grotesque Bold';
       }
     }
@@ -73,7 +75,7 @@
       width: 100%;
       margin-top: 1vh;
       border-radius: 0.7vw;
-      height: 5.7vh;
+      height: 3.45vw;
       position: relative;
     }
     

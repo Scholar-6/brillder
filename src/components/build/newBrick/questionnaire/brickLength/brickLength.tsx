@@ -76,7 +76,7 @@ function BrickLength({ length, saveBrick }: any) {
                     onClick={() => setBrickLength(BrickLengthEnum.S60min)}></div>
                   <Grid container direction="row" justify="center" className="bottom-time-description">
                     60
-                </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
               <PreviousButton to="/build/new-brick/synthesis" />

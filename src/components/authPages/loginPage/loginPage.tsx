@@ -118,7 +118,8 @@ const LoginPage: React.FC<LoginProps> = props => {
                 onChange={e => setPassword(e.target.value)}
                 required
                 style={{
-                  fontSize: (passwordHidden && password) ? '3vw' : '1.5vw' }}
+                  fontSize: (passwordHidden && password) ? '3vw' : '1.5vw',
+                }}
                 placeholder="Password"
               />
               <div className="hide-password-icon-container">
