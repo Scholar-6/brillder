@@ -2,10 +2,12 @@
 
 .tutorial-page {
   .tutorial-prev-container {
+    cursor: pointer;
     position: absolute;
     bottom: 1%;
-    left: -1%;
+    left: -2.3%;
     padding: 0px !important;
+    z-index: 2;
     padding-right: 0 !important;
 
     .tutorial-prev-button {

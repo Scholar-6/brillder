@@ -4,9 +4,8 @@
   .tutorial-next-container {
     position: absolute;
     bottom: 1%;
-    right: 3.7%;
+    right: 3.2%;
     padding: 0px !important;
-    padding-right: 0 !important;
 
     .tutorial-next-button {
       padding: 0 !important;
@@ -16,6 +15,7 @@
       color: $global-orange;
 
       span {
+        margin-left: -60%;
         width: 500% !important;
         height: 100% !important;
       }
