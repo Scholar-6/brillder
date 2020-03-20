@@ -1,3 +1,5 @@
+@import '_variables';
+
 .align-center {
   text-align: center !important;
   display: block !important;
@@ -21,6 +23,87 @@
     font-family: 'Brandon Grotesque Bold';
     font-size: 2vw;
     margin-bottom: 5% !important;
+  }
+
+  .brick-title-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 6.4vh 0.3vw 0 0.6vw;
+    background: $dark-blue;
+    color: $orange;
+    font-family: 'Spartan MB Regular';
+    letter-spacing: 0.1vw;
+
+    .search-container {
+      height: 3vh;
+      width: 100%;
+      font-size: 1.2vw;
+      padding-left: 0.5vw;
+      background: white;
+      border-radius: 0.25vw;
+
+      .fake-loop {
+        position: absolute;
+        height: 100%;
+        right: 0;
+      }
+    }
+
+    .brick-preview-container {
+      position: relative;
+      background: $orange;
+      color: $dark-blue;
+      padding: 0 0.75vw 0.3vh 0.75vw;
+      font-size: 0.9vw;
+      letter-spacing: 0;
+      width: 100%;
+      margin-top: 2.3vh;
+      border-radius: 0.7vw;
+      font-family: 'Spartan MB Regular';
+
+      .brick-title {
+        font-size: 0.8vw;
+        font-family: 'Spartan MB Bold';
+      }
+    }
+    .brick-fake-preview-container {
+      background: $orange;
+      width: 100%;
+      margin-top: 1vh;
+      border-radius: 0.7vw;
+      height: 5.7vh;
+      position: relative;
+    }
+    
+    .brick-right-button {
+      position: absolute;
+      height: 100%;
+      background: white;
+      width: 0.55vw;
+      right: 0;
+      top: 0;
+      border-top-right-radius: 0.7vw;
+      border-bottom-right-radius: 0.7vw;
+
+      .fake-expand {
+        color: black;
+        font-family: 'Spartan MB Bold';
+        font-size: 0.8vw;
+      }
+    }
+
+    .brick-container-2 {
+      opacity: 0.75;
+    }
+
+    .brick-container-3 {
+      opacity: 0.5;
+    }
+
+    .brick-container-4 {
+      opacity: 0.25;
+    }
   }
 
   @media only screen and (max-width: 959px) and (min-width: 600px) {

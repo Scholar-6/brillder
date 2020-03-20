@@ -1,14 +1,83 @@
 import React from "react";
 import { Grid, Input } from "@material-ui/core";
+import SearchIcon from '@material-ui/icons/Search';
 
+import './brickTitle.scss';
+import { NewBrickStep } from "../../model";
 import ExitButton from '../../components/ExitButton';
 import NextButton from '../../components/nextButton'
-import { NewBrickStep } from "../../model";
-import './brickTitle.scss';
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
+import { Brick } from "model/brick";
 
 
-function BrickTitle({ parentState, saveTitles }: any) {
+interface BrickTitleProps {
+  parentState: Brick
+  saveTitles(data: any):void
+}
+
+const BrickTitlePreviewComponent:React.FC<any> = (props) => {
+  const date = new Date();
+  const dateString = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+
+  let {subTopic, alternativeTopics, title} = props.data;
+  if (title.length > 30) {
+    title = title.slice(0, 27) + '...';
+  }
+  if (subTopic.length > 11) {
+    subTopic = subTopic.slice(0, 9) + '...';
+  }
+
+  if (alternativeTopics.length > 14) {
+    alternativeTopics = alternativeTopics.slice(0, 12) + '...';
+  }
+  
+  return (
+    <Grid container alignContent="flex-start" className="brick-title-container">
+      <div className="search-container">
+        <Grid container alignContent="center" style={{height: '100%', position:'relative'}}>
+          Search
+          <SearchIcon className="fake-loop"/>
+        </Grid>
+      </div>
+      <div className="brick-preview-container">
+        <div className="brick-title">{title ? title : 'Title'}</div>
+        <div>
+          {subTopic ? subTopic : 'Sub-Topic'} | {alternativeTopics ? alternativeTopics: 'Alternative Topic(s)'}
+        </div>
+        <div>Author | {dateString}</div>
+        <div className="brick-right-button">
+          <Grid container alignContent="flex-end" style={{height: '100%'}}>
+            <span className="fake-expand">+</span>
+          </Grid>
+        </div>
+      </div>
+      <div className="brick-fake-preview-container brick-container-2">
+        <div className="brick-right-button">
+          <Grid container alignContent="flex-end" style={{height: '100%'}}>
+            <span className="fake-expand">+</span>
+          </Grid>
+        </div>
+      </div>
+      <div className="brick-fake-preview-container brick-container-3">
+        <div className="brick-right-button">
+          <Grid container alignContent="flex-end" style={{height: '100%'}}>
+            <span className="fake-expand">+</span>
+          </Grid>
+        </div>
+      </div>
+      <div className="brick-fake-preview-container brick-container-4">
+        <div className="brick-right-button">
+          <Grid container alignContent="flex-end" style={{height: '100%'}}>
+            <span className="fake-expand">+</span>
+          </Grid>
+        </div>
+      </div>
+    </Grid>
+  )
+}
+
+
+const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
   const [titles, setTitles] = React.useState({
     title: parentState.title,
     subTopic: parentState.subTopic,
@@ -45,7 +114,7 @@ function BrickTitle({ parentState, saveTitles }: any) {
             </div>
           </Grid>
         </Grid>
-        <PhonePreview link={window.location.origin + '/logo-page'} />
+        <PhonePreview Component={BrickTitlePreviewComponent} data={titles} />
       </Grid>
     </div>
   );
