@@ -45,7 +45,6 @@ const SynthesisComponent: React.FC<SynthesisProps> = ({ parentSynthesis, saveSyn
                 </div>
               </Grid>
               <PreviousButton to="/build/new-brick/prep" />
-              <p className="page-number">5 of 6</p>
               <NextButton step={NewBrickStep.Synthesis} canSubmit={true} data={synthesis} onSubmit={saveSynthesis} />
             </div>
           </Grid>

@@ -46,7 +46,7 @@ function BrickLength({ length, saveBrick }: any) {
       <ExitButton />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={8} lg={8}>
-          <Grid justify="center" container item xs={12} sm={9} md={10} lg={7}>
+          <Grid justify="center" container item xs={12} sm={9} md={8} lg={7}>
             <div className="left-card">
               <h1 className="only-tutorial-header-length">
                 <p>20 minute are a taster. 60 minutes are a feast.</p>
@@ -59,7 +59,7 @@ function BrickLength({ length, saveBrick }: any) {
                     className={"brick-length-image brick-length-20-image " + ((brickLength === BrickLengthEnum.S20min) ? "active" : "")}
                     onClick={() => setBrickLength(BrickLengthEnum.S20min)}></div>
                   <Grid container direction="row" justify="center" className="bottom-time-description">
-                    20mins
+                    20
                   </Grid>
                 </Grid>
                 <Grid container item xs={4} className="brick-length-image-container brick-length-image-container2">
@@ -67,7 +67,7 @@ function BrickLength({ length, saveBrick }: any) {
                     className={"brick-length-image brick-length-40-image " + ((brickLength === BrickLengthEnum.S40min) ? "active" : "")}
                     onClick={() => setBrickLength(BrickLengthEnum.S40min)}></div>
                   <Grid container direction="row" justify="center" className="bottom-time-description">
-                    40mins
+                    40
                 </Grid>
                 </Grid>
                 <Grid container item xs={4} className="brick-length-image-container brick-length-image-container3">
@@ -75,12 +75,11 @@ function BrickLength({ length, saveBrick }: any) {
                     className={"brick-length-image brick-length-60-image " + ((brickLength === BrickLengthEnum.S60min) ? "active" : "")}
                     onClick={() => setBrickLength(BrickLengthEnum.S60min)}></div>
                   <Grid container direction="row" justify="center" className="bottom-time-description">
-                    60mins
+                    60
                 </Grid>
                 </Grid>
               </Grid>
               <PreviousButton to="/build/new-brick/synthesis" />
-              <p className="page-number">6 of 6</p>
               <NextButton
                 step={NewBrickStep.BrickLength}
                 canSubmit={brickLength !== BrickLengthEnum.None}
