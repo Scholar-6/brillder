@@ -32,7 +32,7 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
       <ExitButton />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid container justify="center" item xs={12} md={8} lg={8}>
-          <Grid justify="center" container item xs={12} sm={11} md={10} lg={9}>
+          <Grid justify="center" container item xs={12} sm={11} md={9} lg={9}>
             <div className="left-card">
               <h1 className="only-tutorial-header">
                 <p>Ideally, every brick should point to a bigger question.</p>
@@ -46,7 +46,7 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
                   placeholder="Enter Open Question(s)..." />
               </Grid>
               <PreviousButton to="/build/new-brick/brick-title" />
-              <p className="page-number">2 of 6</p>
+              <p className="page-number">2 of 4</p>
               <NextButton
                 step={NewBrickStep.OpenQuestion}
                 canSubmit={true}
