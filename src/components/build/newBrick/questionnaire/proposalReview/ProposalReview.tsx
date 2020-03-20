@@ -41,7 +41,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
               <p style={{fontWeight: 'normal'}} dangerouslySetInnerHTML={{ __html: brick.prep}}></p>
               <p>5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span></p>
               <PreviousButton to="/build/new-brick/length" />
-              <NextButton step={NewBrickStep.ProposalReview} canSubmit={true} brickId={brick.id} onSubmit={saveBrick} />
+              <NextButton step={NewBrickStep.ProposalReview} canSubmit={true} onSubmit={saveBrick} />
             </div>
           </Grid>
         </Grid>

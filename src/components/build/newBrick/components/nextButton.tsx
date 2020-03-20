@@ -6,8 +6,14 @@ import { IconButton } from "material-ui";
 import { NewBrickStep } from "../model";
 import './nextButton.scss';
 
+interface NextButtonProps {
+  step: NewBrickStep
+  canSubmit: boolean
+  onSubmit(data?:any): void
+  data?: any
+}
 
-function NextButton({ step, canSubmit, onSubmit, data, brickId }: any) {
+const NextButton:React.FC<NextButtonProps> = ({ step, canSubmit, onSubmit, data }) => {
   const history = useHistory()
   const url = "/build/new-brick"
 
