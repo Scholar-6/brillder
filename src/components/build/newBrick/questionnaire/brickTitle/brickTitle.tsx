@@ -40,11 +40,15 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
         </Grid>
       </div>
       <div className="brick-preview-container">
-        <div className="brick-title">{title ? title : 'Title'}</div>
-        <div>
-          {subTopic ? subTopic : 'Sub-Topic'} | {alternativeTopics ? alternativeTopics: 'Alternative Topic(s)'}
+        <div className="brick-title" style={{color: title ? '#D8D2CE' : ''}}>
+          {title ? title : 'Title'}
         </div>
-        <div>Author | {dateString}</div>
+        <div>
+          <span style={{color: subTopic ? '#D8D2CE' : ''}}>{subTopic ? subTopic : 'Sub-Topic'}</span>
+          <span> | </span>
+          <span style={{color: alternativeTopics ? '#D8D2CE' : ''}}>{alternativeTopics ? alternativeTopics: 'Alternative Topic(s)'}</span>
+        </div>
+        <div>Author | <span style={{color: '#D8D2CE'}}>{dateString}</span></div>
         <div className="brick-right-button">
           <Grid container alignContent="flex-end" style={{height: '100%'}}>
             <span className="fake-expand">+</span>
@@ -53,23 +57,14 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
       </div>
       <div className="brick-fake-preview-container brick-container-2">
         <div className="brick-right-button">
-          <Grid container alignContent="flex-end" style={{height: '100%'}}>
-            <span className="fake-expand">+</span>
-          </Grid>
         </div>
       </div>
       <div className="brick-fake-preview-container brick-container-3">
         <div className="brick-right-button">
-          <Grid container alignContent="flex-end" style={{height: '100%'}}>
-            <span className="fake-expand">+</span>
-          </Grid>
         </div>
       </div>
       <div className="brick-fake-preview-container brick-container-4">
         <div className="brick-right-button">
-          <Grid container alignContent="flex-end" style={{height: '100%'}}>
-            <span className="fake-expand">+</span>
-          </Grid>
         </div>
       </div>
     </Grid>
