@@ -107,10 +107,12 @@ const ChooseUserPage:React.FC<ChooseUserProps> = (props) => {
           </Grid>
         </div>
         <div style={{position: 'fixed', top: 0, height: '100%', width: '100%'}}>
-          <Grid justify="center">
+          <Grid container justify="center">
             <img alt="Logo" src="/images/BrixLogo.png" className="logo-mobile-image" />
           </Grid>
-          <ExpandMoreIcon className="mobile-arrow" />
+          <Grid container justify="center">
+            <ExpandMoreIcon className="mobile-arrow" />
+          </Grid>
           <Grid container direction="row">
             <Grid container item xs={12} justify="center">
               <Button onClick={() => { selectLoginType(UserLoginType.Student); }} className="user-type-mobile-btn">
