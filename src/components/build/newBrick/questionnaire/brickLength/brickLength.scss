@@ -73,6 +73,27 @@
     }
     font-size: 1.7vw;
   }
+
+  .phone-preview-component {
+    width: 100%;
+    height: 100%;
+    background: #001D55;
+    position: relative;
+
+    img {
+      width: auto;
+      margin-left: 0vw;
+      margin-top: 12vh;
+      height: 50%;
+    }
+    div {
+      position: absolute;
+      top: 42%;
+      color: white;
+      font-size: 5vw;
+      font-family: 'Brandon Grotesque Bold';
+    }
+  }
   
   @media only screen and (min-width: 1280px)  {
     .brick-length-image-container1 {

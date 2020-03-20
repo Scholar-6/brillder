@@ -17,6 +17,15 @@ export enum BrickLengthEnum {
   S60min = 60
 }
 
+const BrickLengthPreviewComponent:React.FC<any> = ({data}) => {
+  return (
+    <Grid container justify="center" className="phone-preview-component">
+      <img alt="head" src="/images/new-brick/brick-length.png"></img>
+      <div>{data}</div>
+    </Grid>
+  )
+}
+
 function BrickLength({ length, saveBrick }: any) {
   let presectedLength = 0;
   if (length === 20) {
@@ -80,7 +89,7 @@ function BrickLength({ length, saveBrick }: any) {
             </div>
           </Grid>
         </Grid>
-        <PhonePreview link={window.location.origin + '/logo-page'} />
+        <PhonePreview Component={BrickLengthPreviewComponent} data={brickLength} />
       </Grid>
     </div>
   );
