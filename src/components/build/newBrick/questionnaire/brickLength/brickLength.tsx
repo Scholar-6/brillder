@@ -21,7 +21,7 @@ const BrickLengthPreviewComponent:React.FC<any> = ({data}) => {
   return (
     <Grid container justify="center" className="phone-preview-component">
       <img alt="head" src="/images/new-brick/brick-length.png"></img>
-      <div>{data}</div>
+      <div>{data === 0 ? "?" : data}</div>
     </Grid>
   )
 }
