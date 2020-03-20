@@ -33,7 +33,7 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
         <div className="brick-title" style={{color: title ? '#D8D2CE' : ''}}>
           {title ? title : 'Title'}
         </div>
-        <div style={{height: '2vh', overflow: 'hidden'}}>
+        <div style={{height: '0.9vw', overflow: 'hidden'}}>
           <span style={{color: subTopic ? '#D8D2CE' : ''}}>
             {subTopic ? subTopic : 'Sub-Topic'}
           </span> | <span style={{color: alternativeTopics ? '#D8D2CE' : ''}}>
