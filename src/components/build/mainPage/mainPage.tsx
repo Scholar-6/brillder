@@ -58,7 +58,7 @@ class MainPage extends Component<any, any> {
                 </div>
               </Grid>
               <Grid container justify="center" style={{width: "100%"}}>
-                <div className="zoom-item create-item" onClick={() => history.push('/build/new-brick/welcome')}>
+                <div className="zoom-item create-item" onClick={() => history.push('/build/new-brick/brick-title')}>
                   <img alt="Logo" src="/images/main-page/create.png" className="item-image" />
                   <div className="item-description">Start Building</div>
                 </div>
@@ -125,7 +125,7 @@ class MainPage extends Component<any, any> {
                 </div>
               </Grid>
               <Grid container justify="center" style={{width: "100%"}}>
-                <div className="zoom-item create-item" onClick={() => history.push('/build/new-brick/welcome')}>
+                <div className="zoom-item create-item" onClick={() => history.push('/build/new-brick/brick-title')}>
                   <img alt="Logo" src="/images/main-page/create.png" className="item-image" />
                   <div className="item-description">Start Building</div>
                 </div>

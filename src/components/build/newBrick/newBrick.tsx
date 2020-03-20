@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 
 import actions from '../../../redux/actions/brickActions';
 import './newBrick.scss';
-import Welcome from './questionnaire/welcome/welcome';
 import BrickTitle from './questionnaire/brickTitle/brickTitle';
 import OpenQuestion from './questionnaire/openQuestion/openQuestion';
 import BrickLength from './questionnaire/brickLength/brickLength';
@@ -87,7 +86,6 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
   return (
     <MuiThemeProvider>
       <div style={{ width: '100%', height: '100%' }}>
-        <Route path='/build/new-brick/welcome'><Welcome /></Route>
         <Route path='/build/new-brick/brick-title'>
           <BrickTitle parentState={state} saveTitles={setTitles} />
         </Route>
