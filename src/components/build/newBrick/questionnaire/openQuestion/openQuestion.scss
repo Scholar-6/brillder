@@ -20,6 +20,30 @@
     }
   }
 
+  .phone-preview-component {
+    width: 100%;
+    height: 100%;
+    background: #001D55;
+
+    img {
+      width: auto;
+      margin-left: 0.9vw;
+      margin-top: 8vh;
+      height: 44%;
+    }
+    .typing-text {
+      position: absolute;
+      top: 65%;
+      width: 86.5%;
+      overflow: hidden;
+      text-align: left;
+      left: 1.5vw;
+      font-size: 1.25vw;
+      color: white;
+      font-family: 'Brandon Grotesque Regular';
+    }
+  }
+
   @media only screen and (max-width: 959px) and (min-width: 600px) {
     .only-tutorial-header {
       font-size: 2.6vw !important;
