@@ -20,15 +20,15 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
   const dateString = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
 
   let {subTopic, alternativeTopics, title} = props.data;
-  if (title.length > 30) {
-    title = title.slice(0, 27) + '...';
+  if (title.length > 20) {
+    title = title.slice(0, 14) + '...';
   }
-  if (subTopic.length > 11) {
-    subTopic = subTopic.slice(0, 9) + '...';
+  if (subTopic.length > 9) {
+    subTopic = subTopic.slice(0, 8) + '...';
   }
 
-  if (alternativeTopics.length > 14) {
-    alternativeTopics = alternativeTopics.slice(0, 12) + '...';
+  if (alternativeTopics.length > 12) {
+    alternativeTopics = alternativeTopics.slice(0, 11) + '...';
   }
   
   return (
