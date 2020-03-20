@@ -2,7 +2,7 @@
 
 $col-blue: #183265;
 $border-radius: 2vw;
-$button-radius: 0.4vw;
+$button-radius: 0.7vw;
 
 html, body, #root {
   height: 100%
@@ -43,7 +43,7 @@ html, body, #root {
 
       .logo-image {
         margin-top: 6.1vh;
-        margin-bottom: 4.2vh;
+        margin-bottom: 3.9vh;
         height: 20vh;
       }
     }
@@ -69,16 +69,19 @@ html, body, #root {
   }
 
   .login-field {
-    margin-bottom: 2vh;
-    padding: 2vh 0 2vh 0 !important;
+    margin-bottom: 2.9vh;
+    padding: 2.93vh 0 2.93vh 0 !important;
     color: white;
+    font-weight: normal;
     font-family: 'Brandon Grotesque Regular';
-    width: 70%;
+    width: 80%;
     text-align: center;
     background: $dark-blue;
     border: none;
     padding: 10px;
     border-radius: $button-radius;
+    font-size: 1.5vw;
+    letter-spacing: 0.3vw;
   }
 
   ::-webkit-input-placeholder { /* Edge */
@@ -87,12 +90,14 @@ html, body, #root {
   }
 
   .sign-in-button {
-    width: 7.5vw;
-    padding: 0.7vh 1vw 0.7vh 1vw;
+    margin-top: -0.6vh;
+    box-shadow: none;
+    width: 9.2vw;
+    padding: 0.8vh 1vw 0.6vh 1.23vw;
     background: $orange;
     font-weight: normal !important;
-    font-size: 0.9vw;
-    letter-spacing: 0.2vw;
+    font-size: 1.2vw;
+    letter-spacing: 0.3vw;
     font-family: 'Brandon Grotesque Regular';
     border-radius: 0.7vw;
     margin-bottom: 2vh;
@@ -104,6 +109,7 @@ html, body, #root {
 
   .sign-in-button:hover {
     background: $orange; 
-    opacity: 0.7;
+    box-shadow: none;
+    font-family: 'Brandon Grotesque Bold';
   }
 }

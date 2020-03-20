@@ -8,10 +8,11 @@ import './PhonePreview.scss';
 
 
 export interface PhonePreviewProps {
-  link: string
+  link?: string
+  Component?: any
 }
 
-const PhonePreview: React.FC<PhonePreviewProps> = ({ link }) => {
+const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component }) => {
   return (
     <Hidden only={['xs', 'sm']}>
       <div className="phone-preview">
@@ -23,7 +24,13 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link }) => {
           <div className="volume volume2"></div>
           <div className="volume volume3"></div>
           <div className="screen">
-            <iframe src="http://front.scholar6.org/logo-page"></iframe>
+            {
+              link
+                ? <div className="custom-component">
+                    <iframe title="phone-preview-screen" src={link} />
+                  </div>
+                : <div className="custom-component"><Component /></div>
+            }
           </div>
         </div>
       </div>

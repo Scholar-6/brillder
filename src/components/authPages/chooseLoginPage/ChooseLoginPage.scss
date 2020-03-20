@@ -11,10 +11,17 @@ $button-radius: 0.7vw;
     height: 13.3vh;
     width: 32.3vw;
     .back-box {
+      text-align: center;
       .back-button {
+        cursor: pointer;
         width: 4.5vw;
         height: auto;
         color: $orange;
+        transition: all .2s ease-in-out;
+        transform-origin: 110% 50%;
+      }
+      .back-button:hover {
+        transform: scale(1.15, 1.05); 
       }
     }
   }
@@ -39,7 +46,7 @@ $button-radius: 0.7vw;
 
       .logo-image {
         margin-top: 6.1vh;
-        margin-bottom: 4.2vh;
+        margin-bottom: 3.9vh;
         height: 20vh;
       }
     }
@@ -82,7 +89,7 @@ $button-radius: 0.7vw;
   }
 
   .google-button {
-    padding: 2.9vh 2vw 2.85vh 1.5vw;
+    padding: 2.97vh 1.14vw 3vh 2.15vw;
     background: $orange;
     color: white;
     text-transform: none;
@@ -92,7 +99,7 @@ $button-radius: 0.7vw;
     margin-bottom: 2.7vh;
     .google-icon {
       transition: all .2s ease-in-out;
-      margin-right: 2vw;
+      margin-right: 2.2vw;
       width: 1.5vw;
       height: auto;
       color: $dark-blue;
