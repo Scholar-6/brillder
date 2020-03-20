@@ -24,6 +24,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data }) =>
           <div className="volume volume1"></div>
           <div className="volume volume2"></div>
           <div className="volume volume3"></div>
+          <div className="home"></div>
           <div className="screen">
             {
               link
