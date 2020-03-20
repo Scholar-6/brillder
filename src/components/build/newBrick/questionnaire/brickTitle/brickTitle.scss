@@ -57,7 +57,7 @@
       background: $orange;
       color: $dark-blue;
       padding: 0.3vh 0.75vw 0.3vh 0.75vw;
-      font-size: 1.1vw;
+      font-size: 1vw;
       letter-spacing: 0;
       width: 100%;
       margin-top: 3.5vh;
@@ -66,6 +66,7 @@
       line-height: 1;
 
       .brick-title {
+        height: 2vh;
         line-height: 1;
         font-family: 'Brandon Grotesque Bold';
       }

@@ -20,16 +20,6 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
   const dateString = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
 
   let {subTopic, alternativeTopics, title} = props.data;
-  if (title.length > 20) {
-    title = title.slice(0, 14) + '...';
-  }
-  if (subTopic.length > 9) {
-    subTopic = subTopic.slice(0, 8) + '...';
-  }
-
-  if (alternativeTopics.length > 12) {
-    alternativeTopics = alternativeTopics.slice(0, 11) + '...';
-  }
   
   return (
     <Grid container alignContent="flex-start" className="brick-title-container">
@@ -43,10 +33,12 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
         <div className="brick-title" style={{color: title ? '#D8D2CE' : ''}}>
           {title ? title : 'Title'}
         </div>
-        <div>
-          <span style={{color: subTopic ? '#D8D2CE' : ''}}>{subTopic ? subTopic : 'Sub-Topic'}</span>
-          <span> | </span>
-          <span style={{color: alternativeTopics ? '#D8D2CE' : ''}}>{alternativeTopics ? alternativeTopics: 'Alternative Topic(s)'}</span>
+        <div style={{height: '2vh', overflow: 'hidden'}}>
+          <span style={{color: subTopic ? '#D8D2CE' : ''}}>
+            {subTopic ? subTopic : 'Sub-Topic'}
+          </span> | <span style={{color: alternativeTopics ? '#D8D2CE' : ''}}>
+            {alternativeTopics ? alternativeTopics: 'Alternative Topic(s)'}
+          </span>
         </div>
         <div>Author | <span style={{color: '#D8D2CE'}}>{dateString}</span></div>
         <div className="brick-right-button">

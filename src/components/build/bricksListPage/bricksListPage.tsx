@@ -107,7 +107,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return (
       <div className="bricks-list-page">
         <div className="bricks-upper-part">
-          <h1>A &nbsp;L &nbsp;L&nbsp; &nbsp; B &nbsp;R &nbsp;I&nbsp; C&nbsp; K&nbsp; S</h1>
+          <h1 style={{textAlign: "center"}}>A &nbsp;L &nbsp;L&nbsp; &nbsp; B &nbsp;R &nbsp;I&nbsp; C&nbsp; K&nbsp; S</h1>
           <div className="bricks-sort">
             <Grid container direction="row" className="sort-and-search-row">
               <Grid container item xs={3} justify="flex-start">
