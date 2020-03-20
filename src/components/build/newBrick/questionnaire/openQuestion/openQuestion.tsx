@@ -9,12 +9,35 @@ import './openQuestion.scss';
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
 
+function HeadComponent() {
+  return (
+    <Grid container justify="center" style={{width: '100%', height: '100%', background: '#001D55'}}>
+      <img
+        alt="head"
+        style={{width: 'auto', marginLeft: '0.9vw', marginTop: '9vh', height: '44%'}}
+        src="/images/new-brick/head.png">
+      </img>
+      <p style={{fontSize: '1.25vw', color: 'white', fontFamily: 'Brandon Grotesque Regular', margin: 0, marginBottom: '3.5vh'}}>
+        Lorem ipsum dolor sit amet,
+        <br></br>
+        consetetur sadipscing elitr, sed
+        <br></br>
+        diam nonumy eirmod tempor?
+      </p>
+    </Grid>
+  )
+}
+
 function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
   const [openQuestion, setQuestion] = React.useState(selectedQuestion);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setQuestion(event.target.value as number);
   };
+
+  const getComponent = () => {
+    return (<div>Hello</div>);
+  }
 
   return (
     <div className="tutorial-page open-question-page">
@@ -44,7 +67,7 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
             </div>
           </Grid>
         </Grid>
-        <PhonePreview link={window.location.origin + '/logo-page'} />
+        <PhonePreview Component={HeadComponent} link="" />
       </Grid>
     </div>
   );

@@ -118,7 +118,7 @@ const LoginPage: React.FC<LoginProps> = props => {
               placeholder="Password"
             />
             <br />
-            <div style={{ width: "70%", marginLeft: '15%', textAlign: "right" }}>
+            <div style={{ width: "80%", marginLeft: '10%', textAlign: "right" }}>
               {userType === UserLoginType.Student ? (
                 <Button
                   variant="contained"

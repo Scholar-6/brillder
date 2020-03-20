@@ -18,6 +18,34 @@ interface PrepProps {
   savePrep(prep: string):void;
 }
 
+function PrepPreviewComponent() {
+  return (
+    <Grid container justify="center" style={{width: '100%', height: '100%', background: '#001D55'}}>
+      <img
+        alt="head"
+        style={{width: 'auto', marginLeft: '0', marginTop: '6.8vh', height: '27.5%'}}
+        src="/images/new-brick/book.png">
+      </img>
+      <img
+        alt="head"
+        style={{width: 'auto', marginLeft: '0', marginTop: '2vh', height: '7.5%'}}
+        src="/images/new-brick/arrows.png">
+      </img>
+      <p style={{fontSize: '1.25vw', color: 'white', fontFamily: 'Brandon Grotesque Regular', margin: 0, marginBottom: '3vh'}}>
+        Lorem ipsum dolor sit amet,
+        <br></br>
+        consetetur sadipscing elitr, sed
+        <br></br>
+        diam nonumy eirmod tempor
+        <br></br>
+        invidunt ut labore et dolore
+        <br></br>
+        magna aliquyam erat, sed diam
+      </p>
+    </Grid>
+  )
+}
+
 const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
   const [prep, setPrep] = React.useState(parentPrep);
 
@@ -51,7 +79,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
             </div>
           </Grid>
         </Grid>
-        <PhonePreview link={window.location.origin + '/logo-page'} />
+        <PhonePreview Component={PrepPreviewComponent} />
       </Grid>
     </div>
   );

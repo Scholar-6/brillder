@@ -113,9 +113,16 @@
   }
 
   iframe {
+    display: inline;
     border: none;
     width: 100%;
     height: 100%;
     background: $dark-blue;
+  }
+
+  .custom-component {
+    border: 0.2vw solid black;
+    width: auto;
+    height: 100%;
   }
 }
