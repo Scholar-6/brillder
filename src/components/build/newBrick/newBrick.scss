@@ -3,6 +3,18 @@
   font-family: 'Century Gothic Regular';
   color: black;
 
+  ::-webkit-input-placeholder { /* Edge */
+    color: #aaa;
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer */
+    color: #aaa;
+  }
+  
+  ::placeholder {
+    color: #aaa;
+  }
+
   .left-card {
     border: 1px solid grey;
     border-radius: 4px;
