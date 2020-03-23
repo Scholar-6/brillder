@@ -16,16 +16,27 @@ interface PrepProps {
 }
 
 const BriefPreviewComponent:React.FC<any> = ({data}) => {
+  if (data) {
+    return (
+      <Grid container justify="center" style={{width: '100%', height: '100%', background: '#001D55'}}>
+        <img
+          alt="head"
+          style={{width: 'auto', marginLeft: '0', marginTop: '6.8vh', height: '27.5%'}}
+          src="/images/new-brick/brief-circles.png">
+        </img>
+        <div className="typing-text">
+          {data}
+        </div>
+      </Grid>
+    )
+  }
   return (
     <Grid container justify="center" style={{width: '100%', height: '100%', background: '#001D55'}}>
       <img
         alt="head"
-        style={{width: 'auto', marginLeft: '0', marginTop: '6.8vh', height: '27.5%'}}
+        style={{width: 'auto', marginLeft: '0', marginTop: '6.8vh', height: '50%'}}
         src="/images/new-brick/brief-circles.png">
       </img>
-      <div className="typing-text">
-        {data}
-      </div>
     </Grid>
   )
 }
