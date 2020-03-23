@@ -10,12 +10,19 @@ import PhonePreview from "components/build/baseComponents/phonePreview/PhonePrev
 
 
 const HeadComponent:React.FC<any> = ({data}) => {
+  if (data) {
+    return (
+      <Grid container justify="center" className="phone-preview-component">
+        <img alt="head" src="/images/new-brick/head.png"></img>
+        <div className="typing-text">
+          {data}
+        </div>
+      </Grid>
+    )
+  }
   return (
     <Grid container justify="center" className="phone-preview-component">
-      <img alt="head" src="/images/new-brick/head.png"></img>
-      <div className="typing-text">
-        {data}
-      </div>
+      <img alt="head" src="/images/new-brick/head.png" style={{height: '65%'}}></img>
     </Grid>
   )
 }
