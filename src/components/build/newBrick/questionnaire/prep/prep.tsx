@@ -19,18 +19,26 @@ interface PrepProps {
 }
 
 const PrepPreviewComponent:React.FC<any> = ({data}) => {
+  if (data) {
+    return (
+      <Grid container justify="center" alignContent="flex-start" style={{width: '100%', height: '100%', background: '#001D55'}}>
+        <img className="first-phone-image"
+          alt="head"
+          style={{height: '40%'}}
+          src="/images/new-brick/prep.png">
+        </img>
+        <div className="typing-text" dangerouslySetInnerHTML={{ __html: data}}>
+        </div>
+      </Grid>
+    )
+  }
   return (
     <Grid container justify="center" alignContent="flex-start" style={{width: '100%', height: '100%', background: '#001D55'}}>
       <img className="first-phone-image"
         alt="head"
-        src="/images/new-brick/book.png">
+        style={{height: '60%'}}
+        src="/images/new-brick/prep.png">
       </img>
-      <img className="second-phone-image"
-        alt="head"
-        src="/images/new-brick/arrows.png">
-      </img>
-      <div className="typing-text" dangerouslySetInnerHTML={{ __html: data}}>
-      </div>
     </Grid>
   )
 }
