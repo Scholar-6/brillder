@@ -22,7 +22,7 @@ const HeadComponent:React.FC<any> = ({data}) => {
   }
   return (
     <Grid container justify="center" className="phone-preview-component">
-      <img alt="head" src="/images/new-brick/head.png" style={{height: '65%'}}></img>
+      <img alt="head" src="/images/new-brick/head.png" style={{marginTop: '34%', height: '61%'}}></img>
     </Grid>
   )
 }
