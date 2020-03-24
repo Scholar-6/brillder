@@ -9,6 +9,7 @@ import { ComponentAttempt } from '../model/model';
 
 import TextLive from '../comp/TextLive';
 import QuoteLive from '../comp/QuoteLive';
+import ImageLive from '../comp/ImageLive';
 
 import ShortAnswer from '../questionTypes/shortAnswer/ShortAnswer';
 import ChooseOne from '../questionTypes/chooseOne/ChooseOne';
@@ -96,6 +97,8 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     const renderComponent = (component: any, index: number) => {
       if (component.type === QuestionComponentTypeEnum.Text) {
         return <TextLive key={index} component={component} />
+      } else if (component.type === QuestionComponentTypeEnum.Image) {
+        return <ImageLive key={index} component={component} />
       } else if (component.type === QuestionComponentTypeEnum.Quote) {
         return <QuoteLive key={index} component={component} />
       } else if (component.type === QuestionComponentTypeEnum.Component) {
