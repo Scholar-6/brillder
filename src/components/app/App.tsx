@@ -72,7 +72,7 @@ const App: React.FC = (props: any) => {
         <AuthRoute path="/register" exact component={RegisterPage} />
 
         <Route path="/logo-page" component={LogoPage} />
-        <AuthRedirectRoute />
+        <Route component={AuthRedirectRoute} />
       </Switch>
     </ThemeProvider>
   );

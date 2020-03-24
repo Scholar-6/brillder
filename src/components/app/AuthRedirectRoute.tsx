@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from "react-router-dom";
+import queryString from 'query-string';
 // @ts-ignore
 import { connect } from 'react-redux';
 
@@ -7,6 +8,7 @@ import actions from '../../redux/actions/auth';
 import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
 import { User, UserType } from 'model/user';
+import { UserLoginType } from 'model/auth';
 
 interface AuthRedirectProps {
   isAuthenticated: isAuthenticated,
@@ -15,19 +17,28 @@ interface AuthRedirectProps {
   isAuthorized():void,
 }
 
-const AuthRedirect: React.FC<any> = ({ user, ...rest }) => {
-  if (rest.isAuthenticated === isAuthenticated.True) {
+const AuthRedirect: React.FC<any> = ({ user, ...props }) => {
+  if (props.isAuthenticated === isAuthenticated.True) {
     if (!user) {
-      rest.getUser();
+      props.getUser();
       return <div>...Getting User...</div>
+    }
+    const values = queryString.parse(props.location.search)
+    if (values.userType) {
+      let userType:UserLoginType = parseInt(values.userType as string);
+      if (userType === UserLoginType.Student) {
+        return <Redirect to="/play/dashboard" />
+      } else if (userType === UserLoginType.Builder) {
+        return <Redirect to="/build" />
+      }
     }
     if (user.type === UserType.Admin || user.type === UserType.Creator || user.type === UserType.Editor) {
       return <Redirect to="/build" />
     } else {
       return <Redirect to="/play/dashboard" />
     }
-  } else if (rest.isAuthenticated === isAuthenticated.None) {
-    rest.isAuthorized();
+  } else if (props.isAuthenticated === isAuthenticated.None) {
+    props.isAuthorized();
     return <div>...Checking rights...</div>
   } else {
     return <Redirect to="/choose-user" />

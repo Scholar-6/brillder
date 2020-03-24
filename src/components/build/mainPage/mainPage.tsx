@@ -33,7 +33,6 @@ class MainPage extends Component<any, any> {
   }
 
   viewHoverToggle(viewHover: boolean) {
-    console.log(viewHover)
     this.setState({viewHover});
   }
 
