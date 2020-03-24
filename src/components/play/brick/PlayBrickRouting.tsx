@@ -43,6 +43,7 @@ interface BrickRoutingProps {
   brick: Brick;
   match: any;
   user: any;
+  history: any;
   fetchBrick(brickId: number):void;
 }
 
@@ -105,9 +106,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     brickAttempt.studentId = props.user.id;
     console.log('save', brickAttempt)
     return axios.post(process.env.REACT_APP_BACKEND_HOST + '/play/attempt', brickAttempt, {withCredentials: true}).then(res => {
-      console.log('res')
-      console.log(res);
-      //history.push(`/play/dashboard`);
+      props.history.push(`/play/dashboard`);
     })
     .catch(error => {
     });
