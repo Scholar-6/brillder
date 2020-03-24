@@ -31,6 +31,13 @@ const ChooseLoginPage:React.FC<ChooseLoginProps> = (props) => {
   const userType = getUserTypeParam('userType');
 
   if (userType === UserLoginType.Builder || userType === UserLoginType.Student) {
+    let userUrl = '';
+    if (userType === UserLoginType.Builder) {
+      userUrl = '/build';
+    } else if (userType === UserLoginType.Student) {
+      userUrl = '/play';
+    }
+    let googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google?returnUrl=${userUrl}`;
     return (
       <Grid className="pre-login-page" container item justify="center" alignItems="center">
         <div className="back-col">
@@ -49,7 +56,7 @@ const ChooseLoginPage:React.FC<ChooseLoginProps> = (props) => {
               <MailIcon className="email-icon" />
               <span className="email-button-text">Sign in with email</span>
             </Button>
-            <Button className="google-button" href={process.env.REACT_APP_BACKEND_HOST + '/auth/google'}>
+            <Button className="google-button" href={googleLink}>
               <img alt="google-icon" className="google-icon" src="/images/google-icon.png" />
               <span className="email-button-text">Sign in with Google</span>
             </Button>
