@@ -13,6 +13,8 @@ const AccountInitialState: UserState = {
 
 export default (state = AccountInitialState, action: any) => {
   switch (action.type) {
+    case types.LOGOUT_SUCCESS:
+      return { user: null } as UserState
     case types.GET_USER_SUCCESS:
       return { user: action.user } as UserState
     case types.GET_USER_FAILURE:

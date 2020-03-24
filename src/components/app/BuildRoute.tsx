@@ -5,12 +5,13 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions/auth';
 import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
+import { User, UserType } from 'model/user';
 
 
 interface BuildRouteProps {
   component: any,
   isAuthenticated: isAuthenticated,
-  user: any,
+  user: User,
   getUser():void,
   isAuthorized():void,
 }
@@ -20,6 +21,9 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
     if (!rest.user) {
       rest.getUser();
       return <div>...Getting User...</div>
+    }
+    if (rest.user.type === UserType.Student) {
+      return <Redirect to="/play" />
     }
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
