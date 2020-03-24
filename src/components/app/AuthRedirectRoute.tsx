@@ -27,7 +27,7 @@ const AuthRedirect: React.FC<any> = ({ user, ...rest }) => {
       return <Redirect to="/play/dashboard" />
     }
   } else if (rest.isAuthenticated === isAuthenticated.None) {
-    rest.isAuthorized()
+    rest.isAuthorized();
     return <div>...Checking rights...</div>
   } else {
     return <Redirect to="/choose-user" />

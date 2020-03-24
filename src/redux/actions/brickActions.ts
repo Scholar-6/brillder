@@ -79,7 +79,7 @@ const createBrick = (brick:any) => {
     })
     .catch(error => {
       dispatch(createBrickFailure(error.message))
-    })
+    });
   }
 }
 

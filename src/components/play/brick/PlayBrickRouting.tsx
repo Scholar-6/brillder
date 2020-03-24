@@ -11,6 +11,7 @@ import ProvisionalScore from './provisionalScore/ProvisionalScore';
 import Synthesis from './synthesis/Synthesis';
 import Review from './review/ReviewPage';
 import Ending from './ending/Ending';
+import axios from 'axios';
 
 import { Brick } from 'model/brick';
 import { ComponentAttempt, PlayStatus } from './model/model';
@@ -20,7 +21,9 @@ import {
 
 
 export interface BrickAttempt {
-  brick: Brick;
+  brickId?: number;
+  studentId?: number;
+  brick?: Brick;
   score: number;
   oldScore?: number;
   maxScore: number;
@@ -39,6 +42,7 @@ function shuffle(a: any[]) {
 interface BrickRoutingProps {
   brick: Brick;
   match: any;
+  user: any;
   fetchBrick(brickId: number):void;
 }
 
@@ -87,16 +91,26 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     let score = reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0) + brickAttempt.score;
     let maxScore = reviewAttempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba : BrickAttempt = {
-      brick: props.brick,
       score,
       maxScore,
       oldScore: brickAttempt.score,
-      student: null,
       answers: reviewAttempts
     };
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
-    // saveBrickAttempt;
+  }
+
+  const saveBrickAttempt = () => {
+    brickAttempt.brickId = props.brick.id;
+    brickAttempt.studentId = props.user.id;
+    console.log('save', brickAttempt)
+    return axios.post(process.env.REACT_APP_BACKEND_HOST + '/play/attempt', brickAttempt, {withCredentials: true}).then(res => {
+      console.log('res')
+      console.log(res);
+      //history.push(`/play/dashboard`);
+    })
+    .catch(error => {
+    });
   }
 
   return (
@@ -123,7 +137,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           finishBrick={finishReview} />
       </Route>
       <Route exac path="/play/brick/:brickId/ending">
-        <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} />
+        <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} saveBrick={saveBrickAttempt} />
       </Route>
     </Switch>
   );
@@ -197,6 +211,7 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
 
 const mapState = (state: any) => {
   return {
+    user: state.user.user,
     brick: parseAndShuffleQuestions(state.brick.brick) as Brick,
   };
 };

@@ -16,13 +16,14 @@ interface EndingProps {
   status: PlayStatus;
   brick: Brick;
   brickAttempt: BrickAttempt;
+  saveBrick(): void;
 }
 
 interface EndingState {
   otherExpanded: boolean;
 }
 
-const EndingPage: React.FC<EndingProps> = ({ status, brick, brickAttempt }) => {
+const EndingPage: React.FC<EndingProps> = ({ status, brick, brickAttempt, saveBrick }) => {
   const history = useHistory();
   if (status === PlayStatus.Live) {
     history.push(`/play/brick/${brick.id}/intro`);
@@ -37,7 +38,7 @@ const EndingPage: React.FC<EndingProps> = ({ status, brick, brickAttempt }) => {
   }
 
   const endBrick = () => {
-    history.push(`/play/dashboard`);
+    saveBrick();
   }
 
   return (
