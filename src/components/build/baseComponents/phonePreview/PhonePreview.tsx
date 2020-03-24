@@ -1,8 +1,6 @@
 
 import React from 'react';
 import {  Hidden } from '@material-ui/core';
-// @ts-ignore
-import Device from "react-device-frame";
 
 import './PhonePreview.scss';
 

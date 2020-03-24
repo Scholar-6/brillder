@@ -1,16 +1,19 @@
 @import "_variables";
 
+$light-blue: #183265;
+$brick-radius: 10px;
+
 .bricks-list-page {
   background: $dark-blue;
   height: 100%;
-  font-family: 'Spartan MB Regular';
+  font-family: "Spartan MB Regular";
 
   h1 {
     padding-top: 2.8vw;
     padding-bottom: 2.8vw;
     font-size: 2vw;
     color: white;
-    font-family: 'Spartan MB Thin';
+    font-family: "Spartan MB Thin";
   }
 
   .bricks-upper-part {
@@ -18,123 +21,167 @@
     background: $dark-blue;
   }
 
-  .bricks-sort {
-    margin-left: 1.4vw;
-    margin-right: 1.4vw;
+  .bricks-header {
+    background: $light-blue;
+    height: 12vh;
 
-    .sort-and-search-row {
-      padding-bottom: 2.2vw;
+    .home-button {
+      cursor: pointer;
+      padding-left: 0.85vw;
+      padding-top: 1.6vh;
+      padding-bottom: 2vh;
+      height: 8.5vh;
+    }
 
-      .search-brick {
-        .search-label {
-          color: $orange;
-          z-index: 2;
-          top: -14px;
-          left: 14px;
-          font-size: 24px;
-          font-family: 'Spartan MB Regular';
-        }
+    .search-button {
+      padding-left: 4.6vw;
+      padding-top: 3.1vh;
+      height: 5.8vh;
+    }
 
-        .search-input {
-          background: white;
-          font-size: 24px;
-          font-family: 'Spartan MB Regular';
-          border: red;
-          border-radius: 12px;
-          border: none !important;
-          padding-right: 2px;
+    .search-input {
+      border: none;
+      background-color: $light-blue !important;
+      font-family: 'Brandon Grotesque Regular';
+      font-size: 1.7vw;
+      border: red;
+      border-radius: 12px;
+      border: none !important;
+      margin-left: 2.3vw;
+      margin-top: 3vh;
+      height: 6vh;
+      width: 40vw;
+      padding-right: 2px;
+      color: #ACACAC;
+    }
 
-          input {
-            padding: 8px 0 12px 16px;
-            width: 17.5vw;
-          }
-        }
+    .logout-container {
+      width: 40vw;
+      padding-top: 3vh;
 
-        .search-icon {
-          font-size: 2.4vw;
-          color: $orange;
-        }
+      .logout-button {
+        display: block;
+        height: 6.5vh;
+        width: 6.5vh;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/main-page/logout.png);
+        transition: all .2s ease-in-out;
+        transform-origin: 70% 50%;
+        margin-right: 4vw;
+      }
+  
+      .logout-button:hover {
+        transform: scale(1.4); 
+        background-image: url(/images/main-page/logout-hover.png);
+      }
 
-        .MuiInputLabel-shrink {
-          opacity: 0;
+      .bell-button {
+        margin-top: 0.5vh;
+        display: block;
+        height: 4vh;
+        padding-top: 1vh;
+        color: white;
+        text-align: center;
+        width: 4.5vh;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/brick-list/bell.png);
+        transition: all .2s ease-in-out;
+        transform-origin: 50% 50%;
+        margin-right: 3.3vw;
+
+        > span {
+          margin-top: 1vh;
         }
       }
 
-      .sort-bricks-by {
-        background: $orange;
-        padding-top: 4px;
-        padding-bottom: 5px;
-        font-size: 18px;
-        color: white;
-        font-family: 'Spartan MB Regular';
-        border-radius: 12px;
-        width: 100%;
-        text-align: left;
+      .bell-button:hover {
+        transform: scale(1.4); 
+        background-image: url(/images/brick-list/bell-hover.png);
+      }
 
-        .sort-by {
-          padding-top: 8px;
-          padding-left: 1vw;
-          padding-right: 3vw;
-        }
+      .user-button {
+        margin-top: 0.5vh;
+        display: block;
+        height: 5vh;
+        width: 4.5vh;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/brick-list/user.png);
+        transition: all .2s ease-in-out;
+        transform-origin: 50% 50%;
+        margin-right: 2vw;
+      }
 
-        .sort-element {
-          font-family: 'Spartan MB Regular';
-          font-weight: 600;
-          padding-top: 10px;
-          font-size: 16px;
-          color: $dark-blue;
-        }
-
-        .expanded-icon {
-          height: 35px !important;
-          width: 35px !important;
-          color: #DDA9A4;
-          cursor: pointer;
-        }
+      .user-button:hover {
+        background-image: url(/images/brick-list/user-hover.png);
+        transform: scale(1.4); 
       }
     }
   }
 
+  h3 {
+    color: white;
+    font-family: 'Brandon Grotesque Regular';
+    font-weight: normal;
+    margin-top: 5vh;
+    margin-left: 1.4vw;
+    letter-spacing: 0.25vw;
+    font-size: 1.25vw;
+    margin-bottom: 2.1vh;
+  }
+
   .bricks-list {
     min-height: 70%;
-    margin-left: 1.1vw;
-    margin-right: 1.1vw;
+    margin-left: 1vw;
+    margin-right: 0.5vw;
 
     .main-brick-container {
       width: 100%;
-      margin: 5px 0.3vw 5px 0.3vw;
     }
 
     .brick-container {
       cursor: pointer;
-      border-radius: 10px;
+      border-radius: $brick-radius;
       background: $orange;
-      padding-left: 14px;
-      padding-right: 14px;
+      padding-left: 0.5vw;
+      padding-right: 1vw;
       color: $dark-blue;
+      margin-bottom: 1.9vh;
 
-      width: 90%;
+      width: 95%;
       text-align: left;
 
       .link-description {
-        font-size: 1.05vw;
-        margin: 4px 0 12px 0;
-        font-weight: 600;
+        padding-top: 1vh;
+        font-size: 1.3vw;
+        font-family: 'Brandon Grotesque Bold';
+        line-height: 1;
       }
 
       .link-info {
-        font-size: 1.05vw;
-        padding-bottom: 12px;
+        line-height: 1.2;
+        font-size: 1.3vw;
+        font-family: 'Brandon Grotesque Regular';
       }
 
       .edit-button {
-        text-align:center;
+        text-align: center;
         padding-bottom: 8px;
       }
 
       .right-color-column {
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
+        border-top-right-radius: $brick-radius;
+        border-bottom-right-radius: $brick-radius;
+        background: white;
+        position: absolute;
+        right: 0;
+        height: 100%;
+        width: 3.3%;
       }
     }
     .brick-container.expanded {
@@ -144,12 +191,13 @@
 
   .brick-list-footer {
     width: 100%;
-    background: #808EAA;
+    background: #808eaa;
     min-height: 30px;
   }
 }
 
-@media only screen and (min-width: 1280px) {}
+@media only screen and (min-width: 1280px) {
+}
 
 @media only screen and (max-width: 1279px) and (min-width: 960px) {
   .bricks-list-page {
