@@ -21,6 +21,7 @@ export interface Brick {
   title: string
   alternativeTopics: string
   alternativeSubject: string
+  created: string
   openQuestion: string
   brief: string
   prep: string

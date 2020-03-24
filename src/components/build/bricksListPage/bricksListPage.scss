@@ -184,8 +184,8 @@ $brick-radius: 10px;
         width: 3.3%;
       }
     }
-    .brick-container.expanded {
-      color: white;
+    .brick-container:hover {
+      color: #ffffff;
     }
   }
 
