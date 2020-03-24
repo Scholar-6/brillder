@@ -73,15 +73,16 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     let bricksList = []
     let i = 0;
     for (let brick of this.state.bricks) {
+      const created = new Date(brick.created);
       bricksList.push(
         <Grid container key={i} item xs={12} sm={6} md={4} lg={3} justify="center">
           <div className="main-brick-container">
             <Box className={brick.expanded ? "expanded brick-container" : "brick-container"}  style={{paddingRight: 0}} onClick={() => this.move(brick.id)}>
               <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
                 <Grid item xs={11}>
-                  <div className="link-description">Title Appear here</div>
-                  <div className="link-info">Sub-Topic | Alternative</div>
-                  <div className="link-info">{brick.author?.firstName} {brick.author?.lastName} | DD.MM.YYYY | {brick.brickLength} mins</div>
+                  <div className="link-description">{brick.title}</div>
+                  <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
+                  <div className="link-info">{brick.author?.firstName} {brick.author?.lastName} | {created.getDate()}.{created.getMonth() + 1}.{created.getFullYear()} | {brick.brickLength} mins</div>
                 </Grid>
                 <div className="right-color-column">
                   <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center">
@@ -137,9 +138,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               {this.createBricksList()}
             </Grid>
           </div>
-        </div>
-        <div className="brick-list-footer">
-          fotter
         </div>
       </div>
     )
