@@ -127,7 +127,7 @@ $right: 1.4vw;
     font-weight: normal;
     margin-top: 2.5vh;
     margin-left: 1.05vw;
-    margin-bottom: 1.0vh;
+    margin-bottom: 1vh;
     letter-spacing: 0.27vw;
     font-size: 1.2vw;
   }
@@ -210,15 +210,72 @@ $right: 1.4vw;
 
       .sort-box {
         margin-bottom: 1.2vh;
-        padding-left: 0.6vw;
-        padding-top: 0.2vh;
+        padding-left: 0.65vw;
+        padding-top: 0.3vh;
         border-radius: $brick-radius;
         width: 95%;
         background: #193366;
 
         .sort-header {
+          font-size: 1.3vw;
           letter-spacing: 0.22vw;
-
+        }
+        .filter-header {
+          margin-top: 1.6vh;
+          letter-spacing: 0.22vw;
+          margin-bottom: 1vh;
+        }
+        .sort-group {
+          display: block;
+          > label:nth-child(1) {
+            width: 45%;
+          }
+          > label:nth-child(2) {
+            width: 45%;
+          }
+          > label {
+            .sortBy {
+              padding-left: 1vw;
+              padding-right: 0.4vw;
+              svg {
+                height: 2.2vh;
+                width: 2.2vh;
+                color: $orange !important;
+              }
+            }
+            .MuiFormControlLabel-label {
+              font: 1.05vw "Brandon Grotesque Regular" !important;
+              letter-spacing: 0.06vw;
+            }
+          }
+        }
+        .filter-container {
+          cursor: default;
+          width: 45%;
+          > span.filter-radio {
+            padding-left: 1vw;
+            padding-right: 0.4vw;
+            svg {
+              height: 2.2vh;
+              width: 2.2vh;
+            }
+          }
+          .MuiFormControlLabel-label {
+            font: 1.05vw "Brandon Grotesque Regular" !important;
+            letter-spacing: 0.06vw;
+          }
+          .color1 svg { color: #006BFD !important; }
+          .color2 svg { color: #65C44C !important; }
+          .color3 svg { color: #F3F584 !important; }
+          .color4 svg { color: #FF3B01 !important; }
+          .color5 svg { color: #ED6CC9 !important; }
+          .color6 svg { color: #AAF1C7 !important; }
+          .color7 svg { color: #B3F87B !important; }
+          .color8 svg { color: #8E44F6 !important; }
+          .color8 svg { color: #F7F7F7 !important; }
+        }
+        .filter-container:nth-child(odd) {
+          width: 50%;
         }
       }
     }
