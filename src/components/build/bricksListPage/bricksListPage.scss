@@ -10,15 +10,7 @@ $right: 1.4vw;
 .bricks-list-page {
   background: $dark-blue;
   height: 100%;
-  font-family: "Spartan MB Regular";
-
-  h1 {
-    padding-top: 2.8vw;
-    padding-bottom: 2.8vw;
-    font-size: 2vw;
-    color: white;
-    font-family: "Spartan MB Thin";
-  }
+  font-family: "Brandon Grotesque Regular";
 
   .bricks-upper-part {
     min-height: 100%;
@@ -218,11 +210,16 @@ $right: 1.4vw;
 
       .sort-box {
         margin-bottom: 1.2vh;
-        padding-left: 0.5vw;
-        padding-top: 0.5vh;
+        padding-left: 0.6vw;
+        padding-top: 0.2vh;
         border-radius: $brick-radius;
         width: 95%;
         background: #193366;
+
+        .sort-header {
+          letter-spacing: 0.22vw;
+
+        }
       }
     }
   }
