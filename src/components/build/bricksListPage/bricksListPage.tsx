@@ -86,8 +86,36 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({ bricks: this.state.bricks });
   }
 
+  getYear(date: Date) {
+    var currentYear =  date.getFullYear();   
+    var twoLastDigits = currentYear%100;
+    var formatedTwoLastDigits = "";
+    
+    if (twoLastDigits <10 ) {
+      formatedTwoLastDigits = "0" + twoLastDigits;
+    } else {
+      formatedTwoLastDigits = "" + twoLastDigits;
+    }
+    return formatedTwoLastDigits;
+  }
+
+  getMonth(date: Date) {
+    const month = date.getMonth() + 1;
+    var twoLastDigits = month%10;
+    var formatedTwoLastDigits = "";
+
+    if (twoLastDigits < 10 ) {
+      formatedTwoLastDigits = "0" + twoLastDigits;
+    } else {
+      formatedTwoLastDigits = "" + twoLastDigits;
+    }
+    return formatedTwoLastDigits;
+  }
+
   getBrickContainer = (brick: Brick, key: number, size: any = 3) => {
     const created = new Date(brick.created);
+    const year = this.getYear(created);
+    const month = this.getMonth(created);
     return (
       <Grid container key={key} item xs={size} justify="center">
         <div className="main-brick-container">
@@ -96,7 +124,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               <Grid item xs={11}>
                 <div className="link-description">{brick.title}</div>
                 <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
-                <div className="link-info">{brick.author?.firstName} {brick.author?.lastName} | {created.getDate()}.{created.getMonth() + 1}.{created.getFullYear()} | {brick.brickLength} mins</div>
+                <div className="link-info">
+                  {brick.author?.firstName} {brick.author?.lastName} | {created.getDate()}.{month}.{year} | {brick.brickLength} mins
+                </div>
               </Grid>
               <div className="right-color-column">
                 <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center">
