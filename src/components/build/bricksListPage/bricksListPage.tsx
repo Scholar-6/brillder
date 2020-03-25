@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Box, Grid } from '@material-ui/core';
 // @ts-ignore
 import { connect } from 'react-redux';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 import actions from 'redux/actions/bricksActions';
 import authActions from 'redux/actions/auth';
@@ -69,33 +70,69 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({ bricks: this.state.bricks });
   }
 
+  getBrickContainer = (brick: Brick, key: number) => {
+    const created = new Date(brick.created);
+    return (
+      <Grid container key={key} item xs={3} justify="center">
+        <div className="main-brick-container">
+          <Box className={brick.expanded ? "expanded brick-container" : "brick-container"}  style={{paddingRight: 0}} onClick={() => this.move(brick.id)}>
+            <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
+              <Grid item xs={11}>
+                <div className="link-description">{brick.title}</div>
+                <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
+                <div className="link-info">{brick.author?.firstName} {brick.author?.lastName} | {created.getDate()}.{created.getMonth() + 1}.{created.getFullYear()} | {brick.brickLength} mins</div>
+              </Grid>
+              <div className="right-color-column">
+                <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center">
+                  {
+                    brick.expanded ? " " : " "
+                  }
+                </Grid>
+              </div>
+            </Grid>
+          </Box>
+        </div>
+      </Grid>
+    );
+  }
+
+  getEmptyBrickContainer = (key: number, size: any = 3) => {
+    return (
+      <Grid container key={key} item xs={size} justify="center">
+        <div className="main-brick-container">
+          <Box className="brick-container empty-container"  style={{paddingRight: 0}}>
+            <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
+              <Grid item xs={11}></Grid>
+              <div className="right-color-column">
+                <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center">
+                </Grid>
+              </div>
+            </Grid>
+          </Box>
+        </div>
+      </Grid>
+    );
+  }
+
+
+  renderYourBrickRow = () => {
+    let bricksList = []
+    let index = 0;
+    for (let i = index; i < index + 4; i++) {
+      if (this.state.bricks[i]) {
+        bricksList.push(this.getBrickContainer(this.state.bricks[i], i));
+      } else {
+        bricksList.push(this.getEmptyBrickContainer(i));
+      }
+    }
+    return bricksList;
+  }
+
   createBricksList = () => {
     let bricksList = []
     let i = 0;
     for (let brick of this.state.bricks) {
-      const created = new Date(brick.created);
-      bricksList.push(
-        <Grid container key={i} item xs={12} sm={6} md={4} lg={3} justify="center">
-          <div className="main-brick-container">
-            <Box className={brick.expanded ? "expanded brick-container" : "brick-container"}  style={{paddingRight: 0}} onClick={() => this.move(brick.id)}>
-              <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
-                <Grid item xs={11}>
-                  <div className="link-description">{brick.title}</div>
-                  <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
-                  <div className="link-info">{brick.author?.firstName} {brick.author?.lastName} | {created.getDate()}.{created.getMonth() + 1}.{created.getFullYear()} | {brick.brickLength} mins</div>
-                </Grid>
-                <div className="right-color-column">
-                  <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center">
-                    {
-                      brick.expanded ? " " : " "
-                    }
-                  </Grid>
-                </div>
-              </Grid>
-            </Box>
-          </div>
-        </Grid>
-      );
+      bricksList.push(this.getBrickContainer(brick, i));
       i++;
     }
     return bricksList
@@ -112,7 +149,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                   <img
                     alt="home"
                     className="home-button"
-                    src="/images/brick-list/home.png"
+                    src="/images/choose-login/logo.png"
                     onClick={() => { this.props.history.push('/build') }}
                   />
                 </Grid>
@@ -128,16 +165,48 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             </Grid>
             <Grid container  className="logout-container" justify="flex-end" item xs={5}>
             <div className="logout-button"></div>
-            <div className="bell-button"><div>3</div></div>
+            <div className="bell-button"><div></div></div>
             <div className="user-button"></div>
             </Grid>
           </Grid>
-          <h3>Continue Building</h3>
-          <div className="bricks-list">
+          <h3>Your Bricks</h3>
+          <div className="your-bricks-list">
             <Grid container direction="row">
-              {this.createBricksList()}
+              {this.renderYourBrickRow()}
             </Grid>
+            <div className="next-bricks">
+              <NavigateNextIcon className="MuiSvgIcon-root jss415 MuiSvgIcon-fontSizeLarge" />
+            </div>
           </div>
+          <Grid container direction="row" className="sorted-row">
+            <Grid container item xs={3} className="sort-and-filter-container">
+              <div className="sort-box">
+                Sort By
+              </div>
+            </Grid>
+            <Grid item xs={9}>
+              <Grid container direction="row">
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              {this.getEmptyBrickContainer(1, 4)}
+              </Grid> 
+            </Grid>
+          </Grid>
         </div>
       </div>
     )
