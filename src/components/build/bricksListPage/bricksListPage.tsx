@@ -1,6 +1,6 @@
 import './bricksListPage.scss';
 import React, { Component } from 'react';
-import { Box, Grid } from '@material-ui/core';
+import { Box, Grid, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 // @ts-ignore
 import { connect } from 'react-redux';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -138,6 +138,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return bricksList
   }
 
+  handleSortChange = (e: any) => {
+    const {state} = this;
+    this.setState({...state, sortBy: parseInt(e.target.value)})
+  }
+
   render() {  
     return (
       <div className="bricks-list-page">
@@ -181,7 +186,16 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
               <div className="sort-box">
-                Sort By
+                <div className="sort-header">Sort By</div>
+                <RadioGroup
+                  aria-label="SortBy"
+                  name="SortBy"
+                  value={this.state.sortBy}
+                  onChange={this.handleSortChange}
+                >
+                  <FormControlLabel value={SortBy.Popularity} control={<Radio />} label="Popularity" />
+                  <FormControlLabel value={SortBy.Date} control={<Radio />} label="Date Added" />
+                </RadioGroup>
               </div>
             </Grid>
             <Grid item xs={9}>

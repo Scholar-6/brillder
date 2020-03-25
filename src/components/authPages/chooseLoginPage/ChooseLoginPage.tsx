@@ -37,7 +37,7 @@ const ChooseLoginPage:React.FC<ChooseLoginProps> = (props) => {
     } else if (userType === UserLoginType.Student) {
       userUrl = '/play';
     }
-    let googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google?returnUrl=${userUrl}`;
+    let googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/${userUrl}`;
     return (
       <Grid className="pre-login-page" container item justify="center" alignItems="center">
         <div className="back-col">
