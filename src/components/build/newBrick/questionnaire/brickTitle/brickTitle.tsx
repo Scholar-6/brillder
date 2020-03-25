@@ -16,10 +16,36 @@ interface BrickTitleProps {
 }
 
 const BrickTitlePreviewComponent:React.FC<any> = (props) => {
-  const date = new Date();
-  const dateString = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-
   let {subTopic, alternativeTopics, title} = props.data;
+
+  const getYear = (date: Date) => {
+    var currentYear =  date.getFullYear();   
+    var twoLastDigits = currentYear%100;
+    var formatedTwoLastDigits = "";
+    
+    if (twoLastDigits <10 ) {
+      formatedTwoLastDigits = "0" + twoLastDigits;
+    } else {
+      formatedTwoLastDigits = "" + twoLastDigits;
+    }
+    return formatedTwoLastDigits;
+  }
+
+  const getMonth = (date: Date) => {
+    const month = date.getMonth() + 1;
+    var twoLastDigits = month%10;
+    var formatedTwoLastDigits = "";
+
+    if (twoLastDigits < 10 ) {
+      formatedTwoLastDigits = "0" + twoLastDigits;
+    } else {
+      formatedTwoLastDigits = "" + twoLastDigits;
+    }
+    return formatedTwoLastDigits;
+  }
+
+  const date = new Date();
+  const dateString = `${date.getDate()}.${getMonth(date)}.${getYear(date)}`;
   
   return (
     <Grid container alignContent="flex-start" className="brick-title-container">
