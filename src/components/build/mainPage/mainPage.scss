@@ -19,7 +19,7 @@ $mobile-arrow-color: #96A0B6;
   .welcome-col {
     width: 35.2vw;
     text-align: center;
-    padding-top: 16vh;
+    padding-top: 15vh;
     .welcome-box {
       color:white;
       letter-spacing: 0.66vw;
@@ -124,16 +124,16 @@ $mobile-arrow-color: #96A0B6;
   .logout-button {
     cursor: pointer;
     position: fixed;
-    top: 2vh;
+    top: 2.8vh;
     right: 1.8vw;
     font-size: 1.5vw;
     color: white;
-    font: 1.24vw 'Brandon Grotesque Bold';
+    font: 1.24vw 'Brandon Grotesque Regular';
     letter-spacing: 0.25vw;
 
     .logout-image {
-      margin-right: 0.2vw;
-      height: 3.8vw;
+      margin-right: 1.1vw;
+      height: 3.1vw;
       min-height: 100%;
     }
 
@@ -153,6 +153,9 @@ $mobile-arrow-color: #96A0B6;
     }
     .image-top {
       display: inline;
+    }
+    .logout-text {
+      font-family: 'Brandon Grotesque Bold';
     }
   }
 

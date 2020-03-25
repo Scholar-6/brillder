@@ -83,7 +83,7 @@ class MainPage extends Component<any, any> {
               </div>
               <div>
                 <Grid container alignContent="center" style={{height: '100%'}}>
-                  <span>LOGOUT</span>
+                  <span className="logout-text">LOGOUT</span>
                 </Grid>
               </div>
             </Grid>
