@@ -196,6 +196,15 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  renderSortedBricks = () => {
+    let bricksList = []
+    for (let i =0; i < 18; i++) {
+      bricksList.push(this.getEmptyBrickContainer(i, 4));
+      i++;
+    }
+    return bricksList
+  }
+
   render() {  
     return (
       <div className="bricks-list-page">
@@ -242,24 +251,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             </Grid>
             <Grid item xs={9}>
               <Grid container direction="row">
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
-              {this.getEmptyBrickContainer(1, 4)}
+                {this.renderSortedBricks()}
               </Grid> 
             </Grid>
           </Grid>
