@@ -1,6 +1,6 @@
 import './bricksListPage.scss';
 import React, { Component } from 'react';
-import { Box, Grid, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import { Box, Grid, FormControlLabel, Radio, RadioGroup, Color } from '@material-ui/core';
 // @ts-ignore
 import { connect } from 'react-redux';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -8,6 +8,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import actions from 'redux/actions/bricksActions';
 import authActions from 'redux/actions/auth';
 import { Brick } from 'model/brick';
+
 
 const mapState = (state: any) => {
   return {
@@ -34,6 +35,7 @@ interface BricksListProps {
 interface BricksListState {
   bricks: Array<Brick>;
   sortBy: SortBy;
+  subjects: any[];
 }
 
 enum SortBy {
@@ -49,7 +51,21 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props)
     this.props.fetchBricks();
-    this.state = {bricks: props.bricks, sortBy: SortBy.None};
+    this.state = {
+      bricks: props.bricks,
+      sortBy: SortBy.None,
+      subjects: [
+        { checked: false, color: 'color1', name: 'Art & Design'},
+        { checked: false, color: 'color2', name: 'Biology'},
+        { checked: false, color: 'color3', name: 'Chemistry'},
+        { checked: false, color: 'color4', name: 'Chinese'},
+        { checked: false, color: 'color5', name: 'Classics'},
+        { checked: false, color: 'color6', name: 'Computer Science'},
+        { checked: false, color: 'color7', name: 'Ecomonics'},
+        { checked: false, color: 'color8', name: 'English Literature'},
+        { checked: false, color: 'color9', name: 'French'}
+      ]
+    };
   }
 
   logout() {
@@ -143,6 +159,43 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({...state, sortBy: parseInt(e.target.value)})
   }
 
+  filterBySubject = (i: number) => {
+    const {state} = this;
+    const {subjects} = state;
+    subjects[i].checked = !subjects[i].checked
+    this.setState({...state})
+  }
+
+  renderSortAndFilterBox = () => {
+    return (
+      <div className="sort-box">
+        <div className="sort-header">Sort By</div>
+        <RadioGroup
+          className="sort-group"
+          aria-label="SortBy"
+          name="SortBy"
+          value={this.state.sortBy}
+          onChange={this.handleSortChange}
+        >
+          <FormControlLabel value={SortBy.Popularity} control={<Radio className="sortBy" />} label="Popularity" />
+          <FormControlLabel value={SortBy.Date} control={<Radio className="sortBy" />} label="Date Added" />
+        </RadioGroup>
+        <div className="filter-header">Filter</div>
+        {
+          this.state.subjects.map((subject, i) =>
+            <FormControlLabel
+              className="filter-container"
+              
+              checked={subject.checked}
+              onClick={() => this.filterBySubject(i)}
+              control={<Radio className={"filter-radio " + subject.color}/>}
+              label={subject.name} />
+          )
+        }
+      </div>
+    );
+  }
+
   render() {  
     return (
       <div className="bricks-list-page">
@@ -185,18 +238,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           </div>
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
-              <div className="sort-box">
-                <div className="sort-header">Sort By</div>
-                <RadioGroup
-                  aria-label="SortBy"
-                  name="SortBy"
-                  value={this.state.sortBy}
-                  onChange={this.handleSortChange}
-                >
-                  <FormControlLabel value={SortBy.Popularity} control={<Radio />} label="Popularity" />
-                  <FormControlLabel value={SortBy.Date} control={<Radio />} label="Date Added" />
-                </RadioGroup>
-              </div>
+              {this.renderSortAndFilterBox()}
             </Grid>
             <Grid item xs={9}>
               <Grid container direction="row">
