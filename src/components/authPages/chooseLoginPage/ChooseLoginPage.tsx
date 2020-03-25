@@ -33,9 +33,9 @@ const ChooseLoginPage:React.FC<ChooseLoginProps> = (props) => {
   if (userType === UserLoginType.Builder || userType === UserLoginType.Student) {
     let userUrl = '';
     if (userType === UserLoginType.Builder) {
-      userUrl = '/build';
+      userUrl = 'build';
     } else if (userType === UserLoginType.Student) {
-      userUrl = '/play';
+      userUrl = 'play';
     }
     let googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/${userUrl}`;
     return (
