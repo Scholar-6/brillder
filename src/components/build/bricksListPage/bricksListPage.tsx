@@ -86,10 +86,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({ bricks: this.state.bricks });
   }
 
-  getBrickContainer = (brick: Brick, key: number) => {
+  getBrickContainer = (brick: Brick, key: number, size: any = 3) => {
     const created = new Date(brick.created);
     return (
-      <Grid container key={key} item xs={3} justify="center">
+      <Grid container key={key} item xs={size} justify="center">
         <div className="main-brick-container">
           <Box className={brick.expanded ? "expanded brick-container" : "brick-container"}  style={{paddingRight: 0}} onClick={() => this.move(brick.id)}>
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
@@ -144,16 +144,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return bricksList;
   }
 
-  createBricksList = () => {
-    let bricksList = []
-    let i = 0;
-    for (let brick of this.state.bricks) {
-      bricksList.push(this.getBrickContainer(brick, i));
-      i++;
-    }
-    return bricksList
-  }
-
   handleSortChange = (e: any) => {
     const {state} = this;
     this.setState({...state, sortBy: parseInt(e.target.value)})
@@ -198,9 +188,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
   renderSortedBricks = () => {
     let bricksList = []
-    for (let i =0; i < 18; i++) {
-      bricksList.push(this.getEmptyBrickContainer(i, 4));
-      i++;
+    for (let i = 0; i < 18; i++) {
+      if (this.state.bricks[i]) {
+        bricksList.push(this.getBrickContainer(this.state.bricks[i], i, 4));
+      } else {
+        bricksList.push(this.getEmptyBrickContainer(i, 4));
+      }
     }
     return bricksList
   }
