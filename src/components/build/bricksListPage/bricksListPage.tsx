@@ -11,27 +11,26 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import actions from 'redux/actions/bricksActions';
 import authActions from 'redux/actions/auth';
 import { Brick, BrickStatus } from 'model/brick';
+import { User, UserType } from 'model/user';
 
 
 const mapState = (state: any) => {
   return {
-    bricks: state.bricks.bricks
+    user: state.user.user,
   }
 }
 
 const mapDispatch = (dispatch: any) => {
   return {
     logout: () => dispatch(authActions.logout()),
-    fetchBricks: () => dispatch(actions.fetchBricks()),
   }
 }
 
 const connector = connect(mapState, mapDispatch);
 
 interface BricksListProps {
-  bricks: Array<Brick>;
+  user: User,
   history: any;
-  fetchBricks(): void;
   logout(): void;
 }
 
@@ -58,6 +57,7 @@ enum SortBy {
 class BricksListPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props)
+    console.log(props.user);
     this.state = {
       yourBricks: [],
       bricks: [],
@@ -169,7 +169,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     let reversed = this.state.sortedReversed;
     let preReversed = reversed;
     let index = this.state.sortedIndex;
-    if (index + 36 >= this.props.bricks.length) {
+    if (index + 36 >= this.state.bricks.length) {
       preReversed = true;
     }
     if (reversed === false) {
@@ -208,7 +208,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                       </div>
                       <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
                         <Grid item xs={6} container justify="flex-start">
-                          <img alt="bin" onClick={() => this.delete(key, brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
+                          {
+                            (this.props.user.type === UserType.Admin)
+                              ? <img alt="bin" onClick={() => this.delete(key, brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
+                              : ""
+                          }
                         </Grid>
                         <Grid item xs={6} container justify="flex-end">
                           <img
@@ -307,7 +311,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                       </div>
                       <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
                         <Grid item xs={6} container justify="flex-start">
-                          <img alt="bin" onClick={() => this.delete(key, brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
+                          {
+                            (this.props.user.type === UserType.Admin)
+                              ? <img alt="bin" onClick={() => this.delete(key, brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
+                              : ""
+                          }
                         </Grid>
                         <Grid item xs={6} container justify="flex-end">
                           <img
