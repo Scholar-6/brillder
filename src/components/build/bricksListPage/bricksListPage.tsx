@@ -187,7 +187,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       <Grid container key={key} item xs={3} justify="center">
         <div className="main-brick-container">
           <Box
-            className="brick-container sorted-brick"
+            className="brick-container sorted-brick bigger-hover"
             onMouseEnter={() => this.yourBricksMouseHover(key)}
             onMouseLeave={() => this.yourBricksMouseLeave()}
           >
