@@ -57,7 +57,6 @@ enum SortBy {
 class BricksListPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props)
-    console.log(props.user);
     this.state = {
       yourBricks: [],
       bricks: [],
@@ -98,6 +97,13 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       .catch(error => {
         alert('Can`t get bricks');
       });
+
+    axios.get(process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true})
+    .then(res => {
+    })
+    .catch(error => {
+      alert('Can`t get bricks');
+    });
   }
 
   logout() {
@@ -186,7 +192,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             onMouseEnter={() => this.yourBricksMouseHover(key)}
             onMouseLeave={() => this.yourBricksMouseLeave(key)}
           >
-            <div className="sorted-brick absolute-container bigger-hover">
+            <div className={`sorted-brick absolute-container ${brick.expanded ? "bigger-hover" : ""}`}>
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
               <Grid item xs={brick.expanded ? 12 : 11}>
                 <div className="link-description">{brick.title}</div>
@@ -319,7 +325,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             onMouseEnter={() => this.handleMouseHover(key)}
             onMouseLeave={() => this.handleMouseLeave(key)}
           >
-            <div className={`sorted-brick absolute-container brick-row-${row}`}>
+            <div className={`sorted-brick absolute-container brick-row-${row} ${brick.expanded ? 'brick-hover' : ''}`}>
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
               <Grid item xs={brick.expanded ? 12 : 11}>
                 <div className="link-description">{brick.title}</div>
