@@ -6,7 +6,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: $global-orange;
+    background: $orange;
     border-radius: 1vw;
   }
 
@@ -67,7 +67,7 @@
     .new-question-button {
       margin: 0 !important;
       padding-top: 6px !important;
-      color: $global-orange;
+      color: $orange;
 
       div {
         span {
@@ -116,7 +116,7 @@
 
       .new-question-button {
         padding-top: 6px !important;
-        color: $global-orange;
+        color: $orange;
 
         div {
           span {
@@ -198,10 +198,10 @@
           padding: 0px;
           border-radius: 0;
           display: block;
-          border: 2px solid $global-orange;
+          border: 2px solid $orange;
           border-radius: 10px;
           background: white;
-          color: $global-orange;
+          color: $orange;
           width: 90%;
           font-family: 'Century Gothic Regular';
           font-size: 1.1vw;
