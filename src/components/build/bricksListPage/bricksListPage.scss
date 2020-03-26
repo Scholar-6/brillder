@@ -202,7 +202,6 @@ $right: 1.4vw;
   }
 
   .brick-container {
-    cursor: pointer;
     padding-right: 0;
     height: $min-brick-height;
     border-radius: $brick-radius;
@@ -277,6 +276,7 @@ $right: 1.4vw;
       position: relative;
 
       .bin-button {
+        cursor: pointer;
         position: absolute;
         left: -0.2vw;
         height: 3.7vh;
@@ -285,6 +285,7 @@ $right: 1.4vw;
       }
 
       .play-button {
+        cursor: pointer;
         position: absolute;
         right: -0vw;
         height: 3.7vh;
