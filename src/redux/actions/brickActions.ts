@@ -56,6 +56,12 @@ const saveBrick = (brick:any) => {
   }
 }
 
+const forgetBrick = () => {
+  return function (dispatch: Dispatch) {
+    dispatch({ type: types.FORGET_BRICK })
+  }
+}
+
 const createBrickSuccess = (brick: Brick) => {
   return {
     type: types.CREATE_BRICK_SUCCESS,
@@ -83,4 +89,4 @@ const createBrick = (brick:any) => {
   }
 }
 
-export default { fetchBrick, createBrick, saveBrick }
+export default { fetchBrick, createBrick, saveBrick, forgetBrick }
