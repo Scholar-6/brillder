@@ -18,13 +18,13 @@ $right: 1.4vw;
 
     .bottom-next-button {
       position: absolute;
-      bottom: -2.7vh;
+      bottom: -2.1vh;
       color: white;
       > svg {
         cursor: pointer;
         margin-right: 1.5vw;
-        height: 5.2vh;
-        width: 5.2vh;
+        height: 5vh;
+        width: 5vh;
       }
     }
   }
@@ -34,6 +34,7 @@ $right: 1.4vw;
 
     .home-button-container {
       padding-right: 1.2vw;
+      width: 5.5vw;
       border-bottom-right-radius: 2vw;
       background: $light-blue;
       height: 10.5vh;

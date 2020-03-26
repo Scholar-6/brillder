@@ -23,7 +23,7 @@
 
   .question-container {
     background: $color-light-grey;
-    color: $global-orange;
+    color: $orange;
     margin: 0.6vw 0.6vw 0.6vw 0.6vw;
     border-radius: 1.1vw;
     height: 15vh;
@@ -53,7 +53,7 @@
   .set-type-button {
     margin: 0 !important;
     padding-top: 6px !important;
-    color: $global-orange;
+    color: $orange;
   
     .set-type-icon {
       font-size: 50px;
@@ -67,7 +67,7 @@
       margin: 0 !important;
       
       padding: 0 !important;
-      color: $global-orange;
+      color: $orange;
 
       span {
         height: 60px !important;
