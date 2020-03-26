@@ -300,6 +300,13 @@ $right: 1.4vw;
     }
   }
 
+  .bigger-hover:hover {
+    height: 35.4vh;
+    .hover-icons-row {
+      height: 11.2vh;
+    }
+  }
+
   .empty-container {
     opacity: 0.75;
   }
