@@ -36,6 +36,7 @@ export interface Brick {
   questions: Question[]
   author: Author
   expanded?: boolean
+  expandFinished?: boolean
   status: BrickStatus
 }
 

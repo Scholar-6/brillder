@@ -234,25 +234,43 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   handleMouseHover(index: number) {
-    setTimeout(() => {
-      let {bricks} = this.state;
-      bricks.forEach(brick => {
-        brick.expanded = false;
-      });
-      bricks[index].expanded = true;
-      this.setState({...this.state});
-    }, 400);
-  }
-
-  handleMouseLeave() {
     let {bricks} = this.state;
     bricks.forEach(brick => {
       brick.expanded = false;
     });
     this.setState({...this.state});
+    setTimeout(() => {
+      let {bricks} = this.state;
+      bricks.forEach(brick => {
+        brick.expanded = false;
+      });
+      if (!bricks[index].expandFinished) {
+        bricks[index].expanded = true;
+      }
+      this.setState({...this.state});
+    }, 400);
+  }
+
+  handleMouseLeave(key: number) {
+    let {bricks} = this.state;
+    bricks.forEach(brick => {
+      brick.expanded = false;
+    });
+    bricks[key].expandFinished = true;
+    this.setState({...this.state});
+    setTimeout(() => {
+      bricks[key].expandFinished = false;
+      this.setState({...this.state});
+    }, 400);
   }
 
   yourBricksMouseHover(index: number) {
+    let {yourBricks} = this.state;
+    yourBricks.forEach(brick => {
+      brick.expanded = false;
+    });
+    this.setState({...this.state});
+
     setTimeout(() => {
       let {yourBricks} = this.state;
       yourBricks.forEach(brick => {
@@ -293,7 +311,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           <Box
             className="brick-container"
             onMouseEnter={() => this.handleMouseHover(key)}
-            onMouseLeave={() => this.handleMouseLeave()}
+            onMouseLeave={() => this.handleMouseLeave(key)}
           >
             <div className={`sorted-brick absolute-container brick-row-${row}`}>
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
