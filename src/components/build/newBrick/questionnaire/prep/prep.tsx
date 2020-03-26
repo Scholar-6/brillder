@@ -21,7 +21,7 @@ interface PrepProps {
 const PrepPreviewComponent:React.FC<any> = ({data}) => {
   if (data) {
     return (
-      <Grid container justify="center" alignContent="flex-start" style={{width: '100%', height: '100%', background: '#001D55'}}>
+      <Grid container justify="center" alignContent="flex-start" className="prep-phone-preview">
         <img className="first-phone-image"
           alt="head"
           style={{height: '40%'}}
@@ -33,7 +33,7 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
     )
   }
   return (
-    <Grid container justify="center" alignContent="flex-start" style={{width: '100%', height: '100%', background: '#001D55'}}>
+    <Grid container justify="center" alignContent="flex-start" className="prep-phone-preview">
       <img className="first-phone-image"
         alt="head"
         style={{height: '60%'}}
