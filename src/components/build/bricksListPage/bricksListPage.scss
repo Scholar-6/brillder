@@ -197,6 +197,7 @@ $right: 1.4vw;
   }
 
   .main-brick-container {
+    position: relative;
     width: 100%;
   }
 
@@ -246,9 +247,26 @@ $right: 1.4vw;
       width: 3.3%;
     }
   }
+  
   .brick-container:hover {
     color: #ffffff;
   }
+
+  .sorted-brick:hover {
+    position: absolute;
+    z-index: 2;
+    width: 95%;
+    height: 31.1vh;
+    .right-color-column {
+      width: 0;
+    }
+
+    .hovered-open-question {
+      margin-top: 2.5vh;
+      margin-bottom: 2.5vh;
+    }
+  }
+
   .empty-container {
     opacity: 0.75;
   }
