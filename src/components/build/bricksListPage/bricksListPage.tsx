@@ -184,7 +184,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           <Box
             className="brick-container"
             onMouseEnter={() => this.yourBricksMouseHover(key)}
-            onMouseLeave={() => this.yourBricksMouseLeave()}
+            onMouseLeave={() => this.yourBricksMouseLeave(key)}
           >
             <div className="sorted-brick absolute-container bigger-hover">
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
@@ -270,23 +270,29 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       brick.expanded = false;
     });
     this.setState({...this.state});
-
     setTimeout(() => {
       let {yourBricks} = this.state;
       yourBricks.forEach(brick => {
         brick.expanded = false;
       });
-      yourBricks[index].expanded = true;
+      if (!yourBricks[index].expandFinished) {
+        yourBricks[index].expanded = true;
+      }
       this.setState({...this.state});
     }, 400);
   }
 
-  yourBricksMouseLeave() {
+  yourBricksMouseLeave(key: number) {
     let {yourBricks} = this.state;
     yourBricks.forEach(brick => {
       brick.expanded = false;
     });
+    yourBricks[key].expandFinished = true;
     this.setState({...this.state});
+    setTimeout(() => {
+      yourBricks[key].expandFinished = false;
+      this.setState({...this.state});
+    }, 400);
   }
 
   getAuthorRow(brick: Brick) {
@@ -364,14 +370,16 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return (
       <Grid container key={key} item xs={size} justify="center">
         <div className="main-brick-container">
-          <Box className="brick-container empty-container"  style={{paddingRight: 0}}>
-            <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
-              <Grid item xs={11}></Grid>
-              <div className="right-color-column">
-                <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center">
-                </Grid>
-              </div>
-            </Grid>
+          <Box className="brick-container">
+            <div className="absolute-container empty-container">
+              <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
+                <Grid item xs={11}></Grid>
+                <div className="right-color-column">
+                  <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center">
+                  </Grid>
+                </div>
+              </Grid>
+            </div>
           </Box>
         </div>
       </Grid>
