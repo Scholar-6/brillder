@@ -122,11 +122,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.props.history.push(`/build/brick/${brickId}/build/investigation/question`)
   }
 
-  expend(brick: Brick) {
-    brick.expanded = !brick.expanded;
-    this.setState({ bricks: this.state.bricks });
-  }
-
   getYear(date: Date) {
     var currentYear =  date.getFullYear();   
     var twoLastDigits = currentYear%100;
@@ -187,10 +182,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       <Grid container key={key} item xs={3} justify="center">
         <div className="main-brick-container">
           <Box
-            className="brick-container sorted-brick bigger-hover"
+            className="brick-container"
             onMouseEnter={() => this.yourBricksMouseHover(key)}
             onMouseLeave={() => this.yourBricksMouseLeave()}
           >
+            <div className="sorted-brick absolute-container bigger-hover">
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
               <Grid item xs={brick.expanded ? 12 : 11}>
                 <div className="link-description">{brick.title}</div>
@@ -230,6 +226,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center"></Grid>
               </div>
             </Grid>
+            </div>
           </Box>
         </div>
       </Grid>
@@ -237,12 +234,14 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   handleMouseHover(index: number) {
-    let {bricks} = this.state;
-    bricks.forEach(brick => {
-      brick.expanded = false;
-    });
-    bricks[index].expanded = true;
-    this.setState({...this.state});
+    setTimeout(() => {
+      let {bricks} = this.state;
+      bricks.forEach(brick => {
+        brick.expanded = false;
+      });
+      bricks[index].expanded = true;
+      this.setState({...this.state});
+    }, 400);
   }
 
   handleMouseLeave() {
@@ -254,12 +253,14 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   yourBricksMouseHover(index: number) {
-    let {yourBricks} = this.state;
-    yourBricks.forEach(brick => {
-      brick.expanded = false;
-    });
-    yourBricks[index].expanded = true;
-    this.setState({...this.state});
+    setTimeout(() => {
+      let {yourBricks} = this.state;
+      yourBricks.forEach(brick => {
+        brick.expanded = false;
+      });
+      yourBricks[index].expanded = true;
+      this.setState({...this.state});
+    }, 400);
   }
 
   yourBricksMouseLeave() {
@@ -290,10 +291,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
           <Box
-            className={`sorted-brick brick-container brick-row-${row}`}
+            className="brick-container"
             onMouseEnter={() => this.handleMouseHover(key)}
             onMouseLeave={() => this.handleMouseLeave()}
           >
+            <div className={`sorted-brick absolute-container brick-row-${row}`}>
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
               <Grid item xs={brick.expanded ? 12 : 11}>
                 <div className="link-description">{brick.title}</div>
@@ -333,6 +335,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center"></Grid>
               </div>
             </Grid>
+            </div>
           </Box>
         </div>
       </Grid>
