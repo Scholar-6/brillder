@@ -2,6 +2,11 @@
 import { Question } from "components/model/question";
 import { UserType } from "./user";
 
+export enum BrickStatus {
+  Draft = 1,
+  Review,
+  Publish
+}
 
 export interface Author {
   email: string
@@ -31,6 +36,7 @@ export interface Brick {
   questions: Question[]
   author: Author
   expanded?: boolean
+  status: BrickStatus
 }
 
 export enum isAuthenticated {

@@ -1,15 +1,18 @@
 import './bricksListPage.scss';
 import React, { Component } from 'react';
 import { Box, Grid, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import actions from 'redux/actions/bricksActions';
 import authActions from 'redux/actions/auth';
-import { Brick } from 'model/brick';
+import { Brick, BrickStatus } from 'model/brick';
 
 
 const mapState = (state: any) => {
@@ -35,6 +38,7 @@ interface BricksListProps {
 }
 
 interface BricksListState {
+  yourBricks: Array<Brick>;
   bricks: Array<Brick>;
   sortBy: SortBy;
   subjects: any[];
@@ -58,7 +62,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     super(props)
     this.props.fetchBricks();
     this.state = {
-      bricks: props.bricks,
+      yourBricks: [],
+      bricks: [],
       sortBy: SortBy.None,
       subjects: [
         { checked: false, color: 'color1', name: 'Art & Design'},
@@ -76,6 +81,22 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       sortedIndex: 0,
       sortedReversed: false,
     };
+
+    axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/currentUser', {withCredentials: true})
+      .then((res) => {  
+        this.setState({...this.state, yourBricks: res.data });
+      })
+      .catch(error => {
+        alert('Can`t get bricks')
+      });
+
+    axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/byStatus/' + BrickStatus.Publish, {withCredentials: true})
+      .then((res) => {  
+        this.setState({...this.state, bricks: res.data });
+      })
+      .catch(error => {
+        alert('Can`t get bricks')
+      });
   }
 
   logout() {
@@ -151,12 +172,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  getBrickContainer = (brick: Brick, key: number, size: any = 3) => {
+  getBrickContainer = (brick: Brick, key: number) => {
     const created = new Date(brick.created);
     const year = this.getYear(created);
     const month = this.getMonth(created);
     return (
-      <Grid container key={key} item xs={size} justify="center">
+      <Grid container key={key} item xs={3} justify="center">
         <div className="main-brick-container">
           <Box className={brick.expanded ? "expanded brick-container" : "brick-container"}  style={{paddingRight: 0}} onClick={() => this.move(brick.id)}>
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
@@ -166,6 +187,68 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 <div className="link-info">
                   {brick.author?.firstName} {brick.author?.lastName} | {created.getDate()}.{month}.{year} | {brick.brickLength} mins
                 </div>
+              </Grid>
+              <div className="right-color-column">
+                <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center"></Grid>
+              </div>
+            </Grid>
+          </Box>
+        </div>
+      </Grid>
+    );
+  }
+
+  handleMouseHover(index: number) {
+    let {bricks} = this.state;
+    bricks.forEach(brick => {
+      brick.expanded = false;
+    });
+    bricks[index].expanded = true;
+    this.setState({...this.state});
+  }
+
+  handleMouseLeave() {
+    let {bricks} = this.state;
+    bricks.forEach(brick => {
+      brick.expanded = false;
+    });
+    this.setState({...this.state});
+  }
+
+  getSortedBrickContainer = (brick: Brick, key: number, row: any = 1) => {
+    const created = new Date(brick.created);
+    const year = this.getYear(created);
+    const month = this.getMonth(created);
+    return (
+      <Grid container key={key} item xs={4} justify="center">
+        <div className="main-brick-container">
+          <Box
+            className={brick.expanded ? "expanded brick-container sorted-brick" : "sorted-brick brick-container"}
+            style={{paddingRight: 0}}
+            onClick={() => this.move(brick.id)}
+            onMouseEnter={() => this.handleMouseHover(key)}
+            onMouseLeave={() => this.handleMouseLeave()}
+          >
+            <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
+              <Grid item xs={11}>
+                <div className="link-description">{brick.title}</div>
+                <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
+                <div className="link-info">
+                  {brick.author?.firstName} {brick.author?.lastName} | {created.getDate()}.{month}.{year} | {brick.brickLength} mins
+                </div>
+                {
+                  brick.expanded ?
+                    <div>
+                      <div className="hovered-open-question">Open Question Open Question Open Question</div>
+                      <div>SUBJECT Code | No. of Plays</div>
+                      <div>Editor: Name Surname</div>
+                      <Grid container direction="row">
+                        <DeleteIcon />
+                        <PlayArrowIcon />
+                      </Grid>
+                    </div>
+                    : ""
+                }
               </Grid>
               <div className="right-color-column">
                 <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center"></Grid>
@@ -200,8 +283,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     let bricksList = []
     let index = 0;
     for (let i = index; i < index + 4; i++) {
-      if (this.state.bricks[i]) {
-        bricksList.push(this.getBrickContainer(this.state.bricks[i], i));
+      if (this.state.yourBricks[i]) {
+        bricksList.push(this.getBrickContainer(this.state.yourBricks[i], i));
       } else {
         bricksList.push(this.getEmptyBrickContainer(i));
       }
@@ -244,7 +327,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     let bricksList = [];
     for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
       if (this.state.bricks[i]) {
-        bricksList.push(this.getBrickContainer(this.state.bricks[i], i, 4));
+        bricksList.push(this.getSortedBrickContainer(this.state.bricks[i], i, 4));
       } else {
         bricksList.push(this.getEmptyBrickContainer(i, 4));
       }
@@ -301,13 +384,17 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               <Grid container direction="row">
                 {this.renderSortedBricks()}
               </Grid>
-              <Grid container justify="center" className="bottom-next-button">
-                {
-                  this.state.sortedReversed
-                    ? <ExpandLessIcon onClick={() => this.changeSortedBricks()} />
-                    : <ExpandMoreIcon onClick={() => this.changeSortedBricks()} />
-                }
-              </Grid>
+              {
+                this.state.bricks.length > 18 ?
+                <Grid container justify="center" className="bottom-next-button">
+                  {
+                    this.state.sortedReversed
+                      ? <ExpandLessIcon onClick={() => this.changeSortedBricks()} />
+                      : <ExpandMoreIcon onClick={() => this.changeSortedBricks()} />
+                  }
+                </Grid>
+                : ""
+              }
             </Grid>
           </Grid>
         </div>
