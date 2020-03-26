@@ -5,6 +5,7 @@ import { Box, Grid, FormControlLabel, Radio, RadioGroup } from '@material-ui/cor
 import { connect } from 'react-redux';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 import actions from 'redux/actions/bricksActions';
 import authActions from 'redux/actions/auth';
@@ -259,24 +260,16 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             <Grid item style={{width: '7.65vw'}}>
               <Grid container direction="row">
                 <Grid item className="home-button-container">
-                  <img
-                    alt="home"
-                    className="home-button"
-                    src="/images/choose-login/logo.png"
-                    onClick={() => { this.props.history.push('/build') }}
-                  />
+                  <div className="home-button" onClick={() => { this.props.history.push('/build') }}>
+                    <div></div>
+                  </div>
                 </Grid>
               </Grid>
             </Grid>
             <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
               <Grid container style={{width: '60vw', height: '7vh'}}>
-
               <Grid item justify="flex-start">
-                <img
-                  alt="home"
-                  className="search-button"
-                  src="/images/brick-list/search.png"
-                />
+                <div className="search-button"></div>
               </Grid>
               <Grid item justify="flex-start">
                 <input className="search-input" placeholder="Search Subjects, Topics, Titles & more" />
@@ -311,7 +304,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               <Grid container justify="center" className="bottom-next-button">
                 {
                   this.state.sortedReversed
-                    ? <ExpandMoreIcon onClick={() => this.changeSortedBricks()} />
+                    ? <ExpandLessIcon onClick={() => this.changeSortedBricks()} />
                     : <ExpandMoreIcon onClick={() => this.changeSortedBricks()} />
                 }
               </Grid>
