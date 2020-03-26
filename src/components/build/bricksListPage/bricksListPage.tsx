@@ -277,7 +277,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               </Grid>
               <Grid item style={{width: '32.35vw'}}>
                 <Grid container direction="row" justify="flex-end">
-                  <div className="logout-button"></div>
+                  <div className="logout-button" onClick={() => this.logout()}></div>
                   <div className="bell-button"><div></div></div>
                   <div className="user-button"></div>
                 </Grid>
