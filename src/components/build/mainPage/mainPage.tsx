@@ -5,6 +5,7 @@ import { Grid, Hidden } from '@material-ui/core';
 
 import './mainPage.scss';
 import actions from 'redux/actions/auth';
+import brickActions from 'redux/actions/brickActions';
 
 
 const mapState = (state: any) => {
@@ -13,6 +14,7 @@ const mapState = (state: any) => {
 
 const mapDispatch = (dispatch: any) => {
   return {
+    forgetBrick: () => dispatch(brickActions.forgetBrick()),
     logout: () => dispatch(actions.logout())
   }
 }
@@ -22,7 +24,19 @@ const connector = connect(
   mapDispatch
 )
 
-class MainPage extends Component<any, any> {
+interface MainPageProps {
+  history: any
+  forgetBrick(): void
+  logout(): void
+}
+
+interface MainPageState {
+  viewHover: boolean,
+  createHober: boolean,
+  backHober: boolean,
+}
+
+class MainPage extends Component<MainPageProps, MainPageState> {
   constructor(props:any) {
     super(props);
     this.state = {
@@ -34,6 +48,11 @@ class MainPage extends Component<any, any> {
 
   viewHoverToggle(viewHover: boolean) {
     this.setState({viewHover});
+  }
+
+  creatingBrick() {
+    this.props.forgetBrick();
+    this.props.history.push('/build/new-brick/brick-title');
   }
 
   render() {
@@ -57,7 +76,7 @@ class MainPage extends Component<any, any> {
                 </div>
               </Grid>
               <Grid container justify="center" style={{width: "100%"}}>
-                <div className="zoom-item create-item" onClick={() => history.push('/build/new-brick/brick-title')}>
+                <div className="zoom-item create-item" onClick={() => this.creatingBrick()}>
                   <img alt="Logo" src="/images/main-page/create.png" className="item-image" />
                   <div className="item-description">Start Building</div>
                 </div>

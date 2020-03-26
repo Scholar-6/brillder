@@ -285,12 +285,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return row;
   }
 
-  getSortedBrickContainer = (brick: Brick, key: number, row: any = 1) => {
+  getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
     return (
       <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
           <Box
-            className={brick.expanded ? "expanded brick-container sorted-brick" : "sorted-brick brick-container"}
+            className={`sorted-brick brick-container brick-row-${row}`}
             onMouseEnter={() => this.handleMouseHover(key)}
             onMouseLeave={() => this.handleMouseLeave()}
           >
@@ -406,7 +406,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     let bricksList = [];
     for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
       if (this.state.bricks[i]) {
-        bricksList.push(this.getSortedBrickContainer(this.state.bricks[i], i, 4));
+        let row = Math.floor(i / 3);
+        console.log('item: ', i, ", row: ", row);
+        bricksList.push(this.getSortedBrickContainer(this.state.bricks[i], i, row));
       } else {
         bricksList.push(this.getEmptyBrickContainer(i, 4));
       }
