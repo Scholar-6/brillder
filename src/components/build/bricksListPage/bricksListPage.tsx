@@ -1,9 +1,10 @@
 import './bricksListPage.scss';
 import React, { Component } from 'react';
-import { Box, Grid, FormControlLabel, Radio, RadioGroup, Color } from '@material-ui/core';
+import { Box, Grid, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 // @ts-ignore
 import { connect } from 'react-redux';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import actions from 'redux/actions/bricksActions';
 import authActions from 'redux/actions/auth';
@@ -91,7 +92,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     var twoLastDigits = currentYear%100;
     var formatedTwoLastDigits = "";
     
-    if (twoLastDigits <10 ) {
+    if (twoLastDigits < 10 ) {
       formatedTwoLastDigits = "0" + twoLastDigits;
     } else {
       formatedTwoLastDigits = "" + twoLastDigits;
@@ -272,10 +273,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             <Grid container item xs={3} className="sort-and-filter-container">
               {this.renderSortAndFilterBox()}
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={9} style={{position: 'relative'}}>
               <Grid container direction="row">
                 {this.renderSortedBricks()}
-              </Grid> 
+              </Grid>
+              <Grid container justify="center" className="bottom-next-button"><ExpandMoreIcon /></Grid>
             </Grid>
           </Grid>
         </div>

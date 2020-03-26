@@ -33,7 +33,6 @@ const AuthRedirect: React.FC<any> = ({ user, ...props }) => {
       }
     }
     let path = props.location.pathname;
-    console.log(props.location)
     if (user.type === UserType.Admin) {
       if (path === '/build') {
         return <Redirect to="/build" />

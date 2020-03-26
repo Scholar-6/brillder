@@ -13,8 +13,20 @@ $right: 1.4vw;
   font-family: "Brandon Grotesque Regular";
 
   .bricks-upper-part {
+    position: relative;
     min-height: 100%;
     background: $dark-blue;
+
+    .bottom-next-button {
+      position: absolute;
+      bottom: -2.7vh;
+      color: white;
+      > svg {
+        margin-right: 1.5vw;
+        height: 5.2vh;
+        width: 5.2vh;
+      }
+    }
   }
 
   .bricks-header {
@@ -145,10 +157,10 @@ $right: 1.4vw;
 
   .brick-container {
     cursor: pointer;
-    min-height: $min-brick-height;
+    height: $min-brick-height;
     border-radius: $brick-radius;
     background: $orange;
-    padding-left: 0.5vw;
+    padding-left: 0.65vw;
     padding-right: 1vw;
     color: $dark-blue;
     margin-top: 0.1vh;
@@ -158,18 +170,19 @@ $right: 1.4vw;
     text-align: left;
 
     .link-description {
-      padding-top: 1vh;
-      font-size: 1.3vw;
+      padding-top: 0.75vh;
+      font-size: 2.3vh;
       font-family: "Brandon Grotesque Bold";
       line-height: 1;
       overflow: hidden;
-      height: 1.3vw;
+      height: 2.1vh;
     }
 
     .link-info {
-      line-height: 1.2;
-      font-size: 1.3vw;
+      line-height: 1.4;
+      font-size: 2.3vh;
       font-family: "Brandon Grotesque Regular";
+      height: 2.4vh;
     }
 
     .edit-button {
@@ -203,6 +216,7 @@ $right: 1.4vw;
 
   .sorted-row {
     margin-top: 4.3vh;
+    height: 63.5vh;
     padding-left: $left;
     padding-right: $right;
     .sort-and-filter-container {
