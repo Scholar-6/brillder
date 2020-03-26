@@ -37,6 +37,10 @@ interface BricksListState {
   bricks: Array<Brick>;
   sortBy: SortBy;
   subjects: any[];
+  yoursIndex: number;
+  yoursReversed: boolean;
+  sortedIndex: number;
+  sortedReversed: boolean;
 }
 
 enum SortBy {
@@ -65,7 +69,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         { checked: false, color: 'color7', name: 'Ecomonics'},
         { checked: false, color: 'color8', name: 'English Literature'},
         { checked: false, color: 'color9', name: 'French'}
-      ]
+      ],
+      yoursIndex: 0,
+      yoursReversed: false,
+      sortedIndex: 0,
+      sortedReversed: false,
     };
   }
 
@@ -113,6 +121,35 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return formatedTwoLastDigits;
   }
 
+  handleSortChange = (e: any) => {
+    const {state} = this;
+    this.setState({...state, sortBy: parseInt(e.target.value)})
+  }
+
+  filterBySubject = (i: number) => {
+    const {state} = this;
+    const {subjects} = state;
+    subjects[i].checked = !subjects[i].checked
+    this.setState({...state})
+  }
+
+  changeSortedBricks = () => {
+    let reversed = this.state.sortedReversed;
+    let preReversed = reversed;
+    let index = this.state.sortedIndex;
+    if (index + 36 >= this.props.bricks.length) {
+      preReversed = true;
+    }
+    if (reversed === false) {
+      this.setState({...this.state, sortedIndex: index + 18, sortedReversed: preReversed});
+    } else {
+      if (index <= 18) {
+        preReversed = false;
+      }
+      this.setState({...this.state, sortedIndex: index - 18, sortedReversed: preReversed});
+    }
+  }
+
   getBrickContainer = (brick: Brick, key: number, size: any = 3) => {
     const created = new Date(brick.created);
     const year = this.getYear(created);
@@ -130,11 +167,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 </div>
               </Grid>
               <div className="right-color-column">
-                <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center">
-                  {
-                    brick.expanded ? " " : " "
-                  }
-                </Grid>
+                <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center"></Grid>
               </div>
             </Grid>
           </Box>
@@ -175,18 +208,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return bricksList;
   }
 
-  handleSortChange = (e: any) => {
-    const {state} = this;
-    this.setState({...state, sortBy: parseInt(e.target.value)})
-  }
-
-  filterBySubject = (i: number) => {
-    const {state} = this;
-    const {subjects} = state;
-    subjects[i].checked = !subjects[i].checked
-    this.setState({...state})
-  }
-
   renderSortAndFilterBox = () => {
     return (
       <div className="sort-box">
@@ -206,7 +227,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           this.state.subjects.map((subject, i) =>
             <FormControlLabel
               className="filter-container"
-              
+              key={i}
               checked={subject.checked}
               onClick={() => this.filterBySubject(i)}
               control={<Radio className={"filter-radio " + subject.color}/>}
@@ -218,8 +239,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderSortedBricks = () => {
-    let bricksList = []
-    for (let i = 0; i < 18; i++) {
+    let {sortedIndex} = this.state;
+    let bricksList = [];
+    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
       if (this.state.bricks[i]) {
         bricksList.push(this.getBrickContainer(this.state.bricks[i], i, 4));
       } else {
@@ -234,9 +256,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       <div className="bricks-list-page">
         <div className="bricks-upper-part">
           <Grid container direction="row" className="bricks-header">
-            <Grid item xs={7}>
+            <Grid item style={{width: '7.65vw'}}>
               <Grid container direction="row">
-                <Grid item>
+                <Grid item className="home-button-container">
                   <img
                     alt="home"
                     className="home-button"
@@ -244,20 +266,29 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                     onClick={() => { this.props.history.push('/build') }}
                   />
                 </Grid>
-                <Grid item>
-                  <img
-                    alt="home"
-                    className="search-button"
-                    src="/images/brick-list/search.png"
-                  />
-                </Grid>
-                <input className="search-input" placeholder="Search Subjects, Topics, Titles & more" />
               </Grid>
             </Grid>
-            <Grid container  className="logout-container" justify="flex-end" item xs={5}>
-            <div className="logout-button"></div>
-            <div className="bell-button"><div></div></div>
-            <div className="user-button"></div>
+            <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
+              <Grid container style={{width: '60vw', height: '7vh'}}>
+
+              <Grid item justify="flex-start">
+                <img
+                  alt="home"
+                  className="search-button"
+                  src="/images/brick-list/search.png"
+                />
+              </Grid>
+              <Grid item justify="flex-start">
+                <input className="search-input" placeholder="Search Subjects, Topics, Titles & more" />
+              </Grid>
+              </Grid>
+              <Grid item style={{width: '32.35vw'}}>
+                <Grid container direction="row" justify="flex-end">
+                  <div className="logout-button"></div>
+                  <div className="bell-button"><div></div></div>
+                  <div className="user-button"></div>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
           <h3>Your Bricks</h3>
@@ -277,7 +308,13 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               <Grid container direction="row">
                 {this.renderSortedBricks()}
               </Grid>
-              <Grid container justify="center" className="bottom-next-button"><ExpandMoreIcon /></Grid>
+              <Grid container justify="center" className="bottom-next-button">
+                {
+                  this.state.sortedReversed
+                    ? <ExpandMoreIcon onClick={() => this.changeSortedBricks()} />
+                    : <ExpandMoreIcon onClick={() => this.changeSortedBricks()} />
+                }
+              </Grid>
             </Grid>
           </Grid>
         </div>
