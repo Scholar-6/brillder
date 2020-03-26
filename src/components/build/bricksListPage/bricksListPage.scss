@@ -203,11 +203,11 @@ $right: 1.4vw;
 
   .brick-container {
     cursor: pointer;
+    padding-right: 0;
     height: $min-brick-height;
     border-radius: $brick-radius;
     background: $orange;
     padding-left: 0.65vw;
-    padding-right: 1vw;
     color: $dark-blue;
     margin-top: 0.1vh;
     margin-bottom: 1.3vh;
@@ -221,11 +221,11 @@ $right: 1.4vw;
       font-family: "Brandon Grotesque Bold";
       line-height: 1;
       overflow: hidden;
-      height: 2.1vh;
+      height: 2.4vh;
     }
 
     .link-info {
-      line-height: 1.4;
+      line-height: 1;
       font-size: 2.3vh;
       font-family: "Brandon Grotesque Regular";
       height: 2.4vh;
@@ -257,13 +257,45 @@ $right: 1.4vw;
     z-index: 2;
     width: 95%;
     height: 31.1vh;
+
     .right-color-column {
       width: 0;
     }
 
-    .hovered-open-question {
-      margin-top: 2.5vh;
-      margin-bottom: 2.5vh;
+    .hover-text {
+      height: 16vh;
+      overflow: hidden;
+      .hovered-open-question {
+        margin-top: 2.5vh;
+        margin-bottom: 2.5vh;
+      }
+    }
+    .hover-icons-row {
+      height: 7vh;
+      color: $dark-blue;
+      width: 98%;
+      position: relative;
+
+      .bin-button {
+        position: absolute;
+        left: -0.2vw;
+        height: 3.7vh;
+        bottom: 1vh;
+        padding-right: -31vw;
+      }
+
+      .play-button {
+        position: absolute;
+        right: -0vw;
+        height: 3.7vh;
+        bottom: 1vh;
+        padding-right: -31vw;
+      }
+
+      .MuiSvgIcon-root {
+        height: 5vh !important;
+        width: 5vh !important;
+      }
     }
   }
 

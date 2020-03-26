@@ -7,8 +7,6 @@ import { connect } from 'react-redux';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 import actions from 'redux/actions/bricksActions';
 import authActions from 'redux/actions/auth';
@@ -60,7 +58,6 @@ enum SortBy {
 class BricksListPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props)
-    this.props.fetchBricks();
     this.state = {
       yourBricks: [],
       bricks: [],
@@ -83,7 +80,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     };
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/currentUser', {withCredentials: true})
-      .then((res) => {  
+      .then((res) => { 
+        let bricks = res.data as Brick[];
+        bricks = bricks.filter(brick => {
+          return brick.status === BrickStatus.Publish;
+        });
         this.setState({...this.state, yourBricks: res.data });
       })
       .catch(error => {
@@ -91,11 +92,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       });
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/byStatus/' + BrickStatus.Publish, {withCredentials: true})
-      .then((res) => {  
+      .then(res => {  
         this.setState({...this.state, bricks: res.data });
       })
       .catch(error => {
-        alert('Can`t get bricks')
+        alert('Can`t get bricks');
       });
   }
 
@@ -104,8 +105,17 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.props.history.push('/choose-user');
   }
 
-  componentWillReceiveProps(props:BricksListProps) {
-    this.setState({bricks: props.bricks});
+  delete(index: number, brickId: number) {
+    axios.delete(process.env.REACT_APP_BACKEND_HOST + '/brick/' + brickId, {withCredentials: true})
+      .then(res => {
+        console.log(res);
+        let {bricks} = this.state;
+        bricks.splice(index, 1);
+        this.setState({...this.state})
+      })
+      .catch(error => {
+        alert('Can`t delete bricks');
+      });
   }
 
   move(brickId:number) {
@@ -173,20 +183,44 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   getBrickContainer = (brick: Brick, key: number) => {
-    const created = new Date(brick.created);
-    const year = this.getYear(created);
-    const month = this.getMonth(created);
     return (
       <Grid container key={key} item xs={3} justify="center">
         <div className="main-brick-container">
-          <Box className={brick.expanded ? "expanded brick-container" : "brick-container"}  style={{paddingRight: 0}} onClick={() => this.move(brick.id)}>
+          <Box
+            className="brick-container sorted-brick"
+            onMouseEnter={() => this.yourBricksMouseHover(key)}
+            onMouseLeave={() => this.yourBricksMouseLeave()}
+          >
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
-              <Grid item xs={11}>
+              <Grid item xs={brick.expanded ? 12 : 11}>
                 <div className="link-description">{brick.title}</div>
                 <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
                 <div className="link-info">
-                  {brick.author?.firstName} {brick.author?.lastName} | {created.getDate()}.{month}.{year} | {brick.brickLength} mins
+                  {this.getAuthorRow(brick)}
                 </div>
+                {
+                  brick.expanded ?
+                    <div>
+                      <div className="hover-text">
+                        <div className="hovered-open-question">Open Question Open Question Open Question</div>
+                        <div>SUBJECT Code | No. of Plays</div>
+                        <div>Editor: Name Surname</div>
+                      </div>
+                      <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
+                        <Grid item xs={6} container justify="flex-start">
+                          <img alt="bin" onClick={() => this.delete(key, brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
+                        </Grid>
+                        <Grid item xs={6} container justify="flex-end">
+                          <img
+                            alt="play"
+                            className="play-button"
+                            onClick={() => this.move(brick.id)}
+                            src="/images/brick-list/play.png" />
+                        </Grid>
+                      </Grid>
+                    </div>
+                    : ""
+                }
               </Grid>
               <div className="right-color-column">
                 <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center"></Grid>
@@ -215,36 +249,73 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({...this.state});
   }
 
-  getSortedBrickContainer = (brick: Brick, key: number, row: any = 1) => {
+  yourBricksMouseHover(index: number) {
+    let {yourBricks} = this.state;
+    yourBricks.forEach(brick => {
+      brick.expanded = false;
+    });
+    yourBricks[index].expanded = true;
+    this.setState({...this.state});
+  }
+
+  yourBricksMouseLeave() {
+    let {yourBricks} = this.state;
+    yourBricks.forEach(brick => {
+      brick.expanded = false;
+    });
+    this.setState({...this.state});
+  }
+
+  getAuthorRow(brick: Brick) {
+    let row = "";
     const created = new Date(brick.created);
     const year = this.getYear(created);
     const month = this.getMonth(created);
+    if (brick.author) {
+      const {author} = brick;
+      if (author.firstName || author.firstName) {
+        row += `${author.firstName} ${author.firstName} | `
+      }
+      row += `${created.getDate()}.${month}.${year} | ${brick.brickLength} mins`;
+    }
+    return row;
+  }
+
+  getSortedBrickContainer = (brick: Brick, key: number, row: any = 1) => {
     return (
       <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
           <Box
             className={brick.expanded ? "expanded brick-container sorted-brick" : "sorted-brick brick-container"}
-            style={{paddingRight: 0}}
-            onClick={() => this.move(brick.id)}
             onMouseEnter={() => this.handleMouseHover(key)}
             onMouseLeave={() => this.handleMouseLeave()}
           >
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
-              <Grid item xs={11}>
+              <Grid item xs={brick.expanded ? 12 : 11}>
                 <div className="link-description">{brick.title}</div>
                 <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
                 <div className="link-info">
-                  {brick.author?.firstName} {brick.author?.lastName} | {created.getDate()}.{month}.{year} | {brick.brickLength} mins
+                  {this.getAuthorRow(brick)}
                 </div>
                 {
                   brick.expanded ?
                     <div>
-                      <div className="hovered-open-question">Open Question Open Question Open Question</div>
-                      <div>SUBJECT Code | No. of Plays</div>
-                      <div>Editor: Name Surname</div>
-                      <Grid container direction="row">
-                        <DeleteIcon />
-                        <PlayArrowIcon />
+                      <div className="hover-text">
+                        <div className="hovered-open-question">Open Question Open Question Open Question</div>
+                        <div>SUBJECT Code | No. of Plays</div>
+                        <div>Editor: Name Surname</div>
+                      </div>
+                      <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
+                        <Grid item xs={6} container justify="flex-start">
+                          <img alt="bin" onClick={() => this.delete(key, brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
+                        </Grid>
+                        <Grid item xs={6} container justify="flex-end">
+                          <img
+                            alt="play"
+                            className="play-button"
+                            onClick={() => this.move(brick.id)}
+                            src="/images/brick-list/play.png" />
+                        </Grid>
                       </Grid>
                     </div>
                     : ""
@@ -351,10 +422,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             </Grid>
             <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
               <Grid container style={{width: '60vw', height: '7vh'}}>
-              <Grid item justify="flex-start">
+              <Grid item>
                 <div className="search-button"></div>
               </Grid>
-              <Grid item justify="flex-start">
+              <Grid item>
                 <input className="search-input" placeholder="Search Subjects, Topics, Titles & more" />
               </Grid>
               </Grid>
