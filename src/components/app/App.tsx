@@ -13,6 +13,7 @@ import PlayBrickRouting from '../play/brick/PlayBrickRouting';
 import NewBrick from '../build/newBrick/newBrick';
 import MainPage from '../build/mainPage/mainPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
+import BackToWorkPage from '../build/backToWorkPage/BackToWork';
 import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
 import LoginPage from '../authPages/loginPage/loginPage';
 import RegisterPage from '../authPages/registerPage/registerPage';
@@ -64,6 +65,7 @@ const App: React.FC = (props: any) => {
         <BuildRoute path="/build/new-brick" component={NewBrick} />
         <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
         <BuildRoute path="/build/bricks-list" component={BricksListPage} />
+        <BuildRoute path="/build/back-to-work" component={BackToWorkPage} />
         <BuildRoute path="/build" component={MainPage} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
