@@ -5,6 +5,8 @@ $brick-radius: 1.2vh;
 $min-brick-height: 9.4vh;
 $left: 0.8vw;
 $right: 1.4vw;
+$yellow: #FF9D00;
+$light-green: #5CC364;
 $lighter-blue: #304775;
 
 .bricks-list-page {
@@ -382,7 +384,7 @@ $lighter-blue: #304775;
     .sort-and-filter-container {
       color: white;
 
-      .sort-box {
+      .back-sort-box {
         margin-bottom: 1.4vh;
         padding-left: 0vw;
         padding-top: 0.91vh;
@@ -435,23 +437,22 @@ $lighter-blue: #304775;
         .filter-container {
           position: relative;
           width: 100%;
-          padding-left: 0.85vw;
           .filter-radio-label {
+            padding-left: 0.85vw;
             cursor: default;
-            width: 45%;
-            .color1 svg { color: #006BFD !important; }
-            .color2 svg { color: #65C44C !important; }
-            .color3 svg { color: #F3F584 !important; }
-            .color4 svg { color: #FF3B01 !important; }
-
+            width: 90%;
+            
             svg {
               height: 2.2vh;
               width: 2.2vh;
             }
+            .MuiFormControlLabel-label {
+              font: 1.05vw "Brandon Grotesque Regular" !important;
+              letter-spacing: 0.06vw;
+            }
           }
           .right-index {
             position: absolute;
-            background: white;
             line-height: 1;
             padding: 0.14vh 0.68vw;
             border-radius: 0.65vw;
@@ -460,12 +461,35 @@ $lighter-blue: #304775;
             right: 1.2vw;
             top: 0.9vh;
           }
-        }
-        .filter-container:nth-child(odd) {
-          width: 50%;
+          .color1 {
+            .right-index {
+              background: $orange;
+            }
+          }
         }
       }
     }
+  }
+
+  .color1 {
+    .absolute-container { background: $orange; }
+    .right-index { background: $orange; }
+    svg { color: $orange !important; }
+  }
+  .color2 {
+    .absolute-container { background: $yellow; }
+    .right-index { background: $yellow; }
+    svg { color: $yellow !important; }
+  }
+  .color3 {
+    .absolute-container { background: white; }
+    .right-index { background: white; }
+    svg { color: white !important; }
+  }
+  .color4 {
+    .absolute-container { background: $light-green; }
+    .right-index { background: $light-green; }
+    svg { color: $light-green !important; }
   }
 }
 
