@@ -79,7 +79,8 @@ $mobile-arrow-color: #96A0B6;
     height: 10.1vh;
   }
 
-  .view-item {
+  .view-item-container {
+    width: 100%;
     padding-top: 14.5vh;
   }
 
@@ -98,19 +99,24 @@ $mobile-arrow-color: #96A0B6;
     }
   }
 
-  .create-item {
+  .create-item-container {
+    width: 100%;
     padding-top: 8.3vh;
-
-    .item-image {
-      height: 14.5vh;
+    .create-item {
+      .item-image {
+        height: 14.5vh;
+      }
     }
   }
 
-  .back-item {
-    text-align: center;
+  .back-item-container {
+    width: 100%;
     padding-top: 11.4vh;
-    .item-image {
-      height: 14vh;
+    .back-item {
+      text-align: center;
+      .item-image {
+        height: 14vh;
+      }
     }
   }
 
