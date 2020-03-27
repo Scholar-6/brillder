@@ -9,7 +9,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Dialog from '@material-ui/core/Dialog';
 
-import actions from 'redux/actions/bricksActions';
 import authActions from 'redux/actions/auth';
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType } from 'model/user';
@@ -53,10 +52,8 @@ interface BackToWorkState {
 enum SortBy {
   None,
   Date,
-  Subject,
   Popularity,
-  Author,
-  Length,
+  Status
 }
 
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
@@ -434,18 +431,24 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     );
   }
 
-
-  renderYourBrickRow = () => {
-    let BackToWork = []
-    let index = 0;
-    for (let i = index; i < index + 4; i++) {
-      if (this.state.yourBricks[i]) {
-        BackToWork.push(this.getBrickContainer(this.state.yourBricks[i], i));
-      } else {
-        BackToWork.push(this.getEmptyBrickContainer(i));
-      }
-    }
-    return BackToWork;
+  renderIndexesBox = () => {
+    return (
+      <div className="indexes-box">
+        <div className="sort-header">Inbox</div>
+        <div className="index-box active">
+          View All
+          <div className="right-index">6</div>
+        </div>
+        <div className="index-box">
+          Build
+          <div className="right-index">2</div>
+        </div>
+        <div className="index-box">
+          Edit
+          <div className="right-index">4</div>
+        </div>
+      </div>
+    );
   }
 
   renderSortAndFilterBox = () => {
@@ -459,21 +462,19 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           value={this.state.sortBy}
           onChange={this.handleSortChange}
         >
+          <FormControlLabel value={SortBy.Status} control={<Radio className="sortBy" />} label="Status" />
           <FormControlLabel value={SortBy.Popularity} control={<Radio className="sortBy" />} label="Popularity" />
-          <FormControlLabel value={SortBy.Date} control={<Radio className="sortBy" />} label="Date Added" />
+          <FormControlLabel value={SortBy.Date} control={<Radio className="sortBy" />} label="Last Edit" />
         </RadioGroup>
         <div className="filter-header">Filter</div>
-        {
-          this.state.subjects.map((subject, i) =>
-            <FormControlLabel
-              className="filter-container"
-              key={i}
-              checked={subject.checked}
-              onClick={() => this.filterBySubject(i)}
-              control={<Radio className={"filter-radio " + subject.color}/>}
-              label={subject.name} />
-          )
-        }
+        <div className="filter-container">
+          <FormControlLabel
+            className="filter-radio-label color1"
+            onClick={() => {}}
+            control={<Radio className={"filter-radio sort-by color1"}/>}
+            label="Proposal" />
+          <div className="right-index">4</div>
+        </div>
       </div>
     );
   }
@@ -481,7 +482,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   renderSortedBricks = () => {
     let {sortedIndex} = this.state;
     let BackToWork = [];
-    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
+    for (let i = 0 + sortedIndex; i < 21 + sortedIndex; i++) {
       if (this.state.bricks[i]) {
         let row = Math.floor(i / 3);
         BackToWork.push(this.getSortedBrickContainer(this.state.bricks[i], i, row));
@@ -512,7 +513,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                 <div className="search-button"></div>
               </Grid>
               <Grid item>
-                <input className="search-input" placeholder="Search Subjects, Topics, Titles & more" />
+                <input className="search-input" placeholder="Search Ongoing Projects & Published Bricks…" />
               </Grid>
               </Grid>
               <Grid item style={{width: '32.35vw'}}>
@@ -524,18 +525,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
               </Grid>
             </Grid>
           </Grid>
-          <h3>Your Bricks</h3>
-          <div className="your-bricks-list">
-            <Grid container direction="row">
-              {this.renderYourBrickRow()}
-            </Grid>
-            <div className="next-bricks">
-              <NavigateNextIcon className="MuiSvgIcon-root jss415 MuiSvgIcon-fontSizeLarge" />
-            </div>
-          </div>
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
-              {this.renderSortAndFilterBox()}
+              <div style={{width: '100%'}}>
+                {this.renderIndexesBox()}
+                {this.renderSortAndFilterBox()}
+              </div>
             </Grid>
             <Grid item xs={9} style={{position: 'relative'}}>
               <Grid container direction="row">

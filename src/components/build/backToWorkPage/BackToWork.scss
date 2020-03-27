@@ -5,6 +5,7 @@ $brick-radius: 1.2vh;
 $min-brick-height: 9.4vh;
 $left: 0.8vw;
 $right: 1.4vw;
+$lighter-blue: #304775;
 
 .bricks-list-page {
   background: $dark-blue;
@@ -335,42 +336,89 @@ $right: 1.4vw;
   }
 
   .sorted-row {
-    margin-top: 4.3vh;
+    margin-top: 6.7vh;
     height: 63.5vh;
     padding-left: $left;
     padding-right: $right;
+
+    .indexes-box {
+      margin-bottom: 1.3vh;
+      padding-top: 0.91vh;
+      padding-bottom: 1.5vh;
+      border-radius: $brick-radius;
+      width: 97%;
+      background: $light-blue;
+
+      .sort-header {
+        padding-left: 0.85vw;
+        padding-bottom: 0.9vh;
+        font-size: 1.3vw;
+        letter-spacing: 0.26vw;
+      }
+      .index-box {
+        position: relative;
+        padding-left: 0.9vw;
+        padding-top: 0.9vh;
+        padding-bottom: 0.9vh;
+        font-size: 1.1vw;
+
+        .right-index {
+          position: absolute;
+          background: white;
+          line-height: 1;
+          padding: 0.14vh 0.68vw;
+          border-radius: 0.65vw;
+          font-size: 1.35vw;
+          color: $dark-blue;
+          right: 1.2vw;
+          top: 0.9vh;
+        }
+      }
+      .index-box.active {
+        background: $lighter-blue;
+      }
+    }
+
     .sort-and-filter-container {
       color: white;
 
       .sort-box {
-        margin-bottom: 1.2vh;
-        padding-left: 0.65vw;
-        padding-top: 0.3vh;
+        margin-bottom: 1.4vh;
+        padding-left: 0vw;
+        padding-top: 0.91vh;
         border-radius: $brick-radius;
-        width: 95%;
+        width: 97%;
         background: $light-blue;
 
         .sort-header {
+          padding-left: 0.85vw;
           font-size: 1.3vw;
-          letter-spacing: 0.22vw;
+          letter-spacing: 0.26vw;
         }
         .filter-header {
+          padding-left: 0.85vw;
           font-size: 1.3vw;
           margin-top: 1.6vh;
           letter-spacing: 0.22vw;
           margin-bottom: 1vh;
         }
         .sort-group {
+          padding-left: 0.85vw;
           display: block;
           > label:nth-child(1) {
-            width: 45%;
+            width: 34%;
           }
           > label:nth-child(2) {
-            width: 45%;
+            width: 35%;
+          }
+          > label:nth-child(3) {
+            width: 30%;
           }
           > label {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
             .sortBy {
-              padding-left: 1vw;
+              padding-left: 0vw;
               padding-right: 0.4vw;
               svg {
                 height: 2.2vh;
@@ -385,29 +433,33 @@ $right: 1.4vw;
           }
         }
         .filter-container {
-          cursor: default;
-          width: 45%;
-          > span.filter-radio {
-            padding-left: 1vw;
-            padding-right: 0.4vw;
+          position: relative;
+          width: 100%;
+          padding-left: 0.85vw;
+          .filter-radio-label {
+            cursor: default;
+            width: 45%;
+            .color1 svg { color: #006BFD !important; }
+            .color2 svg { color: #65C44C !important; }
+            .color3 svg { color: #F3F584 !important; }
+            .color4 svg { color: #FF3B01 !important; }
+
             svg {
               height: 2.2vh;
               width: 2.2vh;
             }
           }
-          .MuiFormControlLabel-label {
-            font: 1.05vw "Brandon Grotesque Regular" !important;
-            letter-spacing: 0.06vw;
+          .right-index {
+            position: absolute;
+            background: white;
+            line-height: 1;
+            padding: 0.14vh 0.68vw;
+            border-radius: 0.65vw;
+            font-size: 1.35vw;
+            color: $dark-blue;
+            right: 1.2vw;
+            top: 0.9vh;
           }
-          .color1 svg { color: #006BFD !important; }
-          .color2 svg { color: #65C44C !important; }
-          .color3 svg { color: #F3F584 !important; }
-          .color4 svg { color: #FF3B01 !important; }
-          .color5 svg { color: #ED6CC9 !important; }
-          .color6 svg { color: #AAF1C7 !important; }
-          .color7 svg { color: #B3F87B !important; }
-          .color8 svg { color: #8E44F6 !important; }
-          .color8 svg { color: #F7F7F7 !important; }
         }
         .filter-container:nth-child(odd) {
           width: 50%;

@@ -69,22 +69,22 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           </div>
           <div className="first-col">
             <div className="first-item">
-              <Grid container justify="center" style={{width: "100%"}}>
+              <Grid container justify="center" className="view-item-container">
                 <div className="zoom-item view-item" onClick={() => history.push('/build/bricks-list')}>
                   <img alt="Logo" src="/images/main-page/glasses.png" className="item-image" />
                   <div className="item-description">View All Bricks</div>
                 </div>
               </Grid>
-              <Grid container justify="center" style={{width: "100%"}}>
+              <Grid container justify="center" className="create-item-container">
                 <div className="zoom-item create-item" onClick={() => this.creatingBrick()}>
                   <img alt="Logo" src="/images/main-page/create.png" className="item-image" />
                   <div className="item-description">Start Building</div>
                 </div>
               </Grid>
-              <Grid container justify="center" style={{width: "100%"}}>
-                <div className="zoom-item back-item" onClick={() => history.push('/build')}>
+              <Grid container justify="center" className="back-item-container">
+                <div className="zoom-item back-item" onClick={() => history.push('/build/back-to-work')}>
                   <img alt="Logo" src="/images/main-page/backToWork.png" className="item-image" />
-                  <div className="item-description" onClick={() => history.push('/build/back-to-work')}>Back To Work</div>
+                  <div className="item-description">Back To Work</div>
                 </div>
               </Grid>
             </div>
@@ -137,23 +137,23 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               </Grid>
             </div>
             <Grid container justify="center" style={{width: "100%"}}>
-                <div className="zoom-item view-item" onClick={() => history.push('/build/bricks-list')}>
-                  <img alt="Logo" src="/images/main-page/glasses.png" className="item-image" />
-                  <div className="item-description">View All Bricks</div>
-                </div>
-              </Grid>
-              <Grid container justify="center" style={{width: "100%"}}>
-                <div className="zoom-item create-item" onClick={() => history.push('/build/new-brick/brick-title')}>
-                  <img alt="Logo" src="/images/main-page/create.png" className="item-image" />
-                  <div className="item-description">Start Building</div>
-                </div>
-              </Grid>
-              <Grid container justify="center" style={{width: "100%"}}>
-                <div className="zoom-item back-item" onClick={() => history.push('/build')}>
-                  <img alt="Logo" src="/images/main-page/backToWork.png" className="item-image" />
-                  <div className="item-description" onClick={() => history.push('/build/back-to-work')}>Back To Work</div>
-                </div>
-              </Grid>
+              <div className="zoom-item view-item" onClick={() => history.push('/build/bricks-list')}>
+                <img alt="Logo" src="/images/main-page/glasses.png" className="item-image" />
+                <div className="item-description">View All Bricks</div>
+              </div>
+            </Grid>
+            <Grid container justify="center" style={{width: "100%"}}>
+              <div className="zoom-item create-item" onClick={() => history.push('/build/new-brick/brick-title')}>
+                <img alt="Logo" src="/images/main-page/create.png" className="item-image" />
+                <div className="item-description">Start Building</div>
+              </div>
+            </Grid>
+            <Grid container justify="center" style={{width: "100%"}}>
+              <div className="zoom-item back-item" onClick={() => history.push('/build/back-to-work')}>
+                <img alt="Logo" src="/images/main-page/backToWork.png" className="item-image" />
+                <div className="item-description">Back To Work</div>
+              </div>
+            </Grid>
           </div>
         </Hidden>
       </Grid>
