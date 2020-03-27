@@ -45,7 +45,9 @@ interface BricksListState {
   sortedIndex: number;
   sortedReversed: boolean;
   logoutDialogOpen: boolean;
+
   deleteDialogOpen: boolean;
+  deleteBrickId: number;
 }
 
 enum SortBy {
@@ -82,6 +84,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
       logoutDialogOpen: false,
       deleteDialogOpen: false,
+      deleteBrickId: -1
     };
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/currentUser', {withCredentials: true})
@@ -117,12 +120,24 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.props.history.push('/choose-user');
   }
 
-  delete(index: number, brickId: number) {
+  delete() {
+    let brickId = this.state.deleteBrickId;
     axios.delete(process.env.REACT_APP_BACKEND_HOST + '/brick/' + brickId, {withCredentials: true})
       .then(res => {
-        let {bricks} = this.state;
-        bricks.splice(index, 1);
-        this.setState({...this.state})
+        let {bricks, yourBricks} = this.state;
+        let brick = bricks.find(brick => brick.id === brickId);
+        if (brick) {
+          let index = bricks.indexOf(brick);
+          bricks.splice(index, 1);
+        }
+
+        brick = yourBricks.find(brick => brick.id === brickId);
+        if (brick) {
+          let index = yourBricks.indexOf(brick);
+          yourBricks.splice(index, 1);
+        }
+
+        this.setState({...this.state, deleteDialogOpen: false});
       })
       .catch(error => {
         alert('Can`t delete bricks');
@@ -217,7 +232,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                         <Grid item xs={6} container justify="flex-start">
                           {
                             (this.props.user.type === UserType.Admin)
-                              ? <img alt="bin" onClick={() => this.delete(key, brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
+                              ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
                               : ""
                           }
                         </Grid>
@@ -335,8 +350,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({...this.state, logoutDialogOpen: false})
   }
 
-  handleDeleteOpen() {
-    this.setState({...this.state, deleteDialogOpen: true})
+  handleDeleteOpen(deleteBrickId: number) {
+    this.setState({...this.state, deleteDialogOpen: true, deleteBrickId })
   }
 
   handleDeleteClose() {
@@ -372,7 +387,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                         <Grid item xs={6} container justify="flex-start">
                           {
                             (this.props.user.type === UserType.Admin)
-                              ? <img alt="bin" onClick={() => this.delete(key, brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
+                              ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
                               : ""
                           }
                         </Grid>
@@ -558,18 +573,18 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         </Dialog>
         <Dialog
           open={this.state.deleteDialogOpen}
-          onClose={() => this.handleLogoutClose()}
+          onClose={() => this.handleDeleteClose()}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
+          className="delete-brick-dialog"
         >
-          <h1>Permanently delete this brick?</h1>
-          <Grid container direction="row">
-            <Grid item xs={6}>
-              <Button className="yes-button">Yes, delete</Button>
-            </Grid>
-            <Grid item xs={6}>
-              <Button className="yes-button">No, keep</Button>
-            </Grid>
+          <div className="dialog-header">
+            <div>Permanently delete</div>
+            <div>this brick?</div>
+          </div>
+          <Grid container direction="row" className="row-buttons" justify="center">
+            <Button className="yes-button" onClick={() => this.delete()}>Yes, delete</Button>
+            <Button className="no-button" onClick={() => this.handleDeleteClose()}>No, keep</Button>
           </Grid>
         </Dialog>
       </div>
