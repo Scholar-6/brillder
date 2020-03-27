@@ -1,12 +1,13 @@
 import './bricksListPage.scss';
 import React, { Component } from 'react';
-import { Box, Grid, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import { Box, Grid, FormControlLabel, Radio, RadioGroup, Button } from '@material-ui/core';
 import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import Dialog from '@material-ui/core/Dialog';
 
 import actions from 'redux/actions/bricksActions';
 import authActions from 'redux/actions/auth';
@@ -43,6 +44,8 @@ interface BricksListState {
   yoursReversed: boolean;
   sortedIndex: number;
   sortedReversed: boolean;
+  logoutDialogOpen: boolean;
+  deleteDialogOpen: boolean;
 }
 
 enum SortBy {
@@ -76,6 +79,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       yoursReversed: false,
       sortedIndex: 0,
       sortedReversed: false,
+
+      logoutDialogOpen: false,
+      deleteDialogOpen: false,
     };
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/currentUser', {withCredentials: true})
@@ -84,7 +90,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         bricks = bricks.filter(brick => {
           return brick.status === BrickStatus.Publish;
         });
-        this.setState({...this.state, yourBricks: res.data });
+        this.setState({...this.state, yourBricks: bricks });
       })
       .catch(error => {
         alert('Can`t get bricks')
@@ -114,7 +120,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   delete(index: number, brickId: number) {
     axios.delete(process.env.REACT_APP_BACKEND_HOST + '/brick/' + brickId, {withCredentials: true})
       .then(res => {
-        console.log(res);
         let {bricks} = this.state;
         bricks.splice(index, 1);
         this.setState({...this.state})
@@ -258,7 +263,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   handleMouseLeave(key: number) {
-    let {bricks} = this.state;
+    let {bricks, yourBricks} = this.state;
+    yourBricks.forEach(brick => {
+      brick.expanded = false;
+    });
     bricks.forEach(brick => {
       brick.expanded = false;
     });
@@ -271,7 +279,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   yourBricksMouseHover(index: number) {
-    let {yourBricks} = this.state;
+    let {yourBricks, bricks} = this.state;
+    bricks.forEach(brick => {
+      brick.expanded = false;
+    });
     yourBricks.forEach(brick => {
       brick.expanded = false;
     });
@@ -314,6 +325,22 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       row += `${created.getDate()}.${month}.${year} | ${brick.brickLength} mins`;
     }
     return row;
+  }
+
+  handleLogoutOpen() {
+    this.setState({...this.state, logoutDialogOpen: true})
+  }
+
+  handleLogoutClose() {
+    this.setState({...this.state, logoutDialogOpen: false})
+  }
+
+  handleDeleteOpen() {
+    this.setState({...this.state, deleteDialogOpen: true})
+  }
+
+  handleDeleteClose() {
+    this.setState({...this.state, deleteDialogOpen: false})
   }
 
   getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
@@ -442,7 +469,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
       if (this.state.bricks[i]) {
         let row = Math.floor(i / 3);
-        console.log('item: ', i, ", row: ", row);
         bricksList.push(this.getSortedBrickContainer(this.state.bricks[i], i, row));
       } else {
         bricksList.push(this.getEmptyBrickContainer(i, 4));
@@ -476,7 +502,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               </Grid>
               <Grid item style={{width: '32.35vw'}}>
                 <Grid container direction="row" justify="flex-end">
-                  <div className="logout-button" onClick={() => this.logout()}></div>
+                  <div className="logout-button" onClick={() => this.handleLogoutOpen()}></div>
                   <div className="bell-button"><div></div></div>
                   <div className="user-button"></div>
                 </Grid>
@@ -514,6 +540,38 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             </Grid>
           </Grid>
         </div>
+        <Dialog
+          open={this.state.logoutDialogOpen}
+          onClose={() => this.handleLogoutClose()}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className="alert-dialog"
+        >
+          <div className="logout-dialog-header">
+            <div>Are you sure you want</div>
+            <div>to log out?</div>
+          </div>
+          <Grid container direction="row" className="logout-buttons" justify="center">
+            <Button className="yes-button" onClick={() => this.logout()}>Yes</Button>
+            <Button className="no-button" onClick={() => this.handleLogoutClose()}>No</Button>
+          </Grid>
+        </Dialog>
+        <Dialog
+          open={this.state.deleteDialogOpen}
+          onClose={() => this.handleLogoutClose()}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <h1>Permanently delete this brick?</h1>
+          <Grid container direction="row">
+            <Grid item xs={6}>
+              <Button className="yes-button">Yes, delete</Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button className="yes-button">No, keep</Button>
+            </Grid>
+          </Grid>
+        </Dialog>
       </div>
     )
   }

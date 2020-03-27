@@ -417,6 +417,56 @@ $right: 1.4vw;
   }
 }
 
+.alert-dialog {
+  position: fixed;
+  top: 0;
+
+  .MuiDialog-paperScrollPaper {
+    position: fixed;
+    top: 8.3vh;
+    right: 7vw;
+    border-radius: 0.8vw;
+  }
+
+  .logout-dialog-header {
+    padding: 3.8vh 1vw 3.5vh 2.2vw;
+    font-size: 2.35vw;
+    letter-spacing: 0;
+    color: $dark-blue;
+  }
+  .logout-buttons {
+    padding-bottom: 2.3vh;
+
+    button {
+      min-width: 9.55vw;
+      font-size: 2vw;
+      border-radius: 0.6vw;
+      text-transform: none;
+      font-weight: normal !important;
+      padding-top: 0.8vh;
+      padding-bottom: 1.5vh;
+      line-height: 1;
+      font-family: "Brandon Grotesque Regular";
+      > span {
+        width: 100%;
+      }
+    }
+
+    .yes-button {
+      color: white;
+      background: $orange;
+      margin-right: 1.4vw !important;
+    }
+
+    .no-button {
+      color: $dark-blue;
+      background: #E5E8ED;
+      margin-right: 0.2vw;
+    }
+  }
+}
+
+
 @media only screen and (min-width: 1280px) {
 }
 
