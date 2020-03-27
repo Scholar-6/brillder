@@ -4,7 +4,6 @@ import { Box, Grid, FormControlLabel, Radio, RadioGroup, Button } from '@materia
 import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Dialog from '@material-ui/core/Dialog';
@@ -35,16 +34,11 @@ interface BackToWorkProps {
 }
 
 interface BackToWorkState {
-  yourBricks: Array<Brick>;
   bricks: Array<Brick>;
   sortBy: SortBy;
-  subjects: any[];
-  yoursIndex: number;
-  yoursReversed: boolean;
   sortedIndex: number;
   sortedReversed: boolean;
   logoutDialogOpen: boolean;
-
   deleteDialogOpen: boolean;
   deleteBrickId: number;
 }
@@ -60,56 +54,33 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   constructor(props: BackToWorkProps) {
     super(props)
     this.state = {
-      yourBricks: [],
       bricks: [],
       sortBy: SortBy.None,
-      subjects: [
-        { checked: false, color: 'color1', name: 'Art & Design'},
-        { checked: false, color: 'color2', name: 'Biology'},
-        { checked: false, color: 'color3', name: 'Chemistry'},
-        { checked: false, color: 'color4', name: 'Chinese'},
-        { checked: false, color: 'color5', name: 'Classics'},
-        { checked: false, color: 'color6', name: 'Computer Science'},
-        { checked: false, color: 'color7', name: 'Ecomonics'},
-        { checked: false, color: 'color8', name: 'English Literature'},
-        { checked: false, color: 'color9', name: 'French'}
-      ],
-      yoursIndex: 0,
-      yoursReversed: false,
       sortedIndex: 0,
       sortedReversed: false,
-
       logoutDialogOpen: false,
       deleteDialogOpen: false,
       deleteBrickId: -1
     };
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/currentUser', {withCredentials: true})
-      .then((res) => { 
-        let bricks = res.data as Brick[];
-        bricks = bricks.filter(brick => {
-          return brick.status === BrickStatus.Publish;
+    if (this.props.user.type === UserType.Admin) {
+      axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks', {withCredentials: true})
+        .then(res => {  
+          console.log(res.data);
+          this.setState({...this.state, bricks: res.data });
+        })
+        .catch(error => {
+          alert('Can`t get bricks');
         });
-        this.setState({...this.state, yourBricks: bricks });
-      })
-      .catch(error => {
-        alert('Can`t get bricks')
-      });
-
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/byStatus/' + BrickStatus.Publish, {withCredentials: true})
-      .then(res => {  
-        this.setState({...this.state, bricks: res.data });
-      })
-      .catch(error => {
-        alert('Can`t get bricks');
-      });
-
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true})
-    .then(res => {
-    })
-    .catch(error => {
-      alert('Can`t get bricks');
-    });
+    } else {
+      axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/currentUser', {withCredentials: true})
+        .then((res) => { 
+          this.setState({...this.state, bricks: res.data });
+        })
+        .catch(error => {
+          alert('Can`t get bricks')
+        });
+    }
   }
 
   logout() {
@@ -121,17 +92,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     let brickId = this.state.deleteBrickId;
     axios.delete(process.env.REACT_APP_BACKEND_HOST + '/brick/' + brickId, {withCredentials: true})
       .then(res => {
-        let {bricks, yourBricks} = this.state;
+        let {bricks} = this.state;
         let brick = bricks.find(brick => brick.id === brickId);
         if (brick) {
           let index = bricks.indexOf(brick);
           bricks.splice(index, 1);
-        }
-
-        brick = yourBricks.find(brick => brick.id === brickId);
-        if (brick) {
-          let index = yourBricks.indexOf(brick);
-          yourBricks.splice(index, 1);
         }
 
         this.setState({...this.state, deleteDialogOpen: false});
@@ -176,13 +141,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({...state, sortBy: parseInt(e.target.value)})
   }
 
-  filterBySubject = (i: number) => {
-    const {state} = this;
-    const {subjects} = state;
-    subjects[i].checked = !subjects[i].checked
-    this.setState({...state})
-  }
-
   changeSortedBricks = () => {
     let reversed = this.state.sortedReversed;
     let preReversed = reversed;
@@ -198,62 +156,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       }
       this.setState({...this.state, sortedIndex: index - 18, sortedReversed: preReversed});
     }
-  }
-
-  getBrickContainer = (brick: Brick, key: number) => {
-    return (
-      <Grid container key={key} item xs={3} justify="center">
-        <div className="main-brick-container">
-          <Box
-            className="brick-container"
-            onMouseEnter={() => this.yourBricksMouseHover(key)}
-            onMouseLeave={() => this.yourBricksMouseLeave(key)}
-          >
-            <div className={`sorted-brick absolute-container ${brick.expanded ? "bigger-hover" : ""}`}>
-            <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
-              <Grid item xs={brick.expanded ? 12 : 11}>
-                <div className="link-description">{brick.title}</div>
-                <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
-                <div className="link-info">
-                  {this.getAuthorRow(brick)}
-                </div>
-                {
-                  brick.expanded ?
-                    <div>
-                      <div className="hover-text">
-                        <div className="hovered-open-question">Open Question Open Question Open Question</div>
-                        <div>SUBJECT Code | No. of Plays</div>
-                        <div>Editor: Name Surname</div>
-                      </div>
-                      <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
-                        <Grid item xs={6} container justify="flex-start">
-                          {
-                            (this.props.user.type === UserType.Admin)
-                              ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
-                              : ""
-                          }
-                        </Grid>
-                        <Grid item xs={6} container justify="flex-end">
-                          <img
-                            alt="play"
-                            className="play-button"
-                            onClick={() => this.move(brick.id)}
-                            src="/images/brick-list/play.png" />
-                        </Grid>
-                      </Grid>
-                    </div>
-                    : ""
-                }
-              </Grid>
-              <div className="right-color-column">
-                <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center"></Grid>
-              </div>
-            </Grid>
-            </div>
-          </Box>
-        </div>
-      </Grid>
-    );
   }
 
   handleMouseHover(index: number) {
@@ -275,10 +177,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   handleMouseLeave(key: number) {
-    let {bricks, yourBricks} = this.state;
-    yourBricks.forEach(brick => {
-      brick.expanded = false;
-    });
+    let {bricks} = this.state;
     bricks.forEach(brick => {
       brick.expanded = false;
     });
@@ -286,40 +185,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({...this.state});
     setTimeout(() => {
       bricks[key].expandFinished = false;
-      this.setState({...this.state});
-    }, 400);
-  }
-
-  yourBricksMouseHover(index: number) {
-    let {yourBricks, bricks} = this.state;
-    bricks.forEach(brick => {
-      brick.expanded = false;
-    });
-    yourBricks.forEach(brick => {
-      brick.expanded = false;
-    });
-    this.setState({...this.state});
-    setTimeout(() => {
-      let {yourBricks} = this.state;
-      yourBricks.forEach(brick => {
-        brick.expanded = false;
-      });
-      if (!yourBricks[index].expandFinished) {
-        yourBricks[index].expanded = true;
-      }
-      this.setState({...this.state});
-    }, 400);
-  }
-
-  yourBricksMouseLeave(key: number) {
-    let {yourBricks} = this.state;
-    yourBricks.forEach(brick => {
-      brick.expanded = false;
-    });
-    yourBricks[key].expandFinished = true;
-    this.setState({...this.state});
-    setTimeout(() => {
-      yourBricks[key].expandFinished = false;
       this.setState({...this.state});
     }, 400);
   }
@@ -356,11 +221,21 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
+    let color = "";
+    if (brick.status === BrickStatus.Draft) {
+      color = "color1";
+    } else if (brick.status === BrickStatus.Review) {
+      color = "color2";
+    } else if (brick.status === BrickStatus.Build) {
+      color = "color3";
+    } else if (brick.status === BrickStatus.Publish) {
+      color = "color4";
+    }
     return (
       <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
           <Box
-            className="brick-container"
+            className={`brick-container ${color}`}
             onMouseEnter={() => this.handleMouseHover(key)}
             onMouseLeave={() => this.handleMouseLeave(key)}
           >
@@ -453,7 +328,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   renderSortAndFilterBox = () => {
     return (
-      <div className="sort-box">
+      <div className="back-sort-box">
         <div className="sort-header">Sort By</div>
         <RadioGroup
           className="sort-group"
@@ -467,12 +342,36 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           <FormControlLabel value={SortBy.Date} control={<Radio className="sortBy" />} label="Last Edit" />
         </RadioGroup>
         <div className="filter-header">Filter</div>
-        <div className="filter-container">
+        <div className="filter-container color1">
+          <FormControlLabel
+            className="filter-radio-label"
+            onClick={() => {}}
+            control={<Radio className={"filter-radio sort-by"}/>}
+            label="Proposal" />
+          <div className="right-index">4</div>
+        </div>
+        <div className="filter-container color2">
+          <FormControlLabel
+            className="filter-radio-label"
+            onClick={() => {}}
+            control={<Radio className={"filter-radio sort-by"}/>}
+            label="Submitted for Review" />
+          <div className="right-index">4</div>
+        </div>
+        <div className="filter-container color3">
+          <FormControlLabel
+            className="filter-radio-label color3"
+            onClick={() => {}}
+            control={<Radio className={"filter-radio sort-by color3"}/>}
+            label="Build in Progress" />
+          <div className="right-index">4</div>
+        </div>
+        <div className="filter-container color1">
           <FormControlLabel
             className="filter-radio-label color1"
             onClick={() => {}}
-            control={<Radio className={"filter-radio sort-by color1"}/>}
-            label="Proposal" />
+            control={<Radio className={"filter-radio sort-by color4"}/>}
+            label="Published" />
           <div className="right-index">4</div>
         </div>
       </div>

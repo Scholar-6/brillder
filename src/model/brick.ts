@@ -5,7 +5,7 @@ import { UserType } from "./user";
 export enum BrickStatus {
   Draft = 1,
   Review,
-  Some,
+  Build,
   Publish
 }
 
