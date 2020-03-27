@@ -1,7 +1,8 @@
 import React from "react";
 import { RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import update from "immutability-helper";
 // @ts-ignore
 import { connect } from "react-redux";
@@ -264,6 +265,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setQuestions(questions);
   }
 
+  const exitAndSave = () => {
+    saveBrick();
+    history.push('/build');
+  }
+
   const renderBuildQuestion = () => {
     return (
       <BuildQuestionComponent
@@ -298,6 +304,20 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   return (
     <div className="investigation-build-page">
+      <Hidden only={['xs', 'sm']}>
+        <div className="exit-button" onClick={exitAndSave}>
+          <div>
+            <div className="exit-label">
+              <div className="exit-arrow">
+                <ArrowBackIosIcon/>
+              </div>
+              EXIT
+            </div>
+            <div className="small-label">SAVE</div>
+            <div className="small-label">CHANGES</div>
+          </div>
+        </div>
+      </Hidden>
       <Grid
         container direction="row"
         alignItems="center"

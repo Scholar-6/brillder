@@ -3,6 +3,36 @@
 .investigation-build-page {
   height: 100%;
 
+  .exit-button {
+    cursor: pointer;
+    position: fixed;
+    top: 3vh;
+    left: 3vw;
+    color: $orange;
+    .exit-label {
+      position: relative;
+      font-size: 1.3vw;
+      line-height: 1;
+      letter-spacing: 0.3vw;
+      font-family: 'Brandon Grotesque Bold';
+      .exit-arrow {
+        position: absolute;
+        top: -0.2vh;
+        left: -1.3vw;
+        svg {
+          height: 1.5vw;
+          width: 1.5vw;
+        }
+      }
+    }
+    .small-label {
+      padding-left: 0.2vw;
+      letter-spacing: 0.2vw;
+      font-size: 0.67vw;
+      font-family: 'Brandon Grotesque Regular';
+    }
+  }
+
   .right-top-drop-icon {
     position: absolute;
     top: 8px;
