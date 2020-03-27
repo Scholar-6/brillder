@@ -84,7 +84,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               <Grid container justify="center" style={{width: "100%"}}>
                 <div className="zoom-item back-item" onClick={() => history.push('/build')}>
                   <img alt="Logo" src="/images/main-page/backToWork.png" className="item-image" />
-                  <div className="item-description">Back To Work</div>
+                  <div className="item-description" onClick={() => history.push('/build/back-to-work')}>Back To Work</div>
                 </div>
               </Grid>
             </div>
@@ -151,7 +151,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               <Grid container justify="center" style={{width: "100%"}}>
                 <div className="zoom-item back-item" onClick={() => history.push('/build')}>
                   <img alt="Logo" src="/images/main-page/backToWork.png" className="item-image" />
-                  <div className="item-description">Back To Work</div>
+                  <div className="item-description" onClick={() => history.push('/build/back-to-work')}>Back To Work</div>
                 </div>
               </Grid>
           </div>
