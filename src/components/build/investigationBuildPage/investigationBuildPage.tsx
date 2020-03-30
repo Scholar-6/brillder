@@ -262,8 +262,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const updateComponents = (components: any[]) => {
     if (locked) { return; }
     const index = getQuestionIndex(activeQuestion);
-    questions[index].components = components;
-    setQuestions(questions);
+    const updatedQuestions = questions.slice();
+    updatedQuestions[index].components = components;
+    setQuestions(update(questions, { $set: updatedQuestions }));
   }
 
   const exitAndSave = () => {
@@ -321,12 +322,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       </Hidden>
       <Grid
         container direction="row"
+        className="investigation-build-background"
         alignItems="center"
-        style={{ height: "100%" }}
       >
         <Grid
           container
-          item xs={12} sm={12} md={7} lg={8}
+          item xs={12} sm={12} md={7} lg={9}
           alignItems="center"
           style={{ height: "100%" }}
           className="question-container"

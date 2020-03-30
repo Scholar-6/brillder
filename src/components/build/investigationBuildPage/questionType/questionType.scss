@@ -1,14 +1,15 @@
 
 @import "_variables";
+$question-radius: 0.65vw;
 
 .question-type {
   position: relative;
-  $color-light-grey: #D4D4D4;
+  $color-light-grey: $tab-grey;
   $color-light-red2: #A84C3F;
+  background: white;
 
-  border: 1px solid grey;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: $question-radius;
+  border-bottom-right-radius: $question-radius;
   border-top: none;
   width: 100%;
   height: 94%;
@@ -17,37 +18,58 @@
     padding: 6vh 4vh 2vh 4vh;
   }
 
+  .round-button-center-container {
+    position: absolute;
+    bottom: 2vh;
+  }
+  .round-button-center {
+    color: $dark-blue;
+    width: 20vw;
+    background: $color-light-grey;
+    border-radius: 1.2vw;
+
+    .synthesis-icon {
+      font-size: 4.4vh;
+    }
+    .synthesis-text {
+      padding-left: 1vw;
+      line-height: 2.3;
+      font-size: 2vh;
+      letter-spacing: 0.2vh;
+    }
+  }
+  .round-button-center:hover {
+    background: $orange;
+    color: white;
+  }
+
   .card-description {
     text-align: center; 
   }
 
   .question-container {
+    cursor: pointer;
     background: $color-light-grey;
-    color: $orange;
+    color: $dark-blue;
     margin: 0.6vw 0.6vw 0.6vw 0.6vw;
     border-radius: 1.1vw;
-    height: 15vh;
-    font-size: 1.2vw;
+    height: 15.35vh;
+    font-size: 1.5vw;
     padding: 0;
-    font-family: "Century Gothic Regular";
+    font-family: "Brandon Grotesque Regular";
     font-weight: bold;
 
     .link-description {
       text-align: center;
       margin: 0;
-      line-height: 1.15;
+      line-height: 1.4;
     }
   }
   
   .question-container:hover {
-    cursor: pointer;
-    opacity: 0.7;
-  }
-
-  .question-container.active {
     background: $color-light-red2;
+    font-family: "Brandon Grotesque Black";
     color: white;
-    opacity: 1;
   }
 
   .set-type-button {

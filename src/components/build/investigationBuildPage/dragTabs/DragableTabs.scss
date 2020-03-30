@@ -1,28 +1,25 @@
-$tab-radius: 0.3vw;
+@import "_variables";
+$tab-radius: 0.6vw;
 $distance: 0.13vw;
+
 
 $tile-height: 100%;
 
 .drag-tabs {
   display: inline-block;
   width: 100%;
+  background: $dark-blue !important;
   height: 6%;
-  border-bottom: none;
 
   .drag-last-tile-container {
     padding: 0 !important;
-    border-bottom: 1px solid grey;
     margin-top: 1px !important;
     height: calc(100% - 1px) !important;
     padding-left: $distance !important;
-    .drag-tile {
-      border-bottom: 0 !important;
-    }
   }
 
   .drag-tile-container {
     padding: 0 !important;
-    border-bottom: 1px solid grey;
     height: calc(100% - 2px) !important;
     padding-left: $distance !important;
   }
@@ -31,16 +28,12 @@ $tile-height: 100%;
     padding: 1px;
     cursor: pointer;
     height: 100%;
-    background-color: #BFBFBF;
-    border-top: 1px solid grey;
-    border-bottom: 1px solid grey;
-    border-left: 1px solid grey;
+    background-color: $tab-grey;
   }
   .drag-tile:first-child {
     border-top-left-radius: $tab-radius;
   }
   .drag-tile:last-child {
-    border-right: 1px solid grey;
     border-top-right-radius: $tab-radius;
   }
 
@@ -56,7 +49,6 @@ $tile-height: 100%;
 
   .drag-tile-container.active {
     height: calc(100% - 2px) !important;
-    border-bottom: 0;
 
     .drag-tile {
       background: white;
@@ -70,6 +62,18 @@ $tile-height: 100%;
     font-size: 1.5vw;
     width: 100%;
 
+    .tab-number {
+      color: $dark-blue;
+      font-family: 'Brandon Grotesque Bold';
+      font-size: 3.4vh;
+    }
+
+    .remove-icon-container {
+      height: 100%;
+      position: absolute;
+      right: 0;
+    }
+
     .remove-icon:hover {
       cursor: pointer;
     }
@@ -77,10 +81,11 @@ $tile-height: 100%;
 
   .last-tab {
     text-align: center;
-    color: black;
-    font-size: 1vw;
-    background-color: #BFBFBF;
-    font-family: 'Century Gothic Regular';
+    color: $dark-blue;
+    font-size: 1.3vw;
+    overflow: hidden;
+    background-color: $tab-grey;
+    font-family: 'Brandon Grotesque Bold';
   }
 
   @media only screen and (max-width: 599px) {

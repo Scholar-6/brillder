@@ -14,11 +14,10 @@ export interface TextComponentProps {
 }
 
 const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updateComponent}) => {
+  const [focused, setFocus] = React.useState(false);
   if (!data.value) {
     data.value = "";
   }
-
-  let isBuilding = true;
 
   return (
     <div className="question-build-text-editor">
@@ -28,14 +27,19 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updat
         disabled={locked}
         config={{toolbar: ['bold']}}
         onChange={(e: any, editor: any) => {
-          if (isBuilding) {
-            isBuilding= false;
+          if (!focused) {
             return;
           }
           let value = editor.getData();
           let comp = Object.assign({}, data);
           comp.value = value;
           updateComponent(comp, index);
+        }}
+        onFocus={() => {
+          setFocus(true);
+        }}
+        onBlur={() => {
+          setFocus(false);
         }}
       />
     </div>
