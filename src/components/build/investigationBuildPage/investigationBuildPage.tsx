@@ -376,6 +376,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <Route path="/build/brick/:brickId/build/investigation/question">
           <PhonePreview link={window.location.origin + "/logo-page"} />
         </Route>
+        <Route path="/build/brick/:brickId/build/investigation/synthesis">
+          <PhonePreview link={window.location.origin + "/logo-page"} />
+        </Route>
       </Grid>
     </div>
   );
