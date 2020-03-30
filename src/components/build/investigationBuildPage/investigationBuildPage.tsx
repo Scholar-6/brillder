@@ -12,6 +12,7 @@ import BuildQuestionComponent from "./buildQuestions/buildQuestionComponent";
 import QuestionTypePage from "./questionType/questionType";
 import DragableTabs from "./dragTabs/dragableTabs";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
+import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/PhoneQuestionPreview";
 import {
   Question,
   QuestionTypeEnum,
@@ -348,23 +349,22 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                 removeQuestion={removeQuestion}
               />
               <Switch>
-                <Route exac path="/build/brick/:brickId/build/investigation/question-component">
+                <Route path="/build/brick/:brickId/build/investigation/question-component">
                   {renderBuildQuestion}
                 </Route>
-                <Route exac path="/build/brick/:brickId/build/investigation/question-component/:questionId">
-                  {renderBuildQuestion}
-                </Route>
-                <Route exec path="/build/brick/:brickId/build/investigation/question/:questionId">
-                  {renderQuestionComponent}
-                </Route>
-                <Route exec path="/build/brick/:brickId/build/investigation/question">
+                <Route path="/build/brick/:brickId/build/investigation/question">
                   {renderQuestionComponent}
                 </Route>
               </Switch>
             </Grid>
           </Grid>
         </Grid>
-        <PhonePreview link={window.location.origin + "/logo-page"} />
+        <Route path="/build/brick/:brickId/build/investigation/question-component">
+          <PhoneQuestionPreview question={activeQuestion} />
+        </Route>
+        <Route path="/build/brick/:brickId/build/investigation/question">
+          <PhonePreview link={window.location.origin + "/logo-page"} />
+        </Route>
       </Grid>
     </div>
   );
