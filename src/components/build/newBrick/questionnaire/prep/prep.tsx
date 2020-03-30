@@ -12,7 +12,6 @@ import { NewBrickStep } from "../../model";
 import './prep.scss';
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
-
 interface PrepProps {
   parentPrep: string;
   savePrep(prep: string):void;
@@ -44,8 +43,11 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
 }
 
 const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
-  const [prep, setPrep] = React.useState(parentPrep);
+  let [prep, setPrep] = React.useState(parentPrep);
 
+  console.log(prep);
+ // prep = '<oembed url="http://front.scholar6.org/build/"><html>&lt;b&gt;awesome!&lt;/b&gt;</html></oembed>'
+  
   return (
     <div className="tutorial-page prep-page">
       <ExitButton />
@@ -62,7 +64,10 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
                   <CKEditor
                     editor={ClassicEditor}
                     data={prep}
-                    config={{ toolbar: ['bold', 'link'] }}
+                    config={{
+                      toolbar: ['bold', 'link', 'mediaEmbed'],
+                      mediaEmbed: { previewsInData: true }
+                    }}
                     onChange={(e: any, editor: any) => {
                       let value = editor.getData();
                       setPrep(value)
