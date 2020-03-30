@@ -23,7 +23,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question }) => {
           <div className="volume volume3"></div>
           <div className="home"></div>
           <div className="screen">
-            <div className="custom-component" style={{background: "white"}}>
+            <div className="custom-component mobile-question-component" style={{background: "white"}}>
               <QuestionPlay question={question} isLastOne={false} answers={[]} next={() => {}}/>
             </div>
           </div>

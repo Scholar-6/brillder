@@ -72,7 +72,10 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, history, 
         </Grid>
       </div>
       <Grid className="round-button-center-container" container direction="row" justify="center">
-        <Grid className="round-button-center" onClick={() => {}} container direction="row" justify="center">
+        <Grid
+          className="round-button-center"
+          onClick={() => {history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}}
+          container direction="row" justify="center">
           <FormatListBulletedIcon className="synthesis-icon" /> <span className="synthesis-text">ADD SYNTHESIS</span>
         </Grid>
       </Grid>
