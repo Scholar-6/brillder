@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import "./investigationBuildPage.scss";
 import BuildQuestionComponent from "./buildQuestions/buildQuestionComponent";
 import QuestionTypePage from "./questionType/questionType";
+import SynthesisPage from "./synthesisPage/SynthesisPage";
 import DragableTabs from "./dragTabs/dragableTabs";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/PhoneQuestionPreview";
@@ -108,6 +109,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     updatedQuestions.forEach(q => (q.active = false));
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
     setQuestions(update(questions, { $set: updatedQuestions }));
+    if (history.location.pathname.slice(-10) === '/synthesis') {
+      history.push(`/build/brick/${brickId}/build/investigation/question`)
+    }
   };
 
   const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
@@ -198,6 +202,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           $set: updatedQuestions
         })
       );
+    }
+    if (history.location.pathname.slice(-10) === '/synthesis') {
+      history.push(`/build/brick/${brickId}/build/investigation/question`)
     }
   };
 
@@ -355,6 +362,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                 </Route>
                 <Route path="/build/brick/:brickId/build/investigation/question">
                   {renderQuestionComponent}
+                </Route>
+                <Route path="/build/brick/:brickId/build/investigation/synthesis">
+                  <SynthesisPage goBack={() => {}} onSynthesisChange={() => {}} />
                 </Route>
               </Switch>
             </Grid>
