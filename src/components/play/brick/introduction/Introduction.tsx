@@ -68,7 +68,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <h2>Prep</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography dangerouslySetInnerHTML={{ __html: brick.prep}}></Typography>
+              <div style={{width: '100%'}} dangerouslySetInnerHTML={{ __html: brick.prep}}></div>
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <div className="begin-row">
