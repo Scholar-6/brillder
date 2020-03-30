@@ -3,6 +3,11 @@
 .investigation-build-page {
   height: 100%;
 
+  .investigation-build-background {
+    height: 100%;
+    background: $dark-blue;
+  }
+
   .exit-button {
     cursor: pointer;
     position: fixed;
@@ -75,8 +80,6 @@
 
   .tab-panel {
     padding: 0;
-    border: 1px solid grey;
-    border-top: none;
   }
 
   .drag-and-drop-box {

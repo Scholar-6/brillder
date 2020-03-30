@@ -1,6 +1,6 @@
 import React from 'react'
-import { Grid, IconButton } from '@material-ui/core';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { Grid } from '@material-ui/core';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 import './questionType.scss';
 import { QuestionTypeEnum } from 'components/model/question';
@@ -21,12 +21,12 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, history, 
     history.push(`/build/brick/${brickId}/build/investigation/question-component/${questionId}`);
   }
 
-  const [type, setInnerType] = React.useState(QuestionTypeEnum.None);
+  const type = questionType;
 
   document.title = "Select First Question Type";
 
   const setCurrentType = (type: QuestionTypeEnum) => {
-    setInnerType(type);
+    setQuestionType(type);
   }
 
   return (
@@ -71,16 +71,11 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, history, 
           </Grid>
         </Grid>
       </div>
-      <div className="round-button-container" style={{ position: 'absolute', right: 0, bottom: 0 }}>
-        <IconButton className="new-question-button" aria-label="next" onClick={() => setQuestionType(type)}>
-          <ArrowForwardIosIcon className="new-question-icon" />
-        </IconButton>
-      </div>
-      <div className="round-button-container" style={{ position: 'absolute', left: 0, bottom: 0 }}>
-        <IconButton className="new-question-button" aria-label="next" onClick={setPreviousQuestion}>
-          <ArrowForwardIosIcon className="new-question-icon rotate-180" />
-        </IconButton>
-      </div>
+      <Grid className="round-button-center-container" container direction="row" justify="center">
+        <Grid className="round-button-center" onClick={() => {}} container direction="row" justify="center">
+          <FormatListBulletedIcon className="synthesis-icon" /> <span className="synthesis-text">ADD SYNTHESIS</span>
+        </Grid>
+      </Grid>
     </div>
   );
 }

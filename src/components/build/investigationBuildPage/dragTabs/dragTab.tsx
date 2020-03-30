@@ -24,10 +24,10 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, selectQuestion, re
   return (
     <div className="draggable-tab" onClick={activateTab} style={{ ...style, height: '100%' }}>
       <Grid container direction="row" alignContent="center" style={{height: '95%'}}>
-        <Grid item xs={10}  style={{color: 'black', fontFamily: 'Century Gothic Regular' }}>
+        <Grid item xs={10} className="tab-number">
           {index + 1}
         </Grid>
-        <Grid item style={{position: 'absolute', right: 0}}>
+        <Grid item container direction="row" alignContent="center" justify="flex-end" className="remove-icon-container">
           {
             active === true && <ClearIcon className="remove-icon" onClick={removeTab} />
           }
