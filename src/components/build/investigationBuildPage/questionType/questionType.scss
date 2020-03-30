@@ -25,18 +25,20 @@ $question-radius: 0.65vw;
   .round-button-center {
     cursor: pointer;
     color: $dark-blue;
-    width: 20vw;
+    width: 22vw;
+    padding-left: 0.3vw;
     background: $color-light-grey;
     border-radius: 1.2vw;
 
     .synthesis-icon {
-      font-size: 4.4vh;
+      font-size: 5.3vh;
     }
     .synthesis-text {
-      padding-left: 1vw;
-      line-height: 2.3;
-      font-size: 2vh;
-      letter-spacing: 0.2vh;
+      font-family: "Brandon Grotesque Regular";
+      padding-left: 1.4vw;
+      line-height: 2.05;
+      font-size: 2.6vh;
+      letter-spacing: 0.3vw;
     }
   }
   .round-button-center:hover {
