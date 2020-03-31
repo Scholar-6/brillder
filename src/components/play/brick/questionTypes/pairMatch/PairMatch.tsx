@@ -37,26 +37,35 @@ interface PairMatchProps {
   component: PairMatchComponent;
   attempt?: ComponentAttempt;
   answers: number;
-  isPreview?: boolean;
+  isPreview?: boolean
 }
 
 interface PairMatchState {
   userAnswers: any[];
-  isPreview: boolean;
 }
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   constructor(props: PairMatchProps) {
     super(props);
 
-    this.state = {
-      userAnswers: props.component.choices ? props.component.choices : [],
-      isPreview: props.isPreview ? props.isPreview : false
-    };
+    const {component} = props;
+    if (props.isPreview === true) {
+      this.state = {
+        userAnswers: component.list ? component.list : [],
+      };
+    } else {
+      this.state = {
+        userAnswers: component.choices ? component.choices : [],
+      };
+    }
   }
 
-  componentWillReceiveProps(props: PairMatchProps) {
-    console.log(props.component);
+  componentWillUpdate(props: PairMatchProps) {
+    if (props.isPreview === true && props.component) {
+      if (this.state.userAnswers !== props.component.list) {
+        this.setState({userAnswers: props.component.list});
+      }
+    }
   }
 
   setUserAnswers(userAnswers: any[]) {
@@ -109,37 +118,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return "";
   }
 
-  renderSortableList() {
-    return (
-      <ReactSortable
-        list={this.state.userAnswers}
-        animation={150}
-        style={{display:"inline-block"}}
-        group={{ name: "cloning-group-name" }}
-        setList={(choices) => this.setUserAnswers(choices)}
-      >
-        {
-          this.state.userAnswers.map((answer, i) => (
-            <div style={{display: "block"}} key={i} className="pair-match-play-choice">
-              <Grid container direction="row">
-                <Grid item xs={1} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
-                  <DragIndicatorIcon/>
-                </Grid>
-                <Grid item xs={11} container justify="center" alignContent="center" style={{width: '100%', height: '24px'}}>
-                  {answer.value}
-                </Grid>
-              </Grid>
-            </div>
-          ))
-        }
-      </ReactSortable>
-    );
-  }
-
-  renderList() {
-    return this.renderSortableList();
-  }
-
   render() {
     return (
       <div className="pair-match-play">
@@ -161,7 +139,28 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
             ))
           }
           </List>
-          {this.renderList()}
+          <ReactSortable
+        list={this.state.userAnswers}
+        animation={150}
+        style={{display:"inline-block"}}
+        group={{ name: "cloning-group-name" }}
+        setList={(choices) => this.setUserAnswers(choices)}
+      >
+        {
+          this.state.userAnswers.map((answer, i) => (
+            <div style={{display: "block"}} key={i} className="pair-match-play-choice">
+              <Grid container direction="row">
+                <Grid item xs={1} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
+                  <DragIndicatorIcon/>
+                </Grid>
+                <Grid item xs={11} container justify="center" alignContent="center" style={{width: '100%', height: '24px'}}>
+                  {answer.value}
+                </Grid>
+              </Grid>
+                </div>
+              ))
+            }
+          </ReactSortable>
         </Grid>
         <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
       </div>

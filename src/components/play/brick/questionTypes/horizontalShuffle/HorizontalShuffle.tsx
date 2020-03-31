@@ -42,6 +42,14 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     };
   }
 
+  componentWillUpdate(props: VerticalShuffleProps) {
+    if (props.component && props.component.list) {
+      if (this.state.userAnswers !== props.component.list) {
+        this.setState({userAnswers: props.component.list});
+      }
+    }
+  }
+
   setUserAnswers(userAnswers: any[]) {
     this.setState({ userAnswers });
   }

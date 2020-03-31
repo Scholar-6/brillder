@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { Grid } from '@material-ui/core';
@@ -14,24 +14,27 @@ export enum HintStatus {
 }
 
 export interface HintState {
+  index: number,
   status: HintStatus
   value: string
   list: string[]
 }
 
 export interface HintProps {
-  locked: boolean
-  list: string[]
+  index: number,
+  locked: boolean,
+  list: string[],
   status?: HintStatus,
   value?: string,
   count?: number,
   onChange(state: HintState): void
 }
 
-const HintComponent: React.FC<HintProps> = ({ onChange, locked, ...props }) => {
+const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props }) => {
   let initState = {
     status: HintStatus.All,
     value: '',
+    index,
     list: []
   } as HintState;
 
@@ -48,6 +51,11 @@ const HintComponent: React.FC<HintProps> = ({ onChange, locked, ...props }) => {
   }
 
   const [state, setState] = React.useState(initState);
+
+  if (state.index !== index) {
+    setState(initState);
+  }
+
   if (state.status !== initState.status) {
     setState(initState);
   }

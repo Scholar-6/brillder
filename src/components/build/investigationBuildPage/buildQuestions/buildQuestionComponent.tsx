@@ -65,6 +65,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
   }
 
   let typeArray: string[] = Object.keys(QuestionType);
+  let index = getQuestionIndex(question);
 
   return (
     <MuiThemeProvider >
@@ -113,6 +114,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
             </Grid>
             <Grid container item xs={5} sm={6} md={6} className="question-components-list">
               <QuestionComponents
+                questionIndex={index}
                 locked={locked}
                 brickId={brickId}
                 history={history}

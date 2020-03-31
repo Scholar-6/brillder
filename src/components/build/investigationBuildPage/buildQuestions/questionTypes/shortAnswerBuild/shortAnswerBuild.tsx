@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
 
@@ -25,6 +25,8 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
   }
 
   const [state, setState] = React.useState(data);
+
+  useEffect(() => { setState(data) }, [data]);
 
   const update = () => {
     setState(Object.assign({}, state));

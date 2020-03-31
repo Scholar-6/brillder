@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import EditIcon from '@material-ui/icons/Edit';
 import { Button } from '@material-ui/core';
 
@@ -28,6 +28,12 @@ export interface LineHighlightingProps {
 
 const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, data, updateComponent }) => {
   const [state, setState] = React.useState(data);
+
+  useEffect(() => {
+    if (!data.text) { data.text = ''; }
+    if (!data.lines) { data.lines = []; }
+    setState(data);
+  }, [data]);
 
   const update = () => {
     setState(Object.assign({}, state));

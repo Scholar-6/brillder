@@ -11,6 +11,7 @@ interface WordHighlightingProps {
   component: any;
   attempt: ComponentAttempt;
   answers: number[];
+  isPreview?: boolean;
 }
 
 interface WordHighlightingState {
@@ -25,6 +26,10 @@ class WordHighlighting extends CompComponent<
   constructor(props: WordHighlightingProps) {
     super(props);
     this.state = { userAnswers: [], words: props.component.words };
+  }
+  
+  componentWillReceiveProps(props: WordHighlightingProps) {
+    this.setState({ words: props.component.words });
   }
 
   getAnswer(): number[] {
@@ -67,6 +72,10 @@ class WordHighlighting extends CompComponent<
 
   render() {
     const { component } = this.props;
+
+    if (this.props.isPreview === true && (!component.words || component.words.length === 0)) {
+      return <div>Words will appear here in correction mode.</div>
+    }
 
     return (
       <div className="word-highlighting-play">

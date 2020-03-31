@@ -11,6 +11,7 @@ interface LineHighlightingProps {
   component: any;
   attempt: ComponentAttempt;
   answers: number[];
+  isPreview?: boolean;
 }
 
 interface LineHighlightingState {
@@ -25,6 +26,10 @@ class LineHighlighting extends CompComponent<
   constructor(props: LineHighlightingProps) {
     super(props);
     this.state = { userAnswers: [], lines: props.component.lines };
+  }
+
+  componentWillReceiveProps(props: LineHighlightingProps) {
+    this.setState({ lines: props.component.lines });
   }
 
   getAnswer(): number[] {
@@ -74,6 +79,9 @@ class LineHighlighting extends CompComponent<
 
   render() {
     const { component } = this.props;
+    if (this.props.isPreview === true && (!component.lines || component.lines.length === 0)) {
+      return <div>Lines will appear here in correction mode.</div>
+    }
 
     return (
       <div className="line-highlighting-play">

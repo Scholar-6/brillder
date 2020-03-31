@@ -25,7 +25,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   constructor(props: MissingWordProps) {
     super(props);
     let userAnswers: any[] = [];
-    if (props.answers) {
+    if (props.answers && props.answers.length > 0) {
       userAnswers = props.answers;
     } else if (props.attempt?.answer?.length > 0) {
       props.attempt.answer.forEach((a: number) => userAnswers.push(a));
@@ -34,6 +34,14 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     }
 
     this.state = { userAnswers, choices: props.component.choices };
+  }
+
+  componentWillReceiveProps(props: MissingWordProps) {
+    if (props.component) {
+      let userAnswers: any[] = [];
+      props.component.choices.forEach(() => userAnswers.push({ value: -1 }));
+      this.setState({ userAnswers });
+    }
   }
 
   setUserAnswer(e: any, index: number) {
@@ -97,6 +105,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   }
 
   renderSelect(choice: any, index: number) {
+    if (!this.state.userAnswers[index]) { return <div>...Loading...</div>}
     return (
       <Select
         className="missing-select"

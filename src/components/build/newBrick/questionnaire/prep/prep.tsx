@@ -45,9 +45,6 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
 const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
   let [prep, setPrep] = React.useState(parentPrep);
 
-  console.log(prep);
- // prep = '<oembed url="http://front.scholar6.org/build/"><html>&lt;b&gt;awesome!&lt;/b&gt;</html></oembed>'
-  
   return (
     <div className="tutorial-page prep-page">
       <ExitButton />

@@ -27,6 +27,7 @@ interface QuestionProps {
   attempt?: ComponentAttempt;
   question: Question;
   isLastOne: boolean;
+  isPreview?: boolean;
   answers: any;
   next(): void;
 }
@@ -90,6 +91,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
         key={index}
         attempt={this.props.attempt}
         answers={this.props.answers}
+        isPreview={this.props.isPreview}
         question={question}
         component={component} />
     }
