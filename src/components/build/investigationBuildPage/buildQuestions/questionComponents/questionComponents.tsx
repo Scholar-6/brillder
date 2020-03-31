@@ -19,6 +19,7 @@ import { HintState } from 'components/build/baseComponents/Hint/Hint';
 
 
 type QuestionComponentsProps = {
+  questionIndex: number
   locked: boolean
   history: any
   brickId: number
@@ -28,12 +29,11 @@ type QuestionComponentsProps = {
 }
 
 const QuestionComponents = ({
-  locked, history, brickId, question, updateComponents, setQuestionHint
+  questionIndex, locked, history, brickId, question, updateComponents, setQuestionHint
 }: QuestionComponentsProps) => {
   let componentsCopy = Object.assign([], question.components) as any[]
   const [questionId, setQuestionId] = useState(question.id);
   const [components, setComponents] = useState(componentsCopy);
-
 
   if (questionId !== question.id) {
     setQuestionId(question.id);
@@ -96,6 +96,7 @@ const QuestionComponents = ({
 
     return <SwitchQuestionComponent
       type={component.type}
+      questionIndex={questionIndex}
       index={index}
       locked={locked}
       component={component}

@@ -66,7 +66,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     if (this.props.user.type === UserType.Admin) {
       axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks', {withCredentials: true})
         .then(res => {  
-          console.log(res.data);
           this.setState({...this.state, bricks: res.data });
         })
         .catch(error => {

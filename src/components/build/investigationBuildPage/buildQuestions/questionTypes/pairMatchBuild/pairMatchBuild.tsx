@@ -28,6 +28,8 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
 
   const [state, setState] = React.useState(data);
 
+  useEffect(() => { setState(data) }, [data]);
+
   const update = () => {
     setState(Object.assign({}, state));
     updateComponent(state);

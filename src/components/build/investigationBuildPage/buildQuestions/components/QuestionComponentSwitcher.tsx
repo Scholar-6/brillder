@@ -14,6 +14,7 @@ import HintComponent, { HintState } from '../../../baseComponents/Hint/Hint';
 export interface SwitchQuestionProps {
   type: QuestionComponentTypeEnum
   index: number
+  questionIndex: number
   uniqueComponent: any
   component: any
   hint: Hint
@@ -25,12 +26,8 @@ export interface SwitchQuestionProps {
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
-  type, index, component, hint, locked, canRemove,
-  setQuestionHint,
-  updateComponent, removeComponent,
-  uniqueComponent,
+  type, index, component, hint, locked, updateComponent, uniqueComponent, ...props
 }) => {
-
   const getNumberOfAnswers = (data: any) => {
     let count = 1;
     if (data.list && data.list.length) {
@@ -55,12 +52,12 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     return (
       <div style={{position: 'relative', width: '100%'}}>
         {
-          canRemove
+          props.canRemove
           ?
             <DeleteIcon
               className="right-top-icon"
               style={{right: '2px', top: '7px'}}
-              onClick={() => removeComponent(index)} />
+              onClick={() => props.removeComponent(index)} />
           : ""
         }
         <DropBox
@@ -90,13 +87,21 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
         numberOfAnswers = component.categories.length;
       }
     }
+
     return (
       <div className="unique-component-wrapper">
         <InnerComponent
           locked={locked}
           data={component}
           updateComponent={updateComponent} />
-        <HintComponent status={hint.status} locked={locked} value={hint.value} list={hint.list} count={numberOfAnswers} onChange={setQuestionHint}/>
+        <HintComponent
+          index={props.questionIndex}
+          status={hint.status}
+          locked={locked}
+          value={hint.value}
+          list={hint.list}
+          count={numberOfAnswers}
+          onChange={props.setQuestionHint}/>
       </div>
     )
   }

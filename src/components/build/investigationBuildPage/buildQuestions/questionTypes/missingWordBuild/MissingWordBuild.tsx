@@ -1,6 +1,6 @@
 
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox'; 
@@ -36,6 +36,8 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
   }
 
   const [state, setState] = React.useState(data);
+
+  useEffect(() => { setState(data) }, [data]);
 
   const update = () => {
     setState(Object.assign({}, state));

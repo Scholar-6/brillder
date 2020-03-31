@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import EditIcon from '@material-ui/icons/Edit';
 import { Button } from '@material-ui/core';
 
@@ -28,6 +28,12 @@ export interface WordHighlightingProps {
 
 const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, data, updateComponent }) => {
   const [state, setState] = React.useState(data);
+
+  useEffect(() => {
+    if (!data.text) { data.text = ''; }
+    if (!data.words) { data.words = []; }
+    setState(data);
+  }, [data]);
 
   const update = () => {
     setState(Object.assign({}, state));
@@ -68,6 +74,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
   }
 
   const renderBox = () => {
+    console.log(state);
     if (state.mode === WordMode.Edit) {
       return (
         <div className="hightlight-area">

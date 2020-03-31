@@ -52,6 +52,14 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     return this.state.userAnswers;
   }
 
+  componentWillUpdate(props: VerticalShuffleProps) {
+    if (props.component && props.component.list) {
+      if (this.state.userAnswers !== props.component.list) {
+        this.setState({userAnswers: props.component.list});
+      }
+    }
+  }
+
   getState(entry: number): number {
     if (this.props.attempt?.answer[entry]) {
       if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')) {

@@ -43,11 +43,13 @@ interface SortProps {
   component: SortComponent;
   attempt?: ComponentAttempt;
   answers: number;
+  isPreview?: boolean;
 }
 
 interface SortState {
   userCats: UserCategory[];
   choices: any;
+  data?: any;
 }
 
 class Sort extends CompComponent<SortProps, SortState> {
@@ -74,6 +76,26 @@ class Sort extends CompComponent<SortProps, SortState> {
     }
 
     this.state = { userCats, choices: this.getChoices() };
+  }
+
+  componentWillReceiveProps(props: SortProps) {
+    if (props.isPreview === true && props.component) {
+      let userCats:UserCategory[] = [];
+      let choices:SortChoice[] = [];
+  
+      for (let cat of props.component.categories) {
+        choices = choices.concat(cat.answers);
+        userCats.push({choices: [], name: cat.name});
+      }
+
+      userCats.push({choices: choices, name: 'Unsorted'});
+
+      this.setState({
+        userCats: userCats,
+        choices: this.getChoices(),
+        data: props.component.categories
+      });
+    }
   }
 
   setUserAnswers(userCats: any[]) {
