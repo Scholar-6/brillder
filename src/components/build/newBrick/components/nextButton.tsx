@@ -32,8 +32,6 @@ const NextButton:React.FC<NextButtonProps> = ({ step, canSubmit, onSubmit, data 
         case NewBrickStep.Brief:
           return history.push(`${url}/prep`);
         case NewBrickStep.Prep:
-          return history.push(`${url}/synthesis`);
-        case NewBrickStep.Synthesis:
           return history.push(`${url}/length`);
         case NewBrickStep.BrickLength:
           return history.push(`${url}/proposal`);

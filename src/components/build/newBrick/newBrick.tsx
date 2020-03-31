@@ -11,7 +11,6 @@ import OpenQuestion from './questionnaire/openQuestion/openQuestion';
 import BrickLength from './questionnaire/brickLength/brickLength';
 import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
-import Synthesis from './questionnaire/synthesis/synthesis';
 import ProposalReview from './questionnaire/proposalReview/ProposalReview';
 import { Brick } from "model/brick";
 
@@ -60,10 +59,6 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
     setBrick({ ...state, prep } as Brick)
   }
 
-  const setSynthesis = (synthesis: string) => {
-    setBrick({ ...state, synthesis } as Brick)
-  }
-
   const setLength = (brickLength: number) => {
     setBrick({ ...state, brickLength } as Brick)
   }
@@ -97,9 +92,6 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
         </Route>
         <Route path='/build/new-brick/prep'>
           <Prep parentPrep={state.prep} savePrep={setPrep} />
-        </Route>
-        <Route path='/build/new-brick/synthesis'>
-          <Synthesis parentSynthesis={state.synthesis} saveSynthesis={setSynthesis} />
         </Route>
         <Route path='/build/new-brick/length'>
           <BrickLength length={state.brickLength} saveBrick={setLength} />
