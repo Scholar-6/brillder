@@ -59,6 +59,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } as Question;
   };
 
+  let initSynthesis = props.brick ? props.brick.synthesis as string : "";
+  const [synthesis, setSynthesis] = React.useState(initSynthesis);
   const [questions, setQuestions] = React.useState([
     getNewQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
@@ -249,6 +251,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const saveBrick = () => {
     brick.questions = [];
+    brick.synthesis = synthesis;
     for (let question of questions) {
       let questionObject = {
         components: question.components,
@@ -365,7 +368,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   {renderQuestionComponent}
                 </Route>
                 <Route path="/build/brick/:brickId/build/investigation/synthesis">
-                  <SynthesisPage goBack={() => {}} onSynthesisChange={() => {}} />
+                  <SynthesisPage synthesis={synthesis} goBack={() => {}} onSynthesisChange={setSynthesis} />
                 </Route>
               </Switch>
             </Grid>

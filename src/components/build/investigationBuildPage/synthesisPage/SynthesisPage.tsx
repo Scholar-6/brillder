@@ -6,11 +6,12 @@ import EditIcon from '@material-ui/icons/Edit';
 
 
 export interface SynthesisProps {
+  synthesis: string;
   onSynthesisChange(text: string): void
   goBack(): void
 }
 
-const SynthesisPage: React.FC<SynthesisProps> = ({ onSynthesisChange, goBack }) => {
+const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange, goBack }) => {
   document.title = "Synthesis";
 
   return (
@@ -19,6 +20,7 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ onSynthesisChange, goBack }) 
         <Grid container direction="row">
           <Grid item md={9}>
             <textarea
+              value={synthesis}
               placeholder="Synthesis"
               onChange={(e) => onSynthesisChange(e.target.value)}></textarea>
           </Grid>
