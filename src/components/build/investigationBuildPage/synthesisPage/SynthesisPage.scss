@@ -1,0 +1,62 @@
+@import "_variables";
+$border-radius: 0.6vw;
+
+.synthesis-page {
+  height: 90%;
+
+  .inner-question-type {
+    padding-right: 0;
+    padding-left: 1.4vw;
+    padding-bottom: 0;
+    padding-top: 2.7vh;
+
+    textarea {
+      padding: 1.6vh 1vw;
+      border-radius: $border-radius;
+      min-width: 93%;
+      height: 72vh;
+      letter-spacing: 0.03vw;
+      font-size: 1.1vw;
+      font-family: "Brandon Grotesque Regular";
+    }
+
+    .finish-text {
+      color: $dark-blue;
+      letter-spacing: 0.2vw;
+      font-size: 1.3vw;
+      text-align: center;
+      font-family: "Brandon Grotesque Bold";
+    }
+    .edit-proposal-button {
+      padding-top: 0.9vh;
+      padding-bottom: 0.9vh;
+      margin-top: 2vh;
+      padding-right: 0.8vw;
+
+      font-size: 1.3vw;
+      text-transform: none;
+      font-family: "Brandon Grotesque Regular";
+      color: $dark-blue;
+      background: $tab-grey;
+      border-radius: $border-radius;
+
+      .edit-icon {
+        margin-left: 0.3vw;
+        font-size: 1.8vw;
+        margin-right: 0.5vw;
+      }
+    }
+
+    .submit-button {
+      margin-top: 2.4vh;
+      padding: 2.7vh 1.725vw;
+      background: $light-green;
+      color: white;
+      line-height: 1.5;
+      border-radius: $border-radius;
+      letter-spacing: 0.4vw;
+      font-size: 1.4vw;
+      font-family: "Brandon Grotesque Black";
+    }
+  }
+}
