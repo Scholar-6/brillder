@@ -74,7 +74,6 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
   }
 
   const renderBox = () => {
-    console.log(state);
     if (state.mode === WordMode.Edit) {
       return (
         <div className="hightlight-area">
