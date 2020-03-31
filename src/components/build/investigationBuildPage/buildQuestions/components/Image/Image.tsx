@@ -1,5 +1,4 @@
-import React from 'react'
-import {useDropzone} from 'react-dropzone';
+import React, { useEffect } from 'react'
 import axios from 'axios';
 // @ts-ignore 
 import DropNCrop from '@synapsestudios/react-drop-n-crop';
@@ -15,8 +14,15 @@ interface ImageProps {
   updateComponent(component:any, index:number): void
 }
 
+enum SavingStatus {
+  Loading,
+  Saving,
+  Saved,
+}
+
 
 const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
+  const [imageStatus, setImageStatus] = React.useState(SavingStatus.Loading);
   const [result, setResult] = React.useState('');
   const [cropImage, setCropImage] = React.useState({
     result: null,
@@ -26,7 +32,6 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
     src: null,
     error: null,
   });
-  const [fileName, setFileName] = React.useState(props.data.value);
 
   const toDataURL = (url: string, callback: any) => {
     var xhr = new XMLHttpRequest();
@@ -43,7 +48,9 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
     xhr.send();
   }
 
-  if (props.data.value) {
+
+  useEffect(() => {
+    if (props.data.value) {
     const src = `${process.env.REACT_APP_BACKEND_HOST}/files/${props.data.value}`;
     toDataURL(src, (base64: any) => {
       setCropImage({
@@ -55,10 +62,12 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
         error: null,
       });
     });
-  }
+    }
+  }, [props.data]);
 
   const saveImage = () => {
     if (result) {
+      setImageStatus(SavingStatus.Saving);
       let file = dataURItoBlob(result as any);
       var formData = new FormData();
       formData.append('file', file);
@@ -73,7 +82,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
         let comp = Object.assign({}, props.data);
         comp.value = res.data.fileName;
         props.updateComponent(comp, props.index);
-        setFileName(comp.value);
+        setImageStatus(SavingStatus.Saved);
       })
       .catch(error => {
         alert('Can`t save image');
