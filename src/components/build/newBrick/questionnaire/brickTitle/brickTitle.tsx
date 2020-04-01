@@ -61,9 +61,9 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
         </div>
         <div style={{height: '0.9vw', overflow: 'hidden'}}>
           <span style={{color: subTopic ? '#D8D2CE' : ''}}>
-            {subTopic ? subTopic : 'Sub-Topic'}
+            {subTopic ? subTopic : 'Topic'}
           </span> | <span style={{color: alternativeTopics ? '#D8D2CE' : ''}}>
-            {alternativeTopics ? alternativeTopics: 'Alternative Topic(s)'}
+            {alternativeTopics ? alternativeTopics: 'SubTopic'}
           </span>
         </div>
         <div>Author | <span style={{color: '#D8D2CE'}}>{dateString}</span></div>

@@ -79,7 +79,7 @@ function BrickLength({ length, saveBrick }: any) {
                   </Grid>
                 </Grid>
               </Grid>
-              <PreviousButton to="/build/new-brick/synthesis" />
+              <PreviousButton to="/build/new-brick/prep" />
               <NextButton
                 step={NewBrickStep.BrickLength}
                 canSubmit={brickLength !== BrickLengthEnum.None}
