@@ -7,13 +7,26 @@
   
   .horizontal-shuffle-box {
     position: relative;
-    margin: 0px 3px 0px 0px;
+    width: 99%;
+    margin: 0;
 
     input {
       width: 100%;
       height: 55px;
       text-align: center;
-      border: 1px solid black;
+      opacity: 0.8;
+      border-radius: 0;
+      border: none;
     }
+  }
+  .horizontal-column-1 {
+    margin-right: 1%;
+  }
+  .horizontal-column-2 {
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+  }
+  .horizontal-column-3 {
+    margin-left: 1%;
   }
 }

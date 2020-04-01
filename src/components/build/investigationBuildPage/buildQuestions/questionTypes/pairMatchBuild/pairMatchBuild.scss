@@ -6,31 +6,35 @@
   }
 
   .pair-match-option {
-    margin: 0px 3px 0 0;
+    margin: 0;
     width: 100%;
 
     input {
-      width: 84%;
+      margin-right: 1%;
+      width: 83%;
       height: 55px;
       padding-left: 8%;
       padding-right: 8%;
       text-align: center;
-      border: 1px solid black;
+      border: none;
+      border-radius: 0;
     }
   }
 
   .pair-match-answer {
-    margin: 0px 3px 0 0;
+    margin: 0;
     width: 100%;
     position: relative;
 
     input {
-      width: 76%;
+      margin-left: 1%;
+      width: 75%;
       height: 55px;
       padding-left: 8%;
       padding-right: 16%;
       text-align: center;
-      border: 1px solid black;
+      border: none;
+      border-radius: 0;
     }
   }
 }

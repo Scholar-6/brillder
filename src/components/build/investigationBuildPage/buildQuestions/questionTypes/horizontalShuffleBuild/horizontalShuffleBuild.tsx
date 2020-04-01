@@ -53,13 +53,18 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
   }
 
   const renderAnswer = (answer: any, key: number) => {
+    let column = (key % 3) + 1;
     return (
       <Grid container item xs={4} key={key}>
-        <div className="horizontal-shuffle-box">
+        <div className={`horizontal-shuffle-box horizontal-column-${column}`}>
           {
             (state.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
           }
-          <input disabled={locked} value={answer.value} onChange={(event) => changed(answer, event)} placeholder={"Enter Answer " + (key + 1) + "..."} />
+          <input
+            disabled={locked}
+            value={answer.value}
+            onChange={(event) => changed(answer, event)}
+            placeholder={"Enter A" + (key + 1) + "..."} />
         </div>
       </Grid>
     );
