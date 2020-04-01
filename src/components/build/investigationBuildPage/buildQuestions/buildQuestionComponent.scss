@@ -1,5 +1,5 @@
 @import "_variables";
-$question-radius: 0.65vw;
+$question-radius: 0.6vw;
 
 .build-question-page {
   background: white;
@@ -192,24 +192,52 @@ $question-radius: 0.65vw;
 
     .right-sidebar {
       .question-button-container {
-        margin-top: 3vh;
-        margin-left: 10px;
-        width: 90%;
+        margin-top: 2.1vh;
+        width: 100%;
+
+        .right-side-text {
+          margin-bottom: 2.3vh;
+          font-size: 1.37vw;
+          line-height: 1;
+          letter-spacing: 0.3vw;
+          width: 100%;
+          text-align: center;
+          color: $dark-blue;
+          font-family: 'Brandon Grotesque Bold';
+        }
 
         button {
           line-height: 1.3 !important;
-          margin: 5px;
-          padding: 0px;
-          border-radius: 0;
-          display: block;
-          border: 2px solid $orange;
-          border-radius: 10px;
+          margin-bottom: 0.9vh;
           background: white;
-          color: $orange;
-          width: 90%;
+          color: $dark-blue;
+          width: 94%;
+          background: $tab-grey;
           font-family: 'Century Gothic Regular';
-          font-size: 1.1vw;
+
+          font-size: 1.3vw;
+          text-transform: none;
+          font-family: "Brandon Grotesque Regular";
+          color: $dark-blue;
+          background: $tab-grey;
+          border-radius: $question-radius;
+
+          padding: 0.75vh 0;
+
+          > span {
+            justify-content: flex-start;
+          }
+    
+          .inner-icon {
+            margin-left: 0.3vw;
+            font-size: 2.4vw;
+            margin-right: 0.5vw;
+          }
         }
+      }
+
+      .synthesis-button {
+        padding: 0.75vh 0;
       }
 
       .order-text-container {

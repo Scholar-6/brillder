@@ -88,6 +88,20 @@ $tile-height: 100%;
     font-family: 'Brandon Grotesque Bold';
   }
 
+  .synthesis-tab {
+    .drag-tile {
+      background: white;
+
+      .last-tab {
+        background: white;
+        height: 5vh;
+      }
+      .synthesis-tab-icon {
+        font-size: 5vh;
+      }
+    }
+  }
+
   @media only screen and (max-width: 599px) {
     .last-tab {
       margin-top: 12px !important;

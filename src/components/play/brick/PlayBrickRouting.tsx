@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 // @ts-ignore
 import { connect } from "react-redux";
+import queryString from 'query-string';
 
 import './brick.scss';
 import actions from 'redux/actions/brickActions';
@@ -18,6 +19,7 @@ import { ComponentAttempt, PlayStatus } from './model/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'components/model/question';
+import { UserType } from 'model/user';
 
 
 export interface BrickAttempt {
@@ -44,10 +46,23 @@ interface BrickRoutingProps {
   match: any;
   user: any;
   history: any;
+  location: any;
   fetchBrick(brickId: number):void;
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
+  /* Admin preview part */
+  let urlPreview = false;
+  if (props.user.type === UserType.Admin) {
+    const values = queryString.parse(props.location.search)
+    if (values.preview) {
+      urlPreview = true;
+    }
+  }
+  const [isPreview] = React.useState(urlPreview);
+
+  /* Admin preview part */
+
   let initAttempts:any[] = [];
   props.brick?.questions.forEach(question => initAttempts.push({}));
   
@@ -57,7 +72,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
 
   const brickId = parseInt(props.match.params.brickId);
-  if (!props.brick || props.brick.id !== brickId) {
+  if (!props.brick || props.brick.id !== brickId || !props.brick.author) {
     props.fetchBrick(brickId);
     return <div>...Loading brick...</div>
   }
@@ -104,11 +119,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const saveBrickAttempt = () => {
     brickAttempt.brickId = props.brick.id;
     brickAttempt.studentId = props.user.id;
-    return axios.post(process.env.REACT_APP_BACKEND_HOST + '/play/attempt', brickAttempt, {withCredentials: true}).then(res => {
-      props.history.push(`/play/dashboard`);
-    })
-    .catch(error => {
-    });
+    if (isPreview) {
+      props.history.push(`/build/brick/${brickId}/build/investigation/synthesis`);
+    } else {
+      return axios.post(
+        process.env.REACT_APP_BACKEND_HOST + '/play/attempt',
+        brickAttempt,
+        {withCredentials: true}
+      ).then(res => {
+        props.history.push(`/play/dashboard`);
+      })
+      .catch(error => {
+      });
+    }
   }
 
   return (

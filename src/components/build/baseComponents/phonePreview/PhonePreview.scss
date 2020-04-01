@@ -37,11 +37,11 @@
     top: 0;
     left: 0;
     height: 71% !important;
-    width: 79% !important;
+    width: 81% !important;
     padding-top: 21% !important;
-    padding-right: 3% !important;
+    padding-right: 2% !important;
     padding-bottom: 22% !important;
-    padding-left: 3% !important;
+    padding-left: 2% !important;
     border-radius: 3.8vw !important;
 
     .home {
@@ -65,9 +65,11 @@
     }
 
     .volume {
-      left: -0.55vw !important;
+      left: -0.7vw !important;
       position: absolute;
-      width: 0.3vw;
+      border-top-left-radius: 0.3vw;
+      border-bottom-left-radius: 0.3vw;
+      width: 0.6vw;
     }
 
     .volume1 {

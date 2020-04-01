@@ -4,6 +4,8 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton, MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
+import EditIcon from '@material-ui/icons/Edit';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 import QuestionComponents from './questionComponents/questionComponents';
 import './buildQuestionComponent.scss';
@@ -59,13 +61,13 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
     setQuestion(index, updatedQuestion);
   }
 
-  const submitBrick = () => {
-    saveBrick();
-    history.push("/build");
-  }
-
   let typeArray: string[] = Object.keys(QuestionType);
   let index = getQuestionIndex(question);
+
+  const editProposal = () => {
+    saveBrick();
+    history.push(`/build/new-brick/proposal`);
+  }
 
   return (
     <MuiThemeProvider >
@@ -124,12 +126,21 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
               <Grid container direction="row" justify="center">
-                <Grid container item xs={10} className="question-button-container">
-                  <Button onClick={submitBrick}>
-                    <div>R E V I E W</div>
-                    <div>&</div>
-                    <div>S U B M I T</div>
+                <Grid container item xs={11} className="question-button-container">
+                  <div>
+                  <div className="right-side-text">Last Question?</div>
+                  <Button
+                    className="synthesis-button"
+                    onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
+                  >
+                    <FormatListBulletedIcon className="inner-icon" />
+                    Add Synthesis
                   </Button>
+                  <Button onClick={() => editProposal()}>
+                    <EditIcon className="inner-icon"/>
+                    Edit Proposal
+                  </Button>
+                  </div>
                 </Grid>
               </Grid>
               <Grid container direction="row" alignItems="flex-end">

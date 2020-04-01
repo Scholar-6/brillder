@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
@@ -34,6 +34,22 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
   saveBrick(brick: any): void;
 }
 
+const SynthesisPreviewComponent:React.FC<any> = ({data}) => {
+  let newData = "";
+  if (data) {
+    newData = data.replace(/(?:\r\n|\r|\n)/g, '<br>');
+  }
+
+  return (
+    <Grid container className="phone-preview-component synthesis-preview">
+      <div style={{width: '100%'}}>
+        <div className="synthesis-title" style={{textAlign: 'center'}}>SYNTHESIS</div>
+        <div className="synthesis-text" dangerouslySetInnerHTML={{ __html: newData}}></div>
+      </div>
+    </Grid>
+  )
+}
+
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const brickId = parseInt(props.match.params.brickId);
 
@@ -59,13 +75,26 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } as Question;
   };
 
-  let initSynthesis = props.brick ? props.brick.synthesis as string : "";
-  const [synthesis, setSynthesis] = React.useState(initSynthesis);
   const [questions, setQuestions] = React.useState([
     getNewQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
   const [loaded, setStatus] = React.useState(false as boolean);
   const [locked, setLock] = React.useState(false as boolean);
+
+  /* Synthesis */
+  let isSynthesisPage = false;
+  if (history.location.pathname.slice(-10) === '/synthesis') {
+    isSynthesisPage = true;
+  }
+
+  let initSynthesis = props.brick ? props.brick.synthesis as string : "";
+  const [synthesis, setSynthesis] = React.useState(initSynthesis);
+  useEffect(() => {
+    if (props.brick && props.brick.synthesis) {
+      setSynthesis(props.brick.synthesis)
+    }
+  }, [props.brick]);
+  /* Synthesis */
 
   if (!props.brick) {
     return <div>...Loading...</div>;
@@ -75,8 +104,19 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return questions.indexOf(question);
   };
 
+  const unselectQuestions = () => {
+    const updatedQuestions = questions.slice();
+    updatedQuestions.forEach(q => (q.active = false));
+    setQuestions(update(questions, { $set: updatedQuestions }));
+  }
+
   let activeQuestion = questions.find(q => q.active === true) as Question;
-  if (!activeQuestion) {
+  if (isSynthesisPage === true) {
+    if (activeQuestion) {
+      unselectQuestions();
+      return <div>...Loading...</div>
+    }
+  } else if (!activeQuestion) {
     console.log("Can`t find active question");
     activeQuestion = {} as Question;
   }
@@ -249,6 +289,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   }
 
+  const moveToReview = () => {
+    saveBrick();
+    history.push(`/play/brick/${brickId}/intro?preview=true`);
+  }
+
   const saveBrick = () => {
     brick.questions = [];
     brick.synthesis = synthesis;
@@ -356,6 +401,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               <DragableTabs
                 setQuestions={setQuestions}
                 questions={questions}
+                isSynthesisPage={isSynthesisPage}
                 createNewQuestion={createNewQuestion}
                 selectQuestion={selectQuestion}
                 removeQuestion={removeQuestion}
@@ -368,7 +414,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   {renderQuestionComponent}
                 </Route>
                 <Route path="/build/brick/:brickId/build/investigation/synthesis">
-                  <SynthesisPage synthesis={synthesis} goBack={() => {}} onSynthesisChange={setSynthesis} />
+                  <SynthesisPage synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
                 </Route>
               </Switch>
             </Grid>
@@ -381,7 +427,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <PhonePreview link={window.location.origin + "/logo-page"} />
         </Route>
         <Route path="/build/brick/:brickId/build/investigation/synthesis">
-          <PhonePreview link={window.location.origin + "/logo-page"} />
+          <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
         </Route>
       </Grid>
     </div>
