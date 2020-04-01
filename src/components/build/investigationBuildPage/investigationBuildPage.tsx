@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid, Button, Hidden } from "@material-ui/core";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import Dialog from '@material-ui/core/Dialog';
 import update from "immutability-helper";
 // @ts-ignore
 import { connect } from "react-redux";
@@ -78,8 +79,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [questions, setQuestions] = React.useState([
     getNewQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
-  const [loaded, setStatus] = React.useState(false as boolean);
-  const [locked, setLock] = React.useState(false as boolean);
+  const [loaded, setStatus] = React.useState(false);
+  const [locked, setLock] = React.useState(false);
+  const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
+  const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -209,12 +212,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   };
 
-  const removeQuestion = (index: number) => {
-    if (locked) { return; }
-    if (questions.length === 1) {
-      alert("You can`t delete last question");
-      return;
-    }
+  const deleteQuestionByIndex = (index: number) => {
     if (index !== 0) {
       setQuestions(
         update(questions, {
@@ -230,6 +228,23 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         })
       );
     }
+    if (deleteDialogOpen) {
+      setDeleteDialog(false);
+    }
+  }
+
+  const removeQuestion = (index: number) => {
+    if (locked) { return; }
+    if (questions.length === 1) {
+      alert("You can`t delete last question");
+      return;
+    }
+    if (questions[index].type) {
+      setDeleteDialog(true);
+      setDeleteIndex(index);
+      return;
+    }
+    deleteQuestionByIndex(index);
   };
 
   const selectQuestion = (index: number) => {
@@ -432,6 +447,22 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
         </Route>
       </Grid>
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialog(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        className="delete-brick-dialog"
+      >
+        <div className="dialog-header">
+          <div>Permanently delete</div>
+          <div>this question?</div>
+        </div>
+        <Grid container direction="row" className="row-buttons" justify="center">
+          <Button className="yes-button" onClick={() => deleteQuestionByIndex(deleteQuestionIndex)}>Yes, delete</Button>
+          <Button className="no-button" onClick={() => setDeleteDialog(false)}>No, keep</Button>
+        </Grid>
+      </Dialog>
     </div>
   );
 };
