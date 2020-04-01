@@ -4,7 +4,32 @@
   height: 100%;
 
   .phone-preview {
-    right: 5%;
+    top: 16.2%;
+    right: 5.4%;
+    .custom-component {
+      background: $tab-grey;
+      overflow-y: hidden;
+
+      .synthesis-preview {
+        color: $dark-blue;
+        .synthesis-title {
+          margin-top: 1.6vh;
+          margin-bottom: 1vh;
+          font-size: 1.45vw;
+          letter-spacing: 0.3vw;
+          font-family: 'Brandon Grotesque Black';
+        }
+
+        .synthesis-text {
+          margin-left: 0.6vw;
+          margin-right: 0.6vw;
+          letter-spacing: 0.014vw;
+          line-height: 1.5;
+          font-size: 0.8vw;
+          font-family: 'Brandon Grotesque Regular';
+        }
+      }
+    }
   }
 
   .investigation-build-background {
