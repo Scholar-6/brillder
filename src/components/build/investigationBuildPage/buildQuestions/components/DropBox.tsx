@@ -13,7 +13,9 @@ const DropBox: React.FC<DropBoxProps> = ({locked, onDrop}) => {
 
   return (
     <div style={{height:'10vh', position: 'relative'}}>
-      <Grid container justify="center" alignContent="center" className="drop-box-text" style={{height: '100%', color: '#838384'}}>Drag Component Here </Grid>
+      <Grid container justify="center" alignContent="center" className="drop-box-text" style={{height: '100%'}}>
+        Drag Component Here
+      </Grid>
       <ReactSortable
         list={components}
         style={{height: '100%', width: '100%', position: 'absolute', top: 0}}

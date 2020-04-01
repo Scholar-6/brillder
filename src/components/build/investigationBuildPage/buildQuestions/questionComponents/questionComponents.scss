@@ -4,10 +4,10 @@
   width: 100%;
 
   .drop-box {
-    margin-top: 0.1vw;
+    margin-top: 0.4vh;
     border-radius: $global-drop-border-radius;
-    padding: 0.2vw 0.2vw 0.2vw 0.2vw;
-    background-color: #d9d9d9;
+    padding: 0.2vw 0;
+    background-color: $tab-grey;
   }
 
   .add-dropbox {

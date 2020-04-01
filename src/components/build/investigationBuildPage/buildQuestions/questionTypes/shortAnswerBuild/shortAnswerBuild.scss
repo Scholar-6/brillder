@@ -3,15 +3,16 @@
 
   .short-answer-box {
     position: relative;
-    margin: 0px 3px 0px 0px;
+    margin: 0;
 
     input {
+      border-radius: 0;
+      opacity: 0.8;
       width: 84%;
+      padding: 0 8%;
       height: 55px;
       text-align: center;
-      border: 1px solid black;
-      padding-right: 8%;
-      padding-left: 8%;
+      border: none;
     }
   }
 }
