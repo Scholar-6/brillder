@@ -53,7 +53,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
 
   const renderShortAnswer = (shortAnswer: any, key: number) => {
     return (
-      <div className="short-answer-box unique-component-box" key={key}>
+      <div className="short-answer-box" key={key}>
         {
           (state.list.length > 1) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
         }

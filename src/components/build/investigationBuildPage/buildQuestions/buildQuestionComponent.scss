@@ -150,14 +150,16 @@ $question-radius: 0.6vw;
     .question-components-list {
       max-height: 38vw;
       overflow-y: auto;
-      border: 1px solid black;
-      border-radius: 0.35vw;
+      border: 1px solid #707070;
+      border-radius: 0.6vw;
       padding: 0px 4px 2px 4px;
       margin-bottom: 25px;
     }
 
     .drop-box-text {
-      font-size: 1.35vw;
+      font-size: 1.6vw;
+      font-family: 'Brandon Grotesque Bold';
+      color: #8A8D90;
     }
 
     .parent-left-sidebar {

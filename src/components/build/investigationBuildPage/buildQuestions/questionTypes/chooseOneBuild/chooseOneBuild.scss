@@ -5,13 +5,14 @@
 
   .choose-one-box {
     position: relative;
-    margin: 0px 3px 0px 0px;
+    margin: 0;
 
     .left-ckeckbox {
       position: absolute;
       padding: 0.45vw;
       left: 0.1vw;
       top: 0.5vw;
+      opacity: 1 !important;
       span {
         svg {
           height: $bin-size !important;
@@ -20,13 +21,15 @@
       }
     }
 
-    input {
+    input:not([type='checkbox']) {
       width: 84%;
       height: 55px;
       text-align: center;
-      border: 1px solid black;
+      border: none;
+      background: #FAFAFB;
       padding-right: 8%;
       padding-left: 8%;
+      border-radius: 0;
     }
   }
 }

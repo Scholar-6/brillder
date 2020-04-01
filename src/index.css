@@ -23,6 +23,10 @@ code {
   font-family: 'Brandon Grotesque Regular'
 }
 
+input:focus {
+  outline: none;
+}
+
 @font-face {
   font-family: "Century Gothic Regular";
   src: url("./assets/fonts/CenturyGothic/CenturyGothic.eot");
