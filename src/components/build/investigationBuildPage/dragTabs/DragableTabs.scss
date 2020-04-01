@@ -14,13 +14,13 @@ $tile-height: 100%;
   .drag-last-tile-container {
     padding: 0 !important;
     margin-top: 1px !important;
-    height: calc(100% - 1px) !important;
+    height: 100% !important;
     padding-left: $distance !important;
   }
 
   .drag-tile-container {
     padding: 0 !important;
-    height: calc(100% - 2px) !important;
+    height: 100% !important;
     padding-left: $distance !important;
   }
 
@@ -48,7 +48,7 @@ $tile-height: 100%;
   }
 
   .drag-tile-container.active {
-    height: calc(100% - 2px) !important;
+    height: 100% !important;
 
     .drag-tile {
       background: white;
