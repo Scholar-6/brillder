@@ -371,8 +371,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               </div>
               EXIT
             </div>
-            <div className="small-label">SAVE</div>
-            <div className="small-label">CHANGES</div>
+            <div className="small-labels">
+              <div className="small-label">SAVE</div>
+              <div className="small-label">CHANGES</div>
+            </div>
           </div>
         </div>
       </Hidden>

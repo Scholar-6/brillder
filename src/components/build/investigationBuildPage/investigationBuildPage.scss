@@ -52,7 +52,7 @@
       .exit-arrow {
         transition: all .2s ease-in-out;
         position: absolute;
-        top: -0.2vh;
+        top: -0.4vh;
         left: -1.3vw;
         svg {
           height: 1.5vw;
@@ -66,12 +66,17 @@
       font-size: 0.67vw;
       font-family: 'Brandon Grotesque Regular';
     }
+    .small-labels {
+      transition: all .2s ease-in-out;
+    }
   }
 
   .exit-button:hover {
     .exit-arrow {
-      top: -0.2vh;
       left: -2vw;
+    }
+    .small-labels {
+      margin-top: 0.15vh;
     }
   }
 
