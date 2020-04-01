@@ -134,5 +134,8 @@
 
   .mobile-question-component {
     overflow-y: auto;
+    > div {
+      padding-top: 2vh;
+    }
   }
 }
