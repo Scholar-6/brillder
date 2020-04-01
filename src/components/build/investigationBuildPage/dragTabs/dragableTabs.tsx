@@ -8,7 +8,7 @@ import './DragableTabs.scss';
 import DragTab from './dragTab';
 import LastTab from './lastTab';
 import { Grid } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -73,8 +73,6 @@ const DragableTabs: React.FC<DragTabsProps> = ({
     if (isSynthesisPage) {
       width = (100 * 2) / (comlumns - 2);
     }
-
-    console.log(comlumns)
 
     return (
       <GridListTile className={titleClassNames} key={index} cols={cols} style={{display:'inline-block', width: `${width}%`}}>
