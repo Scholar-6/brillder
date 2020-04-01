@@ -50,6 +50,7 @@
       letter-spacing: 0.3vw;
       font-family: 'Brandon Grotesque Bold';
       .exit-arrow {
+        transition: all .2s ease-in-out;
         position: absolute;
         top: -0.2vh;
         left: -1.3vw;
@@ -64,6 +65,13 @@
       letter-spacing: 0.2vw;
       font-size: 0.67vw;
       font-family: 'Brandon Grotesque Regular';
+    }
+  }
+
+  .exit-button:hover {
+    .exit-arrow {
+      top: -0.2vh;
+      left: -2vw;
     }
   }
 
