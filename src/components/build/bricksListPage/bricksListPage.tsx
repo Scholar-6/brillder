@@ -471,7 +471,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           <FormControlLabel value={SortBy.Popularity} control={<Radio className="sortBy" />} label="Popularity" />
           <FormControlLabel value={SortBy.Date} control={<Radio className="sortBy" />} label="Date Added" />
         </RadioGroup>
-        <div className="filter-header" style={{ background: '#304775 0% 0% no-repeat padding-box' }}>
+        <div className="filter-header">
           <div style={{ display: 'inline' }}>
             <span className='filter-control'>Filter</span>
             {
