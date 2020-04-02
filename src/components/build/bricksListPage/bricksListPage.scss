@@ -344,21 +344,32 @@ $right: 1.4vw;
 
       .sort-box {
         margin-bottom: 1.2vh;
-        padding-left: 0.65vw;
         padding-top: 0.3vh;
         border-radius: $brick-radius;
         width: 95%;
         background: $light-blue;
 
         .sort-header {
+          text-transform: uppercase;
+          padding-left: $left;
           font-size: 1.3vw;
           letter-spacing: 0.22vw;
         }
         .filter-header {
+          text-transform: uppercase;
+          background: #304775 0% 0% no-repeat padding-box;
+          padding-left: $left;
           font-size: 1.3vw;
           margin-top: 1.6vh;
           letter-spacing: 0.22vw;
           margin-bottom: 1vh;
+            .filter-control {
+              vertical-align:middle
+            }
+            .filter-control:not(:first-child) {
+              margin-left: 1.6vh;
+              cursor: pointer;
+            }
         }
         .sort-group {
           display: block;
@@ -370,7 +381,7 @@ $right: 1.4vw;
           }
           > label {
             .sortBy {
-              padding-left: 1vw;
+              padding-left: 1.2vw;
               padding-right: 0.4vw;
               svg {
                 height: 2.2vh;
@@ -388,7 +399,7 @@ $right: 1.4vw;
           cursor: default;
           width: 45%;
           > span.filter-radio {
-            padding-left: 1vw;
+            padding-left: 1.2vw;
             padding-right: 0.4vw;
             svg {
               height: 2.2vh;

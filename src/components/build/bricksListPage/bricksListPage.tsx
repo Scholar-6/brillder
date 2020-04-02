@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ClearIcon from '@material-ui/icons/Clear';
 import Dialog from '@material-ui/core/Dialog';
 
 import actions from 'redux/actions/bricksActions';
@@ -44,6 +45,7 @@ interface BricksListState {
   yoursReversed: boolean;
   sortedIndex: number;
   sortedReversed: boolean;
+  filterExpanded: boolean;
   logoutDialogOpen: boolean;
 
   deleteDialogOpen: boolean;
@@ -81,7 +83,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       yoursReversed: false,
       sortedIndex: 0,
       sortedReversed: false,
-
+      filterExpanded: false,
       logoutDialogOpen: false,
       deleteDialogOpen: false,
       deleteBrickId: -1
@@ -184,6 +186,13 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     const {subjects} = state;
     subjects[i].checked = !subjects[i].checked
     this.setState({...state})
+  }
+
+  clearSubjects = () => {
+    const { state } = this;
+    const { subjects } = state;
+    subjects.forEach((r: any)=> r.checked = false);
+    this.setState({ ...state })
   }
 
   changeSortedBricks = () => {
@@ -462,18 +471,31 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           <FormControlLabel value={SortBy.Popularity} control={<Radio className="sortBy" />} label="Popularity" />
           <FormControlLabel value={SortBy.Date} control={<Radio className="sortBy" />} label="Date Added" />
         </RadioGroup>
-        <div className="filter-header">Filter</div>
+        <div className="filter-header">
+          <div style={{ display: 'inline' }}>
+            <span className='filter-control'>Filter</span>
+            {
+              this.state.filterExpanded
+                ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }} onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
+                : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }} onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
+            }
+            <ClearIcon className='filter-control' style={{ fontSize: '2vw' }} onClick={() => this.clearSubjects()} />
+          </div>
+        </div>
         {
-          this.state.subjects.map((subject, i) =>
-            <FormControlLabel
-              className="filter-container"
-              key={i}
-              checked={subject.checked}
-              onClick={() => this.filterBySubject(i)}
-              control={<Radio className={"filter-radio " + subject.color}/>}
-              label={subject.name} />
-          )
+          this.state.filterExpanded
+              ? this.state.subjects.map((subject, i) =>
+                <FormControlLabel
+                  className="filter-container"
+                  key={i}
+                  checked={subject.checked}
+                  onClick={() => this.filterBySubject(i)}
+                  control={<Radio className={"filter-radio " + subject.color} />}
+                  label={subject.name} />
+              )
+              : ''
         }
+
       </div>
     );
   }
