@@ -3,6 +3,13 @@
 .choose-several-build {
   text-align: center;
 
+  .component-title{
+    opacity: 0.8;
+    font-size: $base-sm-text-size;
+    font-family: $font-family-regular;
+    letter-spacing: 2px;
+  }
+
   .choose-several-box {
     position: relative;
     margin: 0;
@@ -29,6 +36,9 @@
       padding-right: 8%;
       padding-left: 8%;
       border-radius: 0;
+      opacity: 0.8;
+      font-size: $base-sm-text-size;
+      font-family: $font-family-regular;
     }
   }
 }

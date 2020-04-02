@@ -1,6 +1,16 @@
+@import "_variables";
+
 .vertical-shuffle-build {
   text-align: center;
 
+  .component-title{
+    > div {
+      opacity: 0.8;
+      font-size: $base-sm-text-size;
+      font-family: $font-family-regular;
+      letter-spacing: 2px;
+    }
+  }
   p {
     margin: 0;
   }
@@ -17,6 +27,9 @@
       height: 55px;
       text-align: center;
       border: none;
+      opacity: 0.8;
+      font-size: $answer-input-text-size;
+      font-family: $font-family-regular;
     }
   }
 }

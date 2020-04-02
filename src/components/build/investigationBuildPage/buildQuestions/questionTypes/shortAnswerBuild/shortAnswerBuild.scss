@@ -1,3 +1,5 @@
+@import "_variables";
+
 .short-answer-build {
   text-align: center;
 
@@ -6,6 +8,8 @@
     margin: 0;
 
     input {
+      font-family: $font-family-regular;
+      font-size: $answer-input-text-size;
       border-radius: 0;
       opacity: 0.8;
       width: 84%;

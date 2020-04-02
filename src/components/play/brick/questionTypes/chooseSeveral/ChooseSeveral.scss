@@ -1,3 +1,5 @@
+@import "_variables";
+
 .choose-one-live {
   .choose-choice {
     color: white;
@@ -5,7 +7,9 @@
     text-transform: none !important;
     border-radius: 0 !important;
     width: 100%;
-    font-size: 15px;
+    opacity: 0.8;
+    font-size: $answer-input-text-size;
+    font-family: $font-family-regular;
   }
 
   .choose-choice:nth-child(odd) {background: #0076B4}
