@@ -46,6 +46,11 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick }) =>
     history.push(`/play/brick/${brick.id}/review`);
   }
 
+  let newSynthesis = "";
+  if (brick.synthesis) {
+    newSynthesis = brick.synthesis.replace(/(?:\r\n|\r|\n)/g, '<br>');
+  }
+
   return (
     <Grid container direction="row" justify="center">
       <div className="brick-container">
@@ -59,7 +64,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick }) =>
               <h2>Synthesis</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography dangerouslySetInnerHTML={{ __html: brick.synthesis}} />
+              <Typography dangerouslySetInnerHTML={{ __html: newSynthesis}} />
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <div className="begin-row">
