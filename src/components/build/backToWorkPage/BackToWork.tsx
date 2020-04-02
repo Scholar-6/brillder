@@ -136,8 +136,21 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   handleSortChange = (e: any) => {
+    let sortBy = parseInt(e.target.value) as SortBy;
     const {state} = this;
-    this.setState({...state, sortBy: parseInt(e.target.value)})
+    let bricks = Object.assign([], state.bricks) as Brick[];
+    if (sortBy === SortBy.Date) {
+      bricks = bricks.sort((a, b) => {
+        const createdA = new Date(a.updated).getTime();
+        const createdB = new Date(b.updated).getTime();
+        return (createdA > createdB) ? 1 : -1;
+      });
+    } else if (sortBy === SortBy.Status) {
+      bricks = bricks.sort((a, b) => ((a.status > b.status) ? 1 : -1));
+    } else if (sortBy === SortBy.Popularity) {
+      bricks = bricks.sort((a, b) => ((a.attemptsCount > b.attemptsCount) ? 1 : -1));
+    }
+    this.setState({...state, bricks, sortBy})
   }
 
   changeSortedBricks = () => {
@@ -250,8 +263,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                   brick.expanded ?
                     <div>
                       <div className="hover-text">
-                        <div className="hovered-open-question">Open Question Open Question Open Question</div>
-                        <div>SUBJECT Code | No. of Plays</div>
+                        <div className="hovered-open-question">{brick.openQuestion}</div>
+                        <div>SUBJECT Code | No. {brick.attemptsCount} of Plays</div>
                         <div>Editor: Name Surname</div>
                       </div>
                       <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
@@ -306,26 +319,68 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   renderIndexesBox = () => {
+    let build = 0;
+    let edit = 0;
+    for (let b of this.state.bricks) {
+      if (b.status === BrickStatus.Draft) {
+        build += 1;
+      }
+    }
+
+    for (let b of this.state.bricks) {
+      if (b.status !== BrickStatus.Draft) {
+        edit += 1;
+      }
+    }
     return (
       <div className="indexes-box">
-        <div className="sort-header">Inbox</div>
+        <div className="sort-header">INBOX</div>
         <div className="index-box active">
           View All
-          <div className="right-index">6</div>
+          <div className="right-index">{this.state.bricks.length}</div>
         </div>
         <div className="index-box">
           Build
-          <div className="right-index">2</div>
+          <div className="right-index">{build}</div>
         </div>
         <div className="index-box">
           Edit
-          <div className="right-index">4</div>
+          <div className="right-index">{edit}</div>
         </div>
       </div>
     );
   }
 
   renderSortAndFilterBox = () => {
+    let draft = 0;
+    let review = 0;
+    let build = 0;
+    let publish = 0;
+
+    for (let b of this.state.bricks) {
+      if (b.status === BrickStatus.Draft) {
+        draft += 1;
+      }
+    }
+
+    for (let b of this.state.bricks) {
+      if (b.status === BrickStatus.Review) {
+        review += 1;
+      }
+    }
+
+    for (let b of this.state.bricks) {
+      if (b.status === BrickStatus.Build) {
+        build += 1;
+      }
+    }
+
+    for (let b of this.state.bricks) {
+      if (b.status === BrickStatus.Publish) {
+        publish += 1;
+      }
+    }
+
     return (
       <div className="back-sort-box">
         <div className="sort-header">Sort By</div>
@@ -346,8 +401,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             className="filter-radio-label"
             onClick={() => {}}
             control={<Radio className={"filter-radio sort-by"}/>}
-            label="Proposal" />
-          <div className="right-index">4</div>
+            label="Draft" />
+          <div className="right-index">{draft}</div>
         </div>
         <div className="filter-container color2">
           <FormControlLabel
@@ -355,7 +410,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             onClick={() => {}}
             control={<Radio className={"filter-radio sort-by"}/>}
             label="Submitted for Review" />
-          <div className="right-index">4</div>
+          <div className="right-index">{review}</div>
         </div>
         <div className="filter-container color3">
           <FormControlLabel
@@ -363,15 +418,15 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             onClick={() => {}}
             control={<Radio className={"filter-radio sort-by color3"}/>}
             label="Build in Progress" />
-          <div className="right-index">4</div>
+          <div className="right-index">{build}</div>
         </div>
-        <div className="filter-container color1">
+        <div className="filter-container color4">
           <FormControlLabel
-            className="filter-radio-label color1"
+            className="filter-radio-label color4"
             onClick={() => {}}
             control={<Radio className={"filter-radio sort-by color4"}/>}
             label="Published" />
-          <div className="right-index">4</div>
+          <div className="right-index">{publish}</div>
         </div>
       </div>
     );

@@ -28,6 +28,7 @@ export interface Brick {
   alternativeTopics: string
   alternativeSubject: string
   created: string
+  updated: string
   openQuestion: string
   brief: string
   prep: string
@@ -39,6 +40,7 @@ export interface Brick {
   expanded?: boolean
   expandFinished?: boolean
   status: BrickStatus
+  attemptsCount: number
 }
 
 export enum isAuthenticated {
