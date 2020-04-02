@@ -479,7 +479,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }} onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
                 : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }} onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
             }
-            <ClearIcon className='filter-control' style={{ fontSize: '2vw' }} onClick={() => this.clearSubjects()} />
+            {
+              this.state.subjects.some((r: any) => r.checked)
+              ? <ClearIcon className='filter-control' style={{ fontSize: '2vw' }} onClick={() => this.clearSubjects()} />
+              : ''
+            }
           </div>
         </div>
         {
