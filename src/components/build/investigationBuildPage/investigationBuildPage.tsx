@@ -3,6 +3,7 @@ import { RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid, Button, Hidden } from "@material-ui/core";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import EditIcon from '@material-ui/icons/Edit';
 import Dialog from '@material-ui/core/Dialog';
 import update from "immutability-helper";
 // @ts-ignore
@@ -122,6 +123,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   } else if (!activeQuestion) {
     console.log("Can`t find active question");
     activeQuestion = {} as Question;
+  }
+
+  const editProposal = () => {
+    saveBrick();
+    history.push(`/build/new-brick/proposal`);
   }
 
   const setPreviousQuestion = () => {
@@ -377,7 +383,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   return (
     <div className="investigation-build-page">
-      <Hidden only={['xs', 'sm']}>
+      <Hidden only={['xs', 'sm', 'md']}>
         <div className="exit-button" onClick={exitAndSave}>
           <div>
             <div className="exit-label">
@@ -387,9 +393,17 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               EXIT
             </div>
             <div className="small-labels">
-              <div className="small-label">SAVE</div>
+              <div className="small-label">AND SAVE</div>
               <div className="small-label">CHANGES</div>
             </div>
+          </div>
+        </div>
+        <div className="proposal-link" onClick={editProposal}>
+          <EditIcon className="proposal-edit-icon"/>
+          <div className="proposal-text">
+            <div style={{lineHeight: 0.9}}>YOUR</div>
+            <div style={{lineHeight: 2}}>PROP</div>
+            <div style={{lineHeight: 0.9}}>OSAL</div>
           </div>
         </div>
       </Hidden>

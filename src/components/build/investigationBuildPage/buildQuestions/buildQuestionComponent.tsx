@@ -64,11 +64,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
   let typeArray: string[] = Object.keys(QuestionType);
   let index = getQuestionIndex(question);
 
-  const editProposal = () => {
-    saveBrick();
-    history.push(`/build/new-brick/proposal`);
-  }
-
   return (
     <MuiThemeProvider >
       <div className="build-question-page" style={{width: '100%', height: '94%'}}>
@@ -128,18 +123,14 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
               <Grid container direction="row" justify="center">
                 <Grid container item xs={11} className="question-button-container">
                   <div>
-                  <div className="right-side-text">Last Question?</div>
-                  <Button
-                    className="synthesis-button"
-                    onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
-                  >
-                    <FormatListBulletedIcon className="inner-icon" />
-                    Add Synthesis
-                  </Button>
-                  <Button onClick={() => editProposal()}>
-                    <EditIcon className="inner-icon"/>
-                    Edit Proposal
-                  </Button>
+                    <div className="right-side-text">Last Question?</div>
+                    <Button
+                      className="synthesis-button"
+                      onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
+                    >
+                      <FormatListBulletedIcon className="inner-icon" />
+                      Add Synthesis
+                    </Button>
                   </div>
                 </Grid>
               </Grid>

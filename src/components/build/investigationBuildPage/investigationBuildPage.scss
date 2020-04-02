@@ -39,23 +39,48 @@
     background: $dark-blue;
   }
 
+  .proposal-link {
+    cursor: pointer;
+    position: absolute;
+    top: 33.5vh;
+    left: 1.44vw;
+    font-size: 1.8vw;
+    letter-spacing: 0.3vw;
+    font-family: 'Brandon Grotesque Black';
+    color: $light-blue;
+
+    .proposal-edit-icon {
+      font-size: 3.7vw;
+    }
+    .proposal-text {
+      margin-top: 0vh;
+      margin-left: 0.3vw;
+    }
+  }
+
+  .proposal-link:hover {
+    color: white;
+  }
+
   .exit-button {
     cursor: pointer;
     position: fixed;
-    top: 3vh;
-    left: 3vw;
+    top: 2.32vh;
+    left: 3.3vw;
     color: $orange;
+
     .exit-label {
       position: relative;
-      font-size: 1.3vw;
+      font-size: 1.75vw;
       line-height: 1;
-      letter-spacing: 0.3vw;
-      font-family: 'Brandon Grotesque Bold';
+      letter-spacing: 0.36vw;
+      color: white;
+      font-family: 'Brandon Grotesque Black';
       .exit-arrow {
         transition: all .2s ease-in-out;
         position: absolute;
-        top: -0.4vh;
-        left: -1.3vw;
+        top: 0.1vh;
+        left: -1.7vw;
         svg {
           height: 1.5vw;
           width: 1.5vw;
@@ -65,20 +90,21 @@
     .small-label {
       padding-left: 0.2vw;
       letter-spacing: 0.2vw;
-      font-size: 0.67vw;
+      font-size: 1.05vw;
       font-family: 'Brandon Grotesque Regular';
     }
     .small-labels {
+      position: absolute;
+      margin-top: 1vh;
+      left: -1.95vw;
+      color: $light-blue;
       transition: all .2s ease-in-out;
     }
   }
 
   .exit-button:hover {
     .exit-arrow {
-      left: -2vw;
-    }
-    .small-labels {
-      margin-top: 0.15vh;
+      left: -2.1vw;
     }
   }
 
