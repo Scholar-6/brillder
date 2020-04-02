@@ -75,7 +75,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         { checked: false, color: 'color4', name: 'Chinese'},
         { checked: false, color: 'color5', name: 'Classics'},
         { checked: false, color: 'color6', name: 'Computer Science'},
-        { checked: false, color: 'color7', name: 'Ecomonics'},
+        { checked: false, color: 'color7', name: 'Economics'},
         { checked: false, color: 'color8', name: 'English Literature'},
         { checked: false, color: 'color9', name: 'French'}
       ],
