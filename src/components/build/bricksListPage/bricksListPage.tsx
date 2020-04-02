@@ -68,17 +68,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       yourBricks: [],
       bricks: [],
       sortBy: SortBy.None,
-      subjects: [
-        { checked: false, color: 'color1', name: 'Art & Design'},
-        { checked: false, color: 'color2', name: 'Biology'},
-        { checked: false, color: 'color3', name: 'Chemistry'},
-        { checked: false, color: 'color4', name: 'Chinese'},
-        { checked: false, color: 'color5', name: 'Classics'},
-        { checked: false, color: 'color6', name: 'Computer Science'},
-        { checked: false, color: 'color7', name: 'Economics'},
-        { checked: false, color: 'color8', name: 'English Literature'},
-        { checked: false, color: 'color9', name: 'French'}
-      ],
+      subjects: [],
       yoursIndex: 0,
       yoursReversed: false,
       sortedIndex: 0,
@@ -111,6 +101,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true})
     .then(res => {
+      this.setState({...this.state, subjects: res.data });
     })
     .catch(error => {
       alert('Can`t get bricks');
@@ -487,6 +478,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           </div>
         </div>
         {
+          
           this.state.filterExpanded
               ? this.state.subjects.map((subject, i) =>
                 <FormControlLabel
@@ -494,7 +486,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                   key={i}
                   checked={subject.checked}
                   onClick={() => this.filterBySubject(i)}
-                  control={<Radio className={"filter-radio " + subject.color} />}
+                  control={<Radio className={"filter-radio custom-color"} style={{['--color' as any] : subject.color}} />}
                   label={subject.name} />
               )
               : ''

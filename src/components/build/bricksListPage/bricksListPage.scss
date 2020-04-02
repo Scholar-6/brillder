@@ -411,6 +411,7 @@ $right: 1.4vw;
             font: 1.05vw "Brandon Grotesque Regular" !important;
             letter-spacing: 0.06vw;
           }
+          .custom-color svg { color: var(--color)!important; }
           .color1 svg { color: #006BFD !important; }
           .color2 svg { color: #65C44C !important; }
           .color3 svg { color: #F3F584 !important; }
