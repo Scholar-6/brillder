@@ -112,9 +112,6 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
       <div className="input-container">
         {renderBox()}
       </div>
-      <div className="button-box">
-        <Button className="add-answer-button" onClick={() => {}}>Convert to Click and Correct?</Button>
-      </div>
     </div>
   )
 }
