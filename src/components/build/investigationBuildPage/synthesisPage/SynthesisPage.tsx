@@ -30,12 +30,6 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
             <div style={{width: '100%'}}>
               <div className="finish-text">Finished?</div>
               <div style={{textAlign: 'center'}}>
-                <Button className="edit-proposal-button" onClick={() => {history.push(`/build/new-brick/proposal/`)}}>
-                  <EditIcon className="edit-icon"/>
-                  Edit Proposal
-                </Button>
-              </div>
-              <div style={{textAlign: 'center'}}>
                 <Button className="submit-button" onClick={() => onReview()}>
                   <div>
                     <div>Review</div>
