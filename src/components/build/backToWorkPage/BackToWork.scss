@@ -320,6 +320,10 @@ $lighter-blue: #304775;
     bottom: 0;
   }
 
+  .brick-row-6 {
+    bottom: 0;
+  }
+
   .bigger-hover:hover {
     height: 35.4vh;
     .hover-icons-row {
@@ -338,18 +342,15 @@ $lighter-blue: #304775;
   }
 
   .sorted-row {
-    margin-top: 6.7vh;
+    margin-top: 3.5vh;
     height: 63.5vh;
-    padding-left: $left;
-    padding-right: $right;
+    padding-left: 0;
 
     .indexes-box {
       margin-bottom: 1.3vh;
       padding-top: 0.91vh;
       padding-bottom: 1.5vh;
-      border-radius: $brick-radius;
       width: 97%;
-      background: $light-blue;
 
       .sort-header {
         padding-left: 0.85vw;
@@ -383,14 +384,20 @@ $lighter-blue: #304775;
 
     .sort-and-filter-container {
       color: white;
+      padding-right: 0.4vw;
+
+      > div {
+        border-top-right-radius: 2vw;
+        border-bottom-right-radius: 2vw;
+        background: $light-blue;
+        height: 74.5vh;
+      }
 
       .back-sort-box {
         margin-bottom: 1.4vh;
         padding-left: 0vw;
         padding-top: 0.91vh;
-        border-radius: $brick-radius;
         width: 97%;
-        background: $light-blue;
 
         .sort-header {
           padding-left: 0.85vw;
