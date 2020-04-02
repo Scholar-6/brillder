@@ -96,10 +96,11 @@ $tile-height: 100%;
         background: white;
         height: 5vh;
       }
-      .synthesis-tab-icon {
-        font-size: 5vh;
-      }
     }
+  }
+
+  .synthesis-tab-icon {
+    font-size: 5vh;
   }
 
   @media only screen and (max-width: 599px) {

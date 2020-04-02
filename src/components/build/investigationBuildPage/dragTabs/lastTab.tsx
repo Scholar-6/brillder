@@ -3,11 +3,15 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 export interface LastTabProps {
   columns: number
+  synthesis: string
   isSynthesis: boolean
 }
 
-const LastTab: React.FC<LastTabProps> = ({columns, isSynthesis}) => {
+const LastTab: React.FC<LastTabProps> = ({columns, synthesis, isSynthesis}) => {
   if (isSynthesis) {
+    return <div className="last-tab"><FormatListBulletedIcon className="synthesis-tab-icon" /></div>
+  }
+  if (synthesis && synthesis.length > 0) {
     return <div className="last-tab"><FormatListBulletedIcon className="synthesis-tab-icon" /></div>
   }
   if (columns > 5) {

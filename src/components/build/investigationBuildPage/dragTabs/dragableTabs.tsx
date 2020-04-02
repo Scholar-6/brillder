@@ -41,16 +41,17 @@ interface Question {
 
 interface DragTabsProps {
   questions: Question[],
+  synthesis: string,
   isSynthesisPage: boolean,
-  createNewQuestion: Function,
-  setQuestions(questions: any): void
-  selectQuestion: Function,
-  removeQuestion: Function
+  createNewQuestion(): void,
+  moveToSynthesis(): void,
+  setQuestions(questions: any): void,
+  selectQuestion(e: any): void,
+  removeQuestion(e: any): void
 } 
 
 const DragableTabs: React.FC<DragTabsProps> = ({
-  questions, createNewQuestion, selectQuestion, isSynthesisPage,
-  removeQuestion, setQuestions,
+  questions, isSynthesisPage, synthesis, ...props
 }) => {
   const renderQuestionTab = (questions: Question[], question: Question, index: number, comlumns: number) => {
     let titleClassNames = "drag-tile-container";
@@ -81,8 +82,8 @@ const DragableTabs: React.FC<DragTabsProps> = ({
             index={index}
             id={question.id}
             active={question.active}
-            selectQuestion={selectQuestion}
-            removeQuestion={removeQuestion}
+            selectQuestion={props.selectQuestion}
+            removeQuestion={props.removeQuestion}
           />
         </div>
       </GridListTile>
@@ -98,9 +99,12 @@ const DragableTabs: React.FC<DragTabsProps> = ({
   }
 
   const addQuestion = () => {
-    if (!isSynthesisPage) {
-      createNewQuestion();
+    if (isSynthesisPage) { return; }
+    if (synthesis && synthesis.length > 0) {
+      props.moveToSynthesis();
+      return;
     }
+    props.createNewQuestion();
   }
 
   return (
@@ -110,7 +114,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
           list={questions}
           style={{width: '100%', marginTop: '+1px', padding: 0, height: '100% '}}
           group="tabs-group"
-          setList={setQuestions}>
+          setList={props.setQuestions}>
           {
             questions.map((question, i) => renderQuestionTab(questions, question, i, columns))
           }
@@ -121,7 +125,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
           cols={2}
         >
           <Grid className={"drag-tile"} container alignContent="center" justify="center">
-            <LastTab columns={columns} isSynthesis={isSynthesisPage}></LastTab>
+            <LastTab columns={columns} isSynthesis={isSynthesisPage} synthesis={synthesis}></LastTab>
           </Grid>
         </GridListTile>
       </GridList>
