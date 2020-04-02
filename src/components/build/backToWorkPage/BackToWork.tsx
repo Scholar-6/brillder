@@ -53,6 +53,7 @@ interface BackToWorkState {
   logoutDialogOpen: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
+  filterExpanded: boolean;
   filters: Filters;
 }
 
@@ -76,6 +77,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       deleteDialogOpen: false,
       deleteBrickId: -1,
 
+      filterExpanded: false,
       filters: {
         viewAll: true,
         buildAll: false,
@@ -312,9 +314,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                     : ""
                 }
               </Grid>
-              <div className="right-color-column">
-                <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center"></Grid>
-              </div>
             </Grid>
             </div>
           </Box>
@@ -464,7 +463,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     filters.review = !filters.review;
     const bricks = this.filterBricks(filters);
     this.setState({...this.state, filters, bricks });
-    console.log(filters)
   }
 
   togglePublishFilter() {
@@ -507,7 +505,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
     return (
       <div className="back-sort-box">
-        <div className="sort-header">Sort By</div>
+        <div className="sort-header">SORT BY</div>
         <RadioGroup
           className="sort-group"
           aria-label="SortBy"
@@ -519,7 +517,20 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           <FormControlLabel value={SortBy.Popularity} control={<Radio className="sortBy" />} label="Popularity" />
           <FormControlLabel value={SortBy.Date} control={<Radio className="sortBy" />} label="Last Edit" />
         </RadioGroup>
-        <div className="filter-header">Filter</div>
+        <div className="filter-header">
+          <div style={{ display: 'inline' }}>
+            <span className='filter-control'>FILTER</span>
+            {
+              this.state.filterExpanded
+                ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }}
+                    onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
+                : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }}
+                    onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
+            }
+          </div>
+        </div>
+        { this.state.filterExpanded === true ?
+        <div>
         <div className="filter-container color1">
           <FormControlLabel
             className="filter-radio-label"
@@ -535,7 +546,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           <FormControlLabel
             className="filter-radio-label"
             value={this.state.filters.review}
-            control={<Checkbox className={"filter-radio sort-by"} />}
+            control={<Checkbox checked={this.state.filters.review} className={"filter-radio sort-by"} />}
             onChange={() => this.toggleReviewFilter()}
             label="Submitted for Review"
             labelPlacement="end"
@@ -546,7 +557,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           <FormControlLabel
             className="filter-radio-label"
             value={this.state.filters.build}
-            control={<Checkbox className={"filter-radio sort-by"} />}
+            control={<Checkbox checked={this.state.filters.build} className={"filter-radio sort-by"} />}
             onChange={() => this.toggleBuildFilter()}
             label="Build in Progress"
             labelPlacement="end"
@@ -556,14 +567,17 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         <div className="filter-container color4">
           <FormControlLabel
             className="filter-radio-label"
-            value={this.state.filters.build}
-            control={<Checkbox className={"filter-radio sort-by"} />}
+            value={this.state.filters.publish}
+            control={<Checkbox checked={this.state.filters.publish} className={"filter-radio sort-by"} />}
             onChange={() => this.togglePublishFilter()}
             label="Published"
             labelPlacement="end"
           />
           <div className="right-index">{publish}</div>
         </div>
+        </div>
+        : ""
+  }
       </div>
     );
   }
@@ -571,7 +585,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   renderSortedBricks = () => {
     let {sortedIndex} = this.state;
     let BackToWork = [];
-    for (let i = 0 + sortedIndex; i < 21 + sortedIndex; i++) {
+    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
       if (this.state.bricks[i]) {
         let row = Math.floor(i / 3);
         BackToWork.push(this.getSortedBrickContainer(this.state.bricks[i], i, row));
@@ -580,6 +594,27 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       }
     }
     return BackToWork
+  }
+
+  renderTitle = () => {
+    const {filters} = this.state;
+    if (filters.viewAll) {
+      return "ALL PROJECTS";
+    } else if (filters.buildAll) {
+      return "BUILD";
+    } else if (filters.editAll) {
+      return "EDIT";
+    } else if (filters.draft && !filters.build && !filters.review && !filters.publish) {
+      return "DRAFT";
+    } else if (!filters.draft && filters.build && !filters.review && !filters.publish) {
+      return "BUILD IN PROGRESS";
+    } else if (!filters.draft && !filters.build && filters.review && !filters.publish) {
+      return "REVIEW";
+    } else if (!filters.draft && !filters.build && !filters.review && filters.publish) {
+      return "PUBLISHED";
+    } else {
+      return "FILTERED";
+    }
   }
 
   render() {  
@@ -616,15 +651,20 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           </Grid>
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
-              <div style={{width: '100%'}}>
+              <div style={{width: '100%', height: '100%'}} className="sort-and-filter-inner-container">
                 {this.renderIndexesBox()}
                 {this.renderSortAndFilterBox()}
               </div>
             </Grid>
             <Grid item xs={9} style={{position: 'relative'}}>
+              <div className="brick-row-container">
+              <div className="brick-row-title">
+                {this.renderTitle()}
+              </div>
               <Grid container direction="row">
                 {this.renderSortedBricks()}
               </Grid>
+              </div>
               {
                 this.state.bricks.length > 18 ?
                 <Grid container justify="center" className="bottom-next-button">
