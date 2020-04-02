@@ -64,8 +64,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
     <MuiThemeProvider >
       <div className="build-question-page" style={{width: '100%', height: '94%'}}>
         <Grid container justify="center" className="build-question-column" item xs={12}>
-        <div className="prev-button-container">
-        </div>
           <Grid container direction="row">
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
               <Grid container item xs={12} className="left-sidebar" alignItems="center">
@@ -157,16 +155,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 </Grid>
               </Grid>
               <LockComponent locked={locked} onChange={props.toggleLock} />
-              <Grid
-                container direction="row"
-                justify="flex-end" alignItems="flex-end"
-              >
-                <div className="round-button-container">
-                  <IconButton className="new-question-button" aria-label="next" onClick={props.nextOrNewQuestion}>
-                    <ArrowForwardIosIcon className="new-question-icon" />
-                  </IconButton>
-                </div>
-              </Grid>
             </Grid>
           </Grid>
         </Grid>
