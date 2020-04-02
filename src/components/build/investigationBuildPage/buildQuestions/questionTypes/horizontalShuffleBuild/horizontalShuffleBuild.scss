@@ -1,3 +1,5 @@
+@import "_variables";
+
 .horizontal-shuffle-build {
   text-align: center;
   
@@ -5,6 +7,14 @@
     margin: 0;
   }
   
+  .component-title {
+    > div {
+      opacity: 0.8;
+      font-size: $base-sm-text-size;
+      font-family: $font-family-regular;
+      letter-spacing: 2px;
+    }
+  }
   .horizontal-shuffle-box {
     position: relative;
     width: 99%;
@@ -17,6 +27,9 @@
       opacity: 0.8;
       border-radius: 0;
       border: none;
+      opacity: 0.8;
+      font-size: $answer-input-text-size;
+      font-family: $font-family-regular;
     }
   }
   .horizontal-column-1 {

@@ -97,7 +97,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({locked, data, u
   return (
     <div className="choose-one-build unique-component">
       <div className="component-title">
-        <div>Tick correct answer</div>
+        Tick Correct Answer
       </div>
       {
         state.list.map((answer:any, i:number) => renderAnswer(answer, i))

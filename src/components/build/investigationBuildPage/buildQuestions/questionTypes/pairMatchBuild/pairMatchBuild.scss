@@ -1,8 +1,19 @@
+@import "_variables";
+
 .pair-match-build {
   text-align: center;
 
   p {
     margin: 0;
+  }
+
+  .component-title {
+    > div {
+      opacity: 0.8;
+      font-size: $base-sm-text-size;
+      font-family: $font-family-regular;
+      letter-spacing: 2px;
+    }
   }
 
   .pair-match-option {
@@ -19,6 +30,8 @@
       border: none;
       border-radius: 0;
       opacity: 0.8;
+      font-size: $answer-input-text-size;
+      font-family: $font-family-regular;
     }
   }
 
@@ -37,6 +50,8 @@
       border: none;
       border-radius: 0;
       opacity: 0.8;
+      font-size: $answer-input-text-size;
+      font-family: $font-family-regular;
     }
   }
 }

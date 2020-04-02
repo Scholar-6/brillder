@@ -95,7 +95,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
   return (
     <div className="choose-several-build unique-component">
       <div className="component-title">
-        <div>Tick correct answers</div>
+        Tick Correct Answers
       </div>
       {
         state.list.map((answer:any, i:number) => renderAnswer(answer, i))
