@@ -162,9 +162,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
     setQuestions(update(questions, { $set: updatedQuestions }));
     if (history.location.pathname.slice(-10) === '/synthesis') {
-      history.push(`/build/brick/${brickId}/build/investigation/question`)
+      history.push(`/build/brick/${brickId}/build/investigation/question`);
     }
   };
+
+  const moveToSynthesis = () => {
+    history.push(`/build/brick/${brickId}/build/investigation/synthesis`);
+  }
 
   const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
     if (locked) { return; }
@@ -432,7 +436,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               <DragableTabs
                 setQuestions={setQuestions}
                 questions={questions}
+                synthesis={synthesis}
                 isSynthesisPage={isSynthesisPage}
+                moveToSynthesis={moveToSynthesis}
                 createNewQuestion={createNewQuestion}
                 selectQuestion={selectQuestion}
                 removeQuestion={removeQuestion}
