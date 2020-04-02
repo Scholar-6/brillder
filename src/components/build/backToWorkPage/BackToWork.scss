@@ -1,6 +1,7 @@
 @import "_variables";
 
 $brick-radius: 1.2vh;
+$main-panel-radius: 2vw;
 
 $min-brick-height: 9.4vh;
 $left: 0.8vw;
@@ -14,6 +15,22 @@ $lighter-blue: #304775;
   height: 100%;
   font-family: "Brandon Grotesque Regular";
 
+  .brick-row-container {
+    margin-left: 1.5vw;
+    padding-left: 2.2vw;
+    height: 86vh;
+    border-top-left-radius: $main-panel-radius;
+    background: white;
+
+    .brick-row-title {
+      color: $dark-blue;
+      line-height: 1.42;
+      font-size: 5.4vw;
+      letter-spacing: 1.05vw;
+      font-family: "Brandon Grotesque Black";
+    }
+  }
+
   .bricks-upper-part {
     position: relative;
     min-height: 100%;
@@ -21,8 +38,8 @@ $lighter-blue: #304775;
 
     .bottom-next-button {
       position: absolute;
-      bottom: -2.1vh;
-      color: white;
+      bottom: 2vh;
+      color: $dark-blue;
       > svg {
         cursor: pointer;
         margin-right: 1.5vw;
@@ -345,15 +362,16 @@ $lighter-blue: #304775;
     margin-top: 3.5vh;
     height: 63.5vh;
     padding-left: 0;
+    padding-right: 0;
 
     .indexes-box {
       margin-bottom: 1.3vh;
       padding-top: 0.91vh;
       padding-bottom: 1.5vh;
-      width: 97%;
+      width: 100%;
 
       .sort-header {
-        padding-left: 0.85vw;
+        padding-left: 1.7vw;
         padding-bottom: 0.9vh;
         font-size: 1.3vw;
         letter-spacing: 0.26vw;
@@ -361,9 +379,9 @@ $lighter-blue: #304775;
       .index-box {
         cursor: pointer;
         position: relative;
-        padding-left: 0.9vw;
-        padding-top: 0.9vh;
-        padding-bottom: 0.9vh;
+        padding-left: 1.7vw;
+        padding-top: 0.84vh;
+        padding-bottom: 0.84vh;
         font-size: 1.1vw;
 
         .right-index {
@@ -388,41 +406,51 @@ $lighter-blue: #304775;
       padding-right: 0.4vw;
 
       > div {
-        border-top-right-radius: 2vw;
-        border-bottom-right-radius: 2vw;
+        padding-top: 3.2vh;
+        border-top-right-radius: $main-panel-radius;
         background: $light-blue;
-        height: 74.5vh;
       }
 
       .back-sort-box {
         margin-bottom: 1.4vh;
         padding-left: 0vw;
-        padding-top: 0.91vh;
-        width: 97%;
+        padding-top: 5.7vh;
+        width: 100%;
 
         .sort-header {
-          padding-left: 0.85vw;
+          padding-left: 1.4vw;
           font-size: 1.3vw;
           letter-spacing: 0.26vw;
         }
         .filter-header {
-          padding-left: 0.85vw;
-          font-size: 1.3vw;
-          margin-top: 1.6vh;
+          text-transform: uppercase;
+          background: $lighter-blue;
+          padding-left: 1.3vw;
+          font-size: 1.2vw;
+          margin-top: 4vh;
+          line-height: 1.2;
           letter-spacing: 0.22vw;
           margin-bottom: 1vh;
+            .filter-control {
+              vertical-align:middle
+            }
+            .filter-control:not(:first-child) {
+              margin-left: 0.9vw;
+              cursor: pointer;
+            }
         }
         .sort-group {
-          padding-left: 0.85vw;
+          padding-top: 1.6vh;
+          padding-left: 1.6vw;
           display: block;
           > label:nth-child(1) {
-            width: 34%;
+            width: 36%;
           }
           > label:nth-child(2) {
-            width: 35%;
+            width: 36%;
           }
           > label:nth-child(3) {
-            width: 30%;
+            width: 28%;
           }
           > label {
             margin-left: 0 !important;
