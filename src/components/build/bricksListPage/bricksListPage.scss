@@ -7,6 +7,7 @@ $left: 0.8vw;
 $right: 1.4vw;
 
 .bricks-list-page {
+  overflow-y: hidden;
   background: $dark-blue;
   height: 100%;
   font-family: "Brandon Grotesque Regular";
