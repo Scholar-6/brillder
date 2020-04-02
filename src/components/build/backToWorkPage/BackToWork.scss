@@ -470,11 +470,16 @@ $lighter-blue: #304775;
             }
           }
         }
+        .filter-items {
+          padding-top: 2.3vh;
+          padding-left: 1.7vw;
+        }
+
         .filter-container {
           position: relative;
           width: 100%;
           .filter-radio-label {
-            padding-left: 0.85vw;
+            padding-left: 0;
             cursor: default;
             width: 90%;
             

@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Dialog from '@material-ui/core/Dialog';
+import ClearIcon from '@material-ui/icons/Clear';
 
 import authActions from 'redux/actions/auth';
 import { Brick, BrickStatus } from 'model/brick';
@@ -342,14 +343,24 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     );
   }
 
-  removeAllFilters(filters: Filters) {
-    filters.viewAll = false;
-    filters.buildAll = false;
-    filters.editAll = false;
+  clearStatusFilters(filters: Filters) {
     filters.draft = false;
     filters.build = false;
     filters.review = false;
     filters.publish = false;
+  }
+
+  removeStatusFilters() {
+    const {filters} = this.state;
+    this.clearStatusFilters(filters);
+    this.setState({...this.state, filters, bricks: this.state.rawBricks});
+  }
+
+  removeAllFilters(filters: Filters) {
+    filters.viewAll = false;
+    filters.buildAll = false;
+    filters.editAll = false;
+    this.clearStatusFilters(filters);
   }
 
   showAll() {
@@ -474,6 +485,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   renderSortAndFilterBox = () => {
+    const {filters} = this.state;
+
+    let filterPresent = (filters.draft || filters.build || filters.review || filters.publish) ? true : false;
+
     let draft = 0;
     let review = 0;
     let build = 0;
@@ -527,10 +542,16 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                 : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }}
                     onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
             }
+            {
+              filterPresent
+              ? <ClearIcon className='filter-control' style={{ fontSize: '2vw' }}
+                  onClick={() => this.removeStatusFilters()} />
+              : ''
+            }
           </div>
         </div>
         { this.state.filterExpanded === true ?
-        <div>
+        <div className="filter-items">
         <div className="filter-container color1">
           <FormControlLabel
             className="filter-radio-label"
