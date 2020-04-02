@@ -4,7 +4,6 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton, MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
-import EditIcon from '@material-ui/icons/Edit';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 import QuestionComponents from './questionComponents/questionComponents';
@@ -23,6 +22,7 @@ export interface QuestionProps {
   brickId: number
   question: Question
   history: any
+  questionsCount: number
   saveBrick(): void
   setQuestion(index: number, question: Question): void
   updateComponents(components: any[]): void
@@ -35,11 +35,7 @@ export interface QuestionProps {
 }
 
 const BuildQuestionComponent: React.FC<QuestionProps> = (
-  {
-    brickId, question, history, setQuestionType, getQuestionIndex, toggleLock, 
-    saveBrick, nextOrNewQuestion, setQuestion,
-    locked, setPreviousQuestion, updateComponents
-  }
+  { brickId, question, history, getQuestionIndex, locked, ...props }
 ) => {
   const [componentTypes, setComponentType] = React.useState([
     {id: 1, type: QuestionComponentTypeEnum.Text},
@@ -58,7 +54,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
     updatedQuestion.hint.value = hintState.value;
     updatedQuestion.hint.list = hintState.list;
     updatedQuestion.hint.status = hintState.status;
-    setQuestion(index, updatedQuestion);
+    props.setQuestion(index, updatedQuestion);
   }
 
   let typeArray: string[] = Object.keys(QuestionType);
@@ -69,7 +65,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
       <div className="build-question-page" style={{width: '100%', height: '94%'}}>
         <Grid container justify="center" className="build-question-column" item xs={12}>
         <div className="prev-button-container">
-          <IconButton className="new-question-button" aria-label="next" onClick={setPreviousQuestion}>
+          <IconButton className="new-question-button" aria-label="next" onClick={props.setPreviousQuestion}>
             <ArrowForwardIosIcon className="new-question-icon rotate-180" />
           </IconButton>
         </div>
@@ -116,22 +112,26 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 brickId={brickId}
                 history={history}
                 question={question}
-                updateComponents={updateComponents}
+                updateComponents={props.updateComponents}
                 setQuestionHint={setQuestionHint} />
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
               <Grid container direction="row" justify="center">
                 <Grid container item xs={11} className="question-button-container">
-                  <div>
-                    <div className="right-side-text">Last Question?</div>
-                    <Button
-                      className="synthesis-button"
-                      onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
-                    >
-                      <FormatListBulletedIcon className="inner-icon" />
-                      Add Synthesis
-                    </Button>
-                  </div>
+                  {
+                    (props.questionsCount > 1) ?
+                      <div>
+                        <div className="right-side-text">Last Question?</div>
+                        <Button
+                          className="synthesis-button"
+                          onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
+                        >
+                          <FormatListBulletedIcon className="inner-icon" />
+                          Add Synthesis
+                        </Button>
+                      </div>
+                    : ""
+                  }
                 </Grid>
               </Grid>
               <Grid container direction="row" alignItems="flex-end">
@@ -146,7 +146,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                         id: 'age-native-simple',
                       }}
                       onChange={(e) => {
-                        setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
+                        props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
                       }}
                     >
                       {
@@ -159,13 +159,13 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   </FormControl>
                 </Grid>
               </Grid>
-              <LockComponent locked={locked} onChange={toggleLock} />
+              <LockComponent locked={locked} onChange={props.toggleLock} />
               <Grid
                 container direction="row"
                 justify="flex-end" alignItems="flex-end"
               >
                 <div className="round-button-container">
-                  <IconButton className="new-question-button" aria-label="next" onClick={nextOrNewQuestion}>
+                  <IconButton className="new-question-button" aria-label="next" onClick={props.nextOrNewQuestion}>
                     <ArrowForwardIosIcon className="new-question-icon" />
                   </IconButton>
                 </div>

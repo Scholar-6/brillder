@@ -358,6 +358,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       <BuildQuestionComponent
         brickId={brickId}
         history={history}
+        questionsCount={questions.length}
         question={activeQuestion}
         getQuestionIndex={getQuestionIndex}
         setQuestion={setQuestion}
