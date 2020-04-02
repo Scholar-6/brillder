@@ -11,6 +11,10 @@ To run project run next commands:
 ### `npm install`
 ### `npm start`
 
+## Run via https
+
+### ($env:HTTPS = "true") -and (npm start)
+
 ## Run StoryBook
 
 ### `npm run storybook`
