@@ -136,6 +136,10 @@
     height: 100%;
     overflow-y: auto !important;
     > div {
+      p {
+        margin: 0.1vh 0.2vw;
+        font-size: 0.8vw !important;
+      }
       padding-top: 2vh;
       padding-left: 1vw;
       padding-right: 1vw;
