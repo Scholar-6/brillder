@@ -11,6 +11,8 @@
       overflow-y: hidden;
 
       .synthesis-preview {
+        height: 100%;
+        overflow-y: auto;
         color: $dark-blue;
         .synthesis-title {
           margin-top: 1.6vh;
