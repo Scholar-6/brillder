@@ -1,6 +1,6 @@
 import './BackToWork.scss';
 import React, { Component } from 'react';
-import { Box, Grid, FormControlLabel, Radio, RadioGroup, Button } from '@material-ui/core';
+import { Box, Grid, FormControlLabel, Radio, RadioGroup, Button, Checkbox } from '@material-ui/core';
 import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
@@ -33,14 +33,27 @@ interface BackToWorkProps {
   logout(): void;
 }
 
+interface Filters {
+  viewAll: boolean
+  buildAll: boolean
+  editAll: boolean
+
+  draft: boolean
+  review: boolean
+  build: boolean
+  publish: boolean
+}
+
 interface BackToWorkState {
-  bricks: Array<Brick>;
+  bricks: Brick[];
+  rawBricks: Brick[];
   sortBy: SortBy;
   sortedIndex: number;
   sortedReversed: boolean;
   logoutDialogOpen: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
+  filters: Filters;
 }
 
 enum SortBy {
@@ -55,18 +68,30 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     super(props)
     this.state = {
       bricks: [],
+      rawBricks: [],
       sortBy: SortBy.None,
       sortedIndex: 0,
       sortedReversed: false,
       logoutDialogOpen: false,
       deleteDialogOpen: false,
-      deleteBrickId: -1
+      deleteBrickId: -1,
+
+      filters: {
+        viewAll: true,
+        buildAll: false,
+        editAll: false,
+
+        draft: false,
+        review: false,
+        build: false,
+        publish: false
+      }
     };
 
     if (this.props.user.type === UserType.Admin) {
       axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks', {withCredentials: true})
         .then(res => {  
-          this.setState({...this.state, bricks: res.data });
+          this.setState({...this.state, bricks: res.data, rawBricks: res.data });
         })
         .catch(error => {
           alert('Can`t get bricks');
@@ -74,7 +99,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     } else {
       axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/currentUser', {withCredentials: true})
         .then((res) => { 
-          this.setState({...this.state, bricks: res.data });
+          this.setState({...this.state, bricks: res.data, rawBricks: res.data });
         })
         .catch(error => {
           alert('Can`t get bricks')
@@ -318,16 +343,50 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     );
   }
 
+  removeAllFilters(filters: Filters) {
+    filters.viewAll = false;
+    filters.buildAll = false;
+    filters.editAll = false;
+    filters.draft = false;
+    filters.build = false;
+    filters.review = false;
+    filters.publish = false;
+  }
+
+  showAll() {
+    const {filters} = this.state;
+    this.removeAllFilters(filters);
+    filters.viewAll = true;
+    this.setState({...this.state, filters, bricks: this.state.rawBricks});
+  }
+
+  showEditAll() {
+    const {filters} = this.state;
+    this.removeAllFilters(filters);
+    filters.editAll = true;
+    let bricks = this.filterByStatus(this.state.rawBricks, BrickStatus.Review)
+    bricks.push(...this.filterByStatus(this.state.rawBricks, BrickStatus.Publish))
+    this.setState({...this.state, filters, bricks});
+  }
+
+  showBuildAll() {
+    const {filters} = this.state;
+    this.removeAllFilters(filters);
+    filters.buildAll = true;
+    let bricks = this.filterByStatus(this.state.rawBricks, BrickStatus.Draft)
+    this.setState({...this.state, filters, bricks });
+  }
+
   renderIndexesBox = () => {
     let build = 0;
     let edit = 0;
-    for (let b of this.state.bricks) {
+    for (let b of this.state.rawBricks) {
       if (b.status === BrickStatus.Draft) {
         build += 1;
       }
     }
 
-    for (let b of this.state.bricks) {
+    for (let b of this.state.rawBricks) {
       if (b.status !== BrickStatus.Draft) {
         edit += 1;
       }
@@ -335,20 +394,85 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return (
       <div className="indexes-box">
         <div className="sort-header">INBOX</div>
-        <div className="index-box active">
+        <div className={"index-box " + ((this.state.filters.viewAll) ? "active" : "")} onClick={() => this.showAll()}>
           View All
-          <div className="right-index">{this.state.bricks.length}</div>
+          <div className="right-index">{this.state.rawBricks.length}</div>
         </div>
-        <div className="index-box">
+        <div className={"index-box " + ((this.state.filters.buildAll) ? "active" : "")} onClick={() => this.showBuildAll()}>
           Build
           <div className="right-index">{build}</div>
         </div>
-        <div className="index-box">
+        <div className={"index-box " + ((this.state.filters.editAll) ? "active" : "")} onClick={() => this.showEditAll()}>
           Edit
           <div className="right-index">{edit}</div>
         </div>
       </div>
     );
+  }
+
+  filterByStatus(bricks: Brick[], status: BrickStatus): Brick[] {
+    return bricks.filter(b => b.status === status);
+  }
+
+  filterBricks(filters: Filters): Brick[] {
+    let filteredBricks:Brick[] = [];
+    let bricks = Object.assign([], this.state.rawBricks) as Brick[];
+    if (filters.draft) {
+      filteredBricks.push(...this.filterByStatus(bricks, BrickStatus.Draft));
+    }
+    if (filters.build) {
+      filteredBricks.push(...this.filterByStatus(bricks, BrickStatus.Build));
+    }
+    if (filters.review) {
+      filteredBricks.push(...this.filterByStatus(bricks, BrickStatus.Review));
+    }
+    if (filters.publish) {
+      filteredBricks.push(...this.filterByStatus(bricks, BrickStatus.Publish));
+    }
+
+    if (!filters.draft && !filters.build && !filters.review && !filters.publish) {
+      return bricks;
+    }
+    return filteredBricks;
+  }
+
+  removeInboxFilters(filters: Filters) {
+    filters.viewAll = false;
+    filters.buildAll = false;
+    filters.editAll = false;
+  }
+
+  toggleDraftFilter() {
+    const {filters} = this.state;
+    this.removeInboxFilters(filters);
+    filters.draft = !filters.draft;
+    const bricks = this.filterBricks(filters);
+    this.setState({...this.state, filters, bricks });
+  }
+
+  toggleBuildFilter() {
+    const {filters} = this.state;
+    this.removeInboxFilters(filters);
+    filters.build = !filters.build;
+    const bricks = this.filterBricks(filters);
+    this.setState({...this.state, filters, bricks });
+  }
+
+  toggleReviewFilter() {
+    const {filters} = this.state;
+    this.removeInboxFilters(filters);
+    filters.review = !filters.review;
+    const bricks = this.filterBricks(filters);
+    this.setState({...this.state, filters, bricks });
+    console.log(filters)
+  }
+
+  togglePublishFilter() {
+    const {filters} = this.state;
+    this.removeInboxFilters(filters);
+    filters.publish = !filters.publish;
+    const bricks = this.filterBricks(filters);
+    this.setState({...this.state, filters, bricks });
   }
 
   renderSortAndFilterBox = () => {
@@ -357,25 +481,25 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     let build = 0;
     let publish = 0;
 
-    for (let b of this.state.bricks) {
+    for (let b of this.state.rawBricks) {
       if (b.status === BrickStatus.Draft) {
         draft += 1;
       }
     }
 
-    for (let b of this.state.bricks) {
+    for (let b of this.state.rawBricks) {
       if (b.status === BrickStatus.Review) {
         review += 1;
       }
     }
 
-    for (let b of this.state.bricks) {
+    for (let b of this.state.rawBricks) {
       if (b.status === BrickStatus.Build) {
         build += 1;
       }
     }
 
-    for (let b of this.state.bricks) {
+    for (let b of this.state.rawBricks) {
       if (b.status === BrickStatus.Publish) {
         publish += 1;
       }
@@ -399,33 +523,45 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         <div className="filter-container color1">
           <FormControlLabel
             className="filter-radio-label"
-            onClick={() => {}}
-            control={<Radio className={"filter-radio sort-by"}/>}
-            label="Draft" />
+            value={this.state.filters.draft}
+            control={<Checkbox checked={this.state.filters.draft} className={"filter-radio sort-by"} />}
+            onChange={() => this.toggleDraftFilter()}
+            label="Draft"
+            labelPlacement="end"
+          />
           <div className="right-index">{draft}</div>
         </div>
         <div className="filter-container color2">
           <FormControlLabel
             className="filter-radio-label"
-            onClick={() => {}}
-            control={<Radio className={"filter-radio sort-by"}/>}
-            label="Submitted for Review" />
+            value={this.state.filters.review}
+            control={<Checkbox className={"filter-radio sort-by"} />}
+            onChange={() => this.toggleReviewFilter()}
+            label="Submitted for Review"
+            labelPlacement="end"
+          />
           <div className="right-index">{review}</div>
         </div>
         <div className="filter-container color3">
           <FormControlLabel
-            className="filter-radio-label color3"
-            onClick={() => {}}
-            control={<Radio className={"filter-radio sort-by color3"}/>}
-            label="Build in Progress" />
+            className="filter-radio-label"
+            value={this.state.filters.build}
+            control={<Checkbox className={"filter-radio sort-by"} />}
+            onChange={() => this.toggleBuildFilter()}
+            label="Build in Progress"
+            labelPlacement="end"
+          />
           <div className="right-index">{build}</div>
         </div>
         <div className="filter-container color4">
           <FormControlLabel
-            className="filter-radio-label color4"
-            onClick={() => {}}
-            control={<Radio className={"filter-radio sort-by color4"}/>}
-            label="Published" />
+            className="filter-radio-label"
+            value={this.state.filters.build}
+            control={<Checkbox className={"filter-radio sort-by"} />}
+            onChange={() => this.togglePublishFilter()}
+            label="Published"
+            labelPlacement="end"
+          />
           <div className="right-index">{publish}</div>
         </div>
       </div>
