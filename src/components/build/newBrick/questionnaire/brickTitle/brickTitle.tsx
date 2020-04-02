@@ -119,8 +119,8 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
               <h1 className="only-tutorial-header">What is your brick about?</h1>
               <Grid container justify="center" item xs={12}>
                 <Input className="audience-inputs" value={titles.title} onChange={(onTitleChange)} placeholder="Enter Proposed Title Here..." />
-                <Input className="audience-inputs" value={titles.subTopic} onChange={onSubTopicChange} placeholder="Enter Sub-Topic(s)..." />
-                <Input className="audience-inputs" value={titles.alternativeTopics} onChange={onAltTopicChange} placeholder="Enter Alternative Topic(s)..." />
+                <Input className="audience-inputs" value={titles.subTopic} onChange={onSubTopicChange} placeholder="Enter Topic(s)..." />
+                <Input className="audience-inputs" value={titles.alternativeTopics} onChange={onAltTopicChange} placeholder="Enter Sub Topic(s)..." />
               </Grid>
               <p className="page-number">1 of 4</p>
               <NextButton step={NewBrickStep.BrickTitle} canSubmit={true} onSubmit={saveTitles} data={titles} />
