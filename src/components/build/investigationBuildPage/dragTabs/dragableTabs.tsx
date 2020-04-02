@@ -3,11 +3,12 @@ import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridList from '@material-ui/core/GridList';
 import { ReactSortable } from "react-sortablejs";
+import { Grid } from '@material-ui/core';
 
 import './DragableTabs.scss';
 import DragTab from './dragTab';
 import LastTab from './lastTab';
-import { Grid } from '@material-ui/core';
+import SynthesisTab from './SynthesisTab';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -48,11 +49,16 @@ interface DragTabsProps {
   setQuestions(questions: any): void,
   selectQuestion(e: any): void,
   removeQuestion(e: any): void
-} 
+}
 
 const DragableTabs: React.FC<DragTabsProps> = ({
   questions, isSynthesisPage, synthesis, ...props
 }) => {
+  let isSynthesisPresent = false;
+  if (synthesis && synthesis.length > 0) {
+    isSynthesisPresent = true;
+  }
+
   const renderQuestionTab = (questions: Question[], question: Question, index: number, comlumns: number) => {
     let titleClassNames = "drag-tile-container";
     let cols = 2;
@@ -98,15 +104,6 @@ const DragableTabs: React.FC<DragTabsProps> = ({
     columns = (questions.length * 2) + 2;
   }
 
-  const addQuestion = () => {
-    if (isSynthesisPage) { return; }
-    if (synthesis && synthesis.length > 0) {
-      props.moveToSynthesis();
-      return;
-    }
-    props.createNewQuestion();
-  }
-
   return (
     <div className={classes.root + " drag-tabs"}>
       <GridList cellHeight={40} className={classes.gridList} cols={columns}>
@@ -120,14 +117,27 @@ const DragableTabs: React.FC<DragTabsProps> = ({
           }
         </ReactSortable>
         <GridListTile
-          onClick={addQuestion}
-          className={"drag-last-tile-container " + (isSynthesisPage ? "synthesis-tab" : "")}
-          cols={2}
+          onClick={props.createNewQuestion}
+          className={"drag-last-tile-container"}
+          cols={(isSynthesisPresent || isSynthesisPage) ? 1.5555 : 2}
         >
           <Grid className={"drag-tile"} container alignContent="center" justify="center">
-            <LastTab columns={columns} isSynthesis={isSynthesisPage} synthesis={synthesis}></LastTab>
+            <LastTab columns={columns} isSynthesis={isSynthesisPage} synthesis={synthesis} />
           </Grid>
         </GridListTile>
+        {
+          (isSynthesisPresent || isSynthesisPage)  ?
+            <GridListTile
+              onClick={props.moveToSynthesis}
+              className={"drag-last-tile-container " + (isSynthesisPage ? "synthesis-tab" : "")}
+              cols={1.5555}
+            >
+              <Grid className={"drag-tile"} container alignContent="center" justify="center">
+                <SynthesisTab columns={columns} isSynthesis={isSynthesisPage} synthesis={synthesis} />
+              </Grid>
+            </GridListTile>
+          : ""
+        }
       </GridList>
     </div>
   )

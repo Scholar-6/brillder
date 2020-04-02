@@ -65,9 +65,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
       <div className="build-question-page" style={{width: '100%', height: '94%'}}>
         <Grid container justify="center" className="build-question-column" item xs={12}>
         <div className="prev-button-container">
-          <IconButton className="new-question-button" aria-label="next" onClick={props.setPreviousQuestion}>
-            <ArrowForwardIosIcon className="new-question-icon rotate-180" />
-          </IconButton>
         </div>
           <Grid container direction="row">
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
