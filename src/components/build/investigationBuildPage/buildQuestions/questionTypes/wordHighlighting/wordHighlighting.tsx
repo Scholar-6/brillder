@@ -110,9 +110,6 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
       <div className="input-container">
         {renderBox()}
       </div>
-      <div className="button-box">
-        <Button disabled={locked} className="add-answer-button" onClick={() => {}}>Convert to Click and Correct?</Button>
-      </div>
     </div>
   )
 }
