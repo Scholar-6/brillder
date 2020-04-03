@@ -205,7 +205,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
   getBrickContainer = (brick: Brick, key: number) => {
     return (
-      <Grid container key={key} item xs={3} justify="center">
+      <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
           <Box
             className="brick-container"
@@ -414,35 +414,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  getEmptyBrickContainer = (key: number, size: any = 3) => {
-    return (
-      <Grid container key={key} item xs={size} justify="center">
-        <div className="main-brick-container">
-          <Box className="brick-container">
-            <div className="absolute-container empty-container">
-              <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
-                <Grid item xs={11}></Grid>
-                <div className="right-color-column">
-                  <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center">
-                  </Grid>
-                </div>
-              </Grid>
-            </div>
-          </Box>
-        </div>
-      </Grid>
-    );
-  }
-
-
   renderYourBrickRow = () => {
     let bricksList = []
     let index = 0;
-    for (let i = index; i < index + 4; i++) {
+    for (let i = index; i < index + 3; i++) {
       if (this.state.yourBricks[i]) {
         bricksList.push(this.getBrickContainer(this.state.yourBricks[i], i));
-      } else {
-        bricksList.push(this.getEmptyBrickContainer(i));
       }
     }
     return bricksList;
@@ -467,8 +444,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             <span className='filter-control'>Filter</span>
             {
               this.state.filterExpanded
-                ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }} onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
-                : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }} onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
+                ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }}
+                    onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
+                : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }}
+                    onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
             }
             {
               this.state.subjects.some((r: any) => r.checked)
@@ -496,6 +475,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  renderTitle = () => {
+    return "ALL BRICKS";
+  }
+
   renderSortedBricks = () => {
     let {sortedIndex} = this.state;
     let bricksList = [];
@@ -503,8 +486,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       if (this.state.bricks[i]) {
         let row = Math.floor(i / 3);
         bricksList.push(this.getSortedBrickContainer(this.state.bricks[i], i, row));
-      } else {
-        bricksList.push(this.getEmptyBrickContainer(i, 4));
       }
     }
     return bricksList
@@ -542,34 +523,33 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               </Grid>
             </Grid>
           </Grid>
-          <h3>Your Bricks</h3>
-          <div className="your-bricks-list">
-            <Grid container direction="row">
-              {this.renderYourBrickRow()}
-            </Grid>
-            <div className="next-bricks">
-              <NavigateNextIcon className="MuiSvgIcon-root jss415 MuiSvgIcon-fontSizeLarge" />
-            </div>
-          </div>
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
               {this.renderSortAndFilterBox()}
             </Grid>
             <Grid item xs={9} style={{position: 'relative'}}>
-              <Grid container direction="row">
-                {this.renderSortedBricks()}
-              </Grid>
-              {
-                this.state.bricks.length > 18 ?
-                <Grid container justify="center" className="bottom-next-button">
-                  {
-                    this.state.sortedReversed
-                      ? <ExpandLessIcon onClick={() => this.changeSortedBricks()} />
-                      : <ExpandMoreIcon onClick={() => this.changeSortedBricks()} />
-                  }
+              <div className="brick-row-container">
+                <div className="brick-row-title">
+                  {this.renderTitle()}
+                </div>
+                <Grid container direction="row">
+                  {this.renderYourBrickRow()}
                 </Grid>
-                : ""
-              }
+                <Grid container direction="row">
+                  {this.renderSortedBricks()}
+                </Grid>
+                {
+                  this.state.bricks.length > 18 ?
+                  <Grid container justify="center" className="bottom-next-button">
+                    {
+                      this.state.sortedReversed
+                        ? <ExpandLessIcon onClick={() => this.changeSortedBricks()} />
+                        : <ExpandMoreIcon onClick={() => this.changeSortedBricks()} />
+                    }
+                  </Grid>
+                  : ""
+                }
+              </div>
             </Grid>
           </Grid>
         </div>
