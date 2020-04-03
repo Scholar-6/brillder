@@ -671,14 +671,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             </Grid>
             <Grid item xs={9} style={{position: 'relative'}}>
               <div className="brick-row-container">
-              <div className="brick-row-title">
-                {this.renderTitle()}
-              </div>
-              <Grid container direction="row">
-                {this.renderSortedBricks()}
-              </Grid>
-              </div>
-              {
+                <div className="brick-row-title">
+                  {this.renderTitle()}
+                </div>
+                <Grid container direction="row">
+                  {this.renderSortedBricks()}
+                </Grid>
+                </div>
+                {
                 this.state.bricks.length > 18 ?
                 <Grid container justify="center" className="bottom-next-button">
                   {
