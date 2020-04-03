@@ -8,11 +8,14 @@ interface ImageProps {
 }
 
 const ImageLive: React.FC<ImageProps> = ({ component }) => {
-  return (
-    <div>
-      <img alt="play" className="image-play" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${component.value}`} />
-    </div>
-  );
+  if (component.value) {
+    return (
+      <div>
+        <img alt="play" className="image-play" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${component.value}`} />
+      </div>
+    );
+  }
+  return <div></div>;
 }
 
 export default ImageLive;

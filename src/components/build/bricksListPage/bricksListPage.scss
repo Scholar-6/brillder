@@ -1,6 +1,7 @@
 @import "_variables";
 
 $brick-radius: 1.2vh;
+$main-panel-radius: 2vw;
 
 $min-brick-height: 9.4vh;
 $left: 0.8vw;
@@ -325,9 +326,6 @@ $right: 1.4vw;
     }
   }
 
-  .empty-container {
-    opacity: 0.75;
-  }
   .next-bricks {
     position: absolute;
     right: 0;
@@ -336,34 +334,33 @@ $right: 1.4vw;
   }
 
   .sorted-row {
-    margin-top: 4.3vh;
-    height: 63.5vh;
-    padding-left: $left;
-    padding-right: $right;
+    margin-top: 3.5vh;
+    height: 87.1vh;
     .sort-and-filter-container {
       color: white;
 
       .sort-box {
         margin-bottom: 1.2vh;
-        padding-top: 0.3vh;
-        border-radius: $brick-radius;
-        width: 95%;
+        padding-top: 1vh;
+        border-top-right-radius: $main-panel-radius;
+        width: 100%;
         background: $light-blue;
 
         .sort-header {
+          margin-top: 1.1vh;
+          margin-left: 1.4vw;
           text-transform: uppercase;
-          padding-left: $left;
           font-size: 1.3vw;
           letter-spacing: 0.22vw;
         }
         .filter-header {
           text-transform: uppercase;
           background: #304775 0% 0% no-repeat padding-box;
-          padding-left: $left;
+          padding-left: 1.4vw;
           font-size: 1.3vw;
-          margin-top: 1.6vh;
+          margin-top: 1.9vh;
           letter-spacing: 0.22vw;
-          margin-bottom: 1vh;
+          margin-bottom: 2.8vh;
             .filter-control {
               vertical-align:middle
             }
@@ -373,6 +370,8 @@ $right: 1.4vw;
             }
         }
         .sort-group {
+          margin-top: 0.45vh;
+          margin-left: 0.9vw;
           display: block;
           > label:nth-child(1) {
             width: 45%;
@@ -398,9 +397,10 @@ $right: 1.4vw;
         }
         .filter-container {
           cursor: default;
+          margin-bottom: 0.1vh;
           width: 45%;
           > span.filter-radio {
-            padding-left: 1.2vw;
+            padding-left: 2vw;
             padding-right: 0.4vw;
             svg {
               height: 2.2vh;
@@ -425,6 +425,22 @@ $right: 1.4vw;
         .filter-container:nth-child(odd) {
           width: 50%;
         }
+      }
+    }
+    .brick-row-container {
+      border-top-left-radius: $main-panel-radius;
+      margin-left: 2.1vw;
+      padding-left: 1.98vw;
+      background: white;
+      height: 100%;
+
+      .brick-row-title {
+        padding-left: 0.22vw;
+        color: $dark-blue;
+        line-height: 1.42;
+        font-size: 5.4vw;
+        letter-spacing: 1.05vw;
+        font-family: "Brandon Grotesque Black";
       }
     }
   }
