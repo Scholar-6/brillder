@@ -114,7 +114,7 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   }
 
   return (
-    <div>
+    <div className="image-drag-n-drop">
       <DropNCrop style={{height: '20vh !important'}} value={cropImage} onChange={onCropChange} />
       <Button className="save-image-button" onClick={saveImage}>Save Image</Button>
     </div>
