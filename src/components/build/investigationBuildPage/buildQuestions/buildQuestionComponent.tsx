@@ -73,28 +73,32 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   setList={setComponentType} sort={false}>
                 <DragBox
                   locked={locked}
-                  name="T" fontSize="2.4vw" label="T E X T"
+                  name="T" fontSize="3.4vw" label="T E X T"
                   hoverMarginTop="0.5vw"
+                  fontFamily="Brandon Grotesque Bold"
                   value={QuestionComponentTypeEnum.Text} />
                 <DragBox
                   locked={locked}
-                  name="“ ”" fontSize="2.8vw" label="Q U O T E"
+                  name="“ ”" fontSize="2.5vw" label="Q U O T E"
                   marginTop="0vw" hoverMarginTop="-0.65vw"
+                  fontFamily="Brandon Grotesque Bold"
                   value={QuestionComponentTypeEnum.Quote} />
                 <DragBox
                   locked={locked}
-                  name="jpg." fontSize="1.7vw" label="I M A G E"
+                  name="jpg." fontSize="2.5vw" label="I M A G E"
                   hoverMarginTop="1vw"
+                  fontFamily="Brandon Grotesque Bold"
                   value={QuestionComponentTypeEnum.Image} />
                 <DragBox
                   locked={locked}
                   isImage={true} src="/images/soundicon.png"
                   label="S O U N D" marginTop="-0.2vw" hoverMarginTop="0.5vw"
+                  fontFamily="Brandon Grotesque Bold"
                   value={QuestionComponentTypeEnum.Sound} />
                 <DragBox
                   locked={locked}
-                  name="E Q N" fontSize="1.6vw" label="E Q U A T I O N"
-                  fontFamily="Century Gothic Bold"
+                  name="f(x)" fontSize="2.5vw" label="E Q U A T I O N"
+                  fontFamily="Brandon Grotesque Bold Italic"
                   hoverMarginTop="0.9vw"
                   value={QuestionComponentTypeEnum.Equation} />
                 </ReactSortable>
