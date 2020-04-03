@@ -204,6 +204,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   getBrickContainer = (brick: Brick, key: number) => {
+    let color = "";
+    
+    if (!brick.subject) {
+      color = '#B0B0AD';
+    }
+
     return (
       <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
@@ -213,30 +219,33 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             onMouseLeave={() => this.yourBricksMouseLeave(key)}
           >
             <div className={`sorted-brick absolute-container ${brick.expanded ? "bigger-hover" : ""}`}>
-            <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
-              <Grid item xs={brick.expanded ? 12 : 11}>
-                <div className="link-description">{brick.title}</div>
-                <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
-                <div className="link-info">
-                  {this.getAuthorRow(brick)}
-                </div>
-                {
-                  brick.expanded ?
-                    <div>
-                      <div className="hover-text">
-                        <div className="hovered-open-question">Open Question Open Question Open Question</div>
-                        <div>SUBJECT Code | No. of Plays</div>
-                        <div>Editor: Name Surname</div>
-                      </div>
+              <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
+                <Grid item xs={brick.expanded ? 12 : 11}>
+                  {
+                    brick.expanded ?
+                      <div className="expended-brick-info">
+                        <div className="hover-text">
+                          <div className="link-description">{brick.title}</div>
+                          <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
+                          <div className="link-info">
+                            {this.getAuthorRow(brick)}
+                          </div>
+                          <div className="hovered-open-question link-info">{brick.openQuestion}</div>
+                          <div>SUBJECT Code | No. {brick.attemptsCount} of Plays</div>
+                          <div>Editor: Name Surname</div>
+                        </div>
                       <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
-                        <Grid item xs={6} container justify="flex-start">
+                        <Grid item xs={4} container justify="flex-start">
+                          <div className="round-button" style={{background : `${color}`}}></div>
+                        </Grid>
+                        <Grid item xs={4} container justify="flex-start">
                           {
                             (this.props.user.type === UserType.Admin)
                               ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
                               : ""
                           }
                         </Grid>
-                        <Grid item xs={6} container justify="flex-end">
+                        <Grid item xs={4} container justify="flex-end">
                           <img
                             alt="play"
                             className="play-button"
@@ -245,13 +254,22 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                         </Grid>
                       </Grid>
                     </div>
-                    : ""
-                }
+                    :
+                    <div>
+                      <div className="left-brick-circle">
+                        <div className="round-button" style={{background: `${color}`}}></div>
+                      </div>
+                      <div className="short-brick-info">
+                        <div className="link-description">{brick.title}</div>
+                        <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
+                        <div className="link-info">
+                          {this.getAuthorRow(brick)}
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </Grid>
               </Grid>
-              <div className="right-color-column">
-                <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center"></Grid>
-              </div>
-            </Grid>
             </div>
           </Box>
         </div>
@@ -359,6 +377,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
+    let color = "";
+    
+    if (!brick.subject) {
+      color = '#B0B0AD';
+    }
+
     return (
       <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
@@ -370,42 +394,54 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             <div className={`sorted-brick absolute-container brick-row-${row} ${brick.expanded ? 'brick-hover' : ''}`}>
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
               <Grid item xs={brick.expanded ? 12 : 11}>
-                <div className="link-description">{brick.title}</div>
-                <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
-                <div className="link-info">
-                  {this.getAuthorRow(brick)}
-                </div>
                 {
                   brick.expanded ?
-                    <div>
+                    <div className="expended-brick-info">
                       <div className="hover-text">
-                        <div className="hovered-open-question">Open Question Open Question Open Question</div>
-                        <div>SUBJECT Code | No. of Plays</div>
+                        <div className="link-description">{brick.title}</div>
+                        <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
+                        <div className="link-info">
+                          {this.getAuthorRow(brick)}
+                        </div>
+                        <div className="hovered-open-question link-info">{brick.openQuestion}</div>
+                        <div>SUBJECT Code | No. {brick.attemptsCount} of Plays</div>
                         <div>Editor: Name Surname</div>
                       </div>
-                      <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
-                        <Grid item xs={6} container justify="flex-start">
-                          {
-                            (this.props.user.type === UserType.Admin)
-                              ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
-                              : ""
-                          }
-                        </Grid>
-                        <Grid item xs={6} container justify="flex-end">
-                          <img
-                            alt="play"
-                            className="play-button"
-                            onClick={() => this.move(brick.id)}
-                            src="/images/brick-list/play.png" />
-                        </Grid>
+                    <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
+                      <Grid item xs={4} container justify="flex-start">
+                        <div className="round-button" style={{background : `${color}`}}></div>
                       </Grid>
+                      <Grid item xs={4} container justify="flex-start">
+                        {
+                          (this.props.user.type === UserType.Admin)
+                            ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
+                            : ""
+                        }
+                      </Grid>
+                      <Grid item xs={4} container justify="flex-end">
+                        <img
+                          alt="play"
+                          className="play-button"
+                          onClick={() => this.move(brick.id)}
+                          src="/images/brick-list/play.png" />
+                      </Grid>
+                    </Grid>
+                  </div>
+                  :
+                  <div>
+                    <div className="left-brick-circle">
+                      <div className="round-button" style={{background: `${color}`}}></div>
                     </div>
-                    : ""
+                    <div className="short-brick-info">
+                      <div className="link-description">{brick.title}</div>
+                      <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
+                      <div className="link-info">
+                        {this.getAuthorRow(brick)}
+                      </div>
+                    </div>
+                  </div>
                 }
               </Grid>
-              <div className="right-color-column">
-                <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center"></Grid>
-              </div>
             </Grid>
             </div>
           </Box>
