@@ -6,23 +6,24 @@ $main-panel-radius: 2vw;
 $min-brick-height: 9.4vh;
 $left: 0.8vw;
 $right: 1.4vw;
-$yellow: #FF9D00;
-$light-green: #5CC364;
+$yellow: #ff9d00;
+$light-green: #5cc364;
 $lighter-blue: #304775;
 
-.bricks-list-page {
+.back-to-work-page {
   background: $dark-blue;
   height: 100%;
   font-family: "Brandon Grotesque Regular";
 
   .brick-row-container {
     margin-left: 1.5vw;
-    padding-left: 2.2vw;
     height: 86vh;
+    padding-left: 1.98vw;
     border-top-left-radius: $main-panel-radius;
     background: white;
 
     .brick-row-title {
+      padding-left: 0.22vw;
       color: $dark-blue;
       line-height: 1.42;
       font-size: 5.4vw;
@@ -58,7 +59,7 @@ $lighter-blue: #304775;
       border-bottom-right-radius: 2vw;
       background: $light-blue;
       height: 10.5vh;
-      
+
       .home-button {
         cursor: pointer;
         padding-left: 1.05vw;
@@ -132,10 +133,10 @@ $lighter-blue: #304775;
       .logout-button {
         cursor: pointer;
         display: block;
-        height: 5.6vh;
-        width: 5.65vh;
-        margin-top: 0.1vh;
-        margin-right: 4.27vw;
+        height: 4.5vh;
+        width: 4.2vh;
+        margin-top: 0.5vh;
+        margin-right: 4.5vw;
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center;
@@ -145,7 +146,7 @@ $lighter-blue: #304775;
       }
 
       .logout-button:hover {
-        transform: scale(1.4);
+        transform: scale(1.3);
         background-image: url(/images/main-page/logout-hover.png);
       }
 
@@ -226,35 +227,51 @@ $lighter-blue: #304775;
     padding-right: 0;
     height: $min-brick-height;
     margin-top: 0.1vh;
-    margin-bottom: 1.3vh;
+    margin-bottom: 1.7vh;
 
     .absolute-container {
       border-radius: $brick-radius;
-      padding-left: 0.65vw;
       color: $dark-blue;
-  
+
       width: 95%;
       text-align: left;
-      background: $orange;
       width: 95%;
       position: absolute;
       height: $min-brick-height;
-    }
 
-    .link-description {
-      padding-top: 0.75vh;
-      font-size: 2.3vh;
-      font-family: "Brandon Grotesque Bold";
-      line-height: 1;
-      overflow: hidden;
-      height: 2.4vh;
-    }
+      .left-brick-circle {
+        position: absolute;
+        top: 0.85vh;
 
-    .link-info {
-      line-height: 1;
-      font-size: 2.3vh;
-      font-family: "Brandon Grotesque Regular";
-      height: 2.4vh;
+        > div {
+          height: 2.1vw;
+          width: 2.1vw;
+          border-radius: 20vw;
+        }
+      }
+      .short-brick-info {
+        position: absolute;
+        top: 0.3vh;
+        left: 3vw;
+
+        .link-description {
+          text-transform: uppercase;
+          font-size: 1.7vh;
+          font-family: "Brandon Grotesque Bold";
+          line-height: 1;
+          overflow: hidden;
+          height: 1.7vh;
+          margin-bottom: 0.5vh;
+        }
+        .link-info {
+          color: $lighter-blue;
+          line-height: 1;
+          font-size: 1.6vh;
+          font-family: "Brandon Grotesque Regular";
+          height: 1.6vh;
+          margin-bottom: 0.5vh;
+        }
+      }
     }
 
     .edit-button {
@@ -273,32 +290,55 @@ $lighter-blue: #304775;
       width: 3.3%;
     }
   }
-  
+
   .brick-container:hover {
-    color: #ffffff;
+    //color: #ffffff;
   }
 
   .sorted-brick:hover {
     position: absolute;
     z-index: 2;
     width: 95%;
-    color: white;
+    //color: white;
 
     .right-color-column {
       width: 0;
     }
 
-    .hover-text {
-      height: 16vh;
-      font-family: "Brandon Grotesque Regular";
-      overflow: hidden;
-      font-size: 2.3vh;
-      .hovered-open-question {
-        margin-top: 2.5vh;
-        margin-bottom: 2.5vh;
+    .expended-brick-info {
+      background: $tab-grey;
+      border-radius: 0.3vw;
+      padding: 1.2vh 1vw;
+
+      .hover-text {
+        height: 21vh;
+        font-family: "Brandon Grotesque Regular";
+        overflow: hidden;
+        font-size: 2.3vh;
+        .hovered-open-question {
+          margin-top: 2.5vh;
+          margin-bottom: 2.5vh;
+        }
+        .link-description {
+          text-transform: uppercase;
+          font-size: 1.7vh;
+          font-family: "Brandon Grotesque Bold";
+          line-height: 1;
+          overflow: hidden;
+          height: 1.7vh;
+          margin-bottom: 0.5vh;
+        }
+
+        .link-info {
+          color: $lighter-blue;
+          line-height: 1;
+          font-size: 1.6vh;
+          font-family: "Brandon Grotesque Regular";
+          height: 1.6vh;
+          margin-bottom: 0.5vh;
+        }
       }
     }
-    
   }
   .hover-icons-row {
     height: 7vh;
@@ -306,10 +346,21 @@ $lighter-blue: #304775;
     width: 98%;
     position: relative;
 
+    .round-button {
+      position: absolute;
+      left: -0.2vw;
+      height: 2.1vw;
+      width: 2.1vw;
+      bottom: 1vh;
+      border-radius: 20vw;
+      padding-right: -31vw;
+      background: black;
+    }
+
     .bin-button {
       cursor: pointer;
       position: absolute;
-      left: -0.2vw;
+      left: 8vw;
       height: 3.7vh;
       bottom: 1vh;
       padding-right: -31vw;
@@ -326,7 +377,7 @@ $lighter-blue: #304775;
   }
 
   .brick-hover {
-    height: 31.1vh !important;
+    height: 32vh !important;
   }
 
   .brick-row-4 {
@@ -335,27 +386,6 @@ $lighter-blue: #304775;
 
   .brick-row-5 {
     bottom: 0;
-  }
-
-  .brick-row-6 {
-    bottom: 0;
-  }
-
-  .bigger-hover:hover {
-    height: 35.4vh;
-    .hover-icons-row {
-      height: 11.2vh;
-    }
-  }
-
-  .empty-container {
-    opacity: 0.75;
-  }
-  .next-bricks {
-    position: absolute;
-    right: 0;
-    color: white;
-    top: 2vh;
   }
 
   .sorted-row {
@@ -431,13 +461,13 @@ $lighter-blue: #304775;
           line-height: 1.2;
           letter-spacing: 0.22vw;
           margin-bottom: 1vh;
-            .filter-control {
-              vertical-align:middle
-            }
-            .filter-control:not(:first-child) {
-              margin-left: 0.9vw;
-              cursor: pointer;
-            }
+          .filter-control {
+            vertical-align: middle;
+          }
+          .filter-control:not(:first-child) {
+            margin-left: 0.9vw;
+            cursor: pointer;
+          }
         }
         .sort-group {
           padding-top: 1.6vh;
@@ -482,7 +512,7 @@ $lighter-blue: #304775;
             padding-left: 0;
             cursor: default;
             width: 90%;
-            
+
             svg {
               height: 2.2vh;
               width: 2.2vh;
@@ -513,24 +543,40 @@ $lighter-blue: #304775;
   }
 
   .color1 {
-    .absolute-container { background: $orange; }
-    .right-index { background: $orange; }
-    svg { color: $orange !important; }
+    .round-button { background: $orange;}
+    .right-index {
+      background: $orange;
+    }
+    svg {
+      color: $orange !important;
+    }
   }
   .color2 {
-    .absolute-container { background: $yellow; }
-    .right-index { background: $yellow; }
-    svg { color: $yellow !important; }
+    .round-button { background: $yellow;}
+    .right-index {
+      background: $yellow;
+    }
+    svg {
+      color: $yellow !important;
+    }
   }
   .color3 {
-    .absolute-container { background: white; }
-    .right-index { background: white; }
-    svg { color: white !important; }
+    .round-button { background: white;}
+    .right-index {
+      background: white;
+    }
+    svg {
+      color: white !important;
+    }
   }
   .color4 {
-    .absolute-container { background: $light-green; }
-    .right-index { background: $light-green; }
-    svg { color: $light-green !important; }
+    .round-button { background: $light-green;}
+    .right-index {
+      background: $light-green;
+    }
+    svg {
+      color: $light-green !important;
+    }
   }
 }
 
@@ -627,7 +673,6 @@ $lighter-blue: #304775;
     }
   }
 }
-
 
 @media only screen and (min-width: 1280px) {
 }

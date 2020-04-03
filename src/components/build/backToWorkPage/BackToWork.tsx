@@ -230,7 +230,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   getAuthorRow(brick: Brick) {
-    let row = "";
+    let row = "Author ";
     const created = new Date(brick.created);
     const year = this.getYear(created);
     const month = this.getMonth(created);
@@ -280,30 +280,34 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             onMouseLeave={() => this.handleMouseLeave(key)}
           >
             <div className={`sorted-brick absolute-container brick-row-${row} ${brick.expanded ? 'brick-hover' : ''}`}>
-            <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
-              <Grid item xs={brick.expanded ? 12 : 11}>
-                <div className="link-description">{brick.title}</div>
-                <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
-                <div className="link-info">
-                  {this.getAuthorRow(brick)}
-                </div>
-                {
-                  brick.expanded ?
-                    <div>
-                      <div className="hover-text">
-                        <div className="hovered-open-question">{brick.openQuestion}</div>
-                        <div>SUBJECT Code | No. {brick.attemptsCount} of Plays</div>
-                        <div>Editor: Name Surname</div>
-                      </div>
+              <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
+                <Grid item xs={brick.expanded ? 12 : 11}>
+                  {
+                    brick.expanded ?
+                      <div className="expended-brick-info">
+                        <div className="hover-text">
+                          <div className="link-description">{brick.title}</div>
+                          <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
+                          <div className="link-info">
+                            {this.getAuthorRow(brick)}
+                          </div>
+                          <div className="hovered-open-question link-info">{brick.openQuestion}</div>
+                          <div>SUBJECT Code | No. {brick.attemptsCount} of Plays</div>
+                          <div>Editor: Name Surname</div>
+                        </div>
                       <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
-                        <Grid item xs={6} container justify="flex-start">
+
+                        <Grid item xs={4} container justify="flex-start">
+                          <div className="round-button"></div>
+                        </Grid>
+                        <Grid item xs={4} container justify="flex-start">
                           {
                             (this.props.user.type === UserType.Admin)
                               ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
                               : ""
                           }
                         </Grid>
-                        <Grid item xs={6} container justify="flex-end">
+                        <Grid item xs={4} container justify="flex-end">
                           <img
                             alt="play"
                             className="play-button"
@@ -312,30 +316,20 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                         </Grid>
                       </Grid>
                     </div>
-                    : ""
-                }
+                    :
+                    <div>
+                      <div className={`left-brick-circle ${color}`}><div className="round-button"></div></div>
+                      <div className="short-brick-info">
+                        <div className="link-description">{brick.title}</div>
+                        <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
+                        <div className="link-info">
+                          {this.getAuthorRow(brick)}
+                        </div>
+                      </div>
+                    </div>
+                  }
               </Grid>
             </Grid>
-            </div>
-          </Box>
-        </div>
-      </Grid>
-    );
-  }
-
-  getEmptyBrickContainer = (key: number, size: any = 3) => {
-    return (
-      <Grid container key={key} item xs={size} justify="center">
-        <div className="main-brick-container">
-          <Box className="brick-container">
-            <div className="absolute-container empty-container">
-              <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
-                <Grid item xs={11}></Grid>
-                <div className="right-color-column">
-                  <Grid container alignContent="flex-end" style={{width: '100%', height: '100%'}} justify="center">
-                  </Grid>
-                </div>
-              </Grid>
             </div>
           </Box>
         </div>
@@ -610,8 +604,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       if (this.state.bricks[i]) {
         let row = Math.floor(i / 3);
         BackToWork.push(this.getSortedBrickContainer(this.state.bricks[i], i, row));
-      } else {
-        BackToWork.push(this.getEmptyBrickContainer(i, 4));
       }
     }
     return BackToWork
@@ -640,7 +632,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   render() {  
     return (
-      <div className="bricks-list-page">
+      <div className="back-to-work-page">
         <div className="bricks-upper-part">
           <Grid container direction="row" className="bricks-header">
             <Grid item style={{width: '7.65vw'}}>
@@ -672,7 +664,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           </Grid>
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
-              <div style={{width: '100%', height: '100%'}} className="sort-and-filter-inner-container">
+              <div style={{width: '100%'}} className="sort-and-filter-inner-container">
                 {this.renderIndexesBox()}
                 {this.renderSortAndFilterBox()}
               </div>
