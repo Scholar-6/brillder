@@ -80,19 +80,24 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                 <DragBox
                   locked={locked}
                   name="“ ”" fontSize="2.5vw" label="Q U O T E"
-                  marginTop="0vw" hoverMarginTop="-0.65vw"
+                  hoverMarginTop="-0.65vw"
                   fontFamily="Brandon Grotesque Bold"
+                  letterSpacing="0.625vw"
+                  marginLeft="0.3vw"
                   value={QuestionComponentTypeEnum.Quote} />
                 <DragBox
                   locked={locked}
                   name="jpg." fontSize="2.5vw" label="I M A G E"
                   hoverMarginTop="1vw"
+                  marginTop="-2.8vw"
                   fontFamily="Brandon Grotesque Bold"
                   value={QuestionComponentTypeEnum.Image} />
                 <DragBox
                   locked={locked}
                   isImage={true} src="/images/soundicon.png"
-                  label="S O U N D" marginTop="-0.2vw" hoverMarginTop="0.5vw"
+                  label="S O U N D" 
+                  // marginTop="-0.5vw" 
+                  hoverMarginTop="0.5vw"
                   fontFamily="Brandon Grotesque Bold"
                   value={QuestionComponentTypeEnum.Sound} />
                 <DragBox
@@ -100,6 +105,8 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   name="f(x)" fontSize="2.5vw" label="E Q U A T I O N"
                   fontFamily="Brandon Grotesque Bold Italic"
                   hoverMarginTop="0.9vw"
+                  marginTop="-1vw" 
+
                   value={QuestionComponentTypeEnum.Equation} />
                 </ReactSortable>
               </Grid>
