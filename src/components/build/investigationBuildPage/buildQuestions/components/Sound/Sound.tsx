@@ -23,7 +23,7 @@ enum AudioStatus {
   Stop
 }
 
-const SoundComponent: React.FC<SoundProps> = ({locked}) => {
+const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
   const [status, setStatus] = React.useState(AudioStatus.Start);
   const [blobUrl, setBlobUrl] = React.useState("");
   const [audio, setAudio] = React.useState(new Audio());
@@ -46,7 +46,7 @@ const SoundComponent: React.FC<SoundProps> = ({locked}) => {
 
   const onSave = (blob: any) => {
     if (locked) { return; }
-    saveAudio(blobUrl);
+    saveAudio(blob);
   }
 
   const onStop = (blob: any) => {
@@ -91,11 +91,10 @@ const SoundComponent: React.FC<SoundProps> = ({locked}) => {
     return new Blob([ia], {type:mimeString});
   }
 
-  const saveAudio = (result: string) => {
+  const saveAudio = (result: any) => {
     if (result) {
-      let file = dataURItoBlob(result as any);
       var formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', result.blob);
       return axios.post(
         process.env.REACT_APP_BACKEND_HOST + '/fileUpload',
         formData,
@@ -104,10 +103,9 @@ const SoundComponent: React.FC<SoundProps> = ({locked}) => {
           withCredentials: true
         }
       ).then(res => {
-        console.log(res.data);
-        //let comp = Object.assign({}, props.data);
-        //comp.value = res.data.fileName;
-        //props.updateComponent(comp, props.index);
+        let comp = Object.assign({}, props.data);
+        comp.value = res.data.fileName;
+        props.updateComponent(comp, props.index);
       })
       .catch(error => {
         alert('Can`t save image');
