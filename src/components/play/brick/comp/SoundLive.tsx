@@ -11,7 +11,10 @@ const ImageLive: React.FC<ImageProps> = ({ component }) => {
   if (component.value) {
     return (
       <div>
-        <audio style={{width: '100%'}} controls src={`${process.env.REACT_APP_BACKEND_HOST}/files/${component.value}`} />
+        <audio
+          controls
+          style={{width: '100%'}}
+          src={`${process.env.REACT_APP_BACKEND_HOST}/files/${component.value}`} />
       </div>
     );
   }
