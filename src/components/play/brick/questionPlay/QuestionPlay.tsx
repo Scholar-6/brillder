@@ -11,6 +11,7 @@ import TextLive from '../comp/TextLive';
 import QuoteLive from '../comp/QuoteLive';
 import ImageLive from '../comp/ImageLive';
 import EquationLive from '../comp/EquationLive';
+import SoundLive from '../comp/SoundLive';
 
 import ShortAnswer from '../questionTypes/shortAnswer/ShortAnswer';
 import ChooseOne from '../questionTypes/chooseOne/ChooseOne';
@@ -107,6 +108,8 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
         return <QuoteLive key={index} component={component} />
       } else if (type === QuestionComponentTypeEnum.Equation) {
         return <EquationLive key={index} component={component} />
+      } else if (type === QuestionComponentTypeEnum.Sound) {
+        return <SoundLive key={index} component={component} />
       } else if (type === QuestionComponentTypeEnum.Component) {
         return renderUniqueComponent(component, index);
       }
