@@ -1,6 +1,6 @@
 import React from 'react'
 import {useDropzone} from 'react-dropzone';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import axios from 'axios';
 // @ts-ignore
 import ReactRecord from 'react-record';
@@ -27,6 +27,7 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
   let initAudio = new Audio();
   let initStatus = AudioStatus.Start;
   if (props.data && props.data.value) {
+    console.log(props.data.value);
     initAudio = new Audio(`${process.env.REACT_APP_BACKEND_HOST}/files/${props.data.value}`)
     initStatus = AudioStatus.Recorded;
   }
@@ -137,6 +138,8 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
   }
   /* Recording audios */
 
+  let canDelete = status === AudioStatus.Start || status === AudioStatus.Recording;
+
   return (
     <div className="react-recording">
       {
@@ -162,14 +165,14 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
         {
           (status === AudioStatus.Start && !blobUrl) ?
             <Button className="start-record" onClick={startRecording} type="button">
-              <div className="round-circle"></div> Record
+              <FiberManualRecordIcon className="round-circle" /> Record
             </Button>
           : <div></div>
         }
         {
           (status === AudioStatus.Recording) ?
             <Button className="stop-record" onClick={stopRecording} type="button">
-             <div className="round-circle"></div>  Recording
+             <FiberManualRecordIcon className="round-circle" />  Recording
             </Button>
           : <div></div>
         }
@@ -188,9 +191,9 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
          : <div></div>
         }
         <Button
-          className={"delete-record " + (!blobUrl ? 'disabled' : "")}
+          className={"delete-record " + (canDelete ? 'disabled' : "")}
           onClick={() => deleteAudio()}
-          disabled={!blobUrl}
+          disabled={canDelete}
         >
           Delete
         </Button>
