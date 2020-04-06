@@ -120,7 +120,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     brickAttempt.brickId = props.brick.id;
     brickAttempt.studentId = props.user.id;
     if (isPreview) {
-      props.history.push(`/build/brick/${brickId}/build/investigation/synthesis`);
+      props.history.push(`/build/brick/${brickId}/build/investigation/publish`);
     } else {
       return axios.post(
         process.env.REACT_APP_BACKEND_HOST + '/play/attempt',
