@@ -76,6 +76,12 @@
     }
   }
 
+  .pause-record {
+    .play-arrow {
+      margin-right: 0.5vw;
+    }
+  }
+
   .delete-record {
     border-left: 1px solid $tab-grey;
     border-top-left-radius: 0 !important;
