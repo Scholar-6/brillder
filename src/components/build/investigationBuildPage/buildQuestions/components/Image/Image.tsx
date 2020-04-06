@@ -67,7 +67,6 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
 
   const saveImage = () => {
     if (result) {
-      console.log(result)
       setImageStatus(SavingStatus.Saving);
       let file = dataURItoBlob(result as any);
       var formData = new FormData();
