@@ -185,7 +185,7 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
         }
         {
           (status === AudioStatus.Play) ?
-            <Button className="play-record" onClick={stopRecord} type="button">
+            <Button className="pause-record play-record" onClick={stopRecord} type="button">
               <img alt="play-sound" src="/images/play-orange.png" className="play-arrow" /> Pause
             </Button>
          : <div></div>
