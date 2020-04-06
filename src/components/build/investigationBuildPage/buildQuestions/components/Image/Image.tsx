@@ -57,16 +57,14 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
           fileName
             ? <img style={{width: '100%'}} src={`${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`} />
             : <Grid
-          container
-          justify="center"
-          alignContent="center"
-          style={{
-            height:'100%',
-            backgroundPosition: 'center'
-          }}
-        >
-          <p>Drag Image Here | Click to Select Image</p>
-        </Grid>
+                container
+                justify="center"
+                alignContent="center"
+                direction="row"
+                style={{height: '10vh'}}
+              >
+                Drag Image Here | Click to Select Image
+              </Grid>
         }
       </div>
     </div>
