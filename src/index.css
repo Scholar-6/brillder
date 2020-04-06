@@ -23,6 +23,10 @@ code {
   font-family: 'Brandon Grotesque Regular'
 }
 
+div:focus {
+  outline: none;
+}
+
 input:focus {
   outline: none;
 }
