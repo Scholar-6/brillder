@@ -1,3 +1,5 @@
+@import '_variables';
+
 .dropzone {
     height: 100px;
     border: 2px dashed #eee;
@@ -10,4 +12,73 @@
 
 .dropzone.disabled {
     background: #EBEBE4;
+}
+
+.react-recording {
+  $button-radius: 0.3vw;
+  
+  button {
+    text-transform: none;
+    padding: 0 2vw !important;
+  }
+  
+  .round-circle {
+    height: 2vh;
+    width: 2vh;
+    border-radius: 2vh;
+    background: $orange;
+    margin-right: 1.2vw;
+  }
+
+  .start-record {
+    padding-left: 0.3vw !important;
+    background: white;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-left-radius: $button-radius !important;
+    border-bottom-left-radius: $button-radius !important;
+  }
+  .stop-record {
+    padding-left: 0.3vw !important;
+    background: $orange;
+    color: white;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-left-radius: $button-radius !important;
+    border-bottom-left-radius: $button-radius !important;
+
+    .round-circle {
+      background: white;
+    }
+  }
+  .play-record {
+    padding-left: 0.3vw !important;
+    background: white;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-left-radius: $button-radius !important;
+    border-bottom-left-radius: $button-radius !important;
+
+    .play-arrow {
+      margin-right: 1.2vw;
+      color: $orange;
+    }
+  }
+  .delete-record {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-top-right-radius: $button-radius !important;
+    border-bottom-right-radius: $button-radius !important;
+    background: white;
+  }
+
+  .disabled {
+    background: #F2F2F2;
+  }
+
+  .stop-record:hover {
+    color: white;
+    background: $orange;
+    opacity: 0.9;
+  }
 }
