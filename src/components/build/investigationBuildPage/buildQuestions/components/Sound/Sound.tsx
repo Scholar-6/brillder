@@ -113,6 +113,10 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
     }
   }
 
+  if (files && files.length > 0) {
+    saveAudio(files[0]);
+  }
+
   const deleteAudio = () => {
     if (locked) { return; }
     setStatus(AudioStatus.Start);
