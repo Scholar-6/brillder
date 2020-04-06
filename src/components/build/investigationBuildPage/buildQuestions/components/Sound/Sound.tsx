@@ -10,6 +10,9 @@ import { Grid, Button } from '@material-ui/core';
 
 interface SoundProps {
   locked: boolean
+  index: number,
+  data: any,
+  updateComponent(component:any, index:number): void
 }
 
 enum AudioStatus {
@@ -35,24 +38,30 @@ const SoundComponent: React.FC<SoundProps> = ({locked}) => {
     </li>
   ));
 
+  /* Recording audios */
   const recordFile = (blob: Blob) => {
+    if (locked) { return; }
     console.log('Record: ', blob);
   }
 
   const onSave = (blob: any) => {
+    if (locked) { return; }
     saveAudio(blobUrl);
   }
 
   const onStop = (blob: any) => {
+    if (locked) { return; }
     setBlobUrl(blob.blobURL);
     setAudio(new Audio(blob.blobURL));
   }
 
   const startRecording = () => {
+    if (locked) { return; }
     return status === AudioStatus.Start ? setStatus(AudioStatus.Recording) : null;
   }
 
   const stopRecording = () => {
+    if (locked) { return; }
     return status === AudioStatus.Recording ? setStatus(AudioStatus.Recorded) : null;
   }
 
@@ -107,19 +116,27 @@ const SoundComponent: React.FC<SoundProps> = ({locked}) => {
   }
 
   const deleteAudio = () => {
+    if (locked) { return; }
     setStatus(AudioStatus.Start);
     setBlobUrl("");
   }
+  /* Recording audios */
 
   return (
     <div className="react-recording">
-      <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
-        <input {...getInputProps()} />
-        <Grid container justify="center" alignContent="center" style={{height:'80%'}}>
-          <p>Drag Sound File Here | Click to Select Sound File</p>
-        </Grid>
-      </div>
-      {files[0]}
+      {
+        (status === AudioStatus.Start) ?
+          <div>
+            <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
+              <input {...getInputProps()} />
+              <Grid container justify="center" alignContent="center" style={{height:'80%'}}>
+                <p>Drag Sound File Here | Click to Select Sound File</p>
+              </Grid>
+            </div>
+            {files[0]}
+          </div>
+        : <div></div>
+      }
       <Grid container item xs={12} justify="center">
       <ReactRecord
         record={status === AudioStatus.Recording}
