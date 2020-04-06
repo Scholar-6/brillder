@@ -55,10 +55,7 @@ interface BricksListState {
 enum SortBy {
   None,
   Date,
-  Subject,
   Popularity,
-  Author,
-  Length,
 }
 
 class BricksListPage extends Component<BricksListProps, BricksListState> {
@@ -169,7 +166,18 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
   handleSortChange = (e: any) => {
     const {state} = this;
-    this.setState({...state, sortBy: parseInt(e.target.value)})
+    const sortBy = parseInt(e.target.value) as SortBy;
+    let bricks = this.state.bricks;
+    if (sortBy === SortBy.Date) {
+      bricks = bricks.sort((a, b) => {
+        const createdA = new Date(a.created).getTime();
+        const createdB = new Date(b.created).getTime();
+        return (createdA < createdB) ? 1 : -1;
+      });
+    } else if (sortBy === SortBy.Popularity) {
+      bricks = bricks.sort((a, b) => ((a.attemptsCount > b.attemptsCount) ? 1 : -1)); 
+    }
+    this.setState({...state, bricks, sortBy})
   }
 
   filterBySubject = (i: number) => {
