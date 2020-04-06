@@ -50,25 +50,25 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   ));
 
   return (
-    <div>
+    <div className="image-drag-n-drop">
       <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
         <input {...getInputProps()} />
-        <Grid
+        {
+          fileName
+            ? <img style={{width: '100%'}} src={`${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`} />
+            : <Grid
           container
           justify="center"
           alignContent="center"
           style={{
             height:'100%',
-            backgroundImage: `url(${process.env.REACT_APP_BACKEND_HOST}/files/${fileName})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'auto 100%',
             backgroundPosition: 'center'
           }}
         >
           <p>Drag Image Here | Click to Select Image</p>
         </Grid>
+        }
       </div>
-      {files[0]}
     </div>
   );
 }
