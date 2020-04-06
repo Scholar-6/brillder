@@ -8,7 +8,7 @@ export interface LastTabProps {
 }
 
 const LastTab: React.FC<LastTabProps> = ({columns, synthesis, isSynthesis}) => {
-  if (columns > 5) {
+  if (columns > 5 || synthesis) {
     return <div className="last-tab" style={{fontSize: '1.5vw'}}>+</div>;
   }
   return (
