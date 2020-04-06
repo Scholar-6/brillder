@@ -139,7 +139,7 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
           </div>
         : <div></div>
       }
-      <Grid container item xs={12} justify="center">
+      <Grid container item xs={12} justify="center" className="record-button-row">
       <ReactRecord
         record={status === AudioStatus.Recording}
         onStop={onStop}
