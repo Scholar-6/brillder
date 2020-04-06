@@ -26,7 +26,9 @@
   }
 
   button {
+    width: 7.5vw;
     font-family: 'Brandon Grotesque Regular';
+    font-size: 1vw;
     text-transform: none;
     padding: 0.3vh 2vw !important;
   }
@@ -35,7 +37,7 @@
     font-size: 3vh;
     border-radius: 2vh;
     color: $orange;
-    margin-right: 1.2vw;
+    margin-right: 1vw;
   }
 
   .start-record {
@@ -55,8 +57,14 @@
     border-top-left-radius: $button-radius !important;
     border-bottom-left-radius: $button-radius !important;
 
+    span {
+      margin-left: 0.45vw;
+    }
+
     .round-circle {
       color: white;
+      margin-left: 0.1vw;
+      margin-right: 0vw;
     }
   }
   .play-record {
@@ -93,6 +101,7 @@
 
   .disabled {
     background: #F2F2F2;
+    color: #444 !important;
   }
 
   .stop-record:hover {

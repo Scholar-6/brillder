@@ -172,7 +172,7 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
         {
           (status === AudioStatus.Recording) ?
             <Button className="stop-record" onClick={stopRecording} type="button">
-             <FiberManualRecordIcon className="round-circle" />  Recording
+             <FiberManualRecordIcon className="round-circle" />  <span>Recording</span>
             </Button>
           : <div></div>
         }
