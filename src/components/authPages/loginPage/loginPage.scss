@@ -147,4 +147,31 @@ html, body, #root {
     box-shadow: none;
     font-family: 'Brandon Grotesque Bold';
   }
+
+
+  .register-success {
+    position: fixed;
+    top: 24.1vh;
+    left: 19.2vw;
+    color: white;
+    font-family: 'Brandon Grotesque Regular';
+
+    .thanks-info {
+      position: 'relative';
+      line-height: 1.43;
+      font-size: 4.2vw;
+      .register-success-icon {
+        position: absolute;
+        top: 0.3vh;
+        left: -14.6vh;
+        font-size: 10.7vh;
+        color: $orange;
+      }
+    }
+    .contact-info {
+      margin-top: 15.2vh;
+      line-height: 1;
+      font-size: 2.1vw;
+    }
+  }
 }

@@ -107,4 +107,4 @@ const isAuthorized = () => {
   }
 }
 
-export default { login, logout, isAuthorized }
+export default { login, logout, loginSuccess, isAuthorized }
