@@ -20,16 +20,28 @@ enum AudioStatus {
   Recording,
   Recorded,
   Play,
-  Stop
+  Stop,
 }
 
 const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
-  const [status, setStatus] = React.useState(AudioStatus.Start);
+  let initAudio = new Audio();
+  let initStatus = AudioStatus.Start;
+  if (props.data && props.data.value) {
+    initAudio = new Audio(`${process.env.REACT_APP_BACKEND_HOST}/files/${props.data.value}`)
+    initStatus = AudioStatus.Recorded;
+  }
+  const [status, setStatus] = React.useState(initStatus as AudioStatus);
   const [blobUrl, setBlobUrl] = React.useState("");
-  const [audio, setAudio] = React.useState(new Audio());
+  const [audio, setAudio] = React.useState(initAudio);
   const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
     accept: 'audio/*',
-    disabled: locked
+    disabled: locked,
+    onDrop: (files: any[]) => {
+      if (files && files.length > 0) {
+        console.log(files);
+        saveAudio(files[0]);
+      }
+    }
   });
   
   const files = acceptedFiles.map((file:any) => (
@@ -46,7 +58,7 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
 
   const onSave = (blob: any) => {
     if (locked) { return; }
-    saveAudio(blob);
+    saveAudio(blob.blob);
   }
 
   const onStop = (blob: any) => {
@@ -68,9 +80,14 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
   const playRecord = () => {
     audio.play();
     setStatus(AudioStatus.Play);
-    audio.onpause = function () {
-      //console.log(pause);
-    }
+    audio.onended = function() {
+      setStatus(AudioStatus.Recorded);
+    };
+  }
+
+  const stopRecord = () => {
+    audio.pause();
+    setStatus(AudioStatus.Recorded);
   }
 
   function dataURItoBlob(dataURI: string) {
@@ -91,10 +108,10 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
     return new Blob([ia], {type:mimeString});
   }
 
-  const saveAudio = (result: any) => {
-    if (result) {
+  const saveAudio = (file: any) => {
+    if (file) {
       var formData = new FormData();
-      formData.append('file', result.blob);
+      formData.append('file', file);
       return axios.post(
         process.env.REACT_APP_BACKEND_HOST + '/fileUpload',
         formData,
@@ -108,13 +125,9 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
         props.updateComponent(comp, props.index);
       })
       .catch(error => {
-        alert('Can`t save image');
+        alert('Can`t save audio file');
       });
     }
-  }
-
-  if (files && files.length > 0) {
-    saveAudio(files[0]);
   }
 
   const deleteAudio = () => {
@@ -135,7 +148,7 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
                 <p>Drag Sound File Here | Click to Select Sound File</p>
               </Grid>
             </div>
-            {files[0]}
+            {files[0] ? files[0] : props.data.value}
           </div>
         : <div></div>
       }
@@ -161,9 +174,16 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
           : <div></div>
         }
         {
-          blobUrl ?
+          (status === AudioStatus.Recorded) ?
             <Button className="play-record" onClick={playRecord} type="button">
               <PlayArrowIcon className="play-arrow" /> Play
+            </Button>
+         : <div></div>
+        }
+        {
+          (status === AudioStatus.Play) ?
+            <Button className="play-record" onClick={stopRecord} type="button">
+              <PlayArrowIcon className="play-arrow" /> Pause
             </Button>
          : <div></div>
         }
