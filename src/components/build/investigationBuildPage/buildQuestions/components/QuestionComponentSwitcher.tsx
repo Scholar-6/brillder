@@ -43,6 +43,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
 
   const setEmptyType = () => {
     component.type = QuestionTypeEnum.None;
+    component.value = "";
     updateComponent(component, index);
   }
 
