@@ -10,7 +10,7 @@ interface ImageProps {
 const ImageLive: React.FC<ImageProps> = ({ component }) => {
   if (component.value) {
     return (
-      <div>
+      <div className="audio-play-component">
         <audio
           controls
           style={{width: '100%'}}
