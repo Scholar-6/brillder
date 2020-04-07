@@ -41,19 +41,23 @@
       text-transform: none !important;
     }
   }
+  
+  .hint-question-circle {
+    font-size: 2.5vw;
+    color: $orange;
+  }
 
   .hint-type {
-    padding: 13px 0 10px 5px;
+    position: absolute;
+    right: 0;
+    width: 2.5vw;
+    height: 2.6vw;
 
     .question-mark {
       font-weight: bold;
-      font-family: $font-family-regular;
+      font-family: 'Brandon Grotesque Black';
       color: white;
-      border-radius: 30px;
-      font-size: 0.78vw;
-      padding: 0 5px;
-      background: $orange;
-      margin-right: 0.6vw;
+      font-size: 1.2vw;
     }
   }
 
