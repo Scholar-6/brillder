@@ -273,7 +273,7 @@ $lighter-blue: #304775;
 
     .expended-brick-info {
       background: $tab-grey;
-      border-radius: 0.3vw;
+      border-radius: 0.5vw;
       padding: 1.2vh 1vw;
 
       .hover-text {
@@ -326,7 +326,7 @@ $lighter-blue: #304775;
     .bin-button {
       cursor: pointer;
       position: absolute;
-      left: 8vw;
+      left: 9.2vw;
       height: 3.7vh;
       bottom: 1vh;
       padding-right: -31vw;
@@ -345,13 +345,17 @@ $lighter-blue: #304775;
   .brick-hover {
     height: 31.1vh !important;
   }
-
-  .brick-row-3 {
-    bottom: 0;
+  .brick-row-0, .brick-row-1, .brick-row-2 {
+    .expended-brick-info {
+      border-top-left-radius: 0 !important;
+    }
   }
 
-  .brick-row-4 {
+  .brick-row-3, .brick-row-4 {
     bottom: 0;
+    .expended-brick-info {
+      border-bottom-left-radius: 0 !important;
+    }
   }
 
   .bigger-hover:hover {

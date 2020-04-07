@@ -4,13 +4,11 @@ import { Box, Grid, FormControlLabel, Radio, RadioGroup, Button } from '@materia
 import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ClearIcon from '@material-ui/icons/Clear';
 import Dialog from '@material-ui/core/Dialog';
 
-import actions from 'redux/actions/bricksActions';
 import authActions from 'redux/actions/auth';
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType } from 'model/user';
