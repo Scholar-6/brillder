@@ -31,7 +31,6 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
           withCredentials: true
         }
       ).then(res => {
-        console.log(res.data.fileName);
         let comp = Object.assign({}, props.data);
         comp.value = res.data.fileName;
         props.updateComponent(comp, props.index);

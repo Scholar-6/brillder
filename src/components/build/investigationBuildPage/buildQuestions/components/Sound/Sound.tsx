@@ -27,7 +27,6 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
   let initAudio = new Audio();
   let initStatus = AudioStatus.Start;
   if (props.data && props.data.value) {
-    console.log(props.data.value);
     initAudio = new Audio(`${process.env.REACT_APP_BACKEND_HOST}/files/${props.data.value}`)
     initStatus = AudioStatus.Recorded;
   }
@@ -39,7 +38,6 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
     disabled: locked,
     onDrop: (files: any[]) => {
       if (files && files.length > 0) {
-        console.log(files);
         saveAudio(files[0]);
       }
     }
@@ -54,7 +52,6 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
   /* Recording audios */
   const recordFile = (blob: Blob) => {
     if (locked) { return; }
-    console.log('Record: ', blob);
   }
 
   const onSave = (blob: any) => {

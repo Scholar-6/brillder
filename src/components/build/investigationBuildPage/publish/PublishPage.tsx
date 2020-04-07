@@ -32,7 +32,6 @@ interface PublishBrickState {
 class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
   constructor(props: PublishBrickProps) {
     super(props);
-    console.log(props);
 
     this.state = {
       status: ButtonStatus.Start,
@@ -89,7 +88,6 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
       alert(msg);
     })
     .catch(error => {
-      console.log(error);
       alert('Can`t update brick')
     })
   }
@@ -113,7 +111,6 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
       alert(msg);
     })
     .catch(error => {
-      console.log(error);
       alert('Can`t update brick')
     })
   }

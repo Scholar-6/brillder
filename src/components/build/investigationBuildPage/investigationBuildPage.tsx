@@ -188,11 +188,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     );
   };
 
-  const chooseOneToChooseSeveral = (type: QuestionTypeEnum) => {
-    const index = getQuestionIndex(activeQuestion);
-    const component = activeQuestion.components.find(
+  const getUniqueComponent = (question: Question) => {
+    return question.components.find(
       c => c.type === QuestionComponentTypeEnum.Component
     );
+  }
+
+  const chooseOneToChooseSeveral = (type: QuestionTypeEnum) => {
+    const index = getQuestionIndex(activeQuestion);
+    const component = getUniqueComponent(activeQuestion);
     for (const answer of component.list) {
       answer.checked = false;
     }
@@ -200,6 +204,17 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const question = Object.assign({}, activeQuestion);
     setQuestion(index, question);
   };
+
+  const convertToShortAnswer = (type: QuestionTypeEnum) => {
+    const index = getQuestionIndex(activeQuestion);
+    activeQuestion.type = type;
+    const component = getUniqueComponent(activeQuestion);
+    if (component.list && component.list.length > 0) {
+      component.list = [component.list[0]];
+    }
+    const question = Object.assign({}, activeQuestion);
+    setQuestion(index, question);
+  }
 
   const convertQuestionTypes = (type: QuestionTypeEnum) => {
     if (
@@ -217,6 +232,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         list: []
       };
       setQuestion(index, question);
+    } else if (type === QuestionTypeEnum.ShortAnswer) {
+      convertToShortAnswer(type);
     } else {
       setQuestionType(type);
     }
