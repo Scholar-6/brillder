@@ -9,7 +9,11 @@ export interface SynthesisTabProps {
 }
 
 const SynthesisTab: React.FC<SynthesisTabProps> = ({columns, synthesis, isSynthesis}) => {
-  return <div className="last-tab"><FormatListBulletedIcon className="synthesis-tab-icon" /></div>
+  return (
+    <div className="last-tab">
+      <img alt="add-synthesis" src="/images/synthesis-icon.png" className="synthesis-tab-icon" />
+    </div>
+  );
 }
 
 export default SynthesisTab

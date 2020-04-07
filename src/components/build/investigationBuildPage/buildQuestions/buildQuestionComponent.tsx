@@ -132,7 +132,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                           className="synthesis-button"
                           onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
                         >
-                          <FormatListBulletedIcon className="inner-icon" />
+                          <img alt="add-synthesis" src="/images/synthesis-icon.png" className="inner-icon" />
                           Add Synthesis
                         </Button>
                       </Grid>

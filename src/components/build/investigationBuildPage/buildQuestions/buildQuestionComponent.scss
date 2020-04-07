@@ -204,7 +204,7 @@ $question-radius: 0.6vw;
           font-size: 1.37vw;
           line-height: 1;
           margin-left: 0;
-          letter-spacing: 0.3vw;
+          letter-spacing: 0.2vw;
           width: 100%;
           text-align: center;
           color: $dark-blue;
@@ -216,7 +216,7 @@ $question-radius: 0.6vw;
           margin-bottom: 0.9vh;
           background: white;
           color: $dark-blue;
-          width: 94%;
+          width: 89%;
           background: $tab-grey;
           font-family: 'Brandon Grotesque Regular';
 
@@ -227,15 +227,10 @@ $question-radius: 0.6vw;
           background: $tab-grey;
           border-radius: $question-radius;
 
-          padding: 0.75vh 0;
+          padding: 1.5vh 0;
 
-          > span {
-            justify-content: flex-start;
-          }
-    
           .inner-icon {
-            margin-left: 0.3vw;
-            font-size: 2.4vw;
+            width: 2vw;
             margin-right: 0.5vw;
           }
         }
