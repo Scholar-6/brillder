@@ -123,10 +123,10 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
               <Grid container direction="row" justify="center">
-                <Grid container item xs={11} className="question-button-container">
+                <Grid container item xs={11} className="question-button-container" justify="center">
                   {
                     (props.questionsCount > 1) ?
-                      <div>
+                      <Grid container justify="center" alignContent="flex-start">
                         <div className="right-side-text">Last Question?</div>
                         <Button
                           className="synthesis-button"
@@ -135,7 +135,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                           <FormatListBulletedIcon className="inner-icon" />
                           Add Synthesis
                         </Button>
-                      </div>
+                      </Grid>
                     : ""
                   }
                 </Grid>
