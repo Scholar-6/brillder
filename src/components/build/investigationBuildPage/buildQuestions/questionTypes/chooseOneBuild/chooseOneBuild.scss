@@ -14,12 +14,18 @@
     position: relative;
     margin: 0;
 
+    .Mui-checked {
+      color: $orange;
+    }
+
     .left-ckeckbox {
       position: absolute;
+      z-index: 1;
       padding: 0.45vw;
       left: 0.1vw;
       top: 0.5vw;
       opacity: 1 !important;
+
       span {
         svg {
           height: $bin-size !important;
