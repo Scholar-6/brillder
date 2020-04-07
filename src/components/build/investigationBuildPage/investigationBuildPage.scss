@@ -1,5 +1,16 @@
 @import "_variables";
 
+.mobile-brick-dialog {
+  font-size: 5vw;
+  padding: 4vh 4vw !important;
+
+  .yes-button {
+    color: white;
+    background: $orange;
+    margin-bottom: 4vh;
+  }
+}
+
 .investigation-build-page {
   height: 100%;
 

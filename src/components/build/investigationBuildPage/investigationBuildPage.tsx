@@ -388,7 +388,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   return (
     <div className="investigation-build-page">
-      <Hidden only={['xs', 'sm', 'md']}>
+      <Hidden only={['xs', 'sm']}>
         <div className="exit-button" onClick={exitAndSave}>
           <div>
             <div className="exit-label">
@@ -411,8 +411,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <div style={{lineHeight: 0.9}}>OSAL</div>
           </div>
         </div>
-      </Hidden>
-      <Grid
+        <Grid
         container direction="row"
         className="investigation-build-background"
         alignItems="center"
@@ -468,22 +467,39 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
         </Route>
       </Grid>
+        <Dialog
+          open={deleteDialogOpen}
+          onClose={() => setDeleteDialog(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className="delete-brick-dialog"
+        >
+          <div className="dialog-header">
+            <div>Permanently delete</div>
+            <div>this question?</div>
+          </div>
+          <Grid container direction="row" className="row-buttons" justify="center">
+            <Button className="yes-button" onClick={() => deleteQuestionByIndex(deleteQuestionIndex)}>Yes, delete</Button>
+            <Button className="no-button" onClick={() => setDeleteDialog(false)}>No, keep</Button>
+          </Grid>
+        </Dialog>
+      </Hidden>
+      <Hidden only={['md', 'lg', 'xl']}>
       <Dialog
-        open={deleteDialogOpen}
-        onClose={() => setDeleteDialog(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        className="delete-brick-dialog"
-      >
-        <div className="dialog-header">
-          <div>Permanently delete</div>
-          <div>this question?</div>
-        </div>
-        <Grid container direction="row" className="row-buttons" justify="center">
-          <Button className="yes-button" onClick={() => deleteQuestionByIndex(deleteQuestionIndex)}>Yes, delete</Button>
-          <Button className="no-button" onClick={() => setDeleteDialog(false)}>No, keep</Button>
-        </Grid>
-      </Dialog>
+          open={true}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className="mobile-brick-dialog"
+        >
+          <div className="mobile-dialog-header" style={{padding: '4vh 4vw'}}>
+            <div>You need desktop browser</div>
+            <div>to use this page</div>
+          </div>
+          <Grid container direction="row" className="row-buttons" justify="center">
+            <Button className="yes-button" onClick={() => history.push('/build')}>Move</Button>
+          </Grid>
+        </Dialog>
+      </Hidden>
     </div>
   );
 };
