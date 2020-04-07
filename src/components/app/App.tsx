@@ -16,7 +16,6 @@ import BricksListPage from '../build/bricksListPage/bricksListPage';
 import BackToWorkPage from '../build/backToWorkPage/BackToWork';
 import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
 import LoginPage from '../authPages/loginPage/loginPage';
-import RegisterPage from '../authPages/registerPage/registerPage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
 import ChooseUserPage from '../authPages/chooseUserPage/ChooseUserPage';
 import LogoPage from '../logoPage/logoPage';
@@ -73,7 +72,6 @@ const App: React.FC = (props: any) => {
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
         <AuthRoute path="/choose-user" component={ChooseUserPage} />
         <AuthRoute path="/login" exact component={LoginPage} />
-        <AuthRoute path="/register" exact component={RegisterPage} />
 
         <Route path="/logo-page" component={LogoPage} />
         <Route component={AuthRedirectRoute} />
