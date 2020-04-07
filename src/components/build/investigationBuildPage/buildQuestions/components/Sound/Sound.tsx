@@ -151,7 +151,7 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
                 <p>Drag Sound File Here | Click to Select Sound File</p>
               </Grid>
             </div>
-            {files[0] ? files[0] : props.data.value}
+            {files[0] ? files[0] : ""}
           </div>
         : <div></div>
       }
