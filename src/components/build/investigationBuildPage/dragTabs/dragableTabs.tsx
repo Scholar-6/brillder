@@ -109,7 +109,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
       <GridList cellHeight={40} className={classes.gridList} cols={columns}>
         <ReactSortable
           list={questions}
-          style={{width: '100%', marginTop: '+1px', padding: 0, height: '100% '}}
+          style={{width: '100%', marginTop: 0, padding: 0, height: '100% '}}
           group="tabs-group"
           setList={props.setQuestions}>
           {
