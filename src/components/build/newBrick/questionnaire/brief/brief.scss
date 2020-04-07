@@ -37,13 +37,15 @@
   .typing-text {
     position: absolute;
     top: 53%;
-    width: 86.5%;
+    width: 89%;
     overflow: hidden;
     text-align: left;
     left: 1.5vw;
     font-size: 1.25vw;
     color: white;
     font-family: 'Brandon Grotesque Regular';
+    height: 12.5vw;
+    overflow-y: auto;
   }
 
   @media only screen and (max-width: 959px) and (min-width: 600px) {
