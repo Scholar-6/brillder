@@ -158,7 +158,7 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                       {
                         typeArray.map((typeName, i) => {
                           const type = QuestionType[typeName] as QuestionTypeEnum;
-                          return <MenuItem key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
+                          return <MenuItem style={{fontFamily: 'Brandon Grotesque Regular'}} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
                         })
                       }
                     </Select>
