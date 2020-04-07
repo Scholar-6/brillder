@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid, Input } from "@material-ui/core";
-import SearchIcon from '@material-ui/icons/Search';
 
 import './brickTitle.scss';
 import { NewBrickStep } from "../../model";
@@ -49,41 +48,21 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
   
   return (
     <Grid container alignContent="flex-start" className="brick-title-container">
-      <div className="search-container">
-        <Grid container alignContent="center" style={{height: '100%', position:'relative'}}>
-          Search
-          <SearchIcon className="fake-loop"/>
-        </Grid>
-      </div>
+      <Grid container justify="center">
+        <img alt="titles" src="/images/new-brick/titles.png" className="titles-image" />
+      </Grid>
       <div className="brick-preview-container">
-        <div className="brick-title" style={{color: title ? '#D8D2CE' : ''}}>
-          {title ? title : 'Title'}
+        <div className={"brick-title " + (title ? 'topic-filled' : '')}>
+          {title ? title : 'TITLE'}
         </div>
-        <div style={{height: '0.9vw', overflow: 'hidden'}}>
-          <span style={{color: subTopic ? '#D8D2CE' : ''}}>
+        <div className="brick-topics">
+          <span className={subTopic ? 'topic-filled' : ''}>
             {subTopic ? subTopic : 'Topic'}
-          </span> | <span style={{color: alternativeTopics ? '#D8D2CE' : ''}}>
-            {alternativeTopics ? alternativeTopics: 'Subtopics'}
+          </span> | <span className={alternativeTopics ? 'topic-filled' : ''}>
+            {alternativeTopics ? alternativeTopics: 'Subtopic(s)'}
           </span>
         </div>
-        <div>Author | <span style={{color: '#D8D2CE'}}>{dateString}</span></div>
-        <div className="brick-right-button">
-          <Grid container alignContent="flex-end" style={{height: '100%'}}>
-            <span className="fake-expand">+</span>
-          </Grid>
-        </div>
-      </div>
-      <div className="brick-fake-preview-container brick-container-2">
-        <div className="brick-right-button">
-        </div>
-      </div>
-      <div className="brick-fake-preview-container brick-container-3">
-        <div className="brick-right-button">
-        </div>
-      </div>
-      <div className="brick-fake-preview-container brick-container-4">
-        <div className="brick-right-button">
-        </div>
+        <div className="author-row">Author | {dateString}</div>
       </div>
     </Grid>
   )
