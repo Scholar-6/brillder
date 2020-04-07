@@ -48,7 +48,7 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
     target.style.color = "#3FCA79";
     target.borderRadius = "20vw";
     e.target.style.fontSize = "3vw";
-    e.target.innerHTML = "✔";
+    e.target.innerHTML = `<img alt="tick" src="/images/tick-white.png" />`;
     if (this.props.user.type === UserType.Admin || this.props.user.type === UserType.Editor) {
       this.publish();
     } else if (this.props.user.type === UserType.Creator) {
@@ -122,7 +122,7 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
     if (this.state.status === ButtonStatus.Wider) {
       let button = this.state.myRef.current;
       setTimeout(() => {
-        button.style.width = '20vw';
+        button.style.width = '25vw';
       }, 200);
     }
   }
@@ -150,9 +150,9 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
             >
               {
                 (this.props.user.type === UserType.Admin || this.props.user.type === UserType.Editor)
-                  ? "Submit/Publish"
+                  ? "SUBMIT"
                   : (this.props.user.type === UserType.Creator)
-                    ? "Review"
+                    ? "REVIEW"
                     : ""
               }
             </Grid>
@@ -191,7 +191,7 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
               justify="center"
               alignContent="center"
             >
-              ✔
+              <img alt="tick" src="/images/tick-white.png" />
             </Grid>
           </button>
         ) : (
