@@ -68,9 +68,10 @@ $box-radius: 0.4vw;
       line-height: 1.2;
 
       .brick-title {
-        height: 0.9vw;
+        height: 0.86vw;
         line-height: 1;
         font-family: 'Brandon Grotesque Bold';
+        overflow-y: hidden;
       }
     }
     .brick-fake-preview-container {
