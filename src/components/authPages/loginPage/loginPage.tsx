@@ -12,7 +12,7 @@ import axios from "axios";
 import actions from "redux/actions/auth";
 import "./loginPage.scss";
 import { Redirect } from "react-router-dom";
-import { LoginModel, UserLoginType } from "model/auth";
+import { UserLoginType } from "model/auth";
 
 const mapState = (state: any) => {
   return {
@@ -102,7 +102,7 @@ const LoginPage: React.FC<LoginProps> = props => {
             register(email, password);
           }
         } else if (response.status === 401) {
-          if (response.data.msg === 'User is not active.') {
+          if (response.data.msg === 'USER_IS_NOT_ACTIVE') {
             setNewUser(true);
           }
         }
