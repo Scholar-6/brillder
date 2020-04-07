@@ -23,6 +23,10 @@ code {
   font-family: 'Brandon Grotesque Regular'
 }
 
+.ck-focused {
+  border-color: #C4C4C4 !important;
+}
+
 div:focus {
   outline: none;
 }
