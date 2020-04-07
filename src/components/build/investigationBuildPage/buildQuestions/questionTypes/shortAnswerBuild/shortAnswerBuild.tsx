@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
+import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
 import './shortAnswerBuild.scss'
 
@@ -20,13 +21,27 @@ export interface ShortAnswerBuildProps {
 }
 
 const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, data, updateComponent}) => {
+  const [height, setHeight] = React.useState('0%');
+
+  useEffect(() => calculateHeight());
+
   if (!data.list) {
     data.list = [{value: ""}];
   }
 
   const [state, setState] = React.useState(data);
 
-  useEffect(() => { setState(data) }, [data]);
+  useEffect(() => {setState(data) }, [data]);
+
+  const calculateHeight = () => {
+    let showButton = true;
+    for (let answer of state.list) {
+      if (answer.value === "") {
+        showButton = false;
+      }
+    }
+    showButton === true ? setHeight('auto') : setHeight('0%');
+  }
 
   const update = () => {
     setState(Object.assign({}, state));
@@ -71,11 +86,11 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
       {
         state.list.map((shortAnswer:any, i:number) => renderShortAnswer(shortAnswer, i))
       }
-      <div className="button-box">
-        <Button disabled={locked} className="add-answer-button" onClick={addShortAnswer}>
-          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; S &nbsp; H &nbsp; O &nbsp; R &nbsp; T &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
-        </Button>
-      </div>
+      <AddAnswerButton
+        locked={locked}
+        addAnswer={addShortAnswer}
+        height={height}
+        label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; S &nbsp; H &nbsp; O &nbsp; R &nbsp; T &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
     </div>
   )
 }
