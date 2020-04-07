@@ -26,8 +26,7 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
           style={{height: '40%'}}
           src="/images/new-brick/prep.png">
         </img>
-        <div className="typing-text" dangerouslySetInnerHTML={{ __html: data}}>
-        </div>
+        <div className="typing-text" dangerouslySetInnerHTML={{ __html: data}} />
       </Grid>
     )
   }
