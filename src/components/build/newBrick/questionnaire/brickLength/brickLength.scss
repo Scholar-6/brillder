@@ -5,6 +5,13 @@
   font-family: 'Brandon Grotesque Regular';
   color: black;
 
+  h1 {
+    font-weight: normal;
+    > p {
+      font-weight: normal;
+    }
+  }
+
   .left-card {
     position: relative;
     padding-bottom: 7.5%;
