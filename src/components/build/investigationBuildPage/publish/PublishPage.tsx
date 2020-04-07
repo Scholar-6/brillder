@@ -1,11 +1,18 @@
 import React, { Component } from "react";
-// @ts-ignore
+import axios from 'axios';
+import { User, UserType } from 'model/user';
 import { Grid, CircularProgress } from "@material-ui/core";
+// @ts-ignore
+import { connect } from 'react-redux';
 
 import "./PublishPage.scss";
+import { Brick, BrickStatus } from "model/brick";
+
 
 interface PublishBrickProps {
   history: any;
+  match: any;
+  user: User;
   forgetBrick(): void;
   logout(): void;
 }
@@ -25,6 +32,7 @@ interface PublishBrickState {
 class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
   constructor(props: PublishBrickProps) {
     super(props);
+    console.log(props);
 
     this.state = {
       status: ButtonStatus.Start,
@@ -41,6 +49,14 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
     target.borderRadius = "20vw";
     e.target.style.fontSize = "3vw";
     e.target.innerHTML = "✔";
+    if (this.props.user.type === UserType.Admin || this.props.user.type === UserType.Editor) {
+      this.publish();
+    } else if (this.props.user.type === UserType.Creator) {
+      this.review();
+    } else {
+      return;
+    }
+
     setTimeout(() => {
       this.setState({ ...this.state, status: ButtonStatus.Pressed });
       let counter = setInterval(() => {
@@ -54,10 +70,57 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
     }, 400);
   }
 
+  publish () {
+    const {brickId} = this.props.match.params;
+
+    return axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/brick/publish/${brickId}`,
+      {}, {withCredentials: true}
+    ).then(response => {
+      const {data} = response;
+      if (response.status === 200 && data.status === BrickStatus.Publish) {
+        return;
+      }
+      let {msg} = data;
+      if (!msg) {
+        const {errors} = data;
+        msg = errors[0].msg
+      }
+      alert(msg);
+    })
+    .catch(error => {
+      console.log(error);
+      alert('Can`t update brick')
+    })
+  }
+
+  review () {
+    const {brickId} = this.props.match.params;
+
+    return axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/brick/review/${brickId}`,
+      {}, {withCredentials: true}
+    ).then(response => {
+      const {data} = response;
+      if (response.status === 200 && data.status === BrickStatus.Publish) {
+        return;
+      }
+      let {msg} = data;
+      if (!msg) {
+        const {errors} = data;
+        msg = errors[0].msg
+      }
+      alert(msg);
+    })
+    .catch(error => {
+      console.log(error);
+      alert('Can`t update brick')
+    })
+  }
+
   componentDidUpdate() {
     if (this.state.status === ButtonStatus.Wider) {
       let button = this.state.myRef.current;
-      console.log(button);
       setTimeout(() => {
         button.style.width = '20vw';
       }, 200);
@@ -85,7 +148,13 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
               justify="center"
               alignContent="center"
             >
-              Submit/Publish
+              {
+                (this.props.user.type === UserType.Admin || this.props.user.type === UserType.Editor)
+                  ? "Submit/Publish"
+                  : (this.props.user.type === UserType.Creator)
+                    ? "Review"
+                    : ""
+              }
             </Grid>
           </button>
         ) : (
@@ -114,7 +183,7 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
             className="publish-brick-button"
             ref={this.state.myRef}
             style={{width: '7vw'}}
-            onClick={e => this.animate(e)}
+            onClick={() => this.props.history.push('/build')}
           >
             <Grid
               container
@@ -133,4 +202,12 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
   }
 }
 
-export default PublishBrickPage;
+const mapState = (state: any) => {
+  return {
+    user: state.user.user,
+  }
+}
+
+const connector = connect(mapState)
+
+export default connector(PublishBrickPage);
