@@ -14,6 +14,10 @@
     position: relative;
     margin: 0;
 
+    .Mui-checked {
+      color: $orange;
+    }
+
     .left-ckeckbox {
       position: absolute;
       padding: 0.45vw;
