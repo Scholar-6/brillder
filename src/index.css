@@ -27,6 +27,10 @@ div:focus {
   outline: none;
 }
 
+textarea:focus {
+  outline: none;
+}
+
 input:focus {
   outline: none;
 }
