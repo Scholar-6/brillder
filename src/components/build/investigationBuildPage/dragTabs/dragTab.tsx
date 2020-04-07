@@ -23,7 +23,7 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, selectQuestion, re
 
   return (
     <div className="draggable-tab" onClick={activateTab} style={{ ...style, height: '100%' }}>
-      <Grid container direction="row" alignContent="center" style={{height: '95%'}}>
+      <Grid container direction="row" alignContent="center" style={{height: '100%'}}>
         <Grid item xs={10} className="tab-number">
           {index + 1}
         </Grid>
