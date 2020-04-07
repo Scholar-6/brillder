@@ -8,11 +8,17 @@
     color: white;
     font-family: 'Brandon Grotesque Black';
     border: 0.5vw solid #3FCA79;
-    font-size: 2vw;
+    font-size: 3vw;
+    letter-spacing: 0.6vw;
     border-radius: 3vw;
     height: 7vw;
     width: 25vw;
     transition: all 0.4s ease-in-out;
+
+    img {
+      height: 3vw;
+      width: 3.9vw;
+    }
   }
 
   .brick-spinner {
