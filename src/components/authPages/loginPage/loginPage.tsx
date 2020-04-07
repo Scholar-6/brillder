@@ -130,10 +130,6 @@ const LoginPage: React.FC<LoginProps> = props => {
       });
   };
 
-  const toRegister = () => {
-    props.history.push("/register");
-  };
-
   return (
     <Grid
       className="login-page"

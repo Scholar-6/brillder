@@ -81,16 +81,15 @@ html, body, #root {
     color: white;
     font-weight: normal;
     font-family: 'Brandon Grotesque Regular';
-    width: 50%;
+    width: 70%;
     text-align: center;
     background: $dark-blue;
     border: none;
-    padding: 10px;
     border-radius: $button-radius;
     font-size: 1.5vw;
     letter-spacing: 0.3vw;
-    padding-left: 15% !important;
-    padding-right: 15% !important;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
     height: 3.8vh;
   }
 
@@ -98,10 +97,14 @@ html, body, #root {
     display: block;
     position: relative;
     margin-bottom: 3vh;
+
     input {
-      width: 70%;
+      width: 80%;
       margin-bottom: 0;
+      padding-left: 10% !important;
+      padding-right: 10% !important;
     }
+
     .hide-password-icon-container {
       right: 0.7vw;
       top: 0%;
