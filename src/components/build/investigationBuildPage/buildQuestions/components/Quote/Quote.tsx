@@ -5,6 +5,7 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import './Quote.scss'
+import { Grid } from '@material-ui/core';
 
 
 export interface QuoteComponentProps {
@@ -35,6 +36,9 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, upd
           updateComponent(data, index);
         }}
       />
+      <Grid className="text-label" container justify="center">
+        Quote
+      </Grid>
     </div>
   );
 }

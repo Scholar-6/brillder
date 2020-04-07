@@ -5,6 +5,7 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import './Text.scss'
+import { Grid } from '@material-ui/core';
 
 export interface TextComponentProps {
   locked: boolean
@@ -42,6 +43,9 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updat
           setFocus(false);
         }}
       />
+      <Grid className="text-label" container justify="center">
+        Text
+      </Grid>
     </div>
   );
 }
