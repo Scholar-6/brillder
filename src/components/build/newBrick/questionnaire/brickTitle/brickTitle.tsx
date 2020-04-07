@@ -63,7 +63,7 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
           <span style={{color: subTopic ? '#D8D2CE' : ''}}>
             {subTopic ? subTopic : 'Topic'}
           </span> | <span style={{color: alternativeTopics ? '#D8D2CE' : ''}}>
-            {alternativeTopics ? alternativeTopics: 'SubTopic'}
+            {alternativeTopics ? alternativeTopics: 'Subtopics'}
           </span>
         </div>
         <div>Author | <span style={{color: '#D8D2CE'}}>{dateString}</span></div>
@@ -120,7 +120,7 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
               <Grid container justify="center" item xs={12}>
                 <Input className="audience-inputs" value={titles.title} onChange={(onTitleChange)} placeholder="Enter Proposed Title Here..." />
                 <Input className="audience-inputs" value={titles.subTopic} onChange={onSubTopicChange} placeholder="Enter Topic(s)..." />
-                <Input className="audience-inputs" value={titles.alternativeTopics} onChange={onAltTopicChange} placeholder="Enter Sub Topic(s)..." />
+                <Input className="audience-inputs" value={titles.alternativeTopics} onChange={onAltTopicChange} placeholder="Enter Subtopic(s)..." />
               </Grid>
               <p className="page-number">1 of 4</p>
               <NextButton step={NewBrickStep.BrickTitle} canSubmit={true} onSubmit={saveTitles} data={titles} />
