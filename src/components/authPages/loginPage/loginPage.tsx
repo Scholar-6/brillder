@@ -72,7 +72,7 @@ const LoginPage: React.FC<LoginProps> = props => {
     login(email, password);
   }
 
-  const login = (email: string, password: string, isNew: boolean = false) => {
+  const login = (email: string, password: string) => {
     axios
       .post(
         `${process.env.REACT_APP_BACKEND_HOST}/auth/login/${userType}`,
@@ -82,10 +82,7 @@ const LoginPage: React.FC<LoginProps> = props => {
       .then(response => {
         const { data } = response;
         if (data === "OK") {
-          setNewUser(isNew);
-          if (!isNew) {
-            props.loginSuccess(userType);
-          }
+          props.loginSuccess(userType);
           return;
         }
         let { msg } = data;
@@ -96,12 +93,17 @@ const LoginPage: React.FC<LoginProps> = props => {
         alert(msg);
       })
       .catch(error => {
+        const {response} = error;
         if (
-          error.response.status === 500 &&
+          response.status === 500 &&
           userType === UserLoginType.Student
         ) {
           if (!isNewUser) {
             register(email, password);
+          }
+        } else if (response.status === 401) {
+          if (response.data.msg === 'User is not active.') {
+            setNewUser(true);
           }
         }
       });
@@ -123,7 +125,7 @@ const LoginPage: React.FC<LoginProps> = props => {
         if (data.msg) {
           alert(data.msg);
         }
-        login(email, password, true);
+        setNewUser(true);
       })
       .catch(e => {
         alert("Connection problem");
@@ -139,14 +141,18 @@ const LoginPage: React.FC<LoginProps> = props => {
       alignItems="center"
     >
       <div className="back-col">
-        <div className="back-box">
-          <ArrowBackIcon
-            className="back-button"
-            onClick={() =>
-              props.history.push(`/choose-login?userType=${userType}`)
-            }
-          />
-        </div>
+        {
+          !isNewUser ?
+          <div className="back-box">
+            <ArrowBackIcon
+              className="back-button"
+              onClick={() =>
+                props.history.push(`/choose-login?userType=${userType}`)
+              }
+            />
+          </div>
+          : ""
+        }
       </div>
       <div className="first-col">
         <div className="first-item"></div>
