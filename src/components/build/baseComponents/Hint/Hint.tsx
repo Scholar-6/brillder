@@ -3,6 +3,7 @@ import React from 'react';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { Grid } from '@material-ui/core';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 import './Hint.scss';
 
@@ -136,8 +137,11 @@ const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props 
             </ToggleButton>
           </ToggleButtonGroup>
         </Grid>
-        <Grid container item xs={2} alignContent="center" justify="flex-end">
-          <span className="hint-type"><span className="question-mark">?</span></span>
+        <Grid container item xs={2} alignContent="center" justify="flex-end" style={{position: 'relative'}}>
+          <FiberManualRecordIcon className="hint-question-circle" />
+          <Grid container alignContent="center" justify="center" className="hint-type">
+            <span className="question-mark">?</span>
+          </Grid>
         </Grid>
       </Grid>
       {renderHintInputs()}
