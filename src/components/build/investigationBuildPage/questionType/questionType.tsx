@@ -1,6 +1,5 @@
 import React from 'react'
 import { Grid } from '@material-ui/core';
-import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 import './questionType.scss';
 import { QuestionTypeEnum } from 'components/model/question';
@@ -16,7 +15,9 @@ export interface QuestionTypeProps {
   setPreviousQuestion(): void
 }
 
-const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, history, brickId, questionId, setQuestionType, setPreviousQuestion }: QuestionTypeProps) => {
+const QuestionTypePage: React.FC<QuestionTypeProps> = ({
+  questionType, history, brickId, questionId, setQuestionType, setPreviousQuestion
+}: QuestionTypeProps) => {
   if (questionType !== QuestionTypeEnum.None) {
     history.push(`/build/brick/${brickId}/build/investigation/question-component/${questionId}`);
   }
@@ -67,7 +68,8 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({ questionType, history, 
             <TypeButton activeType={type} questionType={QuestionTypeEnum.WordHighlighting} setType={setCurrentType} labels={["W O R D", "H I G H L I G H T I N G"]} isActive={false} />
           </Grid>
           <Grid item xs={6}>
-            <TypeButton activeType={type} questionType={QuestionTypeEnum.LineHighlighting} setType={setCurrentType} labels={["L I N E", "H I G H L I G H T I N G"]} isActive={false} />
+            <TypeButton
+              activeType={type} questionType={QuestionTypeEnum.LineHighlighting} setType={setCurrentType} labels={["L I N E", "H I G H L I G H T I N G"]} isActive={false} />
           </Grid>
         </Grid>
       </div>

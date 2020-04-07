@@ -1,10 +1,8 @@
 import React from 'react'
 import { Grid, Select, FormControl, Button } from '@material-ui/core';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { IconButton, MenuItem } from "material-ui";
+import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
-import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 import QuestionComponents from './questionComponents/questionComponents';
 import './buildQuestionComponent.scss';
@@ -96,7 +94,6 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
                   locked={locked}
                   isImage={true} src="/images/soundicon.png"
                   label="S O U N D" 
-                  // marginTop="-0.5vw" 
                   hoverMarginTop="0.5vw"
                   fontFamily="Brandon Grotesque Bold"
                   value={QuestionComponentTypeEnum.Sound} />
