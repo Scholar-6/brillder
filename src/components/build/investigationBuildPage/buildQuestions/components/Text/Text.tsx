@@ -43,7 +43,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updat
           setFocus(false);
         }}
       />
-      <Grid className="text-label" container justify="center">
+      <Grid className="text-label" container justify="center" alignContent="center">
         Text
       </Grid>
     </div>

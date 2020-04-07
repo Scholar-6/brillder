@@ -25,7 +25,7 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, upd
   }
 
   return (
-    <div className="question-build-text-editor">
+    <div className="question-build-quote-editor">
       <CKEditor
         editor={ClassicEditor}
         data={data.value}
@@ -36,7 +36,7 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, upd
           updateComponent(data, index);
         }}
       />
-      <Grid className="text-label" container justify="center">
+      <Grid className="text-label" container justify="center" alignContent="center">
         Quote
       </Grid>
     </div>
