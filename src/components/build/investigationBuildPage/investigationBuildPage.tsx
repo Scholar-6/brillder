@@ -10,7 +10,7 @@ import update from "immutability-helper";
 import { connect } from "react-redux";
 
 import "./investigationBuildPage.scss";
-import BuildQuestionComponent from "./buildQuestions/buildQuestionComponent";
+import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
 import QuestionTypePage from "./questionType/questionType";
 import SynthesisPage from "./synthesisPage/SynthesisPage";
 import DragableTabs from "./dragTabs/dragableTabs";
@@ -372,7 +372,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const renderBuildQuestion = () => {
     return (
-      <BuildQuestionComponent
+      <QuestionPanelWorkArea
         brickId={brickId}
         history={history}
         questionsCount={questions.length}
