@@ -94,16 +94,18 @@ const LoginPage: React.FC<LoginProps> = props => {
       })
       .catch(error => {
         const {response} = error;
-        if (
-          response.status === 500 &&
-          userType === UserLoginType.Student
-        ) {
-          if (!isNewUser) {
-            register(email, password);
-          }
-        } else if (response.status === 401) {
-          if (response.data.msg === 'USER_IS_NOT_ACTIVE') {
-            setNewUser(true);
+        if (response) {
+          if (
+            response.status === 500 &&
+            userType === UserLoginType.Student
+          ) {
+            if (!isNewUser) {
+              register(email, password);
+            }
+          } else if (response.status === 401) {
+            if (response.data.msg === 'USER_IS_NOT_ACTIVE') {
+              setNewUser(true);
+            }
           }
         }
       });
