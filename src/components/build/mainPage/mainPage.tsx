@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 // @ts-ignore
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Grid } from '@material-ui/core';
+import { Grid, Hidden } from '@material-ui/core';
 
 import './mainPage.scss';
-import MainMenu from '../base-components/main-menu/main-menu';
+import actions from 'redux/actions/auth';
+import brickActions from 'redux/actions/brickActions';
 
 
 const mapState = (state: any) => {
@@ -13,7 +13,10 @@ const mapState = (state: any) => {
 }
 
 const mapDispatch = (dispatch: any) => {
-  return { }
+  return {
+    forgetBrick: () => dispatch(brickActions.forgetBrick()),
+    logout: () => dispatch(actions.logout())
+  }
 }
 
 const connector = connect(
@@ -21,41 +24,139 @@ const connector = connect(
   mapDispatch
 )
 
-class MainPage extends Component {
-  render() {
-    return (
-      <div className="mainPage">
-        <MainMenu></MainMenu>
+interface MainPageProps {
+  history: any
+  forgetBrick(): void
+  logout(): void
+}
 
-        <Grid container direction="row" justify="center" style={{ height: "100%" }} alignItems="center">
-          <div className="main-page-center-container">
-            <Grid container direction="row" justify="center" alignItems="center">
-              <Grid container item xs={6} sm={5} md={4} lg={3} justify="center">
-                <Link to="/build/bricks-list" className="bigButton">
-                  <div className="link-title">V I E W</div>
-                  <div className="link-description">S e e &nbsp; w h a t &nbsp; w e &nbsp; w a n t</div>
-                </Link>
+interface MainPageState {
+  viewHover: boolean,
+  createHober: boolean,
+  backHober: boolean,
+}
+
+class MainPage extends Component<MainPageProps, MainPageState> {
+  constructor(props:any) {
+    super(props);
+    this.state = {
+      viewHover: false,
+      createHober: false,
+      backHober: false,
+    } as any;
+  }
+
+  viewHoverToggle(viewHover: boolean) {
+    this.setState({viewHover});
+  }
+
+  creatingBrick() {
+    this.props.forgetBrick();
+    this.props.history.push('/build/new-brick/brick-title');
+  }
+
+  render() {
+    const {history} = this.props;
+    return (
+      <Grid container direction="row" className="mainPage">
+        <Hidden only={['xs']}>
+          <div className="welcome-col">
+            <div className="welcome-box">
+              <div>WELCOME</div>
+              <div>TO BRIX,</div>
+              <div className="welcome-name">USER X</div>
+            </div>
+          </div>
+          <div className="first-col">
+            <div className="first-item">
+              <Grid container justify="center" className="view-item-container">
+                <div className="zoom-item view-item" onClick={() => history.push('/build/bricks-list')}>
+                  <img alt="Logo" src="/images/main-page/glasses.png" className="item-image" />
+                  <div className="item-description">View All Bricks</div>
+                </div>
               </Grid>
-            </Grid>
-            <Grid container direction="row" justify="center" alignItems="center">
-              <Grid container item xs={6} sm={5} md={4} lg={3} justify="center">
-                <Link to="/build/new-brick/welcome" className="bigButton">
-                  <div className="link-title">C R E A T E</div>
-                  <div className="link-description">S t a r t &nbsp; b u i l d i n g</div>
-                </Link>
+              <Grid container justify="center" className="create-item-container">
+                <div className="zoom-item create-item" onClick={() => this.creatingBrick()}>
+                  <img alt="Logo" src="/images/main-page/create.png" className="item-image" />
+                  <div className="item-description">Start Building</div>
+                </div>
               </Grid>
-            </Grid>
-            <Grid container direction="row" justify="center" alignItems="center">
-              <Grid container item xs={6} sm={5} md={4} lg={3} justify="center">
-                <Link to="/build" className="bigButton">
-                  <div className="link-title">B A C K &nbsp; T O &nbsp; W O R K</div>
-                  <div className="link-description">O n g o i n g &nbsp; p r o j e c t s</div>
-                </Link>
+              <Grid container justify="center" className="back-item-container">
+                <div className="zoom-item back-item" onClick={() => history.push('/build/back-to-work')}>
+                  <img alt="Logo" src="/images/main-page/backToWork.png" className="item-image" />
+                  <div className="item-description">Back To Work</div>
+                </div>
               </Grid>
+            </div>
+            <div className="second-item"></div>
+          </div>
+          <div className="second-col">
+            <div className="first-item"></div>
+            <div className="second-item"></div>
+          </div>
+          <div className="logout-button" onClick={this.props.logout}>
+            <Grid container alignContent="center">
+              <div style={{position: 'relative'}}>
+                <img className="logout-image image-bottom" alt="logout" src="/images/main-page/logout.png" />
+                <img className="logout-image image-top" alt="logout" src="/images/main-page/logout-hover.png" />
+              </div>
+              <div>
+                <Grid container alignContent="center" style={{height: '100%'}}>
+                  <span className="logout-text">LOGOUT</span>
+                </Grid>
+              </div>
             </Grid>
           </div>
-        </Grid>
-      </div>
+        </Hidden>
+        <Hidden only={['sm', 'md', 'lg', 'xl']}>
+          <div className="mobile-main-page-background">
+            <Grid container direction="row" className="first-mobile-row">
+              <div className="first-col"></div>
+              <div className="second-col"></div>
+            </Grid>
+            <Grid container direction="row" className="second-mobile-row">
+            <div className="first-col"></div>
+              <div className="second-col"></div>
+            </Grid>
+            <Grid container direction="row" className="third-mobile-row">
+              <div className="first-col"></div>
+              <div className="second-col"></div>
+            </Grid>
+          </div>
+          <div className="mobile-main-page">
+            <div className="mobile-logout-button" onClick={this.props.logout}>
+              <Grid container alignContent="center" justify="flex-end">
+                <div>
+                  <img className="logout-image image-bottom" alt="logout" src="/images/main-page/logout.png" />
+                </div>
+                <div>
+                  <Grid container alignContent="center" style={{height: '100%'}}>
+                    <span>LOGOUT</span>
+                  </Grid>
+                </div>
+              </Grid>
+            </div>
+            <Grid container justify="center" style={{width: "100%"}}>
+              <div className="zoom-item view-item" onClick={() => history.push('/build/bricks-list')}>
+                <img alt="Logo" src="/images/main-page/glasses.png" className="item-image" />
+                <div className="item-description">View All Bricks</div>
+              </div>
+            </Grid>
+            <Grid container justify="center" style={{width: "100%"}}>
+              <div className="zoom-item create-item" onClick={() => history.push('/build/new-brick/brick-title')}>
+                <img alt="Logo" src="/images/main-page/create.png" className="item-image" />
+                <div className="item-description">Start Building</div>
+              </div>
+            </Grid>
+            <Grid container justify="center" style={{width: "100%"}}>
+              <div className="zoom-item back-item" onClick={() => history.push('/build/back-to-work')}>
+                <img alt="Logo" src="/images/main-page/backToWork.png" className="item-image" />
+                <div className="item-description">Back To Work</div>
+              </div>
+            </Grid>
+          </div>
+        </Hidden>
+      </Grid>
     )
   }
 }

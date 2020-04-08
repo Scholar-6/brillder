@@ -1,0 +1,47 @@
+@import "_variables";
+
+.missing-word-build {
+  textarea {
+    width: 89%;
+    padding: 0;
+    padding-left: 1%;
+    padding-right: 10%;
+    min-height: 55px;
+  }
+  text-align: center;
+
+  .choose-several-box {
+    position: relative;
+    margin: 0;
+
+    .Mui-checked {
+      color: $orange;
+    }
+
+    .left-ckeckbox {
+      position: absolute;
+      padding: 0.45vw;
+      left: 0.1vw;
+      top: 0.5vw;
+      span {
+        svg {
+          height: $bin-size !important;
+          width: $bin-size !important;
+        }
+      }
+    }
+
+    input {
+      width: 84%;
+      height: 55px;
+      text-align: center;
+      border: none;
+      background: $input-grey;
+      border-radius: 0;
+      padding-right: 8%;
+      padding-left: 8%;
+      font-family: $font-family-regular;
+      font-size: $answer-input-text-size;
+    }
+  }
+}

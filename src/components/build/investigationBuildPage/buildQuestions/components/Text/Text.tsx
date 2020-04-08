@@ -5,19 +5,17 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import './Text.scss'
+import { Grid } from '@material-ui/core';
 
 export interface TextComponentProps {
-  index: number,
-  data: any,
-  cleanComponent(): void
+  locked: boolean
+  index: number
+  data: any
   updateComponent(component: any, index: number): void
 }
 
-const editorConfiguration = {
-  toolbar: ['bold']
-};
-
-const TextComponent: React.FC<TextComponentProps> = ({index, data, cleanComponent, updateComponent}) => {
+const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updateComponent}) => {
+  const [focused, setFocus] = React.useState(false);
   if (!data.value) {
     data.value = "";
   }
@@ -27,12 +25,27 @@ const TextComponent: React.FC<TextComponentProps> = ({index, data, cleanComponen
       <CKEditor
         editor={ClassicEditor}
         data={data.value}
-        config={editorConfiguration}
-        onChange={(event: any, editor: any) => {
-          data.value = editor.getData();
-          updateComponent(data, index);
+        disabled={locked}
+        config={{toolbar: ['bold']}}
+        onChange={(e: any, editor: any) => {
+          if (!focused) {
+            return;
+          }
+          let value = editor.getData();
+          let comp = Object.assign({}, data);
+          comp.value = value;
+          updateComponent(comp, index);
+        }}
+        onFocus={() => {
+          setFocus(true);
+        }}
+        onBlur={() => {
+          setFocus(false);
         }}
       />
+      <Grid className="text-label" container justify="center" alignContent="center">
+        Text
+      </Grid>
     </div>
   );
 }

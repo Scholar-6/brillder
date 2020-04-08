@@ -21,6 +21,13 @@ export default (state = BrickInitialState, action: any) => {
         brick: action.payload,
         error: ''
       }
+    case types.CREATE_BRICK_SUCCESS:
+      return {
+        brick: action.payload,
+        error: ''
+      }
+    case types.FORGET_BRICK:
+      return BrickInitialState
     default: return state;
   }
 }

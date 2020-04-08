@@ -1,31 +1,49 @@
+@import "_variables";
+
 .choose-several-build {
   text-align: center;
 
+  .component-title{
+    opacity: 0.8;
+    font-size: $base-sm-text-size;
+    font-family: $font-family-regular;
+    letter-spacing: 2px;
+  }
+
   .choose-several-box {
     position: relative;
-    margin: 3px 5px;
+    margin: 0;
 
     .left-ckeckbox {
       position: absolute;
-      left: 0;
-      top: 5px;
+      z-index: 1;
+      padding: 0.45vw;
+      left: 0.1vw;
+      top: 0.5vw;
+      span {
+        svg {
+          height: $bin-size !important;
+          width: $bin-size !important;
+        }
+      }
     }
 
-    input {
-      width: 100%;
-      height: 55px;
-      box-sizing: border-box;
-      padding: 0 38px;
-      text-align: center;
-      border: 1px solid black;
+    .Mui-checked {
+      color: $orange;
     }
-  }
-  
-  .button-box {
-    margin: 3px 5px;
-    .add-answer-button {
-      width: 100%;
+
+    input:not([type='checkbox']) {
+      width: 84%;
       height: 55px;
+      text-align: center;
+      border: none;
+      background: $input-grey;
+      padding-right: 8%;
+      padding-left: 8%;
+      border-radius: 0;
+      opacity: 0.8;
+      font-size: $base-sm-text-size;
+      font-family: $font-family-regular;
     }
   }
 }

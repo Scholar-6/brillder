@@ -1,0 +1,15 @@
+.other-information {
+  .other-header {
+    font-size: 15px;
+  }
+  .other-content {
+    font: 500 16px/24px 'Montserrat';
+    color: rgba(0,0,0,.87);
+    > div {
+      margin: 5px;
+    }
+  }
+  .MuiExpansionPanelDetails-root {
+    padding-top: 0 !important;
+  }
+}

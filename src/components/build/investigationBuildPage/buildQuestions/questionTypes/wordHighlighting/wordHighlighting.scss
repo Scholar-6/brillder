@@ -1,0 +1,43 @@
+.word-highlight-build {
+  position: relative;
+
+  .pencil-icon-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    .active {
+      color: green;
+    }
+  }
+
+  .hightlight-area {
+    width: 98%;
+    background: white;
+    text-align: left;
+    border: 1px solid grey;
+    padding: 0;
+    margin: 0;
+    border-radius: 0.2vw;
+    padding-left: 1%;
+    padding-right: 1%;
+    font-size: 0.7vw;
+    line-height: 1.1;
+    min-height: 3vh;
+  }
+
+  textarea {
+    width: 98%;
+    padding: 0;
+    margin: 0;
+    padding-left: 1%;
+    padding-right: 1%;
+    font-size: 0.7vw;
+  }
+
+  .input-container {
+    padding-right: 2px;
+    margin-top: 0.1vw;
+    margin-bottom: 0.1vw;
+  }
+}

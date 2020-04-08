@@ -1,25 +1,76 @@
+@import "_variables";
+$tab-radius: 0.6vw;
+$distance: 0.13vw;
+
+
+$tile-height: 100%;
+
 .drag-tabs {
   display: inline-block;
   width: 100%;
-  height: 40px;
-  border: 1px solid black;
-  border-bottom: none;
+  background: $dark-blue !important;
+  height: 6.2%;
+
+  .drag-last-tile-container {
+    padding: 0 !important;
+    height: 100% !important;
+    padding-left: $distance !important;
+  }
+
+  .drag-tile-container {
+    padding: 0 !important;
+    height: 100% !important;
+    padding-left: $distance !important;
+  }
 
   .drag-tile {
     cursor: pointer;
+    height: 100%;
+    background-color: $tab-grey;
+  }
+  .drag-tile:first-child {
+    border-top-left-radius: $tab-radius;
+  }
+  .drag-tile:last-child {
+    border-top-right-radius: $tab-radius;
+  }
 
-    background-color: #BFBFBF;
+  .drag-tile-container:first-child {
+    padding: 0 !important;
   }
-  .drag-tile.active {
-    background: white;
+
+  .drag-tile-container.pre-active {
+    .drag-tile {
+      margin-right: $distance;
+    }
   }
+
+  .drag-tile-container.active {
+    height: 100% !important;
+
+    .drag-tile {
+      background: white;
+    }
+  }
+
   .draggable-tab {
     display: inline-block;
     cursor: pointer;
     text-align: center;
-    padding: 6px 0;
-    font-size: 24px;
+    font-size: 1.5vw;
     width: 100%;
+
+    .tab-number {
+      color: $dark-blue;
+      font-family: 'Brandon Grotesque Bold';
+      font-size: 3.4vh;
+    }
+
+    .remove-icon-container {
+      height: 100%;
+      position: absolute;
+      right: 0;
+    }
 
     .remove-icon:hover {
       cursor: pointer;
@@ -27,10 +78,31 @@
   }
 
   .last-tab {
-    margin-top: 10px;
     text-align: center;
-    color: black;
-    font-size: 10px;
-    background-color: #BFBFBF;
+    color: $dark-blue;
+    font-size: 1.3vw;
+    overflow: hidden;
+    font-family: 'Brandon Grotesque Bold';
+  }
+
+  .synthesis-tab {
+    .drag-tile {
+      background: white;
+
+      .last-tab {
+        background: white;
+        height: 5vh;
+      }
+    }
+  }
+
+  .synthesis-tab-icon {
+    height: 3.5vh;
+  }
+
+  @media only screen and (max-width: 599px) {
+    .last-tab {
+      font-size: 2.5vw !important;
+    }
   }
 }

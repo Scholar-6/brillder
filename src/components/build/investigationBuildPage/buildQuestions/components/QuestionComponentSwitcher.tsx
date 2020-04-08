@@ -1,75 +1,127 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { QuestionComponentTypeEnum, Hint } from 'components/model/question';
-import DragAndDropBox from '../drag/dragAndDropBox'
+import { QuestionComponentTypeEnum, Hint, QuestionTypeEnum } from 'components/model/question';
 import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'
 import SoundComponent from './Sound/Sound'
 import EquationComponent from './Equation/Equation'
-import HintComponent, { HintState } from '../../../base-components/Hint/Hint';
+import DropBox from './DropBox';
+import HintComponent, { HintState } from '../../../baseComponents/Hint/Hint';
 
 
 export interface SwitchQuestionProps {
   type: QuestionComponentTypeEnum
   index: number
+  questionIndex: number
   uniqueComponent: any
   component: any
   hint: Hint
+  locked: boolean
+  canRemove: boolean
   updateComponent(component: any, index: number): void
-  swapComponents: Function
   setQuestionHint(hintState: HintState): void
+  removeComponent(componentIndex: number): void
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
-  type,
-  index,
-  component,
-  hint,
-  swapComponents,
-  setQuestionHint,
-  updateComponent,
-  uniqueComponent
+  type, index, component, hint, locked, updateComponent, uniqueComponent, ...props
 }) => {
-
-  const renderEmptyComponent = () => <span>Drag component here</span>
-
-  const cleanComponent = () => {
-    updateComponent({ type: 0 }, index);
+  const getNumberOfAnswers = (data: any) => {
+    let count = 1;
+    if (data.list && data.list.length) {
+      return data.list.length;
+    }
+    return count;
   }
 
-  let innerComponent = renderEmptyComponent as any;
-  let value = type;
-  if (type === QuestionComponentTypeEnum.Text) {
-    innerComponent = TextComponent;
+  const setComponentType = (type:number) => {
+    component.type = type;
+    updateComponent(component, index);
+  }
+
+  const setEmptyType = () => {
+    component.type = QuestionTypeEnum.None;
+    component.value = "";
+    updateComponent(component, index);
+  }
+
+  let InnerComponent = DropBox as any;
+
+  if (type === QuestionComponentTypeEnum.None) {
+    return (
+      <div style={{position: 'relative', width: '100%'}}>
+        {
+          props.canRemove
+          ?
+            <DeleteIcon
+              className="right-top-icon"
+              style={{right: '2px', top: '7px'}}
+              onClick={() => props.removeComponent(index)} />
+          : ""
+        }
+        <DropBox
+          locked={locked}
+          onDrop={setComponentType} />
+      </div>
+    );
+  } else if (type === QuestionComponentTypeEnum.Text) {
+    InnerComponent = TextComponent;
   } else if (type === QuestionComponentTypeEnum.Image) {
-    innerComponent = ImageComponent;
+    InnerComponent = ImageComponent;
   } else if (type === QuestionComponentTypeEnum.Quote) {
-    innerComponent = QuoteComponent;
+    InnerComponent = QuoteComponent;
   } else if (type === QuestionComponentTypeEnum.Sound) {
-    innerComponent = SoundComponent;
+    InnerComponent = SoundComponent;
   } else if (type === QuestionComponentTypeEnum.Equation) {
-    innerComponent = EquationComponent;
+    InnerComponent = EquationComponent;
   } else if (type === QuestionComponentTypeEnum.Component) {
-    innerComponent = uniqueComponent;
+    InnerComponent = uniqueComponent;
+    let numberOfAnswers = getNumberOfAnswers(component);
+    if (uniqueComponent.name === "MissingWordComponent") {
+      if (component.choices) {
+        numberOfAnswers = component.choices.length;
+      }
+    } else if (uniqueComponent.name === "CategoriseBuildComponent") {
+      if (component.categories) {
+        numberOfAnswers = component.categories.length;
+      }
+    }
+
     return (
       <div className="unique-component-wrapper">
-        <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} cleanComponent={() => {}} updateComponent={updateComponent} component={innerComponent} />
-        <HintComponent status={hint.status} value={hint.value} onChange={setQuestionHint}/>
+        <InnerComponent
+          locked={locked}
+          data={component}
+          updateComponent={updateComponent} />
+        <HintComponent
+          index={props.questionIndex}
+          status={hint.status}
+          locked={locked}
+          value={hint.value}
+          list={hint.list}
+          count={numberOfAnswers}
+          onChange={props.setQuestionHint}/>
       </div>
     )
   }
-  if (innerComponent !== renderEmptyComponent) {
-    return (
-      <div style={{position: 'relative', width: '100%'}}>
-        <DeleteIcon className="right-top-icon" style={{right: '2px', top: '7px'}} onClick={cleanComponent} />
-        <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} cleanComponent={cleanComponent} updateComponent={updateComponent} component={innerComponent} />
-      </div>
-    );
-  }
   return (
-    <DragAndDropBox index={index} value={value} data={component} onDrop={swapComponents} cleanComponent={cleanComponent} updateComponent={updateComponent} component={innerComponent} />
+    <div style={{position: 'relative', width: '100%'}}>
+      {
+        !locked
+        ?
+          <DeleteIcon
+            className="right-top-icon"
+            style={{right: '2px', top: '7px'}}
+            onClick={setEmptyType} />
+        : ""
+      }
+      <InnerComponent
+        locked={locked}
+        data={component}
+        updateComponent={updateComponent} />
+    </div>
   );
 }
 

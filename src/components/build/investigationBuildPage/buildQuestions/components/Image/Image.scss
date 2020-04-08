@@ -1,0 +1,22 @@
+.image-drag-n-drop {
+  margin-left: 1%;
+  width: 98.5%;
+
+  .dropzone {
+    margin-left: 0vw;
+    margin-right: 0vw;
+    min-height: 10vh;
+    border: 2px dashed #eee;
+    background: #FAFAFA;
+    font-size: 0.81vw;
+    font-family: 'Brandon Grotesque Regular' !important;
+  }
+  
+  .dropzone:hover {
+      border: 2px dashed rgb(23, 27, 31);
+  }
+  
+  .dropzone.disabled {
+      background: #EBEBE4;
+  }
+}

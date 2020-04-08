@@ -1,0 +1,33 @@
+.question-build-quote-editor {
+  input {
+    width: 84%;
+    height: 55px;
+    text-align: center;
+    border: 1px solid black;
+    padding-right: 8%;
+    padding-left: 8%;
+  }
+
+  .text-label {
+    position: absolute;
+    top: 0;
+    height: 5.5vh;
+    font-size: 1.1vw;
+  }
+
+  .ck-editor {
+    .ck-icon {
+      font-size: 0.6vw !important;
+    }
+
+    .ck-sticky-panel {
+      .ck-toolbar__items {
+        height: 5.5vh !important;
+      }
+    }
+
+    .ck-content {
+      font-size: 1vw;
+    }
+  }
+}

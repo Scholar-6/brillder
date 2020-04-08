@@ -1,0 +1,184 @@
+@import "_variables";
+
+$col-blue: $light-blue;
+$border-radius: 2vw;
+$button-radius: 0.7vw;
+
+html, body, #root {
+  height: 100%
+}
+
+.login-page {
+  background: $dark-blue;
+  height: 100%;
+  .back-col {
+    text-align: center;
+    height: 13.3vh;
+    width: 32.3vw;
+    .back-box {
+      .back-button {
+        cursor: pointer;
+        width: 4.5vw;
+        height: auto;
+        color: $orange;
+        transition: all .2s ease-in-out;
+        transform-origin: 110% 50%;
+      }
+      .back-button:hover {
+        transform: scale(1.15, 1.05); 
+      }
+    }
+  }
+
+  .first-col {
+    width: 29.6vw;
+    height: 100%;
+
+    .first-item {
+      background: $col-blue;
+      height: 14.7vh;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+    .second-item {
+      background: $col-blue;
+      margin-top: 4.7vh;
+      height: 80.6vh;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+      text-align: center;
+
+      .logo-image {
+        margin-top: 6.1vh;
+        margin-bottom: 3.9vh;
+        height: 20vh;
+      }
+    }
+  }
+  .second-col {
+    margin-left: 2.7vw;
+    width: 29.7vw;
+    height: 100%;
+
+    .first-item {
+      background: $col-blue;
+      height: 70.9vh;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+    .second-item {
+      background: $col-blue;
+      margin-top: 4.7vh;
+      height: 24.4vh;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
+  }
+
+  .login-field {
+    margin-bottom: 2.9vh;
+    padding: 2.93vh 0 2.93vh 0 !important;
+    color: white;
+    font-weight: normal;
+    font-family: 'Brandon Grotesque Regular';
+    width: 70%;
+    text-align: center;
+    background: $dark-blue;
+    border: none;
+    border-radius: $button-radius;
+    font-size: 1.5vw;
+    letter-spacing: 0.3vw;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    height: 3.8vh;
+  }
+
+  .password-container {
+    display: block;
+    position: relative;
+    margin-bottom: 3vh;
+
+    input {
+      width: 80%;
+      margin-bottom: 0;
+      padding-left: 10% !important;
+      padding-right: 10% !important;
+    }
+
+    .hide-password-icon-container {
+      right: 0.7vw;
+      top: 0%;
+      height: 100%;
+      position: absolute;
+      .hide-password-icon {
+        height: 37%;
+        opacity: 0.7;
+        color: $orange;
+        z-index: 5;
+      }
+      .hide-password-icon:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  ::-webkit-input-placeholder { /* Edge */
+    color: white;
+    opacity: 0.8;
+  }
+
+  .sign-in-button {
+    margin-top: -0.6vh;
+    box-shadow: none;
+    width: 9.2vw;
+    padding: 0.8vh 1vw 0.6vh 1.23vw;
+    background: $orange;
+    font-weight: normal !important;
+    font-size: 1.2vw;
+    letter-spacing: 0.3vw;
+    font-family: 'Brandon Grotesque Regular';
+    border-radius: 0.7vw;
+    margin-bottom: 2vh;
+  }
+
+  .sign-up-button {
+    margin-right: 1vw;
+  }
+
+  .register-button {
+    margin-right: 1vw;
+  }
+
+  .sign-in-button:hover {
+    background: $orange; 
+    box-shadow: none;
+    font-family: 'Brandon Grotesque Bold';
+  }
+
+
+  .register-success {
+    position: fixed;
+    top: 24.1vh;
+    left: 19.2vw;
+    color: white;
+    font-family: 'Brandon Grotesque Regular';
+
+    .thanks-info {
+      position: 'relative';
+      line-height: 1.43;
+      font-size: 4.2vw;
+      .register-success-icon {
+        position: absolute;
+        top: 0.3vh;
+        left: -14.6vh;
+        font-size: 10.7vh;
+        color: $orange;
+      }
+    }
+    .contact-info {
+      margin-top: 15.2vh;
+      line-height: 1;
+      font-size: 2.1vw;
+    }
+  }
+}

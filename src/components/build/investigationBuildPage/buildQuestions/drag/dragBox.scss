@@ -1,6 +1,16 @@
+@import "_variables";
+
 .drag-box-item {
-  border: 1px dashed gray;
-  background-color: white;
+  cursor: pointer;
   width: 100%;
-  float: left;
+  color: $orange;
+  font-family: 'SuperclarendonW00-Bold';
+  font-size: 2vw;
+
+  .drag-box-hover {
+    font-family: 'Brandon Grotesque Regular';
+    font-size: 0.81vw;
+    color: $global-light-text-grey;
+    opacity: 0;
+  }
 }

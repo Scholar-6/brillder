@@ -1,23 +1,22 @@
+@import "_variables";
+
 .short-answer-build {
   text-align: center;
 
   .short-answer-box {
     position: relative;
-    margin: 3px 5px;
+    margin: 0;
 
     input {
-      width: 100%;
+      font-family: $font-family-regular;
+      font-size: $answer-input-text-size;
+      border-radius: 0;
+      opacity: 0.8;
+      width: 84%;
+      padding: 0 8%;
       height: 55px;
       text-align: center;
-      border: 1px solid black;
-    }
-  }
-  
-  .button-box {
-    margin: 3px 5px;
-    .add-answer-button {
-      width: 100%;
-      height: 55px;
+      border: none;
     }
   }
 }

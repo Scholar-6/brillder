@@ -1,0 +1,751 @@
+@import "_variables";
+
+$brick-radius: 1.2vh;
+$main-panel-radius: 2vw;
+
+$min-brick-height: 9.4vh;
+$left: 0.8vw;
+$right: 1.4vw;
+$yellow: #ff9d00;
+$light-green: #5cc364;
+$lighter-blue: #304775;
+
+.back-to-work-page {
+  background: $dark-blue;
+  height: 100%;
+  font-family: "Brandon Grotesque Regular";
+
+  .brick-row-container {
+    margin-left: 1.5vw;
+    height: 86vh;
+    padding-left: 1.98vw;
+    border-top-left-radius: $main-panel-radius;
+    background: white;
+
+    .brick-row-title {
+      padding-left: 0.22vw;
+      color: $dark-blue;
+      line-height: 1.42;
+      font-size: 5.4vw;
+      letter-spacing: 1.05vw;
+      font-family: "Brandon Grotesque Black";
+    }
+  }
+
+  .bricks-upper-part {
+    position: relative;
+    min-height: 100%;
+    background: $dark-blue;
+
+    .bottom-next-button {
+      position: absolute;
+      bottom: 2vh;
+      color: $dark-blue;
+      > svg {
+        cursor: pointer;
+        margin-right: 1.5vw;
+        height: 5vh;
+        width: 5vh;
+      }
+    }
+  }
+
+  .bricks-header {
+    height: 10.5vh;
+
+    .home-button-container {
+      padding-right: 1.2vw;
+      width: 5.5vw;
+      border-bottom-right-radius: 2vw;
+      background: $light-blue;
+      height: 10.5vh;
+
+      .home-button {
+        cursor: pointer;
+        padding-left: 1.05vw;
+        padding-top: 2.2vh;
+        height: 9.3vh;
+        width: 3.3vw;
+        display: block;
+        > div {
+          height: 6.3vh;
+          width: 3.3vw;
+          display: block;
+          background-image: url(/images/choose-login/logo.png);
+          transition: all 0.2s ease-in-out;
+          transform-origin: 70% 50%;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+      .home-button:hover {
+        > div {
+          background-image: url(/images/brick-list/home-hover.png);
+        }
+      }
+    }
+
+    .logout-container {
+      height: 10.5vh;
+      border-bottom-left-radius: 2vw;
+      background: $light-blue;
+      padding-top: 2.5vh;
+
+      .search-button {
+        cursor: pointer;
+        display: block;
+        margin-top: 0.2vh !important;
+        margin-left: 1.6vw;
+        height: 5vh;
+        width: 5vh;
+        margin-top: 0.1vh;
+        margin-right: 0vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/brick-list/search.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 70% 50%;
+      }
+      .search-button:hover {
+        background-image: url(/images/brick-list/search-hover.png);
+      }
+
+      .search-input {
+        display: block;
+        border: none;
+        background-color: $light-blue !important;
+        font-family: "Brandon Grotesque Regular";
+        font-size: 1.7vw;
+        border: red;
+        border-radius: 12px;
+        border: none !important;
+        margin-left: 2.3vw;
+        margin-top: 0vh;
+        letter-spacing: 0.045vw;
+        height: 5.5vh;
+        width: 40vw;
+        padding-right: 2px;
+        color: #acacac;
+      }
+
+      .logout-button {
+        cursor: pointer;
+        display: block;
+        height: 4.5vh;
+        width: 4.2vh;
+        margin-top: 0.5vh;
+        margin-right: 4.5vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/main-page/logout.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 70% 50%;
+      }
+
+      .logout-button:hover {
+        transform: scale(1.3);
+        background-image: url(/images/main-page/logout-hover.png);
+      }
+
+      .bell-button {
+        cursor: pointer;
+        margin-top: 0.53vh;
+        display: block;
+        color: white;
+        text-align: center;
+        padding-top: 1vh;
+        height: 3.6vh;
+        width: 4.1vh;
+        margin-right: 4.28vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/brick-list/bell.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 50% 50%;
+
+        > span {
+          margin-top: 1vh;
+        }
+      }
+
+      .bell-button:hover {
+        transform: scale(1.4);
+        background-image: url(/images/brick-list/bell-hover.png);
+      }
+
+      .user-button {
+        cursor: pointer;
+        margin-top: 0.635vh;
+        display: block;
+        height: 4.3vh;
+        width: 4.1vh;
+        margin-right: 1.9vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/brick-list/user.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 50% 50%;
+      }
+
+      .user-button:hover {
+        background-image: url(/images/brick-list/user-hover.png);
+        transform: scale(1.4);
+      }
+    }
+  }
+
+  h3 {
+    color: white;
+    font-family: "Brandon Grotesque Regular";
+    font-weight: normal;
+    margin-top: 2.5vh;
+    margin-left: 1.05vw;
+    margin-bottom: 1vh;
+    letter-spacing: 0.27vw;
+    font-size: 1.3vw;
+  }
+
+  .your-bricks-list {
+    position: relative;
+    min-height: 70%;
+    padding-left: $left;
+    padding-right: $right;
+  }
+
+  .main-brick-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .brick-container {
+    position: relative;
+    padding-right: 0;
+    height: $min-brick-height;
+    margin-top: 0.1vh;
+    margin-bottom: 1.7vh;
+
+    .absolute-container {
+      border-radius: $brick-radius;
+      color: $dark-blue;
+
+      width: 95%;
+      text-align: left;
+      width: 95%;
+      position: absolute;
+      height: $min-brick-height;
+
+      .left-brick-circle {
+        position: absolute;
+        top: 0.85vh;
+
+        > div {
+          height: 2.1vw;
+          width: 2.1vw;
+          border-radius: 20vw;
+        }
+      }
+      .short-brick-info {
+        position: absolute;
+        top: 0.3vh;
+        left: 3vw;
+
+        .link-description {
+          text-transform: uppercase;
+          font-size: 1.7vh;
+          font-family: "Brandon Grotesque Bold";
+          line-height: 1;
+          overflow: hidden;
+          height: 1.7vh;
+          margin-bottom: 0.5vh;
+        }
+        .link-info {
+          color: $lighter-blue;
+          line-height: 1;
+          font-size: 1.6vh;
+          font-family: "Brandon Grotesque Regular";
+          height: 1.6vh;
+          margin-bottom: 0.5vh;
+        }
+      }
+    }
+
+    .edit-button {
+      text-align: center;
+      padding-bottom: 8px;
+    }
+
+    .right-color-column {
+      border-top-right-radius: $brick-radius;
+      border-bottom-right-radius: $brick-radius;
+      background: white;
+      position: absolute;
+      right: 0;
+      height: 100%;
+      min-height: $min-brick-height;
+      width: 3.3%;
+    }
+  }
+
+  .sorted-brick:hover {
+    position: absolute;
+    z-index: 2;
+    width: 95%;
+    //color: white;
+
+    .right-color-column {
+      width: 0;
+    }
+
+    .expended-brick-info {
+      background: $tab-grey;
+      border-radius: 0.5vw;
+      padding: 1.2vh 1vw;
+
+      .hover-text {
+        height: 21vh;
+        font-family: "Brandon Grotesque Regular";
+        overflow: hidden;
+        font-size: 2.3vh;
+        .hovered-open-question {
+          margin-top: 2.5vh;
+          margin-bottom: 2.5vh;
+        }
+        .link-description {
+          text-transform: uppercase;
+          font-size: 1.7vh;
+          font-family: "Brandon Grotesque Bold";
+          line-height: 1;
+          overflow: hidden;
+          height: 1.7vh;
+          margin-bottom: 0.5vh;
+        }
+
+        .link-info {
+          color: $lighter-blue;
+          line-height: 1;
+          font-size: 1.6vh;
+          font-family: "Brandon Grotesque Regular";
+          height: 1.6vh;
+          margin-bottom: 0.5vh;
+        }
+      }
+    }
+  }
+  .hover-icons-row {
+    height: 7vh;
+    color: $dark-blue;
+    width: 98%;
+    position: relative;
+
+    .round-button {
+      position: absolute;
+      left: -0.2vw;
+      height: 2.1vw;
+      width: 2.1vw;
+      bottom: 1vh;
+      border-radius: 20vw;
+      padding-right: -31vw;
+      background: black;
+    }
+
+    .bin-button {
+      cursor: pointer;
+      position: absolute;
+      left: 9.2vw;
+      height: 3.7vh;
+      bottom: 1vh;
+      padding-right: -31vw;
+    }
+
+    .play-button {
+      cursor: pointer;
+      position: absolute;
+      right: -0vw;
+      height: 3.7vh;
+      bottom: 1vh;
+      padding-right: -31vw;
+    }
+  }
+
+  .brick-hover {
+    height: 32vh !important;
+  }
+
+  .brick-row-0, .brick-row-1, .brick-row-2, .brick-row-3 {
+    .expended-brick-info {
+      border-top-left-radius: 0 !important;
+    }
+  }
+
+  .brick-row-4, .brick-row-5 {
+    bottom: 0;
+    .expended-brick-info {
+      border-bottom-left-radius: 0 !important;
+    }
+  }
+
+  .sorted-row {
+    margin-top: 3.5vh;
+    height: 63.5vh;
+    padding-left: 0;
+    padding-right: 0;
+
+    .indexes-box {
+      margin-bottom: 1.3vh;
+      padding-top: 0.91vh;
+      padding-bottom: 1.5vh;
+      width: 100%;
+
+      .sort-header {
+        padding-left: 1.7vw;
+        padding-bottom: 0.9vh;
+        font-size: 1.3vw;
+        letter-spacing: 0.26vw;
+      }
+      .index-box {
+        cursor: pointer;
+        position: relative;
+        padding-left: 1.7vw;
+        padding-top: 0.84vh;
+        padding-bottom: 0.84vh;
+        font-size: 1.1vw;
+
+        .right-index {
+          position: absolute;
+          background: white;
+          line-height: 1;
+          padding: 0.14vh 0.68vw;
+          border-radius: 0.65vw;
+          font-size: 1.35vw;
+          color: $dark-blue;
+          right: 1.2vw;
+          top: 0.9vh;
+        }
+      }
+      .index-box.active {
+        background: $lighter-blue;
+      }
+    }
+
+    .sort-and-filter-container {
+      color: white;
+      padding-right: 0.4vw;
+
+      > div {
+        padding-top: 3.2vh;
+        border-top-right-radius: $main-panel-radius;
+        background: $light-blue;
+      }
+
+      .back-sort-box {
+        margin-bottom: 1.4vh;
+        padding-left: 0vw;
+        padding-top: 5.7vh;
+        width: 100%;
+
+        .sort-header {
+          padding-left: 1.4vw;
+          font-size: 1.3vw;
+          letter-spacing: 0.26vw;
+        }
+        .filter-header {
+          text-transform: uppercase;
+          background: $lighter-blue;
+          padding-left: 1.3vw;
+          font-size: 1.2vw;
+          margin-top: 4vh;
+          line-height: 1.2;
+          letter-spacing: 0.22vw;
+          margin-bottom: 1vh;
+          .filter-control {
+            vertical-align: middle;
+          }
+          .filter-control:not(:first-child) {
+            margin-left: 0.9vw;
+            cursor: pointer;
+          }
+        }
+        .sort-group {
+          padding-top: 1.6vh;
+          padding-left: 1.6vw;
+          display: block;
+          > label:nth-child(1) {
+            width: 36%;
+          }
+          > label:nth-child(2) {
+            width: 36%;
+          }
+          > label:nth-child(3) {
+            width: 28%;
+          }
+          > label {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            .sortBy {
+              padding-left: 0vw;
+              padding-right: 0.4vw;
+              svg {
+                height: 2.2vh;
+                width: 2.2vh;
+                color: $orange !important;
+              }
+            }
+            .MuiFormControlLabel-label {
+              font: 1.05vw "Brandon Grotesque Regular" !important;
+              letter-spacing: 0.06vw;
+            }
+          }
+        }
+        .filter-items {
+          padding-top: 2.3vh;
+          padding-left: 1.7vw;
+        }
+
+        .filter-container {
+          position: relative;
+          width: 100%;
+          .filter-radio-label {
+            padding-left: 0;
+            cursor: default;
+            width: 90%;
+
+            svg {
+              height: 2.2vh;
+              width: 2.2vh;
+            }
+            .MuiFormControlLabel-label {
+              font: 1.05vw "Brandon Grotesque Regular" !important;
+              letter-spacing: 0.06vw;
+            }
+          }
+          .right-index {
+            position: absolute;
+            line-height: 1;
+            padding: 0.14vh 0.68vw;
+            border-radius: 0.65vw;
+            font-size: 1.35vw;
+            color: $dark-blue;
+            right: 1.2vw;
+            top: 0.9vh;
+          }
+          .color1 {
+            .right-index {
+              background: $orange;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .color1 {
+    .round-button { background: $orange;}
+    .right-index {
+      background: $orange;
+    }
+    svg {
+      color: $orange !important;
+    }
+  }
+  .color2 {
+    .round-button { background: $yellow;}
+    .right-index {
+      background: $yellow;
+    }
+    svg {
+      color: $yellow !important;
+    }
+  }
+  .color3 {
+    .round-button { background: white;}
+    .right-index {
+      background: white;
+    }
+    svg {
+      color: white !important;
+    }
+  }
+  .color4 {
+    .round-button { background: $light-green;}
+    .right-index {
+      background: $light-green;
+    }
+    svg {
+      color: $light-green !important;
+    }
+  }
+}
+
+.alert-dialog {
+  position: fixed;
+  top: 0;
+
+  .MuiDialog-paperScrollPaper {
+    position: fixed;
+    top: 8.3vh;
+    right: 7vw;
+    border-radius: 0.8vw;
+  }
+
+  .logout-dialog-header {
+    padding: 3.8vh 1vw 3.5vh 2.2vw;
+    font-size: 2.35vw;
+    letter-spacing: 0;
+    color: $dark-blue;
+    font-family: "Brandon Grotesque Regular";
+  }
+  .logout-buttons {
+    padding-bottom: 2.3vh;
+
+    button {
+      min-width: 9.55vw;
+      font-size: 2vw;
+      border-radius: 0.6vw;
+      text-transform: none;
+      font-weight: normal !important;
+      padding-top: 1.1vh;
+      padding-bottom: 1.1vh;
+      line-height: 1;
+      font-family: "Brandon Grotesque Regular";
+      > span {
+        width: 100%;
+      }
+    }
+
+    .yes-button {
+      color: white;
+      background: $orange;
+      margin-right: 1.4vw !important;
+    }
+
+    .no-button {
+      color: $dark-blue;
+      background: $tab-grey;
+      margin-right: 0.2vw;
+    }
+  }
+}
+
+.delete-brick-dialog {
+  .MuiDialog-paperScrollPaper {
+    border-radius: 0.8vw;
+  }
+
+  .dialog-header {
+    padding: 3.8vh 4vw 3.5vh 1.7vw;
+    font-size: 2.35vw;
+    letter-spacing: 0;
+    color: $dark-blue;
+    font-family: "Brandon Grotesque Regular";
+  }
+  .row-buttons {
+    padding-bottom: 2.3vh;
+
+    button {
+      min-width: 9.55vw;
+      font-size: 1.7vw;
+      border-radius: 0.6vw;
+      text-transform: none;
+      font-weight: normal !important;
+      padding-top: 1.1vh;
+      padding-bottom: 1.1vh;
+      line-height: 1;
+      font-family: "Brandon Grotesque Regular";
+      > span {
+        width: 100%;
+      }
+    }
+
+    .yes-button {
+      color: white;
+      background: $orange;
+      margin-right: 1.4vw !important;
+    }
+
+    .no-button {
+      color: $dark-blue;
+      background: $tab-grey;
+      margin-right: 0.2vw;
+    }
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+}
+
+@media only screen and (max-width: 1279px) and (min-width: 960px) {
+  .bricks-list-page {
+    .bricks-sort {
+      .sort-and-search-row {
+        .sort-bricks-by {
+          font-size: 12px;
+          .sort-by {
+            padding-top: 5px;
+          }
+          .sort-element {
+            padding-top: 6px;
+            font-size: 12px;
+          }
+
+          .expanded-icon {
+            height: 24px !important;
+            width: 24px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 959px) and (min-width: 600px) {
+  .bricks-list-page {
+    .bricks-sort {
+      .sort-and-search-row {
+        .sort-bricks-by {
+          font-size: 9px;
+          .sort-by {
+            padding-top: 1px;
+          }
+          .sort-element {
+            padding-top: 2px;
+            font-size: 8px;
+          }
+
+          .expanded-icon {
+            height: 12px !important;
+            width: 12px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .bricks-list-page {
+    .bricks-sort {
+      .sort-and-search-row {
+        .sort-bricks-by {
+          font-size: 7px;
+          .sort-by {
+            padding-top: 1px;
+          }
+          .sort-element {
+            padding-top: 2px;
+            font-size: 7px;
+          }
+
+          .expanded-icon {
+            height: 10px !important;
+            width: 10px !important;
+          }
+        }
+      }
+    }
+  }
+}
