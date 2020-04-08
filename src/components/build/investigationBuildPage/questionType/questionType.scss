@@ -15,7 +15,16 @@ $question-radius: 0.65vw;
   height: 94%;
 
   .inner-question-type {
-    padding: 6vh 4vh 2vh 4vh;
+    padding: 0.7vh 4vh 2vh 4vh;
+
+    .label-question-type {
+      margin-left: 0.6vw;
+      font-size: 1.5vw;
+      margin-bottom: 1.2vh;
+      letter-spacing: 0.01vw;
+      font-family: "Brandon Grotesque Regular";
+      color: $dark-blue;
+    }
   }
 
   .round-button-center-container {
