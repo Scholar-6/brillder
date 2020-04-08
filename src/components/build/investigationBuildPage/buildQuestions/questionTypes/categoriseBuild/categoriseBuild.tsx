@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Button } from '@material-ui/core';
 
 import './categoriseBuild.scss'
+import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
 
 interface Answer {
@@ -12,6 +12,7 @@ interface Answer {
 interface SortCategory {
   name: string
   answers: Answer[]
+  height: string
 }
 
 export interface ChooseSeveralData {
@@ -25,8 +26,11 @@ export interface ChooseSeveralBuildProps {
 }
 
 const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ locked, data, updateComponent }) => {
+  const [categoryHeight, setCategoryHeight] = React.useState('0%');
+
+
   const newAnswer = () => ({ value: "" });
-  const newCategory = () => ({ name: "", answers: [newAnswer()] })
+  const newCategory = () => ({ name: "", answers: [newAnswer()], height: '0%' })
 
   if (!data.categories) {
     data.categories = [newCategory(), newCategory()];
@@ -34,7 +38,28 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ locked, d
 
   const [state, setState] = React.useState(data);
 
-  useEffect(() => { setState(data)}, [data]);
+  useEffect(() => calculateCategoryHeight());
+
+  useEffect(() => setState(data), [data]);
+
+  const calculateCategoryHeight = () => {
+    let showButton = true;
+    let categories = [];
+    for (let category of state.categories) {
+      if (category.name === "") {
+        showButton = false;
+      }
+      category.height = 'auto';
+      for (let answer of category.answers) {
+        if (!answer.value) {
+          category.height = "0%";
+        }
+      }
+      categories.push(category);
+    }
+    showButton === true ? setCategoryHeight('auto') : setCategoryHeight('0%');
+    setState(state);
+  }
 
   const update = () => {
     setState(Object.assign({}, state));
@@ -90,11 +115,11 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ locked, d
             );
           })
         }
-        <div className="button-box">
-          <Button disabled={locked} className="add-answer-button" onClick={() => { addAnswer(category) }}>
-            + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
-          </Button>
-        </div>
+        <AddAnswerButton
+          locked={locked}
+          addAnswer={() => addAnswer(category)}
+          height={category.height}
+          label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
       </div>
     );
   }
@@ -104,11 +129,11 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ locked, d
       {
         state.categories.map((category, i) => renderCategory(category, i))
       }
-      <div className="button-box">
-        <Button disabled={locked} className="add-answer-button" onClick={addCategory}>
-          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; C &nbsp; A &nbsp; T &nbsp; E &nbsp; G &nbsp; O &nbsp; R &nbsp; Y
-        </Button>
-      </div>
+      <AddAnswerButton
+        locked={locked}
+        addAnswer={addCategory}
+        height={categoryHeight}
+        label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; C &nbsp; A &nbsp; T &nbsp; E &nbsp; G &nbsp; O &nbsp; R &nbsp; Y" />
     </div>
   )
 }
