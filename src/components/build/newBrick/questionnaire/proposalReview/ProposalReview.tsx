@@ -36,7 +36,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
         <Grid className="back-button-container" container alignContent="center">
           {
             bookHovered
-              ? <ArrowBackIcon className="back-button" onClick={() => history.push('/build/new-brick/length')} />
+              ? <div className="back-button" onClick={() => history.push('/build/new-brick/length')} />
               : ""
           }
         </Grid>
@@ -44,7 +44,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
           {
             bookHovered ? (
               <div>
-                <ArrowForwardIcon className="next-button" onClick={savingBrick} />
+                <div className="next-button" onClick={savingBrick}></div>
                 <div className="button-text">
                   <div>START</div>
                   <div>BUILDING!</div>
