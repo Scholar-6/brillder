@@ -1,6 +1,6 @@
 // This is for the dropdown that allows user to change the answer type.
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { Grid, Button } from '@material-ui/core';
 
@@ -36,6 +36,11 @@ const QuestionComponents = ({
   let componentsCopy = Object.assign([], question.components) as any[]
   const [questionId, setQuestionId] = useState(question.id);
   const [components, setComponents] = useState(componentsCopy);
+
+  useEffect(() => {
+    let componentsCopy = Object.assign([], question.components) as any[];
+    setComponents(componentsCopy);
+  }, [question]);
 
   if (questionId !== question.id) {
     setQuestionId(question.id);
