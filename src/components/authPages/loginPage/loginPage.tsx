@@ -107,9 +107,7 @@ const LoginPage: React.FC<LoginProps> = props => {
   const register = (email: string, password: string) => {
     axios
       .post(process.env.REACT_APP_BACKEND_HOST + "/auth/SignUp", {
-        email,
-        password,
-        confirmPassword: password
+        email, password, confirmPassword: password
       })
       .then(resp => {
         const { data } = resp;
@@ -119,6 +117,9 @@ const LoginPage: React.FC<LoginProps> = props => {
         }
         if (data.msg) {
           alert(data.msg);
+        }
+        if (data === "OK") {
+          props.history.push('/play');
         }
       })
       .catch(e => {
