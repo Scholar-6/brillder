@@ -17,24 +17,8 @@ interface BrickTitleProps {
 const BrickTitlePreviewComponent:React.FC<any> = (props) => {
   let {subTopic, alternativeTopics, title} = props.data;
 
-  const getYear = (date: Date) => {
-    var currentYear =  date.getFullYear();   
-    var twoLastDigits = currentYear%100;
+  const formatTwoLastDigits = (twoLastDigits: number) => {
     var formatedTwoLastDigits = "";
-    
-    if (twoLastDigits <10 ) {
-      formatedTwoLastDigits = "0" + twoLastDigits;
-    } else {
-      formatedTwoLastDigits = "" + twoLastDigits;
-    }
-    return formatedTwoLastDigits;
-  }
-
-  const getMonth = (date: Date) => {
-    const month = date.getMonth() + 1;
-    var twoLastDigits = month%10;
-    var formatedTwoLastDigits = "";
-
     if (twoLastDigits < 10 ) {
       formatedTwoLastDigits = "0" + twoLastDigits;
     } else {
@@ -43,8 +27,25 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
     return formatedTwoLastDigits;
   }
 
+  const getYear = (date: Date) => {
+    var currentYear =  date.getFullYear();   
+    var twoLastDigits = currentYear%100;
+    return formatTwoLastDigits(twoLastDigits);
+  }
+
+  const getMonth = (date: Date) => {
+    const month = date.getMonth() + 1;
+    var twoLastDigits = month%10;
+    return formatTwoLastDigits(twoLastDigits);
+  }
+
+  const getDate = (date: Date) => {
+    const days = date.getDate();
+    return formatTwoLastDigits(days);
+  }
+
   const date = new Date();
-  const dateString = `${date.getDate()}.${getMonth(date)}.${getYear(date)}`;
+  const dateString = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
   
   return (
     <Grid container alignContent="flex-start" className="brick-title-container">

@@ -137,11 +137,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.props.history.push(`/build/brick/${brickId}/build/investigation/question`)
   }
 
-  getYear(date: Date) {
-    var currentYear =  date.getFullYear();   
-    var twoLastDigits = currentYear%100;
+  formatTwoLastDigits(twoLastDigits: number) {
     var formatedTwoLastDigits = "";
-    
     if (twoLastDigits < 10 ) {
       formatedTwoLastDigits = "0" + twoLastDigits;
     } else {
@@ -150,17 +147,21 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return formatedTwoLastDigits;
   }
 
+  getYear(date: Date) {
+    var currentYear =  date.getFullYear();   
+    var twoLastDigits = currentYear % 100;
+    return this.formatTwoLastDigits(twoLastDigits);
+  }
+
   getMonth(date: Date) {
     const month = date.getMonth() + 1;
-    var twoLastDigits = month%10;
-    var formatedTwoLastDigits = "";
+    var twoLastDigits = month % 10;
+    return this.formatTwoLastDigits(twoLastDigits);
+  }
 
-    if (twoLastDigits < 10 ) {
-      formatedTwoLastDigits = "0" + twoLastDigits;
-    } else {
-      formatedTwoLastDigits = "" + twoLastDigits;
-    }
-    return formatedTwoLastDigits;
+  getDate(date: Date) {
+    const days = date.getDate();
+    return this.formatTwoLastDigits(days);
   }
 
   handleSortChange = (e: any) => {
@@ -234,12 +235,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     const created = new Date(brick.created);
     const year = this.getYear(created);
     const month = this.getMonth(created);
+    const date = this.getDate(created);
     if (brick.author) {
       const {author} = brick;
       if (author.firstName || author.firstName) {
         row += `${author.firstName} ${author.firstName} | `
       }
-      row += `${created.getDate()}.${month}.${year} | ${brick.brickLength} mins`;
+      row += `${date}.${month}.${year} | ${brick.brickLength} mins`;
     }
     return row;
   }

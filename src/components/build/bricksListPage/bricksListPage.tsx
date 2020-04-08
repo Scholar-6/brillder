@@ -136,32 +136,33 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.props.history.push(`/build/brick/${brickId}/build/investigation/question`)
   }
 
-  getYear(date: Date) {
-    var currentYear =  date.getFullYear();   
-    var twoLastDigits = currentYear%100;
+  formatTwoLastDigits(twoLastDigits: number) {
     var formatedTwoLastDigits = "";
-    
     if (twoLastDigits < 10 ) {
       formatedTwoLastDigits = "0" + twoLastDigits;
     } else {
       formatedTwoLastDigits = "" + twoLastDigits;
     }
     return formatedTwoLastDigits;
+  }
+
+  getYear(date: Date) {
+    var currentYear =  date.getFullYear();   
+    var twoLastDigits = currentYear % 100;
+    return this.formatTwoLastDigits(twoLastDigits);
   }
 
   getMonth(date: Date) {
     const month = date.getMonth() + 1;
-    var twoLastDigits = month%10;
-    var formatedTwoLastDigits = "";
-
-    if (twoLastDigits < 10 ) {
-      formatedTwoLastDigits = "0" + twoLastDigits;
-    } else {
-      formatedTwoLastDigits = "" + twoLastDigits;
-    }
-    return formatedTwoLastDigits;
+    var twoLastDigits = month % 10;
+    return this.formatTwoLastDigits(twoLastDigits);
   }
 
+  getDate(date: Date) {
+    const days = date.getDate();
+    return this.formatTwoLastDigits(days);
+  }
+  
   handleSortChange = (e: any) => {
     const {state} = this;
     const sortBy = parseInt(e.target.value) as SortBy;
@@ -356,12 +357,13 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     const created = new Date(brick.created);
     const year = this.getYear(created);
     const month = this.getMonth(created);
+    const date = this.getDate(created);
     if (brick.author) {
       const {author} = brick;
       if (author.firstName || author.firstName) {
         row += `${author.firstName} ${author.firstName} | `
       }
-      row += `${created.getDate()}.${month}.${year} | ${brick.brickLength} mins`;
+      row += `${date}.${month}.${year} | ${brick.brickLength} mins`;
     }
     return row;
   }
