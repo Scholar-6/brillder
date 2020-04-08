@@ -76,11 +76,10 @@
   .book-container {
     display: flex;
     perspective: 100vw;
-
     $book-radius: 0.4vw;
 
     .book {
-      margin-top: 15vh;
+      margin-top: 17vh;
       transform-style: preserve-3d;
       position: relative;
       height: 65vh;
@@ -196,7 +195,7 @@
         margin-right: 0vw;
         height: 65vh;
         overflow: auto;
-        font-size: 1.2vw;
+        font-size: 1vw;
 
         font-family: "Brandon Grotesque Regular";
 
