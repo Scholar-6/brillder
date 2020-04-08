@@ -5,7 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
 
 import QuestionComponents from './questionComponents/questionComponents';
-import './buildQuestionComponent.scss';
+import './questionPanelWorkArea.scss';
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../model/question';
 import DragBox from './drag/dragBox';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
@@ -32,7 +32,7 @@ export interface QuestionProps {
   locked: boolean
 }
 
-const BuildQuestionComponent: React.FC<QuestionProps> = (
+const QuestionPanelWorkArea: React.FC<QuestionProps> = (
   { brickId, question, history, getQuestionIndex, locked, ...props }
 ) => {
   const [componentTypes, setComponentType] = React.useState([
@@ -171,4 +171,4 @@ const BuildQuestionComponent: React.FC<QuestionProps> = (
   );
 }
 
-export default BuildQuestionComponent
+export default QuestionPanelWorkArea

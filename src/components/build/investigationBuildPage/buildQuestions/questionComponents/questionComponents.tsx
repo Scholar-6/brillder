@@ -1,3 +1,5 @@
+// This is for the dropdown that allows user to change the answer type.
+
 import React, { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { Grid, Button } from '@material-ui/core';
