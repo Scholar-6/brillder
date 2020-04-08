@@ -182,3 +182,19 @@ html, body, #root {
     }
   }
 }
+
+@media only screen and (max-width: 599px) {
+  .logo-image {
+    height: auto !important;
+    width: 80%;
+  }
+  input {
+    font-size: 3vw !important;
+  }
+  button {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    font-size: 3vw !important;
+    width: 100% !important;
+  }
+}

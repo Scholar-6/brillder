@@ -105,26 +105,23 @@ const LoginPage: React.FC<LoginProps> = props => {
   };
 
   const register = (email: string, password: string) => {
-    axios
-      .post(process.env.REACT_APP_BACKEND_HOST + "/auth/SignUp", {
-        email, password, confirmPassword: password
-      })
-      .then(resp => {
-        const { data } = resp;
-        if (data.errors) {
-          alert(data.errors[0].msg);
-          return;
-        }
-        if (data.msg) {
-          alert(data.msg);
-        }
-        if (data === "OK") {
-          props.history.push('/play');
-        }
-      })
-      .catch(e => {
-        alert("Connection problem");
-      });
+    axios.post(process.env.REACT_APP_BACKEND_HOST + "/auth/SignUp", {
+      email, password, confirmPassword: password
+    }).then(resp => {
+      const { data } = resp;
+      if (data.errors) {
+        alert(data.errors[0].msg);
+        return;
+      }
+      if (data.msg) {
+        alert(data.msg);
+      }
+      if (data === "OK") {
+        props.history.push('/play');
+      }
+    }).catch(e => {
+      alert("Connection problem");
+    });
   };
 
   return (
@@ -201,15 +198,19 @@ const LoginPage: React.FC<LoginProps> = props => {
                     textAlign: "right"
                   }}
                 >
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className="sign-in-button sign-up-button"
-                    type="button"
-                    onClick={() => register(email, password)}
-                  >
-                    Sign up
-                  </Button>
+                  {
+                    (userType === UserLoginType.Student) ? (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className="sign-in-button sign-up-button"
+                        type="button"
+                        onClick={() => register(email, password)}
+                      >
+                        Sign up
+                      </Button>
+                    ) : ""
+                  }
                   <Button
                     variant="contained"
                     color="primary"
