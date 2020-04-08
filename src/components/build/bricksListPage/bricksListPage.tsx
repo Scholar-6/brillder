@@ -220,12 +220,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return (
       <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
-          <Box
-            className="brick-container"
-            onMouseEnter={() => this.yourBricksMouseHover(key)}
-            onMouseLeave={() => this.yourBricksMouseLeave(key)}
-          >
-            <div className={`sorted-brick absolute-container brick-row-0 ${brick.expanded ? "bigger-hover" : ""}`}>
+          <Box className="brick-container">
+            <div
+              className={`sorted-brick absolute-container brick-row-0 ${brick.expanded ? "bigger-hover" : ""}`}
+              onMouseEnter={() => this.yourBricksMouseHover(key)}
+              onMouseLeave={() => this.yourBricksMouseLeave(key)}
+            >
               <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
                 <Grid item xs={brick.expanded ? 12 : 11}>
                   {
@@ -394,12 +394,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return (
       <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
-          <Box
-            className="brick-container"
-            onMouseEnter={() => this.handleMouseHover(key)}
-            onMouseLeave={() => this.handleMouseLeave(key)}
-          >
-            <div className={`sorted-brick absolute-container brick-row-${row + 1} ${brick.expanded ? 'brick-hover' : ''}`}>
+          <Box className="brick-container">
+            <div
+              className={`sorted-brick absolute-container brick-row-${row + 1} ${brick.expanded ? 'brick-hover' : ''}`}
+              onMouseEnter={() => this.handleMouseHover(key)}
+              onMouseLeave={() => this.handleMouseLeave(key)}
+            >
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
               <Grid item xs={brick.expanded ? 12 : 11}>
                 {
