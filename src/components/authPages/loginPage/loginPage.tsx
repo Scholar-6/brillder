@@ -36,7 +36,6 @@ interface LoginProps {
 }
 
 const LoginPage: React.FC<LoginProps> = props => {
-  const [isNewUser, setNewUser] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -78,15 +77,15 @@ const LoginPage: React.FC<LoginProps> = props => {
       { email, password, userType },
       { withCredentials: true }
     ).then(response => {
-        const { data } = response;
-        if (data === "OK") {
-          props.loginSuccess(userType);
-          return;
-        }
-        let { msg } = data;
-        if (!msg) {
-          const { errors } = data;
-          msg = errors[0].msg;
+      const { data } = response;
+      if (data === "OK") {
+        props.loginSuccess(userType);
+        return;
+      }
+      let { msg } = data;
+      if (!msg) {
+        const { errors } = data;
+        msg = errors[0].msg;
         }
         alert(msg);
       })
@@ -97,12 +96,8 @@ const LoginPage: React.FC<LoginProps> = props => {
             response.status === 500 &&
             userType === UserLoginType.Student
           ) {
-            if (!isNewUser) {
-              //register(email, password);
-            }
           } else if (response.status === 401) {
             if (response.data.msg === 'USER_IS_NOT_ACTIVE') {
-              setNewUser(true);
             }
           }
         }
@@ -125,7 +120,6 @@ const LoginPage: React.FC<LoginProps> = props => {
         if (data.msg) {
           alert(data.msg);
         }
-        setNewUser(true);
       })
       .catch(e => {
         alert("Connection problem");
@@ -141,25 +135,18 @@ const LoginPage: React.FC<LoginProps> = props => {
       alignItems="center"
     >
       <div className="back-col">
-        {
-          !isNewUser ?
-          <div className="back-box">
-            <ArrowBackIcon
-              className="back-button"
-              onClick={() =>
-                props.history.push(`/choose-login?userType=${userType}`)
-              }
-            />
-          </div>
-          : ""
-        }
+        <div className="back-box">
+          <ArrowBackIcon
+            className="back-button"
+            onClick={() =>
+              props.history.push(`/choose-login?userType=${userType}`)
+            }
+          />
+        </div>
       </div>
       <div className="first-col">
         <div className="first-item"></div>
         <div className="second-item">
-          {isNewUser ? (
-            <div></div>
-          ) : (
             <div>
               <Grid>
                 <img
@@ -233,28 +220,12 @@ const LoginPage: React.FC<LoginProps> = props => {
                 </div>
               </form>
             </div>
-          )}
         </div>
       </div>
       <div className="second-col">
         <div className="first-item"></div>
         <div className="second-item"></div>
       </div>
-      {isNewUser ? (
-        <div className="register-success">
-          <div className="thanks-info">
-            <CheckCircleIcon className="register-success-icon" />
-            Thank you for signing up to Brix. <br />
-            We’ll get back to you soon with a link <br />
-            to activate your account.
-          </div>
-          <div className="contact-info">
-            If you have any further questions, please email theteam@scholar6.org
-          </div>
-        </div>
-      ) : (
-        <div></div>
-      )}
     </Grid>
   );
 };
