@@ -1,49 +1,82 @@
-$light-grey: #F4F4F4;
+@import "_variables";
+
+$left-grey: #E6E6ED;
+$light-grey: #f4f4f4;
 
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
   .MuiTypography-root {
-    font: 500 16px/24px 'Montserrat';
+    font: 500 16px/24px "Montserrat";
   }
 }
 
-.brick-container {
-  font-family: 'Montserrat';
-  max-width: 800px;
-  width: 100%;
-  text-align: left;
+.play-pages {
+  .back-to-build {
+    position: fixed;
+    height: 100%;
+    width: 15vw;
+    left: 1.8vw;
+    top: 0;
+    font-size: 1.8vw;
+    font-family: 'Brandon Grotesque Black';
+    color: $left-grey;
 
-  h3 {
-    color: black;
-    padding: 5px;
-    font-size: 16px;
-    line-height: 28px;
+    .create-icon {
+      height: 5vw;
+      width: 6.35vw;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/images/main-page/create-grey.png);
+      margin-bottom: 1.5vh;
+    }
   }
 
-  h2 {
-    font-size: 24px;
+  .back-hover-area:hover {
+    color: $dark-blue;
+    .create-icon {
+      background-image: url(/images/main-page/create.png);
+    }
   }
 
-  h1 {
-    color: black;
-    padding: 5px;
-    line-height: 48px;
-    text-transform: capitalize;
-    font-size: 32px;
-  }
-
-  .MuiExpansionPanel-root {
-    background: $light-grey;
-  }
-
-  .MuiExpansionPanel-root.Mui-expanded {
-    margin: 0 !important;
-    margin-bottom: 16px !important;
-  }
-}
-
-@media only screen and (max-width: 599px) {
   .brick-container {
-    text-align: center;
+    font-family: "Montserrat";
+    max-width: 800px;
+    width: 100%;
+    text-align: left;
+
+    h3 {
+      color: black;
+      padding: 5px;
+      font-size: 16px;
+      line-height: 28px;
+    }
+
+    h2 {
+      font-size: 24px;
+    }
+
+    h1 {
+      color: black;
+      padding: 5px;
+      line-height: 48px;
+      text-transform: capitalize;
+      font-size: 32px;
+    }
+
+    .MuiExpansionPanel-root {
+      background: $light-grey;
+    }
+
+    .MuiExpansionPanel-root.Mui-expanded {
+      margin: 0 !important;
+      margin-bottom: 16px !important;
+    }
+  }
+
+  @media only screen and (max-width: 599px) {
+    .brick-container {
+      text-align: center;
+    }
   }
 }

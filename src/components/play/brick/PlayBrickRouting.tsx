@@ -20,6 +20,7 @@ import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'components/model/question';
 import { UserType } from 'model/user';
+import { Hidden, Grid } from '@material-ui/core';
 
 
 export interface BrickAttempt {
@@ -135,32 +136,51 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   return (
-    <Switch>
-      <Route exac path="/play/brick/:brickId/intro">
-        <Introduction brick={props.brick} />
-      </Route>
-      <Route exac path="/play/brick/:brickId/live">
-        <Live status={status} questions={props.brick.questions} brickId={props.brick.id} updateAttempts={updateAttempts} finishBrick={finishBrick} />
-      </Route>
-      <Route exac path="/play/brick/:brickId/provisionalScore">
-        <ProvisionalScore status={status} brick={props.brick} attempts={attempts} />
-      </Route>
-      <Route exac path="/play/brick/:brickId/synthesis">
-        <Synthesis status={status} brick={props.brick} />
-      </Route>
-      <Route exac path="/play/brick/:brickId/review">
-        <Review
-          status={status}
-          questions={props.brick.questions}
-          brickId={props.brick.id}
-          updateAttempts={updateReviewAttempts}
-          attempts={attempts}
-          finishBrick={finishReview} />
-      </Route>
-      <Route exac path="/play/brick/:brickId/ending">
-        <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} saveBrick={saveBrickAttempt} />
-      </Route>
-    </Switch>
+    <div className="play-pages">
+      <Switch>
+        <Route exac path="/play/brick/:brickId/intro">
+          <Introduction brick={props.brick} />
+        </Route>
+        <Route exac path="/play/brick/:brickId/live">
+          <Live status={status} questions={props.brick.questions} brickId={props.brick.id} updateAttempts={updateAttempts} finishBrick={finishBrick} />
+        </Route>
+        <Route exac path="/play/brick/:brickId/provisionalScore">
+          <ProvisionalScore status={status} brick={props.brick} attempts={attempts} />
+        </Route>
+        <Route exac path="/play/brick/:brickId/synthesis">
+          <Synthesis status={status} brick={props.brick} />
+        </Route>
+        <Route exac path="/play/brick/:brickId/review">
+          <Review
+            status={status}
+            questions={props.brick.questions}
+            brickId={props.brick.id}
+            updateAttempts={updateReviewAttempts}
+            attempts={attempts}
+            finishBrick={finishReview} />
+        </Route>
+        <Route exac path="/play/brick/:brickId/ending">
+          <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} saveBrick={saveBrickAttempt} />
+        </Route>
+      </Switch>
+      {
+        isPreview ? (
+          <Hidden only={['xs', 'sm', 'md']}>
+            <Grid container alignContent="center" className="back-to-build">
+              <div
+                className="back-hover-area"
+                onClick={() => props.history.push(`/build/brick/${brickId}/build/investigation/question`)}
+              >
+                <div className="create-icon"></div>
+                <div>BACK</div>
+                <div>TO</div>
+                <div>BUILD</div>
+              </div>
+            </Grid>
+          </Hidden>
+        ) : ""
+      }
+    </div>
   );
 }
 
