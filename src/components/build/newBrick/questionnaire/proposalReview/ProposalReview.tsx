@@ -54,7 +54,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
           }
         </Grid>
             <div className="book-container">
-              <div className="book" onMouseEnter={() => onBookHover()}>
+              <div className="book" onMouseOver={() => onBookHover()}>
                 <div className="back"></div>
                 <div className="page6">
                   <div className="normal-page">
