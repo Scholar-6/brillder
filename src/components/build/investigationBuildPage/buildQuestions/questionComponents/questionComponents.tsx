@@ -1,4 +1,7 @@
-import React from 'react';
+// This is for the dropdown that allows user to change the answer type.
+
+import React, { useState, useEffect } from "react";
+import { ReactSortable } from "react-sortablejs";
 import { Grid, Button } from '@material-ui/core';
 
 import './questionComponents.scss';
@@ -8,36 +11,74 @@ import CategoriseComponent from '../questionTypes/categoriseBuild/categoriseBuil
 import ChooseOneComponent from '../questionTypes/chooseOneBuild/chooseOneBuild';
 import ChooseSeveralComponent from '../questionTypes/chooseSeveralBuild/chooseSeveralBuild';
 import HorizontalShuffleComponent from '../questionTypes/horizontalShuffleBuild/horizontalShuffleBuild';
-import LineHighlightingComponent from '../questionTypes/lineHighlightingBuild';
-import MissingWordComponent from '../questionTypes/missingWordBuild';
+import LineHighlightingComponent from '../questionTypes/lineHighlightingBuild/LineHighlightingBuild';
+import MissingWordComponent from '../questionTypes/missingWordBuild/MissingWordBuild';
 import PairMatchComponent from '../questionTypes/pairMatchBuild/pairMatchBuild';
 import VerticalShuffleComponent from '../questionTypes/verticalShuffleBuild/verticalShuffleBuild';
 import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHighlighting';
 import { Question, QuestionTypeEnum } from 'components/model/question';
-import { HintState } from 'components/build/base-components/Hint/Hint';
+import { HintState } from 'components/build/baseComponents/Hint/Hint';
 
 
 type QuestionComponentsProps = {
+  questionIndex: number
+  locked: boolean
   history: any
   brickId: number
   question: Question
-  swapComponents: Function
-  addComponent: Function
-  updateComponent(component: any, index: number):void
+  updateComponents(components: any[]): void
   setQuestionHint(hintState: HintState): void
 }
 
-const QuestionComponents = ({ history, brickId, question, swapComponents, setQuestionHint, updateComponent, addComponent }: QuestionComponentsProps) => {
+const QuestionComponents = ({
+  questionIndex, locked, history, brickId, question, updateComponents, setQuestionHint
+}: QuestionComponentsProps) => {
+  let componentsCopy = Object.assign([], question.components) as any[]
+  const [questionId, setQuestionId] = useState(question.id);
+  const [components, setComponents] = useState(componentsCopy);
+
+  useEffect(() => {
+    let componentsCopy = Object.assign([], question.components) as any[];
+    setComponents(componentsCopy);
+  }, [question]);
+
+  if (questionId !== question.id) {
+    setQuestionId(question.id);
+    let compsCopy = Object.assign([], question.components);
+    setComponents(compsCopy);
+  }
+
+  const removeInnerComponent = (componentIndex:number) => {
+    if (locked) { return; }
+    const comps = Object.assign([], components) as any[];
+    comps.splice(componentIndex, 1);
+    setComponents(comps);
+    updateComponents(comps);
+  }
+
+  const addInnerComponent = () => {
+    if (locked) { return; }
+    const comps = Object.assign([], components) as any[];
+    comps.push({type: 0});
+    setComponents(comps);
+    updateComponents(comps);
+  }
+
+  let canRemove = (components.length > 3) ? true : false;
+
   const renderDropBox = (component: any, index: number) => {
-    const updatingComponent = (compData:any) => {
-      updateComponent(compData, index);
+    const updatingComponent = (compData: any) => {
+      let copyComponents = Object.assign([], components) as any[];
+      copyComponents[index] = compData;
+      setComponents(copyComponents);
+      updateComponents(copyComponents);
     }
 
-    const {type} = question;
-    let uniqueComponent:any;
+    const { type } = question;
+    let uniqueComponent: any;
     if (type === QuestionTypeEnum.ShortAnswer) {
       uniqueComponent = ShortAnswerComponent;
-    } else if (type === QuestionTypeEnum.Categorise) {
+    } else if (type === QuestionTypeEnum.Sort) {
       uniqueComponent = CategoriseComponent;
     } else if (type === QuestionTypeEnum.ChooseOne) {
       uniqueComponent = ChooseOneComponent;
@@ -59,38 +100,45 @@ const QuestionComponents = ({ history, brickId, question, swapComponents, setQue
       history.push(`/build/brick/${brickId}/build/investigation/question`);
       return <div>...Loading...</div>
     }
+
     return <SwitchQuestionComponent
       type={component.type}
+      questionIndex={questionIndex}
       index={index}
-      swapComponents={swapComponents}
+      locked={locked}
       component={component}
       updateComponent={updatingComponent}
       hint={question.hint}
+      canRemove={canRemove}
+      removeComponent={removeInnerComponent}
       setQuestionHint={setQuestionHint}
       uniqueComponent={uniqueComponent} />
   }
 
-  const addQuestionComponent = () => {
-    // update question
-    addComponent();
+  const setList = (components: any) => {
+    if (locked) { return; }
+    setComponents(components);
+    updateComponents(components);
   }
 
   return (
     <div className="questions">
-      {
-        question.components.map((comp, i) => {
-          return (
+      <ReactSortable
+        list={components}
+        animation={150}
+        group={{ name: "cloning-group-name", pull: "clone" }}
+        setList={setList}>
+        {
+          components.map((comp, i) => (
             <Grid key={i} container direction="row" className="drop-box">
-              {
-                renderDropBox(comp, i)
-              }
+              {renderDropBox(comp, i)}
             </Grid>
-          )
-        })
-      }
+          ))
+        }
+      </ReactSortable>
       <Grid container direction="row" className="add-dropbox">
-        <Button className="add-dropbox-button" onClick={addQuestionComponent}>
-          + Question Component
+        <Button disabled={locked} className="add-dropbox-button" onClick={addInnerComponent}>
+          + QUESTION COMPONENT
         </Button>
       </Grid>
     </div>

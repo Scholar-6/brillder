@@ -19,7 +19,6 @@ const fetchBrickFailure = (errorMessage:string) => {
 
 const fetchBrick = (id: number) => {
   return function (dispatch: Dispatch) {
-    console.log('fetch brick')
     return axios.get(process.env.REACT_APP_BACKEND_HOST + '/brick/' + id, {withCredentials: true})
       .then((res) => {
         dispatch(fetchBrickSuccess(res.data));
@@ -44,14 +43,11 @@ const saveBrickFailure = (errorMessage:string) => {
   } as Action
 }
 
-
 const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
-    console.log('save brick', brick)
     brick.type = 1;
-    return axios.post(process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true}).then(response => {
+    return axios.put(process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true}).then(response => {
       const brick = response.data as Brick;
-      console.log("response", brick);
       dispatch(saveBrickSuccess(brick));
     })
     .catch(error => {
@@ -60,4 +56,37 @@ const saveBrick = (brick:any) => {
   }
 }
 
-export default { fetchBrick, saveBrick }
+const forgetBrick = () => {
+  return function (dispatch: Dispatch) {
+    dispatch({ type: types.FORGET_BRICK })
+  }
+}
+
+const createBrickSuccess = (brick: Brick) => {
+  return {
+    type: types.CREATE_BRICK_SUCCESS,
+    payload: brick,
+  } as Action
+}
+
+const createBrickFailure = (errorMessage:string) => {
+  return {
+    type: types.CREATE_BRICK_FAILURE,
+    error: errorMessage
+  } as Action
+}
+
+const createBrick = (brick:any) => {
+  return function (dispatch: Dispatch) {
+    brick.type = 1;
+    return axios.post(process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true}).then(response => {
+      const brick = response.data as Brick;
+      dispatch(createBrickSuccess(brick));
+    })
+    .catch(error => {
+      dispatch(createBrickFailure(error.message))
+    });
+  }
+}
+
+export default { fetchBrick, createBrick, saveBrick, forgetBrick }

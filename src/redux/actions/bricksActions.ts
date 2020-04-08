@@ -19,7 +19,6 @@ const fetchBricksFailure = (errorMessage:string) => {
 
 const fetchBricks = () => {
   return function (dispatch: Dispatch) {
-    console.log('fetch bricks')
     return axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks', {withCredentials: true})
       .then((res) => {
         dispatch(fetchBricksSuccess(res.data));

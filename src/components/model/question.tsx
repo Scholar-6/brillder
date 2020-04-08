@@ -10,16 +10,6 @@ export enum QuestionComponentTypeEnum{
   Component= 127,
 }
 
-export const QuestionComponentType = {
-  None: QuestionComponentTypeEnum.None,
-  Text: QuestionComponentTypeEnum.Text,
-  Quote: QuestionComponentTypeEnum.Quote,
-  Image: QuestionComponentTypeEnum.Image,
-  Sound: QuestionComponentTypeEnum.Sound,
-  Equation: QuestionComponentTypeEnum.Equation,
-  Component: QuestionComponentTypeEnum.Component,
-} as any
-
 export enum QuestionTypeEnum {
   None = 0,
   ShortAnswer = 1,
@@ -28,10 +18,10 @@ export enum QuestionTypeEnum {
   VerticalShuffle = 4,
   HorizontalShuffle = 5,
   PairMatch = 6,
-  Categorise = 7,
+  Sort = 7,
   MissingWord = 8,
   WordHighlighting = 9,
-  LineHighlighting = 10
+  LineHighlighting = 10,
 }
 
 export const QuestionType = {
@@ -41,10 +31,10 @@ export const QuestionType = {
   VerticalShuffle: QuestionTypeEnum.VerticalShuffle,
   HorizontalShuffle: QuestionTypeEnum.HorizontalShuffle,
   PairMatch: QuestionTypeEnum.PairMatch,
-  Categorise: QuestionTypeEnum.Categorise,
+  Sort: QuestionTypeEnum.Sort,
   MissingWord: QuestionTypeEnum.MissingWord,
   WordHighlighting: QuestionTypeEnum.WordHighlighting,
-  LineHighlighting: QuestionTypeEnum.LineHighlighting
+  LineHighlighting: QuestionTypeEnum.LineHighlighting,
 } as any
 
 export enum HintStatus {
@@ -55,13 +45,16 @@ export enum HintStatus {
 
 export interface Hint {
   value: string,
+  list: string[],
   status: HintStatus
 }
 
 export interface Question {
   id: number,
   active: boolean,
-  type: number,
+  type: QuestionTypeEnum,
   hint: Hint
   components: any[]
+  edited?: boolean
+  contentBlocks? : string
 }

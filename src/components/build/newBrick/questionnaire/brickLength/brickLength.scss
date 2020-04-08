@@ -1,0 +1,192 @@
+@import "_variables";
+
+.brick-length-page {
+  height: 100%;
+  font-family: 'Brandon Grotesque Regular';
+  color: black;
+
+  h1 {
+    font-weight: normal;
+    > p {
+      font-weight: normal;
+    }
+  }
+
+  .left-card {
+    position: relative;
+    padding-bottom: 7.5%;
+  
+    .length-description {
+      text-align: left;
+      margin-left: 20px;
+      color: black;
+      font-family: 'Brandon Grotesque Thin';
+      font-weight: bold;
+    }
+
+    .brick-length-image-container {
+      .brick-length-60-image {
+        background-image: url('/images/60min-icon-red.png');
+      }
+      .brick-length-40-image {
+        background-image: url('/images/40min-icon-red.png');
+      }
+      .brick-length-20-image {
+        background-image: url('/images/20min-icon-red.png');
+      }
+      .brick-length-image {
+        border-radius: 6px;
+        width: 100%;
+        background-color: $dark-blue;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        padding-top: 100%;
+      }
+
+      .brick-length-image:hover {
+        opacity: 0.9;
+      }
+  
+      .brick-length-image.active {
+        background-color: $orange;
+      }
+      .brick-length-20-image.active {
+        background-image: url('/images/20min-icon-white.png');
+      }
+      .brick-length-40-image.active {
+        background-image: url('/images/40min-icon-white.png');
+      }
+      .brick-length-60-image.active {
+        background-image: url('/images/60min-icon-white.png');
+      }
+    }
+
+    .bottom-time-description {
+      color: #495057;
+      margin-top: 10px;
+    }
+    .length-description {
+      font-size: 16px;
+    }
+  }
+
+  .only-tutorial-header-length {
+    font-family: 'Brandon Grotesque Bold';
+    margin: 6% 2%;
+    p {
+      margin: 0;
+      margin-bottom: 0.8vh;
+    }
+    font-size: 1.7vw;
+  }
+
+  .phone-preview-component {
+    width: 100%;
+    height: 100%;
+    background: $dark-blue;
+    position: relative;
+
+    img {
+      width: auto;
+      margin-left: 0vw;
+      margin-top: 7vw;
+      height: 14vw;
+    }
+    div {
+      position: absolute;
+      top: 10vw;
+      margin-top: 10%;
+      color: white;
+      font-size: 5vw;
+      font-family: 'Brandon Grotesque Bold';
+    }
+  }
+  
+  @media only screen and (min-width: 1280px)  {
+    .brick-length-image-container1 {
+      padding: 12px 20px 15px 72px;
+    }
+
+    .brick-length-image-container2 {
+      padding: 12px 46px 15px 46px;
+    }
+
+    .brick-length-image-container3 {
+      padding: 12px 72px 15px 20px;
+    }
+
+    .length-description {
+      margin-left: 72px !important;
+    }
+  }
+  
+  @media only screen and (max-width: 1279px) and (min-width: 960px)  {
+    .brick-length-image-container1 {
+      padding: 12px 10px 15px 35px;
+    }
+
+    .brick-length-image-container2 {
+      padding: 12px 22px 15px 22px;
+    }
+
+    .brick-length-image-container3 {
+      padding: 12px 35px 15px 10px;
+    }
+
+    .length-description {
+      margin-left: 35px !important;
+      font-size: 14px;
+    }
+  }
+  
+  @media only screen and (max-width: 959px) and (min-width: 600px)  {
+    .brick-length-image-container1 {
+      padding: 12px 10px 15px 35px;
+    }
+
+    .brick-length-image-container2 {
+      padding: 12px 22px 15px 22px;
+    }
+
+    .brick-length-image-container3 {
+      padding: 12px 35px 15px 10px;
+    }
+
+    .length-description {
+      margin-left: 35px !important;
+      font-size: 17px;
+    }
+
+    .only-tutorial-header-length {
+      font-size: 3.2vw;
+      font-weight: normal !important;
+    }
+  }
+  
+  @media only screen and (max-width: 599px) {
+    .left-card {
+      width: 90%;
+    }
+    .brick-length-image-container1 {
+      padding: 12px 10px 15px 35px;
+    }
+
+    .brick-length-image-container2 {
+      padding: 12px 22px 15px 22px;
+    }
+
+    .brick-length-image-container3 {
+      padding: 12px 35px 15px 10px;
+    }
+
+    .length-description {
+      font-size: 13px;
+      margin-left: 35px !important;
+    }
+
+    .only-tutorial-header-length {
+      font-size: 4vw;
+    }
+  }
+}
+

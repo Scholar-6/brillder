@@ -1,3 +1,24 @@
+
+import { Question } from "components/model/question";
+import { UserType } from "./user";
+
+export enum BrickStatus {
+  Draft = 1,
+  Review,
+  Build,
+  Publish
+}
+
+export interface Author {
+  email: string
+  firstName: string
+  googleId: string
+  id: number
+  lastName: string
+  tutorialPassed: boolean
+  type: UserType
+}
+
 export interface Brick {
   id: number
   subject: string
@@ -5,10 +26,25 @@ export interface Brick {
   subTopic: string
   title: string
   alternativeTopics: string
-  investigationBrief: string
-  preparationBrief: string
-  openQuestion: string
   alternativeSubject: string
+  created: string
+  updated: string
+  openQuestion: string
+  brief: string
+  prep: string
+  synthesis: string
+  brickLength: number
   type: number
-  questions: any[]
+  questions: Question[]
+  author: Author
+  expanded?: boolean
+  expandFinished?: boolean
+  status: BrickStatus
+  attemptsCount: number
+}
+
+export enum isAuthenticated {
+  None,
+  True,
+  False
 }

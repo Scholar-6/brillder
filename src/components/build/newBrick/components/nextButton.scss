@@ -1,20 +1,27 @@
+@import "_variables";
+
 .tutorial-page {
   .tutorial-next-container {
-    padding: 15px !important;
-    padding-right: 25px !important;
-  
+    position: absolute;
+    bottom: 1%;
+    right: 3.2%;
+    padding: 0px !important;
+
     .tutorial-next-button {
-      margin: 23px !important;
-      padding-top: 6px !important;
-      color: #b44438;
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 20% !important;
+      height: 20% !important;
+      color: $orange;
 
       span {
-        width: 70px !important;
-        height: 70px !important;
+        margin-left: -60%;
+        width: 500% !important;
+        height: 100% !important;
       }
 
       .tutorial-next-icon {
-        font-size: 60px;
+        font-size: 3.6vw;
       }
     }
   }

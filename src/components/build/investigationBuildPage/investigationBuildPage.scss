@@ -1,15 +1,153 @@
+@import "_variables";
+
+.mobile-brick-dialog {
+  font-size: 5vw;
+  padding: 4vh 4vw !important;
+
+  .yes-button {
+    color: white;
+    background: $orange;
+    margin-bottom: 4vh;
+  }
+}
 
 .investigation-build-page {
+  height: 100%;
+
+  .phone-preview {
+    top: 16.2%;
+    right: 5.4%;
+    .custom-component {
+      background: $tab-grey;
+      overflow-y: hidden;
+
+      .synthesis-preview {
+        height: 100%;
+        overflow-y: auto;
+        color: $dark-blue;
+        .synthesis-title {
+          margin-top: 1.6vh;
+          margin-bottom: 1vh;
+          font-size: 1.45vw;
+          letter-spacing: 0.3vw;
+          font-family: 'Brandon Grotesque Black';
+        }
+
+        .synthesis-text {
+          margin-left: 0.6vw;
+          margin-right: 0.6vw;
+          letter-spacing: 0.014vw;
+          line-height: 1.5;
+          font-size: 0.8vw;
+          font-family: 'Brandon Grotesque Regular';
+        }
+      }
+    }
+  }
+
+  .investigation-build-background {
+    height: 100%;
+    background: $dark-blue;
+  }
+
+  .proposal-link {
+    cursor: pointer;
+    position: absolute;
+    top: 33.5vh;
+    left: 1.44vw;
+    font-size: 1.8vw;
+    letter-spacing: 0.3vw;
+    font-family: 'Brandon Grotesque Black';
+    color: $light-blue;
+
+    .proposal-edit-icon {
+      font-size: 3.7vw;
+    }
+    .proposal-text {
+      margin-top: 0vh;
+      margin-left: 0.3vw;
+    }
+  }
+
+  .proposal-link:hover {
+    color: white;
+  }
+
+  .exit-button {
+    cursor: pointer;
+    position: fixed;
+    top: 2.32vh;
+    left: 3.3vw;
+    color: $orange;
+
+    .exit-label {
+      position: relative;
+      font-size: 1.75vw;
+      line-height: 1;
+      letter-spacing: 0.36vw;
+      color: white;
+      font-family: 'Brandon Grotesque Black';
+      .exit-arrow {
+        transition: all .2s ease-in-out;
+        position: absolute;
+        top: 0.1vh;
+        left: -1.7vw;
+        svg {
+          height: 1.5vw;
+          width: 1.5vw;
+        }
+      }
+    }
+    .small-label {
+      padding-left: 0.2vw;
+      letter-spacing: 0.2vw;
+      font-size: 1.05vw;
+      font-family: 'Brandon Grotesque Regular';
+    }
+    .small-labels {
+      position: absolute;
+      margin-top: 1vh;
+      left: -1.95vw;
+      color: $light-blue;
+      transition: all .2s ease-in-out;
+    }
+  }
+
+  .exit-button:hover {
+    .exit-arrow {
+      left: -2.1vw;
+    }
+    .small-labels {
+      color: white;
+    }
+  }
+
+  .right-top-drop-icon {
+    position: absolute;
+    top: 8px;
+    right: 1px;
+    cursor: pointer;
+    color: $orange;
+    z-index: 2;
+  }
+
+  .right-top-drop-icon:hover {
+    opacity: 0.5;
+  }
+
   .right-top-icon {
     position: absolute;
-    top: 2px;
-    right: 0;
+    top: 1vw;
+    height: $bin-size;
+    width: $bin-size;
+    right: 0.1vw;
     cursor: pointer;
+    color: $orange;
     z-index: 2;
   }
 
   .right-top-icon:hover {
-    color: red;
+    opacity: 0.5;
   }
 
   .question-container {
@@ -24,120 +162,38 @@
     opacity: 0;
   }
 
-  .page-footer {
-    background: #b2b2b2;
-    padding: 20px;
-
-    .white {
-      color: white;
-    }
-
-    .percentages {
-      color: white;
-      height: 44px;
-    }
-  
-    .MuiSlider-thumb {
-      color: #0a3a7e;
-    }
-  }
-
   .tab-panel {
     padding: 0;
-    border: 1px solid grey;
-    border-top: none;
   }
 
   .drag-and-drop-box {
-    min-height: 81px;
-    border: 1px dashed black;
-    background: white;
-    margin: 4px 0;
-  }
-}
-
-.grey .screen {
-    background: #E2E3E4 !important;
-    background: -webkit-gradient(linear, left top, left bottom, from(grey), to(#ebdac7)) !important;
-    background: linear-gradient(to bottom, grey 0%, #ebdac7 100%) !important;
-}
-
-.marvel-device.iphone5s:before,
-.top-bar, .bottom-bar {
-  background: white !important;
-}
-
-.grey, .volume, .camera, .sensor, .speaker {
-  background: #E2E3E4 !important;
-}
-
-
-
-.grey {
-  height: 335px !important;
-  width: 200px !important;
-  padding-top: 60px !important;
-  padding-right: 14px !important;
-  padding-bottom: 60px !important;
-  padding-left: 14px !important;
-  border-radius: 30px !important;
-
-  .home {
-    width: 40px !important;
-    height: 40px !important;
-    margin-left: -20px !important;
-    bottom: 10px !important;
+    min-height: 6vw;
+    margin: 0;
+    border-radius: $global-drop-border-radius;
   }
 
-  .sensor {
-    left: 100px !important;
-    width: 7px !important;
-    top: 28px !important;
-    height: 7px !important;
-  }
-  
-  .home {
-    box-shadow: inset 0 0 0 4px #E2E3E4 !important;
-  }
-
-  .volume, .volume::before, .volume::after {
-    width: 4px !important;
+  .button-box {
+    .add-answer-button {
+      width: 97.5%;
+      height: 2.8vw;
+      padding: 0 !important;
+      font-size: 0.81vw;
+      border-radius: $global-drop-border-radius;
+      background: #002060;
+      color: white;
+      font-family: 'Brandon Grotesque Regular';
+    }
   }
 
-  .top-bar, .sleep {
-    opacity: 0;
+  @media only screen and (max-width: 959px) {
+    .add-answer-button {
+      font-size: 1.61vw !important;
+    }
   }
 
-  .volume {
-    left: -2px !important;
-    top: 90px !important;
-    height: 24px !important;
+  @media only screen and (max-width: 600px) {
+    .add-answer-button {
+      font-size: 1.11vw !important;
+    }
   }
-
-  .volume::before {
-    top: -35px !important;
-    height: 18px !important;
-  }
-
-  .volume::after {
-    top: 35px !important;
-    height: 24px !important;
-  }
-
-  .speaker {
-    width: 40px !important;
-    margin-left: -20px !important;
-    height: 4px !important;
-    top: 30px !important;
-  }
-
-  .camera {
-    top: 10px !important;
-    height: 6px !important;
-    width: 6px !important;
-  }
-}
-
-.grey::before {
-  border-radius: 30px !important;
 }

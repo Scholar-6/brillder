@@ -1,29 +1,57 @@
+@import "_variables";
+
 .questions {
   width: 100%;
 
   .drop-box {
-    min-height: 81px;
+    margin-top: 0.4vh;
+    border-radius: $global-drop-border-radius;
+    padding: 0.2vw 0;
+    background-color: $tab-grey;
   }
 
   .add-dropbox {
+    margin: 0 !important;
     .add-dropbox-button {
       width: 100%;
-      border: 1px black solid;
+      border: none;
+      padding: 2.5vh 0;
       text-transform: none;
-      border-radius: 0;
+      background: $orange;
+      color: white;
+      font-size: 1.25vw;
+      font-family: 'Brandon Grotesque Bold';
+      letter-spacing: 0.3vw;
+      border-radius: $global-drop-border-radius;
     }
     margin-bottom: 10px;  
   }
-}
-
-@media only screen and (min-width: 1200px)  {
-}
-
-@media only screen and (max-width: 1199px) and (min-width: 900px)  {
-}
-
-@media only screen and (max-width: 899px) and (min-width: 600px)  {
-}
-
-@media only screen and (max-width: 599px) {
+  
+  @media only screen and (min-width: 1280px)  {
+  }
+  
+  @media only screen and (max-width: 1279px) and (min-width: 960px)  {
+    .add-dropbox {
+      .add-dropbox-button {
+        font-size: 0.8vw;
+      }
+    }
+  }
+  
+  @media only screen and (max-width: 959px) and (min-width: 600px)  {
+    .add-dropbox {
+      .add-dropbox-button {
+        font-size: 1.4vw !important;
+      }
+    }
+  }
+  
+  @media only screen and (max-width: 599px) {
+    .add-dropbox {
+      .add-dropbox-button {
+        font-size: 1vw;
+        height: 35px;
+      }
+    }
+  }
 }

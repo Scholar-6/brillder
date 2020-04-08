@@ -1,50 +1,96 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Button } from '@material-ui/core';
+import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
 import './shortAnswerBuild.scss'
 
 
+interface ShortAnswerItem {
+  value: string
+}
+
+interface ShrortAnswerData {
+  list: ShortAnswerItem[]
+}
+
 export interface ShortAnswerBuildProps {
-  data: any
+  data: ShrortAnswerData
+  locked: boolean
   updateComponent(component:any):void
 }
 
-const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({data, updateComponent}) => {
+const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, data, updateComponent}) => {
+  const [height, setHeight] = React.useState('0%');
+
+  useEffect(() => calculateHeight());
+
   if (!data.list) {
     data.list = [{value: ""}];
   }
+
+  const [state, setState] = React.useState(data);
+
+  useEffect(() => {setState(data) }, [data]);
+
+  const calculateHeight = () => {
+    let showButton = true;
+    for (let answer of state.list) {
+      if (answer.value === "") {
+        showButton = false;
+      }
+    }
+    showButton === true ? setHeight('auto') : setHeight('0%');
+  }
+
+  const update = () => {
+    setState(Object.assign({}, state));
+    updateComponent(state);
+  }
+
   const changed = (shortAnswer: any, event: any) => {
+    if (locked) { return; }
     shortAnswer.value = event.target.value;
-    updateComponent(data);
+    update();
   }
 
   const addShortAnswer = () => {
-    data.list.push({ value: ""});
-    updateComponent(data);
+    if (locked) { return; }
+    state.list.push({ value: ""});
+    update();
   }
 
   const removeFromList = (index: number) => {
-    data.list.splice(index, 1);
-    updateComponent(data);
+    if (locked) { return; }
+    state.list.splice(index, 1);
+    update();
   }
 
   const renderShortAnswer = (shortAnswer: any, key: number) => {
     return (
       <div className="short-answer-box" key={key}>
-        <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} />
-        <input value={shortAnswer.value} onChange={(event) => changed(shortAnswer, event)} placeholder="Enter short answer..." />
+        {
+          (state.list.length > 1) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
+        }
+        <input
+          disabled={locked}
+          value={shortAnswer.value}
+          onChange={(event) => changed(shortAnswer, event)}
+          placeholder="Enter Short Answer..." />
       </div>
     );
   }
 
   return (
-    <div className="short-answer-build">
+    <div className="short-answer-build unique-component">
       {
-        data.list.map((shortAnswer:any, i:number) => renderShortAnswer(shortAnswer, i))
+        state.list.map((shortAnswer:any, i:number) => renderShortAnswer(shortAnswer, i))
       }
-      <div className="button-box">
-        <button className="add-answer-button" onClick={addShortAnswer}>+ Add Short Answer</button>
-      </div>
+      <AddAnswerButton
+        locked={locked}
+        addAnswer={addShortAnswer}
+        height={height}
+        label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; S &nbsp; H &nbsp; O &nbsp; R &nbsp; T &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
     </div>
   )
 }

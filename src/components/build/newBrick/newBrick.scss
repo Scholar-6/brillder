@@ -1,67 +1,54 @@
 .tutorial-page {
   height: 100%;
-  font-family: 'Century Gothic Regular';
+  font-family: 'Brandon Grotesque Regular';
   color: black;
 
+  ::-webkit-input-placeholder { /* Edge */
+    color: #aaa;
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer */
+    color: #aaa;
+  }
+  
+  ::placeholder {
+    color: #aaa;
+  }
+
   .left-card {
-    width: 70%;
     border: 1px solid grey;
     border-radius: 4px;
     text-align: center;
+    width: 100%;
+
+    .tutorial-prev-icon {
+      font-size: 60px;
+      margin-left: -5px !important;
+    }
 
     .only-tutorial-header {
-      margin: 30px 5px;
+      color: #4A4F56;
+      font-family: 'Brandon Grotesque Bold' !important;
+      margin: 2.5vw 1vw;
+      font-weight: normal !important;
       p {margin: 0}
+    }
+
+    .page-number {
+      position: absolute;
+      bottom: 1vh;
+      width: 100%;
+      text-align: center;
+      color: #ACACAC;
+      font-size: 1.2vw;
+      font-family: 'Brandon Grotesque Regular';
     }
 
     .audience-inputs {
       display: block !important;
-      margin: 10px 20px !important;
-    }
-
-    .tutorial-logo-container {
-      padding-top: 40px;
-    }
-
-    .tutorial-logo-text {
-      color: black;
-      font-size: 14px;
-    }
-
-    .welcome-upper-text {
-      font-size: 23px;
-      margin-top: 40px;
-    }
-    .welcome-bottom-text {
-      margin-bottom: 30px;
-      font-size: 28px;
-      font-family: 'Century Gothic Bold';
-      color: black;
+      margin: 2vh 5.5vw;
+      font-size: 1.3vw;
+      font-family: 'Brandon Grotesque Regular';
     }
   }
 }
-
-@media only screen and (min-width: 1280px)  {
-  .only-tutorial-header {
-    font-size: 26px;
-  }
-}
-
-@media only screen and (max-width: 1279px) and (min-width: 900px)  {
-  .only-tutorial-header {
-    font-size: 18px;
-  }
-}
-
-@media only screen and (max-width: 899px) and (min-width: 600px)  {
-  .only-tutorial-header {
-    font-size: 18px;
-  }
-}
-
-@media only screen and (max-width: 599px) {
-  .only-tutorial-header {
-    font-size: 14px;
-  }
-}
-

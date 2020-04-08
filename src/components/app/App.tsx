@@ -4,19 +4,28 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
-import './app.css';
-import '../../font-numbers/style.css'
+import './app.scss';
+import '../../assets/fonts/icomoon/style.css';
 
+import Pallet from '../play/pallet/Pallet';
+import Dashboard from '../manage/dashboard/Dashboard';
+import PlayBrickRouting from '../play/brick/PlayBrickRouting';
 import NewBrick from '../build/newBrick/newBrick';
 import MainPage from '../build/mainPage/mainPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
+import BackToWorkPage from '../build/backToWorkPage/BackToWork';
 import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
-import LoginPage from '../loginPage/loginPage';
-import RegisterPage from '../registerPage/registerPage';
-import PreLoginPage from '../preLoginPage/preLoginPage';
+import LoginPage from '../authPages/loginPage/loginPage';
+import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
+import ChooseUserPage from '../authPages/chooseUserPage/ChooseUserPage';
 import LogoPage from '../logoPage/logoPage';
+import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
+
 import AuthRoute from './AuthRoute';
-import PrivateRoute from './privateRoute';
+import BuildRoute from './BuildRoute';
+import StudentRoute from './StudentRoute';
+import AuthRedirectRoute from './AuthRedirectRoute';
+
 
 const App: React.FC = (props: any) => {
   let history = useHistory();
@@ -24,7 +33,10 @@ const App: React.FC = (props: any) => {
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    history.push("/pre-login");
+    let {url} = error.response.config;
+    if (url.search('/auth/login/') === -1) {
+      history.push("/choose-user");
+    }
     return Promise.reject(error);
   });
 
@@ -46,16 +58,25 @@ const App: React.FC = (props: any) => {
   return (
     <ThemeProvider theme={theme}>
       <Switch>
-        <PrivateRoute path="/build/new-brick" component={NewBrick} />
-        <PrivateRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
-        <PrivateRoute path="/build/bricks-list" component={BricksListPage} />
-        <AuthRoute path="/pre-login" component={PreLoginPage} />
+        <StudentRoute path="/play/brick/:brickId" component={PlayBrickRouting} />
+        <StudentRoute path="/play/pallet/:palletName" component={Pallet} />
+        <StudentRoute path="/play/dashboard" component={Dashboard} />
+
+        <BuildRoute path="/build/new-brick" component={NewBrick} />
+        <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} />
+        <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
+        <BuildRoute path="/build/bricks-list" component={BricksListPage} />
+        <BuildRoute path="/build/back-to-work" component={BackToWorkPage} />
+        <BuildRoute path="/build" component={MainPage} />
+
+        <AuthRoute path="/choose-login" component={ChooseLoginPage} />
+        <AuthRoute path="/choose-user" component={ChooseUserPage} />
         <AuthRoute path="/login" exact component={LoginPage} />
-        <AuthRoute path="/register" exact component={RegisterPage} />
-        <PrivateRoute path="/build" component={MainPage} />
+
         <Route path="/logo-page" component={LogoPage} />
-        <PrivateRoute path="/" component={MainPage} />
+        <Route component={AuthRedirectRoute} />
       </Switch>
+      <div className="beta-text">BETA</div>
     </ThemeProvider>
   );
 }

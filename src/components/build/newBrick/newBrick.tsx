@@ -1,79 +1,105 @@
 import React from "react";
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-
 // @ts-ignore
 import { connect } from 'react-redux';
+
 import actions from '../../../redux/actions/brickActions';
 import './newBrick.scss';
-import Welcome from './questionnaire/welcome';
-import ChooseSubject from './questionnaire/chooseSubject';
-import BrickTitle from './questionnaire/brickTitle';
-import OpenQuestion from './questionnaire/openQuestion';
-import BrickLength from './questionnaire/brickLength';
-import BriefPrep from './questionnaire/briefPrep';
+import BrickTitle from './questionnaire/brickTitle/brickTitle';
+import OpenQuestion from './questionnaire/openQuestion/openQuestion';
+import BrickLength from './questionnaire/brickLength/brickLength';
+import Brief from './questionnaire/brief/brief';
+import Prep from './questionnaire/prep/prep';
+import ProposalReview from './questionnaire/proposalReview/ProposalReview';
+import { Brick } from "model/brick";
 
+interface NewBrickProps {
+  brick: Brick;
+  saveBrick(brick: Brick): void;
+  createBrick(brick: Brick): void;
+  history: any;
+}
 
-function NewBrick(props: any) {
-  console.log(props)
-  const [state, setBrick] = React.useState({
+const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
+  let initState = {
     subject: '0',
     brickLength: 0,
     topic: '',
     subTopic: '',
     alternativeTopics: '',
     title: '',
-    investigationBrief: '',
-    preparationBrief: '',
     openQuestion: '',
+    brief: '',
+    prep: '',
+    synthesis: '',
     alternativeSubject: '',
-    links: [],
-  });
-
-  const setSubject = (subject: string) => {
-    setBrick({ ...state, subject } as any);
+  } as Brick;
+  
+  if (brick) {
+    initState = brick;
   }
+  
+  const [state, setBrick] = React.useState(initState);
+  const [saved, setSaved] = React.useState(false);
 
   const setTitles = (titles: any) => {
     setBrick({ ...state, ...titles });
   }
 
   const setOpenQuestion = (openQuestion: string) => {
-    setBrick({ ...state, openQuestion } as any);
+    setBrick({ ...state, openQuestion } as Brick);
   }
 
-  const setBrickLength = (brickLength: number) => {
-    setBrick({ ...state, brickLength } as any);
+  const setBrief = (brief: string) => {
+    setBrick({ ...state, brief } as Brick)
   }
 
-  const setBriefPrep = (data: any) => {
-    let brick = { ...state, preparationBrief: data.preparationBrief, links: data.links.split(" ") } as any
-    setBrick(brick)
-    props.saveBrick(brick);
+  const setPrep = (prep: string) => {
+    setBrick({ ...state, prep } as Brick)
   }
 
-  if (props.brick != null) {
-    props.history.push(`/build/brick/${props.brick.id}/build/investigation/question`);
+  const setLength = (brickLength: number) => {
+    setBrick({ ...state, brickLength } as Brick)
+  }
+
+  const saveBrick = () => {
+    let brick = { ...state } as Brick;
+    setBrick(brick);
+    if (brick.id) {
+      props.saveBrick(brick);
+    } else {
+      props.createBrick(brick);
+    }
+    setSaved(true);
+  }
+
+  if (saved && brick && brick.id) {
+    history.push(`/build/brick/${brick.id}/build/investigation/question`);
   }
 
   return (
     <MuiThemeProvider>
-      <Route path='/build/new-brick/welcome'><Welcome /></Route>
-      <Route path='/build/new-brick/choose-subject'>
-        <ChooseSubject saveSubject={setSubject} selectedSubject={state.subject} />
-      </Route>
-      <Route path='/build/new-brick/brick-title'>
-        <BrickTitle parentState={state} saveTitles={setTitles} />
-      </Route>
-      <Route path='/build/new-brick/open-question'>
-        <OpenQuestion selectedQuestion={state.openQuestion} saveOpenQuestion={setOpenQuestion} />
-      </Route>
-      <Route path='/build/new-brick/length'>
-        <BrickLength length={state.brickLength} saveBrickLength={setBrickLength} />
-      </Route>
-      <Route path='/build/new-brick/brief-prep'>
-        <BriefPrep parentState={state} saveBriefPrep={setBriefPrep} />
-      </Route>
+      <div style={{ width: '100%', height: '100%' }}>
+        <Route path='/build/new-brick/brick-title'>
+          <BrickTitle parentState={state} saveTitles={setTitles} />
+        </Route>
+        <Route path='/build/new-brick/open-question'>
+          <OpenQuestion selectedQuestion={state.openQuestion} saveOpenQuestion={setOpenQuestion} />
+        </Route>
+        <Route path='/build/new-brick/brief'>
+          <Brief parentBrief={state.brief} saveBrief={setBrief} />
+        </Route>
+        <Route path='/build/new-brick/prep'>
+          <Prep parentPrep={state.prep} savePrep={setPrep} />
+        </Route>
+        <Route path='/build/new-brick/length'>
+          <BrickLength length={state.brickLength} saveBrick={setLength} />
+        </Route>
+        <Route path="/build/new-brick/proposal">
+          <ProposalReview brick={state} saveBrick={saveBrick} />
+        </Route>
+      </div>
     </MuiThemeProvider>
   );
 }
@@ -82,18 +108,16 @@ const mapState = (state: any) => {
   return {
     brick: state.brick.brick,
   }
-}
+};
 
 const mapDispatch = (dispatch: any) => {
   return {
     fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
     saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
+    createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
   }
-}
+};
 
-const connector = connect(
-  mapState,
-  mapDispatch
-)
+const connector = connect(mapState, mapDispatch);
 
-export default connector(NewBrick)
+export default connector(NewBrick);

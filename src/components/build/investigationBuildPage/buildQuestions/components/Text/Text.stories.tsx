@@ -7,4 +7,5 @@ const data = {
 }
 
 storiesOf("QuestionComponent", module)
-  .add("Text", () => <Text index={1} data={data} cleanComponent={() => {}} updateComponent={() => {}} />);
+  .add("Text", () => <Text locked={false} index={1} data={data} updateComponent={() => {}} />)
+  .add("TextLocked", () => <Text locked={true} index={1} data={data} updateComponent={() => {}} />);

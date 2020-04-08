@@ -1,0 +1,25 @@
+.pallet-title {
+  font-family: 'Montserrat';
+  font-size: 20px;
+    font-size: 36px;
+    color: black;
+    margin: 0 0 16px;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 48px;
+}
+.first-row-box {
+  background: blue;
+  padding-top: 100px;
+}
+
+.pallet-tile {
+  height: 100%;
+}
+
+.pallet-tile-container {
+  height: 11vw !important;
+  > div {
+    padding: 0;
+  }
+}
