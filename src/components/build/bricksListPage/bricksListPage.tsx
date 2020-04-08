@@ -201,12 +201,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       preReversed = true;
     }
     if (reversed === false) {
-      this.setState({...this.state, sortedIndex: index + 18, sortedReversed: preReversed});
+      this.setState({...this.state, sortedIndex: index + 15, sortedReversed: preReversed});
     } else {
-      if (index <= 18) {
+      if (index <= 15) {
         preReversed = false;
       }
-      this.setState({...this.state, sortedIndex: index - 18, sortedReversed: preReversed});
+      this.setState({...this.state, sortedIndex: index - 15, sortedReversed: preReversed});
     }
   }
 
@@ -526,7 +526,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   renderSortedBricks = () => {
     let {sortedIndex} = this.state;
     let bricksList = [];
-    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
+    for (let i = 0 + sortedIndex; i < 15 + sortedIndex; i++) {
       if (this.state.bricks[i]) {
         let row = Math.floor(i / 3);
         bricksList.push(this.getSortedBrickContainer(this.state.bricks[i], i, row));
@@ -583,7 +583,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                   {this.renderSortedBricks()}
                 </Grid>
                 {
-                  this.state.bricks.length > 18 ?
+                  this.state.bricks.length > 15 ?
                   <Grid container justify="center" className="bottom-next-button">
                     {
                       this.state.sortedReversed
