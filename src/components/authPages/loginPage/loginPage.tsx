@@ -73,13 +73,11 @@ const LoginPage: React.FC<LoginProps> = props => {
   }
 
   const login = (email: string, password: string) => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_HOST}/auth/login/${userType}`,
-        { email, password, userType },
-        { withCredentials: true }
-      )
-      .then(response => {
+    axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/auth/login/${userType}`,
+      { email, password, userType },
+      { withCredentials: true }
+    ).then(response => {
         const { data } = response;
         if (data === "OK") {
           props.loginSuccess(userType);
@@ -100,7 +98,7 @@ const LoginPage: React.FC<LoginProps> = props => {
             userType === UserLoginType.Student
           ) {
             if (!isNewUser) {
-              register(email, password);
+              //register(email, password);
             }
           } else if (response.status === 401) {
             if (response.data.msg === 'USER_IS_NOT_ACTIVE') {
@@ -215,6 +213,15 @@ const LoginPage: React.FC<LoginProps> = props => {
                     textAlign: "right"
                   }}
                 >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className="sign-in-button sign-up-button"
+                    type="button"
+                    onClick={() => register(email, password)}
+                  >
+                    Sign up
+                  </Button>
                   <Button
                     variant="contained"
                     color="primary"
