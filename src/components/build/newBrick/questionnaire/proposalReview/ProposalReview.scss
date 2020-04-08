@@ -1,6 +1,9 @@
 @import "_variables";
 
 .proposal-page {
+  height: 100%;
+  background: #E5E8ED;
+
   .back-button-container {
     position: fixed;
     height: 100%;
@@ -10,13 +13,20 @@
 
     .back-button {
       cursor: pointer;
-      font-size: 5vw;
+      height: 3vw;
+      width: 3vw;
       margin-left: 7.5vw;
       color: $orange;
       transition: all .2s ease-in-out;
-      transform-origin: 110% 50%;
+      transform-origin: 200% 50%;
+
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/images/arrow-thin-back.png);
     }
     .back-button:hover {
+      background-image: url(/images/arrow-thick-back.png);
       transform: scale(1.15, 1.05); 
     }
   }
@@ -26,7 +36,7 @@
     height: 100%;
     width: 15vw;
     right: 0;
-    top: 0;
+    top: 4.5%;
     color: $orange;
 
     .button-text {
@@ -34,7 +44,7 @@
       letter-spacing: 0.2vw;
       font-size: 1.3vw;
       font-family: 'Brandon Grotesque Black';
-      margin-top: 2vh;
+      margin-top: 2.5vh;
       div:nth-child(1n) {
         margin-left: 1vw;
       }
@@ -45,13 +55,20 @@
 
     .next-button {
       cursor: pointer;
-      font-size: 5vw;
-      margin-left: 2.2vw;
+      height: 3vw;
+      width: 3vw;
+      margin-left: 2.8vw;
       transition: all .2s ease-in-out;
-      transform-origin: 0% 50%;
+      transform-origin: -100% 50%;
+
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/images/arrow-thin-forward.png);
     }
 
     .next-button:hover {
+      background-image: url(/images/arrow-thick-forward.png);
       transform: scale(1.15, 1.05); 
     }
   }
