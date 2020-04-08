@@ -176,7 +176,9 @@
       background: #fdfdfd;
       .normal-page {
         margin-left: 2vw;
-        margin-right: 2vw;
+        margin-right: 0vw;
+        height: 65vh;
+        overflow: auto;
 
         .edit-icon {
           margin-top: 2vh;
