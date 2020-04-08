@@ -1,74 +1,228 @@
 @import "_variables";
 
-.proposal-card {
-  font-family: 'Brandon Grotesque Regular';
-  position: relative;
-  padding-bottom: 20%;
-  width: 100%;
+.proposal-page {
+  .back-button-container {
+    position: fixed;
+    height: 100%;
+    width: 15vw;
+    left: 0;
+    top: 0;
 
-  h1 {
-    font-size: 1.7vw;
+    .back-button {
+      cursor: pointer;
+      font-size: 5vw;
+      margin-left: 7.5vw;
+      color: $orange;
+      transition: all .2s ease-in-out;
+      transform-origin: 110% 50%;
+    }
+    .back-button:hover {
+      transform: scale(1.15, 1.05); 
+    }
   }
 
-  .only-tutorial-header {
-    margin: 5vh 0 !important;
-  }
-
-  .edit-proposal {
-    margin-left: 2vw;
-    cursor: pointer;
-    border: 0.18vw solid black;
-    border-radius: 0.4vw;
-    font-size: 1.8vw;
-  }
-
-
-  .edit-proposal:hover {
-    opacity: 0.7;
-  }
-
-  p {
-    margin-top: 3% !important;
-    margin-left: 1.7vw;
-    color: #4A4F56;
-    letter-spacing: 0.05vw;
-    font-size: 1.2vw;
-    font-weight: bold;
-    text-align: left;
-    margin-bottom: 0;
-  }
-
-  .proposal-titles {
-    font-weight: normal;
-    margin-top: 1vh;
-    font-family: 'Brandon Grotesque Regular';
-    text-align: left;
-    color: #4A4F56;
-    margin-left: 3.1vw;
-    text-transform: capitalize;
-    font-size: 1.2vw;
-  }
-
-  .openQuestion {
-    margin: 0;
-    margin-left: 1.53vw;
-    font-weight: normal;
-    text-transform: capitalize;
-  }
-
-  .proposal-button {
+  .next-button-container {
+    position: fixed;
+    height: 100%;
+    width: 15vw;
+    right: 0;
+    top: 0;
     color: $orange;
-  }
-}
 
-@media only screen and (max-width: 959px) and (min-width: 600px) {
-  .proposal-card {
-    width: 80% !important;
-  }
-}
+    .button-text {
+      margin-left: 2vw;
+      letter-spacing: 0.2vw;
+      font-size: 1.3vw;
+      font-family: 'Brandon Grotesque Black';
+      margin-top: 2vh;
+      div:nth-child(1n) {
+        margin-left: 1vw;
+      }
+      div:nth-child(2n) {
+        margin-left: 0.5vw;
+      }
+    }
 
-@media only screen and (max-width: 599px) {
-  .proposal-card {
-    width: 80% !important;
+    .next-button {
+      cursor: pointer;
+      font-size: 5vw;
+      margin-left: 2.2vw;
+      transition: all .2s ease-in-out;
+      transform-origin: 0% 50%;
+    }
+
+    .next-button:hover {
+      transform: scale(1.15, 1.05); 
+    }
+  }
+  
+  .book-container {
+    display: flex;
+    perspective: 100vw;
+
+    $book-radius: 0.4vw;
+
+    .book {
+      margin-top: 15vh;
+      transform-style: preserve-3d;
+      position: relative;
+      height: 65vh;
+      cursor: pointer;
+      backface-visibility: visible;
+    }
+
+    .front,
+    .back,
+    .page1,
+    .page2,
+    .page3,
+    .page4,
+    .page5,
+    .page6 {
+      transform-style: preserve-3d;
+      position: absolute;
+      width: 30vw;
+      height: 100%;
+      top: 0;
+      left: 0;
+      transform-origin: left center;
+      transition: transform 0.5s ease-in-out, box-shadow 0.35s ease-in-out;
+    }
+
+    .front,
+    .back {
+      background: $dark-blue;
+    }
+
+    .front,
+    .page1,
+    .page3,
+    .page5 {
+      border-bottom-right-radius: $book-radius;
+      border-top-right-radius: $book-radius;
+    }
+
+    .back,
+    .page2,
+    .page4,
+    .page6 {
+      border-bottom-right-radius: $book-radius;
+      border-top-right-radius: $book-radius;
+    }
+
+    .front {
+      font-size: 6vw;
+      letter-spacing: 0.3vw;
+      color: $orange;
+      text-align: center;
+      font-family: "Brandon Grotesque Bold";
+    }
+
+    .page1 {
+      background: #efefef;
+    }
+
+    .page2 {
+      background: #efefef;
+    }
+
+    .page3 {
+      background: #f5f5f5;
+    }
+
+    .page4 {
+      background: #f5f5f5;
+    }
+
+    .page5 {
+      background: #fafafa;
+      .flipped-page {
+        height: 100%;
+        width: 100%;
+
+        -moz-transform: scale(-1, 1);
+        -webkit-transform: scale(-1, 1);
+        -o-transform: scale(-1, 1);
+        -ms-transform: scale(-1, 1);
+        transform: scale(-1, 1);
+
+        padding-top: 3.5vh;
+        color: $orange;
+
+        .circle-icon {
+          font-size: 7.3vw;
+        }
+
+        .proposal-titles {
+          font-weight: normal;
+          margin-left: 3vw;
+          margin-right: 3vw;
+          margin-top: 3vh;
+          font-family: "Brandon Grotesque Regular";
+          text-align: left;
+          margin-left: 3.1vw;
+          text-transform: capitalize;
+          font-size: 1.3vw;
+
+          .title {
+            font-family: "Brandon Grotesque Bold";
+            text-transform: uppercase;
+            height: 20vh;
+          }
+        }
+      }
+    }
+
+    .page6 {
+      background: #fdfdfd;
+      .normal-page {
+        margin-left: 2vw;
+        margin-right: 2vw;
+
+        .edit-icon {
+          margin-top: 2vh;
+          font-size: 3.5vw;
+          color: $dark-blue;
+        }
+      }
+    }
+    .book:hover .front {
+      transform: rotateY(-160deg) scale(1.1);
+      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .book:hover .page1 {
+      transform: rotateY(-150deg) scale(1.1);
+      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .book:hover .page2 {
+      transform: rotateY(-30deg) scale(1.1);
+      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .book:hover .page3 {
+      transform: rotateY(-140deg) scale(1.1);
+      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .book:hover .page4 {
+      transform: rotateY(-40deg) scale(1.1);
+      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .book:hover .page5 {
+      transform: rotateY(-130deg) scale(1.1);
+      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .book:hover .page6 {
+      transform: rotateY(-50deg) scale(1.1);
+      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .book:hover .back {
+      transform: rotateY(-20deg) scale(1.1);
+    }
   }
 }

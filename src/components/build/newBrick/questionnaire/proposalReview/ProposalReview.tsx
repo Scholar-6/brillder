@@ -1,13 +1,13 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import EditIcon from '@material-ui/icons/Edit';
 
-import ExitButton from '../../components/ExitButton';
 import { Brick } from "model/brick";
 import './ProposalReview.scss';
-import { NewBrickStep } from "../../model";
-import NextButton from '../../components/nextButton';
-import PreviousButton from '../../components/previousButton';
-import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
+import { useHistory } from "react-router-dom";
 
 
 interface ProposalProps {
@@ -16,35 +16,70 @@ interface ProposalProps {
 }
 
 const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
+  const history = useHistory();
+
+  const savingBrick = () => {
+    saveBrick();
+  }
   return (
-    <div className="tutorial-page">
-      <ExitButton />
-      <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
-        <Grid container justify="center" item xs={12} md={8} lg={8}>
-          <Grid justify="center" container item xs={12} sm={9} md={8} lg={7}>
-            <div className="left-card proposal-card">
-              <Grid container direction="row" justify="center" className="only-tutorial-header" alignContent="center">
-                <h1 >Your Proposal</h1>
-              </Grid>
-              <p>1. What is your brick about</p>
-              <div className="proposal-titles">
-                <div>{brick.title}</div>
-                <div>{brick.subTopic}</div>
-                <div>{brick.alternativeTopics}</div>
-              </div>
-              <p>2. Ideally, every brick should point to a bigger question.</p>
-              <p className="proposal-titles">{brick.openQuestion}</p>
-              <p>3. Outline the purpose of your brick.</p>
-              <p className="proposal-titles">{brick.brief}</p>
-              <p>4. Create an engaging and relevant preparatory task.</p>
-              <p style={{fontWeight: 'normal'}} dangerouslySetInnerHTML={{ __html: brick.prep}}></p>
-              <p>5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span></p>
-              <PreviousButton to="/build/new-brick/length" />
-              <NextButton step={NewBrickStep.ProposalReview} canSubmit={true} onSubmit={saveBrick} />
-            </div>
-          </Grid>
+    <div className="proposal-page">
+      <Grid container direction="row" style={{ height: '100%' }} justify="center">
+        <Grid className="back-button-container" container alignContent="center">
+          <ArrowBackIcon className="back-button" onClick={() => history.push('/build/new-brick/length')} />
         </Grid>
-        <PhonePreview link={window.location.origin + '/logo-page'} />
+        <Grid className="next-button-container" container alignContent="center">
+          <div>
+            <ArrowForwardIcon className="next-button" onClick={savingBrick} />
+            <div className="button-text">
+              <div>START</div>
+              <div>BUILDING!</div>
+            </div>
+          </div>
+        </Grid>
+            <div className="book-container">
+              <div className="book">
+                <div className="back"></div>
+                <div className="page6">
+                  <div className="normal-page">
+                    <Grid container justify="center">
+                      <EditIcon className="edit-icon" />
+                    </Grid>
+                    <p>2. Ideally, every brick should point to a bigger question.</p>
+                    <p className="proposal-titles">{brick.openQuestion}</p>
+                    <p>3. Outline the purpose of your brick.</p>
+                    <p className="proposal-titles">{brick.brief}</p>
+                    <p>4. Create an engaging and relevant preparatory task.</p>
+                    <p style={{fontWeight: 'normal'}} dangerouslySetInnerHTML={{ __html: brick.prep}}></p>
+                    <p>5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span></p>
+                  </div>
+                </div>
+                <div className="page5">
+                  <div className="flipped-page">
+                    <Grid container justify="center">
+                      <FiberManualRecordIcon className="circle-icon" />
+                    </Grid>
+                    <div className="proposal-titles">
+                      <div className="title">{brick.title}</div>
+                      <div>{brick.subTopic}</div>
+                      <div>{brick.alternativeTopics}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="page4"></div>
+                <div className="page3"></div>
+                <div className="page2"></div>
+                <div className="page1"></div>
+                <div className="front">
+                  <Grid container justify="center" alignContent="center" style={{height: '100%'}}>
+                    <div>
+                      <div>YOUR</div>
+                      <div>PROP</div>
+                      <div>OSAL</div>
+                    </div>
+                  </Grid>
+                </div>
+              </div>
+            </div>
       </Grid>
     </div>
   );
