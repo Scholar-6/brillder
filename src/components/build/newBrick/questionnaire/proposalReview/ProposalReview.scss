@@ -85,7 +85,7 @@
       top: 0;
       left: 0;
       transform-origin: left center;
-      transition: transform 0.5s ease-in-out, box-shadow 0.35s ease-in-out;
+      transition: transform 0.8s ease-in-out, box-shadow 0.6s ease-in-out;
     }
 
     .front,
@@ -110,11 +110,11 @@
     }
 
     .front {
-      font-size: 6vw;
-      letter-spacing: 0.3vw;
+      font-size: 6.1vw;
+      letter-spacing: 1.1vw;
       color: $orange;
       text-align: center;
-      font-family: "Brandon Grotesque Bold";
+      font-family: "Brandon Grotesque Black";
     }
 
     .page1 {
@@ -185,43 +185,45 @@
         }
       }
     }
-    .book:hover .front {
-      transform: rotateY(-160deg) scale(1.1);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-    }
+    .book:hover {
+      .front {
+        transform: rotateY(-160deg) scale(1.1);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+      }
 
-    .book:hover .page1 {
-      transform: rotateY(-150deg) scale(1.1);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-    }
+      .page1 {
+        transform: rotateY(-150deg) scale(1.1);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+      }
 
-    .book:hover .page2 {
-      transform: rotateY(-30deg) scale(1.1);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-    }
+      .page2 {
+        transform: rotateY(-30deg) scale(1.1);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+      }
 
-    .book:hover .page3 {
-      transform: rotateY(-140deg) scale(1.1);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-    }
+      .page3 {
+        transform: rotateY(-140deg) scale(1.1);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+      }
 
-    .book:hover .page4 {
-      transform: rotateY(-40deg) scale(1.1);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-    }
+      .page4 {
+        transform: rotateY(-40deg) scale(1.1);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+      }
 
-    .book:hover .page5 {
-      transform: rotateY(-130deg) scale(1.1);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-    }
+      .page5 {
+        transform: rotateY(-130deg) scale(1.1);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+      }
 
-    .book:hover .page6 {
-      transform: rotateY(-50deg) scale(1.1);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-    }
+      .page6 {
+        transform: rotateY(-50deg) scale(1.1);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+      }
 
-    .book:hover .back {
-      transform: rotateY(-20deg) scale(1.1);
+      .back {
+        transform: rotateY(-20deg) scale(1.1);
+      }
     }
   }
 }

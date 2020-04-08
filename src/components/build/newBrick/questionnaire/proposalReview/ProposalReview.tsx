@@ -18,26 +18,43 @@ interface ProposalProps {
 const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
   const history = useHistory();
 
+  const [bookHovered, setHover] = React.useState(false);
+
+  const onBookHover = () => {
+    setTimeout(() => {
+      setHover(true);
+    }, 800);
+  }
+
   const savingBrick = () => {
     saveBrick();
   }
+
   return (
     <div className="proposal-page">
       <Grid container direction="row" style={{ height: '100%' }} justify="center">
         <Grid className="back-button-container" container alignContent="center">
-          <ArrowBackIcon className="back-button" onClick={() => history.push('/build/new-brick/length')} />
+          {
+            bookHovered
+              ? <ArrowBackIcon className="back-button" onClick={() => history.push('/build/new-brick/length')} />
+              : ""
+          }
         </Grid>
         <Grid className="next-button-container" container alignContent="center">
-          <div>
-            <ArrowForwardIcon className="next-button" onClick={savingBrick} />
-            <div className="button-text">
-              <div>START</div>
-              <div>BUILDING!</div>
-            </div>
-          </div>
+          {
+            bookHovered ? (
+              <div>
+                <ArrowForwardIcon className="next-button" onClick={savingBrick} />
+                <div className="button-text">
+                  <div>START</div>
+                  <div>BUILDING!</div>
+                </div>
+              </div>
+            ) : ""
+          }
         </Grid>
             <div className="book-container">
-              <div className="book">
+              <div className="book" onMouseEnter={() => onBookHover()}>
                 <div className="back"></div>
                 <div className="page6">
                   <div className="normal-page">
