@@ -54,6 +54,7 @@
     }
 
     .next-button {
+      z-index: 12;
       cursor: pointer;
       height: 3vw;
       width: 3vw;
@@ -72,10 +73,20 @@
       transform: scale(1.15, 1.05); 
     }
   }
+
+  .book-main-container {
+    position: fixed;
+    right: 0;
+    width: 50vw;
+    height: 100%;
+    top: 0;
+  }
   
   .book-container {
     display: flex;
     perspective: 100vw;
+    width: 0;
+    left: 0;
     $book-radius: 0.4vw;
 
     .book {
@@ -217,7 +228,8 @@
         }
       }
     }
-    .book:hover {
+  }
+    .book-main-container:hover {
       .front {
         transform: rotateY(-160deg) scale(1.1);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
@@ -264,5 +276,4 @@
         transform: rotateY(-20deg) scale(1.1);
       }
     }
-  }
 }

@@ -40,6 +40,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
               : ""
           }
         </Grid>
+        <div className="book-main-container">
         <Grid className="next-button-container" container alignContent="center">
           {
             bookHovered ? (
@@ -97,6 +98,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
                 </div>
               </div>
             </div>
+          </div>
       </Grid>
     </div>
   );
