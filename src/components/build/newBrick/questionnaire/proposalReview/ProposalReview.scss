@@ -196,11 +196,25 @@
         margin-right: 0vw;
         height: 65vh;
         overflow: auto;
+        font-size: 1.2vw;
+
+        font-family: "Brandon Grotesque Regular";
 
         .edit-icon {
           margin-top: 2vh;
           font-size: 3.5vw;
           color: $dark-blue;
+        }
+
+        p { margin: 0}
+
+        .text-title {
+          color: #4A4F56;
+          font-family: "Brandon Grotesque Bold";
+        }
+        .proposal-text {
+          margin-left: 1.3vw;
+          margin-bottom: 1vh;
         }
       }
     }
