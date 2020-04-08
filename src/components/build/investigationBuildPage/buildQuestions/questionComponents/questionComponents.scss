@@ -11,16 +11,17 @@
   }
 
   .add-dropbox {
-    margin: 2px 0 2px 0 !important;
+    margin: 0 !important;
     .add-dropbox-button {
       width: 100%;
       border: none;
+      padding: 2.5vh 0;
       text-transform: none;
       background: $orange;
       color: white;
-      font-size: 0.7vw;
-      height: 2.8vw;
-      font-family: 'Brandon Grotesque Regular';
+      font-size: 1.25vw;
+      font-family: 'Brandon Grotesque Bold';
+      letter-spacing: 0.3vw;
       border-radius: $global-drop-border-radius;
     }
     margin-bottom: 10px;  

@@ -133,7 +133,7 @@ const QuestionComponents = ({
       </ReactSortable>
       <Grid container direction="row" className="add-dropbox">
         <Button disabled={locked} className="add-dropbox-button" onClick={addInnerComponent}>
-          + &nbsp;&nbsp; Q &nbsp; U &nbsp; E &nbsp; S &nbsp; T &nbsp; I &nbsp; O &nbsp; N &nbsp; &nbsp; C &nbsp; O &nbsp; M &nbsp; P &nbsp; O &nbsp; N &nbsp; E &nbsp; N &nbsp; T
+          + QUESTION COMPONENT
         </Button>
       </Grid>
     </div>
