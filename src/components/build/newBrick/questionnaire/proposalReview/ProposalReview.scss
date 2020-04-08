@@ -76,11 +76,10 @@
   .book-container {
     display: flex;
     perspective: 100vw;
-
     $book-radius: 0.4vw;
 
     .book {
-      margin-top: 15vh;
+      margin-top: 17vh;
       transform-style: preserve-3d;
       position: relative;
       height: 65vh;
@@ -196,7 +195,7 @@
         margin-right: 0vw;
         height: 65vh;
         overflow: auto;
-        font-size: 1.2vw;
+        font-size: 1vw;
 
         font-family: "Brandon Grotesque Regular";
 
@@ -222,36 +221,43 @@
       .front {
         transform: rotateY(-160deg) scale(1.1);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 10;
       }
 
       .page1 {
         transform: rotateY(-150deg) scale(1.1);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 9;
       }
 
       .page2 {
         transform: rotateY(-30deg) scale(1.1);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 8;
       }
 
       .page3 {
         transform: rotateY(-140deg) scale(1.1);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 7;
       }
 
       .page4 {
         transform: rotateY(-40deg) scale(1.1);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 6;
       }
 
       .page5 {
         transform: rotateY(-130deg) scale(1.1);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 5;
       }
 
       .page6 {
         transform: rotateY(-50deg) scale(1.1);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 4;
       }
 
       .back {
