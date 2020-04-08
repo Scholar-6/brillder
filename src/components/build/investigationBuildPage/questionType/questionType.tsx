@@ -79,7 +79,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
           onClick={() => {history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}}
           container direction="row" justify="flex-start"
         >
-          <img alt="add-synthesis" src="/images/synthesis-icon.png" className="synthesis-icon" />
+          <div className="synthesis-icon"></div>
           <span className="synthesis-text">ADD SYNTHESIS</span>
         </Grid>
       </Grid>

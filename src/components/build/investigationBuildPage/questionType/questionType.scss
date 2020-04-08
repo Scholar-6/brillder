@@ -34,6 +34,11 @@ $question-radius: 0.65vw;
       margin-left: 0.4vw;
       margin-top: 0.8vh;
       height: 3.6vh;
+      width: 5.17vh;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/images/synthesis-icon.png);
     }
     .synthesis-text {
       font-family: "Brandon Grotesque Regular";
@@ -46,6 +51,9 @@ $question-radius: 0.65vw;
   .round-button-center:hover {
     background: $orange;
     color: white;
+    .synthesis-icon {
+      background-image: url(/images/synthesis-white.png);
+    }
   }
 
   .card-description {
