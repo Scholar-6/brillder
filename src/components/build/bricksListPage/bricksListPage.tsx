@@ -531,7 +531,40 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderPagination() {
-    return ("");   
+    if (this.state.bricks.length <= 15) {
+      return "";
+    }
+    
+    return (
+      <Grid container direction="row" className="bricks-pagination">
+        <Grid item xs={4} className="left-pagination">
+          <div className="first-row">
+            {this.state.sortedIndex + 1}-{  
+              this.state.sortedIndex + 15 > this.state.bricks.length
+                ? this.state.bricks.length
+                : this.state.sortedIndex + 15
+            }
+            <span className="grey"> &nbsp;|&nbsp; {this.state.bricks.length}</span>
+          </div>
+          <div>
+            {(this.state.sortedIndex + 15) / 15}
+            <span className="grey"> &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / 15)}</span>
+          </div>
+        </Grid>
+        <Grid container item xs={4} justify="center" className="bottom-next-button">
+          <div>
+            <ExpandLessIcon
+              className={"prev-button " + ((this.state.sortedIndex >= 15) ? "active" : "")}
+              onClick={() => this.moveAllBack()}
+            />
+            <ExpandMoreIcon
+              className={"next-button " + ((this.state.sortedIndex + 15 <= this.state.bricks.length) ? "active" : "")}
+              onClick={() => this.moveAllNext()}
+            />
+          </div>
+        </Grid>
+      </Grid>
+    );
   }
 
   render() {  
@@ -581,36 +614,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 <Grid container direction="row">
                   {this.renderSortedBricks()}
                 </Grid>
-                {
-                  this.state.bricks.length > 15 ? (
-                    <Grid container direction="row" className="left-pagination">
-                      <Grid item xs={4}>
-                        <div>
-                          {this.state.sortedIndex + 1} - {
-                            this.state.sortedIndex + 15 > this.state.bricks.length
-                              ? this.state.bricks.length
-                              : this.state.sortedIndex + 15
-                          } | {this.state.bricks.length}
-                        </div>
-                        <div>
-                          {(this.state.sortedIndex + 15) / 15} | {Math.ceil(this.state.bricks.length / 15)}
-                        </div>
-                      </Grid>
-                      <Grid container item xs={4} justify="center" className="bottom-next-button">
-                        <div>
-                          <ExpandLessIcon
-                            className={"prev-button " + ((this.state.sortedIndex >= 15) ? "active" : "")}
-                            onClick={() => this.moveAllBack()}
-                          />
-                          <ExpandMoreIcon
-                            className={"next-button " + ((this.state.sortedIndex + 15 <= this.state.bricks.length) ? "active" : "")}
-                            onClick={() => this.moveAllNext()}
-                          />
-                        </div>
-                      </Grid>
-                    </Grid>
-                  ) : ""
-                }
+                {this.renderPagination()}
               </div>
             </Grid>
           </Grid>
