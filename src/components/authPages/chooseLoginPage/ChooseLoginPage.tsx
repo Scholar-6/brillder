@@ -54,11 +54,11 @@ const ChooseLoginPage:React.FC<ChooseLoginProps> = (props) => {
             </Grid>
             <Button className="email-button" onClick={moveToLogin}>
               <MailIcon className="email-icon" />
-              <span className="email-button-text">Sign in with email</span>
+              <span>Register &nbsp;|&nbsp; Sign in with email</span>
             </Button>
             <Button className="google-button" href={googleLink}>
               <img alt="google-icon" className="google-icon" src="/images/google-icon.png" />
-              <span className="email-button-text">Sign in with Google</span>
+              <span>Register &nbsp;|&nbsp; Sign in with Google</span>
             </Button>
           </div>
         </div>

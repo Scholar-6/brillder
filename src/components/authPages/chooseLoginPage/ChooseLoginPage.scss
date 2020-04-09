@@ -74,14 +74,15 @@ $button-radius: 0.7vw;
     background: white;
     text-transform: none;
     border-radius: $button-radius;
-    padding: 2.5vh 2.3vw 2.5vh 1.5vw;
-    font: 2.6vh 'Brandon Grotesque Regular';
-    letter-spacing: 0.3vw;
+    padding: 2.5vh 0;
+    font: 1.1vw 'Brandon Grotesque Regular';
+    letter-spacing: 0.1vw;
+    width: 23vw;
     margin-bottom: 2.7vh;
     transition: all .2s ease-in-out;
     .email-icon {
       transition: all .2s ease-in-out;
-      margin-right: 2vw;
+      margin-right: 1.8vw;
       width: 2.6vw;
       height: auto;
       color: $dark-blue;
@@ -89,17 +90,18 @@ $button-radius: 0.7vw;
   }
 
   .google-button {
-    padding: 2.97vh 1.14vw 3vh 2.15vw;
+    padding: 2.97vh 0 3vh 1.2vw;
     background: $orange;
     color: white;
     text-transform: none;
     border-radius: $button-radius;
-    font: 2.6vh 'Brandon Grotesque Regular';
-    letter-spacing: 0.3vw;
+    width: 23vw;
+    font: 1.1vw 'Brandon Grotesque Regular';
+    letter-spacing: 0.1vw;
     margin-bottom: 2.7vh;
     .google-icon {
       transition: all .2s ease-in-out;
-      margin-right: 2.2vw;
+      margin-right: 2vw;
       width: 1.5vw;
       height: auto;
       color: $dark-blue;
