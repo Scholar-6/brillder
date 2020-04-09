@@ -109,6 +109,9 @@ const LoginPage: React.FC<LoginProps> = props => {
             setAlertMessage("Password is not correct");
           }
         }
+      } else {
+        toggleAlertMessage(true);
+        setAlertMessage("Connection problem");
       }
     });
   };
