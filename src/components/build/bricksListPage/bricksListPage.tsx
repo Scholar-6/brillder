@@ -42,7 +42,6 @@ interface BricksListState {
   yoursIndex: number;
   yoursReversed: boolean;
   sortedIndex: number;
-  sortedReversed: boolean;
   filterExpanded: boolean;
   logoutDialogOpen: boolean;
 
@@ -67,7 +66,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       yoursIndex: 0,
       yoursReversed: false,
       sortedIndex: 0,
-      sortedReversed: false,
       filterExpanded: false,
       logoutDialogOpen: false,
       deleteDialogOpen: false,
@@ -193,20 +191,17 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({ ...state })
   }
 
-  changeSortedBricks = () => {
-    let reversed = this.state.sortedReversed;
-    let preReversed = reversed;
+  moveAllBack() {
     let index = this.state.sortedIndex;
-    if (index + 36 >= this.state.bricks.length) {
-      preReversed = true;
+    if (index >= 15) {
+      this.setState({...this.state, sortedIndex: index - 15});
     }
-    if (reversed === false) {
-      this.setState({...this.state, sortedIndex: index + 15, sortedReversed: preReversed});
-    } else {
-      if (index <= 15) {
-        preReversed = false;
-      }
-      this.setState({...this.state, sortedIndex: index - 15, sortedReversed: preReversed});
+  }
+
+  moveAllNext() {
+    let index = this.state.sortedIndex;
+    if (index + 15 <= this.state.bricks.length) {
+      this.setState({...this.state, sortedIndex: index + 15});
     }
   }
 
@@ -583,15 +578,34 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                   {this.renderSortedBricks()}
                 </Grid>
                 {
-                  this.state.bricks.length > 15 ?
-                  <Grid container justify="center" className="bottom-next-button">
-                    {
-                      this.state.sortedReversed
-                        ? <ExpandLessIcon onClick={() => this.changeSortedBricks()} />
-                        : <ExpandMoreIcon onClick={() => this.changeSortedBricks()} />
-                    }
-                  </Grid>
-                  : ""
+                  this.state.bricks.length > 15 ? (
+                    <Grid container direction="row" className="left-pagination">
+                      <Grid item xs={4}>
+                        <div>
+                          {this.state.sortedIndex + 1} - {
+                            this.state.sortedIndex + 15 > this.state.bricks.length
+                              ? this.state.bricks.length
+                              : this.state.sortedIndex + 15
+                          } | {this.state.bricks.length}
+                        </div>
+                        <div>
+                          {(this.state.sortedIndex + 15) / 15} | {Math.ceil(this.state.bricks.length / 15)}
+                        </div>
+                      </Grid>
+                      <Grid container item xs={4} justify="center" className="bottom-next-button">
+                        <div>
+                          <ExpandLessIcon
+                            className={"prev-button " + ((this.state.sortedIndex >= 15) ? "active" : "")}
+                            onClick={() => this.moveAllBack()}
+                          />
+                          <ExpandMoreIcon
+                            className={"next-button " + ((this.state.sortedIndex + 15 <= this.state.bricks.length) ? "active" : "")}
+                            onClick={() => this.moveAllNext()}
+                          />
+                        </div>
+                      </Grid>
+                    </Grid>
+                  ) : ""
                 }
               </div>
             </Grid>
