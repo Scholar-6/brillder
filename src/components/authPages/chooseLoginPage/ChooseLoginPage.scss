@@ -90,7 +90,7 @@ $button-radius: 0.7vw;
   }
 
   .google-button {
-    padding: 2.97vh 0 3vh 1.2vw;
+    padding: 2.5vh 0 2.5vh 1.2vw;
     background: $orange;
     color: white;
     text-transform: none;
@@ -103,6 +103,8 @@ $button-radius: 0.7vw;
       transition: all .2s ease-in-out;
       margin-right: 2vw;
       width: 1.5vw;
+      padding-top: 0.532vw;
+      padding-bottom: 0.532vw;
       height: auto;
       color: $dark-blue;
     }
