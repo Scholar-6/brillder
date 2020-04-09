@@ -531,9 +531,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderPagination() {
-    if (this.state.bricks.length <= 15) {
-      return "";
-    }
+    if (this.state.bricks.length <= 15) { return ""; }
+
+    const showPrev = this.state.sortedIndex >= 15;
+    const showNext = this.state.sortedIndex + 15 <= this.state.bricks.length;
     
     return (
       <Grid container direction="row" className="bricks-pagination">
@@ -553,14 +554,22 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         </Grid>
         <Grid container item xs={4} justify="center" className="bottom-next-button">
           <div>
-            <ExpandLessIcon
-              className={"prev-button " + ((this.state.sortedIndex >= 15) ? "active" : "")}
-              onClick={() => this.moveAllBack()}
-            />
-            <ExpandMoreIcon
-              className={"next-button " + ((this.state.sortedIndex + 15 <= this.state.bricks.length) ? "active" : "")}
-              onClick={() => this.moveAllNext()}
-            />
+            {
+              showPrev ? (
+                <ExpandLessIcon
+                  className={"prev-button " + (showPrev ? "active" : "")}
+                  onClick={() => this.moveAllBack()}
+                />
+              ) : ""
+            }
+            {
+              showNext ? (
+                <ExpandMoreIcon
+                  className={"next-button " + (showNext ? "active" : "")}
+                  onClick={() => this.moveAllNext()}
+                />
+              ) : ""
+            }
           </div>
         </Grid>
       </Grid>
