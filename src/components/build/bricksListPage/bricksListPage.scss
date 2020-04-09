@@ -9,9 +9,10 @@ $right: 1.4vw;
 $lighter-blue: #304775;
 
 .bricks-list-page {
-  overflow-y: hidden;
+  overflow: hidden;
   background: $dark-blue;
   height: 100%;
+  width: 100%;
   font-family: "Brandon Grotesque Regular";
 
   .bricks-upper-part {
@@ -21,13 +22,14 @@ $lighter-blue: #304775;
 
     .bottom-next-button {
       position: absolute;
-      bottom: -2.1vh;
+      bottom: 1vh;
       color: white;
       > svg {
         cursor: pointer;
         margin-right: 1.5vw;
         height: 5vh;
         width: 5vh;
+        color: black;
       }
     }
   }
@@ -280,7 +282,7 @@ $lighter-blue: #304775;
         height: 21vh;
         font-family: "Brandon Grotesque Regular";
         overflow: hidden;
-        font-size: 2.3vh;
+        font-size: 1.7vh;
         .hovered-open-question {
           margin-top: 2.5vh;
           margin-bottom: 2.5vh;
