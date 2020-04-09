@@ -7,6 +7,8 @@ $min-brick-height: 9.4vh;
 $left: 0.8vw;
 $right: 1.4vw;
 $lighter-blue: #304775;
+$grey: #B0B0AD;
+$light-grey: #F3F4F7;
 
 .bricks-list-page {
   overflow: hidden;
@@ -20,8 +22,22 @@ $lighter-blue: #304775;
     min-height: 100%;
     background: $dark-blue;
 
-    .left-pagination {
-      font-size: 1vw;
+    .bricks-pagination {
+      position: absolute;
+      bottom: 0;
+      height: 9vh;
+      font-size: 0.9vw;
+      color: $dark-blue;
+
+      .grey {
+        color: $grey;
+      }
+
+      .left-pagination {
+        padding-top: 0.35vh;
+        padding-left: 0.15vw;
+        line-height: 1.4;
+      }
     }
 
     .bottom-next-button {
@@ -32,15 +48,15 @@ $lighter-blue: #304775;
 
         .prev-button {
           position: absolute;
-          top: -1.6vh;
+          top: -0.6vh;
           margin-left: 2.8vh;
-          left: -3vw;
+          left: -4vw;
         }
   
         .next-button {
           position: absolute;
-          left: -3vw;
-          top: 0vh;
+          left: -4vw;
+          top: 1vh;
         }
 
         .active:hover {
@@ -49,9 +65,9 @@ $lighter-blue: #304775;
         }
 
         svg {
-          height: 5vh;
-          width: 5vh;
-          color: grey;
+          height: 4.7vh;
+          width: 4.7vh;
+          color: $grey;
         }
       }
     }
@@ -492,17 +508,20 @@ $lighter-blue: #304775;
       }
     }
     .brick-row-container {
+      position: relative;
       border-top-left-radius: $main-panel-radius;
       margin-left: 2.1vw;
       padding-left: 1.98vw;
-      background: white;
+      background: $light-grey;
       height: 100%;
 
       .brick-row-title {
-        padding-left: 0.22vw;
+        padding-left: 0.35vw;
         color: $dark-blue;
-        line-height: 1.3;
-        font-size: 5.4vw;
+        padding-top: 2.3vh;
+        padding-bottom: 2vh;
+        line-height: 1;
+        font-size: 5.2vw;
         letter-spacing: 1.05vw;
         font-family: "Brandon Grotesque Black";
       }
