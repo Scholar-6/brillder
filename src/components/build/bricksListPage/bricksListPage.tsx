@@ -530,6 +530,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return bricksList
   }
 
+  renderPagination() {
+    return ("");   
+  }
+
   render() {  
     return (
       <div className="bricks-list-page">
