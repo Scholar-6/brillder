@@ -65,7 +65,8 @@ const LoginPage: React.FC<LoginProps> = props => {
 
     let res = validateForm();
     if (res !== true) {
-      alert(res);
+      toggleAlertMessage(true);
+      setAlertMessage(res);
       return;
     }
 
@@ -87,27 +88,29 @@ const LoginPage: React.FC<LoginProps> = props => {
       if (!msg) {
         const { errors } = data;
         msg = errors[0].msg;
-        }
-        alert(msg);
-      })
-      .catch(error => {
+      }
+      toggleAlertMessage(true);
+      setAlertMessage(msg);
+    }).catch(error => {
         const {response} = error;
         if (response) {
           if (
             response.status === 500 &&
             userType === UserLoginType.Student
-          ) {
-          } else if (response.status === 401) {
-            const {msg} = response.data;
-            if (msg === 'USER_IS_NOT_ACTIVE') {
-              props.history.push('/sign-up-success');
-            } else if (msg === 'INVALID_EMAIL_OR_PASSWORD') {
-              toggleAlertMessage(true);
-              setAlertMessage("Username or Password is not correct");
-            }
+        ) {
+          toggleAlertMessage(true);
+          setAlertMessage("Server error");
+        } else if (response.status === 401) {
+          const {msg} = response.data;
+          if (msg === 'USER_IS_NOT_ACTIVE') {
+            props.history.push('/sign-up-success');
+          } else if (msg === 'INVALID_EMAIL_OR_PASSWORD') {
+            toggleAlertMessage(true);
+            setAlertMessage("Password is not correct");
           }
         }
-      });
+      }
+    });
   };
 
   const register = (email: string, password: string) => {
@@ -117,7 +120,8 @@ const LoginPage: React.FC<LoginProps> = props => {
       const { data } = resp;
 
       if (data.errors) {
-        alert(data.errors[0].msg);
+        toggleAlertMessage(true);
+        setAlertMessage(data.errors[0].msg);
         return;
       }
 
