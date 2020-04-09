@@ -98,6 +98,7 @@ const LoginPage: React.FC<LoginProps> = props => {
           ) {
           } else if (response.status === 401) {
             if (response.data.msg === 'USER_IS_NOT_ACTIVE') {
+              props.history.push('/sign-up-success');
             }
           }
         }
