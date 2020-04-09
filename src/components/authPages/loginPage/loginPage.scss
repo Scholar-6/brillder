@@ -9,6 +9,12 @@ html, body, #root {
 }
 
 .login-page {
+  
+  .MuiSnackbarContent-message {
+    font-size: 1.2vw;
+    font-family: 'Brandon Grotesque Regular';
+  }
+
   background: $dark-blue;
   height: 100%;
   .back-col {
@@ -164,6 +170,7 @@ html, body, #root {
     font-family: 'Brandon Grotesque Regular';
 
     .thanks-info {
+      cursor: pointer;
       position: 'relative';
       line-height: 1.43;
       font-size: 4.2vw;
@@ -180,5 +187,21 @@ html, body, #root {
       line-height: 1;
       font-size: 2.1vw;
     }
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .logo-image {
+    height: auto !important;
+    width: 80%;
+  }
+  input {
+    font-size: 3vw !important;
+  }
+  button {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    font-size: 3vw !important;
+    width: 100% !important;
   }
 }

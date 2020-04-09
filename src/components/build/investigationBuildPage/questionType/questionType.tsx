@@ -33,6 +33,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
   return (
     <div className="question-type">
       <div className="inner-question-type">
+        <div className="label-question-type">Select Answer Type</div>
         <Grid container direction="row">
           <Grid item xs={4}>
             <TypeButton activeType={type} questionType={QuestionTypeEnum.ShortAnswer} setType={setCurrentType} labels={["S H O R T", "A N S W E R"]} isActive={false} />

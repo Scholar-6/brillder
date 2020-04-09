@@ -201,12 +201,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       preReversed = true;
     }
     if (reversed === false) {
-      this.setState({...this.state, sortedIndex: index + 18, sortedReversed: preReversed});
+      this.setState({...this.state, sortedIndex: index + 15, sortedReversed: preReversed});
     } else {
-      if (index <= 18) {
+      if (index <= 15) {
         preReversed = false;
       }
-      this.setState({...this.state, sortedIndex: index - 18, sortedReversed: preReversed});
+      this.setState({...this.state, sortedIndex: index - 15, sortedReversed: preReversed});
     }
   }
 
@@ -220,12 +220,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return (
       <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
-          <Box
-            className="brick-container"
-            onMouseEnter={() => this.yourBricksMouseHover(key)}
-            onMouseLeave={() => this.yourBricksMouseLeave(key)}
-          >
-            <div className={`sorted-brick absolute-container brick-row-0 ${brick.expanded ? "bigger-hover" : ""}`}>
+          <Box className="brick-container">
+            <div
+              className={`sorted-brick absolute-container brick-row-0 ${brick.expanded ? "bigger-hover" : ""}`}
+              onMouseEnter={() => this.yourBricksMouseHover(key)}
+              onMouseLeave={() => this.yourBricksMouseLeave(key)}
+            >
               <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
                 <Grid item xs={brick.expanded ? 12 : 11}>
                   {
@@ -394,12 +394,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return (
       <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
-          <Box
-            className="brick-container"
-            onMouseEnter={() => this.handleMouseHover(key)}
-            onMouseLeave={() => this.handleMouseLeave(key)}
-          >
-            <div className={`sorted-brick absolute-container brick-row-${row + 1} ${brick.expanded ? 'brick-hover' : ''}`}>
+          <Box className="brick-container">
+            <div
+              className={`sorted-brick absolute-container brick-row-${row + 1} ${brick.expanded ? 'brick-hover' : ''}`}
+              onMouseEnter={() => this.handleMouseHover(key)}
+              onMouseLeave={() => this.handleMouseLeave(key)}
+            >
             <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
               <Grid item xs={brick.expanded ? 12 : 11}>
                 {
@@ -526,7 +526,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   renderSortedBricks = () => {
     let {sortedIndex} = this.state;
     let bricksList = [];
-    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
+    for (let i = 0 + sortedIndex; i < 15 + sortedIndex; i++) {
       if (this.state.bricks[i]) {
         let row = Math.floor(i / 3);
         bricksList.push(this.getSortedBrickContainer(this.state.bricks[i], i, row));
@@ -583,7 +583,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                   {this.renderSortedBricks()}
                 </Grid>
                 {
-                  this.state.bricks.length > 18 ?
+                  this.state.bricks.length > 15 ?
                   <Grid container justify="center" className="bottom-next-button">
                     {
                       this.state.sortedReversed
