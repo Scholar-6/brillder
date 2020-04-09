@@ -2,6 +2,7 @@
 
 $brick-radius: 1.2vh;
 $main-panel-radius: 2vw;
+$grey: #B0B0AD;
 
 $min-brick-height: 9.4vh;
 $left: 0.8vw;
@@ -9,10 +10,13 @@ $right: 1.4vw;
 $yellow: #ff9d00;
 $light-green: #5cc364;
 $lighter-blue: #304775;
+$light-grey: #F3F4F7;
 
 .back-to-work-page {
   background: $dark-blue;
+  overflow: hidden;
   height: 100%;
+  width: 100%;
   font-family: "Brandon Grotesque Regular";
 
   .brick-row-container {
@@ -20,7 +24,7 @@ $lighter-blue: #304775;
     height: 86vh;
     padding-left: 1.98vw;
     border-top-left-radius: $main-panel-radius;
-    background: white;
+    background: $light-grey;
 
     .brick-row-title {
       padding-left: 0.22vw;
@@ -37,15 +41,53 @@ $lighter-blue: #304775;
     min-height: 100%;
     background: $dark-blue;
 
-    .bottom-next-button {
+    .bricks-pagination {
       position: absolute;
-      bottom: 2vh;
+      bottom: 0;
+      height: 7.5vh;
+      font-size: 0.9vw;
       color: $dark-blue;
-      > svg {
-        cursor: pointer;
-        margin-right: 1.5vw;
-        height: 5vh;
-        width: 5vh;
+
+      .grey {
+        color: $grey;
+      }
+
+      .left-pagination {
+        padding-top: 0.35vh;
+        padding-left: 0.15vw;
+        line-height: 1.4;
+      }
+    }
+
+    .bottom-next-button {
+      bottom: 1vh;
+      color: white;
+      > div {
+        position: relative;
+
+        .prev-button {
+          position: absolute;
+          top: -0.6vh;
+          margin-left: 2.8vh;
+          left: -4vw;
+        }
+  
+        .next-button {
+          position: absolute;
+          left: -4vw;
+          top: 1vh;
+        }
+
+        .active:hover {
+          cursor: pointer;
+          color: $dark-blue !important;
+        }
+
+        svg {
+          height: 4.7vh;
+          width: 4.7vh;
+          color: $grey;
+        }
       }
     }
   }

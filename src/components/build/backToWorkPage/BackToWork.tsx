@@ -182,20 +182,17 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({...state, bricks, sortBy})
   }
 
-  changeSortedBricks = () => {
-    let reversed = this.state.sortedReversed;
-    let preReversed = reversed;
+  moveAllBack() {
     let index = this.state.sortedIndex;
-    if (index + 36 >= this.state.bricks.length) {
-      preReversed = true;
+    if (index >= 18) {
+      this.setState({...this.state, sortedIndex: index - 18});
     }
-    if (reversed === false) {
-      this.setState({...this.state, sortedIndex: index + 18, sortedReversed: preReversed});
-    } else {
-      if (index <= 18) {
-        preReversed = false;
-      }
-      this.setState({...this.state, sortedIndex: index - 18, sortedReversed: preReversed});
+  }
+
+  moveAllNext() {
+    let index = this.state.sortedIndex;
+    if (index + 18 <= this.state.bricks.length) {
+      this.setState({...this.state, sortedIndex: index + 18});
     }
   }
 
@@ -632,6 +629,52 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     }
   }
 
+  renderPagination() {
+    if (this.state.bricks.length <= 15) { return ""; }
+
+    const showPrev = this.state.sortedIndex >= 18;
+    const showNext = this.state.sortedIndex + 18 <= this.state.bricks.length;
+    
+    return (
+      <Grid container direction="row" className="bricks-pagination">
+        <Grid item xs={4} className="left-pagination">
+          <div className="first-row">
+            {this.state.sortedIndex + 1}-{  
+              this.state.sortedIndex + 18 > this.state.bricks.length
+                ? this.state.bricks.length
+                : this.state.sortedIndex + 18
+            }
+            <span className="grey"> &nbsp;|&nbsp; {this.state.bricks.length}</span>
+          </div>
+          <div>
+            {(this.state.sortedIndex + 18) / 18}
+            <span className="grey"> &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / 18)}</span>
+          </div>
+        </Grid>
+        <Grid container item xs={4} justify="center" className="bottom-next-button">
+          <div>
+            {
+              showPrev ? (
+                <ExpandLessIcon
+                  className={"prev-button " + (showPrev ? "active" : "")}
+                  onClick={() => this.moveAllBack()}
+                />
+              ) : ""
+            }
+            {
+              showNext ? (
+                <ExpandMoreIcon
+                  className={"next-button " + (showNext ? "active" : "")}
+                  onClick={() => this.moveAllNext()}
+                />
+              ) : ""
+            }
+          </div>
+        </Grid>
+      </Grid>
+    );
+  }
+
   render() {  
     return (
       <div className="back-to-work-page">
@@ -679,18 +722,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                 <Grid container direction="row">
                   {this.renderSortedBricks()}
                 </Grid>
-                </div>
-                {
-                this.state.bricks.length > 18 ?
-                <Grid container justify="center" className="bottom-next-button">
-                  {
-                    this.state.sortedReversed
-                      ? <ExpandLessIcon onClick={() => this.changeSortedBricks()} />
-                      : <ExpandMoreIcon onClick={() => this.changeSortedBricks()} />
-                  }
-                </Grid>
-                : ""
-              }
+                {this.renderPagination()}
+              </div>
             </Grid>
           </Grid>
         </div>
