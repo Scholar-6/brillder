@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Snackbar } from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import Button from "@material-ui/core/Button";
 // @ts-ignore
 import { connect } from "react-redux";
@@ -36,6 +35,8 @@ interface LoginProps {
 }
 
 const LoginPage: React.FC<LoginProps> = props => {
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -97,8 +98,12 @@ const LoginPage: React.FC<LoginProps> = props => {
             userType === UserLoginType.Student
           ) {
           } else if (response.status === 401) {
-            if (response.data.msg === 'USER_IS_NOT_ACTIVE') {
+            const {msg} = response.data;
+            if (msg === 'USER_IS_NOT_ACTIVE') {
               props.history.push('/sign-up-success');
+            } else if (msg === 'INVALID_EMAIL_OR_PASSWORD') {
+              toggleAlertMessage(true);
+              setAlertMessage("Username or Password is not correct");
             }
           }
         }
@@ -110,13 +115,17 @@ const LoginPage: React.FC<LoginProps> = props => {
       email, password, confirmPassword: password
     }).then(resp => {
       const { data } = resp;
+
       if (data.errors) {
         alert(data.errors[0].msg);
         return;
       }
+
       if (data.msg) {
-        alert(data.msg);
+        toggleAlertMessage(true);
+        setAlertMessage(data.msg);
       }
+
       if (data === "OK") {
         if (userType !== UserLoginType.Student) {
           props.history.push('/sign-up-success');
@@ -125,7 +134,8 @@ const LoginPage: React.FC<LoginProps> = props => {
         }
       }
     }).catch(e => {
-      alert("Connection problem");
+      toggleAlertMessage(true);
+      setAlertMessage("Connection problem");
     });
   };
 
@@ -229,6 +239,18 @@ const LoginPage: React.FC<LoginProps> = props => {
         <div className="first-item"></div>
         <div className="second-item"></div>
       </div>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom', horizontal: 'center',
+        }}
+        open={alertShown}
+        autoHideDuration={1500}
+        onClose={() => toggleAlertMessage(false)}
+        message={alertMessage}
+        action={
+          <React.Fragment></React.Fragment>
+        }
+      />
     </Grid>
   );
 };
