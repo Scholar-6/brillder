@@ -9,6 +9,12 @@ html, body, #root {
 }
 
 .login-page {
+  
+  .MuiSnackbarContent-message {
+    font-size: 1.2vw;
+    font-family: 'Brandon Grotesque Regular';
+  }
+
   background: $dark-blue;
   height: 100%;
   .back-col {
