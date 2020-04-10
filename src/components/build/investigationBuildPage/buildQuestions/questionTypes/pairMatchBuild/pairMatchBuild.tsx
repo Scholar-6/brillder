@@ -66,6 +66,9 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
       if (answer.value === "") {
         showButton = false;
       }
+      if (answer.option === "") {
+        showButton = false;
+      }
     }
     showButton === true ? setHeight('auto') : setHeight('0%');
   }
