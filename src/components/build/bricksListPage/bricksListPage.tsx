@@ -66,7 +66,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       yoursIndex: 0,
       yoursReversed: false,
       sortedIndex: 0,
-      filterExpanded: false,
+      filterExpanded: true,
       logoutDialogOpen: false,
       deleteDialogOpen: false,
       deleteBrickId: -1
