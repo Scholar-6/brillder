@@ -207,9 +207,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
   getBrickContainer = (brick: Brick, key: number) => {
     let color = "";
-    
+
     if (!brick.subject) {
       color = '#B0B0AD';
+    } else {
+      color = brick.subject.color;
     }
 
     return (
@@ -384,6 +386,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     
     if (!brick.subject) {
       color = '#B0B0AD';
+    } else {
+      color = brick.subject.color;
     }
 
     return (
