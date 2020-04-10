@@ -78,7 +78,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       deleteDialogOpen: false,
       deleteBrickId: -1,
 
-      filterExpanded: false,
+      filterExpanded: true,
       filters: {
         viewAll: true,
         buildAll: false,
