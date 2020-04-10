@@ -22,6 +22,7 @@ export interface Author {
 export interface Brick {
   id: number
   subject: string
+  subjectId: number
   topic: string
   subTopic: string
   title: string

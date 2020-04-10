@@ -1,0 +1,94 @@
+@import '_variables';
+
+$box-radius: 0.4vw;
+
+.align-center {
+  text-align: center !important;
+  display: block !important;
+}
+
+.subject-page {
+  .select-subject {
+    min-width: 6vw;
+  }
+  .left-card {
+    position: relative;
+    padding-bottom: 14%;
+  }
+
+  .audience-inputs {
+    width: 100% !important;
+    font-size: 1.4vw;
+    margin: 1vh 3vw !important;
+  }
+
+  .only-tutorial-header {
+    font-family: $font-family-bold;
+    font-size: 2vw;
+    margin-bottom: 5% !important;
+  }
+
+  .brick-title-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 6vh 0vw 0 0vw;
+    background: $dark-blue;
+    color: $orange;
+    font-family: $font-family-regular;
+    letter-spacing: 0.1vw;
+
+    .titles-image {
+      margin-top: 0.5vw;
+      height: 6.2vw;
+    }
+
+    .brick-preview-container {
+      overflow: hidden;
+      position: relative;
+      padding: 0.6vh 0.75vw 0.6vh 1.6vw;
+      font-size: 1vw;
+      letter-spacing: 0;
+      width: 100%;
+      margin-top: 2.5vh;
+      border-radius: $box-radius;
+      font-family: $font-family-regular;
+      line-height: 1.2;
+      letter-spacing: 0.03vw;
+
+      .topic-filled {
+        color: white;
+      }
+
+      .author-row {
+        margin-top: 0.5vh;
+        color: white;
+      }
+
+      .brick-title {
+        height: 1vw;
+        line-height: 1;
+        font-family: $font-family-bold;
+        overflow-y: hidden;
+        margin-bottom: 0.5vh;
+      }
+
+      .brick-subtopics {
+        height: 1vw;
+        overflow: hidden;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 959px) and (min-width: 600px) {
+    .left-card {
+      width: 70% !important;
+    }
+  }
+
+  @media only screen and (max-width: 599px) {
+    .left-card {
+      width: 70% !important;
+    }
+  }
+}
