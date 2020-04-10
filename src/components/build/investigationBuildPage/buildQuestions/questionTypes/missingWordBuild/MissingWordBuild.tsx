@@ -122,7 +122,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
           placeholder="Text after choice..." ></textarea>
         <div className="button-box">
           <Button disabled={locked} className="add-answer-button" onClick={() => { addAnswer(choice) }}>
-            + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
+            + &nbsp;&nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R
           </Button>
         </div>
       </div>
@@ -136,7 +136,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
       }
       <div className="button-box">
         <Button disabled={locked} className="add-answer-button" onClick={addChoice}>
-          + &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; M &nbsp; I &nbsp; S &nbsp; S &nbsp; I &nbsp; N &nbsp; G &nbsp; &nbsp; W &nbsp; O &nbsp; R &nbsp; D
+          + &nbsp;&nbsp; M &nbsp; I &nbsp; S &nbsp; S &nbsp; I &nbsp; N &nbsp; G &nbsp; &nbsp; W &nbsp; O &nbsp; R &nbsp; D
         </Button>
       </div>
     </div>

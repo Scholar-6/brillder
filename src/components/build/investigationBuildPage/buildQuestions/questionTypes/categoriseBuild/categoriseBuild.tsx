@@ -119,7 +119,7 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ locked, d
           locked={locked}
           addAnswer={() => addAnswer(category)}
           height={category.height}
-          label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
+          label="+ &nbsp;&nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
       </div>
     );
   }
@@ -133,7 +133,7 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({ locked, d
         locked={locked}
         addAnswer={addCategory}
         height={categoryHeight}
-        label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; C &nbsp; A &nbsp; T &nbsp; E &nbsp; G &nbsp; O &nbsp; R &nbsp; Y" />
+        label="+ &nbsp;&nbsp; C &nbsp; A &nbsp; T &nbsp; E &nbsp; G &nbsp; O &nbsp; R &nbsp; Y" />
     </div>
   )
 }
