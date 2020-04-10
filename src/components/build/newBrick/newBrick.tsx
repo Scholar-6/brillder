@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../../redux/actions/brickActions';
 import './newBrick.scss';
+import SubjectPage from './questionnaire/subject/Subject';
 import BrickTitle from './questionnaire/brickTitle/brickTitle';
 import OpenQuestion from './questionnaire/openQuestion/openQuestion';
 import BrickLength from './questionnaire/brickLength/brickLength';
@@ -13,17 +14,28 @@ import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
 import ProposalReview from './questionnaire/proposalReview/ProposalReview';
 import { Brick } from "model/brick";
+import { User } from "model/user";
+
 
 interface NewBrickProps {
   brick: Brick;
+  user: User;
   saveBrick(brick: Brick): void;
   createBrick(brick: Brick): void;
   history: any;
 }
 
 const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
+  let showSubjectDropdown = false;
+  let subjectId = 0;
+  if (props.user.subjects.length === 1) {
+    subjectId = props.user.subjects[0].id;
+  } else if (props.user.subjects.length > 1) {
+    showSubjectDropdown = true;
+  }
   let initState = {
     subject: '0',
+    subjectId,
     brickLength: 0,
     topic: '',
     subTopic: '',
@@ -42,6 +54,11 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
   
   const [state, setBrick] = React.useState(initState);
   const [saved, setSaved] = React.useState(false);
+
+  const setSubject = (subjectId: number) => {
+    console.log(subjectId);
+    setBrick({ ...state, subjectId });
+  }
 
   const setTitles = (titles: any) => {
     setBrick({ ...state, ...titles });
@@ -81,6 +98,9 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
   return (
     <MuiThemeProvider>
       <div style={{ width: '100%', height: '100%' }}>
+        <Route path='/build/new-brick/subject'>
+          <SubjectPage subjects={props.user.subjects} subjectId={0} saveSubject={setSubject} />
+        </Route>
         <Route path='/build/new-brick/brick-title'>
           <BrickTitle parentState={state} saveTitles={setTitles} />
         </Route>
@@ -106,6 +126,7 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
 
 const mapState = (state: any) => {
   return {
+    user: state.user.user,
     brick: state.brick.brick,
   }
 };

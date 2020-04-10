@@ -23,7 +23,7 @@ const NextButton:React.FC<NextButtonProps> = ({ step, canSubmit, onSubmit, data 
         onSubmit(data);
       }
       switch (step) {
-        case NewBrickStep.Welcome:
+        case NewBrickStep.Subject:
           return history.push(`${url}/brick-title`);
         case NewBrickStep.BrickTitle:
           return history.push(`${url}/open-question`);

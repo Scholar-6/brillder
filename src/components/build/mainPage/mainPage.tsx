@@ -56,7 +56,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   creatingBrick() {
     this.props.forgetBrick();
-    this.props.history.push('/build/new-brick/brick-title');
+    this.props.history.push('/build/new-brick/subject');
   }
 
   render() {
