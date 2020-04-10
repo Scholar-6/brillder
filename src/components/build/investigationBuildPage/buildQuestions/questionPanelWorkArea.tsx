@@ -137,7 +137,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
                   }
                 </Grid>
               </Grid>
-              <Grid container direction="row" alignItems="flex-end">
+              <Grid container direction="row" alignItems="center">
                 <Grid container justify="center" item sm={12}>
                   <FormControl variant="outlined">
                     <Select
