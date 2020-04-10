@@ -9,7 +9,7 @@ $box-radius: 0.4vw;
 
 .brick-title-page {
   .MuiInputBase-input {
-    font-family: 'Brandon Grotesque Regular';
+    font-family: $font-family-regular;
   }
   .left-card {
     position: relative;
@@ -23,7 +23,7 @@ $box-radius: 0.4vw;
   }
 
   .only-tutorial-header {
-    font-family: 'Brandon Grotesque Bold';
+    font-family: $font-family-bold;
     font-size: 2vw;
     margin-bottom: 5% !important;
   }
@@ -35,7 +35,7 @@ $box-radius: 0.4vw;
     padding: 6vh 0vw 0 0vw;
     background: $dark-blue;
     color: $orange;
-    font-family: 'Brandon Grotesque Regular';
+    font-family: $font-family-regular;
     letter-spacing: 0.1vw;
 
     .titles-image {
@@ -52,7 +52,7 @@ $box-radius: 0.4vw;
       width: 100%;
       margin-top: 2.5vh;
       border-radius: $box-radius;
-      font-family: 'Brandon Grotesque Regular';
+      font-family: $font-family-regular;
       line-height: 1.2;
       letter-spacing: 0.03vw;
 
@@ -68,7 +68,7 @@ $box-radius: 0.4vw;
       .brick-title {
         height: 1vw;
         line-height: 1;
-        font-family: 'Brandon Grotesque Bold';
+        font-family: $font-family-bold;
         overflow-y: hidden;
         margin-bottom: 0.5vh;
       }

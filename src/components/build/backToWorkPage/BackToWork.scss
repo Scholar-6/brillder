@@ -17,7 +17,7 @@ $light-grey: #F3F4F7;
   overflow: hidden;
   height: 100%;
   width: 100%;
-  font-family: "Brandon Grotesque Regular";
+  font-family: $font-family-regular;
 
   .brick-row-container {
     margin-left: 1.5vw;
@@ -158,7 +158,7 @@ $light-grey: #F3F4F7;
         display: block;
         border: none;
         background-color: $light-blue !important;
-        font-family: "Brandon Grotesque Regular";
+        font-family: $font-family-regular;
         font-size: 1.7vw;
         border: red;
         border-radius: 12px;
@@ -243,7 +243,7 @@ $light-grey: #F3F4F7;
 
   h3 {
     color: white;
-    font-family: "Brandon Grotesque Regular";
+    font-family: $font-family-regular;
     font-weight: normal;
     margin-top: 2.5vh;
     margin-left: 1.05vw;
@@ -299,7 +299,7 @@ $light-grey: #F3F4F7;
         .link-description {
           text-transform: uppercase;
           font-size: 1.7vh;
-          font-family: "Brandon Grotesque Bold";
+          font-family: $font-family-bold;
           line-height: 1;
           overflow: hidden;
           height: 1.7vh;
@@ -309,7 +309,7 @@ $light-grey: #F3F4F7;
           color: $lighter-blue;
           line-height: 1;
           font-size: 1.6vh;
-          font-family: "Brandon Grotesque Regular";
+          font-family: $font-family-regular;
           height: 1.6vh;
           margin-bottom: 0.5vh;
         }
@@ -350,7 +350,7 @@ $light-grey: #F3F4F7;
 
       .hover-text {
         height: 21vh;
-        font-family: "Brandon Grotesque Regular";
+        font-family: $font-family-regular;
         overflow: hidden;
         font-size: 2.3vh;
         .hovered-open-question {
@@ -360,7 +360,7 @@ $light-grey: #F3F4F7;
         .link-description {
           text-transform: uppercase;
           font-size: 1.7vh;
-          font-family: "Brandon Grotesque Bold";
+          font-family: $font-family-bold;
           line-height: 1;
           overflow: hidden;
           height: 1.7vh;
@@ -371,7 +371,7 @@ $light-grey: #F3F4F7;
           color: $lighter-blue;
           line-height: 1;
           font-size: 1.6vh;
-          font-family: "Brandon Grotesque Regular";
+          font-family: $font-family-regular;
           height: 1.6vh;
           margin-bottom: 0.5vh;
         }
@@ -538,7 +538,7 @@ $light-grey: #F3F4F7;
               }
             }
             .MuiFormControlLabel-label {
-              font: 1.05vw "Brandon Grotesque Regular" !important;
+              font: 1.05vw $font-family-regular !important;
               letter-spacing: 0.06vw;
             }
           }
@@ -561,7 +561,7 @@ $light-grey: #F3F4F7;
               width: 2.2vh;
             }
             .MuiFormControlLabel-label {
-              font: 1.05vw "Brandon Grotesque Regular" !important;
+              font: 1.05vw $font-family-regular !important;
               letter-spacing: 0.06vw;
             }
           }
@@ -639,7 +639,7 @@ $light-grey: #F3F4F7;
     font-size: 2.35vw;
     letter-spacing: 0;
     color: $dark-blue;
-    font-family: "Brandon Grotesque Regular";
+    font-family: $font-family-regular;
   }
   .logout-buttons {
     padding-bottom: 2.3vh;
@@ -653,7 +653,7 @@ $light-grey: #F3F4F7;
       padding-top: 1.1vh;
       padding-bottom: 1.1vh;
       line-height: 1;
-      font-family: "Brandon Grotesque Regular";
+      font-family: $font-family-regular;
       > span {
         width: 100%;
       }
@@ -683,7 +683,7 @@ $light-grey: #F3F4F7;
     font-size: 2.35vw;
     letter-spacing: 0;
     color: $dark-blue;
-    font-family: "Brandon Grotesque Regular";
+    font-family: $font-family-regular;
   }
   .row-buttons {
     padding-bottom: 2.3vh;
@@ -697,7 +697,7 @@ $light-grey: #F3F4F7;
       padding-top: 1.1vh;
       padding-bottom: 1.1vh;
       line-height: 1;
-      font-family: "Brandon Grotesque Regular";
+      font-family: $font-family-regular;
       > span {
         width: 100%;
       }

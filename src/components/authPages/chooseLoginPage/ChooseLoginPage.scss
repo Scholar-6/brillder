@@ -75,7 +75,7 @@ $button-radius: 0.7vw;
     text-transform: none;
     border-radius: $button-radius;
     padding: 2.5vh 0.4vw 2.5vh 0;
-    font: 1.16vw 'Brandon Grotesque Regular';
+    font: 1.16vw $font-family-regular;
     letter-spacing: 0.1vw;
     width: 23vw;
     margin-bottom: 2.7vh;
@@ -96,7 +96,7 @@ $button-radius: 0.7vw;
     text-transform: none;
     border-radius: $button-radius;
     width: 23vw;
-    font: 1.16vw 'Brandon Grotesque Regular';
+    font: 1.16vw $font-family-regular;
     letter-spacing: 0.1vw;
     margin-bottom: 2.7vh;
     .google-icon {
