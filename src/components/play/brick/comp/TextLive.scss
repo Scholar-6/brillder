@@ -1,9 +1,11 @@
+@import '_variables';
+
 .text-play {
   margin-top: 5px;
   margin-bottom: 5px;
   color: black;
-  font: 500 16px/24px "Montserrat";
+  font: 500 16px/24px $font-family-regular;
   p {
-    font: 500 16px/24px "Montserrat";
+    font: 500 16px/24px $font-family-regular;
   }
 }
