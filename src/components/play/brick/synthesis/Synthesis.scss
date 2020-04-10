@@ -1,3 +1,5 @@
+@import '_variables';
+
 .synthesis-page {
   padding: 1vw;
 
@@ -34,7 +36,7 @@
 
     >span {
       color: black;
-      font: 500 16px/24px 'Montserrat';
+      font: 500 16px/24px $font-family-regular;
       margin-right: 5px;
     }
   }
