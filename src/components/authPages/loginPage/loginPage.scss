@@ -12,7 +12,7 @@ html, body, #root {
   
   .MuiSnackbarContent-message {
     font-size: 1.2vw;
-    font-family: 'Brandon Grotesque Regular';
+    font-family: $font-family-regular;
   }
 
   background: $dark-blue;
@@ -86,7 +86,7 @@ html, body, #root {
     padding: 2.93vh 0 2.93vh 0 !important;
     color: white;
     font-weight: normal;
-    font-family: 'Brandon Grotesque Regular';
+    font-family: $font-family-regular;
     width: 70%;
     text-align: center;
     background: $dark-blue;
@@ -142,7 +142,7 @@ html, body, #root {
     font-weight: normal !important;
     font-size: 1.2vw;
     letter-spacing: 0.3vw;
-    font-family: 'Brandon Grotesque Regular';
+    font-family: $font-family-regular;
     border-radius: 0.7vw;
     margin-bottom: 2vh;
   }
@@ -158,7 +158,7 @@ html, body, #root {
   .sign-in-button:hover {
     background: $orange; 
     box-shadow: none;
-    font-family: 'Brandon Grotesque Bold';
+    font-family: $font-family-bold;
   }
 
 
@@ -167,7 +167,7 @@ html, body, #root {
     top: 24.1vh;
     left: 19.2vw;
     color: white;
-    font-family: 'Brandon Grotesque Regular';
+    font-family: $font-family-regular;
 
     .thanks-info {
       cursor: pointer;

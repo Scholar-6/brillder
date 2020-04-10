@@ -1,3 +1,5 @@
+@import '_variables';
+
 .image-drag-n-drop {
   margin-left: 1%;
   width: 98.5%;
@@ -9,7 +11,7 @@
     border: 2px dashed #eee;
     background: #FAFAFA;
     font-size: 0.81vw;
-    font-family: 'Brandon Grotesque Regular' !important;
+    font-family: $font-family-regular !important;
   }
   
   .dropzone:hover {

@@ -62,7 +62,7 @@ $tile-height: 100%;
 
     .tab-number {
       color: $dark-blue;
-      font-family: 'Brandon Grotesque Bold';
+      font-family: $font-family-bold;
       font-size: 3.4vh;
     }
 
@@ -82,7 +82,7 @@ $tile-height: 100%;
     color: $dark-blue;
     font-size: 1.3vw;
     overflow: hidden;
-    font-family: 'Brandon Grotesque Bold';
+    font-family: $font-family-bold;
   }
 
   .synthesis-tab {
