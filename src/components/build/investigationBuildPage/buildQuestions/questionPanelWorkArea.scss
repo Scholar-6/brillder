@@ -8,6 +8,11 @@ $question-radius: 0.6vw;
   border-bottom-left-radius: $question-radius;
   border-bottom-right-radius: $question-radius;
 
+  ::placeholder {
+    color: #aaa;
+    font-family: "Brandon Grotesque Bold";
+  }
+
   ::-webkit-scrollbar {
     width: 0.6vw;
   }
