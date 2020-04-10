@@ -34,7 +34,6 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
     showSubjectDropdown = true;
   }
   let initState = {
-    subject: '0',
     subjectId,
     brickLength: 0,
     topic: '',

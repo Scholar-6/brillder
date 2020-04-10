@@ -19,9 +19,15 @@ export interface Author {
   type: UserType
 }
 
+export interface Subject {
+  id: number;
+  name: string;
+  color: string;
+}
+
 export interface Brick {
   id: number
-  subject: string
+  subject?: Subject
   subjectId: number
   topic: string
   subTopic: string
