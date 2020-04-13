@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from "react-router-dom";
+import queryString from 'query-string';
 // @ts-ignore
 import { connect } from 'react-redux';
 import actions from '../../redux/actions/auth';
@@ -12,11 +13,16 @@ interface BuildRouteProps {
   component: any,
   isAuthenticated: isAuthenticated,
   user: User,
+  location: any,
   getUser():void,
   isAuthorized():void,
 }
 
 const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }) => {
+  const values = queryString.parse(rest.location.search);
+  if (values.msg === 'USER_IS_NOT_ACTIVE') {
+    return <Redirect to="/sign-up-success" />
+  }
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!rest.user) {
       rest.getUser();
