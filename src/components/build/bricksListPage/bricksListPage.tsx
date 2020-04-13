@@ -381,6 +381,19 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({...this.state, deleteDialogOpen: false})
   }
 
+  searching(value: string) {
+    console.log(value);
+    axios.post(
+      process.env.REACT_APP_BACKEND_HOST + '/bricks/search',
+      {searchString: value},
+      {withCredentials: true}
+    ).then(res => {
+      console.log(res);
+    }).catch(error => {
+      alert('Can`t get bricks');
+    });
+  }
+
   getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
     let color = "";
     
@@ -479,8 +492,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           value={this.state.sortBy}
           onChange={this.handleSortChange}
         >
-          <FormControlLabel value={SortBy.Popularity} control={<Radio className="sortBy" />} label="Popularity" />
-          <FormControlLabel value={SortBy.Date} control={<Radio className="sortBy" />} label="Date Added" />
+          <FormControlLabel value={SortBy.Popularity} style={{marginRight: 0, width: '47.5%'}} control={<Radio className="sortBy" />} label="Popularity" />
+          <FormControlLabel value={SortBy.Date} style={{marginRight: 0}} control={<Radio className="sortBy" />} label="Date Added" />
         </RadioGroup>
         <div className="filter-header">
           <div style={{ display: 'inline' }}>
@@ -600,7 +613,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 <div className="search-button"></div>
               </Grid>
               <Grid item>
-                <input className="search-input" placeholder="Search Subjects, Topics, Titles & more" />
+                <input
+                  className="search-input"
+                  onChange={(e) => this.searching(e.target.value)}
+                  placeholder="Search Subjects, Topics, Titles & more" />
               </Grid>
               </Grid>
               <Grid item style={{width: '32.35vw'}}>
