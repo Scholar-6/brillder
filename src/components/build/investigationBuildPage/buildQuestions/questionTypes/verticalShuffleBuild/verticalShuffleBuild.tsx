@@ -91,7 +91,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({loc
         locked={locked}
         addAnswer={addAnswer}
         height={height}
-        label="+ &nbsp;&nbsp; A &nbsp; D &nbsp; D &nbsp; &nbsp; P &nbsp; A &nbsp; I &nbsp; R" />
+        label="+ &nbsp;&nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
     </div>
   )
 }

@@ -2,11 +2,16 @@
 $question-radius: 0.6vw;
 
 .build-question-page {
-  font-family: "Brandon Grotesque Regular";
+  font-family: $font-family-regular;
   background: white;
  
   border-bottom-left-radius: $question-radius;
   border-bottom-right-radius: $question-radius;
+
+  ::placeholder {
+    color: #aaa;
+    font-family: $font-family-bold;
+  }
 
   ::-webkit-scrollbar {
     width: 0.6vw;
@@ -160,25 +165,23 @@ $question-radius: 0.6vw;
 
     .drop-box-text {
       font-size: 1.6vw;
-      font-family: 'Brandon Grotesque Bold';
+      font-family: $font-family-bold;
       color: #8A8D90;
     }
 
     .parent-left-sidebar {
       height: 85%;
-      padding-bottom: 25px;
     }
 
     .left-sidebar {
       margin-top: 3vh;
       padding-left: 10px;
       padding-right: 10px;
-      margin-bottom: 40px;
       height: 87% !important;
 
       .drag-box-item {
         padding-top: 8px;
-        height: 11.5vh;
+        height: 14.5vh;
         width: 100%;
         text-align: center;
 
@@ -208,7 +211,7 @@ $question-radius: 0.6vw;
           width: 100%;
           text-align: center;
           color: $dark-blue;
-          font-family: 'Brandon Grotesque Bold';
+          font-family: $font-family-bold;
         }
 
         button {
@@ -218,11 +221,11 @@ $question-radius: 0.6vw;
           color: $dark-blue;
           width: 89%;
           background: $tab-grey;
-          font-family: 'Brandon Grotesque Regular';
+          font-family: $font-family-regular;
 
           font-size: 1.3vw;
           text-transform: none;
-          font-family: "Brandon Grotesque Regular";
+          font-family: $font-family-regular;
           color: $dark-blue;
           background: $tab-grey;
           border-radius: $question-radius;

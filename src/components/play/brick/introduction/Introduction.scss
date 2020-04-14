@@ -1,3 +1,5 @@
+@import '_variables';
+
 .introduction-page {
   padding: 1vw;
 
@@ -15,7 +17,7 @@
   .start-brick-button {
     margin-right: 0px;
     >span {
-      font-family: 'Montserrat';
+      font-family: $font-family-regular;
       color: black;
       font-size: 25px;
       margin-right: 10px;

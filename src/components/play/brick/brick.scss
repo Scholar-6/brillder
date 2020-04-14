@@ -6,7 +6,7 @@ $light-grey: #f4f4f4;
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
   .MuiTypography-root {
-    font: 500 16px/24px "Montserrat";
+    font: 500 16px/24px $font-family-regular;
   }
 }
 
@@ -41,7 +41,7 @@ $light-grey: #f4f4f4;
   }
 
   .brick-container {
-    font-family: "Montserrat";
+    font-family: $font-family-regular;
     max-width: 800px;
     width: 100%;
     text-align: left;

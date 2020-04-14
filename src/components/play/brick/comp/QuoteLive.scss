@@ -1,7 +1,8 @@
+@import '_variables';
 
 .quotes-live {
   padding: 5px;
-  font: 500 16px/24px Montserrat;
+  font: 500 16px/24px $font-family-regular;
   color: black;
   padding: 5px;
   justify-content: center;

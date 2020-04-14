@@ -124,7 +124,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     if (this.props.attempt && this.props.attempt.correct === true) {
       return (
         <div>
-          <div style={{font: "500 16px/24px Montserrat", color: 'black'}}>Question is correct!</div>
+          <div style={{font: "500 16px/24px Brandon Grotesque Regular", color: 'black'}}>Question is correct!</div>
           <Grid container direction="row" justify="flex-end" className="next-question-button-container">
             <FormControlLabel
               className="next-question-button"

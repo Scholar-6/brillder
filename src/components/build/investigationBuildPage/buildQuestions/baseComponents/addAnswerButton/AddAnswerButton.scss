@@ -1,0 +1,9 @@
+@import '_variables';
+
+.button-box {
+  .add-answer-button {
+    padding: 2.5vh 0 !important;
+    font-family: $font-family-bold;
+    font-size: 1.2vw;
+  }
+}

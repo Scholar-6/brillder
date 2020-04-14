@@ -184,14 +184,14 @@
           margin-left: 3vw;
           margin-right: 3vw;
           margin-top: 3vh;
-          font-family: "Brandon Grotesque Regular";
+          font-family: $font-family-regular;
           text-align: left;
           margin-left: 3.1vw;
           text-transform: capitalize;
           font-size: 1.3vw;
 
           .title {
-            font-family: "Brandon Grotesque Bold";
+            font-family: $font-family-bold;
             text-transform: uppercase;
             height: 20vh;
           }
@@ -208,7 +208,7 @@
         overflow: auto;
         font-size: 1vw;
 
-        font-family: "Brandon Grotesque Regular";
+        font-family: $font-family-regular;
 
         .edit-icon {
           margin-top: 2vh;
@@ -219,8 +219,8 @@
         p { margin: 0}
 
         .text-title {
-          color: #4A4F56;
-          font-family: "Brandon Grotesque Bold";
+          color: #4A4F56 !important;
+          font-family: $font-family-bold;
         }
         .proposal-text {
           margin-left: 1.3vw;

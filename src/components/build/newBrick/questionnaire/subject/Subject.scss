@@ -7,9 +7,9 @@ $box-radius: 0.4vw;
   display: block !important;
 }
 
-.brick-title-page {
-  .MuiInputBase-input {
-    font-family: $font-family-regular;
+.subject-page {
+  .select-subject {
+    min-width: 6vw;
   }
   .left-card {
     position: relative;

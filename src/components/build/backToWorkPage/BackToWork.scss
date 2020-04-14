@@ -2,6 +2,7 @@
 
 $brick-radius: 1.2vh;
 $main-panel-radius: 2vw;
+$grey: #B0B0AD;
 
 $min-brick-height: 9.4vh;
 $left: 0.8vw;
@@ -9,18 +10,21 @@ $right: 1.4vw;
 $yellow: #ff9d00;
 $light-green: #5cc364;
 $lighter-blue: #304775;
+$light-grey: #F3F4F7;
 
 .back-to-work-page {
   background: $dark-blue;
+  overflow: hidden;
   height: 100%;
-  font-family: "Brandon Grotesque Regular";
+  width: 100%;
+  font-family: $font-family-regular;
 
   .brick-row-container {
     margin-left: 1.5vw;
     height: 86vh;
     padding-left: 1.98vw;
     border-top-left-radius: $main-panel-radius;
-    background: white;
+    background: $light-grey;
 
     .brick-row-title {
       padding-left: 0.22vw;
@@ -37,15 +41,53 @@ $lighter-blue: #304775;
     min-height: 100%;
     background: $dark-blue;
 
-    .bottom-next-button {
+    .bricks-pagination {
       position: absolute;
-      bottom: 2vh;
+      bottom: 0;
+      height: 7.5vh;
+      font-size: 0.9vw;
       color: $dark-blue;
-      > svg {
-        cursor: pointer;
-        margin-right: 1.5vw;
-        height: 5vh;
-        width: 5vh;
+
+      .grey {
+        color: $grey;
+      }
+
+      .left-pagination {
+        padding-top: 0.35vh;
+        padding-left: 0.15vw;
+        line-height: 1.4;
+      }
+    }
+
+    .bottom-next-button {
+      bottom: 1vh;
+      color: white;
+      > div {
+        position: relative;
+
+        .prev-button {
+          position: absolute;
+          top: -0.6vh;
+          margin-left: 2.8vh;
+          left: -4vw;
+        }
+  
+        .next-button {
+          position: absolute;
+          left: -4vw;
+          top: 1vh;
+        }
+
+        .active:hover {
+          cursor: pointer;
+          color: $dark-blue !important;
+        }
+
+        svg {
+          height: 4.7vh;
+          width: 4.7vh;
+          color: $grey;
+        }
       }
     }
   }
@@ -116,7 +158,7 @@ $lighter-blue: #304775;
         display: block;
         border: none;
         background-color: $light-blue !important;
-        font-family: "Brandon Grotesque Regular";
+        font-family: $font-family-regular;
         font-size: 1.7vw;
         border: red;
         border-radius: 12px;
@@ -201,7 +243,7 @@ $lighter-blue: #304775;
 
   h3 {
     color: white;
-    font-family: "Brandon Grotesque Regular";
+    font-family: $font-family-regular;
     font-weight: normal;
     margin-top: 2.5vh;
     margin-left: 1.05vw;
@@ -257,7 +299,7 @@ $lighter-blue: #304775;
         .link-description {
           text-transform: uppercase;
           font-size: 1.7vh;
-          font-family: "Brandon Grotesque Bold";
+          font-family: $font-family-bold;
           line-height: 1;
           overflow: hidden;
           height: 1.7vh;
@@ -267,7 +309,7 @@ $lighter-blue: #304775;
           color: $lighter-blue;
           line-height: 1;
           font-size: 1.6vh;
-          font-family: "Brandon Grotesque Regular";
+          font-family: $font-family-regular;
           height: 1.6vh;
           margin-bottom: 0.5vh;
         }
@@ -308,7 +350,7 @@ $lighter-blue: #304775;
 
       .hover-text {
         height: 21vh;
-        font-family: "Brandon Grotesque Regular";
+        font-family: $font-family-regular;
         overflow: hidden;
         font-size: 2.3vh;
         .hovered-open-question {
@@ -318,7 +360,7 @@ $lighter-blue: #304775;
         .link-description {
           text-transform: uppercase;
           font-size: 1.7vh;
-          font-family: "Brandon Grotesque Bold";
+          font-family: $font-family-bold;
           line-height: 1;
           overflow: hidden;
           height: 1.7vh;
@@ -329,7 +371,7 @@ $lighter-blue: #304775;
           color: $lighter-blue;
           line-height: 1;
           font-size: 1.6vh;
-          font-family: "Brandon Grotesque Regular";
+          font-family: $font-family-regular;
           height: 1.6vh;
           margin-bottom: 0.5vh;
         }
@@ -496,7 +538,7 @@ $lighter-blue: #304775;
               }
             }
             .MuiFormControlLabel-label {
-              font: 1.05vw "Brandon Grotesque Regular" !important;
+              font: 1.05vw $font-family-regular !important;
               letter-spacing: 0.06vw;
             }
           }
@@ -519,7 +561,7 @@ $lighter-blue: #304775;
               width: 2.2vh;
             }
             .MuiFormControlLabel-label {
-              font: 1.05vw "Brandon Grotesque Regular" !important;
+              font: 1.05vw $font-family-regular !important;
               letter-spacing: 0.06vw;
             }
           }
@@ -589,6 +631,7 @@ $lighter-blue: #304775;
     position: fixed;
     top: 8.3vh;
     right: 7vw;
+    max-width: 50vw;
     border-radius: 0.8vw;
   }
 
@@ -597,7 +640,7 @@ $lighter-blue: #304775;
     font-size: 2.35vw;
     letter-spacing: 0;
     color: $dark-blue;
-    font-family: "Brandon Grotesque Regular";
+    font-family: $font-family-regular;
   }
   .logout-buttons {
     padding-bottom: 2.3vh;
@@ -611,7 +654,7 @@ $lighter-blue: #304775;
       padding-top: 1.1vh;
       padding-bottom: 1.1vh;
       line-height: 1;
-      font-family: "Brandon Grotesque Regular";
+      font-family: $font-family-regular;
       > span {
         width: 100%;
       }
@@ -641,7 +684,7 @@ $lighter-blue: #304775;
     font-size: 2.35vw;
     letter-spacing: 0;
     color: $dark-blue;
-    font-family: "Brandon Grotesque Regular";
+    font-family: $font-family-regular;
   }
   .row-buttons {
     padding-bottom: 2.3vh;
@@ -655,7 +698,7 @@ $lighter-blue: #304775;
       padding-top: 1.1vh;
       padding-bottom: 1.1vh;
       line-height: 1;
-      font-family: "Brandon Grotesque Regular";
+      font-family: $font-family-regular;
       > span {
         width: 100%;
       }
