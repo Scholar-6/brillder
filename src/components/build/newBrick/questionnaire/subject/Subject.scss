@@ -8,11 +8,16 @@ $box-radius: 0.4vw;
 }
 
 .subject-page {
+  .select-label {
+    background: white !important;
+  }
   .select-subject {
+    font-size: 1.3vw !important;
     min-width: 10vw;
   }
-  .left-card {
+  .subject-container {
     position: relative;
+    width: 100%;
     padding-bottom: 14%;
   }
 
@@ -23,6 +28,7 @@ $box-radius: 0.4vw;
   }
 
   .only-tutorial-header {
+    text-align: center;
     font-family: $font-family-bold;
     font-size: 2vw;
     margin-bottom: 5% !important;
@@ -52,6 +58,7 @@ $box-radius: 0.4vw;
       width: 100%;
       margin-top: 2.5vh;
       border-radius: $box-radius;
+      border: none;
       font-family: $font-family-regular;
       line-height: 1.2;
       letter-spacing: 0.03vw;
@@ -81,13 +88,13 @@ $box-radius: 0.4vw;
   }
 
   @media only screen and (max-width: 959px) and (min-width: 600px) {
-    .left-card {
+    .subject-container {
       width: 70% !important;
     }
   }
 
   @media only screen and (max-width: 599px) {
-    .left-card {
+    .subject-container {
       width: 70% !important;
     }
   }
