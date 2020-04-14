@@ -1,33 +1,699 @@
-@import '_variables';
+@import "_variables";
 
-.pallet-title {
-  font-family: $font-family-regular;
-  font-size: 20px;
-  font-size: 36px;
-  color: black;
-  margin: 0 0 16px;
-  font-weight: bold;
-  font-size: 32px;
-  line-height: 48px;
-}
+$brick-radius: 1.2vh;
+$main-panel-radius: 2vw;
 
-.first-row-box {
-  background: blue;
-  padding-top: 100px;
-}
+$min-brick-height: 9.4vh;
+$left: 0.8vw;
+$right: 1.4vw;
+$lighter-blue: #304775;
+$grey: #B0B0AD;
+$light-grey: #F3F4F7;
 
-.pallet-tile {
+.dashboard-page {
+  overflow: hidden;
+  background: $dark-blue;
   height: 100%;
-}
+  width: 100%;
+  font-family: $font-family-regular;
 
-.pallet-tile-container {
-  height: 11vw !important;
+  .bricks-upper-part {
+    position: relative;
+    min-height: 100%;
+    background: $dark-blue;
 
-  >div {
-    padding: 0;
+    .bricks-pagination {
+      position: absolute;
+      bottom: 0;
+      height: 9vh;
+      font-size: 0.9vw;
+      color: $dark-blue;
+
+      .grey {
+        color: $grey;
+      }
+
+      .left-pagination {
+        padding-top: 0.35vh;
+        padding-left: 0.15vw;
+        line-height: 1.4;
+      }
+    }
+
+    .bottom-next-button {
+      bottom: 1vh;
+      color: white;
+      > div {
+        position: relative;
+
+        .prev-button {
+          position: absolute;
+          top: -0.6vh;
+          margin-left: 2.8vh;
+          left: -4vw;
+        }
+  
+        .next-button {
+          position: absolute;
+          left: -4vw;
+          top: 1vh;
+        }
+
+        .active:hover {
+          cursor: pointer;
+          color: $dark-blue !important;
+        }
+
+        svg {
+          height: 4.7vh;
+          width: 4.7vh;
+          color: $grey;
+        }
+      }
+    }
+  }
+
+  .bricks-header {
+    height: 10.5vh;
+
+    .home-button-container {
+      padding-right: 1.2vw;
+      width: 5.5vw;
+      border-bottom-right-radius: 2vw;
+      background: $light-blue;
+      height: 10.5vh;
+      
+      .home-button {
+        cursor: pointer;
+        padding-left: 1.05vw;
+        padding-top: 2.2vh;
+        height: 9.3vh;
+        width: 3.3vw;
+        display: block;
+        > div {
+          height: 6.3vh;
+          width: 3.3vw;
+          display: block;
+          background-image: url(/images/choose-login/logo.png);
+          transition: all 0.2s ease-in-out;
+          transform-origin: 70% 50%;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+      .home-button:hover {
+        > div {
+          background-image: url(/images/brick-list/home-hover.png);
+        }
+      }
+    }
+
+    .logout-container {
+      height: 10.5vh;
+      border-bottom-left-radius: 2vw;
+      background: $light-blue;
+      padding-top: 2.5vh;
+
+      .search-button {
+        cursor: pointer;
+        display: block;
+        margin-top: 0.2vh !important;
+        margin-left: 1.6vw;
+        height: 5vh;
+        width: 5vh;
+        margin-top: 0.1vh;
+        margin-right: 0vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/brick-list/search.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 70% 50%;
+      }
+      .search-button:hover {
+        background-image: url(/images/brick-list/search-hover.png);
+      }
+
+      .search-input {
+        display: block;
+        border: none;
+        background-color: $light-blue !important;
+        font-family: $font-family-regular;
+        font-size: 1.7vw;
+        border: red;
+        border-radius: 12px;
+        border: none !important;
+        margin-left: 2.3vw;
+        margin-top: 0vh;
+        letter-spacing: 0.045vw;
+        height: 5.5vh;
+        width: 40vw;
+        padding-right: 2px;
+        color: #acacac;
+      }
+
+      .logout-button {
+        cursor: pointer;
+        display: block;
+        height: 5.6vh;
+        width: 5.65vh;
+        margin-top: 0.1vh;
+        margin-right: 4.27vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/main-page/logout.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 70% 50%;
+      }
+
+      .logout-button:hover {
+        transform: scale(1.4);
+        background-image: url(/images/main-page/logout-hover.png);
+      }
+
+      .bell-button {
+        cursor: pointer;
+        margin-top: 0.53vh;
+        display: block;
+        color: white;
+        text-align: center;
+        padding-top: 1vh;
+        height: 3.6vh;
+        width: 4.1vh;
+        margin-right: 4.28vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/brick-list/bell.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 50% 50%;
+
+        > span {
+          margin-top: 1vh;
+        }
+      }
+
+      .bell-button:hover {
+        transform: scale(1.4);
+        background-image: url(/images/brick-list/bell-hover.png);
+      }
+
+      .user-button {
+        cursor: pointer;
+        margin-top: 0.635vh;
+        display: block;
+        height: 4.3vh;
+        width: 4.1vh;
+        margin-right: 1.9vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/brick-list/user.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 50% 50%;
+      }
+
+      .user-button:hover {
+        background-image: url(/images/brick-list/user-hover.png);
+        transform: scale(1.4);
+      }
+    }
+  }
+
+  h3 {
+    color: white;
+    font-family: $font-family-regular;
+    font-weight: normal;
+    margin-top: 2.5vh;
+    margin-left: 1.05vw;
+    margin-bottom: 1vh;
+    letter-spacing: 0.27vw;
+    font-size: 1.3vw;
+  }
+
+  .your-bricks-list {
+    position: relative;
+    min-height: 70%;
+    padding-left: $left;
+    padding-right: $right;
+  }
+
+  .main-brick-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .brick-container {
+    position: relative;
+    padding-right: 0;
+    height: $min-brick-height;
+    margin-top: 0.1vh;
+    margin-bottom: 1.3vh;
+
+    .absolute-container {
+      border-radius: $brick-radius;
+      color: $dark-blue;
+
+      width: 95%;
+      text-align: left;
+      width: 95%;
+      position: absolute;
+      height: $min-brick-height;
+
+      .left-brick-circle {
+        position: absolute;
+        top: 0.85vh;
+
+        > div {
+          height: 2.1vw;
+          width: 2.1vw;
+          border-radius: 20vw;
+        }
+      }
+      .short-brick-info {
+        position: absolute;
+        top: 0.3vh;
+        left: 3vw;
+
+        .link-description {
+          text-transform: uppercase;
+          font-size: 1.7vh;
+          font-family: $font-family-bold;
+          line-height: 1;
+          overflow: hidden;
+          height: 1.7vh;
+          margin-bottom: 0.5vh;
+        }
+        .link-info {
+          color: $lighter-blue;
+          line-height: 1;
+          font-size: 1.6vh;
+          font-family: $font-family-regular;
+          height: 1.6vh;
+          margin-bottom: 0.5vh;
+        }
+      }
+    }
+
+    .edit-button {
+      text-align: center;
+      padding-bottom: 8px;
+    }
+  }
+  
+  .brick-container:hover {
+    color: #ffffff;
+  }
+
+  .sorted-brick:hover {
+    position: absolute;
+    z-index: 2;
+    width: 95%;
+
+    .expended-brick-info {
+      background: $tab-grey;
+      border-radius: 0.5vw;
+      padding: 1.2vh 1vw;
+
+      .hover-text {
+        height: 21vh;
+        font-family: $font-family-regular;
+        overflow: hidden;
+        font-size: 1.7vh;
+        .hovered-open-question {
+          margin-top: 2.5vh;
+          margin-bottom: 2.5vh;
+        }
+        .link-description {
+          text-transform: uppercase;
+          font-size: 1.7vh;
+          font-family: $font-family-bold;
+          line-height: 1;
+          overflow: hidden;
+          height: 1.7vh;
+          margin-bottom: 0.5vh;
+        }
+
+        .link-info {
+          color: $lighter-blue;
+          line-height: 1;
+          font-size: 1.6vh;
+          font-family: $font-family-regular;
+          height: 1.6vh;
+          margin-bottom: 0.5vh;
+        }
+      }
+    }
+  }
+  .hover-icons-row {
+    height: 7vh;
+    color: $dark-blue;
+    width: 98%;
+    position: relative;
+
+    .round-button {
+      position: absolute;
+      left: -0.2vw;
+      height: 2.1vw;
+      width: 2.1vw;
+      bottom: 1vh;
+      border-radius: 20vw;
+      padding-right: -31vw;
+      background: black;
+    }
+
+    .bin-button {
+      cursor: pointer;
+      position: absolute;
+      left: 9.2vw;
+      height: 3.7vh;
+      bottom: 1vh;
+      padding-right: -31vw;
+    }
+
+    .play-button {
+      cursor: pointer;
+      position: absolute;
+      right: -0vw;
+      height: 3.7vh;
+      bottom: 1vh;
+      padding-right: -31vw;
+    }
+  }
+
+  .brick-hover {
+    height: 31.1vh !important;
+  }
+  .brick-row-0, .brick-row-1, .brick-row-2, .brick-row-3 {
+    .expended-brick-info {
+      border-top-left-radius: 0 !important;
+    }
+  }
+
+  .brick-row-4, .brick-row-5 {
+    bottom: 0;
+    .expended-brick-info {
+      border-bottom-left-radius: 0 !important;
+    }
+  }
+
+  .bigger-hover:hover {
+    height: 35.4vh;
+    .hover-icons-row {
+      height: 11.2vh;
+    }
+  }
+
+  .next-bricks {
+    position: absolute;
+    right: 0;
+    color: white;
+    top: 2vh;
+  }
+
+  .sorted-row {
+    margin-top: 3.5vh;
+    height: 87.1vh;
+    .sort-and-filter-container {
+      color: white;
+
+      .sort-box {
+        margin-bottom: 1.2vh;
+        padding-top: 1vh;
+        border-top-right-radius: $main-panel-radius;
+        width: 100%;
+        background: $light-blue;
+
+        .sort-header {
+          margin-top: 1.1vh;
+          margin-left: 1.4vw;
+          text-transform: uppercase;
+          font-size: 1.3vw;
+          letter-spacing: 0.22vw;
+        }
+        .filter-header {
+          text-transform: uppercase;
+          background: #304775 0% 0% no-repeat padding-box;
+          padding-left: 1.4vw;
+          font-size: 1.3vw;
+          margin-top: 1.9vh;
+          letter-spacing: 0.22vw;
+          margin-bottom: 2.8vh;
+            .filter-control {
+              vertical-align:middle
+            }
+            .filter-control:not(:first-child) {
+              margin-left: 0.9vw;
+              cursor: pointer;
+            }
+        }
+        .sort-group {
+          margin-top: 0.45vh;
+          margin-left: 0.9vw;
+          display: block;
+          > label:nth-child(1) {
+            width: 45%;
+          }
+          > label:nth-child(2) {
+            width: 45%;
+          }
+          > label {
+            .sortBy {
+              padding-left: 1.2vw;
+              padding-right: 0.4vw;
+              svg {
+                height: 2.2vh;
+                width: 2.2vh;
+                color: $orange !important;
+              }
+            }
+            .MuiFormControlLabel-label {
+              font: 1.05vw $font-family-regular !important;
+              letter-spacing: 0.06vw;
+            }
+          }
+        }
+        .filter-container {
+          cursor: default;
+          margin-bottom: 0.1vh;
+          margin-right: 0;
+          width: 46%;
+          > span.filter-radio {
+            padding-left: 2vw;
+            padding-right: 0.4vw;
+            svg {
+              height: 2.2vh;
+              width: 2.2vh;
+            }
+          }
+          .MuiFormControlLabel-label {
+            font: 1.05vw $font-family-regular !important;
+            letter-spacing: 0.06vw;
+          }
+          .custom-color svg { color: var(--color)!important; }
+          .color1 svg { color: #006BFD !important; }
+          .color2 svg { color: #65C44C !important; }
+          .color3 svg { color: #F3F584 !important; }
+          .color4 svg { color: #FF3B01 !important; }
+          .color5 svg { color: #ED6CC9 !important; }
+          .color6 svg { color: #AAF1C7 !important; }
+          .color7 svg { color: #B3F87B !important; }
+          .color8 svg { color: #8E44F6 !important; }
+          .color8 svg { color: #F7F7F7 !important; }
+        }
+        .filter-container:nth-child(odd) {
+          width: 50%;
+        }
+      }
+    }
+    .brick-row-container {
+      position: relative;
+      border-top-left-radius: $main-panel-radius;
+      margin-left: 2.1vw;
+      padding-left: 1.98vw;
+      background: $light-grey;
+      height: 100%;
+
+      .brick-row-title {
+        padding-left: 0.35vw;
+        color: $dark-blue;
+        padding-top: 2.3vh;
+        padding-bottom: 2vh;
+        line-height: 1;
+        font-size: 5.2vw;
+        letter-spacing: 1.05vw;
+        font-family: "Brandon Grotesque Black";
+      }
+    }
   }
 }
 
-.pallet-tile {
-  cursor: pointer;
+.alert-dialog {
+  position: fixed;
+  top: 0;
+
+  .MuiDialog-paperScrollPaper {
+    position: fixed;
+    top: 8.3vh;
+    right: 7vw;
+    border-radius: 0.8vw;
+  }
+
+  .logout-dialog-header {
+    padding: 3.8vh 1vw 3.5vh 2.2vw;
+    font-size: 2.35vw;
+    letter-spacing: 0;
+    color: $dark-blue;
+  }
+  .logout-buttons {
+    padding-bottom: 2.3vh;
+
+    button {
+      min-width: 9.55vw;
+      font-size: 2vw;
+      border-radius: 0.6vw;
+      text-transform: none;
+      font-weight: normal !important;
+      padding-top: 1.1vh;
+      padding-bottom: 1.1vh;
+      line-height: 1;
+      font-family: $font-family-regular;
+      > span {
+        width: 100%;
+      }
+    }
+
+    .yes-button {
+      color: white;
+      background: $orange;
+      margin-right: 1.4vw !important;
+    }
+
+    .no-button {
+      color: $dark-blue;
+      background: $tab-grey;
+      margin-right: 0.2vw;
+    }
+  }
+}
+
+.delete-brick-dialog {
+  .MuiDialog-paperScrollPaper {
+    border-radius: 0.8vw;
+  }
+
+  .dialog-header {
+    padding: 3.8vh 4vw 3.5vh 1.7vw;
+    font-size: 2.35vw;
+    letter-spacing: 0;
+    color: $dark-blue;
+  }
+  .row-buttons {
+    padding-bottom: 2.3vh;
+
+    button {
+      min-width: 9.55vw;
+      font-size: 1.7vw;
+      border-radius: 0.6vw;
+      text-transform: none;
+      font-weight: normal !important;
+      padding-top: 1.1vh;
+      padding-bottom: 1.1vh;
+      line-height: 1;
+      font-family: $font-family-regular;
+      > span {
+        width: 100%;
+      }
+    }
+
+    .yes-button {
+      color: white;
+      background: $orange;
+      margin-right: 1.4vw !important;
+    }
+
+    .no-button {
+      color: $dark-blue;
+      background: $tab-grey;
+      margin-right: 0.2vw;
+    }
+  }
+}
+
+
+@media only screen and (min-width: 1280px) {
+}
+
+@media only screen and (max-width: 1279px) and (min-width: 960px) {
+  .bricks-list-page {
+    .bricks-sort {
+      .sort-and-search-row {
+        .sort-bricks-by {
+          font-size: 12px;
+          .sort-by {
+            padding-top: 5px;
+          }
+          .sort-element {
+            padding-top: 6px;
+            font-size: 12px;
+          }
+
+          .expanded-icon {
+            height: 24px !important;
+            width: 24px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 959px) and (min-width: 600px) {
+  .bricks-list-page {
+    .bricks-sort {
+      .sort-and-search-row {
+        .sort-bricks-by {
+          font-size: 9px;
+          .sort-by {
+            padding-top: 1px;
+          }
+          .sort-element {
+            padding-top: 2px;
+            font-size: 8px;
+          }
+
+          .expanded-icon {
+            height: 12px !important;
+            width: 12px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .bricks-list-page {
+    .bricks-sort {
+      .sort-and-search-row {
+        .sort-bricks-by {
+          font-size: 7px;
+          .sort-by {
+            padding-top: 1px;
+          }
+          .sort-element {
+            padding-top: 2px;
+            font-size: 7px;
+          }
+
+          .expanded-icon {
+            height: 10px !important;
+            width: 10px !important;
+          }
+        }
+      }
+    }
+  }
 }
