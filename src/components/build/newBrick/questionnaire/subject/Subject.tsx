@@ -45,8 +45,8 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
                   value={subject}
                   onChange={(e) => onSubjectChange(e)}
                   labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  style={{minWidth: '10vw', fontFamily: 'Brandon Grotesque Regular'}}
+                  className="select-subject"
+                  style={{fontFamily: 'Brandon Grotesque Regular'}}
                 >
                   {
                     subjects.map((subject, i) => {
