@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Select, FormControl, MenuItem } from "@material-ui/core";
+import { Grid, Select, FormControl, MenuItem, InputLabel } from "@material-ui/core";
 
 import './Subject.scss';
 import { NewBrickStep } from "../../model";
@@ -10,12 +10,13 @@ import { Redirect } from "react-router-dom";
 
 
 interface SubjectProps {
-  subjectId: number
+  subjectId: any
   subjects: any[]
   saveSubject(subjectId: number):void
 }
 
 const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }) => {
+  console.log(subjectId)
   const [subject, setSubject] = React.useState(subjectId);
 
   if (subjects.length === 1) {
@@ -37,23 +38,26 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
             <div className="left-card">
               <h1 className="only-tutorial-header">Choose subject</h1>
               <Grid container justify="center" item xs={12}>
-                <FormControl variant="outlined">
-                    <Select
-                      className="select-subject"
-                      value={subject}
-                      onChange={(e) => onSubjectChange(e)}
-                    >
-                      {
-                        subjects.map((subject, i) => {
-                          return (
-                            <MenuItem style={{fontFamily: 'Brandon Grotesque Regular'}} key={i} value={subject.id}>
-                              {subject.name}
-                            </MenuItem>
-                          );
-                        })
-                      }
-                    </Select>
-                  </FormControl>
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">Select subject</InputLabel>
+                <Select
+                  value={subject}
+                  onChange={(e) => onSubjectChange(e)}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  style={{minWidth: '10vw'}}
+                >
+                  {
+                    subjects.map((subject, i) => {
+                      return (
+                        <MenuItem style={{fontFamily: 'Brandon Grotesque Regular'}} key={i} value={subject.id}>
+                          {subject.name}
+                        </MenuItem>
+                      );
+                    })
+                  }
+                </Select>
+              </FormControl>
               </Grid>
               <NextButton step={NewBrickStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
             </div>

@@ -98,7 +98,7 @@ const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
     <MuiThemeProvider>
       <div style={{ width: '100%', height: '100%' }}>
         <Route path='/build/new-brick/subject'>
-          <SubjectPage subjects={props.user.subjects} subjectId={0} saveSubject={setSubject} />
+          <SubjectPage subjects={props.user.subjects} subjectId={''} saveSubject={setSubject} />
         </Route>
         <Route path='/build/new-brick/brick-title'>
           <BrickTitle parentState={state} saveTitles={setTitles} />
