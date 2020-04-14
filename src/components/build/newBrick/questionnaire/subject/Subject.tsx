@@ -16,7 +16,6 @@ interface SubjectProps {
 }
 
 const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }) => {
-  console.log(subjectId)
   const [subject, setSubject] = React.useState(subjectId);
 
   if (subjects.length === 1) {
@@ -29,6 +28,8 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
     setSubject(event.target.value as number);
   };
 
+  console.log(subject);
+
   return (
     <div className="tutorial-page subject-page">
       <ExitButton />
@@ -39,13 +40,13 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
               <h1 className="only-tutorial-header">Choose subject</h1>
               <Grid container justify="center" item xs={12}>
               <FormControl>
-                <InputLabel id="demo-simple-select-label">Select subject</InputLabel>
+                <InputLabel id="demo-simple-select-label" style={{fontFamily: 'Brandon Grotesque Regular'}}>Subject</InputLabel>
                 <Select
                   value={subject}
                   onChange={(e) => onSubjectChange(e)}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  style={{minWidth: '10vw'}}
+                  style={{minWidth: '10vw', fontFamily: 'Brandon Grotesque Regular'}}
                 >
                   {
                     subjects.map((subject, i) => {
@@ -59,7 +60,12 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
                 </Select>
               </FormControl>
               </Grid>
-              <NextButton step={NewBrickStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
+              {
+                subject ? (
+                  <NextButton step={NewBrickStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
+                ) : ""
+              }
+              
             </div>
           </Grid>
         </Grid>
