@@ -37,6 +37,9 @@ interface BricksListProps {
 interface BricksListState {
   yourBricks: Array<Brick>;
   bricks: Array<Brick>;
+  searchBricks: Array<Brick>;
+  searchString: string;
+  isSearching: boolean;
   sortBy: SortBy;
   subjects: any[];
   yoursIndex: number;
@@ -44,6 +47,7 @@ interface BricksListState {
   sortedIndex: number;
   filterExpanded: boolean;
   logoutDialogOpen: boolean;
+  finalBricks: Brick[];
 
   deleteDialogOpen: boolean;
   deleteBrickId: number;
@@ -69,7 +73,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       filterExpanded: true,
       logoutDialogOpen: false,
       deleteDialogOpen: false,
-      deleteBrickId: -1
+      deleteBrickId: -1,
+      finalBricks: [],
+
+      searchBricks: [],
+      searchString: '',
+      isSearching: false,
     };
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/currentUser', {withCredentials: true})
@@ -86,9 +95,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/byStatus/' + BrickStatus.Publish, {withCredentials: true})
       .then(res => {  
-        this.setState({...this.state, bricks: res.data });
+        this.setState({...this.state, bricks: res.data, finalBricks: res.data as Brick[] });
       })
-      .catch(error => {
+      .catch(error => { 
         alert('Can`t get bricks');
       });
 
@@ -164,24 +173,63 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   handleSortChange = (e: any) => {
     const {state} = this;
     const sortBy = parseInt(e.target.value) as SortBy;
-    let bricks = this.state.bricks;
+    let {finalBricks} = this.state;
     if (sortBy === SortBy.Date) {
-      bricks = bricks.sort((a, b) => {
+      finalBricks = finalBricks.sort((a, b) => {
         const createdA = new Date(a.created).getTime();
         const createdB = new Date(b.created).getTime();
         return (createdA < createdB) ? 1 : -1;
       });
     } else if (sortBy === SortBy.Popularity) {
-      bricks = bricks.sort((a, b) => ((a.attemptsCount > b.attemptsCount) ? 1 : -1)); 
+      finalBricks = finalBricks.sort((a, b) => ((a.attemptsCount > b.attemptsCount) ? 1 : -1)); 
     }
-    this.setState({...state, bricks, sortBy})
+    this.setState({...state, finalBricks, sortBy})
+  }
+
+  getBricksForFilter() {
+    if (this.state.isSearching) {
+      return this.state.searchBricks;
+    } else {
+      return this.state.bricks;
+    }
+  }
+
+  getCheckedSubjectIds() {
+    const filterSubjects = [];
+    const {state} = this;
+    const {subjects} = state;
+    for (let subject of subjects) {
+      if (subject.checked) {
+        filterSubjects.push(subject.id);
+      }
+    }
+    return filterSubjects;
+  }
+
+  filter() {
+    const {state} = this;
+    let bricks = this.getBricksForFilter();
+    let filtered = [];
+
+    let filterSubjects = this.getCheckedSubjectIds();
+
+    if (filterSubjects.length > 0) {
+      for (let brick of bricks) {
+        let res = filterSubjects.indexOf(brick.subjectId);
+        if (res !== -1) {
+          filtered.push(brick);
+        }
+      }
+      this.setState({...state, finalBricks: filtered});
+    } else {
+      this.setState({...state, finalBricks: bricks});
+    }
   }
 
   filterBySubject = (i: number) => {
-    const {state} = this;
-    const {subjects} = state;
+    const {subjects} = this.state;
     subjects[i].checked = !subjects[i].checked
-    this.setState({...state})
+    this.filter();
   }
 
   clearSubjects = () => {
@@ -282,18 +330,18 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   handleMouseHover(index: number) {
-    let {bricks} = this.state;
-    bricks.forEach(brick => {
+    let {finalBricks} = this.state;
+    finalBricks.forEach(brick => {
       brick.expanded = false;
     });
     this.setState({...this.state});
     setTimeout(() => {
-      let {bricks} = this.state;
-      bricks.forEach(brick => {
+      let {finalBricks} = this.state;
+      finalBricks.forEach(brick => {
         brick.expanded = false;
       });
-      if (!bricks[index].expandFinished) {
-        bricks[index].expanded = true;
+      if (!finalBricks[index].expandFinished) {
+        finalBricks[index].expanded = true;
       }
       this.setState({...this.state});
     }, 400);
@@ -316,8 +364,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   yourBricksMouseHover(index: number) {
-    let {yourBricks, bricks} = this.state;
-    bricks.forEach(brick => {
+    let {yourBricks, finalBricks} = this.state;
+    finalBricks.forEach(brick => {
       brick.expanded = false;
     });
     yourBricks.forEach(brick => {
@@ -381,15 +429,24 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({...this.state, deleteDialogOpen: false})
   }
 
-  searching(value: string) {
-    console.log(value);
+  searching(searchString: string) {
+    if (searchString.length == 0) {
+      this.setState({...this.state, searchString, finalBricks: this.state.bricks, isSearching: false});
+    } else {
+      this.setState({...this.state, searchString});
+    }
+  }
+
+  search() {
+    const {searchString} = this.state;
     axios.post(
       process.env.REACT_APP_BACKEND_HOST + '/bricks/search',
-      {searchString: value},
+      {searchString},
       {withCredentials: true}
     ).then(res => {
-      console.log(res);
-    }).catch(error => {
+      const searchBricks = res.data.map((brick: any) => brick.body);
+      this.setState({...this.state, searchBricks, finalBricks: searchBricks, isSearching: true});
+    }).catch(error => { 
       alert('Can`t get bricks');
     });
   }
@@ -513,7 +570,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           </div>
         </div>
         {
-          
           this.state.filterExpanded
               ? this.state.subjects.map((subject, i) =>
                 <FormControlLabel
@@ -526,7 +582,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               )
               : ''
         }
-
       </div>
     );
   }
@@ -539,9 +594,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     let {sortedIndex} = this.state;
     let bricksList = [];
     for (let i = 0 + sortedIndex; i < 15 + sortedIndex; i++) {
-      if (this.state.bricks[i]) {
+      if (this.state.finalBricks[i]) {
         let row = Math.floor(i / 3);
-        bricksList.push(this.getSortedBrickContainer(this.state.bricks[i], i, row));
+        bricksList.push(this.getSortedBrickContainer(this.state.finalBricks[i], i, row));
       }
     }
     return bricksList
@@ -610,7 +665,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
               <Grid container style={{width: '60vw', height: '7vh'}}>
               <Grid item>
-                <div className="search-button"></div>
+                <div className="search-button" onClick={() => this.search()}></div>
               </Grid>
               <Grid item>
                 <input
