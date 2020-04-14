@@ -1,5 +1,5 @@
 export enum NewBrickStep {
-    Welcome = 1,
+    Subject = 1,
     BrickTitle = 2,
     OpenQuestion = 3,
     Brief = 4,

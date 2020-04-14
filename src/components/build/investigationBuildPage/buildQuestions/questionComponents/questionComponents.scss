@@ -15,12 +15,12 @@
     .add-dropbox-button {
       width: 100%;
       border: none;
-      padding: 2.5vh 0;
+      padding: 3.4vh 0;
       text-transform: none;
       background: $orange;
       color: white;
       font-size: 1.25vw;
-      font-family: 'Brandon Grotesque Bold';
+      font-family: $font-family-bold;
       letter-spacing: 0.3vw;
       border-radius: $global-drop-border-radius;
     }
@@ -33,7 +33,7 @@
   @media only screen and (max-width: 1279px) and (min-width: 960px)  {
     .add-dropbox {
       .add-dropbox-button {
-        font-size: 0.8vw;
+        font-size: 1.2vw;
       }
     }
   }

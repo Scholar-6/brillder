@@ -1,3 +1,5 @@
+@import '_variables';
+
 .review-page {
   .question-hint {
     background: yellow;
@@ -13,7 +15,7 @@
   .question-hint-global {
     width: 100%;
     background: yellow;
-    font: 500 16px/24px 'Montserrat';
+    font: 500 16px/24px $font-family-regular;
     line-height: 1;
     background: #fffc7f;
     color: #000;

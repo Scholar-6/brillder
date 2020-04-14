@@ -17,7 +17,7 @@ $border-radius: 0.6vw;
       height: 72vh;
       letter-spacing: 0.03vw;
       font-size: 1.1vw;
-      font-family: "Brandon Grotesque Regular";
+      font-family: $font-family-regular;
     }
 
     .finish-text {
@@ -25,7 +25,7 @@ $border-radius: 0.6vw;
       letter-spacing: 0.2vw;
       font-size: 1.3vw;
       text-align: center;
-      font-family: "Brandon Grotesque Bold";
+      font-family: $font-family-bold;
     }
     .edit-proposal-button {
       padding-top: 0.9vh;
@@ -35,7 +35,7 @@ $border-radius: 0.6vw;
 
       font-size: 1.3vw;
       text-transform: none;
-      font-family: "Brandon Grotesque Regular";
+      font-family: $font-family-regular;
       color: $dark-blue;
       background: $tab-grey;
       border-radius: $border-radius;

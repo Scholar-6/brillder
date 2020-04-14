@@ -1,7 +1,7 @@
 @import "_variables";
 
 .brief-prep-page {
-  font-family: 'Brandon Grotesque Regular';
+  font-family: $font-family-regular;
 
   .brief-phone-preview {
     width: 100%;
@@ -19,7 +19,7 @@
       padding-left: 0.5vw;
       width: 80% !important;
       height: 18vh !important;
-      font-family: 'Brandon Grotesque Regular';
+      font-family: $font-family-regular;
       border: 1px solid grey !important;
       border-radius: 0.3vw !important;
     }
@@ -43,7 +43,7 @@
     left: 1.5vw;
     font-size: 1.25vw;
     color: white;
-    font-family: 'Brandon Grotesque Regular';
+    font-family: $font-family-regular;
     height: 12.9vw;
     overflow-y: auto;
   }

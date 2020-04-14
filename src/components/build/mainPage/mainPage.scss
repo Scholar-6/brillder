@@ -25,11 +25,12 @@ $mobile-arrow-color: #96A0B6;
       color:white;
       letter-spacing: 0.66vw;
       font-size: 2.58vw;
-      font-family: "Brandon Grotesque Bold";
+      font-family: $font-family-bold;
       padding-right: 2.9vw;
 
       .welcome-name {
         font-weight: 600;
+        text-transform: uppercase;
         font-family: "Brandon Grotesque Thin";
         color: $orange;
       }
@@ -95,7 +96,7 @@ $mobile-arrow-color: #96A0B6;
 
     .item-description {
       color: white;
-      font-family: 'Brandon Grotesque Bold';
+      font-family: $font-family-bold;
     }
   }
 
@@ -135,7 +136,7 @@ $mobile-arrow-color: #96A0B6;
     right: 1.8vw;
     font-size: 1.5vw;
     color: white;
-    font: 1.24vw 'Brandon Grotesque Regular';
+    font: 1.24vw $font-family-regular;
     letter-spacing: 0.25vw;
 
     .logout-image {
@@ -162,7 +163,7 @@ $mobile-arrow-color: #96A0B6;
       display: inline;
     }
     .logout-text {
-      font-family: 'Brandon Grotesque Bold';
+      font-family: $font-family-bold;
     }
   }
 
@@ -241,7 +242,7 @@ $mobile-arrow-color: #96A0B6;
       margin-top: 3.45vh;
       margin-right: 9vw;
       color: white;
-      font: 4vw 'Brandon Grotesque Regular';
+      font: 4vw $font-family-regular;
       letter-spacing: 1vw;
 
       .logout-image {

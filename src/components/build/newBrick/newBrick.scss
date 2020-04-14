@@ -1,6 +1,8 @@
+@import '_variables';
+
 .tutorial-page {
   height: 100%;
-  font-family: 'Brandon Grotesque Regular';
+  font-family: $font-family-regular;
   color: black;
 
   ::-webkit-input-placeholder { /* Edge */
@@ -28,7 +30,7 @@
 
     .only-tutorial-header {
       color: #4A4F56;
-      font-family: 'Brandon Grotesque Bold' !important;
+      font-family: $font-family-bold !important;
       margin: 2.5vw 1vw;
       font-weight: normal !important;
       p {margin: 0}
@@ -41,14 +43,14 @@
       text-align: center;
       color: #ACACAC;
       font-size: 1.2vw;
-      font-family: 'Brandon Grotesque Regular';
+      font-family: $font-family-regular;
     }
 
     .audience-inputs {
       display: block !important;
       margin: 2vh 5.5vw;
       font-size: 1.3vw;
-      font-family: 'Brandon Grotesque Regular';
+      font-family: $font-family-regular;
     }
   }
 }

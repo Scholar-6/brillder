@@ -6,10 +6,13 @@ import { Grid, Hidden } from '@material-ui/core';
 import './mainPage.scss';
 import actions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
+import { User } from 'model/user';
 
 
 const mapState = (state: any) => {
-  return { }
+  return { 
+    user: state.user.user
+  }
 }
 
 const mapDispatch = (dispatch: any) => {
@@ -26,6 +29,7 @@ const connector = connect(
 
 interface MainPageProps {
   history: any
+  user: User
   forgetBrick(): void
   logout(): void
 }
@@ -52,10 +56,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   creatingBrick() {
     this.props.forgetBrick();
-    this.props.history.push('/build/new-brick/brick-title');
+    this.props.history.push('/build/new-brick/subject');
   }
 
   render() {
+    console.log(this.props);
     const {history} = this.props;
     return (
       <Grid container direction="row" className="mainPage">
@@ -64,7 +69,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             <div className="welcome-box">
               <div>WELCOME</div>
               <div>TO BRIX,</div>
-              <div className="welcome-name">USER X</div>
+              <div className="welcome-name">
+                {
+                  this.props.user.firstName ? this.props.user.firstName : 'USER X'
+                }
+              </div>
             </div>
           </div>
           <div className="first-col">
