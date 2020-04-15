@@ -453,13 +453,7 @@ $light-grey: #F3F4F7;
           margin-top: 0.45vh;
           margin-left: 0.9vw;
           display: block;
-          > label:nth-child(1) {
-            width: 45%;
-          }
-          > label:nth-child(2) {
-            width: 45%;
-          }
-          > label {
+          label {
             .sortBy {
               padding-left: 1.2vw;
               padding-right: 0.4vw;
@@ -479,7 +473,7 @@ $light-grey: #F3F4F7;
           cursor: default;
           margin-bottom: 0.1vh;
           margin-right: 0;
-          width: 46%;
+          width: 100%;
           > span.filter-radio {
             padding-left: 2vw;
             padding-right: 0.4vw;
@@ -493,18 +487,9 @@ $light-grey: #F3F4F7;
             letter-spacing: 0.06vw;
           }
           .custom-color svg { color: var(--color)!important; }
-          .color1 svg { color: #006BFD !important; }
-          .color2 svg { color: #65C44C !important; }
-          .color3 svg { color: #F3F584 !important; }
-          .color4 svg { color: #FF3B01 !important; }
-          .color5 svg { color: #ED6CC9 !important; }
-          .color6 svg { color: #AAF1C7 !important; }
-          .color7 svg { color: #B3F87B !important; }
-          .color8 svg { color: #8E44F6 !important; }
-          .color8 svg { color: #F7F7F7 !important; }
         }
         .filter-container:nth-child(odd) {
-          width: 50%;
+          width: 100%;
         }
       }
     }
