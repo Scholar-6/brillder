@@ -430,7 +430,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   searching(searchString: string) {
-    if (searchString.length == 0) {
+    if (searchString.length === 0) {
       this.setState({...this.state, searchString, finalBricks: this.state.bricks, isSearching: false});
     } else {
       this.setState({...this.state, searchString});

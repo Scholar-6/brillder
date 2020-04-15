@@ -229,11 +229,15 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  handleMouseHover(index: number) {
-    let {finalBricks} = this.state;
+  hideBricks() {
+    const {finalBricks} = this.state;
     finalBricks.forEach(brick => {
       brick.expanded = false;
     });
+  }
+
+  handleMouseHover(index: number) {
+    this.hideBricks();
     this.setState({...this.state});
     setTimeout(() => {
       let {finalBricks} = this.state;
@@ -248,14 +252,14 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   handleMouseLeave(key: number) {
-    let {bricks} = this.state;
-    bricks.forEach(brick => {
+    let {finalBricks} = this.state;
+    finalBricks.forEach(brick => {
       brick.expanded = false;
     });
-    bricks[key].expandFinished = true;
+    finalBricks[key].expandFinished = true;
     this.setState({...this.state});
     setTimeout(() => {
-      bricks[key].expandFinished = false;
+      finalBricks[key].expandFinished = false;
       this.setState({...this.state});
     }, 400);
   }
@@ -307,6 +311,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       {searchString},
       {withCredentials: true}
     ).then(res => {
+      this.hideBricks();
       const searchBricks = res.data.map((brick: any) => brick.body);
       this.setState({...this.state, searchBricks, finalBricks: searchBricks, isSearching: true});
     }).catch(error => { 
@@ -508,7 +513,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             <Grid item style={{width: '7.65vw'}}>
               <Grid container direction="row">
                 <Grid item className="home-button-container">
-                  <div className="home-button" onClick={() => { this.props.history.push('/build') }}>
+                  <div className="home-button">
                     <div></div>
                   </div>
                 </Grid>
