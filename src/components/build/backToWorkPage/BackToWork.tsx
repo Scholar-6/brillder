@@ -47,7 +47,11 @@ interface Filters {
 
 interface BackToWorkState {
   bricks: Brick[];
+  finalBricks: Brick[];
   rawBricks: Brick[];
+  searchBricks: Array<Brick>;
+  searchString: string;
+  isSearching: boolean;
   sortBy: SortBy;
   sortedIndex: number;
   sortedReversed: boolean;
@@ -70,6 +74,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     super(props)
     this.state = {
       bricks: [],
+      finalBricks: [],
       rawBricks: [],
       sortBy: SortBy.None,
       sortedIndex: 0,
@@ -88,13 +93,17 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         review: false,
         build: false,
         publish: false
-      }
+      },
+
+      searchBricks: [],
+      searchString: '',
+      isSearching: false,
     };
 
     if (this.props.user.type === UserType.Admin) {
       axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks', {withCredentials: true})
         .then(res => {  
-          this.setState({...this.state, bricks: res.data, rawBricks: res.data });
+          this.setState({...this.state, bricks: res.data, finalBricks: res.data, rawBricks: res.data });
         })
         .catch(error => {
           alert('Can`t get bricks');
@@ -102,7 +111,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     } else {
       axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/currentUser', {withCredentials: true})
         .then((res) => { 
-          this.setState({...this.state, bricks: res.data, rawBricks: res.data });
+          this.setState({...this.state, bricks: res.data, finalBricks: res.data, rawBricks: res.data });
         })
         .catch(error => {
           alert('Can`t get bricks')
@@ -119,11 +128,23 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     let brickId = this.state.deleteBrickId;
     axios.delete(process.env.REACT_APP_BACKEND_HOST + '/brick/' + brickId, {withCredentials: true})
       .then(res => {
-        let {bricks} = this.state;
-        let brick = bricks.find(brick => brick.id === brickId);
+        let {finalBricks, searchBricks, bricks} = this.state;
+        let brick = finalBricks.find(brick => brick.id === brickId);
         if (brick) {
-          let index = bricks.indexOf(brick);
-          bricks.splice(index, 1);
+          let index = finalBricks.indexOf(brick);
+          if (index >= 0) {
+            finalBricks.splice(index, 1);
+          }
+          
+          index = bricks.indexOf(brick);
+          if (index >= 0) {
+            bricks.splice(index, 1);
+          }
+
+          index = searchBricks.indexOf(brick);
+          if (index >= 0) {
+            this.state.searchBricks.splice(index, 1);
+          }
         }
 
         this.setState({...this.state, deleteDialogOpen: false});
@@ -167,7 +188,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   handleSortChange = (e: any) => {
     let sortBy = parseInt(e.target.value) as SortBy;
     const {state} = this;
-    let bricks = Object.assign([], state.bricks) as Brick[];
+    let bricks = Object.assign([], state.finalBricks) as Brick[];
     if (sortBy === SortBy.Date) {
       bricks = bricks.sort((a, b) => {
         const createdA = new Date(a.updated).getTime();
@@ -179,7 +200,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     } else if (sortBy === SortBy.Popularity) {
       bricks = bricks.sort((a, b) => ((a.attemptsCount > b.attemptsCount) ? 1 : -1));
     }
-    this.setState({...state, bricks, sortBy})
+    this.setState({...state, finalBricks: bricks, sortBy})
   }
 
   moveAllBack() {
@@ -191,38 +212,31 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   moveAllNext() {
     let index = this.state.sortedIndex;
-    if (index + 18 <= this.state.bricks.length) {
+    if (index + 18 <= this.state.finalBricks.length) {
       this.setState({...this.state, sortedIndex: index + 18});
     }
   }
 
   handleMouseHover(index: number) {
-    let {bricks} = this.state;
-    bricks.forEach(brick => {
-      brick.expanded = false;
-    });
+    this.state.finalBricks.forEach(brick => brick.expanded = false);
     this.setState({...this.state});
     setTimeout(() => {
-      let {bricks} = this.state;
-      bricks.forEach(brick => {
-        brick.expanded = false;
-      });
-      if (!bricks[index].expandFinished) {
-        bricks[index].expanded = true;
+      let {finalBricks} = this.state;
+      finalBricks.forEach(brick => brick.expanded = false);
+      if (!finalBricks[index].expandFinished) {
+        finalBricks[index].expanded = true;
       }
       this.setState({...this.state});
     }, 400);
   }
 
   handleMouseLeave(key: number) {
-    let {bricks} = this.state;
-    bricks.forEach(brick => {
-      brick.expanded = false;
-    });
-    bricks[key].expandFinished = true;
+    let {finalBricks} = this.state;
+    finalBricks.forEach(brick => brick.expanded = false);
+    finalBricks[key].expandFinished = true;
     this.setState({...this.state});
     setTimeout(() => {
-      bricks[key].expandFinished = false;
+      finalBricks[key].expandFinished = false;
       this.setState({...this.state});
     }, 400);
   }
@@ -360,7 +374,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     const {filters} = this.state;
     this.removeAllFilters(filters);
     filters.viewAll = true;
-    this.setState({...this.state, filters, bricks: this.state.rawBricks});
+    this.setState({...this.state, filters, finalBricks: this.state.rawBricks});
   }
 
   showEditAll() {
@@ -369,7 +383,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     filters.editAll = true;
     let bricks = this.filterByStatus(this.state.rawBricks, BrickStatus.Review)
     bricks.push(...this.filterByStatus(this.state.rawBricks, BrickStatus.Publish))
-    this.setState({...this.state, filters, bricks});
+    this.setState({...this.state, filters, finalBricks: bricks});
   }
 
   showBuildAll() {
@@ -377,7 +391,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeAllFilters(filters);
     filters.buildAll = true;
     let bricks = this.filterByStatus(this.state.rawBricks, BrickStatus.Draft)
-    this.setState({...this.state, filters, bricks });
+    this.setState({...this.state, filters, finalBricks: bricks });
   }
 
   renderIndexesBox = () => {
@@ -450,7 +464,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeInboxFilters(filters);
     filters.draft = !filters.draft;
     const bricks = this.filterBricks(filters);
-    this.setState({...this.state, filters, bricks });
+    this.setState({...this.state, filters, finalBricks: bricks });
   }
 
   toggleBuildFilter() {
@@ -458,7 +472,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeInboxFilters(filters);
     filters.build = !filters.build;
     const bricks = this.filterBricks(filters);
-    this.setState({...this.state, filters, bricks });
+    this.setState({...this.state, filters, finalBricks: bricks });
   }
 
   toggleReviewFilter() {
@@ -466,7 +480,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeInboxFilters(filters);
     filters.review = !filters.review;
     const bricks = this.filterBricks(filters);
-    this.setState({...this.state, filters, bricks });
+    this.setState({...this.state, filters, finalBricks: bricks });
   }
 
   togglePublishFilter() {
@@ -474,7 +488,30 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeInboxFilters(filters);
     filters.publish = !filters.publish;
     const bricks = this.filterBricks(filters);
-    this.setState({...this.state, filters, bricks });
+    this.setState({...this.state, filters, finalBricks: bricks });
+  }
+
+  
+  searching(searchString: string) {
+    if (searchString.length === 0) {
+      this.setState({...this.state, searchString, finalBricks: this.state.bricks, isSearching: false});
+    } else {
+      this.setState({...this.state, searchString});
+    }
+  }
+
+  search() {
+    const {searchString} = this.state;
+    axios.post(
+      process.env.REACT_APP_BACKEND_HOST + '/bricks/search',
+      {searchString},
+      {withCredentials: true}
+    ).then(res => {
+      const searchBricks = res.data.map((brick: any) => brick.body);
+      this.setState({...this.state, searchBricks, finalBricks: searchBricks, isSearching: true});
+    }).catch(error => { 
+      alert('Can`t get bricks');
+    });
   }
 
   renderSortAndFilterBox = () => {
@@ -600,9 +637,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     let {sortedIndex} = this.state;
     let BackToWork = [];
     for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
-      if (this.state.bricks[i]) {
+      if (this.state.finalBricks[i]) {
         let row = Math.floor(i / 3);
-        BackToWork.push(this.getSortedBrickContainer(this.state.bricks[i], i, row));
+        BackToWork.push(this.getSortedBrickContainer(this.state.finalBricks[i], i, row));
       }
     }
     return BackToWork
@@ -630,25 +667,25 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   renderPagination() {
-    if (this.state.bricks.length <= 15) { return ""; }
+    if (this.state.finalBricks.length <= 18) { return ""; }
 
     const showPrev = this.state.sortedIndex >= 18;
-    const showNext = this.state.sortedIndex + 18 <= this.state.bricks.length;
+    const showNext = this.state.sortedIndex + 18 <= this.state.finalBricks.length;
     
     return (
       <Grid container direction="row" className="bricks-pagination">
         <Grid item xs={4} className="left-pagination">
           <div className="first-row">
             {this.state.sortedIndex + 1}-{  
-              this.state.sortedIndex + 18 > this.state.bricks.length
-                ? this.state.bricks.length
+              this.state.sortedIndex + 18 > this.state.finalBricks.length
+                ? this.state.finalBricks.length
                 : this.state.sortedIndex + 18
             }
-            <span className="grey"> &nbsp;|&nbsp; {this.state.bricks.length}</span>
+            <span className="grey"> &nbsp;|&nbsp; {this.state.finalBricks.length}</span>
           </div>
           <div>
             {(this.state.sortedIndex + 18) / 18}
-            <span className="grey"> &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / 18)}</span>
+            <span className="grey"> &nbsp;|&nbsp; {Math.ceil(this.state.finalBricks.length / 18)}</span>
           </div>
         </Grid>
         <Grid container item xs={4} justify="center" className="bottom-next-button">
@@ -692,10 +729,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
               <Grid container style={{width: '60vw', height: '7vh'}}>
               <Grid item>
-                <div className="search-button"></div>
+                <div className="search-button" onClick={() => this.search()}></div>
               </Grid>
               <Grid item>
-                <input className="search-input" placeholder="Search Ongoing Projects & Published Bricks…" />
+                <input
+                  className="search-input"
+                  onChange={(e) => this.searching(e.target.value)}
+                  placeholder="Search Ongoing Projects & Published Bricks…" />
               </Grid>
               </Grid>
               <Grid item style={{width: '32.35vw'}}>
