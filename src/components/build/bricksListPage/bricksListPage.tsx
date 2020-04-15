@@ -437,6 +437,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
+  keySearch(e: any) {
+    if (e.keyCode === 13) {
+      this.search();
+    }
+  }
+
   search() {
     const {searchString} = this.state;
     axios.post(
@@ -670,6 +676,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               <Grid item>
                 <input
                   className="search-input"
+                  onKeyUp={(e) => this.keySearch(e)}
                   onChange={(e) => this.searching(e.target.value)}
                   placeholder="Search Subjects, Topics, Titles & more" />
               </Grid>

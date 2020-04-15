@@ -500,6 +500,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     }
   }
 
+  keySearch(e: any) {
+    if (e.keyCode === 13) {
+      this.search();
+    }
+  }
+
   search() {
     const {searchString} = this.state;
     axios.post(
@@ -734,6 +740,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
               <Grid item>
                 <input
                   className="search-input"
+                  onKeyUp={(e) => this.keySearch(e)}
                   onChange={(e) => this.searching(e.target.value)}
                   placeholder="Search Ongoing Projects & Published Bricks…" />
               </Grid>
