@@ -555,8 +555,14 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           value={this.state.sortBy}
           onChange={this.handleSortChange}
         >
-          <FormControlLabel value={SortBy.Popularity} style={{marginRight: 0, width: '47.5%'}} control={<Radio className="sortBy" />} label="Popularity" />
-          <FormControlLabel value={SortBy.Date} style={{marginRight: 0}} control={<Radio className="sortBy" />} label="Date Added" />
+          <Grid container direction="row">
+            <Grid item xs={5}>
+              <FormControlLabel value={SortBy.Popularity} style={{marginRight: 0, width: '47.5%'}} control={<Radio className="sortBy" />} label="Popularity" />
+            </Grid>
+            <Grid item xs={7}>
+              <FormControlLabel value={SortBy.Date} style={{marginRight: 0}} control={<Radio className="sortBy" />} label="Date Added" />
+            </Grid>
+          </Grid>
         </RadioGroup>
         <div className="filter-header">
           <div style={{ display: 'inline' }}>
@@ -575,19 +581,24 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             }
           </div>
         </div>
+        <Grid container direction="row">
         {
           this.state.filterExpanded
               ? this.state.subjects.map((subject, i) =>
-                <FormControlLabel
-                  className="filter-container"
-                  key={i}
-                  checked={subject.checked}
-                  onClick={() => this.filterBySubject(i)}
-                  control={<Radio className={"filter-radio custom-color"} style={{['--color' as any] : subject.color}} />}
-                  label={subject.name} />
+                <Grid item xs={((i % 2) === 1) ? 7 : 5}>
+                  <FormControlLabel
+                    className="filter-container"
+                    key={i}
+                    checked={subject.checked}
+                    onClick={() => this.filterBySubject(i)}
+                    control={<Radio className={"filter-radio custom-color"} style={{['--color' as any] : subject.color}} />}
+                    label={subject.name}
+                  />
+                </Grid>
               )
               : ''
         }
+        </Grid>
       </div>
     );
   }
