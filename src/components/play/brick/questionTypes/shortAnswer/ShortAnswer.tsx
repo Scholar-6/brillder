@@ -14,6 +14,7 @@ interface ShortAnswerProps {
   component: any;
   attempt: ComponentAttempt;
   answers: string[];
+  isPreview: boolean;
 }
 
 interface ShortAnswerState {
@@ -103,6 +104,26 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     return "";
   }
 
+  renderTextField(index: number) {
+    if (this.props.isPreview) {
+      let {value} = this.props.component.list[index];
+      return (
+        <TextField
+          value={value}
+          onChange={e => this.setUserAnswer(e, index)}
+          label="Answer"
+        />
+      )
+    }
+    return (
+      <TextField
+        value={this.state.userAnswers[index]}
+        onChange={e => this.setUserAnswer(e, index)}
+        label="Answer"
+      />
+    )
+  }
+
   render() {
     const { component } = this.props;
 
@@ -113,15 +134,12 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         {
           component.list.map((i: any, index: number) =>
             <div key={index} className="short-answer-input" style={{ width: `${width}%` }}>
-                <Grid container direction="row" justify="center">
-                  <TextField
-                    value={this.state.userAnswers[index]}
-                    onChange={e => this.setUserAnswer(e, index)}
-                    label="Answer" />
-                </Grid>
-                <Grid container direction="row" justify="center">
-                  {this.renderEachHint(index)}
-                </Grid>
+              <Grid container direction="row" justify="center">
+                {this.renderTextField(index)}
+              </Grid>
+              <Grid container direction="row" justify="center">
+                {this.renderEachHint(index)}
+              </Grid>
             </div>
           )
         }
