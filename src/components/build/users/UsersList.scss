@@ -10,6 +10,64 @@ $lighter-blue: #304775;
 $grey: #B0B0AD;
 $light-grey: #F3F4F7;
 
+.users-list-redirect-dropdown {
+  .MuiPaper-root {
+    position: fixed;
+    right: 0 !important;
+    left: auto !important;
+    top: 10.5vh !important;
+    min-width: 14.9vw !important;
+    min-height: 39.7vh;
+    border-radius: 0;
+    border-bottom-left-radius: 2vw;
+    color: white;
+    background: $light-blue;
+    box-shadow: none;
+
+    .menu-item {
+      position: relative;
+      font-family: $font-family-regular !important;
+      font-size: 1.45vw;
+      padding-left: 1.65vw;
+      margin-bottom: 1vh;
+
+      .menu-icon {
+        position: fixed;
+        width: 2.2vw;
+        right: 1vw;
+      }
+
+      .svg-icon {
+        filter: invert(1);
+      }
+
+      .user-icon {
+        right: 0.8vw;
+        width: 1.93vw;
+      }
+
+      .logout-icon {
+        right: 0.6vw;
+        width: 1.88vw;
+      }
+
+      .back-to-work-icon {
+        position: fixed;
+        width: 1.5vw;
+        right: 1.4vw;
+      }
+    }
+
+    .first-item {
+      margin-top: 1.7vh;
+    }
+
+    .view-profile {
+      margin-top: 3.4vh;
+    }
+  }
+}
+
 .user-list-page {
   overflow: hidden;
   background: $dark-blue;
@@ -200,23 +258,24 @@ $light-grey: #F3F4F7;
         background-image: url(/images/brick-list/bell-hover.png);
       }
 
-      .user-button {
+      .more-button {
         cursor: pointer;
-        margin-top: 0.635vh;
-        display: block;
-        height: 4.3vh;
-        width: 4.1vh;
-        margin-right: 1.9vw;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/images/brick-list/user.png);
+        margin-top: 0.5vh;
+        margin-right: 2.2vw;
+        width: 6.7vh;
+        display: inline-block;
+        background-color: $orange;
+  
+        -webkit-mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
+        mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
+        -webkit-mask-size: cover;
+        mask-size: cover;
+
         transition: all 0.2s ease-in-out;
         transform-origin: 50% 50%;
       }
 
-      .user-button:hover {
-        background-image: url(/images/brick-list/user-hover.png);
+      .more-button:hover {
         transform: scale(1.4);
       }
     }
