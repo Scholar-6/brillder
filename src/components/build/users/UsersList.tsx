@@ -627,25 +627,50 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           </Grid>
         </div>
         <Menu
-          className="brick-list-redirect-dropdown"
+          className="users-list-redirect-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}
         >
           <MenuItem className="first-item menu-item" onClick={() => history.push('/build/bricks-list')}>
-            View All Bricks <img className="menu-icon" alt="" src="/images/main-page/glasses-white.png" />
+            View All Bricks
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="menu-icon" alt="" src="/images/main-page/glasses-white.png" />
+              </div>
+            </Grid>
           </MenuItem>
           <MenuItem className="menu-item" onClick={() => this.creatingBrick()}>
-            Start Building <img className="menu-icon" alt="" src="/images/main-page/create-white.png" />
+            Start Building
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="menu-icon" alt="" src="/images/main-page/create-white.png" />
+              </div>
+            </Grid>
           </MenuItem>
           <MenuItem className="menu-item" onClick={() => history.push('/build/back-to-work')}>
-            Back To Work <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
+            Back To Work
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
+              </div>
+            </Grid>
           </MenuItem>
           <MenuItem className="view-profile menu-item">
-            View Profile <img className="menu-icon svg-icon user-icon" alt="" src="/images/user.svg" />
+            View Profile
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="menu-icon svg-icon user-icon" alt="" src="/images/user.svg" />
+              </div>
+            </Grid>
           </MenuItem>
           <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
-            Logout <img className="menu-icon svg-icon logout-icon" alt="" src="/images/log-out.svg" />
+            Logout
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="menu-icon svg-icon logout-icon" alt="" src="/images/log-out.svg" />
+              </div>
+            </Grid>
           </MenuItem>
         </Menu>
         <Dialog
