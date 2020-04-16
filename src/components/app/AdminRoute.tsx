@@ -38,9 +38,8 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ component: Component, ...rest }
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized()
     return <div>...Checking rights...</div>
-  } else {
-    return <Redirect to="/choose-user" />
   }
+  return <Redirect to="/choose-user" />
 }
 
 const mapState = (state: any) => {

@@ -5,7 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { connect } from 'react-redux';
 
 import actions from '../../../redux/actions/brickActions';
-import './newBrick.scss';
+import './Proposal.scss';
 import SubjectPage from './questionnaire/subject/Subject';
 import BrickTitle from './questionnaire/brickTitle/brickTitle';
 import OpenQuestion from './questionnaire/openQuestion/openQuestion';
@@ -17,7 +17,7 @@ import { Brick } from "model/brick";
 import { User } from "model/user";
 
 
-interface NewBrickProps {
+interface ProposalProps {
   brick: Brick;
   user: User;
   saveBrick(brick: Brick): void;
@@ -25,7 +25,7 @@ interface NewBrickProps {
   history: any;
 }
 
-const NewBrick: React.FC<NewBrickProps> = ({brick, history, ...props}) => {
+const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
   let showSubjectDropdown = false;
   let subjectId = 0;
   if (props.user.subjects.length === 1) {
@@ -140,4 +140,4 @@ const mapDispatch = (dispatch: any) => {
 
 const connector = connect(mapState, mapDispatch);
 
-export default connector(NewBrick);
+export default connector(Proposal);

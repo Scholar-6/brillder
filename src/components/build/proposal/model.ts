@@ -1,4 +1,4 @@
-export enum NewBrickStep {
+export enum ProposalStep {
     Subject = 1,
     BrickTitle = 2,
     OpenQuestion = 3,

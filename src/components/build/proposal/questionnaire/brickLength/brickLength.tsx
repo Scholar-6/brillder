@@ -6,7 +6,7 @@ import ExitButton from '../../components/ExitButton';
 import './brickLength.scss';
 import NextButton from '../../components/nextButton';
 import PreviousButton from '../../components/previousButton';
-import { NewBrickStep } from "../../model";
+import { ProposalStep } from "../../model";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
 
@@ -81,7 +81,7 @@ function BrickLength({ length, saveBrick }: any) {
               </Grid>
               <PreviousButton to="/build/new-brick/prep" />
               <NextButton
-                step={NewBrickStep.BrickLength}
+                step={ProposalStep.BrickLength}
                 canSubmit={brickLength !== BrickLengthEnum.None}
                 onSubmit={saveBrick}
                 data={brickLength} />

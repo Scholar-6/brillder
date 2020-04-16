@@ -10,11 +10,11 @@ import '../../assets/fonts/icomoon/style.css';
 import Pallet from '../play/pallet/Pallet';
 import Dashboard from '../manage/dashboard/Dashboard';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
-import NewBrick from '../build/newBrick/newBrick';
+import Proposal from '../build/proposal/Proposal';
 import MainPage from '../build/mainPage/mainPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
 import BackToWorkPage from '../build/backToWorkPage/BackToWork';
-import UsersListPage from '../users/UsersList';
+import UsersListPage from '../build/users/UsersList';
 import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
 import LoginPage from '../authPages/loginPage/loginPage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
@@ -64,7 +64,7 @@ const App: React.FC = (props: any) => {
         <StudentRoute path="/play/pallet/:palletName" component={Pallet} />
         <StudentRoute path="/play/dashboard" component={Dashboard} />
 
-        <BuildRoute path="/build/new-brick" component={NewBrick} />
+        <BuildRoute path="/build/new-brick" component={Proposal} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} />
         <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
         <BuildRoute path="/build/bricks-list" component={BricksListPage} />

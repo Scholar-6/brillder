@@ -72,7 +72,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       roles: [
         { name: 'Student', type: UserType.Student, checked: false },
         { name: 'Teacher', type: UserType.Teacher, checked: false },
-        { name: 'Builder', type: UserType.Creator, checked: false },
+        { name: 'Builder', type: UserType.Builder, checked: false },
         { name: 'Editor', type: UserType.Editor, checked: false },
         { name: 'Admin', type: UserType.Admin, checked: false },
       ],

@@ -5,7 +5,7 @@ import { Grid } from "@material-ui/core";
 import ExitButton from '../../components/ExitButton';
 import NextButton from '../../components/nextButton';
 import PreviousButton from '../../components/previousButton';
-import { NewBrickStep } from "../../model";
+import { ProposalStep } from "../../model";
 import './brief.scss';
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
@@ -63,7 +63,7 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
                 placeholder="Enter Brief Here..." />
               <PreviousButton to="/build/new-brick/open-question" />
               <p className="page-number">3 of 4</p>
-              <NextButton step={NewBrickStep.Brief} canSubmit={true} data={brief} onSubmit={saveBrief} />
+              <NextButton step={ProposalStep.Brief} canSubmit={true} data={brief} onSubmit={saveBrief} />
             </div>
           </Grid>
         </Grid>

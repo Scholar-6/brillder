@@ -3,11 +3,11 @@ import { useHistory } from 'react-router-dom';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton } from "material-ui";
 
-import { NewBrickStep } from "../model";
+import { ProposalStep } from "../model";
 import './nextButton.scss';
 
 interface NextButtonProps {
-  step: NewBrickStep
+  step: ProposalStep
   canSubmit: boolean
   onSubmit(data?:any): void
   data?: any
@@ -23,17 +23,17 @@ const NextButton:React.FC<NextButtonProps> = ({ step, canSubmit, onSubmit, data 
         onSubmit(data);
       }
       switch (step) {
-        case NewBrickStep.Subject:
+        case ProposalStep.Subject:
           return history.push(`${url}/brick-title`);
-        case NewBrickStep.BrickTitle:
+        case ProposalStep.BrickTitle:
           return history.push(`${url}/open-question`);
-        case NewBrickStep.OpenQuestion:
+        case ProposalStep.OpenQuestion:
           return history.push(`${url}/brief`);
-        case NewBrickStep.Brief:
+        case ProposalStep.Brief:
           return history.push(`${url}/prep`);
-        case NewBrickStep.Prep:
+        case ProposalStep.Prep:
           return history.push(`${url}/length`);
-        case NewBrickStep.BrickLength:
+        case ProposalStep.BrickLength:
           return history.push(`${url}/proposal`);
       }
     }
