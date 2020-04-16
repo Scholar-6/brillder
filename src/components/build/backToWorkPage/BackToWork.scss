@@ -34,10 +34,15 @@ $light-grey: #F3F4F7;
       padding-left: 1.65vw;
       margin-bottom: 1vh;
 
-      .menu-icon {
+      .menu-icon-container {
         position: fixed;
+        width: 4.5vw;
+        height: 3vh;
+        right: 0vw;
+      }
+
+      .menu-icon {
         width: 2.2vw;
-        right: 1vw;
       }
 
       .svg-icon {
@@ -45,25 +50,19 @@ $light-grey: #F3F4F7;
       }
 
       .user-icon {
-        right: 0.8vw;
         width: 1.93vw;
       }
 
       .logout-icon {
-        right: 0.6vw;
         width: 1.88vw;
       }
 
       .back-to-work-icon {
-        position: fixed;
         width: 1.5vw;
-        right: 1.4vw;
       }
       .manage-users-icon {
-        position: fixed;
         margin-top: 0.13vh;
         width: 1.9vw;
-        right: 1.3vw;
       }
     }
 
