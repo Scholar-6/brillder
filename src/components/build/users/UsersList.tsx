@@ -1,6 +1,6 @@
 import './UsersList.scss';
 import React, { Component } from 'react';
-import { Box, Grid, FormControlLabel, Radio, RadioGroup, Button } from '@material-ui/core';
+import { Box, Grid, FormControlLabel, Radio, Button } from '@material-ui/core';
 import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
@@ -8,8 +8,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ClearIcon from '@material-ui/icons/Clear';
 import Dialog from '@material-ui/core/Dialog';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import authActions from 'redux/actions/auth';
+import brickActions from 'redux/actions/brickActions';
+
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType } from 'model/user';
 
@@ -22,6 +26,7 @@ const mapState = (state: any) => {
 
 const mapDispatch = (dispatch: any) => {
   return {
+    forgetBrick: () => dispatch(brickActions.forgetBrick()),
     logout: () => dispatch(authActions.logout()),
   }
 }
@@ -32,6 +37,7 @@ interface BricksListProps {
   user: User,
   history: any;
   logout(): void;
+  forgetBrick(): void;
 }
 
 interface BricksListState {
@@ -48,6 +54,7 @@ interface BricksListState {
 
   deleteDialogOpen: boolean;
   deleteBrickId: number;
+  dropdownShown: boolean;
 }
 
 class BricksListPage extends Component<BricksListProps, BricksListState> {
@@ -73,6 +80,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       searchBricks: [],
       searchString: '',
       isSearching: false,
+      dropdownShown: false
     };
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/byStatus/' + BrickStatus.Publish, {withCredentials: true})
@@ -357,6 +365,19 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     });
   }
 
+  creatingBrick() {
+    this.props.forgetBrick();
+    this.props.history.push('/build/new-brick/subject');
+  }
+
+  showDropdown() {
+    this.setState({...this.state, dropdownShown: true});
+  }
+
+  hideDropdown() {
+    this.setState({...this.state, dropdownShown: false});
+  }
+
   getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
     let color = "";
     
@@ -552,7 +573,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  render() {  
+  render() {
+    const {history} = this.props;
     return (
       <div className="user-list-page">
         <div className="bricks-upper-part">
@@ -560,7 +582,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             <Grid item style={{width: '7.65vw'}}>
               <Grid container direction="row">
                 <Grid item className="home-button-container">
-                  <div className="home-button" onClick={() => { this.props.history.push('/build') }}>
+                  <div className="home-button" onClick={() => { history.push('/build') }}>
                     <div></div>
                   </div>
                 </Grid>
@@ -581,9 +603,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               </Grid>
               <Grid item style={{width: '32.35vw'}}>
                 <Grid container direction="row" justify="flex-end">
-                  <div className="logout-button" onClick={() => this.handleLogoutOpen()}></div>
                   <div className="bell-button"><div></div></div>
-                  <div className="user-button"></div>
+                  <div className="more-button" onClick={() => this.showDropdown()}></div>
                 </Grid>
               </Grid>
             </Grid>
@@ -605,6 +626,28 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             </Grid>
           </Grid>
         </div>
+        <Menu
+          className="brick-list-redirect-dropdown"
+          keepMounted
+          open={this.state.dropdownShown}
+          onClose={() => this.hideDropdown()}
+        >
+          <MenuItem className="first-item menu-item" onClick={() => history.push('/build/bricks-list')}>
+            View All Bricks <img className="menu-icon" alt="" src="/images/main-page/glasses-white.png" />
+          </MenuItem>
+          <MenuItem className="menu-item" onClick={() => this.creatingBrick()}>
+            Start Building <img className="menu-icon" alt="" src="/images/main-page/create-white.png" />
+          </MenuItem>
+          <MenuItem className="menu-item" onClick={() => history.push('/build/back-to-work')}>
+            Back To Work <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
+          </MenuItem>
+          <MenuItem className="view-profile menu-item">
+            View Profile <img className="menu-icon svg-icon user-icon" alt="" src="/images/user.svg" />
+          </MenuItem>
+          <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
+            Logout <img className="menu-icon svg-icon logout-icon" alt="" src="/images/log-out.svg" />
+          </MenuItem>
+        </Menu>
         <Dialog
           open={this.state.logoutDialogOpen}
           onClose={() => this.handleLogoutClose()}
