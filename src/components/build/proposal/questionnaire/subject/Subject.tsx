@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Select, FormControl, MenuItem, InputLabel } from "@material-ui/core";
 
 import './Subject.scss';
-import { NewBrickStep } from "../../model";
+import { ProposalStep } from "../../model";
 import ExitButton from '../../components/ExitButton';
 import NextButton from '../../components/nextButton'
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
@@ -62,7 +62,7 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
               </Grid>
               {
                 subject ? (
-                  <NextButton step={NewBrickStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
+                  <NextButton step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
                 ) : ""
               }
             </div>

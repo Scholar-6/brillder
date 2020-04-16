@@ -8,7 +8,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import ExitButton from '../../components/ExitButton';
 import NextButton from '../../components/nextButton';
 import PreviousButton from '../../components/previousButton';
-import { NewBrickStep } from "../../model";
+import { ProposalStep } from "../../model";
 import './prep.scss';
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
@@ -73,7 +73,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
               </Grid>
               <PreviousButton to="/build/new-brick/brief" />
               <p className="page-number">4 of 4</p>
-              <NextButton step={NewBrickStep.Prep} canSubmit={true} data={prep} onSubmit={savePrep} />
+              <NextButton step={ProposalStep.Prep} canSubmit={true} data={prep} onSubmit={savePrep} />
             </div>
           </Grid>
         </Grid>

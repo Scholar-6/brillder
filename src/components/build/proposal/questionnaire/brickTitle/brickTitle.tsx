@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Input } from "@material-ui/core";
 
 import './brickTitle.scss';
-import { NewBrickStep } from "../../model";
+import { ProposalStep } from "../../model";
 import ExitButton from '../../components/ExitButton';
 import NextButton from '../../components/nextButton'
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
@@ -103,7 +103,7 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
                 <Input className="audience-inputs" value={titles.alternativeTopics} onChange={onAltTopicChange} placeholder="Enter Subtopic(s)..." />
               </Grid>
               <p className="page-number">1 of 4</p>
-              <NextButton step={NewBrickStep.BrickTitle} canSubmit={true} onSubmit={saveTitles} data={titles} />
+              <NextButton step={ProposalStep.BrickTitle} canSubmit={true} onSubmit={saveTitles} data={titles} />
             </div>
           </Grid>
         </Grid>

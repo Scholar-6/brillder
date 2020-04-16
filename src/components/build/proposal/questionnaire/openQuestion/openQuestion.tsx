@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Input } from "@material-ui/core";
 
 import ExitButton from '../../components/ExitButton';
-import { NewBrickStep } from "../../model";
+import { ProposalStep } from "../../model";
 import NextButton from '../../components/nextButton';
 import PreviousButton from '../../components/previousButton';
 import './openQuestion.scss';
@@ -55,7 +55,7 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
               <PreviousButton to="/build/new-brick/brick-title" />
               <p className="page-number">2 of 4</p>
               <NextButton
-                step={NewBrickStep.OpenQuestion}
+                step={ProposalStep.OpenQuestion}
                 canSubmit={true}
                 onSubmit={saveOpenQuestion}
                 data={openQuestion} />
