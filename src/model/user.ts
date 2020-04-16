@@ -3,6 +3,7 @@ export enum UserType {
   Creator = 2,
   Editor = 3,
   Admin = 4,
+  Teacher = 5
 }
 
 export interface User {
