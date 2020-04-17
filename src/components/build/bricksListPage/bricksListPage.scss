@@ -326,6 +326,21 @@ $light-grey: #F3F4F7;
       position: absolute;
       height: $min-brick-height;
 
+      .left-brick-roller {
+        position: absolute;
+        top: 1.5vh;
+        left: 0.15vw;
+
+        > div {
+          height: 2.1vw;
+          width: 1.9vw;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-image: url(/images/roller-green.png);
+        }
+      }
+
       .left-brick-circle {
         position: absolute;
         top: 0.85vh;
