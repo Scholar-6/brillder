@@ -236,6 +236,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
+  getSubjectRow(brick: Brick) {
+    return `${brick.subject ? brick.subject.name : 'SUBJECT Code'} | No. ${brick.attemptsCount} of Plays`;
+  }
+
   filterBySubject = (i: number) => {
     const {subjects} = this.state;
     subjects[i].checked = !subjects[i].checked
@@ -293,7 +297,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                             {this.getAuthorRow(brick)}
                           </div>
                           <div className="hovered-open-question link-info">{brick.openQuestion}</div>
-                          <div>{brick.subject ? brick.subject.name : 'SUBJECT Code'} | No. {brick.attemptsCount} of Plays</div>
+                          <div>{this.getSubjectRow(brick)}</div>
                           <div>Editor: Name Surname</div>
                         </div>
                         <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
@@ -511,7 +515,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                           {this.getAuthorRow(brick)}
                         </div>
                         <div className="hovered-open-question link-info">{brick.openQuestion}</div>
-                        <div>SUBJECT Code | No. {brick.attemptsCount} of Plays</div>
+                        <div>{this.getSubjectRow(brick)}</div>
                         <div>Editor: Name Surname</div>
                       </div>
                     <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">

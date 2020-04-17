@@ -356,6 +356,7 @@ $light-grey: #F3F4F7;
           font-size: 1.6vh;
           font-family: $font-family-regular;
           height: 1.6vh;
+          overflow-y: hidden;
           margin-bottom: 0.5vh;
         }
       }
@@ -405,7 +406,8 @@ $light-grey: #F3F4F7;
           line-height: 1;
           font-size: 1.6vh;
           font-family: $font-family-regular;
-          height: 1.6vh;
+          height: 1.72vh;
+          overflow-y: hidden;
           margin-bottom: 0.5vh;
         }
       }
