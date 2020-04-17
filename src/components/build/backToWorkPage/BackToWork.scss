@@ -432,16 +432,17 @@ $light-grey: #F3F4F7;
 
         .link-info {
           color: $lighter-blue;
-          line-height: 1;
+          line-height: 1.1;
           font-size: 1.6vh;
           font-family: $font-family-regular;
-          height: 1.6vh;
+          height: 2vh;
+          overflow-y: hidden;
           margin-bottom: 0.5vh;
         }
 
         .hovered-open-question {
           margin-top: 2.5vh;
-          max-height: 3.2vh;
+          max-height: 3.6vh;
           margin-bottom: 1.7vh;
         }
       }
