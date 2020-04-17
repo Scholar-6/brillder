@@ -638,10 +638,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   renderSortedBricks = () => {
     let {sortedIndex} = this.state;
     let bricksList = [];
+    let count = 0;
     for (let i = 0 + sortedIndex; i < 15 + sortedIndex; i++) {
       if (this.state.finalBricks[i]) {
-        let row = Math.floor(i / 3);
+        let row = Math.floor(count / 3);
         bricksList.push(this.getSortedBrickContainer(this.state.finalBricks[i], i, row));
+        count++;
       }
     }
     return bricksList

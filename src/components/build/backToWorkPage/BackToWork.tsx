@@ -662,10 +662,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   renderSortedBricks = () => {
     let {sortedIndex} = this.state;
     let BackToWork = [];
+    let count = 0;
     for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
       if (this.state.finalBricks[i]) {
-        let row = Math.floor(i / 3);
+        let row = Math.floor(count / 3);
         BackToWork.push(this.getSortedBrickContainer(this.state.finalBricks[i], i, row));
+        count++;
       }
     }
     return BackToWork

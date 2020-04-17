@@ -371,12 +371,11 @@ $light-grey: #F3F4F7;
         }
         .link-info {
           color: $lighter-blue;
-          line-height: 1;
+          line-height: 1.1;
           font-size: 1.6vh;
           font-family: $font-family-regular;
-          height: 1.6vh;
+          height: 1.9vh;
           margin-bottom: 0.5vh;
-          max-height: 1.6vh;
           overflow-y: hidden;
         }
       }
