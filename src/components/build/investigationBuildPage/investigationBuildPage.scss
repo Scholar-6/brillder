@@ -61,7 +61,13 @@
     color: $light-blue;
 
     .proposal-edit-icon {
-      font-size: 3.7vw;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/images/edit.png);
+      height: 4.5vw;
+      width: 4.5vw;
+      margin-bottom: 0.5vh;
     }
     .proposal-text {
       margin-top: 0vh;
@@ -71,6 +77,10 @@
 
   .proposal-link:hover {
     color: white;
+
+    .proposal-edit-icon {
+      background-image: url(/images/edit-white.png);
+    }
   }
 
   .exit-button {
