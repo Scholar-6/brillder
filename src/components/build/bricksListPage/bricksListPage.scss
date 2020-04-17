@@ -412,9 +412,9 @@ $light-grey: #F3F4F7;
     }
   }
   .hover-icons-row {
-    height: 7vh;
+    height: 5.8vh;
     color: $dark-blue;
-    width: 98%;
+    width: 100%;
     position: relative;
 
     .round-button {
@@ -440,7 +440,7 @@ $light-grey: #F3F4F7;
     .play-button {
       cursor: pointer;
       position: absolute;
-      right: -0vw;
+      right: -0.2vw;
       height: 3.7vh;
       bottom: 1vh;
       padding-right: -31vw;
@@ -448,8 +448,10 @@ $light-grey: #F3F4F7;
   }
 
   .brick-hover {
+    left: -0.8vw;
     height: 31.1vh !important;
   }
+
   .brick-row-0, .brick-row-1, .brick-row-2, .brick-row-3 {
     .expended-brick-info {
       border-top-left-radius: 0 !important;

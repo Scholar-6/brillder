@@ -277,14 +277,14 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         <div className="main-brick-container">
           <Box className="brick-container">
             <div
-              className={`sorted-brick absolute-container brick-row-0 ${brick.expanded ? "bigger-hover" : ""}`}
+              className={`sorted-brick absolute-container brick-row-0 ${brick.expanded ? "brick-hover" : ""}`}
               onMouseEnter={() => this.yourBricksMouseHover(key)}
               onMouseLeave={() => this.yourBricksMouseLeave(key)}
             >
               <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
                 <Grid item xs={brick.expanded ? 12 : 11}>
                   {
-                    brick.expanded ?
+                    brick.expanded ? (
                       <div className="expended-brick-info">
                         <div className="hover-text">
                           <div className="link-description">{brick.title}</div>
@@ -296,39 +296,40 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                           <div>{brick.subject ? brick.subject.name : 'SUBJECT Code'} | No. {brick.attemptsCount} of Plays</div>
                           <div>Editor: Name Surname</div>
                         </div>
-                      <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
-                        <Grid item xs={4} container justify="flex-start">
-                          <div className="round-button" style={{background : `${color}`}}></div>
+                        <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
+                          <Grid item xs={4} container justify="flex-start">
+                            <div className="round-button" style={{background : `${color}`}}></div>
+                          </Grid>
+                          <Grid item xs={4} container justify="flex-start">
+                            {
+                              (this.props.user.type === UserType.Admin)
+                                ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
+                                : ""
+                            }
+                          </Grid>
+                          <Grid item xs={4} container justify="flex-end">
+                            <img
+                              alt="play"
+                              className="play-button"
+                              onClick={() => this.move(brick.id)}
+                              src="/images/brick-list/play.png" />
+                          </Grid>
                         </Grid>
-                        <Grid item xs={4} container justify="flex-start">
-                          {
-                            (this.props.user.type === UserType.Admin)
-                              ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
-                              : ""
-                          }
-                        </Grid>
-                        <Grid item xs={4} container justify="flex-end">
-                          <img
-                            alt="play"
-                            className="play-button"
-                            onClick={() => this.move(brick.id)}
-                            src="/images/brick-list/play.png" />
-                        </Grid>
-                      </Grid>
-                    </div>
-                    :
-                    <div>
-                      <div className="left-brick-circle">
-                        <div className="round-button" style={{background: `${color}`}}></div>
                       </div>
-                      <div className="short-brick-info">
-                        <div className="link-description">{brick.title}</div>
-                        <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
-                        <div className="link-info">
-                          {this.getAuthorRow(brick)}
+                     ) : (
+                      <div>
+                        <div className="left-brick-circle">
+                          <div className="round-button" style={{background: `${color}`}}></div>
+                        </div>
+                        <div className="short-brick-info">
+                          <div className="link-description">{brick.title}</div>
+                          <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
+                          <div className="link-info">
+                            {this.getAuthorRow(brick)}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    )
                   }
                 </Grid>
               </Grid>
