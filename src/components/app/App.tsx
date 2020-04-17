@@ -8,7 +8,7 @@ import './app.scss';
 import '../../assets/fonts/icomoon/style.css';
 
 import Pallet from '../play/pallet/Pallet';
-import Dashboard from '../manage/dashboard/Dashboard';
+import Dashboard from '../play/dashboard/Dashboard';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
 import Proposal from '../build/proposal/Proposal';
 import MainPage from '../build/mainPage/mainPage';
