@@ -1,9 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import EditIcon from '@material-ui/icons/Edit';
 
 import { Brick } from "model/brick";
 import './ProposalReview.scss';
@@ -60,7 +57,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
                 <div className="page6">
                   <div className="normal-page">
                     <Grid container justify="center">
-                      <EditIcon className="edit-icon" />
+                      <div className="edit-icon" />
                     </Grid>
                     <p className="text-title">2. Ideally, every brick should point to a bigger question.</p>
                     <p className="proposal-text">{brick.openQuestion}</p>

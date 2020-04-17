@@ -421,7 +421,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           </div>
         </div>
         <div className="proposal-link" onClick={editProposal}>
-          <EditIcon className="proposal-edit-icon"/>
+          <div className="proposal-edit-icon"/>
           <div className="proposal-text">
             <div style={{lineHeight: 0.9}}>YOUR</div>
             <div style={{lineHeight: 2}}>PROP</div>
