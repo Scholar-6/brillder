@@ -322,8 +322,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                       </div>
                      ) : (
                       <div>
-                        <div className="left-brick-circle">
-                          <div className="round-button" style={{background: `${color}`}}></div>
+                        <div className="left-brick-roller">
+                          <div className="roller-button"></div>
                         </div>
                         <div className="short-brick-info">
                           <div className="link-description">{brick.title}</div>
