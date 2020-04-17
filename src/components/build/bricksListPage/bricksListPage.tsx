@@ -284,7 +284,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         <div className="main-brick-container">
           <Box className="brick-container">
             <div
-              className={`sorted-brick absolute-container brick-row-0 ${brick.expanded ? "brick-hover" : ""}`}
+              className={`absolute-container brick-row-0 ${brick.expanded ? "brick-hover" : ""}`}
               onMouseEnter={() => this.yourBricksMouseHover(key)}
               onMouseLeave={() => this.yourBricksMouseLeave(key)}
             >
@@ -510,7 +510,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         <div className="main-brick-container">
           <Box className="brick-container">
             <div
-              className={`sorted-brick absolute-container brick-row-${row + 1} ${brick.expanded ? 'brick-hover' : ''}`}
+              className={`absolute-container brick-row-${row + 1} ${brick.expanded ? 'brick-hover' : ''}`}
               onMouseEnter={() => this.handleMouseHover(key)}
               onMouseLeave={() => this.handleMouseLeave(key)}
             >

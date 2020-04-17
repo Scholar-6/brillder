@@ -387,7 +387,45 @@ $light-grey: #F3F4F7;
     color: #ffffff;
   }
 
-  .sorted-brick:hover {
+  .hover-icons-row {
+    height: 5.8vh;
+    color: $dark-blue;
+    width: 100%;
+    position: relative;
+
+    .round-button {
+      position: absolute;
+      left: -0.2vw;
+      height: 2.1vw;
+      width: 2.1vw;
+      bottom: 1vh;
+      border-radius: 20vw;
+      padding-right: -31vw;
+      background: black;
+    }
+
+    .bin-button {
+      cursor: pointer;
+      position: absolute;
+      left: 9.2vw;
+      height: 3.7vh;
+      bottom: 1vh;
+      padding-right: -31vw;
+    }
+
+    .play-button {
+      cursor: pointer;
+      position: absolute;
+      right: -0.2vw;
+      height: 3.7vh;
+      bottom: 1vh;
+      padding-right: -31vw;
+    }
+  }
+
+  .brick-hover {
+    left: -0.8vw;
+    height: 31.1vh !important;
     position: absolute;
     z-index: 2;
     width: 95%;
@@ -428,46 +466,6 @@ $light-grey: #F3F4F7;
         }
       }
     }
-  }
-  .hover-icons-row {
-    height: 5.8vh;
-    color: $dark-blue;
-    width: 100%;
-    position: relative;
-
-    .round-button {
-      position: absolute;
-      left: -0.2vw;
-      height: 2.1vw;
-      width: 2.1vw;
-      bottom: 1vh;
-      border-radius: 20vw;
-      padding-right: -31vw;
-      background: black;
-    }
-
-    .bin-button {
-      cursor: pointer;
-      position: absolute;
-      left: 9.2vw;
-      height: 3.7vh;
-      bottom: 1vh;
-      padding-right: -31vw;
-    }
-
-    .play-button {
-      cursor: pointer;
-      position: absolute;
-      right: -0.2vw;
-      height: 3.7vh;
-      bottom: 1vh;
-      padding-right: -31vw;
-    }
-  }
-
-  .brick-hover {
-    left: -0.8vw;
-    height: 31.1vh !important;
   }
 
   .brick-row-0, .brick-row-1, .brick-row-2, .brick-row-3 {
