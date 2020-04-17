@@ -10,6 +10,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Dialog from '@material-ui/core/Dialog';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import AnimateHeight from 'react-animate-height';
 
 import authActions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
@@ -59,6 +60,7 @@ interface BricksListState {
   deleteBrickId: number;
 
   dropdownShown: boolean;
+  filterHeight: any;
 }
 
 enum SortBy {
@@ -89,6 +91,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       isSearching: false,
 
       dropdownShown: false,
+      filterHeight: "auto",
     };
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/currentUser', {withCredentials: true})
@@ -250,7 +253,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     const { state } = this;
     const { subjects } = state;
     subjects.forEach((r: any)=> r.checked = false);
-    this.setState({ ...state })
+    this.filter();
   }
 
   moveAllBack() {
@@ -485,6 +488,14 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({...this.state, dropdownShown: false});
   }
 
+  hideFilter() {
+    this.setState({...this.state, filterExpanded: false, filterHeight: '0'})
+  }
+
+  expendFilter() {
+    this.setState({...this.state, filterExpanded: true, filterHeight: 'auto'})
+  }
+
   getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
     let color = "";
     
@@ -598,9 +609,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             {
               this.state.filterExpanded
                 ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }}
-                    onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
+                    onClick={() => this.hideFilter()} />
                 : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }}
-                    onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
+                    onClick={() => this.expendFilter()} />
             }
             {
               this.state.subjects.some((r: any) => r.checked)
@@ -609,10 +620,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             }
           </div>
         </div>
-        <Grid container direction="row">
-        {
-          this.state.filterExpanded
-              ? this.state.subjects.map((subject, i) =>
+        <AnimateHeight duration={500} height={this.state.filterHeight}>
+          <Grid container direction="row">
+            {
+              this.state.subjects.map((subject, i) =>
                 <Grid item xs={((i % 2) === 1) ? 7 : 5}>
                   <FormControlLabel
                     className="filter-container"
@@ -624,9 +635,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                   />
                 </Grid>
               )
-              : ''
-        }
-        </Grid>
+            }
+          </Grid>
+        </AnimateHeight>
       </div>
     );
   }
