@@ -325,11 +325,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                             {this.getAuthorRow(brick)}
                           </div>
                           <div className="hovered-open-question link-info">{brick.openQuestion}</div>
-                          <div>{brick.subject ? brick.subject.name : 'SUBJECT Code'} | No. {brick.attemptsCount} of Plays</div>
-                          <div>Editor: Name Surname</div>
+                          <div className="link-info">{brick.subject ? brick.subject.name : 'SUBJECT Code'} | No. {brick.attemptsCount} of Plays</div>
+                          <div className="link-info">Editor: Name Surname</div>
                         </div>
                       <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
-
                         <Grid item xs={4} container justify="flex-start">
                           <div className="round-button"></div>
                         </Grid>
@@ -345,7 +344,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                             alt="play"
                             className="play-button"
                             onClick={() => this.move(brick.id)}
-                            src="/images/brick-list/play.png" />
+                            src="/images/brick-list/play.png"
+                          />
                         </Grid>
                       </Grid>
                     </div>
