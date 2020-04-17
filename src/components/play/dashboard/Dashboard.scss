@@ -291,6 +291,7 @@ $light-grey: #F3F4F7;
           font-size: 1.6vh;
           font-family: $font-family-regular;
           height: 1.6vh;
+          overflow-y: hidden;
           margin-bottom: 0.5vh;
         }
       }
@@ -321,10 +322,7 @@ $light-grey: #F3F4F7;
         font-family: $font-family-regular;
         overflow: hidden;
         font-size: 1.7vh;
-        .hovered-open-question {
-          margin-top: 2.5vh;
-          margin-bottom: 2.5vh;
-        }
+
         .link-description {
           text-transform: uppercase;
           font-size: 1.7vh;
@@ -341,7 +339,14 @@ $light-grey: #F3F4F7;
           font-size: 1.6vh;
           font-family: $font-family-regular;
           height: 1.6vh;
+          overflow-y: hidden;
           margin-bottom: 0.5vh;
+        }
+
+        .hovered-open-question {
+          margin-top: 2.5vh;
+          max-height: 3.2vh;
+          margin-bottom: 1.7vh;
         }
       }
     }
@@ -349,7 +354,7 @@ $light-grey: #F3F4F7;
   .hover-icons-row {
     height: 7vh;
     color: $dark-blue;
-    width: 98%;
+    width: 100%;
     position: relative;
 
     .round-button {
@@ -375,7 +380,7 @@ $light-grey: #F3F4F7;
     .play-button {
       cursor: pointer;
       position: absolute;
-      right: -0vw;
+      right: -0.2vw;
       height: 3.7vh;
       bottom: 1vh;
       padding-right: -31vw;
@@ -383,8 +388,10 @@ $light-grey: #F3F4F7;
   }
 
   .brick-hover {
+    left: -0.8vw;
     height: 31.1vh !important;
   }
+
   .brick-row-0, .brick-row-1, .brick-row-2, .brick-row-3 {
     .expended-brick-info {
       border-top-left-radius: 0 !important;
