@@ -3,7 +3,7 @@ import { Fab, Grid, FormControlLabel } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 import './QuestionPlay.scss';
-import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from "components/model/question";
+import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from "model/question";
 import CompComponent from '../questionTypes/Comp';
 import { ComponentAttempt } from '../model/model';
 

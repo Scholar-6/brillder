@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {ComponentAttempt} from '../model/model';
-import {Hint, HintStatus} from 'components/model/question';
+import {Hint, HintStatus} from 'model/question';
 
 interface ReviewHintProps {
   attempt?: ComponentAttempt;

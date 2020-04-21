@@ -3,7 +3,7 @@ import React from 'react';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 
 import './VerticalShuffle.scss';
-import { Question } from "components/model/question";
+import { Question } from "model/question";
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';

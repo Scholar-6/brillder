@@ -18,7 +18,7 @@ import { Brick } from 'model/brick';
 import { ComponentAttempt, PlayStatus } from './model/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
-} from 'components/model/question';
+} from 'model/question';
 import { UserType } from 'model/user';
 import { Hidden, Grid } from '@material-ui/core';
 

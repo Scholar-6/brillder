@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid } from '@material-ui/core';
 
 import './questionType.scss';
-import { QuestionTypeEnum } from 'components/model/question';
+import { QuestionTypeEnum } from 'model/question';
 import TypeButton from './TypeButton'
 
 

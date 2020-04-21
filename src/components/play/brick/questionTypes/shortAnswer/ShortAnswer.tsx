@@ -1,5 +1,5 @@
 import React from 'react';
-import { Question } from "components/model/question";
+import { Question } from "model/question";
 import { TextField, Grid } from '@material-ui/core';
 import CompComponent from '../Comp';
 

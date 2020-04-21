@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Box } from '@material-ui/core';
-import { QuestionTypeEnum } from 'components/model/question';
+import { QuestionTypeEnum } from 'model/question';
 
 
 export interface TypeButtonProps {

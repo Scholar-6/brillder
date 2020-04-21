@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import MediaQuery from 'react-responsive';
 
 import './dragBox.scss';
-import { QuestionComponentTypeEnum } from 'components/model/question';
+import { QuestionComponentTypeEnum } from 'model/question';
 
 
 const HoverBox = ({ marginTop, label }: any) => {
