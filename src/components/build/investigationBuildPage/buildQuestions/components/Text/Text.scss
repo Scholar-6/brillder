@@ -6,11 +6,17 @@
     font-weight: bold !important;
   }
 
-  .text-label {
-    position: absolute;
-    top: 0;
-    height: 5.5vh;
-    font-size: 1.1vw;
+  .text-label-container {
+    margin: 0 20%;
+
+    .text-label {
+      width: 60%;
+      position: absolute;
+      top: 0;
+      z-index: 1;
+      height: 5.5vh;
+      font-size: 1.1vw;
+    }
   }
 
   .ck-editor {
