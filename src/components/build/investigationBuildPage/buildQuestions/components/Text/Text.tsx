@@ -26,8 +26,9 @@ const TextComponent: React.FC<TextComponentProps> = (props) => {
         ],
         height: 100
       });
-      console.log(props.data.value);
+
       editor.setData(props.data.value);
+
       editor.on('change', (e:any) => {
         let comp = Object.assign({}, props.data);
         comp.value = e.editor.getData();
@@ -44,9 +45,7 @@ const TextComponent: React.FC<TextComponentProps> = (props) => {
           Text
         </Grid>
       </div>
-      <div style={{minHeight: 170}} className="question-build-text-editor">
-        <div id={id} className="ckeditor-4"></div>
-      </div>
+      <div id={id}></div>
     </div>
   );
 }
