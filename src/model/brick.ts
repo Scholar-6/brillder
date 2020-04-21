@@ -1,5 +1,5 @@
 
-import { Question } from "components/model/question";
+import { Question } from "./question";
 import { UserType } from "./user";
 
 export enum BrickStatus {

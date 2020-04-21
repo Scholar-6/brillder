@@ -6,7 +6,7 @@ import { ReactSortable } from "react-sortablejs";
 
 import QuestionComponents from './questionComponents/questionComponents';
 import './questionPanelWorkArea.scss';
-import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../model/question';
+import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../../model/question';
 import DragBox from './drag/dragBox';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import LockComponent from './lock/Lock';

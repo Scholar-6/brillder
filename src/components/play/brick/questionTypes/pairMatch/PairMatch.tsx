@@ -7,7 +7,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import './PairMatch.scss';
-import { Question } from "components/model/question";
+import { Question } from "model/question";
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';

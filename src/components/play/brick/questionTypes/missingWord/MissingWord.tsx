@@ -1,5 +1,5 @@
 import React from "react";
-import { Question } from "components/model/question";
+import { Question } from "model/question";
 import { Grid, Select } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import CompComponent from "../Comp";

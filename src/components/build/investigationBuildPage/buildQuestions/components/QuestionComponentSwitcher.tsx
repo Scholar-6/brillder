@@ -1,7 +1,7 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { QuestionComponentTypeEnum, Hint, QuestionTypeEnum } from 'components/model/question';
+import { QuestionComponentTypeEnum, Hint, QuestionTypeEnum } from 'model/question';
 import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'

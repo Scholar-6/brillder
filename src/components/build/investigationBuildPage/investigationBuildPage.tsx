@@ -21,7 +21,7 @@ import {
   QuestionTypeEnum,
   QuestionComponentTypeEnum,
   HintStatus
-} from "components/model/question";
+} from "model/question";
 import actions from "../../../redux/actions/brickActions";
 
 interface ApiQuestion {
