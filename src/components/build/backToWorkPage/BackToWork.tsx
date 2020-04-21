@@ -307,12 +307,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return (
       <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
-          <Box
-            className={`brick-container ${color}`}
-            onMouseEnter={() => this.handleMouseHover(key)}
-            onMouseLeave={() => this.handleMouseLeave(key)}
-          >
-            <div className={`sorted-brick absolute-container brick-row-${row} ${brick.expanded ? 'brick-hover' : ''}`}>
+          <Box className={`brick-container ${color}`}>
+            <div
+              className={`absolute-container brick-row-${row} ${brick.expanded ? 'brick-hover' : ''}`}
+              onMouseEnter={() => this.handleMouseHover(key)}
+              onMouseLeave={() => this.handleMouseLeave(key)}
+            >
               <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
                 <Grid item xs={brick.expanded ? 12 : 11}>
                   {

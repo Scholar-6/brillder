@@ -300,8 +300,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                             {this.getAuthorRow(brick)}
                           </div>
                           <div className="hovered-open-question link-info">{brick.openQuestion}</div>
-                          <div>{this.getSubjectRow(brick)}</div>
-                          <div>Editor: Name Surname</div>
+                          <div className="link-info">{this.getSubjectRow(brick)}</div>
+                          <div className="link-info">Editor: Name Surname</div>
                         </div>
                         <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
                           <Grid item xs={4} container justify="flex-start">
@@ -526,8 +526,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                           {this.getAuthorRow(brick)}
                         </div>
                         <div className="hovered-open-question link-info">{brick.openQuestion}</div>
-                        <div>{this.getSubjectRow(brick)}</div>
-                        <div>Editor: Name Surname</div>
+                        <div className="link-info">{this.getSubjectRow(brick)}</div>
+                        <div className="link-info">Editor: Name Surname</div>
                       </div>
                     <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
                       <Grid item xs={4} container justify="flex-start">
