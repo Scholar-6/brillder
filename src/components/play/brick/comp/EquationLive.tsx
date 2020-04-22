@@ -35,14 +35,14 @@ const EquationLive: React.FC<EquationProps> = ({ component }) => {
   return (
     <div>
       {
-        arr.map((el:any, i:number) => {
+        arr ? arr.map((el:any, i:number) => {
           var res = el.indexOf('<span class="math-tex">');
           if (res >= 0) {
             return renderLaTex(el);
           } else {
             return <div dangerouslySetInnerHTML={{ __html: el}} />
           }
-        })
+        }) : ""
       }
     </div>
   );
