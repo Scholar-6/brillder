@@ -1,6 +1,8 @@
 import './UsersList.scss';
 import React, { Component } from 'react';
 import { Grid, FormControlLabel, Radio, Button } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch';
 import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
@@ -54,6 +56,59 @@ interface BricksListState {
   deleteBrickId: number;
   dropdownShown: boolean;
 }
+
+let anyStyles = withStyles as any;
+
+const IOSSwitch = anyStyles((theme:any) => ({
+  root: {
+    width: '4.5vh',
+    height: '2.8vh',
+    padding: 0,
+    margin: theme.spacing(1),
+  },
+  switchBase: {
+    padding: 1,
+    '&$checked': {
+      transform: 'translateX(16px)',
+      color: '#30C474',
+      '& + $track': {
+        borderRadius: '2vh',
+        border: '0.25vh solid #001C58',
+        height: '2.3vh',
+        backgroundColor: '#30C474',
+        opacity: 1,
+      },
+    },
+    '&$focusVisible $thumb': {
+      color: '#52d869',
+      border: '6px solid #fff',
+    },
+  },
+  thumb: {
+    marginTop: '0.6vh',
+    marginLeft: '0.4vh',
+    marginRight: '0.4vh',
+    border: '0.2vh solid #001C58',
+    width: '0.9vh',
+    height: '0.9vh',
+  },
+  track: {
+    borderRadius: '2vh',
+    border: '0.25vh solid #001C58',
+    height: '2.3vh',
+    backgroundColor: theme.palette.grey[50],
+    opacity: 1,
+  },
+  checked: {},
+}))((props:any) => {
+  return (
+    <Switch
+      disableRipple
+      {...props}
+    />
+  );
+});
+
 
 class BricksListPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
@@ -180,6 +235,24 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     if (e.keyCode === 13) {
       this.search();
     }
+  }
+
+  activateUser(userId: number) {
+    axios.put(`${process.env.REACT_APP_BACKEND_HOST}/users/${userId}`, {}, {withCredentials: true} as any)
+      .then(res => {
+        this.setState({...this.state, users: res.data})
+      })
+      .catch(error => { 
+        alert('Can`t get bricks');
+      });
+  }
+
+  deactivateUser() {
+
+  }
+
+  toggleUser(user: User) {
+    console.log(user)
   }
 
   search() {
@@ -334,7 +407,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                   <td>{user.firstName} <span className="user-last-name">{user.lastName}</span></td>
                   <td>{user.email}</td>
                   <td>{this.renderUserType(user)}</td>
-                  <td></td>
+                  <td className="activate-button-container">
+                    <IOSSwitch checked={user.status === 1} onChange={() => this.toggleUser(user)} />
+                  </td>
                   <td>
                     <div className="edit-button" />
                   </td>
