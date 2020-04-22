@@ -84,6 +84,7 @@ $light-grey: #F3F4F7;
 
     .bricks-pagination {
       position: absolute;
+      margin-left: 2vw;
       bottom: 0;
       height: 9vh;
       font-size: 0.9vw;
@@ -401,22 +402,23 @@ $light-grey: #F3F4F7;
         line-height: 1;
         font-size: 5.4vw;
         letter-spacing: 1.05vw;
-        font-family: "Brandon Grotesque Black";
+        font-family: $font-family-black;
       }
 
       .users-table {
         border: none;
         width: 100%;
+        height: 59vh;
         thead {
           background: $tab-grey;
           color: $dark-blue;
           font-family: $font-family-black;
           font-size: 1.3vw;
-          letter-spacing: 0.2vw;
+          letter-spacing: 0.25vw;
           tr {
             th {
-              padding-top: 0.7vh;
-              padding-bottom: 0.7vh;
+              padding-top: 0.6vh;
+              padding-bottom: 0.6vh;
               text-align: left;
               padding-left: 0.5vw;
             }
@@ -424,12 +426,52 @@ $light-grey: #F3F4F7;
             .subject-title {
               width: 5%;
             }
+            .user-full-name {
+              width: 30%;
+            }
+            .email-column {
+              width: 31.3%;
+            }
+            .edit-button-column {
+              width: 2.5vw;
+            }
           }
         }
         tbody {
+          tr {
+            td {
+              padding-left: 0.5vw;
+              color: $dark-blue;
+
+              .edit-button {
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-image: url(/images/edit.png);
+                height: 1.85vw;
+                width: 1.85vw;
+              }
+            }
+          }
           tr:nth-child(even) {
             background: $tab-grey;
           }
+          .user-last-name {
+            font-family: $font-family-bold;
+          }
+        }
+      }
+      .role-description {
+        width: 100%;
+        text-align: right;
+        font-size: 0.8vw;
+        margin-top: 0.6vh;
+        margin-right: 6vw;
+        color: $dark-blue;
+        letter-spacing: 0.015vw;
+
+        .bold {
+          font-family: $font-family-bold;
         }
       }
     }

@@ -294,6 +294,22 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  renderUserType(user: User) {
+    let type = "";
+    if (user.type === UserType.Admin) {
+      type = "A";
+    } else if (user.type === UserType.Builder) {
+      type = "B";
+    } else if (user.type === UserType.Editor) {
+      type = "E";
+    } else if (user.type === UserType.Student) {
+      type = "S";
+    } else if (user.type === UserType.Teacher) {
+      type = "T";
+    }
+    return type;
+  }
+
   renderUsers() {
     if (!this.state.users) { return "" }
     return (
@@ -301,30 +317,45 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         <thead>
           <tr>
             <th className="subject-title">SC</th>
-            <th>NAME</th>
-            <th>EMAIL</th>
+            <th className="user-full-name">NAME</th>
+            <th className="email-column">EMAIL</th>
             <th>ROLE</th>
-            <th>ACTIVE</th>
-            <th></th>
+            <th>ACTIVE?</th>
+            <th className="edit-button-column"></th>
           </tr>
         </thead>
         <tbody>
           {
-            this.state.users.map((user:any) => {
+            this.state.users.map((user:any, i:number) => {
+              if (i > 11) { return ""}
               return (
                 <tr>
                   <td></td>
-                  <td>{user.firstName} {user.lastName}</td>
+                  <td>{user.firstName} <span className="user-last-name">{user.lastName}</span></td>
                   <td>{user.email}</td>
+                  <td>{this.renderUserType(user)}</td>
                   <td></td>
-                  <td></td>
-                  <td></td>
+                  <td>
+                    <div className="edit-button" />
+                  </td>
                 </tr>
               );
             })
           }
         </tbody>
       </table>
+    );
+  }
+
+  renderRoleDescription() {
+    return (
+      <div className="role-description">
+        <span className="bold">S</span>: Student,&nbsp;
+        <span className="bold">T</span>: Teacher,&nbsp;
+        <span className="bold">B</span>: Builder,&nbsp;
+        <span className="bold">E</span>: Editor,&nbsp;
+        <span className="bold">A</span>: Admin
+      </div>
     );
   }
 
@@ -375,6 +406,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 </div>
                 <Grid container direction="row">
                   {this.renderUsers()}
+                  {this.renderRoleDescription()}
                 </Grid>
                 {this.renderPagination()}
               </div>
