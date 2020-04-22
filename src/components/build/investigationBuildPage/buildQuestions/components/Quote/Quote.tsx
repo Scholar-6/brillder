@@ -16,7 +16,7 @@ export interface QuoteComponentProps {
 }
 
 const editorConfiguration = {
-  toolbar: ['bold']
+  toolbar: ['bold', 'italic']
 };
 
 const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, updateComponent}) => {

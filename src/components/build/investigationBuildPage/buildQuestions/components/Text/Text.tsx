@@ -32,7 +32,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updat
         editor={ClassicEditor}
         data={data.value}
         disabled={locked}
-        config={{toolbar: ['bold']}}
+        config={{toolbar: ['bold', 'italic']}}
         onChange={(e: any, editor: any) => {
           if (!focused) {
             return;
