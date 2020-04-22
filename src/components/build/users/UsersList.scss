@@ -452,6 +452,9 @@ $light-grey: #F3F4F7;
                 width: 1.85vw;
               }
             }
+            .activate-button-container {
+              padding-left: 2vw;
+            }
           }
           tr:nth-child(even) {
             background: $tab-grey;
