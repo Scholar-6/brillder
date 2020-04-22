@@ -27,7 +27,6 @@ const QuoteComponent: React.FC<TextComponentProps> = (props) => {
         height: 100
       });
 
-      editor.setData(props.data.value);
 
       editor.on('change', (e:any) => {
         let comp = Object.assign({}, props.data);
