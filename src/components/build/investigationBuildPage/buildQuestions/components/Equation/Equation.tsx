@@ -1,8 +1,6 @@
 
 import React, { useEffect } from 'react'
 import './Equation.scss'
-// @ts-ignore
-import MJ from 'react-mathjax-ts'
 
 
 declare var CKEDITOR: any;
@@ -28,22 +26,24 @@ const EquationComponent: React.FC<EquationComponentProps> = (props) => {
         height: 100,
       });
 
-      if (editor && props.data.value) {
+      if (editor) {
         editor.setData(props.data.value);
-      }
 
-      editor.on('change', (e:any) => {
-        let comp = Object.assign({}, props.data);
-        comp.value = e.editor.getData();
-        props.updateComponent(comp, props.index);
-      });
-      setCreated(true);
+        editor.on('change', (e:any) => {
+          let comp = Object.assign({}, props.data);
+          comp.value = e.editor.getData();
+          props.updateComponent(comp, props.index);
+        });
+        setCreated(true);
+      }
     }
   }, [id, props, created]);
 
   return (
     <div className="question-build-latex-editor">
-      <div id={id}></div>
+      <div id={id}>
+        Default text
+      </div>
     </div>
   );
 
