@@ -437,31 +437,29 @@ $light-grey: #F3F4F7;
             }
           }
         }
-        tbody {
-          tr {
-            td {
-              padding-left: 0.5vw;
-              color: $dark-blue;
+        tr.user-row {
+          td {
+            padding-left: 0.5vw;
+            color: $dark-blue;
 
-              .edit-button {
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-position: center;
-                background-image: url(/images/edit.png);
-                height: 1.85vw;
-                width: 1.85vw;
-              }
-            }
-            .activate-button-container {
-              padding-left: 2vw;
+            .edit-button {
+              background-size: 100% 100%;
+              background-repeat: no-repeat;
+              background-position: center;
+              background-image: url(/images/edit.png);
+              height: 1.85vw;
+              width: 1.85vw;
             }
           }
-          tr:nth-child(even) {
-            background: $tab-grey;
+          .activate-button-container {
+            padding-left: 2vw;
           }
-          .user-last-name {
-            font-family: $font-family-bold;
-          }
+        }
+        tr.user-row:nth-child(odd) {
+          background: $tab-grey;
+        }
+        .user-last-name {
+          font-family: $font-family-bold;
         }
       }
       .role-description {

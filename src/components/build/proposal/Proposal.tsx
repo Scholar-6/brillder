@@ -26,12 +26,9 @@ interface ProposalProps {
 }
 
 const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
-  let showSubjectDropdown = false;
   let subjectId = 0;
   if (props.user.subjects.length === 1) {
     subjectId = props.user.subjects[0].id;
-  } else if (props.user.subjects.length > 1) {
-    showSubjectDropdown = true;
   }
   let initState = {
     subjectId,

@@ -1,5 +1,9 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
+// @ts-ignore 
+import CKEditor from '@ckeditor/ckeditor5-react';
+// @ts-ignore 
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import ExitButton from '../../components/ExitButton';
 import NextButton from '../../components/nextButton';
@@ -7,6 +11,7 @@ import PreviousButton from '../../components/previousButton';
 import { ProposalStep } from "../../model";
 import './prep.scss';
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
+
 
 interface PrepProps {
   parentPrep: string;
@@ -53,7 +58,18 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
               </h1>
               <Grid justify="center" container item xs={12}>
                 <div style={{ width: '84%' }}>
-                 
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={prep}
+                    config={{
+                      toolbar: ['bold', 'link', 'mediaEmbed'],
+                      mediaEmbed: { previewsInData: true }
+                    }}
+                    onChange={(e: any, editor: any) => {
+                      let value = editor.getData();
+                      setPrep(value)
+                    }}
+                  />
                 </div>
               </Grid>
               <PreviousButton to="/build/new-brick/brief" />

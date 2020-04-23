@@ -2,8 +2,6 @@ import React from 'react'
 
 import './SynthesisPage.scss';
 import { Grid, Button } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import { useHistory } from 'react-router-dom';
 
 
 export interface SynthesisProps {
@@ -14,7 +12,6 @@ export interface SynthesisProps {
 
 const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange, onReview }) => {
   document.title = "Synthesis";
-  let history = useHistory();
 
   return (
     <div className="question-type synthesis-page">
@@ -24,7 +21,8 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
             <textarea
               value={synthesis}
               placeholder="Synthesis"
-              onChange={(e) => onSynthesisChange(e.target.value)}></textarea>
+              onChange={(e) => onSynthesisChange(e.target.value)}>
+            </textarea>
           </Grid>
           <Grid container item md={3}>
             <div style={{width: '100%'}}>
