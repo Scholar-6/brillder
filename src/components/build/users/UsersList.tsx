@@ -252,7 +252,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   toggleUser(user: User) {
-    console.log(user)
   }
 
   search() {
