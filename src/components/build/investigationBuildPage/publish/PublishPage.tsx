@@ -6,7 +6,7 @@ import { Grid, CircularProgress } from "@material-ui/core";
 import { connect } from 'react-redux';
 
 import "./PublishPage.scss";
-import { Brick, BrickStatus } from "model/brick";
+import { BrickStatus } from "model/brick";
 
 
 interface PublishBrickProps {
@@ -100,7 +100,7 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
       {}, {withCredentials: true}
     ).then(response => {
       const {data} = response;
-      if (response.status === 200 && data.status === BrickStatus.Publish) {
+      if (response.status === 200 && data.status === BrickStatus.Review) {
         return;
       }
       let {msg} = data;
