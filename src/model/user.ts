@@ -14,4 +14,5 @@ export interface User {
   tutorialPassed: boolean
   email: string
   subjects: any[],
+  status: number,
 }

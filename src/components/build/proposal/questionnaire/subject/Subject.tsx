@@ -5,7 +5,6 @@ import './Subject.scss';
 import { ProposalStep } from "../../model";
 import ExitButton from '../../components/ExitButton';
 import NextButton from '../../components/nextButton'
-import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import { Redirect } from "react-router-dom";
 
 

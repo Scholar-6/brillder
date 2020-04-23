@@ -14,7 +14,7 @@ interface ImageProps {
 
 const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
   const [fileName, setFileName] = React.useState(props.data.value);
-  const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
+  const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/jpeg, image/png',
     disabled: locked,
     onDrop: (files:any[]) => {
@@ -41,20 +41,13 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
     }
   });
 
-  
-  const files = acceptedFiles.map((file:any) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
-
   return (
     <div className="image-drag-n-drop">
       <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
         <input {...getInputProps()} />
         {
           fileName
-            ? <img style={{width: '100%'}} src={`${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`} />
+            ? <img alt="" style={{width: '100%'}} src={`${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`} />
             : <Grid
                 container
                 justify="center"

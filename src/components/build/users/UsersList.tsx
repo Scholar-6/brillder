@@ -42,7 +42,7 @@ interface BricksListProps {
 }
 
 interface BricksListState {
-  users: any[];
+  users: User[];
   page: number;
   searchString: string;
   isSearching: boolean;
@@ -64,7 +64,7 @@ const IOSSwitch = anyStyles((theme:any) => ({
     width: '4.5vh',
     height: '2.8vh',
     padding: 0,
-    margin: theme.spacing(1),
+    margin: 0,
   },
   switchBase: {
     padding: 1,
@@ -238,20 +238,31 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   activateUser(userId: number) {
-    axios.put(`${process.env.REACT_APP_BACKEND_HOST}/users/${userId}`, {}, {withCredentials: true} as any)
-      .then(res => {
-        this.setState({...this.state, users: res.data})
-      })
-      .catch(error => { 
-        alert('Can`t get bricks');
-      });
+    axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/user/activate/${userId}`, {}, {withCredentials: true} as any
+    ).then(res => {
+      console.log(res);
+    }).catch(error => { 
+      alert('Can`t activate user');
+    });
   }
 
-  deactivateUser() {
-
+  deactivateUser(userId: number) {
+    axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/user/deactivate/${userId}`, {}, {withCredentials: true} as any
+    ).then(res => {
+      console.log(res);
+    }).catch(error => { 
+      alert('Can`t deactivate user');
+    });
   }
 
   toggleUser(user: User) {
+    if (user.status === 1) {
+      this.deactivateUser(user.id);
+    } else {
+      this.activateUser(user.id);
+    }
   }
 
   search() {
@@ -397,25 +408,24 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           </tr>
         </thead>
         <tbody>
-          {
-            this.state.users.map((user:any, i:number) => {
-              if (i > 11) { return ""}
-              return (
-                <tr>
-                  <td></td>
-                  <td>{user.firstName} <span className="user-last-name">{user.lastName}</span></td>
-                  <td>{user.email}</td>
-                  <td>{this.renderUserType(user)}</td>
-                  <td className="activate-button-container">
-                    <IOSSwitch checked={user.status === 1} onChange={() => this.toggleUser(user)} />
-                  </td>
-                  <td>
-                    <div className="edit-button" />
-                  </td>
-                </tr>
-              );
-            })
-          }
+        {
+          this.state.users.map((user:any, i:number) => {
+            if (i > 11) { return <tr key={i}></tr>}
+            return (
+              <tr className="user-row" key={i}>
+                <td></td>
+                <td>{user.firstName} <span className="user-last-name">{user.lastName}</span></td>
+                <td>{user.email}</td>
+                <td>{this.renderUserType(user)}</td>
+                <td className="activate-button-container">
+                  <IOSSwitch checked={user.status === 1} onChange={() => this.toggleUser(user)} />
+                </td>
+                <td><div className="edit-button" />
+                </td>
+              </tr>
+            );
+          })
+        }
         </tbody>
       </table>
     );
