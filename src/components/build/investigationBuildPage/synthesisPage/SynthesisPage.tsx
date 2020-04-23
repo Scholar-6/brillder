@@ -1,4 +1,8 @@
 import React from 'react'
+// @ts-ignore 
+import CKEditor from '@ckeditor/ckeditor5-react';
+// @ts-ignore 
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import './SynthesisPage.scss';
 import { Grid, Button } from '@material-ui/core';
@@ -10,6 +14,10 @@ export interface SynthesisProps {
   onReview(): void
 }
 
+const editorConfiguration = {
+  toolbar: ['bold', 'italic', 'bulletedList', 'numberedList']
+};
+
 const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange, onReview }) => {
   document.title = "Synthesis";
 
@@ -18,11 +26,16 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
       <div className="inner-question-type">
         <Grid container direction="row">
           <Grid item md={9}>
-            <textarea
-              value={synthesis}
-              placeholder="Synthesis"
-              onChange={(e) => onSynthesisChange(e.target.value)}>
-            </textarea>
+            <CKEditor
+              editor={ClassicEditor}
+              data={synthesis}
+              className="ckeditor-synthesis"
+              config={editorConfiguration}
+              onChange={(e: any, editor: any) => {
+                const value = editor.getData();
+                onSynthesisChange(value);
+              }}
+            />
           </Grid>
           <Grid container item md={3}>
             <div style={{width: '100%'}}>

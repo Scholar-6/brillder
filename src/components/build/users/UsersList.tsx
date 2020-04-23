@@ -140,7 +140,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         this.setState({...this.state, users: res.data})
       })
       .catch(error => { 
-        alert('Can`t get bricks');
+        alert('Can`t get users');
       });
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true})
@@ -148,7 +148,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       this.setState({...this.state, subjects: res.data });
     })
     .catch(error => {
-      alert('Can`t get bricks');
+      alert('Can`t get subjects');
     });
   }
 
