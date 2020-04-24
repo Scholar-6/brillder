@@ -60,7 +60,6 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   render() {
-    console.log(this.props);
     const {history} = this.props;
     return (
       <Grid container direction="row" className="mainPage">
