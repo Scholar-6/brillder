@@ -1,12 +1,10 @@
 
 import React from 'react'
-// @ts-ignore 
-import CKEditor from '@ckeditor/ckeditor5-react';
-// @ts-ignore 
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Grid } from '@material-ui/core';
 
 import './Text.scss'
-import { Grid } from '@material-ui/core';
+import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
+
 
 export interface TextComponentProps {
   locked: boolean
@@ -16,9 +14,10 @@ export interface TextComponentProps {
 }
 
 const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updateComponent}) => {
-  const [focused, setFocus] = React.useState(false);
-  if (!data.value) {
-    data.value = "";
+  const onChange = (htmlString: string) => {
+    let comp = Object.assign({}, data);
+    comp.value = htmlString;
+    updateComponent(comp, index);
   }
 
   return (
@@ -28,27 +27,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updat
           Text
         </Grid>
       </div>
-      <CKEditor
-        editor={ClassicEditor}
-        data={data.value}
-        disabled={locked}
-        config={{toolbar: ['bold', 'italic', 'bulletedList', 'numberedList']}}
-        onChange={(e: any, editor: any) => {
-          if (!focused) {
-            return;
-          }
-          let value = editor.getData();
-          let comp = Object.assign({}, data);
-          comp.value = value;
-          updateComponent(comp, index);
-        }}
-        onFocus={() => {
-          setFocus(true);
-        }}
-        onBlur={() => {
-          setFocus(false);
-        }}
-      />
+      <DocumentCKEditor data={data.value} onChange={onChange} />
     </div>
   );
 }
