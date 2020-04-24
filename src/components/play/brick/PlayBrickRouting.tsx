@@ -73,7 +73,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
 
   if (isPreview === false && (type === UserType.Builder || type === UserType.Editor)) {
-    return <div>...You haven`t access to play...</div>
+    return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
   }
 
   const brickId = parseInt(props.match.params.brickId);
