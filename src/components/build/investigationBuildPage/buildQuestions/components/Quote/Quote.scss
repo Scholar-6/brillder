@@ -24,16 +24,13 @@
     }
   }
 
-  .cke_top {
-    padding: 0 !important;
-    height: 5.5vh !important;
-
-    > span > span {
-      height: 5.5vh;
-      > span {
-        padding-top: 1.2vh;
-        margin: 0;
-      }
-    }
+  .ck-toolbar {
+    z-index: 1000;
+  }
+  .ck-color-table {
+    z-index: 10000;
+  }
+  .ck-color-ui-dropdown {
+    margin-right: 50% !important;
   }
 }

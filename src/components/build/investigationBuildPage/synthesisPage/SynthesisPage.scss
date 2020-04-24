@@ -21,18 +21,20 @@ $border-radius: 0.6vw;
       
     }
 
-    .ck-editor {
-
+    .document-editor {
       .ck-toolbar__items {
         height: 5vh;
-
         .ck-icon {
           font-size: 1.5vh;
         }
       }
+
       .ck-content {
         font-size: 1vw;
         height: 70vh;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        border: 1px solid grey;
       }
     }
 
