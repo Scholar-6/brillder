@@ -1,9 +1,8 @@
 import React from 'react'
+import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
 
 import './SynthesisPage.scss';
 import { Grid, Button } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import { useHistory } from 'react-router-dom';
 
 
 export interface SynthesisProps {
@@ -12,19 +11,19 @@ export interface SynthesisProps {
   onReview(): void
 }
 
+const editorConfiguration = {
+  toolbar: ['bold', 'italic', 'bulletedList', 'numberedList']
+};
+
 const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange, onReview }) => {
   document.title = "Synthesis";
-  let history = useHistory();
 
   return (
     <div className="question-type synthesis-page">
       <div className="inner-question-type">
         <Grid container direction="row">
           <Grid item md={9}>
-            <textarea
-              value={synthesis}
-              placeholder="Synthesis"
-              onChange={(e) => onSynthesisChange(e.target.value)}></textarea>
+            <DocumentCKEditor data={synthesis} onChange={onSynthesisChange} />
           </Grid>
           <Grid container item md={3}>
             <div style={{width: '100%'}}>

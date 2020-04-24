@@ -10,6 +10,70 @@ $lighter-blue: #304775;
 $grey: #B0B0AD;
 $light-grey: #F3F4F7;
 
+.brick-list-redirect-dropdown {
+  .MuiPaper-root {
+    position: fixed;
+    right: 0 !important;
+    left: auto !important;
+    top: 10.5vh !important;
+    min-width: 14.9vw !important;
+    min-height: 31.3vh;
+    border-radius: 0;
+    border-bottom-left-radius: 2vw;
+    color: white;
+    background: $light-blue;
+    box-shadow: none;
+
+    .menu-item {
+      cursor: pointer;
+      position: relative;
+      font-family: $font-family-regular !important;
+      font-size: 1.45vw;
+      padding-left: 1.65vw;
+      margin-bottom: 1vh;
+
+      .menu-icon-container {
+        position: fixed;
+        width: 4.5vw;
+        height: 3vh;
+        right: 0vw;
+      }
+
+      .menu-icon {
+        width: 2.2vw;
+      }
+
+      .svg-icon {
+        filter: invert(1);
+      }
+
+      .user-icon {
+        width: 1.93vw;
+      }
+
+      .logout-icon {
+        width: 1.88vw;
+      }
+
+      .back-to-work-icon {
+        width: 1.5vw;
+      }
+      .manage-users-icon {
+        margin-top: 0.13vh;
+        width: 1.9vw;
+      }
+    }
+
+    .first-item {
+      margin-top: 1.7vh;
+    }
+
+    .view-profile {
+      margin-top: 3.4vh;
+    }
+  }
+}
+
 .bricks-list-page {
   overflow: hidden;
   background: $dark-blue;
@@ -180,9 +244,9 @@ $light-grey: #F3F4F7;
         color: white;
         text-align: center;
         padding-top: 1vh;
-        height: 3.6vh;
-        width: 4.1vh;
-        margin-right: 4.28vw;
+        height: 4vh;
+        width: 4.4vh;
+        margin-right: 3.5vw;
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center;
@@ -196,27 +260,27 @@ $light-grey: #F3F4F7;
       }
 
       .bell-button:hover {
-        transform: scale(1.4);
         background-image: url(/images/brick-list/bell-hover.png);
       }
 
-      .user-button {
+      .more-button {
         cursor: pointer;
-        margin-top: 0.635vh;
-        display: block;
-        height: 4.3vh;
-        width: 4.1vh;
-        margin-right: 1.9vw;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/images/brick-list/user.png);
+        margin-top: 0.5vh;
+        margin-right: 2.2vw;
+        width: 6.7vh;
+        display: inline-block;
+        background-color: $orange;
+  
+        -webkit-mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
+        mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
+        -webkit-mask-size: cover;
+        mask-size: cover;
+
         transition: all 0.2s ease-in-out;
         transform-origin: 50% 50%;
       }
 
-      .user-button:hover {
-        background-image: url(/images/brick-list/user-hover.png);
+      .more-button:hover {
         transform: scale(1.4);
       }
     }
@@ -262,6 +326,21 @@ $light-grey: #F3F4F7;
       position: absolute;
       height: $min-brick-height;
 
+      .left-brick-roller {
+        position: absolute;
+        top: 1.5vh;
+        left: 0.15vw;
+
+        > div {
+          height: 2.1vw;
+          width: 1.9vw;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-image: url(/images/roller-green.png);
+        }
+      }
+
       .left-brick-circle {
         position: absolute;
         top: 0.85vh;
@@ -288,10 +367,11 @@ $light-grey: #F3F4F7;
         }
         .link-info {
           color: $lighter-blue;
-          line-height: 1;
+          line-height: 1.1;
           font-size: 1.6vh;
           font-family: $font-family-regular;
-          height: 1.6vh;
+          height: 1.9vh;
+          overflow-y: hidden;
           margin-bottom: 0.5vh;
         }
       }
@@ -307,50 +387,10 @@ $light-grey: #F3F4F7;
     color: #ffffff;
   }
 
-  .sorted-brick:hover {
-    position: absolute;
-    z-index: 2;
-    width: 95%;
-
-    .expended-brick-info {
-      background: $tab-grey;
-      border-radius: 0.5vw;
-      padding: 1.2vh 1vw;
-
-      .hover-text {
-        height: 21vh;
-        font-family: $font-family-regular;
-        overflow: hidden;
-        font-size: 1.7vh;
-        .hovered-open-question {
-          margin-top: 2.5vh;
-          margin-bottom: 2.5vh;
-        }
-        .link-description {
-          text-transform: uppercase;
-          font-size: 1.7vh;
-          font-family: $font-family-bold;
-          line-height: 1;
-          overflow: hidden;
-          height: 1.7vh;
-          margin-bottom: 0.5vh;
-        }
-
-        .link-info {
-          color: $lighter-blue;
-          line-height: 1;
-          font-size: 1.6vh;
-          font-family: $font-family-regular;
-          height: 1.6vh;
-          margin-bottom: 0.5vh;
-        }
-      }
-    }
-  }
   .hover-icons-row {
-    height: 7vh;
+    height: 5.8vh;
     color: $dark-blue;
-    width: 98%;
+    width: 100%;
     position: relative;
 
     .round-button {
@@ -376,7 +416,7 @@ $light-grey: #F3F4F7;
     .play-button {
       cursor: pointer;
       position: absolute;
-      right: -0vw;
+      right: -0.2vw;
       height: 3.7vh;
       bottom: 1vh;
       padding-right: -31vw;
@@ -384,8 +424,50 @@ $light-grey: #F3F4F7;
   }
 
   .brick-hover {
+    left: -0.8vw;
     height: 31.1vh !important;
+    position: absolute;
+    z-index: 2;
+    width: 95%;
+
+    .expended-brick-info {
+      background: $tab-grey;
+      border-radius: 0.5vw;
+      padding: 1.2vh 1vw;
+
+      .hover-text {
+        height: 21vh;
+        font-family: $font-family-regular;
+        overflow: hidden;
+        font-size: 1.7vh;
+        .link-description {
+          text-transform: uppercase;
+          font-size: 1.7vh;
+          font-family: $font-family-bold;
+          line-height: 1;
+          overflow: hidden;
+          height: 1.7vh;
+          margin-bottom: 0.5vh;
+        }
+
+        .link-info {
+          color: $lighter-blue;
+          line-height: 1.1;
+          font-size: 1.6vh;
+          font-family: $font-family-regular;
+          max-height: 1.9vh;
+          overflow-y: hidden;
+          margin-bottom: 0.5vh;
+        }
+        .hovered-open-question {
+          margin-top: 2.5vh;
+          max-height: 3.6vh;
+          margin-bottom: 1.7vh;
+        }
+      }
+    }
   }
+
   .brick-row-0, .brick-row-1, .brick-row-2, .brick-row-3 {
     .expended-brick-info {
       border-top-left-radius: 0 !important;
@@ -453,13 +535,7 @@ $light-grey: #F3F4F7;
           margin-top: 0.45vh;
           margin-left: 0.9vw;
           display: block;
-          > label:nth-child(1) {
-            width: 45%;
-          }
-          > label:nth-child(2) {
-            width: 45%;
-          }
-          > label {
+          label {
             .sortBy {
               padding-left: 1.2vw;
               padding-right: 0.4vw;
@@ -479,7 +555,7 @@ $light-grey: #F3F4F7;
           cursor: default;
           margin-bottom: 0.1vh;
           margin-right: 0;
-          width: 46%;
+          width: 100%;
           > span.filter-radio {
             padding-left: 2vw;
             padding-right: 0.4vw;
@@ -493,18 +569,9 @@ $light-grey: #F3F4F7;
             letter-spacing: 0.06vw;
           }
           .custom-color svg { color: var(--color)!important; }
-          .color1 svg { color: #006BFD !important; }
-          .color2 svg { color: #65C44C !important; }
-          .color3 svg { color: #F3F584 !important; }
-          .color4 svg { color: #FF3B01 !important; }
-          .color5 svg { color: #ED6CC9 !important; }
-          .color6 svg { color: #AAF1C7 !important; }
-          .color7 svg { color: #B3F87B !important; }
-          .color8 svg { color: #8E44F6 !important; }
-          .color8 svg { color: #F7F7F7 !important; }
         }
         .filter-container:nth-child(odd) {
-          width: 50%;
+          width: 100%;
         }
       }
     }

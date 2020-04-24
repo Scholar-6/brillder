@@ -3,7 +3,6 @@ import { RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid, Button, Hidden } from "@material-ui/core";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import EditIcon from '@material-ui/icons/Edit';
 import Dialog from '@material-ui/core/Dialog';
 import update from "immutability-helper";
 // @ts-ignore
@@ -21,7 +20,7 @@ import {
   QuestionTypeEnum,
   QuestionComponentTypeEnum,
   HintStatus
-} from "components/model/question";
+} from "model/question";
 import actions from "../../../redux/actions/brickActions";
 
 interface ApiQuestion {
@@ -421,7 +420,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           </div>
         </div>
         <div className="proposal-link" onClick={editProposal}>
-          <EditIcon className="proposal-edit-icon"/>
+          <div className="proposal-edit-icon"/>
           <div className="proposal-text">
             <div style={{lineHeight: 0.9}}>YOUR</div>
             <div style={{lineHeight: 2}}>PROP</div>

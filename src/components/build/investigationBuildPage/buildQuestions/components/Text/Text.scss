@@ -1,31 +1,36 @@
 .question-build-text-editor {
   position: relative;
+  margin-left: 0.5%;
+  width: 99%;
   font-size: 0.68vw !important;
 
   strong {
     font-weight: bold !important;
   }
 
-  .text-label {
-    position: absolute;
-    top: 0;
-    height: 5.5vh;
-    font-size: 1.1vw;
+  .text-label-container {
+    margin: 0 30%;
+
+    .text-label {
+      width: 40%;
+      position: absolute;
+      top: 0;
+      z-index: 1;
+      height: 5.5vh;
+      font-size: 1.1vw;
+    }
   }
 
-  .ck-editor {
-    .ck-icon {
-      font-size: 0.6vw !important;
-    }
+  .cke_top {
+    padding: 0 !important;
+    height: 5.5vh !important;
 
-    .ck-sticky-panel {
-      .ck-toolbar__items {
-        height: 5.5vh !important;
+    > span > span {
+      height: 5.5vh;
+      > span {
+        padding-top: 1.2vh;
+        margin: 0;
       }
-    }
-
-    .ck-content {
-      font-size: 1vw;
     }
   }
 }

@@ -2,7 +2,6 @@
 
 import React, { useEffect } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Button } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox'; 
 
 import './MissingWordBuild.scss'

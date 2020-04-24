@@ -1,11 +1,11 @@
 
-import { Question } from "components/model/question";
+import { Question } from "./question";
 import { UserType } from "./user";
 
 export enum BrickStatus {
   Draft = 1,
-  Review,
   Build,
+  Review,
   Publish
 }
 
