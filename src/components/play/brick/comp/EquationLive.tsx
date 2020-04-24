@@ -14,6 +14,7 @@ const EquationLive: React.FC<EquationProps> = ({ component }) => {
     return <div></div>;
   }
 
+  /* Parsing out the html created by CKEditor so that the phone preview works correctly */
   var arr = component.value.match(/<(.+)>.*?<\/(.+)>/g);
 
   function extractContent(s: string) {
