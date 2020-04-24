@@ -110,6 +110,7 @@ $question-radius: 0.6vw;
     color: black;
 
     .unique-component-wrapper {
+      margin: 0.2vw 0;
       width: 100%;
     }
 
@@ -273,7 +274,6 @@ $question-radius: 0.6vw;
         height: 1.15vw;
         width: 1.15vw;
       }
-
 
       .active {
         color: green;
