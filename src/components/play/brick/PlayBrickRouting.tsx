@@ -18,7 +18,7 @@ import { Brick } from 'model/brick';
 import { ComponentAttempt, PlayStatus } from './model/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
-} from 'components/model/question';
+} from 'model/question';
 import { UserType } from 'model/user';
 import { Hidden, Grid } from '@material-ui/core';
 
@@ -54,14 +54,14 @@ interface BrickRoutingProps {
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   /* Admin preview part */
   let urlPreview = false;
-  if (props.user.type === UserType.Admin) {
+  const {type} = props.user;
+  if (type === UserType.Admin || type === UserType.Builder || type === UserType.Editor) {
     const values = queryString.parse(props.location.search)
     if (values.preview) {
       urlPreview = true;
     }
   }
   const [isPreview] = React.useState(urlPreview);
-
   /* Admin preview part */
 
   let initAttempts:any[] = [];
@@ -71,6 +71,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
+
+  if (isPreview === false && (type === UserType.Builder || type === UserType.Editor)) {
+    return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
+  }
 
   const brickId = parseInt(props.match.params.brickId);
   if (!props.brick || props.brick.id !== brickId || !props.brick.author) {

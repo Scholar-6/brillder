@@ -1,0 +1,15 @@
+@import '_variables';
+
+.document-editor {
+  .ck-toolbar {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  .ck-content {
+    font-family: $font-family-regular;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border: 1px solid grey;
+  }
+}

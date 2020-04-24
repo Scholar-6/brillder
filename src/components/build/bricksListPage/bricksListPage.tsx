@@ -8,8 +8,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ClearIcon from '@material-ui/icons/Clear';
 import Dialog from '@material-ui/core/Dialog';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import AnimateHeight from 'react-animate-height';
 
 import authActions from 'redux/actions/auth';
+import brickActions from 'redux/actions/brickActions';
+
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType } from 'model/user';
 
@@ -22,6 +27,7 @@ const mapState = (state: any) => {
 
 const mapDispatch = (dispatch: any) => {
   return {
+    forgetBrick: () => dispatch(brickActions.forgetBrick()),
     logout: () => dispatch(authActions.logout()),
   }
 }
@@ -31,12 +37,16 @@ const connector = connect(mapState, mapDispatch);
 interface BricksListProps {
   user: User,
   history: any;
+  forgetBrick(): void;
   logout(): void;
 }
 
 interface BricksListState {
   yourBricks: Array<Brick>;
   bricks: Array<Brick>;
+  searchBricks: Array<Brick>;
+  searchString: string;
+  isSearching: boolean;
   sortBy: SortBy;
   subjects: any[];
   yoursIndex: number;
@@ -44,9 +54,13 @@ interface BricksListState {
   sortedIndex: number;
   filterExpanded: boolean;
   logoutDialogOpen: boolean;
+  finalBricks: Brick[];
 
   deleteDialogOpen: boolean;
   deleteBrickId: number;
+
+  dropdownShown: boolean;
+  filterHeight: any;
 }
 
 enum SortBy {
@@ -69,7 +83,15 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       filterExpanded: true,
       logoutDialogOpen: false,
       deleteDialogOpen: false,
-      deleteBrickId: -1
+      deleteBrickId: -1,
+      finalBricks: [],
+
+      searchBricks: [],
+      searchString: '',
+      isSearching: false,
+
+      dropdownShown: false,
+      filterHeight: "auto",
     };
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/currentUser', {withCredentials: true})
@@ -86,9 +108,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/byStatus/' + BrickStatus.Publish, {withCredentials: true})
       .then(res => {  
-        this.setState({...this.state, bricks: res.data });
+        this.setState({...this.state, bricks: res.data, finalBricks: res.data as Brick[] });
       })
-      .catch(error => {
+      .catch(error => { 
         alert('Can`t get bricks');
       });
 
@@ -164,31 +186,74 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   handleSortChange = (e: any) => {
     const {state} = this;
     const sortBy = parseInt(e.target.value) as SortBy;
-    let bricks = this.state.bricks;
+    let {finalBricks} = this.state;
     if (sortBy === SortBy.Date) {
-      bricks = bricks.sort((a, b) => {
+      finalBricks = finalBricks.sort((a, b) => {
         const createdA = new Date(a.created).getTime();
         const createdB = new Date(b.created).getTime();
         return (createdA < createdB) ? 1 : -1;
       });
     } else if (sortBy === SortBy.Popularity) {
-      bricks = bricks.sort((a, b) => ((a.attemptsCount > b.attemptsCount) ? 1 : -1)); 
+      finalBricks = finalBricks.sort((a, b) => ((a.attemptsCount > b.attemptsCount) ? 1 : -1)); 
     }
-    this.setState({...state, bricks, sortBy})
+    this.setState({...state, finalBricks, sortBy})
+  }
+
+  getBricksForFilter() {
+    if (this.state.isSearching) {
+      return this.state.searchBricks;
+    } else {
+      return this.state.bricks;
+    }
+  }
+
+  getCheckedSubjectIds() {
+    const filterSubjects = [];
+    const {state} = this;
+    const {subjects} = state;
+    for (let subject of subjects) {
+      if (subject.checked) {
+        filterSubjects.push(subject.id);
+      }
+    }
+    return filterSubjects;
+  }
+
+  filter() {
+    const {state} = this;
+    let bricks = this.getBricksForFilter();
+    let filtered = [];
+
+    let filterSubjects = this.getCheckedSubjectIds();
+
+    if (filterSubjects.length > 0) {
+      for (let brick of bricks) {
+        let res = filterSubjects.indexOf(brick.subjectId);
+        if (res !== -1) {
+          filtered.push(brick);
+        }
+      }
+      this.setState({...state, finalBricks: filtered});
+    } else {
+      this.setState({...state, finalBricks: bricks});
+    }
+  }
+
+  getSubjectRow(brick: Brick) {
+    return `${brick.subject ? brick.subject.name : 'SUBJECT Code'} | No. ${brick.attemptsCount} of Plays`;
   }
 
   filterBySubject = (i: number) => {
-    const {state} = this;
-    const {subjects} = state;
+    const {subjects} = this.state;
     subjects[i].checked = !subjects[i].checked
-    this.setState({...state})
+    this.filter();
   }
 
   clearSubjects = () => {
     const { state } = this;
     const { subjects } = state;
     subjects.forEach((r: any)=> r.checked = false);
-    this.setState({ ...state })
+    this.filter();
   }
 
   moveAllBack() {
@@ -219,14 +284,14 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         <div className="main-brick-container">
           <Box className="brick-container">
             <div
-              className={`sorted-brick absolute-container brick-row-0 ${brick.expanded ? "bigger-hover" : ""}`}
+              className={`absolute-container brick-row-0 ${brick.expanded ? "brick-hover" : ""}`}
               onMouseEnter={() => this.yourBricksMouseHover(key)}
               onMouseLeave={() => this.yourBricksMouseLeave(key)}
             >
               <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
                 <Grid item xs={brick.expanded ? 12 : 11}>
                   {
-                    brick.expanded ?
+                    brick.expanded ? (
                       <div className="expended-brick-info">
                         <div className="hover-text">
                           <div className="link-description">{brick.title}</div>
@@ -235,42 +300,43 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                             {this.getAuthorRow(brick)}
                           </div>
                           <div className="hovered-open-question link-info">{brick.openQuestion}</div>
-                          <div>SUBJECT Code | No. {brick.attemptsCount} of Plays</div>
-                          <div>Editor: Name Surname</div>
+                          <div className="link-info">{this.getSubjectRow(brick)}</div>
+                          <div className="link-info">Editor: Name Surname</div>
                         </div>
-                      <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
-                        <Grid item xs={4} container justify="flex-start">
-                          <div className="round-button" style={{background : `${color}`}}></div>
+                        <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
+                          <Grid item xs={4} container justify="flex-start">
+                            <div className="round-button" style={{background : `${color}`}}></div>
+                          </Grid>
+                          <Grid item xs={4} container justify="flex-start">
+                            {
+                              (this.props.user.type === UserType.Admin)
+                                ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
+                                : ""
+                            }
+                          </Grid>
+                          <Grid item xs={4} container justify="flex-end">
+                            <img
+                              alt="play"
+                              className="play-button"
+                              onClick={() => this.move(brick.id)}
+                              src="/images/brick-list/play.png" />
+                          </Grid>
                         </Grid>
-                        <Grid item xs={4} container justify="flex-start">
-                          {
-                            (this.props.user.type === UserType.Admin)
-                              ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
-                              : ""
-                          }
-                        </Grid>
-                        <Grid item xs={4} container justify="flex-end">
-                          <img
-                            alt="play"
-                            className="play-button"
-                            onClick={() => this.move(brick.id)}
-                            src="/images/brick-list/play.png" />
-                        </Grid>
-                      </Grid>
-                    </div>
-                    :
-                    <div>
-                      <div className="left-brick-circle">
-                        <div className="round-button" style={{background: `${color}`}}></div>
                       </div>
-                      <div className="short-brick-info">
-                        <div className="link-description">{brick.title}</div>
-                        <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
-                        <div className="link-info">
-                          {this.getAuthorRow(brick)}
+                     ) : (
+                      <div>
+                        <div className="left-brick-roller">
+                          <div className="roller-button"></div>
+                        </div>
+                        <div className="short-brick-info">
+                          <div className="link-description">{brick.title}</div>
+                          <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
+                          <div className="link-info">
+                            {this.getAuthorRow(brick)}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    )
                   }
                 </Grid>
               </Grid>
@@ -282,18 +348,18 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   handleMouseHover(index: number) {
-    let {bricks} = this.state;
-    bricks.forEach(brick => {
+    let {finalBricks} = this.state;
+    finalBricks.forEach(brick => {
       brick.expanded = false;
     });
     this.setState({...this.state});
     setTimeout(() => {
-      let {bricks} = this.state;
-      bricks.forEach(brick => {
+      let {finalBricks} = this.state;
+      finalBricks.forEach(brick => {
         brick.expanded = false;
       });
-      if (!bricks[index].expandFinished) {
-        bricks[index].expanded = true;
+      if (!finalBricks[index].expandFinished) {
+        finalBricks[index].expanded = true;
       }
       this.setState({...this.state});
     }, 400);
@@ -316,8 +382,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   yourBricksMouseHover(index: number) {
-    let {yourBricks, bricks} = this.state;
-    bricks.forEach(brick => {
+    let {yourBricks, finalBricks} = this.state;
+    finalBricks.forEach(brick => {
       brick.expanded = false;
     });
     yourBricks.forEach(brick => {
@@ -381,17 +447,53 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({...this.state, deleteDialogOpen: false})
   }
 
-  searching(value: string) {
-    console.log(value);
+  searching(searchString: string) {
+    if (searchString.length === 0) {
+      this.setState({...this.state, searchString, finalBricks: this.state.bricks, isSearching: false});
+    } else {
+      this.setState({...this.state, searchString});
+    }
+  }
+
+  keySearch(e: any) {
+    if (e.keyCode === 13) {
+      this.search();
+    }
+  }
+
+  search() {
+    const {searchString} = this.state;
     axios.post(
       process.env.REACT_APP_BACKEND_HOST + '/bricks/search',
-      {searchString: value},
+      {searchString},
       {withCredentials: true}
     ).then(res => {
-      console.log(res);
-    }).catch(error => {
+      const searchBricks = res.data.map((brick: any) => brick.body);
+      this.setState({...this.state, searchBricks, finalBricks: searchBricks, isSearching: true});
+    }).catch(error => { 
       alert('Can`t get bricks');
     });
+  }
+
+  creatingBrick() {
+    this.props.forgetBrick();
+    this.props.history.push('/build/new-brick/subject');
+  }
+
+  showDropdown() {
+    this.setState({...this.state, dropdownShown: true});
+  }
+
+  hideDropdown() {
+    this.setState({...this.state, dropdownShown: false});
+  }
+
+  hideFilter() {
+    this.setState({...this.state, filterExpanded: false, filterHeight: '0'})
+  }
+
+  expendFilter() {
+    this.setState({...this.state, filterExpanded: true, filterHeight: 'auto'})
   }
 
   getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
@@ -408,7 +510,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         <div className="main-brick-container">
           <Box className="brick-container">
             <div
-              className={`sorted-brick absolute-container brick-row-${row + 1} ${brick.expanded ? 'brick-hover' : ''}`}
+              className={`absolute-container brick-row-${row + 1} ${brick.expanded ? 'brick-hover' : ''}`}
               onMouseEnter={() => this.handleMouseHover(key)}
               onMouseLeave={() => this.handleMouseLeave(key)}
             >
@@ -424,8 +526,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                           {this.getAuthorRow(brick)}
                         </div>
                         <div className="hovered-open-question link-info">{brick.openQuestion}</div>
-                        <div>SUBJECT Code | No. {brick.attemptsCount} of Plays</div>
-                        <div>Editor: Name Surname</div>
+                        <div className="link-info">{this.getSubjectRow(brick)}</div>
+                        <div className="link-info">Editor: Name Surname</div>
                       </div>
                     <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
                       <Grid item xs={4} container justify="flex-start">
@@ -492,8 +594,14 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           value={this.state.sortBy}
           onChange={this.handleSortChange}
         >
-          <FormControlLabel value={SortBy.Popularity} style={{marginRight: 0, width: '47.5%'}} control={<Radio className="sortBy" />} label="Popularity" />
-          <FormControlLabel value={SortBy.Date} style={{marginRight: 0}} control={<Radio className="sortBy" />} label="Date Added" />
+          <Grid container direction="row">
+            <Grid item xs={5}>
+              <FormControlLabel value={SortBy.Popularity} style={{marginRight: 0, width: '47.5%'}} control={<Radio className="sortBy" />} label="Popularity" />
+            </Grid>
+            <Grid item xs={7}>
+              <FormControlLabel value={SortBy.Date} style={{marginRight: 0}} control={<Radio className="sortBy" />} label="Date Added" />
+            </Grid>
+          </Grid>
         </RadioGroup>
         <div className="filter-header">
           <div style={{ display: 'inline' }}>
@@ -501,9 +609,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             {
               this.state.filterExpanded
                 ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }}
-                    onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
+                    onClick={() => this.hideFilter()} />
                 : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }}
-                    onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
+                    onClick={() => this.expendFilter()} />
             }
             {
               this.state.subjects.some((r: any) => r.checked)
@@ -512,21 +620,24 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             }
           </div>
         </div>
-        {
-          
-          this.state.filterExpanded
-              ? this.state.subjects.map((subject, i) =>
-                <FormControlLabel
-                  className="filter-container"
-                  key={i}
-                  checked={subject.checked}
-                  onClick={() => this.filterBySubject(i)}
-                  control={<Radio className={"filter-radio custom-color"} style={{['--color' as any] : subject.color}} />}
-                  label={subject.name} />
+        <AnimateHeight duration={500} height={this.state.filterHeight}>
+          <Grid container direction="row">
+            {
+              this.state.subjects.map((subject, i) =>
+                <Grid item xs={((i % 2) === 1) ? 7 : 5}>
+                  <FormControlLabel
+                    className="filter-container"
+                    key={i}
+                    checked={subject.checked}
+                    onClick={() => this.filterBySubject(i)}
+                    control={<Radio className={"filter-radio custom-color"} style={{['--color' as any] : subject.color}} />}
+                    label={subject.name}
+                  />
+                </Grid>
               )
-              : ''
-        }
-
+            }
+          </Grid>
+        </AnimateHeight>
       </div>
     );
   }
@@ -538,10 +649,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   renderSortedBricks = () => {
     let {sortedIndex} = this.state;
     let bricksList = [];
+    let count = 0;
     for (let i = 0 + sortedIndex; i < 15 + sortedIndex; i++) {
-      if (this.state.bricks[i]) {
-        let row = Math.floor(i / 3);
-        bricksList.push(this.getSortedBrickContainer(this.state.bricks[i], i, row));
+      if (this.state.finalBricks[i]) {
+        let row = Math.floor(count / 3);
+        bricksList.push(this.getSortedBrickContainer(this.state.finalBricks[i], i, row));
+        count++;
       }
     }
     return bricksList
@@ -610,20 +723,20 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
               <Grid container style={{width: '60vw', height: '7vh'}}>
               <Grid item>
-                <div className="search-button"></div>
+                <div className="search-button" onClick={() => this.search()}></div>
               </Grid>
               <Grid item>
                 <input
                   className="search-input"
+                  onKeyUp={(e) => this.keySearch(e)}
                   onChange={(e) => this.searching(e.target.value)}
                   placeholder="Search Subjects, Topics, Titles & more" />
               </Grid>
               </Grid>
               <Grid item style={{width: '32.35vw'}}>
                 <Grid container direction="row" justify="flex-end">
-                  <div className="logout-button" onClick={() => this.handleLogoutOpen()}></div>
                   <div className="bell-button"><div></div></div>
-                  <div className="user-button"></div>
+                  <div className="more-button" onClick={() => this.showDropdown()}></div>
                 </Grid>
               </Grid>
             </Grid>
@@ -648,6 +761,57 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             </Grid>
           </Grid>
         </div>
+        <Menu
+          className="brick-list-redirect-dropdown"
+          keepMounted
+          open={this.state.dropdownShown}
+          onClose={() => this.hideDropdown()}
+        >
+          <MenuItem className="first-item menu-item" onClick={() => this.creatingBrick()}>
+            Start Building
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="menu-icon" alt="" src="/images/main-page/create-white.png" />
+              </div>
+            </Grid>
+          </MenuItem>
+          <MenuItem className="menu-item" onClick={() => this.props.history.push('/build/back-to-work')}>
+            Back To Work
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
+              </div>
+            </Grid>
+          </MenuItem>
+          {
+            this.props.user.type === UserType.Admin ? (
+              <MenuItem className="menu-item" onClick={() => this.props.history.push('/build/users')}>
+                Manage Users
+                <Grid container className="menu-icon-container" justify="center" alignContent="center">
+                  <div>
+                    <img className="manage-users-icon svg-icon" alt="" src="/images/users.svg" />
+                  </div>
+                </Grid>
+              </MenuItem>
+            ) : ""
+          }
+          <MenuItem className="view-profile menu-item">
+            View Profile
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="menu-icon svg-icon user-icon" alt="" src="/images/user.svg" />
+              </div>
+            </Grid>
+          </MenuItem>
+          <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
+            Logout
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="menu-icon svg-icon logout-icon" alt="" src="/images/log-out.svg" />
+              </div>
+            </Grid>
+          </MenuItem>
+        </Menu>
         <Dialog
           open={this.state.logoutDialogOpen}
           onClose={() => this.handleLogoutClose()}

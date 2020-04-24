@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Button } from '@material-ui/core';
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
 import './shortAnswerBuild.scss'

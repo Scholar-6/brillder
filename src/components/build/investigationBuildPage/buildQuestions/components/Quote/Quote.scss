@@ -1,4 +1,7 @@
 .question-build-quote-editor {
+  margin-left: 0.5%;
+  width: 99%;
+
   input {
     width: 84%;
     height: 55px;
@@ -8,26 +11,26 @@
     padding-left: 8%;
   }
 
-  .text-label {
-    position: absolute;
-    top: 0;
-    height: 5.5vh;
-    font-size: 1.1vw;
+  .text-label-container {
+    margin: 0 30%;
+
+    .text-label {
+      width: 40%;
+      position: absolute;
+      top: 0;
+      z-index: 1;
+      height: 5.5vh;
+      font-size: 1.1vw;
+    }
   }
 
-  .ck-editor {
-    .ck-icon {
-      font-size: 0.6vw !important;
-    }
-
-    .ck-sticky-panel {
-      .ck-toolbar__items {
-        height: 5.5vh !important;
-      }
-    }
-
-    .ck-content {
-      font-size: 1vw;
-    }
+  .ck-toolbar {
+    z-index: 1000;
+  }
+  .ck-color-table {
+    z-index: 10000;
+  }
+  .ck-color-ui-dropdown {
+    margin-right: 50% !important;
   }
 }

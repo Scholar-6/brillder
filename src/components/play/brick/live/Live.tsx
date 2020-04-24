@@ -8,7 +8,7 @@ import { useHistory, Redirect } from 'react-router-dom';
 
 import './Live.scss';
 import CircleIconNumber from 'components/play/components/circleIcon/circleIcon';
-import { Question } from 'components/model/question';
+import { Question } from 'model/question';
 import QuestionLive from '../questionPlay/QuestionPlay';
 import TabPanel from '../baseComponents/QuestionTabPanel';
 import { PlayStatus } from '../model/model';

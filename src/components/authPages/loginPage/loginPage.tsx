@@ -13,6 +13,7 @@ import "./loginPage.scss";
 import { Redirect } from "react-router-dom";
 import { UserLoginType } from "model/auth";
 
+
 const mapState = (state: any) => {
   return {
     error: state.auth.error,
@@ -92,11 +93,11 @@ const LoginPage: React.FC<LoginProps> = props => {
       toggleAlertMessage(true);
       setAlertMessage(msg);
     }).catch(error => {
-        const {response} = error;
-        if (response) {
-          if (
-            response.status === 500 &&
-            userType === UserLoginType.Student
+      const {response} = error;
+      if (response) {
+        if (
+          response.status === 500 &&
+          userType === UserLoginType.Student
         ) {
           toggleAlertMessage(true);
           setAlertMessage("Server error");
@@ -117,9 +118,11 @@ const LoginPage: React.FC<LoginProps> = props => {
   };
 
   const register = (email: string, password: string) => {
-    axios.post(`${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp/${userType}`, {
-      email, password, confirmPassword: password
-    }).then(resp => {
+    axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp/${userType}`,
+      { email, password, confirmPassword: password },
+      { withCredentials: true }
+    ).then(resp => {
       const { data } = resp;
 
       if (data.errors) {
@@ -158,88 +161,84 @@ const LoginPage: React.FC<LoginProps> = props => {
         <div className="back-box">
           <ArrowBackIcon
             className="back-button"
-            onClick={() =>
-              props.history.push(`/choose-login?userType=${userType}`)
-            }
+            onClick={() => props.history.push(`/choose-login?userType=${userType}`)}
           />
         </div>
       </div>
       <div className="first-col">
         <div className="first-item"></div>
         <div className="second-item">
-            <div>
-              <Grid>
-                <img
-                  alt="Logo"
-                  src="/images/choose-login/logo.png"
-                  className="logo-image"
-                />
-              </Grid>
-              <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
+          <div>
+            <Grid>
+              <img
+                alt="Logo"
+                src="/images/choose-login/logo.png"
+                className="logo-image"
+              />
+            </Grid>
+            <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                className="login-field"
+                required
+                placeholder="Email"
+              />
+              <br />
+              <div
+                className="password-container"
+                style={{ marginLeft: "10%", width: "80%" }}
+              >
                 <input
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  className="login-field"
+                  type={passwordHidden ? "password" : "text"}
+                  value={password}
+                  className="login-field password"
+                  onChange={e => setPassword(e.target.value)}
                   required
-                  placeholder="Email"
+                  style={{fontSize: passwordHidden && password ? "3vw" : "1.5vw"}}
+                  placeholder="Password"
                 />
-                <br />
-                <div
-                  className="password-container"
-                  style={{ marginLeft: "10%", width: "80%" }}
-                >
-                  <input
-                    type={passwordHidden ? "password" : "text"}
-                    value={password}
-                    className="login-field password"
-                    onChange={e => setPassword(e.target.value)}
-                    required
-                    style={{
-                      fontSize: passwordHidden && password ? "3vw" : "1.5vw"
-                    }}
-                    placeholder="Password"
-                  />
-                  <div className="hide-password-icon-container">
-                    <Grid
-                      container
-                      alignContent="center"
-                      style={{ height: "100%" }}
-                    >
-                      <VisibilityIcon
-                        className="hide-password-icon"
-                        onClick={() => setHidden(!passwordHidden)}
-                      />
-                    </Grid>
-                  </div>
-                </div>
-                <div
-                  style={{
-                    width: "80%",
-                    marginLeft: "10%",
-                    textAlign: "right"
-                  }}
-                >
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        className="sign-in-button sign-up-button"
-                        type="button"
-                        onClick={() => register(email, password)}
-                      >
-                        Sign up
-                      </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className="sign-in-button"
-                    type="submit"
+                <div className="hide-password-icon-container">
+                  <Grid
+                    container
+                    alignContent="center"
+                    style={{ height: "100%" }}
                   >
-                    Sign in
-                  </Button>
+                    <VisibilityIcon
+                      className="hide-password-icon"
+                      onClick={() => setHidden(!passwordHidden)}
+                    />
+                  </Grid>
                 </div>
-              </form>
-            </div>
+              </div>
+              <div
+                style={{
+                  width: "80%",
+                  marginLeft: "10%",
+                  textAlign: "right"
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="sign-in-button sign-up-button"
+                  type="button"
+                  onClick={() => register(email, password)}
+                >
+                  Sign up
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="sign-in-button"
+                  type="submit"
+                >
+                  Sign in
+                </Button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
       <div className="second-col">
@@ -247,16 +246,12 @@ const LoginPage: React.FC<LoginProps> = props => {
         <div className="second-item"></div>
       </div>
       <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom', horizontal: 'center',
-        }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         open={alertShown}
         autoHideDuration={1500}
         onClose={() => toggleAlertMessage(false)}
         message={alertMessage}
-        action={
-          <React.Fragment></React.Fragment>
-        }
+        action={<React.Fragment></React.Fragment>}
       />
     </Grid>
   );

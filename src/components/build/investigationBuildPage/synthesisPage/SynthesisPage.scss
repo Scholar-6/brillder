@@ -10,14 +10,32 @@ $border-radius: 0.6vw;
     padding-bottom: 0;
     padding-top: 2.7vh;
 
-    textarea {
+    .ckeditor-synthesis {
       padding: 1.6vh 1vw;
       border-radius: $border-radius;
       min-width: 93%;
-      height: 72vh;
       letter-spacing: 0.03vw;
       font-size: 1.1vw;
       font-family: $font-family-regular;
+
+      
+    }
+
+    .document-editor {
+      .ck-toolbar__items {
+        height: 5vh;
+        .ck-icon {
+          font-size: 1.5vh;
+        }
+      }
+
+      .ck-content {
+        font-size: 1vw;
+        height: 70vh;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        border: 1px solid grey;
+      }
     }
 
     .finish-text {

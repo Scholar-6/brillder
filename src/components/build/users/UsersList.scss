@@ -1,0 +1,530 @@
+@import "_variables";
+
+$brick-radius: 1.2vh;
+$main-panel-radius: 2vw;
+
+$min-brick-height: 9.4vh;
+$left: 0.8vw;
+$right: 1.4vw;
+$lighter-blue: #304775;
+$grey: #B0B0AD;
+$light-grey: #F3F4F7;
+
+
+.users-list-redirect-dropdown {
+  .MuiPaper-root {
+    position: fixed;
+    right: 0 !important;
+    left: auto !important;
+    top: 10.5vh !important;
+    min-width: 14.9vw !important;
+    min-height: 39.7vh;
+    border-radius: 0;
+    border-bottom-left-radius: 2vw;
+    color: white;
+    background: $light-blue;
+    box-shadow: none;
+
+    .menu-item {
+      position: relative;
+      font-family: $font-family-regular !important;
+      font-size: 1.45vw;
+      padding-left: 1.65vw;
+      margin-bottom: 1vh;
+
+      .menu-icon-container {
+        position: fixed;
+        width: 4.5vw;
+        height: 3vh;
+        right: 0vw;
+      }
+      
+      .menu-icon {
+        width: 2.2vw;
+      }
+
+      .svg-icon {
+        filter: invert(1);
+      }
+
+      .user-icon {
+        width: 1.93vw;
+      }
+
+      .logout-icon {
+        width: 1.88vw;
+      }
+
+      .back-to-work-icon {
+        width: 1.5vw;
+      }
+    }
+
+    .first-item {
+      margin-top: 1.7vh;
+    }
+
+    .view-profile {
+      margin-top: 3.4vh;
+    }
+  }
+}
+
+.user-list-page {
+  overflow: hidden;
+  background: $dark-blue;
+  height: 100%;
+  width: 100%;
+  font-family: $font-family-regular;
+
+  .bricks-upper-part {
+    position: relative;
+    min-height: 100%;
+    background: $dark-blue;
+
+    .bricks-pagination {
+      position: absolute;
+      margin-left: 2vw;
+      bottom: 0;
+      height: 9vh;
+      font-size: 0.9vw;
+      color: $dark-blue;
+
+      .grey {
+        color: $grey;
+      }
+
+      .left-pagination {
+        padding-top: 0.35vh;
+        padding-left: 0.15vw;
+        line-height: 1.4;
+      }
+    }
+
+    .bottom-next-button {
+      bottom: 1vh;
+      color: white;
+      > div {
+        position: relative;
+
+        .prev-button {
+          position: absolute;
+          top: -0.6vh;
+          margin-left: 2.8vh;
+          left: -4vw;
+        }
+  
+        .next-button {
+          position: absolute;
+          left: -4vw;
+          top: 1vh;
+        }
+
+        .active:hover {
+          cursor: pointer;
+          color: $dark-blue !important;
+        }
+
+        svg {
+          height: 4.7vh;
+          width: 4.7vh;
+          color: $grey;
+        }
+      }
+    }
+  }
+
+  .bricks-header {
+    height: 10.5vh;
+
+    .home-button-container {
+      padding-right: 1.2vw;
+      width: 5.5vw;
+      border-bottom-right-radius: 2vw;
+      background: $light-blue;
+      height: 10.5vh;
+      
+      .home-button {
+        cursor: pointer;
+        padding-left: 1.05vw;
+        padding-top: 2.2vh;
+        height: 9.3vh;
+        width: 3.3vw;
+        display: block;
+        > div {
+          height: 6.3vh;
+          width: 3.3vw;
+          display: block;
+          background-image: url(/images/choose-login/logo.png);
+          transition: all 0.2s ease-in-out;
+          transform-origin: 70% 50%;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+      }
+      .home-button:hover {
+        > div {
+          background-image: url(/images/brick-list/home-hover.png);
+        }
+      }
+    }
+
+    .logout-container {
+      height: 10.5vh;
+      border-bottom-left-radius: 2vw;
+      background: $light-blue;
+      padding-top: 2.5vh;
+
+      .search-button {
+        cursor: pointer;
+        display: block;
+        margin-top: 0.2vh !important;
+        margin-left: 1.6vw;
+        height: 5vh;
+        width: 5vh;
+        margin-top: 0.1vh;
+        margin-right: 0vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/brick-list/search.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 70% 50%;
+      }
+      .search-button:hover {
+        background-image: url(/images/brick-list/search-hover.png);
+      }
+
+      .search-input {
+        display: block;
+        border: none;
+        background-color: $light-blue !important;
+        font-family: $font-family-regular;
+        font-size: 1.7vw;
+        border: red;
+        border-radius: 12px;
+        border: none !important;
+        margin-left: 2.3vw;
+        margin-top: 0vh;
+        letter-spacing: 0.045vw;
+        height: 5.5vh;
+        width: 40vw;
+        padding-right: 2px;
+        color: #acacac;
+      }
+
+      .logout-button {
+        cursor: pointer;
+        display: block;
+        height: 5.6vh;
+        width: 5.65vh;
+        margin-top: 0.1vh;
+        margin-right: 4.27vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/main-page/logout.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 70% 50%;
+      }
+
+      .logout-button:hover {
+        transform: scale(1.4);
+        background-image: url(/images/main-page/logout-hover.png);
+      }
+
+      .bell-button {
+        cursor: pointer;
+        margin-top: 0.53vh;
+        display: block;
+        color: white;
+        text-align: center;
+        padding-top: 1vh;
+        height: 4vh;
+        width: 4.4vh;
+        margin-right: 3.5vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/brick-list/bell.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 50% 50%;
+
+        > span {
+          margin-top: 1vh;
+        }
+      }
+
+
+      .bell-button:hover {
+        background-image: url(/images/brick-list/bell-hover.png);
+      }
+
+      .more-button {
+        cursor: pointer;
+        margin-top: 0.5vh;
+        margin-right: 2.2vw;
+        width: 6.7vh;
+        display: inline-block;
+        background-color: $orange;
+  
+        -webkit-mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
+        mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
+        -webkit-mask-size: cover;
+        mask-size: cover;
+
+        transition: all 0.2s ease-in-out;
+        transform-origin: 50% 50%;
+      }
+
+      .more-button:hover {
+        transform: scale(1.4);
+      }
+    }
+  }
+
+  h3 {
+    color: white;
+    font-family: $font-family-regular;
+    font-weight: normal;
+    margin-top: 2.5vh;
+    margin-left: 1.05vw;
+    margin-bottom: 1vh;
+    letter-spacing: 0.27vw;
+    font-size: 1.3vw;
+  }
+
+  .your-bricks-list {
+    position: relative;
+    min-height: 70%;
+    padding-left: $left;
+    padding-right: $right;
+  }
+
+  .sorted-row {
+    margin-top: 3.5vh;
+    height: 87.1vh;
+    .sort-and-filter-container {
+      color: white;
+
+      .sort-box {
+        margin-bottom: 1.2vh;
+        padding-top: 1vh;
+        border-top-right-radius: $main-panel-radius;
+        width: 100%;
+        background: $light-blue;
+
+        .role-filter-header {
+          margin-top: 1.2vh;
+          margin-left: 1.3vw;
+          text-transform: uppercase;
+          font-size: 1.3vw;
+          letter-spacing: 0.25vw;
+          margin-bottom: 1.7vh;
+        }
+        .roles-row {
+          margin-left: 0.3vw;
+        }
+        .filter-header {
+          text-transform: uppercase;
+          background: #304775 0% 0% no-repeat padding-box;
+          padding-left: 1.4vw;
+          font-size: 1.3vw;
+          margin-top: 5vh;
+          letter-spacing: 0.22vw;
+          margin-bottom: 2.8vh;
+            .filter-control {
+              vertical-align:middle
+            }
+            .filter-control:not(:first-child) {
+              margin-left: 0.9vw;
+              cursor: pointer;
+            }
+        }
+        .sort-group {
+          margin-top: 0.45vh;
+          margin-left: 0.9vw;
+          display: block;
+          label {
+            .sortBy {
+              padding-left: 1.2vw;
+              padding-right: 0.4vw;
+              svg {
+                height: 2.2vh;
+                width: 2.2vh;
+                color: $orange !important;
+              }
+            }
+            .MuiFormControlLabel-label {
+              font: 1.05vw $font-family-regular !important;
+              letter-spacing: 0.06vw;
+            }
+          }
+        }
+        .filter-container {
+          cursor: default;
+          margin-bottom: 0.1vh;
+          margin-right: 0;
+          width: 100%;
+          > span.filter-radio {
+            padding-left: 2vw;
+            padding-right: 0.4vw;
+            svg {
+              height: 2.2vh;
+              width: 2.2vh;
+              color: $orange;
+            }
+          }
+          .MuiFormControlLabel-label {
+            font: 1.05vw $font-family-regular !important;
+            letter-spacing: 0.06vw;
+          }
+          .custom-color svg { color: var(--color)!important; }
+        }
+        .filter-container:nth-child(odd) {
+          width: 100%;
+        }
+      }
+    }
+    .brick-row-container {
+      position: relative;
+      border-top-left-radius: $main-panel-radius;
+      margin-left: 2.5vw;
+      background: white;
+      height: 100%;
+
+      .brick-row-title {
+        padding-left: 2.2vw;
+        color: $dark-blue;
+        padding-top: 2vh;
+        padding-bottom: 2vh;
+        line-height: 1;
+        font-size: 5.4vw;
+        letter-spacing: 1.05vw;
+        font-family: $font-family-black;
+      }
+
+      .users-table {
+        border: none;
+        width: 100%;
+        height: 59vh;
+        thead {
+          background: $tab-grey;
+          color: $dark-blue;
+          font-family: $font-family-black;
+          font-size: 1.3vw;
+          letter-spacing: 0.25vw;
+          tr {
+            th {
+              padding-top: 0.6vh;
+              padding-bottom: 0.6vh;
+              text-align: left;
+              padding-left: 0.5vw;
+            }
+
+            .subject-title {
+              width: 5%;
+            }
+            .user-full-name {
+              width: 30%;
+            }
+            .email-column {
+              width: 31.3%;
+            }
+            .edit-button-column {
+              width: 2.5vw;
+            }
+          }
+        }
+        tr.user-row {
+          td {
+            padding-left: 0.5vw;
+            color: $dark-blue;
+
+            .edit-button {
+              background-size: 100% 100%;
+              background-repeat: no-repeat;
+              background-position: center;
+              background-image: url(/images/edit.png);
+              height: 1.85vw;
+              width: 1.85vw;
+            }
+          }
+          .activate-button-container {
+            padding-left: 2vw;
+          }
+        }
+        tr.user-row:nth-child(odd) {
+          background: $tab-grey;
+        }
+        .user-last-name {
+          font-family: $font-family-bold;
+        }
+      }
+      .role-description {
+        width: 100%;
+        text-align: right;
+        font-size: 0.8vw;
+        margin-top: 0.6vh;
+        margin-right: 6vw;
+        color: $dark-blue;
+        letter-spacing: 0.015vw;
+
+        .bold {
+          font-family: $font-family-bold;
+        }
+      }
+    }
+  }
+}
+
+.alert-dialog {
+  position: fixed;
+  top: 0;
+
+  .MuiDialog-paperScrollPaper {
+    position: fixed;
+    top: 8.3vh;
+    right: 7vw;
+    border-radius: 0.8vw;
+  }
+
+  .logout-dialog-header {
+    padding: 3.8vh 1vw 3.5vh 2.2vw;
+    font-size: 2.35vw;
+    letter-spacing: 0;
+    color: $dark-blue;
+  }
+
+  .logout-buttons {
+    padding-bottom: 2.3vh;
+
+    button {
+      min-width: 9.55vw;
+      font-size: 2vw;
+      border-radius: 0.6vw;
+      text-transform: none;
+      font-weight: normal !important;
+      padding-top: 1.1vh;
+      padding-bottom: 1.1vh;
+      line-height: 1;
+      font-family: $font-family-regular;
+      > span {
+        width: 100%;
+      }
+    }
+
+    .yes-button {
+      color: white;
+      background: $orange;
+      margin-right: 1.4vw !important;
+    }
+
+    .no-button {
+      color: $dark-blue;
+      background: $tab-grey;
+      margin-right: 0.2vw;
+    }
+  }
+}

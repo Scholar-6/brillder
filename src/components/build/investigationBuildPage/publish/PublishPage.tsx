@@ -6,7 +6,7 @@ import { Grid, CircularProgress } from "@material-ui/core";
 import { connect } from 'react-redux';
 
 import "./PublishPage.scss";
-import { Brick, BrickStatus } from "model/brick";
+import { BrickStatus } from "model/brick";
 
 
 interface PublishBrickProps {
@@ -50,7 +50,7 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
     e.target.innerHTML = `<img alt="tick" src="/images/tick-white.png" />`;
     if (this.props.user.type === UserType.Admin || this.props.user.type === UserType.Editor) {
       this.publish();
-    } else if (this.props.user.type === UserType.Creator) {
+    } else if (this.props.user.type === UserType.Builder) {
       this.review();
     } else {
       return;
@@ -100,7 +100,7 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
       {}, {withCredentials: true}
     ).then(response => {
       const {data} = response;
-      if (response.status === 200 && data.status === BrickStatus.Publish) {
+      if (response.status === 200 && data.status === BrickStatus.Review) {
         return;
       }
       let {msg} = data;
@@ -148,7 +148,7 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
               {
                 (this.props.user.type === UserType.Admin || this.props.user.type === UserType.Editor)
                   ? "SUBMIT"
-                  : (this.props.user.type === UserType.Creator)
+                  : (this.props.user.type === UserType.Builder)
                     ? "REVIEW"
                     : ""
               }

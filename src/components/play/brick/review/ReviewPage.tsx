@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 import './ReviewPage.scss';
 import GreenTickIcon from 'components/play/components/GreenTickIcon';
 import BlueCrossIcon from 'components/play/components/BlueCrossIcon';
-import { Question } from 'components/model/question';
+import { Question } from 'model/question';
 import QuestionLive from '../questionPlay/QuestionPlay';
 import TabPanel from '../baseComponents/QuestionTabPanel';
 import { PlayStatus, ComponentAttempt } from '../model/model';

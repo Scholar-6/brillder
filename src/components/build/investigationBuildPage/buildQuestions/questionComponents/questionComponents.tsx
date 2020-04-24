@@ -16,7 +16,7 @@ import MissingWordComponent from '../questionTypes/missingWordBuild/MissingWordB
 import PairMatchComponent from '../questionTypes/pairMatchBuild/pairMatchBuild';
 import VerticalShuffleComponent from '../questionTypes/verticalShuffleBuild/verticalShuffleBuild';
 import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHighlighting';
-import { Question, QuestionTypeEnum } from 'components/model/question';
+import { Question, QuestionTypeEnum } from 'model/question';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 
 
