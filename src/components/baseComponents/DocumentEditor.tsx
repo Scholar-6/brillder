@@ -55,7 +55,8 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
                 label: 'Green'
               }]
             },
-            toolbar: ['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']
+            toolbar: ['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList'],
+            mediaEmbed: { previewsInData: true }
           }}
           onInit={(e:any) => this.handleOnInit(e)}
           onChange={(e: any, editor: any) => {

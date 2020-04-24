@@ -11,10 +11,6 @@ export interface SynthesisProps {
   onReview(): void
 }
 
-const editorConfiguration = {
-  toolbar: ['bold', 'italic', 'bulletedList', 'numberedList']
-};
-
 const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange, onReview }) => {
   document.title = "Synthesis";
 
