@@ -156,6 +156,7 @@ $question-radius: 0.6vw;
 
     .question-components-list {
       max-height: 76vh;
+      overflow-x: hidden;
       overflow-y: auto;
       border: 1px solid #707070;
       border-radius: 0.6vw;
