@@ -52,7 +52,6 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
   const [saved, setSaved] = React.useState(false);
 
   const setSubject = (subjectId: number) => {
-    console.log(subjectId);
     setBrick({ ...state, subjectId });
   }
 

@@ -23,11 +23,8 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
   }
 
   const onSubjectChange = (event: any) => {
-    console.log(event.target.value);
     setSubject(event.target.value as number);
   };
-
-  console.log(subject);
 
   return (
     <div className="tutorial-page subject-page">
