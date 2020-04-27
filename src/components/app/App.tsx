@@ -71,6 +71,7 @@ const App: React.FC = (props: any) => {
         <BuildRoute path="/build/bricks-list" component={BricksListPage} />
         <BuildRoute path="/build/back-to-work" component={BackToWorkPage} />
         <BuildRoute path="/build/users" component={UsersListPage} />
+        <BuildRoute path="/build/user-profile/:userId" component={UserProfilePage} />
         <BuildRoute path="/build/user-profile" component={UserProfilePage} />
         <BuildRoute path="/build" component={MainPage} />
 

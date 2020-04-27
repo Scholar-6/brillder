@@ -415,7 +415,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                     onChange={() => this.toggleUser(user)}
                   />
                 </td>
-                <td><div className="edit-button" />
+                <td>
+                  <div className="edit-button" onClick={() => this.props.history.push(`/build/user-profile/${user.id}`)}/>
                 </td>
               </tr>
             );
