@@ -152,7 +152,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       process.env.REACT_APP_BACKEND_HOST + '/users',
       {
         pageSize: this.state.pageSize,
-        page,
+        page: page.toString(),
         searchString: "",
         roleFilters: [],
         isAscending: true
