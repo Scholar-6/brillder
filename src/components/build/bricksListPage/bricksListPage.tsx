@@ -795,7 +795,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               </MenuItem>
             ) : ""
           }
-          <MenuItem className="view-profile menu-item">
+          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/build/user-profile')}>
             View Profile
             <Grid container className="menu-icon-container" justify="center" alignContent="center">
               <div>

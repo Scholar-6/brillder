@@ -44,16 +44,17 @@ interface BricksListProps {
 interface BricksListState {
   users: User[];
   page: number;
+  pageSize: number;
+  totalCount: number;
+
   searchString: string;
   isSearching: boolean;
+
   subjects: any[];
   roles: any[];
-  sortedIndex: number;
+
   filterExpanded: boolean;
   logoutDialogOpen: boolean;
-
-  deleteDialogOpen: boolean;
-  deleteBrickId: number;
   dropdownShown: boolean;
 }
 
@@ -115,13 +116,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     super(props)
     this.state = {
       users: [],
-      page: 0,
+      page: 1,
+      pageSize: 12,
       subjects: [],
-      sortedIndex: 0,
       filterExpanded: true,
       logoutDialogOpen: false,
-      deleteDialogOpen: false,
-      deleteBrickId: -1,
+
       roles: [
         { name: 'Student', type: UserType.Student, checked: false },
         { name: 'Teacher', type: UserType.Teacher, checked: false },
@@ -130,25 +130,38 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         { name: 'Admin', type: UserType.Admin, checked: false },
       ],
 
+      totalCount: 0,
       searchString: '',
       isSearching: false,
       dropdownShown: false
     };
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/users', {withCredentials: true, pageSize: 19, page: 0} as any)
-      .then(res => {
-        this.setState({...this.state, users: res.data})
-      })
-      .catch(error => { 
-        alert('Can`t get users');
-      });
+    this.getUsers(this.state.page);
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true})
-    .then(res => {
+    axios.get(
+      process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true}
+    ).then(res => {
       this.setState({...this.state, subjects: res.data });
-    })
-    .catch(error => {
+    }).catch(error => {
       alert('Can`t get subjects');
+    });
+  }
+
+  getUsers(page: number) {
+    axios.post(
+      process.env.REACT_APP_BACKEND_HOST + '/users',
+      {
+        pageSize: this.state.pageSize,
+        page,
+        searchString: "",
+        roleFilters: [],
+        isAscending: true
+      },
+      {withCredentials: true}
+    ).then(res => {
+      this.setState({...this.state, users: res.data.pageData, totalCount: res.data.totalCount})
+    }).catch(error => { 
+      alert('Can`t get users');
     });
   }
 
@@ -161,33 +174,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.props.history.push(`/build/brick/${brickId}/build/investigation/question`)
   }
 
-  formatTwoLastDigits(twoLastDigits: number) {
-    var formatedTwoLastDigits = "";
-    if (twoLastDigits < 10 ) {
-      formatedTwoLastDigits = "0" + twoLastDigits;
-    } else {
-      formatedTwoLastDigits = "" + twoLastDigits;
-    }
-    return formatedTwoLastDigits;
-  }
-
-  getYear(date: Date) {
-    var currentYear =  date.getFullYear();   
-    var twoLastDigits = currentYear % 100;
-    return this.formatTwoLastDigits(twoLastDigits);
-  }
-
-  getMonth(date: Date) {
-    const month = date.getMonth() + 1;
-    var twoLastDigits = month % 10;
-    return this.formatTwoLastDigits(twoLastDigits);
-  }
-
-  getDate(date: Date) {
-    const days = date.getDate();
-    return this.formatTwoLastDigits(days);
-  }
-  
   handleSortChange = (e: any) => {
   }
 
@@ -331,46 +317,41 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  renderTitle = () => {
-    return "ALL USERS";
-  }
-
   renderPagination() {
-    const showPrev = this.state.sortedIndex >= 15;
-    const showNext = this.state.sortedIndex + 15 <= this.state.users.length;
-    
+    const {totalCount, users, page, pageSize} = this.state;
+    const showPrev = page > 0;
+    const currentPage = page;
+    const showNext = ((totalCount / pageSize) - currentPage) > 1;
+    const prevCount = currentPage * pageSize;
+    const minUser = prevCount + 1;
+    const maxUser = prevCount + users.length;
+
+    const nextPage = () => {
+      this.setState({...this.state, page: page + 1});
+      this.getUsers(page + 1);
+    }
+
+    const previousPage = () => {
+      this.setState({...this.state, page: page - 1});
+      this.getUsers(page - 1);
+    }
+
     return (
-      <Grid container direction="row" className="bricks-pagination">
+      <Grid container direction="row" className="users-pagination">
         <Grid item xs={4} className="left-pagination">
           <div className="first-row">
-            {this.state.sortedIndex + 1}-{  
-              this.state.sortedIndex + 15 > this.state.users.length
-                ? this.state.users.length
-                : this.state.sortedIndex + 15
-            }
-            <span className="grey"> &nbsp;|&nbsp; {this.state.users.length}</span>
+            {minUser}-{maxUser}
+            <span className="grey"> &nbsp;|&nbsp; {totalCount}</span>
           </div>
           <div>
-            {(this.state.sortedIndex + 15) / 15}
-            <span className="grey"> &nbsp;|&nbsp; {Math.ceil(this.state.users.length / 15)}</span>
+            {page}
+            <span className="grey"> &nbsp;|&nbsp; {Math.ceil(totalCount / pageSize)}</span>
           </div>
         </Grid>
         <Grid container item xs={4} justify="center" className="bottom-next-button">
           <div>
-            {
-              showPrev ? (
-                <ExpandLessIcon
-                  className={"prev-button " + (showPrev ? "active" : "")}
-                />
-              ) : ""
-            }
-            {
-              showNext ? (
-                <ExpandMoreIcon
-                  className={"next-button " + (showNext ? "active" : "")}
-                />
-              ) : ""
-            }
+            { showPrev ? <ExpandLessIcon onClick={previousPage} className="prev-button active" /> : "" }
+            { showNext ? <ExpandMoreIcon onClick={nextPage} className="next-button active" /> : "" }
           </div>
         </Grid>
       </Grid>
@@ -410,7 +391,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         <tbody>
         {
           this.state.users.map((user:any, i:number) => {
-            if (i > 11) { return <tr key={i}></tr>}
             return (
               <tr className="user-row" key={i}>
                 <td></td>
@@ -447,8 +427,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     const {history} = this.props;
     return (
       <div className="user-list-page">
-        <div className="bricks-upper-part">
-          <Grid container direction="row" className="bricks-header">
+        <div className="users-upper-part">
+          <Grid container direction="row" className="users-header">
             <Grid item style={{width: '7.65vw'}}>
               <Grid container direction="row">
                 <Grid item className="home-button-container">
@@ -484,9 +464,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               {this.renderSortAndFilterBox()}
             </Grid>
             <Grid item xs={9} style={{position: 'relative'}}>
-              <div className="brick-row-container">
-                <div className="brick-row-title">
-                  {this.renderTitle()}
+              <div className="user-row-container">
+                <div className="user-row-title">
+                  ALL USERS
                 </div>
                 <Grid container direction="row">
                   {this.renderUsers()}
@@ -527,7 +507,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               </div>
             </Grid>
           </MenuItem>
-          <MenuItem className="view-profile menu-item">
+          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/build/user-profile')}>
             View Profile
             <Grid container className="menu-icon-container" justify="center" alignContent="center">
               <div>
