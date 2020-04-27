@@ -24,9 +24,11 @@
     border-top-right-radius: 0.4vw !important;
     z-index: 1000;
   }
+
   .ck-color-table {
     z-index: 10000;
   }
+
   .ck-color-ui-dropdown {
     margin-right: 50% !important;
   }
@@ -34,5 +36,8 @@
   .ck-content {
     border-bottom-left-radius: 0.4vw !important;
     border-bottom-right-radius: 0.4vw !important;
+    box-shadow: none !important;
+    border-top: none !important;
+    border: 1px solid var(--ck-color-toolbar-border);
   }
 }
