@@ -116,7 +116,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     super(props)
     this.state = {
       users: [],
-      page: 1,
+      page: 0,
       pageSize: 12,
       subjects: [],
       filterExpanded: true,
@@ -147,13 +147,14 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     });
   }
 
-  getUsers(page: number) {
+  getUsers(page: number, subjects: number[] = []) {
     axios.post(
       process.env.REACT_APP_BACKEND_HOST + '/users',
       {
         pageSize: this.state.pageSize,
         page: page.toString(),
         searchString: "",
+        subjectFilters: subjects,
         roleFilters: [],
         isAscending: true
       },
@@ -187,18 +188,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       }
     }
     return result;
-  }
-
-  getCheckedSubjectIds() {
-    const filterSubjects = [];
-    const {state} = this;
-    const {subjects} = state;
-    for (let subject of subjects) {
-      if (subject.checked) {
-        filterSubjects.push(subject.id);
-      }
-    }
-    return filterSubjects;
   }
 
   handleLogoutOpen() {
@@ -274,6 +263,30 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({...this.state, dropdownShown: false});
   }
 
+  filterBySubject = (i: number) => {
+    const {subjects} = this.state;
+    subjects[i].checked = !subjects[i].checked
+    this.filter();
+    this.setState({...this.state});
+  }
+
+  getCheckedSubjectIds() {
+    const filterSubjects = [];
+    const {state} = this;
+    const {subjects} = state;
+    for (let subject of subjects) {
+      if (subject.checked) {
+        filterSubjects.push(subject.id);
+      }
+    }
+    return filterSubjects;
+  }
+
+  filter() {
+    let filterSubjects = this.getCheckedSubjectIds();
+    this.getUsers(0, filterSubjects);
+  }
+
   renderSortAndFilterBox = () => {
     return (
       <div className="sort-box">
@@ -317,6 +330,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                   <FormControlLabel
                     className="filter-container"
                     checked={subject.checked}
+                    onClick={() => this.filterBySubject(i)}
                     control={<Radio className={"filter-radio custom-color"} style={{['--color' as any] : subject.color}} />}
                     label={subject.name}
                   />
