@@ -34,14 +34,14 @@ const mapDispatch = (dispatch: any) => {
 
 const connector = connect(mapState, mapDispatch);
 
-interface BricksListProps {
+interface UsersListProps {
   user: User,
   history: any;
   logout(): void;
   forgetBrick(): void;
 }
 
-interface BricksListState {
+interface UsersListState {
   users: User[];
   page: number;
   pageSize: number;
@@ -111,8 +111,8 @@ const IOSSwitch = anyStyles((theme:any) => ({
 });
 
 
-class BricksListPage extends Component<BricksListProps, BricksListState> {
-  constructor(props: BricksListProps) {
+class UsersListPage extends Component<UsersListProps, UsersListState> {
+  constructor(props: UsersListProps) {
     super(props)
     this.state = {
       users: [],
@@ -575,4 +575,4 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 }
 
-export default connector(BricksListPage);
+export default connector(UsersListPage);
