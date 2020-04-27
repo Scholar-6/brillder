@@ -249,7 +249,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   getAuthorRow(brick: Brick) {
-    let row = "Author ";
+    let row = "";
     const created = new Date(brick.created);
     const year = this.getYear(created);
     const month = this.getMonth(created);

@@ -16,7 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import authActions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
 
-import { User, UserType } from 'model/user';
+import { User, UserType, UserStatus } from 'model/user';
 
 
 const mapState = (state: any) => {
@@ -227,7 +227,13 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/user/activate/${userId}`, {}, {withCredentials: true} as any
     ).then(res => {
-      console.log(res);
+      if (res.data === 'OK') {
+        const user = this.state.users.find(user => user.id === userId);
+        if (user) {
+          user.status = UserStatus.Active;
+        }
+        this.setState({...this.state});
+      }
     }).catch(error => { 
       alert('Can`t activate user');
     });
@@ -237,14 +243,20 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/user/deactivate/${userId}`, {}, {withCredentials: true} as any
     ).then(res => {
-      console.log(res);
+      if (res.data === 'OK') {
+        const user = this.state.users.find(user => user.id === userId);
+        if (user) {
+          user.status = UserStatus.Disabled;
+        }
+        this.setState({...this.state});
+      }
     }).catch(error => { 
       alert('Can`t deactivate user');
     });
   }
 
   toggleUser(user: User) {
-    if (user.status === 1) {
+    if (user.status === UserStatus.Active) {
       this.deactivateUser(user.id);
     } else {
       this.activateUser(user.id);
@@ -398,7 +410,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 <td>{user.email}</td>
                 <td>{this.renderUserType(user)}</td>
                 <td className="activate-button-container">
-                  <IOSSwitch checked={user.status === 1} onChange={() => this.toggleUser(user)} />
+                  <IOSSwitch
+                    checked={user.status === UserStatus.Active}
+                    onChange={() => this.toggleUser(user)}
+                  />
                 </td>
                 <td><div className="edit-button" />
                 </td>
