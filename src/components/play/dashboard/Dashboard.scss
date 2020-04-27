@@ -10,6 +10,66 @@ $lighter-blue: #304775;
 $grey: #B0B0AD;
 $light-grey: #F3F4F7;
 
+
+.play-dashboard-redirect-dropdown {
+  .MuiPaper-root {
+    position: fixed;
+    right: 0 !important;
+    left: auto !important;
+    top: 10.5vh !important;
+    min-width: 14.9vw !important;
+    border-radius: 0;
+    border-bottom-left-radius: 2vw;
+    color: white;
+    background: $light-blue;
+    box-shadow: none;
+
+    .menu-item {
+      cursor: pointer;
+      position: relative;
+      font-family: $font-family-regular !important;
+      font-size: 1.45vw;
+      padding-left: 1.65vw;
+      margin-bottom: 1vh;
+
+      .menu-icon-container {
+        position: fixed;
+        width: 4.5vw;
+        height: 3vh;
+        right: 0vw;
+      }
+
+      .menu-icon {
+        width: 2.2vw;
+      }
+
+      .svg-icon {
+        filter: invert(1);
+      }
+
+      .user-icon {
+        width: 1.93vw;
+      }
+
+      .logout-icon {
+        width: 1.88vw;
+      }
+
+      .back-to-work-icon {
+        width: 1.5vw;
+      }
+      .manage-users-icon {
+        margin-top: 0.13vh;
+        width: 1.9vw;
+      }
+    }
+
+    .first-item {
+      margin-top: 1.7vh;
+    }
+  }
+}
+
 .dashboard-page {
   overflow: hidden;
   background: $dark-blue;
@@ -197,6 +257,27 @@ $light-grey: #F3F4F7;
 
       .bell-button:hover {
         background-image: url(/images/brick-list/bell-hover.png);
+      }
+
+      .more-button {
+        cursor: pointer;
+        margin-top: 0.5vh;
+        margin-right: 2.2vw;
+        width: 6.7vh;
+        display: inline-block;
+        background-color: $orange;
+  
+        -webkit-mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
+        mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
+        -webkit-mask-size: cover;
+        mask-size: cover;
+
+        transition: all 0.2s ease-in-out;
+        transform-origin: 50% 50%;
+      }
+
+      .more-button:hover {
+        transform: scale(1.4);
       }
 
       .user-button {
