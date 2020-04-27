@@ -398,6 +398,14 @@ $grey: #B0B0AD;
               padding-bottom: 0.6vh;
               text-align: left;
               padding-left: 0.5vw;
+
+              .sort-button {
+                cursor: pointer;
+                margin-top: 0.3vh;
+                margin-left: 0.4vw;
+                height: 1.5vw;
+                width: 1.5vw;
+              }
             }
 
             .subject-title {

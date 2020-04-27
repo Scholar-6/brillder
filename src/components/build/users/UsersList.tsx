@@ -41,6 +41,13 @@ interface UsersListProps {
   forgetBrick(): void;
 }
 
+enum UserSortBy {
+  None,
+  Name,
+  Role,
+  Status
+}
+
 interface UsersListState {
   users: User[];
   page: number;
@@ -56,6 +63,9 @@ interface UsersListState {
   filterExpanded: boolean;
   logoutDialogOpen: boolean;
   dropdownShown: boolean;
+
+  sortBy: UserSortBy;
+  isAscending: boolean;
 }
 
 let anyStyles = withStyles as any;
@@ -133,7 +143,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       totalCount: 0,
       searchString: '',
       isSearching: false,
-      dropdownShown: false
+      dropdownShown: false,
+
+      sortBy: UserSortBy.None,
+      isAscending: false,
     };
 
     this.getUsers(this.state.page);
@@ -147,7 +160,26 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     });
   }
 
-  getUsers(page: number, subjects: number[] = []) {
+  getUsers(page: number, subjects: number[] = [], sortBy: UserSortBy = UserSortBy.None, isAscending: any = null) {
+    let orderBy = null;
+
+    if (sortBy === UserSortBy.None) {
+      sortBy = this.state.sortBy;
+    }
+
+    if (isAscending === null) {
+      isAscending = this.state.isAscending;
+    }
+
+    if (sortBy) {
+      if (sortBy === UserSortBy.Name) {
+        orderBy = "user.firstName";
+      } else if (sortBy === UserSortBy.Status) {
+        orderBy = "user.status";
+      } else if (sortBy === UserSortBy.Role) {
+        orderBy = "user.type";
+      }
+    }
     axios.post(
       process.env.REACT_APP_BACKEND_HOST + '/users',
       {
@@ -156,7 +188,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         searchString: "",
         subjectFilters: subjects,
         roleFilters: [],
-        isAscending: true
+        orderBy,
+        isAscending,
       },
       {withCredentials: true}
     ).then(res => {
@@ -311,20 +344,20 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             {
               this.state.filterExpanded
                 ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }}
-                    onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
+                  onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
                 : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }}
-                    onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
+                  onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
             }
             {
               this.state.subjects.some((r: any) => r.checked)
-              ? <ClearIcon className='filter-control' style={{ fontSize: '2vw' }} onClick={() => {}} />
-              : ''
+                ? <ClearIcon className='filter-control' style={{ fontSize: '2vw' }} onClick={() => {}} />
+                : ''
             }
           </div>
         </div>
         <Grid container direction="row">
-        {
-          this.state.filterExpanded
+          {
+            this.state.filterExpanded
               ? this.state.subjects.map((subject, i) =>
                 <Grid item xs={((i % 2) === 1) ? 7 : 5} key={i}>
                   <FormControlLabel
@@ -335,9 +368,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                     label={subject.name}
                   />
                 </Grid>
-              )
-              : ''
-        }
+              ) : ''
+          }
         </Grid>
       </div>
     );
@@ -400,19 +432,71 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     return type;
   }
 
+  sortBy(sortBy: UserSortBy) {
+    let isAscending = this.state.isAscending;
+
+    if (sortBy === this.state.sortBy) {
+      isAscending = !isAscending;
+      this.setState({...this.state, isAscending});
+    } else {
+      isAscending = false;
+      this.setState({...this.state, isAscending, sortBy});
+    }
+    let filterSubjects = this.getCheckedSubjectIds();
+    this.getUsers(this.state.page, filterSubjects, sortBy, isAscending);
+  }
+
+  renderSortArrow(currentSortBy: UserSortBy) {
+    const {sortBy, isAscending} = this.state;
+
+    return (
+      <img
+        className="sort-button" alt=""
+        src={
+          sortBy === currentSortBy
+            ? !isAscending ? "/feathericons/chevron-down.svg"
+              : "/feathericons/chevron-up.svg"
+            : "/feathericons/chevron-right.svg"
+        }
+        onClick={() => this.sortBy(currentSortBy)}
+      />
+    );
+  }
+
+  renderUserTableHead() {
+    return (
+      <tr>
+        <th className="subject-title">SC</th>
+        <th className="user-full-name">
+          <Grid container>
+            NAME
+            {this.renderSortArrow(UserSortBy.Name)}
+          </Grid>
+        </th>
+        <th className="email-column">EMAIL</th>
+        <th>
+          <Grid container>
+            ROLE
+            {this.renderSortArrow(UserSortBy.Role)}
+          </Grid>
+        </th>
+        <th>
+          <Grid container>
+            ACTIVE?
+            {this.renderSortArrow(UserSortBy.Status)}
+          </Grid>
+        </th>
+        <th className="edit-button-column"></th>
+      </tr>
+    );
+  }
+
   renderUsers() {
     if (!this.state.users) { return "" }
     return (
       <table className="users-table" cellSpacing="0" cellPadding="0">
         <thead>
-          <tr>
-            <th className="subject-title">SC</th>
-            <th className="user-full-name">NAME</th>
-            <th className="email-column">EMAIL</th>
-            <th>ROLE</th>
-            <th>ACTIVE?</th>
-            <th className="edit-button-column"></th>
-          </tr>
+          {this.renderUserTableHead()}
         </thead>
         <tbody>
         {
