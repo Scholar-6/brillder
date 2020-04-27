@@ -6,6 +6,12 @@ export enum UserType {
   Editor,
 }
 
+export enum UserStatus {
+  Pending,
+  Active,
+  Disabled
+}
+
 export interface User {
   id: number
   type: UserType,
@@ -14,5 +20,5 @@ export interface User {
   tutorialPassed: boolean
   email: string
   subjects: any[],
-  status: number,
+  status: UserStatus,
 }
