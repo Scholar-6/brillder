@@ -356,7 +356,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             <span className="grey"> &nbsp;|&nbsp; {totalCount}</span>
           </div>
           <div>
-            {page}
+            {page + 1}
             <span className="grey"> &nbsp;|&nbsp; {Math.ceil(totalCount / pageSize)}</span>
           </div>
         </Grid>
