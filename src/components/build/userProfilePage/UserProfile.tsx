@@ -14,8 +14,9 @@ import brickActions from 'redux/actions/brickActions';
 
 import './UserProfile.scss';
 import authActions from 'redux/actions/auth';
-import { User, UserType } from 'model/user';
+import { User, UserType, UserStatus } from 'model/user';
 import PhonePreview from '../baseComponents/phonePreview/PhonePreview';
+import { Subject } from 'model/brick';
 
 
 const mapState = (state: any) => {
@@ -36,11 +37,14 @@ const connector = connect(mapState, mapDispatch);
 interface BackToWorkProps {
   user: User,
   history: any;
+  match: any;
   forgetBrick(): void;
   logout(): void;
 }
 
 interface BackToWorkState {
+  user: User;
+  subjects?: Subject[];
   searchString: string;
   isSearching: boolean;
   logoutDialogOpen: boolean;
@@ -52,7 +56,18 @@ interface BackToWorkState {
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   constructor(props: BackToWorkProps) {
     super(props)
+    const {userId} = props.match.params;
     this.state = {
+      user: {
+        id: -1,
+        firstName: '',
+        lastName: '',
+        type: 0,
+        tutorialPassed: false,
+        email: '',
+        subjects: [],
+        status: UserStatus.Pending,
+      },
       logoutDialogOpen: false,
       deleteDialogOpen: false,
       searchString: '',
@@ -66,6 +81,52 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         { name: "Admin"}
       ]
     };
+    if (userId) {
+      axios.get(
+        `${process.env.REACT_APP_BACKEND_HOST}/user/${userId}`, {withCredentials: true}
+      ).then(res => {
+        const user = res.data as User;
+        if (!user.email) {
+          user.email = '';
+        }
+        if (!user.firstName) {
+          user.firstName = '';
+        }
+        if (!user.lastName) {
+          user.lastName = '';
+        }
+        this.setState({...this.state, user: res.data});
+      })
+      .catch(error => {
+        alert('Can`t get user profile');
+      });
+    }
+
+    axios.get(
+      process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true}
+    ).then(res => {
+      this.setState({...this.state, subjects: res.data });
+    })
+    .catch(error => {
+      alert('Can`t get bricks');
+    });
+  }
+
+  saveUserProfile() {
+    const {user} = this.state;
+    const {id, firstName, lastName, type} = user;
+    const userToSave = {
+      id, firstName, lastName, type
+    };
+    axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/user`, {...userToSave}, {withCredentials: true}
+    ).then(res => {
+      if (res.data === 'OK') {
+        
+      }
+    }).catch(error => {
+      alert('Can`t save user profile');
+    });
   }
 
   logout() {
@@ -92,6 +153,24 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   hideDropdown() {
     this.setState({...this.state, dropdownShown: false});
+  }
+
+  onFirstNameChanged(e: any) {
+    const {user} = this.state;
+    user.firstName = e.target.value;
+    this.setState({...this.state});
+  }
+
+  onLastNameChanged(e: any) {
+    const {user} = this.state;
+    user.lastName = e.target.value;
+    this.setState({...this.state});
+  }
+
+  onEmailChanged(e: any) {
+    const {user} = this.state;
+    user.email = e.target.value;
+    this.setState({...this.state});
   }
 
   searching(searchString: string) { }
@@ -145,7 +224,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
               <div className="profile-block">
                 <div className="profile-header">NAME</div>
                 <div className="save-button-container">
-                  <Avatar alt="" src="/feathericons/save-blue.png" className="save-image" />
+                  <Avatar
+                    alt="" src="/feathericons/save-blue.png" className="save-image"
+                    onClick={() => this.saveUserProfile()}
+                  />
                 </div>
                 <Grid container direction="row">
                   <Grid container className="profile-image-container" justify="center" alignContent="flex-start">
@@ -160,8 +242,23 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                   </Grid>
                   <Grid item className="profile-inputs-container">
                     <div>
-                      <input placeholder="Name Surname" />
-                      <input placeholder="username@domain.com" />
+                      <input
+                        className="first-name"
+                        value={this.state.user.firstName}
+                        onChange={(e: any) => this.onFirstNameChanged(e)}
+                        placeholder="Name"
+                      />
+                      <input
+                        className="last-name"
+                        value={this.state.user.lastName}
+                        onChange={(e: any) => this.onLastNameChanged(e)}
+                        placeholder="Surname"
+                      />
+                      <input
+                        value={this.state.user.email}
+                        onChange={(e: any) => this.onEmailChanged(e)}
+                        placeholder="username@domain.com"
+                      />
                       <input placeholder="* * * * * * * * * * *"/>
                     </div>
                   </Grid>
@@ -170,7 +267,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                     <Grid container className="roles-box">
                       {
                         this.state.roles.map((role: any, i:number) =>
-                          <Grid item>
+                          <Grid item key={i}>
                             <FormControlLabel
                               className="filter-container"
                               key={i}

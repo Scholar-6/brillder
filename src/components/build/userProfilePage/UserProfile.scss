@@ -245,6 +245,7 @@ $light-grey: #F5F6F7;
       right: 1vw;
       
       .save-image {
+        cursor: pointer;
         text-align: center;
         height: 3.5vw;
         width: 3.5vw;
@@ -321,17 +322,41 @@ $light-grey: #F5F6F7;
         box-shadow: 0 0 0.3vw rgba(0,0,0,0.2);
       }
 
+      .first-name {
+        width: 13.4vw;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        margin-right: 0.5vw;
+      }
+
+      .last-name {
+        width: 16.9vw;
+        padding-left: 0.6vw;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
       ::placeholder {
         color: $dark-blue;
         opacity: 1;
       }
-      
+
       :-ms-input-placeholder {
        color: $dark-blue;
       }
       
       ::-ms-input-placeholder {
        color: $dark-blue;
+      }
+
+      .last-name::placeholder {
+        font-family: $font-family-bold;
+      }
+      .last-name:-ms-input-placeholder {
+        font-family: $font-family-bold;
+      }
+      .last-name::-ms-input-placeholder {
+        font-family: $font-family-bold;
       }
     }
     .profile-roles-container {
