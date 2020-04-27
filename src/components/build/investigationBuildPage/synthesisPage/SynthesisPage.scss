@@ -30,9 +30,14 @@ $border-radius: 0.6vw;
       .ck-content {
         font-size: 1vw;
         height: 70vh;
+        border-top: none !important;
+        border: 1px solid var(--ck-color-toolbar-border);
         border-top-left-radius: 0 !important;
         border-top-right-radius: 0 !important;
-        border: 1px solid grey;
+        border-bottom-left-radius: 0.4vw !important;
+        border-bottom-right-radius: 0.4vw !important;
+        box-shadow: none !important;
+        background: #E5E8ED;
       }
     }
 

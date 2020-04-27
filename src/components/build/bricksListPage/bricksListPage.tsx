@@ -625,10 +625,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           <Grid container direction="row">
             {
               this.state.subjects.map((subject, i) =>
-                <Grid item xs={((i % 2) === 1) ? 7 : 5}>
+                <Grid item xs={((i % 2) === 1) ? 7 : 5} key={i}>
                   <FormControlLabel
                     className="filter-container"
-                    key={i}
                     checked={subject.checked}
                     onClick={() => this.filterBySubject(i)}
                     control={<Radio className={"filter-radio custom-color"} style={{['--color' as any] : subject.color}} />}
