@@ -147,7 +147,7 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
             >
               {
                 (this.props.user.type === UserType.Admin || this.props.user.type === UserType.Editor)
-                  ? "SUBMIT"
+                  ? "PUBLISH"
                   : (this.props.user.type === UserType.Builder)
                     ? "REVIEW"
                     : ""
