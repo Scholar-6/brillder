@@ -106,19 +106,20 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         alert('Can`t get bricks')
       });
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/byStatus/' + BrickStatus.Publish, {withCredentials: true})
-      .then(res => {  
-        this.setState({...this.state, bricks: res.data, finalBricks: res.data as Brick[] });
-      })
-      .catch(error => { 
-        alert('Can`t get bricks');
-      });
+    axios.get(
+      `${process.env.REACT_APP_BACKEND_HOST}/bricks/byStatus/${BrickStatus.Publish}`,
+      {withCredentials: true}
+    ).then(res => {  
+      this.setState({...this.state, bricks: res.data, finalBricks: res.data as Brick[] });
+    }).catch(error => { 
+      alert('Can`t get bricks');
+    });
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true})
-    .then(res => {
+    axios.get(
+      process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true}
+    ).then(res => {
       this.setState({...this.state, subjects: res.data });
-    })
-    .catch(error => {
+    }).catch(error => {
       alert('Can`t get bricks');
     });
   }
