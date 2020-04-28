@@ -44,15 +44,21 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
   const [brief, setBrief] = React.useState(parentBrief);
 
   const setBriefText = (event: React.ChangeEvent<{ value: string }>) => {
-    setBrief(event.target.value)
+    let value = event.target.value;
+    let limit = 5;
+    let values = event.target.value.replace(/\r\n/g,"\n").split("\n")
+    if (values.length > limit) {
+      value = values.slice(0, limit).join("\n")
+    }
+    setBrief(value)
   }
 
   return (
     <div className="tutorial-page brief-prep-page">
       <HomeButton link='/build' />
-      <Navigation step={ProposalStep.BrickTitle} />
+      <Navigation step={ProposalStep.Brief} />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
-        <Grid justify="center" item className="left-block">
+        <Grid className="left-block">
           <h1 className="only-tutorial-header">
             Outline the purpose of this brick.
           </h1>

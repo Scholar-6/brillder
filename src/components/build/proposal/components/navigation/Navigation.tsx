@@ -35,11 +35,31 @@ const NextButton:React.FC<NextButtonProps> = ({ step }) => {
   return (
     <div className="navigation-container">
       <Grid container item justify="center">
-        <img onClick={() => moveToTitles()} className="navigation-button first" alt="" src="/images/new-brick/titles.png" />
-        <img onClick={() => moveToOpenQuestion()} className="navigation-button" alt="" src="/images/new-brick/head.png" />
-        <img onClick={() => moveToBrief()} className="navigation-button" alt="" src="/images/new-brick/brief-circles.png" />
-        <img onClick={() => moveToPrep()} className="navigation-button" alt="" src="/images/new-brick/prep.png" />
-        <img onClick={() => moveToLength()} className="navigation-button last" alt="" src="/images/new-brick/brick-length.png" />
+        <img
+          onClick={moveToTitles}
+          className="navigation-button first" alt=""
+          src="/images/new-brick/titles.png"
+        />
+        <img
+          onClick={moveToOpenQuestion}
+          className="navigation-button" alt=""
+          src={step >= ProposalStep.OpenQuestion ? "/images/new-brick/head.png" : "/images/new-brick/head-grey.png"}
+        />
+        <img
+          onClick={moveToBrief}
+          className="navigation-button" alt=""
+          src={step >= ProposalStep.Brief ? "/images/new-brick/brief-circles.png" : "/images/new-brick/brief-circles-grey.png"}
+        />
+        <img
+          onClick={moveToPrep}
+          className="navigation-button" alt=""
+          src={step >= ProposalStep.Prep ? "/images/new-brick/prep.png" : "/images/new-brick/prep-grey.png"}
+        />
+        <img
+          onClick={moveToLength}
+          className="navigation-button last" alt=""
+          src={step >= ProposalStep.BrickLength ? "/images/new-brick/brick-length.png" : "/images/new-brick/brick-length-grey.png"}
+        />
       </Grid>
     </div>
   );

@@ -8,27 +8,35 @@
     width: 60vw;
   }
 
-  $textarea-size2: 8.6vh;
-  $textarea-size1: 8.7vh;
+  $textarea-size2: 9.2vh;
+  $textarea-size1: 9.3vh;
 
   textarea {
     font-family: $font-family-regular;
     margin-left: 9.4vw;
-    height: 54vh;
+    height: 45vh;
     font-size: 1.5vw;
     width: 42.2vw;
     line-height: $textarea-size1;
     padding: 0 !important;
-    background-image: -webkit-linear-gradient(left,white 0px, transparent 0px),
+    background-image:
+      -webkit-linear-gradient(left,white 0px, transparent 0px),
       -webkit-linear-gradient(right, white 0px, transparent 0px),
-      -webkit-linear-gradient(white $textarea-size2, #ccc $textarea-size2, #ccc $textarea-size1, white $textarea-size1);
+      -webkit-linear-gradient(
+        white $textarea-size2,
+        #ccc $textarea-size2,
+        #ccc $textarea-size1,
+        white $textarea-size1
+      );
     background-size: 100% 100%, 100% 100%, 100% $textarea-size1 !important;
     border: none;
     resize: none;
     overflow: hidden;
+    padding-top: 1.8vh !important;
   }
 
   .only-tutorial-header {
+    margin-left: 1.3vw;
     margin-top: 0.5vh;
     font-size: 3.2vw;
     letter-spacing: 0.04vw;
