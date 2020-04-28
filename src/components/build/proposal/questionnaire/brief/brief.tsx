@@ -58,12 +58,12 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
           </h1>
           <textarea
             value={brief}
+            rows={4}
             onChange={setBriefText}
-            style={{ width: '90%', border: '2px solid black', height: '70px', fontSize: '1.2vw', textAlign: 'left' }}
             placeholder="Enter Brief Here..."
           />
-          <PreviousButton to="/build/new-brick/open-question" />
           <NextButton step={ProposalStep.Brief} canSubmit={true} data={brief} onSubmit={saveBrief} />
+          <PreviousButton to="/build/new-brick/open-question" />
         </Grid>
         <ProposalPhonePreview Component={BriefPreviewComponent} data={brief} />
         <div className="red-right-block"></div>

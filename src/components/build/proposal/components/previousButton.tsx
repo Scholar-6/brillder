@@ -1,7 +1,5 @@
 import React from "react";
 import { useHistory } from 'react-router-dom';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { IconButton } from "material-ui";
 
 import './previousButton.scss';
 import { Grid } from "@material-ui/core";
