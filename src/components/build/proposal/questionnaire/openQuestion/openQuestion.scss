@@ -1,25 +1,43 @@
 @import "_variables";
 
 .open-question-page {
+  .left-block {
+    margin-top: 5vh;
+    width: 60vw;
+  }
+
+  .tutorial-header {
+    margin: 0;
+    font-family: $font-family-black;
+    font-size: 3.9vw;
+    letter-spacing: 0.09vw;
+    text-align: center;
+    line-height: 1.35;
+    color: $dark-blue;
+  }
+
+  .sub-header {
+    font-family: $font-family-regular;
+    font-size: 1.32vw;
+    text-align: center;
+    color: $dark-blue;
+  }
+
   .audience-inputs {
-    width: 100% !important;
-  }
+    font-family: $font-family-regular;
+    font-size: 1.4vw !important;
+    margin-top: 6.2vh;
+    margin-left: 9vw;
+    width: 43vw !important;
+    margin-bottom: 9vh;
 
-  .left-card {
-    position: relative;
-    padding-bottom: 20%;
-  }
-
-  .only-tutorial-header {
-    font-size: 1.7vw !important;
-    margin-bottom: 5% !important;
-
-    .sub-header {
-      margin-top: 0vh !important;
-      font-size: 1.1vw;
-      letter-spacing: 0.1vw;
-      font-family: 'Brandon Grotesque Light';
+    input {
+      padding-bottom: 1.7vh;
     }
+  }
+
+  .MuiInputBase-input {
+    letter-spacing: 0.05vw;
   }
 
   .phone-preview-component {
@@ -29,8 +47,8 @@
 
     img {
       width: auto;
-      margin-top: 8vh;
-      height: 44%;
+      margin-top: 8.8vh;
+      height: 34%;
     }
     .typing-text {
       position: absolute;
@@ -44,30 +62,6 @@
       font-family: $font-family-regular;
       height: 8.4vw;
       overflow-y: auto;
-    }
-  }
-
-  @media only screen and (max-width: 959px) and (min-width: 600px) {
-    .only-tutorial-header {
-      font-size: 2.6vw !important;
-      .sub-header {
-        font-size: 2vw !important;
-      }
-    }
-    .left-card {
-      width: 80% !important;
-    }
-  }
-
-  @media only screen and (max-width: 599px) {
-    .only-tutorial-header {
-      font-size: 3vw !important;
-      .sub-header {
-        font-size: 2.3vw !important;
-      }
-    }
-    .left-card {
-      width: 90% !important;
     }
   }
 }

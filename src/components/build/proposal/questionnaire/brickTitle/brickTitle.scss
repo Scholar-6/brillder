@@ -2,30 +2,35 @@
 
 $box-radius: 0.4vw;
 
-.align-center {
-  text-align: center !important;
-  display: block !important;
-}
-
 .brick-title-page {
-  .MuiInputBase-input {
-    font-family: $font-family-regular;
-  }
-  .left-card {
-    position: relative;
-    padding-bottom: 14%;
-  }
+  .left-block {
+    width: 60vw;
 
-  .audience-inputs {
-    width: 100% !important;
-    font-size: 1.4vw;
-    margin: 1vh 3vw !important;
-  }
+    .only-tutorial-header {
+      font-family: $font-family-black;
+      margin-top: 4.7vh;
+      font-size: 3.9vw;
+      letter-spacing: 0.09vw;
+      text-align: center;
+      color: $dark-blue;
+      margin-bottom: 12.1vh !important;
+    }
 
-  .only-tutorial-header {
-    font-family: $font-family-bold;
-    font-size: 2vw;
-    margin-bottom: 5% !important;
+    .MuiInputBase-input {
+      font-family: $font-family-regular;
+      letter-spacing: 0.05vw;
+    }
+
+    .input-container {
+      margin-left: 9vw;
+      width: 43vw;
+
+      .audience-inputs {
+        width: 100% !important;
+        font-size: 1.8vw;
+        margin-bottom: 4.1vh;
+      }
+    }
   }
 
   .brick-title-container {
@@ -39,15 +44,15 @@ $box-radius: 0.4vw;
     letter-spacing: 0.1vw;
 
     .titles-image {
-      margin-top: 0.5vw;
-      height: 6.2vw;
+      margin-top: 1.5vw;
+      height: 7vw;
     }
 
     .brick-preview-container {
       overflow: hidden;
       position: relative;
-      padding: 0.6vh 0.75vw 0.6vh 1.6vw;
-      font-size: 1vw;
+      padding: 0.6vh 0.75vw 0.6vh 1.2vw;
+      font-size: 1.3vw;
       letter-spacing: 0;
       width: 100%;
       margin-top: 2.5vh;
@@ -66,7 +71,7 @@ $box-radius: 0.4vw;
       }
 
       .brick-title {
-        height: 1vw;
+        height: 1.4vw;
         line-height: 1;
         font-family: $font-family-bold;
         overflow-y: hidden;
@@ -77,18 +82,6 @@ $box-radius: 0.4vw;
         height: 1vw;
         overflow: hidden;
       }
-    }
-  }
-
-  @media only screen and (max-width: 959px) and (min-width: 600px) {
-    .left-card {
-      width: 70% !important;
-    }
-  }
-
-  @media only screen and (max-width: 599px) {
-    .left-card {
-      width: 70% !important;
     }
   }
 }

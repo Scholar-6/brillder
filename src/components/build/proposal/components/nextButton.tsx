@@ -1,10 +1,11 @@
 import React from "react";
 import { useHistory } from 'react-router-dom';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { IconButton } from "material-ui";
 
 import { ProposalStep } from "../model";
 import './nextButton.scss';
+import { Grid } from "@material-ui/core";
 
 interface NextButtonProps {
   step: ProposalStep
@@ -40,11 +41,9 @@ const NextButton:React.FC<NextButtonProps> = ({ step, canSubmit, onSubmit, data 
   }
 
   return (
-    <div className="tutorial-next-container">
-      <IconButton className="tutorial-next-button" onClick={next} aria-label="next">
-        <ArrowForwardIosIcon className="tutorial-next-icon" />
-      </IconButton>
-    </div>
+    <Grid container justify="center" className="tutorial-next-container">
+      <img alt="" src="/feathericons/chevron-down-orange.png" onClick={next} />
+    </Grid>
   );
 }
 

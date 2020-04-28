@@ -2,29 +2,9 @@
 
 .tutorial-page {
   .tutorial-prev-container {
-    cursor: pointer;
-    position: absolute;
-    bottom: 1%;
-    left: -2.3%;
-    padding: 0px !important;
-    z-index: 2;
-    padding-right: 0 !important;
-
-    .tutorial-prev-button {
-      padding: 0 !important;
-      margin: 0 !important;
-      width: 20% !important;
-      height: 20% !important;
-      color: $orange;
-
-      span {
-        width: 550% !important;
-        height: 100% !important;
-      }
-
-      .tutorial-prev-icon {
-        font-size: 3.6vw;
-      }
+    > img {
+      cursor: pointer;
+      height: 6.5vh;
     }
   }
 }
