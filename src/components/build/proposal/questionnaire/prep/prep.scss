@@ -21,6 +21,7 @@
   .document-editor {
     margin-top: 4.6vh;
     margin-left: 9.5vw;
+    margin-bottom: 3.5vh;
     width: 42.7vw;
 
     .ck-toolbar {
@@ -32,18 +33,37 @@
 
       .ck-button {
         border-radius: 2.1vw;
-        font-size: 2.8vh;
+        font-size: 1.7vw;
         color: $dark-blue;
+        margin-right: 0;
+        margin-left: 0;
+        padding-right: 0;
+        padding-left: 0;
+        min-width: 3.2vw;
+      }
+      .ck-toolbar__items {
+        > .ck:nth-child(4) {
+          margin-left: 23vw;
+        }
       }
     }
 
     .ck-content {
-      border: none;
+      border: none !important;
       box-shadow: none !important;
       background: #F5F6F7;
       height: 38vh;
-      border-bottom-left-radius: 2.1vw;
-      border-bottom-right-radius: 2.1vw;
+      border-bottom-left-radius: 2.1vw !important;
+      border-bottom-right-radius: 2.1vw !important;
+      font-size: 1.5vw;
+      padding-top: 0.7vh;
+      padding-left: 1.05vw;
+      letter-spacing: 0.01vw;
+
+      > p {
+        margin-top: 0.5vh !important;
+        margin-bottom: 0.5vh !important;
+      }
     }
   }
 
@@ -56,21 +76,25 @@
   .first-phone-image {
     width: auto;
     margin-left: 0;
-    margin-top: 6.8vh;
-    height: 27.5%;
+    margin-top: 6.3vh;
+    height: 31%;
   }
 
   .typing-text {
     position: absolute;
-    top: 55%;
+    top: 53.5%;
     width: 88%;
     overflow: hidden;
     text-align: left;
-    left: 1.5vw;
+    left: 1.2vw;
     font-size: 1.25vw;
     color: white;
     font-family: $font-family-regular;
-    height: 12.2vw;
+    height: 16.4vw;
     overflow-y: auto;
+
+    p {
+      margin: 0 !important;
+    }
   }
 }
