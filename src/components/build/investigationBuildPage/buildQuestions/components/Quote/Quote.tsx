@@ -26,7 +26,7 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, upd
           Quote
         </Grid>
       </div>
-      <DocumentCKEditor data={data.value} onChange={onChange} />
+      <DocumentCKEditor data={data.value} placeholder="" onChange={onChange} />
     </div>
   );
 }

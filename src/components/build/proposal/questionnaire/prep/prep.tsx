@@ -22,7 +22,6 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
       <Grid container justify="center" alignContent="flex-start" className="prep-phone-preview">
         <img className="first-phone-image"
           alt="head"
-          style={{height: '40%'}}
           src="/images/new-brick/prep.png">
         </img>
         <div className="typing-text" dangerouslySetInnerHTML={{ __html: data}} />
@@ -33,7 +32,7 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
     <Grid container justify="center" alignContent="flex-start" className="prep-phone-preview">
       <img className="first-phone-image"
         alt="head"
-        style={{height: '50%'}}
+        style={{height: '45%'}}
         src="/images/new-brick/prep.png">
       </img>
     </Grid>
@@ -51,7 +50,11 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
         <Grid className="left-block">
           <h1 className="tutorial-header">Add engaging and relevant</h1>
           <h1 className="tutorial-header">preparatory material.</h1>
-          <DocumentCKEditor data={prep} onChange={setPrep} />
+          <DocumentCKEditor
+            data={prep}
+            placeholder="Enter Instructions, Links to Videos and Webpages Here…"
+            onChange={setPrep}
+          />
           <NextButton step={ProposalStep.Prep} canSubmit={true} data={prep} onSubmit={savePrep} />
           <PreviousButton to="/build/new-brick/brief" />
         </Grid>

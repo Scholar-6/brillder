@@ -9,6 +9,7 @@ import './DocumentEditor.scss';
 
 export interface DocumentEditorProps {
   data: string,
+  placeholder: string,
   onChange(data: string): void,
 }
 
@@ -43,6 +44,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
           data={this.state.data}
           editor={DecoupledEditor}
           config={{
+            placeholder: this.props.placeholder,
             fontColor: {
               colors: [{
                 color: '#C43C30',
