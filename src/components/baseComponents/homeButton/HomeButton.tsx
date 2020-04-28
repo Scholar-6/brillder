@@ -98,12 +98,13 @@ class HomeButtonComponent extends React.Component<any, HomeButtonState> {
       <Grid item style={{width: '7.65vw'}}>
         <Grid container direction="row">
           <Grid item className="home-button-container">
-            <div className="home-button" onClick={() => { this.props.history.push(this.props.link) }}>
-              <div
-                onMouseEnter={() => this.onMouseEnterHandler()}
-                onMouseLeave={() => this.onMouseLeaveHandler()}
-                ref={this.state.ref}
-              />
+            <div
+              className="home-button"
+              onMouseEnter={() => this.onMouseEnterHandler()}
+              onMouseLeave={() => this.onMouseLeaveHandler()}
+              onClick={() => { this.props.history.push(this.props.link) }}
+            >
+              <div ref={this.state.ref} />
             </div>
           </Grid>
         </Grid>
