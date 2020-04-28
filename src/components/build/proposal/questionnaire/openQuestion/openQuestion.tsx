@@ -38,7 +38,7 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
   return (
     <div className="tutorial-page open-question-page">
       <HomeButton link='/build' />
-      <Navigation step={ProposalStep.BrickTitle} />
+      <Navigation step={ProposalStep.OpenQuestion} />
       <Grid container direction="row">
         <Grid justify="center" item className="left-block">
           <h1 className="tutorial-header">Ideally, every brick should</h1>
