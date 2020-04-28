@@ -132,39 +132,6 @@ $grey: #B0B0AD;
   .users-header {
     height: 10.5vh;
 
-    .home-button-container {
-      padding-right: 1.2vw;
-      width: 5.5vw;
-      border-bottom-right-radius: 2vw;
-      background: $light-blue;
-      height: 10.5vh;
-      
-      .home-button {
-        cursor: pointer;
-        padding-left: 1.05vw;
-        padding-top: 2.2vh;
-        height: 9.3vh;
-        width: 3.3vw;
-        display: block;
-        > div {
-          height: 6.3vh;
-          width: 3.3vw;
-          display: block;
-          background-image: url(/images/choose-login/logo.png);
-          transition: all 0.2s ease-in-out;
-          transform-origin: 70% 50%;
-          background-size: 100% 100%;
-          background-repeat: no-repeat;
-          background-position: center;
-        }
-      }
-      .home-button:hover {
-        > div {
-          background-image: url(/images/brick-list/home-hover.png);
-        }
-      }
-    }
-
     .logout-container {
       height: 10.5vh;
       border-bottom-left-radius: 2vw;

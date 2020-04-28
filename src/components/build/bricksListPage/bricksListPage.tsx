@@ -14,6 +14,7 @@ import AnimateHeight from 'react-animate-height';
 
 import authActions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType } from 'model/user';
@@ -711,15 +712,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       <div className="bricks-list-page">
         <div className="bricks-upper-part">
           <Grid container direction="row" className="bricks-header">
-            <Grid item style={{width: '7.65vw'}}>
-              <Grid container direction="row">
-                <Grid item className="home-button-container">
-                  <div className="home-button" onClick={() => { this.props.history.push('/build') }}>
-                    <div></div>
-                  </div>
-                </Grid>
-              </Grid>
-            </Grid>
+            <HomeButton link='/build' />
             <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
               <Grid container style={{width: '60vw', height: '7vh'}}>
               <Grid item>

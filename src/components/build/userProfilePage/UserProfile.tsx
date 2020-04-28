@@ -13,6 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import brickActions from 'redux/actions/brickActions';
 
 import './UserProfile.scss';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import authActions from 'redux/actions/auth';
 import { User, UserType, UserStatus } from 'model/user';
 import PhonePreview from '../baseComponents/phonePreview/PhonePreview';
@@ -188,15 +189,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       <div className="user-profile-page">
         <div className="bricks-upper-part">
           <Grid container direction="row" className="page-header">
-            <Grid item style={{width: '7.65vw'}}>
-              <Grid container direction="row">
-                <Grid item className="home-button-container">
-                  <div className="home-button" onClick={() => { this.props.history.push('/build') }}>
-                    <div></div>
-                  </div>
-                </Grid>
-              </Grid>
-            </Grid>
+            <HomeButton link="/build" />
             <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
               <Grid container style={{width: '60vw', height: '7vh'}}>
               <Grid item>
