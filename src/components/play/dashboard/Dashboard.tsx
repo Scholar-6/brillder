@@ -11,6 +11,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import authActions from 'redux/actions/auth';
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType } from 'model/user';
@@ -527,15 +528,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       <div className="dashboard-page">
         <div className="bricks-upper-part">
           <Grid container direction="row" className="bricks-header">
-            <Grid item style={{width: '7.65vw'}}>
-              <Grid container direction="row">
-                <Grid item className="home-button-container">
-                  <div className="home-button">
-                    <div></div>
-                  </div>
-                </Grid>
-              </Grid>
-            </Grid>
+            <HomeButton />
             <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
               <Grid container style={{width: '60vw', height: '7vh'}}>
               <Grid item>
