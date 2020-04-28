@@ -1,12 +1,13 @@
 import React from "react";
 import { Grid, Input } from "@material-ui/core";
 
-import ExitButton from '../../components/ExitButton';
-import { ProposalStep } from "../../model";
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import NextButton from '../../components/nextButton';
+import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
+import Navigation from 'components/build/proposal/components/navigation/Navigation';
+import { ProposalStep } from "../../model";
 import PreviousButton from '../../components/previousButton';
 import './openQuestion.scss';
-import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
 
 const HeadComponent:React.FC<any> = ({data}) => {
@@ -22,7 +23,7 @@ const HeadComponent:React.FC<any> = ({data}) => {
   }
   return (
     <Grid container justify="center" className="phone-preview-component">
-      <img alt="head" src="/images/new-brick/head.png" style={{marginTop: '34%', height: '61%'}}></img>
+      <img alt="head" src="/images/new-brick/head.png" style={{marginTop: '34%', height: '54%'}}></img>
     </Grid>
   )
 }
@@ -36,33 +37,29 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
 
   return (
     <div className="tutorial-page open-question-page">
-      <ExitButton />
-      <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
-        <Grid container justify="center" item xs={12} md={8} lg={8}>
-          <Grid justify="center" container item xs={12} sm={11} md={9} lg={9}>
-            <div className="left-card">
-              <h1 className="only-tutorial-header">
-                <p>Ideally, every brick should point to a bigger question.</p>
-                <p className="sub-header">Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.</p>
-              </h1>
-              <Grid container justify="center" item xs={12}>
-                <Input
-                  className="audience-inputs"
-                  value={openQuestion}
-                  onChange={handleChange}
-                  placeholder="Enter Open Question(s)..." />
-              </Grid>
-              <PreviousButton to="/build/new-brick/brick-title" />
-              <p className="page-number">2 of 4</p>
-              <NextButton
-                step={ProposalStep.OpenQuestion}
-                canSubmit={true}
-                onSubmit={saveOpenQuestion}
-                data={openQuestion} />
-            </div>
-          </Grid>
+      <HomeButton link='/build' />
+      <Navigation step={ProposalStep.BrickTitle} />
+      <Grid container direction="row">
+        <Grid justify="center" item className="left-block">
+          <h1 className="tutorial-header">Ideally, every brick should</h1>
+          <h1 className="tutorial-header">point to a bigger question.</h1>
+          <p className="sub-header">Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.</p>
+          <Input
+            className="audience-inputs"
+            value={openQuestion}
+            onChange={handleChange}
+            placeholder="Enter Open Question(s)..."
+          />
+          <NextButton
+            step={ProposalStep.OpenQuestion}
+            canSubmit={true}
+            onSubmit={saveOpenQuestion}
+            data={openQuestion} />
+          <PreviousButton to="/build/new-brick/brick-title" />
         </Grid>
-        <PhonePreview Component={HeadComponent} data={openQuestion} link="" />
+        <ProposalPhonePreview Component={HeadComponent} data={openQuestion} link="" />
+        <div className="red-right-block"></div>
+        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );

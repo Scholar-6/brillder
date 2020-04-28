@@ -3,9 +3,10 @@ import { Grid, Input } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep } from "../../model";
-import ExitButton from '../../components/ExitButton';
-import NextButton from '../../components/nextButton'
-import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
+import NextButton from '../../components/nextButton';
+import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
+import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { Brick } from "model/brick";
 
 
@@ -91,23 +92,33 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
 
   return (
     <div className="tutorial-page brick-title-page">
-      <ExitButton />
-      <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
-        <Grid container justify="center" item xs={12} md={8} lg={8}>
-          <Grid justify="center" container item xs={12} sm={9} md={7} lg={7}>
-            <div className="left-card">
-              <h1 className="only-tutorial-header">What is your brick about?</h1>
-              <Grid container justify="center" item xs={12}>
-                <Input className="audience-inputs" value={titles.title} onChange={(onTitleChange)} placeholder="Enter Proposed Title Here..." />
-                <Input className="audience-inputs" value={titles.subTopic} onChange={onSubTopicChange} placeholder="Enter Topic(s)..." />
-                <Input className="audience-inputs" value={titles.alternativeTopics} onChange={onAltTopicChange} placeholder="Enter Subtopic(s)..." />
-              </Grid>
-              <p className="page-number">1 of 4</p>
-              <NextButton step={ProposalStep.BrickTitle} canSubmit={true} onSubmit={saveTitles} data={titles} />
-            </div>
+      <HomeButton link='/build' />
+      <Navigation step={ProposalStep.BrickTitle} />
+      <Grid container direction="row">
+        <Grid justify="center" item className="left-block">
+          <h1 className="only-tutorial-header">What is your brick about?</h1>
+          <Grid item className="input-container">
+            <Input
+              className="audience-inputs"
+              value={titles.title}
+              onChange={(onTitleChange)}
+              placeholder="Enter Proposed Title Here..." />
+            <Input
+              className="audience-inputs"
+              value={titles.subTopic}
+              onChange={onSubTopicChange}
+              placeholder="Enter Topic..." />
+            <Input
+              className="audience-inputs"
+              value={titles.alternativeTopics}
+              onChange={onAltTopicChange}
+              placeholder="Enter Subtopic(s)..." />
           </Grid>
+          <NextButton step={ProposalStep.BrickTitle} canSubmit={true} onSubmit={saveTitles} data={titles} />
         </Grid>
-        <PhonePreview Component={BrickTitlePreviewComponent} data={titles} />
+        <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={titles} />
+        <div className="red-right-block"></div>
+        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );

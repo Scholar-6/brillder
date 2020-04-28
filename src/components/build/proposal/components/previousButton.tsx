@@ -1,9 +1,10 @@
 import React from "react";
 import { useHistory } from 'react-router-dom';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { IconButton } from "material-ui";
 
 import './previousButton.scss';
+import { Grid } from "@material-ui/core";
 
 function PreviousButton({ to }: any) {
   const history = useHistory()
@@ -13,11 +14,9 @@ function PreviousButton({ to }: any) {
   }
 
   return (
-    <div className="tutorial-prev-container">
-      <IconButton className="tutorial-prev-button" onClick={prev} aria-label="next">
-        <ArrowForwardIosIcon className="tutorial-prev-icon rotate-180" />
-      </IconButton>
-    </div>
+    <Grid container justify="center" className="tutorial-prev-container">
+      <img alt="" src="/feathericons/chevron-up-orange.png" onClick={prev} />
+    </Grid>
   );
 }
 
