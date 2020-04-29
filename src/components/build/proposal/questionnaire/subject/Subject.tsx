@@ -23,11 +23,8 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
   }
 
   const onSubjectChange = (event: any) => {
-    console.log(event.target.value);
     setSubject(event.target.value as number);
   };
-
-  console.log(subject);
 
   return (
     <div className="tutorial-page subject-page">
@@ -61,7 +58,7 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
               </Grid>
               {
                 subject ? (
-                  <NextButton step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
+                  <NextButton isActive={true} step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
                 ) : ""
               }
             </div>

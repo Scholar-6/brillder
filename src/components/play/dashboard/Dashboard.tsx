@@ -8,7 +8,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ClearIcon from '@material-ui/icons/Clear';
 import Dialog from '@material-ui/core/Dialog';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import authActions from 'redux/actions/auth';
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType } from 'model/user';
@@ -46,6 +49,7 @@ interface BricksListState {
   logoutDialogOpen: boolean;
   finalBricks: Brick[];
 
+  dropdownShown: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
 }
@@ -69,7 +73,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       deleteDialogOpen: false,
       deleteBrickId: -1,
       finalBricks: [],
-
+      dropdownShown: false,
       searchBricks: [],
       searchString: '',
       isSearching: false,
@@ -304,6 +308,14 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
+  showDropdown() {
+    this.setState({...this.state, dropdownShown: true});
+  }
+
+  hideDropdown() {
+    this.setState({...this.state, dropdownShown: false});
+  }
+
   keySearch(e: any) {
     if (e.keyCode === 13) {
       this.search();
@@ -364,7 +376,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                       </Grid>
                       <Grid item xs={4} container justify="flex-start">
                         {
-                          (this.props.user.type === UserType.Admin)
+                          (this.props.user.roles.some(role => role.roleId === UserType.Admin))
                             ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
                             : ""
                         }
@@ -516,15 +528,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       <div className="dashboard-page">
         <div className="bricks-upper-part">
           <Grid container direction="row" className="bricks-header">
-            <Grid item style={{width: '7.65vw'}}>
-              <Grid container direction="row">
-                <Grid item className="home-button-container">
-                  <div className="home-button">
-                    <div></div>
-                  </div>
-                </Grid>
-              </Grid>
-            </Grid>
+            <HomeButton />
             <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
               <Grid container style={{width: '60vw', height: '7vh'}}>
               <Grid item>
@@ -540,9 +544,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               </Grid>
               <Grid item style={{width: '32.35vw'}}>
                 <Grid container direction="row" justify="flex-end">
-                  <div className="logout-button" onClick={() => this.handleLogoutOpen()}></div>
                   <div className="bell-button"><div></div></div>
-                  <div className="user-button"></div>
+                  <div className="more-button" onClick={() => this.showDropdown()}></div>
                 </Grid>
               </Grid>
             </Grid>
@@ -564,6 +567,29 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             </Grid>
           </Grid>
         </div>
+        <Menu
+          className="play-dashboard-redirect-dropdown"
+          keepMounted
+          open={this.state.dropdownShown}
+          onClose={() => this.hideDropdown()}
+        >
+          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/build/user-profile')}>
+            View Profile
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="menu-icon svg-icon user-icon" alt="" src="/images/user.svg" />
+              </div>
+            </Grid>
+          </MenuItem>
+          <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
+            Logout
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="menu-icon svg-icon logout-icon" alt="" src="/images/log-out.svg" />
+              </div>
+            </Grid>
+          </MenuItem>
+        </Menu>
         <Dialog
           open={this.state.logoutDialogOpen}
           onClose={() => this.handleLogoutClose()}

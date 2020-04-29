@@ -1,21 +1,69 @@
 @import "_variables";
 
 .prep-page {
-  .left-card {
-    position: relative;
-    padding-bottom: 19%;
-    width: 100%;
+  .left-block {
+    margin-top: 1.8vh;
+    width: 60vw;
 
-    textarea {
-      height: 30% !important;
+    > h1 {
+      margin-left: 9.5vw;
+      text-align: left;
+      margin-top: 0;
+      margin-bottom: 0;
+      font-size: 3.8vw;
+      line-height:1.32;
+      font-family: $font-family-black;
+      font-weight: normal !important;
+      letter-spacing: 0.04vw;
+      color: $dark-blue;
+    }
+  }
+
+  .document-editor {
+    margin-top: 4.6vh;
+    margin-left: 9.5vw;
+    margin-bottom: 3.5vh;
+    width: 42.7vw;
+
+    .ck-toolbar {
+      border-top-left-radius: 2.1vw;
+      border-top-right-radius: 2.1vw;
+      background: $tab-grey;
+      height: 7.5vh;
+      border: none;
+
+      .ck-button {
+        border-radius: 2.1vw;
+        font-size: 1.7vw;
+        color: $dark-blue;
+        margin-right: 0;
+        margin-left: 0;
+        padding-right: 0;
+        padding-left: 0;
+        min-width: 3.2vw;
+      }
+      .ck-toolbar__items {
+        > .ck:nth-child(4) {
+          margin-left: 23vw;
+        }
+      }
     }
 
-    .only-tutorial-header {
-      p:nth-child(1) {
-        font-size: 1.86vw !important;
-      }
-      p:nth-child(2) {
-        font-size: 1.81vw !important;
+    .ck-content {
+      border: none !important;
+      box-shadow: none !important;
+      background: #F5F6F7;
+      height: 38vh;
+      border-bottom-left-radius: 2.1vw !important;
+      border-bottom-right-radius: 2.1vw !important;
+      font-size: 1.5vw;
+      padding-top: 0.7vh;
+      padding-left: 1.05vw;
+      letter-spacing: 0.01vw;
+
+      > p {
+        margin-top: 0.5vh !important;
+        margin-bottom: 0.5vh !important;
       }
     }
   }
@@ -29,33 +77,25 @@
   .first-phone-image {
     width: auto;
     margin-left: 0;
-    margin-top: 6.8vh;
-    height: 27.5%;
+    margin-top: 6.3vh;
+    height: 31%;
   }
 
   .typing-text {
     position: absolute;
-    top: 55%;
+    top: 53.5%;
     width: 88%;
     overflow: hidden;
     text-align: left;
-    left: 1.5vw;
+    left: 1.2vw;
     font-size: 1.25vw;
     color: white;
     font-family: $font-family-regular;
-    height: 12.2vw;
+    height: 16.4vw;
     overflow-y: auto;
-  }
 
-  @media only screen and (max-width: 959px) and (min-width: 600px) {
-    .left-card {
-      width: 70% !important;
-    }
-  }
-
-  @media only screen and (max-width: 599px) {
-    .left-card {
-      width: 80% !important;
+    p {
+      margin: 0 !important;
     }
   }
 }

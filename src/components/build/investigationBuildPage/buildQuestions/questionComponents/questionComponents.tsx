@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { Grid, Button } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
 
 import './questionComponents.scss';
 import ShortAnswerComponent from '../questionTypes/shortAnswerBuild/shortAnswerBuild';
@@ -36,6 +37,8 @@ const QuestionComponents = ({
   let componentsCopy = Object.assign([], question.components) as any[]
   const [questionId, setQuestionId] = useState(question.id);
   const [components, setComponents] = useState(componentsCopy);
+  const [removeIndex, setRemovedIndex] = useState(-1);
+  const [dialogOpen, setDialog] = useState(false);
 
   useEffect(() => {
     let componentsCopy = Object.assign([], question.components) as any[];
@@ -66,12 +69,39 @@ const QuestionComponents = ({
 
   let canRemove = (components.length > 3) ? true : false;
 
+  const updateComponentByIndex = (compData: any, index:number) => {
+    let copyComponents = Object.assign([], components) as any[];
+    copyComponents[index] = compData;
+    setComponents(copyComponents);
+    updateComponents(copyComponents);
+  }
+
+  const removeComponentType = () => {
+    const component = components[removeIndex];
+    component.type = QuestionTypeEnum.None;
+    component.value = "";
+    updateComponentByIndex(component, removeIndex);
+    setDialog(false);
+    setRemovedIndex(-1);
+  }
+
   const renderDropBox = (component: any, index: number) => {
     const updatingComponent = (compData: any) => {
       let copyComponents = Object.assign([], components) as any[];
       copyComponents[index] = compData;
       setComponents(copyComponents);
       updateComponents(copyComponents);
+    }
+
+    const setEmptyType = () => {
+      if (component.value) {
+        setDialog(true);
+        setRemovedIndex(index);
+      } else {
+        component.type = QuestionTypeEnum.None;
+        component.value = "";
+        updatingComponent(component);
+      }
     }
 
     const { type } = question;
@@ -101,24 +131,33 @@ const QuestionComponents = ({
       return <div>...Loading...</div>
     }
 
-    return <SwitchQuestionComponent
-      type={component.type}
-      questionIndex={questionIndex}
-      index={index}
-      locked={locked}
-      component={component}
-      updateComponent={updatingComponent}
-      hint={question.hint}
-      canRemove={canRemove}
-      removeComponent={removeInnerComponent}
-      setQuestionHint={setQuestionHint}
-      uniqueComponent={uniqueComponent} />
+    return (
+      <SwitchQuestionComponent
+        type={component.type}
+        questionIndex={questionIndex}
+        index={index}
+        locked={locked}
+        component={component}
+        updateComponent={updatingComponent}
+        hint={question.hint}
+        canRemove={canRemove}
+        setEmptyType={setEmptyType}
+        removeComponent={removeInnerComponent}
+        setQuestionHint={setQuestionHint}
+        uniqueComponent={uniqueComponent}
+      />
+    );
   }
 
   const setList = (components: any) => {
     if (locked) { return; }
     setComponents(components);
     updateComponents(components);
+  }
+
+  const hideDialog = () => {
+    setDialog(false);
+    setRemovedIndex(-1);
   }
 
   return (
@@ -141,6 +180,22 @@ const QuestionComponents = ({
           + QUESTION COMPONENT
         </Button>
       </Grid>
+      <Dialog
+        open={dialogOpen}
+        onClose={hideDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        className="delete-brick-dialog"
+      >
+        <div className="dialog-header">
+          <div>Permanently delete</div>
+          <div>this component?</div>
+        </div>
+        <Grid container direction="row" className="row-buttons" justify="center">
+          <Button className="yes-button" onClick={removeComponentType}>Yes, delete</Button>
+          <Button className="no-button" onClick={hideDialog}>No, keep</Button>
+        </Grid>
+      </Dialog>
     </div>
   );
 }

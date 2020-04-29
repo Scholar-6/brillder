@@ -1,7 +1,7 @@
 import React from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { QuestionComponentTypeEnum, Hint, QuestionTypeEnum } from 'model/question';
+import { QuestionComponentTypeEnum, Hint } from 'model/question';
 import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'
@@ -20,6 +20,7 @@ export interface SwitchQuestionProps {
   hint: Hint
   locked: boolean
   canRemove: boolean
+  setEmptyType(): void
   updateComponent(component: any, index: number): void
   setQuestionHint(hintState: HintState): void
   removeComponent(componentIndex: number): void
@@ -38,12 +39,6 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
 
   const setComponentType = (type:number) => {
     component.type = type;
-    updateComponent(component, index);
-  }
-
-  const setEmptyType = () => {
-    component.type = QuestionTypeEnum.None;
-    component.value = "";
     updateComponent(component, index);
   }
 
@@ -94,7 +89,8 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
         <InnerComponent
           locked={locked}
           data={component}
-          updateComponent={updateComponent} />
+          updateComponent={updateComponent}
+        />
         <HintComponent
           index={props.questionIndex}
           status={hint.status}
@@ -102,7 +98,8 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           value={hint.value}
           list={hint.list}
           count={numberOfAnswers}
-          onChange={props.setQuestionHint}/>
+          onChange={props.setQuestionHint}
+        />
       </div>
     )
   }
@@ -114,13 +111,15 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           <DeleteIcon
             className="right-top-icon"
             style={{right: '2px', top: '7px'}}
-            onClick={setEmptyType} />
+            onClick={props.setEmptyType}
+          />
         : ""
       }
       <InnerComponent
         locked={locked}
         data={component}
-        updateComponent={updateComponent} />
+        updateComponent={updateComponent}
+      />
     </div>
   );
 }

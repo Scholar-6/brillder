@@ -1,0 +1,449 @@
+@import "_variables";
+
+$light-grey: #F5F6F7;
+
+.back-to-work-redirect-dropdown {
+  .MuiPaper-root {
+    position: fixed;
+    right: 0 !important;
+    left: auto !important;
+    top: 10.5vh !important;
+    min-width: 14.9vw !important;
+    min-height: 31.3vh;
+    border-radius: 0;
+    border-bottom-left-radius: 2vw;
+    color: white;
+    background: $light-blue;
+    box-shadow: none;
+
+    .menu-item {
+      cursor: pointer;
+      position: relative;
+      font-family: $font-family-regular !important;
+      font-size: 1.45vw;
+      padding-left: 1.65vw;
+      margin-bottom: 1vh;
+
+      .menu-icon-container {
+        position: fixed;
+        width: 4.5vw;
+        height: 3vh;
+        right: 0vw;
+      }
+
+      .menu-icon {
+        width: 2.2vw;
+      }
+
+      .svg-icon {
+        filter: invert(1);
+      }
+
+      .user-icon {
+        width: 1.93vw;
+      }
+
+      .logout-icon {
+        width: 1.88vw;
+      }
+
+      .back-to-work-icon {
+        width: 1.5vw;
+      }
+      .manage-users-icon {
+        margin-top: 0.13vh;
+        width: 1.9vw;
+      }
+    }
+
+    .first-item {
+      margin-top: 1.7vh;
+    }
+
+    .view-profile {
+      margin-top: 3.4vh;
+    }
+  }
+}
+
+.user-profile-page {
+  background: $dark-blue;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  font-family: $font-family-regular;
+
+  .page-header {
+    height: 10.5vh;
+
+    .logout-container {
+      height: 10.5vh;
+      border-bottom-left-radius: 2vw;
+      background: $light-blue;
+      padding-top: 2.5vh;
+
+      .search-button {
+        cursor: pointer;
+        display: block;
+        margin-top: 0.2vh !important;
+        margin-left: 1.6vw;
+        height: 5vh;
+        width: 5vh;
+        margin-top: 0.1vh;
+        margin-right: 0vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/brick-list/search.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 70% 50%;
+      }
+      .search-button:hover {
+        background-image: url(/images/brick-list/search-hover.png);
+      }
+
+      .search-input {
+        display: block;
+        border: none;
+        background-color: $light-blue !important;
+        font-family: $font-family-regular;
+        font-size: 1.7vw;
+        border: red;
+        border-radius: 12px;
+        border: none !important;
+        margin-left: 2.3vw;
+        margin-top: 0vh;
+        letter-spacing: 0.045vw;
+        height: 5.5vh;
+        width: 40vw;
+        padding-right: 2px;
+        color: #acacac;
+      }
+
+      .logout-button {
+        cursor: pointer;
+        display: block;
+        height: 4.5vh;
+        width: 4.2vh;
+        margin-top: 0.5vh;
+        margin-right: 4.5vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/main-page/logout.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 70% 50%;
+      }
+
+      .logout-button:hover {
+        transform: scale(1.3);
+        background-image: url(/images/main-page/logout-hover.png);
+      }
+
+      .bell-button {
+        cursor: pointer;
+        margin-top: 0.53vh;
+        display: block;
+        color: white;
+        text-align: center;
+        padding-top: 1vh;
+        height: 4vh;
+        width: 4.4vh;
+        margin-right: 3.5vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/brick-list/bell.png);
+        transition: all 0.2s ease-in-out;
+        transform-origin: 50% 50%;
+
+        > span {
+          margin-top: 1vh;
+        }
+      }
+
+      .bell-button:hover {
+        background-image: url(/images/brick-list/bell-hover.png);
+      }
+
+      .more-button {
+        cursor: pointer;
+        margin-top: 0.5vh;
+        margin-right: 2.2vw;
+        width: 6.7vh;
+        display: inline-block;
+        background-color: $orange;
+
+        -webkit-mask: url("/images/more-horizontal.svg") no-repeat 50% 50%;
+        mask: url("/images/more-horizontal.svg") no-repeat 50% 50%;
+        -webkit-mask-size: cover;
+        mask-size: cover;
+
+        transition: all 0.2s ease-in-out;
+        transform-origin: 50% 50%;
+      }
+
+      .more-button:hover {
+        transform: scale(1.4);
+      }
+    }
+  }
+  .profile-block {
+    position: relative;
+    background: $light-grey;
+    height: 85.9vh;
+    margin-top: 3.6vh;
+    width: 72.5vw;
+    border-top-right-radius: 2vw;
+
+    .profile-header {
+      padding-top: 3.1vh;
+      margin-left: 1.08vw;
+      font-size: 5.4vw;
+      letter-spacing: 1.05vw;
+      text-align: center;
+      font-family: $font-family-black;
+      color: $dark-blue;
+      line-height: 1;
+    }
+    .save-button-container {
+      position: absolute;
+      top: 1.9vh;
+      right: 1vw;
+      
+      .save-image {
+        cursor: pointer;
+        text-align: center;
+        height: 3.5vw;
+        width: 3.5vw;
+        background: #E5E8ED 0% 0% no-repeat padding-box;
+        border: 0.25vw solid $light-grey;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        img {
+          height: 1.9vw;
+          width: 1.9vw;
+        } 
+      }
+    }
+    .profile-image-container {
+      position: relative;
+      padding-top: 3.2vh;
+      width: 18.7vw;
+
+      .profile-image {
+        text-align: center;
+        height: 11vw;
+        width: 11vw;
+        background: #E5E8ED 0% 0% no-repeat padding-box;
+        border: 0.25vw solid $light-grey;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        img {
+          height: 7.8vw;
+          width: 7.8vw;
+        } 
+      }
+      .add-image-button {
+        padding: 0 !important;
+        z-index: 100;
+        position: absolute;
+        color: $orange;
+        top: 52%;
+        left: 55.8%;
+        .add-image-icon {
+          height: 4.15vw;
+          width: 4.15vw;
+        }
+      }
+      .status-container {
+        margin-top: 2.6vh;
+        margin-right: 2.3vw;
+        height: 3.5vh;
+
+        .circle-icon {
+          margin-top: 0.25vh;
+          color: #30C474;
+          font-size: 2.35vw;
+        }
+        > span {
+          margin-left: 0.45vw;
+          color: $dark-blue;
+          font-size: 1.85vw;
+        }
+      }
+    }
+    .profile-inputs-container {
+      padding-top: 4.8vh;
+      margin-left: 0.8vw;
+      width: 32.4vw;
+      input {
+        font-family: $font-family-regular;
+        width: 31.4vw;
+        font-size: 1.8vw;
+        margin-bottom: 2.5vh;
+        padding-left: 1vw;
+        line-height: 2.1;
+        background: $light-grey;
+        border-radius: 0.5vw;
+        border: none;
+        color: $dark-blue;
+        box-shadow: 0 0 0.3vw rgba(0,0,0,0.2);
+      }
+
+      .first-name {
+        width: 13.4vw;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        margin-right: 0.5vw;
+      }
+
+      .last-name {
+        width: 16.9vw;
+        padding-left: 0.6vw;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      ::placeholder {
+        color: $dark-blue;
+        opacity: 1;
+      }
+
+      :-ms-input-placeholder {
+       color: $dark-blue;
+      }
+      
+      ::-ms-input-placeholder {
+       color: $dark-blue;
+      }
+
+      .last-name::placeholder {
+        font-family: $font-family-bold;
+      }
+      .last-name:-ms-input-placeholder {
+        font-family: $font-family-bold;
+      }
+      .last-name::-ms-input-placeholder {
+        font-family: $font-family-bold;
+      }
+    }
+    .profile-roles-container {
+      width: 19.2vw;
+      .roles-title {
+        width: 100%;
+        text-align: center;
+        font-size: 1.82vw;
+        letter-spacing: 0.36vw;
+        color: $dark-blue;
+        font-family: $font-family-black;
+        line-height: 1.41;
+      }
+      .roles-box {
+        width: 13.2vw;
+        border-radius: 0.3vw;
+        box-shadow: 0 0 0.3vw rgba(0,0,0,0.2);
+        padding-top: 1.9vh;
+        padding-left: 1.15vw;
+        padding-bottom: 1.4vh;
+
+        .MuiGrid-item {
+          width: 100%;
+          
+          .MuiSvgIcon-root {
+            color: $dark-blue;
+            font-size: 1.55vw;
+          }
+
+          .MuiIconButton-root {
+            padding: 0.5vw !important;
+          }
+
+          .MuiFormControlLabel-label {
+            margin-left: 1.15vw;
+            font-family: $font-family-regular;
+            font-size: 1.45vw;
+            color: $dark-blue;
+          }
+          .MuiFormControlLabel-root {
+            margin: 0;
+          }
+        }
+      }
+    }
+    .big-input-container {
+      margin-top: 2.3vh;
+      padding-left: 4.2vw;
+      padding-right: 4.2vw;
+      textarea {
+        width: 100%;
+        height: 18vh;
+        background: $light-grey;
+        border: none;
+        border-radius: 0.5vw;
+        font-family: $font-family-regular;
+        box-shadow: 0 0 0.3vw rgba(0,0,0,0.2);
+        padding-top: 0.75vh;
+        padding-left: 1.1vw;
+        font-size: 1.8vw;
+        max-height: 18vh;
+      }
+    }
+  }
+  .profile-phone-preview {
+    .phone-preview {
+      top: 21.5% !important;
+      right: 1.8% !important;
+    }
+  }
+}
+
+.alert-dialog {
+  position: fixed;
+  top: 0;
+
+  .MuiDialog-paperScrollPaper {
+    position: fixed;
+    top: 8.3vh;
+    right: 7vw;
+    max-width: 50vw;
+    border-radius: 0.8vw;
+  }
+
+  .logout-dialog-header {
+    padding: 3.8vh 1vw 3.5vh 2.2vw;
+    font-size: 2.35vw;
+    letter-spacing: 0;
+    color: $dark-blue;
+    font-family: $font-family-regular;
+  }
+
+  .logout-buttons {
+    padding-bottom: 2.3vh;
+
+    button {
+      min-width: 9.55vw;
+      font-size: 2vw;
+      border-radius: 0.6vw;
+      text-transform: none;
+      font-weight: normal !important;
+      padding-top: 1.1vh;
+      padding-bottom: 1.1vh;
+      line-height: 1;
+      font-family: $font-family-regular;
+      > span {
+        width: 100%;
+      }
+    }
+
+    .yes-button {
+      color: white;
+      background: $orange;
+      margin-right: 1.4vw !important;
+    }
+
+    .no-button {
+      color: $dark-blue;
+      background: $tab-grey;
+      margin-right: 0.2vw;
+    }
+  }
+}

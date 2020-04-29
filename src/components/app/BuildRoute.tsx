@@ -28,7 +28,8 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
       rest.getUser();
       return <div>...Getting User...</div>
     }
-    if (rest.user.type === UserType.Student) {
+    const isStudent = rest.user.roles.some(role => role.roleId === UserType.Student);
+    if (isStudent) {
       return <Redirect to="/play" />
     }
     return <Route {...rest} render={(props) => <Component {...props} />} />;

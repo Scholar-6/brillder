@@ -110,6 +110,7 @@ $question-radius: 0.6vw;
     color: black;
 
     .unique-component-wrapper {
+      margin: 0.2vw 0;
       width: 100%;
     }
 
@@ -156,6 +157,7 @@ $question-radius: 0.6vw;
 
     .question-components-list {
       max-height: 76vh;
+      overflow-x: hidden;
       overflow-y: auto;
       border: 1px solid #707070;
       border-radius: 0.6vw;
@@ -272,7 +274,6 @@ $question-radius: 0.6vw;
         height: 1.15vw;
         width: 1.15vw;
       }
-
 
       .active {
         color: green;
