@@ -66,6 +66,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         type: 0,
         tutorialPassed: false,
         email: '',
+        roles: [],
         subjects: [],
         status: UserStatus.Pending,
       },
@@ -308,7 +309,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             </Grid>
           </MenuItem>
           {
-            this.props.user.type === UserType.Admin ? (
+            this.props.user.roles.some(role => role.roleId === UserType.Admin) ? (
               <MenuItem className="menu-item" onClick={() => this.props.history.push('/build/users')}>
                 Manage Users
                 <Grid container className="menu-icon-container" justify="center" alignContent="center">

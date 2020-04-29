@@ -21,4 +21,5 @@ export interface User {
   email: string
   subjects: any[],
   status: UserStatus,
+  roles: any[]
 }
