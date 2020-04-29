@@ -26,7 +26,12 @@ const BrickLengthPreviewComponent:React.FC<any> = ({data}) => {
   )
 }
 
-function BrickLength({ length, saveBrick }: any) {
+interface BrickLengthProps {
+  length: any
+  saveBrick(data: any): void
+}
+
+const BrickLength:React.FC<BrickLengthProps> = ({ length, saveBrick }) => {
   let presectedLength = 0;
   if (length === 20) {
     presectedLength = BrickLengthEnum.S20min;
