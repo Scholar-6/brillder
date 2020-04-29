@@ -90,6 +90,7 @@ $mobile-arrow-color: #96A0B6;
 
   .zoom-item {
     cursor: pointer;
+    text-align: center;
     transition: all .2s ease-in-out;
     transform-origin: 50% 75%;
   }
@@ -135,7 +136,7 @@ $mobile-arrow-color: #96A0B6;
   .logout-button {
     cursor: pointer;
     position: fixed;
-    top: 2.8vh;
+    top: 3.7vh;
     right: 1.8vw;
     font-size: 1.5vw;
     color: white;
@@ -144,14 +145,15 @@ $mobile-arrow-color: #96A0B6;
     transition: all .2s ease-in-out;
 
     .logout-image {
+      margin-top: 0.2vh;
       background-size: 100% 100%;
       background-repeat: no-repeat;
       background-position: center;
       background-image: url(/images/main-page/logout.png);
       transition: all .3s ease-in-out;
       margin-right: 1.1vw;
-      height: 3.1vw;
-      width: 3.1vw;
+      height: 2.6vw;
+      width: 2.8vw;
       min-height: 100%;
     }
   }
