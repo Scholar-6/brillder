@@ -141,29 +141,26 @@ $mobile-arrow-color: #96A0B6;
     color: white;
     font: 1.24vw $font-family-regular;
     letter-spacing: 0.25vw;
+    transition: all .2s ease-in-out;
 
     .logout-image {
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/images/main-page/logout.png);
+      transition: all .3s ease-in-out;
       margin-right: 1.1vw;
       height: 3.1vw;
+      width: 3.1vw;
       min-height: 100%;
-    }
-
-    .image-top {
-      display: none;
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: 99;
-      height: 3.6vw;
     }
   }
   .logout-button:hover {
     font-weight: bold;
-    .image-bottom {
-      opacity: 0;
-    }
-    .image-top {
-      display: inline;
+
+    .logout-image {
+      margin-right: 1.2vw;
+      background-image: url(/images/main-page/logout-hover.png);
     }
     .logout-text {
       font-family: $font-family-bold;
@@ -249,11 +246,16 @@ $mobile-arrow-color: #96A0B6;
       letter-spacing: 1vw;
 
       .logout-image {
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/main-page/logout.png);
         margin-right: 1.6vw;
         height: 5.6vh;
         min-height: 100%;
       }
     }
+
 
     .item-description {
       text-align: center;

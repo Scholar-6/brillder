@@ -105,8 +105,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <div className="logout-button" onClick={this.props.logout}>
             <Grid container alignContent="center">
               <div style={{position: 'relative'}}>
-                <img className="logout-image image-bottom" alt="logout" src="/images/main-page/logout.png" />
-                <img className="logout-image image-top" alt="logout" src="/images/main-page/logout-hover.png" />
+                <div className="logout-image" />
               </div>
               <div>
                 <Grid container alignContent="center" style={{height: '100%'}}>
