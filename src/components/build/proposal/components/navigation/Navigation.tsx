@@ -58,7 +58,7 @@ const NextButton:React.FC<NextButtonProps> = ({ step }) => {
         <img
           onClick={moveToLength}
           className="navigation-button last" alt=""
-          src={step >= ProposalStep.BrickLength ? "/images/new-brick/brick-length.png" : "/images/new-brick/brick-length-grey.png"}
+          src={step >= ProposalStep.BrickLength ? "/feathericons/clock.png" : "/feathericons/clock-grey.png"}
         />
       </Grid>
     </div>
