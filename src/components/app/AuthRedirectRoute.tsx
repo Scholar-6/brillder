@@ -33,14 +33,22 @@ const AuthRedirect: React.FC<any> = ({ user, ...props }) => {
       }
     }
     let path = props.location.pathname;
-    if (user.type === UserType.Admin) {
+
+    let isAdmin = user.roles.some((role:any) => role.roleId === UserType.Admin);
+
+    if (isAdmin) {
       if (path === '/build') {
         return <Redirect to="/build" />
       } else if (path === '/play') {
         return <Redirect to="/play/dashboard" />
       }
     }
-    if (user.type === UserType.Admin || user.type === UserType.Builder || user.type === UserType.Editor) {
+
+    let canBuild = user.roles.some((role:any) => 
+      role.roleId === UserType.Admin || role.roleId === UserType.Builder || role.roleId === UserType.Editor
+    );
+
+    if (canBuild) {
       return <Redirect to="/build" />
     } else {
       return <Redirect to="/play/dashboard" />

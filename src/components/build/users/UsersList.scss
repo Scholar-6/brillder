@@ -1,14 +1,9 @@
 @import "_variables";
 
-$brick-radius: 1.2vh;
 $main-panel-radius: 2vw;
-
-$min-brick-height: 9.4vh;
 $left: 0.8vw;
 $right: 1.4vw;
-$lighter-blue: #304775;
 $grey: #B0B0AD;
-$light-grey: #F3F4F7;
 
 
 .users-list-redirect-dropdown {
@@ -77,12 +72,12 @@ $light-grey: #F3F4F7;
   width: 100%;
   font-family: $font-family-regular;
 
-  .bricks-upper-part {
+  .users-upper-part {
     position: relative;
     min-height: 100%;
     background: $dark-blue;
 
-    .bricks-pagination {
+    .users-pagination {
       position: absolute;
       margin-left: 2vw;
       bottom: 0;
@@ -134,41 +129,8 @@ $light-grey: #F3F4F7;
     }
   }
 
-  .bricks-header {
+  .users-header {
     height: 10.5vh;
-
-    .home-button-container {
-      padding-right: 1.2vw;
-      width: 5.5vw;
-      border-bottom-right-radius: 2vw;
-      background: $light-blue;
-      height: 10.5vh;
-      
-      .home-button {
-        cursor: pointer;
-        padding-left: 1.05vw;
-        padding-top: 2.2vh;
-        height: 9.3vh;
-        width: 3.3vw;
-        display: block;
-        > div {
-          height: 6.3vh;
-          width: 3.3vw;
-          display: block;
-          background-image: url(/images/choose-login/logo.png);
-          transition: all 0.2s ease-in-out;
-          transform-origin: 70% 50%;
-          background-size: 100% 100%;
-          background-repeat: no-repeat;
-          background-position: center;
-        }
-      }
-      .home-button:hover {
-        > div {
-          background-image: url(/images/brick-list/home-hover.png);
-        }
-      }
-    }
 
     .logout-container {
       height: 10.5vh;
@@ -284,24 +246,6 @@ $light-grey: #F3F4F7;
     }
   }
 
-  h3 {
-    color: white;
-    font-family: $font-family-regular;
-    font-weight: normal;
-    margin-top: 2.5vh;
-    margin-left: 1.05vw;
-    margin-bottom: 1vh;
-    letter-spacing: 0.27vw;
-    font-size: 1.3vw;
-  }
-
-  .your-bricks-list {
-    position: relative;
-    min-height: 70%;
-    padding-left: $left;
-    padding-right: $right;
-  }
-
   .sorted-row {
     margin-top: 3.5vh;
     height: 87.1vh;
@@ -387,14 +331,14 @@ $light-grey: #F3F4F7;
         }
       }
     }
-    .brick-row-container {
+    .user-row-container {
       position: relative;
       border-top-left-radius: $main-panel-radius;
       margin-left: 2.5vw;
       background: white;
       height: 100%;
 
-      .brick-row-title {
+      .user-row-title {
         padding-left: 2.2vw;
         color: $dark-blue;
         padding-top: 2vh;
@@ -421,6 +365,14 @@ $light-grey: #F3F4F7;
               padding-bottom: 0.6vh;
               text-align: left;
               padding-left: 0.5vw;
+
+              .sort-button {
+                cursor: pointer;
+                margin-top: 0.3vh;
+                margin-left: 0.4vw;
+                height: 1.5vw;
+                width: 1.5vw;
+              }
             }
 
             .subject-title {
@@ -441,8 +393,10 @@ $light-grey: #F3F4F7;
           td {
             padding-left: 0.5vw;
             color: $dark-blue;
+            font-size: 1.3vw;
 
             .edit-button {
+              cursor: pointer;
               background-size: 100% 100%;
               background-repeat: no-repeat;
               background-position: center;
@@ -455,7 +409,7 @@ $light-grey: #F3F4F7;
             padding-left: 2vw;
           }
         }
-        tr.user-row:nth-child(odd) {
+        tr.user-row:nth-child(even) {
           background: $tab-grey;
         }
         .user-last-name {

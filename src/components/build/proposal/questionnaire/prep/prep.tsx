@@ -1,13 +1,13 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
+import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
-import ExitButton from '../../components/ExitButton';
-import NextButton from '../../components/nextButton';
-import PreviousButton from '../../components/previousButton';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
+import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
+import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
 import './prep.scss';
-import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 
 
 interface PrepProps {
@@ -21,7 +21,6 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
       <Grid container justify="center" alignContent="flex-start" className="prep-phone-preview">
         <img className="first-phone-image"
           alt="head"
-          style={{height: '40%'}}
           src="/images/new-brick/prep.png">
         </img>
         <div className="typing-text" dangerouslySetInnerHTML={{ __html: data}} />
@@ -32,7 +31,7 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
     <Grid container justify="center" alignContent="flex-start" className="prep-phone-preview">
       <img className="first-phone-image"
         alt="head"
-        style={{height: '60%'}}
+        style={{height: '45%'}}
         src="/images/new-brick/prep.png">
       </img>
     </Grid>
@@ -44,27 +43,28 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
 
   return (
     <div className="tutorial-page prep-page">
-      <ExitButton />
-      <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
-        <Grid container justify="center" item xs={12} md={8} lg={8}>
-          <Grid justify="center" container item xs={12} sm={9} md={8} lg={7}>
-            <div className="left-card">
-              <h1 className="only-tutorial-header">
-                <p>Create an engaging and relevant</p>
-                <p>preparatory task for your investigation.</p>
-              </h1>
-              <Grid justify="center" container item xs={12}>
-                <div style={{ width: '84%' }}>
-                  <DocumentCKEditor data={prep} onChange={setPrep} />
-                </div>
-              </Grid>
-              <PreviousButton to="/build/new-brick/brief" />
-              <p className="page-number">4 of 4</p>
-              <NextButton step={ProposalStep.Prep} canSubmit={true} data={prep} onSubmit={savePrep} />
-            </div>
-          </Grid>
+      <HomeButton link='/build' />
+      <Navigation step={ProposalStep.Prep} />
+      <Grid container direction="row" alignItems="flex-start">
+        <Grid className="left-block">
+          <h1>Add engaging and relevant</h1>
+          <h1>preparatory material.</h1>
+          <DocumentCKEditor
+            data={prep}
+            placeholder="Enter Instructions, Links to Videos and Webpages Here…"
+            onChange={setPrep}
+          />
+          <NavigationButtons
+            step={ProposalStep.Prep}
+            canSubmit={true}
+            data={prep}
+            onSubmit={savePrep}
+            backLink="/build/new-brick/brief"
+          />
         </Grid>
-        <PhonePreview Component={PrepPreviewComponent} data={prep} />
+        <ProposalPhonePreview Component={PrepPreviewComponent} data={prep} />
+        <div className="red-right-block"></div>
+        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );

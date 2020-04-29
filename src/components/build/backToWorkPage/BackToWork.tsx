@@ -1,4 +1,3 @@
-import './BackToWork.scss';
 import React, { Component } from 'react';
 import { Box, Grid, FormControlLabel, Radio, RadioGroup, Button, Checkbox } from '@material-ui/core';
 import axios from 'axios';
@@ -10,11 +9,13 @@ import Dialog from '@material-ui/core/Dialog';
 import ClearIcon from '@material-ui/icons/Clear';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import brickActions from 'redux/actions/brickActions';
 
+import './BackToWork.scss';
+import brickActions from 'redux/actions/brickActions';
 import authActions from 'redux/actions/auth';
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType } from 'model/user';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 
 
 const mapState = (state: any) => {
@@ -107,7 +108,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       dropdownShown: false,
     };
 
-    if (this.props.user.type === UserType.Admin) {
+    const isAdmin = this.props.user.roles.some(role => role.roleId === UserType.Admin);
+    if (isAdmin) {
       axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks', {withCredentials: true})
         .then(res => {  
           this.setState({...this.state, bricks: res.data, finalBricks: res.data, rawBricks: res.data });
@@ -249,7 +251,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   getAuthorRow(brick: Brick) {
-    let row = "Author ";
+    let row = "";
     const created = new Date(brick.created);
     const year = this.getYear(created);
     const month = this.getMonth(created);
@@ -334,7 +336,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                         </Grid>
                         <Grid item xs={4} container justify="flex-start">
                           {
-                            (this.props.user.type === UserType.Admin)
+                            (this.props.user.roles.some(role => role.roleId === UserType.Admin))
                               ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
                               : ""
                           }
@@ -745,15 +747,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       <div className="back-to-work-page">
         <div className="bricks-upper-part">
           <Grid container direction="row" className="bricks-header">
-            <Grid item style={{width: '7.65vw'}}>
-              <Grid container direction="row">
-                <Grid item className="home-button-container">
-                  <div className="home-button" onClick={() => { this.props.history.push('/build') }}>
-                    <div></div>
-                  </div>
-                </Grid>
-              </Grid>
-            </Grid>
+            <HomeButton link='/build' />
             <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
               <Grid container style={{width: '60vw', height: '7vh'}}>
               <Grid item>
@@ -818,7 +812,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             </Grid>
           </MenuItem>
           {
-            this.props.user.type === UserType.Admin ? (
+            this.props.user.roles.some(role => role.roleId === UserType.Admin) ? (
               <MenuItem className="menu-item" onClick={() => this.props.history.push('/build/users')}>
                 Manage Users
                 <Grid container className="menu-icon-container" justify="center" alignContent="center">
@@ -829,7 +823,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
               </MenuItem>
             ) : ""
           }
-          <MenuItem className="view-profile menu-item">
+          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/build/user-profile')}>
             View Profile
             <Grid container className="menu-icon-container" justify="center" alignContent="center">
               <div>

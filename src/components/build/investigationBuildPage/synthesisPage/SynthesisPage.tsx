@@ -11,10 +11,6 @@ export interface SynthesisProps {
   onReview(): void
 }
 
-const editorConfiguration = {
-  toolbar: ['bold', 'italic', 'bulletedList', 'numberedList']
-};
-
 const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange, onReview }) => {
   document.title = "Synthesis";
 
@@ -23,7 +19,7 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
       <div className="inner-question-type">
         <Grid container direction="row">
           <Grid item md={9}>
-            <DocumentCKEditor data={synthesis} onChange={onSynthesisChange} />
+            <DocumentCKEditor data={synthesis} placeholder="" onChange={onSynthesisChange} />
           </Grid>
           <Grid container item md={3}>
             <div style={{width: '100%'}}>

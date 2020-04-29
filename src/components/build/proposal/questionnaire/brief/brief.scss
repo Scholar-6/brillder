@@ -3,60 +3,65 @@
 .brief-prep-page {
   font-family: $font-family-regular;
 
+  .left-block {
+    margin-top: 5vh;
+    width: 60vw;
+
+    > h1 {
+      font-weight: normal !important;
+      margin-left: 1.3vw;
+      margin-top: 0.5vh;
+      font-size: 3.2vw;
+      letter-spacing: 0.04vw;
+      margin-bottom: 4vh;
+    }
+  }
+
+  $textarea-size2: 9.2vh;
+  $textarea-size1: 9.3vh;
+
+  textarea {
+    font-family: $font-family-regular;
+    margin-left: 9.4vw;
+    margin-bottom: 7.6vh;
+    height: 45vh;
+    font-size: 1.5vw;
+    width: 42.2vw;
+    line-height: $textarea-size1;
+    padding: 0 !important;
+    background-image:
+      -webkit-linear-gradient(left,white 0px, transparent 0px),
+      -webkit-linear-gradient(right, white 0px, transparent 0px),
+      -webkit-linear-gradient(
+        white $textarea-size2,
+        #ccc $textarea-size2,
+        #ccc $textarea-size1,
+        white $textarea-size1
+      );
+    background-size: 100% 100%, 100% 100%, 100% $textarea-size1 !important;
+    border: none;
+    resize: none;
+    overflow: hidden;
+    padding-top: 1.8vh !important;
+  }
+
   .brief-phone-preview {
     width: 100%;
     height: 100%;
     background: $dark-blue;
   }
 
-  .left-card {
-    position: relative;
-    padding-bottom: 12%;
-    width: 100%;
-
-    textarea {
-      padding-top: 0.5vh;
-      padding-left: 0.5vw;
-      width: 80% !important;
-      height: 18vh !important;
-      font-family: $font-family-regular;
-      border: 1px solid grey !important;
-      border-radius: 0.3vw !important;
-    }
-
-    .only-tutorial-header {
-      p:nth-child(1) {
-        font-size: 1.86vw !important;
-      }
-      p:nth-child(2) {
-        font-size: 1.81vw !important;
-      }
-    }
-  }
-
   .typing-text {
     position: absolute;
-    top: 53%;
-    width: 88%;
+    top: 49%;
+    width: 90%;
     overflow: hidden;
     text-align: left;
-    left: 1.5vw;
+    left: 1.23vw;
     font-size: 1.25vw;
     color: white;
     font-family: $font-family-regular;
     height: 12.9vw;
     overflow-y: auto;
-  }
-
-  @media only screen and (max-width: 959px) and (min-width: 600px) {
-    .left-card {
-      width: 70% !important;
-    }
-  }
-
-  @media only screen and (max-width: 599px) {
-    .left-card {
-      width: 70% !important;
-    }
   }
 }

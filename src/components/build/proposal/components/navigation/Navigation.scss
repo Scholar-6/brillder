@@ -1,0 +1,18 @@
+.navigation-container {
+  position: fixed;
+  top: 5.4%;
+  right: 0;
+  width: 43.8vw;
+
+  img {
+    cursor: pointer;
+    height: 2vw;
+    margin: 0 3.7vw;
+  }
+  .first {
+    margin-left: 0;
+  }
+  .last {
+    margin-right: 0;
+  }
+}

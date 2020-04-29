@@ -60,7 +60,6 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   render() {
-    console.log(this.props);
     const {history} = this.props;
     return (
       <Grid container direction="row" className="mainPage">
@@ -71,7 +70,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               <div>TO BRIX,</div>
               <div className="welcome-name">
                 {
-                  this.props.user.firstName ? this.props.user.firstName : 'USER X'
+                  this.props.user.firstName ? this.props.user.firstName : 'NAME'
                 }
               </div>
             </div>
@@ -106,8 +105,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <div className="logout-button" onClick={this.props.logout}>
             <Grid container alignContent="center">
               <div style={{position: 'relative'}}>
-                <img className="logout-image image-bottom" alt="logout" src="/images/main-page/logout.png" />
-                <img className="logout-image image-top" alt="logout" src="/images/main-page/logout-hover.png" />
+                <div className="logout-image" />
               </div>
               <div>
                 <Grid container alignContent="center" style={{height: '100%'}}>

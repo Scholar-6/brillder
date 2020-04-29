@@ -1,7 +1,10 @@
 @import '_variables';
 
 .tutorial-page {
-  height: 100%;
+  h1 {
+    font-weight: normal !important;
+  }
+
   font-family: $font-family-regular;
   color: black;
 
@@ -17,6 +20,45 @@
     color: #aaa;
   }
 
+  .red-right-block {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    background: $orange;
+    height: 74.9vh;
+    width: 43.8vw;
+    border-top-left-radius: 2vw;
+    z-index: -1;
+  }
+
+  .beta-text {
+    z-index: 10;
+    right: 0.5%;
+    bottom: 1.25%;
+    font-size: 2.3vw;
+    color: $dark-blue;
+  }
+
+  .only-tutorial-header {
+    font-family: $font-family-black;
+    margin-top: 4.7vh;
+    font-size: 3.9vw;
+    letter-spacing: 0.09vw;
+    text-align: center;
+    color: $dark-blue;
+    margin-bottom: 12.1vh;
+
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .sub-header {
+    font-size: 1vw;
+  }
+
+
   .left-card {
     border: 1px solid grey;
     border-radius: 4px;
@@ -29,12 +71,11 @@
     }
 
     .only-tutorial-header {
-      color: #4A4F56;
-      font-family: $font-family-bold !important;
       margin: 2.5vw 1vw;
       font-weight: normal !important;
       p {margin: 0}
     }
+
 
     .page-number {
       position: absolute;

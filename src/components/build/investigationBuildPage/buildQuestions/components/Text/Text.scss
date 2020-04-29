@@ -1,8 +1,6 @@
 .question-build-text-editor {
   position: relative;
-  margin-left: 0.5%;
-  width: 99%;
-  font-size: 0.68vw !important;
+  width: 100%;
 
   strong {
     font-weight: bold !important;
@@ -21,16 +19,25 @@
     }
   }
 
-  .cke_top {
-    padding: 0 !important;
-    height: 5.5vh !important;
+  .ck-toolbar {
+    border-top-left-radius: 0.4vw !important;
+    border-top-right-radius: 0.4vw !important;
+    z-index: 1000;
+  }
 
-    > span > span {
-      height: 5.5vh;
-      > span {
-        padding-top: 1.2vh;
-        margin: 0;
-      }
-    }
+  .ck-color-table {
+    z-index: 10000;
+  }
+
+  .ck-color-ui-dropdown {
+    margin-right: 50% !important;
+  }
+
+  .ck-content {
+    border-bottom-left-radius: 0.4vw !important;
+    border-bottom-right-radius: 0.4vw !important;
+    box-shadow: none !important;
+    border-top: none !important;
+    border: 1px solid var(--ck-color-toolbar-border);
   }
 }

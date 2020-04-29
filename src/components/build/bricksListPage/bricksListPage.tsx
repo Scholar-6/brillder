@@ -14,6 +14,7 @@ import AnimateHeight from 'react-animate-height';
 
 import authActions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType } from 'model/user';
@@ -106,19 +107,20 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         alert('Can`t get bricks')
       });
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/byStatus/' + BrickStatus.Publish, {withCredentials: true})
-      .then(res => {  
-        this.setState({...this.state, bricks: res.data, finalBricks: res.data as Brick[] });
-      })
-      .catch(error => { 
-        alert('Can`t get bricks');
-      });
+    axios.get(
+      `${process.env.REACT_APP_BACKEND_HOST}/bricks/byStatus/${BrickStatus.Publish}`,
+      {withCredentials: true}
+    ).then(res => {  
+      this.setState({...this.state, bricks: res.data, finalBricks: res.data as Brick[] });
+    }).catch(error => { 
+      alert('Can`t get bricks');
+    });
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true})
-    .then(res => {
+    axios.get(
+      process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true}
+    ).then(res => {
       this.setState({...this.state, subjects: res.data });
-    })
-    .catch(error => {
+    }).catch(error => {
       alert('Can`t get bricks');
     });
   }
@@ -309,7 +311,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                           </Grid>
                           <Grid item xs={4} container justify="flex-start">
                             {
-                              (this.props.user.type === UserType.Admin)
+                              (this.props.user.roles.some(role => role.roleId === UserType.Admin))
                                 ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
                                 : ""
                             }
@@ -535,7 +537,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                       </Grid>
                       <Grid item xs={4} container justify="flex-start">
                         {
-                          (this.props.user.type === UserType.Admin)
+                          (this.props.user.roles.some(role => role.roleId === UserType.Admin))
                             ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
                             : ""
                         }
@@ -624,10 +626,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           <Grid container direction="row">
             {
               this.state.subjects.map((subject, i) =>
-                <Grid item xs={((i % 2) === 1) ? 7 : 5}>
+                <Grid item xs={((i % 2) === 1) ? 7 : 5} key={i}>
                   <FormControlLabel
                     className="filter-container"
-                    key={i}
                     checked={subject.checked}
                     onClick={() => this.filterBySubject(i)}
                     control={<Radio className={"filter-radio custom-color"} style={{['--color' as any] : subject.color}} />}
@@ -711,15 +712,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       <div className="bricks-list-page">
         <div className="bricks-upper-part">
           <Grid container direction="row" className="bricks-header">
-            <Grid item style={{width: '7.65vw'}}>
-              <Grid container direction="row">
-                <Grid item className="home-button-container">
-                  <div className="home-button" onClick={() => { this.props.history.push('/build') }}>
-                    <div></div>
-                  </div>
-                </Grid>
-              </Grid>
-            </Grid>
+            <HomeButton link='/build' />
             <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
               <Grid container style={{width: '60vw', height: '7vh'}}>
               <Grid item>
@@ -784,7 +777,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             </Grid>
           </MenuItem>
           {
-            this.props.user.type === UserType.Admin ? (
+            this.props.user.roles.some(role => role.roleId === UserType.Admin) ? (
               <MenuItem className="menu-item" onClick={() => this.props.history.push('/build/users')}>
                 Manage Users
                 <Grid container className="menu-icon-container" justify="center" alignContent="center">
@@ -795,7 +788,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               </MenuItem>
             ) : ""
           }
-          <MenuItem className="view-profile menu-item">
+          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/build/user-profile')}>
             View Profile
             <Grid container className="menu-icon-container" justify="center" alignContent="center">
               <div>

@@ -15,8 +15,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import authActions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 
-import { User, UserType } from 'model/user';
+import { User, UserType, UserStatus } from 'model/user';
 
 
 const mapState = (state: any) => {
@@ -34,27 +35,38 @@ const mapDispatch = (dispatch: any) => {
 
 const connector = connect(mapState, mapDispatch);
 
-interface BricksListProps {
+interface UsersListProps {
   user: User,
   history: any;
   logout(): void;
   forgetBrick(): void;
 }
 
-interface BricksListState {
+enum UserSortBy {
+  None,
+  Name,
+  Role,
+  Status
+}
+
+interface UsersListState {
   users: User[];
   page: number;
+  pageSize: number;
+  totalCount: number;
+
   searchString: string;
   isSearching: boolean;
+
   subjects: any[];
   roles: any[];
-  sortedIndex: number;
+
   filterExpanded: boolean;
   logoutDialogOpen: boolean;
-
-  deleteDialogOpen: boolean;
-  deleteBrickId: number;
   dropdownShown: boolean;
+
+  sortBy: UserSortBy;
+  isAscending: boolean;
 }
 
 let anyStyles = withStyles as any;
@@ -110,18 +122,17 @@ const IOSSwitch = anyStyles((theme:any) => ({
 });
 
 
-class BricksListPage extends Component<BricksListProps, BricksListState> {
-  constructor(props: BricksListProps) {
+class UsersListPage extends Component<UsersListProps, UsersListState> {
+  constructor(props: UsersListProps) {
     super(props)
     this.state = {
       users: [],
       page: 0,
+      pageSize: 12,
       subjects: [],
-      sortedIndex: 0,
       filterExpanded: true,
       logoutDialogOpen: false,
-      deleteDialogOpen: false,
-      deleteBrickId: -1,
+
       roles: [
         { name: 'Student', type: UserType.Student, checked: false },
         { name: 'Teacher', type: UserType.Teacher, checked: false },
@@ -130,25 +141,62 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         { name: 'Admin', type: UserType.Admin, checked: false },
       ],
 
+      totalCount: 0,
       searchString: '',
       isSearching: false,
-      dropdownShown: false
+      dropdownShown: false,
+
+      sortBy: UserSortBy.None,
+      isAscending: false,
     };
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/users', {withCredentials: true, pageSize: 19, page: 0} as any)
-      .then(res => {
-        this.setState({...this.state, users: res.data})
-      })
-      .catch(error => { 
-        alert('Can`t get users');
-      });
+    this.getUsers(this.state.page);
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true})
-    .then(res => {
+    axios.get(
+      process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true}
+    ).then(res => {
       this.setState({...this.state, subjects: res.data });
-    })
-    .catch(error => {
+    }).catch(error => {
       alert('Can`t get subjects');
+    });
+  }
+
+  getUsers(page: number, subjects: number[] = [], sortBy: UserSortBy = UserSortBy.None, isAscending: any = null) {
+    let orderBy = null;
+
+    if (sortBy === UserSortBy.None) {
+      sortBy = this.state.sortBy;
+    }
+
+    if (isAscending === null) {
+      isAscending = this.state.isAscending;
+    }
+
+    if (sortBy) {
+      if (sortBy === UserSortBy.Name) {
+        orderBy = "user.firstName";
+      } else if (sortBy === UserSortBy.Status) {
+        orderBy = "user.status";
+      } else if (sortBy === UserSortBy.Role) {
+        orderBy = "user.roles";
+      }
+    }
+    axios.post(
+      process.env.REACT_APP_BACKEND_HOST + '/users',
+      {
+        pageSize: this.state.pageSize,
+        page: page.toString(),
+        searchString: "",
+        subjectFilters: subjects,
+        roleFilters: [],
+        orderBy,
+        isAscending,
+      },
+      {withCredentials: true}
+    ).then(res => {
+      this.setState({...this.state, users: res.data.pageData, totalCount: res.data.totalCount})
+    }).catch(error => { 
+      alert('Can`t get users');
     });
   }
 
@@ -161,33 +209,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.props.history.push(`/build/brick/${brickId}/build/investigation/question`)
   }
 
-  formatTwoLastDigits(twoLastDigits: number) {
-    var formatedTwoLastDigits = "";
-    if (twoLastDigits < 10 ) {
-      formatedTwoLastDigits = "0" + twoLastDigits;
-    } else {
-      formatedTwoLastDigits = "" + twoLastDigits;
-    }
-    return formatedTwoLastDigits;
-  }
-
-  getYear(date: Date) {
-    var currentYear =  date.getFullYear();   
-    var twoLastDigits = currentYear % 100;
-    return this.formatTwoLastDigits(twoLastDigits);
-  }
-
-  getMonth(date: Date) {
-    const month = date.getMonth() + 1;
-    var twoLastDigits = month % 10;
-    return this.formatTwoLastDigits(twoLastDigits);
-  }
-
-  getDate(date: Date) {
-    const days = date.getDate();
-    return this.formatTwoLastDigits(days);
-  }
-  
   handleSortChange = (e: any) => {
   }
 
@@ -201,18 +222,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       }
     }
     return result;
-  }
-
-  getCheckedSubjectIds() {
-    const filterSubjects = [];
-    const {state} = this;
-    const {subjects} = state;
-    for (let subject of subjects) {
-      if (subject.checked) {
-        filterSubjects.push(subject.id);
-      }
-    }
-    return filterSubjects;
   }
 
   handleLogoutOpen() {
@@ -241,7 +250,13 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/user/activate/${userId}`, {}, {withCredentials: true} as any
     ).then(res => {
-      console.log(res);
+      if (res.data === 'OK') {
+        const user = this.state.users.find(user => user.id === userId);
+        if (user) {
+          user.status = UserStatus.Active;
+        }
+        this.setState({...this.state});
+      }
     }).catch(error => { 
       alert('Can`t activate user');
     });
@@ -251,14 +266,20 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/user/deactivate/${userId}`, {}, {withCredentials: true} as any
     ).then(res => {
-      console.log(res);
+      if (res.data === 'OK') {
+        const user = this.state.users.find(user => user.id === userId);
+        if (user) {
+          user.status = UserStatus.Disabled;
+        }
+        this.setState({...this.state});
+      }
     }).catch(error => { 
       alert('Can`t deactivate user');
     });
   }
 
   toggleUser(user: User) {
-    if (user.status === 1) {
+    if (user.status === UserStatus.Active) {
       this.deactivateUser(user.id);
     } else {
       this.activateUser(user.id);
@@ -274,6 +295,30 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
   hideDropdown() {
     this.setState({...this.state, dropdownShown: false});
+  }
+
+  filterBySubject = (i: number) => {
+    const {subjects} = this.state;
+    subjects[i].checked = !subjects[i].checked
+    this.filter();
+    this.setState({...this.state});
+  }
+
+  getCheckedSubjectIds() {
+    const filterSubjects = [];
+    const {state} = this;
+    const {subjects} = state;
+    for (let subject of subjects) {
+      if (subject.checked) {
+        filterSubjects.push(subject.id);
+      }
+    }
+    return filterSubjects;
+  }
+
+  filter() {
+    let filterSubjects = this.getCheckedSubjectIds();
+    this.getUsers(0, filterSubjects);
   }
 
   renderSortAndFilterBox = () => {
@@ -300,77 +345,72 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             {
               this.state.filterExpanded
                 ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }}
-                    onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
+                  onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
                 : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }}
-                    onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
+                  onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
             }
             {
               this.state.subjects.some((r: any) => r.checked)
-              ? <ClearIcon className='filter-control' style={{ fontSize: '2vw' }} onClick={() => {}} />
-              : ''
+                ? <ClearIcon className='filter-control' style={{ fontSize: '2vw' }} onClick={() => {}} />
+                : ''
             }
           </div>
         </div>
         <Grid container direction="row">
-        {
-          this.state.filterExpanded
+          {
+            this.state.filterExpanded
               ? this.state.subjects.map((subject, i) =>
                 <Grid item xs={((i % 2) === 1) ? 7 : 5} key={i}>
                   <FormControlLabel
                     className="filter-container"
                     checked={subject.checked}
+                    onClick={() => this.filterBySubject(i)}
                     control={<Radio className={"filter-radio custom-color"} style={{['--color' as any] : subject.color}} />}
                     label={subject.name}
                   />
                 </Grid>
-              )
-              : ''
-        }
+              ) : ''
+          }
         </Grid>
       </div>
     );
   }
 
-  renderTitle = () => {
-    return "ALL USERS";
-  }
-
   renderPagination() {
-    const showPrev = this.state.sortedIndex >= 15;
-    const showNext = this.state.sortedIndex + 15 <= this.state.users.length;
-    
+    const {totalCount, users, page, pageSize} = this.state;
+    const showPrev = page > 0;
+    const currentPage = page;
+    const showNext = ((totalCount / pageSize) - currentPage) > 1;
+    const prevCount = currentPage * pageSize;
+    const minUser = prevCount + 1;
+    const maxUser = prevCount + users.length;
+
+    const nextPage = () => {
+      this.setState({...this.state, page: page + 1});
+      this.getUsers(page + 1);
+    }
+
+    const previousPage = () => {
+      this.setState({...this.state, page: page - 1});
+      this.getUsers(page - 1);
+    }
+
     return (
-      <Grid container direction="row" className="bricks-pagination">
+      <Grid container direction="row" className="users-pagination">
         <Grid item xs={4} className="left-pagination">
           <div className="first-row">
-            {this.state.sortedIndex + 1}-{  
-              this.state.sortedIndex + 15 > this.state.users.length
-                ? this.state.users.length
-                : this.state.sortedIndex + 15
-            }
-            <span className="grey"> &nbsp;|&nbsp; {this.state.users.length}</span>
+            {minUser}-{maxUser}
+            <span className="grey"> &nbsp;|&nbsp; {totalCount}</span>
           </div>
           <div>
-            {(this.state.sortedIndex + 15) / 15}
-            <span className="grey"> &nbsp;|&nbsp; {Math.ceil(this.state.users.length / 15)}</span>
+            {page + 1}
+            <span className="grey"> &nbsp;|&nbsp; {Math.ceil(totalCount / pageSize)}</span>
           </div>
         </Grid>
         <Grid container item xs={4} justify="center" className="bottom-next-button">
           <div>
-            {
-              showPrev ? (
-                <ExpandLessIcon
-                  className={"prev-button " + (showPrev ? "active" : "")}
-                />
-              ) : ""
-            }
-            {
-              showNext ? (
-                <ExpandMoreIcon
-                  className={"next-button " + (showNext ? "active" : "")}
-                />
-              ) : ""
-            }
+            { showPrev ? <ExpandLessIcon onClick={previousPage} className="prev-button active" /> : "" }
+            { showNext ? <ExpandMoreIcon onClick={nextPage} className="next-button active" /> : "" }
           </div>
         </Grid>
       </Grid>
@@ -379,18 +419,80 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
   renderUserType(user: User) {
     let type = "";
-    if (user.type === UserType.Admin) {
-      type = "A";
-    } else if (user.type === UserType.Builder) {
-      type = "B";
-    } else if (user.type === UserType.Editor) {
-      type = "E";
-    } else if (user.type === UserType.Student) {
-      type = "S";
-    } else if (user.type === UserType.Teacher) {
-      type = "T";
+
+    for (let role of user.roles) {
+      if (role.roleId === UserType.Admin) {
+        type += "A";
+      } else if (role.roleId === UserType.Builder) {
+        type += "B";
+      } else if (role.roleId === UserType.Editor) {
+        type += "E";
+      } else if (role.roleId === UserType.Student) {
+        type += "S";
+      } else if (role.roleId === UserType.Teacher) {
+        type += "T";
+      }
     }
     return type;
+  }
+
+  sortBy(sortBy: UserSortBy) {
+    let isAscending = this.state.isAscending;
+
+    if (sortBy === this.state.sortBy) {
+      isAscending = !isAscending;
+      this.setState({...this.state, isAscending});
+    } else {
+      isAscending = false;
+      this.setState({...this.state, isAscending, sortBy});
+    }
+    let filterSubjects = this.getCheckedSubjectIds();
+    this.getUsers(this.state.page, filterSubjects, sortBy, isAscending);
+  }
+
+  renderSortArrow(currentSortBy: UserSortBy) {
+    const {sortBy, isAscending} = this.state;
+
+    return (
+      <img
+        className="sort-button" alt=""
+        src={
+          sortBy === currentSortBy
+            ? !isAscending ? "/feathericons/chevron-down.svg"
+              : "/feathericons/chevron-up.svg"
+            : "/feathericons/chevron-right.svg"
+        }
+        onClick={() => this.sortBy(currentSortBy)}
+      />
+    );
+  }
+
+  renderUserTableHead() {
+    return (
+      <tr>
+        <th className="subject-title">SC</th>
+        <th className="user-full-name">
+          <Grid container>
+            NAME
+            {this.renderSortArrow(UserSortBy.Name)}
+          </Grid>
+        </th>
+        <th className="email-column">EMAIL</th>
+        <th>
+          <Grid container>
+            ROLE
+            {this.renderSortArrow(UserSortBy.Role)}
+          </Grid>
+        </th>
+        <th>
+          <Grid container>
+            ACTIVE?
+            {this.renderSortArrow(UserSortBy.Status)}
+          </Grid>
+        </th>
+        <th className="edit-button-column"></th>
+      </tr>
+    );
   }
 
   renderUsers() {
@@ -398,19 +500,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return (
       <table className="users-table" cellSpacing="0" cellPadding="0">
         <thead>
-          <tr>
-            <th className="subject-title">SC</th>
-            <th className="user-full-name">NAME</th>
-            <th className="email-column">EMAIL</th>
-            <th>ROLE</th>
-            <th>ACTIVE?</th>
-            <th className="edit-button-column"></th>
-          </tr>
+          {this.renderUserTableHead()}
         </thead>
         <tbody>
         {
           this.state.users.map((user:any, i:number) => {
-            if (i > 11) { return <tr key={i}></tr>}
             return (
               <tr className="user-row" key={i}>
                 <td></td>
@@ -418,9 +512,13 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 <td>{user.email}</td>
                 <td>{this.renderUserType(user)}</td>
                 <td className="activate-button-container">
-                  <IOSSwitch checked={user.status === 1} onChange={() => this.toggleUser(user)} />
+                  <IOSSwitch
+                    checked={user.status === UserStatus.Active}
+                    onChange={() => this.toggleUser(user)}
+                  />
                 </td>
-                <td><div className="edit-button" />
+                <td>
+                  <div className="edit-button" onClick={() => this.props.history.push(`/build/user-profile/${user.id}`)}/>
                 </td>
               </tr>
             );
@@ -447,17 +545,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     const {history} = this.props;
     return (
       <div className="user-list-page">
-        <div className="bricks-upper-part">
-          <Grid container direction="row" className="bricks-header">
-            <Grid item style={{width: '7.65vw'}}>
-              <Grid container direction="row">
-                <Grid item className="home-button-container">
-                  <div className="home-button" onClick={() => { history.push('/build') }}>
-                    <div></div>
-                  </div>
-                </Grid>
-              </Grid>
-            </Grid>
+        <div className="users-upper-part">
+          <Grid container direction="row" className="users-header">
+            <HomeButton link="/build" />
             <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
               <Grid container style={{width: '60vw', height: '7vh'}}>
               <Grid item>
@@ -484,9 +574,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               {this.renderSortAndFilterBox()}
             </Grid>
             <Grid item xs={9} style={{position: 'relative'}}>
-              <div className="brick-row-container">
-                <div className="brick-row-title">
-                  {this.renderTitle()}
+              <div className="user-row-container">
+                <div className="user-row-title">
+                  ALL USERS
                 </div>
                 <Grid container direction="row">
                   {this.renderUsers()}
@@ -527,7 +617,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               </div>
             </Grid>
           </MenuItem>
-          <MenuItem className="view-profile menu-item">
+          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/build/user-profile')}>
             View Profile
             <Grid container className="menu-icon-container" justify="center" alignContent="center">
               <div>
@@ -565,4 +655,4 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 }
 
-export default connector(BricksListPage);
+export default connector(UsersListPage);

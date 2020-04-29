@@ -29,6 +29,9 @@ $mobile-arrow-color: #96A0B6;
       padding-right: 2.9vw;
 
       .welcome-name {
+        font-size: 2.5vw;
+        letter-spacing: 0.73vw;
+        margin-top: 4.2vh;
         font-weight: 600;
         text-transform: uppercase;
         font-family: "Brandon Grotesque Thin";
@@ -87,6 +90,7 @@ $mobile-arrow-color: #96A0B6;
 
   .zoom-item {
     cursor: pointer;
+    text-align: center;
     transition: all .2s ease-in-out;
     transform-origin: 50% 75%;
   }
@@ -132,7 +136,7 @@ $mobile-arrow-color: #96A0B6;
   .logout-button {
     cursor: pointer;
     position: fixed;
-    top: 2.8vh;
+    top: 3.7vh;
     right: 1.8vw;
     font-size: 1.5vw;
     color: white;
@@ -140,27 +144,23 @@ $mobile-arrow-color: #96A0B6;
     letter-spacing: 0.25vw;
 
     .logout-image {
+      margin-top: 0.2vh;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/images/main-page/logout.png);
+      transition: all .3s ease-in-out;
       margin-right: 1.1vw;
-      height: 3.1vw;
+      height: 2.6vw;
+      width: 2.8vw;
       min-height: 100%;
     }
-
-    .image-top {
-      display: none;
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: 99;
-      height: 3.6vw;
-    }
   }
+
   .logout-button:hover {
-    font-weight: bold;
-    .image-bottom {
-      opacity: 0;
-    }
-    .image-top {
-      display: inline;
+    .logout-image {
+      margin-right: 1.2vw;
+      background-image: url(/images/main-page/logout-hover.png);
     }
     .logout-text {
       font-family: $font-family-bold;
@@ -246,11 +246,16 @@ $mobile-arrow-color: #96A0B6;
       letter-spacing: 1vw;
 
       .logout-image {
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/main-page/logout.png);
         margin-right: 1.6vw;
         height: 5.6vh;
         min-height: 100%;
       }
     }
+
 
     .item-description {
       text-align: center;
