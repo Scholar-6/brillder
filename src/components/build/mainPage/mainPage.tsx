@@ -70,7 +70,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               <div>TO BRIX,</div>
               <div className="welcome-name">
                 {
-                  this.props.user.firstName ? this.props.user.firstName : 'USER X'
+                  this.props.user.firstName ? this.props.user.firstName : 'NAME'
                 }
               </div>
             </div>
