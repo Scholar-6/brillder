@@ -114,7 +114,9 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
               onChange={onAltTopicChange}
               placeholder="Enter Subtopic(s)..." />
           </Grid>
-          <NextButton step={ProposalStep.BrickTitle} canSubmit={true} onSubmit={saveTitles} data={titles} />
+          <div className="last-button">
+            <NextButton step={ProposalStep.BrickTitle} canSubmit={true} onSubmit={saveTitles} data={titles} />
+          </div>
         </Grid>
         <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={titles} />
         <div className="red-right-block"></div>
