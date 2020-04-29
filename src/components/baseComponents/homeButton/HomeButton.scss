@@ -1,6 +1,7 @@
 @import '_variables';
 
 .home-button-container {
+  z-index: 1000;
   padding-right: 1.2vw;
   width: 5.5vw;
   border-bottom-right-radius: 2vw;
