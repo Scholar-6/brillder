@@ -1,6 +1,10 @@
 @import '_variables';
 
 .tutorial-page {
+  h1 {
+    font-weight: normal !important;
+  }
+
   font-family: $font-family-regular;
   color: black;
 

@@ -6,6 +6,15 @@
   .left-block {
     margin-top: 5vh;
     width: 60vw;
+
+    > h1 {
+      font-weight: normal !important;
+      margin-left: 1.3vw;
+      margin-top: 0.5vh;
+      font-size: 3.2vw;
+      letter-spacing: 0.04vw;
+      margin-bottom: 4vh;
+    }
   }
 
   $textarea-size2: 9.2vh;
@@ -34,14 +43,6 @@
     resize: none;
     overflow: hidden;
     padding-top: 1.8vh !important;
-  }
-
-  .only-tutorial-header {
-    margin-left: 1.3vw;
-    margin-top: 0.5vh;
-    font-size: 3.2vw;
-    letter-spacing: 0.04vw;
-    margin-bottom: 4vh;
   }
 
   .brief-phone-preview {

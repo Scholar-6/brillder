@@ -96,7 +96,7 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
       <Navigation step={ProposalStep.BrickTitle} />
       <Grid container direction="row">
         <Grid justify="center" item className="left-block">
-          <h1 className="only-tutorial-header">What is your brick about?</h1>
+          <h1>What is your brick about?</h1>
           <Grid item className="input-container">
             <Input
               className="audience-inputs"

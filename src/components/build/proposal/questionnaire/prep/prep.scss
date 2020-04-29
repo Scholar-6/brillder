@@ -4,18 +4,19 @@
   .left-block {
     margin-top: 1.8vh;
     width: 60vw;
-  }
 
-  .tutorial-header {
-    margin-left: 9.5vw;
-    text-align: left;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 3.8vw;
-    line-height:1.32;
-    font-family: $font-family-black;
-    letter-spacing: 0.04vw;
-    color: $dark-blue;
+    > h1 {
+      margin-left: 9.5vw;
+      text-align: left;
+      margin-top: 0;
+      margin-bottom: 0;
+      font-size: 3.8vw;
+      line-height:1.32;
+      font-family: $font-family-black;
+      font-weight: normal !important;
+      letter-spacing: 0.04vw;
+      color: $dark-blue;
+    }
   }
 
   .document-editor {
