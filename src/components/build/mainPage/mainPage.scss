@@ -142,7 +142,6 @@ $mobile-arrow-color: #96A0B6;
     color: white;
     font: 1.24vw $font-family-regular;
     letter-spacing: 0.25vw;
-    transition: all .2s ease-in-out;
 
     .logout-image {
       margin-top: 0.2vh;
@@ -157,9 +156,8 @@ $mobile-arrow-color: #96A0B6;
       min-height: 100%;
     }
   }
-  .logout-button:hover {
-    font-weight: bold;
 
+  .logout-button:hover {
     .logout-image {
       margin-right: 1.2vw;
       background-image: url(/images/main-page/logout-hover.png);
