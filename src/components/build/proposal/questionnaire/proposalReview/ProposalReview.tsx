@@ -49,7 +49,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
           <h2>Slide your mouse over the cover to</h2>
           <h2>open it. &nbsp;Click back to edit.</h2>
           <div className="text-line-2"></div>
-          <h2>When you`re ready, start building!</h2>
+          <h2>When you're ready, start building!</h2>
         </Grid>
         <div className="book-main-container">
           <Grid className="next-button-container" container alignContent="center">
