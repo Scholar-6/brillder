@@ -58,7 +58,7 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
               </Grid>
               {
                 subject ? (
-                  <NextButton step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
+                  <NextButton isActive={true} step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
                 ) : ""
               }
             </div>

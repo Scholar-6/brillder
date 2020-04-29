@@ -3,10 +3,9 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
-import NextButton from '../../components/nextButton';
+import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
-import PreviousButton from '../../components/previousButton';
 import { ProposalStep } from "../../model";
 import './brief.scss';
 
@@ -68,8 +67,13 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
             onChange={setBriefText}
             placeholder="Enter Brief Here..."
           />
-          <NextButton step={ProposalStep.Brief} canSubmit={true} data={brief} onSubmit={saveBrief} />
-          <PreviousButton to="/build/new-brick/open-question" />
+          <NavigationButtons
+            step={ProposalStep.Brief}
+            canSubmit={true}
+            data={brief}
+            onSubmit={saveBrief}
+            backLink="/build/new-brick/open-question"
+          />
         </Grid>
         <ProposalPhonePreview Component={BriefPreviewComponent} data={brief} />
         <div className="red-right-block"></div>
