@@ -48,8 +48,8 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
       <Navigation step={ProposalStep.Prep} />
       <Grid container direction="row" alignItems="flex-start">
         <Grid className="left-block">
-          <h1 className="tutorial-header">Add engaging and relevant</h1>
-          <h1 className="tutorial-header">preparatory material.</h1>
+          <h1>Add engaging and relevant</h1>
+          <h1>preparatory material.</h1>
           <DocumentCKEditor
             data={prep}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
