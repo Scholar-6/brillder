@@ -23,7 +23,12 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
       rest.getUser();
       return <div>...Getting User...</div>
     }
-    if (user.type === UserType.Student || user.type === UserType.Admin || user.type === UserType.Builder || user.type === UserType.Editor) {
+    const {roles} = user;
+    let can = roles.some((role: any) => {
+      const {roleId} = role
+      return roleId === UserType.Student || roleId === UserType.Admin || roleId === UserType.Builder || roleId === UserType.Editor;
+    });
+    if (can) {
       return <Route {...rest} render={(props) => <Component {...props} />} />;
     } else {
       return <div>...Forbidden...</div>

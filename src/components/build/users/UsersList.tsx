@@ -178,7 +178,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       } else if (sortBy === UserSortBy.Status) {
         orderBy = "user.status";
       } else if (sortBy === UserSortBy.Role) {
-        orderBy = "user.type";
+        orderBy = "user.roles";
       }
     }
     axios.post(
@@ -419,16 +419,19 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   renderUserType(user: User) {
     let type = "";
-    if (user.type === UserType.Admin) {
-      type = "A";
-    } else if (user.type === UserType.Builder) {
-      type = "B";
-    } else if (user.type === UserType.Editor) {
-      type = "E";
-    } else if (user.type === UserType.Student) {
-      type = "S";
-    } else if (user.type === UserType.Teacher) {
-      type = "T";
+
+    for (let role of user.roles) {
+      if (role.roleId === UserType.Admin) {
+        type += "A";
+      } else if (role.roleId === UserType.Builder) {
+        type += "B";
+      } else if (role.roleId === UserType.Editor) {
+        type += "E";
+      } else if (role.roleId === UserType.Student) {
+        type += "S";
+      } else if (role.roleId === UserType.Teacher) {
+        type += "T";
+      }
     }
     return type;
   }

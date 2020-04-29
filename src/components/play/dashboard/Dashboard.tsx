@@ -376,7 +376,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                       </Grid>
                       <Grid item xs={4} container justify="flex-start">
                         {
-                          (this.props.user.type === UserType.Admin)
+                          (this.props.user.roles.some(role => role.roleId === UserType.Admin))
                             ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
                             : ""
                         }

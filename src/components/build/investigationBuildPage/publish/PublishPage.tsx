@@ -48,9 +48,11 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
     target.borderRadius = "20vw";
     e.target.style.fontSize = "3vw";
     e.target.innerHTML = `<img alt="tick" src="/images/tick-white.png" />`;
-    if (this.props.user.type === UserType.Admin || this.props.user.type === UserType.Editor) {
+    const canPublish = this.props.user.roles.some(role => role.roleId ===  UserType.Admin || role.roleId === UserType.Editor);
+    const canSubmit = this.props.user.roles.some(role => role.roleId === UserType.Builder);
+    if (canPublish) {
       this.publish();
-    } else if (this.props.user.type === UserType.Builder) {
+    } else if (canSubmit) {
       this.review();
     } else {
       return;
@@ -146,9 +148,9 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
               alignContent="center"
             >
               {
-                (this.props.user.type === UserType.Admin || this.props.user.type === UserType.Editor)
+                (this.props.user.roles.some(role => role.roleId === UserType.Admin || role.roleId === UserType.Editor))
                   ? "PUBLISH"
-                  : (this.props.user.type === UserType.Builder)
+                  : (this.props.user.roles.some(role => role.roleId === UserType.Builder))
                     ? "REVIEW"
                     : ""
               }

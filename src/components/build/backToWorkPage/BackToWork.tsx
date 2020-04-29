@@ -108,7 +108,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       dropdownShown: false,
     };
 
-    if (this.props.user.type === UserType.Admin) {
+    const isAdmin = this.props.user.roles.some(role => role.roleId === UserType.Admin);
+    if (isAdmin) {
       axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks', {withCredentials: true})
         .then(res => {  
           this.setState({...this.state, bricks: res.data, finalBricks: res.data, rawBricks: res.data });
@@ -335,7 +336,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                         </Grid>
                         <Grid item xs={4} container justify="flex-start">
                           {
-                            (this.props.user.type === UserType.Admin)
+                            (this.props.user.roles.some(role => role.roleId === UserType.Admin))
                               ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
                               : ""
                           }
@@ -811,7 +812,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             </Grid>
           </MenuItem>
           {
-            this.props.user.type === UserType.Admin ? (
+            this.props.user.roles.some(role => role.roleId === UserType.Admin) ? (
               <MenuItem className="menu-item" onClick={() => this.props.history.push('/build/users')}>
                 Manage Users
                 <Grid container className="menu-icon-container" justify="center" alignContent="center">
