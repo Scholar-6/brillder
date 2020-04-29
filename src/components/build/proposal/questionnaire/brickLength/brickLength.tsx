@@ -2,12 +2,11 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
+import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import './brickLength.scss';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
-import NextButton from '../../components/nextButton';
-import PreviousButton from '../../components/previousButton';
 import { ProposalStep } from "../../model";
 
 
@@ -80,13 +79,13 @@ function BrickLength({ length, saveBrick }: any) {
               </Grid>
             </Grid>
           </Grid>
-          <NextButton
+          <NavigationButtons
             step={ProposalStep.BrickLength}
             canSubmit={brickLength !== BrickLengthEnum.None}
             onSubmit={saveBrick}
             data={brickLength}
+            backLink="/build/new-brick/prep"
           />
-          <PreviousButton to="/build/new-brick/prep" />
         </Grid>
         <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={brickLength} />
         <div className="red-right-block"></div>

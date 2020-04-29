@@ -2,11 +2,10 @@ import React from "react";
 import { Grid, Input } from "@material-ui/core";
 
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
-import NextButton from '../../components/nextButton';
+import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
-import PreviousButton from '../../components/previousButton';
 import './openQuestion.scss';
 
 
@@ -51,13 +50,13 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
             placeholder="Enter Open Question(s)..."
           />
           <div className="last-buttons">
-            <NextButton
+            <NavigationButtons
               step={ProposalStep.OpenQuestion}
               canSubmit={true}
               onSubmit={saveOpenQuestion}
               data={openQuestion}
+              backLink="/build/new-brick/brick-title" 
             />
-            <PreviousButton to="/build/new-brick/brick-title" />
           </div>
         </Grid>
         <ProposalPhonePreview Component={HeadComponent} data={openQuestion} link="" />

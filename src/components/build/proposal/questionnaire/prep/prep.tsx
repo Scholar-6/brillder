@@ -1,12 +1,11 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
+import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
-import NextButton from '../../components/nextButton';
-import PreviousButton from '../../components/previousButton';
 import { ProposalStep } from "../../model";
 import './prep.scss';
 
@@ -55,8 +54,13 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
             onChange={setPrep}
           />
-          <NextButton step={ProposalStep.Prep} canSubmit={true} data={prep} onSubmit={savePrep} />
-          <PreviousButton to="/build/new-brick/brief" />
+          <NavigationButtons
+            step={ProposalStep.Prep}
+            canSubmit={true}
+            data={prep}
+            onSubmit={savePrep}
+            backLink="/build/new-brick/brief"
+          />
         </Grid>
         <ProposalPhonePreview Component={PrepPreviewComponent} data={prep} />
         <div className="red-right-block"></div>

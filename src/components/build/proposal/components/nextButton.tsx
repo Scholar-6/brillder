@@ -1,20 +1,21 @@
 import React from "react";
 import { useHistory } from 'react-router-dom';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import { IconButton } from "material-ui";
 
 import { ProposalStep } from "../model";
 import './nextButton.scss';
 import { Grid } from "@material-ui/core";
 
 interface NextButtonProps {
+  isActive: boolean
   step: ProposalStep
   canSubmit: boolean
   onSubmit(data?:any): void
   data?: any
 }
 
-const NextButton:React.FC<NextButtonProps> = ({ step, canSubmit, onSubmit, data }) => {
+const NextButton:React.FC<NextButtonProps> = (
+  { step, canSubmit, onSubmit, data, isActive }
+) => {
   const history = useHistory()
   const url = "/build/new-brick"
 
@@ -42,7 +43,15 @@ const NextButton:React.FC<NextButtonProps> = ({ step, canSubmit, onSubmit, data 
 
   return (
     <Grid container justify="center" className="tutorial-next-container">
-      <img alt="" src="/feathericons/chevron-down-orange.png" onClick={next} />
+      <img
+        alt=""
+        src={
+          isActive
+            ? "/feathericons/chevron-down-orange.png"
+            : "/feathericons/chevron-down-grey.png"
+        }
+        onClick={next}
+      />
     </Grid>
   );
 }
