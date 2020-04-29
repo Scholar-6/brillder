@@ -71,8 +71,9 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     setBrick({ ...state, prep } as Brick)
   }
 
-  const setLength = (brickLength: number) => {
+  const setLengthAndSave = (brickLength: number) => {
     setBrick({ ...state, brickLength } as Brick)
+    saveBrick();
   }
 
   const saveBrick = () => {
@@ -83,10 +84,14 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     } else {
       props.createBrick(brick);
     }
+  }
+
+  const saveAndMove = () => {
+    saveBrick();
     setSaved(true);
   }
 
-  if (saved && brick && brick.id) {
+  if (saved) {
     history.push(`/build/brick/${brick.id}/build/investigation/question`);
   }
 
@@ -109,10 +114,10 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
           <Prep parentPrep={state.prep} savePrep={setPrep} />
         </Route>
         <Route path='/build/new-brick/length'>
-          <BrickLength length={state.brickLength} saveBrick={setLength} />
+          <BrickLength length={state.brickLength} saveBrick={setLengthAndSave} />
         </Route>
         <Route path="/build/new-brick/proposal">
-          <ProposalReview brick={state} saveBrick={saveBrick} />
+          <ProposalReview brick={state} saveBrick={saveAndMove} />
         </Route>
       </div>
     </MuiThemeProvider>
