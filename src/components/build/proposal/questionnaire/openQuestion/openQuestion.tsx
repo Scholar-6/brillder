@@ -49,15 +49,13 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
             onChange={handleChange}
             placeholder="Enter Open Question(s)..."
           />
-          <div className="last-buttons">
-            <NavigationButtons
-              step={ProposalStep.OpenQuestion}
-              canSubmit={true}
-              onSubmit={saveOpenQuestion}
-              data={openQuestion}
-              backLink="/build/new-brick/brick-title" 
-            />
-          </div>
+          <NavigationButtons
+            step={ProposalStep.OpenQuestion}
+            canSubmit={true}
+            onSubmit={saveOpenQuestion}
+            data={openQuestion}
+            backLink="/build/new-brick/brick-title" 
+          />
         </Grid>
         <ProposalPhonePreview Component={HeadComponent} data={openQuestion} link="" />
         <div className="red-right-block"></div>
