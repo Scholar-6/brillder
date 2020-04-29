@@ -41,17 +41,22 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
               : ""
           }
         </Grid>
-        <Grid className="main-text-container"></Grid>
+        <Grid className="main-text-container">
+          <h1>Your proposal has been saved!</h1>
+          <h1>We've made a booklet for you</h1>
+          <h1>to check all is in order.</h1>
+          <div className="text-line-1"></div>
+          <h2>Slide your mouse over the cover to</h2>
+          <h2>open it. &nbsp;Click back to edit.</h2>
+          <div className="text-line-2"></div>
+          <h2>When you`re ready, start building!</h2>
+        </Grid>
         <div className="book-main-container">
           <Grid className="next-button-container" container alignContent="center">
             {
               bookHovered ? (
                 <div>
                   <div className="next-button" onClick={savingBrick}></div>
-                  <div className="button-text">
-                    <div>START</div>
-                    <div>BUILDING!</div>
-                  </div>
                 </div>
               ) : ""
             }
@@ -101,6 +106,8 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
             </div>
           </div>
         </div>
+        <div className="red-right-block"></div>
+        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );
