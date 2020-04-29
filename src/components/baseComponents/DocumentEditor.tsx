@@ -50,7 +50,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
                 color: '#C43C30',
                 label: 'Red'
               }, {
-                color: '#001C58',
+                color: '#0681DB',
                 label: 'Blue'
               }, {
                 color: '#30C474',
