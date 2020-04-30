@@ -29,10 +29,12 @@
       border-top-left-radius: 2.1vw;
       border-top-right-radius: 2.1vw;
       background: $tab-grey;
-      height: 7.5vh;
+      height: 4vw;
       border: none;
 
       .ck-button {
+        padding-top: 0;
+        padding-bottom: 0;
         font-size: 1.7vw;
         color: $dark-blue;
         margin-right: 0;
@@ -40,6 +42,7 @@
         padding-right: 0;
         padding-left: 0;
         min-width: 3.2vw;
+        min-height: 3.2vw;
       }
       .ck-color-table__remove-color {
         color: black;
@@ -52,10 +55,10 @@
       }
       .ck-toolbar__items {
         > .ck-button:nth-child(1) {
-          border-top-left-radius: 2.1vw;
+          margin-left: 1vw;
         }
         > .ck:nth-child(4) {
-          margin-left: 23vw;
+          margin-left: 21vw;
         }
       }
     }
