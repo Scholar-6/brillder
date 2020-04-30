@@ -128,7 +128,13 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
                   (choice.answers.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, key)} /> : ""
                 }
                 <Checkbox className="left-ckeckbox" disabled={locked} checked={answer.checked} onChange={(e) => onChecked(choice, e)} value={key} />
-                <input disabled={locked} value={answer.value} onChange={(event: any) => { answerChanged(answer, event) }} placeholder="Enter Answer..." />
+                <input
+                  className="input-answer"
+                  disabled={locked}
+                  value={answer.value}
+                  onChange={(event: any) => { answerChanged(answer, event) }}
+                  placeholder="Enter Answer..."
+                />
               </div>
             );
           })

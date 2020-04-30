@@ -21,7 +21,6 @@
     padding: 8px 0;
     border: none;
     border-top: 1px solid #d9d9d9;
-    height: 60px;
     margin: 0;
     opacity: 0.8;
     font-size: $answer-input-text-size;
@@ -29,6 +28,8 @@
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     color: $dark-blue;
+    padding: 0;
+    margin: 0.1vw 0;
   }
 
   .hint-type-text {

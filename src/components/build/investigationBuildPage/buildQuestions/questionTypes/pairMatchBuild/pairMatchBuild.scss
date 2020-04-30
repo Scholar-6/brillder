@@ -1,4 +1,5 @@
 @import "_variables";
+@import "../../questionVariables";
 
 .pair-match-build {
   text-align: center;
@@ -32,6 +33,7 @@
       opacity: 0.8;
       font-size: $answer-input-text-size;
       font-family: $font-family-regular;
+      height: $answer-height !important;
     }
   }
 
@@ -52,6 +54,7 @@
       opacity: 0.8;
       font-size: $answer-input-text-size;
       font-family: $font-family-regular;
+      height: $answer-height !important;
     }
   }
 }
