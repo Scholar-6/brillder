@@ -135,6 +135,15 @@ $background-color: white;
   .mobile-question-component {
     height: 100%;
     overflow-y: auto !important;
+
+    .text-play {
+      color: $dark-blue;
+    }
+
+    .quotes-live {
+      color: $dark-blue;
+    }
+
     > div {
       p {
         margin: 0.1vh 0.2vw;
