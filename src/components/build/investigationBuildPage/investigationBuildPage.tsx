@@ -14,7 +14,7 @@ import QuestionTypePage from "./questionType/questionType";
 import SynthesisPage from "./synthesisPage/SynthesisPage";
 import DragableTabs from "./dragTabs/dragableTabs";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
-import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/PhoneQuestionPreview";
+import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 import {
   Question,
   QuestionTypeEnum,
