@@ -15,10 +15,10 @@ $background-color: white;
   }
 
   .screen {
-    height: 98.6% !important;
-    border-top-right-radius: 0.5vw;
-    border-bottom-left-radius: 2.2vw;
-    border-bottom-right-radius: 2.2vw;
+    height: 100% !important;
+    border-top-right-radius: 1.7vw;
+    border-bottom-left-radius: 1.7vw;
+    border-bottom-right-radius: 1.7vw;
     overflow: hidden;
   }
 
@@ -78,6 +78,7 @@ $background-color: white;
     }
 
     .sensor {
+      position: absolute;
       width: 0.7vw !important;
       top: 2.3vw !important;
       left: 50% !important;
@@ -127,7 +128,7 @@ $background-color: white;
   }
 
   .custom-component {
-    border-radius: 2.2vw;
+    border-radius: 1.8vw;
     overflow: hidden;
     width: auto;
     height: 100%;
