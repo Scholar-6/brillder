@@ -28,8 +28,8 @@
     .ck-toolbar {
       border-top-left-radius: 2.1vw !important;
       border-top-right-radius: 2.1vw !important;
+      padding-left: 0;
       background: $tab-grey;
-      height: 4vw;
       border: none;
 
       .ck-button {
@@ -54,11 +54,25 @@
         min-height: 2vw;
       }
       .ck-toolbar__items {
+        .ck-color-ui-dropdown {
+          margin-right: 0;
+          margin: 0;
+          width: 6vw;
+          .ck-button {
+            padding: 0 !important;
+          }
+        }
         > .ck-button:nth-child(1) {
-          margin-left: 1vw;
+          border-top-left-radius: 1.5vw;
+          margin-top: 0.5vw;
+          margin-bottom: 0.5vw;
+          margin-left: 0.5vw;
         }
         > .ck:nth-child(4) {
-          margin-left: 21vw;
+          margin-left: 22.85vw;
+        }
+        > .ck:nth-child(5) {
+          border-top-right-radius: 1.5vw;
         }
       }
       .ck-button__icon {

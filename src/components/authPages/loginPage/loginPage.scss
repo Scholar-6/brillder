@@ -191,6 +191,7 @@ html, body, #root {
 }
 
 @media only screen and (max-width: 599px) {
+  .login-page {
   .logo-image {
     height: auto !important;
     width: 80%;
@@ -204,4 +205,5 @@ html, body, #root {
     font-size: 3vw !important;
     width: 100% !important;
   }
+}
 }
