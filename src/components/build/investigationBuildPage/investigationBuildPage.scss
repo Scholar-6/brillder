@@ -26,10 +26,15 @@
         overflow-y: auto;
         color: $dark-blue;
 
+        p {
+          margin-top: 5%;
+          margin-bottom: 5%;
+        }
+
         .synthesis-title {
           color: $dark-blue;
-          margin-top: 2vh;
-          margin-bottom: 1vh;
+          margin-top: 12%;
+          margin-bottom: 3%;
           font-size: 1.45vw;
           letter-spacing: 0.3vw;
           font-family: 'Brandon Grotesque Black';
