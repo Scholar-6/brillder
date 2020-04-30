@@ -4,6 +4,8 @@
   .ck-toolbar {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
+    background: $tab-grey !important;
+    border: none;
 
     .ck-button {
       color: $dark-blue;
@@ -15,7 +17,8 @@
     font-family: $font-family-regular;
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
-    border: 1px solid grey;
+    border: none !important;
     font-size: 1vw;
+    background: #F5F6F7;
   }
 }
