@@ -1,4 +1,5 @@
 @import "_variables";
+@import "../../questionVariables";
 
 .short-answer-build {
   text-align: center;
@@ -17,6 +18,7 @@
       height: 55px;
       text-align: center;
       border: none;
+      height: $answer-height !important;
     }
   }
 }
