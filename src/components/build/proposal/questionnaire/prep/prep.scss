@@ -33,7 +33,6 @@
       border: none;
 
       .ck-button {
-        border-radius: 2.1vw;
         font-size: 1.7vw;
         color: $dark-blue;
         margin-right: 0;
@@ -43,6 +42,9 @@
         min-width: 3.2vw;
       }
       .ck-toolbar__items {
+        > .ck-button:nth-child(1) {
+          border-top-left-radius: 2.1vw;
+        }
         > .ck:nth-child(4) {
           margin-left: 23vw;
         }
