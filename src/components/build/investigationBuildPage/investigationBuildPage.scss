@@ -15,13 +15,17 @@
   height: 100%;
 
   .phone-question-preview {
-    top: 16.2%;
-    right: 5.4%;
+    top: 15.3%;
+    right: 6%;
+    //right: 5.4%;
+    
     .custom-component {
       background: white;
       overflow-y: hidden;
 
+
       .synthesis-preview {
+        width: 100%;
         height: 100%;
         overflow-y: auto;
         color: $dark-blue;

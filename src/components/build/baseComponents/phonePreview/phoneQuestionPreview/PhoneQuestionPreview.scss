@@ -34,24 +34,22 @@ $background-color: white;
     left: 0;
     height: 100% !important;
     width: 90% !important;
-    border-radius: 2.4vw !important;
+    border-radius: 2.6vw !important;
 
     .phone-border {
       position: relative;
       height: 96%;
       margin: 2%;
-      border-top: 0.43vw solid $phone-border-color;
-      border-left: 0.43vw solid $phone-border-color;
-      border-right: 0.43vw solid $phone-border-color;
-      border-bottom: 0.43vw solid $phone-border-color;
+      background: $phone-border-color;
+      padding: 0.43vw;
       border-radius: 2.2vw;
 
       .upper-panel {
         position: absolute;
         top: 0;
-        height: 3%;
-        left: 27.5%;
-        width: 45%;
+        height: 3.5%;
+        left: 29%;
+        width: 42%;
         border-bottom-left-radius: 0.65vw;
         border-bottom-right-radius: 0.65vw;
         background: $phone-border-color;
@@ -59,7 +57,7 @@ $background-color: white;
 
         .speaker {
           width: 36%;
-          margin-top: 2.3%;
+          margin-top: 6%;
           margin-left: 33%;
           height: 0.43vw;
           border-radius: 1vw;
@@ -69,7 +67,7 @@ $background-color: white;
         .camera {
           height: 0.52vw;
           width: 0.52vw;
-          margin-top: 2%;
+          margin-top: 5%;
           margin-left: 8%;
           border-radius: 100%;
           background: $background-color;
@@ -88,7 +86,7 @@ $background-color: white;
     }
 
     .volume {
-      left: -1.1vw !important;
+      left: -0.7vw !important;
       position: absolute;
       border-top-left-radius: 0.3vw;
       border-bottom-left-radius: 0.3vw;
@@ -114,7 +112,7 @@ $background-color: white;
       border-bottom-right-radius: 0.4vw;
       position: absolute;
       top: 8.55vw;
-      right: -1.14vw;
+      right: -0.7vw;
       width: 0.6vw;
       height: 5.7vw;
     }
@@ -128,7 +126,7 @@ $background-color: white;
   }
 
   .custom-component {
-    border-radius: 1.8vw;
+    border-radius: 1.6vw;
     overflow: hidden;
     width: auto;
     height: 100%;
