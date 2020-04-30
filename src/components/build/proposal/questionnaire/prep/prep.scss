@@ -26,8 +26,8 @@
     width: 42.7vw;
 
     .ck-toolbar {
-      border-top-left-radius: 2.1vw;
-      border-top-right-radius: 2.1vw;
+      border-top-left-radius: 2.1vw !important;
+      border-top-right-radius: 2.1vw !important;
       background: $tab-grey;
       height: 4vw;
       border: none;
