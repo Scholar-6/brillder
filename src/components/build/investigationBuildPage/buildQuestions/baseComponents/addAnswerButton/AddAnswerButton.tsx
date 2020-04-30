@@ -14,10 +14,7 @@ export interface AddAnswerButtonProps {
 
 const AddAnswerButton: React.FC<AddAnswerButtonProps> = ({ label, locked, height, addAnswer }) => {
   return (
-    <AnimateHeight
-      duration={500}
-      height={height}
-    >
+    <AnimateHeight duration={500} height={height}>
       <div className="button-box">
         <Button className="add-answer-button" disabled={locked} onClick={addAnswer}>
           {label}
