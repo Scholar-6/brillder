@@ -4,6 +4,10 @@
   .ck-toolbar {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
+
+    .ck-button {
+      color: $dark-blue;
+    }
   }
 
   .ck-content {
