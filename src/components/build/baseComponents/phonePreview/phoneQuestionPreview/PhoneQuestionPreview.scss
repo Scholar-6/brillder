@@ -1,10 +1,11 @@
 @import "_variables";
 
-$phone-border-color: #193366;
+$phone-border-color: $tab-grey;
+$background-color: white;
 
-.proposal-phone-preview {
+.phone-question-preview {
   top: 15%;
-  right: 8.5%;
+  right: 6%;
   position: fixed;
   width: 21.2%;
   padding-top: 39.3%;
@@ -13,19 +14,21 @@ $phone-border-color: #193366;
     height: 100%;
   }
 
-  .marvel-device.iphone5s:before,
-  .top-bar,
-  .bottom-bar {
-    background: white !important;
+  .screen {
+    height: 98.6% !important;
+    border-top-right-radius: 0.5vw;
+    border-bottom-left-radius: 2.2vw;
+    border-bottom-right-radius: 2.2vw;
+    overflow: hidden;
   }
 
   .volume, .sleep {
     position: absolute;
-    background: $dark-blue !important;
+    background: $background-color !important;
   }
 
   .phone {
-    background: $dark-blue;
+    background: $background-color;
     position: absolute !important;
     top: 0;
     left: 0;
@@ -45,14 +48,14 @@ $phone-border-color: #193366;
 
       .upper-panel {
         position: absolute;
-          top: 0;
+        top: 0;
         height: 3%;
         left: 27.5%;
         width: 45%;
         border-bottom-left-radius: 0.65vw;
         border-bottom-right-radius: 0.65vw;
         background: $phone-border-color;
-        z-index: 10;
+        z-index: 1000;
 
         .speaker {
           width: 36%;
@@ -60,7 +63,7 @@ $phone-border-color: #193366;
           margin-left: 33%;
           height: 0.43vw;
           border-radius: 1vw;
-          background: $dark-blue;
+          background: $background-color;
         }
 
         .camera {
@@ -69,7 +72,7 @@ $phone-border-color: #193366;
           margin-top: 2%;
           margin-left: 8%;
           border-radius: 100%;
-          background: $dark-blue;
+          background: $background-color;
         }
       }
     }

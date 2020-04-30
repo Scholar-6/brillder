@@ -17,23 +17,23 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Compo
       <div className="proposal-phone-preview">
         <div className="phone">
           <div className="phone-border">
-          <Grid container className="upper-panel">
-            <div className="speaker"></div>
-            <div className="camera"></div>
-          </Grid>
-          <div className="volume volume1"></div>
-          <div className="volume volume2"></div>
-          <div className="volume volume3"></div>
-          <div className="sleep"></div>
-          <div className="screen">
-            {
-              link
-                ? <div className="custom-component">
-                    <iframe title="phone-preview-screen" src={link} />
-                  </div>
-                : <div className="custom-component"><Component data={data} /></div>
-            }
-          </div>
+            <Grid container className="upper-panel">
+              <div className="speaker"></div>
+              <div className="camera"></div>
+            </Grid>
+            <div className="volume volume1"></div>
+            <div className="volume volume2"></div>
+            <div className="volume volume3"></div>
+            <div className="sleep"></div>
+            <div className="screen">
+              {
+                link
+                  ? <div className="custom-component">
+                      <iframe title="phone-preview-screen" src={link} />
+                    </div>
+                  : <div className="custom-component"><Component data={data} /></div>
+              }
+            </div>
           </div>
         </div>
       </div>
