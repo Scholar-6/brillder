@@ -35,7 +35,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
     if (this.state.editor) {
       let data = this.state.editor.getData();
       if (props.data !== data) {
-        this.state.editor.setData(props.data);
+        this.state.editor.setData(props.data ? props.data : '');
       }
     }
   }
