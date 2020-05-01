@@ -137,7 +137,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
           <Grid item xs={11}>
             {
               (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && input.hint) ?
-                <span className="question-hint">{input.hint}</span>
+                <span className="question-hint" dangerouslySetInnerHTML={{ __html: input.hint}} />
                 : ""
             }
           </Grid>

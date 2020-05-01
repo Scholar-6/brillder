@@ -103,7 +103,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
                   <div>{input.value}</div>
                   {
                     (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && input.hint) ?
-                      <span className="question-hint">{input.hint}</span>
+                      <span className="question-hint" dangerouslySetInnerHTML={{ __html: input.hint}} />
                       : ""
                   }
                 </div>

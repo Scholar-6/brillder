@@ -9,6 +9,7 @@ import './DocumentEditor.scss';
 
 export interface DocumentEditorProps {
   data: string,
+  config?: any,
   placeholder: string,
   onChange(data: string): void,
 }
@@ -49,29 +50,33 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
   }
 
   render() {
+    let config = {
+      placeholder: this.props.placeholder,
+      fontColor: {
+        colors: [{
+          color: '#C43C30',
+          label: 'Red'
+        }, {
+          color: '#0681DB',
+          label: 'Blue'
+        }, {
+          color: '#30C474',
+          label: 'Green'
+        }]
+      },
+      toolbar: ['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList'],
+      mediaEmbed: { previewsInData: true }
+    }
+    if (this.props.config) {
+      config = this.props.config;
+    }
     return (
       <div className="document-editor">
         <div ref={this.state.ref} />
         <CKEditor
           data={this.state.data}
           editor={DecoupledEditor}
-          config={{
-            placeholder: this.props.placeholder,
-            fontColor: {
-              colors: [{
-                color: '#C43C30',
-                label: 'Red'
-              }, {
-                color: '#0681DB',
-                label: 'Blue'
-              }, {
-                color: '#30C474',
-                label: 'Green'
-              }]
-            },
-            toolbar: ['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList'],
-            mediaEmbed: { previewsInData: true }
-          }}
+          config={config}
           onInit={(e:any) => this.handleOnInit(e)}
           onChange={(e: any, editor: any) => {
             if (!this.state.focused) {
