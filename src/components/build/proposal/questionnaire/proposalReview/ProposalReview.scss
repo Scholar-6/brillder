@@ -166,12 +166,58 @@
     }
 
     .front {
-      font-size: 6.7vw;
-      letter-spacing: 1.34vw;
+      position: relative;
       line-height: 1.45;
       color: $orange;
-      text-align: left;
+      text-align: center;
       font-family: "Brandon Grotesque Black";
+      .page-stitch {
+        position: absolute;
+        height: 100%;
+        width: 1.76vw;
+        .vertical-line {
+          position: absolute;
+          height: 100%;
+          right: 0;
+          width: 0.8vw;
+          background: #193366;
+        }
+        .horizontal-line {
+          position: absolute;
+          height: 0.8vw;
+          width: 100%;
+          background: #193366;
+        }
+        .top-line-1 {
+          top: 7.8vh;
+        }
+        .top-line-2 {
+          top: 14.7vh;
+        }
+        .bottom-line-1 {
+          bottom: 14.7vh;
+        }
+        .bottom-line-2 {
+          bottom: 7.8vh;
+        }
+      }
+      img {
+        margin-left:1vw;
+        margin-top: 6.5vh;
+        height: 21.5vh;
+      }
+      .white-text {
+        margin-top: 5vh;
+        margin-left: 1.9vw;
+        letter-spacing: 0.8vw;
+        font-size: 3.5vw;
+        color: white;
+      }
+      .names-row {
+        margin-top: 1vh;
+        font-size: 2.4vw;
+        color: #193366;
+      }
     }
 
     .page1 {
