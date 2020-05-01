@@ -174,7 +174,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
     if (sortBy) {
       if (sortBy === UserSortBy.Name) {
-        orderBy = "user.firstName";
+        orderBy = "user.lastName";
       } else if (sortBy === UserSortBy.Status) {
         orderBy = "user.status";
       } else if (sortBy === UserSortBy.Role) {

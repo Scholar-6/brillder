@@ -111,7 +111,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
                 <div style={{display: "block"}}>
                   {
                     (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && this.props.question.hint.list.length > 0) ?
-                      <span className="question-hint">{answer.hint}</span>
+                      <span className="question-hint" dangerouslySetInnerHTML={{ __html: answer.hint}} />
                       : ""
                   }
                 </div>

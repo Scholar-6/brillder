@@ -4,6 +4,7 @@
 .hint-component {
   margin-left: 1.25%;
   width: 97.5%;
+  overflow: hidden;
 
   input {
     padding-left: 0.6vw !important;
@@ -21,13 +22,15 @@
     padding: 8px 0;
     border: none;
     border-top: 1px solid #d9d9d9;
-    height: 60px;
     margin: 0;
     opacity: 0.8;
     font-size: $answer-input-text-size;
     font-family: $font-family-regular;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    color: $dark-blue;
+    padding: 0;
+    margin: 0.1vw 0;
   }
 
   .hint-type-text {
@@ -66,15 +69,20 @@
     }
   }
 
-  @media only screen and (min-width: 1200px)  {
-  }
-  
-  @media only screen and (max-width: 1199px) and (min-width: 960px)  {
-  }
-  
-  @media only screen and (max-width: 959px) and (min-width: 600px)  {
-  }
-  
-  @media only screen and (max-width: 599px) {
+  .hint-container {
+    .document-editor {
+      width: 100%;
+
+      .ck-toolbar {
+        background:  #F5F6F7 !important;
+        .ck-toolbar__items {
+          background:  #F5F6F7 !important;
+        }
+      }
+
+      .ck-content {
+        background: white;
+      }
+    }
   }
 }

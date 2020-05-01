@@ -2,16 +2,15 @@
 import React from 'react';
 import {  Hidden, Grid } from '@material-ui/core';
 
-import './phoneQuestionPreview/PhoneQuestionPreview.scss';
+import './PhoneQuestionPreview.scss';
+import QuestionPlay from "components/play/brick/questionPlay/QuestionPlay";
 
 
 export interface PhonePreviewProps {
-  link?: string
-  Component?: any
-  data?: any
+  question: any
 }
 
-const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data }) => {
+const PhonePreview: React.FC<PhonePreviewProps> = ({ question }) => {
   return (
     <Hidden only={['xs', 'sm']}>
       <div className="phone-question-preview">
@@ -30,13 +29,9 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data }) =>
             <div className="home"></div>
             <div className="sleep"></div>
             <div className="screen">
-              {
-                link
-                  ? <div className="custom-component">
-                      <iframe title="phone-preview-screen" src={link} />
-                    </div>
-                  : <div className="custom-component"><Component data={data} /></div>
-              }
+              <div className="custom-component mobile-question-component" style={{background: "white"}}>
+                <QuestionPlay question={question} isPreview={true} isLastOne={false} answers={[]} next={() => {}}/>
+              </div>
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ import { Grid } from '@material-ui/core';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 import './Hint.scss';
+import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
 
 
 export enum HintStatus {
@@ -61,16 +62,16 @@ const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props 
     setState(initState);
   }
 
-  const onHintChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onHintChanged = (value: string) => {
     if (locked) { return; }
-    setState({ ...state, value: event.target.value });
-    onChange({ ...state, value: event.target.value });
+    setState({ ...state, value });
+    onChange({ ...state, value });
   }
 
-  const onHintListChanged = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const onHintListChanged = (value: string, index: number) => {
     if (locked) { return; }
     let {list} = state;
-    list[index] = event.target.value;
+    list[index] = value;
     onChange({ ...state, list });
   }
 
@@ -83,8 +84,16 @@ const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props 
   const renderHintInputs = () => {
     if (state.status === HintStatus.All || !props.count || props.count === 1) {
       return (
-        <Grid container item xs={12}>
-          <input disabled={locked} className="hint-input-text" value={state.value} onChange={onHintChanged} placeholder="Enter Hint..."></input>
+        <Grid container item xs={12} className="hint-container">
+          <DocumentCKEditor
+            data={state.value}
+            config={{
+              placeholder: 'Enter Hint...',
+              toolbar: ['bold'],
+            }}
+            placeholder=""
+            onChange={onHintChanged}
+          />
         </Grid>
       );
     }
@@ -105,13 +114,16 @@ const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props 
 
     for (let i = 0; i < props.count; i++) {
       answerHints.push(
-        <Grid key={i} container item xs={12}>
-          <input
-            disabled={locked}
-            className="hint-input-text"
-            value={state.list[i]}
-            onChange={(e) => {onHintListChanged(e, i)}}
-            placeholder="Enter Hint..."/>
+        <Grid key={i} container item xs={12} className="hint-container">
+          <DocumentCKEditor
+            data={state.list[i]}
+            config={{
+              placeholder: 'Enter Hint...',
+              toolbar: ['bold'],
+            }}
+            placeholder=""
+            onChange={(v) => {onHintListChanged(v, i)}}
+          />
         </Grid>
       );
     }

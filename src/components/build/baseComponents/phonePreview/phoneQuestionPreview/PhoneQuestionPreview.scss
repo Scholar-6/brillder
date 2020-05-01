@@ -1,10 +1,11 @@
 @import "_variables";
 
-$phone-border-color: #193366;
+$phone-border-color: $tab-grey;
+$background-color: white;
 
-.proposal-phone-preview {
+.phone-question-preview {
   top: 15%;
-  right: 8.5%;
+  right: 6%;
   position: fixed;
   width: 21.2%;
   padding-top: 39.3%;
@@ -13,68 +14,69 @@ $phone-border-color: #193366;
     height: 100%;
   }
 
-  .marvel-device.iphone5s:before,
-  .top-bar,
-  .bottom-bar {
-    background: white !important;
+  .screen {
+    height: 100% !important;
+    border-top-right-radius: 1.7vw;
+    border-bottom-left-radius: 1.7vw;
+    border-bottom-right-radius: 1.7vw;
+    overflow: hidden;
   }
 
   .volume, .sleep {
     position: absolute;
-    background: $dark-blue !important;
+    background: $background-color !important;
   }
 
   .phone {
-    background: $dark-blue;
+    background: $background-color;
     position: absolute !important;
     top: 0;
     left: 0;
     height: 100% !important;
     width: 90% !important;
-    border-radius: 2.4vw !important;
+    border-radius: 2.6vw !important;
 
     .phone-border {
       position: relative;
       height: 96%;
       margin: 2%;
-      border-top: 0.43vw solid $phone-border-color;
-      border-left: 0.43vw solid $phone-border-color;
-      border-right: 0.43vw solid $phone-border-color;
-      border-bottom: 0.43vw solid $phone-border-color;
+      background: $phone-border-color;
+      padding: 0.43vw;
       border-radius: 2.2vw;
 
       .upper-panel {
         position: absolute;
-          top: 0;
-        height: 3%;
-        left: 27.5%;
-        width: 45%;
+        top: 0;
+        height: 3.5%;
+        left: 29%;
+        width: 42%;
         border-bottom-left-radius: 0.65vw;
         border-bottom-right-radius: 0.65vw;
         background: $phone-border-color;
-        z-index: 10;
+        z-index: 1000;
 
         .speaker {
           width: 36%;
-          margin-top: 2.3%;
+          margin-top: 6%;
           margin-left: 33%;
           height: 0.43vw;
           border-radius: 1vw;
-          background: $dark-blue;
+          background: $background-color;
         }
 
         .camera {
           height: 0.52vw;
           width: 0.52vw;
-          margin-top: 2%;
+          margin-top: 5%;
           margin-left: 8%;
           border-radius: 100%;
-          background: $dark-blue;
+          background: $background-color;
         }
       }
     }
 
     .sensor {
+      position: absolute;
       width: 0.7vw !important;
       top: 2.3vw !important;
       left: 50% !important;
@@ -84,7 +86,7 @@ $phone-border-color: #193366;
     }
 
     .volume {
-      left: -1.1vw !important;
+      left: -0.7vw !important;
       position: absolute;
       border-top-left-radius: 0.3vw;
       border-bottom-left-radius: 0.3vw;
@@ -110,7 +112,7 @@ $phone-border-color: #193366;
       border-bottom-right-radius: 0.4vw;
       position: absolute;
       top: 8.55vw;
-      right: -1.14vw;
+      right: -0.7vw;
       width: 0.6vw;
       height: 5.7vw;
     }
@@ -124,7 +126,7 @@ $phone-border-color: #193366;
   }
 
   .custom-component {
-    border-radius: 2.2vw;
+    border-radius: 1.6vw;
     overflow: hidden;
     width: auto;
     height: 100%;
@@ -133,6 +135,15 @@ $phone-border-color: #193366;
   .mobile-question-component {
     height: 100%;
     overflow-y: auto !important;
+
+    .text-play {
+      color: $dark-blue;
+    }
+
+    .quotes-live {
+      color: $dark-blue;
+    }
+
     > div {
       p {
         margin: 0.1vh 0.2vw;

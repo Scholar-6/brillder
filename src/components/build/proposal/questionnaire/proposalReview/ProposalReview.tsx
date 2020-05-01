@@ -6,14 +6,16 @@ import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import { Brick } from "model/brick";
 import './ProposalReview.scss';
 import { useHistory } from "react-router-dom";
+import { User } from "model/user";
 
 
 interface ProposalProps {
   brick: Brick;
+  user: User;
   saveBrick():void;
 }
 
-const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
+const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
   const history = useHistory();
 
   const [bookHovered, setHover] = React.useState(false);
@@ -95,11 +97,18 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
               <div className="page2"></div>
               <div className="page1"></div>
               <div className="front">
+                <div className="page-stitch">
+                  <div className="vertical-line"></div>
+                  <div className="horizontal-line top-line-1"></div>
+                  <div className="horizontal-line top-line-2"></div>
+                  <div className="horizontal-line bottom-line-1"></div>
+                  <div className="horizontal-line bottom-line-2"></div>
+                </div>
                 <Grid container justify="center" alignContent="center" style={{height: '100%'}}>
                   <div>
-                    <div>YOUR</div>
-                    <div>PROP</div>
-                    <div>OSAL</div>
+                    <img alt="" src="/images/choose-login/logo.png" />
+                    <div className="white-text">PROPOSAL</div>
+                    <div className="names-row">{user.firstName} {user.lastName}</div>
                   </div>
                 </Grid>
               </div>

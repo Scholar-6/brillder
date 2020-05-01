@@ -26,14 +26,15 @@
     width: 42.7vw;
 
     .ck-toolbar {
-      border-top-left-radius: 2.1vw;
-      border-top-right-radius: 2.1vw;
+      border-top-left-radius: 2.1vw !important;
+      border-top-right-radius: 2.1vw !important;
+      padding-left: 0;
       background: $tab-grey;
-      height: 7.5vh;
       border: none;
 
       .ck-button {
-        border-radius: 2.1vw;
+        padding-top: 0;
+        padding-bottom: 0;
         font-size: 1.7vw;
         color: $dark-blue;
         margin-right: 0;
@@ -41,11 +42,41 @@
         padding-right: 0;
         padding-left: 0;
         min-width: 3.2vw;
+        min-height: 3.2vw;
+      }
+      .ck-color-table__remove-color {
+        color: black;
+        padding: 0.5vh 0.7vw;
+        font-size: 1.1vw;
+      }
+      .ck-color-grid__tile {
+        min-width: 2vw;
+        min-height: 2vw;
       }
       .ck-toolbar__items {
-        > .ck:nth-child(4) {
-          margin-left: 23vw;
+        .ck-color-ui-dropdown {
+          margin-right: 0;
+          margin: 0;
+          width: 6vw;
+          .ck-button {
+            padding: 0 !important;
+          }
         }
+        > .ck-button:nth-child(1) {
+          border-top-left-radius: 1.5vw;
+          margin-top: 0.5vw;
+          margin-bottom: 0.5vw;
+          margin-left: 0.5vw;
+        }
+        > .ck:nth-child(4) {
+          margin-left: 22.85vw;
+        }
+        > .ck:nth-child(5) {
+          border-top-right-radius: 1.5vw;
+        }
+      }
+      .ck-button__icon {
+        font-size: 1vw;
       }
     }
 
