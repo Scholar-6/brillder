@@ -73,6 +73,13 @@
     .document-editor {
       width: 100%;
 
+      .ck-toolbar {
+        background:  #F5F6F7 !important;
+        .ck-toolbar__items {
+          background:  #F5F6F7 !important;
+        }
+      }
+
       .ck-content {
         background: white;
       }
