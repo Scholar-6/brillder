@@ -39,7 +39,7 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
       <HomeButton link='/build' />
       <Navigation step={ProposalStep.OpenQuestion} />
       <Grid container direction="row">
-        <Grid justify="center" item className="left-block">
+        <Grid item className="left-block">
           <h1 className="tutorial-header">Ideally, every brick should</h1>
           <h1 className="tutorial-header">point to a bigger question.</h1>
           <p className="sub-header">Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.</p>

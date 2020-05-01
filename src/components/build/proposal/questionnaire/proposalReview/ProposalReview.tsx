@@ -15,6 +15,7 @@ interface ProposalProps {
 
 const ProposalReview: React.FC<ProposalProps> = ({brick, saveBrick}) => {
   const history = useHistory();
+  console.log(brick);
 
   const [bookHovered, setHover] = React.useState(false);
 
