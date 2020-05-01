@@ -120,7 +120,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
           <BrickLength length={state.brickLength} saveBrick={setLengthAndSave} />
         </Route>
         <Route path="/build/new-brick/proposal">
-          <ProposalReview brick={state} saveBrick={saveAndMove} />
+          <ProposalReview brick={state} user={props.user} saveBrick={saveAndMove} />
         </Route>
       </div>
     </MuiThemeProvider>
