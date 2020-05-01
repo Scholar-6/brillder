@@ -80,9 +80,9 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     let tempBrick = { ...state } as Brick;
     setBrick(tempBrick);
     if (tempBrick.id) {
-      tempBrick.id = brick.id;
       props.saveBrick(tempBrick);
     } else if (brick && brick.id) {
+      tempBrick.id = brick.id;
       props.saveBrick(tempBrick);
     } else {
       props.createBrick(tempBrick);
