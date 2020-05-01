@@ -43,7 +43,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     synthesis: '',
     alternativeSubject: '',
   } as Brick;
-  
+
   if (brick) {
     initState = brick;
   }
@@ -77,12 +77,16 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
   }
 
   const saveBrick = () => {
-    let brick = { ...state } as Brick;
-    setBrick(brick);
-    if (brick.id) {
-      props.saveBrick(brick);
+    let tempBrick = { ...state } as Brick;
+    setBrick(tempBrick);
+    console.log('saving', brick, tempBrick);
+    if (tempBrick.id) {
+      tempBrick.id = brick.id;
+      props.saveBrick(tempBrick);
+    } else if (brick && brick.id) {
+      props.saveBrick(tempBrick);
     } else {
-      props.createBrick(brick);
+      props.createBrick(tempBrick);
     }
   }
 
