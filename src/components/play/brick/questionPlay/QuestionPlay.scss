@@ -1,3 +1,5 @@
+@import '_variables';
+
 .next-question-button-container {
   .next-question-button {
     margin: 0;
@@ -10,4 +12,15 @@
       margin-right: 5px;
     }
   }
+
+  .MuiFormControlLabel-label {
+    font-family: $font-family-regular;
+  }
+}
+.MuiInputLabel-animated {
+  font-family: $font-family-regular !important;
+}
+
+input {
+  font-family: $font-family-regular !important;
 }

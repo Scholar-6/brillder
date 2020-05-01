@@ -54,8 +54,9 @@ interface BrickRoutingProps {
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   /* Admin preview part */
   let urlPreview = false;
-  const {type} = props.user;
-  if (type === UserType.Admin || type === UserType.Builder || type === UserType.Editor) {
+  const {roles} = props.user;
+  let canBuild = roles.some((role:any) => role.roleId === UserType.Admin || role.roleId === UserType.Builder || role.roleId === UserType.Editor);
+  if (canBuild) {
     const values = queryString.parse(props.location.search)
     if (values.preview) {
       urlPreview = true;
@@ -72,7 +73,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
 
-  if (isPreview === false && (type === UserType.Builder || type === UserType.Editor)) {
+  let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor); 
+  if (isPreview === false && cantPlay) {
     return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
   }
 

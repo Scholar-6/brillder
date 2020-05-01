@@ -1,4 +1,5 @@
 @import "_variables";
+@import "../../questionVariables";
 
 .missing-word-build {
   textarea {
@@ -7,6 +8,8 @@
     padding-left: 1%;
     padding-right: 10%;
     min-height: 55px;
+    font-size: 1vw !important;
+    font-family: $font-family-regular;
   }
   text-align: center;
 
@@ -22,16 +25,17 @@
       position: absolute;
       padding: 0.45vw;
       left: 0.1vw;
-      top: 0.5vw;
+      top: 1vw;
       span {
         svg {
           height: $bin-size !important;
           width: $bin-size !important;
         }
       }
+      height: auto !important;
     }
 
-    input {
+    .input-answer {
       width: 84%;
       height: 55px;
       text-align: center;
@@ -42,6 +46,7 @@
       padding-left: 8%;
       font-family: $font-family-regular;
       font-size: $answer-input-text-size;
+      height: $answer-height !important;
     }
   }
 }

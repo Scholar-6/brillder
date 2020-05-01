@@ -1,3 +1,5 @@
+@import '_variables';
+
 .question-build-text-editor {
   position: relative;
   width: 100%;
@@ -11,17 +13,26 @@
 
     .text-label {
       width: 40%;
+      color: $dark-blue;
       position: absolute;
       top: 0;
       z-index: 1;
-      height: 5.5vh;
+      height: 2.6vw;
       font-size: 1.1vw;
     }
   }
 
   .ck-toolbar {
+    height: 2.6vw;
     border-top-left-radius: 0.4vw !important;
     border-top-right-radius: 0.4vw !important;
+
+    .ck-button {
+      font-size: 0.85vw;
+    }
+  }
+
+  .ck-dropdown__panel {
     z-index: 1000;
   }
 
@@ -38,6 +49,5 @@
     border-bottom-right-radius: 0.4vw !important;
     box-shadow: none !important;
     border-top: none !important;
-    border: 1px solid var(--ck-color-toolbar-border);
   }
 }

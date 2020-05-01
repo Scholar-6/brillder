@@ -14,7 +14,7 @@ import QuestionTypePage from "./questionType/questionType";
 import SynthesisPage from "./synthesisPage/SynthesisPage";
 import DragableTabs from "./dragTabs/dragableTabs";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
-import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/PhoneQuestionPreview";
+import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 import {
   Question,
   QuestionTypeEnum,
@@ -42,12 +42,10 @@ const SynthesisPreviewComponent:React.FC<any> = ({data}) => {
   }
 
   return (
-    <Grid container className="phone-preview-component synthesis-preview">
-      <div style={{width: '100%'}}>
-        <div className="synthesis-title" style={{textAlign: 'center'}}>SYNTHESIS</div>
-        <div className="synthesis-text" dangerouslySetInnerHTML={{ __html: newData}}></div>
-      </div>
-    </Grid>
+    <div className="phone-preview-component synthesis-preview">
+      <div className="synthesis-title" style={{textAlign: 'center'}}>SYNTHESIS</div>
+      <div className="synthesis-text" dangerouslySetInnerHTML={{ __html: newData}}></div>
+    </div>
   )
 }
 

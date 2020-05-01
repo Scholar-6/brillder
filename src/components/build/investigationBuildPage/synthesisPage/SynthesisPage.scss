@@ -20,10 +20,15 @@ $border-radius: 0.6vw;
     }
 
     .document-editor {
-      .ck-toolbar__items {
-        height: 5vh;
-        .ck-icon {
-          font-size: 1.5vh;
+      .ck-toolbar {
+        border-top-left-radius: 0.6vw !important;
+        border-top-right-radius: 0.6vw !important;
+        
+        .ck-toolbar__items {
+          height: 5vh;
+          .ck-icon {
+            font-size: 1.5vh;
+          }
         }
       }
 
@@ -34,10 +39,9 @@ $border-radius: 0.6vw;
         border: 1px solid var(--ck-color-toolbar-border);
         border-top-left-radius: 0 !important;
         border-top-right-radius: 0 !important;
-        border-bottom-left-radius: 0.4vw !important;
-        border-bottom-right-radius: 0.4vw !important;
+        border-bottom-left-radius: 0.6vw !important;
+        border-bottom-right-radius: 0.6vw !important;
         box-shadow: none !important;
-        background: #E5E8ED;
       }
     }
 

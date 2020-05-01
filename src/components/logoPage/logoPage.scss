@@ -2,5 +2,10 @@
 
 .logo-page {
   height: 100%;
-  background: $tab-grey;
+  background: white;
+
+  .brick-logo-image {
+    width: 69.5%;
+    padding-bottom: 10%; 
+  }
 }

@@ -95,7 +95,7 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
       <HomeButton link='/build' />
       <Navigation step={ProposalStep.BrickTitle} />
       <Grid container direction="row">
-        <Grid justify="center" item className="left-block">
+        <Grid item className="left-block">
           <h1>What is your brick about?</h1>
           <Grid item className="input-container">
             <Input
