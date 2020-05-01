@@ -136,7 +136,7 @@
     .page6 {
       transform-style: preserve-3d;
       position: absolute;
-      width: 30.52vw;
+      width: 30.1vw;
       height: 100%;
       top: 0;
       left: 0;
@@ -146,6 +146,8 @@
 
     .front,
     .back {
+      width: 30.5vw;
+      height: 63.8vh;
       background: $dark-blue;
     }
 
