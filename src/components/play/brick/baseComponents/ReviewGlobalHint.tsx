@@ -12,7 +12,7 @@ const ReviewGlobalHint: React.FC<ReviewHintProps> = ({ hint, ...props }) => {
   if (props.attempt?.correct === false && hint.status === HintStatus.All && hint.value) {
     return (
       <div className="question-hint-global">
-        <div>{hint.value}</div>
+        <div dangerouslySetInnerHTML={{ __html: hint.value}} />
       </div>
     );
   }

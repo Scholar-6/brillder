@@ -99,7 +99,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       hint.status === HintStatus.Each &&
       hint.list[index]
     ) {
-      return <div className="question-hint">{hint.list[index]}</div>;
+      return <div className="question-hint" dangerouslySetInnerHTML={{ __html: hint.list[index]}} />;
     }
     return "";
   }

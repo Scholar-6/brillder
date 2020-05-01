@@ -130,7 +130,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
                 <ListItemText>
                   {
                     (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && this.props.question.hint.list.length > 0) ?
-                      <span className="question-hint">{item.hint}</span>
+                      <span className="question-hint" dangerouslySetInnerHTML={{ __html: item.hint}} />
                       : ""
                    }
                 </ListItemText>

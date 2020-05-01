@@ -135,7 +135,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
                     <Grid container direction="row" justify="center">
                       {
                         (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && this.props.question.hint.list.length > 0) ?
-                          <span className="question-hint">{answer.hint}</span>
+                          <span className="question-hint" dangerouslySetInnerHTML={{ __html: answer.hint}} />
                           : ""
                       }
                     </Grid>

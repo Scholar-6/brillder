@@ -99,7 +99,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   renderEachHint(index: number) {
     const {hint} = this.props.question;
     if (this.props.attempt?.correct === false && hint.status === HintStatus.Each && hint.list[index]) {
-      return <div className="question-hint">{hint.list[index]}</div>;
+      return <div className="question-hint" dangerouslySetInnerHTML={{ __html: hint.list[index]}} />;
     }
     return "";
   }

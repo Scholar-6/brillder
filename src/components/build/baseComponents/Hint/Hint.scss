@@ -4,6 +4,7 @@
 .hint-component {
   margin-left: 1.25%;
   width: 97.5%;
+  overflow: hidden;
 
   input {
     padding-left: 0.6vw !important;
@@ -68,15 +69,13 @@
     }
   }
 
-  @media only screen and (min-width: 1200px)  {
-  }
-  
-  @media only screen and (max-width: 1199px) and (min-width: 960px)  {
-  }
-  
-  @media only screen and (max-width: 959px) and (min-width: 600px)  {
-  }
-  
-  @media only screen and (max-width: 599px) {
+  .hint-container {
+    .document-editor {
+      width: 100%;
+
+      .ck-content {
+        background: white;
+      }
+    }
   }
 }
