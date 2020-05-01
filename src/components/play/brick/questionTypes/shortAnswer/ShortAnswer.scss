@@ -5,4 +5,14 @@
     display: inline-block;
     margin-bottom: 20px;
   }
+
+  @media only screen and (max-width: 599px) {
+    .short-answer-input {
+      width: 100% !important;
+      display: block;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
 }
+

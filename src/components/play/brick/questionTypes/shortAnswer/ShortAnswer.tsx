@@ -111,7 +111,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         <TextField
           value={value}
           onChange={e => this.setUserAnswer(e, index)}
-          label="Answer"
+          label={`Answer ${index + 1}`}
         />
       )
     }
@@ -119,7 +119,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
       <TextField
         value={this.state.userAnswers[index]}
         onChange={e => this.setUserAnswer(e, index)}
-        label="Answer"
+        label={`Answer ${index + 1}`}
       />
     )
   }
@@ -128,6 +128,10 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     const { component } = this.props;
 
     let width = (100 - 1) / component.list.length;
+
+    if (this.props.isPreview) {
+      width = 100;
+    }
 
     return (
       <div className="short-answer-live">
