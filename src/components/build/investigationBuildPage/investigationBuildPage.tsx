@@ -22,6 +22,7 @@ import {
   HintStatus
 } from "model/question";
 import actions from "../../../redux/actions/brickActions";
+import validateQuestion from "./questionService/QuestionService";
 
 interface ApiQuestion {
   id?: number;
@@ -80,6 +81,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [loaded, setStatus] = React.useState(false);
   const [locked, setLock] = React.useState(false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
+  const [submitDialogOpen, setSubmitDialog] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
 
   /* Synthesis */
@@ -329,8 +331,20 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const moveToReview = () => {
+    let invalidQuestion = questions.find(question => {
+      return !validateQuestion(question);
+    });
+    if (invalidQuestion) {
+      setSubmitDialog(true);
+    } else {
+      saveBrick();
+      history.push(`/play/brick/${brickId}/intro?preview=true`);
+    }
+  }
+
+  const submitInvalidBrick = () => {
     saveBrick();
-    history.push(`/play/brick/${brickId}/intro?preview=true`);
+    history.push(`/build/brick/${brickId}/build/investigation/submit`);
   }
 
   const saveBrick = () => {
@@ -426,61 +440,78 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           </div>
         </div>
         <Grid
-        container direction="row"
-        className="investigation-build-background"
-        alignItems="center"
-      >
-        <Grid
-          container
-          item xs={12} sm={12} md={7} lg={9}
+          container direction="row"
+          className="investigation-build-background"
           alignItems="center"
-          style={{ height: "100%" }}
-          className="question-container"
         >
           <Grid
-            container direction="row"
-            justify="center" alignItems="center"
+            container
+            item xs={12} sm={12} md={7} lg={9}
+            alignItems="center"
             style={{ height: "100%" }}
+            className="question-container"
           >
             <Grid
-              container
-              item xs={12} sm={12} md={12} lg={9}
-              style={{ height: "90%" }}
+              container direction="row"
+              justify="center" alignItems="center"
+              style={{ height: "100%" }}
             >
-              <DragableTabs
-                setQuestions={setQuestions}
-                questions={questions}
-                synthesis={synthesis}
-                isSynthesisPage={isSynthesisPage}
-                moveToSynthesis={moveToSynthesis}
-                createNewQuestion={createNewQuestion}
-                selectQuestion={selectQuestion}
-                removeQuestion={removeQuestion}
-              />
-              <Switch>
-                <Route path="/build/brick/:brickId/build/investigation/question-component">
-                  {renderBuildQuestion}
-                </Route>
-                <Route path="/build/brick/:brickId/build/investigation/question">
-                  {renderQuestionComponent}
-                </Route>
-                <Route path="/build/brick/:brickId/build/investigation/synthesis">
-                  <SynthesisPage synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
-                </Route>
-              </Switch>
+              <Grid
+                container
+                item xs={12} sm={12} md={12} lg={9}
+                style={{ height: "90%" }}
+              >
+                <DragableTabs
+                  setQuestions={setQuestions}
+                  questions={questions}
+                  synthesis={synthesis}
+                  isSynthesisPage={isSynthesisPage}
+                  moveToSynthesis={moveToSynthesis}
+                  createNewQuestion={createNewQuestion}
+                  selectQuestion={selectQuestion}
+                  removeQuestion={removeQuestion}
+                />
+                <Switch>
+                  <Route path="/build/brick/:brickId/build/investigation/question-component">
+                    {renderBuildQuestion}
+                  </Route>
+                  <Route path="/build/brick/:brickId/build/investigation/question">
+                    {renderQuestionComponent}
+                  </Route>
+                  <Route path="/build/brick/:brickId/build/investigation/synthesis">
+                    <SynthesisPage synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
+                  </Route>
+                </Switch>
+              </Grid>
             </Grid>
           </Grid>
+          <Route path="/build/brick/:brickId/build/investigation/question-component">
+            <PhoneQuestionPreview question={activeQuestion} />
+          </Route>
+          <Route path="/build/brick/:brickId/build/investigation/question">
+            <PhonePreview link={window.location.origin + "/logo-page"} />
+          </Route>
+          <Route path="/build/brick/:brickId/build/investigation/synthesis">
+            <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
+          </Route>
         </Grid>
-        <Route path="/build/brick/:brickId/build/investigation/question-component">
-          <PhoneQuestionPreview question={activeQuestion} />
-        </Route>
-        <Route path="/build/brick/:brickId/build/investigation/question">
-          <PhonePreview link={window.location.origin + "/logo-page"} />
-        </Route>
-        <Route path="/build/brick/:brickId/build/investigation/synthesis">
-          <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
-        </Route>
-      </Grid>
+        <Dialog
+          open={submitDialogOpen}
+          onClose={() => setSubmitDialog(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className="delete-brick-dialog"
+        >
+          <div className="dialog-header">
+            <div>Not all your questions are complete.</div>
+            <div>These are marked in red.</div>
+            <div>Submit anyway?</div>
+          </div>
+          <Grid container direction="row" className="row-buttons" justify="center">
+            <Button className="yes-button" onClick={() => submitInvalidBrick()}>Yes, save</Button>
+            <Button className="no-button" onClick={() => setSubmitDialog(false)}>No, keep</Button>
+          </Grid>
+        </Dialog>
         <Dialog
           open={deleteDialogOpen}
           onClose={() => setDeleteDialog(false)}
@@ -499,7 +530,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         </Dialog>
       </Hidden>
       <Hidden only={['md', 'lg', 'xl']}>
-      <Dialog
+        <Dialog
           open={true}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"

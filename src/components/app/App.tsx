@@ -20,6 +20,7 @@ import LoginPage from '../authPages/loginPage/loginPage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
 import ChooseUserPage from '../authPages/chooseUserPage/ChooseUserPage';
 import LogoPage from '../logoPage/logoPage';
+import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
 import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
 import SignUpFinished from '../authPages/signUpFinished/SignUpFinished';
 import UserProfilePage from '../build/userProfilePage/UserProfile';
@@ -66,6 +67,7 @@ const App: React.FC = (props: any) => {
         <StudentRoute path="/play/dashboard" component={Dashboard} />
 
         <BuildRoute path="/build/new-brick" component={Proposal} />
+        <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} />
         <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
         <BuildRoute path="/build/bricks-list" component={BricksListPage} />
