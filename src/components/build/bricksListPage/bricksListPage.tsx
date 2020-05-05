@@ -588,23 +588,25 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   renderSortAndFilterBox = () => {
     return (
       <div className="sort-box">
-        <div className="sort-header">Sort By</div>
-        <RadioGroup
-          className="sort-group"
-          aria-label="SortBy"
-          name="SortBy"
-          value={this.state.sortBy}
-          onChange={this.handleSortChange}
-        >
-          <Grid container direction="row">
-            <Grid item xs={5}>
-              <FormControlLabel value={SortBy.Popularity} style={{marginRight: 0, width: '47.5%'}} control={<Radio className="sortBy" />} label="Popularity" />
+        <div className="sort-by-box">
+          <div className="sort-header">Sort By</div>
+          <RadioGroup
+            className="sort-group"
+            aria-label="SortBy"
+            name="SortBy"
+            value={this.state.sortBy}
+            onChange={this.handleSortChange}
+          >
+            <Grid container direction="row">
+              <Grid item xs={6}>
+                <FormControlLabel value={SortBy.Popularity} style={{marginRight: 0, width: '47.5%'}} control={<Radio className="sortBy" />} label="Popularity" />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControlLabel value={SortBy.Date} style={{marginRight: 0}} control={<Radio className="sortBy" />} label="Date Added" />
+              </Grid>
             </Grid>
-            <Grid item xs={7}>
-              <FormControlLabel value={SortBy.Date} style={{marginRight: 0}} control={<Radio className="sortBy" />} label="Date Added" />
-            </Grid>
-          </Grid>
-        </RadioGroup>
+          </RadioGroup>
+        </div>
         <div className="filter-header">
           <div style={{ display: 'inline' }}>
             <span className='filter-control'>Filter</span>
@@ -622,11 +624,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             }
           </div>
         </div>
-        <AnimateHeight duration={500} height={this.state.filterHeight}>
-          <Grid container direction="row">
+        <Grid container direction="row" className="subjects-filter">
+          <AnimateHeight duration={500} height={this.state.filterHeight} style={{width: '100%'}}>
             {
               this.state.subjects.map((subject, i) =>
-                <Grid item xs={((i % 2) === 1) ? 7 : 5} key={i}>
+                <Grid item xs={12} key={i}>
                   <FormControlLabel
                     className="filter-container"
                     checked={subject.checked}
@@ -637,8 +639,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 </Grid>
               )
             }
-          </Grid>
-        </AnimateHeight>
+          </AnimateHeight>
+        </Grid>
       </div>
     );
   }

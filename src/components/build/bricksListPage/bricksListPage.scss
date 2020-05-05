@@ -7,8 +7,8 @@ $min-brick-height: 9.4vh;
 $left: 0.8vw;
 $right: 1.4vw;
 $lighter-blue: #304775;
-$grey: #B0B0AD;
-$light-grey: #F3F4F7;
+$grey: #b0b0ad;
+$light-grey: #f3f4f7;
 
 .brick-list-redirect-dropdown {
   .MuiPaper-root {
@@ -116,7 +116,7 @@ $light-grey: #F3F4F7;
           margin-left: 2.8vh;
           left: -4vw;
         }
-  
+
         .next-button {
           position: absolute;
           left: -4vw;
@@ -237,9 +237,9 @@ $light-grey: #F3F4F7;
         width: 6.7vh;
         display: inline-block;
         background-color: $orange;
-  
-        -webkit-mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
-        mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
+
+        -webkit-mask: url("/images/more-horizontal.svg") no-repeat 50% 50%;
+        mask: url("/images/more-horizontal.svg") no-repeat 50% 50%;
         -webkit-mask-size: cover;
         mask-size: cover;
 
@@ -349,7 +349,7 @@ $light-grey: #F3F4F7;
       padding-bottom: 8px;
     }
   }
-  
+
   .brick-container:hover {
     color: #ffffff;
   }
@@ -435,13 +435,17 @@ $light-grey: #F3F4F7;
     }
   }
 
-  .brick-row-0, .brick-row-1, .brick-row-2, .brick-row-3 {
+  .brick-row-0,
+  .brick-row-1,
+  .brick-row-2,
+  .brick-row-3 {
     .expended-brick-info {
       border-top-left-radius: 0 !important;
     }
   }
 
-  .brick-row-4, .brick-row-5 {
+  .brick-row-4,
+  .brick-row-5 {
     bottom: 0;
     .expended-brick-info {
       border-bottom-left-radius: 0 !important;
@@ -464,65 +468,67 @@ $light-grey: #F3F4F7;
 
   .sorted-row {
     margin-top: 3.5vh;
-    height: 87.1vh;
     .sort-and-filter-container {
       color: white;
+      height: 86vh;
 
       .sort-box {
-        margin-bottom: 1.2vh;
-        padding-top: 1vh;
+        width: 23.3vw !important;
         border-top-right-radius: $main-panel-radius;
-        width: 100%;
         background: $light-blue;
 
-        .sort-header {
-          margin-top: 1.1vh;
-          margin-left: 1.4vw;
-          text-transform: uppercase;
-          font-size: 1.3vw;
-          letter-spacing: 0.22vw;
+        .sort-by-box {
+          height: 12.9vh;
+          .sort-header {
+            padding-top: 2.2vh;
+            margin-left: 1.4vw;
+            text-transform: uppercase;
+            font-size: 2.3vh;
+            letter-spacing: 0.45vh;
+          }
+          .sort-group {
+            margin-top: 0.65vh;
+            margin-left: 0.8vw;
+            margin-right: 0.6vw;
+            display: block;
+            label {
+              .sortBy {
+                padding-left: 1.2vw;
+                padding-right: 0.4vw;
+                svg {
+                  height: 2.2vh;
+                  width: 2.2vh;
+                  color: $orange !important;
+                }
+              }
+              .MuiFormControlLabel-label {
+                font: 1.05vw $font-family-regular !important;
+                letter-spacing: 0.06vw;
+              }
+            }
+          }
         }
         .filter-header {
+          height: 4.5vh;
           text-transform: uppercase;
           background: #304775 0% 0% no-repeat padding-box;
           padding-left: 1.4vw;
-          font-size: 1.3vw;
-          margin-top: 1.9vh;
+          font-size: 2.4vh;
           letter-spacing: 0.22vw;
           margin-bottom: 2.8vh;
-            .filter-control {
-              vertical-align:middle
-            }
-            .filter-control:not(:first-child) {
-              margin-left: 0.9vw;
-              cursor: pointer;
-            }
-        }
-        .sort-group {
-          margin-top: 0.45vh;
-          margin-left: 0.9vw;
-          display: block;
-          label {
-            .sortBy {
-              padding-left: 1.2vw;
-              padding-right: 0.4vw;
-              svg {
-                height: 2.2vh;
-                width: 2.2vh;
-                color: $orange !important;
-              }
-            }
-            .MuiFormControlLabel-label {
-              font: 1.05vw $font-family-regular !important;
-              letter-spacing: 0.06vw;
-            }
+          .filter-control {
+            height: 100%;
+            vertical-align: middle;
+          }
+          .filter-control:not(:first-child) {
+            margin-left: 0.9vw;
+            cursor: pointer;
           }
         }
         .filter-container {
           cursor: default;
           margin-bottom: 0.1vh;
           margin-right: 0;
-          width: 100%;
           > span.filter-radio {
             padding-left: 2vw;
             padding-right: 0.4vw;
@@ -535,17 +541,25 @@ $light-grey: #F3F4F7;
             font: 1.05vw $font-family-regular !important;
             letter-spacing: 0.06vw;
           }
-          .custom-color svg { color: var(--color)!important; }
+          .custom-color svg {
+            color: var(--color) !important;
+          }
         }
         .filter-container:nth-child(odd) {
           width: 100%;
         }
       }
     }
+
+    .subjects-filter {
+      height: 66vh;
+      overflow-y: auto;
+    }
+
     .brick-row-container {
       position: relative;
       border-top-left-radius: $main-panel-radius;
-      margin-left: 2.1vw;
+      margin-left: 0.5vw;
       padding-left: 1.98vw;
       background: $light-grey;
       height: 100%;
@@ -655,7 +669,6 @@ $light-grey: #F3F4F7;
     }
   }
 }
-
 
 @media only screen and (min-width: 1280px) {
 }
