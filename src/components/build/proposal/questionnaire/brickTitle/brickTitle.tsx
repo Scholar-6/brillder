@@ -16,7 +16,7 @@ interface BrickTitleProps {
 }
 
 const BrickTitlePreviewComponent:React.FC<any> = (props) => {
-  let {subTopic, alternativeTopics, title} = props.data;
+  let {subTopic, alternativeTopics, title, author} = props.data;
 
   const formatTwoLastDigits = (twoLastDigits: number) => {
     var formatedTwoLastDigits = "";
@@ -64,7 +64,7 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
             {alternativeTopics ? alternativeTopics: 'Subtopic(s)'}
           </span>
         </div>
-        <div className="author-row">Author | {dateString}</div>
+        <div className="author-row">{author.firstName ? author.firstName + ' ' + author.lastName : 'Author'}  | {dateString}</div>
       </div>
     </Grid>
   )
@@ -75,7 +75,8 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
   const [titles, setTitles] = React.useState({
     title: parentState.title,
     subTopic: parentState.subTopic,
-    alternativeTopics: parentState.alternativeTopics
+    alternativeTopics: parentState.alternativeTopics,
+    author: {}
   });
 
   const onTitleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -89,6 +90,10 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
   const onAltTopicChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setTitles({ ...titles, alternativeTopics: event.target.value } as any);
   };
+
+  if (parentState.author) {
+    titles.author = parentState.author;
+  }
 
   return (
     <div className="tutorial-page brick-title-page">
