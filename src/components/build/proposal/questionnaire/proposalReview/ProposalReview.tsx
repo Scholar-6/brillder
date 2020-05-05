@@ -108,7 +108,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
                   <div>
                     <img alt="" src="/images/choose-login/logo.png" />
                     <div className="white-text">PROPOSAL</div>
-                    <div className="names-row">{user.firstName} {user.lastName}</div>
+                    <div className="names-row">{brick.author ? brick.author.firstName + ' ' + brick.author.lastName : ''}</div>
                   </div>
                 </Grid>
               </div>
