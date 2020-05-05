@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid, Button, Hidden } from "@material-ui/core";
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import Dialog from '@material-ui/core/Dialog';
 import update from "immutability-helper";
 // @ts-ignore
@@ -431,21 +431,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   return (
     <div className="investigation-build-page">
-      <Hidden only={['xs', 'sm']}>
-        <div className="exit-button" onClick={exitAndSave}>
-          <div>
-            <div className="exit-label">
-              <div className="exit-arrow">
-                <ArrowBackIosIcon/>
-              </div>
-              EXIT
-            </div>
-            <div className="small-labels">
-              <div className="small-label">AND SAVE</div>
-              <div className="small-label">CHANGES</div>
-            </div>
-          </div>
+      <div style={{position: 'fixed'}}>
+        <HomeButton link="/build" />
         </div>
+      <Hidden only={['xs', 'sm']}>
         <div className="proposal-link" onClick={editProposal}>
           <div className="proposal-edit-icon"/>
           <div className="proposal-text">
