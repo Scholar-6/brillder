@@ -22,7 +22,7 @@ import {
   HintStatus
 } from "model/question";
 import actions from "../../../redux/actions/brickActions";
-import validateQuestion from "./questionService/QuestionService";
+import {validateQuestion} from "./questionService/QuestionService";
 
 interface ApiQuestion {
   id?: number;

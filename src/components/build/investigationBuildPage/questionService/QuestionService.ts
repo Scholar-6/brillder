@@ -6,7 +6,8 @@ const getUniqueComponent = (components: any[]) => {
   return components.find(c => c.type === QuestionComponentTypeEnum.Component);
 }
 
-const getNonEmptyComponent = (components: any[]) => {
+
+export function getNonEmptyComponent(components: any[]) {
   return !components.find(c =>
     c.type === QuestionComponentTypeEnum.Text ||
     c.type === QuestionComponentTypeEnum.Image ||
@@ -101,7 +102,7 @@ const validateLineHighlighting = (comp: any) => {
   return false;
 }
 
-const validateQuestion = (question: Question) => {
+export function validateQuestion(question: Question) {
   const {type, hint, components} = question;
   if (question.id === 92) {
     console.log(question);
@@ -135,5 +136,3 @@ const validateQuestion = (question: Question) => {
   }
   return false;
 };
-
-export default validateQuestion;
