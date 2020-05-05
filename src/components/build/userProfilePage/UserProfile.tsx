@@ -58,14 +58,15 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   constructor(props: BackToWorkProps) {
     super(props)
     const {userId} = props.match.params;
+    console.log(props.user);
     this.state = {
       user: {
-        id: -1,
-        firstName: '',
-        lastName: '',
+        id: props.user.id,
+        firstName: props.user.firstName ? props.user.firstName : '',
+        lastName: props.user.lastName ? props.user.lastName : '',
         type: 0,
         tutorialPassed: false,
-        email: '',
+        email: props.user.email ? props.user.email : '',
         roles: [],
         subjects: [],
         status: UserStatus.Pending,
