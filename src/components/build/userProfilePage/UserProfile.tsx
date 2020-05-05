@@ -15,7 +15,7 @@ import brickActions from 'redux/actions/brickActions';
 import './UserProfile.scss';
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import authActions from 'redux/actions/auth';
-import { User, UserType, UserStatus } from 'model/user';
+import { User, UserType, UserStatus, UserProfile, UserRole } from 'model/user';
 import PhonePreview from '../baseComponents/phonePreview/PhonePreview';
 import { Subject } from 'model/brick';
 
@@ -35,7 +35,7 @@ const mapDispatch = (dispatch: any) => {
 
 const connector = connect(mapState, mapDispatch);
 
-interface BackToWorkProps {
+interface UserProfileProps {
   user: User,
   history: any;
   match: any;
@@ -43,8 +43,8 @@ interface BackToWorkProps {
   logout(): void;
 }
 
-interface BackToWorkState {
-  user: User;
+interface UserProfileState {
+  user: UserProfile;
   subjects?: Subject[];
   searchString: string;
   isSearching: boolean;
@@ -54,20 +54,22 @@ interface BackToWorkState {
   roles: any[];
 }
 
-class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
-  constructor(props: BackToWorkProps) {
+class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
+  constructor(props: UserProfileProps) {
     super(props)
+    const {user} = props;
     const {userId} = props.match.params;
-    console.log(props.user);
+    const roles = props.user.roles.map(role => role.roleId);
+
     this.state = {
       user: {
-        id: props.user.id,
-        firstName: props.user.firstName ? props.user.firstName : '',
-        lastName: props.user.lastName ? props.user.lastName : '',
-        type: 0,
+        id: user.id,
+        firstName: user.firstName ? user.firstName : '',
+        lastName: user.lastName ? user.lastName : '',
         tutorialPassed: false,
-        email: props.user.email ? props.user.email : '',
-        roles: [],
+        email: user.email ? user.email : '',
+        password: '',
+        roles: roles,
         subjects: [],
         status: UserStatus.Pending,
       },
@@ -77,18 +79,20 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       isSearching: false,
       dropdownShown: false,
       roles: [
-        { name: "Student"},
-        { name: "Teacher"},
-        { name: "Builder"},
-        { name: "Editor"},
-        { name: "Admin"}
+        { roleId: UserType.Student, name: "Student"},
+        { roleId: UserType.Teacher, name: "Teacher"},
+        { roleId: UserType.Builder, name: "Builder"},
+        { roleId: UserType.Editor, name: "Editor"},
+        { roleId: UserType.Admin, name: "Admin"}
       ]
     };
     if (userId) {
       axios.get(
         `${process.env.REACT_APP_BACKEND_HOST}/user/${userId}`, {withCredentials: true}
       ).then(res => {
-        const user = res.data as User;
+        const user = res.data as UserProfile;
+
+        user.roles = res.data.roles.map((role: UserRole) => role.roleId);
         if (!user.email) {
           user.email = '';
         }
@@ -97,6 +101,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         }
         if (!user.lastName) {
           user.lastName = '';
+        }
+        if (!user.roles) {
+          user.roles = [];
         }
         this.setState({...this.state, user: res.data});
       })
@@ -117,9 +124,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   saveUserProfile() {
     const {user} = this.state;
-    const {id, firstName, lastName, email, type} = user;
+    const {id, firstName, lastName, email, roles} = user;
     const userToSave = {
-      firstName, lastName, email, type
+      firstName, lastName, email, roles
     } as any;
     if (id !== -1) {
       userToSave.id = id;
@@ -179,6 +186,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({...this.state});
   }
 
+  onPasswordChanged(e: any) {
+    const {user} = this.state;
+    user.password = e.target.value;
+    this.setState({...this.state});
+  }
+
   searching(searchString: string) { }
 
   keySearch(e: any) {
@@ -189,7 +202,45 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   search() { }
 
-  render() {  
+  checkUserRole(roleId: number) {
+    return this.state.user.roles.some(id => id === roleId);
+  }
+
+  toggleRole(roleId: number) {
+    let index = this.state.user.roles.indexOf(roleId);
+    if (index !== -1) {
+      this.state.user.roles.splice(index, 1);
+    } else {
+      this.state.user.roles.push(roleId);
+    }
+    this.setState({...this.state});
+  }
+
+  renderUserRole(role: UserRole) {
+    let checked = this.checkUserRole(role.roleId);
+
+    return (
+      <FormControlLabel
+        className="filter-container"
+        checked={checked}
+        onClick={() => this.toggleRole(role.roleId)}
+        control={<Radio className="filter-radio" />}
+        label={role.name}
+      />
+    );
+  }
+
+  renderRoles() {
+    return (
+      this.state.roles.map((role: any, i:number) =>
+        <Grid item key={i}>
+          {this.renderUserRole(role)}
+        </Grid>
+      )
+    );
+  }
+
+  render() {
     return (
       <div className="user-profile-page">
         <div className="bricks-upper-part">
@@ -257,24 +308,17 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                         onChange={(e: any) => this.onEmailChanged(e)}
                         placeholder="username@domain.com"
                       />
-                      <input placeholder="* * * * * * * * * * *"/>
+                      <input
+                        value={this.state.user.password}
+                        onChange={(e: any) => this.onPasswordChanged(e)}
+                        placeholder="* * * * * * * * * * *"
+                        />
                     </div>
                   </Grid>
                   <Grid container justify="center" alignContent="flex-start" className="profile-roles-container">
                     <div className="roles-title">ROLES</div>
                     <Grid container className="roles-box">
-                      {
-                        this.state.roles.map((role: any, i:number) =>
-                          <Grid item key={i}>
-                            <FormControlLabel
-                              className="filter-container"
-                              key={i}
-                              control={<Radio className="filter-radio" />}
-                              label={role.name}
-                            />
-                          </Grid>
-                        )
-                      }
+                      { this.renderRoles()}
                     </Grid>
                   </Grid>
                 </Grid>
@@ -291,7 +335,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           </Grid>
         </div>
         <Menu
-          className="back-to-work-redirect-dropdown"
+          className="user-profile-redirect-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}
@@ -354,4 +398,4 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 }
 
-export default connector(BackToWorkPage);
+export default connector(UserProfilePage);
