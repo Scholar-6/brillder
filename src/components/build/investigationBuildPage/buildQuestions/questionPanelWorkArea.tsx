@@ -122,7 +122,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
               <Grid container direction="row" justify="center">
                 <Grid container item xs={11} className="question-button-container" justify="center">
                   {
-                    (props.questionsCount > 1) ?
+                    (index >= 1) ?
                       <Grid container justify="center" alignContent="flex-start">
                         <div className="right-side-text">Last Question?</div>
                         <Button

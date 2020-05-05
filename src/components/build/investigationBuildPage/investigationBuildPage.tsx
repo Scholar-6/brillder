@@ -438,7 +438,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   return (
     <div className="investigation-build-page">
       <div style={{position: 'fixed'}}>
-        <HomeButton link="/build" />
+        <HomeButton onClick={exitAndSave} />
         </div>
       <Hidden only={['xs', 'sm']}>
         <div className="proposal-link" onClick={editProposal}>
