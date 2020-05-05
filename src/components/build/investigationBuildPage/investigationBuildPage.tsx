@@ -414,6 +414,21 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     );
   };
 
+  const renderLastSave = () => {
+    let updated = new Date(brick.updated);
+
+    return (
+      <div className="saved-info">
+        <Grid container alignContent="center" justify="center">
+          <img alt="" src="/feathericons/save-white.png" />
+          <div>
+          Last Saved at {updated.getHours() + ":" + updated.getMinutes()}
+          </div>
+        </Grid>
+      </div>
+    );
+  }
+
   return (
     <div className="investigation-build-page">
       <Hidden only={['xs', 'sm']}>
@@ -485,6 +500,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               </Grid>
             </Grid>
           </Grid>
+          {renderLastSave()}
           <Route path="/build/brick/:brickId/build/investigation/question-component">
             <PhoneQuestionPreview question={activeQuestion} />
           </Route>
