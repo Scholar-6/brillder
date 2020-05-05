@@ -1,7 +1,28 @@
-import { Question, QuestionTypeEnum, QuestionComponentTypeEnum, QuestionType } from 'model/question';
+import {
+  Question, QuestionTypeEnum, QuestionComponentTypeEnum, Hint, HintStatus
+} from 'model/question';
 
 const getUniqueComponent = (components: any[]) => {
   return components.find(c => c.type === QuestionComponentTypeEnum.Component);
+}
+
+const getNonEmptyComponent = (components: any[]) => {
+  return !components.find(c =>
+    c.type === QuestionComponentTypeEnum.Text ||
+    c.type === QuestionComponentTypeEnum.Image ||
+    c.type === QuestionComponentTypeEnum.Quote ||
+    c.type === QuestionComponentTypeEnum.Equation ||
+    c.type === QuestionComponentTypeEnum.Sound
+  );
+}
+
+const validateHint = (hint: Hint) => {
+  if (hint.status === HintStatus.All) {
+    return !hint.value;
+  } else {
+    const emptyHint = hint.list.some(h => h == null || h === "");
+    return emptyHint;
+  }
 }
 
 const validateNotEmptyAnswer = (comp: any) => {
@@ -81,8 +102,19 @@ const validateLineHighlighting = (comp: any) => {
 }
 
 const validateQuestion = (question: Question) => {
-  const {type} = question;
-  const comp = getUniqueComponent(question.components);
+  const {type, hint, components} = question;
+
+  let noComponent = getNonEmptyComponent(components);
+  if (noComponent) {
+    return false;
+  }
+
+  let isHintInvalid = validateHint(hint);
+  if (isHintInvalid) {
+    return false;
+  }
+
+  const comp = getUniqueComponent(components);
   if (type === QuestionTypeEnum.ShortAnswer || type === QuestionTypeEnum.VerticalShuffle
     || type === QuestionTypeEnum.HorizontalShuffle)
   {

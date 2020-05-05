@@ -44,6 +44,7 @@ interface DragTabsProps {
   questions: Question[],
   synthesis: string,
   isSynthesisPage: boolean,
+  validationRequired: boolean,
   createNewQuestion(): void,
   moveToSynthesis(): void,
   setQuestions(questions: any): void,
@@ -81,7 +82,10 @@ const DragableTabs: React.FC<DragTabsProps> = ({
       width = (100 * 2) / (comlumns - 2);
     }
 
-    const isValid = validateQuestion(question as any);
+    let isValid = true;
+    if (props.validationRequired) {
+      isValid = validateQuestion(question as any);
+    }
 
     return (
       <GridListTile className={titleClassNames} key={index} cols={cols} style={{display:'inline-block', width: `${width}%`}}>
