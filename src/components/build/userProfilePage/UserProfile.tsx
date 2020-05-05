@@ -116,10 +116,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   saveUserProfile() {
     const {user} = this.state;
-    const {id, firstName, lastName, type} = user;
+    const {id, firstName, lastName, email, type} = user;
     const userToSave = {
-      id, firstName, lastName, type
-    };
+      firstName, lastName, email, type
+    } as any;
+    if (id !== -1) {
+      userToSave.id = id;
+    }
     axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/user`, {...userToSave}, {withCredentials: true}
     ).then(res => {
