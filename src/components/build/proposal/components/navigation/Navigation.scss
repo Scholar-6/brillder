@@ -1,18 +1,30 @@
+@import '_variables';
+
 .navigation-container {
   position: fixed;
-  top: 5.4%;
+  top: 1.2vh;
   right: 0;
-  width: 43.8vw;
+  width: 44.9vw;
+
+  .step-container {
+    width: 8.98vw;
+    position: relative;
+    height: 5vh;
+    .step-label {
+      width: 8.98vw;
+      text-align: center;
+      font-family: $font-family-regular;
+      font-size: 1.3vw;
+      color: $orange;
+      top: 0%;
+      position: absolute;
+    }
+  }
 
   img {
     cursor: pointer;
     height: 2vw;
-    margin: 0 3.7vw;
-  }
-  .first {
-    margin-left: 0;
-  }
-  .last {
-    margin-right: 0;
+    margin: 0 3.55vw;
+    margin-top: 4vh;
   }
 }
