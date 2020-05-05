@@ -505,16 +505,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           onClose={() => setSubmitDialog(false)}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          className="delete-brick-dialog"
+          className="submit-brick-dialog"
         >
           <div className="dialog-header">
-            <div>Not all your questions are complete.</div>
+            <div>Some questions are incomplete.</div>
             <div>These are marked in red.</div>
             <div>Submit anyway?</div>
           </div>
           <Grid container direction="row" className="row-buttons" justify="center">
-            <Button className="yes-button" onClick={() => submitInvalidBrick()}>Yes, save</Button>
-            <Button className="no-button" onClick={() => setSubmitDialog(false)}>No, keep</Button>
+            <Button className="yes-button" onClick={() => submitInvalidBrick()}>Yes, never mind</Button>
+            <Button className="no-button" onClick={() => setSubmitDialog(false)}>No, keep working</Button>
           </Grid>
         </Dialog>
         <Dialog
