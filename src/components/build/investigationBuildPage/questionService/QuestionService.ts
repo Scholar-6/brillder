@@ -104,9 +104,6 @@ const validateLineHighlighting = (comp: any) => {
 
 export function validateQuestion(question: Question) {
   const {type, hint, components} = question;
-  if (question.id === 92) {
-    console.log(question);
-  }
 
   let noComponent = getNonEmptyComponent(components);
   if (noComponent) {

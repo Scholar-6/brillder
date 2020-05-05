@@ -28,11 +28,18 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
       rest.getUser();
       return <div>...Getting User...</div>
     }
+    const isBuilder = rest.user.roles.some(role => {
+      const {roleId} = role;
+      return roleId === UserType.Builder || roleId === UserType.Editor || roleId === UserType.Admin;
+    });
+    if (isBuilder) {
+      return <Route {...rest} render={(props) => <Component {...props} />} />;
+    }
     const isStudent = rest.user.roles.some(role => role.roleId === UserType.Student);
     if (isStudent) {
       return <Redirect to="/play" />
     }
-    return <Route {...rest} render={(props) => <Component {...props} />} />;
+    return <Redirect to="/" />
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized()
     return <div>...Checking rights...</div>
