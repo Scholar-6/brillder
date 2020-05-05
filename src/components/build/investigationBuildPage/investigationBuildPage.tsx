@@ -82,6 +82,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [locked, setLock] = React.useState(false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
+  const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
 
   /* Synthesis */
@@ -347,6 +348,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     history.push(`/build/brick/${brickId}/build/investigation/submit`);
   }
 
+  const hideInvalidBrick = () => {
+    setValidation(true);
+    setSubmitDialog(false);
+  }
+
   const saveBrick = () => {
     brick.questions = [];
     brick.synthesis = synthesis;
@@ -469,6 +475,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   setQuestions={setQuestions}
                   questions={questions}
                   synthesis={synthesis}
+                  validationRequired={validationRequired}
                   isSynthesisPage={isSynthesisPage}
                   moveToSynthesis={moveToSynthesis}
                   createNewQuestion={createNewQuestion}
@@ -514,7 +521,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           </div>
           <Grid container direction="row" className="row-buttons" justify="center">
             <Button className="yes-button" onClick={() => submitInvalidBrick()}>Yes, never mind</Button>
-            <Button className="no-button" onClick={() => setSubmitDialog(false)}>No, keep working</Button>
+            <Button className="no-button" onClick={() => hideInvalidBrick()}>No, keep working</Button>
           </Grid>
         </Dialog>
         <Dialog
