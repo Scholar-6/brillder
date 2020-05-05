@@ -17,11 +17,11 @@ const getNonEmptyComponent = (components: any[]) => {
 }
 
 const validateHint = (hint: Hint) => {
-  if (hint.status === HintStatus.All) {
-    return !hint.value;
-  } else {
+  if (hint.status === HintStatus.Each) {
     const emptyHint = hint.list.some(h => h == null || h === "");
     return emptyHint;
+  } else {
+    return !hint.value;
   }
 }
 
@@ -103,6 +103,9 @@ const validateLineHighlighting = (comp: any) => {
 
 const validateQuestion = (question: Question) => {
   const {type, hint, components} = question;
+  if (question.id === 92) {
+    console.log(question);
+  }
 
   let noComponent = getNonEmptyComponent(components);
   if (noComponent) {
