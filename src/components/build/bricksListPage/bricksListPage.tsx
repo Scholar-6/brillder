@@ -426,7 +426,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     if (brick.author) {
       const {author} = brick;
       if (author.firstName || author.firstName) {
-        row += `${author.firstName} ${author.firstName} | `
+        row += `${author.firstName} ${author.lastName} | `
       }
       row += `${date}.${month}.${year} | ${brick.brickLength} mins`;
     }
