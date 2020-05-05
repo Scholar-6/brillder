@@ -116,55 +116,6 @@
     }
   }
 
-  .exit-button {
-    cursor: pointer;
-    position: fixed;
-    top: 2.32vh;
-    left: 3.3vw;
-    color: $orange;
-
-    .exit-label {
-      position: relative;
-      font-size: 1.75vw;
-      line-height: 1;
-      letter-spacing: 0.36vw;
-      color: white;
-      font-family: 'Brandon Grotesque Black';
-      .exit-arrow {
-        transition: all .2s ease-in-out;
-        position: absolute;
-        top: 0.1vh;
-        left: -1.7vw;
-        svg {
-          height: 1.5vw;
-          width: 1.5vw;
-        }
-      }
-    }
-    .small-label {
-      padding-left: 0.2vw;
-      letter-spacing: 0.2vw;
-      font-size: 1.05vw;
-      font-family: $font-family-regular;
-    }
-    .small-labels {
-      position: absolute;
-      margin-top: 1vh;
-      left: -1.95vw;
-      color: $light-blue;
-      transition: all .2s ease-in-out;
-    }
-  }
-
-  .exit-button:hover {
-    .exit-arrow {
-      left: -2.1vw;
-    }
-    .small-labels {
-      color: white;
-    }
-  }
-
   .right-top-drop-icon {
     position: absolute;
     top: 8px;
