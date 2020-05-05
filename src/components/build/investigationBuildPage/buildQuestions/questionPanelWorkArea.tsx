@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
 
 import QuestionComponents from './questionComponents/questionComponents';
+import {getNonEmptyComponent} from '../questionService/QuestionService';
 import './questionPanelWorkArea.scss';
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../../model/question';
 import DragBox from './drag/dragBox';
@@ -58,9 +59,17 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
   let typeArray: string[] = Object.keys(QuestionType);
   let index = getQuestionIndex(question);
 
+  let showHelpArrow = false;
+  if (index === 0) {
+    showHelpArrow = getNonEmptyComponent(question.components);
+  }
+
   return (
     <MuiThemeProvider >
       <div className="build-question-page" style={{width: '100%', height: '94%'}}>
+        {
+          showHelpArrow ? <img alt="" className="help-arrow" src="/images/investigation-arrow.png" /> : ""
+        }
         <Grid container justify="center" className="build-question-column" item xs={12}>
           <Grid container direction="row">
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">

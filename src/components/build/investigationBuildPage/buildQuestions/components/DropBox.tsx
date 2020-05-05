@@ -12,7 +12,7 @@ const DropBox: React.FC<DropBoxProps> = ({locked, onDrop}) => {
   const [components] = React.useState([]);
 
   return (
-    <div style={{height:'10vh', position: 'relative'}}>
+    <div style={{height:'18vh', position: 'relative'}}>
       <Grid container justify="center" alignContent="center" className="drop-box-text" style={{height: '100%'}}>
         Drag Component Here
       </Grid>
