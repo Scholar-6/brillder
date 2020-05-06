@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { Component } from "react";
 
 import './ShortAnswerPreview.scss';
 import { Grid } from "@material-ui/core";

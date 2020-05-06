@@ -62,7 +62,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               setType={setCurrentType}
               labels={["C H O O S E", "O N E"]}
               isActive={false}
-              onMouseEnter={() => {}}
+              onMouseEnter={onHover}
               onMouseLeave={removeHover}
             />
           </Grid>
@@ -73,7 +73,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               setType={setCurrentType}
               labels={["C H O O S E", "S E V E R A L"]}
               isActive={false}
-              onMouseEnter={() => {}}
+              onMouseEnter={onHover}
               onMouseLeave={removeHover}
             />
           </Grid>
@@ -86,7 +86,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               setType={setCurrentType}
               labels={["V E R T I C A L", "S H U F F L E"]}
               isActive={false}
-              onMouseEnter={() => {}}
+              onMouseEnter={onHover}
               onMouseLeave={removeHover}
             />
           </Grid>
@@ -97,7 +97,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               setType={setCurrentType}
               labels={["H O R I Z O N T A L", "S H U F F L E"]}
               isActive={false}
-              onMouseEnter={() => {}}
+              onMouseEnter={onHover}
               onMouseLeave={removeHover}
             />
           </Grid>
@@ -110,7 +110,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               setType={setCurrentType}
               labels={["P A I R", "M A T C H"]}
               isActive={false}
-              onMouseEnter={() => {}}
+              onMouseEnter={onHover}
               onMouseLeave={removeHover}
             />
           </Grid>
@@ -121,7 +121,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               setType={setCurrentType}
               labels={["S O R T"]}
               isActive={false}
-              onMouseEnter={() => {}}
+              onMouseEnter={onHover}
               onMouseLeave={removeHover}
             />
           </Grid>
@@ -132,7 +132,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               setType={setCurrentType}
               labels={["M I S S I N G", "W O R D"]}
               isActive={false}
-              onMouseEnter={() => {}}
+              onMouseEnter={onHover}
               onMouseLeave={removeHover}
             />
           </Grid>
@@ -145,7 +145,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               setType={setCurrentType}
               labels={["W O R D", "H I G H L I G H T I N G"]}
               isActive={false}
-              onMouseEnter={() => {}}
+              onMouseEnter={onHover}
               onMouseLeave={removeHover}
             />
           </Grid>
@@ -156,7 +156,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               setType={setCurrentType}
               labels={["L I N E", "H I G H L I G H T I N G"]}
               isActive={false}
-              onMouseEnter={() => {}}
+              onMouseEnter={onHover}
               onMouseLeave={removeHover}
             />
           </Grid>
