@@ -271,6 +271,7 @@ $light-grey: #F5F6F7;
         }
       }
     }
+
     .profile-inputs-container {
       padding-top: 4.8vh;
       margin-left: 0.8vw;
@@ -367,6 +368,15 @@ $light-grey: #F5F6F7;
             margin: 0;
           }
         }
+      }
+    }
+    .subjects-container {
+      margin-top: 2.3vh;
+      padding-left: 4.2vw;
+      padding-right: 4.2vw;
+
+      .MuiAutocomplete-root {
+        width: 100%;
       }
     }
     .big-input-container {

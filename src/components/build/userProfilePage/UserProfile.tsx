@@ -11,6 +11,8 @@ import { connect } from 'react-redux';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import brickActions from 'redux/actions/brickActions';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 import './UserProfile.scss';
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
@@ -45,7 +47,7 @@ interface UserProfileProps {
 
 interface UserProfileState {
   user: UserProfile;
-  subjects?: Subject[];
+  subjects: Subject[];
   searchString: string;
   isSearching: boolean;
   logoutDialogOpen: boolean;
@@ -70,9 +72,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         email: user.email ? user.email : '',
         password: '',
         roles: roles,
-        subjects: [],
+        subjects: user.subjects,
         status: UserStatus.Pending,
       },
+      subjects: [],
       logoutDialogOpen: false,
       deleteDialogOpen: false,
       searchString: '',
@@ -105,6 +108,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         if (!user.roles) {
           user.roles = [];
         }
+        if (!user.subjects) {
+          user.subjects = [];
+        }
         this.setState({...this.state, user: res.data});
       })
       .catch(error => {
@@ -134,11 +140,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (id !== -1) {
       userToSave.id = id;
     }
+    if (user.subjects) {
+      userToSave.subjects = user.subjects.map(s => s.id);
+    }
     axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/user`, {...userToSave}, {withCredentials: true}
     ).then(res => {
       if (res.data === 'OK') {
-        
       }
     }).catch(error => {
       alert('Can`t save user profile');
@@ -243,6 +251,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     );
   }
 
+  onSubjectChange(event: any, newValue: any) {
+    const {user} = this.state;
+    user.subjects = newValue;
+    this.setState({...this.state, user});
+  }
+
   render() {
     return (
       <div className="user-profile-page">
@@ -326,6 +340,23 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                       { this.renderRoles()}
                     </Grid>
                   </Grid>
+                </Grid>
+                <Grid container direction="row" className="subjects-container">
+                  <Autocomplete
+                    multiple
+                    value={this.state.user.subjects}
+                    options={this.state.subjects}
+                    onChange={(e:any, v: any) => this.onSubjectChange(e, v)}
+                    getOptionLabel={(option:any) => option.name}
+                    renderInput={(params:any) => (
+                      <TextField
+                        {...params}
+                        variant="standard"
+                        label="Subjects: "
+                        placeholder="Favorites"
+                      />
+                    )}
+                  />
                 </Grid>
                 <Grid container direction="row" className="big-input-container">
                   <textarea placeholder="Write a short bio here..." />
