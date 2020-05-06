@@ -25,8 +25,8 @@ const LockComponent: React.FC<LockComponentProps> = ({locked, onChange}) => {
             lock ? <LockIcon className="lock-icon" onClick={toggleLock} /> : <LockOpenIcon className="unlock-icon" onClick={toggleLock} />
           }
         </div>
-        <div className="lock-text">L &nbsp;O &nbsp;C &nbsp;K</div>
-        <div className="lock-text">P &nbsp;A &nbsp;G &nbsp;E &nbsp;?</div>
+        <div className="lock-text">Lock</div>
+        <div className="lock-text">brick?</div>
       </Grid>
     </Grid>
   );

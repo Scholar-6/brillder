@@ -20,6 +20,7 @@ import ShortAnswerPreview from "components/build/baseComponents/phonePreview/que
 import ChooseOnePreview from "components/build/baseComponents/phonePreview/questionPreview/ChooseOnePreview";
 import ChooseSeveralPreview from "components/build/baseComponents/phonePreview/questionPreview/ChooseSeveralPreview";
 import VerticalShufflePreview from "components/build/baseComponents/phonePreview/questionPreview/VerticalShufflePreview";
+import HorizontalShufflePreview from "components/build/baseComponents/phonePreview/questionPreview/HorizontalShufflePreview";
 
 
 import {
@@ -441,6 +442,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       return <PhonePreview Component={ChooseSeveralPreview} />
     } else if (hoverQuestion === QuestionTypeEnum.VerticalShuffle) {
       return <PhonePreview Component={VerticalShufflePreview} />
+    } else if (hoverQuestion === QuestionTypeEnum.HorizontalShuffle) {
+      return <PhonePreview Component={HorizontalShufflePreview} />
     }
     return <PhonePreview link={window.location.origin + "/logo-page"} />
   }
