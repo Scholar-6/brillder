@@ -17,6 +17,7 @@ import PhonePreview from "components/build/baseComponents/phonePreview/PhonePrev
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 import SynthesisPreviewComponent from "components/build/baseComponents/phonePreview/synthesis/SynthesisPreview";
 import ShortAnswerPreview from "components/build/baseComponents/phonePreview/questionPreview/ShortAnswerPreview";
+import ChooseOnePreview from "components/build/baseComponents/phonePreview/questionPreview/ChooseOnePreview";
 
 
 import {
@@ -432,6 +433,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       return <PhonePreview link={window.location.origin + "/logo-page"} />
     } else if (hoverQuestion === QuestionTypeEnum.ShortAnswer) {
       return <PhonePreview Component={ShortAnswerPreview} />
+    } else if (hoverQuestion === QuestionTypeEnum.ChooseOne) {
+      return <PhonePreview Component={ChooseOnePreview} />
+    } else if (hoverQuestion === QuestionTypeEnum.ChooseSeveral) {
+
     }
     return <PhonePreview link={window.location.origin + "/logo-page"} />
   }
