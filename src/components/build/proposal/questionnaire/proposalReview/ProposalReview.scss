@@ -121,6 +121,7 @@
     .book {
       margin-top: 15.5vh;
       transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
       position: relative;
       height: 63.6vh;
       backface-visibility: visible;
@@ -135,6 +136,7 @@
     .page5,
     .page6 {
       transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
       position: absolute;
       width: 30.1vw;
       height: 100%;
