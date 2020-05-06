@@ -1,0 +1,53 @@
+@import '_variables';
+
+.vertical-shuffle-preview {
+  width: 100%;
+  height: 100%;
+  color: $dark-blue;
+  
+  .small-text {
+    padding: 26.6% 10% 16% 10%;
+    font-size: 1.3vw;
+    font-family: $font-family-regular;
+  }
+
+  button {
+    position: relative;
+    text-align: left;
+    padding-left: 24%;
+    font-family: $font-family-bold;
+    margin-left: 7.5%;
+    margin-bottom: 7.5%;
+    width: 85%;
+    font-size: 1.2vw;
+    line-height: 1.1;
+    letter-spacing: 0.01vw;
+    border-radius: 1vw;
+    border: none;
+    height: 12.5%;
+    background: $light-green;
+    color: white;
+
+    .circle-number {
+      width: 100%;
+      height: 100%;
+
+      .MuiAvatar-root {
+        height: 2.1vw;
+        width: 2.1vw;
+        color: $light-green;
+        font-size: 1.6vw;
+        font-family: $font-family-black;
+        background-color: white;
+      }
+    }
+
+    > div {
+      width: 28%;
+      position: absolute;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+  }
+}
