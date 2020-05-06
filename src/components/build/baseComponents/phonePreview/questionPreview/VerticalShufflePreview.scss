@@ -25,8 +25,8 @@
     border-radius: 1vw;
     border: none;
     height: 12.5%;
-    background: $light-green;
-    color: white;
+    background: $tab-grey;
+    color: $dark-blue;
 
     .circle-number {
       width: 100%;
@@ -35,7 +35,7 @@
       .MuiAvatar-root {
         height: 2.1vw;
         width: 2.1vw;
-        color: $light-green;
+        color: white;
         font-size: 1.6vw;
         font-family: $font-family-black;
         background-color: white;
