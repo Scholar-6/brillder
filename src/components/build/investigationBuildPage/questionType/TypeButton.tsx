@@ -8,13 +8,25 @@ export interface TypeButtonProps {
   isActive: boolean,
   activeType: QuestionTypeEnum,
   questionType: QuestionTypeEnum,
+  onMouseEnter(type: QuestionTypeEnum): void
+  onMouseLeave(): void
   setType(e: any): void,
 }
 
-const QuestionTypePage: React.FC<TypeButtonProps> = ({ labels, activeType, questionType, setType }) => {
+const QuestionTypePage: React.FC<TypeButtonProps> = ({
+  labels, activeType, questionType, setType, onMouseEnter, onMouseLeave
+}) => {
   const renderLabel = (label: string, i:number) => {
     return (
-      <Grid container justify="center" direction="row" key={i} className="link-description">
+      <Grid
+        container
+        justify="center"
+        direction="row"
+        className="link-description"
+        key={i}
+        onMouseEnter={() => onMouseEnter(questionType)}
+        onMouseLeave={onMouseLeave}
+      >
         {label}
       </Grid>
     )
