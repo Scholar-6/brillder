@@ -128,6 +128,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const userToSave = {
       firstName, lastName, email, roles
     } as any;
+    if (user.password) {
+      userToSave.password = user.password;
+    }
     if (id !== -1) {
       userToSave.id = id;
     }
@@ -304,11 +307,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                         placeholder="Surname"
                       />
                       <input
+                        type="email"
                         value={this.state.user.email}
                         onChange={(e: any) => this.onEmailChanged(e)}
                         placeholder="username@domain.com"
                       />
                       <input
+                        type="password"
                         value={this.state.user.password}
                         onChange={(e: any) => this.onPasswordChanged(e)}
                         placeholder="* * * * * * * * * * *"
