@@ -15,6 +15,10 @@ import SynthesisPage from "./synthesisPage/SynthesisPage";
 import DragableTabs from "./dragTabs/dragableTabs";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
+import SynthesisPreviewComponent from "components/build/baseComponents/phonePreview/synthesis/SynthesisPreview";
+import ShortAnswerPreview from "components/build/baseComponents/phonePreview/questionPreview/ShortAnswerPreview";
+
+
 import {
   Question,
   QuestionTypeEnum,
@@ -34,20 +38,6 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
   fetchBrick(brickId: number): void;
   saveBrick(brick: any): void;
-}
-
-const SynthesisPreviewComponent:React.FC<any> = ({data}) => {
-  let newData = "";
-  if (data) {
-    newData = data.replace(/(?:\r\n|\r|\n)/g, '<br>');
-  }
-
-  return (
-    <div className="phone-preview-component synthesis-preview">
-      <div className="synthesis-title" style={{textAlign: 'center'}}>SYNTHESIS</div>
-      <div className="synthesis-text" dangerouslySetInnerHTML={{ __html: newData}}></div>
-    </div>
-  )
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
@@ -84,6 +74,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
+  const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -412,6 +403,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       <QuestionTypePage
         history={history}
         brickId={brickId}
+        setHoverQuestion={setHoverQuestion}
         questionId={activeQuestion.id}
         setQuestionType={setQuestionTypeAndMove}
         setPreviousQuestion={setPreviousQuestion}
@@ -428,18 +420,27 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <Grid container alignContent="center" justify="center">
           <img alt="" src="/feathericons/save-white.png" />
           <div>
-          Last Saved at {updated.getHours() + ":" + updated.getMinutes()}
+            Last Saved at {updated.getHours() + ":" + updated.getMinutes()}
           </div>
         </Grid>
       </div>
     );
   }
 
+  const renderQuestionPhonePreview = () => {
+    if (hoverQuestion === QuestionTypeEnum.None) {
+      return <PhonePreview link={window.location.origin + "/logo-page"} />
+    } else if (hoverQuestion === QuestionTypeEnum.ShortAnswer) {
+      return <PhonePreview Component={ShortAnswerPreview} />
+    }
+    return <PhonePreview link={window.location.origin + "/logo-page"} />
+  }
+
   return (
     <div className="investigation-build-page">
       <div style={{position: 'fixed'}}>
         <HomeButton onClick={exitAndSave} />
-        </div>
+      </div>
       <Hidden only={['xs', 'sm']}>
         <div className="proposal-link" onClick={editProposal}>
           <div className="proposal-edit-icon"/>
@@ -501,7 +502,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <PhoneQuestionPreview question={activeQuestion} />
           </Route>
           <Route path="/build/brick/:brickId/build/investigation/question">
-            <PhonePreview link={window.location.origin + "/logo-page"} />
+            {renderQuestionPhonePreview()}
           </Route>
           <Route path="/build/brick/:brickId/build/investigation/synthesis">
             <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
