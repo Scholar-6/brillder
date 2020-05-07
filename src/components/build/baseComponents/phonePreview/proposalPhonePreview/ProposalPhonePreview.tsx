@@ -12,6 +12,24 @@ export interface ProposalPhonePreviewProps {
 }
 
 const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Component, data }) => {
+  const renderInner = () => {
+    if (link) {
+      return (
+        <div className="custom-component">
+          <iframe title="phone-preview-screen" src={link} />
+        </div>
+      );
+    }
+    if (Component) {
+      return (
+        <div className="custom-component">
+          <Component data={data} />
+        </div>
+      );
+    }
+    return <div className="custom-component"/>;
+  }
+
   return (
     <Hidden only={['xs', 'sm']}>
       <div className="proposal-phone-preview">
@@ -26,16 +44,7 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Compo
             <div className="volume volume3"></div>
             <div className="sleep"></div>
             <div className="screen">
-              {
-                link
-                  ? (<div className="custom-component">
-                      <iframe title="phone-preview-screen" src={link} />
-                    </div>)
-                  : Component ? (<div className="custom-component">
-                      <Component data={data} />
-                    </div>)
-                    : <div className="custom-component"/>
-              }
+              {renderInner()}
             </div>
           </div>
         </div>
