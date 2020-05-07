@@ -15,8 +15,30 @@ interface SubjectProps {
   saveSubject(subjectId: number):void
 }
 
+const FrenchComponent:React.FC = () => {
+  return (
+    <div className="french-preview">
+      <div>“Revenos à nos moutons”</div>
+      <div>Anon.</div>
+    </div>
+  )
+}
+
 const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }) => {
+  const getSubjectName = (subjectId: number) => {
+    if (subjectId) {
+      const subject = subjects.find(s => s.id === subjectId);
+      if (subject) {
+        return subject.name;
+      }
+    }
+    return "";
+  }
+
+  let initSubjectName = getSubjectName(subjectId);
+
   const [subject, setSubject] = React.useState(subjectId);
+  const [subjectName, setSubjectName] = React.useState(initSubjectName);
 
   if (subjects.length === 1) {
     saveSubject(subjects[0].id);
@@ -26,14 +48,21 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
   const onSubjectChange = (event: any) => {
     const subjectId = parseInt(event.target.value) as number;
     setSubject(subjectId);
+    const currentName = getSubjectName(subjectId);
+    setSubjectName(currentName);
   };
+
+  let innerComponent = null;
+  if (subjectName === 'French') {
+    innerComponent = FrenchComponent;
+  }
 
   return (
     <div className="tutorial-page subject-page">
       <HomeButton link="/build" />
       <Grid container direction="row" style={{ height: '100%' }}>
-        <Grid container justify="flex-start" item xs={12}>
-          <Grid justify="flex-start" container item xs={9}>
+        <Grid container justify="flex-start" item xs={10}>
+          <Grid justify="flex-start" container item xs={8}>
             <div className="subject-container">
               <h1 className="only-tutorial-header">Choose Subject</h1>
               <Grid container justify="flex-start" item xs={12}>
@@ -67,9 +96,9 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
           }
         </Grid>
         <div className="subject-name">
-          <div>Subject 1</div>
+          <div>{subjectName}</div>
         </div>
-        <ProposalPhonePreview />
+        <ProposalPhonePreview Component={innerComponent} />
         <div className="red-right-block"></div>
         <div className="beta-text">BETA</div>
       </Grid>
