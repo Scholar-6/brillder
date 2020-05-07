@@ -57,6 +57,21 @@ $box-radius: 0.4vw;
     }
   }
 
+  .french-preview {
+    margin-left: 3vw;
+    margin-right: 3vw;
+    color: white;
+    text-align: center;
+    > div:nth-child(1) {
+      font-size: 3.2vw;
+      margin-top: 10vw;
+    }
+    > div:nth-child(2) {
+      margin-top: 10vw;
+      font-size: 2vw;
+    }
+  }
+
   @media only screen and (max-width: 959px) and (min-width: 600px) {
     .subject-container {
       width: 70% !important;
