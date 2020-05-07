@@ -24,7 +24,7 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, isValid, selectQue
   return (
     <div className="draggable-tab" onClick={activateTab}>
       <Grid container direction="row" alignContent="center">
-        <Grid item xs={10} className="tab-number">
+        <Grid item xs={active ? 10 : 12} className="tab-number">
           {index + 1}
         </Grid>
         <Grid item container direction="row" alignContent="center" justify="flex-end" className="remove-icon-container">
