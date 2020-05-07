@@ -366,7 +366,11 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               </div>
             </Grid>
             <Grid item xs={3} className="profile-phone-preview">
-              <PhonePreview link="/" />
+              <Grid container justify="center" alignContent="center" style={{height: "100%"}}>
+                <div>
+                  <PhonePreview />
+                </div>
+              </Grid>
             </Grid>
           </Grid>
         </div>
