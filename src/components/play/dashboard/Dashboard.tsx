@@ -12,9 +12,12 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
+import LogoutDialog from 'components/baseComponents/logoutDialog/LogoutDialog';
+import DeleteBrickDialog from 'components/baseComponents/deleteBrickDialog/DeleteBrickDialog';
 import authActions from 'redux/actions/auth';
 import { Brick, BrickStatus } from 'model/brick';
 import { User, UserType } from 'model/user';
+import {getAuthorRow} from 'components/services/brickService';
 
 
 const mapState = (state: any) => {
@@ -101,53 +104,19 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     this.props.history.push('/choose-user');
   }
 
-  delete() {
-    let brickId = this.state.deleteBrickId;
-    axios.delete(process.env.REACT_APP_BACKEND_HOST + '/brick/' + brickId, {withCredentials: true})
-      .then(res => {
-        let {bricks} = this.state;
-        let brick = bricks.find(brick => brick.id === brickId);
-        if (brick) {
-          let index = bricks.indexOf(brick);
-          bricks.splice(index, 1);
-        }
+  delete(brickId: number) {
+    let {bricks} = this.state;
+    let brick = bricks.find(brick => brick.id === brickId);
+    if (brick) {
+      let index = bricks.indexOf(brick);
+      bricks.splice(index, 1);
+    }
 
-        this.setState({...this.state, deleteDialogOpen: false});
-      })
-      .catch(error => {
-        alert('Can`t delete bricks');
-      });
+    this.setState({...this.state, deleteDialogOpen: false});
   }
 
   move(brickId:number) {
     this.props.history.push(`/play/brick/${brickId}/intro`);
-  }
-
-  formatTwoLastDigits(twoLastDigits: number) {
-    var formatedTwoLastDigits = "";
-    if (twoLastDigits < 10 ) {
-      formatedTwoLastDigits = "0" + twoLastDigits;
-    } else {
-      formatedTwoLastDigits = "" + twoLastDigits;
-    }
-    return formatedTwoLastDigits;
-  }
-
-  getYear(date: Date) {
-    var currentYear =  date.getFullYear();   
-    var twoLastDigits = currentYear % 100;
-    return this.formatTwoLastDigits(twoLastDigits);
-  }
-
-  getMonth(date: Date) {
-    const month = date.getMonth() + 1;
-    var twoLastDigits = month % 10;
-    return this.formatTwoLastDigits(twoLastDigits);
-  }
-
-  getDate(date: Date) {
-    const days = date.getDate();
-    return this.formatTwoLastDigits(days);
   }
   
   handleSortChange = (e: any) => {
@@ -268,22 +237,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }, 400);
   }
 
-  getAuthorRow(brick: Brick) {
-    let row = "";
-    const created = new Date(brick.created);
-    const year = this.getYear(created);
-    const month = this.getMonth(created);
-    const date = this.getDate(created);
-    if (brick.author) {
-      const {author} = brick;
-      if (author.firstName || author.firstName) {
-        row += `${author.firstName} ${author.lastName} | `
-      }
-      row += `${date}.${month}.${year} | ${brick.brickLength} mins`;
-    }
-    return row;
-  }
-
   handleLogoutOpen() {
     this.setState({...this.state, logoutDialogOpen: true})
   }
@@ -364,7 +317,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                         <div className="link-description">{brick.title}</div>
                         <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
                         <div className="link-info">
-                          {this.getAuthorRow(brick)}
+                          {getAuthorRow(brick)}
                         </div>
                         <div className="hovered-open-question link-info">{brick.openQuestion}</div>
                         <div>{brick.subject ? brick.subject.name : 'SUBJECT Code'} | No. {brick.attemptsCount} of Plays</div>
@@ -399,7 +352,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                       <div className="link-description">{brick.title}</div>
                       <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
                       <div className="link-info">
-                        {this.getAuthorRow(brick)}
+                        {getAuthorRow(brick)}
                       </div>
                     </div>
                   </div>
@@ -590,38 +543,17 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             </Grid>
           </MenuItem>
         </Menu>
-        <Dialog
-          open={this.state.logoutDialogOpen}
-          onClose={() => this.handleLogoutClose()}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className="alert-dialog"
-        >
-          <div className="logout-dialog-header">
-            <div>Are you sure you want</div>
-            <div>to log out?</div>
-          </div>
-          <Grid container direction="row" className="logout-buttons" justify="center">
-            <Button className="yes-button" onClick={() => this.logout()}>Yes</Button>
-            <Button className="no-button" onClick={() => this.handleLogoutClose()}>No</Button>
-          </Grid>
-        </Dialog>
-        <Dialog
-          open={this.state.deleteDialogOpen}
-          onClose={() => this.handleDeleteClose()}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className="delete-brick-dialog"
-        >
-          <div className="dialog-header">
-            <div>Permanently delete</div>
-            <div>this brick?</div>
-          </div>
-          <Grid container direction="row" className="row-buttons" justify="center">
-            <Button className="yes-button" onClick={() => this.delete()}>Yes, delete</Button>
-            <Button className="no-button" onClick={() => this.handleDeleteClose()}>No, keep</Button>
-          </Grid>
-        </Dialog>
+        <LogoutDialog
+          history={this.props.history}
+          isOpen={this.state.logoutDialogOpen}
+          close={() => this.handleLogoutClose()}
+        />
+        <DeleteBrickDialog
+          isOpen={this.state.deleteDialogOpen}
+          brickId={this.state.deleteBrickId}
+          close={() => this.handleDeleteClose()}
+          onDelete={(brickId) => this.delete(brickId)}
+        />
       </div>
     )
   }
