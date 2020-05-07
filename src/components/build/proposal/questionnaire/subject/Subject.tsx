@@ -1,9 +1,10 @@
 import React from "react";
-import { Grid, Select, FormControl, MenuItem, InputLabel } from "@material-ui/core";
+import { Grid, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
 
 import './Subject.scss';
 import { ProposalStep } from "../../model";
-import ExitButton from '../../components/ExitButton';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
+import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import NextButton from '../../components/nextButton'
 import { Redirect } from "react-router-dom";
 
@@ -23,47 +24,54 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
   }
 
   const onSubjectChange = (event: any) => {
-    setSubject(event.target.value as number);
+    const subjectId = parseInt(event.target.value) as number;
+    setSubject(subjectId);
   };
 
   return (
     <div className="tutorial-page subject-page">
-      <ExitButton />
-      <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
-        <Grid container justify="center" item xs={12}>
-          <Grid justify="center" container item xs={12} sm={9} md={5} lg={4}>
+      <HomeButton link="/build" />
+      <Grid container direction="row" style={{ height: '100%' }}>
+        <Grid container justify="flex-start" item xs={12}>
+          <Grid justify="flex-start" container item xs={9}>
             <div className="subject-container">
-              <h1 className="only-tutorial-header">Choose subject</h1>
-              <Grid container justify="center" item xs={12}>
-              <FormControl>
-                <InputLabel id="demo-simple-select-label" className="select-label" style={{fontFamily: 'Brandon Grotesque Regular'}}>Subject</InputLabel>
-                <Select
+              <h1 className="only-tutorial-header">Choose Subject</h1>
+              <Grid container justify="flex-start" item xs={12}>
+                <RadioGroup
+                  className="subjects-group"
                   value={subject}
-                  onChange={(e) => onSubjectChange(e)}
-                  labelId="demo-simple-select-label"
-                  className="select-subject"
-                  style={{fontFamily: 'Brandon Grotesque Regular'}}
+                  onChange={onSubjectChange}
                 >
                   {
                     subjects.map((subject, i) => {
                       return (
-                        <MenuItem style={{fontFamily: 'Brandon Grotesque Regular'}} key={i} value={subject.id}>
-                          {subject.name}
-                        </MenuItem>
-                      );
+                        <FormControlLabel
+                          key={i}
+                          value={subject.id}
+                          control={<Radio className="sortBy" />}
+                          label={subject.name}
+                        />
+                      )
                     })
                   }
-                </Select>
-              </FormControl>
+                </RadioGroup>
               </Grid>
-              {
-                subject ? (
-                  <NextButton isActive={true} step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
-                ) : ""
-              }
             </div>
           </Grid>
         </Grid>
+        <Grid style={{width: '60vw'}}>
+          {
+            subject ? (
+              <NextButton isActive={true} step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
+            ) : ""
+          }
+        </Grid>
+        <div className="subject-name">
+          <div>Subject 1</div>
+        </div>
+        <ProposalPhonePreview />
+        <div className="red-right-block"></div>
+        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );
