@@ -1,6 +1,6 @@
 import { Brick, } from 'model/brick';
 
-export function formatTwoLastDigits(twoLastDigits: number) {
+function formatTwoLastDigits(twoLastDigits: number) {
   var formatedTwoLastDigits = "";
   if (twoLastDigits < 10 ) {
     formatedTwoLastDigits = "0" + twoLastDigits;
@@ -26,8 +26,6 @@ export function getDate(date: Date) {
   const days = date.getDate();
   return formatTwoLastDigits(days);
 }
-
-
 
 export function getAuthorRow(brick: Brick) {
   let row = "";
