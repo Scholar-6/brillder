@@ -28,10 +28,13 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Compo
             <div className="screen">
               {
                 link
-                  ? <div className="custom-component">
+                  ? (<div className="custom-component">
                       <iframe title="phone-preview-screen" src={link} />
-                    </div>
-                  : <div className="custom-component"><Component data={data} /></div>
+                    </div>)
+                  : Component ? (<div className="custom-component">
+                      <Component data={data} />
+                    </div>)
+                    : <div className="custom-component"/>
               }
             </div>
           </div>
