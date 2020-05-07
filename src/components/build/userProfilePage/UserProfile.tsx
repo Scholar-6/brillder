@@ -308,6 +308,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   </Grid>
                   <Grid item className="profile-inputs-container">
                     <div>
+                      <Grid>
                       <input
                         className="first-name"
                         value={this.state.user.firstName}
@@ -320,6 +321,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                         onChange={(e: any) => this.onLastNameChanged(e)}
                         placeholder="Surname"
                       />
+                      </Grid>
                       <input
                         type="email"
                         value={this.state.user.email}

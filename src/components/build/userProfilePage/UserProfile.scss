@@ -299,15 +299,19 @@ $base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5),
       }
 
       .first-name {
-        width: 13.5vw;
+        width: 41%;
+        padding: 0;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
-        margin-right: 0.5vw;
+        padding-left: 3%;
+        margin-right: 2%
       }
 
       .last-name {
-        width: 16.6vw;
-        padding-left: 0.6vw;
+        width: 51%;
+        right: 0;
+        padding: 0;
+        padding-left: 3%;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
       }
