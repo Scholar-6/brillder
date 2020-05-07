@@ -1,6 +1,9 @@
 @import "_variables";
 
-$light-grey: #F5F6F7;
+$light-grey: #f5f6f7;
+
+$base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5),
+  10px 10px 15px rgba(70, 70, 70, 0.12);
 
 .user-profile-redirect-dropdown {
   .MuiPaper-root {
@@ -210,19 +213,19 @@ $light-grey: #F5F6F7;
       position: absolute;
       top: 1.9vh;
       right: 1vw;
-      
+
       .save-image {
         cursor: pointer;
         text-align: center;
         height: 3.5vw;
         width: 3.5vw;
-        background: #E5E8ED 0% 0% no-repeat padding-box;
+        background: #e5e8ed 0% 0% no-repeat padding-box;
         border: 0.25vw solid $light-grey;
-        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        box-shadow: $base-shadow;
         img {
           height: 1.9vw;
           width: 1.9vw;
-        } 
+        }
       }
     }
     .profile-image-container {
@@ -234,13 +237,13 @@ $light-grey: #F5F6F7;
         text-align: center;
         height: 11vw;
         width: 11vw;
-        background: #E5E8ED 0% 0% no-repeat padding-box;
+        background: #e5e8ed 0% 0% no-repeat padding-box;
         border: 0.25vw solid $light-grey;
-        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        box-shadow: $base-shadow;
         img {
           height: 7.8vw;
           width: 7.8vw;
-        } 
+        }
       }
       .add-image-button {
         padding: 0 !important;
@@ -261,7 +264,7 @@ $light-grey: #F5F6F7;
 
         .circle-icon {
           margin-top: 0.25vh;
-          color: #30C474;
+          color: #30c474;
           font-size: 2.35vw;
         }
         > span {
@@ -287,7 +290,12 @@ $light-grey: #F5F6F7;
         border-radius: 0.5vw;
         border: none;
         color: $dark-blue;
-        box-shadow: 0 0 0.3vw rgba(0,0,0,0.2);
+        -webkit-appearance: none;
+        box-shadow: $base-shadow;
+      }
+
+      input[type="password"] {
+        margin: 0;
       }
 
       .first-name {
@@ -310,11 +318,11 @@ $light-grey: #F5F6F7;
       }
 
       :-ms-input-placeholder {
-       color: $dark-blue;
+        color: $dark-blue;
       }
-      
+
       ::-ms-input-placeholder {
-       color: $dark-blue;
+        color: $dark-blue;
       }
 
       .last-name::placeholder {
@@ -341,14 +349,14 @@ $light-grey: #F5F6F7;
       .roles-box {
         width: 13.2vw;
         border-radius: 0.3vw;
-        box-shadow: 0 0 0.3vw rgba(0,0,0,0.2);
+        box-shadow: $base-shadow;
         padding-top: 1.9vh;
         padding-left: 1.15vw;
         padding-bottom: 1.4vh;
 
         .MuiGrid-item {
           width: 100%;
-          
+
           .MuiSvgIcon-root {
             color: $dark-blue;
             font-size: 1.55vw;
@@ -371,8 +379,8 @@ $light-grey: #F5F6F7;
       }
     }
     .subjects-container {
-      margin-top: 2.3vh;
-      padding-left: 4.2vw;
+      margin-top: 0.8vh;
+      padding-left: 4.6vw;
       padding-right: 4.2vw;
 
       .MuiAutocomplete-root {
@@ -381,18 +389,18 @@ $light-grey: #F5F6F7;
     }
     .big-input-container {
       margin-top: 2.3vh;
-      padding-left: 4.2vw;
+      padding-left: 4.5vw;
       padding-right: 4.2vw;
       textarea {
         width: 100%;
-        height: 18vh;
+        height: 15vh;
         background: $light-grey;
         border: none;
         border-radius: 0.5vw;
         font-family: $font-family-regular;
-        box-shadow: 0 0 0.3vw rgba(0,0,0,0.2);
-        padding-top: 0.75vh;
-        padding-left: 1.1vw;
+        box-shadow: $base-shadow;
+        padding-top: 0;
+        padding-left: 0.65vw;
         font-size: 1.8vw;
         max-height: 18vh;
       }
@@ -401,7 +409,7 @@ $light-grey: #F5F6F7;
   .profile-phone-preview {
     > div {
       > div {
-        height:39.5vw;
+        height: 39.5vw;
       }
     }
     .phone-question-preview {
