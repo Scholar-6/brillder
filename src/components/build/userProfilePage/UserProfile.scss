@@ -399,9 +399,17 @@ $light-grey: #F5F6F7;
     }
   }
   .profile-phone-preview {
-    .phone-preview {
-      top: 21.5% !important;
+    > div {
+      > div {
+        height:39.5vw;
+      }
+    }
+    .phone-question-preview {
+      top: auto !important;
       right: 1.8% !important;
+    }
+    .custom-component {
+      background-color: white;
     }
   }
 }
