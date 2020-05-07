@@ -1,41 +1,46 @@
-import './Dashboard.scss';
-import React, { Component } from 'react';
-import { Box, Grid, FormControlLabel, Radio, RadioGroup, Button } from '@material-ui/core';
-import axios from 'axios';
+import "./Dashboard.scss";
+import React, { Component } from "react";
+import {
+  Box,
+  Grid,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from "@material-ui/core";
+import axios from "axios";
 // @ts-ignore
-import { connect } from 'react-redux';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ClearIcon from '@material-ui/icons/Clear';
-import Dialog from '@material-ui/core/Dialog';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import { connect } from "react-redux";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import ClearIcon from "@material-ui/icons/Clear";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
-import LogoutDialog from 'components/baseComponents/logoutDialog/LogoutDialog';
-import DeleteBrickDialog from 'components/baseComponents/deleteBrickDialog/DeleteBrickDialog';
-import authActions from 'redux/actions/auth';
-import { Brick, BrickStatus } from 'model/brick';
-import { User, UserType } from 'model/user';
-import {getAuthorRow} from 'components/services/brickService';
-
+import HomeButton from "components/baseComponents/homeButton/HomeButton";
+import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
+import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
+import authActions from "redux/actions/auth";
+import { Brick, BrickStatus } from "model/brick";
+import { User, UserType } from "model/user";
+import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
+import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 
 const mapState = (state: any) => {
   return {
     user: state.user.user,
-  }
-}
+  };
+};
 
 const mapDispatch = (dispatch: any) => {
   return {
     logout: () => dispatch(authActions.logout()),
-  }
-}
+  };
+};
 
 const connector = connect(mapState, mapDispatch);
 
 interface BricksListProps {
-  user: User,
+  user: User;
   history: any;
   logout(): void;
 }
@@ -65,7 +70,7 @@ enum SortBy {
 
 class DashboardPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
-    super(props)
+    super(props);
     this.state = {
       bricks: [],
       sortBy: SortBy.None,
@@ -78,62 +83,77 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       finalBricks: [],
       dropdownShown: false,
       searchBricks: [],
-      searchString: '',
+      searchString: "",
       isSearching: false,
     };
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks/byStatus/' + BrickStatus.Publish, {withCredentials: true})
-      .then(res => {  
-        this.setState({...this.state, bricks: res.data, finalBricks: res.data as Brick[] });
+    axios
+      .get(
+        process.env.REACT_APP_BACKEND_HOST +
+          "/bricks/byStatus/" +
+          BrickStatus.Publish,
+        { withCredentials: true }
+      )
+      .then((res) => {
+        this.setState({
+          ...this.state,
+          bricks: res.data,
+          finalBricks: res.data as Brick[],
+        });
       })
-      .catch(error => { 
-        alert('Can`t get bricks');
+      .catch((error) => {
+        alert("Can`t get bricks");
       });
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true})
-    .then(res => {
-      this.setState({...this.state, subjects: res.data });
-    })
-    .catch(error => {
-      alert('Can`t get bricks');
-    });
+    axios
+      .get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        this.setState({ ...this.state, subjects: res.data });
+      })
+      .catch((error) => {
+        alert("Can`t get bricks");
+      });
   }
 
   logout() {
     this.props.logout();
-    this.props.history.push('/choose-user');
+    this.props.history.push("/choose-user");
   }
 
   delete(brickId: number) {
-    let {bricks} = this.state;
-    let brick = bricks.find(brick => brick.id === brickId);
+    let { bricks } = this.state;
+    let brick = bricks.find((brick) => brick.id === brickId);
     if (brick) {
       let index = bricks.indexOf(brick);
       bricks.splice(index, 1);
     }
 
-    this.setState({...this.state, deleteDialogOpen: false});
+    this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
-  move(brickId:number) {
+  move(brickId: number) {
     this.props.history.push(`/play/brick/${brickId}/intro`);
   }
-  
+
   handleSortChange = (e: any) => {
-    const {state} = this;
+    const { state } = this;
     const sortBy = parseInt(e.target.value) as SortBy;
-    let {finalBricks} = this.state;
+    let { finalBricks } = this.state;
     if (sortBy === SortBy.Date) {
       finalBricks = finalBricks.sort((a, b) => {
         const createdA = new Date(a.created).getTime();
         const createdB = new Date(b.created).getTime();
-        return (createdA < createdB) ? 1 : -1;
+        return createdA < createdB ? 1 : -1;
       });
     } else if (sortBy === SortBy.Popularity) {
-      finalBricks = finalBricks.sort((a, b) => ((a.attemptsCount > b.attemptsCount) ? 1 : -1)); 
+      finalBricks = finalBricks.sort((a, b) =>
+        a.attemptsCount > b.attemptsCount ? 1 : -1
+      );
     }
-    this.setState({...state, finalBricks, sortBy})
-  }
+    this.setState({ ...state, finalBricks, sortBy });
+  };
 
   getBricksForFilter() {
     if (this.state.isSearching) {
@@ -145,8 +165,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
   getCheckedSubjectIds() {
     const filterSubjects = [];
-    const {state} = this;
-    const {subjects} = state;
+    const { state } = this;
+    const { subjects } = state;
     for (let subject of subjects) {
       if (subject.checked) {
         filterSubjects.push(subject.id);
@@ -156,7 +176,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   filter() {
-    const {state} = this;
+    const { state } = this;
     let bricks = this.getBricksForFilter();
     let filtered = [];
 
@@ -169,104 +189,109 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           filtered.push(brick);
         }
       }
-      this.setState({...state, finalBricks: filtered});
+      this.setState({ ...state, finalBricks: filtered });
     } else {
-      this.setState({...state, finalBricks: bricks});
+      this.setState({ ...state, finalBricks: bricks });
     }
   }
 
   filterBySubject = (i: number) => {
-    const {subjects} = this.state;
-    subjects[i].checked = !subjects[i].checked
+    const { subjects } = this.state;
+    subjects[i].checked = !subjects[i].checked;
     this.filter();
-  }
+  };
 
   clearSubjects = () => {
     const { state } = this;
     const { subjects } = state;
-    subjects.forEach((r: any)=> r.checked = false);
-    this.setState({ ...state })
-  }
+    subjects.forEach((r: any) => (r.checked = false));
+    this.setState({ ...state });
+  };
 
   moveAllBack() {
     let index = this.state.sortedIndex;
     if (index >= 18) {
-      this.setState({...this.state, sortedIndex: index - 18});
+      this.setState({ ...this.state, sortedIndex: index - 18 });
     }
   }
 
   moveAllNext() {
     let index = this.state.sortedIndex;
     if (index + 18 <= this.state.bricks.length) {
-      this.setState({...this.state, sortedIndex: index + 18});
+      this.setState({ ...this.state, sortedIndex: index + 18 });
     }
   }
 
   hideBricks() {
-    const {finalBricks} = this.state;
-    finalBricks.forEach(brick => {
+    const { finalBricks } = this.state;
+    finalBricks.forEach((brick) => {
       brick.expanded = false;
     });
   }
 
   handleMouseHover(index: number) {
     this.hideBricks();
-    this.setState({...this.state});
+    this.setState({ ...this.state });
     setTimeout(() => {
-      let {finalBricks} = this.state;
-      finalBricks.forEach(brick => {
+      let { finalBricks } = this.state;
+      finalBricks.forEach((brick) => {
         brick.expanded = false;
       });
       if (!finalBricks[index].expandFinished) {
         finalBricks[index].expanded = true;
       }
-      this.setState({...this.state});
+      this.setState({ ...this.state });
     }, 400);
   }
 
   handleMouseLeave(key: number) {
-    let {finalBricks} = this.state;
-    finalBricks.forEach(brick => {
+    let { finalBricks } = this.state;
+    finalBricks.forEach((brick) => {
       brick.expanded = false;
     });
     finalBricks[key].expandFinished = true;
-    this.setState({...this.state});
+    this.setState({ ...this.state });
     setTimeout(() => {
       finalBricks[key].expandFinished = false;
-      this.setState({...this.state});
+      this.setState({ ...this.state });
     }, 400);
   }
 
   handleLogoutOpen() {
-    this.setState({...this.state, logoutDialogOpen: true})
+    this.setState({ ...this.state, logoutDialogOpen: true });
   }
 
   handleLogoutClose() {
-    this.setState({...this.state, logoutDialogOpen: false})
+    this.setState({ ...this.state, logoutDialogOpen: false });
   }
 
   handleDeleteOpen(deleteBrickId: number) {
-    this.setState({...this.state, deleteDialogOpen: true, deleteBrickId })
+    this.setState({ ...this.state, deleteDialogOpen: true, deleteBrickId });
   }
 
   handleDeleteClose() {
-    this.setState({...this.state, deleteDialogOpen: false})
+    this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
   searching(searchString: string) {
     if (searchString.length === 0) {
-      this.setState({...this.state, searchString, finalBricks: this.state.bricks, isSearching: false});
+      this.setState({
+        ...this.state,
+        searchString,
+        finalBricks: this.state.bricks,
+        isSearching: false,
+      });
     } else {
-      this.setState({...this.state, searchString});
+      this.setState({ ...this.state, searchString });
     }
   }
 
   showDropdown() {
-    this.setState({...this.state, dropdownShown: true});
+    this.setState({ ...this.state, dropdownShown: true });
   }
 
   hideDropdown() {
-    this.setState({...this.state, dropdownShown: false});
+    this.setState({ ...this.state, dropdownShown: false });
   }
 
   keySearch(e: any) {
@@ -276,95 +301,77 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   search() {
-    const {searchString} = this.state;
-    axios.post(
-      process.env.REACT_APP_BACKEND_HOST + '/bricks/search',
-      {searchString},
-      {withCredentials: true}
-    ).then(res => {
-      this.hideBricks();
-      const searchBricks = res.data.map((brick: any) => brick.body);
-      this.setState({...this.state, searchBricks, finalBricks: searchBricks, isSearching: true});
-    }).catch(error => { 
-      alert('Can`t get bricks');
-    });
+    const { searchString } = this.state;
+    axios
+      .post(
+        process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
+        { searchString },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        this.hideBricks();
+        const searchBricks = res.data.map((brick: any) => brick.body);
+        this.setState({
+          ...this.state,
+          searchBricks,
+          finalBricks: searchBricks,
+          isSearching: true,
+        });
+      })
+      .catch((error) => {
+        alert("Can`t get bricks");
+      });
   }
 
   getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
     let color = "";
-    
+
     if (!brick.subject) {
-      color = '#B0B0AD';
+      color = "#B0B0AD";
     } else {
       color = brick.subject.color;
     }
+
+    const isAdmin = this.props.user.roles.some(
+      (role: any) => role.roleId === UserType.Admin
+    );
 
     return (
       <Grid container key={key} item xs={4} justify="center">
         <div className="main-brick-container">
           <Box className="brick-container">
             <div
-              className={`sorted-brick absolute-container brick-row-${row} ${brick.expanded ? 'brick-hover' : ''}`}
+              className={`sorted-brick absolute-container brick-row-${row} ${
+                brick.expanded ? "brick-hover" : ""
+              }`}
               onMouseEnter={() => this.handleMouseHover(key)}
               onMouseLeave={() => this.handleMouseLeave(key)}
             >
-            <Grid container direction="row" style={{padding: 0, position: 'relative'}}>
-              <Grid item xs={brick.expanded ? 12 : 11}>
-                {
-                  brick.expanded ?
-                    <div className="expended-brick-info">
-                      <div className="hover-text">
-                        <div className="link-description">{brick.title}</div>
-                        <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
-                        <div className="link-info">
-                          {getAuthorRow(brick)}
-                        </div>
-                        <div className="hovered-open-question link-info">{brick.openQuestion}</div>
-                        <div>{brick.subject ? brick.subject.name : 'SUBJECT Code'} | No. {brick.attemptsCount} of Plays</div>
-                        <div>Editor: Name Surname</div>
-                      </div>
-                    <Grid container direction="row" className="hover-icons-row" alignContent="flex-end">
-                      <Grid item xs={4} container justify="flex-start">
-                        <div className="round-button" style={{background : `${color}`}}></div>
-                      </Grid>
-                      <Grid item xs={4} container justify="flex-start">
-                        {
-                          (this.props.user.roles.some(role => role.roleId === UserType.Admin))
-                            ? <img alt="bin" onClick={() => this.handleDeleteOpen(brick.id)} className="bin-button" src="/images/brick-list/bin.png" />
-                            : ""
-                        }
-                      </Grid>
-                      <Grid item xs={4} container justify="flex-end">
-                        <img
-                          alt="play"
-                          className="play-button"
-                          onClick={() => this.move(brick.id)}
-                          src="/images/brick-list/play.png" />
-                      </Grid>
-                    </Grid>
-                  </div>
-                  :
-                  <div>
-                    <div className="left-brick-circle">
-                      <div className="round-button" style={{background: `${color}`}}></div>
-                    </div>
-                    <div className="short-brick-info">
-                      <div className="link-description">{brick.title}</div>
-                      <div className="link-info">{brick.subTopic} | {brick.alternativeTopics}</div>
-                      <div className="link-info">
-                        {getAuthorRow(brick)}
-                      </div>
-                    </div>
-                  </div>
-                }
+              <Grid
+                container
+                direction="row"
+                style={{ padding: 0, position: "relative" }}
+              >
+                <Grid item xs={brick.expanded ? 12 : 11}>
+                  {brick.expanded ? (
+                    <ExpandedBrickDescription
+                      isAdmin={isAdmin}
+                      color={color}
+                      brick={brick}
+                      move={(brickId) => this.move(brickId)}
+                      onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+                    />
+                  ) : (
+                    <ShortBrickDescription brick={brick} color={color} />
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
             </div>
           </Box>
         </div>
       </Grid>
     );
-  }
+  };
 
   renderSortAndFilterBox = () => {
     return (
@@ -377,128 +384,186 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           value={this.state.sortBy}
           onChange={this.handleSortChange}
         >
-          <FormControlLabel value={SortBy.Popularity} style={{marginRight: 0, width: '47.5%'}} control={<Radio className="sortBy" />} label="Popularity" />
-          <FormControlLabel value={SortBy.Date} style={{marginRight: 0}} control={<Radio className="sortBy" />} label="Date Added" />
+          <FormControlLabel
+            value={SortBy.Popularity}
+            style={{ marginRight: 0, width: "47.5%" }}
+            control={<Radio className="sortBy" />}
+            label="Popularity"
+          />
+          <FormControlLabel
+            value={SortBy.Date}
+            style={{ marginRight: 0 }}
+            control={<Radio className="sortBy" />}
+            label="Date Added"
+          />
         </RadioGroup>
         <div className="filter-header">
-          <div style={{ display: 'inline' }}>
-            <span className='filter-control'>Filter</span>
-            {
-              this.state.filterExpanded
-                ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }}
-                    onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
-                : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }}
-                    onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
-            }
-            {
-              this.state.subjects.some((r: any) => r.checked)
-              ? <ClearIcon className='filter-control' style={{ fontSize: '2vw' }} onClick={() => this.clearSubjects()} />
-              : ''
-            }
+          <div style={{ display: "inline" }}>
+            <span className="filter-control">Filter</span>
+            {this.state.filterExpanded ? (
+              <ExpandLessIcon
+                className="filter-control"
+                style={{ fontSize: "3vw" }}
+                onClick={() =>
+                  this.setState({ ...this.state, filterExpanded: false })
+                }
+              />
+            ) : (
+              <ExpandMoreIcon
+                className="filter-control"
+                style={{ fontSize: "3vw" }}
+                onClick={() =>
+                  this.setState({ ...this.state, filterExpanded: true })
+                }
+              />
+            )}
+            {this.state.subjects.some((r: any) => r.checked) ? (
+              <ClearIcon
+                className="filter-control"
+                style={{ fontSize: "2vw" }}
+                onClick={() => this.clearSubjects()}
+              />
+            ) : (
+              ""
+            )}
           </div>
         </div>
-        {
-          this.state.filterExpanded
-              ? this.state.subjects.map((subject, i) =>
-                <FormControlLabel
-                  className="filter-container"
-                  key={i}
-                  checked={subject.checked}
-                  onClick={() => this.filterBySubject(i)}
-                  control={<Radio className={"filter-radio custom-color"} style={{['--color' as any] : subject.color}} />}
-                  label={subject.name} />
-              )
-              : ''
-        }
+        {this.state.filterExpanded
+          ? this.state.subjects.map((subject, i) => (
+              <FormControlLabel
+                className="filter-container"
+                key={i}
+                checked={subject.checked}
+                onClick={() => this.filterBySubject(i)}
+                control={
+                  <Radio
+                    className={"filter-radio custom-color"}
+                    style={{ ["--color" as any]: subject.color }}
+                  />
+                }
+                label={subject.name}
+              />
+            ))
+          : ""}
       </div>
     );
-  }
+  };
 
   renderTitle = () => {
     return "ALL BRICKS";
-  }
+  };
 
   renderSortedBricks = () => {
-    let {sortedIndex} = this.state;
+    let { sortedIndex } = this.state;
     let bricksList = [];
     for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
       if (this.state.finalBricks[i]) {
         let row = Math.floor(i / 3);
-        bricksList.push(this.getSortedBrickContainer(this.state.finalBricks[i], i, row));
+        bricksList.push(
+          this.getSortedBrickContainer(this.state.finalBricks[i], i, row)
+        );
       }
     }
-    return bricksList
-  }
+    return bricksList;
+  };
 
   renderPagination() {
-    if (this.state.bricks.length <= 18) { return ""; }
+    if (this.state.bricks.length <= 18) {
+      return "";
+    }
 
     const showPrev = this.state.sortedIndex >= 18;
     const showNext = this.state.sortedIndex + 18 <= this.state.bricks.length;
-    
+
     return (
       <Grid container direction="row" className="bricks-pagination">
         <Grid item xs={4} className="left-pagination">
           <div className="first-row">
-            {this.state.sortedIndex + 1}-{  
-              this.state.sortedIndex + 18 > this.state.bricks.length
-                ? this.state.bricks.length
-                : this.state.sortedIndex + 18
-            }
-            <span className="grey"> &nbsp;|&nbsp; {this.state.bricks.length}</span>
+            {this.state.sortedIndex + 1}-
+            {this.state.sortedIndex + 18 > this.state.bricks.length
+              ? this.state.bricks.length
+              : this.state.sortedIndex + 18}
+            <span className="grey">
+              {" "}
+              &nbsp;|&nbsp; {this.state.bricks.length}
+            </span>
           </div>
           <div>
             {(this.state.sortedIndex + 18) / 18}
-            <span className="grey"> &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / 18)}</span>
+            <span className="grey">
+              {" "}
+              &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / 18)}
+            </span>
           </div>
         </Grid>
-        <Grid container item xs={4} justify="center" className="bottom-next-button">
+        <Grid
+          container
+          item
+          xs={4}
+          justify="center"
+          className="bottom-next-button"
+        >
           <div>
-            {
-              showPrev ? (
-                <ExpandLessIcon
-                  className={"prev-button " + (showPrev ? "active" : "")}
-                  onClick={() => this.moveAllBack()}
-                />
-              ) : ""
-            }
-            {
-              showNext ? (
-                <ExpandMoreIcon
-                  className={"next-button " + (showNext ? "active" : "")}
-                  onClick={() => this.moveAllNext()}
-                />
-              ) : ""
-            }
+            {showPrev ? (
+              <ExpandLessIcon
+                className={"prev-button " + (showPrev ? "active" : "")}
+                onClick={() => this.moveAllBack()}
+              />
+            ) : (
+              ""
+            )}
+            {showNext ? (
+              <ExpandMoreIcon
+                className={"next-button " + (showNext ? "active" : "")}
+                onClick={() => this.moveAllNext()}
+              />
+            ) : (
+              ""
+            )}
           </div>
         </Grid>
       </Grid>
     );
   }
 
-  render() {  
+  render() {
     return (
       <div className="dashboard-page">
         <div className="bricks-upper-part">
           <Grid container direction="row" className="bricks-header">
             <HomeButton />
-            <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
-              <Grid container style={{width: '60vw', height: '7vh'}}>
-              <Grid item>
-                <div className="search-button" onClick={() => this.search()}></div>
+            <Grid
+              container
+              className="logout-container"
+              item
+              direction="row"
+              style={{ width: "92.35vw" }}
+            >
+              <Grid container style={{ width: "60vw", height: "7vh" }}>
+                <Grid item>
+                  <div
+                    className="search-button"
+                    onClick={() => this.search()}
+                  ></div>
+                </Grid>
+                <Grid item>
+                  <input
+                    className="search-input"
+                    onKeyUp={(e) => this.keySearch(e)}
+                    onChange={(e) => this.searching(e.target.value)}
+                    placeholder="Search Subjects, Topics, Titles & more"
+                  />
+                </Grid>
               </Grid>
-              <Grid item>
-                <input
-                  className="search-input"
-                  onKeyUp={(e) => this.keySearch(e)}
-                  onChange={(e) => this.searching(e.target.value)}
-                  placeholder="Search Subjects, Topics, Titles & more" />
-              </Grid>
-              </Grid>
-              <Grid item style={{width: '32.35vw'}}>
+              <Grid item style={{ width: "32.35vw" }}>
                 <Grid container direction="row" justify="flex-end">
-                  <div className="bell-button"><div></div></div>
-                  <div className="more-button" onClick={() => this.showDropdown()}></div>
+                  <div className="bell-button">
+                    <div></div>
+                  </div>
+                  <div
+                    className="more-button"
+                    onClick={() => this.showDropdown()}
+                  ></div>
                 </Grid>
               </Grid>
             </Grid>
@@ -507,11 +572,9 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             <Grid container item xs={3} className="sort-and-filter-container">
               {this.renderSortAndFilterBox()}
             </Grid>
-            <Grid item xs={9} style={{position: 'relative'}}>
+            <Grid item xs={9} style={{ position: "relative" }}>
               <div className="brick-row-container">
-                <div className="brick-row-title">
-                  {this.renderTitle()}
-                </div>
+                <div className="brick-row-title">{this.renderTitle()}</div>
                 <Grid container direction="row">
                   {this.renderSortedBricks()}
                 </Grid>
@@ -526,19 +589,43 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}
         >
-          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/build/user-profile')}>
+          <MenuItem
+            className="view-profile menu-item"
+            onClick={() => this.props.history.push("/build/user-profile")}
+          >
             View Profile
-            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+            <Grid
+              container
+              className="menu-icon-container"
+              justify="center"
+              alignContent="center"
+            >
               <div>
-                <img className="menu-icon svg-icon user-icon" alt="" src="/images/user.svg" />
+                <img
+                  className="menu-icon svg-icon user-icon"
+                  alt=""
+                  src="/images/user.svg"
+                />
               </div>
             </Grid>
           </MenuItem>
-          <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
+          <MenuItem
+            className="menu-item"
+            onClick={() => this.handleLogoutOpen()}
+          >
             Logout
-            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+            <Grid
+              container
+              className="menu-icon-container"
+              justify="center"
+              alignContent="center"
+            >
               <div>
-                <img className="menu-icon svg-icon logout-icon" alt="" src="/images/log-out.svg" />
+                <img
+                  className="menu-icon svg-icon logout-icon"
+                  alt=""
+                  src="/images/log-out.svg"
+                />
               </div>
             </Grid>
           </MenuItem>
@@ -555,7 +642,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           onDelete={(brickId) => this.delete(brickId)}
         />
       </div>
-    )
+    );
   }
 }
 

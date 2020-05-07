@@ -24,7 +24,8 @@ import { User, UserType } from "model/user";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
-import { getAuthorRow } from "components/services/brickService";
+import ShortBrickDecsiption from "components/baseComponents/ShortBrickDescription";
+import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
 
 const mapState = (state: any) => {
   return { user: state.user.user };
@@ -265,76 +266,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, dropdownShown: false });
   }
 
-  renderShortDescription(color: string, brick: Brick) {
-    return (
-      <div>
-        <div className={`left-brick-circle ${color}`}>
-          <div className="round-button"></div>
-        </div>
-        <div className="short-brick-info">
-          <div className="link-description">{brick.title}</div>
-          <div className="link-info">
-            {brick.subTopic} | {brick.alternativeTopics}
-          </div>
-          <div className="link-info">{getAuthorRow(brick)}</div>
-        </div>
-      </div>
-    );
-  }
-
-  renderExpandedDescription(color: string, brick: Brick) {
-    return (
-      <div className="expended-brick-info">
-        <div className="hover-text">
-          <div className="link-description">{brick.title}</div>
-          <div className="link-info">
-            {brick.subTopic} | {brick.alternativeTopics}
-          </div>
-          <div className="link-info">{getAuthorRow(brick)}</div>
-          <div className="hovered-open-question link-info">
-            {brick.openQuestion}
-          </div>
-          <div className="link-info">
-            {brick.subject ? brick.subject.name : "SUBJECT Code"} | No.{" "}
-            {brick.attemptsCount} of Plays
-          </div>
-          <div className="link-info">Editor: Name Surname</div>
-        </div>
-        <Grid
-          container
-          direction="row"
-          className="hover-icons-row"
-          alignContent="flex-end"
-        >
-          <Grid item xs={4} container justify="flex-start">
-            <div className="round-button"></div>
-          </Grid>
-          <Grid item xs={4} container justify="flex-start">
-            {this.props.user.roles.some(
-              (role) => role.roleId === UserType.Admin
-            ) ? (
-              <img
-                alt="bin"
-                onClick={() => this.handleDeleteOpen(brick.id)}
-                className="bin-button"
-                src="/images/brick-list/bin.png"
-              />
-            ) : ""
-            }
-          </Grid>
-          <Grid item xs={4} container justify="flex-end">
-            <img
-              alt="play"
-              className="play-button"
-              onClick={() => this.move(brick.id)}
-              src="/images/brick-list/play.png"
-            />
-          </Grid>
-        </Grid>
-      </div>
-    );
-  }
-
   getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
     let color = "";
     if (brick.status === BrickStatus.Draft) {
@@ -346,8 +277,18 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     } else if (brick.status === BrickStatus.Publish) {
       color = "color4";
     }
+
+    const isAdmin = this.props.user.roles.some(
+      (role: any) => role.roleId === UserType.Admin
+    );
+
     return (
-      <Grow in={this.state.shown} key={key} style={{ transformOrigin: "0 0 0" }} timeout={key * 150}>
+      <Grow
+        in={this.state.shown}
+        key={key}
+        style={{ transformOrigin: "0 0 0" }}
+        timeout={key * 150}
+      >
         <Grid container item xs={4} justify="center">
           <div className="main-brick-container">
             <Box className={`brick-container ${color}`}>
@@ -364,9 +305,17 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                   style={{ padding: 0, position: "relative" }}
                 >
                   <Grid item xs={brick.expanded ? 12 : 11}>
-                    {brick.expanded
-                      ? this.renderExpandedDescription(color, brick)
-                      : this.renderShortDescription(color, brick)}
+                    {brick.expanded ? (
+                      <ExpandedBrickDecsiption
+                        isAdmin={isAdmin}
+                        color={color}
+                        brick={brick}
+                        move={(brickId) => this.move(brickId)}
+                        onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+                      />
+                    ) : (
+                      <ShortBrickDecsiption color={color} brick={brick} />
+                    )}
                   </Grid>
                 </Grid>
               </div>
@@ -565,26 +514,29 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   search() {
     const { searchString } = this.state;
-    this.setState({...this.state, shown: false});
+    this.setState({ ...this.state, shown: false });
 
-    axios.post(
-      process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
-      { searchString },
-      { withCredentials: true }
-    ).then((res) => {
-      const searchBricks = res.data.map((brick: any) => brick.body);
-      setTimeout(() => {
-        this.setState({
-          ...this.state,
-          searchBricks,
-          finalBricks: searchBricks,
-          isSearching: true,
-          shown: true,
-        });
-      }, 1400);
-    }).catch((error) => {
-      alert("Can`t get bricks");
-    });
+    axios
+      .post(
+        process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
+        { searchString },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        const searchBricks = res.data.map((brick: any) => brick.body);
+        setTimeout(() => {
+          this.setState({
+            ...this.state,
+            searchBricks,
+            finalBricks: searchBricks,
+            isSearching: true,
+            shown: true,
+          });
+        }, 1400);
+      })
+      .catch((error) => {
+        alert("Can`t get bricks");
+      });
   }
 
   renderSortAndFilterBox = () => {
