@@ -13,11 +13,9 @@ import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
 const HtmlTooltip = withStyles((theme:any) => ({
   tooltip: {
     backgroundColor: '#193366',
-    color: 'rgba(0, 0, 0, 0.87)',
     padding: '1.5vh 1vw',
     maxWidth: '17vw',
-    fontSize: theme.typography.pxToRem(12),
-    border: '1px solid #dadde9',
+    border: 0,
   },
 }))(Tooltip);
 
