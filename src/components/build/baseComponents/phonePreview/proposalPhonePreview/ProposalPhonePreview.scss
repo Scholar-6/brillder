@@ -37,10 +37,8 @@ $phone-border-color: #193366;
       position: relative;
       height: 96%;
       margin: 2%;
-      border-top: 0.43vw solid $phone-border-color;
-      border-left: 0.43vw solid $phone-border-color;
-      border-right: 0.43vw solid $phone-border-color;
-      border-bottom: 0.43vw solid $phone-border-color;
+      padding: 0.43vw;
+      background-color: $phone-border-color;
       border-radius: 2.2vw;
 
       .upper-panel {
@@ -84,7 +82,7 @@ $phone-border-color: #193366;
     }
 
     .volume {
-      left: -1.1vw !important;
+      left: -0.7vw !important;
       position: absolute;
       border-top-left-radius: 0.3vw;
       border-bottom-left-radius: 0.3vw;
@@ -110,7 +108,7 @@ $phone-border-color: #193366;
       border-bottom-right-radius: 0.4vw;
       position: absolute;
       top: 8.55vw;
-      right: -1.14vw;
+      right: -0.76vw;
       width: 0.6vw;
       height: 5.7vw;
     }
@@ -124,7 +122,8 @@ $phone-border-color: #193366;
   }
 
   .custom-component {
-    border-radius: 2.2vw;
+    background-color: $dark-blue;
+    border-radius: 1.8vw;
     overflow: hidden;
     width: auto;
     height: 100%;
