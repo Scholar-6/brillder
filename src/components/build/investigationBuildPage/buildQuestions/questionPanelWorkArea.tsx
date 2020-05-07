@@ -22,6 +22,7 @@ export interface QuestionProps {
   question: Question
   history: any
   questionsCount: number
+  synthesis: string
   saveBrick(): void
   setQuestion(index: number, question: Question): void
   updateComponents(components: any[]): void
@@ -139,7 +140,9 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
                           onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
                         >
                           <img alt="add-synthesis" src="/images/synthesis-icon.png" className="inner-icon" />
-                          Add Synthesis
+                          {
+                            props.synthesis ? 'Edit Synthesis' : 'Add Synthesis'
+                          }
                         </Button>
                       </Grid>
                     : ""

@@ -8,6 +8,7 @@ import TypeButton from './TypeButton'
 
 export interface QuestionTypeProps {
   questionType: QuestionTypeEnum,
+  synthesis: string,
   history: any,
   brickId: number,
   questionId: number,
@@ -17,7 +18,7 @@ export interface QuestionTypeProps {
 }
 
 const QuestionTypePage: React.FC<QuestionTypeProps> = ({
-  questionType, history, brickId, questionId, setQuestionType, setHoverQuestion
+  questionType, history, brickId, questionId, setQuestionType, setHoverQuestion, synthesis
 }: QuestionTypeProps) => {
   if (questionType !== QuestionTypeEnum.None) {
     history.push(`/build/brick/${brickId}/build/investigation/question-component/${questionId}`);
@@ -169,7 +170,11 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
           container direction="row" justify="flex-start"
         >
           <div className="synthesis-icon"></div>
-          <span className="synthesis-text">ADD SYNTHESIS</span>
+          <span className="synthesis-text">
+            {
+              synthesis ? 'EDIT SYNTHESIS' : 'ADD SYNTHESIS'
+            }
+          </span>
         </Grid>
       </Grid>
     </div>

@@ -387,6 +387,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       <QuestionPanelWorkArea
         brickId={brickId}
         history={history}
+        synthesis={brick.synthesis}
         questionsCount={questions.length}
         question={activeQuestion}
         getQuestionIndex={getQuestionIndex}
@@ -405,6 +406,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const renderQuestionComponent = () => {
     return (
       <QuestionTypePage
+        synthesis={brick.synthesis}
         history={history}
         brickId={brickId}
         setHoverQuestion={setHoverQuestion}
