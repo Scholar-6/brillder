@@ -8,7 +8,7 @@ import NextButton from '../../components/nextButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { Brick } from "model/brick";
-
+import {getDate, getMonth, getYear} from 'components/services/brickService';
 
 interface BrickTitleProps {
   parentState: Brick
@@ -17,33 +17,6 @@ interface BrickTitleProps {
 
 const BrickTitlePreviewComponent:React.FC<any> = (props) => {
   let {subTopic, alternativeTopics, title, author} = props.data;
-
-  const formatTwoLastDigits = (twoLastDigits: number) => {
-    var formatedTwoLastDigits = "";
-    if (twoLastDigits < 10 ) {
-      formatedTwoLastDigits = "0" + twoLastDigits;
-    } else {
-      formatedTwoLastDigits = "" + twoLastDigits;
-    }
-    return formatedTwoLastDigits;
-  }
-
-  const getYear = (date: Date) => {
-    var currentYear =  date.getFullYear();   
-    var twoLastDigits = currentYear%100;
-    return formatTwoLastDigits(twoLastDigits);
-  }
-
-  const getMonth = (date: Date) => {
-    const month = date.getMonth() + 1;
-    var twoLastDigits = month%10;
-    return formatTwoLastDigits(twoLastDigits);
-  }
-
-  const getDate = (date: Date) => {
-    const days = date.getDate();
-    return formatTwoLastDigits(days);
-  }
 
   const date = new Date();
   const dateString = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
