@@ -172,7 +172,7 @@ const GermanComponent:React.FC = () => {
   )
 }
 
-const PhilosophyComponent:React.FC = () => {
+const TheologyComponent:React.FC = () => {
   return (
     <div className="philosophy-preview">
       <div>
@@ -182,7 +182,7 @@ const PhilosophyComponent:React.FC = () => {
         <div>except how</div>
         <div>to live.”</div>
       </div>
-      <div>Goethe</div>
+      <div>Jean-Paul Sartre</div>
     </div>
   )
 }
@@ -243,7 +243,7 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
     } else if (subjectName === 'Psychology') {
       return PsychologyComponent;
     } else if (subjectName === 'Theology & Philosophy') {
-      return PhilosophyComponent;
+      return TheologyComponent;
     }
   }
 
