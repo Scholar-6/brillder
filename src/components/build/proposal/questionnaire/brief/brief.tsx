@@ -24,7 +24,9 @@ const BriefPreviewComponent:React.FC<any> = ({data}) => {
           style={{width: 'auto', marginLeft: '0', marginTop: '9vh', height: '24%'}}
           src="/images/new-brick/brief-circles.png">
         </img>
-        <div className="typing-text">{data}</div>
+        <div className="typing-text">
+          <div>{data}</div>
+        </div>
       </Grid>
     )
   }

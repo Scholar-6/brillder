@@ -59,15 +59,18 @@
     .typing-text {
       position: absolute;
       top: 65%;
-      width: 88%;
+      width: 100%;
       overflow: hidden;
       text-align: left;
-      left: 1.5vw;
       font-size: 1.25vw;
       color: white;
       font-family: $font-family-regular;
-      height: 8.4vw;
+      height: 35%;
       overflow-y: auto;
+      
+      > div {
+        padding-left: 1.5vw;
+      }
     }
   }
 }

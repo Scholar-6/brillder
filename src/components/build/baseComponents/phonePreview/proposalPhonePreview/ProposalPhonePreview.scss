@@ -122,6 +122,7 @@ $phone-border-color: #193366;
   }
 
   .custom-component {
+    position: relative;
     background-color: $dark-blue;
     border-radius: 1.8vw;
     overflow: hidden;
