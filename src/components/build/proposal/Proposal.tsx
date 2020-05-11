@@ -46,10 +46,12 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   if (brick) {
     initState = brick;
+    console.log('brick', brick);
   }
   
   const [state, setBrick] = React.useState(initState);
   const [saved, setSaved] = React.useState(false);
+  console.log('state', state);
 
   const setSubject = (subjectId: number) => {
     setBrick({ ...state, subjectId });
@@ -72,13 +74,13 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
   }
 
   const setLengthAndSave = (brickLength: number) => {
+    console.log('save brick length', brickLength);
     setBrick({ ...state, brickLength } as Brick)
     saveBrick();
   }
 
   const saveBrick = () => {
     let tempBrick = { ...state } as Brick;
-    setBrick(tempBrick);
     if (tempBrick.id) {
       props.saveBrick(tempBrick);
     } else if (brick && brick.id) {
