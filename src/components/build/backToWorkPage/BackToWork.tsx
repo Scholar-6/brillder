@@ -289,7 +289,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         style={{ transformOrigin: "0 0 0" }}
         timeout={index * 150}
       >
-        <Grid container item xs={4} justify="center">
+        <Grid container item xs={4} justify="center" className="column-brick-container">
           <div className="main-brick-container">
             <Box className={`brick-container ${color}`}>
               <div
@@ -879,9 +879,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             <Grid item xs={9} style={{ position: "relative" }}>
               <div className="brick-row-container">
                 <div className="brick-row-title">{this.renderTitle()}</div>
-                <Grid container direction="row">
-                  {this.renderSortedBricks()}
-                </Grid>
+                <div className="bricks-list-container">
+                  <Grid container direction="row" className="bricks-list">
+                    {this.renderSortedBricks()}
+                  </Grid>
+                </div>
                 {this.renderPagination()}
               </div>
             </Grid>

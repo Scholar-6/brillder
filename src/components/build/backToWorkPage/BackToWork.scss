@@ -4,7 +4,7 @@ $brick-radius: 1.2vh;
 $main-panel-radius: 2vw;
 $grey: #B0B0AD;
 
-$min-brick-height: 9.4vh;
+$min-brick-height: 4.5vw;
 $left: 0.8vw;
 $right: 1.4vw;
 $yellow: #ff9d00;
@@ -93,11 +93,17 @@ $light-grey: #F3F4F7;
     .brick-row-title {
       padding-left: 0.22vw;
       color: $dark-blue;
-      line-height: 1.42;
+      padding-top: 2vh;
+      line-height: 1;
       font-size: 5.4vw;
       letter-spacing: 1.05vw;
       font-family: "Brandon Grotesque Black";
     }
+  }
+
+  .bricks-list-container {
+    height: 66vh;
+    overflow-y: auto;
   }
 
   .bricks-upper-part {
@@ -287,7 +293,7 @@ $light-grey: #F3F4F7;
     position: relative;
     min-height: 70%;
     padding-left: $left;
-    padding-right: $right;
+    padding-right: $right;  
   }
 
   .main-brick-container {
@@ -299,8 +305,8 @@ $light-grey: #F3F4F7;
     position: relative;
     padding-right: 0;
     height: $min-brick-height;
-    margin-top: 0.1vh;
-    margin-bottom: 1.7vh;
+    margin-top: 1.2vw;
+    margin-bottom: 0.4vw;
 
     .absolute-container {
       border-radius: $brick-radius;
@@ -314,7 +320,7 @@ $light-grey: #F3F4F7;
 
       .left-brick-circle {
         position: absolute;
-        top: 1.3vh;
+        top: 0.5vw;
 
         > div {
           height: 2.1vw;
@@ -329,22 +335,28 @@ $light-grey: #F3F4F7;
 
         .link-description {
           text-transform: uppercase;
-          font-size: 1.7vh;
+          font-size: 0.8vw;
           font-family: $font-family-bold;
           line-height: 1.1;
-          overflow: hidden;
-          height: 1.7vh;
           margin-bottom: 0.5vh;
-          word-break: break-all;
+
+          width: 19vw;
+          overflow: hidden;
+          white-space:nowrap;
+          text-overflow:ellipsis;
         }
         .link-info {
           color: $lighter-blue;
           line-height: 1.3;
-          font-size: 1.6vh;
+          font-size: 0.9vw;
           font-family: $font-family-regular;
-          height: 2vh;
           overflow-y: hidden;
           margin-bottom: 0.1vh;
+
+          width: 19vw;
+          overflow: hidden;
+          white-space:nowrap;
+          text-overflow:ellipsis;
         }
       }
     }
@@ -370,7 +382,6 @@ $light-grey: #F3F4F7;
     position: absolute;
     z-index: 2;
     width: 95%;
-    //color: white;
 
     .right-color-column {
       width: 0;
@@ -714,15 +725,5 @@ $light-grey: #F3F4F7;
 }
 
 
-@media only screen and (max-width: 1920px) {
-  .link-description {
-    font-size: 1.2vh !important;
-    text-transform: uppercase;
-    font-family: $font-family-bold;
-    line-height: 1.2;
-    overflow: hidden;
-    height: 1.2vh !important;
-    margin-bottom: 0.5vh;
-    word-break: break-all;
-  }
+@media only screen and (max-width: 2560px) {
 }
