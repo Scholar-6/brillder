@@ -29,7 +29,9 @@ $box-radius: 0.4vw;
       .MuiFormControlLabel-root {
         width: 20.5vw;
       }
+
       .MuiFormControlLabel-label {
+        font-family: $font-family-regular;
         color: $dark-blue;
         margin-left: 1.8vw;
         font-size: 2vw;
