@@ -20,6 +20,10 @@
     color: #aaa;
   }
 
+  h1:hover {
+    color: $light-blue2 !important;
+  }
+
   .red-right-block {
     position: fixed;
     right: 0;
