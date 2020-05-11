@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 // @ts-ignore
@@ -51,7 +51,13 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
   
   const [state, setBrick] = React.useState(initState);
   const [saved, setSaved] = React.useState(false);
-  console.log('state', state);
+
+  useEffect(() => {
+    if (brick) {
+      console.log(brick);
+      setBrick(brick);
+    }
+  }, [brick]);
 
   const setSubject = (subjectId: number) => {
     setBrick({ ...state, subjectId });
@@ -74,13 +80,12 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
   }
 
   const setLengthAndSave = (brickLength: number) => {
-    console.log('save brick length', brickLength);
-    setBrick({ ...state, brickLength } as Brick)
-    saveBrick();
+    let brick = { ...state, brickLength } as Brick;
+    setBrick(brick);
+    saveBrick(brick);
   }
 
-  const saveBrick = () => {
-    let tempBrick = { ...state } as Brick;
+  const saveBrick = (tempBrick: Brick) => {
     if (tempBrick.id) {
       props.saveBrick(tempBrick);
     } else if (brick && brick.id) {
@@ -92,7 +97,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
   }
 
   const saveAndMove = () => {
-    saveBrick();
+    saveBrick(state);
     setSaved(true);
   }
 
