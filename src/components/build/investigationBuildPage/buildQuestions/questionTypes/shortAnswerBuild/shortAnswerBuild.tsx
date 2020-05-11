@@ -49,8 +49,11 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
 
   const changed = (shortAnswer: any, event: any) => {
     if (locked) { return; }
-    shortAnswer.value = event.target.value;
-    update();
+    var res = event.target.value.split(' ');
+    if (res.length <= 3) {
+      shortAnswer.value = event.target.value;
+      update();
+    }
   }
 
   const addShortAnswer = () => {
