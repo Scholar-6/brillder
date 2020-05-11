@@ -51,11 +51,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
       </div>
       <Grid container direction="row" style={{ height: '100%' }} justify="center">
         <Grid className="back-button-container" container alignContent="center">
-          {
-            bookHovered
-              ? <div className="back-button" onClick={() => history.push('/build/new-brick/length')} />
-              : ""
-          }
+          <div className="back-button" onClick={() => history.push('/build/new-brick/length')} />
         </Grid>
         <Grid className="main-text-container">
           <h1>Your proposal has been saved!</h1>
