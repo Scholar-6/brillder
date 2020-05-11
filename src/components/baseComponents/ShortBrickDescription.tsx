@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
+import './ShortBrickDescription.scss';
 
 
 interface ShortDescriptionProps {
