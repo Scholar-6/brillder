@@ -335,6 +335,7 @@ $light-grey: #F3F4F7;
           overflow: hidden;
           height: 1.7vh;
           margin-bottom: 0.5vh;
+          word-break: break-all;
         }
         .link-info {
           color: $lighter-blue;
@@ -712,26 +713,16 @@ $light-grey: #F3F4F7;
   }
 }
 
-@media only screen and (max-width: 599px) {
-  .bricks-list-page {
-    .bricks-sort {
-      .sort-and-search-row {
-        .sort-bricks-by {
-          font-size: 7px;
-          .sort-by {
-            padding-top: 1px;
-          }
-          .sort-element {
-            padding-top: 2px;
-            font-size: 7px;
-          }
 
-          .expanded-icon {
-            height: 10px !important;
-            width: 10px !important;
-          }
-        }
-      }
-    }
+@media only screen and (max-width: 1920px) {
+  .link-description {
+    font-size: 1.2vh !important;
+    text-transform: uppercase;
+    font-family: $font-family-bold;
+    line-height: 1.2;
+    overflow: hidden;
+    height: 1.2vh !important;
+    margin-bottom: 0.5vh;
+    word-break: break-all;
   }
 }

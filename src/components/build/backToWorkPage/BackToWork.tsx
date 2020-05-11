@@ -266,7 +266,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, dropdownShown: false });
   }
 
-  getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
+  getSortedBrickContainer = (brick: Brick, key: number, index: number, row: any = 0) => {
     let color = "";
     if (brick.status === BrickStatus.Draft) {
       color = "color1";
@@ -287,7 +287,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         in={this.state.shown}
         key={key}
         style={{ transformOrigin: "0 0 0" }}
-        timeout={key * 150}
+        timeout={index * 150}
       >
         <Grid container item xs={4} justify="center">
           <div className="main-brick-container">
@@ -715,7 +715,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       if (this.state.finalBricks[i]) {
         let row = Math.floor(count / 3);
         BackToWork.push(
-          this.getSortedBrickContainer(this.state.finalBricks[i], i, row)
+          this.getSortedBrickContainer(this.state.finalBricks[i], i, count, row)
         );
         count++;
       }

@@ -46,7 +46,6 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   if (brick) {
     initState = brick;
-    console.log('brick', brick);
   }
   
   const [state, setBrick] = React.useState(initState);
@@ -54,7 +53,6 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   useEffect(() => {
     if (brick) {
-      console.log(brick);
       setBrick(brick);
     }
   }, [brick]);

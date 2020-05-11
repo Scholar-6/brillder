@@ -32,7 +32,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
       <div>
         {color ? this.renderCircle(color) : this.renderRoler()}
         <div className="short-brick-info">
-          <div className="link-description">{brick.title}</div>
+          <div className="link-description"><span>{brick.title}</span></div>
           <div className="link-info">
             {brick.subTopic} | {brick.alternativeTopics}
           </div>
