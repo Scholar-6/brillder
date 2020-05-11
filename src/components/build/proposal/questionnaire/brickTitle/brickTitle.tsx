@@ -52,16 +52,19 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
     author: {}
   });
 
-  const onTitleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTitles({ ...titles, title: event.target.value } as any);
+  const onTitleChange = (event: React.ChangeEvent<{ value: string }>) => {
+    const title = event.target.value.substr(0, 40);
+    setTitles({ ...titles, title });
   };
 
-  const onSubTopicChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTitles({ ...titles, subTopic: event.target.value } as any);
+  const onSubTopicChange = (event: React.ChangeEvent<{ value: string }>) => {
+    const subTopic = event.target.value.substr(0, 40);
+    setTitles({ ...titles, subTopic });
   };
 
-  const onAltTopicChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTitles({ ...titles, alternativeTopics: event.target.value } as any);
+  const onAltTopicChange = (event: React.ChangeEvent<{ value: string }>) => {
+    const alternativeTopics = event.target.value.substr(0, 40);
+    setTitles({ ...titles, alternativeTopics });
   };
 
   if (parentState.author) {

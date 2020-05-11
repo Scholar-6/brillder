@@ -12,6 +12,8 @@ const mapDispatch = (dispatch: any) => {
   return { logout: () => dispatch(authActions.logout()) }
 }
 
+const mapState = () => {};
+
 interface LogoutComponentProps {
   isOpen: boolean;
   history: any;
@@ -47,6 +49,6 @@ class LogoutDialog extends Component<LogoutComponentProps> {
   }
 }
 
-const connector = connect(mapDispatch);
+const connector = connect(mapState, mapDispatch);
 
 export default connector(LogoutDialog);
