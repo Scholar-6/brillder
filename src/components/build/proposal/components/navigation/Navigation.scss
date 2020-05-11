@@ -19,12 +19,20 @@
       top: 0%;
       position: absolute;
     }
+    img {
+      cursor: pointer;
+      height: 2vw;
+      margin: 0 3.55vw;
+      margin-top: 4vh;
+    }
   }
 
-  img {
-    cursor: pointer;
-    height: 2vw;
-    margin: 0 3.55vw;
-    margin-top: 4vh;
+  .step-container:hover {
+    .step-label {
+      color: $light-blue2;
+    }
+    img {
+      color: yellow;
+    }
   }
 }
