@@ -3,7 +3,7 @@
 $brick-radius: 1.2vh;
 $main-panel-radius: 2vw;
 
-$min-brick-height: 9.4vh;
+$min-brick-height: 4.4vw;
 $left: 0.8vw;
 $right: 1.4vw;
 $lighter-blue: #304775;
@@ -80,6 +80,11 @@ $light-grey: #f3f4f7;
   height: 100%;
   width: 100%;
   font-family: $font-family-regular;
+
+  .bricks-list-container {
+    height: 65vh;
+    overflow-y: auto;
+  }
 
   .bricks-upper-part {
     position: relative;
@@ -281,8 +286,8 @@ $light-grey: #f3f4f7;
     position: relative;
     padding-right: 0;
     height: $min-brick-height;
-    margin-top: 0.1vh;
-    margin-bottom: 1.3vh;
+    margin-top: 1.3vw;
+    margin-bottom: 0.25vw;
 
     .absolute-container {
       border-radius: $brick-radius;
@@ -317,33 +322,6 @@ $light-grey: #f3f4f7;
           height: 2.1vw;
           width: 2.1vw;
           border-radius: 20vw;
-        }
-      }
-      .short-brick-info {
-        position: absolute;
-        top: 0.3vh;
-        left: 3vw;
-
-        .link-description {
-          text-transform: uppercase;
-          font-size: 1.7vh;
-          font-family: $font-family-bold;
-          line-height: 1.1;
-          overflow: hidden;
-          height: 1.7vh;
-          margin-bottom: 0.5vh;
-          span {
-            word-break: break-all;
-          }
-        }
-        .link-info {
-          color: $lighter-blue;
-          line-height: 1.3;
-          font-size: 1.6vh;
-          font-family: $font-family-regular;
-          height: 2vh;
-          overflow-y: hidden;
-          margin-bottom: 0.1vh;
         }
       }
     }
@@ -400,43 +378,6 @@ $light-grey: #f3f4f7;
     position: absolute;
     z-index: 2;
     width: 95%;
-
-    .expended-brick-info {
-      background: $tab-grey;
-      border-radius: 0.5vw;
-      padding: 1.2vh 1vw;
-
-      .hover-text {
-        height: 21vh;
-        font-family: $font-family-regular;
-        overflow: hidden;
-        font-size: 1.7vh;
-        .link-description {
-          text-transform: uppercase;
-          font-size: 1.7vh;
-          font-family: $font-family-bold;
-          line-height: 1.2;
-          overflow: hidden;
-          height: 1.7vh;
-          margin-bottom: 0.5vh;
-        }
-
-        .link-info {
-          color: $lighter-blue;
-          line-height: 1.3;
-          font-size: 1.6vh;
-          font-family: $font-family-regular;
-          max-height: 1.9vh;
-          overflow-y: hidden;
-          margin-bottom: 0.5vh;
-        }
-        .hovered-open-question {
-          margin-top: 2.5vh;
-          max-height: 3.6vh;
-          margin-bottom: 1.7vh;
-        }
-      }
-    }
   }
 
   .brick-row-0,
@@ -572,7 +513,7 @@ $light-grey: #f3f4f7;
         padding-left: 0.35vw;
         color: $dark-blue;
         padding-top: 2.3vh;
-        padding-bottom: 2vh;
+        padding-bottom: 0;
         line-height: 1;
         font-size: 5.2vw;
         letter-spacing: 1.05vw;
