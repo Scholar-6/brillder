@@ -30,6 +30,20 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
     saveBrick();
   }
 
+  const renderAuthorRow = () => {
+    const {author} = brick;
+    if (!author) { return ''; }
+
+    const {firstName, lastName} = author;
+
+    return (
+      <div className="names-row">
+        {firstName ? firstName + ' ' : ''}
+        {lastName ? lastName : ''}
+      </div>
+    );
+  }
+
   return (
     <div className="proposal-page">
       <div style={{position: 'fixed', top: 0, left: 0, zIndex: 1000}}>
@@ -108,7 +122,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
                   <div>
                     <img alt="" src="/images/choose-login/logo.png" />
                     <div className="white-text">PROPOSAL</div>
-                    <div className="names-row">{brick.author ? brick.author.firstName + ' ' + brick.author.lastName : ''}</div>
+                    {renderAuthorRow()}
                   </div>
                 </Grid>
               </div>
