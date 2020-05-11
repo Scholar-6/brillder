@@ -151,7 +151,7 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
                 (this.props.user.roles.some(role => role.roleId === UserType.Admin || role.roleId === UserType.Editor))
                   ? "PUBLISH"
                   : (this.props.user.roles.some(role => role.roleId === UserType.Builder))
-                    ? "REVIEW"
+                    ? "SUBMIT FOR REVIEW"
                     : ""
               }
             </Grid>

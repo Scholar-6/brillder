@@ -464,7 +464,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     });
   }
 
-  getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
+  getSortedBrickContainer = (brick: Brick, key: number, index: number, row: any = 0) => {
     let color = "";
 
     if (!brick.subject) {
@@ -482,7 +482,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         in={this.state.shown}
         key={key}
         style={{ transformOrigin: "0 0 0" }}
-        timeout={key * 150}
+        timeout={index * 150}
       >
         <Grid container key={key} item xs={4} justify="center">
           <div className="main-brick-container">
@@ -526,7 +526,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     let index = 0;
     for (let i = index; i < index + 3; i++) {
       if (this.state.yourBricks[i]) {
-        console.log(44);
         bricksList.push(this.getBrickContainer(this.state.yourBricks[i], i));
       }
     }
@@ -632,7 +631,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       if (this.state.finalBricks[i]) {
         let row = Math.floor(count / 3);
         bricksList.push(
-          this.getSortedBrickContainer(this.state.finalBricks[i], i, row)
+          this.getSortedBrickContainer(this.state.finalBricks[i], i, count, row)
         );
         count++;
       }
