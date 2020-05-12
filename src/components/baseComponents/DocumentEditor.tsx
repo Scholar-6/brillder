@@ -2,10 +2,24 @@ import React from 'react'
 // @ts-ignore 
 import CKEditor from '@ckeditor/ckeditor5-react';
 // @ts-ignore
-import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+// @ts-ignore
+import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
+// @ts-ignore
+import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+// @ts-ignore
+import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
+// @ts-ignore
+import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+
 
 import './DocumentEditor.scss';
 
+
+const editorConfiguration = {
+  plugins: [ Essentials, Bold, Italic, Paragraph ],
+  toolbar: [ 'bold', 'italic' ]
+};
 
 export interface DocumentEditorProps {
   data: string,
@@ -75,8 +89,8 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
         <div ref={this.state.ref} />
         <CKEditor
           data={this.state.data}
-          editor={DecoupledEditor}
-          config={config}
+          editor={ClassicEditor}
+          config={editorConfiguration}
           onInit={(e:any) => this.handleOnInit(e)}
           onChange={(e: any, editor: any) => {
             if (!this.state.focused) {
