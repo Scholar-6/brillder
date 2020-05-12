@@ -14,15 +14,13 @@ export interface HomeButtonProps {
 interface HomeButtonState {
   focused: boolean,
   ref: any,
-
   enterTimeout: any,
   leaveTimeout: any,
-
   style: any,
 }
 
-class HomeButtonComponent extends React.Component<any, HomeButtonState> {
-  constructor(props: any) {
+class HomeButtonComponent extends React.Component<HomeButtonProps, HomeButtonState> {
+  constructor(props: HomeButtonProps) {
     super(props);
     this.state = {
       focused: false,
