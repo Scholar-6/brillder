@@ -30,6 +30,20 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
     saveBrick();
   }
 
+  const renderAuthorRow = () => {
+    const {author} = brick;
+    if (!author) { return ''; }
+
+    const {firstName, lastName} = author;
+
+    return (
+      <div className="names-row">
+        {firstName ? firstName + ' ' : ''}
+        {lastName ? lastName : ''}
+      </div>
+    );
+  }
+
   return (
     <div className="proposal-page">
       <div style={{position: 'fixed', top: 0, left: 0, zIndex: 1000}}>
@@ -37,11 +51,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
       </div>
       <Grid container direction="row" style={{ height: '100%' }} justify="center">
         <Grid className="back-button-container" container alignContent="center">
-          {
-            bookHovered
-              ? <div className="back-button" onClick={() => history.push('/build/new-brick/length')} />
-              : ""
-          }
+          <div className="back-button" onClick={() => history.push('/build/new-brick/length')} />
         </Grid>
         <Grid className="main-text-container">
           <h1>Your proposal has been saved!</h1>
@@ -108,7 +118,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
                   <div>
                     <img alt="" src="/images/choose-login/logo.png" />
                     <div className="white-text">PROPOSAL</div>
-                    <div className="names-row">{user.firstName} {user.lastName}</div>
+                    {renderAuthorRow()}
                   </div>
                 </Grid>
               </div>

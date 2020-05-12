@@ -8,15 +8,14 @@ import './HomeButton.scss';
 export interface HomeButtonProps {
   link: string,
   history: any
+  onClick(): void
 }
 
 interface HomeButtonState {
   focused: boolean,
   ref: any,
-
   enterTimeout: any,
   leaveTimeout: any,
-
   style: any,
 }
 
@@ -93,6 +92,14 @@ class HomeButtonComponent extends React.Component<any, HomeButtonState> {
     this.setState({...this.state, leaveTimeout})
   }
 
+  onClick () {
+    if (this.props.onClick) {
+      this.props.onClick();
+    } else {
+      this.props.history.push(this.props.link);
+    }
+  }
+
   render() {
     return (
       <Grid item style={{width: '7.65vw'}}>
@@ -102,7 +109,7 @@ class HomeButtonComponent extends React.Component<any, HomeButtonState> {
               className="home-button"
               onMouseEnter={() => this.onMouseEnterHandler()}
               onMouseLeave={() => this.onMouseLeaveHandler()}
-              onClick={() => { this.props.history.push(this.props.link) }}
+              onClick={() => this.onClick()}
             >
               <div ref={this.state.ref} />
             </div>

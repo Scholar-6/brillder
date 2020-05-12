@@ -115,18 +115,27 @@
   .typing-text {
     position: absolute;
     top: 53.5%;
-    width: 88%;
+    width: 100%;
     overflow: hidden;
     text-align: left;
-    left: 1.2vw;
     font-size: 1.25vw;
+    left: 0;
     color: white;
     font-family: $font-family-regular;
-    height: 16.4vw;
+    height: 46.5%;
     overflow-y: auto;
 
     p {
-      margin: 0 !important;
+      margin: 0;
+      margin-left: 1.2vw;
     }
+
+    figure {
+      margin: 2vh 0;
+    }
+  }
+
+  .screen {
+    overflow: hidden;
   }
 }

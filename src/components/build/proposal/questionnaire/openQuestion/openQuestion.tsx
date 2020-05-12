@@ -15,7 +15,7 @@ const HeadComponent:React.FC<any> = ({data}) => {
       <Grid container justify="center" className="phone-preview-component">
         <img alt="head" src="/images/new-brick/head.png"></img>
         <div className="typing-text">
-          {data}
+          <div>{data}</div>
         </div>
       </Grid>
     )

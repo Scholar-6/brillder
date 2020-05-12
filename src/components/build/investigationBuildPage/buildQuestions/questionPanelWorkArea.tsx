@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
 
 import QuestionComponents from './questionComponents/questionComponents';
+import {getNonEmptyComponent} from '../questionService/QuestionService';
 import './questionPanelWorkArea.scss';
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../../model/question';
 import DragBox from './drag/dragBox';
@@ -21,6 +22,7 @@ export interface QuestionProps {
   question: Question
   history: any
   questionsCount: number
+  synthesis: string
   saveBrick(): void
   setQuestion(index: number, question: Question): void
   updateComponents(components: any[]): void
@@ -58,9 +60,17 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
   let typeArray: string[] = Object.keys(QuestionType);
   let index = getQuestionIndex(question);
 
+  let showHelpArrow = false;
+  if (index === 0) {
+    showHelpArrow = getNonEmptyComponent(question.components);
+  }
+
   return (
     <MuiThemeProvider >
       <div className="build-question-page" style={{width: '100%', height: '94%'}}>
+        {
+          showHelpArrow ? <img alt="" className="help-arrow" src="/images/investigation-arrow.png" /> : ""
+        }
         <Grid container justify="center" className="build-question-column" item xs={12}>
           <Grid container direction="row">
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
@@ -122,7 +132,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
               <Grid container direction="row" justify="center">
                 <Grid container item xs={11} className="question-button-container" justify="center">
                   {
-                    (props.questionsCount > 1) ?
+                    (index >= 1) ?
                       <Grid container justify="center" alignContent="flex-start">
                         <div className="right-side-text">Last Question?</div>
                         <Button
@@ -130,7 +140,9 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
                           onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
                         >
                           <img alt="add-synthesis" src="/images/synthesis-icon.png" className="inner-icon" />
-                          Add Synthesis
+                          {
+                            props.synthesis ? 'Edit Synthesis' : 'Add Synthesis'
+                          }
                         </Button>
                       </Grid>
                     : ""

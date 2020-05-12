@@ -56,9 +56,14 @@ $tile-height: 100%;
   .draggable-tab {
     display: inline-block;
     cursor: pointer;
+    height: 100%;
     text-align: center;
     font-size: 1.5vw;
     width: 100%;
+
+    > div {
+      height: 100%;
+    }
 
     .tab-number {
       color: $dark-blue;
@@ -98,6 +103,10 @@ $tile-height: 100%;
 
   .synthesis-tab-icon {
     height: 3.5vh;
+  }
+
+  .invalid {
+    background: $orange !important;
   }
 
   @media only screen and (max-width: 599px) {

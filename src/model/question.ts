@@ -1,5 +1,5 @@
 
-export enum QuestionComponentTypeEnum{
+export enum QuestionComponentTypeEnum {
   None = 0,
   Text = 1,
   Quote = 3,
