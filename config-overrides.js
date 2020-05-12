@@ -1,6 +1,5 @@
 const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
 
-console.log(55)
 module.exports = function override(config, env) {
     if (!config.plugins) {
         config.plugins = [];
