@@ -11,20 +11,22 @@ import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 // @ts-ignore
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-
+// @ts-ignore
+import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
+// @ts-ignore
+import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
+// @ts-ignore
+import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
+// @ts-ignore
+import List from '@ckeditor/ckeditor5-list/src/list';
 
 import './DocumentEditor.scss';
 
 
-const editorConfiguration = {
-  plugins: [ Essentials, Bold, Italic, Paragraph ],
-  toolbar: [ 'bold', 'italic' ]
-};
-
 export interface DocumentEditorProps {
   data: string,
-  config?: any,
-  placeholder: string,
+  toolbar?: any,
+  placeholder?: string,
   onChange(data: string): void,
 }
 
@@ -65,24 +67,18 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
 
   render() {
     let config = {
-      placeholder: this.props.placeholder,
-      fontColor: {
-        colors: [{
-          color: '#C43C30',
-          label: 'Red'
-        }, {
-          color: '#0681DB',
-          label: 'Blue'
-        }, {
-          color: '#30C474',
-          label: 'Green'
-        }]
-      },
-      toolbar: ['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList'],
-      mediaEmbed: { previewsInData: true }
+      plugins: [ Essentials, Bold, Italic, Paragraph, FontColor, Superscript, Subscript, List ],
+      toolbar: [
+        'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'bulletedList', 'numberedList'
+      ],
+      placeholder: ''
+    };
+
+    if (this.props.toolbar) {
+      config.toolbar = this.props.toolbar;
     }
-    if (this.props.config) {
-      config = this.props.config;
+    if (this.props.placeholder) {
+      config.placeholder = this.props.placeholder;
     }
     return (
       <div className="document-editor">
@@ -90,7 +86,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
         <CKEditor
           data={this.state.data}
           editor={ClassicEditor}
-          config={editorConfiguration}
+          config={config}
           onInit={(e:any) => this.handleOnInit(e)}
           onChange={(e: any, editor: any) => {
             if (!this.state.focused) {

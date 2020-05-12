@@ -1,4 +1,3 @@
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
 
 console.log(55)
