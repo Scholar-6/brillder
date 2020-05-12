@@ -8,7 +8,7 @@ import NextButton from '../../components/nextButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { Brick } from "model/brick";
-
+import {getDate, getMonth, getYear} from 'components/services/brickService';
 
 interface BrickTitleProps {
   parentState: Brick
@@ -16,34 +16,7 @@ interface BrickTitleProps {
 }
 
 const BrickTitlePreviewComponent:React.FC<any> = (props) => {
-  let {subTopic, alternativeTopics, title} = props.data;
-
-  const formatTwoLastDigits = (twoLastDigits: number) => {
-    var formatedTwoLastDigits = "";
-    if (twoLastDigits < 10 ) {
-      formatedTwoLastDigits = "0" + twoLastDigits;
-    } else {
-      formatedTwoLastDigits = "" + twoLastDigits;
-    }
-    return formatedTwoLastDigits;
-  }
-
-  const getYear = (date: Date) => {
-    var currentYear =  date.getFullYear();   
-    var twoLastDigits = currentYear%100;
-    return formatTwoLastDigits(twoLastDigits);
-  }
-
-  const getMonth = (date: Date) => {
-    const month = date.getMonth() + 1;
-    var twoLastDigits = month%10;
-    return formatTwoLastDigits(twoLastDigits);
-  }
-
-  const getDate = (date: Date) => {
-    const days = date.getDate();
-    return formatTwoLastDigits(days);
-  }
+  let {subTopic, alternativeTopics, title, author} = props.data;
 
   const date = new Date();
   const dateString = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
@@ -64,7 +37,7 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
             {alternativeTopics ? alternativeTopics: 'Subtopic(s)'}
           </span>
         </div>
-        <div className="author-row">Author | {dateString}</div>
+        <div className="author-row">{author.firstName ? author.firstName + ' ' + author.lastName : 'Author'}  | {dateString}</div>
       </div>
     </Grid>
   )
@@ -75,20 +48,28 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
   const [titles, setTitles] = React.useState({
     title: parentState.title,
     subTopic: parentState.subTopic,
-    alternativeTopics: parentState.alternativeTopics
+    alternativeTopics: parentState.alternativeTopics,
+    author: {}
   });
 
-  const onTitleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTitles({ ...titles, title: event.target.value } as any);
+  const onTitleChange = (event: React.ChangeEvent<{ value: string }>) => {
+    const title = event.target.value.substr(0, 40);
+    setTitles({ ...titles, title });
   };
 
-  const onSubTopicChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTitles({ ...titles, subTopic: event.target.value } as any);
+  const onSubTopicChange = (event: React.ChangeEvent<{ value: string }>) => {
+    const subTopic = event.target.value.substr(0, 40);
+    setTitles({ ...titles, subTopic });
   };
 
-  const onAltTopicChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTitles({ ...titles, alternativeTopics: event.target.value } as any);
+  const onAltTopicChange = (event: React.ChangeEvent<{ value: string }>) => {
+    const alternativeTopics = event.target.value.substr(0, 40);
+    setTitles({ ...titles, alternativeTopics });
   };
+
+  if (parentState.author) {
+    titles.author = parentState.author;
+  }
 
   return (
     <div className="tutorial-page brick-title-page">

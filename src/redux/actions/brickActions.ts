@@ -46,13 +46,14 @@ const saveBrickFailure = (errorMessage:string) => {
 const saveBrick = (brick:any) => {
   return function (dispatch: Dispatch) {
     brick.type = 1;
-    return axios.put(process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true}).then(response => {
+    return axios.put(
+      process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true}
+    ).then(response => {
       const brick = response.data as Brick;
       dispatch(saveBrickSuccess(brick));
-    })
-    .catch(error => {
+    }).catch(error => {
       dispatch(saveBrickFailure(error.message))
-    })
+    });
   }
 }
 

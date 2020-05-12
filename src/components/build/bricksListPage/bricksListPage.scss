@@ -3,12 +3,12 @@
 $brick-radius: 1.2vh;
 $main-panel-radius: 2vw;
 
-$min-brick-height: 9.4vh;
+$min-brick-height: 4.4vw;
 $left: 0.8vw;
 $right: 1.4vw;
 $lighter-blue: #304775;
-$grey: #B0B0AD;
-$light-grey: #F3F4F7;
+$grey: #b0b0ad;
+$light-grey: #f3f4f7;
 
 .brick-list-redirect-dropdown {
   .MuiPaper-root {
@@ -81,6 +81,11 @@ $light-grey: #F3F4F7;
   width: 100%;
   font-family: $font-family-regular;
 
+  .bricks-list-container {
+    height: 65vh;
+    overflow-y: auto;
+  }
+
   .bricks-upper-part {
     position: relative;
     min-height: 100%;
@@ -116,7 +121,7 @@ $light-grey: #F3F4F7;
           margin-left: 2.8vh;
           left: -4vw;
         }
-  
+
         .next-button {
           position: absolute;
           left: -4vw;
@@ -141,6 +146,7 @@ $light-grey: #F3F4F7;
     height: 10.5vh;
 
     .logout-container {
+      width: 92.35vw;
       height: 10.5vh;
       border-bottom-left-radius: 2vw;
       background: $light-blue;
@@ -237,9 +243,9 @@ $light-grey: #F3F4F7;
         width: 6.7vh;
         display: inline-block;
         background-color: $orange;
-  
-        -webkit-mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
-        mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
+
+        -webkit-mask: url("/images/more-horizontal.svg") no-repeat 50% 50%;
+        mask: url("/images/more-horizontal.svg") no-repeat 50% 50%;
         -webkit-mask-size: cover;
         mask-size: cover;
 
@@ -280,8 +286,8 @@ $light-grey: #F3F4F7;
     position: relative;
     padding-right: 0;
     height: $min-brick-height;
-    margin-top: 0.1vh;
-    margin-bottom: 1.3vh;
+    margin-top: 0.85vw;
+    margin-bottom: 0;
 
     .absolute-container {
       border-radius: $brick-radius;
@@ -318,30 +324,6 @@ $light-grey: #F3F4F7;
           border-radius: 20vw;
         }
       }
-      .short-brick-info {
-        position: absolute;
-        top: 0.3vh;
-        left: 3vw;
-
-        .link-description {
-          text-transform: uppercase;
-          font-size: 1.7vh;
-          font-family: $font-family-bold;
-          line-height: 1.1;
-          overflow: hidden;
-          height: 1.7vh;
-          margin-bottom: 0.5vh;
-        }
-        .link-info {
-          color: $lighter-blue;
-          line-height: 1.3;
-          font-size: 1.6vh;
-          font-family: $font-family-regular;
-          height: 2vh;
-          overflow-y: hidden;
-          margin-bottom: 0.1vh;
-        }
-      }
     }
 
     .edit-button {
@@ -349,7 +331,7 @@ $light-grey: #F3F4F7;
       padding-bottom: 8px;
     }
   }
-  
+
   .brick-container:hover {
     color: #ffffff;
   }
@@ -396,52 +378,19 @@ $light-grey: #F3F4F7;
     position: absolute;
     z-index: 2;
     width: 95%;
-
-    .expended-brick-info {
-      background: $tab-grey;
-      border-radius: 0.5vw;
-      padding: 1.2vh 1vw;
-
-      .hover-text {
-        height: 21vh;
-        font-family: $font-family-regular;
-        overflow: hidden;
-        font-size: 1.7vh;
-        .link-description {
-          text-transform: uppercase;
-          font-size: 1.7vh;
-          font-family: $font-family-bold;
-          line-height: 1.2;
-          overflow: hidden;
-          height: 1.7vh;
-          margin-bottom: 0.5vh;
-        }
-
-        .link-info {
-          color: $lighter-blue;
-          line-height: 1.3;
-          font-size: 1.6vh;
-          font-family: $font-family-regular;
-          max-height: 1.9vh;
-          overflow-y: hidden;
-          margin-bottom: 0.5vh;
-        }
-        .hovered-open-question {
-          margin-top: 2.5vh;
-          max-height: 3.6vh;
-          margin-bottom: 1.7vh;
-        }
-      }
-    }
   }
 
-  .brick-row-0, .brick-row-1, .brick-row-2, .brick-row-3 {
+  .brick-row-0,
+  .brick-row-1,
+  .brick-row-2,
+  .brick-row-3 {
     .expended-brick-info {
       border-top-left-radius: 0 !important;
     }
   }
 
-  .brick-row-4, .brick-row-5 {
+  .brick-row-4,
+  .brick-row-5 {
     bottom: 0;
     .expended-brick-info {
       border-bottom-left-radius: 0 !important;
@@ -464,65 +413,67 @@ $light-grey: #F3F4F7;
 
   .sorted-row {
     margin-top: 3.5vh;
-    height: 87.1vh;
     .sort-and-filter-container {
       color: white;
+      height: 86vh;
 
       .sort-box {
-        margin-bottom: 1.2vh;
-        padding-top: 1vh;
+        width: 23.3vw !important;
         border-top-right-radius: $main-panel-radius;
-        width: 100%;
         background: $light-blue;
 
-        .sort-header {
-          margin-top: 1.1vh;
-          margin-left: 1.4vw;
-          text-transform: uppercase;
-          font-size: 1.3vw;
-          letter-spacing: 0.22vw;
+        .sort-by-box {
+          height: 12.9vh;
+          .sort-header {
+            padding-top: 2.2vh;
+            margin-left: 1.4vw;
+            text-transform: uppercase;
+            font-size: 2.3vh;
+            letter-spacing: 0.45vh;
+          }
+          .sort-group {
+            margin-top: 0.65vh;
+            margin-left: 0.8vw;
+            margin-right: 0.6vw;
+            display: block;
+            label {
+              .sortBy {
+                padding-left: 1.2vw;
+                padding-right: 0.4vw;
+                svg {
+                  height: 2.2vh;
+                  width: 2.2vh;
+                  color: $orange !important;
+                }
+              }
+              .MuiFormControlLabel-label {
+                font: 1.05vw 'Brandon Grotesque Light' !important;
+                letter-spacing: 0.06vw;
+              }
+            }
+          }
         }
         .filter-header {
+          height: 4.5vh;
           text-transform: uppercase;
           background: #304775 0% 0% no-repeat padding-box;
           padding-left: 1.4vw;
-          font-size: 1.3vw;
-          margin-top: 1.9vh;
+          font-size: 2.4vh;
           letter-spacing: 0.22vw;
           margin-bottom: 2.8vh;
-            .filter-control {
-              vertical-align:middle
-            }
-            .filter-control:not(:first-child) {
-              margin-left: 0.9vw;
-              cursor: pointer;
-            }
-        }
-        .sort-group {
-          margin-top: 0.45vh;
-          margin-left: 0.9vw;
-          display: block;
-          label {
-            .sortBy {
-              padding-left: 1.2vw;
-              padding-right: 0.4vw;
-              svg {
-                height: 2.2vh;
-                width: 2.2vh;
-                color: $orange !important;
-              }
-            }
-            .MuiFormControlLabel-label {
-              font: 1.05vw $font-family-regular !important;
-              letter-spacing: 0.06vw;
-            }
+          .filter-control {
+            height: 100%;
+            vertical-align: middle;
+          }
+          .filter-control:not(:first-child) {
+            margin-left: 0.9vw;
+            cursor: pointer;
           }
         }
         .filter-container {
           cursor: default;
           margin-bottom: 0.1vh;
           margin-right: 0;
-          width: 100%;
           > span.filter-radio {
             padding-left: 2vw;
             padding-right: 0.4vw;
@@ -532,20 +483,28 @@ $light-grey: #F3F4F7;
             }
           }
           .MuiFormControlLabel-label {
-            font: 1.05vw $font-family-regular !important;
+            font: 1.05vw 'Brandon Grotesque Light' !important;
             letter-spacing: 0.06vw;
           }
-          .custom-color svg { color: var(--color)!important; }
+          .custom-color svg {
+            color: var(--color) !important;
+          }
         }
         .filter-container:nth-child(odd) {
           width: 100%;
         }
       }
     }
+
+    .subjects-filter {
+      height: 66vh;
+      overflow-y: auto;
+    }
+
     .brick-row-container {
       position: relative;
       border-top-left-radius: $main-panel-radius;
-      margin-left: 2.1vw;
+      margin-left: 0.5vw;
       padding-left: 1.98vw;
       background: $light-grey;
       height: 100%;
@@ -554,7 +513,7 @@ $light-grey: #F3F4F7;
         padding-left: 0.35vw;
         color: $dark-blue;
         padding-top: 2.3vh;
-        padding-bottom: 2vh;
+        padding-bottom: 0;
         line-height: 1;
         font-size: 5.2vw;
         letter-spacing: 1.05vw;
@@ -655,7 +614,6 @@ $light-grey: #F3F4F7;
     }
   }
 }
-
 
 @media only screen and (min-width: 1280px) {
 }

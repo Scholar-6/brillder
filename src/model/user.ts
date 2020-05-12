@@ -12,14 +12,26 @@ export enum UserStatus {
   Disabled
 }
 
-export interface User {
-  id: number
-  type: UserType,
-  firstName: string
-  lastName: string
-  tutorialPassed: boolean
-  email: string
+export interface UserRole {
+  roleId: number,
+  name?: string
+}
+
+export interface UserBase {
+  id: number,
+  firstName: string,
+  lastName: string,
+  tutorialPassed: boolean,
+  email: string,
   subjects: any[],
   status: UserStatus,
-  roles: any[]
+}
+
+export interface User extends UserBase {
+  roles: UserRole[]
+}
+
+export interface UserProfile extends UserBase {
+  password: string,
+  roles: number[]
 }

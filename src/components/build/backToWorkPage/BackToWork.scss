@@ -4,7 +4,7 @@ $brick-radius: 1.2vh;
 $main-panel-radius: 2vw;
 $grey: #B0B0AD;
 
-$min-brick-height: 9.4vh;
+$min-brick-height: 4.5vw;
 $left: 0.8vw;
 $right: 1.4vw;
 $yellow: #ff9d00;
@@ -86,18 +86,24 @@ $light-grey: #F3F4F7;
   .brick-row-container {
     margin-left: 1.5vw;
     height: 86vh;
-    padding-left: 1.98vw;
+    padding-left: 1.18vw;
     border-top-left-radius: $main-panel-radius;
     background: $light-grey;
 
     .brick-row-title {
-      padding-left: 0.22vw;
+      padding-left: 1.02vw;
       color: $dark-blue;
-      line-height: 1.42;
+      padding-top: 2vh;
+      line-height: 1;
       font-size: 5.4vw;
       letter-spacing: 1.05vw;
-      font-family: "Brandon Grotesque Black";
+      font-family: $font-family-black;
     }
+  }
+
+  .bricks-list-container {
+    height: 66vh;
+    overflow-y: auto;
   }
 
   .bricks-upper-part {
@@ -287,11 +293,11 @@ $light-grey: #F3F4F7;
     position: relative;
     min-height: 70%;
     padding-left: $left;
-    padding-right: $right;
+    padding-right: $right;  
   }
 
   .main-brick-container {
-    position: relative;
+    padding-left: 0.8vw;
     width: 100%;
   }
 
@@ -299,8 +305,8 @@ $light-grey: #F3F4F7;
     position: relative;
     padding-right: 0;
     height: $min-brick-height;
-    margin-top: 0.1vh;
-    margin-bottom: 1.7vh;
+    margin-top: 0.85vw;
+    margin-bottom: 0vw;
 
     .absolute-container {
       border-radius: $brick-radius;
@@ -314,36 +320,12 @@ $light-grey: #F3F4F7;
 
       .left-brick-circle {
         position: absolute;
-        top: 1.3vh;
+        top: 0.5vw;
 
         > div {
           height: 2.1vw;
           width: 2.1vw;
           border-radius: 20vw;
-        }
-      }
-      .short-brick-info {
-        position: absolute;
-        top: 0.3vh;
-        left: 3vw;
-
-        .link-description {
-          text-transform: uppercase;
-          font-size: 1.7vh;
-          font-family: $font-family-bold;
-          line-height: 1.1;
-          overflow: hidden;
-          height: 1.7vh;
-          margin-bottom: 0.5vh;
-        }
-        .link-info {
-          color: $lighter-blue;
-          line-height: 1.3;
-          font-size: 1.6vh;
-          font-family: $font-family-regular;
-          height: 2vh;
-          overflow-y: hidden;
-          margin-bottom: 0.1vh;
         }
       }
     }
@@ -369,49 +351,9 @@ $light-grey: #F3F4F7;
     position: absolute;
     z-index: 2;
     width: 95%;
-    //color: white;
 
     .right-color-column {
       width: 0;
-    }
-
-    .expended-brick-info {
-      background: $tab-grey;
-      border-radius: 0.5vw;
-      padding: 1.2vh 1vw;
-
-      .hover-text {
-        height: 21vh;
-        font-family: $font-family-regular;
-        overflow: hidden;
-        font-size: 2.3vh;
-
-        .link-description {
-          text-transform: uppercase;
-          font-size: 1.7vh;
-          font-family: $font-family-bold;
-          line-height: 1.2;
-          overflow: hidden;
-          height: 1.7vh;
-          margin-bottom: 0.5vh;
-        }
-
-        .link-info {
-          color: $lighter-blue;
-          line-height: 1.3;
-          font-size: 1.6vh;
-          font-family: $font-family-regular;
-          height: 2vh;
-          overflow-y: hidden;
-          margin-bottom: 0.5vh;
-        }
-
-        .hovered-open-question {
-          margin-top: 2.5vh;
-          max-height: 3.6vh;
-          margin-bottom: 1.7vh;
-        }
-      }
     }
   }
   .hover-icons-row {
@@ -661,101 +603,6 @@ $light-grey: #F3F4F7;
   }
 }
 
-.alert-dialog {
-  position: fixed;
-  top: 0;
-
-  .MuiDialog-paperScrollPaper {
-    position: fixed;
-    top: 8.3vh;
-    right: 7vw;
-    max-width: 50vw;
-    border-radius: 0.8vw;
-  }
-
-  .logout-dialog-header {
-    padding: 3.8vh 1vw 3.5vh 2.2vw;
-    font-size: 2.35vw;
-    letter-spacing: 0;
-    color: $dark-blue;
-    font-family: $font-family-regular;
-  }
-  .logout-buttons {
-    padding-bottom: 2.3vh;
-
-    button {
-      min-width: 9.55vw;
-      font-size: 2vw;
-      border-radius: 0.6vw;
-      text-transform: none;
-      font-weight: normal !important;
-      padding-top: 1.1vh;
-      padding-bottom: 1.1vh;
-      line-height: 1;
-      font-family: $font-family-regular;
-      > span {
-        width: 100%;
-      }
-    }
-
-    .yes-button {
-      color: white;
-      background: $orange;
-      margin-right: 1.4vw !important;
-    }
-
-    .no-button {
-      color: $dark-blue;
-      background: $tab-grey;
-      margin-right: 0.2vw;
-    }
-  }
-}
-
-.delete-brick-dialog {
-  .MuiDialog-paperScrollPaper {
-    border-radius: 0.8vw;
-  }
-
-  .dialog-header {
-    padding: 3.8vh 4vw 3.5vh 1.7vw;
-    font-size: 2.35vw;
-    letter-spacing: 0;
-    color: $dark-blue;
-    font-family: $font-family-regular;
-  }
-  .row-buttons {
-    padding-bottom: 2.3vh;
-
-    button {
-      min-width: 9.55vw;
-      font-size: 1.7vw;
-      border-radius: 0.6vw;
-      text-transform: none;
-      font-weight: normal !important;
-      padding-top: 1.1vh;
-      padding-bottom: 1.1vh;
-      line-height: 1;
-      font-family: $font-family-regular;
-      > span {
-        width: 100%;
-      }
-    }
-
-    .yes-button {
-      color: white;
-      background: $orange;
-      margin-right: 1.4vw !important;
-    }
-
-    .no-button {
-      color: $dark-blue;
-      background: $tab-grey;
-      margin-right: 0.2vw;
-    }
-  }
-}
-
 @media only screen and (min-width: 1280px) {
 }
 
@@ -807,26 +654,6 @@ $light-grey: #F3F4F7;
   }
 }
 
-@media only screen and (max-width: 599px) {
-  .bricks-list-page {
-    .bricks-sort {
-      .sort-and-search-row {
-        .sort-bricks-by {
-          font-size: 7px;
-          .sort-by {
-            padding-top: 1px;
-          }
-          .sort-element {
-            padding-top: 2px;
-            font-size: 7px;
-          }
 
-          .expanded-icon {
-            height: 10px !important;
-            width: 10px !important;
-          }
-        }
-      }
-    }
-  }
+@media only screen and (max-width: 2560px) {
 }

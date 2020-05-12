@@ -8,15 +8,17 @@ import TypeButton from './TypeButton'
 
 export interface QuestionTypeProps {
   questionType: QuestionTypeEnum,
+  synthesis: string,
   history: any,
   brickId: number,
   questionId: number,
   setQuestionType: Function
   setPreviousQuestion(): void
+  setHoverQuestion(type: QuestionTypeEnum): void
 }
 
 const QuestionTypePage: React.FC<QuestionTypeProps> = ({
-  questionType, history, brickId, questionId, setQuestionType, setPreviousQuestion
+  questionType, history, brickId, questionId, setQuestionType, setHoverQuestion, synthesis
 }: QuestionTypeProps) => {
   if (questionType !== QuestionTypeEnum.None) {
     history.push(`/build/brick/${brickId}/build/investigation/question-component/${questionId}`);
@@ -30,47 +32,134 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
     setQuestionType(type);
   }
 
+  const onHover = (type: QuestionTypeEnum) => {
+    setHoverQuestion(type);
+  }
+
+  const removeHover = () => {
+    setHoverQuestion(QuestionTypeEnum.None);
+  }
+
   return (
     <div className="question-type">
       <div className="inner-question-type">
         <div className="label-question-type">Select Answer Type</div>
         <Grid container direction="row">
           <Grid item xs={4}>
-            <TypeButton activeType={type} questionType={QuestionTypeEnum.ShortAnswer} setType={setCurrentType} labels={["S H O R T", "A N S W E R"]} isActive={false} />
+            <TypeButton
+              activeType={type}
+              questionType={QuestionTypeEnum.ShortAnswer}
+              setType={setCurrentType}
+              labels={["S H O R T", "A N S W E R"]}
+              isActive={false}
+              onMouseEnter={onHover}
+              onMouseLeave={removeHover}
+            />
           </Grid>
           <Grid item xs={4}>
-            <TypeButton activeType={type} questionType={QuestionTypeEnum.ChooseOne} setType={setCurrentType} labels={["C H O O S E", "O N E"]} isActive={false} />
+            <TypeButton
+              activeType={type}
+              questionType={QuestionTypeEnum.ChooseOne}
+              setType={setCurrentType}
+              labels={["C H O O S E", "O N E"]}
+              isActive={false}
+              onMouseEnter={onHover}
+              onMouseLeave={removeHover}
+            />
           </Grid>
           <Grid item xs={4}>
-            <TypeButton activeType={type} questionType={QuestionTypeEnum.ChooseSeveral} setType={setCurrentType} labels={["C H O O S E", "S E V E R A L"]} isActive={false} />
+            <TypeButton
+              activeType={type}
+              questionType={QuestionTypeEnum.ChooseSeveral}
+              setType={setCurrentType}
+              labels={["C H O O S E", "S E V E R A L"]}
+              isActive={false}
+              onMouseEnter={onHover}
+              onMouseLeave={removeHover}
+            />
           </Grid>
         </Grid>
         <Grid container direction="row">
           <Grid item xs={6}>
-            <TypeButton activeType={type} questionType={QuestionTypeEnum.VerticalShuffle} setType={setCurrentType} labels={["V E R T I C A L", "S H U F F L E"]} isActive={false} />
-          </Grid>
-          <Grid item xs={6}>
-            <TypeButton activeType={type} questionType={QuestionTypeEnum.HorizontalShuffle} setType={setCurrentType} labels={["H O R I Z O N T A L", "S H U F F L E"]} isActive={false} />
-          </Grid>
-        </Grid>
-        <Grid container direction="row">
-          <Grid item xs={4}>
-            <TypeButton activeType={type} questionType={QuestionTypeEnum.PairMatch} setType={setCurrentType} labels={["P A I R", "M A T C H"]} isActive={false} />
-          </Grid>
-          <Grid item xs={4}>
-            <TypeButton activeType={type} questionType={QuestionTypeEnum.Sort} setType={setCurrentType} labels={["S O R T"]} isActive={false} />
-          </Grid>
-          <Grid item xs={4}>
-            <TypeButton activeType={type} questionType={QuestionTypeEnum.MissingWord} setType={setCurrentType} labels={["M I S S I N G", "W O R D"]} isActive={false} />
-          </Grid>
-        </Grid>
-        <Grid container direction="row">
-          <Grid item xs={6}>
-            <TypeButton activeType={type} questionType={QuestionTypeEnum.WordHighlighting} setType={setCurrentType} labels={["W O R D", "H I G H L I G H T I N G"]} isActive={false} />
+            <TypeButton
+              activeType={type}
+              questionType={QuestionTypeEnum.VerticalShuffle}
+              setType={setCurrentType}
+              labels={["V E R T I C A L", "S H U F F L E"]}
+              isActive={false}
+              onMouseEnter={onHover}
+              onMouseLeave={removeHover}
+            />
           </Grid>
           <Grid item xs={6}>
             <TypeButton
-              activeType={type} questionType={QuestionTypeEnum.LineHighlighting} setType={setCurrentType} labels={["L I N E", "H I G H L I G H T I N G"]} isActive={false} />
+              activeType={type}
+              questionType={QuestionTypeEnum.HorizontalShuffle}
+              setType={setCurrentType}
+              labels={["H O R I Z O N T A L", "S H U F F L E"]}
+              isActive={false}
+              onMouseEnter={onHover}
+              onMouseLeave={removeHover}
+            />
+          </Grid>
+        </Grid>
+        <Grid container direction="row">
+          <Grid item xs={4}>
+            <TypeButton
+              activeType={type}
+              questionType={QuestionTypeEnum.PairMatch}
+              setType={setCurrentType}
+              labels={["P A I R", "M A T C H"]}
+              isActive={false}
+              onMouseEnter={onHover}
+              onMouseLeave={removeHover}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TypeButton
+              activeType={type}
+              questionType={QuestionTypeEnum.Sort}
+              setType={setCurrentType}
+              labels={["S O R T"]}
+              isActive={false}
+              onMouseEnter={onHover}
+              onMouseLeave={removeHover}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TypeButton
+              activeType={type}
+              questionType={QuestionTypeEnum.MissingWord}
+              setType={setCurrentType}
+              labels={["M I S S I N G", "W O R D"]}
+              isActive={false}
+              onMouseEnter={onHover}
+              onMouseLeave={removeHover}
+            />
+          </Grid>
+        </Grid>
+        <Grid container direction="row">
+          <Grid item xs={6}>
+            <TypeButton
+              activeType={type}
+              questionType={QuestionTypeEnum.WordHighlighting}
+              setType={setCurrentType}
+              labels={["W O R D", "H I G H L I G H T I N G"]}
+              isActive={false}
+              onMouseEnter={onHover}
+              onMouseLeave={removeHover}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TypeButton
+              activeType={type}
+              questionType={QuestionTypeEnum.LineHighlighting}
+              setType={setCurrentType}
+              labels={["L I N E", "H I G H L I G H T I N G"]}
+              isActive={false}
+              onMouseEnter={onHover}
+              onMouseLeave={removeHover}
+            />
           </Grid>
         </Grid>
       </div>
@@ -81,7 +170,11 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
           container direction="row" justify="flex-start"
         >
           <div className="synthesis-icon"></div>
-          <span className="synthesis-text">ADD SYNTHESIS</span>
+          <span className="synthesis-text">
+            {
+              synthesis ? 'EDIT SYNTHESIS' : 'ADD SYNTHESIS'
+            }
+          </span>
         </Grid>
       </Grid>
     </div>

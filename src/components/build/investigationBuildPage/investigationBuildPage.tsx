@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid, Button, Hidden } from "@material-ui/core";
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import Dialog from '@material-ui/core/Dialog';
 import update from "immutability-helper";
 // @ts-ignore
@@ -15,6 +15,14 @@ import SynthesisPage from "./synthesisPage/SynthesisPage";
 import DragableTabs from "./dragTabs/dragableTabs";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
+import SynthesisPreviewComponent from "components/build/baseComponents/phonePreview/synthesis/SynthesisPreview";
+import ShortAnswerPreview from "components/build/baseComponents/phonePreview/questionPreview/ShortAnswerPreview";
+import ChooseOnePreview from "components/build/baseComponents/phonePreview/questionPreview/ChooseOnePreview";
+import ChooseSeveralPreview from "components/build/baseComponents/phonePreview/questionPreview/ChooseSeveralPreview";
+import VerticalShufflePreview from "components/build/baseComponents/phonePreview/questionPreview/VerticalShufflePreview";
+import HorizontalShufflePreview from "components/build/baseComponents/phonePreview/questionPreview/HorizontalShufflePreview";
+
+
 import {
   Question,
   QuestionTypeEnum,
@@ -22,6 +30,7 @@ import {
   HintStatus
 } from "model/question";
 import actions from "../../../redux/actions/brickActions";
+import {validateQuestion} from "./questionService/QuestionService";
 
 interface ApiQuestion {
   id?: number;
@@ -33,20 +42,6 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
   fetchBrick(brickId: number): void;
   saveBrick(brick: any): void;
-}
-
-const SynthesisPreviewComponent:React.FC<any> = ({data}) => {
-  let newData = "";
-  if (data) {
-    newData = data.replace(/(?:\r\n|\r|\n)/g, '<br>');
-  }
-
-  return (
-    <div className="phone-preview-component synthesis-preview">
-      <div className="synthesis-title" style={{textAlign: 'center'}}>SYNTHESIS</div>
-      <div className="synthesis-text" dangerouslySetInnerHTML={{ __html: newData}}></div>
-    </div>
-  )
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
@@ -80,7 +75,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [loaded, setStatus] = React.useState(false);
   const [locked, setLock] = React.useState(false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
+  const [submitDialogOpen, setSubmitDialog] = React.useState(false);
+  const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
+  const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -329,8 +327,25 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const moveToReview = () => {
+    let invalidQuestion = questions.find(question => {
+      return !validateQuestion(question);
+    });
+    if (invalidQuestion) {
+      setSubmitDialog(true);
+    } else {
+      saveBrick();
+      history.push(`/play/brick/${brickId}/intro?preview=true`);
+    }
+  }
+
+  const submitInvalidBrick = () => {
     saveBrick();
-    history.push(`/play/brick/${brickId}/intro?preview=true`);
+    history.push(`/build/brick/${brickId}/build/investigation/submit`);
+  }
+
+  const hideInvalidBrick = () => {
+    setValidation(true);
+    setSubmitDialog(false);
   }
 
   const saveBrick = () => {
@@ -372,6 +387,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       <QuestionPanelWorkArea
         brickId={brickId}
         history={history}
+        synthesis={brick.synthesis}
         questionsCount={questions.length}
         question={activeQuestion}
         getQuestionIndex={getQuestionIndex}
@@ -390,8 +406,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const renderQuestionComponent = () => {
     return (
       <QuestionTypePage
+        synthesis={brick.synthesis}
         history={history}
         brickId={brickId}
+        setHoverQuestion={setHoverQuestion}
         questionId={activeQuestion.id}
         setQuestionType={setQuestionTypeAndMove}
         setPreviousQuestion={setPreviousQuestion}
@@ -399,24 +417,59 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       />
     );
   };
+  
+  const formatTwoDigits = (number: Number) => {
+    let str = number.toString();
+    if (str.length < 2) {
+      return '0' + str;
+    }
+    return str;
+  }
+
+  const getTime = (updated: Date) => {
+    let hours = formatTwoDigits(updated.getHours());
+    let minutes = formatTwoDigits(updated.getMinutes());
+    return hours + ":" + minutes;
+  }
+
+  const renderLastSave = () => {
+    let updated = new Date(brick.updated);
+
+    return (
+      <div className="saved-info">
+        <Grid container alignContent="center" justify="center">
+          <img alt="" src="/feathericons/save-white.png" />
+          <div>
+            Last Saved at {getTime(updated)}
+          </div>
+        </Grid>
+      </div>
+    );
+  }
+
+  const renderQuestionPhonePreview = () => {
+    if (hoverQuestion === QuestionTypeEnum.None) {
+      return <PhonePreview link={window.location.origin + "/logo-page"} />
+    } else if (hoverQuestion === QuestionTypeEnum.ShortAnswer) {
+      return <PhonePreview Component={ShortAnswerPreview} />
+    } else if (hoverQuestion === QuestionTypeEnum.ChooseOne) {
+      return <PhonePreview Component={ChooseOnePreview} />
+    } else if (hoverQuestion === QuestionTypeEnum.ChooseSeveral) {
+      return <PhonePreview Component={ChooseSeveralPreview} />
+    } else if (hoverQuestion === QuestionTypeEnum.VerticalShuffle) {
+      return <PhonePreview Component={VerticalShufflePreview} />
+    } else if (hoverQuestion === QuestionTypeEnum.HorizontalShuffle) {
+      return <PhonePreview Component={HorizontalShufflePreview} />
+    }
+    return <PhonePreview link={window.location.origin + "/logo-page"} />
+  }
 
   return (
     <div className="investigation-build-page">
+      <div style={{position: 'fixed'}}>
+        <HomeButton onClick={exitAndSave} />
+      </div>
       <Hidden only={['xs', 'sm']}>
-        <div className="exit-button" onClick={exitAndSave}>
-          <div>
-            <div className="exit-label">
-              <div className="exit-arrow">
-                <ArrowBackIosIcon/>
-              </div>
-              EXIT
-            </div>
-            <div className="small-labels">
-              <div className="small-label">AND SAVE</div>
-              <div className="small-label">CHANGES</div>
-            </div>
-          </div>
-        </div>
         <div className="proposal-link" onClick={editProposal}>
           <div className="proposal-edit-icon"/>
           <div className="proposal-text">
@@ -426,61 +479,80 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           </div>
         </div>
         <Grid
-        container direction="row"
-        className="investigation-build-background"
-        alignItems="center"
-      >
-        <Grid
-          container
-          item xs={12} sm={12} md={7} lg={9}
+          container direction="row"
+          className="investigation-build-background"
           alignItems="center"
-          style={{ height: "100%" }}
-          className="question-container"
         >
           <Grid
-            container direction="row"
-            justify="center" alignItems="center"
+            container
+            item xs={12} sm={12} md={7} lg={9}
+            alignItems="center"
             style={{ height: "100%" }}
+            className="question-container"
           >
             <Grid
-              container
-              item xs={12} sm={12} md={12} lg={9}
-              style={{ height: "90%" }}
+              container direction="row"
+              justify="center" alignItems="center"
+              style={{ height: "100%" }}
             >
-              <DragableTabs
-                setQuestions={setQuestions}
-                questions={questions}
-                synthesis={synthesis}
-                isSynthesisPage={isSynthesisPage}
-                moveToSynthesis={moveToSynthesis}
-                createNewQuestion={createNewQuestion}
-                selectQuestion={selectQuestion}
-                removeQuestion={removeQuestion}
-              />
-              <Switch>
-                <Route path="/build/brick/:brickId/build/investigation/question-component">
-                  {renderBuildQuestion}
-                </Route>
-                <Route path="/build/brick/:brickId/build/investigation/question">
-                  {renderQuestionComponent}
-                </Route>
-                <Route path="/build/brick/:brickId/build/investigation/synthesis">
-                  <SynthesisPage synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
-                </Route>
-              </Switch>
+              <Grid
+                container
+                item xs={12} sm={12} md={12} lg={9}
+                style={{ height: "90%" }}
+              >
+                <DragableTabs
+                  setQuestions={setQuestions}
+                  questions={questions}
+                  synthesis={synthesis}
+                  validationRequired={validationRequired}
+                  isSynthesisPage={isSynthesisPage}
+                  moveToSynthesis={moveToSynthesis}
+                  createNewQuestion={createNewQuestion}
+                  selectQuestion={selectQuestion}
+                  removeQuestion={removeQuestion}
+                />
+                <Switch>
+                  <Route path="/build/brick/:brickId/build/investigation/question-component">
+                    {renderBuildQuestion}
+                  </Route>
+                  <Route path="/build/brick/:brickId/build/investigation/question">
+                    {renderQuestionComponent}
+                  </Route>
+                  <Route path="/build/brick/:brickId/build/investigation/synthesis">
+                    <SynthesisPage synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
+                  </Route>
+                </Switch>
+              </Grid>
             </Grid>
           </Grid>
+          {renderLastSave()}
+          <Route path="/build/brick/:brickId/build/investigation/question-component">
+            <PhoneQuestionPreview question={activeQuestion} />
+          </Route>
+          <Route path="/build/brick/:brickId/build/investigation/question">
+            {renderQuestionPhonePreview()}
+          </Route>
+          <Route path="/build/brick/:brickId/build/investigation/synthesis">
+            <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
+          </Route>
         </Grid>
-        <Route path="/build/brick/:brickId/build/investigation/question-component">
-          <PhoneQuestionPreview question={activeQuestion} />
-        </Route>
-        <Route path="/build/brick/:brickId/build/investigation/question">
-          <PhonePreview link={window.location.origin + "/logo-page"} />
-        </Route>
-        <Route path="/build/brick/:brickId/build/investigation/synthesis">
-          <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
-        </Route>
-      </Grid>
+        <Dialog
+          open={submitDialogOpen}
+          onClose={() => setSubmitDialog(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className="submit-brick-dialog"
+        >
+          <div className="dialog-header">
+            <div>Some questions are incomplete.</div>
+            <div>These are marked in red.</div>
+            <div>Submit anyway?</div>
+          </div>
+          <Grid container direction="row" className="row-buttons" justify="center">
+            <Button className="yes-button" onClick={() => submitInvalidBrick()}>Yes, never mind</Button>
+            <Button className="no-button" onClick={() => hideInvalidBrick()}>No, keep working</Button>
+          </Grid>
+        </Dialog>
         <Dialog
           open={deleteDialogOpen}
           onClose={() => setDeleteDialog(false)}
@@ -499,7 +571,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         </Dialog>
       </Hidden>
       <Hidden only={['md', 'lg', 'xl']}>
-      <Dialog
+        <Dialog
           open={true}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"

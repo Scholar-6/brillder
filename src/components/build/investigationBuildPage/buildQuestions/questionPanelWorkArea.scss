@@ -2,11 +2,20 @@
 $question-radius: 0.6vw;
 
 .build-question-page {
+  position: relative;
   font-family: $font-family-regular;
   background: white;
  
   border-bottom-left-radius: $question-radius;
   border-bottom-right-radius: $question-radius;
+
+  .help-arrow {
+    position: absolute;
+    top: 8.5vh;
+    left: 8.2vw;
+    width: 9.5vw;
+    z-index: 1000;
+  }
 
   ::placeholder {
     color: #aaa;

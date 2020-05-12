@@ -76,16 +76,18 @@ $box-radius: 0.4vw;
       }
 
       .brick-title {
-        height: 1.4vw;
-        line-height: 1;
         font-family: $font-family-bold;
-        overflow-y: hidden;
         margin-bottom: 0.5vh;
-      }
-
-      .brick-subtopics {
-        height: 1vw;
+        width: 15.5vw;
         overflow: hidden;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+      }
+      .brick-topics {
+        width: 15.5vw;
+        overflow: hidden;
+        white-space:nowrap;
+        text-overflow:ellipsis;
       }
     }
   }

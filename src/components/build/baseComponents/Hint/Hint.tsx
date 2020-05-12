@@ -1,13 +1,23 @@
 
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { Grid } from '@material-ui/core';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import './Hint.scss';
 import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
 
+const HtmlTooltip = withStyles((theme:any) => ({
+  tooltip: {
+    backgroundColor: '#193366',
+    padding: '1.5vh 1vw',
+    maxWidth: '17vw',
+    border: 0,
+  },
+}))(Tooltip);
 
 export enum HintStatus {
   None,
@@ -87,11 +97,8 @@ const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props 
         <Grid container item xs={12} className="hint-container">
           <DocumentCKEditor
             data={state.value}
-            config={{
-              placeholder: 'Enter Hint...',
-              toolbar: ['bold'],
-            }}
-            placeholder=""
+            toolbar={['bold']}
+            placeholder="Enter Hint..."
             onChange={onHintChanged}
           />
         </Grid>
@@ -117,12 +124,9 @@ const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props 
         <Grid key={i} container item xs={12} className="hint-container">
           <DocumentCKEditor
             data={state.list[i]}
-            config={{
-              placeholder: 'Enter Hint...',
-              toolbar: ['bold'],
-            }}
-            placeholder=""
-            onChange={(v) => {onHintListChanged(v, i)}}
+            toolbar={['bold']}
+            placeholder="Enter Hint"
+            onChange={(v:any) => {onHintListChanged(v, i)}}
           />
         </Grid>
       );
@@ -152,7 +156,23 @@ const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props 
         <Grid container item xs={2} alignContent="center" justify="flex-end" style={{position: 'relative'}}>
           <FiberManualRecordIcon className="hint-question-circle" />
           <Grid container alignContent="center" justify="center" className="hint-type">
-            <span className="question-mark">?</span>
+            <HtmlTooltip
+              title={
+                <React.Fragment>
+                  <div className="hint-question-mark-hover-title">
+                    <span className="question-mark">?</span>
+                    Hints ensure that in reviewing material the learner has to keep re-evaluating.
+                    This is why our interface does not allow for standard true or false questions:
+                    much less can be gained by a blind click at the second time of asking.
+                    <div>
+                      We only give teachers the correct answers.
+                    </div>
+                  </div>
+                </React.Fragment>
+              }
+            >
+              <span className="question-mark">?</span>
+            </HtmlTooltip>
           </Grid>
         </Grid>
       </Grid>

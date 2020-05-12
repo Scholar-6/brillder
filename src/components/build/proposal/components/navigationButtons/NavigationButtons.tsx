@@ -5,6 +5,7 @@ import PreviousButton from '../previousButton';
 import { ProposalStep } from "../../model";
 import './NavigationButtons.scss';
 
+
 interface NavigationButtonsProps {
   step: ProposalStep
   canSubmit: boolean

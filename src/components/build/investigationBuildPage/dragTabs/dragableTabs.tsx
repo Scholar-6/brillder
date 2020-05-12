@@ -6,10 +6,10 @@ import { ReactSortable } from "react-sortablejs";
 import { Grid } from '@material-ui/core';
 
 import './DragableTabs.scss';
+import {validateQuestion} from '../questionService/QuestionService';
 import DragTab from './dragTab';
 import LastTab from './lastTab';
 import SynthesisTab from './SynthesisTab';
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,6 +44,7 @@ interface DragTabsProps {
   questions: Question[],
   synthesis: string,
   isSynthesisPage: boolean,
+  validationRequired: boolean,
   createNewQuestion(): void,
   moveToSynthesis(): void,
   setQuestions(questions: any): void,
@@ -81,13 +82,19 @@ const DragableTabs: React.FC<DragTabsProps> = ({
       width = (100 * 2) / (comlumns - 2);
     }
 
+    let isValid = true;
+    if (props.validationRequired) {
+      isValid = validateQuestion(question as any);
+    }
+
     return (
       <GridListTile className={titleClassNames} key={index} cols={cols} style={{display:'inline-block', width: `${width}%`}}>
-        <div className="drag-tile">
+        <div className={isValid ? "drag-tile valid" : "drag-tile invalid"}>
           <DragTab
             index={index}
             id={question.id}
             active={question.active}
+            isValid={isValid}
             selectQuestion={props.selectQuestion}
             removeQuestion={props.removeQuestion}
           />
