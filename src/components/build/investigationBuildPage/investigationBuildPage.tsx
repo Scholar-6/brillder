@@ -417,6 +417,20 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       />
     );
   };
+  
+  const formatTwoDigits = (number: Number) => {
+    let str = number.toString();
+    if (str.length < 2) {
+      return '0' + str;
+    }
+    return str;
+  }
+
+  const getTime = (updated: Date) => {
+    let hours = formatTwoDigits(updated.getHours());
+    let minutes = formatTwoDigits(updated.getMinutes());
+    return hours + ":" + minutes;
+  }
 
   const renderLastSave = () => {
     let updated = new Date(brick.updated);
@@ -426,7 +440,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <Grid container alignContent="center" justify="center">
           <img alt="" src="/feathericons/save-white.png" />
           <div>
-            Last Saved at {updated.getHours() + ":" + updated.getMinutes()}
+            Last Saved at {getTime(updated)}
           </div>
         </Grid>
       </div>
