@@ -3,8 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ckeditor/ckeditor5-basic-styles": "^19.0.0",
     "@ckeditor/ckeditor5-build-decoupled-document": "^18.0.0",
+    "@ckeditor/ckeditor5-dev-utils": "^13.0.1",
+    "@ckeditor/ckeditor5-editor-classic": "^19.0.0",
+    "@ckeditor/ckeditor5-essentials": "^19.0.0",
+    "@ckeditor/ckeditor5-font": "^19.0.0",
+    "@ckeditor/ckeditor5-list": "^19.0.0",
+    "@ckeditor/ckeditor5-paragraph": "^19.0.0",
     "@ckeditor/ckeditor5-react": "^2.1.0",
+    "@ckeditor/ckeditor5-theme-lark": "^19.0.0",
     "@material-ui/core": "^4.8.3",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.44",
@@ -34,6 +42,7 @@
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
     "query-string": "^6.11.1",
+    "raw-loader": "^3.1.0",
     "react": "^16.12.0",
     "react-animate-height": "^2.0.20",
     "react-device-frame": "^2.1.4",
@@ -54,9 +63,9 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start --scripts-version react-scripts",
+    "build": "react-app-rewired build --scripts-version react-scripts",
+    "test": "react-app-rewired test --env=jsdom --scripts-version react-scripts",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -c .storybook -s public"
   },
@@ -79,6 +88,8 @@
     "@storybook/react": "^5.3.13",
     "@types/prop-types": "^15.7.3",
     "awesome-typescript-loader": "^5.2.1",
+    "copy-webpack-plugin": "^5.1.1",
+    "react-app-rewired": "^2.1.6",
     "react-docgen-typescript-loader": "^3.6.0",
     "react-docgen-typescript-webpack-plugin": "^1.1.0"
   }
