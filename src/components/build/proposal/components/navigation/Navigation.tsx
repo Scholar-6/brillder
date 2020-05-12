@@ -39,50 +39,42 @@ const NextButton:React.FC<NextButtonProps> = ({ step }) => {
           {
             step === ProposalStep.BrickTitle ? <div className="step-label">Title</div> : ""
           }
-          <img
-            onClick={moveToTitles}
-            className="navigation-button first" alt=""
-            src="/images/new-brick/titles.png"
-          />
-          </div>
+          <div className="navigation-button navigation-titles" onClick={moveToTitles} />
+        </div>
         <div className="step-container">
           {
             step === ProposalStep.OpenQuestion ? <div className="step-label">Open Question</div> : ""
           }
-          <img
+          <div
+            className={`navigation-button navigation-question ${step >= ProposalStep.OpenQuestion ? 'active' : ''}`}
             onClick={moveToOpenQuestion}
-            className="navigation-button" alt=""
-            src={step >= ProposalStep.OpenQuestion ? "/images/new-brick/head.png" : "/images/new-brick/head-grey.png"}
           />
         </div>
         <div className="step-container">
           {
             step === ProposalStep.Brief ? <div className="step-label">Brief</div> : ""
           }
-          <img
+          <div
+            className={`navigation-button navigation-brief ${step >= ProposalStep.Brief ? 'active' : ''}`}
             onClick={moveToBrief}
-            className="navigation-button" alt=""
-            src={step >= ProposalStep.Brief ? "/images/new-brick/brief-circles.png" : "/images/new-brick/brief-circles-grey.png"}
           />
         </div>
         <div className="step-container">
           {
             step === ProposalStep.Prep ? <div className="step-label">Prep</div> : ""
           }
-          <img
+          <div
             onClick={moveToPrep}
-            className="navigation-button" alt=""
-            src={step >= ProposalStep.Prep ? "/images/new-brick/prep.png" : "/images/new-brick/prep-grey.png"}
+            className={`navigation-button navigation-prep ${step >= ProposalStep.Brief ? 'active' : ''}`}
           />
         </div>
         <div className="step-container">
           {
             step === ProposalStep.BrickLength ? <div className="step-label">Length</div> : ""
           }
-          <img
+          <div
             onClick={moveToLength}
-            className="navigation-button last" alt=""
-            src={step >= ProposalStep.BrickLength ? "/feathericons/clock.png" : "/feathericons/clock-grey.png"}
+            className={`navigation-button navigation-length ${step >= ProposalStep.Brief ? 'active' : ''}`}
           />
         </div>
       </Grid>
