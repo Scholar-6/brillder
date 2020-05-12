@@ -19,8 +19,8 @@ interface HomeButtonState {
   style: any,
 }
 
-class HomeButtonComponent extends React.Component<any, HomeButtonState> {
-  constructor(props: HomeButtonProps) {
+class HomeButtonComponent extends React.Component<HomeButtonProps, HomeButtonState> {
+  constructor(props: any) {
     super(props);
     this.state = {
       focused: false,
