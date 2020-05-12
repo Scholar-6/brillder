@@ -36,42 +36,32 @@ const NextButton:React.FC<NextButtonProps> = ({ step }) => {
     <div className="navigation-container">
       <Grid container item justify="center">
         <div className="step-container">
-          {
-            step === ProposalStep.BrickTitle ? <div className="step-label">Title</div> : ""
-          }
+          <div className={`step-label ${step === ProposalStep.BrickTitle ? 'active' : ''}`}>Title</div>
           <div className="navigation-button navigation-titles" onClick={moveToTitles} />
         </div>
         <div className="step-container">
-          {
-            step === ProposalStep.OpenQuestion ? <div className="step-label">Open Question</div> : ""
-          }
+          <div className={`step-label ${step === ProposalStep.OpenQuestion ? 'active' : ''}`}>Open Question</div>
           <div
             className={`navigation-button navigation-question ${step >= ProposalStep.OpenQuestion ? 'active' : ''}`}
             onClick={moveToOpenQuestion}
           />
         </div>
         <div className="step-container">
-          {
-            step === ProposalStep.Brief ? <div className="step-label">Brief</div> : ""
-          }
+          <div className={`step-label ${step === ProposalStep.Brief ? 'active' : ''}`}>Brief</div>
           <div
             className={`navigation-button navigation-brief ${step >= ProposalStep.Brief ? 'active' : ''}`}
             onClick={moveToBrief}
           />
         </div>
         <div className="step-container">
-          {
-            step === ProposalStep.Prep ? <div className="step-label">Prep</div> : ""
-          }
+          <div className={`step-label ${step === ProposalStep.Prep ? 'active' : ''}`}>Prep</div>
           <div
             onClick={moveToPrep}
             className={`navigation-button navigation-prep ${step >= ProposalStep.Brief ? 'active' : ''}`}
           />
         </div>
         <div className="step-container">
-          {
-            step === ProposalStep.BrickLength ? <div className="step-label">Length</div> : ""
-          }
+          <div className={`step-label ${step === ProposalStep.BrickLength ? 'active' : ''}`}>Length</div>
           <div
             onClick={moveToLength}
             className={`navigation-button navigation-length ${step >= ProposalStep.Brief ? 'active' : ''}`}

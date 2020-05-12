@@ -18,6 +18,11 @@
       color: $orange;
       top: 0%;
       position: absolute;
+      opacity: 0;
+    }
+
+    .step-label.active {
+      opacity: 1;
     }
 
     .navigation-button {
@@ -64,6 +69,7 @@
   .step-container:hover {
     .step-label {
       color: $light-blue2;
+      opacity: 1;
     }
     .navigation-titles {
       background-image: url(/images/new-brick/titles-hover.png);
