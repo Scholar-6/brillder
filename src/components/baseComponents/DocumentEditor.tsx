@@ -19,7 +19,8 @@ import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
 import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
 // @ts-ignore
 import List from '@ckeditor/ckeditor5-list/src/list';
-
+// @ts-ignore
+import MathType from '@wiris/mathtype-ckeditor5/src/plugin';
 import './DocumentEditor.scss';
 
 
@@ -67,9 +68,21 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
 
   render() {
     let config = {
-      plugins: [ Essentials, Bold, Italic, Paragraph, FontColor, Superscript, Subscript, List ],
+      plugins: [ Essentials, Bold, Italic, Paragraph, FontColor, Superscript, Subscript, List, MathType ],
+      fontColor: {
+        colors: [{
+          color: '#C43C30',
+          label: 'Red'
+        }, {
+          color: '#0681DB',
+          label: 'Blue'
+        }, {
+          color: '#30C474',
+          label: 'Green'
+        }]
+      },
       toolbar: [
-        'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'bulletedList', 'numberedList'
+        'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'mathType', 'bulletedList', 'numberedList',
       ],
       placeholder: ''
     };
