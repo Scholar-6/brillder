@@ -51,6 +51,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
           <h1>preparatory material.</h1>
           <DocumentCKEditor
             data={prep}
+            toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
             onChange={setPrep}
           />

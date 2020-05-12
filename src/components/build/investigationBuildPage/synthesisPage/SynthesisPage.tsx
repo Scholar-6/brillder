@@ -19,7 +19,12 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
       <div className="inner-question-type">
         <Grid container direction="row">
           <Grid item md={9}>
-            <DocumentCKEditor data={synthesis} placeholder="" onChange={onSynthesisChange} />
+            <DocumentCKEditor
+              data={synthesis}
+              placeholder=""
+              toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
+              onChange={onSynthesisChange}
+            />
           </Grid>
           <Grid container item md={3}>
             <div style={{width: '100%'}}>
