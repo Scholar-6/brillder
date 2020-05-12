@@ -97,11 +97,8 @@ const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props 
         <Grid container item xs={12} className="hint-container">
           <DocumentCKEditor
             data={state.value}
-            config={{
-              placeholder: 'Enter Hint...',
-              toolbar: ['bold'],
-            }}
-            placeholder=""
+            toolbar={['bold']}
+            placeholder="Enter Hint..."
             onChange={onHintChanged}
           />
         </Grid>
@@ -127,12 +124,9 @@ const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props 
         <Grid key={i} container item xs={12} className="hint-container">
           <DocumentCKEditor
             data={state.list[i]}
-            config={{
-              placeholder: 'Enter Hint...',
-              toolbar: ['bold'],
-            }}
-            placeholder=""
-            onChange={(v) => {onHintListChanged(v, i)}}
+            toolbar={['bold']}
+            placeholder="Enter Hint"
+            onChange={(v:any) => {onHintListChanged(v, i)}}
           />
         </Grid>
       );
