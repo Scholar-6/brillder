@@ -53,6 +53,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
             data={prep}
             toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
+            mediaEmbed={true}
             onChange={setPrep}
           />
           <NavigationButtons

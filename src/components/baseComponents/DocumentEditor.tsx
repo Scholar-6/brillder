@@ -21,6 +21,8 @@ import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
 import List from '@ckeditor/ckeditor5-list/src/list';
 // @ts-ignore
 import MathType from '@wiris/mathtype-ckeditor5/src/plugin';
+// @ts-ignore
+import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
 import './DocumentEditor.scss';
 
 
@@ -28,6 +30,7 @@ export interface DocumentEditorProps {
   data: string,
   toolbar?: any,
   placeholder?: string,
+  mediaEmbed?: boolean,
   onChange(data: string): void,
 }
 
@@ -68,7 +71,11 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
 
   render() {
     let config = {
-      plugins: [ Essentials, Bold, Italic, Paragraph, FontColor, Superscript, Subscript, List, MathType ],
+      plugins: [
+        Essentials, Bold, Italic, Paragraph,
+        FontColor, Superscript, Subscript, List,
+        MathType
+      ],
       fontColor: {
         colors: [{
           color: '#C43C30',
@@ -82,10 +89,16 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
         }]
       },
       toolbar: [
-        'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'mathType', 'bulletedList', 'numberedList',
+        'bold', 'italic', 'fontColor', 'superscript',
+        'subscript', 'mathType', 'bulletedList', 'numberedList'
       ],
       placeholder: ''
     };
+
+    if (this.props.mediaEmbed) {
+      config.plugins.push(MediaEmbed);
+      config.toolbar.push('mediaEmbed');
+    }
 
     if (this.props.toolbar) {
       config.toolbar = this.props.toolbar;
