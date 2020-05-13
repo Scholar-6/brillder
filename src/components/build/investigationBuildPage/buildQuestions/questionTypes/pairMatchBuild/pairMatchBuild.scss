@@ -18,13 +18,13 @@
   }
 
   .pair-match-option {
+    position: relative;
     margin: 0;
     width: 100%;
 
     input {
       margin-right: 1%;
       width: 83%;
-      height: 55px;
       padding-left: 8%;
       padding-right: 8%;
       text-align: center;
@@ -34,6 +34,40 @@
       font-size: $answer-input-text-size;
       font-family: $font-family-regular;
       height: $answer-height !important;
+    }
+    .pair-option-image-drop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 20%;
+      height: $answer-height !important;
+
+      .dropzone {
+        margin-left: 0vw;
+        margin-right: 0vw;
+        height: 100%;
+        border: 2px dashed #eee;
+        background: #FAFAFA;
+        font-size: 0.81vw;
+        font-family: $font-family-regular !important;
+      }
+
+      img {
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .drop-placeholder {
+        height: 100%;
+      }
+      
+      .dropzone:hover {
+        border: 2px dashed rgb(23, 27, 31);
+      }
+      
+      .dropzone.disabled {
+        background: #EBEBE4;
+      }
     }
   }
 
@@ -55,6 +89,41 @@
       font-size: $answer-input-text-size;
       font-family: $font-family-regular;
       height: $answer-height !important;
+    }
+
+    .pair-answer-image-drop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 20%;
+      height: $answer-height !important;
+
+      .dropzone {
+        margin-left: 0vw;
+        margin-right: 0vw;
+        height: 100%;
+        border: 2px dashed #eee;
+        background: #FAFAFA;
+        font-size: 0.81vw;
+        font-family: $font-family-regular !important;
+      }
+
+      img {
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .drop-placeholder {
+        height: 100%;
+      }
+      
+      .dropzone:hover {
+        border: 2px dashed rgb(23, 27, 31);
+      }
+      
+      .dropzone.disabled {
+        background: #EBEBE4;
+      }
     }
   }
 }

@@ -1,9 +1,10 @@
 import React from 'react'
 import {useDropzone} from 'react-dropzone';
-import axios from 'axios';
- 
-import './Image.scss'
 import { Grid } from '@material-ui/core';
+
+import './Image.scss'
+import {uploadFile} from 'components/services/uploadFile';
+
 
 interface ImageProps {
   locked: boolean,
@@ -18,26 +19,12 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
     accept: 'image/jpeg, image/png',
     disabled: locked,
     onDrop: (files:any[]) => {
-      var formData = new FormData();
-      const file = Object.assign(files[0]);
-      formData.append('file', file);
-      return axios.post(
-        process.env.REACT_APP_BACKEND_HOST + '/fileUpload',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          withCredentials: true
-        }
-      ).then(res => {
+      return uploadFile(files[0] as File, (res: any) => {
         let comp = Object.assign({}, props.data);
         comp.value = res.data.fileName;
         props.updateComponent(comp, props.index);
         setFileName(comp.value);
-      })
-      .catch(error => {
-      });
+      }, () => { });
     }
   });
 
