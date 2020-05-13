@@ -22,7 +22,7 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
             <DocumentCKEditor
               data={synthesis}
               placeholder=""
-              toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
+              toolbar={['bold', 'italic', 'alignment', 'fontColor', 'bulletedList', 'numberedList']}
               onChange={onSynthesisChange}
             />
           </Grid>
