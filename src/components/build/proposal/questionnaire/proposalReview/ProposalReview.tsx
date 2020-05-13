@@ -84,7 +84,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
                   <p className="text-title">2. Ideally, every brick should point to a bigger question.</p>
                   <p className="proposal-text">{brick.openQuestion}</p>
                   <p className="text-title">3. Outline the purpose of your brick.</p>
-                  <p className="proposal-text">{brick.brief}</p>
+                  <p className="proposal-text" dangerouslySetInnerHTML={{ __html: brick.brief}} />
                   <p className="text-title">4. Create an engaging and relevant preparatory task.</p>
                   <p style={{fontWeight: 'normal'}} dangerouslySetInnerHTML={{ __html: brick.prep}}></p>
                   <p className="text-title">5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span></p>
