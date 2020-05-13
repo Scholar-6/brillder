@@ -1,6 +1,6 @@
 @import "_variables";
 
-.brief-prep-page {
+.brief-page {
   font-family: $font-family-regular;
 
   .left-block {
@@ -15,34 +15,85 @@
       letter-spacing: 0.04vw;
       margin-bottom: 4vh;
     }
-  }
+    .document-editor {
+      margin-top: 4.6vh;
+      margin-left: 9.5vw;
+      margin-bottom: 3.5vh;
+      width: 42.7vw;
 
-  $textarea-size2: 9.2vh;
-  $textarea-size1: 9.3vh;
+      .ck-toolbar {
+        border-top-left-radius: 2.1vw !important;
+        border-top-right-radius: 2.1vw !important;
+        padding-left: 0;
+        background: $tab-grey;
+        border: none;
 
-  textarea {
-    font-family: $font-family-regular;
-    margin-left: 9.4vw;
-    margin-bottom: 7.6vh;
-    height: 45vh;
-    font-size: 1.5vw;
-    width: 42.2vw;
-    line-height: $textarea-size1;
-    padding: 0 !important;
-    background-image:
-      -webkit-linear-gradient(left,white 0px, transparent 0px),
-      -webkit-linear-gradient(right, white 0px, transparent 0px),
-      -webkit-linear-gradient(
-        white $textarea-size2,
-        #ccc $textarea-size2,
-        #ccc $textarea-size1,
-        white $textarea-size1
-      );
-    background-size: 100% 100%, 100% 100%, 100% $textarea-size1 !important;
-    border: none;
-    resize: none;
-    overflow: hidden;
-    padding-top: 1.8vh !important;
+        .ck-button {
+          padding-top: 0;
+          padding-bottom: 0;
+          font-size: 1.7vw;
+          color: $dark-blue;
+          margin-right: 0;
+          margin-left: 0;
+          padding-right: 0;
+          padding-left: 0;
+          min-width: 3.2vw;
+          min-height: 3.2vw;
+        }
+        .ck-color-table__remove-color {
+          color: black;
+          padding: 0.5vh 0.7vw;
+          font-size: 1.1vw;
+        }
+        .ck-color-grid__tile {
+          min-width: 2vw;
+          min-height: 2vw;
+        }
+        .ck-toolbar__items {
+          .ck-color-ui-dropdown {
+            margin-right: 0;
+            margin: 0;
+            width: 6vw;
+            .ck-button {
+              padding: 0 !important;
+            }
+          }
+          > .ck-button:nth-child(1) {
+            border-top-left-radius: 1.5vw;
+            margin-top: 0.5vw;
+            margin-bottom: 0.5vw;
+            margin-left: 0.5vw;
+          }
+          > .ck:nth-child(4) {
+            margin-left: 22.85vw;
+          }
+          > .ck:nth-child(5) {
+            border-top-right-radius: 1.5vw;
+          }
+        }
+        .ck-button__icon {
+          font-size: 1vw;
+        }
+      }
+
+      .ck-content {
+        border: none !important;
+        box-shadow: none !important;
+        background: #f5f6f7;
+        height: 38vh;
+        border-bottom-left-radius: 2.1vw !important;
+        border-bottom-right-radius: 2.1vw !important;
+        font-size: 1.5vw;
+        padding-top: 0.7vh;
+        padding-left: 1.05vw;
+        letter-spacing: 0.01vw;
+
+        > p {
+          margin-top: 0.5vh !important;
+          margin-bottom: 0.5vh !important;
+        }
+      } 
+    }
   }
 
   .brief-phone-preview {

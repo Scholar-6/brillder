@@ -8,6 +8,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
 import './brief.scss';
+import DocumentCKEditor from "components/baseComponents/DocumentEditor";
 
 
 interface PrepProps {
@@ -25,7 +26,7 @@ const BriefPreviewComponent:React.FC<any> = ({data}) => {
           src="/images/new-brick/brief-circles.png">
         </img>
         <div className="typing-text">
-          <div>{data}</div>
+          <div dangerouslySetInnerHTML={{ __html: data}} />
         </div>
       </Grid>
     )
@@ -44,18 +45,12 @@ const BriefPreviewComponent:React.FC<any> = ({data}) => {
 const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
   const [brief, setBrief] = React.useState(parentBrief);
 
-  const setBriefText = (event: React.ChangeEvent<{ value: string }>) => {
-    let value = event.target.value;
-    let limit = 5;
-    let values = event.target.value.replace(/\r\n/g,"\n").split("\n")
-    if (values.length > limit) {
-      value = values.slice(0, limit).join("\n")
-    }
+  const setBriefText = (value: string) => {
     setBrief(value)
   }
 
   return (
-    <div className="tutorial-page brief-prep-page">
+    <div className="tutorial-page brief-page">
       <HomeButton link='/build' />
       <Navigation step={ProposalStep.Brief} />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
@@ -63,11 +58,11 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
           <h1 className="only-tutorial-header">
             Outline the purpose of this brick.
           </h1>
-          <textarea
-            value={brief}
-            rows={4}
+          <DocumentCKEditor
+            data={brief}
+            toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
             onChange={setBriefText}
-            placeholder="Enter Brief Here..."
+            placeholder="Enter Brief Here"
           />
           <NavigationButtons
             step={ProposalStep.Brief}
