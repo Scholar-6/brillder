@@ -90,7 +90,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
       },
       toolbar: [
         'bold', 'italic', 'fontColor', 'superscript',
-        'subscript', 'mathType', 'bulletedList', 'numberedList'
+        'subscript', 'mathType', 'chemType', 'bulletedList', 'numberedList'
       ],
       placeholder: ''
     };
