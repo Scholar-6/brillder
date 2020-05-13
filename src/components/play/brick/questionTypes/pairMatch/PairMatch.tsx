@@ -16,6 +16,7 @@ import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 import DenimCrossRect from 'components/play/components/DenimCrossRect';
 import DenimTickRect from 'components/play/components/DenimTickRect';
+import {Answer, PairBoxType} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/pairMatchBuild/types';
 
 
 interface PairMatchChoice {
@@ -118,14 +119,33 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return "";
   }
 
+  renderOption(answer: Answer) {
+    if (answer.optionType && answer.optionType === PairBoxType.Image) {
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} />;
+    }
+    return answer.option;
+  }
+
+  renderAnswer(answer: Answer) {
+    if (answer.answerType && answer.answerType === PairBoxType.Image) {
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
+    }
+    return answer.value;
+  }
+
   render() {
     return (
       <div className="pair-match-play">
         <Grid container justify="center">
-          <List style={{padding: 0}}>
+          <List style={{padding: 0}} className="answers-list">
           {
-            this.props.component.list.map((item, i) => (
-              <ListItem key={i} className="pair-match-play-option">
+            this.props.component.list.map((item:any, i) => (
+              <ListItem
+                key={i}
+                className={
+                  `pair-match-play-option ${(item.optionType === PairBoxType.Image || item.answerType === PairBoxType.Image) ? "pair-match-image-choice" : ""}`
+                }
+              >
                 {this.renderIcon(i)}
                 <ListItemText>
                   {
@@ -134,29 +154,39 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
                       : ""
                    }
                 </ListItemText>
-                <ListItemText><span className="pair-match-play-option-text">{item.option}</span></ListItemText>
+                <ListItemText>
+                  <span className="pair-match-play-option-text">
+                    {this.renderOption(item as any)}
+                  </span>
+                </ListItemText>
               </ListItem>
             ))
           }
           </List>
           <ReactSortable
-        list={this.state.userAnswers}
-        animation={150}
-        style={{display:"inline-block"}}
-        group={{ name: "cloning-group-name" }}
-        setList={(choices) => this.setUserAnswers(choices)}
-      >
-        {
-          this.state.userAnswers.map((answer, i) => (
-            <div style={{display: "block"}} key={i} className="pair-match-play-choice">
-              <Grid container direction="row">
-                <Grid item xs={1} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
-                  <DragIndicatorIcon/>
-                </Grid>
-                <Grid item xs={11} container justify="center" alignContent="center" style={{width: '100%', height: '24px'}}>
-                  {answer.value}
-                </Grid>
-              </Grid>
+            list={this.state.userAnswers}
+            animation={150}
+            style={{display:"inline-block"}}
+            group={{ name: "cloning-group-name" }}
+            className="answers-list"
+            setList={(choices) => this.setUserAnswers(choices)}
+          >
+            {
+              this.state.userAnswers.map((answer, i) => (
+                <div
+                  style={{display: "block"}} key={i}
+                  className={
+                    `pair-match-play-choice ${(answer.optionType === PairBoxType.Image || answer.answerType === PairBoxType.Image) ? "pair-match-image-choice" : ""}`
+                  }
+                >
+                  <Grid container direction="row">
+                    <Grid item xs={1} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
+                      <DragIndicatorIcon/>
+                    </Grid>
+                    <Grid item xs={11} container justify="center" alignContent="center" className="pair-match-play-data">
+                      {this.renderAnswer(answer)}
+                    </Grid>
+                  </Grid>
                 </div>
               ))
             }

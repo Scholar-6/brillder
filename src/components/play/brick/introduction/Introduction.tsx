@@ -60,7 +60,9 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <h2>Brief</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>{brick.brief}</Typography>
+              <Typography>
+                <div dangerouslySetInnerHTML={{ __html: brick.brief}} />
+              </Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <ExpansionPanel expanded={state.prepExpanded === true} onChange={togglePrep}>

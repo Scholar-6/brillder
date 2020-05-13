@@ -11,6 +11,10 @@ module.exports = function override(config, env) {
             ...rule,
             oneOf: [
                 {
+                    test: /theme[/\\]icons[/\\][^/\\]+\.svg$/,
+                    use: [ 'raw-loader' ]
+                },
+                {
                     test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
                     use: [ 'raw-loader' ]
                 },

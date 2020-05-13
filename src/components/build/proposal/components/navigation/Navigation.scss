@@ -1,4 +1,4 @@
-@import '_variables';
+@import "_variables";
 
 .navigation-container {
   position: fixed;
@@ -10,6 +10,7 @@
     width: 8.98vw;
     position: relative;
     height: 5vh;
+
     .step-label {
       width: 8.98vw;
       text-align: center;
@@ -19,10 +20,6 @@
       top: 0%;
       position: absolute;
       opacity: 0;
-    }
-
-    .step-label.active {
-      opacity: 1;
     }
 
     .navigation-button {
@@ -42,27 +39,30 @@
       width: 1.6vw;
       background-image: url(/images/new-brick/head-grey.png);
     }
-    .navigation-question.active {
-      background-image: url(/images/new-brick/head.png);
-    }
     .navigation-brief {
       background-image: url(/images/new-brick/brief-circles-grey.png);
-    }
-    .navigation-brief.active {
-      background-image: url(/images/new-brick/brief-circles.png);
     }
     .navigation-prep {
       width: 1.5vw;
       background-image: url(/images/new-brick/prep-grey.png);
     }
+    .navigation-length {
+      background-image: url(/feathericons/clock-grey.png);
+    }
+    .navigation-titles.active {
+      background-image: url(/images/new-brick/titles.png);
+    }
+    .navigation-question.active {
+      background-image: url(/images/new-brick/head.png);
+    }
+    .navigation-brief.active {
+      background-image: url(/images/new-brick/brief-circles.png);
+    }
     .navigation-prep.active {
       background-image: url(/images/new-brick/prep.png);
     }
-    .navigation-length {
-      background-image: url(/feathericons/clock-grey.png)
-    }
     .navigation-length.active {
-      background-image: url(/feathericons/clock.png)
+      background-image: url(/feathericons/clock.png);
     }
   }
 
@@ -84,7 +84,32 @@
       background-image: url(/images/new-brick/prep-hover.png);
     }
     .navigation-length {
-      background-image: url(/feathericons/clock-hover.png)
+      background-image: url(/feathericons/clock-hover.png);
+    }
+  }
+
+  .step-container.active {
+    .navigation-titles {
+      background-image: url(/images/new-brick/titles.png);
+    }
+    .navigation-question {
+      background-image: url(/images/new-brick/head.png);
+    }
+    .navigation-brief {
+      background-image: url(/images/new-brick/brief-circles.png);
+    }
+    .navigation-prep {
+      background-image: url(/images/new-brick/prep.png);
+    }
+    .navigation-length {
+      background-image: url(/feathericons/clock.png);
+    }
+  }
+
+  .step-container.active {
+    .step-label {
+      opacity: 1;
+      color: $orange;
     }
   }
 }
