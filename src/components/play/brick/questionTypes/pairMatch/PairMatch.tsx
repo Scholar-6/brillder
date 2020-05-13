@@ -139,8 +139,13 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         <Grid container justify="center">
           <List style={{padding: 0}} className="answers-list">
           {
-            this.props.component.list.map((item, i) => (
-              <ListItem key={i} className="pair-match-play-option">
+            this.props.component.list.map((item:any, i) => (
+              <ListItem
+                key={i}
+                className={
+                  `pair-match-play-option ${(item.optionType === PairBoxType.Image || item.answerType === PairBoxType.Image) ? "pair-match-image-choice" : ""}`
+                }
+              >
                 {this.renderIcon(i)}
                 <ListItemText>
                   {
@@ -168,7 +173,12 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
           >
             {
               this.state.userAnswers.map((answer, i) => (
-                <div style={{display: "block"}} key={i} className="pair-match-play-choice">
+                <div
+                  style={{display: "block"}} key={i}
+                  className={
+                    `pair-match-play-choice ${(answer.optionType === PairBoxType.Image || answer.answerType === PairBoxType.Image) ? "pair-match-image-choice" : ""}`
+                  }
+                >
                   <Grid container direction="row">
                     <Grid item xs={1} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
                       <DragIndicatorIcon/>
