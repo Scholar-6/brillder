@@ -1,9 +1,11 @@
 import React, {useEffect} from 'react'
-import DeleteIcon from '@material-ui/icons/Delete';
 import { Grid } from '@material-ui/core';
-import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
 import './pairMatchBuild.scss'
+import {Answer} from './types';
+import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import PairAnswerComponent from './answer/pairAnswer';
+import PairOptionComponent from './option/pairOption';
 
 
 export interface PairMatchBuildProps {
@@ -36,18 +38,6 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
     calculateHeight();
   }
 
-  const optionChanged = (answer: any, event: any) => {
-    if (locked) { return; }
-    answer.option = event.target.value;
-    update();
-  }
-
-  const answerChanged = (answer: any, event: any) => {
-    if (locked) { return; }
-    answer.value = event.target.value;
-    update();
-  }
-
   const addAnswer = () => {
     if (locked) { return; }
     state.list.push(newAnswer());
@@ -73,30 +63,16 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
     showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
-  const renderAnswer = (answer: any, key: number) => {
+  const renderAnswer = (answer: Answer, key: number) => {
     return (
       <Grid key={key} container direction="row">
-        <Grid container item xs={6}>
-          <div className="pair-match-option">
-            <input
-              disabled={locked}
-              value={answer.option}
-              onChange={(event) => optionChanged(answer, event)}
-              placeholder={"Enter Option " + (key + 1) + "..."} />
-          </div>
-        </Grid>
-        <Grid container item xs={6}>
-          <div className="pair-match-answer">
-            {
-              (state.list.length > 3) ? <DeleteIcon className="right-top-icon" style={{right: '1%'}} onClick={() => removeFromList(key)} /> : ""
-            }
-            <input
-              disabled={locked}
-              value={answer.value}
-              onChange={(event) => answerChanged(answer, event)}
-              placeholder={"Enter Answer " + (key + 1) + "..."} />
-          </div>
-        </Grid>
+        <PairOptionComponent
+          index={key} locked={locked} answer={answer} update={update}
+        />
+        <PairAnswerComponent
+          index={key} length={data.list.length} locked={locked} answer={answer}
+          removeFromList={removeFromList} update={update}
+        />
       </Grid>
     );
   }
@@ -108,7 +84,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
         <div>Order will be randomised in the Play Interface.</div>
       </div>
       {
-        state.list.map((answer: any, i: number) => renderAnswer(answer, i))
+        state.list.map((answer: Answer, i: number) => renderAnswer(answer, i))
       }
       <AddAnswerButton
         locked={locked}

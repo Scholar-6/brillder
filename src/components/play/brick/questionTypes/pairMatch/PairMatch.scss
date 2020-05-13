@@ -1,13 +1,18 @@
-
 .pair-match-play {
   .pair-match-play-option {
     color: white;
     font-size: 10px !important;
     height: 47px;
     width: 100%;
+    overflow: hidden;
     .pair-match-play-option-text {
       font-size: 10px;
       line-height: 3;
+      height: 24px;
+
+      img {
+        height: 45px;
+      }
     }
     .pair-match-play-option-icon {
       display: inline-block;
@@ -21,17 +26,42 @@
       margin-right: 20px;
     }
   }
-  .pair-match-play-option:nth-child(odd) {background: #0076B4}
-  .pair-match-play-option:nth-child(even) {background: #111f33;}
+  .pair-match-play-option:nth-child(odd) {
+    background: #0076b4;
+  }
+  .pair-match-play-option:nth-child(even) {
+    background: #111f33;
+  }
+
+  .answers-list {
+    width: 50%;
+  }
 
   .pair-match-play-choice {
-      border: 1px dashed black;
-      font-size: 10px;
-      color: black;
-      margin: 1px;
-      width: 100%;
-      > div {
-        margin: 10px !important;
-      }
+    border: 1px dashed black;
+    font-size: 10px;
+    color: black;
+    margin: 1px;
+    width: 100%;
+    overflow: hidden;
+    > div {
+      margin: 10px !important;
+    }
+    img {
+      height: 24px;
+    }
+  }
+  .pair-match-image-choice {
+    height: 110px;
+    img {
+      height: 110px;
+    }
+  }
+  .pair-match-play-option.pair-match-image-choice {
+    height: 113px;
+    padding: 0;
+    img {
+      min-height: 60px;
+    }
   }
 }
