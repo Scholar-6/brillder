@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Avatar from '@material-ui/core/Avatar';
 
 import './HorizontalShufflePreview.scss';
 import { Grid } from "@material-ui/core";
