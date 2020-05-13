@@ -1,6 +1,8 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { useDropzone } from "react-dropzone";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import {Answer, PairBoxType} from '../types';
 import {uploadFile} from 'components/services/uploadFile';
@@ -30,6 +32,26 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     }
   });
 
+  const removeImage = () => {
+    if (locked) { return; }
+    answer.optionFile = "";
+    answer.optionType = PairBoxType.None;
+    update();
+  }
+
+  const renderDeleteButton = () => {
+    if (answer.optionType === PairBoxType.Image) {
+      return (
+        <DeleteIcon
+          className="right-top-icon"
+          style={{ right: "1%", top: "2%" }}
+          onClick={() => removeImage()}
+        />
+      );
+    }
+    return "";
+  }
+
   const optionChanged = (answer: Answer, value: string) => {
     if (locked) { return; }
     answer.option = value;
@@ -43,7 +65,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
       <Grid
         container direction="row"
         justify="center" alignContent="center"
-        style={{height: '100%'}}
+        style={{height: '4vw'}}
       >
         <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} />
       </Grid>
@@ -57,7 +79,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
         justify="center" alignContent="center"
         className="drop-placeholder"
       >
-        Img
+        <AddCircleIcon /> jpg.
       </Grid>
     );
   }
@@ -79,7 +101,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
 
   return (
     <Grid container item xs={6}>
-      <div className="pair-match-option">
+      <div className={`pair-match-option ${answer.optionType === PairBoxType.Image ? 'pair-image' : ''}`}>
         <input
           disabled={locked}
           value={answer.option}
@@ -87,6 +109,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
           placeholder={"Enter Option " + (index + 1) + "..."}
         />
         {renderDropBox()}
+        {renderDeleteButton()}
       </div>
     </Grid>
   );
