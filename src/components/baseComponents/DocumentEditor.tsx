@@ -23,6 +23,9 @@ import List from '@ckeditor/ckeditor5-list/src/list';
 import MathType from '@wiris/mathtype-ckeditor5/src/plugin';
 // @ts-ignore
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
+// @ts-ignore
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+
 import './DocumentEditor.scss';
 
 
@@ -74,7 +77,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
       plugins: [
         Essentials, Bold, Italic, Paragraph,
         FontColor, Superscript, Subscript, List,
-        MathType
+        MathType, Alignment
       ],
       fontColor: {
         colors: [{
@@ -90,11 +93,13 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
       },
       toolbar: [
         'bold', 'italic', 'fontColor', 'superscript',
-        'subscript', 'mathType', 'chemType', 'bulletedList', 'numberedList'
+        'subscript', 'mathType', 'chemType',
+        'bulletedList', 'numberedList'
       ],
       placeholder: ''
     };
 
+    /* MediaEmbed plugin enables media links in editor */
     if (this.props.mediaEmbed) {
       config.plugins.push(MediaEmbed);
       config.toolbar.push('mediaEmbed');
