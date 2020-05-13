@@ -62,7 +62,7 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
             data={brief}
             toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
             onChange={setBriefText}
-            placeholder="Enter Brief Here"
+            placeholder="Enter Brief Here..."
           />
           <NavigationButtons
             step={ProposalStep.Brief}
