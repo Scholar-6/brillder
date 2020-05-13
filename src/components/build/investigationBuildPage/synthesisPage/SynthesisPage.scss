@@ -31,6 +31,15 @@ $border-radius: 0.6vw;
           }
         }
       }
+      .ck-toolbar_vertical {
+        border-radius: 0 !important;
+        .ck-toolbar__items {
+          height: 20vh;
+          .ck-button {
+            border-radius: 0;
+          }
+        }
+      }
 
       .ck-content {
         font-size: 1vw;
