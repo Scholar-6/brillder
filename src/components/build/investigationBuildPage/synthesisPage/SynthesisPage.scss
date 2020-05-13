@@ -34,8 +34,11 @@ $border-radius: 0.6vw;
       .ck-toolbar_vertical {
         border-radius: 0 !important;
         .ck-toolbar__items {
-          height: 20vh;
+          height: 5vh;
+          width: 20vh;
+          flex-flow: row wrap;
           .ck-button {
+            width: 5vh;
             border-radius: 0;
           }
         }
