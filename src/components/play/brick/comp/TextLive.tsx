@@ -2,6 +2,7 @@ import React from 'react';
 
 // @ts-ignore
 import MathJax from 'react-mathjax-preview'
+import {parseDataToArray, isMathJax} from 'components/services/mathJaxService';
 import './TextLive.scss';
 
 
@@ -10,14 +11,7 @@ interface TextProps {
 }
 
 const TextLive: React.FC<TextProps> = ({ component }) => {
-  const parseData = () => {
-    const res = component.value.replace(/<\/p>/gi, (s: string) => {
-      return s + '\n';
-    });
-    return res.match(/<(.+)>.*?<\/(.+)>/g);
-  }
-
-  var arr = parseData();
+  var arr = parseDataToArray(component.value);
 
   const renderMath = (data: string, i: number) => {
     return <MathJax math={data} key={i} />;
@@ -26,14 +20,14 @@ const TextLive: React.FC<TextProps> = ({ component }) => {
   return (
     <div className="text-play">
       {
-        arr ? arr.map((el:any, i:number) => {
-          const res = el.indexOf('<math xmlns="http://www.w3.org/1998/Math/MathML">');
-          if (res >= 0) {
+        arr.map((el:any, i:number) => {
+          const res = isMathJax(el);
+          if (res) {
             return renderMath(el, i);
           } else {
             return <div key={i} dangerouslySetInnerHTML={{ __html: el}} />
           }
-        }) : ""
+        })
       }
     </div>
   );
