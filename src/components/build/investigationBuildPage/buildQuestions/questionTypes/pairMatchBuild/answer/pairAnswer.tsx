@@ -2,6 +2,7 @@ import React from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Grid } from "@material-ui/core";
 import { useDropzone } from "react-dropzone";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import {Answer,  PairBoxType} from '../types';
 import {uploadFile} from 'components/services/uploadFile';
@@ -42,12 +43,30 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     update();
   }
 
+  const removeImage = () => {
+    if (locked) { return; }
+    answer.valueFile = "";
+    answer.answerType = PairBoxType.None;
+    update();
+  }
+
   const renderDeleteButton = () => {
+    if (locked) { return; }
+    if (answer.answerType === PairBoxType.Image) {
+      return (
+        <DeleteIcon
+          className="right-top-icon"
+          style={{ right: "1%", top: "2%" }}
+          onClick={() => removeImage()}
+        />
+      );
+    }
+
     if (length > 3) {
       return (
         <DeleteIcon
           className="right-top-icon"
-          style={{ right: "1%" }}
+          style={{ right: "1%", top: '2%' }}
           onClick={() => removeFromList(index)}
         />
       );
@@ -74,7 +93,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
         justify="center" alignContent="center"
         className="drop-placeholder"
       >
-        Img
+        <AddCircleIcon /> jpg.
       </Grid>
     );
   }
@@ -97,7 +116,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
 
   return (
     <Grid container item xs={6}>
-      <div className="pair-match-answer">
+      <div className={`pair-match-answer ${answer.answerType === PairBoxType.Image ? 'pair-image' : ''}`}>
         {renderDeleteButton()}
         <input
           disabled={locked}
