@@ -144,6 +144,23 @@ $box-radius: 0.4vw;
     }
   }
 
+  .drama-preview {
+    margin-left: 1.5vw;
+    margin-right: 1.5vw;
+    color: white;
+    text-align: center;
+    > div:nth-child(1) {
+      font-size: 3.2vw;
+      margin-top: 14.5vw;
+      font-family: $font-family-black;
+    }
+    > div:nth-child(2) {
+      margin-top: 12.8vw;
+      font-size: 2vw;
+      font-family: $font-family-bold;
+    }
+  }
+
   .economics-preview, .philosophy-preview {
     color: white;
     text-align: center;
