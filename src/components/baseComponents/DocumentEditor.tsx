@@ -34,6 +34,7 @@ export interface DocumentEditorProps {
   toolbar?: any,
   placeholder?: string,
   mediaEmbed?: boolean,
+  defaultAlignment?: string,
   onChange(data: string): void,
 }
 
@@ -69,6 +70,11 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
     if (current) {
       current.appendChild(editor.ui.view.toolbar.element);
     }
+    const {defaultAlignment} = this.props;
+    console.log(defaultAlignment);
+    if (defaultAlignment) {
+      editor.execute('alignment', { value: 'center' });
+    }
     this.setState({...this.state, editor});
   }
 
@@ -79,6 +85,9 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
         FontColor, Superscript, Subscript, List,
         MathType, Alignment
       ],
+      alignment: {
+        value: 'center'
+      },
       fontColor: {
         colors: [{
           color: '#C43C30',

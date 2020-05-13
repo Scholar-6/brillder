@@ -119,8 +119,14 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return "";
   }
 
+  renderOption(answer: Answer) {
+    if (answer.optionType && answer.optionType === PairBoxType.Image) {
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} />;
+    }
+    return answer.option;
+  }
+
   renderAnswer(answer: Answer) {
-    console.log(answer.answerType);
     if (answer.answerType && answer.answerType === PairBoxType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
     }
@@ -143,7 +149,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
                       : ""
                    }
                 </ListItemText>
-                <ListItemText><span className="pair-match-play-option-text">{item.option}</span></ListItemText>
+                <ListItemText>
+                  <span className="pair-match-play-option-text">
+                    {this.renderOption(item as any)}
+                  </span>
+                </ListItemText>
               </ListItem>
             ))
           }
