@@ -53,6 +53,7 @@
     "react-dropzone": "^10.2.2",
     "react-image-crop": "^8.5.0",
     "react-mathjax": "^1.0.1",
+    "react-mathjax-preview": "^1.2.4",
     "react-mathjax-ts": "^0.1.2",
     "react-record": "^1.0.5",
     "react-redux": "7.0.1",
