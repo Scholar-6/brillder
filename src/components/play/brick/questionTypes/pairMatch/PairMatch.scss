@@ -9,6 +9,11 @@
     .pair-match-play-option-text {
       font-size: 10px;
       line-height: 3;
+      height: 24px;
+
+      img {
+        height: 45px; 
+      }
     }
     .pair-match-play-option-icon {
       display: inline-block;
