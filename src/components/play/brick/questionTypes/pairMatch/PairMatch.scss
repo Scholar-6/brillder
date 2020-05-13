@@ -59,5 +59,9 @@
   }
   .pair-match-play-option.pair-match-image-choice {
     height: 113px;
+    padding: 0;
+    img {
+      min-height: 60px;
+    }
   }
 }
