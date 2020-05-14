@@ -113,10 +113,14 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     );
   }
 
+  let customClass = '';
+  if (answer.optionType === PairBoxType.Image || answer.answerType === PairBoxType.Image) {
+    customClass = 'pair-image';
+  }
 
   return (
     <Grid container item xs={6}>
-      <div className={`pair-match-answer ${answer.answerType === PairBoxType.Image ? 'pair-image' : ''}`}>
+      <div className={`pair-match-answer ${customClass}`}>
         {renderDeleteButton()}
         <input
           disabled={locked}

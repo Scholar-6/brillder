@@ -99,9 +99,14 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     );
   }
 
+  let customClass = '';
+  if (answer.optionType === PairBoxType.Image || answer.answerType === PairBoxType.Image) {
+    customClass = 'pair-image';
+  }
+
   return (
     <Grid container item xs={6}>
-      <div className={`pair-match-option ${answer.optionType === PairBoxType.Image ? 'pair-image' : ''}`}>
+      <div className={`pair-match-option ${customClass}`}>
         <input
           disabled={locked}
           value={answer.option}
