@@ -10,11 +10,22 @@
     .ck-button {
       color: $dark-blue;
     }
+    .ck-custom-dropdown {
+      .ck-splitbutton__action {
+        font-size: 0;
+        padding: 0;
+        width: 0;
+      }
+      .ck-dropdown__panel {
+        left: auto;
+        right: 0;
+      }
+    }
+    .ck-button__label {
+      font-family: $font-family-regular;
+    }
   }
 
-  .ck-button__label {
-    font-family: $font-family-regular;
-  }
 
   .ck-content {
     color: $dark-blue;
