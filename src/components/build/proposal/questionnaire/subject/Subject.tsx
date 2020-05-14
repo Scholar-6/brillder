@@ -88,6 +88,13 @@ const EnglishComponent:React.FC = () => {
   )
 }
 
+const DramaComponent:React.FC = () => {
+  return (
+    <div className="drama-preview">
+    </div>
+  )
+}
+
 const GeographyComponent:React.FC = () => {
   return (
     <div className="geography-preview">
@@ -230,6 +237,8 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
       return EconomicsComponent;
     } else if (subjectName === 'English Literature') {
       return EnglishComponent;
+    } else if (subjectName === 'Drama & Theatre') {
+        return DramaComponent;
     } else if (subjectName === 'Geography') {
       return GeographyComponent;
     } else if (subjectName === 'German') {
