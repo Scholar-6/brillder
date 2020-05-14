@@ -165,9 +165,6 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
           config={config}
           onInit={(e:any) => this.handleOnInit(e)}
           onChange={(e: any, editor: any) => {
-            if (!this.state.focused) {
-              return;
-            }
             const data = editor.getData();
             this.props.onChange(data);
             this.setState({...this.state, data});
