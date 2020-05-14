@@ -7,6 +7,7 @@ import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
+import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import {checkVisibility} from '../../../services/hintService';
 
@@ -110,7 +111,12 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
               onClick={() => this.setActiveItem(index)}>
                 <div style={{lineHeight: 1}}>
                   <div>{input.value}</div>
-                  {this.renderEachHint(index)}
+                  <ReviewEachHint
+                    isPhonePreview={this.props.isPreview}
+                    attempt={this.props.attempt}
+                    index={index}
+                    hint={this.props.question.hint}
+                  />
                 </div>
             </Button>
           )

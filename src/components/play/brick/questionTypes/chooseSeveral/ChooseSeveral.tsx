@@ -2,11 +2,11 @@ import React from 'react';
 import { Button, Grid } from '@material-ui/core';
 
 import './ChooseSeveral.scss';
-import { HintStatus } from "model/question";
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import DenimTickRect from 'components/play/components/DenimTickRect';
 import DenimCrossRect from 'components/play/components/DenimCrossRect';
+import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from 'components/play/brick/baseComponents/ReviewGlobalHint';
 import {CompQuestionProps} from '../types';
 
@@ -116,6 +116,10 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     return "";
   }
 
+  renderEachHint(index: number) {
+
+  }
+
   renderButton(input: any, index:number) {
     let active = this.state.activeItems.find(i => i === index) as number;
 
@@ -136,11 +140,12 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
           <Grid item xs={1}>
           </Grid>
           <Grid item xs={11}>
-            {
-              (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && input.hint) ?
-                <span className="question-hint" dangerouslySetInnerHTML={{ __html: input.hint}} />
-                : ""
-            }
+            <ReviewEachHint
+              isPhonePreview={this.props.isPreview}
+              attempt={this.props.attempt}
+              index={index}
+              hint={this.props.question.hint}
+            />
           </Grid>
         </Grid>
         </div>

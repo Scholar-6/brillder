@@ -9,7 +9,7 @@ import {CompQuestionProps} from '../types';
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
-import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
+import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 
 
@@ -131,11 +131,12 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
                       {answer.value}
                     </Grid>
                     <Grid container direction="row" justify="center">
-                      {
-                        (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && this.props.question.hint.list.length > 0) ?
-                          <span className="question-hint" dangerouslySetInnerHTML={{ __html: answer.hint}} />
-                          : ""
-                      }
+                      <ReviewEachHint
+                        isPhonePreview={this.props.isPreview}
+                        attempt={this.props.attempt}
+                        index={i}
+                        hint={this.props.question.hint}
+                      />
                     </Grid>
                   </Grid>
                 </Grid>

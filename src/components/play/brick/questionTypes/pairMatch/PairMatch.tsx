@@ -13,6 +13,7 @@ import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
+import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import DenimCrossRect from 'components/play/components/DenimCrossRect';
 import DenimTickRect from 'components/play/components/DenimTickRect';
@@ -145,16 +146,17 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
               >
                 {this.renderIcon(i)}
                 <ListItemText>
-                  {
-                    (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && this.props.question.hint.list.length > 0)
-                      ? <span className="question-hint" dangerouslySetInnerHTML={{ __html: item.hint}} />
-                      : ""
-                  }
-                </ListItemText>
-                <ListItemText>
                   <span className="pair-match-play-option-text">
                     {this.renderOption(item as any)}
                   </span>
+                </ListItemText>
+                <ListItemText>
+                  <ReviewEachHint
+                    isPhonePreview={this.props.isPreview}
+                    attempt={this.props.attempt}
+                    index={i}
+                    hint={this.props.question.hint}
+                  />
                 </ListItemText>
               </ListItem>
             ))
