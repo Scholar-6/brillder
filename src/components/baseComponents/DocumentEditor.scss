@@ -21,6 +21,14 @@
         left: auto;
         right: 0;
       }
+      .ck-splitbutton__action {
+        visibility: hidden;
+        border: none;
+        padding: 0;
+        margin: 0;
+        height: 0;
+        width: 0;
+      }
       .ck-splitbutton__arrow {
         width: 2vw;
         padding: 0;
