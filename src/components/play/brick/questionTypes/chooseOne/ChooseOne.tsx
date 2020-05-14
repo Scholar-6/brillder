@@ -2,8 +2,8 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 
 import './ChooseOne.scss';
-import { Question } from "model/question";
 import CompComponent from '../Comp';
+import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
@@ -20,10 +20,8 @@ interface ChooseOneComponent {
   list: ChooseOneChoice[];
 }
 
-interface ChooseOneProps {
-  question: Question;
+interface ChooseOneProps extends CompQuestionProps {
   component: ChooseOneComponent;
-  attempt?: ComponentAttempt;
   answers: number;
 }
 
@@ -110,7 +108,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
             </Button>
           )
         }
-        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
+        <ReviewGlobalHint attempt={this.props.attempt} isPhonePreview={this.props.isPreview} hint={this.props.question.hint} />
       </div>
     );
   }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Question } from "model/question";
 import { TextField, Grid } from '@material-ui/core';
 import CompComponent from '../Comp';
 
@@ -7,14 +6,13 @@ import './ShortAnswer.scss';
 import { ComponentAttempt } from 'components/play/brick/model/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
+import {CompQuestionProps} from '../types';
 
 
-interface ShortAnswerProps {
-  question: Question;
+interface ShortAnswerProps extends CompQuestionProps {
   component: any;
   attempt: ComponentAttempt;
   answers: string[];
-  isPreview: boolean;
 }
 
 interface ShortAnswerState {
@@ -147,7 +145,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
             </div>
           )
         }
-        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
+        <ReviewGlobalHint attempt={this.props.attempt} isPhonePreview={this.props.isPreview} hint={this.props.question.hint} />
       </div>
     );
   }

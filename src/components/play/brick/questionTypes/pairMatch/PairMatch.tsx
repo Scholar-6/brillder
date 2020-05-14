@@ -1,5 +1,7 @@
 
 import React from 'react';
+import { ReactSortable } from 'react-sortablejs';
+import { Grid } from '@material-ui/core';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -7,13 +9,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import './PairMatch.scss';
-import { Question } from "model/question";
 import CompComponent from '../Comp';
+import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import { ReactSortable } from 'react-sortablejs';
-import { Grid } from '@material-ui/core';
 import DenimCrossRect from 'components/play/components/DenimCrossRect';
 import DenimTickRect from 'components/play/components/DenimTickRect';
 import {Answer, PairBoxType} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/pairMatchBuild/types';
@@ -33,12 +33,9 @@ interface PairMatchComponent {
   options: any[];
 }
 
-interface PairMatchProps {
-  question: Question;
+interface PairMatchProps extends CompQuestionProps {
   component: PairMatchComponent;
-  attempt?: ComponentAttempt;
   answers: number;
-  isPreview?: boolean
 }
 
 interface PairMatchState {
@@ -192,7 +189,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
             }
           </ReactSortable>
         </Grid>
-        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
+        <ReviewGlobalHint
+          attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
+          hint={this.props.question.hint}
+        />
       </div>
     );
   }

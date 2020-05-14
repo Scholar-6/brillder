@@ -2,15 +2,16 @@ import React from 'react';
 import { Button, Grid } from '@material-ui/core';
 
 import './ChooseSeveral.scss';
-import { Question, HintStatus } from "model/question";
+import { HintStatus } from "model/question";
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import DenimTickRect from 'components/play/components/DenimTickRect';
 import DenimCrossRect from 'components/play/components/DenimCrossRect';
 import ReviewGlobalHint from 'components/play/brick/baseComponents/ReviewGlobalHint';
+import {CompQuestionProps} from '../types';
 
-interface ChooseSeveralProps {
-  question: Question;
+
+interface ChooseSeveralProps extends CompQuestionProps {
   component: any;
   attempt: any;
   answers: number[];
@@ -155,7 +156,11 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
         {
           component.list.map((input: any, index: number) => this.renderButton(input, index))
         }
-        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
+        <ReviewGlobalHint
+          attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
+          hint={this.props.question.hint}
+        />
       </div>
     );
   }

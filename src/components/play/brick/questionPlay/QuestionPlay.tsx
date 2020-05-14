@@ -29,7 +29,7 @@ interface QuestionProps {
   attempt?: ComponentAttempt;
   question: Question;
   isLastOne: boolean;
-  isPreview?: boolean;
+  isPhonePreview?: boolean;
   answers: any;
   next(): void;
 }
@@ -93,7 +93,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
         key={index}
         attempt={this.props.attempt}
         answers={this.props.answers}
-        isPreview={this.props.isPreview}
+        isPreview={this.props.isPhonePreview}
         question={question}
         component={component} />
     }
@@ -147,7 +147,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
           question.components.map((component, index) => renderComponent(component, index))
         }
         {
-          !this.props.isPreview ?
+          !this.props.isPhonePreview ?
           <Grid container direction="row" justify="flex-end" className="next-question-button-container">
             <FormControlLabel
               className="next-question-button"
