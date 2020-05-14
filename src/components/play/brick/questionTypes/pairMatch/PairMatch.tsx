@@ -149,10 +149,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
                 {this.renderIcon(i)}
                 <ListItemText>
                   {
-                    (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && this.props.question.hint.list.length > 0) ?
-                      <span className="question-hint" dangerouslySetInnerHTML={{ __html: item.hint}} />
+                    (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && this.props.question.hint.list.length > 0)
+                      ? <span className="question-hint" dangerouslySetInnerHTML={{ __html: item.hint}} />
                       : ""
-                   }
+                  }
                 </ListItemText>
                 <ListItemText>
                   <span className="pair-match-play-option-text">
