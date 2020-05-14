@@ -150,14 +150,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
                     {this.renderOption(item as any)}
                   </span>
                 </ListItemText>
-                <ListItemText>
-                  <ReviewEachHint
-                    isPhonePreview={this.props.isPreview}
-                    attempt={this.props.attempt}
-                    index={i}
-                    hint={this.props.question.hint}
-                  />
-                </ListItemText>
               </ListItem>
             ))
           }
