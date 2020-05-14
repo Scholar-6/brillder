@@ -65,7 +65,6 @@ class InsertDropDown extends Plugin {
       const dropdownView = createDropdown(locale, SplitButtonView);
       dropdownView.class="ck-custom-dropdown";
       const buttons:any[] = [];
-      buttons.push(editor.ui.componentFactory.create('superscript'));
       buttons.push(editor.ui.componentFactory.create('subscript'));
       buttons.push(editor.ui.componentFactory.create('strikethrough'));
       addToolbarToDropdown(dropdownView, buttons);
@@ -139,7 +138,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
         }]
       },
       toolbar: [
-        'bold', 'italic', 'fontColor', 'insertDropDown', 'mathType', 'chemType',
+        'bold', 'italic', 'fontColor', 'superscript', 'insertDropDown', 'mathType', 'chemType',
         'bulletedList', 'numberedList',
       ],
       placeholder: ''
