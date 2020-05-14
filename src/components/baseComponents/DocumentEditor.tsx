@@ -65,16 +65,27 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
     }
   }
 
+  replaceLabelName = () => {
+    const elements = document.getElementsByClassName("ck-button__label");
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements.item(i);
+      if (element) {
+        let text = element.textContent;
+        if (text === 'Remove color') {
+          element.innerHTML = 'Remove colour';
+        }
+      }
+    }
+  }
+
   handleOnInit = (editor: any) => {
     const {current} = this.state.ref;
     if (current) {
       current.appendChild(editor.ui.view.toolbar.element);
     }
-    const {defaultAlignment} = this.props;
-    console.log(defaultAlignment);
-    if (defaultAlignment) {
-      editor.execute('alignment', { value: 'center' });
-    }
+
+    this.replaceLabelName();
+
     this.setState({...this.state, editor});
   }
 
@@ -85,9 +96,6 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
         FontColor, Superscript, Subscript, List,
         MathType, Alignment
       ],
-      alignment: {
-        value: 'center'
-      },
       fontColor: {
         colors: [{
           color: '#C43C30',
