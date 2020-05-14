@@ -8,6 +8,7 @@ import {ComponentAttempt} from 'components/play/brick/model/model';
 import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
+import {checkVisibility} from '../../../services/hintService';
 
 
 interface ChooseOneChoice {
@@ -83,14 +84,24 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     return attempt;
   }
 
+  renderEachHint(index: number) {
+    const isShown = checkVisibility(this.props.attempt, this.props.isPreview);
+    const {hint} = this.props.question;
+
+    if (isShown && this.props.question.hint.status === HintStatus.Each && hint.list[index]) {
+      return (
+        <span className="question-hint" dangerouslySetInnerHTML={{ __html: hint.list[index]}} />
+      );
+    }
+    return "";
+  }
+
   render() {
     const { activeItem } = this.state;
 
     return (
       <div className="choose-one-live">
-        {
-          (this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""
-        }
+        {(this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""}
         {
           this.props.component.list.map((input: any, index: number) =>
             <Button
@@ -99,16 +110,16 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
               onClick={() => this.setActiveItem(index)}>
                 <div style={{lineHeight: 1}}>
                   <div>{input.value}</div>
-                  {
-                    (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && input.hint) ?
-                      <span className="question-hint" dangerouslySetInnerHTML={{ __html: input.hint}} />
-                      : ""
-                  }
+                  {this.renderEachHint(index)}
                 </div>
             </Button>
           )
         }
-        <ReviewGlobalHint attempt={this.props.attempt} isPhonePreview={this.props.isPreview} hint={this.props.question.hint} />
+        <ReviewGlobalHint
+          attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
+          hint={this.props.question.hint}
+        />
       </div>
     );
   }
