@@ -1,16 +1,16 @@
 import React from "react";
-import { Question } from "model/question";
 import { Grid, Select } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
-import CompComponent from "../Comp";
 
+import CompComponent from "../Comp";
 import "./MissingWord.scss";
+import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/brick/model/model";
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import { HintStatus } from "components/build/baseComponents/Hint/Hint";
 
-interface MissingWordProps {
-  question: Question;
+
+interface MissingWordProps extends CompQuestionProps {
   component: any;
   attempt: ComponentAttempt;
   answers: number[];
@@ -140,6 +140,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
         ))}
         <ReviewGlobalHint
           attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}
         />
       </div>

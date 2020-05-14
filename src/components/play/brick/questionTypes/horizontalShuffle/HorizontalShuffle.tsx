@@ -1,15 +1,16 @@
 
 import React from 'react';
+import Card from '@material-ui/core/Card';
+import { ReactSortable } from 'react-sortablejs';
 
 import './HorizontalShuffle.scss';
 import { Question } from "model/question";
 import CompComponent from '../Comp';
+import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import { ReactSortable } from 'react-sortablejs';
-import Card from '@material-ui/core/Card';
 
 
 interface HorizontalShuffleChoice {
@@ -22,10 +23,8 @@ interface HorizontalShuffleComponent {
   list: HorizontalShuffleChoice[];
 }
 
-interface VerticalShuffleProps {
-  question: Question;
+interface VerticalShuffleProps extends CompQuestionProps {
   component: HorizontalShuffleComponent;
-  attempt?: ComponentAttempt;
   answers: number;
 }
 
@@ -119,7 +118,11 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
             ))
           }
         </ReactSortable>
-        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
+        <ReviewGlobalHint
+          attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
+          hint={this.props.question.hint}
+        />
       </div>
     );
   }

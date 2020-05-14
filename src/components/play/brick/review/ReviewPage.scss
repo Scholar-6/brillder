@@ -16,16 +16,17 @@
     }
   }
 
-  .question-hint-global {
-    width: 100%;
-    background: yellow;
-    font: 500 16px/24px $font-family-regular;
-    line-height: 1;
-    background: #fffc7f;
-    color: #000;
-    > div {
-      padding: 2px 5px;
-    }
-    border-radius: 1px 2px 3px 4px;
+}
+
+.question-hint-global {
+  width: 100%;
+  background: yellow;
+  font: 500 16px/24px $font-family-regular;
+  line-height: 1;
+  background: #fffc7f;
+  color: #000;
+  > div {
+    padding: 2px 5px;
   }
+  border-radius: 1px 2px 3px 4px;
 }
