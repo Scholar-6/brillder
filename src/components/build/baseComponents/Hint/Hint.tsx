@@ -87,8 +87,13 @@ const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props 
 
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
     if (locked) { return; }
-    setState({...state, status});
-    onChange({...state, status});
+    if (status === HintStatus.All) {
+      setState({...state, status, list: []});
+      onChange({...state, status, list: []});
+    } else {
+      setState({...state, status});
+      onChange({...state, status});
+    }
   };
 
   const renderHintInputs = () => {

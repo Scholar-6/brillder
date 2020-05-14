@@ -7,6 +7,7 @@ import { ComponentAttempt } from 'components/play/brick/model/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import {CompQuestionProps} from '../types';
+import {checkVisibility} from '../../../services/hintService';
 
 
 interface ShortAnswerProps extends CompQuestionProps {
@@ -95,8 +96,9 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   }
 
   renderEachHint(index: number) {
+    const isShown = checkVisibility(this.props.attempt, this.props.isPreview);
     const {hint} = this.props.question;
-    if (this.props.attempt?.correct === false && hint.status === HintStatus.Each && hint.list[index]) {
+    if (isShown && hint.status === HintStatus.Each && hint.list[index]) {
       return <div className="question-hint" dangerouslySetInnerHTML={{ __html: hint.list[index]}} />;
     }
     return "";
