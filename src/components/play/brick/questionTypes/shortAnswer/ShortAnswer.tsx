@@ -4,6 +4,7 @@ import CompComponent from '../Comp';
 
 import './ShortAnswer.scss';
 import { ComponentAttempt } from 'components/play/brick/model/model';
+import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import {CompQuestionProps} from '../types';
@@ -95,15 +96,6 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     return attempt;
   }
 
-  renderEachHint(index: number) {
-    const isShown = checkVisibility(this.props.attempt, this.props.isPreview);
-    const {hint} = this.props.question;
-    if (isShown && hint.status === HintStatus.Each && hint.list[index]) {
-      return <div className="question-hint" dangerouslySetInnerHTML={{ __html: hint.list[index]}} />;
-    }
-    return "";
-  }
-
   renderTextField(index: number) {
     if (this.props.isPreview) {
       let {value} = this.props.component.list[index];
@@ -142,7 +134,12 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
                 {this.renderTextField(index)}
               </Grid>
               <Grid container direction="row" justify="center">
-                {this.renderEachHint(index)}
+                <ReviewEachHint
+                  isPhonePreview={this.props.isPreview}
+                  attempt={this.props.attempt}
+                  index={index}
+                  hint={this.props.question.hint}
+                />
               </Grid>
             </div>
           )
