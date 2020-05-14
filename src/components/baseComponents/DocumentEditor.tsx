@@ -139,8 +139,8 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
         }]
       },
       toolbar: [
-        'bold', 'italic', 'fontColor', 'mathType', 'chemType',
-        'bulletedList', 'numberedList', 'insertDropDown'
+        'bold', 'italic', 'fontColor', 'insertDropDown', 'mathType', 'chemType',
+        'bulletedList', 'numberedList',
       ],
       placeholder: ''
     };

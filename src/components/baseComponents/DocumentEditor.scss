@@ -11,6 +11,7 @@
       color: $dark-blue;
     }
     .ck-custom-dropdown {
+      margin-right: 29% !important;
       .ck-splitbutton__action {
         font-size: 0;
         padding: 0;
@@ -20,7 +21,27 @@
         left: auto;
         right: 0;
       }
+      .ck-splitbutton__arrow {
+        width: 2vw;
+        padding: 0;
+      .ck-button__icon {
+        width: 2vw;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        z-index: 1000;
+        background-position: center;
+        background-image: url(/feathericons/more-horizontal-blue.png) !important;
+          path {
+            opacity: 0;
+          }
+        }
+      }
     }
+
+    .ck.ck-button.ck-on:not(.ck-disabled):hover, a.ck.ck-button.ck-on:not(.ck-disabled):hover {
+      background-color:transparent !important;
+    }
+
     .ck-button__label {
       font-family: $font-family-regular;
     }
