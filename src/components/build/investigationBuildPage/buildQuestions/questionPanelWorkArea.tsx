@@ -41,8 +41,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
     {id: 1, type: QuestionComponentTypeEnum.Text},
     {id: 2, type: QuestionComponentTypeEnum.Quote},
     {id: 3, type: QuestionComponentTypeEnum.Image},
-    {id: 4, type: QuestionComponentTypeEnum.Sound},
-    {id: 5, type: QuestionComponentTypeEnum.Equation},
+    {id: 4, type: QuestionComponentTypeEnum.Sound}
   ]);
   const { type } = question;
   document.title = QuestionTypeEnum[type];
@@ -107,14 +106,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
                   hoverMarginTop="0.5vw"
                   fontFamily="Brandon Grotesque Bold"
                   value={QuestionComponentTypeEnum.Sound} />
-                <DragBox
-                  locked={locked}
-                  name="f(x)" fontSize="2.5vw" label="E Q U A T I O N"
-                  fontFamily="Brandon Grotesque Bold Italic"
-                  hoverMarginTop="0.9vw"
-                  marginTop="-1vw" 
-
-                  value={QuestionComponentTypeEnum.Equation} />
                 </ReactSortable>
               </Grid>
             </Grid>

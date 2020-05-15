@@ -13,7 +13,6 @@ export function getNonEmptyComponent(components: any[]) {
     c.type === QuestionComponentTypeEnum.Text ||
     c.type === QuestionComponentTypeEnum.Image ||
     c.type === QuestionComponentTypeEnum.Quote ||
-    c.type === QuestionComponentTypeEnum.Equation ||
     c.type === QuestionComponentTypeEnum.Sound
   );
 }
