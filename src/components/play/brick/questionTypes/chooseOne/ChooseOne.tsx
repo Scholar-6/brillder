@@ -11,6 +11,7 @@ import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import {checkVisibility} from '../../../services/hintService';
 import MathInHtml from '../../baseComponents/MathInHtml';
+import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 
 
 interface ChooseOneChoice {
@@ -98,6 +99,14 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     return "";
   }
 
+  renderData(answer: any) {
+    if (answer.answerType === QuestionValueType.Image) {
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
+    } else {
+      return <MathInHtml value={answer.value} />;
+    }
+  }
+
   render() {
     const { activeItem } = this.state;
 
@@ -111,7 +120,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
               key={index}
               onClick={() => this.setActiveItem(index)}>
                 <div style={{lineHeight: 1}}>
-                  <MathInHtml value={input.value} />
+                  {this.renderData(input)}
                   <ReviewEachHint
                     isPhonePreview={this.props.isPreview}
                     attempt={this.props.attempt}
