@@ -6,7 +6,6 @@ import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'
 import SoundComponent from './Sound/Sound'
-import EquationComponent from './Equation/Equation'
 import DropBox from './DropBox';
 import HintComponent, { HintState } from '../../../baseComponents/Hint/Hint';
 
@@ -69,8 +68,6 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     InnerComponent = QuoteComponent;
   } else if (type === QuestionComponentTypeEnum.Sound) {
     InnerComponent = SoundComponent;
-  } else if (type === QuestionComponentTypeEnum.Equation) {
-    InnerComponent = EquationComponent;
   } else if (type === QuestionComponentTypeEnum.Component) {
     InnerComponent = uniqueComponent;
     let numberOfAnswers = getNumberOfAnswers(component);
