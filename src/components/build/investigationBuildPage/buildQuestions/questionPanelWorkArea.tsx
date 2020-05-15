@@ -41,7 +41,8 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
     {id: 1, type: QuestionComponentTypeEnum.Text},
     {id: 2, type: QuestionComponentTypeEnum.Quote},
     {id: 3, type: QuestionComponentTypeEnum.Image},
-    {id: 4, type: QuestionComponentTypeEnum.Sound}
+    {id: 4, type: QuestionComponentTypeEnum.Sound},
+    {id: 4, type: QuestionComponentTypeEnum.Graph}
   ]);
   const { type } = question;
   document.title = QuestionTypeEnum[type];
@@ -74,39 +75,53 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
           <Grid container direction="row">
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
               <Grid container item xs={12} className="left-sidebar" alignItems="center">
+              
                 <ReactSortable
                   list={componentTypes}
                   group={{ name: "cloning-group-name", pull: "clone" }}
-                  setList={setComponentType} sort={false}>
-                <DragBox
-                  locked={locked}
-                  name="T" fontSize="3.4vw" label="T E X T"
-                  hoverMarginTop="0.5vw"
-                  fontFamily="Brandon Grotesque Bold"
-                  value={QuestionComponentTypeEnum.Text} />
-                <DragBox
-                  locked={locked}
-                  name="“ ”" fontSize="2.5vw" label="Q U O T E"
-                  hoverMarginTop="-0.65vw"
-                  fontFamily="Brandon Grotesque Bold"
-                  letterSpacing="0.625vw"
-                  marginLeft="0.3vw"
-                  value={QuestionComponentTypeEnum.Quote} />
-                <DragBox
-                  locked={locked}
-                  name="jpg." fontSize="2.5vw" label="I M A G E"
-                  hoverMarginTop="1vw"
-                  marginTop="-2.8vw"
-                  fontFamily="Brandon Grotesque Bold"
-                  value={QuestionComponentTypeEnum.Image} />
-                <DragBox
-                  locked={locked}
-                  isImage={true} src="/images/soundicon.png"
-                  label="S O U N D" 
-                  hoverMarginTop="0.5vw"
-                  fontFamily="Brandon Grotesque Bold"
-                  value={QuestionComponentTypeEnum.Sound} />
+                  setList={setComponentType} sort={false}
+                >
+                  <DragBox
+                    locked={locked}
+                    name="T" fontSize="3.4vw" label="T E X T"
+                    hoverMarginTop="0.5vw"
+                    fontFamily="Brandon Grotesque Bold"
+                    value={QuestionComponentTypeEnum.Text}
+                  />
+                  <DragBox
+                    locked={locked}
+                    name="“ ”" fontSize="2.5vw" label="Q U O T E"
+                    hoverMarginTop="-0.65vw"
+                    fontFamily="Brandon Grotesque Bold"
+                    letterSpacing="0.625vw"
+                    marginLeft="0.3vw"
+                    value={QuestionComponentTypeEnum.Quote}
+                  />
+                  <DragBox
+                    locked={locked}
+                    name="jpg." fontSize="2.5vw" label="I M A G E"
+                    hoverMarginTop="1vw"
+                    marginTop="-2.8vw"
+                    fontFamily="Brandon Grotesque Bold"
+                    value={QuestionComponentTypeEnum.Image}
+                  />
+                  <DragBox
+                    locked={locked}
+                    isImage={true} src="/images/soundicon.png"
+                    label="S O U N D" 
+                    hoverMarginTop="0.5vw"
+                    fontFamily="Brandon Grotesque Bold"
+                    value={QuestionComponentTypeEnum.Sound}
+                  />
                 </ReactSortable>
+                <DragBox
+                  locked={true}
+                  name="f(x)" fontSize="2.5vw" label="G R A P H"
+                  fontFamily="Brandon Grotesque Bold Italic"
+                  hoverMarginTop="0.9vw"
+                  marginTop="-1vw"
+                  value={QuestionComponentTypeEnum.Graph}
+                />
               </Grid>
             </Grid>
             <Grid container item xs={5} sm={6} md={6} className="question-components-list">

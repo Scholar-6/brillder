@@ -5,6 +5,7 @@ export enum QuestionComponentTypeEnum {
   Quote = 3,
   Image = 4,
   Sound = 5,
+  Graph = 6,
 
   Component= 127,
 }
