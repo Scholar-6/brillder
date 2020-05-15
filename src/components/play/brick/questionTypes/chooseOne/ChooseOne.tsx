@@ -10,6 +10,7 @@ import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import {checkVisibility} from '../../../services/hintService';
+import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 
 
 interface ChooseOneChoice {
@@ -110,7 +111,11 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
               key={index}
               onClick={() => this.setActiveItem(index)}>
                 <div style={{lineHeight: 1}}>
-                  <div>{input.value}</div>
+                  {
+                    input.answerType === QuestionValueType.Image
+                      ? <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${input.valueFile}`} />
+                      : <div dangerouslySetInnerHTML={{ __html: input.value}} />
+                  }
                   <ReviewEachHint
                     isPhonePreview={this.props.isPreview}
                     attempt={this.props.attempt}
