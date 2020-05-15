@@ -1,12 +1,9 @@
 import {QuestionValueType} from '../types';
 
 
-export interface Answer {
+export interface ChooseOneAnswer {
   checked: boolean;
   value: string;
   valueFile: string;
   answerType?: QuestionValueType; 
-  option: string;
-  optionFile: string;
-  optionType?: QuestionValueType;
 }

@@ -2,7 +2,8 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import {Answer, PairBoxType} from '../types';
+import {QuestionValueType} from '../../types';
+import {Answer} from '../types';
 import QuestionImageDropZone from '../../../baseComponents/QuestionImageDropzone';
 
 
@@ -19,12 +20,12 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
   const removeImage = () => {
     if (locked) { return; }
     answer.optionFile = "";
-    answer.optionType = PairBoxType.None;
+    answer.optionType = QuestionValueType.None;
     update();
   }
 
   const renderDeleteButton = () => {
-    if (answer.optionType === PairBoxType.Image) {
+    if (answer.optionType === QuestionValueType.Image) {
       return (
         <DeleteIcon
           className="right-top-icon"
@@ -40,7 +41,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     if (locked) { return; }
     answer.option = value;
     answer.optionFile = "";
-    answer.optionType = PairBoxType.String;
+    answer.optionType = QuestionValueType.String;
     update();
   }
 
@@ -60,12 +61,12 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     if (locked) {return;}
     answer.option = "";
     answer.optionFile = fileName;
-    answer.optionType = PairBoxType.Image;
+    answer.optionType = QuestionValueType.Image;
     update();
   }
 
   let customClass = '';
-  if (answer.optionType === PairBoxType.Image || answer.answerType === PairBoxType.Image) {
+  if (answer.optionType === QuestionValueType.Image || answer.answerType === QuestionValueType.Image) {
     customClass = 'pair-image';
   }
 
@@ -80,7 +81,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
         />
         <QuestionImageDropZone
           answer={answer}
-          type={answer.optionType || PairBoxType.None}
+          type={answer.optionType || QuestionValueType.None}
           fileName={answer.optionFile}
           locked={locked}
           update={setImage}

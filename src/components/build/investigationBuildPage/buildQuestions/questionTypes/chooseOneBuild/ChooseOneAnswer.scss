@@ -67,3 +67,14 @@
     opacity: 0.5;
   }
 }
+
+.choose-one-box.big-answer {
+  .document-editor {
+    > div > .ck-toolbar {
+      height: 14vh;
+    }
+    .ck-content {
+      padding-top: 10vh;
+    }
+  }
+}

@@ -1,7 +1,8 @@
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, Hint, HintStatus
 } from 'model/question';
-import { PairBoxType, Answer } from '../buildQuestions/questionTypes/pairMatchBuild/types';
+import {QuestionValueType} from '../buildQuestions/questionTypes/types';
+import { Answer } from '../buildQuestions/questionTypes/pairMatchBuild/types';
 
 const getUniqueComponent = (components: any[]) => {
   return components.find(c => c.type === QuestionComponentTypeEnum.Component);
@@ -54,18 +55,18 @@ const validateCheckedAnswer = (comp: any) => {
 
 const validatePairMatch = (comp: any) => {
   const validateChoice = (a: Answer) => {
-    if (a.answerType === PairBoxType.Image && !a.valueFile) {
+    if (a.answerType === QuestionValueType.Image && !a.valueFile) {
       return false;
-    } else if (a.answerType !== PairBoxType.Image && !a.value) {
+    } else if (a.answerType !== QuestionValueType.Image && !a.value) {
       return false;
     }
     return true;
   }
 
   const validateOption = (a: Answer) => {
-    if (a.optionType === PairBoxType.Image && !a.optionFile) {
+    if (a.optionType === QuestionValueType.Image && !a.optionFile) {
       return false;
-    } else if (a.optionType !== PairBoxType.Image && !a.option) {
+    } else if (a.optionType !== QuestionValueType.Image && !a.option) {
       return false;
     }
     return true;

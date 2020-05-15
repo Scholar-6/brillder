@@ -5,22 +5,24 @@ import Checkbox from "@material-ui/core/Checkbox";
 import './ChooseOneAnswer.scss'; 
 import DocumentCKEditor from "components/baseComponents/DocumentEditor";
 import QuestionImageDropzone from "../../baseComponents/QuestionImageDropzone";
-import { PairBoxType } from "../pairMatchBuild/types";
+import { QuestionValueType } from "../types";
+import {ChooseOneAnswer} from './types';
+import { Grid } from "@material-ui/core";
 
 
 export interface ChooseOneAnswerProps {
   locked: boolean;
   index: number;
   length: number;
-  answer: any;
+  answer: ChooseOneAnswer;
   removeFromList(index: number): void;
   onChecked(event: any, checked: boolean): void;
-  changed(answer: any, value: string): void;
+  update(): void;
 }
 
 const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   locked, index, length, answer,
-  removeFromList, changed, onChecked
+  removeFromList, update, onChecked
 }) => {
   const renderDeleteButton = () => {
     if (length > 3) {
@@ -35,22 +37,47 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     return "";
   }
 
-  const setImage = () => {
+  const setImage = (fileName: string) => {
+    if (locked) {return;}
+    answer.value = "";
+    answer.valueFile = fileName;
+    answer.answerType = QuestionValueType.Image;
+    update();
+  }
+
+  const onTextChanged = (answer: ChooseOneAnswer, value: string) => {
+    if (locked) {return;}
+    answer.value = value;
+    answer.valueFile = "";
+    answer.answerType = QuestionValueType.String;
+    update();
+  }
+
+  let checkboxClass = "";
+  let className = 'choose-one-box unique-component-box';
+  if (answer.answerType === QuestionValueType.Image) {
+    className+=' big-answer';
+    checkboxClass='big-box';
   }
 
   return (
-    <div className="choose-one-box unique-component-box" key={index}>
+    <div
+      className={className}
+      key={index}
+    >
       {renderDeleteButton()}
-      <Checkbox
-        className="left-ckeckbox"
-        disabled={locked}
-        checked={answer.checked}
-        onChange={onChecked}
-        value={index}
-      />
+        <Grid container alignContent="center" className={`checkbox-container ${checkboxClass}`}>
+          <Checkbox
+            className="left-ckeckbox"
+            disabled={locked}
+            checked={answer.checked}
+            onChange={onChecked}
+            value={index}
+          />
+        </Grid>
       <QuestionImageDropzone
         answer={answer}
-        type={PairBoxType.None}
+        type={answer.answerType || QuestionValueType.None}
         locked={locked}
         fileName={answer.valueFile}
         update={setImage}
@@ -59,7 +86,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
         data={answer.value}
         toolbar={['mathType', 'chemType']}
         placeholder="Enter Answer..."
-        onChange={value => changed(answer, value)}
+        onChange={value => onTextChanged(answer, value)}
       />
     </div>
   );

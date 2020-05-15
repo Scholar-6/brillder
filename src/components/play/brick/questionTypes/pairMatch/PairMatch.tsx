@@ -12,12 +12,11 @@ import './PairMatch.scss';
 import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
-import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
-import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import DenimCrossRect from 'components/play/components/DenimCrossRect';
 import DenimTickRect from 'components/play/components/DenimTickRect';
-import {Answer, PairBoxType} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/pairMatchBuild/types';
+import {QuestionValueType} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
+import {Answer} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/pairMatchBuild/types';
 
 
 interface PairMatchChoice {
@@ -118,14 +117,14 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   }
 
   renderOption(answer: Answer) {
-    if (answer.optionType && answer.optionType === PairBoxType.Image) {
+    if (answer.optionType && answer.optionType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} />;
     }
     return answer.option;
   }
 
   renderAnswer(answer: Answer) {
-    if (answer.answerType && answer.answerType === PairBoxType.Image) {
+    if (answer.answerType && answer.answerType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
     }
     return answer.value;
@@ -141,7 +140,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
               <ListItem
                 key={i}
                 className={
-                  `pair-match-play-option ${(item.optionType === PairBoxType.Image || item.answerType === PairBoxType.Image) ? "pair-match-image-choice" : ""}`
+                  `pair-match-play-option ${(item.optionType === QuestionValueType.Image || item.answerType === QuestionValueType.Image) ? "pair-match-image-choice" : ""}`
                 }
               >
                 {this.renderIcon(i)}
@@ -167,7 +166,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
                 <div
                   style={{display: "block"}} key={i}
                   className={
-                    `pair-match-play-choice ${(answer.optionType === PairBoxType.Image || answer.answerType === PairBoxType.Image) ? "pair-match-image-choice" : ""}`
+                    `pair-match-play-choice ${(answer.optionType === QuestionValueType.Image || answer.answerType === QuestionValueType.Image) ? "pair-match-image-choice" : ""}`
                   }
                 >
                   <Grid container direction="row">
