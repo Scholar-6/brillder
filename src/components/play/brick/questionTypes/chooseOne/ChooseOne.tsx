@@ -1,7 +1,10 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
+// @ts-ignore
+import MathJax from 'react-mathjax-preview'
 
 import './ChooseOne.scss';
+import {parseDataToArray, isMathJax} from 'components/services/mathJaxService';
 import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
@@ -98,6 +101,33 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     return "";
   }
 
+  renderChoice = (choice: any) => {
+    if (choice.answerType === QuestionValueType.Image) {
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${choice.valueFile}`} />
+    } else {
+      var arr = parseDataToArray(choice.value);
+
+      const renderMath = (data: string, i: number) => {
+        return <MathJax math={data} key={i} />;
+      }
+
+      return (
+        <div>
+          {
+            arr.map((el:any, i:number) => {
+              const res = isMathJax(el);
+              if (res) {
+                return renderMath(el, i);
+              } else {
+                return <div key={i} dangerouslySetInnerHTML={{ __html: el}} />
+              }
+            })
+          }
+        </div>
+      );
+    }
+  }
+
   render() {
     const { activeItem } = this.state;
 
@@ -111,11 +141,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
               key={index}
               onClick={() => this.setActiveItem(index)}>
                 <div style={{lineHeight: 1}}>
-                  {
-                    input.answerType === QuestionValueType.Image
-                      ? <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${input.valueFile}`} />
-                      : <div dangerouslySetInnerHTML={{ __html: input.value}} />
-                  }
+                  {this.renderChoice(input)}
                   <ReviewEachHint
                     isPhonePreview={this.props.isPreview}
                     attempt={this.props.attempt}
