@@ -1,11 +1,22 @@
+@import '_variables';
+
 .choose-one-box {
+  .question-image-drop {
+    left: 30%;
+
+    .dropzone {
+      background: none;
+    }
+  }
   .document-editor {
     position: relative;
     > div > .ck-toolbar {
+      font-size: 1.4vh;
       right: 0;
       background: white !important;
       position: absolute;
-      width: 3vw;
+      width: 3.5vh;
+      height: 8vh;
       z-index: 1;
     }
     .ck-dropdown__panel {
@@ -23,8 +34,8 @@
     .ck-content {
       padding-left: 2.5vw;
       padding-right: 5vw;
-      padding-top: 3vh;
-      height: 6vh;
+      padding-top: 4.2vh;
+      height: 4vh;
       text-align: center !important;
       overflow: hidden;
 
@@ -39,5 +50,20 @@
         display: none;
       }
     }
+  }
+
+  .delete-right-top-icon {
+    position: absolute;
+    top: 0.2vh;
+    height: $bin-size;
+    width: $bin-size;
+    right: 4.2vh;
+    cursor: pointer;
+    color: $orange;
+    z-index: 2;
+  }
+
+  .delete-right-top-icon:hover {
+    opacity: 0.5;
   }
 }

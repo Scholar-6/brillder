@@ -36,45 +36,6 @@
       font-family: $font-family-regular;
       height: 3vw !important;
     }
-    .question-image-drop {
-      position: absolute;
-      top: 0.6vw;
-      left: 38%;
-      width: 30%;
-
-      .dropzone {
-        cursor: pointer;
-        margin-left: 0vw;
-        margin-right: 0vw;
-        height: 10%;
-        background: #FAFAFA;
-        font-size: 0.8vw;
-        font-family: $font-family-regular !important;
-        color: #8A8D90;
-
-        svg {
-          height: 1.4vw;
-          width: 1.4vw;
-        }
-
-        img {
-          height: 4vw;
-        }
-      }
-
-
-      .drop-placeholder {
-        height: 10%;
-      }
-      
-      .dropzone:hover {
-        color: $orange;
-      }
-      
-      .dropzone.disabled {
-        background: #EBEBE4;
-      }
-    }
   }
 
   .pair-match-answer {
@@ -95,43 +56,6 @@
       font-size: $answer-input-text-size;
       font-family: $font-family-regular;
       height: 3vw !important;
-    }
-
-    .pair-answer-image-drop {
-      position: absolute;
-      top: 0.6vw;
-      left: 38%;
-      width: 30%;
-
-      .dropzone {
-        margin-left: 0vw;
-        margin-right: 0vw;
-        height: 100%;
-        font-size: 0.81vw;
-        font-family: $font-family-regular !important;
-        color: #8A8D90;
-      }
-
-      svg {
-        height: 1.4vw;
-        width: 1.4vw;
-      }
-
-      img {
-        height: 4vw;
-      }
-
-      .drop-placeholder {
-        height: 10%;
-      }
-      
-      .dropzone:hover {
-        color: $orange;
-      }
-      
-      .dropzone.disabled {
-        background: #EBEBE4;
-      }
     }
   }
   .pair-image {
