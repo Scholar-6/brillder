@@ -4,13 +4,13 @@ import { useDropzone } from "react-dropzone";
 
 import './QuestionImageDropzone.scss';
 import {uploadFile} from 'components/services/uploadFile';
-import { PairBoxType } from "../questionTypes/pairMatchBuild/types";
+import { QuestionValueType } from "../questionTypes/types";
 import AddImageBtnContent from "./AddImageBtnContent";
 
 
 export interface AnswerProps {
   locked: boolean;
-  type: PairBoxType;
+  type: QuestionValueType;
   fileName: string;
   answer: any;
   update(fileName: string): void;
@@ -49,7 +49,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
       <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
         <input {...getInputProps()} />
         {
-          type === PairBoxType.Image
+          type === QuestionValueType.Image
             ? renderImagePreview()
             : <AddImageBtnContent />
         }

@@ -19,12 +19,18 @@
       color: $orange;
     }
 
-    .left-ckeckbox {
+    .checkbox-container {
       position: absolute;
+      height: 8vh;
+    }
+    .checkbox-container.big-box {
+      position: absolute;
+      height: 14vh;
+    }
+
+    .left-ckeckbox {
       z-index: 1;
       padding: 0.45vw;
-      left: 0.1vw;
-      top: 0.5vw;
       opacity: 1 !important;
 
       span {

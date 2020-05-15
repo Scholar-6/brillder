@@ -94,7 +94,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({locked, data, u
             answer={answer}
             removeFromList={removeFromList}
             onChecked={onChecked}
-            changed={changed}
+            update={update}
           />
         })
       }
