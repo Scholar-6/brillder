@@ -376,6 +376,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   renderSortAndFilterBox = () => {
     return (
       <div className="sort-box">
+        <div className="sort-by-box">
         <div className="sort-header">Sort By</div>
         <RadioGroup
           className="sort-group"
@@ -397,6 +398,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             label="Date Added"
           />
         </RadioGroup>
+        </div>
         <div className="filter-header">
           <div style={{ display: "inline" }}>
             <span className="filter-control">Filter</span>
@@ -428,8 +430,9 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             )}
           </div>
         </div>
-        {this.state.filterExpanded
-          ? this.state.subjects.map((subject, i) => (
+        <Grid container direction="row" className="subjects-filter">
+          {this.state.filterExpanded
+            ? this.state.subjects.map((subject, i) => (
               <FormControlLabel
                 className="filter-container"
                 key={i}
@@ -445,6 +448,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               />
             ))
           : ""}
+        </Grid>
       </div>
     );
   };

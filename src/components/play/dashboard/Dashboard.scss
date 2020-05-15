@@ -297,6 +297,11 @@ $light-grey: #F3F4F7;
     overflow-y: auto;
   }
 
+  .subjects-filter {
+    height: 66vh;
+    overflow-y: auto;
+  }
+
   .brick-container {
     position: relative;
     padding-right: 0;
@@ -416,66 +421,62 @@ $light-grey: #F3F4F7;
       color: white;
 
       .sort-box {
-        margin-bottom: 1.2vh;
-        padding-top: 1vh;
+        width: 23.3vw !important;
         border-top-right-radius: $main-panel-radius;
-        width: 100%;
         background: $light-blue;
 
-        .sort-header {
-          margin-top: 1.1vh;
-          margin-left: 1.4vw;
-          text-transform: uppercase;
-          font-size: 1.3vw;
-          letter-spacing: 0.22vw;
-        }
-        .filter-header {
-          text-transform: uppercase;
-          background: #304775 0% 0% no-repeat padding-box;
-          padding-left: 1.4vw;
-          font-size: 1.3vw;
-          margin-top: 1.9vh;
-          letter-spacing: 0.22vw;
-          margin-bottom: 2.8vh;
-            .filter-control {
-              vertical-align:middle
-            }
-            .filter-control:not(:first-child) {
-              margin-left: 0.9vw;
-              cursor: pointer;
-            }
-        }
-        .sort-group {
-          margin-top: 0.45vh;
-          margin-left: 0.9vw;
-          display: block;
-          > label:nth-child(1) {
-            width: 45%;
+        .sort-by-box {
+          height: 12.9vh;
+          .sort-header {
+            padding-top: 2.2vh;
+            margin-left: 1.4vw;
+            text-transform: uppercase;
+            font-size: 2.3vh;
+            letter-spacing: 0.45vh;
           }
-          > label:nth-child(2) {
-            width: 45%;
-          }
-          > label {
-            .sortBy {
-              padding-left: 1.2vw;
-              padding-right: 0.4vw;
-              svg {
-                height: 2.2vh;
-                width: 2.2vh;
-                color: $orange !important;
+          .sort-group {
+            margin-top: 0.65vh;
+            margin-left: 0.8vw;
+            margin-right: 0.6vw;
+            display: block;
+            label {
+              .sortBy {
+                padding-left: 1.2vw;
+                padding-right: 0.4vw;
+                svg {
+                  height: 2.2vh;
+                  width: 2.2vh;
+                  color: $orange !important;
+                }
+              }
+              .MuiFormControlLabel-label {
+                font: 1.05vw 'Brandon Grotesque Light' !important;
+                letter-spacing: 0.06vw;
               }
             }
-            .MuiFormControlLabel-label {
-              font: 1.05vw $font-family-regular !important;
-              letter-spacing: 0.06vw;
-            }
+          }
+        }
+        .filter-header {
+          height: 4.5vh;
+          text-transform: uppercase;
+          background: $orange 0% 0% no-repeat padding-box;
+          padding-left: 1.4vw;
+          font-size: 2.4vh;
+          letter-spacing: 0.22vw;
+          margin-bottom: 2.8vh;
+          .filter-control {
+            height: 100%;
+            vertical-align: middle;
+          }
+          .filter-control:not(:first-child) {
+            margin-left: 0.9vw;
+            cursor: pointer;
           }
         }
         .filter-container {
           cursor: default;
           margin-bottom: 0.1vh;
           margin-right: 0;
-          width: 46%;
           > span.filter-radio {
             padding-left: 2vw;
             padding-right: 0.4vw;
@@ -485,22 +486,15 @@ $light-grey: #F3F4F7;
             }
           }
           .MuiFormControlLabel-label {
-            font: 1.05vw $font-family-regular !important;
+            font: 1.05vw 'Brandon Grotesque Light' !important;
             letter-spacing: 0.06vw;
           }
-          .custom-color svg { color: var(--color)!important; }
-          .color1 svg { color: #006BFD !important; }
-          .color2 svg { color: #65C44C !important; }
-          .color3 svg { color: #F3F584 !important; }
-          .color4 svg { color: #FF3B01 !important; }
-          .color5 svg { color: #ED6CC9 !important; }
-          .color6 svg { color: #AAF1C7 !important; }
-          .color7 svg { color: #B3F87B !important; }
-          .color8 svg { color: #8E44F6 !important; }
-          .color8 svg { color: #F7F7F7 !important; }
+          .custom-color svg {
+            color: var(--color) !important;
+          }
         }
         .filter-container:nth-child(odd) {
-          width: 50%;
+          width: 100%;
         }
       }
     }
