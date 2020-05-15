@@ -14,6 +14,7 @@ import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import {checkVisibility} from '../../../services/hintService';
 import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
+import MathInHtml from '../../baseComponents/MathInHtml';
 
 
 interface ChooseOneChoice {
@@ -101,33 +102,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     return "";
   }
 
-  renderChoice = (choice: any) => {
-    if (choice.answerType === QuestionValueType.Image) {
-      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${choice.valueFile}`} />
-    } else {
-      var arr = parseDataToArray(choice.value);
-
-      const renderMath = (data: string, i: number) => {
-        return <MathJax math={data} key={i} />;
-      }
-
-      return (
-        <div>
-          {
-            arr.map((el:any, i:number) => {
-              const res = isMathJax(el);
-              if (res) {
-                return renderMath(el, i);
-              } else {
-                return <div key={i} dangerouslySetInnerHTML={{ __html: el}} />
-              }
-            })
-          }
-        </div>
-      );
-    }
-  }
-
   render() {
     const { activeItem } = this.state;
 
@@ -141,7 +115,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
               key={index}
               onClick={() => this.setActiveItem(index)}>
                 <div style={{lineHeight: 1}}>
-                  {this.renderChoice(input)}
+                  <MathInHtml value={input.value} />
                   <ReviewEachHint
                     isPhonePreview={this.props.isPreview}
                     attempt={this.props.attempt}
