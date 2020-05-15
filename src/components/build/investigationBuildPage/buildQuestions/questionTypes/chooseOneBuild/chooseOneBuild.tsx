@@ -42,12 +42,6 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({locked, data, u
     calculateHeight();
   }
 
-  const changed = (answer: any, value: string) => {
-    if (locked) { return; }
-    answer.value = value;
-    update();
-  }
-
   const addAnswer = () => {
     if (locked) { return; }
     state.list.push(newAnswer());
@@ -88,6 +82,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({locked, data, u
       {
         state.list.map((answer:any, i:number) => {
           return <ChooseOneAnswer
+            key={i}
             locked={locked}
             index={i}
             length={data.list.length}

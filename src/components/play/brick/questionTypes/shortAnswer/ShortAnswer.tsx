@@ -6,9 +6,7 @@ import './ShortAnswer.scss';
 import { ComponentAttempt } from 'components/play/brick/model/model';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import {CompQuestionProps} from '../types';
-import {checkVisibility} from '../../../services/hintService';
 
 
 interface ShortAnswerProps extends CompQuestionProps {

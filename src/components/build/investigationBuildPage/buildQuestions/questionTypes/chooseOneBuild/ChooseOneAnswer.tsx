@@ -61,20 +61,17 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   }
 
   return (
-    <div
-      className={className}
-      key={index}
-    >
+    <div className={className}>
       {renderDeleteButton()}
-        <Grid container alignContent="center" className={`checkbox-container ${checkboxClass}`}>
-          <Checkbox
-            className="left-ckeckbox"
-            disabled={locked}
-            checked={answer.checked}
-            onChange={onChecked}
-            value={index}
-          />
-        </Grid>
+      <Grid container alignContent="center" className={`checkbox-container ${checkboxClass}`}>
+        <Checkbox
+          className="left-ckeckbox"
+          disabled={locked}
+          checked={answer.checked}
+          onChange={onChecked}
+          value={index}
+        />
+      </Grid>
       <QuestionImageDropzone
         answer={answer}
         type={answer.answerType || QuestionValueType.None}

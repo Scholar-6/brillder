@@ -45,18 +45,6 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     update();
   }
 
-  const renderImagePreview = () => {
-    return (
-      <Grid
-        container direction="row"
-        justify="center" alignContent="center"
-        style={{height: '4vw'}}
-      >
-        <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} />
-      </Grid>
-    );
-  }
-
   const setImage = (fileName: string) => {
     if (locked) {return;}
     answer.option = "";
