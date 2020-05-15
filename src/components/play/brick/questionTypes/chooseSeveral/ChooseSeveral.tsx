@@ -9,6 +9,8 @@ import DenimCrossRect from 'components/play/components/DenimCrossRect';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from 'components/play/brick/baseComponents/ReviewGlobalHint';
 import {CompQuestionProps} from '../types';
+import MathInHtml from '../../baseComponents/MathInHtml';
+import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 
 
 interface ChooseSeveralProps extends CompQuestionProps {
@@ -120,6 +122,14 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   }
 
+  renderData(answer: any) {
+    if (answer.answerType === QuestionValueType.Image) {
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
+    } else {
+      return <MathInHtml value={answer.value} />;
+    }
+  }
+
   renderButton(input: any, index:number) {
     let active = this.state.activeItems.find(i => i === index) as number;
 
@@ -134,7 +144,9 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
           <Grid item xs={1}>
             {this.renderIcon(input, index)}
           </Grid>
-          <Grid item xs={11}>{input.value}</Grid>
+          <Grid item xs={11}>
+            {this.renderData(input)}
+          </Grid>
         </Grid>
         <Grid container direction="row">
           <Grid item xs={1}>
