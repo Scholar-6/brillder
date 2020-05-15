@@ -1,11 +1,9 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import { useDropzone } from "react-dropzone";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteIcon from "@material-ui/icons/Delete";
 
 import {Answer, PairBoxType} from '../types';
-import {uploadFile} from 'components/services/uploadFile';
+import QuestionImageDropZone from '../../../baseComponents/QuestionImageDropzone';
 
 
 export interface PairOptionProps {
@@ -18,20 +16,6 @@ export interface PairOptionProps {
 const PairOptionComponent: React.FC<PairOptionProps> = ({
   locked, index, answer, update
 }) => {
-  const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/jpeg, image/png',
-    disabled: locked,
-    onDrop: (files:any[]) => {
-      return uploadFile(files[0] as File, (res: any) => {
-        if (locked) {return;}
-        answer.option = "";
-        answer.optionFile = res.data.fileName;
-        answer.optionType = PairBoxType.Image;
-        update();
-      }, () => { });
-    }
-  });
-
   const removeImage = () => {
     if (locked) { return; }
     answer.optionFile = "";
@@ -72,31 +56,12 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     );
   }
 
-  const renderEmptyPreview = () => {
-    return (
-      <Grid
-        container direction="row"
-        justify="center" alignContent="center"
-        className="drop-placeholder"
-      >
-        <AddCircleIcon /> jpg.
-      </Grid>
-    );
-  }
-
-  const renderDropBox = () => {
-    return (
-      <div className="pair-option-image-drop">
-        <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
-          <input {...getInputProps()} />
-          {
-            answer.optionType === PairBoxType.Image
-              ? renderImagePreview()
-              : renderEmptyPreview()
-          }
-        </div>
-      </div>
-    );
+  const setImage = (fileName: string) => {
+    if (locked) {return;}
+    answer.option = "";
+    answer.optionFile = fileName;
+    answer.optionType = PairBoxType.Image;
+    update();
   }
 
   let customClass = '';
@@ -113,7 +78,13 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
           onChange={(event) => optionChanged(answer, event.target.value)}
           placeholder={"Enter Option " + (index + 1) + "..."}
         />
-        {renderDropBox()}
+        <QuestionImageDropZone
+          answer={answer}
+          type={answer.optionType || PairBoxType.None}
+          fileName={answer.optionFile}
+          locked={locked}
+          update={setImage}
+        />
         {renderDeleteButton()}
       </div>
     </Grid>
