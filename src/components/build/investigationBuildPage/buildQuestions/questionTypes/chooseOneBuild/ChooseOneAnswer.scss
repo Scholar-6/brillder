@@ -1,0 +1,43 @@
+.choose-one-box {
+  .document-editor {
+    position: relative;
+    > div > .ck-toolbar {
+      right: 0;
+      background: white !important;
+      position: absolute;
+      width: 3vw;
+      z-index: 1;
+    }
+    .ck-dropdown__panel {
+      z-index: 100 !important;
+    }
+    .ck-toolbar__items {
+      display: block !important;
+
+      button {
+        padding: 0;
+        margin: 0;
+        display: block !important;
+      }
+    }
+    .ck-content {
+      padding-left: 2.5vw;
+      padding-right: 5vw;
+      padding-top: 3vh;
+      height: 6vh;
+      text-align: center !important;
+      overflow: hidden;
+
+      p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: center !important;
+        display: inline;
+      }
+      br {
+        display: none;
+      }
+    }
+  }
+}

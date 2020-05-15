@@ -13,7 +13,7 @@
 
   .choose-one-box {
     position: relative;
-    margin: 0;
+    margin: 0.17vw 0.3vw;
 
     .Mui-checked {
       color: $orange;
@@ -49,7 +49,6 @@
       height: $answer-height !important;
     }
     .MuiCheckbox-root {
-      margin-top: 0.6vw;
     }
     input[type='checkbox'] {
       height: 100% !important;

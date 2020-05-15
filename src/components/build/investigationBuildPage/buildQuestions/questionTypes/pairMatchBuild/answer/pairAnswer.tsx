@@ -1,11 +1,9 @@
 import React from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Grid } from "@material-ui/core";
-import { useDropzone } from "react-dropzone";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import {Answer,  PairBoxType} from '../types';
-import {uploadFile} from 'components/services/uploadFile';
+import QuestionImageDropZone from '../../../baseComponents/QuestionImageDropzone';
 
 
 export interface PairAnswerProps {
@@ -21,20 +19,6 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
   locked, index, length, answer,
   removeFromList, update
 }) => {
-  const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/jpeg, image/png',
-    disabled: locked,
-    onDrop: (files:any[]) => {
-      return uploadFile(files[0] as File, (res: any) => {
-        if (locked) {return;}
-        answer.value = "";
-        answer.valueFile = res.data.fileName;
-        answer.answerType = PairBoxType.Image;
-        update();
-      }, () => { });
-    }
-  });
-
   const answerChanged = (answer: Answer, value: string) => {
     if (locked) { return; }
     answer.value = value;
@@ -74,48 +58,17 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     return "";
   }
 
-  const renderImagePreview = () => {
-    return (
-      <Grid
-        container direction="row"
-        justify="center" alignContent="center"
-        style={{height: '100%'}}
-      >
-        <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />
-      </Grid>
-    );
-  }
-
-  const renderEmptyPreview = () => {
-    return (
-      <Grid
-        container direction="row"
-        justify="center" alignContent="center"
-        className="drop-placeholder"
-      >
-        <AddCircleIcon /> jpg.
-      </Grid>
-    );
-  }
-
-  const renderDropBox = () => {
-    return (
-      <div className="pair-answer-image-drop">
-        <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
-          <input {...getInputProps()} />
-          {
-            answer.answerType === PairBoxType.Image
-              ? renderImagePreview()
-              : renderEmptyPreview()
-          }
-        </div>
-      </div>
-    );
-  }
-
   let customClass = '';
   if (answer.optionType === PairBoxType.Image || answer.answerType === PairBoxType.Image) {
     customClass = 'pair-image';
+  }
+
+  const setImage = (fileName: string) => {
+    if (locked) {return;}
+    answer.value = "";
+    answer.valueFile = fileName;
+    answer.answerType = 2;
+    update();
   }
 
   return (
@@ -128,7 +81,13 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
           onChange={(event:any) => answerChanged(answer, event.target.value)}
           placeholder={"Enter Answer " + (index + 1) + "..."}
         />
-        {renderDropBox()}
+        <QuestionImageDropZone
+          answer={answer}
+          type={answer.answerType || PairBoxType.None}
+          fileName={answer.valueFile}
+          locked={locked}
+          update={setImage}
+        />
       </div>
     </Grid>
   );

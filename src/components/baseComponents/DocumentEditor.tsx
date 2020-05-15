@@ -33,6 +33,7 @@ import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { addToolbarToDropdown, createDropdown } from "@ckeditor/ckeditor5-ui/src/dropdown/utils";
 // @ts-ignore
 import SplitButtonView from "@ckeditor/ckeditor5-ui/src/dropdown/button/splitbuttonview";
+
 import './DocumentEditor.scss';
 
 
