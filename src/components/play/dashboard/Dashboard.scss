@@ -140,15 +140,15 @@ $light-grey: #F3F4F7;
       height: 10.5vh;
       border-bottom-left-radius: 2vw;
       background: $light-blue;
-      padding-top: 2.5vh;
+      padding-top: 1.7vh;
 
       .search-button {
         cursor: pointer;
         display: block;
         margin-top: 0.2vh !important;
-        margin-left: 1.6vw;
-        height: 5vh;
-        width: 5vh;
+        margin-left: 1.4vw;
+        height: 6.5vh;
+        width: 6.5vh;
         margin-top: 0.1vh;
         margin-right: 0vw;
         background-size: 100% 100%;
@@ -171,33 +171,13 @@ $light-grey: #F3F4F7;
         border: red;
         border-radius: 12px;
         border: none !important;
-        margin-left: 2.3vw;
-        margin-top: 0vh;
+        margin-left: 1.5vw;
+        margin-top: 0.7vh;
         letter-spacing: 0.045vw;
         height: 5.5vh;
         width: 40vw;
         padding-right: 2px;
         color: #acacac;
-      }
-
-      .logout-button {
-        cursor: pointer;
-        display: block;
-        height: 5.6vh;
-        width: 5.65vh;
-        margin-top: 0.1vh;
-        margin-right: 4.27vw;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/images/main-page/logout.png);
-        transition: all 0.2s ease-in-out;
-        transform-origin: 70% 50%;
-      }
-
-      .logout-button:hover {
-        transform: scale(1.4);
-        background-image: url(/images/main-page/logout-hover.png);
       }
 
       .bell-button {
@@ -206,10 +186,10 @@ $light-grey: #F3F4F7;
         display: block;
         color: white;
         text-align: center;
-        padding-top: 1vh;
-        height: 3.6vh;
-        width: 4.1vh;
-        margin-right: 4.28vw;
+        height: 5.3vh;
+        width: 4.8vh;
+        margin-top: 0.9vh;
+        margin-right: 3.5vw;
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center;
@@ -228,7 +208,7 @@ $light-grey: #F3F4F7;
 
       .more-button {
         cursor: pointer;
-        margin-top: 0.5vh;
+        margin-top: 0.9vh;
         margin-right: 2.2vw;
         width: 6.7vh;
         display: inline-block;
