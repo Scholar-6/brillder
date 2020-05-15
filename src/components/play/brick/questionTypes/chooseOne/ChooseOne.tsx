@@ -1,10 +1,7 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-// @ts-ignore
-import MathJax from 'react-mathjax-preview'
 
 import './ChooseOne.scss';
-import {parseDataToArray, isMathJax} from 'components/services/mathJaxService';
 import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
@@ -13,7 +10,6 @@ import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import {checkVisibility} from '../../../services/hintService';
-import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 import MathInHtml from '../../baseComponents/MathInHtml';
 
 
