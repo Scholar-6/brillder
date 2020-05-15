@@ -4,7 +4,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import './ChooseOneAnswer.scss'; 
 import DocumentCKEditor from "components/baseComponents/DocumentEditor";
-import AddImageBtnContent from '../../baseComponents/AddImageBtnContent';
+import QuestionImageDropzone from "../../baseComponents/QuestionImageDropzone";
+import { PairBoxType } from "../pairMatchBuild/types";
 
 
 export interface ChooseOneAnswerProps {
@@ -25,13 +26,16 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     if (length > 3) {
       return (
         <DeleteIcon
-          className="right-top-icon"
+          className="delete-right-top-icon"
           onClick={() => removeFromList(index)}
         />
       );
     }
 
     return "";
+  }
+
+  const setImage = () => {
   }
 
   return (
@@ -44,7 +48,13 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
         onChange={onChecked}
         value={index}
       />
-      <AddImageBtnContent />
+      <QuestionImageDropzone
+        answer={answer}
+        type={PairBoxType.None}
+        locked={locked}
+        fileName={answer.valueFile}
+        update={setImage}
+      />
       <DocumentCKEditor
         data={answer.value}
         toolbar={['mathType', 'chemType']}
