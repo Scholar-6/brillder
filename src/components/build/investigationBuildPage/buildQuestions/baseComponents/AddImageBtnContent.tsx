@@ -14,7 +14,7 @@ const AddImageBtnContent: React.FC = () => {
       alignContent="center"
       className="answer-image-drop-content drop-placeholder"
     >
-      <AddCircleIcon /> jpg.
+      <AddCircleIcon /> <span>jpg.</span>
     </Grid>
   );
 };
