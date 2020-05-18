@@ -166,6 +166,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     history.push(`/build/brick/${brickId}/build/investigation/synthesis`);
   }
 
+  const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
+    if (locked) { return; }
+    setQuestionType(type);
+    history.push(
+      `/build/brick/${brickId}/build/investigation/question-component`
+    );
+  };
+
   const setQuestionType = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     var index = getQuestionIndex(activeQuestion);
@@ -402,7 +410,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         questionId={activeQuestion.id}
         activeQuestionType={activeQuestionType}
         setActiveQuestionType={setActiveType}
-        setQuestionType={setQuestionType}
+        setQuestionType={setQuestionTypeAndMove}
         questionType={activeQuestion.type}
       />
     );
