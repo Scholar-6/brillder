@@ -13,6 +13,7 @@
 
   .big-animated-text {
     font-family: $font-family-regular;
+    min-height: 5vw;
     > div {
       width: 78%;
       text-align: center;
