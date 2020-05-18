@@ -33,18 +33,7 @@ interface BrickLengthProps {
 }
 
 const BrickLength:React.FC<BrickLengthProps> = ({ length, saveLength, saveBrick }) => {
-  let presectedLength = 0;
-  if (length === 20) {
-    presectedLength = BrickLengthEnum.S20min;
-  } else if (length === 40) {
-    presectedLength = BrickLengthEnum.S40min;
-  } else if (length === 60) {
-    presectedLength = BrickLengthEnum.S60min;
-  }
-  const [brickLength, setLength] = React.useState(presectedLength as BrickLengthEnum);
-
   const setBrickLength = (brickLength: BrickLengthEnum) => {
-    setLength(brickLength);
     saveLength(brickLength);
   }
 
@@ -60,7 +49,7 @@ const BrickLength:React.FC<BrickLengthProps> = ({ length, saveLength, saveBrick 
           <Grid container direction="row" className="brick-length-row">
             <Grid container item xs={4} className="brick-length-image-container brick-length-image-container1">
               <div
-                className={"brick-length-image brick-length-20-image " + ((brickLength === BrickLengthEnum.S20min) ? "active" : "")}
+                className={"brick-length-image brick-length-20-image " + ((length === BrickLengthEnum.S20min) ? "active" : "")}
                 onClick={() => setBrickLength(BrickLengthEnum.S20min)}
               />
               <Grid container direction="row" justify="center" className="bottom-time-description">
@@ -69,7 +58,7 @@ const BrickLength:React.FC<BrickLengthProps> = ({ length, saveLength, saveBrick 
             </Grid>
             <Grid container item xs={4} className="brick-length-image-container brick-length-image-container2">
               <div
-                className={"brick-length-image brick-length-40-image " + ((brickLength === BrickLengthEnum.S40min) ? "active" : "")}
+                className={"brick-length-image brick-length-40-image " + ((length === BrickLengthEnum.S40min) ? "active" : "")}
                 onClick={() => setBrickLength(BrickLengthEnum.S40min)}
               />
               <Grid container direction="row" justify="center" className="bottom-time-description">
@@ -78,7 +67,7 @@ const BrickLength:React.FC<BrickLengthProps> = ({ length, saveLength, saveBrick 
             </Grid>
             <Grid container item xs={4} className="brick-length-image-container brick-length-image-container3">
               <div
-                className={"brick-length-image brick-length-60-image " + ((brickLength === BrickLengthEnum.S60min) ? "active" : "")}
+                className={"brick-length-image brick-length-60-image " + ((length === BrickLengthEnum.S60min) ? "active" : "")}
                 onClick={() => setBrickLength(BrickLengthEnum.S60min)}
               />
               <Grid container direction="row" justify="center" className="bottom-time-description">
@@ -88,13 +77,13 @@ const BrickLength:React.FC<BrickLengthProps> = ({ length, saveLength, saveBrick 
           </Grid>
           <NavigationButtons
             step={ProposalStep.BrickLength}
-            canSubmit={brickLength !== BrickLengthEnum.None}
+            canSubmit={length !== BrickLengthEnum.None}
             onSubmit={saveBrick}
-            data={brickLength}
+            data={length}
             backLink="/build/new-brick/prep"
           />
         </Grid>
-        <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={brickLength} />
+        <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} />
         <div className="red-right-block"></div>
         <div className="beta-text">BETA</div>
       </Grid>

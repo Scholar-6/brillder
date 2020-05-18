@@ -44,23 +44,21 @@ const BriefPreviewComponent:React.FC<any> = ({data}) => {
 }
 
 const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
-  const [brief, setBrief] = React.useState(parentBrief);
-
   const setBriefText = (value: string) => {
-    setBrief(value)
+    saveBrief(value)
   }
 
   return (
     <div className="tutorial-page brief-page">
       <HomeButton link='/build' />
-      <Navigation step={ProposalStep.Brief} onMove={() => saveBrief(brief)} />
+      <Navigation step={ProposalStep.Brief} onMove={() => saveBrief(parentBrief)} />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
           <h1 className="only-tutorial-header">
             Outline the purpose of this brick.
           </h1>
           <DocumentCKEditor
-            data={brief}
+            data={parentBrief}
             toolbar={[
               'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
             ]}
@@ -70,12 +68,12 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
           <NavigationButtons
             step={ProposalStep.Brief}
             canSubmit={true}
-            data={brief}
+            data={parentBrief}
             onSubmit={saveBrief}
             backLink="/build/new-brick/open-question"
           />
         </Grid>
-        <ProposalPhonePreview Component={BriefPreviewComponent} data={brief} />
+        <ProposalPhonePreview Component={BriefPreviewComponent} data={parentBrief} />
         <div className="red-right-block"></div>
         <div className="beta-text">BETA</div>
       </Grid>
