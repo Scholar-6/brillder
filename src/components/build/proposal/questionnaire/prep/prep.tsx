@@ -42,34 +42,32 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
 }
 
 const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
-  let [prep, setPrep] = React.useState(parentPrep);
-
   return (
     <div className="tutorial-page prep-page">
       <HomeButton link='/build' />
-      <Navigation step={ProposalStep.Prep} onMove={() => savePrep(prep)} />
+      <Navigation step={ProposalStep.Prep} onMove={() => savePrep(parentPrep)} />
       <Grid container direction="row" alignItems="flex-start">
         <Grid className="left-block">
           <h1>Add engaging and relevant</h1>
           <h1>preparatory material.</h1>
           <DocumentCKEditor
-            data={prep}
+            data={parentPrep}
             toolbar={[
               'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
             ]}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
             mediaEmbed={true}
-            onChange={setPrep}
+            onChange={savePrep}
           />
           <NavigationButtons
             step={ProposalStep.Prep}
             canSubmit={true}
-            data={prep}
+            data={parentPrep}
             onSubmit={savePrep}
             backLink="/build/new-brick/brief"
           />
         </Grid>
-        <ProposalPhonePreview Component={PrepPreviewComponent} data={prep} />
+        <ProposalPhonePreview Component={PrepPreviewComponent} data={parentPrep} />
         <div className="red-right-block"></div>
         <div className="beta-text">BETA</div>
       </Grid>

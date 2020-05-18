@@ -47,59 +47,54 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
 
 
 const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
-  const [titles, setTitles] = React.useState({
-    title: parentState.title,
-    subTopic: parentState.subTopic,
-    alternativeTopics: parentState.alternativeTopics,
-    author: {}
-  });
-
   const onTitleChange = (event: React.ChangeEvent<{ value: string }>) => {
     const title = event.target.value.substr(0, 40);
-    setTitles({ ...titles, title });
+    saveTitles({ ...parentState, title });
   };
 
   const onSubTopicChange = (event: React.ChangeEvent<{ value: string }>) => {
     const subTopic = event.target.value.substr(0, 40);
-    setTitles({ ...titles, subTopic });
+    saveTitles({ ...parentState, subTopic });
   };
 
   const onAltTopicChange = (event: React.ChangeEvent<{ value: string }>) => {
     const alternativeTopics = event.target.value.substr(0, 40);
-    setTitles({ ...titles, alternativeTopics });
+    saveTitles({ ...parentState, alternativeTopics });
   };
-
-  if (parentState.author) {
-    titles.author = parentState.author;
-  }
 
   return (
     <div className="tutorial-page brick-title-page">
       <HomeButton link='/build' />
-      <Navigation step={ProposalStep.BrickTitle} onMove={() => saveTitles(titles)} />
+      <Navigation step={ProposalStep.BrickTitle} onMove={() => saveTitles(parentState)} />
       <Grid container direction="row">
         <Grid item className="left-block">
           <h1>What is your brick about?</h1>
           <Grid item className="input-container">
             <Input
               className="audience-inputs"
-              value={titles.title}
+              value={parentState.title}
               onChange={(onTitleChange)}
               placeholder="Enter Proposed Title Here..." />
             <Input
               className="audience-inputs"
-              value={titles.subTopic}
+              value={parentState.subTopic}
               onChange={onSubTopicChange}
               placeholder="Enter Topic..." />
             <Input
               className="audience-inputs"
-              value={titles.alternativeTopics}
+              value={parentState.alternativeTopics}
               onChange={onAltTopicChange}
               placeholder="Enter Subtopic(s)..." />
           </Grid>
-          <NextButton isActive={true} step={ProposalStep.BrickTitle} canSubmit={true} onSubmit={saveTitles} data={titles} />
+          <NextButton
+            isActive={true}
+            step={ProposalStep.BrickTitle}
+            canSubmit={true}
+            onSubmit={saveTitles}
+            data={parentState}
+          />
         </Grid>
-        <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={titles} />
+        <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
         <div className="red-right-block"></div>
         <div className="beta-text">BETA</div>
       </Grid>
