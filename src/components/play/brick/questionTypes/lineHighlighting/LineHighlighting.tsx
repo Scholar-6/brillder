@@ -1,17 +1,15 @@
 import React from "react";
-import { Question } from "model/question";
-import CompComponent from "../Comp";
 
 import "./LineHighlighting.scss";
+import CompComponent from "../Comp";
+import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/brick/model/model";
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 
-interface LineHighlightingProps {
-  question: Question;
-  component: any;
+
+interface LineHighlightingProps extends CompQuestionProps {
   attempt: ComponentAttempt;
   answers: number[];
-  isPreview?: boolean;
 }
 
 interface LineHighlightingState {
@@ -100,6 +98,7 @@ class LineHighlighting extends CompComponent<
         <br/>
         <ReviewGlobalHint
           attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}
         />
       </div>

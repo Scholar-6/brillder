@@ -1,0 +1,42 @@
+@import '_variables';
+
+.question-image-drop {
+  position: absolute;
+  top: 1.3vh;
+  left: 38%;
+  width: 30%;
+  z-index: 100;
+
+  .dropzone {
+    cursor: pointer;
+    margin-left: 0vw;
+    margin-right: 0vw;
+    height: 10%;
+    background: #FAFAFA;
+    font-size: 0.8vw;
+    font-family: $font-family-black !important;
+    color: #aaa;
+
+    svg {
+      height: 1.4vw;
+      width: 1.4vw;
+    }
+
+    img {
+      height: 8.5vh;
+    }
+  }
+
+
+  .drop-placeholder {
+    height: 10%;
+  }
+  
+  .dropzone:hover {
+    color: $orange;
+  }
+  
+  .dropzone.disabled {
+    background: #EBEBE4;
+  }
+}

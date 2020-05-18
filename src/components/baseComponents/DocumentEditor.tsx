@@ -16,6 +16,8 @@ import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
 // @ts-ignore
 import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
 // @ts-ignore
+import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
+// @ts-ignore
 import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
 // @ts-ignore
 import List from '@ckeditor/ckeditor5-list/src/list';
@@ -25,6 +27,12 @@ import MathType from '@wiris/mathtype-ckeditor5/src/plugin';
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
 // @ts-ignore
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+// @ts-ignore
+import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
+// @ts-ignore
+import { addToolbarToDropdown, createDropdown } from "@ckeditor/ckeditor5-ui/src/dropdown/utils";
+// @ts-ignore
+import SplitButtonView from "@ckeditor/ckeditor5-ui/src/dropdown/button/splitbuttonview";
 
 import './DocumentEditor.scss';
 
@@ -43,6 +51,27 @@ interface DocumentEditorState {
   focused: boolean,
   editor: any,
   ref: any,
+}
+
+class InsertDropDown extends Plugin {
+  editor: any = null;
+  constructor( editor:any ) {
+    super(editor);
+    this.editor = editor;
+  }
+
+  init() {
+    const editor = this.editor;
+    editor.ui.componentFactory.add("InsertDropDown", (locale:any) => {
+      const dropdownView = createDropdown(locale, SplitButtonView);
+      dropdownView.class="ck-custom-dropdown";
+      const buttons:any[] = [];
+      buttons.push(editor.ui.componentFactory.create('subscript'));
+      buttons.push(editor.ui.componentFactory.create('strikethrough'));
+      addToolbarToDropdown(dropdownView, buttons);
+      return dropdownView;
+    });
+  }
 }
 
 class DocumentEditorComponent extends React.Component<DocumentEditorProps, DocumentEditorState> {
@@ -65,29 +94,38 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
     }
   }
 
+  replaceLabelName = () => {
+    const elements = document.getElementsByClassName("ck-button__label");
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements.item(i);
+      if (element) {
+        let text = element.textContent;
+        if (text === 'Remove color') {
+          element.innerHTML = 'Remove colour';
+        }
+      }
+    }
+  }
+
   handleOnInit = (editor: any) => {
     const {current} = this.state.ref;
     if (current) {
       current.appendChild(editor.ui.view.toolbar.element);
     }
-    const {defaultAlignment} = this.props;
-    console.log(defaultAlignment);
-    if (defaultAlignment) {
-      editor.execute('alignment', { value: 'center' });
-    }
+
+    this.replaceLabelName();
+
     this.setState({...this.state, editor});
   }
 
   render() {
     let config = {
+      extraPlugins: [InsertDropDown],
       plugins: [
         Essentials, Bold, Italic, Paragraph,
         FontColor, Superscript, Subscript, List,
-        MathType, Alignment
+        MathType, Alignment, Strikethrough
       ],
-      alignment: {
-        value: 'center'
-      },
       fontColor: {
         colors: [{
           color: '#C43C30',
@@ -101,10 +139,10 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
         }]
       },
       toolbar: [
-        'bold', 'italic', 'fontColor', 'superscript',
-        'subscript', 'mathType', 'chemType',
-        'bulletedList', 'numberedList'
+        'bold', 'italic', 'fontColor', 'superscript', 'insertDropDown', 'mathType', 'chemType',
+        'bulletedList', 'numberedList',
       ],
+      mediaEmbed: { previewsInData: true },
       placeholder: ''
     };
 
@@ -129,9 +167,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
           config={config}
           onInit={(e:any) => this.handleOnInit(e)}
           onChange={(e: any, editor: any) => {
-            if (!this.state.focused) {
-              return;
-            }
+            if (!this.state.focused) { return; }
             const data = editor.getData();
             this.props.onChange(data);
             this.setState({...this.state, data});

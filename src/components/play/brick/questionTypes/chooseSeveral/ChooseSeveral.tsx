@@ -2,15 +2,18 @@ import React from 'react';
 import { Button, Grid } from '@material-ui/core';
 
 import './ChooseSeveral.scss';
-import { Question, HintStatus } from "model/question";
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import DenimTickRect from 'components/play/components/DenimTickRect';
 import DenimCrossRect from 'components/play/components/DenimCrossRect';
+import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from 'components/play/brick/baseComponents/ReviewGlobalHint';
+import {CompQuestionProps} from '../types';
+import MathInHtml from '../../baseComponents/MathInHtml';
+import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 
-interface ChooseSeveralProps {
-  question: Question;
+
+interface ChooseSeveralProps extends CompQuestionProps {
   component: any;
   attempt: any;
   answers: number[];
@@ -115,6 +118,18 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     return "";
   }
 
+  renderEachHint(index: number) {
+
+  }
+
+  renderData(answer: any) {
+    if (answer.answerType === QuestionValueType.Image) {
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
+    } else {
+      return <MathInHtml value={answer.value} />;
+    }
+  }
+
   renderButton(input: any, index:number) {
     let active = this.state.activeItems.find(i => i === index) as number;
 
@@ -129,17 +144,20 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
           <Grid item xs={1}>
             {this.renderIcon(input, index)}
           </Grid>
-          <Grid item xs={11}>{input.value}</Grid>
+          <Grid item xs={11}>
+            {this.renderData(input)}
+          </Grid>
         </Grid>
         <Grid container direction="row">
           <Grid item xs={1}>
           </Grid>
           <Grid item xs={11}>
-            {
-              (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && input.hint) ?
-                <span className="question-hint" dangerouslySetInnerHTML={{ __html: input.hint}} />
-                : ""
-            }
+            <ReviewEachHint
+              isPhonePreview={this.props.isPreview}
+              attempt={this.props.attempt}
+              index={index}
+              hint={this.props.question.hint}
+            />
           </Grid>
         </Grid>
         </div>
@@ -155,7 +173,11 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
         {
           component.list.map((input: any, index: number) => this.renderButton(input, index))
         }
-        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
+        <ReviewGlobalHint
+          attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
+          hint={this.props.question.hint}
+        />
       </div>
     );
   }

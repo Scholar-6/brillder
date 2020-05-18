@@ -30,7 +30,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick }) =>
     history.push(`/play/brick/${brick.id}/intro`);
   }
   const [state, setState] = React.useState({
-    synthesisExpanded: false,
+    synthesisExpanded: true,
     otherExpanded: false,
   } as ProvisionalState);
 

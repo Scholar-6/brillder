@@ -1,5 +1,7 @@
 
 import React from 'react';
+import { ReactSortable } from 'react-sortablejs';
+import { Grid } from '@material-ui/core';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -7,16 +9,14 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import './PairMatch.scss';
-import { Question } from "model/question";
 import CompComponent from '../Comp';
+import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
-import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import { ReactSortable } from 'react-sortablejs';
-import { Grid } from '@material-ui/core';
 import DenimCrossRect from 'components/play/components/DenimCrossRect';
 import DenimTickRect from 'components/play/components/DenimTickRect';
-import {Answer, PairBoxType} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/pairMatchBuild/types';
+import {QuestionValueType} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
+import {Answer} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/pairMatchBuild/types';
 
 
 interface PairMatchChoice {
@@ -33,12 +33,9 @@ interface PairMatchComponent {
   options: any[];
 }
 
-interface PairMatchProps {
-  question: Question;
+interface PairMatchProps extends CompQuestionProps {
   component: PairMatchComponent;
-  attempt?: ComponentAttempt;
   answers: number;
-  isPreview?: boolean
 }
 
 interface PairMatchState {
@@ -120,14 +117,14 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   }
 
   renderOption(answer: Answer) {
-    if (answer.optionType && answer.optionType === PairBoxType.Image) {
+    if (answer.optionType && answer.optionType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} />;
     }
     return answer.option;
   }
 
   renderAnswer(answer: Answer) {
-    if (answer.answerType && answer.answerType === PairBoxType.Image) {
+    if (answer.answerType && answer.answerType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
     }
     return answer.value;
@@ -143,17 +140,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
               <ListItem
                 key={i}
                 className={
-                  `pair-match-play-option ${(item.optionType === PairBoxType.Image || item.answerType === PairBoxType.Image) ? "pair-match-image-choice" : ""}`
+                  `pair-match-play-option ${(item.optionType === QuestionValueType.Image || item.answerType === QuestionValueType.Image) ? "pair-match-image-choice" : ""}`
                 }
               >
                 {this.renderIcon(i)}
-                <ListItemText>
-                  {
-                    (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && this.props.question.hint.list.length > 0) ?
-                      <span className="question-hint" dangerouslySetInnerHTML={{ __html: item.hint}} />
-                      : ""
-                   }
-                </ListItemText>
                 <ListItemText>
                   <span className="pair-match-play-option-text">
                     {this.renderOption(item as any)}
@@ -176,7 +166,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
                 <div
                   style={{display: "block"}} key={i}
                   className={
-                    `pair-match-play-choice ${(answer.optionType === PairBoxType.Image || answer.answerType === PairBoxType.Image) ? "pair-match-image-choice" : ""}`
+                    `pair-match-play-choice ${(answer.optionType === QuestionValueType.Image || answer.answerType === QuestionValueType.Image) ? "pair-match-image-choice" : ""}`
                   }
                 >
                   <Grid container direction="row">
@@ -192,7 +182,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
             }
           </ReactSortable>
         </Grid>
-        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
+        <ReviewGlobalHint
+          attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
+          hint={this.props.question.hint}
+        />
       </div>
     );
   }

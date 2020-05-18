@@ -1,17 +1,16 @@
 import React from "react";
-import { Question } from "model/question";
-import CompComponent from "../Comp";
 
 import "./WordHighlighting.scss";
+import CompComponent from "../Comp";
+import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/brick/model/model";
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 
-interface WordHighlightingProps {
-  question: Question;
+
+interface WordHighlightingProps extends CompQuestionProps {
   component: any;
   attempt: ComponentAttempt;
   answers: number[];
-  isPreview?: boolean;
 }
 
 interface WordHighlightingState {
@@ -93,6 +92,7 @@ class WordHighlighting extends CompComponent<
         <br/>
         <ReviewGlobalHint
           attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}
         />
       </div>

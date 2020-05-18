@@ -1,11 +1,7 @@
 import "./bricksListPage.scss";
 import React, { Component } from "react";
 import {
-  Box,
-  Grid,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
+  Box, Grid, FormControlLabel, Radio, RadioGroup,
 } from "@material-ui/core";
 import axios from "axios";
 // @ts-ignore

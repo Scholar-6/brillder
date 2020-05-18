@@ -12,6 +12,10 @@
     >span {
       font: 500 16px/24px $font-family-regular !important;
     }
+
+    img {
+      width: 100%;
+    }
   }
 
   .choose-choice:nth-child(odd) {background: #0076B4}
