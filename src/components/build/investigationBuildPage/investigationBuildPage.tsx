@@ -12,10 +12,13 @@ import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
 import QuestionTypePage from "./questionType/questionType";
 import SynthesisPage from "./synthesisPage/SynthesisPage";
+import LastSave from "components/build/baseComponents/lastSave/LastSave";
 import DragableTabs from "./dragTabs/dragableTabs";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 import SynthesisPreviewComponent from "components/build/baseComponents/phonePreview/synthesis/SynthesisPreview";
+import DeleteQuestionDialog from "components/build/baseComponents/deleteQuestionDialog/DeleteQuestionDialog";
+
 import ShortAnswerPreview from "components/build/baseComponents/phonePreview/questionPreview/ShortAnswerPreview";
 import ChooseOnePreview from "components/build/baseComponents/phonePreview/questionPreview/ChooseOnePreview";
 import ChooseSeveralPreview from "components/build/baseComponents/phonePreview/questionPreview/ChooseSeveralPreview";
@@ -283,9 +286,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   };
 
-  const toggleLock = () => {
-    setLock(!locked);
-  };
+  const toggleLock = () => setLock(!locked);
 
   const setQuestion = (index: number, question: Question) => {
     if (locked) { return; }
@@ -413,35 +414,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       />
     );
   };
-  
-  const formatTwoDigits = (number: Number) => {
-    let str = number.toString();
-    if (str.length < 2) {
-      return '0' + str;
-    }
-    return str;
-  }
-
-  const getTime = (updated: Date) => {
-    let hours = formatTwoDigits(updated.getHours());
-    let minutes = formatTwoDigits(updated.getMinutes());
-    return hours + ":" + minutes;
-  }
-
-  const renderLastSave = () => {
-    let updated = new Date(brick.updated);
-
-    return (
-      <div className="saved-info">
-        <Grid container alignContent="center" justify="center">
-          <img alt="" src="/feathericons/save-white.png" />
-          <div>
-            Last Saved at {getTime(updated)}
-          </div>
-        </Grid>
-      </div>
-    );
-  }
 
   const getPreviewElement = (type: QuestionTypeEnum) => {
     if (type === QuestionTypeEnum.ShortAnswer) {
@@ -532,7 +504,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               </Grid>
             </Grid>
           </Grid>
-          {renderLastSave()}
+          <LastSave updated={brick.updated} />
           <Route path="/build/brick/:brickId/build/investigation/question-component">
             <PhoneQuestionPreview question={activeQuestion} />
           </Route>
@@ -560,22 +532,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <Button className="no-button" onClick={() => hideInvalidBrick()}>No, keep working</Button>
           </Grid>
         </Dialog>
-        <Dialog
+        <DeleteQuestionDialog
           open={deleteDialogOpen}
-          onClose={() => setDeleteDialog(false)}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className="delete-brick-dialog"
-        >
-          <div className="dialog-header">
-            <div>Permanently delete</div>
-            <div>this question?</div>
-          </div>
-          <Grid container direction="row" className="row-buttons" justify="center">
-            <Button className="yes-button" onClick={() => deleteQuestionByIndex(deleteQuestionIndex)}>Yes, delete</Button>
-            <Button className="no-button" onClick={() => setDeleteDialog(false)}>No, keep</Button>
-          </Grid>
-        </Dialog>
+          index={deleteQuestionIndex}
+          setDialog={setDeleteDialog}
+          deleteQuestion={deleteQuestionByIndex}
+        />
       </Hidden>
       <Hidden only={['md', 'lg', 'xl']}>
         <Dialog
