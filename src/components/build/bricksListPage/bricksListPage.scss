@@ -258,6 +258,7 @@ $light-grey: #f3f4f7;
   }
 
   .main-brick-container {
+    padding-left: 0.8vw;
     position: relative;
     width: 100%;
   }
@@ -485,12 +486,12 @@ $light-grey: #f3f4f7;
       position: relative;
       border-top-left-radius: $main-panel-radius;
       margin-left: 0.5vw;
-      padding-left: 1.98vw;
+      padding-left: 1.18vw;
       background: $light-grey;
       height: 100%;
 
       .brick-row-title {
-        padding-left: 0.35vw;
+        padding-left: 1.15vw;
         color: $dark-blue;
         padding-top: 2.3vh;
         padding-bottom: 0;
