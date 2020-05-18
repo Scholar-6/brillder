@@ -1,20 +1,18 @@
 import React from 'react';
-import { Question } from "model/question";
 import { TextField, Grid } from '@material-ui/core';
 import CompComponent from '../Comp';
 
 import './ShortAnswer.scss';
 import { ComponentAttempt } from 'components/play/brick/model/model';
+import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
+import {CompQuestionProps} from '../types';
 
 
-interface ShortAnswerProps {
-  question: Question;
+interface ShortAnswerProps extends CompQuestionProps {
   component: any;
   attempt: ComponentAttempt;
   answers: string[];
-  isPreview: boolean;
 }
 
 interface ShortAnswerState {
@@ -96,14 +94,6 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     return attempt;
   }
 
-  renderEachHint(index: number) {
-    const {hint} = this.props.question;
-    if (this.props.attempt?.correct === false && hint.status === HintStatus.Each && hint.list[index]) {
-      return <div className="question-hint" dangerouslySetInnerHTML={{ __html: hint.list[index]}} />;
-    }
-    return "";
-  }
-
   renderTextField(index: number) {
     if (this.props.isPreview) {
       let {value} = this.props.component.list[index];
@@ -142,12 +132,17 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
                 {this.renderTextField(index)}
               </Grid>
               <Grid container direction="row" justify="center">
-                {this.renderEachHint(index)}
+                <ReviewEachHint
+                  isPhonePreview={this.props.isPreview}
+                  attempt={this.props.attempt}
+                  index={index}
+                  hint={this.props.question.hint}
+                />
               </Grid>
             </div>
           )
         }
-        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
+        <ReviewGlobalHint attempt={this.props.attempt} isPhonePreview={this.props.isPreview} hint={this.props.question.hint} />
       </div>
     );
   }

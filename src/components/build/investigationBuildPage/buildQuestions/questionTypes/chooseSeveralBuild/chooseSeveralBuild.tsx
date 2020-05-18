@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react'
-import DeleteIcon from '@material-ui/icons/Delete';
-import Checkbox from '@material-ui/core/Checkbox'; 
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
 import './chooseSeveralBuild.scss'
+import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 
 
 interface ChooseSeveralAnswer {
@@ -45,12 +44,6 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
     calculateHeight();
   }
 
-  const changed = (answer: any, event: any) => {
-    if (locked) { return; }
-    answer.value = event.target.value;
-    update();
-  }
-
   const addAnswer = () => {
     if (locked) { return; }
     state.list.push(newAnswer());
@@ -80,25 +73,23 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
     showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
-  const renderAnswer = (answer: any, key: number) => {
-    return (
-      <div className="choose-several-box unique-component-box" key={key}>
-        {
-          (state.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
-        }
-        <Checkbox className="left-ckeckbox" disabled={locked} checked={answer.checked} onChange={onChecked} value={key} />
-        <input disabled={locked} value={answer.value} onChange={(event) => changed(answer, event)} placeholder="Enter Answer..." />
-      </div>
-    );
-  }
-
   return (
     <div className="choose-several-build unique-component">
       <div className="component-title">
         Tick Correct Answers
       </div>
       {
-        state.list.map((answer:any, i:number) => renderAnswer(answer, i))
+        state.list.map((answer:any, i:number) => {
+          return <ChooseOneAnswerComponent
+            locked={locked}
+            index={i}
+            length={data.list.length}
+            answer={answer}
+            removeFromList={removeFromList}
+            onChecked={onChecked}
+            update={update}
+          />
+        })
       }
       <AddAnswerButton
         locked={locked}

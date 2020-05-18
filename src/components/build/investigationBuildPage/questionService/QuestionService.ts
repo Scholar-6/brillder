@@ -1,6 +1,8 @@
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, Hint, HintStatus
 } from 'model/question';
+import {QuestionValueType} from '../buildQuestions/questionTypes/types';
+import { Answer } from '../buildQuestions/questionTypes/pairMatchBuild/types';
 
 const getUniqueComponent = (components: any[]) => {
   return components.find(c => c.type === QuestionComponentTypeEnum.Component);
@@ -12,7 +14,6 @@ export function getNonEmptyComponent(components: any[]) {
     c.type === QuestionComponentTypeEnum.Text ||
     c.type === QuestionComponentTypeEnum.Image ||
     c.type === QuestionComponentTypeEnum.Quote ||
-    c.type === QuestionComponentTypeEnum.Equation ||
     c.type === QuestionComponentTypeEnum.Sound
   );
 }
@@ -51,9 +52,41 @@ const validateCheckedAnswer = (comp: any) => {
   return false;
 }
 
+
 const validatePairMatch = (comp: any) => {
+  const validateChoice = (a: Answer) => {
+    if (a.answerType === QuestionValueType.Image && !a.valueFile) {
+      return false;
+    } else if (a.answerType !== QuestionValueType.Image && !a.value) {
+      return false;
+    }
+    return true;
+  }
+
+  const validateOption = (a: Answer) => {
+    if (a.optionType === QuestionValueType.Image && !a.optionFile) {
+      return false;
+    } else if (a.optionType !== QuestionValueType.Image && !a.option) {
+      return false;
+    }
+    return true;
+  }
+
+  const getInvalid = (a:Answer) => {
+    if (!validateChoice(a)) {
+      return true;
+    }
+
+    if (!validateOption(a)) {
+      return true;
+    }
+
+    return false;
+  }
+
   if (comp.list && comp.list.length > 1) {
-    let invalid = comp.list.find((a:any) => !a.value || !a.option);
+    let invalid = comp.list.find(getInvalid);
+    console.log(invalid);
     if (invalid) {
       return false;
     }

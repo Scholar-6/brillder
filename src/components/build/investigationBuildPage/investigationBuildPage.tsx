@@ -78,6 +78,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
+  const [activeQuestionType, setActiveType] = React.useState(QuestionTypeEnum.None);
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
 
   /* Synthesis */
@@ -176,11 +177,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setQuestionType = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     var index = getQuestionIndex(activeQuestion);
-    setQuestions(
-      update(questions, {
-        [index]: { type: { $set: type } }
-      })
-    );
+    setQuestions(update(questions, { [index]: { type: { $set: type } } }));
   };
 
   const getUniqueComponent = (question: Question) => {
@@ -411,8 +408,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         brickId={brickId}
         setHoverQuestion={setHoverQuestion}
         questionId={activeQuestion.id}
+        activeQuestionType={activeQuestionType}
+        setActiveQuestionType={setActiveType}
         setQuestionType={setQuestionTypeAndMove}
-        setPreviousQuestion={setPreviousQuestion}
         questionType={activeQuestion.type}
       />
     );
@@ -447,20 +445,31 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     );
   }
 
-  const renderQuestionPhonePreview = () => {
-    if (hoverQuestion === QuestionTypeEnum.None) {
-      return <PhonePreview link={window.location.origin + "/logo-page"} />
-    } else if (hoverQuestion === QuestionTypeEnum.ShortAnswer) {
+  const getPreviewElement = (type: QuestionTypeEnum) => {
+    if (type === QuestionTypeEnum.ShortAnswer) {
       return <PhonePreview Component={ShortAnswerPreview} />
-    } else if (hoverQuestion === QuestionTypeEnum.ChooseOne) {
+    } else if (type === QuestionTypeEnum.ChooseOne) {
       return <PhonePreview Component={ChooseOnePreview} />
-    } else if (hoverQuestion === QuestionTypeEnum.ChooseSeveral) {
+    } else if (type === QuestionTypeEnum.ChooseSeveral) {
       return <PhonePreview Component={ChooseSeveralPreview} />
-    } else if (hoverQuestion === QuestionTypeEnum.VerticalShuffle) {
+    } else if (type === QuestionTypeEnum.VerticalShuffle) {
       return <PhonePreview Component={VerticalShufflePreview} />
-    } else if (hoverQuestion === QuestionTypeEnum.HorizontalShuffle) {
+    } else if (type === QuestionTypeEnum.HorizontalShuffle) {
       return <PhonePreview Component={HorizontalShufflePreview} />
     }
+    return null;
+  }
+
+  const renderQuestionPhonePreview = () => {
+    let preview = getPreviewElement(hoverQuestion);
+    if (preview) {
+      return preview;
+    }
+    preview = getPreviewElement(activeQuestionType);
+    if (preview) {
+      return preview;
+    }
+    
     return <PhonePreview link={window.location.origin + "/logo-page"} />
   }
 

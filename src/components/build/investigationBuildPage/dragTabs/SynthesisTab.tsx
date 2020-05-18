@@ -9,10 +9,14 @@ export interface SynthesisTabProps {
 }
 
 const SynthesisTab: React.FC<SynthesisTabProps> = ({columns, synthesis, isSynthesis}) => {
+  let className = 'synthesis-tab-icon';
+  if (columns > 23) {
+    className+=' width-based';
+  }
   return (
     <div className="last-tab">
       <Grid container justify="center" alignContent="center" style={{height: '100%'}}>
-        <img alt="add-synthesis" src="/images/synthesis-icon.png" className="synthesis-tab-icon" />
+        <img alt="add-synthesis" src="/images/synthesis-icon.png" className={className} />
       </Grid>
     </div>
   );

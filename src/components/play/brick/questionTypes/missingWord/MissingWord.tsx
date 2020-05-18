@@ -1,16 +1,16 @@
 import React from "react";
-import { Question } from "model/question";
 import { Grid, Select } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
+
 import CompComponent from "../Comp";
-
 import "./MissingWord.scss";
+import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/brick/model/model";
+import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
-import { HintStatus } from "components/build/baseComponents/Hint/Hint";
 
-interface MissingWordProps {
-  question: Question;
+
+interface MissingWordProps extends CompQuestionProps {
   component: any;
   attempt: ComponentAttempt;
   answers: number[];
@@ -92,18 +92,6 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     return attempt;
   }
 
-  renderEachHint(index: number) {
-    const { hint } = this.props.question;
-    if (
-      this.props.attempt?.correct === false &&
-      hint.status === HintStatus.Each &&
-      hint.list[index]
-    ) {
-      return <div className="question-hint" dangerouslySetInnerHTML={{ __html: hint.list[index]}} />;
-    }
-    return "";
-  }
-
   renderSelect(choice: any, index: number) {
     if (!this.state.userAnswers[index]) { return <div>...Loading...</div>}
     return (
@@ -134,12 +122,18 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
               {choice.after}
             </Grid>
             <Grid container direction="row" justify="center">
-              {this.renderEachHint(index)}
+              <ReviewEachHint
+                isPhonePreview={this.props.isPreview}
+                attempt={this.props.attempt}
+                index={index}
+                hint={this.props.question.hint}
+              />
             </Grid>
           </div>
         ))}
         <ReviewGlobalHint
           attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}
         />
       </div>

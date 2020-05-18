@@ -10,7 +10,43 @@
     .ck-button {
       color: $dark-blue;
     }
+    .ck-custom-dropdown {
+      .ck-splitbutton__action {
+        font-size: 0;
+        padding: 0;
+        width: 0;
+      }
+      .ck-splitbutton__action {
+        visibility: hidden;
+        border: none;
+        padding: 0;
+        margin: 0;
+        height: 0;
+        width: 0;
+      }
+      .ck-toolbar {
+        border-radius: 0 !important;
+        padding: 0;
+        margin: 0;
+        height: 5vh;
+        width: 10vh;
+        .ck-button {
+          padding: 0;
+          margin: 0;
+          width: 5vh;
+        }
+      }
+    }
+
+    .ck.ck-button.ck-on:not(.ck-disabled):hover, a.ck.ck-button.ck-on:not(.ck-disabled):hover {
+      background-color:transparent !important;
+    }
+
+    .ck-button__label {
+      font-family: $font-family-regular;
+    }
   }
+
 
   .ck-content {
     color: $dark-blue;

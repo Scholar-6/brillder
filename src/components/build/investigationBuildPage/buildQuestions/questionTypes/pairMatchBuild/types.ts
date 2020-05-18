@@ -1,15 +1,12 @@
-export enum PairBoxType {
-  None,
-  String,
-  Image,
-}
+import {QuestionValueType} from '../types';
+
 
 export interface Answer {
   checked: boolean;
   value: string;
   valueFile: string;
-  answerType?: PairBoxType; 
+  answerType?: QuestionValueType; 
   option: string;
   optionFile: string;
-  optionType?: PairBoxType;
+  optionType?: QuestionValueType;
 }

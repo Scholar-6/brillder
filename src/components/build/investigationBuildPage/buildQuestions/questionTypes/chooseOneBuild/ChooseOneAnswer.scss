@@ -1,0 +1,129 @@
+@import '_variables';
+@import "../../questionVariables";
+
+.choose-one-box {
+  .question-image-drop {
+    left: 30%;
+
+    .dropzone {
+      background: none;
+    }
+  }
+  .document-editor {
+    position: relative;
+    > div > .ck-toolbar {
+      font-size: 1.4vh;
+      right: 0;
+      background: white !important;
+      position: absolute;
+      width: 3.5vh;
+      height: 8vh;
+      z-index: 1;
+    }
+    .ck-dropdown__panel {
+      z-index: 100 !important;
+    }
+    .ck-toolbar__items {
+      display: block !important;
+
+      button {
+        padding: 0;
+        margin: 0;
+        display: block !important;
+      }
+    }
+    .ck-content {
+      padding-left: 2.5vw;
+      padding-right: 5vw;
+      padding-top: 4.2vh;
+      height: 4vh;
+      text-align: center !important;
+      overflow: hidden;
+
+      p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: center !important;
+        display: inline;
+      }
+      br {
+        display: none;
+      }
+    }
+  }
+
+  .delete-right-top-icon {
+    position: absolute;
+    top: 0.2vh;
+    height: $bin-size;
+    width: $bin-size;
+    right: 4.2vh;
+    cursor: pointer;
+    color: $orange;
+    z-index: 2;
+  }
+
+  .delete-right-top-icon:hover {
+    opacity: 0.5;
+  }
+}
+
+.choose-one-box.big-answer {
+  .document-editor {
+    > div > .ck-toolbar {
+      height: 14vh;
+    }
+    .ck-content {
+      padding-top: 10vh;
+    }
+  }
+}
+
+.choose-one-box {
+  position: relative;
+  margin: 0.17vw 0.3vw;
+
+  .Mui-checked {
+    color: $orange;
+  }
+
+  .checkbox-container {
+    position: absolute;
+    height: 8vh;
+  }
+  .checkbox-container.big-box {
+    position: absolute;
+    height: 14vh;
+  }
+
+  .left-ckeckbox {
+    z-index: 1;
+    padding: 0.45vw;
+    opacity: 1 !important;
+
+    span {
+      svg {
+        height: $bin-size !important;
+        width: $bin-size !important;
+      }
+    }
+  }
+
+  input:not([type='checkbox']) {
+    width: 84%;
+    text-align: center;
+    border: none;
+    background: $input-grey;
+    padding-right: 8%;
+    padding-left: 8%;
+    border-radius: 0;
+    opacity: 0.8;
+    font-size: $answer-input-text-size;
+    font-family: $font-family-regular;
+    height: $answer-height !important;
+  }
+  input[type='checkbox'] {
+    height: 100% !important;
+  }
+}

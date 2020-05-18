@@ -1,16 +1,16 @@
 
 import React from 'react';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
+import { ReactSortable } from 'react-sortablejs';
+import { Grid } from '@material-ui/core';
 
 import './VerticalShuffle.scss';
-import { Question } from "model/question";
+import {CompQuestionProps} from '../types';
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
-import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
+import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import { ReactSortable } from 'react-sortablejs';
-import { Grid } from '@material-ui/core';
 
 
 interface VerticalShuffleChoice {
@@ -24,10 +24,8 @@ interface VerticalShuffleComponent {
   list: VerticalShuffleChoice[];
 }
 
-interface VerticalShuffleProps {
-  question: Question;
+interface VerticalShuffleProps extends CompQuestionProps {
   component: VerticalShuffleComponent;
-  attempt?: ComponentAttempt;
   answers: number;
 }
 
@@ -133,11 +131,12 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
                       {answer.value}
                     </Grid>
                     <Grid container direction="row" justify="center">
-                      {
-                        (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && this.props.question.hint.list.length > 0) ?
-                          <span className="question-hint" dangerouslySetInnerHTML={{ __html: answer.hint}} />
-                          : ""
-                      }
+                      <ReviewEachHint
+                        isPhonePreview={this.props.isPreview}
+                        attempt={this.props.attempt}
+                        index={i}
+                        hint={this.props.question.hint}
+                      />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -145,7 +144,11 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
             ))
           }
         </ReactSortable>
-        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
+        <ReviewGlobalHint
+          attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
+          hint={this.props.question.hint}
+        />
       </div>
     );
   }

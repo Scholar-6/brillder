@@ -2,12 +2,16 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 
 import './ChooseOne.scss';
-import { Question } from "model/question";
 import CompComponent from '../Comp';
+import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
+import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
+import {checkVisibility} from '../../../services/hintService';
+import MathInHtml from '../../baseComponents/MathInHtml';
+import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 
 
 interface ChooseOneChoice {
@@ -20,10 +24,8 @@ interface ChooseOneComponent {
   list: ChooseOneChoice[];
 }
 
-interface ChooseOneProps {
-  question: Question;
+interface ChooseOneProps extends CompQuestionProps {
   component: ChooseOneComponent;
-  attempt?: ComponentAttempt;
   answers: number;
 }
 
@@ -85,14 +87,32 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     return attempt;
   }
 
+  renderEachHint(index: number) {
+    const isShown = checkVisibility(this.props.attempt, this.props.isPreview);
+    const {hint} = this.props.question;
+
+    if (isShown && this.props.question.hint.status === HintStatus.Each && hint.list[index]) {
+      return (
+        <span className="question-hint" dangerouslySetInnerHTML={{ __html: hint.list[index]}} />
+      );
+    }
+    return "";
+  }
+
+  renderData(answer: any) {
+    if (answer.answerType === QuestionValueType.Image) {
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
+    } else {
+      return <MathInHtml value={answer.value} />;
+    }
+  }
+
   render() {
     const { activeItem } = this.state;
 
     return (
       <div className="choose-one-live">
-        {
-          (this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""
-        }
+        {(this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""}
         {
           this.props.component.list.map((input: any, index: number) =>
             <Button
@@ -100,17 +120,22 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
               key={index}
               onClick={() => this.setActiveItem(index)}>
                 <div style={{lineHeight: 1}}>
-                  <div>{input.value}</div>
-                  {
-                    (this.props.attempt?.correct === false && this.props.question.hint.status === HintStatus.Each && input.hint) ?
-                      <span className="question-hint" dangerouslySetInnerHTML={{ __html: input.hint}} />
-                      : ""
-                  }
+                  {this.renderData(input)}
+                  <ReviewEachHint
+                    isPhonePreview={this.props.isPreview}
+                    attempt={this.props.attempt}
+                    index={index}
+                    hint={this.props.question.hint}
+                  />
                 </div>
             </Button>
           )
         }
-        <ReviewGlobalHint attempt={this.props.attempt} hint={this.props.question.hint} />
+        <ReviewGlobalHint
+          attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
+          hint={this.props.question.hint}
+        />
       </div>
     );
   }

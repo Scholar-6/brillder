@@ -37,7 +37,9 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
             {alternativeTopics ? alternativeTopics: 'Subtopic(s)'}
           </span>
         </div>
-        <div className="author-row">{author.firstName ? author.firstName + ' ' + author.lastName : 'Author'}  | {dateString}</div>
+        <div className="author-row">
+          {author.firstName ? author.firstName + ' ' + author.lastName : 'Author'}  | {dateString}
+        </div>
       </div>
     </Grid>
   )
