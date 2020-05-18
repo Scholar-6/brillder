@@ -26,7 +26,6 @@ interface ProposalProps {
 }
 
 const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
-  console.log(brick);
   let subjectId = 0;
   if (props.user.subjects.length === 1) {
     subjectId = props.user.subjects[0].id;

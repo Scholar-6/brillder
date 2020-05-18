@@ -27,7 +27,7 @@ class WordHighlighting extends CompComponent<
     this.state = { userAnswers: [], words: props.component.words };
   }
   
-  componentWillReceiveProps(props: WordHighlightingProps) {
+  UNSAFE_componentWillReceiveProps(props: WordHighlightingProps) {
     this.setState({ words: props.component.words });
   }
 

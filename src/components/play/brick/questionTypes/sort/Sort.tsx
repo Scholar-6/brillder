@@ -78,7 +78,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     this.state = { userCats, choices: this.getChoices() };
   }
 
-  componentWillReceiveProps(props: SortProps) {
+  UNSAFE_componentWillReceiveProps(props: SortProps) {
     if (props.isPreview === true && props.component) {
       let userCats:UserCategory[] = [];
       let choices:SortChoice[] = [];

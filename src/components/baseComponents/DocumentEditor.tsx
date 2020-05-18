@@ -85,7 +85,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
     }
   }
 
-  componentWillReceiveProps(props: DocumentEditorProps) {
+  UNSAFE_componentWillReceiveProps(props: DocumentEditorProps) {
     if (this.state.editor) {
       let data = this.state.editor.getData();
       if (props.data !== data) {

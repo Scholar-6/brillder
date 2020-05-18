@@ -36,7 +36,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     this.state = { userAnswers, choices: props.component.choices };
   }
 
-  componentWillReceiveProps(props: MissingWordProps) {
+  UNSAFE_componentWillReceiveProps(props: MissingWordProps) {
     if (props.component) {
       let userAnswers: any[] = [];
       props.component.choices.forEach(() => userAnswers.push({ value: -1 }));

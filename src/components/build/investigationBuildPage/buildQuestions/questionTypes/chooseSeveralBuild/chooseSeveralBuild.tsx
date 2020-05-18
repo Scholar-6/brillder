@@ -82,6 +82,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
         state.list.map((answer:any, i:number) => {
           return <ChooseOneAnswerComponent
             locked={locked}
+            key={i}
             index={i}
             length={data.list.length}
             answer={answer}

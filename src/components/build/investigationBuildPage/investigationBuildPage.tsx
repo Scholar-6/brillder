@@ -18,13 +18,7 @@ import PhonePreview from "components/build/baseComponents/phonePreview/PhonePrev
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 import SynthesisPreviewComponent from "components/build/baseComponents/phonePreview/synthesis/SynthesisPreview";
 import DeleteQuestionDialog from "components/build/baseComponents/deleteQuestionDialog/DeleteQuestionDialog";
-
-import ShortAnswerPreview from "components/build/baseComponents/phonePreview/questionPreview/ShortAnswerPreview";
-import ChooseOnePreview from "components/build/baseComponents/phonePreview/questionPreview/ChooseOnePreview";
-import ChooseSeveralPreview from "components/build/baseComponents/phonePreview/questionPreview/ChooseSeveralPreview";
-import VerticalShufflePreview from "components/build/baseComponents/phonePreview/questionPreview/VerticalShufflePreview";
-import HorizontalShufflePreview from "components/build/baseComponents/phonePreview/questionPreview/HorizontalShufflePreview";
-
+import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
 
 import {
   Question,
@@ -34,6 +28,7 @@ import {
 } from "model/question";
 import actions from "../../../redux/actions/brickActions";
 import {validateQuestion} from "./questionService/QuestionService";
+
 
 interface ApiQuestion {
   id?: number;
@@ -163,6 +158,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/build/investigation/question`);
     }
+    saveBrickQuestions(updatedQuestions);
   };
 
   const moveToSynthesis = () => {
@@ -180,6 +176,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setQuestionType = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     var index = getQuestionIndex(activeQuestion);
+    console.log(update(questions, { [index]: { type: { $set: type } } }));
     setQuestions(update(questions, { [index]: { type: { $set: type } } }));
   };
 
@@ -344,6 +341,27 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setSubmitDialog(false);
   }
 
+  const saveBrickQuestions = (updatedQuestions: Question[]) => {
+    brick.questions = [];
+    brick.synthesis = synthesis;
+    for (let question of updatedQuestions) {
+      const questionObject = {
+        components: question.components,
+        hint: question.hint
+      };
+      const apiQuestion = {
+        type: question.type,
+        contentBlocks: JSON.stringify(questionObject)
+      } as ApiQuestion;
+      if (question.id) {
+        apiQuestion.id = question.id;
+        apiQuestion.type = question.type;
+      }
+      brick.questions.push(apiQuestion);
+    }
+    props.saveBrick(brick);
+  }
+
   const saveBrick = () => {
     brick.questions = [];
     brick.synthesis = synthesis;
@@ -415,34 +433,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     );
   };
 
-  const getPreviewElement = (type: QuestionTypeEnum) => {
-    if (type === QuestionTypeEnum.ShortAnswer) {
-      return <PhonePreview Component={ShortAnswerPreview} />
-    } else if (type === QuestionTypeEnum.ChooseOne) {
-      return <PhonePreview Component={ChooseOnePreview} />
-    } else if (type === QuestionTypeEnum.ChooseSeveral) {
-      return <PhonePreview Component={ChooseSeveralPreview} />
-    } else if (type === QuestionTypeEnum.VerticalShuffle) {
-      return <PhonePreview Component={VerticalShufflePreview} />
-    } else if (type === QuestionTypeEnum.HorizontalShuffle) {
-      return <PhonePreview Component={HorizontalShufflePreview} />
-    }
-    return null;
-  }
-
-  const renderQuestionPhonePreview = () => {
-    let preview = getPreviewElement(hoverQuestion);
-    if (preview) {
-      return preview;
-    }
-    preview = getPreviewElement(activeQuestionType);
-    if (preview) {
-      return preview;
-    }
-    
-    return <PhonePreview link={window.location.origin + "/logo-page"} />
-  }
-
   return (
     <div className="investigation-build-page">
       <div style={{position: 'fixed'}}>
@@ -509,7 +499,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <PhoneQuestionPreview question={activeQuestion} />
           </Route>
           <Route path="/build/brick/:brickId/build/investigation/question">
-            {renderQuestionPhonePreview()}
+            <QuestionTypePreview
+              hoverQuestion={hoverQuestion}
+              activeQuestionType={activeQuestionType}
+            />
           </Route>
           <Route path="/build/brick/:brickId/build/investigation/synthesis">
             <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
