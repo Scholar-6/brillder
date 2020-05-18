@@ -23,18 +23,25 @@
   }
 
   .MuiSnackbar-root {
+    position: fixed !important;
+    z-index: 1000;
     font-size: 2vw;
-    top: 0 !important;
+    top: 30% !important;
+    height: 30vh;
     left: 50.8% !important;
     width: 20vw;
     
     .MuiSnackbarContent-root {
       text-align: justify;
-      padding: 0.8vw 1vw;
+      padding: 0 1.7vw 0.8vw 1vw;
       border-radius: 0.7vw;
       background: $light-blue;
       font-size: 1.4vw;
       font-family: $font-family-regular;
+
+      .MuiSnackbarContent-action {
+        padding: 0;
+      }
 
       .exclamation-mark {
         border-radius: 100vw;
