@@ -26,8 +26,6 @@ const QuestionTypePage: React.FC<TypeButtonProps> = ({
         direction="row"
         className="link-description"
         key={i}
-        onMouseEnter={() => onMouseEnter(questionType)}
-        onMouseLeave={onMouseLeave}
       >
         {label}
       </Grid>
@@ -40,7 +38,12 @@ const QuestionTypePage: React.FC<TypeButtonProps> = ({
   }
   return (
     <Box className={`question-container ${className}`} onClick={() => setType(questionType) }>
-      <Grid container justify="center" style={{height: '100%'}} alignContent="center">
+      <Grid
+        container justify="center" alignContent="center"
+        style={{height: '100%'}}
+        onMouseEnter={() => onMouseEnter(questionType)}
+        onMouseLeave={onMouseLeave}
+      >
         {
           labels.map((label:string, i:number) => renderLabel(label, i + 1))
         }
