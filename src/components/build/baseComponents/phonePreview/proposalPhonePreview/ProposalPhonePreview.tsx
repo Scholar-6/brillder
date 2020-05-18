@@ -34,10 +34,6 @@ const ProposalPhonePreview: React.FC<ProposalPhonePreviewProps> = ({ link, Compo
       <div className="proposal-phone-preview">
         <div className="phone">
           <div className="phone-border">
-            <Grid container className="upper-panel">
-              <div className="speaker"></div>
-              <div className="camera"></div>
-            </Grid>
             <div className="volume volume1"></div>
             <div className="volume volume2"></div>
             <div className="volume volume3"></div>
