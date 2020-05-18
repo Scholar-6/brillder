@@ -108,6 +108,9 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
   }
 
   handleOnInit = (editor: any) => {
+    editor.locale.contentLanguageDirection = '';
+    editor.execute( 'alignment', { value: 'justify' } );
+
     const {current} = this.state.ref;
     if (current) {
       current.appendChild(editor.ui.view.toolbar.element);
