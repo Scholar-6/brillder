@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid, Button, Hidden } from "@material-ui/core";
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import Dialog from '@material-ui/core/Dialog';
 import update from "immutability-helper";
 // @ts-ignore
 import { connect } from "react-redux";
 
 import "./investigationBuildPage.scss";
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
 import QuestionTypePage from "./questionType/questionType";
 import SynthesisPage from "./synthesisPage/SynthesisPage";
@@ -275,9 +275,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       selectedQuestion.active = true;
 
       setQuestions(
-        update(questions, {
-          $set: updatedQuestions
-        })
+        update(questions, { $set: updatedQuestions })
       );
     }
     if (history.location.pathname.slice(-10) === '/synthesis') {
