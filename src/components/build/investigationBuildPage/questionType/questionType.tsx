@@ -1,5 +1,6 @@
 import React from 'react'
 import { Grid } from '@material-ui/core';
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import './questionType.scss';
 import { QuestionTypeEnum } from 'model/question';
@@ -8,28 +9,31 @@ import TypeButton from './TypeButton'
 
 export interface QuestionTypeProps {
   questionType: QuestionTypeEnum,
+  activeQuestionType: QuestionTypeEnum,
   synthesis: string,
   history: any,
   brickId: number,
   questionId: number,
-  setQuestionType: Function
-  setPreviousQuestion(): void
+  setQuestionType(type: QuestionTypeEnum): void
+  setActiveQuestionType(type: QuestionTypeEnum): void
   setHoverQuestion(type: QuestionTypeEnum): void
 }
 
 const QuestionTypePage: React.FC<QuestionTypeProps> = ({
-  questionType, history, brickId, questionId, setQuestionType, setHoverQuestion, synthesis
+  questionType, history, brickId, questionId, synthesis, activeQuestionType,
+  setQuestionType, setHoverQuestion, setActiveQuestionType
 }: QuestionTypeProps) => {
   if (questionType !== QuestionTypeEnum.None) {
     history.push(`/build/brick/${brickId}/build/investigation/question-component/${questionId}`);
   }
 
-  const type = questionType;
+  const type = activeQuestionType;
 
   document.title = "Select First Question Type";
 
   const setCurrentType = (type: QuestionTypeEnum) => {
-    setQuestionType(type);
+    setActiveQuestionType(type);
+    //setQuestionType(type);
   }
 
   const onHover = (type: QuestionTypeEnum) => {
@@ -38,6 +42,27 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
 
   const removeHover = () => {
     setHoverQuestion(QuestionTypeEnum.None);
+  }
+
+  const renderSynthesisButton = () => {
+    return (
+      <Grid className="round-button-center-container" container direction="row" justify="center">
+        <Grid
+          className="round-button-center"
+          onClick={() => {
+            history.push(`/build/brick/${brickId}/build/investigation/synthesis`)
+          }}
+          container direction="row" justify="flex-start"
+        >
+          <div className="synthesis-icon"></div>
+          <span className="synthesis-text">
+            {
+              synthesis ? 'EDIT SYNTHESIS' : 'ADD SYNTHESIS'
+            }
+          </span>
+        </Grid>
+      </Grid>
+    );
   }
 
   return (
@@ -163,19 +188,15 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
           </Grid>
         </Grid>
       </div>
-      <Grid className="round-button-center-container" container direction="row" justify="center">
-        <Grid
-          className="round-button-center"
-          onClick={() => {history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}}
-          container direction="row" justify="flex-start"
-        >
-          <div className="synthesis-icon"></div>
-          <span className="synthesis-text">
-            {
-              synthesis ? 'EDIT SYNTHESIS' : 'ADD SYNTHESIS'
-            }
-          </span>
-        </Grid>
+      {renderSynthesisButton()}
+      <Grid className="submit-button-container" container alignContent="center">
+        {
+          activeQuestionType ? (
+            <div>
+              <div className="submit-button"></div>
+            </div>
+          ) : ""
+        }
       </Grid>
     </div>
   );
