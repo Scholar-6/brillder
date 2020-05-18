@@ -33,7 +33,6 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
 
   const setCurrentType = (type: QuestionTypeEnum) => {
     setActiveQuestionType(type);
-    //setQuestionType(type);
   }
 
   const onHover = (type: QuestionTypeEnum) => {
@@ -193,7 +192,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
         {
           activeQuestionType ? (
             <div>
-              <div className="submit-button"></div>
+              <div className="submit-button" onClick={() => setQuestionType(type)}></div>
             </div>
           ) : ""
         }
