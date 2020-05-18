@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
-import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import './shortAnswerBuild.scss'
+import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
 
 interface ShortAnswerItem {
@@ -29,6 +30,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
   }
 
   const [state, setState] = React.useState(data);
+  const [limitOverflow, setLimitOverflow] = React.useState(false);
 
   useEffect(() => {setState(data) }, [data]);
 
@@ -52,7 +54,10 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
     var res = event.target.value.split(' ');
     if (res.length <= 3) {
       shortAnswer.value = event.target.value;
+      setLimitOverflow(false);
       update();
+    } else {
+      setLimitOverflow(true);
     }
   }
 
@@ -93,6 +98,22 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
         addAnswer={addShortAnswer}
         height={height}
         label="+ &nbsp;&nbsp; S &nbsp; H &nbsp; O &nbsp; R &nbsp; T &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={limitOverflow}
+        onClose={() => setLimitOverflow(false)}
+        action={
+          <React.Fragment>
+            <div>
+              <span className="exclamation-mark">!</span>
+              Great minds don't think exactly alike: the learner may know the right answer but use slightly different language, so there is a limit of three words for short answers.
+            </div>
+          </React.Fragment>
+        }
+      />
     </div>
   )
 }
