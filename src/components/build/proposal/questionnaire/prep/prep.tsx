@@ -1,13 +1,14 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
+import './prep.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
-import './prep.scss';
+import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 
 interface PrepProps {
@@ -23,7 +24,9 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
           alt="head"
           src="/images/new-brick/prep.png">
         </img>
-        <div className="typing-text" dangerouslySetInnerHTML={{ __html: data}} />
+        <div className="typing-text">
+          <MathInHtml value={data} />
+        </div>
       </Grid>
     )
   }
@@ -51,7 +54,9 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
           <h1>preparatory material.</h1>
           <DocumentCKEditor
             data={prep}
-            toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
+            toolbar={[
+              'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
+            ]}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
             mediaEmbed={true}
             onChange={setPrep}

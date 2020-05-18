@@ -2,13 +2,14 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
+import './brief.scss';
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
-import './brief.scss';
 import DocumentCKEditor from "components/baseComponents/DocumentEditor";
+import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 
 interface PrepProps {
@@ -26,7 +27,7 @@ const BriefPreviewComponent:React.FC<any> = ({data}) => {
           src="/images/new-brick/brief-circles.png">
         </img>
         <div className="typing-text">
-          <div dangerouslySetInnerHTML={{ __html: data}} />
+          <MathInHtml value={data} />
         </div>
       </Grid>
     )
@@ -60,7 +61,9 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
           </h1>
           <DocumentCKEditor
             data={brief}
-            toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
+            toolbar={[
+              'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
+            ]}
             onChange={setBriefText}
             placeholder="Enter Brief Here..."
           />
