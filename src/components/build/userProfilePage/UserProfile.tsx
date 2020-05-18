@@ -355,7 +355,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                         {...params}
                         variant="standard"
                         label="Subjects: "
-                        placeholder="Favorites"
+                        placeholder="Subjects"
                       />
                     )}
                   />

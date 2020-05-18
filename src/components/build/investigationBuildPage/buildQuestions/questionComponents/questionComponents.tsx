@@ -1,5 +1,3 @@
-// This is for the dropdown that allows user to change the answer type.
-
 import React, { useState, useEffect } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { Grid, Button } from '@material-ui/core';
@@ -22,17 +20,19 @@ import { HintState } from 'components/build/baseComponents/Hint/Hint';
 
 
 type QuestionComponentsProps = {
-  questionIndex: number
-  locked: boolean
-  history: any
-  brickId: number
-  question: Question
-  updateComponents(components: any[]): void
-  setQuestionHint(hintState: HintState): void
+  questionIndex: number;
+  locked: boolean;
+  history: any;
+  brickId: number;
+  question: Question;
+  saveBrick(): void;
+  updateComponents(components: any[]): void;
+  setQuestionHint(hintState: HintState): void;
 }
 
 const QuestionComponents = ({
-  questionIndex, locked, history, brickId, question, updateComponents, setQuestionHint
+  questionIndex, locked, history, brickId, question,
+  updateComponents, setQuestionHint, saveBrick
 }: QuestionComponentsProps) => {
   let componentsCopy = Object.assign([], question.components) as any[]
   const [questionId, setQuestionId] = useState(question.id);
@@ -57,6 +57,8 @@ const QuestionComponents = ({
     comps.splice(componentIndex, 1);
     setComponents(comps);
     updateComponents(comps);
+    console.log('delete');
+    saveBrick();
   }
 
   const addInnerComponent = () => {
@@ -65,6 +67,7 @@ const QuestionComponents = ({
     comps.push({type: 0});
     setComponents(comps);
     updateComponents(comps);
+    saveBrick();
   }
 
   let canRemove = (components.length > 3) ? true : false;
@@ -102,6 +105,7 @@ const QuestionComponents = ({
         component.value = "";
         updatingComponent(component);
       }
+      saveBrick();
     }
 
     const { type } = question;
@@ -138,13 +142,14 @@ const QuestionComponents = ({
         index={index}
         locked={locked}
         component={component}
-        updateComponent={updatingComponent}
         hint={question.hint}
         canRemove={canRemove}
+        uniqueComponent={uniqueComponent}
         setEmptyType={setEmptyType}
         removeComponent={removeInnerComponent}
         setQuestionHint={setQuestionHint}
-        uniqueComponent={uniqueComponent}
+        updateComponent={updatingComponent}
+        saveBrick={saveBrick}
       />
     );
   }
@@ -153,6 +158,7 @@ const QuestionComponents = ({
     if (locked) { return; }
     setComponents(components);
     updateComponents(components);
+    saveBrick();
   }
 
   const hideDialog = () => {
@@ -166,7 +172,8 @@ const QuestionComponents = ({
         list={components}
         animation={150}
         group={{ name: "cloning-group-name", pull: "clone" }}
-        setList={setList}>
+        setList={setList}
+      >
         {
           components.map((comp, i) => (
             <Grid key={i} container direction="row" className="drop-box">
