@@ -3,6 +3,7 @@ import {
 } from 'model/question';
 import {QuestionValueType} from '../buildQuestions/questionTypes/types';
 import { Answer } from '../buildQuestions/questionTypes/pairMatchBuild/types';
+import { MissingChoice } from '../buildQuestions/questionTypes/missingWordBuild/MissingWordBuild';
 
 const getUniqueComponent = (components: any[]) => {
   return components.find(c => c.type === QuestionComponentTypeEnum.Component);
@@ -38,13 +39,17 @@ const validateNotEmptyAnswer = (comp: any) => {
   return false;
 }
 
+const getChecked = (list: any[]) => {
+  return list.find((a:any) => a.checked === true);
+}
+
 const validateCheckedAnswer = (comp: any) => {
   if (comp.list && comp.list.length > 1) {
     let invalid = comp.list.find((a:any) => !a.value);
     if (invalid) {
       return false;
     }
-    let checked = comp.list.find((a:any) => a.checked === true);
+    let checked = getChecked(comp.list);
     if (checked) {
       return true;
     }
@@ -86,7 +91,6 @@ const validatePairMatch = (comp: any) => {
 
   if (comp.list && comp.list.length > 1) {
     let invalid = comp.list.find(getInvalid);
-    console.log(invalid);
     if (invalid) {
       return false;
     }
@@ -135,6 +139,22 @@ const validateLineHighlighting = (comp: any) => {
   return false;
 }
 
+const validateMissingWord = (comp: any) => {
+  for (let choice of comp.choices as MissingChoice[]) {
+    let invalid = choice.answers.find((a:any) => !a.value);
+
+    if (invalid) {
+      return false;
+    }
+   
+    let checked = getChecked(choice.answers);
+    if (!checked) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export function validateQuestion(question: Question) {
   const {type, hint, components} = question;
 
@@ -163,6 +183,8 @@ export function validateQuestion(question: Question) {
     return validateWordHighlighting(comp);
   } else if (type === QuestionTypeEnum.LineHighlighting) {
     return validateLineHighlighting(comp);
+  } else if (type === QuestionTypeEnum.MissingWord) {
+    return validateMissingWord(comp);
   }
   return false;
 };
