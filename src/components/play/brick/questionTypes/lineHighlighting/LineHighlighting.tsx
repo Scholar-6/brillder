@@ -26,7 +26,7 @@ class LineHighlighting extends CompComponent<
     this.state = { userAnswers: [], lines: props.component.lines };
   }
 
-  componentWillReceiveProps(props: LineHighlightingProps) {
+  UNSAFE_componentWillReceiveProps(props: LineHighlightingProps) {
     this.setState({ lines: props.component.lines });
   }
 

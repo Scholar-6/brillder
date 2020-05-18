@@ -85,7 +85,6 @@ const DragableTabs: React.FC<DragTabsProps> = ({
     let isValid = true;
     if (props.validationRequired) {
       isValid = validateQuestion(question as any);
-      console.log(isValid);
     }
 
     return (
