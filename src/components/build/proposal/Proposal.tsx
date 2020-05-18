@@ -26,6 +26,7 @@ interface ProposalProps {
 }
 
 const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
+  console.log(brick);
   let subjectId = 0;
   if (props.user.subjects.length === 1) {
     subjectId = props.user.subjects[0].id;
@@ -53,6 +54,9 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   useEffect(() => {
     if (brick) {
+      if (!brick.author && state.author) {
+        brick.author = state.author;
+      }
       setBrick(brick);
     }
   }, [brick]);
