@@ -29,7 +29,7 @@
     width: 20vw;
     
     .MuiSnackbarContent-root {
-      text-align: left;
+      text-align: justify;
       padding: 0.8vw 1vw;
       border-radius: 0.7vw;
       background: $light-blue;
@@ -37,21 +37,16 @@
       font-family: $font-family-regular;
 
       .exclamation-mark {
-        text-align: center;
-        font-weight: bold;
-        font-family: "Brandon Grotesque Black";
-        color: white;
-        font-size: 1.2vw;
         border-radius: 100vw;
-        background-color: $orange;
         padding-left: 0.7vw;
         padding-right: 0.7vw;
         margin-right: 1vw;
+        font-size: 1.2vw;
         text-align: center;
         font-weight: bold;
-        font-family: "Brandon Grotesque Black";
+        font-family: $font-family-black;
         color: white;
-        font-size: 1.2vw;
+        background-color: $orange;
       }
     }
   }
