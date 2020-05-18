@@ -28,10 +28,11 @@ const BrickLengthPreviewComponent:React.FC<any> = ({data}) => {
 
 interface BrickLengthProps {
   length: any
+  saveLength(value: BrickLengthEnum): any
   saveBrick(data: any): void
 }
 
-const BrickLength:React.FC<BrickLengthProps> = ({ length, saveBrick }) => {
+const BrickLength:React.FC<BrickLengthProps> = ({ length, saveLength, saveBrick }) => {
   let presectedLength = 0;
   if (length === 20) {
     presectedLength = BrickLengthEnum.S20min;
@@ -44,12 +45,13 @@ const BrickLength:React.FC<BrickLengthProps> = ({ length, saveBrick }) => {
 
   const setBrickLength = (brickLength: BrickLengthEnum) => {
     setLength(brickLength);
+    saveLength(brickLength);
   }
 
   return (
     <div className="tutorial-page brick-length-page">
       <HomeButton link='/build' />
-      <Navigation step={ProposalStep.BrickLength} />
+      <Navigation step={ProposalStep.BrickLength} onMove={() => {}} />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
           <h1>20 minutes are a taster,</h1>

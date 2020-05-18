@@ -35,7 +35,12 @@ const NavigationButtons:React.FC<NavigationButtonsProps> = (
         onSubmit={onSubmit}
         data={data}
       />
-      <PreviousButton isActive={!active} onHover={onPrevHover} onOut={onPrevOut} to={backLink} />
+      <PreviousButton
+        isActive={!active}
+        onHover={onPrevHover}
+        onOut={onPrevOut}
+        to={backLink}
+      />
     </div>
   );
 }

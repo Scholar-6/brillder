@@ -47,7 +47,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
   return (
     <div className="tutorial-page prep-page">
       <HomeButton link='/build' />
-      <Navigation step={ProposalStep.Prep} />
+      <Navigation step={ProposalStep.Prep} onMove={() => savePrep(prep)} />
       <Grid container direction="row" alignItems="flex-start">
         <Grid className="left-block">
           <h1>Add engaging and relevant</h1>
