@@ -22,9 +22,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
   const [bookHovered, setHover] = React.useState(false);
 
   const onBookHover = () => {
-    setTimeout(() => {
-      setHover(true);
-    }, 800);
+    setTimeout(() => setHover(true), 800);
   }
 
   const savingBrick = () => {
