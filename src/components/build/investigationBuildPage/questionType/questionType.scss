@@ -94,6 +94,12 @@ $question-radius: 0.65vw;
     color: white;
   }
 
+  .question-container.active {
+    background: $orange;
+    font-family: "Brandon Grotesque Black";
+    color: white;
+  }
+
   .set-type-button {
     margin: 0 !important;
     padding-top: 6px !important;
@@ -121,6 +127,28 @@ $question-radius: 0.65vw;
       .new-question-icon {
         font-size: 50px;
       }
+    }
+  }
+
+  .submit-button-container {
+    position: absolute;
+    bottom: 1.9vh;
+    right: 0;
+    width: 4vw;
+    color: $orange;
+
+    .submit-button {
+      z-index: 12;
+      cursor: pointer;
+      height: 5vh;
+      width: 5vh;
+      transition: all 0.2s ease-in-out;
+      transform-origin: -100% 50%;
+
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/feathericons/chevron-right-orange.png);
     }
   }
 
