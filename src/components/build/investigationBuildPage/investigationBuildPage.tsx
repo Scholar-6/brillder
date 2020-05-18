@@ -71,7 +71,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     getNewQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
   const [loaded, setStatus] = React.useState(false);
-  const [locked, setLock] = React.useState(false);
+  const [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
@@ -90,6 +90,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   useEffect(() => {
     if (props.brick && props.brick.synthesis) {
       setSynthesis(props.brick.synthesis)
+    }
+    if (props.brick && props.brick.locked) {
+      setLock(true);
     }
   }, [props.brick]);
   /* Synthesis */
@@ -176,8 +179,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setQuestionType = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     var index = getQuestionIndex(activeQuestion);
-    console.log(update(questions, { [index]: { type: { $set: type } } }));
-    setQuestions(update(questions, { [index]: { type: { $set: type } } }));
+    const updatedQuestions = update(questions, { [index]: { type: { $set: type } } });
+    setQuestions(updatedQuestions);
+    saveBrickQuestions(updatedQuestions);
   };
 
   const getUniqueComponent = (question: Question) => {
@@ -283,7 +287,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   };
 
-  const toggleLock = () => setLock(!locked);
+  const toggleLock = () => {
+    setLock(!locked);
+    brick.locked = !locked;
+    saveBrick();
+  }
 
   const setQuestion = (index: number, question: Question) => {
     if (locked) { return; }

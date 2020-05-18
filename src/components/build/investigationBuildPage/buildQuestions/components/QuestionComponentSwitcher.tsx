@@ -11,18 +11,19 @@ import HintComponent, { HintState } from '../../../baseComponents/Hint/Hint';
 
 
 export interface SwitchQuestionProps {
-  type: QuestionComponentTypeEnum
-  index: number
-  questionIndex: number
-  uniqueComponent: any
-  component: any
-  hint: Hint
-  locked: boolean
-  canRemove: boolean
-  setEmptyType(): void
-  updateComponent(component: any, index: number): void
-  setQuestionHint(hintState: HintState): void
-  removeComponent(componentIndex: number): void
+  type: QuestionComponentTypeEnum;
+  index: number;
+  questionIndex: number;
+  uniqueComponent: any;
+  component: any;
+  hint: Hint;
+  locked: boolean;
+  canRemove: boolean;
+  saveBrick(): void;
+  setEmptyType(): void;
+  updateComponent(component: any, index: number): void;
+  setQuestionHint(hintState: HintState): void;
+  removeComponent(componentIndex: number): void;
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
@@ -39,6 +40,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   const setComponentType = (type:number) => {
     component.type = type;
     updateComponent(component, index);
+    props.saveBrick();
   }
 
   let InnerComponent = DropBox as any;
@@ -52,12 +54,11 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
             <DeleteIcon
               className="right-top-icon"
               style={{right: '2px', top: '7px'}}
-              onClick={() => props.removeComponent(index)} />
+              onClick={() => props.removeComponent(index)}
+            />
           : ""
         }
-        <DropBox
-          locked={locked}
-          onDrop={setComponentType} />
+        <DropBox locked={locked} onDrop={setComponentType} />
       </div>
     );
   } else if (type === QuestionComponentTypeEnum.Text) {

@@ -18,20 +18,20 @@ function SplitByCapitalLetters(element: string): string {
 }
 
 export interface QuestionProps {
-  brickId: number
-  question: Question
-  history: any
-  questionsCount: number
-  synthesis: string
-  saveBrick(): void
-  setQuestion(index: number, question: Question): void
-  updateComponents(components: any[]): void
-  setQuestionType(type: QuestionTypeEnum): void
-  nextOrNewQuestion(): void
-  getQuestionIndex(question: Question): number
-  setPreviousQuestion(): void
-  toggleLock(): void
-  locked: boolean
+  brickId: number;
+  question: Question;
+  history: any;
+  questionsCount: number;
+  synthesis: string;
+  saveBrick(): void;
+  setQuestion(index: number, question: Question): void;
+  updateComponents(components: any[]): void;
+  setQuestionType(type: QuestionTypeEnum): void;
+  nextOrNewQuestion(): void;
+  getQuestionIndex(question: Question): number;
+  setPreviousQuestion(): void;
+  toggleLock(): void;
+  locked: boolean;
 }
 
 const QuestionPanelWorkArea: React.FC<QuestionProps> = (
@@ -131,6 +131,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
                 brickId={brickId}
                 history={history}
                 question={question}
+                saveBrick={props.saveBrick}
                 updateComponents={props.updateComponents}
                 setQuestionHint={setQuestionHint} />
             </Grid>
