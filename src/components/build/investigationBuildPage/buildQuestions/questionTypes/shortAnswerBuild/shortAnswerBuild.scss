@@ -21,4 +21,46 @@
       height: $answer-height !important;
     }
   }
+
+  .MuiSnackbar-root {
+    font-size: 2vw;
+    top: 0 !important;
+    left: 50.8% !important;
+    width: 20vw;
+    
+    .MuiSnackbarContent-root {
+      text-align: left;
+      padding: 0.8vw 1vw;
+      border-radius: 0.7vw;
+      background: $light-blue;
+      font-size: 1.4vw;
+      font-family: $font-family-regular;
+
+      .exclamation-mark {
+        text-align: center;
+        font-weight: bold;
+        font-family: "Brandon Grotesque Black";
+        color: white;
+        font-size: 1.2vw;
+        border-radius: 100vw;
+        background-color: $orange;
+        padding-left: 0.7vw;
+        padding-right: 0.7vw;
+        margin-right: 1vw;
+        text-align: center;
+        font-weight: bold;
+        font-family: "Brandon Grotesque Black";
+        color: white;
+        font-size: 1.2vw;
+      }
+    }
+  }
+  .exclamation-mark {
+    width: 2vw;
+    text-align: center;
+    font-weight: bold;
+    font-family: "Brandon Grotesque Black";
+    color: white;
+    font-size: 1.2vw;
+  }
 }
