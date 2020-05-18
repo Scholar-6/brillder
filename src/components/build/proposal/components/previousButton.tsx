@@ -11,7 +11,9 @@ interface PrevButtonProps {
   onOut(): void
 }
 
-const PreviousButton:React.FC<PrevButtonProps> = ({ to, isActive, onHover, onOut }) => {
+const PreviousButton:React.FC<PrevButtonProps> = ({
+  to, isActive, onHover, onOut
+}) => {
   const history = useHistory()
 
   const prev = () => history.push(to);

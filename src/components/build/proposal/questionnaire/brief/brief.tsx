@@ -53,7 +53,7 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
   return (
     <div className="tutorial-page brief-page">
       <HomeButton link='/build' />
-      <Navigation step={ProposalStep.Brief} />
+      <Navigation step={ProposalStep.Brief} onMove={() => saveBrief(brief)} />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
           <h1 className="only-tutorial-header">

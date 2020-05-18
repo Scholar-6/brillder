@@ -9,7 +9,7 @@ import './Proposal.scss';
 import SubjectPage from './questionnaire/subject/Subject';
 import BrickTitle from './questionnaire/brickTitle/brickTitle';
 import OpenQuestion from './questionnaire/openQuestion/openQuestion';
-import BrickLength from './questionnaire/brickLength/brickLength';
+import BrickLength, { BrickLengthEnum } from './questionnaire/brickLength/brickLength';
 import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
 import ProposalReview from './questionnaire/proposalReview/ProposalReview';
@@ -77,9 +77,14 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     setBrick({ ...state, prep } as Brick)
   }
 
-  const setLengthAndSave = (brickLength: number) => {
+  const setLength = (brickLength: BrickLengthEnum) => {
     let brick = { ...state, brickLength } as Brick;
     setBrick(brick);
+    return brick;
+  }
+
+  const setLengthAndSave = (brickLength: number) => {
+    let brick = setLength(brickLength);
     saveBrick(brick);
   }
 
@@ -122,7 +127,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
           <Prep parentPrep={state.prep} savePrep={setPrep} />
         </Route>
         <Route path='/build/new-brick/length'>
-          <BrickLength length={state.brickLength} saveBrick={setLengthAndSave} />
+          <BrickLength length={state.brickLength} saveLength={setLength} saveBrick={setLengthAndSave} />
         </Route>
         <Route path="/build/new-brick/proposal">
           <ProposalReview brick={state} user={props.user} saveBrick={saveAndMove} />

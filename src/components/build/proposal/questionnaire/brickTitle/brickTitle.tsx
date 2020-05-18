@@ -76,7 +76,7 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
   return (
     <div className="tutorial-page brick-title-page">
       <HomeButton link='/build' />
-      <Navigation step={ProposalStep.BrickTitle} />
+      <Navigation step={ProposalStep.BrickTitle} onMove={() => saveTitles(titles)} />
       <Grid container direction="row">
         <Grid item className="left-block">
           <h1>What is your brick about?</h1>
