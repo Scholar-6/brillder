@@ -13,13 +13,16 @@
 
   .big-animated-text {
     font-family: $font-family-regular;
-    min-height: 5vw;
     > div {
       width: 78%;
       text-align: center;
+      line-height: 1.5;
       font-size: 2.5vw;
       border-bottom: 0.18vw solid $dark-blue;
       overflow-x: hidden;
+    }
+    .empty {
+      min-height: 3.75vw;
     }
   }
 }
