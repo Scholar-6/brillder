@@ -58,7 +58,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
       }
       setBrick(brick);
     }
-  }, [brick]);
+  }, [brick, state.author]);
 
   const setSubject = (subjectId: number) => {
     setBrick({ ...state, subjectId });
