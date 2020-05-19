@@ -9,26 +9,29 @@ import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButto
 
 
 interface Answer {
-  value: string
-  checked: boolean
+  value: string;
+  checked: boolean;
 }
 
 export interface MissingChoice {
-  before: string
-  answers: Answer[]
-  after: string
-  height: string
+  before: string;
+  answers: Answer[];
+  after: string;
+  height: string;
 }
 
 export interface MissingWordComponentProps {
-  locked: boolean
+  locked: boolean;
   data: {
-    choices: MissingChoice[]
-  }
-  updateComponent(component: any): void
+    choices: MissingChoice[];
+  };
+  save(): void;
+  updateComponent(component: any): void;
 }
 
-const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, data, updateComponent }) => {
+const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
+  locked, data, save, updateComponent
+}) => {
   const [height, setHeight] = React.useState('0%');
   useEffect(() => calculateHeight());
 
@@ -71,21 +74,25 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
   const addAnswer = (choice: MissingChoice) => {
     choice.answers.push(newAnswer());
     update();
+    save();
   }
 
   const removeAnswer = (choice: MissingChoice, index: number) => {
     choice.answers.splice(index, 1);
     update();
+    save();
   }
 
   const addChoice = () => {
     state.choices.push(newChoice());
     update();
+    save();
   }
 
   const removeChoice = (index: number) => {
     state.choices.splice(index, 1);
     update();
+    save();
   }
 
   const beforeChanged = (choice: MissingChoice, event: any) => {
@@ -106,6 +113,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
     }
     choice.answers[index].checked = true;
     update();
+    save();
   }
 
   const renderChoice = (choice: MissingChoice, key: number) => {
