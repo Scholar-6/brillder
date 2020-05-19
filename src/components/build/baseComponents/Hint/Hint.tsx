@@ -43,7 +43,9 @@ export interface HintProps {
   onChange(state: HintState): void;
 }
 
-const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props }) => {
+const HintComponent: React.FC<HintProps> = ({
+  index, locked, onChange, save, ...props
+}) => {
   let initState = {
     status: HintStatus.All,
     value: '',
