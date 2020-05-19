@@ -21,12 +21,15 @@ export interface WordHighlightingData {
 }
 
 export interface WordHighlightingProps {
-  locked: boolean
-  data: WordHighlightingData
-  updateComponent(component: any): void
+  locked: boolean;
+  data: WordHighlightingData;
+  save(): void;
+  updateComponent(component: any): void;
 }
 
-const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, data, updateComponent }) => {
+const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
+  locked, data, save, updateComponent
+}) => {
   const [state, setState] = React.useState(data);
 
   useEffect(() => {
@@ -59,6 +62,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
       state.words = prepareWords(state.text);
     }
     update();
+    save();
   }
 
   const updateText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

@@ -39,7 +39,7 @@ interface ApiQuestion {
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
   fetchBrick(brickId: number): void;
-  saveBrick(brick: any): void;
+  saveBrick(brick: any): any;
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
@@ -78,6 +78,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
   const [activeQuestionType, setActiveType] = React.useState(QuestionTypeEnum.None);
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
+  const [isSaving, setSavingStatus] = React.useState(false);
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -373,6 +374,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const saveBrick = () => {
+    setSavingStatus(true);
     brick.questions = [];
     brick.synthesis = synthesis;
     for (let question of questions) {
@@ -390,7 +392,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       }
       brick.questions.push(apiQuestion);
     }
-    props.saveBrick(brick);
+    props.saveBrick(brick).then((res:any) => {
+      setSavingStatus(false);
+    });
   };
 
   const updateComponents = (components: any[]) => {
@@ -504,7 +508,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               </Grid>
             </Grid>
           </Grid>
-          <LastSave updated={brick.updated} />
+          <LastSave updated={brick.updated} isSaving={isSaving} />
           <Route path="/build/brick/:brickId/build/investigation/question-component">
             <PhoneQuestionPreview question={activeQuestion} />
           </Route>

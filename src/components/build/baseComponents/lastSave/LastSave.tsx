@@ -5,6 +5,7 @@ import { Grid } from "@material-ui/core";
 
 
 interface LastSaveProps {
+  isSaving: boolean;
   updated: string;
 }
 
@@ -25,12 +26,20 @@ const LastSave:React.FC<LastSaveProps> = (props) => {
     return hours + ":" + minutes;
   }
 
+  const renderText = () => {
+    if (props.isSaving) {
+      return "Saving...";
+    } else {
+      return `Last Saved at ${getTime(updated)}`;
+    }
+  }
+
   return (
     <div className="saved-info">
       <Grid container alignContent="center" justify="center">
         <img alt="" src="/feathericons/save-white.png" />
         <div>
-          Last Saved at {getTime(updated)}
+          {renderText()}
         </div>
       </Grid>
     </div>
