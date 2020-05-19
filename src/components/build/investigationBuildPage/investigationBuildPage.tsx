@@ -180,6 +180,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (locked) { return; }
     var index = getQuestionIndex(activeQuestion);
     const updatedQuestions = update(questions, { [index]: { type: { $set: type } } });
+    console.log(updatedQuestions);
     setQuestions(updatedQuestions);
     saveBrickQuestions(updatedQuestions);
   };
