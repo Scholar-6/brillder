@@ -15,6 +15,7 @@ export interface ChooseOneAnswerProps {
   index: number;
   length: number;
   answer: ChooseOneAnswer;
+  save(): void;
   removeFromList(index: number): void;
   onChecked(event: any, checked: boolean): void;
   update(): void;
@@ -22,7 +23,7 @@ export interface ChooseOneAnswerProps {
 
 const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   locked, index, length, answer,
-  removeFromList, update, onChecked
+  removeFromList, update, save, onChecked
 }) => {
   const renderDeleteButton = () => {
     if (length > 3) {
@@ -43,6 +44,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     answer.valueFile = fileName;
     answer.answerType = QuestionValueType.Image;
     update();
+    save();
   }
 
   const onTextChanged = (answer: ChooseOneAnswer, value: string) => {
@@ -83,7 +85,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
         data={answer.value}
         toolbar={['mathType', 'chemType']}
         placeholder="Enter Answer..."
-        onBlur={() => {}}
+        onBlur={() => save()}
         onChange={value => onTextChanged(answer, value)}
       />
     </div>
