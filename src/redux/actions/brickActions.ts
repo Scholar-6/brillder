@@ -51,6 +51,7 @@ const saveBrick = (brick:any) => {
     ).then(response => {
       const brick = response.data as Brick;
       dispatch(saveBrickSuccess(brick));
+      return brick;
     }).catch(error => {
       dispatch(saveBrickFailure(error.message))
     });
