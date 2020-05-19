@@ -13,7 +13,7 @@ import BrickLength, { BrickLengthEnum } from './questionnaire/brickLength/brickL
 import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
 import ProposalReview from './questionnaire/proposalReview/ProposalReview';
-import { Brick } from "model/brick";
+import { Brick, Author } from "model/brick";
 import { User } from "model/user";
 
 
@@ -43,6 +43,10 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     synthesis: '',
     alternativeSubject: '',
   } as Brick;
+
+  if (props.user) {
+    initState.author = (props.user as any) as Author;
+  }
 
   if (brick) {
     initState = brick;
