@@ -75,6 +75,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     if (locked) { return; }
     state.words[index].checked = !state.words[index].checked;
     update();
+    save();
   }
 
   const renderBox = () => {
@@ -96,6 +97,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         disabled={locked}
         className="words-input"
         rows={5}
+        onBlur={() => save()}
         value={state.text}
         onChange={updateText}
         placeholder="Enter Words Here..." />
