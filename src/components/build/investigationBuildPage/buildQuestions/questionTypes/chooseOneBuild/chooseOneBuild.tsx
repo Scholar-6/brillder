@@ -71,7 +71,6 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   const calculateHeight = () => {
     let showButton = true;
     for (let answer of state.list) {
-      console.log(answer);
       if (answer.answerType !== QuestionValueType.Image) {
         if (answer.value === "") {
           showButton = false;
