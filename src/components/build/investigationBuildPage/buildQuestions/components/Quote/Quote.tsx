@@ -30,6 +30,7 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, upd
         data={data.value}
         placeholder=""
         toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
+        onBlur={() => {}}
         onChange={onChange}
       />
     </div>

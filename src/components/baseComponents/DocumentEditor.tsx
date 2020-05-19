@@ -38,19 +38,20 @@ import './DocumentEditor.scss';
 
 
 export interface DocumentEditorProps {
-  data: string,
-  toolbar?: any,
-  placeholder?: string,
-  mediaEmbed?: boolean,
-  defaultAlignment?: string,
-  onChange(data: string): void,
+  data: string;
+  toolbar?: any;
+  placeholder?: string;
+  mediaEmbed?: boolean;
+  defaultAlignment?: string;
+  onBlur(): void;
+  onChange(data: string): void;
 }
 
 interface DocumentEditorState {
-  data: string,
-  focused: boolean,
-  editor: any,
-  ref: any,
+  data: string;
+  focused: boolean;
+  editor: any;
+  ref: any;
 }
 
 class InsertDropDown extends Plugin {
@@ -180,6 +181,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
           }}
           onBlur={() => {
             this.setState({...this.state, focused: false });
+            this.props.onBlur();
           }}
         />
       </div>

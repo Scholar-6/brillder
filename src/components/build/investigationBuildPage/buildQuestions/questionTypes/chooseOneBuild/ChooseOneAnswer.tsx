@@ -83,6 +83,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
         data={answer.value}
         toolbar={['mathType', 'chemType']}
         placeholder="Enter Answer..."
+        onBlur={() => {}}
         onChange={value => onTextChanged(answer, value)}
       />
     </div>

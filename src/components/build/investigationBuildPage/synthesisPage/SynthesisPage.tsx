@@ -24,6 +24,7 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
               placeholder=""
               toolbar={['bold', 'italic', 'fontColor', 'mathType', 'chemType', 'alignment', 'bulletedList', 'numberedList']}
               defaultAlignment="justify"
+              onBlur={() => {}}
               onChange={onSynthesisChange}
             />
           </Grid>
