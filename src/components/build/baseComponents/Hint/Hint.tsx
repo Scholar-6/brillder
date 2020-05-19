@@ -33,13 +33,14 @@ export interface HintState {
 }
 
 export interface HintProps {
-  index: number,
-  locked: boolean,
-  list: string[],
-  status?: HintStatus,
-  value?: string,
-  count?: number,
-  onChange(state: HintState): void
+  index: number;
+  locked: boolean;
+  list: string[];
+  status?: HintStatus;
+  value?: string;
+  count?: number;
+  save(): void;
+  onChange(state: HintState): void;
 }
 
 const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props }) => {
@@ -104,6 +105,7 @@ const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props 
             data={state.value}
             toolbar={['bold']}
             placeholder="Enter Hint..."
+            onBlur={() => save()}
             onChange={onHintChanged}
           />
         </Grid>
@@ -131,6 +133,7 @@ const HintComponent: React.FC<HintProps> = ({ index, onChange, locked, ...props 
             data={state.list[i]}
             toolbar={['bold']}
             placeholder="Enter Hint"
+            onBlur={() => save()}
             onChange={(v:any) => {onHintListChanged(v, i)}}
           />
         </Grid>

@@ -27,7 +27,12 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updat
           Text
         </Grid>
       </div>
-      <DocumentCKEditor data={data.value} placeholder="" onChange={onChange} />
+      <DocumentCKEditor
+        data={data.value}
+        placeholder=""
+        onBlur={() => {}}
+        onChange={onChange}
+      />
     </div>
   );
 }

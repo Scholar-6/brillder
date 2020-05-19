@@ -59,11 +59,12 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
           </h1>
           <DocumentCKEditor
             data={parentBrief}
+            placeholder="Enter Brief Here..."
             toolbar={[
               'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
             ]}
+            onBlur={() => {}}
             onChange={setBriefText}
-            placeholder="Enter Brief Here..."
           />
           <NavigationButtons
             step={ProposalStep.Brief}
