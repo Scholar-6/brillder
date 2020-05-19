@@ -239,24 +239,24 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const deleteQuestionByIndex = (index: number) => {
+    let updatedQuestions = [];
     if (index !== 0) {
-      setQuestions(
-        update(questions, {
-          $splice: [[index, 1]],
-          0: { active: { $set: true } }
-        })
-      );
+      updatedQuestions = update(questions, {
+        $splice: [[index, 1]],
+        0: { active: { $set: true } }
+      });
+      setQuestions(updatedQuestions);
     } else {
-      setQuestions(
-        update(questions, {
-          $splice: [[index, 1]],
-          [questions.length - 1]: { active: { $set: true } }
-        })
-      );
+      updatedQuestions = update(questions, {
+        $splice: [[index, 1]],
+        [questions.length - 1]: { active: { $set: true } }
+      });
+      setQuestions(updatedQuestions);
     }
     if (deleteDialogOpen) {
       setDeleteDialog(false);
     }
+    saveBrickQuestions(updatedQuestions);
   }
 
   const removeQuestion = (index: number) => {
