@@ -3,15 +3,12 @@ import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButto
 
 import './chooseSeveralBuild.scss'
 import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
+import {ChooseOneAnswer} from '../chooseOneBuild/types';
+import { QuestionValueType } from '../types';
 
-
-interface ChooseSeveralAnswer {
-  checked: boolean;
-  value: string;
-}
 
 export interface ChooseSeveralData {
-  list: ChooseSeveralAnswer[];
+  list: ChooseOneAnswer[];
 }
 
 export interface ChooseSeveralBuildProps {
@@ -28,7 +25,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
 
   useEffect(() => calculateHeight());
 
-  const newAnswer = () => ({value: "", checked: false });
+  const newAnswer = () => ({value: "", checked: false, valueFile: '' });
 
   if (!data.list) {
     data.list = [newAnswer(), newAnswer(), newAnswer()];
@@ -66,13 +63,16 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
     if (locked) { return; }
     state.list.splice(index, 1);
     update();
+    save();
   }
 
   const calculateHeight = () => {
     let showButton = true;
     for (let answer of state.list) {
-      if (answer.value === "") {
-        showButton = false;
+      if (answer.answerType !== QuestionValueType.Image) {
+        if (answer.value === "") {
+          showButton = false;
+        }
       }
     }
     showButton === true ? setHeight('auto') : setHeight('0%');
