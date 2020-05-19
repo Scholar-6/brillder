@@ -11,17 +11,19 @@ export interface PairOptionProps {
   locked: boolean;
   index: number;
   answer: Answer;
+  save(): void;
   update(): void;
 }
 
 const PairOptionComponent: React.FC<PairOptionProps> = ({
-  locked, index, answer, update
+  locked, index, answer, save, update
 }) => {
   const removeImage = () => {
     if (locked) { return; }
     answer.optionFile = "";
     answer.optionType = QuestionValueType.None;
     update();
+    save();
   }
 
   const renderDeleteButton = () => {
@@ -51,6 +53,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     answer.optionFile = fileName;
     answer.optionType = QuestionValueType.Image;
     update();
+    save();
   }
 
   let customClass = '';
@@ -64,6 +67,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
         <input
           disabled={locked}
           value={answer.option}
+          onBlur={() => save()}
           onChange={(event) => optionChanged(answer, event.target.value)}
           placeholder={"Enter Option " + (index + 1) + "..."}
         />
