@@ -6,21 +6,24 @@ import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 
 
 interface ChooseSeveralAnswer {
-  checked: boolean
-  value: string
+  checked: boolean;
+  value: string;
 }
 
 export interface ChooseSeveralData {
-  list: ChooseSeveralAnswer[]
+  list: ChooseSeveralAnswer[];
 }
 
 export interface ChooseSeveralBuildProps {
-  locked: boolean
-  data: ChooseSeveralData
-  updateComponent(component:any):void
+  locked: boolean;
+  data: ChooseSeveralData;
+  save(): void;
+  updateComponent(component:any):void;
 }
 
-const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked, data, updateComponent}) => {
+const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
+  locked, data, save, updateComponent
+}) => {
   const [height, setHeight] = React.useState('0%');
 
   useEffect(() => calculateHeight());
@@ -48,6 +51,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
     if (locked) { return; }
     state.list.push(newAnswer());
     update();
+    save();
   }
 
   const onChecked = (event:React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +59,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
     const index = parseInt(event.target.value);
     state.list[index].checked = event.target.checked;
     update();
+    save();
   }
 
   const removeFromList = (index: number) => {
@@ -86,6 +91,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
             index={i}
             length={data.list.length}
             answer={answer}
+            save={save}
             removeFromList={removeFromList}
             onChecked={onChecked}
             update={update}
