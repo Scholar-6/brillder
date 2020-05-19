@@ -57,6 +57,26 @@ const validateCheckedAnswer = (comp: any) => {
   return false;
 }
 
+const validateTwoCheckedAnswers = (comp: any) => {
+  if (comp.list && comp.list.length > 1) {
+    let invalid = comp.list.find((a:any) => !a.value);
+    if (invalid) {
+      return false;
+    }
+
+    let checkedCount = 0;
+    for (let choice of comp.list) {
+      if (choice.checked) {
+        checkedCount++;
+      }
+    }
+    if (checkedCount >= 2) {
+      return true;
+    }
+  }
+  return false;
+}
+
 
 const validatePairMatch = (comp: any) => {
   const validateChoice = (a: Answer) => {
@@ -173,8 +193,10 @@ export function validateQuestion(question: Question) {
     || type === QuestionTypeEnum.HorizontalShuffle)
   {
     return validateNotEmptyAnswer(comp);
-  } else if (type === QuestionTypeEnum.ChooseOne || type === QuestionTypeEnum.ChooseSeveral) {
+  } else if (type === QuestionTypeEnum.ChooseOne) {
     return validateCheckedAnswer(comp);
+  } else if (type === QuestionTypeEnum.ChooseSeveral) {
+    return validateTwoCheckedAnswers(comp);
   } else if (type === QuestionTypeEnum.PairMatch) {
     return validatePairMatch(comp);
   } else if (type === QuestionTypeEnum.Sort) {
