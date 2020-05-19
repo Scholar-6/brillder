@@ -7,20 +7,23 @@ import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButto
 
 
 interface ShortAnswerItem {
-  value: string
+  value: string;
 }
 
 interface ShrortAnswerData {
-  list: ShortAnswerItem[]
+  list: ShortAnswerItem[];
 }
 
 export interface ShortAnswerBuildProps {
-  data: ShrortAnswerData
-  locked: boolean
-  updateComponent(component:any):void
+  data: ShrortAnswerData;
+  locked: boolean;
+  save(): void;
+  updateComponent(component:any):void;
 }
 
-const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, data, updateComponent}) => {
+const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
+  locked, data, save, updateComponent
+}) => {
   const [height, setHeight] = React.useState('0%');
 
   useEffect(() => calculateHeight());
@@ -65,12 +68,14 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
     if (locked) { return; }
     state.list.push({ value: ""});
     update();
+    save();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
     state.list.splice(index, 1);
     update();
+    save();
   }
 
   const renderShortAnswer = (shortAnswer: any, key: number) => {
@@ -82,6 +87,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
         <input
           disabled={locked}
           value={shortAnswer.value}
+          onBlur={() => save()}
           onChange={(event) => changed(shortAnswer, event)}
           placeholder="Enter Short Answer..." />
       </div>
