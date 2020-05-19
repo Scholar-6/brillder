@@ -20,6 +20,16 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
 
   const date = new Date();
   const dateString = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
+
+  const renderAuthorRow = () => {
+    let data = "";
+    if (author) {
+      data = (author.firstName ? author.firstName + ' ' + author.lastName : 'Author') + ' | ' + dateString;
+    } else {
+      data = "Author | " + dateString;
+    }
+    return data;
+  }
   
   return (
     <Grid container alignContent="flex-start" className="brick-title-container">
@@ -38,7 +48,7 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
           </span>
         </div>
         <div className="author-row">
-          {author.firstName ? author.firstName + ' ' + author.lastName : 'Author'}  | {dateString}
+          {renderAuthorRow()}
         </div>
       </div>
     </Grid>
