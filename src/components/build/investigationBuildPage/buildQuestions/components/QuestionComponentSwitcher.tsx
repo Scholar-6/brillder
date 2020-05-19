@@ -96,7 +96,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           value={hint.value}
           list={hint.list}
           count={numberOfAnswers}
-          save={() => {}}
+          save={props.saveBrick}
           onChange={props.setQuestionHint}
         />
       </div>

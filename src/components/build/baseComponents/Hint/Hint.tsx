@@ -97,6 +97,7 @@ const HintComponent: React.FC<HintProps> = ({
       setState({...state, status});
       onChange({...state, status});
     }
+    save();
   };
 
   const renderHintInputs = () => {
