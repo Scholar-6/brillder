@@ -7,4 +7,4 @@ const data = {
 }
 
 storiesOf("QuestionComponent", module)
-  .add("Quote", () => <Quote locked={false} index={1} data={data} updateComponent={() => {}}/>);
+  .add("Quote", () => <Quote locked={false} index={1} data={data} save={()=>{}} updateComponent={() => {}}/>);

@@ -7,17 +7,18 @@ import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
 
 
 export interface TextComponentProps {
-  locked: boolean
-  index: number
-  data: any
-  updateComponent(component: any, index: number): void
+  locked: boolean;
+  index: number;
+  data: any;
+  save(): void;
+  updateComponent(component: any, index: number): void;
 }
 
-const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updateComponent}) => {
+const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, ...props}) => {
   const onChange = (htmlString: string) => {
     let comp = Object.assign({}, data);
     comp.value = htmlString;
-    updateComponent(comp, index);
+    props.updateComponent(comp, index);
   }
 
   return (
@@ -30,7 +31,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updat
       <DocumentCKEditor
         data={data.value}
         placeholder=""
-        onBlur={() => {}}
+        onBlur={() => props.save()}
         onChange={onChange}
       />
     </div>
