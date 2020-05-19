@@ -87,6 +87,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
         <InnerComponent
           locked={locked}
           data={component}
+          save={props.saveBrick}
           updateComponent={updateComponent}
         />
         <HintComponent
@@ -117,6 +118,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
       <InnerComponent
         locked={locked}
         data={component}
+        save={props.saveBrick}
         updateComponent={updateComponent}
       />
     </div>

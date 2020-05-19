@@ -233,6 +233,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else {
       setQuestionType(type);
     }
+    saveBrick();
   };
 
   const deleteQuestionByIndex = (index: number) => {
