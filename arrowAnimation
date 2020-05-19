@@ -1,0 +1,50 @@
+/* SCSS */
+.arrow-container {
+  	position:relative;
+    width:100px;
+    height:100px;
+  .arrow {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0px;
+      width: 5px;
+      height: 100%;
+      transition: all 0.5s;
+    }
+    &:before {
+      left: 6px;
+      transform: rotate(-45deg);
+      background-color: #000;
+    }
+    &:after {
+      right: 6px;
+      transform: rotate(45deg);
+      background-color: #000;
+    }
+    &:hover {
+      &:before {
+        left: 45%;
+      }
+      &:after {
+        right: 45%;
+      }
+    }
+  }
+}
+
+/* HTML */
+
+<h1>Arrow Animation</h1>
+<div class="arrow-container">
+	<span class="arrow"></span>
+</div>
+
