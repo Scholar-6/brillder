@@ -10,8 +10,8 @@ enum LineMode {
 }
 
 export interface Line {
-  text: string,
-  checked: boolean,
+  text: string;
+  checked: boolean;
 }
 
 export interface LineHighlightingData {
@@ -21,12 +21,15 @@ export interface LineHighlightingData {
 }
 
 export interface LineHighlightingProps {
-  locked: boolean
-  data: LineHighlightingData
-  updateComponent(component: any): void
+  locked: boolean;
+  data: LineHighlightingData;
+  save(): void;
+  updateComponent(component: any): void;
 }
 
-const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, data, updateComponent }) => {
+const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
+  locked, data, save, updateComponent
+}) => {
   const [state, setState] = React.useState(data);
 
   useEffect(() => {
@@ -58,6 +61,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
       state.lines = prepareLines(state.text);
     }
     update();
+    save();
   }
 
   const updateText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -70,6 +74,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
     if (locked) { return; }
     state.lines[index].checked = !state.lines[index].checked;
     update();
+    save();
   }
 
   const renderBox = () => {
@@ -96,6 +101,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
         className="lines-input"
         rows={5}
         value={state.text}
+        onBlur={() => save()}
         onChange={updateText} placeholder="Enter Lines Here..." />
     );
   }
