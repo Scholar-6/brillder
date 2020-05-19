@@ -9,12 +9,15 @@ import PairOptionComponent from './option/pairOption';
 
 
 export interface PairMatchBuildProps {
-  locked: boolean
-  data: any
-  updateComponent(component: any): void
+  locked: boolean;
+  data: any;
+  save(): void;
+  updateComponent(component: any): void;
 }
 
-const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, updateComponent }) => {
+const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
+  locked, data, save, updateComponent
+}) => {
   const [height, setHeight] = React.useState('0%');
 
   useEffect(() => calculateHeight());
@@ -42,12 +45,14 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
     if (locked) { return; }
     state.list.push(newAnswer());
     update();
+    save();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
     state.list.splice(index, 1);
     update();
+    save();
   }
 
   const calculateHeight = () => {
@@ -67,11 +72,12 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
     return (
       <Grid key={key} container direction="row">
         <PairOptionComponent
-          index={key} locked={locked} answer={answer} update={update}
+          index={key} locked={locked} answer={answer}
+          update={update} save={save}
         />
         <PairAnswerComponent
           index={key} length={data.list.length} locked={locked} answer={answer}
-          removeFromList={removeFromList} update={update}
+          removeFromList={removeFromList} update={update} save={save}
         />
       </Grid>
     );
@@ -90,7 +96,8 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
         locked={locked}
         addAnswer={addAnswer}
         height={height}
-        label="+ &nbsp;&nbsp; P &nbsp; A &nbsp; I &nbsp; R" />
+        label="+ &nbsp;&nbsp; P &nbsp; A &nbsp; I &nbsp; R"
+      />
     </div>
   )
 }
