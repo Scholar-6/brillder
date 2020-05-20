@@ -59,7 +59,6 @@ const QuestionComponents = ({
     comps.splice(componentIndex, 1);
     setComponents(comps);
     updateComponents(comps);
-    console.log('delete');
     saveBrick();
   }
 

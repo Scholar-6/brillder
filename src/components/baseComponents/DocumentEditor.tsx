@@ -100,14 +100,13 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
     }
   }
 
-  replaceLabelName = () => {
-    const elements = document.getElementsByClassName("ck-button__label");
+  replaceHtml = (className: string, text: string, newText: string) => {
+    const elements = document.getElementsByClassName(className);
     for (let i = 0; i < elements.length; i++) {
       const element = elements.item(i);
       if (element) {
-        let text = element.textContent;
-        if (text === 'Remove color') {
-          element.innerHTML = 'Remove colour';
+        if (element.textContent === text) {
+          element.innerHTML = newText;
         }
       }
     }
@@ -116,14 +115,16 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
   handleOnInit = (editor: any) => {
     editor.locale.contentLanguageDirection = '';
     editor.execute( 'alignment', { value: 'justify' } );
+    editor.execute( 'fontColor', { value: 'rgb(30, 188, 97)' } );
 
     const {current} = this.state.ref;
     if (current) {
       current.appendChild(editor.ui.view.toolbar.element);
     }
 
-    this.replaceLabelName();
-
+    this.replaceHtml("ck-button__label", "Remove color", "Remove colour");
+    this.replaceHtml("ck-tooltip__text", "Remove color", "Remove colour");
+    
     this.setState({...this.state, editor});
   }
 
@@ -186,6 +187,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
             if (!this.state.focused) { return; }
             const data = editor.getData();
             this.props.onChange(data);
+            this.replaceHtml("ck-label", "Document colors", "Document colours");
             this.setState({...this.state, data});
           }}
           onFocus={() => {
