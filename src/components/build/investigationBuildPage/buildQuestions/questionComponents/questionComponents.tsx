@@ -15,7 +15,7 @@ import MissingWordComponent from '../questionTypes/missingWordBuild/MissingWordB
 import PairMatchComponent from '../questionTypes/pairMatchBuild/pairMatchBuild';
 import VerticalShuffleComponent from '../questionTypes/verticalShuffleBuild/verticalShuffleBuild';
 import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHighlighting';
-import { Question, QuestionTypeEnum } from 'model/question';
+import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/question';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 
 
@@ -25,13 +25,14 @@ type QuestionComponentsProps = {
   history: any;
   brickId: number;
   question: Question;
+  validationRequired: boolean;
   saveBrick(): void;
   updateComponents(components: any[]): void;
   setQuestionHint(hintState: HintState): void;
 }
 
 const QuestionComponents = ({
-  questionIndex, locked, history, brickId, question,
+  questionIndex, locked, history, brickId, question, validationRequired,
   updateComponents, setQuestionHint, saveBrick
 }: QuestionComponentsProps) => {
   let componentsCopy = Object.assign([], question.components) as any[]
@@ -145,6 +146,7 @@ const QuestionComponents = ({
         hint={question.hint}
         canRemove={canRemove}
         uniqueComponent={uniqueComponent}
+        validationRequired={validationRequired}
         setEmptyType={setEmptyType}
         removeComponent={removeInnerComponent}
         setQuestionHint={setQuestionHint}
@@ -166,6 +168,14 @@ const QuestionComponents = ({
     setRemovedIndex(-1);
   }
 
+  const validateDropBox = (comp: any) => {
+    let name = "drop-box";
+    if (validationRequired && comp.type === QuestionComponentTypeEnum.None) {
+      name += " invalid";
+    }
+    return name;
+  }
+
   return (
     <div className="questions">
       <ReactSortable
@@ -176,7 +186,7 @@ const QuestionComponents = ({
       >
         {
           components.map((comp, i) => (
-            <Grid key={i} container direction="row" className="drop-box">
+            <Grid key={i} container direction="row" className={validateDropBox(comp)}>
               {renderDropBox(comp, i)}
             </Grid>
           ))

@@ -4,7 +4,8 @@ import { ReactSortable } from 'react-sortablejs';
 
 
 export interface DropBoxProps {
-  locked: boolean
+  locked: boolean;
+  validationRequired: boolean;
   onDrop(type: number):void;
 }
 

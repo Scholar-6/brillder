@@ -39,12 +39,13 @@ export interface HintProps {
   status?: HintStatus;
   value?: string;
   count?: number;
+  validationRequired?: boolean;
   save(): void;
   onChange(state: HintState): void;
 }
 
 const HintComponent: React.FC<HintProps> = ({
-  index, locked, onChange, save, ...props
+  index, locked, validationRequired, onChange, save, ...props
 }) => {
   let initState = {
     status: HintStatus.All,
@@ -108,6 +109,7 @@ const HintComponent: React.FC<HintProps> = ({
             data={state.value}
             toolbar={['bold']}
             placeholder="Enter Hint..."
+            validationRequired={validationRequired}
             onBlur={() => save()}
             onChange={onHintChanged}
           />

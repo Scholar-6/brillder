@@ -7,7 +7,7 @@ import { ReactSortable } from "react-sortablejs";
 import QuestionComponents from './questionComponents/questionComponents';
 import {getNonEmptyComponent} from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
-import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../../model/question';
+import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from 'model/question';
 import DragBox from './drag/dragBox';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import LockComponent from './lock/Lock';
@@ -23,6 +23,7 @@ export interface QuestionProps {
   history: any;
   questionsCount: number;
   synthesis: string;
+  validationRequired: boolean;
   saveBrick(): void;
   setQuestion(index: number, question: Question): void;
   updateComponents(components: any[]): void;
@@ -35,7 +36,7 @@ export interface QuestionProps {
 }
 
 const QuestionPanelWorkArea: React.FC<QuestionProps> = (
-  { brickId, question, history, getQuestionIndex, locked, ...props }
+  { brickId, question, history, validationRequired, locked, getQuestionIndex, ...props }
 ) => {
   const [componentTypes, setComponentType] = React.useState([
     {id: 1, type: QuestionComponentTypeEnum.Text},
@@ -131,9 +132,11 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
                 brickId={brickId}
                 history={history}
                 question={question}
+                validationRequired={validationRequired}
                 saveBrick={props.saveBrick}
                 updateComponents={props.updateComponents}
-                setQuestionHint={setQuestionHint} />
+                setQuestionHint={setQuestionHint}
+              />
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
               <Grid container direction="row" justify="center">
