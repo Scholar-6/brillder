@@ -14,12 +14,13 @@ export interface ChooseOneData {
 export interface ChooseOneBuildProps {
   locked: boolean;
   data: ChooseOneData;
+  validationRequired: boolean;
   save(): void;
   updateComponent(component:any):void;
 }
 
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
-  locked, data, save, updateComponent
+  locked, data, validationRequired, save, updateComponent
 }) => {
   const [height, setHeight] = React.useState('0%');
 
@@ -94,6 +95,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
             length={data.list.length}
             answer={answer}
             save={save}
+            validationRequired={validationRequired}
             removeFromList={removeFromList}
             onChecked={onChecked}
             update={update}
