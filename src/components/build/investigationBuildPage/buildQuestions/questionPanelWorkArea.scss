@@ -21,6 +21,11 @@ $question-radius: 0.6vw;
     z-index: 1000;
   }
 
+  .ck-placeholder:before {
+    color: #aaa;
+    font-family: $font-family-bold;
+  }
+
   ::placeholder {
     color: #aaa;
     font-family: $font-family-bold;

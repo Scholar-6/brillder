@@ -55,6 +55,7 @@ export function getActiveQuestion(questions: Question[]) {
 }
 
 export function getApiQuestion(question: Question) {
+  console.log(question.components);
   const questionObject = {
     components: question.components,
     hint: question.hint
