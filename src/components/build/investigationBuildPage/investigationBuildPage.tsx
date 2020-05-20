@@ -292,17 +292,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const saveBrickQuestions = (updatedQuestions: Question[]) => {
     setSavingStatus(true);
     prepareBrickToSave(brick, updatedQuestions, synthesis);
-    props.saveBrick(brick).then((res:any) => {
-      setSavingStatus(false);
-    });
+    props.saveBrick(brick);
   }
 
   const saveBrick = () => {
     setSavingStatus(true);
     prepareBrickToSave(brick, questions, synthesis);
-    props.saveBrick(brick).then((res:any) => {
-      setSavingStatus(false);
-    });
+    props.saveBrick(brick);
   };
 
   const updateComponents = (components: any[]) => {
