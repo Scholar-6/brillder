@@ -10,8 +10,12 @@
   }
 
   table {
-    width: 100%;
     border-collapse: collapse;
+  }
+
+  .table {
+    margin-left: 0;
+    margin-right: 0;
   }
   
   table, td, th {
