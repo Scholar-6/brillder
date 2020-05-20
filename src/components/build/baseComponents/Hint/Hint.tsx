@@ -107,7 +107,7 @@ const HintComponent: React.FC<HintProps> = ({
         <Grid container item xs={12} className="hint-container">
           <DocumentCKEditor
             data={state.value}
-            toolbar={['bold']}
+            toolbar={['bold', 'insertTable']}
             placeholder="Enter Hint..."
             validationRequired={validationRequired}
             onBlur={() => save()}

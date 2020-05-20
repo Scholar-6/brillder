@@ -10,15 +10,15 @@ import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 // @ts-ignore
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 // @ts-ignore
-import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-// @ts-ignore
-import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
-// @ts-ignore
 import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
 // @ts-ignore
 import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
 // @ts-ignore
 import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
+// @ts-ignore
+import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+// @ts-ignore
+import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
 // @ts-ignore
 import List from '@ckeditor/ckeditor5-list/src/list';
 // @ts-ignore
@@ -33,6 +33,11 @@ import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { addToolbarToDropdown, createDropdown } from "@ckeditor/ckeditor5-ui/src/dropdown/utils";
 // @ts-ignore
 import SplitButtonView from "@ckeditor/ckeditor5-ui/src/dropdown/button/splitbuttonview";
+// @ts-ignore
+import Table from '@ckeditor/ckeditor5-table/src/table';
+// @ts-ignore
+import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
+
 
 import './DocumentEditor.scss';
 
@@ -126,9 +131,10 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
     let config = {
       extraPlugins: [InsertDropDown],
       plugins: [
-        Essentials, Bold, Italic, Paragraph,
-        FontColor, Superscript, Subscript, List,
-        MathType, Alignment, Strikethrough
+        Essentials, Paragraph,
+        Bold, Italic, Strikethrough, Superscript, Subscript,
+        FontColor, List, MathType, Alignment,
+        Table, TableToolbar
       ],
       fontColor: {
         colors: [{
