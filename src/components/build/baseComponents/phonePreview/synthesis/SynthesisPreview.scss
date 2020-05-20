@@ -29,8 +29,12 @@
     font-family: $font-family-regular;
   }
 
+  .table {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   table {
-    width: 100%;
     border-collapse: collapse;
   }
   
