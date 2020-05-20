@@ -19,7 +19,10 @@ export interface SwitchQuestionProps {
   hint: Hint;
   locked: boolean;
   canRemove: boolean;
+
+  allDropBoxesEmpty: boolean;
   validationRequired: boolean;
+
   saveBrick(): void;
   setEmptyType(): void;
   updateComponent(component: any, index: number): void;
@@ -28,7 +31,8 @@ export interface SwitchQuestionProps {
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
-  type, index, component, hint, locked, validationRequired, uniqueComponent,
+  type, index, component, hint, locked, uniqueComponent,
+  allDropBoxesEmpty, validationRequired,
   updateComponent, ...props
 }) => {
   const getNumberOfAnswers = (data: any) => {
@@ -60,11 +64,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
             />
           : ""
         }
-        <DropBox
-          locked={locked}
-          validationRequired={validationRequired}
-          onDrop={setComponentType}
-        />
+        <DropBox locked={locked} onDrop={setComponentType} />
       </div>
     );
   } else if (type === QuestionComponentTypeEnum.Text) {

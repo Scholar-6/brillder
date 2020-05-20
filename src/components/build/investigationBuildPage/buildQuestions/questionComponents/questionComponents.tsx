@@ -17,6 +17,7 @@ import VerticalShuffleComponent from '../questionTypes/verticalShuffleBuild/vert
 import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHighlighting';
 import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/question';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
+import { getNonEmptyComponent } from "../../questionService/ValidateQuestionService";
 
 
 type QuestionComponentsProps = {
@@ -146,6 +147,7 @@ const QuestionComponents = ({
         hint={question.hint}
         canRemove={canRemove}
         uniqueComponent={uniqueComponent}
+        allDropBoxesEmpty={allDropBoxesEmpty}
         validationRequired={validationRequired}
         setEmptyType={setEmptyType}
         removeComponent={removeInnerComponent}
@@ -168,9 +170,15 @@ const QuestionComponents = ({
     setRemovedIndex(-1);
   }
 
+  let allDropBoxesEmpty = false;
+  let noComponent = getNonEmptyComponent(components);
+  if (noComponent) {
+    allDropBoxesEmpty = true;
+  }
+
   const validateDropBox = (comp: any) => {
     let name = "drop-box";
-    if (validationRequired && comp.type === QuestionComponentTypeEnum.None) {
+    if (validationRequired && comp.type === QuestionComponentTypeEnum.None && allDropBoxesEmpty) {
       name += " invalid";
     }
     return name;
