@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import './LastSave.scss'
 import { Grid } from "@material-ui/core";
@@ -11,6 +11,20 @@ interface LastSaveProps {
 
 const LastSave:React.FC<LastSaveProps> = (props) => {
   const updated = new Date(props.updated);
+  const [isSaving, setSaving] = React.useState(props.isSaving);
+  const [saveTimeout, setSaveTimeout] = React.useState(null as any);
+
+  useEffect(() => {
+    if (props.isSaving) {
+      setSaving(true);
+      console.log(55);
+      if (saveTimeout) {
+        clearInterval(saveTimeout);
+      }
+      let timeout = setTimeout(() => setSaving(false), 2000);
+      setSaveTimeout(timeout);
+    }
+  }, [props]);
 
   const formatTwoDigits = (number: Number) => {
     let str = number.toString();
@@ -27,7 +41,7 @@ const LastSave:React.FC<LastSaveProps> = (props) => {
   }
 
   const renderText = () => {
-    if (props.isSaving) {
+    if (isSaving) {
       return "Saving...";
     } else {
       return `Last Saved at ${getTime(updated)}`;
