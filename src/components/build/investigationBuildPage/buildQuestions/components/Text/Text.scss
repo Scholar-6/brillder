@@ -36,4 +36,9 @@
     box-shadow: none !important;
     border-top: none !important;
   }
+
+  .ck.ck-reset.ck-dropdown__panel.ck-dropdown__panel_se.ck-dropdown__panel-visible {
+    left: auto;
+    right: 0;
+  }
 }
