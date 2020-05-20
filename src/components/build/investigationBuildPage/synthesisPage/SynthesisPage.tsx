@@ -22,7 +22,12 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
             <DocumentCKEditor
               data={synthesis}
               placeholder=""
-              toolbar={['bold', 'italic', 'fontColor', 'mathType', 'chemType', 'alignment', 'bulletedList', 'numberedList', 'insertTable']}
+              toolbar={[
+                'bold', 'italic', 'fontColor',
+                'subscript', 'superscript', 'strikethrough',
+                'mathType', 'chemType', 'alignment',
+                'bulletedList', 'numberedList', 'insertTable'
+              ]}
               defaultAlignment="justify"
               onBlur={() => {}}
               onChange={onSynthesisChange}
