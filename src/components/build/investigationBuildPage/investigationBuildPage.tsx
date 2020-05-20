@@ -291,6 +291,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const saveBrickQuestions = (updatedQuestions: Question[]) => {
     setSavingStatus(true);
+    console.log(updatedQuestions);
     prepareBrickToSave(brick, updatedQuestions, synthesis);
     props.saveBrick(brick).then((res:any) => {
       setSavingStatus(false);
@@ -299,7 +300,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const saveBrick = () => {
     setSavingStatus(true);
-    prepareBrickToSave(brick, brick.questions, synthesis);
+    prepareBrickToSave(brick, questions, synthesis);
     props.saveBrick(brick).then((res:any) => {
       setSavingStatus(false);
     });
