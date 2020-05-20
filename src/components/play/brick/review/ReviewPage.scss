@@ -13,6 +13,17 @@
   p {
     display: inline;
   }
+  table {
+    border-collapse: collapse;
+  }
+  
+  table, td, th {
+    border: 1px solid #bfbfbf;
+  }
+  td {
+    min-width: 2em;
+    padding: 0.4em;
+  }
 }
 
 .question-hint-global {
@@ -25,4 +36,16 @@
     padding: 2px 5px;
   }
   border-radius: 1px 2px 3px 4px;
+
+  table {
+    border-collapse: collapse;
+  }
+  
+  table, td, th {
+    border: 1px solid #bfbfbf;
+  }
+  td {
+    min-width: 2em;
+    padding: 0.4em;
+  }
 }

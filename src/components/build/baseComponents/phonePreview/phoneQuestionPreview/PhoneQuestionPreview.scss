@@ -162,7 +162,15 @@ $background-color: white;
       font-size: 1vw !important;
     }
     table {
-      border: 1px solid $tab-grey;
+      border-collapse: collapse;
+    }
+    
+    table, td, th {
+      border: 1px solid #bfbfbf;
+    }
+    td {
+      min-width: 2em;
+      padding: 0.4em;
     }
   }
 
@@ -171,8 +179,17 @@ $background-color: white;
     p {
       font-size: 1vw !important;
     }
-    th, td {
-      border: 1px solid black;
+
+    table {
+      border-collapse: collapse;
+    }
+    
+    table, td, th {
+      border: 1px solid #bfbfbf;
+    }
+    td {
+      min-width: 2em;
+      padding: 0.4em;
     }
   }
 }
