@@ -8,4 +8,16 @@
   p {
     font: 500 16px/24px $font-family-regular;
   }
+
+  table {
+    border-collapse: collapse;
+  }
+  
+  table, td, th {
+    border: 1px solid $dark-blue;
+  }
+  td {
+    min-width: 2em;
+    padding: 0.4em;
+  }
 }

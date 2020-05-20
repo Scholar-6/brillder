@@ -166,7 +166,7 @@ $background-color: white;
     }
     
     table, td, th {
-      border: 1px solid #bfbfbf;
+      border: 1px solid $dark-blue;
     }
     td {
       min-width: 2em;
@@ -185,7 +185,7 @@ $background-color: white;
     }
     
     table, td, th {
-      border: 1px solid #bfbfbf;
+      border: 1px solid $dark-blue;
     }
     td {
       min-width: 2em;
