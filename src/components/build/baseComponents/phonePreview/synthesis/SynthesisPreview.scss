@@ -28,4 +28,16 @@
     font-size: 0.8vw;
     font-family: $font-family-regular;
   }
+
+  table {
+    border-collapse: collapse;
+  }
+  
+  table, td, th {
+    border: 1px solid $dark-blue;
+  }
+  td {
+    min-width: 2em;
+    padding: 0.4em;
+  }
 }
