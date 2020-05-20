@@ -36,13 +36,13 @@ import SplitButtonView from "@ckeditor/ckeditor5-ui/src/dropdown/button/splitbut
 
 import './DocumentEditor.scss';
 
-
 export interface DocumentEditorProps {
   data: string;
   toolbar?: any;
   placeholder?: string;
   mediaEmbed?: boolean;
   defaultAlignment?: string;
+  validationRequired?: boolean;
   onBlur(): void;
   onChange(data: string): void;
 }
@@ -162,8 +162,14 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
     if (this.props.placeholder) {
       config.placeholder = this.props.placeholder;
     }
+
+    let className="document-editor";
+    if (this.props.validationRequired && !this.state.data) {
+      className+=" invalid";
+    }
+
     return (
-      <div className="document-editor">
+      <div className={className}>
         <div ref={this.state.ref} />
         <CKEditor
           data={this.state.data}
