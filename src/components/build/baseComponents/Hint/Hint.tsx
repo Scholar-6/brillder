@@ -138,6 +138,7 @@ const HintComponent: React.FC<HintProps> = ({
             data={state.list[i]}
             toolbar={['bold']}
             placeholder="Enter Hint"
+            validationRequired={validationRequired}
             onBlur={() => save()}
             onChange={(v:any) => {onHintListChanged(v, i)}}
           />
