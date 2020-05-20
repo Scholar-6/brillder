@@ -1,82 +1,43 @@
 import {
-  Question, QuestionTypeEnum, QuestionComponentTypeEnum, Hint, HintStatus
-} from 'model/question';
-import uniqueValidator from './UniqueValidator';
+  HintStatus, QuestionComponentTypeEnum, Question
+} from "model/question";
 
-const getUniqueComponent = (components: any[]) => {
-  return components.find(c => c.type === QuestionComponentTypeEnum.Component);
+
+export function getNewQuestion(type: number, active: boolean) {
+  return {
+    type,
+    active,
+    hint: {
+      value: "",
+      list: [] as string[],
+      status: HintStatus.None
+    },
+    components: [
+      { type: 0 },
+      { type: QuestionComponentTypeEnum.Component },
+      { type: 0 }
+    ]
+  } as Question;
+};
+
+export function deactiveQuestions(questions: Question[]) {
+  const updatedQuestions = questions.slice();
+  updatedQuestions.forEach(q => (q.active = false));
+  return updatedQuestions;
 }
 
-export function getNonEmptyComponent(components: any[]) {
-  return !components.find(c =>
-    c.type === QuestionComponentTypeEnum.Text ||
-    c.type === QuestionComponentTypeEnum.Image ||
-    c.type === QuestionComponentTypeEnum.Quote ||
-    c.type === QuestionComponentTypeEnum.Sound
+export function activeQuestionByIndex(questions: Question[], index: number) {
+  const updatedQuestions = deactiveQuestions(questions);
+  updatedQuestions[index].active = true;
+  return updatedQuestions;
+}
+
+export function getUniqueComponent(question: Question) {
+  return question.components.find(
+    c => c.type === QuestionComponentTypeEnum.Component
   );
 }
 
-const validateComponentValues = (components: any[]) => {
-  const comps = components.filter(c => {
-    return c.type === QuestionComponentTypeEnum.Text
-    || c.type === QuestionComponentTypeEnum.Quote
-    || c.type === QuestionComponentTypeEnum.Image
-    || c.type === QuestionComponentTypeEnum.Sound
-  });
-
-  let invalid = comps.find(c => !c.value);
-  if (invalid) {
-    return false;
-  }
-  return true;
+export function getActiveQuestion(questions: Question[]) {
+  return questions.find(q => q.active === true) as Question;
 }
-
-const validateHint = (hint: Hint) => {
-  if (hint.status === HintStatus.Each) {
-    const emptyHint = hint.list.some(h => h == null || h === "");
-    return emptyHint;
-  } else {
-    return !hint.value;
-  }
-}
-
-export function validateQuestion(question: Question) {
-  const {type, hint, components} = question;
-
-  let noComponent = getNonEmptyComponent(components);
-  if (noComponent) {
-    return false;
-  }
-
-  let isValid = validateComponentValues(components);
-  if (!isValid) {
-    return false;
-  }
-
-  let isHintInvalid = validateHint(hint);
-  if (isHintInvalid) {
-    return false;
-  }
-
-  const comp = getUniqueComponent(components);
-  if (type === QuestionTypeEnum.ShortAnswer || type === QuestionTypeEnum.VerticalShuffle
-    || type === QuestionTypeEnum.HorizontalShuffle)
-  {
-    return uniqueValidator.validateShortAnswer(comp);
-  } else if (type === QuestionTypeEnum.ChooseOne) {
-    return uniqueValidator.validateChooseOne(comp);
-  } else if (type === QuestionTypeEnum.ChooseSeveral) {
-    return uniqueValidator.validateChooseSeveral(comp);
-  } else if (type === QuestionTypeEnum.PairMatch) {
-    return uniqueValidator.validatePairMatch(comp);
-  } else if (type === QuestionTypeEnum.Sort) {
-    return uniqueValidator.validateSort(comp);
-  } else if (type === QuestionTypeEnum.WordHighlighting) {
-    return uniqueValidator.validateWordHighlighting(comp);
-  } else if (type === QuestionTypeEnum.LineHighlighting) {
-    return uniqueValidator.validateLineHighlighting(comp);
-  } else if (type === QuestionTypeEnum.MissingWord) {
-    return uniqueValidator.validateMissingWord(comp);
-  }
-  return false;
-};

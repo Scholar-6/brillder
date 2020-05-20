@@ -23,11 +23,17 @@ import QuestionTypePreview from "components/build/baseComponents/QuestionTypePre
 import {
   Question,
   QuestionTypeEnum,
-  QuestionComponentTypeEnum,
   HintStatus
 } from "model/question";
 import actions from "../../../redux/actions/brickActions";
-import {validateQuestion} from "./questionService/QuestionService";
+import {validateQuestion} from "./questionService/ValidateQuestionService";
+import {
+  getNewQuestion,
+  activeQuestionByIndex,
+  getUniqueComponent,
+  deactiveQuestions,
+  getActiveQuestion
+} from "./questionService/QuestionService";
 
 
 interface ApiQuestion {
@@ -50,22 +56,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const { history } = props;
-  const getNewQuestion = (type: number, active: boolean) => {
-    return {
-      type,
-      active,
-      hint: {
-        value: "",
-        list: [] as string[],
-        status: HintStatus.None
-      },
-      components: [
-        { type: 0 },
-        { type: QuestionComponentTypeEnum.Component },
-        { type: 0 }
-      ]
-    } as Question;
-  };
 
   const [questions, setQuestions] = React.useState([
     getNewQuestion(QuestionTypeEnum.None, true)
@@ -107,12 +97,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const unselectQuestions = () => {
-    const updatedQuestions = questions.slice();
-    updatedQuestions.forEach(q => (q.active = false));
+    const updatedQuestions = deactiveQuestions(questions);
     setQuestions(update(questions, { $set: updatedQuestions }));
   }
 
-  let activeQuestion = questions.find(q => q.active === true) as Question;
+  let activeQuestion = getActiveQuestion(questions);
   if (isSynthesisPage === true) {
     if (activeQuestion) {
       unselectQuestions();
@@ -131,9 +120,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setPreviousQuestion = () => {
     const index = getQuestionIndex(activeQuestion);
     if (index >= 1) {
-      const updatedQuestions = questions.slice();
-      updatedQuestions.forEach(q => (q.active = false));
-      updatedQuestions[index - 1].active = true;
+      const updatedQuestions = activeQuestionByIndex(questions, index - 1);
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
       saveBrick();
@@ -145,9 +132,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const index = getQuestionIndex(activeQuestion);
     let lastIndex = questions.length - 1;
     if (index < lastIndex) {
-      const updatedQuestions = questions.slice();
-      updatedQuestions.forEach(q => (q.active = false));
-      updatedQuestions[index + 1].active = true;
+      const updatedQuestions = activeQuestionByIndex(questions, index + 1);
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
       createNewQuestion();
@@ -155,8 +140,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const createNewQuestion = () => {
-    const updatedQuestions = questions.slice();
-    updatedQuestions.forEach(q => (q.active = false));
+    const updatedQuestions = deactiveQuestions(questions);
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
     setQuestions(update(questions, { $set: updatedQuestions }));
     if (history.location.pathname.slice(-10) === '/synthesis') {
@@ -181,16 +165,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (locked) { return; }
     var index = getQuestionIndex(activeQuestion);
     const updatedQuestions = update(questions, { [index]: { type: { $set: type } } });
-    console.log(updatedQuestions);
     setQuestions(updatedQuestions);
     saveBrickQuestions(updatedQuestions);
   };
-
-  const getUniqueComponent = (question: Question) => {
-    return question.components.find(
-      c => c.type === QuestionComponentTypeEnum.Component
-    );
-  }
 
   const chooseOneToChooseSeveral = (type: QuestionTypeEnum) => {
     const index = getQuestionIndex(activeQuestion);

@@ -5,7 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
 
 import QuestionComponents from './questionComponents/questionComponents';
-import {getNonEmptyComponent} from '../questionService/QuestionService';
+import {getNonEmptyComponent} from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../../model/question';
 import DragBox from './drag/dragBox';

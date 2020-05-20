@@ -6,7 +6,7 @@ import { ReactSortable } from "react-sortablejs";
 import { Grid } from '@material-ui/core';
 
 import './DragableTabs.scss';
-import {validateQuestion} from '../questionService/QuestionService';
+import {validateQuestion} from '../questionService/ValidateQuestionService';
 import DragTab from './dragTab';
 import LastTab from './lastTab';
 import SynthesisTab from './SynthesisTab';
