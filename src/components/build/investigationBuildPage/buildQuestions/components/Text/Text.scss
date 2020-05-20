@@ -10,16 +10,6 @@
 
   .text-label-container {
     margin: 0 43%;
-
-    .text-label {
-      width: 14%;
-      color: $dark-blue;
-      position: absolute;
-      top: 0;
-      z-index: 1;
-      height: 2.6vw;
-      font-size: 1.1vw;
-    }
   }
 
   .ck-toolbar {
@@ -29,9 +19,6 @@
 
     .ck-button {
       font-size: 0.85vw;
-    }
-
-    .ck-custom-dropdown {
     }
   }
 
