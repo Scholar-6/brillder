@@ -28,8 +28,8 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, ...pr
         data={data.value}
         placeholder=""
         toolbar={[
-          'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough', 'mathType', 'chemType',
-          'bulletedList', 'numberedList', 'insertTable'
+          'bold', 'italic', 'fontColor', 'insertTable', 'superscript', 'subscript', 'strikethrough', 'mathType', 'chemType',
+          'bulletedList', 'numberedList'
         ]}
         validationRequired={props.validationRequired}
         onBlur={() => props.save()}
