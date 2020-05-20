@@ -23,7 +23,6 @@ import QuestionTypePreview from "components/build/baseComponents/QuestionTypePre
 import {
   Question,
   QuestionTypeEnum,
-  HintStatus
 } from "model/question";
 import actions from "../../../redux/actions/brickActions";
 import {validateQuestion} from "./questionService/ValidateQuestionService";
@@ -32,15 +31,14 @@ import {
   activeQuestionByIndex,
   getUniqueComponent,
   deactiveQuestions,
-  getActiveQuestion
+  getActiveQuestion,
+  prepareBrickToSave,
+  removeQuestionByIndex,
+  convertToSort,
+  setQuestionTypeByIndex,
+  parseQuestion,
 } from "./questionService/QuestionService";
 
-
-interface ApiQuestion {
-  id?: number;
-  contentBlocks: string;
-  type: number;
-}
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
@@ -164,7 +162,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setQuestionType = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     var index = getQuestionIndex(activeQuestion);
-    const updatedQuestions = update(questions, { [index]: { type: { $set: type } } });
+    const updatedQuestions = setQuestionTypeByIndex(questions, index, type);
     setQuestions(updatedQuestions);
     saveBrickQuestions(updatedQuestions);
   };
@@ -199,13 +197,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       chooseOneToChooseSeveral(type);
     } else if (type === QuestionTypeEnum.Sort) {
       const index = getQuestionIndex(activeQuestion);
-      activeQuestion.type = type;
-      const question = Object.assign({}, activeQuestion);
-      question.hint = {
-        status: HintStatus.All,
-        value: question.hint.value,
-        list: []
-      };
+      const question = convertToSort(activeQuestion);
       setQuestion(index, question);
     } else if (type === QuestionTypeEnum.ShortAnswer) {
       convertToShortAnswer(type);
@@ -216,23 +208,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const deleteQuestionByIndex = (index: number) => {
-    let updatedQuestions = [];
-    if (index !== 0) {
-      updatedQuestions = update(questions, {
-        $splice: [[index, 1]],
-        0: { active: { $set: true } }
-      });
-      setQuestions(updatedQuestions);
-    } else {
-      updatedQuestions = update(questions, {
-        $splice: [[index, 1]],
-        [questions.length - 1]: { active: { $set: true } }
-      });
-      setQuestions(updatedQuestions);
-    }
-    if (deleteDialogOpen) {
-      setDeleteDialog(false);
-    }
+    let updatedQuestions = removeQuestionByIndex(questions, index);
+    setQuestions(updatedQuestions);
+    setDeleteDialog(false);
     saveBrickQuestions(updatedQuestions);
   }
 
@@ -251,17 +229,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const selectQuestion = (index: number) => {
-    const updatedQuestions = questions.slice();
-    updatedQuestions.forEach(q => (q.active = false));
-
-    let selectedQuestion = updatedQuestions[index];
-    if (selectedQuestion) {
-      selectedQuestion.active = true;
-
-      setQuestions(
-        update(questions, { $set: updatedQuestions })
-      );
-    }
+    const updatedQuestions = activeQuestionByIndex(questions, index);
+    setQuestions(update(questions, { $set: updatedQuestions }));
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/build/investigation/question`)
     }
@@ -288,16 +257,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const parsedQuestions: Question[] = [];
     for (const question of brick.questions) {
       try {
-        const parsedQuestion = JSON.parse(question.contentBlocks);
-        if (parsedQuestion.components) {
-          let q = {
-            id: question.id,
-            type: question.type,
-            hint: parsedQuestion.hint,
-            components: parsedQuestion.components
-          } as Question;
-          parsedQuestions.push(q);
-        }
+        parseQuestion(question, parsedQuestions);
       } catch (e) {}
     }
     if (parsedQuestions.length > 0) {
@@ -330,45 +290,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const saveBrickQuestions = (updatedQuestions: Question[]) => {
-    brick.questions = [];
-    brick.synthesis = synthesis;
-    for (let question of updatedQuestions) {
-      const questionObject = {
-        components: question.components,
-        hint: question.hint
-      };
-      const apiQuestion = {
-        type: question.type,
-        contentBlocks: JSON.stringify(questionObject)
-      } as ApiQuestion;
-      if (question.id) {
-        apiQuestion.id = question.id;
-        apiQuestion.type = question.type;
-      }
-      brick.questions.push(apiQuestion);
-    }
-    props.saveBrick(brick);
+    setSavingStatus(true);
+    prepareBrickToSave(brick, updatedQuestions, synthesis);
+    props.saveBrick(brick).then((res:any) => {
+      setSavingStatus(false);
+    });
   }
 
   const saveBrick = () => {
     setSavingStatus(true);
-    brick.questions = [];
-    brick.synthesis = synthesis;
-    for (let question of questions) {
-      let questionObject = {
-        components: question.components,
-        hint: question.hint
-      };
-      let apiQuestion = {
-        type: question.type,
-        contentBlocks: JSON.stringify(questionObject)
-      } as ApiQuestion;
-      if (question.id) {
-        apiQuestion.id = question.id;
-        apiQuestion.type = question.type;
-      }
-      brick.questions.push(apiQuestion);
-    }
+    prepareBrickToSave(brick, brick.questions, synthesis);
     props.saveBrick(brick).then((res:any) => {
       setSavingStatus(false);
     });
