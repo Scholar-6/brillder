@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import EditIcon from '@material-ui/icons/Edit';
 
 import './LineHighlightingBuild.scss'
+import { UniqueComponentProps } from '../types';
 
 
 enum LineMode {
@@ -20,11 +21,8 @@ export interface LineHighlightingData {
   mode: LineMode;
 }
 
-export interface LineHighlightingProps {
-  locked: boolean;
+export interface LineHighlightingProps extends UniqueComponentProps {
   data: LineHighlightingData;
-  save(): void;
-  updateComponent(component: any): void;
 }
 
 const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({

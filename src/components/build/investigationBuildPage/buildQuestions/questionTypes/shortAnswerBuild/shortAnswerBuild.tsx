@@ -4,6 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 import './shortAnswerBuild.scss'
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import { UniqueComponentProps } from '../types';
 
 
 interface ShortAnswerItem {
@@ -14,12 +15,8 @@ interface ShrortAnswerData {
   list: ShortAnswerItem[];
 }
 
-export interface ShortAnswerBuildProps {
+export interface ShortAnswerBuildProps extends UniqueComponentProps {
   data: ShrortAnswerData;
-  locked: boolean;
-  validationRequired: boolean;
-  save(): void;
-  updateComponent(component:any):void;
 }
 
 const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({

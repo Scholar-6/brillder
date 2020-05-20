@@ -4,19 +4,15 @@ import './chooseOneBuild.scss';
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 import ChooseOneAnswerComponent from './ChooseOneAnswer';
 import {ChooseOneAnswer} from './types';
-import { QuestionValueType } from '../types';
+import { QuestionValueType, UniqueComponentProps } from '../types';
 
 
 export interface ChooseOneData {
   list: ChooseOneAnswer[];
 }
 
-export interface ChooseOneBuildProps {
-  locked: boolean;
+export interface ChooseOneBuildProps extends UniqueComponentProps {
   data: ChooseOneData;
-  validationRequired: boolean;
-  save(): void;
-  updateComponent(component:any):void;
 }
 
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({

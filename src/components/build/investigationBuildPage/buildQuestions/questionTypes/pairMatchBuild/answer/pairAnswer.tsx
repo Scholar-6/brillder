@@ -12,13 +12,14 @@ export interface PairAnswerProps {
   index: number;
   length: number;
   answer: Answer;
+  validationRequired: boolean;
   removeFromList(index: number): void;
   save(): void;
   update(): void;
 }
 
 const PairAnswerComponent: React.FC<PairAnswerProps> = ({
-  locked, index, length, answer,
+  locked, index, length, answer, validationRequired,
   removeFromList, update, save
 }) => {
   const answerChanged = (answer: Answer, value: string) => {
@@ -83,6 +84,10 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
           disabled={locked}
           value={answer.value}
           placeholder={"Enter Answer " + (index + 1) + "..."}
+          className={
+            answer.answerType !== QuestionValueType.Image && validationRequired && !answer.value
+              ? "invalid" : ""
+          }
           onBlur={() => save()}
           onChange={(event:any) => answerChanged(answer, event.target.value)}
         />
