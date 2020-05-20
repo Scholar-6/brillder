@@ -10,6 +10,7 @@ export interface TextComponentProps {
   locked: boolean;
   index: number;
   data: any;
+  validationRequired: boolean;
   save(): void;
   updateComponent(component: any, index: number): void;
 }
@@ -31,6 +32,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, ...pr
       <DocumentCKEditor
         data={data.value}
         placeholder=""
+        validationRequired={props.validationRequired}
         onBlur={() => props.save()}
         onChange={onChange}
       />

@@ -9,6 +9,10 @@ $question-radius: 0.6vw;
   border-bottom-left-radius: $question-radius;
   border-bottom-right-radius: $question-radius;
 
+  .invalid {
+    background: $orange;
+  }
+
   .help-arrow {
     position: absolute;
     top: 8.5vh;

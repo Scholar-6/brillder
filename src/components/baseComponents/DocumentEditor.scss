@@ -63,3 +63,9 @@
     }
   }
 }
+
+.document-editor.invalid {
+  .ck-content {
+    background: $orange !important;
+  }
+}

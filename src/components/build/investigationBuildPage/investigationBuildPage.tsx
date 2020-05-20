@@ -330,6 +330,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         setQuestion={setQuestion}
         toggleLock={toggleLock}
         locked={locked}
+        validationRequired={validationRequired}
         updateComponents={updateComponents}
         setQuestionType={convertQuestionTypes}
         setPreviousQuestion={setPreviousQuestion}

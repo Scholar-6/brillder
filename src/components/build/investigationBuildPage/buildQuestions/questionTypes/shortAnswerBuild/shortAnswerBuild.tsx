@@ -17,12 +17,13 @@ interface ShrortAnswerData {
 export interface ShortAnswerBuildProps {
   data: ShrortAnswerData;
   locked: boolean;
+  validationRequired: boolean;
   save(): void;
   updateComponent(component:any):void;
 }
 
 const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
-  locked, data, save, updateComponent
+  locked, data, save, ...props
 }) => {
   const [height, setHeight] = React.useState('0%');
 
@@ -49,7 +50,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
 
   const update = () => {
     setState(Object.assign({}, state));
-    updateComponent(state);
+    props.updateComponent(state);
   }
 
   const changed = (shortAnswer: any, event: any) => {
@@ -87,9 +88,11 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
         <input
           disabled={locked}
           value={shortAnswer.value}
+          className={props.validationRequired && !shortAnswer.value ? "invalid" : ""}
           onBlur={() => save()}
           onChange={(event) => changed(shortAnswer, event)}
-          placeholder="Enter Short Answer..." />
+          placeholder="Enter Short Answer..."
+        />
       </div>
     );
   }
