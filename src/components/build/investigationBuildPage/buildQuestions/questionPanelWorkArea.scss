@@ -10,7 +10,7 @@ $question-radius: 0.6vw;
   border-bottom-right-radius: $question-radius;
 
   .invalid {
-    background: $orange;
+    background: $orange !important;
   }
 
   .help-arrow {

@@ -3,17 +3,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
 import './verticalShuffleBuild.scss'
+import { UniqueComponentProps } from '../types';
 
 
-export interface VerticalShuffleBuildProps {
-  locked: boolean;
-  data: any;
-  save(): void;
-  updateComponent(component:any):void;
+export interface VerticalShuffleBuildProps extends UniqueComponentProps {
 }
 
 const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
-  locked, data, save, updateComponent
+  locked, data, validationRequired, save, updateComponent
 }) => {
   const [height, setHeight] = React.useState('0%');
 
@@ -78,6 +75,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           disabled={locked}
           value={answer.value}
           onBlur={() => save()}
+          className={validationRequired && !answer.value ? "invalid" : ""}
           onChange={(event) => changed(answer, event)}
           placeholder={"Enter Answer " + (key + 1) + "..."}
         />

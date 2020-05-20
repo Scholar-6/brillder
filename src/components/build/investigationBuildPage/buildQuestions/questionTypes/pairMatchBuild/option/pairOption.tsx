@@ -11,12 +11,13 @@ export interface PairOptionProps {
   locked: boolean;
   index: number;
   answer: Answer;
+  validationRequired: boolean;
   save(): void;
   update(): void;
 }
 
 const PairOptionComponent: React.FC<PairOptionProps> = ({
-  locked, index, answer, save, update
+  locked, index, answer, validationRequired, save, update
 }) => {
   const removeImage = () => {
     if (locked) { return; }
@@ -67,6 +68,10 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
         <input
           disabled={locked}
           value={answer.option}
+          className={
+            answer.optionType !== QuestionValueType.Image && validationRequired && !answer.option
+              ? "invalid" : ""
+          }
           onBlur={() => save()}
           onChange={(event) => optionChanged(answer, event.target.value)}
           placeholder={"Enter Option " + (index + 1) + "..."}

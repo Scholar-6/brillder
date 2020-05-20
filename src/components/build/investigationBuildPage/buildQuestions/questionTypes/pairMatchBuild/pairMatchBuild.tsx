@@ -6,17 +6,14 @@ import {Answer} from './types';
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 import PairAnswerComponent from './answer/pairAnswer';
 import PairOptionComponent from './option/pairOption';
+import { UniqueComponentProps } from '../types';
 
 
-export interface PairMatchBuildProps {
-  locked: boolean;
-  data: any;
-  save(): void;
-  updateComponent(component: any): void;
+export interface PairMatchBuildProps extends UniqueComponentProps {
 }
 
 const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
-  locked, data, save, updateComponent
+  locked, data, validationRequired, save, updateComponent
 }) => {
   const [height, setHeight] = React.useState('0%');
 
@@ -73,10 +70,12 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
       <Grid key={key} container direction="row">
         <PairOptionComponent
           index={key} locked={locked} answer={answer}
+          validationRequired={validationRequired}
           update={update} save={save}
         />
         <PairAnswerComponent
           index={key} length={data.list.length} locked={locked} answer={answer}
+          validationRequired={validationRequired}
           removeFromList={removeFromList} update={update} save={save}
         />
       </Grid>

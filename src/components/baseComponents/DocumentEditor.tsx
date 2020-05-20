@@ -165,7 +165,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
 
     let className="document-editor";
     if (this.props.validationRequired && !this.state.data) {
-      className+=" invalid";
+      className+=" content-invalid";
     }
 
     return (

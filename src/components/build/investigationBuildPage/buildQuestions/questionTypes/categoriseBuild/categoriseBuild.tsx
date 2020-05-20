@@ -3,6 +3,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import './categoriseBuild.scss'
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import { UniqueComponentProps } from '../types';
 
 
 interface Answer {
@@ -19,15 +20,12 @@ export interface ChooseSeveralData {
   categories: SortCategory[]
 }
 
-export interface ChooseSeveralBuildProps {
-  locked: boolean;
+export interface ChooseSeveralBuildProps extends UniqueComponentProps {
   data: ChooseSeveralData;
-  save(): void;
-  updateComponent(component: any): void;
 }
 
 const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
-  locked, data, save, updateComponent
+  locked, data, validationRequired, save, updateComponent
 }) => {
   const [categoryHeight, setCategoryHeight] = React.useState('0%');
 
@@ -111,6 +109,7 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
           disabled={locked}
           value={category.name}
           placeholder="Enter Category Heading..."
+          className={validationRequired && !category.name ? "invalid" : ""}
           onBlur={() => save()}
           onChange={(event) => categoryChanged(category, event)}
         />
@@ -127,6 +126,7 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
                   disabled={locked}
                   value={answer.value}
                   placeholder="Enter Answer..."
+                  className={validationRequired && !answer.value ? "invalid" : ""}
                   onBlur={() => save()}
                   onChange={(event: any) => { answerChanged(answer, event) }}
                 />

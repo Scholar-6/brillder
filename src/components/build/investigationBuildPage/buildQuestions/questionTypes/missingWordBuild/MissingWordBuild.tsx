@@ -6,6 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import './MissingWordBuild.scss'
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import { UniqueComponentProps } from '../types';
 
 
 interface Answer {
@@ -20,17 +21,14 @@ export interface MissingChoice {
   height: string;
 }
 
-export interface MissingWordComponentProps {
-  locked: boolean;
+export interface MissingWordComponentProps extends UniqueComponentProps {
   data: {
     choices: MissingChoice[];
   };
-  save(): void;
-  updateComponent(component: any): void;
 }
 
 const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
-  locked, data, save, updateComponent
+  locked, data, validationRequired, save, updateComponent
 }) => {
   const [height, setHeight] = React.useState('0%');
   useEffect(() => calculateHeight());
@@ -116,6 +114,14 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
     save();
   }
 
+  const getInputClass = (answer: any) => {
+    let name = "input-answer";
+    if (validationRequired && !answer.value) {
+      name += " invalid";
+    }
+    return name;
+  }
+
   const renderChoice = (choice: MissingChoice, key: number) => {
     return (
       <div className="choose-several-box" key={key}>
@@ -137,11 +143,11 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
                 }
                 <Checkbox className="left-ckeckbox" disabled={locked} checked={answer.checked} onChange={(e) => onChecked(choice, e)} value={key} />
                 <input
-                  className="input-answer"
+                  placeholder="Enter Answer..."
+                  className={getInputClass(answer)}
                   disabled={locked}
                   value={answer.value}
                   onChange={(event: any) => { answerChanged(answer, event) }}
-                  placeholder="Enter Answer..."
                 />
               </div>
             );
@@ -149,10 +155,10 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
         }
         <textarea
           value={choice.after}
-          onChange={(event) => {afterChanged(choice, event)}}
           disabled={locked}
           rows={3}
-          placeholder="Text after choice..." >
+          placeholder="Text after choice..."
+          onChange={(event) => {afterChanged(choice, event)}}>
         </textarea>
         <AddAnswerButton
           locked={locked} addAnswer={() => { addAnswer(choice) }} height={choice.height}

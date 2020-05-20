@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import EditIcon from '@material-ui/icons/Edit';
 
 import './wordHighlighting.scss'
+import { UniqueComponentProps } from '../types';
 
 
 export enum WordMode {
@@ -20,11 +21,8 @@ export interface WordHighlightingData {
   mode: WordMode;
 }
 
-export interface WordHighlightingProps {
-  locked: boolean;
+export interface WordHighlightingProps extends UniqueComponentProps {
   data: WordHighlightingData;
-  save(): void;
-  updateComponent(component: any): void;
 }
 
 const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
