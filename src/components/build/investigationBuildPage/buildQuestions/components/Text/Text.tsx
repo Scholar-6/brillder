@@ -28,7 +28,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, ...pr
         data={data.value}
         placeholder=""
         toolbar={[
-          'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'superscript', 'mathType', 'chemType',
+          'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough', 'mathType', 'chemType',
           'bulletedList', 'numberedList', 'insertTable'
         ]}
         validationRequired={props.validationRequired}
