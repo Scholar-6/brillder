@@ -24,7 +24,7 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
               placeholder=""
               toolbar={[
                 'bold', 'italic', 'fontColor',
-                'subscript', 'superscript', 'strikethrough',
+                'superscript', 'subscript', 'strikethrough',
                 'mathType', 'chemType', 'alignment',
                 'bulletedList', 'numberedList', 'insertTable'
               ]}

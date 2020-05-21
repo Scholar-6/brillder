@@ -89,6 +89,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if (!props.brick) {
     return <div>...Loading...</div>;
   }
+  console.log(props.brick);
 
   const getQuestionIndex = (question: Question) => {
     return questions.indexOf(question);
@@ -373,7 +374,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         >
           <Grid
             container
-            item xs={12} sm={12} md={7} lg={9}
+            item xs={12} sm={12} md={9}
             alignItems="center"
             style={{ height: "100%" }}
             className="question-container"
@@ -385,8 +386,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             >
               <Grid
                 container
-                item xs={12} sm={12} md={12} lg={9}
-                style={{ height: "90%" }}
+                item xs={12} sm={12} md={9}
+                style={{ height: "90%", width: "75vw", minWidth: 'none' }}
               >
                 <DragableTabs
                   setQuestions={setQuestions}
