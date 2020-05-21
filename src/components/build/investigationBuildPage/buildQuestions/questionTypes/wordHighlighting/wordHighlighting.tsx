@@ -81,11 +81,15 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
       return (
         <div className="hightlight-area">
           {
-            state.words.map((word, i) =>
-              <div key={i} style={{display: 'inline-block', marginRight: '5px', background: word.checked ? 'green' : 'inherit'}} onClick={() => {toggleLight(i)}}>
+            state.words ? state.words.map((word, i) =>
+              <div
+                key={i}
+                className={word.checked ? "word active" : "word"}
+                onClick={() => {toggleLight(i)}}
+              >
                 {word.text}
               </div>
-            )
+            ) : ""
           }
         </div>
       );

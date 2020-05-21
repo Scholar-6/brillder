@@ -1,3 +1,5 @@
+@import '_variables';
+
 .word-highlight-build {
   position: relative;
 
@@ -7,7 +9,7 @@
     right: 0;
 
     .active {
-      color: green;
+      color: $light-green;
     }
   }
 
@@ -24,6 +26,15 @@
     font-size: 1vw;
     line-height: 1.1;
     min-height: 3vh;
+
+    .word {
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .word.active {
+      background: $light-green;
+    }
   }
 
   textarea {
