@@ -323,11 +323,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         synthesis={brick.synthesis}
         questionsCount={questions.length}
         question={activeQuestion}
+        locked={locked}
+        validationRequired={validationRequired}
+        tutorialPassed={false}
         getQuestionIndex={getQuestionIndex}
         setQuestion={setQuestion}
         toggleLock={toggleLock}
-        locked={locked}
-        validationRequired={validationRequired}
         updateComponents={updateComponents}
         setQuestionType={convertQuestionTypes}
         setPreviousQuestion={setPreviousQuestion}
