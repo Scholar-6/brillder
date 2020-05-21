@@ -1,12 +1,11 @@
 .missing-word-live {
   line-height: 50px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin: 5px 0;
   display: inline;
   place-content: center space-evenly;
 
   .missing-word-choice {
-    display: inline-block;
+    display: inline;
     margin-bottom: 20px;
     .missing-select {
       margin-left: 10px;

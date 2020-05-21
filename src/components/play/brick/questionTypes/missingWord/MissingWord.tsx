@@ -116,11 +116,11 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       <div className="missing-word-live">
         {component.choices.map((choice: any, index: number) => (
           <div key={index} className="missing-word-choice">
-            <Grid container direction="row" justify="center">
+            <span>
               {choice.before}
               {this.renderSelect(choice, index)}
               {choice.after}
-            </Grid>
+            </span>
             <Grid container direction="row" justify="center">
               <ReviewEachHint
                 isPhonePreview={this.props.isPreview}
