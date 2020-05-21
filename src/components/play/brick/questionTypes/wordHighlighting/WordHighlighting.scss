@@ -3,9 +3,11 @@
 .word-highlighting-play {
   .words-container {
     width: 100%;
+    font-family: $font-family-regular;
+    color: $dark-blue;
+
     .word {
       cursor: pointer;
-      color: black;
     }
     .word.active {
       background: $light-green;

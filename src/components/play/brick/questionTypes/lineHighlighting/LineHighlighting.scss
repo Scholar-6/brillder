@@ -3,9 +3,11 @@
 .line-highlighting-play {
   .lines-container {
     width: 100%;
+    font-family: $font-family-regular;
+    color: $dark-blue;
+
     .line {
       cursor: pointer;
-      color: black;
     }
     .line.active {
       background: $light-green;
