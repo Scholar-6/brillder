@@ -4,7 +4,6 @@ import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
 
-import TutorialWorkArea from './TutorialPanelWorkArea';
 import QuestionComponents from './questionComponents/questionComponents';
 import {getNonEmptyComponent} from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
@@ -25,7 +24,6 @@ export interface QuestionProps {
   questionsCount: number;
   synthesis: string;
   validationRequired: boolean;
-  tutorialPassed: boolean;
   saveBrick(): void;
   setQuestion(index: number, question: Question): void;
   updateComponents(components: any[]): void;
@@ -66,10 +64,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   let showHelpArrow = false;
   if (index === 0) {
     showHelpArrow = getNonEmptyComponent(question.components);
-  }
-
-  if (!props.tutorialPassed) {
-    return <TutorialWorkArea />
   }
 
   return (
