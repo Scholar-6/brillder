@@ -1,0 +1,133 @@
+@import "_variables";
+
+.build-question-page.tutorial-panel {
+  .tutorial-play-panel {
+    .tutorial-step-1 {
+      margin: 0 3vw;
+      margin-top: 3.3vh;
+      background: #f5f6f7;
+      color: $dark-blue;
+      border-radius: 0.7vw;
+      height: 72vh;
+      overflow: auto;
+
+      .icons-row {
+        margin-top: 2vw;
+        height: 10vw;
+        .icon-container {
+          height: 100%;
+          width: auto;
+
+          .edit-icon {
+            height: 5vw;
+          }
+          .add-icon {
+            height: 6.5vw;
+          }
+          .synthesis-icon {
+            height: 4vw;
+            margin: 0 0.5vw;
+          }
+          .play-icon {
+            margin-left: 0.5vw;
+            height: 6.5vw;
+            border-radius: 100vw;
+            padding-left: 2.2vw;
+            padding-right: 0.8vw;
+            padding-top: 1.5vw;
+            padding-bottom: 1.5vw;
+            background: $light-green;
+          }
+          .dashed-line {
+            width: 5vw;
+            border-style: none none dashed;
+            border-width: 0.1vw;
+          }
+          .arrow-icon {
+            height: 0.8vw;
+          }
+        }
+      }
+      .center {
+        margin: 1.9vh 0 0 0;
+        padding: 0;
+        font-size: 1.28vw;
+        text-align: center;
+      }
+      .center-second {
+        margin: 0;
+        padding: 0;
+        font-size: 1.28vw;
+        text-align: center;
+      }
+      .proposal-box {
+        margin-left: 1vw;
+        h2 {
+          margin: 4.7vh 0 0 0vw;
+          padding: 0;
+          font-family: $font-family-bold;
+          font-size: 2.1vw;
+        }
+        p {
+          margin: 0;
+          font-size: 1.45vw;
+        }
+        .last-text {
+          margin-top: 3.5vh;
+        }
+      }
+    }
+
+    .bold {
+      font-family: $font-family-bold;
+    }
+
+    .button-row {
+      margin-top: 2vh;
+      color: $dark-blue;
+      font-size: 1.5vw;
+
+      button {
+        cursor: pointer;
+        background: white;
+        color: $dark-blue;
+        border-radius: 0.6vw;
+        font-size: 1.5vw;
+        padding: 0;
+        line-height: 1.36;
+        padding: 0 0.8vw;
+        font-family: $font-family-bold;
+        border: 0.1vw solid $dark-blue;
+        transition: all 0.2s ease-in-out;
+      }
+
+      button:hover {
+        background: $dark-blue;
+        color: white;
+      }
+
+      .left-arrow {
+        cursor: pointer;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/feathericons/chevron-left-orange.png);
+        margin-left: 1.8vw;
+        margin-right: 1.3vw;
+        height: 2.5vw;
+        width: 2.5vw;
+      }
+
+      .right-arrow {
+        cursor: pointer;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/feathericons/chevron-right-orange.png);
+        height: 2.5vw;
+        width: 2.5vw;
+        margin-right: 2vw;
+      }
+    }
+  }
+}
