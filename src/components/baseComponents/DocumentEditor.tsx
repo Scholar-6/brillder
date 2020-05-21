@@ -115,7 +115,6 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
   handleOnInit = (editor: any) => {
     editor.locale.contentLanguageDirection = '';
     editor.execute( 'alignment', { value: 'justify' } );
-    editor.execute( 'fontColor', { value: 'rgb(30, 188, 97)' } );
 
     const {current} = this.state.ref;
     if (current) {
