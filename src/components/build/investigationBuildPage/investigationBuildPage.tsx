@@ -89,7 +89,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if (!props.brick) {
     return <div>...Loading...</div>;
   }
-  console.log(props.brick);
 
   const getQuestionIndex = (question: Question) => {
     return questions.indexOf(question);
