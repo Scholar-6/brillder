@@ -81,11 +81,19 @@ $box-radius: 0.4vw;
         white-space:nowrap;
         text-overflow:ellipsis;
       }
+      .brick-title.topic-filled {
+        font-size: 0.44vw;
+      }
       .brick-topics {
         width: 15.5vw;
         overflow: hidden;
         white-space:nowrap;
         text-overflow:ellipsis;
+      }
+      .brick-topics {
+        .topic-filled {
+          font-size: 0.44vw;
+        }
       }
     }
   }
