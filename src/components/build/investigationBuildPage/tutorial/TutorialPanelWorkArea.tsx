@@ -27,12 +27,17 @@ export interface TutorialProps {
   user: User;
   brickId: number;
   getUser(): void;
+  skipTutorial(): void;
 }
 
-const TutorialPanelWorkArea: React.FC<TutorialProps> = ({user, getUser}) => {
+const TutorialPanelWorkArea: React.FC<TutorialProps> = ({user, getUser, skipTutorial}) => {
   const [step, setStep] = React.useState(TutorialStep.Proposal);
 
   const skip = () => {
+    skipTutorial();
+  }
+
+  const notShowAgain = () => {
     axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/user/tutorialShowed`, {}, {withCredentials: true}
     ).then(res => {
