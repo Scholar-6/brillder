@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import "./investigationBuildPage.scss";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
+import TutorialWorkArea from './tutorial/TutorialPanelWorkArea';
 import QuestionTypePage from "./questionType/questionType";
 import SynthesisPage from "./synthesisPage/SynthesisPage";
 import LastSave from "components/build/baseComponents/lastSave/LastSave";
@@ -38,10 +39,12 @@ import {
   setQuestionTypeByIndex,
   parseQuestion,
 } from "./questionService/QuestionService";
+import { User } from "model/user";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
+  user: User;
   fetchBrick(brickId: number): void;
   saveBrick(brick: any): any;
 }
@@ -89,7 +92,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if (!props.brick) {
     return <div>...Loading...</div>;
   }
-  console.log(props.brick);
 
   const getQuestionIndex = (question: Question) => {
     return questions.indexOf(question);
@@ -316,6 +318,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const renderBuildQuestion = () => {
+    if (!props.user.tutorialPassed) {
+      return <TutorialWorkArea />;
+    }
     return (
       <QuestionPanelWorkArea
         brickId={brickId}
@@ -325,7 +330,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         question={activeQuestion}
         locked={locked}
         validationRequired={validationRequired}
-        tutorialPassed={false}
         getQuestionIndex={getQuestionIndex}
         setQuestion={setQuestion}
         toggleLock={toggleLock}
@@ -353,6 +357,22 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       />
     );
   };
+
+  const renderPanel = () => {
+    return (
+      <Switch>
+        <Route path="/build/brick/:brickId/build/investigation/question-component">
+          {renderBuildQuestion}
+        </Route>
+        <Route path="/build/brick/:brickId/build/investigation/question">
+          {renderQuestionComponent}
+        </Route>
+        <Route path="/build/brick/:brickId/build/investigation/synthesis">
+          <SynthesisPage synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
+        </Route>
+      </Switch>
+    );
+  }
 
   return (
     <div className="investigation-build-page">
@@ -401,17 +421,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   selectQuestion={selectQuestion}
                   removeQuestion={removeQuestion}
                 />
-                <Switch>
-                  <Route path="/build/brick/:brickId/build/investigation/question-component">
-                    {renderBuildQuestion}
-                  </Route>
-                  <Route path="/build/brick/:brickId/build/investigation/question">
-                    {renderQuestionComponent}
-                  </Route>
-                  <Route path="/build/brick/:brickId/build/investigation/synthesis">
-                    <SynthesisPage synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
-                  </Route>
-                </Switch>
+                {renderPanel()}
               </Grid>
             </Grid>
           </Grid>
@@ -477,6 +487,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
 const mapState = (state: any) => {
   return {
+    user: state.user.user,
     bricks: state.bricks.bricks,
     brick: state.brick.brick
   };

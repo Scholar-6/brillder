@@ -1,15 +1,21 @@
 import React from 'react'
-import { Grid, Select, FormControl, Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import './TutorialPanelWorkArea.scss';
 
 
-export interface QuestionProps {
+enum TutorialStep {
+  None,
+  Proposal,
+  Investigation,
 }
 
-const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
-}) => {
+export interface TutorialProps {}
+
+const TutorailPanelWorkArea: React.FC<TutorialProps> = () => {
+  const [step, setStep] = React.useState(TutorialStep.Proposal);
+
   return (
     <MuiThemeProvider >
       <div className="build-question-page tutorial-panel" style={{width: '100%', height: '94%'}}>
@@ -44,4 +50,4 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   );
 }
 
-export default QuestionPanelWorkArea
+export default TutorailPanelWorkArea
