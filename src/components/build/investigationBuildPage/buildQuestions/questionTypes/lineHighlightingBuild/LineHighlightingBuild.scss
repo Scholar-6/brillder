@@ -1,3 +1,5 @@
+@import '_variables';
+
 .line-highlight-build {
   position: relative;
 
@@ -7,7 +9,7 @@
     right: 0;
 
     .active {
-      color: #008000;
+      color: green;
     }
   }
 
@@ -26,6 +28,13 @@
     margin-top: 0.1vw;
     margin-bottom: 0.1vw;
     line-height: 1.1;
+
+    .line {
+      cursor: pointer;
+    }
+    .line.active {
+      background: $light-green;
+    }
   }
 
   textarea {
