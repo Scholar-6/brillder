@@ -85,8 +85,7 @@ class WordHighlighting extends CompComponent<
               className={word.selected ? "active word" : "word"}
               onClick={() => this.highlighting(index)}
             >
-              {word.text}&nbsp;
-            </span>
+              {word.text} </span>
           ))}
         </div>
         <br/>

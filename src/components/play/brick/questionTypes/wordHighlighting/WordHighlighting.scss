@@ -1,16 +1,13 @@
 .word-highlighting-play {
-    .words-container {
-      border-left: 5px solid #006ece;
-      margin-left: 25px;
-      padding-left: 25px;
-  
-      .word {
-        cursor: pointer;
-        color: black;
-      }
-      .word.active {
-        background: #00dece;
-      }
+  .words-container {
+    width: 100%;
+    .word {
+      cursor: pointer;
+      color: black;
+    }
+    .word.active {
+      background: #00dece;
     }
   }
+}
   
