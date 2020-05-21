@@ -1,14 +1,20 @@
 import React from 'react'
-import { Grid } from '@material-ui/core';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import './TutorialPanelWorkArea.scss';
+import ProposalPanel from './ProposalPanel';
+import InvestigationPanel from './InvestigationPanel';
+import SynthesisPanel from './SynthesisPanel';
+import PlayPanel from './PlayPanel';
+import AdditionalPanel from './AdditionalPanel';
 
 
-enum TutorialStep {
+export enum TutorialStep {
   None,
   Proposal,
   Investigation,
+  Synthesis,
+  Play,
+  Additional,
 }
 
 export interface TutorialProps {}
@@ -16,35 +22,30 @@ export interface TutorialProps {}
 const TutorailPanelWorkArea: React.FC<TutorialProps> = () => {
   const [step, setStep] = React.useState(TutorialStep.Proposal);
 
+  const skip = () => {
+
+  }
+
+  const renderStepPanel = () => {
+    console.log(step)
+    if (step === TutorialStep.Proposal) {
+      return <ProposalPanel next={(step) => setStep(step)} skip={skip} />
+    } else if (step === TutorialStep.Investigation) {
+      return <InvestigationPanel next={(step) => setStep(step)} skip={skip} />
+    } else if (step === TutorialStep.Synthesis) {
+      return <SynthesisPanel next={(step) => setStep(step)} skip={skip} />
+    } else if (step === TutorialStep.Play) {
+      return <PlayPanel next={(step) => setStep(step)} skip={skip} />
+    } else if (step === TutorialStep.Additional) {
+      return <AdditionalPanel next={(step) => setStep(step)} skip={skip} />
+    }
+    return "";
+  }
+
   return (
     <MuiThemeProvider >
       <div className="build-question-page tutorial-panel" style={{width: '100%', height: '94%'}}>
-        <div className="tutorial-step-1">
-          <h1>There are 4 steps to the build process.</h1>
-          <Grid container justify="center">
-            <div className="edit-border">
-              <div className="edit-icon"/>
-            </div>
-          </Grid>
-          <p className="center">
-            You can <span className="bold">Edit Your Proposal</span> at anytime by clicking the text to the left of this window.
-          </p>
-          <div className="proposal-box">
-            <h2>1. The Proposal</h2>
-            <p>If you’ve made it here, then you’ve at least made a start on your proposal. If you are working with an editor, they will receive a notification at this point and be able to view the draft proposal of your brick.</p>
-            <p className="last-text bold">The Proposal can also be accessed via your ‘Back to Work’ page.</p>
-          </div>
-        </div>
-        <Grid container direction="row" className="button-row">
-          <Grid item xs={4} />
-          <Grid container justify="center" item xs={4}>
-            <button>SKIP</button>
-          </Grid>
-          <Grid container justify="flex-end" item xs={4}>
-            <span className="bold">2. The Investigation</span>
-            <div className="right-arrow" />
-          </Grid>
-        </Grid>
+        {renderStepPanel()}
       </div>
     </MuiThemeProvider>
   );
