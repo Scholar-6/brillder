@@ -35,9 +35,9 @@ export interface QuestionProps {
   locked: boolean;
 }
 
-const QuestionPanelWorkArea: React.FC<QuestionProps> = (
-  { brickId, question, history, validationRequired, locked, getQuestionIndex, ...props }
-) => {
+const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
+  brickId, question, history, validationRequired, locked, getQuestionIndex, ...props
+}) => {
   const [componentTypes, setComponentType] = React.useState([
     {id: 1, type: QuestionComponentTypeEnum.Text},
     {id: 2, type: QuestionComponentTypeEnum.Quote},
