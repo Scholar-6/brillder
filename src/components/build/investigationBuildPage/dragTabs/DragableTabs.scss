@@ -48,6 +48,8 @@ $tile-height: 100%;
   .drag-tile-container.active {
     height: 100% !important;
 
+    padding-left: 0 !important;
+
     .drag-tile {
       background: white;
     }
