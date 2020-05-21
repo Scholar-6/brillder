@@ -464,7 +464,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <div>to use this page</div>
           </div>
           <Grid container direction="row" className="row-buttons" justify="center">
-            <Button className="yes-button" onClick={() => history.push('/build')}>Move</Button>
+            <Button className="yes-button" onClick={() => history.push('/build')}>
+              Move
+            </Button>
           </Grid>
         </Dialog>
       </Hidden>

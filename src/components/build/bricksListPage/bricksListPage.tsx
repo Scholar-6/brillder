@@ -20,8 +20,11 @@ import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
+import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
+
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
+
 
 const mapState = (state: any) => {
   return {
@@ -56,6 +59,7 @@ interface BricksListState {
   sortedIndex: number;
   filterExpanded: boolean;
   logoutDialogOpen: boolean;
+  failedRequest: boolean;
   finalBricks: Brick[];
 
   deleteDialogOpen: boolean;
@@ -86,6 +90,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       filterExpanded: true,
       logoutDialogOpen: false,
       deleteDialogOpen: false,
+      failedRequest: false,
       deleteBrickId: -1,
       finalBricks: [],
 
@@ -98,47 +103,38 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       shown: true,
     };
 
-    axios
-      .get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        let bricks = res.data as Brick[];
-        bricks = bricks.filter((brick) => {
-          return brick.status === BrickStatus.Publish;
-        });
-        this.setState({ ...this.state, yourBricks: bricks });
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
+    axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
+      withCredentials: true,
+    }).then((res) => {
+      let bricks = res.data as Brick[];
+      bricks = bricks.filter((brick) => {
+        return brick.status === BrickStatus.Publish;
       });
+      this.setState({ ...this.state, yourBricks: bricks });
+    }).catch((error) => {
+      this.setState({...this.state, failedRequest: true});
+    });
 
-    axios
-      .get(
-        `${process.env.REACT_APP_BACKEND_HOST}/bricks/byStatus/${BrickStatus.Publish}`,
-        { withCredentials: true }
-      )
-      .then((res) => {
-        this.setState({
-          ...this.state,
-          bricks: res.data,
-          finalBricks: res.data as Brick[],
-        });
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
+    axios.get(
+      `${process.env.REACT_APP_BACKEND_HOST}/bricks/byStatus/${BrickStatus.Publish}`,
+      { withCredentials: true }
+    ).then((res) => {
+      this.setState({
+        ...this.state,
+        bricks: res.data,
+        finalBricks: res.data as Brick[],
       });
+    }).catch((error) => {
+      this.setState({...this.state, failedRequest: true});
+    });
 
-    axios
-      .get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        this.setState({ ...this.state, subjects: res.data });
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
-      });
+    axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
+      withCredentials: true,
+    }).then((res) => {
+      this.setState({ ...this.state, subjects: res.data });
+    }).catch((error) => {
+      this.setState({...this.state, failedRequest: true});
+    });
   }
 
   delete(brickId: number) {
@@ -412,27 +408,24 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     const { searchString } = this.state;
     this.setState({ ...this.state, shown: false });
 
-    axios
-      .post(
-        process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
-        { searchString },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        const searchBricks = res.data.map((brick: any) => brick.body);
-        setTimeout(() => {
-          this.setState({
-            ...this.state,
-            searchBricks,
-            finalBricks: searchBricks,
-            isSearching: true,
-            shown: true,
-          });
-        }, 1400);
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
-      });
+    axios.post(
+      process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
+      { searchString },
+      { withCredentials: true }
+    ).then((res) => {
+      const searchBricks = res.data.map((brick: any) => brick.body);
+      setTimeout(() => {
+        this.setState({
+          ...this.state,
+          searchBricks,
+          finalBricks: searchBricks,
+          isSearching: true,
+          shown: true,
+        });
+      }, 1400);
+    }).catch((error) => {
+      this.setState({...this.state, failedRequest: true});
+    });
   }
 
   creatingBrick() {
@@ -873,6 +866,10 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           brickId={this.state.deleteBrickId}
           close={() => this.handleDeleteClose()}
           onDelete={(brickId) => this.delete(brickId)}
+        />
+        <FailedRequestDialog
+          isOpen={this.state.failedRequest}
+          close={() => this.setState({...this.state, failedRequest: false})}
         />
       </div>
     );
