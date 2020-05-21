@@ -13,13 +13,10 @@
   }
 
   .ck-toolbar {
+    padding-left: 0.2vw;
     height: 2.6vw;
     border-top-left-radius: 0.4vw !important;
     border-top-right-radius: 0.4vw !important;
-
-    .ck-button {
-      font-size: 0.85vw;
-    }
   }
 
   .ck-dropdown__panel {
@@ -40,5 +37,19 @@
   .ck.ck-reset.ck-dropdown__panel.ck-dropdown__panel_se.ck-dropdown__panel-visible {
     left: auto;
     right: 0;
+  }
+
+  .ck-toolbar__items {
+    .ck-button {
+      min-width: 0;
+      border: 0;
+      margin-right: 0;
+      padding-left: 0.2vw;
+      padding-right: 0.2vw;
+
+      .ck-icon {
+        font-size: 0.8vw;
+      }
+    }
   }
 }

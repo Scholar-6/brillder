@@ -17,7 +17,6 @@ const LastSave:React.FC<LastSaveProps> = (props) => {
   useEffect(() => {
     if (props.isSaving) {
       setSaving(true);
-      console.log(55);
       if (saveTimeout) {
         clearInterval(saveTimeout);
       }

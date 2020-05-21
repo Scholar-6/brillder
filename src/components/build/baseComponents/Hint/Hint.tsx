@@ -175,7 +175,8 @@ const HintComponent: React.FC<HintProps> = ({
                 <React.Fragment>
                   <div className="hint-question-mark-hover-title">
                     <span className="question-mark">?</span>
-                    Hints ensure that in reviewing material the learner has to keep re-evaluating.
+                    Hints ensure that the learner has to keep
+                    re-evaluating when reviewing material.
                     This is why our interface does not allow for standard true or false questions:
                     much less can be gained by a blind click at the second time of asking.
                     <div>
