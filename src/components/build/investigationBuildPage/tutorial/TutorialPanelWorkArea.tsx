@@ -1,11 +1,17 @@
 import React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// @ts-ignore
+import { connect } from "react-redux";
 
+import axios from 'axios';
 import ProposalPanel from './ProposalPanel';
 import InvestigationPanel from './InvestigationPanel';
 import SynthesisPanel from './SynthesisPanel';
 import PlayPanel from './PlayPanel';
 import AdditionalPanel from './AdditionalPanel';
+import { User } from 'model/user';
+import { useHistory } from 'react-router-dom';
+import userActions from 'redux/actions/user';
 
 
 export enum TutorialStep {
@@ -17,13 +23,25 @@ export enum TutorialStep {
   Additional,
 }
 
-export interface TutorialProps {}
+export interface TutorialProps {
+  user: User;
+  brickId: number;
+  getUser(): void;
+}
 
-const TutorailPanelWorkArea: React.FC<TutorialProps> = () => {
+const TutorialPanelWorkArea: React.FC<TutorialProps> = ({user, getUser}) => {
   const [step, setStep] = React.useState(TutorialStep.Proposal);
 
   const skip = () => {
-
+    axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/user/tutorialShowed`, {}, {withCredentials: true}
+    ).then(res => {
+      if (res.data === 'OK') {
+        getUser();
+      }
+    }).catch(error => {
+      alert('Can`t save user profile');
+    });
   }
 
   const renderStepPanel = () => {
@@ -51,4 +69,16 @@ const TutorailPanelWorkArea: React.FC<TutorialProps> = () => {
   );
 }
 
-export default TutorailPanelWorkArea
+const mapState = (state: any) => {
+  return {}
+}
+
+const mapDispatch = (dispatch: any) => {
+  return {
+    getUser: () => dispatch(userActions.getUser()),
+  }
+}
+
+const connector = connect(mapState, mapDispatch);
+
+export default connector(TutorialPanelWorkArea);

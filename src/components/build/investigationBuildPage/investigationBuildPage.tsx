@@ -319,7 +319,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const renderBuildQuestion = () => {
     if (!props.user.tutorialPassed) {
-      return <TutorialWorkArea />;
+      return <TutorialWorkArea brickId={brickId} user={props.user} />;
     }
     return (
       <QuestionPanelWorkArea
