@@ -85,7 +85,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
         <div className="hightlight-area">
           {
             state.lines.map((line, i) =>
-              <div key={i} style={{background: line.checked ? 'green' : 'inherit'}} onClick={() => {toggleLight(i)}}>
+              <div key={i} className={line.checked ? "line active" : "line"} onClick={() => {toggleLight(i)}}>
                 {line.text}
               </div>
             )
