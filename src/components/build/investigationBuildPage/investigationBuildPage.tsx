@@ -70,6 +70,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [activeQuestionType, setActiveType] = React.useState(QuestionTypeEnum.None);
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
   const [isSaving, setSavingStatus] = React.useState(false);
+  const [tutorialSkipped, skipTutorial] = React.useState(false);
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -318,8 +319,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const renderBuildQuestion = () => {
-    if (!props.user.tutorialPassed) {
-      return <TutorialWorkArea brickId={brickId} user={props.user} />;
+    if (!props.user.tutorialPassed && tutorialSkipped === false) {
+      return <TutorialWorkArea brickId={brickId} user={props.user} skipTutorial={skipTutorial} />;
     }
     return (
       <QuestionPanelWorkArea
