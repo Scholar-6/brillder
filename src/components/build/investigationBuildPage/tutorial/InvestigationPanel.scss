@@ -23,15 +23,15 @@
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center;
-        background-image: url(/images/edit.png);
-        height: 4.5vw;
-        width: 4.5vw;
+        background-image: url(/feathericons/plus-blue.png);
+        height: 6vw;
+        width: 6vw;
         margin-bottom: 0.5vh;
       }
 
       .add-border {
         margin-top: 5.5vh;
-        padding: 1.5vw;
+        padding: 0.76vw 0.9vw;
         border-radius: 100vw;
         border: 0.3vw dashed $orange;
       }
