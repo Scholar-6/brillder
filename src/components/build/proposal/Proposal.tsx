@@ -95,7 +95,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   const setLength = (brickLength: BrickLengthEnum) => {
     let brick = { ...state, brickLength } as Brick;
-    setBrick(brick);
+    saveLocalState(brick);
     return brick;
   }
 
