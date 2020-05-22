@@ -38,7 +38,7 @@ const AdditionalPanel: React.FC<TutorialProps> = (props) => {
         </Grid>
         <Grid container justify="flex-end" item xs={6}>
           <span className="button-label bold long">START BUILDING</span>
-          <div className="right-arrow" onClick={() => props.next(TutorialStep.Play)} />
+          <div className="right-arrow" onClick={() => props.skip()} />
         </Grid>
       </Grid>
     </div>
