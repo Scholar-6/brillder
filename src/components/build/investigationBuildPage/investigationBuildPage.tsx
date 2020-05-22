@@ -400,24 +400,38 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const renderProposalLink = () => {
-    let className = "proposal-link";
+    let className = "";
     if (!isTutorialPassed()) {
-      className += " white";
       if (step === TutorialStep.Proposal) {
-        className += " proposal";
+        className += " white proposal";
       }
     }
     
     return (
-      <div className={className} onClick={editProposal}>
-        <div className="proposal-edit-icon"/>
-        <div className="proposal-text">
-          <div style={{lineHeight: 0.9}}>YOUR</div>
-          <div style={{lineHeight: 2}}>PROP</div>
-          <div style={{lineHeight: 0.9}}>OSAL</div>
+      <div className="proposal-link">
+        <div className={className} onClick={editProposal}>
+          <div className="proposal-edit-icon"/>
+          <div className="proposal-text">
+            <div style={{lineHeight: 0.9}}>YOUR</div>
+            <div style={{lineHeight: 2}}>PROP</div>
+            <div style={{lineHeight: 0.9}}>OSAL</div>
+          </div>
         </div>
+        {renderZapTooltip()}
       </div>
     );
+  }
+
+  const renderZapTooltip = () => {
+    if (!isTutorialPassed() && step === TutorialStep.Additional) {
+      return (
+        <div className="additional-tooltip">
+          <div className="tooltip-text">Tool Tips</div>
+          <img alt="" className="additional-tooltip-icon" src="/feathericons/zap-white.png" />
+        </div>
+      );
+    }
+    return "";
   }
 
   return (

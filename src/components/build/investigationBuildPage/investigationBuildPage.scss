@@ -30,6 +30,22 @@
     background: $dark-blue;
   }
 
+  .additional-tooltip {
+    margin-top: 4vh;
+    font-size: 1.2vw;
+    font-family: $font-family-regular;
+    letter-spacing: 0;
+    text-align: center;
+    color: white;
+    img {
+      margin-top: 2.5vh;
+      height: 5.4vw;
+      padding: 0.7vw;
+      border-radius: 100vw;
+      border: 0.1vw dashed $orange;
+    }
+  }
+
   .proposal-link {
     cursor: pointer;
     position: absolute;
