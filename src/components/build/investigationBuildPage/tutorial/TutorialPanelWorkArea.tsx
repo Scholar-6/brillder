@@ -26,16 +26,14 @@ export enum TutorialStep {
 export interface TutorialProps {
   user: User;
   brickId: number;
+  step: TutorialStep;
+  setStep(step: TutorialStep): void;
   getUser(): void;
   skipTutorial(): void;
 }
 
-const TutorialPanelWorkArea: React.FC<TutorialProps> = ({user, getUser, skipTutorial}) => {
-  const [step, setStep] = React.useState(TutorialStep.Proposal);
-
-  const skip = () => {
-    skipTutorial();
-  }
+const TutorialPanelWorkArea: React.FC<TutorialProps> = ({user, step, setStep, getUser, skipTutorial}) => {
+  const skip = () => skipTutorial();
 
   const notShowAgain = () => {
     axios.put(

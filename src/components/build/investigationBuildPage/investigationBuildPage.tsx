@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import "./investigationBuildPage.scss";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
-import TutorialWorkArea from './tutorial/TutorialPanelWorkArea';
+import TutorialWorkArea, { TutorialStep } from './tutorial/TutorialPanelWorkArea';
 import QuestionTypePage from "./questionType/questionType";
 import SynthesisPage from "./synthesisPage/SynthesisPage";
 import LastSave from "components/build/baseComponents/lastSave/LastSave";
@@ -20,6 +20,7 @@ import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/p
 import SynthesisPreviewComponent from "components/build/baseComponents/phonePreview/synthesis/SynthesisPreview";
 import DeleteQuestionDialog from "components/build/baseComponents/deleteQuestionDialog/DeleteQuestionDialog";
 import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
+import TutorialPhonePreview from "./tutorial/TutorialPreview";
 
 import {
   Question,
@@ -71,6 +72,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
   const [isSaving, setSavingStatus] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
+  const [step, setStep] = React.useState(TutorialStep.Proposal);
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -343,7 +345,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const renderQuestionComponent = () => {
     if (!props.user.tutorialPassed && tutorialSkipped === false) {
-      return <TutorialWorkArea brickId={brickId} user={props.user} skipTutorial={skipTutorial} />;
+      return <TutorialWorkArea brickId={brickId} step={step} setStep={setStep} user={props.user} skipTutorial={skipTutorial} />;
     }
     return (
       <QuestionTypePage
@@ -360,6 +362,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     );
   };
 
+  const isTutorialPassed = () => {
+    if (props.user.tutorialPassed) {
+      return true;
+    }
+    if (tutorialSkipped) {
+      return true;
+    }
+  }
+
   const renderPanel = () => {
     return (
       <Switch>
@@ -374,6 +385,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         </Route>
       </Switch>
     );
+  }
+
+  const renderQuestionTypePreview = () => {
+    if (isTutorialPassed()) {
+      return (
+        <QuestionTypePreview
+          hoverQuestion={hoverQuestion}
+          activeQuestionType={activeQuestionType}
+        />
+      );
+    }
+    return <TutorialPhonePreview step={step} />;
   }
 
   return (
@@ -432,10 +455,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <PhoneQuestionPreview question={activeQuestion} />
           </Route>
           <Route path="/build/brick/:brickId/build/investigation/question">
-            <QuestionTypePreview
-              hoverQuestion={hoverQuestion}
-              activeQuestionType={activeQuestionType}
-            />
+            {renderQuestionTypePreview()}
           </Route>
           <Route path="/build/brick/:brickId/build/investigation/synthesis">
             <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
