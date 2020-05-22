@@ -61,6 +61,12 @@
     strong {
       font-weight: normal !important;
     }
+
+    table {
+      td {
+        padding: 0;
+      }
+    }
   }
 
   .ck-insert-table-dropdown__grid {
