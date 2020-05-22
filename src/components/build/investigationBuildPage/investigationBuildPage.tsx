@@ -441,6 +441,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <Grid container direction="row" style={{height: '100%'}}>
             <Grid container xs={9} justify="center" style={{height: '100%'}}>
               <Grid container xs={9} style={{height: '100%'}}>
+                <div className="tutorial-exit-label" style={{height: '100%'}}>
+                  <Grid container alignContent="center" style={{height: '100%'}}>
+                  Click the red icon to Exit & Save
+                  </Grid>
+                </div>
                 <div className="tutorial-add-label" style={{height: '100%'}}>
                   <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
                     Add Question Panel

@@ -161,8 +161,11 @@
     color: white;
     font-family: $font-family-regular;
 
+    .tutorial-exit-label {
+      width:38%;
+    }
+
     .tutorial-add-label {
-      margin-left: 38%;
       width:31%;
     }
 
