@@ -38,6 +38,7 @@ export interface QuestionProps {
 const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   brickId, question, history, validationRequired, locked, getQuestionIndex, ...props
 }) => {
+  console.log('question panel init');
   const [componentTypes, setComponentType] = React.useState([
     {id: 1, type: QuestionComponentTypeEnum.Text},
     {id: 2, type: QuestionComponentTypeEnum.Quote},
@@ -61,10 +62,14 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   let typeArray: string[] = Object.keys(QuestionType);
   let index = getQuestionIndex(question);
 
+  console.log('question panel before help arrow');
+
   let showHelpArrow = false;
   if (index === 0) {
     showHelpArrow = getNonEmptyComponent(question.components);
   }
+
+  console.log('question panel before rendering');
 
   return (
     <MuiThemeProvider >
