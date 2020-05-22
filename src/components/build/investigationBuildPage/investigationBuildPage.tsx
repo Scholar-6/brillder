@@ -399,20 +399,34 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return <TutorialPhonePreview step={step} />;
   }
 
+  const renderProposalLink = () => {
+    let className = "proposal-link";
+    if (!isTutorialPassed()) {
+      className += " white";
+      if (step === TutorialStep.Proposal) {
+        className += " proposal";
+      }
+    }
+    
+    return (
+      <div className={className} onClick={editProposal}>
+        <div className="proposal-edit-icon"/>
+        <div className="proposal-text">
+          <div style={{lineHeight: 0.9}}>YOUR</div>
+          <div style={{lineHeight: 2}}>PROP</div>
+          <div style={{lineHeight: 0.9}}>OSAL</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="investigation-build-page">
       <div style={{position: 'fixed'}}>
         <HomeButton onClick={exitAndSave} />
       </div>
       <Hidden only={['xs', 'sm']}>
-        <div className="proposal-link" onClick={editProposal}>
-          <div className="proposal-edit-icon"/>
-          <div className="proposal-text">
-            <div style={{lineHeight: 0.9}}>YOUR</div>
-            <div style={{lineHeight: 2}}>PROP</div>
-            <div style={{lineHeight: 0.9}}>OSAL</div>
-          </div>
-        </div>
+        {renderProposalLink()}
         <Grid
           container direction="row"
           className="investigation-build-background"
@@ -440,6 +454,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   questions={questions}
                   synthesis={synthesis}
                   validationRequired={validationRequired}
+                  tutorialStep={step}
                   isSynthesisPage={isSynthesisPage}
                   moveToSynthesis={moveToSynthesis}
                   createNewQuestion={createNewQuestion}

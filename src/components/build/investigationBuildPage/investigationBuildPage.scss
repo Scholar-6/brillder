@@ -52,7 +52,26 @@
     .proposal-text {
       margin-top: 0vh;
       margin-left: 0.3vw;
+    }    
+  }
+
+  .white {
+    color: white !important;
+    .proposal-edit-icon {
+      height: 3.5vw;
+      width: 3.5vw;
+      background-image: url(/images/edit-white.png);
+      margin-bottom: 1vh;
     }
+  }
+
+  .white.proposal {
+    left: 0.7vw;
+    top: 32.5vh;
+    padding: 1vh 0.5vw 2.3vh 0.5vw;
+    border-radius: 0.65vw;
+    border: 0.1vw dashed $orange;
+    margin-bottom: 10vw;
   }
 
   .proposal-link:hover {
