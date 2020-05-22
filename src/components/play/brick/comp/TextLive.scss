@@ -1,6 +1,7 @@
 @import '_variables';
 
 .text-play {
+  overflow: auto;
   margin-top: 5px;
   margin-bottom: 5px;
   color: black;
@@ -10,6 +11,7 @@
   }
 
   table {
+    width: 100%;
     border-collapse: collapse;
   }
 
@@ -22,7 +24,5 @@
     border: 1px solid $dark-blue;
   }
   td {
-    min-width: 2em;
-    padding: 0.4em;
   }
 }

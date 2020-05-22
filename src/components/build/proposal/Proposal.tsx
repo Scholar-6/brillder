@@ -51,7 +51,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
   if (brick) {
     initState = brick;
   }
-  
+
   const [state, setBrick] = React.useState(initState);
   const [saved, setSaved] = React.useState(false);
 
@@ -64,24 +64,33 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     }
   }, [brick, state.author]);
 
+  const setLocalProposal = (data: any) => {
+    localStorage.setItem('proposal', JSON.stringify(data));
+  }
+
+  const saveLocalState = (data: any) => {
+    setBrick(data);
+    setLocalProposal(data);
+  }
+
   const setSubject = (subjectId: number) => {
-    setBrick({ ...state, subjectId });
+    saveLocalState({...state, subjectId});
   }
 
   const setTitles = (titles: any) => {
-    setBrick({ ...state, ...titles });
+    saveLocalState({ ...state, ...titles });
   }
 
   const setOpenQuestion = (openQuestion: string) => {
-    setBrick({ ...state, openQuestion } as Brick);
+    saveLocalState({ ...state, openQuestion } as Brick);
   }
 
   const setBrief = (brief: string) => {
-    setBrick({ ...state, brief } as Brick)
+    saveLocalState({ ...state, brief } as Brick)
   }
 
   const setPrep = (prep: string) => {
-    setBrick({ ...state, prep } as Brick)
+    saveLocalState({ ...state, prep } as Brick)
   }
 
   const setLength = (brickLength: BrickLengthEnum) => {
