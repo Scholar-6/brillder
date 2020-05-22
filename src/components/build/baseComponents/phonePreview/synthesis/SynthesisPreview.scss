@@ -30,10 +30,9 @@
   }
 
   .table {
-    display: table;
     margin-left: 0;
     margin-right: 0;
-    margin: 1em auto;
+    overflow-y: auto;
   }
 
   table {
@@ -45,7 +44,7 @@
     border: 1px solid $dark-blue;
   }
   td {
-    min-width: 1.5em;
+    min-width: 0;
     padding: 0;
   }
 }
