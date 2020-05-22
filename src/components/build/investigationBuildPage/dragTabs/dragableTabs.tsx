@@ -10,6 +10,7 @@ import {validateQuestion} from '../questionService/ValidateQuestionService';
 import DragTab from './dragTab';
 import LastTab from './lastTab';
 import SynthesisTab from './SynthesisTab';
+import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,30 +36,28 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Question {
-  id: number,
-  active: boolean,
-  type: number
+  id: number;
+  active: boolean;
+  type: number;
 }
 
 interface DragTabsProps {
-  questions: Question[],
-  synthesis: string,
-  isSynthesisPage: boolean,
-  validationRequired: boolean,
-  createNewQuestion(): void,
-  moveToSynthesis(): void,
-  setQuestions(questions: any): void,
-  selectQuestion(e: any): void,
-  removeQuestion(e: any): void
+  questions: Question[];
+  synthesis: string;
+  isSynthesisPage: boolean;
+  validationRequired: boolean;
+  tutorialStep: TutorialStep;
+  createNewQuestion(): void;
+  moveToSynthesis(): void;
+  setQuestions(questions: any): void;
+  selectQuestion(e: any): void;
+  removeQuestion(e: any): void;
 }
 
 const DragableTabs: React.FC<DragTabsProps> = ({
   questions, isSynthesisPage, synthesis, ...props
 }) => {
-  let isSynthesisPresent = false;
-  if (synthesis && synthesis.length > 0) {
-    isSynthesisPresent = true;
-  }
+  let isSynthesisPresent = true;
 
   const renderQuestionTab = (questions: Question[], question: Question, index: number, comlumns: number) => {
     let titleClassNames = "drag-tile-container";
@@ -129,7 +128,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
           cols={(isSynthesisPresent || isSynthesisPage) ? 1.5555 : 2}
         >
           <Grid className={"drag-tile"} container alignContent="center" justify="center">
-            <LastTab columns={columns} isSynthesis={isSynthesisPage} synthesis={synthesis} />
+            <LastTab columns={columns} isSynthesis={isSynthesisPage} tutorialStep={props.tutorialStep} synthesis={synthesis} />
           </Grid>
         </GridListTile>
         {
@@ -140,7 +139,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
               cols={1.5555}
             >
               <Grid className={"drag-tile"} container alignContent="center" justify="center">
-                <SynthesisTab columns={columns} isSynthesis={isSynthesisPage} synthesis={synthesis} />
+                <SynthesisTab columns={columns} tutorialStep={props.tutorialStep} isSynthesis={isSynthesisPage} synthesis={synthesis} />
               </Grid>
             </GridListTile>
           : ""

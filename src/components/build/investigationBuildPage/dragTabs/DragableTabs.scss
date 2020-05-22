@@ -107,6 +107,12 @@ $tile-height: 100%;
     height: 3.5vh;
   }
 
+  .synthesis-tab-icon.tutorial-border {
+    padding: 0.5vh 0.65vw;
+    border-radius: 0.55vw;
+    border: 0.1vw dashed $orange;
+  }
+
   .width-based {
     height: auto;
     width: 90%;
@@ -114,6 +120,20 @@ $tile-height: 100%;
 
   .invalid {
     background: $orange !important;
+  }
+
+  .add-tab {
+    line-height: 1;
+
+    img {
+      height: 2vw;
+    }
+  }
+
+  .add-tab.last-tab.tutorial-border {
+    border-radius: 100vw;
+    padding: 0.21vw 0.25vw 0.1vw 0.25vw;
+    border: 0.1vw dashed $orange;
   }
 
   @media only screen and (max-width: 599px) {
