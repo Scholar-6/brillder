@@ -319,12 +319,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const renderBuildQuestion = () => {
+    console.log('before build question init');
     return (
       <QuestionPanelWorkArea
         brickId={brickId}
         history={history}
         synthesis={brick.synthesis}
-        questionsCount={questions.length}
+        questionsCount={questions ? questions.length : 0}
         question={activeQuestion}
         locked={locked}
         validationRequired={validationRequired}
