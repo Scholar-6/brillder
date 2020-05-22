@@ -153,6 +153,34 @@
     }
   }
 
+  .tutorial-top-labels {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 5%;
+    color: white;
+    font-family: $font-family-regular;
+
+    .tutorial-add-label {
+      margin-left: 38%;
+      width:31%;
+    }
+
+    .tutorial-synthesis-label {
+      width:31%;
+    }
+  }
+
+  .add-question-tutorial-label {
+    position: fixed;
+    vertical-align: bottom;
+    height: 5%;
+    left: 33vw;
+    font-size: 1.3vw;
+    font-family: $font-family-regular;
+    color: white;
+  }
+
   @media only screen and (max-width: 959px) {
     .add-answer-button {
       font-size: 1.61vw !important;

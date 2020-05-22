@@ -434,12 +434,39 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return "";
   }
 
+  const renderTutorialLabels = () => {
+    if (!isTutorialPassed()) {
+      return (
+        <div className="tutorial-top-labels">
+          <Grid container direction="row" style={{height: '100%'}}>
+            <Grid container xs={9} justify="center" style={{height: '100%'}}>
+              <Grid container xs={9} style={{height: '100%'}}>
+                <div className="tutorial-add-label" style={{height: '100%'}}>
+                  <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
+                    Add Question Panel
+                  </Grid>
+                </div>
+                <div className="tutorial-synthesis-label" style={{height: '100%'}}>
+                  <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
+                    Synthesis
+                  </Grid>
+                </div>
+              </Grid>
+            </Grid>
+          </Grid>
+        </div>
+      );
+    }
+    return "";
+  }
+
   return (
     <div className="investigation-build-page">
       <div style={{position: 'fixed'}}>
         <HomeButton onClick={exitAndSave} />
       </div>
       <Hidden only={['xs', 'sm']}>
+        {renderTutorialLabels()}
         {renderProposalLink()}
         <Grid
           container direction="row"
