@@ -465,7 +465,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               </Grid>
             </Grid>
           </Grid>
-          <LastSave updated={brick.updated} isSaving={isSaving} />
+          <LastSave updated={brick.updated} tutorialStep={step} isSaving={isSaving} />
           <Route path="/build/brick/:brickId/build/investigation/question-component">
             <PhoneQuestionPreview question={activeQuestion} />
           </Route>

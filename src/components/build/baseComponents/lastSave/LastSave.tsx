@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 
 import './LastSave.scss'
 import { Grid } from "@material-ui/core";
+import { TutorialStep } from "components/build/investigationBuildPage/tutorial/TutorialPanelWorkArea";
 
 
 interface LastSaveProps {
+  tutorialStep: TutorialStep;
   isSaving: boolean;
   updated: string;
 }
@@ -47,14 +49,30 @@ const LastSave:React.FC<LastSaveProps> = (props) => {
     }
   }
 
+  const {tutorialStep} = props;
+  if (tutorialStep === TutorialStep.Proposal
+    || tutorialStep === TutorialStep.Investigation
+    || tutorialStep === TutorialStep.Synthesis
+    || tutorialStep === TutorialStep.Play
+  ) {
+    return <div></div>;
+  }
+
+  let className = "";
+  if (tutorialStep === TutorialStep.Additional) {
+    className = " tutorial-border";
+  }
+
   return (
     <div className="saved-info">
+      <div className={className}>
       <Grid container alignContent="center" justify="center">
         <img alt="" src="/feathericons/save-white.png" />
         <div>
           {renderText()}
         </div>
       </Grid>
+      </div>
     </div>
   );
 }

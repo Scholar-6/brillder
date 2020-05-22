@@ -12,6 +12,7 @@
       font-size: 1.25vw;
       text-align: center;
       width: 80%;
+      > div {
       > img {
         margin-top: 0.1vw;
         height: 1.52vw;
@@ -22,5 +23,14 @@
         display: inline-block;
       }
     }
+    }
+  }
+
+  .saved-info .tutorial-border {
+    width: 65%;
+    margin-left: 2vw;
+    border-radius: 0.6vw;
+    padding: 0.8vh 0;
+    border: 0.1vw dashed $orange;
   }
 }
