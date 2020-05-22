@@ -30,11 +30,14 @@
   }
 
   .table {
+    display: table;
     margin-left: 0;
     margin-right: 0;
+    margin: 1em auto;
   }
 
   table {
+    width: 100%;
     border-collapse: collapse;
   }
   
@@ -42,7 +45,7 @@
     border: 1px solid $dark-blue;
   }
   td {
-    min-width: 2em;
-    padding: 0.4em;
+    min-width: 1.5em;
+    padding: 0;
   }
 }
