@@ -116,8 +116,10 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
 
   render() {
     const { component } = this.props;
-
-    let width = (100 - 1) / component.list.length;
+    let width = 100;
+    if (component.list && component.list.length >= 1) {
+      width = (100 - 1) / component.list.length;
+    }
 
     if (this.props.isPreview) {
       width = 100;

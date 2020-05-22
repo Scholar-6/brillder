@@ -50,7 +50,6 @@ const TutorialPanelWorkArea: React.FC<TutorialProps> = ({user, getUser, skipTuto
   }
 
   const renderStepPanel = () => {
-    console.log(step)
     if (step === TutorialStep.Proposal) {
       return <ProposalPanel next={(step) => setStep(step)} skip={skip} />
     } else if (step === TutorialStep.Investigation) {
