@@ -1,4 +1,5 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+KrishnaSagar-freelancer.com krishnasagar@clevercopter.com - for CSS animation project.
 
 ## Development Version
 All changes to development branch are automatically deployed to http://dev-brillder.scholar6.org
