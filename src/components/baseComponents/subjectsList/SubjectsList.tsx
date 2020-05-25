@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import AnimateHeight from "react-animate-height";
 
+import "./SubjectsList.scss";
+
 
 interface PublishedSubjectsProps {
   filterHeight: string;
@@ -34,7 +36,7 @@ class PublishedSubjects extends Component<PublishedSubjectsProps, any> {
                   label={subject.name}
                 />
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={1} className="published-count">
                 {subject.publishedBricksCount}
               </Grid>
             </Grid>
