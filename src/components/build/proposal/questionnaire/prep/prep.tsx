@@ -4,7 +4,6 @@ import { Grid } from "@material-ui/core";
 import './prep.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
@@ -44,7 +43,6 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
 const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
   return (
     <div className="tutorial-page prep-page">
-      <HomeButton link='/build' />
       <Navigation step={ProposalStep.Prep} onMove={() => savePrep(parentPrep)} />
       <Grid container direction="row" alignItems="flex-start">
         <Grid className="left-block">

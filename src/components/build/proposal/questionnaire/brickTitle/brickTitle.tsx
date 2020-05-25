@@ -3,12 +3,12 @@ import { Grid, Input } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep } from "../../model";
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import NextButton from '../../components/nextButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { Brick } from "model/brick";
 import {getDate, getMonth, getYear} from 'components/services/brickService';
+
 
 interface BrickTitleProps {
   parentState: Brick
@@ -74,7 +74,6 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
 
   return (
     <div className="tutorial-page brick-title-page">
-      <HomeButton link='/build' />
       <Navigation step={ProposalStep.BrickTitle} onMove={() => saveTitles(parentState)} />
       <Grid container direction="row">
         <Grid item className="left-block">

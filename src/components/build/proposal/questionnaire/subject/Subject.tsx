@@ -3,7 +3,6 @@ import { Grid, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
 
 import './Subject.scss';
 import { ProposalStep } from "../../model";
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import NextButton from '../../components/nextButton'
 import { Redirect } from "react-router-dom";
@@ -260,7 +259,6 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
 
   return (
     <div className="tutorial-page subject-page">
-      <HomeButton link="/build" />
       <Grid container direction="row" style={{ height: '100%' }}>
         <Grid container justify="flex-start" item xs={10}>
           <Grid justify="flex-start" container item xs={8}>
