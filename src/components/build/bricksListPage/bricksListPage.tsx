@@ -16,6 +16,7 @@ import Grow from "@material-ui/core/Grow";
 
 import brickActions from "redux/actions/brickActions";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
+import PublishedSubjects from "components/baseComponents/subjectsList/SubjectsList";
 import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
@@ -580,30 +581,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             )}
           </div>
         </div>
-        <Grid container direction="row" className="subjects-filter">
-          <AnimateHeight
-            duration={500}
-            height={this.state.filterHeight}
-            style={{ width: "100%" }}
-          >
-            {this.state.subjects.map((subject, i) => (
-              <Grid item xs={12} key={i}>
-                <FormControlLabel
-                  className="filter-container"
-                  checked={subject.checked}
-                  onClick={() => this.filterBySubject(i)}
-                  control={
-                    <Radio
-                      className={"filter-radio custom-color"}
-                      style={{ ["--color" as any]: subject.color }}
-                    />
-                  }
-                  label={subject.name}
-                />
-              </Grid>
-            ))}
-          </AnimateHeight>
-        </Grid>
+        <PublishedSubjects
+          subjects = {this.state.subjects}
+          filterHeight={this.state.filterHeight}
+          filterBySubject={this.filterBySubject}
+        />
       </div>
     );
   };
