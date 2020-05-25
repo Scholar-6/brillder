@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
+
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
+import './PageHeader.scss';
 
 
 interface UsersListProps {
