@@ -21,6 +21,7 @@ import SynthesisPreviewComponent from "components/build/baseComponents/phonePrev
 import DeleteQuestionDialog from "components/build/baseComponents/deleteQuestionDialog/DeleteQuestionDialog";
 import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
 import TutorialPhonePreview from "./tutorial/TutorialPreview";
+import YourProposalLink from './YourProposalLink';
 
 import {
   Question,
@@ -114,11 +115,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   } else if (!activeQuestion) {
     console.log("Can`t find active question");
     activeQuestion = {} as Question;
-  }
-
-  const editProposal = () => {
-    saveBrick();
-    history.push(`/build/new-brick/proposal`);
   }
 
   const setPreviousQuestion = () => {
@@ -369,6 +365,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (tutorialSkipped) {
       return true;
     }
+    return false;
   }
 
   const renderPanel = () => {
@@ -397,41 +394,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       );
     }
     return <TutorialPhonePreview step={step} />;
-  }
-
-  const renderProposalLink = () => {
-    let className = "proposal-link";
-    if (!isTutorialPassed()) {
-      if (step === TutorialStep.Proposal) {
-        className += " white proposal";
-      }
-    }
-    
-    return (
-      <div className={className}>
-        <div onClick={editProposal}>
-          <div className="proposal-edit-icon"/>
-          <div className="proposal-text">
-            <div style={{lineHeight: 0.9}}>YOUR</div>
-            <div style={{lineHeight: 2}}>PROP</div>
-            <div style={{lineHeight: 0.9}}>OSAL</div>
-          </div>
-        </div>
-        {renderZapTooltip()}
-      </div>
-    );
-  }
-
-  const renderZapTooltip = () => {
-    if (!isTutorialPassed() && step === TutorialStep.Additional) {
-      return (
-        <div className="additional-tooltip">
-          <div className="tooltip-text">Tool Tips</div>
-          <img alt="" className="additional-tooltip-icon" src="/feathericons/zap-white.png" />
-        </div>
-      );
-    }
-    return "";
   }
 
   const renderTutorialLabels = () => {
@@ -472,7 +434,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       </div>
       <Hidden only={['xs', 'sm']}>
         {renderTutorialLabels()}
-        {renderProposalLink()}
+        <YourProposalLink tutorialStep={step} saveBrick={saveBrick} isTutorialPassed={isTutorialPassed} />
         <Grid
           container direction="row"
           className="investigation-build-background"

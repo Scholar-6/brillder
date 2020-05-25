@@ -37,6 +37,18 @@
     letter-spacing: 0;
     text-align: center;
     color: white;
+
+    button {
+      cursor: pointer;
+      background: inherit;
+      outline: none;
+      border: none;
+    }
+
+    button:focus {
+      opacity: 0;
+    }
+
     img {
       margin-top: 2.5vh;
       height: 5.4vw;
@@ -46,7 +58,12 @@
     }
   }
 
+  .additional-tooltip:focus {
+    opacity: 0;
+  }
+
   .proposal-link {
+    background: inherit;
     cursor: pointer;
     position: absolute;
     top: 33.5vh;
@@ -88,6 +105,11 @@
     border-radius: 0.65vw;
     border: 0.1vw dashed $orange;
     margin-bottom: 10vw;
+  }
+
+  .white.proposal:focus {
+    outline: none;
+    border: none;
   }
 
   .proposal-link:hover {
