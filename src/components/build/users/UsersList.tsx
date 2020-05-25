@@ -15,7 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import authActions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
+import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
 import SubjectsList from 'components/baseComponents/subjectsList/SubjectsList';
 
 import { User, UserType, UserStatus } from 'model/user';
@@ -252,12 +252,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       this.setState({...this.state, searchString, isSearching: false});
     } else {
       this.setState({...this.state, searchString});
-    }
-  }
-
-  keySearch(e: any) {
-    if (e.keyCode === 13) {
-      this.search();
     }
   }
 
@@ -552,29 +546,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     return (
       <div className="user-list-page">
         <div className="users-upper-part">
-          <Grid container direction="row" className="users-header">
-            <HomeButton link="/build" />
-            <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
-              <Grid container style={{width: '60vw', height: '7vh'}}>
-              <Grid item>
-                <div className="search-button" onClick={() => this.search()}></div>
-              </Grid>
-              <Grid item>
-                <input
-                  className="search-input"
-                  onKeyUp={(e) => this.keySearch(e)}
-                  onChange={(e) => this.searching(e.target.value)}
-                  placeholder="Search by Name,  Email or Subject" />
-              </Grid>
-              </Grid>
-              <Grid item style={{width: '32.35vw'}}>
-                <Grid container direction="row" justify="flex-end">
-                  <div className="bell-button"><div></div></div>
-                  <div className="more-button" onClick={() => this.showDropdown()}></div>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+          <PageHeader
+            searchPlaceholder="Search by Name,  Email or Subject"
+            search={() => this.search()}
+            searching={(v) => this.searching(v)}
+            showDropdown={() => this.showDropdown()}
+          />
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
               {this.renderSortAndFilterBox()}
