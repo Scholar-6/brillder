@@ -16,15 +16,15 @@ interface SortCategory {
   height: string;
 }
 
-export interface ChooseSeveralData {
+export interface CategoriseData {
   categories: SortCategory[]
 }
 
-export interface ChooseSeveralBuildProps extends UniqueComponentProps {
-  data: ChooseSeveralData;
+export interface CategoriseBuildProps extends UniqueComponentProps {
+  data: CategoriseData;
 }
 
-const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
+const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   locked, data, validationRequired, save, updateComponent
 }) => {
   const [categoryHeight, setCategoryHeight] = React.useState('0%');
@@ -101,39 +101,41 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
 
   const renderCategory = (category: SortCategory, key: number) => {
     return (
-      <div className="choose-several-box" key={key}>
-        {
-          (state.categories.length > 2) ? <DeleteIcon className="right-top-icon" onClick={() => removeCategory(key)} /> : ""
-        }
-        <input
-          disabled={locked}
-          value={category.name}
-          placeholder="Enter Category Heading..."
-          className={validationRequired && !category.name ? "invalid" : ""}
-          onBlur={() => save()}
-          onChange={(event) => categoryChanged(category, event)}
-        />
-        {
-          category.answers.map((answer, key) => {
-            return (
-              <div style={{position: 'relative'}} key={key}>
-                {
-                  (category.answers.length > 1)
-                    ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(category, key)} />
-                    : ""
-                }
-                <input
-                  disabled={locked}
-                  value={answer.value}
-                  placeholder="Enter Answer..."
-                  className={validationRequired && !answer.value ? "invalid" : ""}
-                  onBlur={() => save()}
-                  onChange={(event: any) => { answerChanged(answer, event) }}
-                />
-              </div>
-            );
-          })
-        }
+      <div>
+        <div className="categorise-box" key={key}>
+          {
+            (state.categories.length > 2) ? <DeleteIcon className="right-top-icon" onClick={() => removeCategory(key)} /> : ""
+          }
+          <input
+            disabled={locked}
+            value={category.name}
+            placeholder="Enter Category Heading..."
+            className={validationRequired && !category.name ? "invalid" : ""}
+            onBlur={() => save()}
+            onChange={(event) => categoryChanged(category, event)}
+          />
+          {
+            category.answers.map((answer, key) => {
+              return (
+                <div style={{position: 'relative'}} key={key}>
+                  {
+                    (category.answers.length > 1)
+                      ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(category, key)} />
+                      : ""
+                  }
+                  <input
+                    disabled={locked}
+                    value={answer.value}
+                    placeholder="Enter Answer..."
+                    className={validationRequired && !answer.value ? "invalid" : ""}
+                    onBlur={() => save()}
+                   onChange={(event: any) => { answerChanged(answer, event) }}
+                  />
+                </div>
+              );
+            })
+          }
+        </div>
         <AddAnswerButton
           locked={locked}
           addAnswer={() => addAnswer(category)}
@@ -145,7 +147,7 @@ const CategoriseBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   }
 
   return (
-    <div className="choose-several-build">
+    <div className="categorise-build">
       {
         state.categories.map((category, i) => renderCategory(category, i))
       }

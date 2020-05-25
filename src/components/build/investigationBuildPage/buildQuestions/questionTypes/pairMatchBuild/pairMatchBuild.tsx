@@ -67,7 +67,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
 
   const renderAnswer = (answer: Answer, key: number) => {
     return (
-      <Grid key={key} container direction="row">
+      <Grid key={key} container direction="row" className="answers-container">
         <PairOptionComponent
           index={key} locked={locked} answer={answer}
           validationRequired={validationRequired}
