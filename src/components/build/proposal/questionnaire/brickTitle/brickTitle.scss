@@ -25,7 +25,7 @@ $box-radius: 0.4vw;
       margin-bottom: 6.2vh;
 
       .audience-inputs {
-        font-size: 1.8vw;
+        font-size: 0.92vw;
         margin-bottom: 4.1vh;
         width: 34vw;
       }
@@ -81,11 +81,19 @@ $box-radius: 0.4vw;
         white-space:nowrap;
         text-overflow:ellipsis;
       }
+      .brick-title.topic-filled {
+        font-size: 0.65vw;
+      }
       .brick-topics {
         width: 15.5vw;
         overflow: hidden;
         white-space:nowrap;
         text-overflow:ellipsis;
+      }
+      .brick-topics {
+        .topic-filled {
+          font-size: 0.65vw;
+        }
       }
     }
   }

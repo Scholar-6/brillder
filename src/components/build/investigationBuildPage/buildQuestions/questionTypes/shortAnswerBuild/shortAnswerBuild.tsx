@@ -1,25 +1,27 @@
 import React, { useEffect } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
-import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import './shortAnswerBuild.scss'
+import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import { UniqueComponentProps } from '../types';
 
 
 interface ShortAnswerItem {
-  value: string
+  value: string;
 }
 
 interface ShrortAnswerData {
-  list: ShortAnswerItem[]
+  list: ShortAnswerItem[];
 }
 
-export interface ShortAnswerBuildProps {
-  data: ShrortAnswerData
-  locked: boolean
-  updateComponent(component:any):void
+export interface ShortAnswerBuildProps extends UniqueComponentProps {
+  data: ShrortAnswerData;
 }
 
-const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, data, updateComponent}) => {
+const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
+  locked, data, save, ...props
+}) => {
   const [height, setHeight] = React.useState('0%');
 
   useEffect(() => calculateHeight());
@@ -29,6 +31,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
   }
 
   const [state, setState] = React.useState(data);
+  const [limitOverflow, setLimitOverflow] = React.useState(false);
 
   useEffect(() => {setState(data) }, [data]);
 
@@ -44,7 +47,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
 
   const update = () => {
     setState(Object.assign({}, state));
-    updateComponent(state);
+    props.updateComponent(state);
   }
 
   const changed = (shortAnswer: any, event: any) => {
@@ -52,7 +55,10 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
     var res = event.target.value.split(' ');
     if (res.length <= 3) {
       shortAnswer.value = event.target.value;
+      setLimitOverflow(false);
       update();
+    } else {
+      setLimitOverflow(true);
     }
   }
 
@@ -60,12 +66,14 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
     if (locked) { return; }
     state.list.push({ value: ""});
     update();
+    save();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
     state.list.splice(index, 1);
     update();
+    save();
   }
 
   const renderShortAnswer = (shortAnswer: any, key: number) => {
@@ -77,8 +85,11 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
         <input
           disabled={locked}
           value={shortAnswer.value}
+          className={props.validationRequired && !shortAnswer.value ? "invalid" : ""}
+          onBlur={() => save()}
           onChange={(event) => changed(shortAnswer, event)}
-          placeholder="Enter Short Answer..." />
+          placeholder="Enter Short Answer..."
+        />
       </div>
     );
   }
@@ -93,6 +104,22 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({locked, dat
         addAnswer={addShortAnswer}
         height={height}
         label="+ &nbsp;&nbsp; S &nbsp; H &nbsp; O &nbsp; R &nbsp; T &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={limitOverflow}
+        onClose={() => setLimitOverflow(false)}
+        action={
+          <React.Fragment>
+            <div>
+              <span className="exclamation-mark">!</span>
+              Great minds don't think exactly alike: the learner may know the right answer but use slightly different language, so there is a limit of three words for short answers.
+            </div>
+          </React.Fragment>
+        }
+      />
     </div>
   )
 }

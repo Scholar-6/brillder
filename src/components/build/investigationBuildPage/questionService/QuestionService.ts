@@ -1,168 +1,124 @@
-import {
-  Question, QuestionTypeEnum, QuestionComponentTypeEnum, Hint, HintStatus
-} from 'model/question';
-import {QuestionValueType} from '../buildQuestions/questionTypes/types';
-import { Answer } from '../buildQuestions/questionTypes/pairMatchBuild/types';
+import update from "immutability-helper";
 
-const getUniqueComponent = (components: any[]) => {
-  return components.find(c => c.type === QuestionComponentTypeEnum.Component);
+import {
+  HintStatus, QuestionComponentTypeEnum, Question, QuestionTypeEnum
+} from "model/question";
+import { Brick } from "model/brick";
+
+
+interface ApiQuestion {
+  id?: number;
+  contentBlocks: string;
+  type: number;
 }
 
+export function getNewQuestion(type: number, active: boolean) {
+  return {
+    type,
+    active,
+    hint: {
+      value: "",
+      list: [] as string[],
+      status: HintStatus.None
+    },
+    components: [
+      { type: 0 },
+      { type: QuestionComponentTypeEnum.Component },
+      { type: 0 }
+    ]
+  } as Question;
+};
 
-export function getNonEmptyComponent(components: any[]) {
-  return !components.find(c =>
-    c.type === QuestionComponentTypeEnum.Text ||
-    c.type === QuestionComponentTypeEnum.Image ||
-    c.type === QuestionComponentTypeEnum.Quote ||
-    c.type === QuestionComponentTypeEnum.Sound
+export function deactiveQuestions(questions: Question[]) {
+  const updatedQuestions = questions.slice();
+  updatedQuestions.forEach(q => (q.active = false));
+  return updatedQuestions;
+}
+
+export function activeQuestionByIndex(questions: Question[], index: number) {
+  let updatedQuestions = questions;
+  if (updatedQuestions[index]) {
+    updatedQuestions = deactiveQuestions(questions)
+    updatedQuestions[index].active = true;
+  }
+  return updatedQuestions;
+}
+
+export function getUniqueComponent(question: Question) {
+  return question.components.find(
+    c => c.type === QuestionComponentTypeEnum.Component
   );
 }
 
-const validateHint = (hint: Hint) => {
-  if (hint.status === HintStatus.Each) {
-    const emptyHint = hint.list.some(h => h == null || h === "");
-    return emptyHint;
-  } else {
-    return !hint.value;
+export function getActiveQuestion(questions: Question[]) {
+  return questions.find(q => q.active === true) as Question;
+}
+
+export function getApiQuestion(question: Question) {
+  const questionObject = {
+    components: question.components,
+    hint: question.hint
+  };
+  const apiQuestion = {
+    type: question.type,
+    contentBlocks: JSON.stringify(questionObject)
+  } as ApiQuestion;
+  if (question.id) {
+    apiQuestion.id = question.id;
+    apiQuestion.type = question.type;
+  }
+  return apiQuestion;
+}
+
+export function prepareBrickToSave(brick: Brick, questions: Question[], synthesis: string) {
+  brick.questions = [];
+  brick.synthesis = synthesis;
+  for (let question of questions) {
+    const apiQuestion = getApiQuestion(question) as Question;
+    brick.questions.push(apiQuestion);
   }
 }
 
-const validateNotEmptyAnswer = (comp: any) => {
-  if (comp.list && comp.list.length >= 1) {
-    let invalid = comp.list.find((a:any) => !a.value);
-    if (invalid) {
-      return false;
-    }
-    return true;
-  }
-  return false;
-}
-
-const validateCheckedAnswer = (comp: any) => {
-  if (comp.list && comp.list.length > 1) {
-    let invalid = comp.list.find((a:any) => !a.value);
-    if (invalid) {
-      return false;
-    }
-    let checked = comp.list.find((a:any) => a.checked === true);
-    if (checked) {
-      return true;
-    }
-  }
-  return false;
-}
-
-
-const validatePairMatch = (comp: any) => {
-  const validateChoice = (a: Answer) => {
-    if (a.answerType === QuestionValueType.Image && !a.valueFile) {
-      return false;
-    } else if (a.answerType !== QuestionValueType.Image && !a.value) {
-      return false;
-    }
-    return true;
-  }
-
-  const validateOption = (a: Answer) => {
-    if (a.optionType === QuestionValueType.Image && !a.optionFile) {
-      return false;
-    } else if (a.optionType !== QuestionValueType.Image && !a.option) {
-      return false;
-    }
-    return true;
-  }
-
-  const getInvalid = (a:Answer) => {
-    if (!validateChoice(a)) {
-      return true;
-    }
-
-    if (!validateOption(a)) {
-      return true;
-    }
-
-    return false;
-  }
-
-  if (comp.list && comp.list.length > 1) {
-    let invalid = comp.list.find(getInvalid);
-    console.log(invalid);
-    if (invalid) {
-      return false;
-    }
-    return true;
-  }
-  return false;
-}
-
-const validateSort = (comp: any) => {
-  if (comp.categories && comp.categories.length > 1) {
-    const invalid = comp.categories.find((c:any) => {
-      if (!c.name) {
-        return true;
-      }
-      const invalid = c.answers.find((a:any) => !a.value);
-      if (invalid) {
-        return true;
-      }
-      return false;
+export function removeQuestionByIndex(questions: Question[], index: number) {
+  let updatedQuestions = [];
+  if (index !== 0) {
+    updatedQuestions = update(questions, {
+      $splice: [[index, 1]],
+      0: { active: { $set: true } }
     });
-    if (invalid) {
-      return false;
-    }
-    return true;
+  } else {
+    updatedQuestions = update(questions, {
+      $splice: [[index, 1]],
+      [questions.length - 1]: { active: { $set: true } }
+    });
   }
-  return false;
+  return updatedQuestions;
 }
 
-const validateWordHighlighting = (comp: any) => {
-  if (comp.words && comp.words.length > 1) {
-    const valid = comp.words.find((w:any) => w.checked);
-    if (valid) {
-      return true;
-    }
-  }
-  return false;
+export function convertToSort(question: Question) {
+  const updatedQuestion = Object.assign({}, question);
+  updatedQuestion.type = QuestionTypeEnum.Sort;
+  updatedQuestion.hint = {
+    status: HintStatus.All,
+    value: question.hint.value,
+    list: []
+  };
+  return updatedQuestion;
 }
 
-const validateLineHighlighting = (comp: any) => {
-  if (comp.lines && comp.lines.length > 1) {
-    const valid = comp.lines.find((l:any) => l.checked);
-    if (valid) {
-      return true;
-    }
-  }
-  return false;
+export function setQuestionTypeByIndex(questions: Question[], index: number, type: QuestionTypeEnum) {
+  return update(questions, { [index]: { type: { $set: type } } });
 }
 
-export function validateQuestion(question: Question) {
-  const {type, hint, components} = question;
-
-  let noComponent = getNonEmptyComponent(components);
-  if (noComponent) {
-    return false;
+export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]) {
+  const parsedQuestion = JSON.parse(question.contentBlocks);
+  if (parsedQuestion.components) {
+    let q = {
+      id: question.id,
+      type: question.type,
+      hint: parsedQuestion.hint,
+      components: parsedQuestion.components
+    } as Question;
+    parsedQuestions.push(q);
   }
-
-  let isHintInvalid = validateHint(hint);
-  if (isHintInvalid) {
-    return false;
-  }
-
-  const comp = getUniqueComponent(components);
-  if (type === QuestionTypeEnum.ShortAnswer || type === QuestionTypeEnum.VerticalShuffle
-    || type === QuestionTypeEnum.HorizontalShuffle)
-  {
-    return validateNotEmptyAnswer(comp);
-  } else if (type === QuestionTypeEnum.ChooseOne || type === QuestionTypeEnum.ChooseSeveral) {
-    return validateCheckedAnswer(comp);
-  } else if (type === QuestionTypeEnum.PairMatch) {
-    return validatePairMatch(comp);
-  } else if (type === QuestionTypeEnum.Sort) {
-    return validateSort(comp);
-  } else if (type === QuestionTypeEnum.WordHighlighting) {
-    return validateWordHighlighting(comp);
-  } else if (type === QuestionTypeEnum.LineHighlighting) {
-    return validateLineHighlighting(comp);
-  }
-  return false;
-};
+}

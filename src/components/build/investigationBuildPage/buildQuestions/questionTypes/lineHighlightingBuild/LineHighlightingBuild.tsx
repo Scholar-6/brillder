@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import EditIcon from '@material-ui/icons/Edit';
 
 import './LineHighlightingBuild.scss'
+import { UniqueComponentProps } from '../types';
 
 
 enum LineMode {
@@ -10,8 +11,8 @@ enum LineMode {
 }
 
 export interface Line {
-  text: string,
-  checked: boolean,
+  text: string;
+  checked: boolean;
 }
 
 export interface LineHighlightingData {
@@ -20,13 +21,13 @@ export interface LineHighlightingData {
   mode: LineMode;
 }
 
-export interface LineHighlightingProps {
-  locked: boolean
-  data: LineHighlightingData
-  updateComponent(component: any): void
+export interface LineHighlightingProps extends UniqueComponentProps {
+  data: LineHighlightingData;
 }
 
-const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, data, updateComponent }) => {
+const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
+  locked, data, save, updateComponent
+}) => {
   const [state, setState] = React.useState(data);
 
   useEffect(() => {
@@ -58,6 +59,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
       state.lines = prepareLines(state.text);
     }
     update();
+    save();
   }
 
   const updateText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -70,6 +72,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
     if (locked) { return; }
     state.lines[index].checked = !state.lines[index].checked;
     update();
+    save();
   }
 
   const renderBox = () => {
@@ -82,7 +85,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
         <div className="hightlight-area">
           {
             state.lines.map((line, i) =>
-              <div key={i} style={{background: line.checked ? 'green' : 'inherit'}} onClick={() => {toggleLight(i)}}>
+              <div key={i} className={line.checked ? "line active" : "line"} onClick={() => {toggleLight(i)}}>
                 {line.text}
               </div>
             )
@@ -96,6 +99,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({ locked, da
         className="lines-input"
         rows={5}
         value={state.text}
+        onBlur={() => save()}
         onChange={updateText} placeholder="Enter Lines Here..." />
     );
   }

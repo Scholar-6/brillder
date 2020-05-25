@@ -6,17 +6,19 @@ import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
 
 
 export interface QuoteComponentProps {
-  locked: boolean
-  index: number
-  data: any
-  updateComponent(component: any, index: number): void
+  locked: boolean;
+  index: number;
+  data: any;
+  validationRequired: boolean;
+  save(): void;
+  updateComponent(component: any, index: number): void;
 }
 
-const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, updateComponent}) => {
+const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, ...props}) => {
   const onChange = (htmlString: string) => {
     let comp = Object.assign({}, data);
     comp.value = htmlString;
-    updateComponent(comp, index);
+    props.updateComponent(comp, index);
   }
 
   return (
@@ -30,6 +32,8 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, upd
         data={data.value}
         placeholder=""
         toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
+        validationRequired={props.validationRequired}
+        onBlur={() => props.save()}
         onChange={onChange}
       />
     </div>

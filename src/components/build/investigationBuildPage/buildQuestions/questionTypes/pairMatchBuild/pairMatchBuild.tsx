@@ -6,15 +6,15 @@ import {Answer} from './types';
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 import PairAnswerComponent from './answer/pairAnswer';
 import PairOptionComponent from './option/pairOption';
+import { UniqueComponentProps } from '../types';
 
 
-export interface PairMatchBuildProps {
-  locked: boolean
-  data: any
-  updateComponent(component: any): void
+export interface PairMatchBuildProps extends UniqueComponentProps {
 }
 
-const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, updateComponent }) => {
+const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
+  locked, data, validationRequired, save, updateComponent
+}) => {
   const [height, setHeight] = React.useState('0%');
 
   useEffect(() => calculateHeight());
@@ -42,12 +42,14 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
     if (locked) { return; }
     state.list.push(newAnswer());
     update();
+    save();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
     state.list.splice(index, 1);
     update();
+    save();
   }
 
   const calculateHeight = () => {
@@ -67,11 +69,14 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
     return (
       <Grid key={key} container direction="row">
         <PairOptionComponent
-          index={key} locked={locked} answer={answer} update={update}
+          index={key} locked={locked} answer={answer}
+          validationRequired={validationRequired}
+          update={update} save={save}
         />
         <PairAnswerComponent
           index={key} length={data.list.length} locked={locked} answer={answer}
-          removeFromList={removeFromList} update={update}
+          validationRequired={validationRequired}
+          removeFromList={removeFromList} update={update} save={save}
         />
       </Grid>
     );
@@ -90,7 +95,8 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({ locked, data, 
         locked={locked}
         addAnswer={addAnswer}
         height={height}
-        label="+ &nbsp;&nbsp; P &nbsp; A &nbsp; I &nbsp; R" />
+        label="+ &nbsp;&nbsp; P &nbsp; A &nbsp; I &nbsp; R"
+      />
     </div>
   )
 }

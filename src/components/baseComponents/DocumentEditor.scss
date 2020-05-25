@@ -61,5 +61,45 @@
     strong {
       font-weight: normal !important;
     }
+
+    .table {
+      display: block;
+    }
+
+    table {
+      td {
+        font-size: 1vw;
+        padding: 0;
+      }
+    }
+  }
+
+  .ck-insert-table-dropdown__grid {
+    //width: 140px;
+    //height: 125px;
+    //overflow: hidden;
+    //padding-right: 0;
+  }
+
+  .ck-insert-table-dropdown-grid-box[data-column="9"],
+  .ck-insert-table-dropdown-grid-box[data-row="9"] {
+    //width: 0;
+    //height: 0;
+    //opacity: 0;
+    //visibility: hidden;
+  }
+
+  .ck-insert-table-dropdown-grid-box[data-column="10"],
+  .ck-insert-table-dropdown-grid-box[data-row="10"] {
+    //width: 0;
+    //height: 0;
+    //opacity: 0;
+    //visibility: hidden;
+  }
+}
+
+.document-editor.content-invalid {
+  .ck-content {
+    background: $orange !important;
   }
 }

@@ -147,11 +147,61 @@ $background-color: white;
     > div {
       p {
         margin: 0.1vh 0.2vw;
-        font-size: 0.8vw !important;
+        font-size: 0.8vw;
       }
       padding-top: 2vh;
       padding-left: 1vw;
       padding-right: 1vw;
+    }
+  }
+
+  .question-hint {
+    line-height: 2;
+    font-size: 1vw !important;
+    p {
+      font-size: 1vw !important;
+    }
+    .table {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    table, td, th {
+      border: 1px solid $dark-blue;
+    }
+    td {
+      min-width: 2em;
+      padding: 0.4em;
+    }
+  }
+
+  .question-hint-global {
+    line-height: 1.3;
+    p {
+      font-size: 1vw !important;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    .table {
+      margin-left: 0;
+      margin-right: 0;
+      overflow-x: auto;
+    }
+    
+    table, td, th {
+      border: 1px solid $dark-blue;
+    }
+    td {
+      min-width: 1em;
+      padding: 0;
     }
   }
 }

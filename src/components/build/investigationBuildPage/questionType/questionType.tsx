@@ -1,6 +1,5 @@
 import React from 'react'
 import { Grid } from '@material-ui/core';
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import './questionType.scss';
 import { QuestionTypeEnum } from 'model/question';

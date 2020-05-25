@@ -24,8 +24,11 @@ import { User, UserType } from "model/user";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
+import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
+
 import ShortBrickDecsiption from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
+
 
 const mapState = (state: any) => {
   return { user: state.user.user };
@@ -70,6 +73,7 @@ interface BackToWorkState {
   filterExpanded: boolean;
   filters: Filters;
   dropdownShown: boolean;
+  failedRequest: boolean;
   shown: boolean;
 }
 
@@ -110,6 +114,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       searchString: "",
       isSearching: false,
       dropdownShown: false,
+      failedRequest: false,
       shown: true,
     };
 
@@ -117,37 +122,31 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       (role) => role.roleId === UserType.Admin
     );
     if (isAdmin) {
-      axios
-        .get(process.env.REACT_APP_BACKEND_HOST + "/bricks", {
-          withCredentials: true,
-        })
-        .then((res) => {
-          this.setState({
-            ...this.state,
-            bricks: res.data,
-            finalBricks: res.data,
-            rawBricks: res.data,
-          });
-        })
-        .catch((error) => {
-          alert("Can`t get bricks");
+      axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks", {
+        withCredentials: true,
+      }).then((res) => {
+        this.setState({
+          ...this.state,
+          bricks: res.data,
+          finalBricks: res.data,
+          rawBricks: res.data,
         });
+      }).catch(() => {
+        this.setState({...this.state, failedRequest: true})
+      });
     } else {
-      axios
-        .get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
-          withCredentials: true,
-        })
-        .then((res) => {
-          this.setState({
-            ...this.state,
-            bricks: res.data,
-            finalBricks: res.data,
-            rawBricks: res.data,
-          });
-        })
-        .catch((error) => {
-          alert("Can`t get bricks");
+      axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
+        withCredentials: true,
+      }).then((res) => {
+        this.setState({
+          ...this.state,
+          bricks: res.data,
+          finalBricks: res.data,
+          rawBricks: res.data,
         });
+      }).catch((error) => {
+        this.setState({...this.state, failedRequest: true})
+      });
     }
   }
 
@@ -516,27 +515,24 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     const { searchString } = this.state;
     this.setState({ ...this.state, shown: false });
 
-    axios
-      .post(
-        process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
-        { searchString },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        const searchBricks = res.data.map((brick: any) => brick.body);
-        setTimeout(() => {
-          this.setState({
-            ...this.state,
-            searchBricks,
-            finalBricks: searchBricks,
-            isSearching: true,
-            shown: true,
-          });
-        }, 1400);
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
-      });
+    axios.post(
+      process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
+      { searchString },
+      { withCredentials: true }
+    ).then((res) => {
+      const searchBricks = res.data.map((brick: any) => brick.body);
+      setTimeout(() => {
+        this.setState({
+          ...this.state,
+          searchBricks,
+          finalBricks: searchBricks,
+          isSearching: true,
+          shown: true,
+        });
+      }, 1400);
+    }).catch((error) => {
+      this.setState({...this.state, failedRequest: true})
+    });
   }
 
   renderSortAndFilterBox = () => {
@@ -1009,6 +1005,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           brickId={this.state.deleteBrickId}
           onDelete={(brickId) => this.delete(brickId)}
           close={() => this.handleDeleteClose()}
+        />
+        <FailedRequestDialog
+          isOpen={this.state.failedRequest}
+          close={() => this.setState({...this.state, failedRequest: false})}
         />
       </div>
     );

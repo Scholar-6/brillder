@@ -3,29 +3,30 @@ import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButto
 
 import './chooseSeveralBuild.scss'
 import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
+import {ChooseOneAnswer} from '../chooseOneBuild/types';
+import { QuestionValueType } from '../types';
 
-
-interface ChooseSeveralAnswer {
-  checked: boolean
-  value: string
-}
 
 export interface ChooseSeveralData {
-  list: ChooseSeveralAnswer[]
+  list: ChooseOneAnswer[];
 }
 
 export interface ChooseSeveralBuildProps {
-  locked: boolean
-  data: ChooseSeveralData
-  updateComponent(component:any):void
+  locked: boolean;
+  data: ChooseSeveralData;
+  validationRequired: boolean;
+  save(): void;
+  updateComponent(component:any):void;
 }
 
-const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked, data, updateComponent}) => {
+const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
+  locked, data, validationRequired, save, updateComponent
+}) => {
   const [height, setHeight] = React.useState('0%');
 
   useEffect(() => calculateHeight());
 
-  const newAnswer = () => ({value: "", checked: false });
+  const newAnswer = () => ({value: "", checked: false, valueFile: '' });
 
   if (!data.list) {
     data.list = [newAnswer(), newAnswer(), newAnswer()];
@@ -48,6 +49,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
     if (locked) { return; }
     state.list.push(newAnswer());
     update();
+    save();
   }
 
   const onChecked = (event:React.ChangeEvent<HTMLInputElement>) => {
@@ -55,19 +57,23 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
     const index = parseInt(event.target.value);
     state.list[index].checked = event.target.checked;
     update();
+    save();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
     state.list.splice(index, 1);
     update();
+    save();
   }
 
   const calculateHeight = () => {
     let showButton = true;
     for (let answer of state.list) {
-      if (answer.value === "") {
-        showButton = false;
+      if (answer.answerType !== QuestionValueType.Image) {
+        if (answer.value === "") {
+          showButton = false;
+        }
       }
     }
     showButton === true ? setHeight('auto') : setHeight('0%');
@@ -82,9 +88,12 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({locked,
         state.list.map((answer:any, i:number) => {
           return <ChooseOneAnswerComponent
             locked={locked}
+            key={i}
             index={i}
             length={data.list.length}
             answer={answer}
+            save={save}
+            validationRequired={validationRequired}
             removeFromList={removeFromList}
             onChecked={onChecked}
             update={update}

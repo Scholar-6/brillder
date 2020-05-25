@@ -2,11 +2,12 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
+import './ProposalReview.scss';
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import { Brick } from "model/brick";
-import './ProposalReview.scss';
 import { useHistory } from "react-router-dom";
 import { User } from "model/user";
+import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 
 interface ProposalProps {
@@ -21,9 +22,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
   const [bookHovered, setHover] = React.useState(false);
 
   const onBookHover = () => {
-    setTimeout(() => {
-      setHover(true);
-    }, 800);
+    setTimeout(() => setHover(true), 800);
   }
 
   const savingBrick = () => {
@@ -84,10 +83,16 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
                   <p className="text-title">2. Ideally, every brick should point to a bigger question.</p>
                   <p className="proposal-text">{brick.openQuestion}</p>
                   <p className="text-title">3. Outline the purpose of your brick.</p>
-                  <p className="proposal-text" dangerouslySetInnerHTML={{ __html: brick.brief}} />
+                  <p className="proposal-text">
+                    <MathInHtml value={brick.brief} />
+                  </p>
                   <p className="text-title">4. Create an engaging and relevant preparatory task.</p>
-                  <p style={{fontWeight: 'normal'}} dangerouslySetInnerHTML={{ __html: brick.prep}}></p>
-                  <p className="text-title">5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span></p>
+                  <p style={{fontWeight: 'normal'}}>
+                    <MathInHtml value={brick.prep} />
+                  </p>
+                  <p className="text-title">
+                    5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>
+                  </p>
                 </div>
               </div>
               <div className="page5">

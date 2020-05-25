@@ -9,10 +9,11 @@ import './Sound.scss';
 import { Grid, Button } from '@material-ui/core';
 
 interface SoundProps {
-  locked: boolean
-  index: number,
-  data: any,
-  updateComponent(component:any, index:number): void
+  locked: boolean;
+  index: number;
+  data: any;
+  save(): void;
+  updateComponent(component:any, index:number): void;
 }
 
 enum AudioStatus {
@@ -103,6 +104,7 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
         let comp = Object.assign({}, props.data);
         comp.value = res.data.fileName;
         props.updateComponent(comp, props.index);
+        props.save();
       })
       .catch(error => {
         alert('Can`t save audio file');
@@ -181,6 +183,5 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
     </div>
   );
 }
-
 
 export default SoundComponent

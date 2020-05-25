@@ -6,7 +6,6 @@
 
   .component-title{
     > div {
-      opacity: 0.8;
       font-size: $base-sm-text-size;
       font-family: $font-family-regular;
       letter-spacing: 2px;
@@ -22,12 +21,10 @@
 
     input {
       border-radius: 0;
-      opacity: 0.8;
       width: 84%;
       padding: 0 8%;
       text-align: center;
       border: none;
-      opacity: 0.8;
       font-size: $answer-input-text-size;
       font-family: $font-family-regular;
       height: $answer-height !important;
