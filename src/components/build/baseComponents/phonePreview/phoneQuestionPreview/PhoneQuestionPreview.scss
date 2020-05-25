@@ -175,7 +175,7 @@ $background-color: white;
       border: 1px solid $dark-blue;
     }
     td {
-      min-width: 2em;
+      min-width: 0;
       padding: 0.4em;
     }
   }
@@ -187,6 +187,7 @@ $background-color: white;
     }
 
     table {
+      width: 100%;
       border-collapse: collapse;
     }
 
@@ -200,7 +201,7 @@ $background-color: white;
       border: 1px solid $dark-blue;
     }
     td {
-      min-width: 1em;
+      min-width: 0;
       padding: 0;
     }
   }
