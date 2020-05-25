@@ -400,7 +400,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const renderProposalLink = () => {
-    let className = "";
+    let className = "proposal-link";
     if (!isTutorialPassed()) {
       if (step === TutorialStep.Proposal) {
         className += " white proposal";
@@ -408,8 +408,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
     
     return (
-      <div className="proposal-link">
-        <div className={className} onClick={editProposal}>
+      <div className={className}>
+        <div onClick={editProposal}>
           <div className="proposal-edit-icon"/>
           <div className="proposal-text">
             <div style={{lineHeight: 0.9}}>YOUR</div>
