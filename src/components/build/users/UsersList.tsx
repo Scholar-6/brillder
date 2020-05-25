@@ -19,7 +19,7 @@ import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
 import SubjectsList from 'components/baseComponents/subjectsList/SubjectsList';
 
 import { User, UserType, UserStatus } from 'model/user';
-
+import {activateUser} from './userService';
 
 const mapState = (state: any) => {
   return {
@@ -164,7 +164,11 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     });
   }
 
-  getUsers(page: number, subjects: number[] = [], sortBy: UserSortBy = UserSortBy.None, isAscending: any = null) {
+  getUsers(
+    page: number, subjects: number[] = [], sortBy: UserSortBy = UserSortBy.None,
+    isAscending: any = null, search: string = ""
+  ) {
+    let searchString = "";
     let orderBy = null;
 
     if (sortBy === UserSortBy.None) {
@@ -184,12 +188,21 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         orderBy = "user.roles";
       }
     }
+
+    if (search) {
+      searchString = search;
+    } else {
+      if (this.state.isSearching) {
+        searchString = this.state.searchString;
+      }
+    }
+
     axios.post(
       process.env.REACT_APP_BACKEND_HOST + '/users',
       {
         pageSize: this.state.pageSize,
         page: page.toString(),
-        searchString: "",
+        searchString,
         subjectFilters: subjects,
         roleFilters: [],
         orderBy,
@@ -296,6 +309,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   search() {
+    const { searchString } = this.state;
+    let filterSubjects = this.getCheckedSubjectIds();
+    this.getUsers(0, filterSubjects, this.state.sortBy, this.state.isAscending, searchString);
   }
 
   showDropdown() {
