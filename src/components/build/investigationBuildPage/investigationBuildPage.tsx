@@ -376,6 +376,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (questions.length > 1) {
       return true;
     }
+    if (questions[0] && questions[0].type !== QuestionTypeEnum.None) {
+      return true;
+    }
     return false;
   }
 
@@ -473,7 +476,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   questions={questions}
                   synthesis={synthesis}
                   validationRequired={validationRequired}
-                  tutorialStep={step}
+                  tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
                   isSynthesisPage={isSynthesisPage}
                   moveToSynthesis={moveToSynthesis}
                   createNewQuestion={createNewQuestion}
@@ -484,7 +487,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               </Grid>
             </Grid>
           </Grid>
-          <LastSave updated={brick.updated} tutorialStep={step} isSaving={isSaving} />
+          <LastSave updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} />
           <Route path="/build/brick/:brickId/build/investigation/question-component">
             <PhoneQuestionPreview question={activeQuestion} />
           </Route>
