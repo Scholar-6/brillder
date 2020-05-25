@@ -3,7 +3,6 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 
 import './brief.scss';
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
@@ -50,7 +49,6 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
 
   return (
     <div className="tutorial-page brief-page">
-      <HomeButton link='/build' />
       <Navigation step={ProposalStep.Brief} onMove={() => saveBrief(parentBrief)} />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
