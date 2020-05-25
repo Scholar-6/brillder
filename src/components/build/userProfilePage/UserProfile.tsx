@@ -204,7 +204,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({...this.state});
   }
 
-  searching(searchString: string) { }
+  searching(searchString: string) {
+    
+  }
 
   keySearch(e: any) {
     if (e.keyCode === 13) {
