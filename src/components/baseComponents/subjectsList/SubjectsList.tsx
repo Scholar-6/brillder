@@ -37,7 +37,9 @@ class SubjectsList extends Component<PublishedSubjectsProps, any> {
                 />
               </Grid>
               <Grid item xs={1} className="published-count">
-                {subject.publishedBricksCount}
+                <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
+                  {subject.publishedBricksCount}
+                </Grid>
               </Grid>
             </Grid>
           ))}
