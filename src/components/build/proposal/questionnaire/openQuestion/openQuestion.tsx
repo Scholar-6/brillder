@@ -28,16 +28,14 @@ const HeadComponent:React.FC<any> = ({data}) => {
 }
 
 function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
-  const [openQuestion, setQuestion] = React.useState(selectedQuestion);
-
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setQuestion(event.target.value as number);
+    saveOpenQuestion(event.target.value as number);
   };
 
   return (
     <div className="tutorial-page open-question-page">
       <HomeButton link='/build' />
-      <Navigation step={ProposalStep.OpenQuestion} />
+      <Navigation step={ProposalStep.OpenQuestion} onMove={() => saveOpenQuestion(selectedQuestion)} />
       <Grid container direction="row">
         <Grid item className="left-block">
           <h1 className="tutorial-header">Ideally, every brick should</h1>
@@ -45,7 +43,7 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
           <p className="sub-header">Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.</p>
           <Input
             className="audience-inputs"
-            value={openQuestion}
+            value={selectedQuestion}
             onChange={handleChange}
             placeholder="Enter Open Question(s)..."
           />
@@ -53,11 +51,11 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
             step={ProposalStep.OpenQuestion}
             canSubmit={true}
             onSubmit={saveOpenQuestion}
-            data={openQuestion}
+            data={selectedQuestion}
             backLink="/build/new-brick/brick-title" 
           />
         </Grid>
-        <ProposalPhonePreview Component={HeadComponent} data={openQuestion} link="" />
+        <ProposalPhonePreview Component={HeadComponent} data={selectedQuestion} link="" />
         <div className="red-right-block"></div>
         <div className="beta-text">BETA</div>
       </Grid>

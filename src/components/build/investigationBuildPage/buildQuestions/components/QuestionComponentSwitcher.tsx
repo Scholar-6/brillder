@@ -11,22 +11,29 @@ import HintComponent, { HintState } from '../../../baseComponents/Hint/Hint';
 
 
 export interface SwitchQuestionProps {
-  type: QuestionComponentTypeEnum
-  index: number
-  questionIndex: number
-  uniqueComponent: any
-  component: any
-  hint: Hint
-  locked: boolean
-  canRemove: boolean
-  setEmptyType(): void
-  updateComponent(component: any, index: number): void
-  setQuestionHint(hintState: HintState): void
-  removeComponent(componentIndex: number): void
+  type: QuestionComponentTypeEnum;
+  index: number;
+  questionIndex: number;
+  uniqueComponent: any;
+  component: any;
+  hint: Hint;
+  locked: boolean;
+  canRemove: boolean;
+
+  allDropBoxesEmpty: boolean;
+  validationRequired: boolean;
+
+  saveBrick(): void;
+  setEmptyType(): void;
+  updateComponent(component: any, index: number): void;
+  setQuestionHint(hintState: HintState): void;
+  removeComponent(componentIndex: number): void;
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
-  type, index, component, hint, locked, updateComponent, uniqueComponent, ...props
+  type, index, component, hint, locked, uniqueComponent,
+  allDropBoxesEmpty, validationRequired,
+  updateComponent, ...props
 }) => {
   const getNumberOfAnswers = (data: any) => {
     let count = 1;
@@ -39,6 +46,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   const setComponentType = (type:number) => {
     component.type = type;
     updateComponent(component, index);
+    props.saveBrick();
   }
 
   let InnerComponent = DropBox as any;
@@ -52,12 +60,11 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
             <DeleteIcon
               className="right-top-icon"
               style={{right: '2px', top: '7px'}}
-              onClick={() => props.removeComponent(index)} />
+              onClick={() => props.removeComponent(index)}
+            />
           : ""
         }
-        <DropBox
-          locked={locked}
-          onDrop={setComponentType} />
+        <DropBox locked={locked} onDrop={setComponentType} />
       </div>
     );
   } else if (type === QuestionComponentTypeEnum.Text) {
@@ -86,6 +93,8 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
         <InnerComponent
           locked={locked}
           data={component}
+          save={props.saveBrick}
+          validationRequired={validationRequired}
           updateComponent={updateComponent}
         />
         <HintComponent
@@ -95,6 +104,8 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           value={hint.value}
           list={hint.list}
           count={numberOfAnswers}
+          validationRequired={validationRequired}
+          save={props.saveBrick}
           onChange={props.setQuestionHint}
         />
       </div>
@@ -115,6 +126,8 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
       <InnerComponent
         locked={locked}
         data={component}
+        save={props.saveBrick}
+        validationRequired={validationRequired}
         updateComponent={updateComponent}
       />
     </div>

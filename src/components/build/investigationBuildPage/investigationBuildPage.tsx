@@ -2,46 +2,52 @@ import React, { useEffect } from "react";
 import { RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid, Button, Hidden } from "@material-ui/core";
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import Dialog from '@material-ui/core/Dialog';
 import update from "immutability-helper";
 // @ts-ignore
 import { connect } from "react-redux";
 
 import "./investigationBuildPage.scss";
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
+import TutorialWorkArea, { TutorialStep } from './tutorial/TutorialPanelWorkArea';
 import QuestionTypePage from "./questionType/questionType";
 import SynthesisPage from "./synthesisPage/SynthesisPage";
+import LastSave from "components/build/baseComponents/lastSave/LastSave";
 import DragableTabs from "./dragTabs/dragableTabs";
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
 import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
 import SynthesisPreviewComponent from "components/build/baseComponents/phonePreview/synthesis/SynthesisPreview";
-import ShortAnswerPreview from "components/build/baseComponents/phonePreview/questionPreview/ShortAnswerPreview";
-import ChooseOnePreview from "components/build/baseComponents/phonePreview/questionPreview/ChooseOnePreview";
-import ChooseSeveralPreview from "components/build/baseComponents/phonePreview/questionPreview/ChooseSeveralPreview";
-import VerticalShufflePreview from "components/build/baseComponents/phonePreview/questionPreview/VerticalShufflePreview";
-import HorizontalShufflePreview from "components/build/baseComponents/phonePreview/questionPreview/HorizontalShufflePreview";
-
+import DeleteQuestionDialog from "components/build/baseComponents/deleteQuestionDialog/DeleteQuestionDialog";
+import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
+import TutorialPhonePreview from "./tutorial/TutorialPreview";
 
 import {
   Question,
   QuestionTypeEnum,
-  QuestionComponentTypeEnum,
-  HintStatus
 } from "model/question";
 import actions from "../../../redux/actions/brickActions";
-import {validateQuestion} from "./questionService/QuestionService";
+import {validateQuestion} from "./questionService/ValidateQuestionService";
+import {
+  getNewQuestion,
+  activeQuestionByIndex,
+  getUniqueComponent,
+  deactiveQuestions,
+  getActiveQuestion,
+  prepareBrickToSave,
+  removeQuestionByIndex,
+  convertToSort,
+  setQuestionTypeByIndex,
+  parseQuestion,
+} from "./questionService/QuestionService";
+import { User } from "model/user";
 
-interface ApiQuestion {
-  id?: number;
-  contentBlocks: string;
-  type: number;
-}
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
+  user: User;
   fetchBrick(brickId: number): void;
-  saveBrick(brick: any): void;
+  saveBrick(brick: any): any;
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
@@ -52,34 +58,21 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const { history } = props;
-  const getNewQuestion = (type: number, active: boolean) => {
-    return {
-      type,
-      active,
-      hint: {
-        value: "",
-        list: [] as string[],
-        status: HintStatus.None
-      },
-      components: [
-        { type: 0 },
-        { type: QuestionComponentTypeEnum.Component },
-        { type: 0 }
-      ]
-    } as Question;
-  };
 
   const [questions, setQuestions] = React.useState([
     getNewQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
   const [loaded, setStatus] = React.useState(false);
-  const [locked, setLock] = React.useState(false);
+  const [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
   const [activeQuestionType, setActiveType] = React.useState(QuestionTypeEnum.None);
   const [hoverQuestion, setHoverQuestion] = React.useState(QuestionTypeEnum.None);
+  const [isSaving, setSavingStatus] = React.useState(false);
+  const [tutorialSkipped, skipTutorial] = React.useState(false);
+  const [step, setStep] = React.useState(TutorialStep.Proposal);
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -93,6 +86,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (props.brick && props.brick.synthesis) {
       setSynthesis(props.brick.synthesis)
     }
+    if (props.brick && props.brick.locked) {
+      setLock(true);
+    }
   }, [props.brick]);
   /* Synthesis */
 
@@ -105,12 +101,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const unselectQuestions = () => {
-    const updatedQuestions = questions.slice();
-    updatedQuestions.forEach(q => (q.active = false));
+    const updatedQuestions = deactiveQuestions(questions);
     setQuestions(update(questions, { $set: updatedQuestions }));
   }
 
-  let activeQuestion = questions.find(q => q.active === true) as Question;
+  let activeQuestion = getActiveQuestion(questions);
   if (isSynthesisPage === true) {
     if (activeQuestion) {
       unselectQuestions();
@@ -129,9 +124,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setPreviousQuestion = () => {
     const index = getQuestionIndex(activeQuestion);
     if (index >= 1) {
-      const updatedQuestions = questions.slice();
-      updatedQuestions.forEach(q => (q.active = false));
-      updatedQuestions[index - 1].active = true;
+      const updatedQuestions = activeQuestionByIndex(questions, index - 1);
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
       saveBrick();
@@ -143,9 +136,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const index = getQuestionIndex(activeQuestion);
     let lastIndex = questions.length - 1;
     if (index < lastIndex) {
-      const updatedQuestions = questions.slice();
-      updatedQuestions.forEach(q => (q.active = false));
-      updatedQuestions[index + 1].active = true;
+      const updatedQuestions = activeQuestionByIndex(questions, index + 1);
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
       createNewQuestion();
@@ -153,13 +144,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const createNewQuestion = () => {
-    const updatedQuestions = questions.slice();
-    updatedQuestions.forEach(q => (q.active = false));
+    const updatedQuestions = deactiveQuestions(questions);
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
     setQuestions(update(questions, { $set: updatedQuestions }));
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/build/investigation/question`);
     }
+    saveBrickQuestions(updatedQuestions);
   };
 
   const moveToSynthesis = () => {
@@ -177,14 +168,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setQuestionType = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     var index = getQuestionIndex(activeQuestion);
-    setQuestions(update(questions, { [index]: { type: { $set: type } } }));
+    const updatedQuestions = setQuestionTypeByIndex(questions, index, type);
+    setQuestions(updatedQuestions);
+    saveBrickQuestions(updatedQuestions);
   };
-
-  const getUniqueComponent = (question: Question) => {
-    return question.components.find(
-      c => c.type === QuestionComponentTypeEnum.Component
-    );
-  }
 
   const chooseOneToChooseSeveral = (type: QuestionTypeEnum) => {
     const index = getQuestionIndex(activeQuestion);
@@ -216,40 +203,21 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       chooseOneToChooseSeveral(type);
     } else if (type === QuestionTypeEnum.Sort) {
       const index = getQuestionIndex(activeQuestion);
-      activeQuestion.type = type;
-      const question = Object.assign({}, activeQuestion);
-      question.hint = {
-        status: HintStatus.All,
-        value: question.hint.value,
-        list: []
-      };
+      const question = convertToSort(activeQuestion);
       setQuestion(index, question);
     } else if (type === QuestionTypeEnum.ShortAnswer) {
       convertToShortAnswer(type);
     } else {
       setQuestionType(type);
     }
+    saveBrick();
   };
 
   const deleteQuestionByIndex = (index: number) => {
-    if (index !== 0) {
-      setQuestions(
-        update(questions, {
-          $splice: [[index, 1]],
-          0: { active: { $set: true } }
-        })
-      );
-    } else {
-      setQuestions(
-        update(questions, {
-          $splice: [[index, 1]],
-          [questions.length - 1]: { active: { $set: true } }
-        })
-      );
-    }
-    if (deleteDialogOpen) {
-      setDeleteDialog(false);
-    }
+    let updatedQuestions = removeQuestionByIndex(questions, index);
+    setQuestions(updatedQuestions);
+    setDeleteDialog(false);
+    saveBrickQuestions(updatedQuestions);
   }
 
   const removeQuestion = (index: number) => {
@@ -267,19 +235,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const selectQuestion = (index: number) => {
-    const updatedQuestions = questions.slice();
-    updatedQuestions.forEach(q => (q.active = false));
-
-    let selectedQuestion = updatedQuestions[index];
-    if (selectedQuestion) {
-      selectedQuestion.active = true;
-
-      setQuestions(
-        update(questions, {
-          $set: updatedQuestions
-        })
-      );
-    }
+    const updatedQuestions = activeQuestionByIndex(questions, index);
+    setQuestions(update(questions, { $set: updatedQuestions }));
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/build/investigation/question`)
     }
@@ -287,7 +244,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const toggleLock = () => {
     setLock(!locked);
-  };
+    brick.locked = !locked;
+    saveBrick();
+  }
 
   const setQuestion = (index: number, question: Question) => {
     if (locked) { return; }
@@ -304,16 +263,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const parsedQuestions: Question[] = [];
     for (const question of brick.questions) {
       try {
-        const parsedQuestion = JSON.parse(question.contentBlocks);
-        if (parsedQuestion.components) {
-          let q = {
-            id: question.id,
-            type: question.type,
-            hint: parsedQuestion.hint,
-            components: parsedQuestion.components
-          } as Question;
-          parsedQuestions.push(q);
-        }
+        parseQuestion(question, parsedQuestions);
       } catch (e) {}
     }
     if (parsedQuestions.length > 0) {
@@ -345,24 +295,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setSubmitDialog(false);
   }
 
+  const saveBrickQuestions = (updatedQuestions: Question[]) => {
+    setSavingStatus(true);
+    prepareBrickToSave(brick, updatedQuestions, synthesis);
+    props.saveBrick(brick);
+  }
+
   const saveBrick = () => {
-    brick.questions = [];
-    brick.synthesis = synthesis;
-    for (let question of questions) {
-      let questionObject = {
-        components: question.components,
-        hint: question.hint
-      };
-      let apiQuestion = {
-        type: question.type,
-        contentBlocks: JSON.stringify(questionObject)
-      } as ApiQuestion;
-      if (question.id) {
-        apiQuestion.id = question.id;
-        apiQuestion.type = question.type;
-      }
-      brick.questions.push(apiQuestion);
-    }
+    setSavingStatus(true);
+    prepareBrickToSave(brick, questions, synthesis);
     props.saveBrick(brick);
   };
 
@@ -380,17 +321,19 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const renderBuildQuestion = () => {
+    console.log('before build question init');
     return (
       <QuestionPanelWorkArea
         brickId={brickId}
         history={history}
         synthesis={brick.synthesis}
-        questionsCount={questions.length}
+        questionsCount={questions ? questions.length : 0}
         question={activeQuestion}
+        locked={locked}
+        validationRequired={validationRequired}
         getQuestionIndex={getQuestionIndex}
         setQuestion={setQuestion}
         toggleLock={toggleLock}
-        locked={locked}
         updateComponents={updateComponents}
         setQuestionType={convertQuestionTypes}
         setPreviousQuestion={setPreviousQuestion}
@@ -401,6 +344,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const renderQuestionComponent = () => {
+    if (!props.user.tutorialPassed && tutorialSkipped === false) {
+      return <TutorialWorkArea brickId={brickId} step={step} setStep={setStep} user={props.user} skipTutorial={skipTutorial} />;
+    }
     return (
       <QuestionTypePage
         synthesis={brick.synthesis}
@@ -415,62 +361,108 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       />
     );
   };
-  
-  const formatTwoDigits = (number: Number) => {
-    let str = number.toString();
-    if (str.length < 2) {
-      return '0' + str;
+
+  const isTutorialPassed = () => {
+    if (props.user.tutorialPassed) {
+      return true;
     }
-    return str;
+    if (tutorialSkipped) {
+      return true;
+    }
   }
 
-  const getTime = (updated: Date) => {
-    let hours = formatTwoDigits(updated.getHours());
-    let minutes = formatTwoDigits(updated.getMinutes());
-    return hours + ":" + minutes;
-  }
-
-  const renderLastSave = () => {
-    let updated = new Date(brick.updated);
-
+  const renderPanel = () => {
     return (
-      <div className="saved-info">
-        <Grid container alignContent="center" justify="center">
-          <img alt="" src="/feathericons/save-white.png" />
-          <div>
-            Last Saved at {getTime(updated)}
+      <Switch>
+        <Route path="/build/brick/:brickId/build/investigation/question-component">
+          {renderBuildQuestion}
+        </Route>
+        <Route path="/build/brick/:brickId/build/investigation/question">
+          {renderQuestionComponent}
+        </Route>
+        <Route path="/build/brick/:brickId/build/investigation/synthesis">
+          <SynthesisPage synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
+        </Route>
+      </Switch>
+    );
+  }
+
+  const renderQuestionTypePreview = () => {
+    if (isTutorialPassed()) {
+      return (
+        <QuestionTypePreview
+          hoverQuestion={hoverQuestion}
+          activeQuestionType={activeQuestionType}
+        />
+      );
+    }
+    return <TutorialPhonePreview step={step} />;
+  }
+
+  const renderProposalLink = () => {
+    let className = "";
+    if (!isTutorialPassed()) {
+      if (step === TutorialStep.Proposal) {
+        className += " white proposal";
+      }
+    }
+    
+    return (
+      <div className="proposal-link">
+        <div className={className} onClick={editProposal}>
+          <div className="proposal-edit-icon"/>
+          <div className="proposal-text">
+            <div style={{lineHeight: 0.9}}>YOUR</div>
+            <div style={{lineHeight: 2}}>PROP</div>
+            <div style={{lineHeight: 0.9}}>OSAL</div>
           </div>
-        </Grid>
+        </div>
+        {renderZapTooltip()}
       </div>
     );
   }
 
-  const getPreviewElement = (type: QuestionTypeEnum) => {
-    if (type === QuestionTypeEnum.ShortAnswer) {
-      return <PhonePreview Component={ShortAnswerPreview} />
-    } else if (type === QuestionTypeEnum.ChooseOne) {
-      return <PhonePreview Component={ChooseOnePreview} />
-    } else if (type === QuestionTypeEnum.ChooseSeveral) {
-      return <PhonePreview Component={ChooseSeveralPreview} />
-    } else if (type === QuestionTypeEnum.VerticalShuffle) {
-      return <PhonePreview Component={VerticalShufflePreview} />
-    } else if (type === QuestionTypeEnum.HorizontalShuffle) {
-      return <PhonePreview Component={HorizontalShufflePreview} />
+  const renderZapTooltip = () => {
+    if (!isTutorialPassed() && step === TutorialStep.Additional) {
+      return (
+        <div className="additional-tooltip">
+          <div className="tooltip-text">Tool Tips</div>
+          <img alt="" className="additional-tooltip-icon" src="/feathericons/zap-white.png" />
+        </div>
+      );
     }
-    return null;
+    return "";
   }
 
-  const renderQuestionPhonePreview = () => {
-    let preview = getPreviewElement(hoverQuestion);
-    if (preview) {
-      return preview;
+  const renderTutorialLabels = () => {
+    if (!isTutorialPassed()) {
+      return (
+        <div className="tutorial-top-labels">
+          <Grid container direction="row" style={{height: '100%'}}>
+            <Grid container xs={9} justify="center" style={{height: '100%'}}>
+              <Grid container xs={9} style={{height: '100%'}}>
+                <div className="tutorial-exit-label" style={{height: '100%'}}>
+                  <Grid container alignContent="center" style={{height: '100%'}}>
+                  Click the red icon to Exit & Save
+                  </Grid>
+                </div>
+                <div className="tutorial-add-label" style={{height: '100%'}}>
+                  <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
+                    Add Question Panel
+                  </Grid>
+                </div>
+                <div className="tutorial-synthesis-label" style={{height: '100%'}}>
+                  <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
+                    Synthesis
+                  </Grid>
+                </div>
+              </Grid>
+            </Grid>
+          </Grid>
+        </div>
+      );
     }
-    preview = getPreviewElement(activeQuestionType);
-    if (preview) {
-      return preview;
-    }
-    
-    return <PhonePreview link={window.location.origin + "/logo-page"} />
+    return "";
   }
 
   return (
@@ -479,14 +471,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <HomeButton onClick={exitAndSave} />
       </div>
       <Hidden only={['xs', 'sm']}>
-        <div className="proposal-link" onClick={editProposal}>
-          <div className="proposal-edit-icon"/>
-          <div className="proposal-text">
-            <div style={{lineHeight: 0.9}}>YOUR</div>
-            <div style={{lineHeight: 2}}>PROP</div>
-            <div style={{lineHeight: 0.9}}>OSAL</div>
-          </div>
-        </div>
+        {renderTutorialLabels()}
+        {renderProposalLink()}
         <Grid
           container direction="row"
           className="investigation-build-background"
@@ -494,7 +480,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         >
           <Grid
             container
-            item xs={12} sm={12} md={7} lg={9}
+            item xs={12} sm={12} md={9}
             alignItems="center"
             style={{ height: "100%" }}
             className="question-container"
@@ -506,40 +492,31 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             >
               <Grid
                 container
-                item xs={12} sm={12} md={12} lg={9}
-                style={{ height: "90%" }}
+                item xs={12} sm={12} md={9}
+                style={{ height: "90%", width: "75vw", minWidth: 'none' }}
               >
                 <DragableTabs
                   setQuestions={setQuestions}
                   questions={questions}
                   synthesis={synthesis}
                   validationRequired={validationRequired}
+                  tutorialStep={step}
                   isSynthesisPage={isSynthesisPage}
                   moveToSynthesis={moveToSynthesis}
                   createNewQuestion={createNewQuestion}
                   selectQuestion={selectQuestion}
                   removeQuestion={removeQuestion}
                 />
-                <Switch>
-                  <Route path="/build/brick/:brickId/build/investigation/question-component">
-                    {renderBuildQuestion}
-                  </Route>
-                  <Route path="/build/brick/:brickId/build/investigation/question">
-                    {renderQuestionComponent}
-                  </Route>
-                  <Route path="/build/brick/:brickId/build/investigation/synthesis">
-                    <SynthesisPage synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
-                  </Route>
-                </Switch>
+                {renderPanel()}
               </Grid>
             </Grid>
           </Grid>
-          {renderLastSave()}
+          <LastSave updated={brick.updated} tutorialStep={step} isSaving={isSaving} />
           <Route path="/build/brick/:brickId/build/investigation/question-component">
             <PhoneQuestionPreview question={activeQuestion} />
           </Route>
           <Route path="/build/brick/:brickId/build/investigation/question">
-            {renderQuestionPhonePreview()}
+            {renderQuestionTypePreview()}
           </Route>
           <Route path="/build/brick/:brickId/build/investigation/synthesis">
             <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
@@ -562,22 +539,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <Button className="no-button" onClick={() => hideInvalidBrick()}>No, keep working</Button>
           </Grid>
         </Dialog>
-        <Dialog
+        <DeleteQuestionDialog
           open={deleteDialogOpen}
-          onClose={() => setDeleteDialog(false)}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className="delete-brick-dialog"
-        >
-          <div className="dialog-header">
-            <div>Permanently delete</div>
-            <div>this question?</div>
-          </div>
-          <Grid container direction="row" className="row-buttons" justify="center">
-            <Button className="yes-button" onClick={() => deleteQuestionByIndex(deleteQuestionIndex)}>Yes, delete</Button>
-            <Button className="no-button" onClick={() => setDeleteDialog(false)}>No, keep</Button>
-          </Grid>
-        </Dialog>
+          index={deleteQuestionIndex}
+          setDialog={setDeleteDialog}
+          deleteQuestion={deleteQuestionByIndex}
+        />
       </Hidden>
       <Hidden only={['md', 'lg', 'xl']}>
         <Dialog
@@ -591,7 +558,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <div>to use this page</div>
           </div>
           <Grid container direction="row" className="row-buttons" justify="center">
-            <Button className="yes-button" onClick={() => history.push('/build')}>Move</Button>
+            <Button className="yes-button" onClick={() => history.push('/build')}>
+              Move
+            </Button>
           </Grid>
         </Dialog>
       </Hidden>
@@ -601,6 +570,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
 const mapState = (state: any) => {
   return {
+    user: state.user.user,
     bricks: state.bricks.bricks,
     brick: state.brick.brick
   };

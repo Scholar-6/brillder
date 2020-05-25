@@ -9,12 +9,21 @@ $question-radius: 0.6vw;
   border-bottom-left-radius: $question-radius;
   border-bottom-right-radius: $question-radius;
 
+  .invalid {
+    background: $orange !important;
+  }
+
   .help-arrow {
     position: absolute;
     top: 8.5vh;
     left: 8.2vw;
     width: 9.5vw;
     z-index: 1000;
+  }
+
+  .ck-placeholder:before {
+    color: #aaa;
+    font-family: $font-family-bold;
   }
 
   ::placeholder {
@@ -282,6 +291,7 @@ $question-radius: 0.6vw;
       right: 0;
 
       svg {
+        cursor: pointer;
         height: 1.15vw;
         width: 1.15vw;
       }

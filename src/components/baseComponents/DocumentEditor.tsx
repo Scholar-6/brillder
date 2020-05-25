@@ -10,15 +10,15 @@ import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 // @ts-ignore
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 // @ts-ignore
-import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-// @ts-ignore
-import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
-// @ts-ignore
 import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
 // @ts-ignore
 import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
 // @ts-ignore
 import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
+// @ts-ignore
+import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+// @ts-ignore
+import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
 // @ts-ignore
 import List from '@ckeditor/ckeditor5-list/src/list';
 // @ts-ignore
@@ -33,24 +33,30 @@ import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { addToolbarToDropdown, createDropdown } from "@ckeditor/ckeditor5-ui/src/dropdown/utils";
 // @ts-ignore
 import SplitButtonView from "@ckeditor/ckeditor5-ui/src/dropdown/button/splitbuttonview";
+// @ts-ignore
+import Table from '@ckeditor/ckeditor5-table/src/table';
+// @ts-ignore
+import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
+
 
 import './DocumentEditor.scss';
 
-
 export interface DocumentEditorProps {
-  data: string,
-  toolbar?: any,
-  placeholder?: string,
-  mediaEmbed?: boolean,
-  defaultAlignment?: string,
-  onChange(data: string): void,
+  data: string;
+  toolbar?: any;
+  placeholder?: string;
+  mediaEmbed?: boolean;
+  defaultAlignment?: string;
+  validationRequired?: boolean;
+  onBlur(): void;
+  onChange(data: string): void;
 }
 
 interface DocumentEditorState {
-  data: string,
-  focused: boolean,
-  editor: any,
-  ref: any,
+  data: string;
+  focused: boolean;
+  editor: any;
+  ref: any;
 }
 
 class InsertDropDown extends Plugin {
@@ -85,7 +91,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
     }
   }
 
-  componentWillReceiveProps(props: DocumentEditorProps) {
+  UNSAFE_componentWillReceiveProps(props: DocumentEditorProps) {
     if (this.state.editor) {
       let data = this.state.editor.getData();
       if (props.data !== data) {
@@ -94,27 +100,30 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
     }
   }
 
-  replaceLabelName = () => {
-    const elements = document.getElementsByClassName("ck-button__label");
+  replaceHtml = (className: string, text: string, newText: string) => {
+    const elements = document.getElementsByClassName(className);
     for (let i = 0; i < elements.length; i++) {
       const element = elements.item(i);
       if (element) {
-        let text = element.textContent;
-        if (text === 'Remove color') {
-          element.innerHTML = 'Remove colour';
+        if (element.textContent === text) {
+          element.innerHTML = newText;
         }
       }
     }
   }
 
   handleOnInit = (editor: any) => {
+    editor.locale.contentLanguageDirection = '';
+    editor.execute( 'alignment', { value: 'justify' } );
+
     const {current} = this.state.ref;
     if (current) {
       current.appendChild(editor.ui.view.toolbar.element);
     }
 
-    this.replaceLabelName();
-
+    this.replaceHtml("ck-button__label", "Remove color", "Remove colour");
+    this.replaceHtml("ck-tooltip__text", "Remove color", "Remove colour");
+    
     this.setState({...this.state, editor});
   }
 
@@ -122,9 +131,10 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
     let config = {
       extraPlugins: [InsertDropDown],
       plugins: [
-        Essentials, Bold, Italic, Paragraph,
-        FontColor, Superscript, Subscript, List,
-        MathType, Alignment, Strikethrough
+        Essentials, Paragraph,
+        Bold, Italic, Strikethrough, Superscript, Subscript,
+        FontColor, List, MathType, Alignment,
+        Table, TableToolbar
       ],
       fontColor: {
         colors: [{
@@ -158,8 +168,14 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
     if (this.props.placeholder) {
       config.placeholder = this.props.placeholder;
     }
+
+    let className="document-editor";
+    if (this.props.validationRequired && !this.state.data) {
+      className+=" content-invalid";
+    }
+
     return (
-      <div className="document-editor">
+      <div className={className}>
         <div ref={this.state.ref} />
         <CKEditor
           data={this.state.data}
@@ -170,6 +186,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
             if (!this.state.focused) { return; }
             const data = editor.getData();
             this.props.onChange(data);
+            this.replaceHtml("ck-label", "Document colors", "Document colours");
             this.setState({...this.state, data});
           }}
           onFocus={() => {
@@ -177,6 +194,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
           }}
           onBlur={() => {
             this.setState({...this.state, focused: false });
+            this.props.onBlur();
           }}
         />
       </div>

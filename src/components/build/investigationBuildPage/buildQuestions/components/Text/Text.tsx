@@ -7,27 +7,34 @@ import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
 
 
 export interface TextComponentProps {
-  locked: boolean
-  index: number
-  data: any
-  updateComponent(component: any, index: number): void
+  locked: boolean;
+  index: number;
+  data: any;
+  validationRequired: boolean;
+  save(): void;
+  updateComponent(component: any, index: number): void;
 }
 
-const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, updateComponent}) => {
+const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, ...props}) => {
   const onChange = (htmlString: string) => {
     let comp = Object.assign({}, data);
     comp.value = htmlString;
-    updateComponent(comp, index);
+    props.updateComponent(comp, index);
   }
 
   return (
     <div className="question-build-text-editor">
-      <div className="text-label-container">
-        <Grid className="text-label" container justify="center" alignContent="center">
-          Text
-        </Grid>
-      </div>
-      <DocumentCKEditor data={data.value} placeholder="" onChange={onChange} />
+      <DocumentCKEditor
+        data={data.value}
+        placeholder=""
+        toolbar={[
+          'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'strikethrough', 'mathType', 'chemType',
+          'bulletedList', 'numberedList', 'insertTable'
+        ]}
+        validationRequired={props.validationRequired}
+        onBlur={() => props.save()}
+        onChange={onChange}
+      />
     </div>
   );
 }

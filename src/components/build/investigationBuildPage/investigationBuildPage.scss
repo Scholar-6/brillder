@@ -14,29 +14,6 @@
 .investigation-build-page {
   height: 100%;
 
-  .saved-info {
-    position: fixed;
-    font-family: $font-family-regular ;
-    top: 7.7%;
-    right: 6%;
-    width: 21vw;
-    > div {
-      color: white;
-      font-size: 1.25vw;
-      text-align: center;
-      width: 80%;
-      > img {
-        margin-top: 0.1vw;
-        height: 1.52vw;
-        width: 1.52vw;
-        margin-right: 1.3vw;
-      }
-      >div {
-        display: inline-block;
-      }
-    }
-  }
-
   .phone-question-preview {
     top: 15.3%;
     right: 6%;
@@ -51,6 +28,22 @@
   .investigation-build-background {
     height: 100%;
     background: $dark-blue;
+  }
+
+  .additional-tooltip {
+    margin-top: 4vh;
+    font-size: 1.2vw;
+    font-family: $font-family-regular;
+    letter-spacing: 0;
+    text-align: center;
+    color: white;
+    img {
+      margin-top: 2.5vh;
+      height: 5.4vw;
+      padding: 0.7vw;
+      border-radius: 100vw;
+      border: 0.1vw dashed $orange;
+    }
   }
 
   .proposal-link {
@@ -75,7 +68,26 @@
     .proposal-text {
       margin-top: 0vh;
       margin-left: 0.3vw;
+    }    
+  }
+
+  .white {
+    color: white !important;
+    .proposal-edit-icon {
+      height: 3.5vw;
+      width: 3.5vw;
+      background-image: url(/images/edit-white.png);
+      margin-bottom: 1vh;
     }
+  }
+
+  .white.proposal {
+    left: 0.7vw;
+    top: 32.5vh;
+    padding: 1vh 0.5vw 2.3vh 0.5vw;
+    border-radius: 0.65vw;
+    border: 0.1vw dashed $orange;
+    margin-bottom: 10vw;
   }
 
   .proposal-link:hover {
@@ -114,10 +126,6 @@
     opacity: 0.5;
   }
 
-  .question-container {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
   .page-header {
     background: #b2b2b2;
   }
@@ -143,6 +151,37 @@
       background: #002060;
       color: white;
     }
+  }
+
+  .tutorial-top-labels {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 5%;
+    color: white;
+    font-family: $font-family-regular;
+
+    .tutorial-exit-label {
+      width:38%;
+    }
+
+    .tutorial-add-label {
+      width:31%;
+    }
+
+    .tutorial-synthesis-label {
+      width:31%;
+    }
+  }
+
+  .add-question-tutorial-label {
+    position: fixed;
+    vertical-align: bottom;
+    height: 5%;
+    left: 33vw;
+    font-size: 1.3vw;
+    font-family: $font-family-regular;
+    color: white;
   }
 
   @media only screen and (max-width: 959px) {

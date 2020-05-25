@@ -9,11 +9,11 @@ import './Proposal.scss';
 import SubjectPage from './questionnaire/subject/Subject';
 import BrickTitle from './questionnaire/brickTitle/brickTitle';
 import OpenQuestion from './questionnaire/openQuestion/openQuestion';
-import BrickLength from './questionnaire/brickLength/brickLength';
+import BrickLength, { BrickLengthEnum } from './questionnaire/brickLength/brickLength';
 import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
 import ProposalReview from './questionnaire/proposalReview/ProposalReview';
-import { Brick } from "model/brick";
+import { Brick, Author } from "model/brick";
 import { User } from "model/user";
 
 
@@ -44,42 +44,63 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     alternativeSubject: '',
   } as Brick;
 
+  if (props.user) {
+    initState.author = (props.user as any) as Author;
+  }
+
   if (brick) {
     initState = brick;
   }
-  
+
   const [state, setBrick] = React.useState(initState);
   const [saved, setSaved] = React.useState(false);
 
   useEffect(() => {
     if (brick) {
+      if (!brick.author && state.author) {
+        brick.author = state.author;
+      }
       setBrick(brick);
     }
-  }, [brick]);
+  }, [brick, state.author]);
+
+  const setLocalProposal = (data: any) => {
+    localStorage.setItem('proposal', JSON.stringify(data));
+  }
+
+  const saveLocalState = (data: any) => {
+    setBrick(data);
+    setLocalProposal(data);
+  }
 
   const setSubject = (subjectId: number) => {
-    setBrick({ ...state, subjectId });
+    saveLocalState({...state, subjectId});
   }
 
   const setTitles = (titles: any) => {
-    setBrick({ ...state, ...titles });
+    saveLocalState({ ...state, ...titles });
   }
 
   const setOpenQuestion = (openQuestion: string) => {
-    setBrick({ ...state, openQuestion } as Brick);
+    saveLocalState({ ...state, openQuestion } as Brick);
   }
 
   const setBrief = (brief: string) => {
-    setBrick({ ...state, brief } as Brick)
+    saveLocalState({ ...state, brief } as Brick)
   }
 
   const setPrep = (prep: string) => {
-    setBrick({ ...state, prep } as Brick)
+    saveLocalState({ ...state, prep } as Brick)
+  }
+
+  const setLength = (brickLength: BrickLengthEnum) => {
+    let brick = { ...state, brickLength } as Brick;
+    saveLocalState(brick);
+    return brick;
   }
 
   const setLengthAndSave = (brickLength: number) => {
-    let brick = { ...state, brickLength } as Brick;
-    setBrick(brick);
+    let brick = setLength(brickLength);
     saveBrick(brick);
   }
 
@@ -122,7 +143,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
           <Prep parentPrep={state.prep} savePrep={setPrep} />
         </Route>
         <Route path='/build/new-brick/length'>
-          <BrickLength length={state.brickLength} saveBrick={setLengthAndSave} />
+          <BrickLength length={state.brickLength} saveLength={setLength} saveBrick={setLengthAndSave} />
         </Route>
         <Route path="/build/new-brick/proposal">
           <ProposalReview brick={state} user={props.user} saveBrick={saveAndMove} />

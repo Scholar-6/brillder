@@ -10,30 +10,13 @@
 
   .text-label-container {
     margin: 0 43%;
-
-    .text-label {
-      width: 14%;
-      color: $dark-blue;
-      position: absolute;
-      top: 0;
-      z-index: 1;
-      height: 2.6vw;
-      font-size: 1.1vw;
-    }
   }
 
   .ck-toolbar {
+    padding-left: 0.2vw;
     height: 2.6vw;
     border-top-left-radius: 0.4vw !important;
     border-top-right-radius: 0.4vw !important;
-
-    .ck-button {
-      font-size: 0.85vw;
-    }
-
-    .ck-custom-dropdown {
-      margin-right: 19.5% !important;
-    }
   }
 
   .ck-dropdown__panel {
@@ -49,5 +32,27 @@
     border-bottom-right-radius: 0.4vw !important;
     box-shadow: none !important;
     border-top: none !important;
+  }
+
+  .ck.ck-reset.ck-dropdown__panel.ck-dropdown__panel_se.ck-dropdown__panel-visible {
+    left: auto;
+    right: 0;
+  }
+
+  .ck-toolbar__items {
+    .ck-button {
+      min-width: 0;
+      border: 0;
+      margin-right: 0;
+      padding-left: 0.2vw;
+      padding-right: 0.2vw;
+
+      .ck-icon {
+        font-size: 0.8vw;
+      }
+    }
+  }
+  .ck-insert-table-dropdown__grid {
+    z-index: 100000;
   }
 }

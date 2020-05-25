@@ -22,8 +22,14 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
             <DocumentCKEditor
               data={synthesis}
               placeholder=""
-              toolbar={['bold', 'italic', 'alignment', 'mathType', 'chemType', 'fontColor', 'bulletedList', 'numberedList']}
+              toolbar={[
+                'bold', 'italic', 'fontColor',
+                'superscript', 'subscript', 'strikethrough',
+                'mathType', 'chemType', 'alignment',
+                'bulletedList', 'numberedList', 'insertTable'
+              ]}
               defaultAlignment="justify"
+              onBlur={() => {}}
               onChange={onSynthesisChange}
             />
           </Grid>

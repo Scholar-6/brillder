@@ -11,6 +11,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import './Introduction.scss';
 import { Brick } from 'model/brick';
 import OtherInformation from '../baseComponents/OtherInformation';
+import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 
 interface IntroductionProps {
@@ -61,7 +62,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <Typography>
-                <div dangerouslySetInnerHTML={{ __html: brick.brief}} />
+                <MathInHtml value={brick.brief} />
               </Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
@@ -70,7 +71,9 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <h2>Prep</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <div style={{width: '100%'}} dangerouslySetInnerHTML={{ __html: brick.prep}}></div>
+              <div style={{width: '100%'}}>
+                <MathInHtml value={brick.prep} />
+              </div>
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <div className="begin-row">

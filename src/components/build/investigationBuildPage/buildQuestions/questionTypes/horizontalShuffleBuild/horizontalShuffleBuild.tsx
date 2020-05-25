@@ -4,15 +4,12 @@ import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButto
 
 import './horizontalShuffleBuild.scss'
 import { Grid } from '@material-ui/core';
+import { UniqueComponentProps } from '../types';
 
 
-export interface VerticalShuffleBuildProps {
-  locked: boolean
-  data: any
-  updateComponent(component: any): void
-}
-
-const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ locked, data, updateComponent }) => {
+const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
+  locked, data, validationRequired, save, updateComponent
+}) => {
   const [height, setHeight] = React.useState('0%');
   
   useEffect(() => calculateHeight());
@@ -44,12 +41,14 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
     if (locked) { return; }
     state.list.push({ value: "" });
     update();
+    save();
   }
 
   const removeFromList = (index: number) => {
     if (locked) { return; }
     state.list.splice(index, 1);
     update();
+    save();
   }
 
   const renderAnswer = (answer: any, key: number) => {
@@ -63,8 +62,11 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({ 
           <input
             disabled={locked}
             value={answer.value}
+            className={!answer.value && validationRequired ? "invalid" : ""}
+            onBlur={() => save()}
             onChange={(event) => changed(answer, event)}
-            placeholder={"Enter A" + (key + 1) + "..."} />
+            placeholder={"Enter A" + (key + 1) + "..."}
+          />
         </div>
       </Grid>
     );

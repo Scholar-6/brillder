@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useDropzone} from 'react-dropzone';
 import { Grid } from '@material-ui/core';
 
@@ -7,10 +7,11 @@ import {uploadFile} from 'components/services/uploadFile';
 
 
 interface ImageProps {
-  locked: boolean,
-  index: number,
-  data: any,
-  updateComponent(component:any, index:number): void
+  locked: boolean;
+  index: number;
+  data: any;
+  save(): void;
+  updateComponent(component:any, index:number): void;
 }
 
 const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
@@ -24,9 +25,14 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
         comp.value = res.data.fileName;
         props.updateComponent(comp, props.index);
         setFileName(comp.value);
+        props.save();
       }, () => { });
     }
   });
+
+  useEffect(() => {
+    setFileName(props.data.value);
+  }, [props]);
 
   return (
     <div className="image-drag-n-drop">

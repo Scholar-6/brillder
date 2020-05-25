@@ -5,31 +5,18 @@ import { ProposalStep } from "../../model";
 import './Navigation.scss';
 import { Grid } from "@material-ui/core";
 
+
 interface NextButtonProps {
   step: ProposalStep
+  onMove(): void
 }
 
-const NextButton:React.FC<NextButtonProps> = ({ step }) => {
+const NextButton:React.FC<NextButtonProps> = ({ step, onMove }) => {
   const history = useHistory()
 
-  const moveToTitles = () => {
-    history.push('/build/new-brick/brick-title');
-  }
-
-  const moveToOpenQuestion = () => {
-    history.push('/build/new-brick/open-question');
-  }
-
-  const moveToBrief = () => {
-    history.push('/build/new-brick/brief');
-  }
-
-  const moveToPrep = () => {
-    history.push('/build/new-brick/prep');
-  }
-
-  const moveToLength = () => {
-    history.push('/build/new-brick/length');
+  const move = (route: string) => {
+    onMove();
+    history.push(route);
   }
 
   return (
@@ -39,34 +26,34 @@ const NextButton:React.FC<NextButtonProps> = ({ step }) => {
           <div className="step-label">Title</div>
           <div
             className="navigation-button navigation-titles"
-            onClick={moveToTitles}
+            onClick={() => move('/build/new-brick/brick-title')}
           />
         </div>
         <div className={`step-container ${step === ProposalStep.OpenQuestion ? 'active' : ''}`}>
           <div className="step-label">Open Question</div>
           <div
             className={`navigation-button navigation-question ${step >= ProposalStep.OpenQuestion ? 'active' : ''}`}
-            onClick={moveToOpenQuestion}
+            onClick={() => move('/build/new-brick/open-question')}
           />
         </div>
         <div className={`step-container ${step === ProposalStep.Brief ? 'active' : ''}`}>
           <div className="step-label">Brief</div>
           <div
             className={`navigation-button navigation-brief ${step >= ProposalStep.Brief ? 'active' : ''}`}
-            onClick={moveToBrief}
+            onClick={() => move('/build/new-brick/brief')}
           />
         </div>
         <div className={`step-container ${step === ProposalStep.Prep ? 'active' : ''}`}>
           <div className="step-label">Prep</div>
           <div
-            onClick={moveToPrep}
+            onClick={() => move('/build/new-brick/prep')}
             className={`navigation-button navigation-prep ${step >= ProposalStep.Prep ? 'active' : ''}`}
           />
         </div>
         <div className={`step-container ${step === ProposalStep.BrickLength ? 'active' : ''}`}>
           <div className="step-label">Length</div>
           <div
-            onClick={moveToLength}
+            onClick={() => move('/build/new-brick/length')}
             className={`navigation-button navigation-length ${step >= ProposalStep.BrickLength ? 'active' : ''}`}
           />
         </div>

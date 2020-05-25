@@ -6,29 +6,30 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import './MissingWordBuild.scss'
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import { UniqueComponentProps } from '../types';
 
 
 interface Answer {
-  value: string
-  checked: boolean
+  value: string;
+  checked: boolean;
 }
 
 export interface MissingChoice {
-  before: string
-  answers: Answer[]
-  after: string
-  height: string
+  before: string;
+  answers: Answer[];
+  after: string;
+  height: string;
 }
 
-export interface MissingWordComponentProps {
-  locked: boolean
+export interface MissingWordComponentProps extends UniqueComponentProps {
   data: {
-    choices: MissingChoice[]
-  }
-  updateComponent(component: any): void
+    choices: MissingChoice[];
+  };
 }
 
-const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, data, updateComponent }) => {
+const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
+  locked, data, validationRequired, save, updateComponent
+}) => {
   const [height, setHeight] = React.useState('0%');
   useEffect(() => calculateHeight());
 
@@ -71,21 +72,25 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
   const addAnswer = (choice: MissingChoice) => {
     choice.answers.push(newAnswer());
     update();
+    save();
   }
 
   const removeAnswer = (choice: MissingChoice, index: number) => {
     choice.answers.splice(index, 1);
     update();
+    save();
   }
 
   const addChoice = () => {
     state.choices.push(newChoice());
     update();
+    save();
   }
 
   const removeChoice = (index: number) => {
     state.choices.splice(index, 1);
     update();
+    save();
   }
 
   const beforeChanged = (choice: MissingChoice, event: any) => {
@@ -106,6 +111,15 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
     }
     choice.answers[index].checked = true;
     update();
+    save();
+  }
+
+  const getInputClass = (answer: any) => {
+    let name = "input-answer";
+    if (validationRequired && !answer.value) {
+      name += " invalid";
+    }
+    return name;
   }
 
   const renderChoice = (choice: MissingChoice, key: number) => {
@@ -129,11 +143,11 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
                 }
                 <Checkbox className="left-ckeckbox" disabled={locked} checked={answer.checked} onChange={(e) => onChecked(choice, e)} value={key} />
                 <input
-                  className="input-answer"
+                  placeholder="Enter Answer..."
+                  className={getInputClass(answer)}
                   disabled={locked}
                   value={answer.value}
                   onChange={(event: any) => { answerChanged(answer, event) }}
-                  placeholder="Enter Answer..."
                 />
               </div>
             );
@@ -141,10 +155,10 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({ locked, dat
         }
         <textarea
           value={choice.after}
-          onChange={(event) => {afterChanged(choice, event)}}
           disabled={locked}
           rows={3}
-          placeholder="Text after choice..." >
+          placeholder="Text after choice..."
+          onChange={(event) => {afterChanged(choice, event)}}>
         </textarea>
         <AddAnswerButton
           locked={locked} addAnswer={() => { addAnswer(choice) }} height={choice.height}

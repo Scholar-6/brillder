@@ -27,7 +27,7 @@ class WordHighlighting extends CompComponent<
     this.state = { userAnswers: [], words: props.component.words };
   }
   
-  componentWillReceiveProps(props: WordHighlightingProps) {
+  UNSAFE_componentWillReceiveProps(props: WordHighlightingProps) {
     this.setState({ words: props.component.words });
   }
 
@@ -69,6 +69,25 @@ class WordHighlighting extends CompComponent<
     this.setState({ words: this.state.words });
   }
 
+  renderWord(word: any, index: number) {
+    if (this.props.isPreview) {
+      return (
+        <span
+          key={index}
+          className={word.checked ? "active word" : "word"}
+        >{word.text} </span>
+      );
+    }
+    return (
+      <span
+      key={index}
+      className={word.selected ? "active word" : "word"}
+      onClick={() => this.highlighting(index)}
+    >
+      {word.text} </span>
+    );
+  }
+
   render() {
     const { component } = this.props;
 
@@ -80,13 +99,7 @@ class WordHighlighting extends CompComponent<
       <div className="word-highlighting-play">
         <div className="words-container">
           {component.words.map((word: any, index: number) => (
-            <span
-              key={index}
-              className={word.selected ? "active word" : "word"}
-              onClick={() => this.highlighting(index)}
-            >
-              {word.text}&nbsp;
-            </span>
+            this.renderWord(word, index)
           ))}
         </div>
         <br/>

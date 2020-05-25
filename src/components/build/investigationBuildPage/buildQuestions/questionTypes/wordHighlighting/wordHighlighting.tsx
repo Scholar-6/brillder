@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import EditIcon from '@material-ui/icons/Edit';
 
 import './wordHighlighting.scss'
+import { UniqueComponentProps } from '../types';
 
 
 export enum WordMode {
@@ -20,13 +21,13 @@ export interface WordHighlightingData {
   mode: WordMode;
 }
 
-export interface WordHighlightingProps {
-  locked: boolean
-  data: WordHighlightingData
-  updateComponent(component: any): void
+export interface WordHighlightingProps extends UniqueComponentProps {
+  data: WordHighlightingData;
 }
 
-const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, data, updateComponent }) => {
+const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
+  locked, data, save, updateComponent
+}) => {
   const [state, setState] = React.useState(data);
 
   useEffect(() => {
@@ -59,6 +60,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
       state.words = prepareWords(state.text);
     }
     update();
+    save();
   }
 
   const updateText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -71,6 +73,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
     if (locked) { return; }
     state.words[index].checked = !state.words[index].checked;
     update();
+    save();
   }
 
   const renderBox = () => {
@@ -78,11 +81,15 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
       return (
         <div className="hightlight-area">
           {
-            state.words.map((word, i) =>
-              <div key={i} style={{display: 'inline-block', marginRight: '5px', background: word.checked ? 'green' : 'inherit'}} onClick={() => {toggleLight(i)}}>
+            state.words ? state.words.map((word, i) =>
+              <div
+                key={i}
+                className={word.checked ? "word active" : "word"}
+                onClick={() => {toggleLight(i)}}
+              >
                 {word.text}
               </div>
-            )
+            ) : ""
           }
         </div>
       );
@@ -92,6 +99,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({ locked, da
         disabled={locked}
         className="words-input"
         rows={5}
+        onBlur={() => save()}
         value={state.text}
         onChange={updateText}
         placeholder="Enter Words Here..." />

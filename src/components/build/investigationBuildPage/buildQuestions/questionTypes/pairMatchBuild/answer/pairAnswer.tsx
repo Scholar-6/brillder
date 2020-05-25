@@ -12,13 +12,15 @@ export interface PairAnswerProps {
   index: number;
   length: number;
   answer: Answer;
+  validationRequired: boolean;
   removeFromList(index: number): void;
+  save(): void;
   update(): void;
 }
 
 const PairAnswerComponent: React.FC<PairAnswerProps> = ({
-  locked, index, length, answer,
-  removeFromList, update
+  locked, index, length, answer, validationRequired,
+  removeFromList, update, save
 }) => {
   const answerChanged = (answer: Answer, value: string) => {
     if (locked) { return; }
@@ -33,6 +35,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     answer.valueFile = "";
     answer.answerType = QuestionValueType.None;
     update();
+    save();
   }
 
   const renderDeleteButton = () => {
@@ -70,6 +73,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     answer.valueFile = fileName;
     answer.answerType = 2;
     update();
+    save();
   }
 
   return (
@@ -79,8 +83,13 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
         <input
           disabled={locked}
           value={answer.value}
-          onChange={(event:any) => answerChanged(answer, event.target.value)}
           placeholder={"Enter Answer " + (index + 1) + "..."}
+          className={
+            answer.answerType !== QuestionValueType.Image && validationRequired && !answer.value
+              ? "invalid" : ""
+          }
+          onBlur={() => save()}
+          onChange={(event:any) => answerChanged(answer, event.target.value)}
         />
         <QuestionImageDropZone
           answer={answer}

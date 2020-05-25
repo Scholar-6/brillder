@@ -36,7 +36,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     this.state = { userAnswers, choices: props.component.choices };
   }
 
-  componentWillReceiveProps(props: MissingWordProps) {
+  UNSAFE_componentWillReceiveProps(props: MissingWordProps) {
     if (props.component) {
       let userAnswers: any[] = [];
       props.component.choices.forEach(() => userAnswers.push({ value: -1 }));
@@ -116,11 +116,11 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       <div className="missing-word-live">
         {component.choices.map((choice: any, index: number) => (
           <div key={index} className="missing-word-choice">
-            <Grid container direction="row" justify="center">
+            <span>
               {choice.before}
               {this.renderSelect(choice, index)}
               {choice.after}
-            </Grid>
+            </span>
             <Grid container direction="row" justify="center">
               <ReviewEachHint
                 isPhonePreview={this.props.isPreview}
