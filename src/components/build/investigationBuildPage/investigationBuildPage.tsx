@@ -340,7 +340,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const renderQuestionComponent = () => {
-    if (!props.user.tutorialPassed && tutorialSkipped === false) {
+    if (!isTutorialPassed()) {
       return <TutorialWorkArea brickId={brickId} step={step} setStep={setStep} user={props.user} skipTutorial={skipTutorial} />;
     }
     return (
@@ -363,6 +363,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       return true;
     }
     if (tutorialSkipped) {
+      return true;
+    }
+    if (questions.length > 1) {
       return true;
     }
     return false;
