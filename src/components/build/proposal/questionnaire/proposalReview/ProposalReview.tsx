@@ -48,7 +48,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
       <div style={{position: 'fixed', top: 0, left: 0, zIndex: 1000}}>
         <HomeButton link='/build' />
       </div>
-      <Grid container direction="row" style={{ height: '100%' }} justify="center">
+      <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
         <Grid className="back-button-container" container alignContent="center">
           <div className="back-button" onClick={() => history.push('/build/new-brick/length')} />
         </Grid>

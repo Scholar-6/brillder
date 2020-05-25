@@ -11,12 +11,11 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ClearIcon from "@material-ui/icons/Clear";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import AnimateHeight from "react-animate-height";
 import Grow from "@material-ui/core/Grow";
 
 import brickActions from "redux/actions/brickActions";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
-import PublishedSubjects from "components/baseComponents/subjectsList/SubjectsList";
+import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
@@ -581,7 +580,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             )}
           </div>
         </div>
-        <PublishedSubjects
+        <SubjectsList
           subjects = {this.state.subjects}
           filterHeight={this.state.filterHeight}
           filterBySubject={this.filterBySubject}
