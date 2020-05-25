@@ -341,7 +341,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const renderQuestionComponent = () => {
     if (!isTutorialPassed()) {
-      return <TutorialWorkArea brickId={brickId} step={step} setStep={setStep} user={props.user} skipTutorial={skipTutorial} />;
+      return (
+        <TutorialWorkArea
+          brickId={brickId}
+          step={step}
+          setStep={setStep}
+          user={props.user}
+          skipTutorial={() => skipTutorial(true)}
+        />
+      );
     }
     return (
       <QuestionTypePage
