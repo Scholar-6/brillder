@@ -14,6 +14,7 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
   tutorialStep, saveBrick, isTutorialPassed
 }) => {
   const history = useHistory();
+  const [buttonState, setState] = React.useState(true);
 
   const editProposal = () => {
     if (!isTutorialPassed()) {
@@ -26,11 +27,23 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
 
   const renderZapTooltip = () => {
     if (!isTutorialPassed() && tutorialStep === TutorialStep.Additional) {
+      let className="additional-tooltip"
+      if (buttonState === false) {
+        className += " tooltip-off";
+      }
+  
       return (
-        <div className="additional-tooltip">
+        <div className={className}>
           <div className="tooltip-text">Tool Tips</div>
-          <button>
-            <img alt="" className="additional-tooltip-icon" src="/feathericons/zap-white.png" />
+          <button onClick={() => setState(!buttonState)}>
+            <img
+              alt="" className="additional-tooltip-icon"
+              src={
+                buttonState === true
+                  ? "/feathericons/zap-white.png"
+                  : "/feathericons/zap-off-light-blue.png"
+              }
+            />
           </button>
         </div>
       );
@@ -39,11 +52,13 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
   }
 
   let className = "proposal-link";
+
   if (!isTutorialPassed()) {
     if (tutorialStep === TutorialStep.Proposal) {
       className += " white proposal";
     }
   }
+
 
   return (
     <div className={className}>
