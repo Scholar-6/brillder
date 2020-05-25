@@ -17,7 +17,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
-import PublishedSubjects from "components/baseComponents/subjectsList/SubjectsList";
+import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import authActions from "redux/actions/auth";
@@ -439,7 +439,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             )}
           </div>
         </div>
-        <PublishedSubjects
+        <SubjectsList
           subjects={this.state.subjects}
           filterHeight={this.state.filterHeight}
           filterBySubject={this.filterBySubject}

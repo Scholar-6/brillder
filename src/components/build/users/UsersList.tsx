@@ -16,6 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import authActions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
+import SubjectsList from 'components/baseComponents/subjectsList/SubjectsList';
 
 import { User, UserType, UserStatus } from 'model/user';
 
@@ -64,6 +65,7 @@ interface UsersListState {
   filterExpanded: boolean;
   logoutDialogOpen: boolean;
   dropdownShown: boolean;
+  filterHeight: string;
 
   sortBy: UserSortBy;
   isAscending: boolean;
@@ -145,6 +147,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       searchString: '',
       isSearching: false,
       dropdownShown: false,
+      filterHeight: 'auto',
 
       sortBy: UserSortBy.None,
       isAscending: false,
@@ -210,6 +213,18 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   handleSortChange = (e: any) => {
+  }
+
+  hideFilter() {
+    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+  }
+
+  expendFilter() {
+    this.setState({
+      ...this.state,
+      filterExpanded: true,
+      filterHeight: "auto",
+    });
   }
 
   getCheckedRoles() {
@@ -324,30 +339,32 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   renderSortAndFilterBox = () => {
     return (
       <div className="sort-box">
-        <div className="role-filter-header">Filter by: role</div>
-        <Grid container direction="row" className="roles-row">
-          {
-            this.state.roles.map((role, i) => 
-              <Grid item xs={4} key={i}>
-                <FormControlLabel
-                  className="filter-container"
-                  checked={role.checked}
-                  control={<Radio className={"filter-radio"} />}
-                  label={role.name}
-                />
-              </Grid>
-            )
-          }
-        </Grid>
+        <div className="sort-by-box">
+          <div className="role-filter-header">Filter by: role</div>
+            <Grid container direction="row" className="roles-row">
+              {
+                this.state.roles.map((role, i) => 
+                  <Grid item xs={4} key={i}>
+                    <FormControlLabel
+                      className="filter-container"
+                      checked={role.checked}
+                      control={<Radio className={"filter-radio"} />}
+                      label={role.name}
+                    />
+                  </Grid>
+                )
+              }
+            </Grid>
+          </div>
         <div className="filter-header">
           <div style={{ display: 'inline' }}>
             <span className='filter-control'>Filter by: Subject</span>
             {
               this.state.filterExpanded
                 ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }}
-                  onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
+                  onClick={() => this.hideFilter()} />
                 : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }}
-                  onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
+                  onClick={() => this.expendFilter()} />
             }
             {
               this.state.subjects.some((r: any) => r.checked)
@@ -356,22 +373,11 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             }
           </div>
         </div>
-        <Grid container direction="row">
-          {
-            this.state.filterExpanded
-              ? this.state.subjects.map((subject, i) =>
-                <Grid item xs={((i % 2) === 1) ? 7 : 5} key={i}>
-                  <FormControlLabel
-                    className="filter-container"
-                    checked={subject.checked}
-                    onClick={() => this.filterBySubject(i)}
-                    control={<Radio className={"filter-radio custom-color"} style={{['--color' as any] : subject.color}} />}
-                    label={subject.name}
-                  />
-                </Grid>
-              ) : ''
-          }
-        </Grid>
+        <SubjectsList
+          subjects = {this.state.subjects}
+          filterHeight={this.state.filterHeight}
+          filterBySubject={this.filterBySubject}
+        />
       </div>
     );
   }

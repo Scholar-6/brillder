@@ -11,7 +11,7 @@ interface PublishedSubjectsProps {
   filterBySubject(index: number): void;
 }
 
-class PublishedSubjects extends Component<PublishedSubjectsProps, any> {
+class SubjectsList extends Component<PublishedSubjectsProps, any> {
   render() {
     return (
       <Grid container direction="row" className="subjects-filter">
@@ -47,4 +47,4 @@ class PublishedSubjects extends Component<PublishedSubjectsProps, any> {
   }
 }
 
-export default PublishedSubjects;
+export default SubjectsList;
