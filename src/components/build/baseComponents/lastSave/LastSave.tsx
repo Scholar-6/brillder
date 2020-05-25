@@ -22,7 +22,7 @@ const LastSave:React.FC<LastSaveProps> = (props) => {
       if (saveTimeout) {
         clearInterval(saveTimeout);
       }
-      let timeout = setTimeout(() => setSaving(false), 2000);
+      let timeout = setTimeout(() => setSaving(false), 1000);
       setSaveTimeout(timeout);
     }
   }, [props]);
