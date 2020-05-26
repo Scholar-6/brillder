@@ -14,3 +14,9 @@ strong {
   font-family: $font-family-black;
   font-weight: normal;
 }
+
+.MuiGrid-align-content-xs-center.MuiGrid-justify-xs-center {
+  display: -webkit-inline-box !important;
+ -webkit-box-align: center !important;
+ -webkit-box-pack: center !important;
+}
