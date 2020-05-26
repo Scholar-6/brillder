@@ -22,6 +22,9 @@ const PlayButton: React.FC<PlayButtonProps> = ({
     } else if (isValid) {
       return <img onClick={() => onClick()} alt="" src="/feathericons/play-circle-white-green.png" />;
     }
+    if (isTutorialSkipped) {
+      return <img onClick={() => onClick()} alt="" src="/feathericons/play-circle-custom-grey.png" />;
+    }
     return <img alt="" src="/feathericons/play-circle-custom-grey.png" />;
   }
   const renderButton = () => {
