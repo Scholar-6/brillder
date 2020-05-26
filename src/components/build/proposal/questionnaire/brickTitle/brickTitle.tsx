@@ -30,6 +30,16 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
     }
     return data;
   }
+
+  if (!title && !alternativeTopics && !subTopic) {
+    return (
+      <Grid container alignContent="flex-start" className="brick-title-container">
+        <Grid container justify="center">
+          <img alt="titles" src="/images/new-brick/titles.png" className="titles-image big" />
+        </Grid>
+      </Grid>
+    );
+  }
   
   return (
     <Grid container alignContent="flex-start" className="brick-title-container">
@@ -83,17 +93,20 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
               className="audience-inputs"
               value={parentState.title}
               onChange={(onTitleChange)}
-              placeholder="Enter Proposed Title Here..." />
+              placeholder="Enter Proposed Title Here..."
+            />
             <Input
               className="audience-inputs"
               value={parentState.subTopic}
               onChange={onSubTopicChange}
-              placeholder="Enter Topic..." />
+              placeholder="Enter Topic..."
+            />
             <Input
               className="audience-inputs"
               value={parentState.alternativeTopics}
               onChange={onAltTopicChange}
-              placeholder="Enter Subtopic(s)..." />
+              placeholder="Enter Subtopic(s)..."
+            />
           </Grid>
           <NextButton
             isActive={true}
