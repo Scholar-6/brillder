@@ -14,6 +14,15 @@
 .investigation-build-page {
   height: 100%;
 
+  .exit-arrow {
+    position: fixed;
+    top: 2.6vh;
+    left: 4.7vw;
+    img {
+      height: 2vw;
+    }
+  }
+
   .phone-question-preview {
     .custom-component {
       background: white;
