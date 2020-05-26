@@ -14,11 +14,16 @@
 .investigation-build-page {
   height: 100%;
 
+  .exit-arrow {
+    position: fixed;
+    top: 2.6vh;
+    left: 4.7vw;
+    img {
+      height: 2vw;
+    }
+  }
+
   .phone-question-preview {
-    top: 15.3%;
-    right: 6%;
-    //right: 5.4%;
-    
     .custom-component {
       background: white;
       overflow-y: hidden;
@@ -28,74 +33,6 @@
   .investigation-build-background {
     height: 100%;
     background: $dark-blue;
-  }
-
-  .additional-tooltip {
-    margin-top: 4vh;
-    font-size: 1.2vw;
-    font-family: $font-family-regular;
-    letter-spacing: 0;
-    text-align: center;
-    color: white;
-    img {
-      margin-top: 2.5vh;
-      height: 5.4vw;
-      padding: 0.7vw;
-      border-radius: 100vw;
-      border: 0.1vw dashed $orange;
-    }
-  }
-
-  .proposal-link {
-    cursor: pointer;
-    position: absolute;
-    top: 33.5vh;
-    left: 1.44vw;
-    font-size: 1.8vw;
-    letter-spacing: 0.3vw;
-    font-family: 'Brandon Grotesque Black';
-    color: $light-blue;
-
-    .proposal-edit-icon {
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url(/images/edit.png);
-      height: 4.5vw;
-      width: 4.5vw;
-      margin-bottom: 0.5vh;
-    }
-    .proposal-text {
-      margin-top: 0vh;
-      margin-left: 0.3vw;
-    }    
-  }
-
-  .white {
-    color: white !important;
-    .proposal-edit-icon {
-      height: 3.5vw;
-      width: 3.5vw;
-      background-image: url(/images/edit-white.png);
-      margin-bottom: 1vh;
-    }
-  }
-
-  .white.proposal {
-    left: 0.7vw;
-    top: 32.5vh;
-    padding: 1vh 0.5vw 2.3vh 0.5vw;
-    border-radius: 0.65vw;
-    border: 0.1vw dashed $orange;
-    margin-bottom: 10vw;
-  }
-
-  .proposal-link:hover {
-    color: white;
-
-    .proposal-edit-icon {
-      background-image: url(/images/edit-white.png);
-    }
   }
 
   .right-top-drop-icon {

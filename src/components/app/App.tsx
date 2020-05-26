@@ -8,6 +8,7 @@ import './app.scss';
 import '../../assets/fonts/icomoon/style.css';
 
 import Pallet from '../play/pallet/Pallet';
+import VersionLabel from 'components/baseComponents/VersionLabel';
 import Dashboard from '../play/dashboard/Dashboard';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
 import Proposal from '../build/proposal/Proposal';
@@ -85,7 +86,7 @@ const App: React.FC = (props: any) => {
         <Route path="/logo-page" component={LogoPage} />
         <Route component={AuthRedirectRoute} />
       </Switch>
-      <div className="beta-text">BETA</div>
+      <VersionLabel />
     </ThemeProvider>
   );
 }

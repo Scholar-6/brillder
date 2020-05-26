@@ -6,18 +6,19 @@
 
   .short-answer-box {
     position: relative;
-    margin: 0;
+    margin-left: 1.25%;
+    width: 97.5%;
 
     input {
       font-family: $font-family-regular;
       font-size: $answer-input-text-size;
-      border-radius: 0;
       width: 84%;
       padding: 0 8%;
       height: 55px;
       text-align: center;
       border: none;
       height: $answer-height !important;
+      border-radius: 0.4vw;
     }
   }
 

@@ -47,7 +47,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     {id: 4, type: QuestionComponentTypeEnum.Graph}
   ]);
   const { type } = question;
-  document.title = QuestionTypeEnum[type];
 
   const setQuestionHint = (hintState: HintState) => {
     if (locked) { return; }

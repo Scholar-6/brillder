@@ -28,8 +28,6 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
 
   const type = activeQuestionType;
 
-  document.title = "Select First Question Type";
-
   const setCurrentType = (type: QuestionTypeEnum) => {
     setActiveQuestionType(type);
   }

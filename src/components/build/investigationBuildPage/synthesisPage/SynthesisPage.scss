@@ -19,15 +19,36 @@ $border-radius: 0.6vw;
       font-family: $font-family-regular;
     }
 
+    .text-label-container {
+      padding-top: 0;
+      margin: 0 45%;
+      .text-label {
+        color: $dark-blue;
+        width: 10%;
+        position: absolute;
+        z-index: 1;
+        height: 5.5vh;
+        font-size: 1.1vw;
+      }
+    }
+
     .document-editor {
       .ck-toolbar {
         border-top-left-radius: 0.6vw !important;
         border-top-right-radius: 0.6vw !important;
+        font-size: 0.8vw;
         
         .ck-toolbar__items {
           height: 5vh;
           .ck-icon {
             font-size: 1.5vh;
+          }
+
+          .ck-button {
+            padding: 0;
+            margin: 0;
+            margin-left: 0.1vw;
+            margin-right: 0.1vw;
           }
         }
       }

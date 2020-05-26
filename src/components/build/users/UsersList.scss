@@ -3,8 +3,7 @@
 $main-panel-radius: 2vw;
 $left: 0.8vw;
 $right: 1.4vw;
-$grey: #B0B0AD;
-
+$grey: #b0b0ad;
 
 .users-list-redirect-dropdown {
   .MuiPaper-root {
@@ -34,7 +33,7 @@ $grey: #B0B0AD;
         height: 3vh;
         right: 0vw;
       }
-      
+
       .menu-icon {
         width: 2.2vw;
       }
@@ -73,6 +72,12 @@ $grey: #B0B0AD;
   width: 100%;
   font-family: $font-family-regular;
 
+  .subjects-filter {
+    padding-top: 1.8vh;
+    height: 58.1vh;
+    overflow-y: auto;
+  }
+
   .users-upper-part {
     position: relative;
     min-height: 100%;
@@ -109,7 +114,7 @@ $grey: #B0B0AD;
           margin-left: 2.8vh;
           left: -4vw;
         }
-  
+
         .next-button {
           position: absolute;
           left: -4vw;
@@ -130,103 +135,6 @@ $grey: #B0B0AD;
     }
   }
 
-  .users-header {
-    height: 10.5vh;
-
-    .logout-container {
-      height: 10.5vh;
-      border-bottom-left-radius: 2vw;
-      background: $light-blue;
-      padding-top: 1.7vh;
-
-      .search-button {
-        cursor: pointer;
-        display: block;
-        margin-top: 0.2vh !important;
-        margin-left: 1.4vw;
-        height: 6.5vh;
-        width: 6.5vh;
-        margin-top: 0.1vh;
-        margin-right: 0vw;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/images/brick-list/search.png);
-        transition: all 0.2s ease-in-out;
-        transform-origin: 70% 50%;
-      }
-      .search-button:hover {
-        background-image: url(/images/brick-list/search-hover.png);
-      }
-
-      .search-input {
-        display: block;
-        border: none;
-        background-color: $light-blue !important;
-        font-family: $font-family-regular;
-        font-size: 1.7vw;
-        border: red;
-        border-radius: 12px;
-        border: none !important;
-        margin-left: 1.5vw;
-        margin-top: 0.7vh;
-        letter-spacing: 0.045vw;
-        height: 5.5vh;
-        width: 40vw;
-        padding-right: 2px;
-        color: #acacac;
-      }
-
-      .bell-button {
-        cursor: pointer;
-        margin-top: 0.53vh;
-        display: block;
-        color: white;
-        text-align: center;
-        height: 5.3vh;
-        width: 4.8vh;
-        margin-top: 0.9vh;
-        margin-right: 3.5vw;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/images/brick-list/bell.png);
-        transition: all 0.2s ease-in-out;
-        transform-origin: 50% 50%;
-
-        > span {
-          margin-top: 1vh;
-        }
-      }
-
-
-      .bell-button:hover {
-        background-image: url(/images/brick-list/bell-hover.png);
-      }
-
-      .more-button {
-        cursor: pointer;
-        margin-top: 0.9vh;
-        margin-right: 2.2vw;
-        width: 6.7vh;
-        display: inline-block;
-        background-color: $orange;
-  
-        -webkit-mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
-        mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
-        -webkit-mask-size: cover;
-        mask-size: cover;
-
-        transition: all 0.2s ease-in-out;
-        transform-origin: 50% 50%;
-      }
-
-      .more-button:hover {
-        transform: scale(1.4);
-      }
-    }
-  }
-
   .sorted-row {
     margin-top: 3.5vh;
     height: 87.1vh;
@@ -234,17 +142,20 @@ $grey: #B0B0AD;
       color: white;
 
       .sort-box {
-        margin-bottom: 1.2vh;
-        padding-top: 1vh;
         border-top-right-radius: $main-panel-radius;
         width: 100%;
         background: $light-blue;
+
+        .sort-by-box {
+          padding-top: 1vh;
+          height: 20.5vh;
+        }
 
         .role-filter-header {
           margin-top: 1.2vh;
           margin-left: 1.3vw;
           text-transform: uppercase;
-          font-size: 1.3vw;
+          font-size: 2.4vh;
           letter-spacing: 0.25vw;
           margin-bottom: 1.7vh;
         }
@@ -255,17 +166,17 @@ $grey: #B0B0AD;
           text-transform: uppercase;
           background: #304775 0% 0% no-repeat padding-box;
           padding-left: 1.4vw;
-          font-size: 1.3vw;
-          margin-top: 5vh;
+          font-size: 2.4vh;
+          height: 6.4vh;
           letter-spacing: 0.22vw;
-          margin-bottom: 2.8vh;
-            .filter-control {
-              vertical-align:middle
-            }
-            .filter-control:not(:first-child) {
-              margin-left: 0.9vw;
-              cursor: pointer;
-            }
+          .filter-control {
+            height: 100%;
+            vertical-align: middle;
+          }
+          .filter-control:not(:first-child) {
+            margin-left: 0.9vw;
+            cursor: pointer;
+          }
         }
         .sort-group {
           margin-top: 0.45vh;
@@ -305,7 +216,9 @@ $grey: #B0B0AD;
             font: 1.05vw $font-family-regular !important;
             letter-spacing: 0.06vw;
           }
-          .custom-color svg { color: var(--color)!important; }
+          .custom-color svg {
+            color: var(--color) !important;
+          }
         }
         .filter-container:nth-child(odd) {
           width: 100%;

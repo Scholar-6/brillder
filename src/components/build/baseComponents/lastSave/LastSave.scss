@@ -1,35 +1,35 @@
-@import '_variables';
+@import "_variables";
 
 .investigation-build-page {
   .saved-info {
     position: fixed;
     font-family: $font-family-regular;
     top: 7.7%;
-    right: 6%;
-    width: 21vw;
-    > div {
+    right: 0;
+    width: 34.3vw;
+    text-align: center;
+    > div > div {
       color: white;
       font-size: 1.25vw;
       text-align: center;
       width: 80%;
       > div {
-      > img {
-        margin-top: 0.1vw;
-        height: 1.52vw;
-        width: 1.52vw;
-        margin-right: 1.3vw;
+        > img {
+          margin-top: 0.1vw;
+          height: 1.52vw;
+          width: 1.52vw;
+          margin-right: 1.3vw;
+        }
+        > div {
+          display: inline-block;
+        }
       }
-      > div {
-        display: inline-block;
-      }
-    }
     }
   }
 
   .saved-info .tutorial-border {
-    width: 65%;
-    margin-left: 2vw;
     border-radius: 0.6vw;
+    width: 46%;
     padding: 0.8vh 0;
     border: 0.1vw dashed $orange;
   }
