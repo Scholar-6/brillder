@@ -13,27 +13,27 @@ export interface TutorialProps {
 const PlayPanel: React.FC<TutorialProps> = (props) => {
   const renderDashedLine = () => {
     return (
-      <Grid container className="icon-container" alignContent="center">
+      <div style={{display: 'table-cell', verticalAlign: 'middle'}} className="icon-container">
         <hr className="dashed-line"></hr>
-      </Grid>
+      </div>
     );
   }
 
   const renderArrow = () => {
     return (
-      <Grid container className="icon-container" alignContent="center">
+      <div style={{display: 'table-cell', verticalAlign: 'middle'}} className="icon-container">
         <img alt="icon" src="/feathericons/big-chevron-right-blue.png" className="arrow-icon" />
-      </Grid>
+      </div>
     );
   }
 
   return (
     <div className="tutorial-play-panel">
       <div className="tutorial-step-1">
-        <Grid container justify="center" alignContent="center" className="icons-row">
-          <Grid container className="icon-container" alignContent="center">
+        <Grid container  justify="center" alignContent="center" className="icons-row">
+          <div className="icon-container" style={{display: 'table-cell', verticalAlign: 'middle'}}>
             <img alt="icon" src="/images/edit.png" className="edit-icon" />
-          </Grid>
+          </div>
           {renderDashedLine()}
           {renderArrow()}
           <Grid container className="icon-container" alignContent="center">
