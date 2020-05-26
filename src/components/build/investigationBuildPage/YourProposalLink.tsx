@@ -1,7 +1,9 @@
 import React from 'react'
 
+import './YourProposalLink.scss';
 import { TutorialStep } from './tutorial/TutorialPanelWorkArea';
 import { useHistory } from 'react-router-dom';
+import { Grid } from '@material-ui/core';
 
 
 export interface YourProposalButtonProps {
@@ -51,7 +53,7 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
     return "";
   }
 
-  let className = "proposal-link";
+  let className = "proposal-container";
 
   if (!isTutorialPassed()) {
     if (tutorialStep === TutorialStep.Proposal) {
@@ -59,17 +61,18 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
     }
   }
 
-
   return (
     <div className={className}>
-      <div onClick={editProposal}>
-        <div className="proposal-edit-icon"/>
-        <div className="proposal-text">
-          <div style={{lineHeight: 0.9}}>YOUR</div>
-          <div style={{lineHeight: 2}}>PROP</div>
-          <div style={{lineHeight: 0.9}}>OSAL</div>
+      <Grid container justify="center" className="your-proposal-container">
+        <div onClick={editProposal} className="proposal-link">
+          <div className="proposal-edit-icon"/>
+          <div className="proposal-text">
+            <div style={{lineHeight: 0.9}}>YOUR</div>
+            <div style={{lineHeight: 2}}>PROP</div>
+            <div style={{lineHeight: 0.9}}>OSAL</div>
+          </div>
         </div>
-      </div>
+      </Grid>
       {renderZapTooltip()}
     </div>
   );
