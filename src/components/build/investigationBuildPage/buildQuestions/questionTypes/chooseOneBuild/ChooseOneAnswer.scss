@@ -90,8 +90,14 @@
   margin-top: 0.17vw;
   margin-bottom: 0.17vw;
 
+  > div {
+    position: absolute;
+    left: 0;
+    -webkit-box-pack: start !important;
+  }
+
   .Mui-checked {
-    color: $orange;
+    color: $light-green !important;
   }
 
   .checkbox-container {
