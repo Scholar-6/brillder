@@ -8,7 +8,6 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { Brick } from "model/brick";
 import {getDate, getMonth, getYear} from 'components/services/brickService';
-import VersionLabel from "components/baseComponents/VersionLabel";
 
 
 interface BrickTitleProps {
