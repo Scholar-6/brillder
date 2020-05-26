@@ -21,7 +21,7 @@ import SynthesisPreviewComponent from "components/build/baseComponents/phonePrev
 import DeleteQuestionDialog from "components/build/baseComponents/deleteQuestionDialog/DeleteQuestionDialog";
 import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
 import TutorialPhonePreview from "./tutorial/TutorialPreview";
-import YourProposalLink from './YourProposalLink';
+import YourProposalLink from './components/YourProposalLink';
 
 import {
   Question,
@@ -74,6 +74,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [isSaving, setSavingStatus] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
+  const [tooltipsOn, setTooltips] = React.useState(true); 
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -411,15 +412,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const renderTutorialLabels = () => {
-    if (!isTutorialPassed()) {
+    if (!isTutorialPassed() && tooltipsOn) {
       return (
         <div className="tutorial-top-labels">
+          <div className="exit-arrow">
+            <img alt="" src="/images/exit-arrow.png" />
+          </div>
           <Grid container direction="row" style={{height: '100%'}}>
             <Grid container xs={9} justify="center" style={{height: '100%'}}>
               <Grid container xs={9} style={{height: '100%'}}>
                 <div className="tutorial-exit-label" style={{height: '100%'}}>
                   <Grid container alignContent="center" style={{height: '100%'}}>
-                  Click the red icon to Exit & Save
+                    Click the red icon to Exit & Save
                   </Grid>
                 </div>
                 <div className="tutorial-add-label" style={{height: '100%'}}>
@@ -448,7 +452,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       </div>
       <Hidden only={['xs', 'sm']}>
         {renderTutorialLabels()}
-        <YourProposalLink tutorialStep={step} saveBrick={saveBrick} isTutorialPassed={isTutorialPassed} />
+        <YourProposalLink
+          tutorialStep={step}
+          tooltipsOn={tooltipsOn}
+          saveBrick={saveBrick}
+          isTutorialPassed={isTutorialPassed}
+          setTooltips={setTooltips}
+        />
         <Grid
           container direction="row"
           className="investigation-build-background"

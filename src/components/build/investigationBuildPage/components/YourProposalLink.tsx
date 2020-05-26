@@ -1,22 +1,23 @@
 import React from 'react'
 
 import './YourProposalLink.scss';
-import { TutorialStep } from './tutorial/TutorialPanelWorkArea';
+import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
 import { useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 
 
 export interface YourProposalButtonProps {
   tutorialStep: TutorialStep;
+  tooltipsOn: boolean;
+  setTooltips(value: boolean): void;
   saveBrick(): void;
   isTutorialPassed(): boolean;
 }
 
 const YourProposalLink: React.FC<YourProposalButtonProps> = ({
-  tutorialStep, saveBrick, isTutorialPassed
+  tooltipsOn, tutorialStep, setTooltips, saveBrick, isTutorialPassed
 }) => {
   const history = useHistory();
-  const [buttonState, setState] = React.useState(true);
 
   const editProposal = () => {
     if (!isTutorialPassed()) {
@@ -30,18 +31,18 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
   const renderZapTooltip = () => {
     if (!isTutorialPassed() && tutorialStep === TutorialStep.Additional) {
       let className="additional-tooltip"
-      if (buttonState === false) {
+      if (tooltipsOn === false) {
         className += " tooltip-off";
       }
   
       return (
         <div className={className}>
           <div className="tooltip-text">Tool Tips</div>
-          <button onClick={() => setState(!buttonState)}>
+          <button onClick={() => setTooltips(!tooltipsOn)}>
             <img
               alt="" className="additional-tooltip-icon"
               src={
-                buttonState === true
+                tooltipsOn === true
                   ? "/feathericons/zap-white.png"
                   : "/feathericons/zap-off-light-blue.png"
               }
