@@ -7,6 +7,7 @@ import { Brick } from "model/brick";
 import { useHistory } from "react-router-dom";
 import { User } from "model/user";
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
+import VersionLabel from "components/baseComponents/VersionLabel";
 
 
 interface ProposalProps {
@@ -127,7 +128,6 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
           </div>
         </div>
         <div className="red-right-block"></div>
-        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );

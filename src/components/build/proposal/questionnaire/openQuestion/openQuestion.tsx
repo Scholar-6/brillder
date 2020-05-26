@@ -6,6 +6,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
 import './openQuestion.scss';
+import VersionLabel from 'components/baseComponents/VersionLabel';
 
 
 const HeadComponent:React.FC<any> = ({data}) => {
@@ -55,7 +56,6 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
         </Grid>
         <ProposalPhonePreview Component={HeadComponent} data={selectedQuestion} link="" />
         <div className="red-right-block"></div>
-        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );

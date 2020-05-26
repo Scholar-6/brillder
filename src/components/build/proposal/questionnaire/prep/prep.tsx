@@ -8,6 +8,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
+import VersionLabel from "components/baseComponents/VersionLabel";
 
 
 interface PrepProps {
@@ -68,7 +69,6 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
         </Grid>
         <ProposalPhonePreview Component={PrepPreviewComponent} data={parentPrep} />
         <div className="red-right-block"></div>
-        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );

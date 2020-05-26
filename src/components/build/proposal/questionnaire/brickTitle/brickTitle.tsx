@@ -8,6 +8,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { Brick } from "model/brick";
 import {getDate, getMonth, getYear} from 'components/services/brickService';
+import VersionLabel from "components/baseComponents/VersionLabel";
 
 
 interface BrickTitleProps {
@@ -122,7 +123,6 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
         </Grid>
         <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
         <div className="red-right-block"></div>
-        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );
