@@ -11,15 +11,14 @@
       height: 10.5vh;
       border-bottom-left-radius: 2vw;
       background: $light-blue;
-      padding-top: 1.7vh;
+      padding-top: 1vh;
 
       .search-button {
         cursor: pointer;
         display: block;
-        margin-top: 0.2vh !important;
         margin-left: 1.4vw;
-        height: 6.5vh;
-        width: 6.5vh;
+        height: 7.9vh;
+        width: 7.9vh;
         margin-top: 0.1vh;
         margin-right: 0vw;
         background-size: 100% 100%;
@@ -43,7 +42,7 @@
         border-radius: 12px;
         border: none !important;
         margin-left: 1.5vw;
-        margin-top: 0.7vh;
+        margin-top: 1vh;
         letter-spacing: 0.045vw;
         height: 5.5vh;
         width: 40vw;
@@ -59,7 +58,7 @@
         text-align: center;
         height: 5.3vh;
         width: 4.8vh;
-        margin-top: 0.9vh;
+        margin-top: 1.6vh;
         margin-right: 3.5vw;
         background-size: 100% 100%;
         background-repeat: no-repeat;
@@ -79,7 +78,7 @@
 
       .more-button {
         cursor: pointer;
-        margin-top: 0.9vh;
+        margin-top: 1.7vh;
         margin-right: 2.2vw;
         width: 6.7vh;
         display: inline-block;
