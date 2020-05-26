@@ -416,20 +416,16 @@ $light-grey: #F3F4F7;
         .filter-container {
           position: relative;
           width: 100%;
-          .filter-radio-label {
-            padding-left: 0;
-            cursor: default;
-            width: 90%;
 
-            svg {
-              height: 2.2vh;
-              width: 2.2vh;
-            }
-            .MuiFormControlLabel-label {
-              font: 1.05vw $font-family-regular !important;
-              letter-spacing: 0.06vw;
-            }
+          .MuiFormControlLabel-label {
+            font: 1.05vw $font-family-regular !important;
+            letter-spacing: 0.06vw;
           }
+          svg {
+            height: 2.7vh;
+            width: 2.7vh;
+          }
+
           .right-index {
             position: absolute;
             line-height: 1;
