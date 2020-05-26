@@ -1,4 +1,4 @@
-@import '_variables';
+@import "_variables";
 
 .investigation-build-page {
   .saved-info {
@@ -14,16 +14,16 @@
       text-align: center;
       width: 80%;
       > div {
-      > img {
-        margin-top: 0.1vw;
-        height: 1.52vw;
-        width: 1.52vw;
-        margin-right: 1.3vw;
+        > img {
+          margin-top: 0.1vw;
+          height: 1.52vw;
+          width: 1.52vw;
+          margin-right: 1.3vw;
+        }
+        > div {
+          display: inline-block;
+        }
       }
-      > div {
-        display: inline-block;
-      }
-    }
     }
   }
 
