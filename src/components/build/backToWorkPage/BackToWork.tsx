@@ -628,65 +628,41 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           <div className="filter-items">
             <div className="filter-container color1">
               <FormControlLabel
-                className="filter-radio-label"
-                value={this.state.filters.draft}
-                control={
-                  <Checkbox
-                    checked={this.state.filters.draft}
-                    className={"filter-radio sort-by"}
-                  />
-                }
-                onChange={() => this.toggleDraftFilter()}
+                className="filter-container"
+                checked={this.state.filters.draft}
+                onClick={() => this.toggleDraftFilter()}
+                control={<Radio className={"filter-radio custom-color"} />}
                 label="Draft"
-                labelPlacement="end"
               />
               <div className="right-index">{draft}</div>
             </div>
             <div className="filter-container color2">
               <FormControlLabel
-                className="filter-radio-label"
-                value={this.state.filters.review}
-                control={
-                  <Checkbox
-                    checked={this.state.filters.review}
-                    className={"filter-radio sort-by"}
-                  />
-                }
-                onChange={() => this.toggleReviewFilter()}
+                className="filter-container"
+                checked={this.state.filters.review}
+                onClick={() => this.toggleReviewFilter()}
+                control={<Radio className={"filter-radio custom-color"} />}
                 label="Submitted for Review"
-                labelPlacement="end"
               />
               <div className="right-index">{review}</div>
             </div>
             <div className="filter-container color3">
               <FormControlLabel
-                className="filter-radio-label"
-                value={this.state.filters.build}
-                control={
-                  <Checkbox
-                    checked={this.state.filters.build}
-                    className={"filter-radio sort-by"}
-                  />
-                }
-                onChange={() => this.toggleBuildFilter()}
+                className="filter-container"
+                checked={this.state.filters.build}
+                onClick={() => this.toggleBuildFilter()}
+                control={<Radio className={"filter-radio custom-color"} />}
                 label="Build in Progress"
-                labelPlacement="end"
               />
               <div className="right-index">{build}</div>
             </div>
             <div className="filter-container color4">
               <FormControlLabel
-                className="filter-radio-label"
-                value={this.state.filters.publish}
-                control={
-                  <Checkbox
-                    checked={this.state.filters.publish}
-                    className={"filter-radio sort-by"}
-                  />
-                }
-                onChange={() => this.togglePublishFilter()}
+                className="filter-container"
+                checked={this.state.filters.publish}
+                onClick={() => this.togglePublishFilter()}
+                control={<Radio className={"filter-radio custom-color"} />}
                 label="Published"
-                labelPlacement="end"
               />
               <div className="right-index">{publish}</div>
             </div>
