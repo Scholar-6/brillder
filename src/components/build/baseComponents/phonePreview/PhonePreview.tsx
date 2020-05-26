@@ -1,6 +1,6 @@
 
 import React from 'react';
-import {  Hidden } from '@material-ui/core';
+import {  Hidden, Grid } from '@material-ui/core';
 
 import './phoneQuestionPreview/PhoneQuestionPreview.scss';
 
@@ -24,6 +24,8 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data }) =>
 
   return (
     <Hidden only={['xs', 'sm']}>
+      <div className="phone-question-preview-box">
+        <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
       <div className="phone-question-preview">
         <div className="phone">
           <div className="phone-border">
@@ -38,6 +40,8 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data }) =>
             </div>
           </div>
         </div>
+      </div>
+      </Grid>
       </div>
     </Hidden>
   );

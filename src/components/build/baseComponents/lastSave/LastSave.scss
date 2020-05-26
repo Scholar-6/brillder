@@ -7,10 +7,12 @@
     top: 7.7%;
     right: 0;
     width: 34.3vw;
-    > div {
+    text-align: center;
+    > div > div {
       color: white;
       font-size: 1.25vw;
       text-align: center;
+      width: 80%;
       > div {
       > img {
         margin-top: 0.1vw;
@@ -26,9 +28,8 @@
   }
 
   .saved-info .tutorial-border {
-    width: 65%;
-    margin-left: 2vw;
     border-radius: 0.6vw;
+    width: 46%;
     padding: 0.8vh 0;
     border: 0.1vw dashed $orange;
   }
