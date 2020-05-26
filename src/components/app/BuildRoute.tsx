@@ -20,6 +20,8 @@ interface BuildRouteProps {
 
 const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }) => {
   const values = queryString.parse(rest.location.search);
+  document.title = "Brillder";
+
   if (values.msg === 'USER_IS_NOT_ACTIVE') {
     return <Redirect to="/sign-up-success" />
   }

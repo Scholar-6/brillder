@@ -1,7 +1,6 @@
 import React from "react";
 import { Grid, Input } from "@material-ui/core";
 
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
@@ -34,7 +33,6 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
 
   return (
     <div className="tutorial-page open-question-page">
-      <HomeButton link='/build' />
       <Navigation step={ProposalStep.OpenQuestion} onMove={() => saveOpenQuestion(selectedQuestion)} />
       <Grid container direction="row">
         <Grid item className="left-block">
@@ -57,7 +55,6 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
         </Grid>
         <ProposalPhonePreview Component={HeadComponent} data={selectedQuestion} link="" />
         <div className="red-right-block"></div>
-        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );

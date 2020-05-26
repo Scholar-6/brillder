@@ -1,4 +1,4 @@
-@import '_variables';
+@import "_variables";
 
 .question-build-text-editor {
   position: relative;
@@ -9,7 +9,16 @@
   }
 
   .text-label-container {
-    margin: 0 43%;
+    margin: 0 60%;
+    .text-label {
+      color: $dark-blue;
+      width: 9%;
+      position: absolute;
+      top: 0;
+      z-index: 1;
+      height: 5.5vh;
+      font-size: 1.1vw;
+    }
   }
 
   .ck-toolbar {
@@ -17,6 +26,10 @@
     height: 2.6vw;
     border-top-left-radius: 0.4vw !important;
     border-top-right-radius: 0.4vw !important;
+
+    .ck-toolbar__items {
+      font-size: 1.05vw;
+    }
   }
 
   .ck-dropdown__panel {

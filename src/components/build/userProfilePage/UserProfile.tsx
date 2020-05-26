@@ -20,6 +20,7 @@ import authActions from 'redux/actions/auth';
 import { User, UserType, UserStatus, UserProfile, UserRole } from 'model/user';
 import PhonePreview from '../baseComponents/phonePreview/PhonePreview';
 import { Subject } from 'model/brick';
+import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
 
 
 const mapState = (state: any) => {
@@ -203,7 +204,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({...this.state});
   }
 
-  searching(searchString: string) { }
+  searching(searchString: string) {
+    
+  }
 
   keySearch(e: any) {
     if (e.keyCode === 13) {
@@ -261,30 +264,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     return (
       <div className="user-profile-page">
         <div className="bricks-upper-part">
-          <Grid container direction="row" className="page-header">
-            <HomeButton link="/build" />
-            <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
-              <Grid container style={{width: '60vw', height: '7vh'}}>
-              <Grid item>
-                <div className="search-button" onClick={() => this.search()}></div>
-              </Grid>
-              <Grid item>
-                <input
-                  className="search-input"
-                  onKeyUp={(e) => this.keySearch(e)}
-                  onChange={(e) => this.searching(e.target.value)}
-                  placeholder="Search by Name, Email or Subject"
-                />
-              </Grid>
-              </Grid>
-              <Grid item style={{width: '32.35vw'}}>
-                <Grid container direction="row" justify="flex-end">
-                  <div className="bell-button"><div></div></div>
-                  <div className="more-button" onClick={() => this.showDropdown()}></div>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+          <PageHeader
+            searchPlaceholder="Search by Name, Email or Subject"
+            search={() => {}}
+            searching={() => {}}
+            showDropdown={() => this.showDropdown()}
+          />
           <Grid container direction="row">
             <Grid item xs={9}>
               <div className="profile-block">

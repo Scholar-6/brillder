@@ -12,9 +12,12 @@ import OpenQuestion from './questionnaire/openQuestion/openQuestion';
 import BrickLength, { BrickLengthEnum } from './questionnaire/brickLength/brickLength';
 import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import ProposalReview from './questionnaire/proposalReview/ProposalReview';
 import { Brick, Author } from "model/brick";
 import { User } from "model/user";
+import CloseProposalDialog from 'components/build/baseComponents/CloseProposalDialog';
+import VersionLabel from "components/baseComponents/VersionLabel";
 
 
 interface ProposalProps {
@@ -54,6 +57,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   const [state, setBrick] = React.useState(initState);
   const [saved, setSaved] = React.useState(false);
+  const [isDialogOpen, setDialog] = React.useState(false);
 
   useEffect(() => {
     if (brick) {
@@ -115,6 +119,8 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     }
   }
 
+  document.title = "Brillder";
+
   const saveAndMove = () => {
     saveBrick(state);
     setSaved(true);
@@ -124,9 +130,25 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     history.push(`/build/brick/${brick.id}/build/investigation/question`);
   }
 
+  const openDialog = () => {
+    setDialog(true);
+  }
+
+  const closeDialog = () => {
+    setDialog(false);
+  }
+
+  const goHome = () => {
+    setDialog(false);
+    history.push('/build');
+  }
+
   return (
     <MuiThemeProvider>
-      <div style={{ width: '100%', height: '100%' }}>
+      <div style={{position: 'absolute'}}>
+        <HomeButton onClick={openDialog} />
+      </div>
+      <div style={{ width: '100%', height: '100%' }} className="proposal-router">
         <Route path='/build/new-brick/subject'>
           <SubjectPage subjects={props.user.subjects} subjectId={''} saveSubject={setSubject} />
         </Route>
@@ -148,7 +170,9 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
         <Route path="/build/new-brick/proposal">
           <ProposalReview brick={state} user={props.user} saveBrick={saveAndMove} />
         </Route>
+        <VersionLabel />
       </div>
+      <CloseProposalDialog isOpen={isDialogOpen} close={closeDialog} move={goHome} />
     </MuiThemeProvider>
   );
 }

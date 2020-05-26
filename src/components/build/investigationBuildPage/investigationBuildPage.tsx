@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 
 import "./investigationBuildPage.scss";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
+import PlayButton from 'components/build/investigationBuildPage/components/PlayButton';
 import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
 import TutorialWorkArea, { TutorialStep } from './tutorial/TutorialPanelWorkArea';
 import QuestionTypePage from "./questionType/questionType";
@@ -21,6 +22,7 @@ import SynthesisPreviewComponent from "components/build/baseComponents/phonePrev
 import DeleteQuestionDialog from "components/build/baseComponents/deleteQuestionDialog/DeleteQuestionDialog";
 import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
 import TutorialPhonePreview from "./tutorial/TutorialPreview";
+import YourProposalLink from './components/YourProposalLink';
 
 import {
   Question,
@@ -73,6 +75,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [isSaving, setSavingStatus] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
+  const [tooltipsOn, setTooltips] = React.useState(true); 
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -114,11 +117,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   } else if (!activeQuestion) {
     console.log("Can`t find active question");
     activeQuestion = {} as Question;
-  }
-
-  const editProposal = () => {
-    saveBrick();
-    history.push(`/build/new-brick/proposal`);
   }
 
   const setPreviousQuestion = () => {
@@ -344,8 +342,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const renderQuestionComponent = () => {
-    if (!props.user.tutorialPassed && tutorialSkipped === false) {
-      return <TutorialWorkArea brickId={brickId} step={step} setStep={setStep} user={props.user} skipTutorial={skipTutorial} />;
+    if (!isTutorialPassed()) {
+      return (
+        <TutorialWorkArea
+          brickId={brickId}
+          step={step}
+          setStep={setStep}
+          user={props.user}
+          skipTutorial={() => skipTutorial(true)}
+        />
+      );
     }
     return (
       <QuestionTypePage
@@ -369,6 +375,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (tutorialSkipped) {
       return true;
     }
+    if (questions.length > 1) {
+      return true;
+    }
+    if (questions[0] && questions[0].type !== QuestionTypeEnum.None) {
+      return true;
+    }
+    return false;
   }
 
   const renderPanel = () => {
@@ -399,51 +412,19 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return <TutorialPhonePreview step={step} />;
   }
 
-  const renderProposalLink = () => {
-    let className = "";
-    if (!isTutorialPassed()) {
-      if (step === TutorialStep.Proposal) {
-        className += " white proposal";
-      }
-    }
-    
-    return (
-      <div className="proposal-link">
-        <div className={className} onClick={editProposal}>
-          <div className="proposal-edit-icon"/>
-          <div className="proposal-text">
-            <div style={{lineHeight: 0.9}}>YOUR</div>
-            <div style={{lineHeight: 2}}>PROP</div>
-            <div style={{lineHeight: 0.9}}>OSAL</div>
-          </div>
-        </div>
-        {renderZapTooltip()}
-      </div>
-    );
-  }
-
-  const renderZapTooltip = () => {
-    if (!isTutorialPassed() && step === TutorialStep.Additional) {
-      return (
-        <div className="additional-tooltip">
-          <div className="tooltip-text">Tool Tips</div>
-          <img alt="" className="additional-tooltip-icon" src="/feathericons/zap-white.png" />
-        </div>
-      );
-    }
-    return "";
-  }
-
   const renderTutorialLabels = () => {
-    if (!isTutorialPassed()) {
+    if (!isTutorialPassed() && tooltipsOn) {
       return (
         <div className="tutorial-top-labels">
+          <div className="exit-arrow">
+            <img alt="" src="/images/exit-arrow.png" />
+          </div>
           <Grid container direction="row" style={{height: '100%'}}>
             <Grid container xs={9} justify="center" style={{height: '100%'}}>
               <Grid container xs={9} style={{height: '100%'}}>
                 <div className="tutorial-exit-label" style={{height: '100%'}}>
                   <Grid container alignContent="center" style={{height: '100%'}}>
-                  Click the red icon to Exit & Save
+                    Click the red icon to Exit & Save
                   </Grid>
                 </div>
                 <div className="tutorial-add-label" style={{height: '100%'}}>
@@ -465,14 +446,34 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return "";
   }
 
+  let isValid = true;
+  questions.forEach(q => {
+    let isQuestionValid = validateQuestion(q as any);
+    if (!isQuestionValid) {
+      isValid = false;
+    }
+  });
+
   return (
     <div className="investigation-build-page">
       <div style={{position: 'fixed'}}>
         <HomeButton onClick={exitAndSave} />
       </div>
+      <PlayButton
+        tutorialStep={step}
+        isTutorialSkipped={isTutorialPassed()}
+        isValid={isValid}
+        onClick={moveToReview}
+      />
       <Hidden only={['xs', 'sm']}>
         {renderTutorialLabels()}
-        {renderProposalLink()}
+        <YourProposalLink
+          tutorialStep={step}
+          tooltipsOn={tooltipsOn}
+          saveBrick={saveBrick}
+          isTutorialPassed={isTutorialPassed}
+          setTooltips={setTooltips}
+        />
         <Grid
           container direction="row"
           className="investigation-build-background"
@@ -500,7 +501,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                   questions={questions}
                   synthesis={synthesis}
                   validationRequired={validationRequired}
-                  tutorialStep={step}
+                  tutorialStep={isTutorialPassed() ? TutorialStep.None : step}
                   isSynthesisPage={isSynthesisPage}
                   moveToSynthesis={moveToSynthesis}
                   createNewQuestion={createNewQuestion}
@@ -511,7 +512,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
               </Grid>
             </Grid>
           </Grid>
-          <LastSave updated={brick.updated} tutorialStep={step} isSaving={isSaving} />
+          <LastSave updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} />
           <Route path="/build/brick/:brickId/build/investigation/question-component">
             <PhoneQuestionPreview question={activeQuestion} />
           </Route>

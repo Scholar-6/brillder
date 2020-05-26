@@ -88,7 +88,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
         <div>Enter Answers below in order.</div>
         <div>These will be randomised in the Play Interface.</div>
       </div>
-      <Grid container direction="row">
+      <Grid container direction="row" className="answers-container">
         {
           state.list.map((answer: any, i: number) => renderAnswer(answer, i))
         }

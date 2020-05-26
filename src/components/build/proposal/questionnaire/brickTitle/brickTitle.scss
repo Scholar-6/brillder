@@ -4,6 +4,7 @@ $box-radius: 0.4vw;
 
 .brick-title-page {
   .left-block {
+    margin-top: 10.5vh;
     width: 60vw;
 
     h1 {
@@ -25,7 +26,7 @@ $box-radius: 0.4vw;
       margin-bottom: 6.2vh;
 
       .audience-inputs {
-        font-size: 0.92vw;
+        font-size: 1.4vw;
         margin-bottom: 4.1vh;
         width: 34vw;
       }
@@ -49,6 +50,10 @@ $box-radius: 0.4vw;
     .titles-image {
       margin-top: 1.5vw;
       height: 7vw;
+    }
+
+    .titles-image.big {
+      height: 12vw;
     }
 
     .brick-preview-container {
@@ -80,6 +85,9 @@ $box-radius: 0.4vw;
         overflow: hidden;
         white-space:nowrap;
         text-overflow:ellipsis;
+      }
+      .uppercase {
+        text-transform: uppercase ;
       }
       .brick-title.topic-filled {
         font-size: 0.65vw;

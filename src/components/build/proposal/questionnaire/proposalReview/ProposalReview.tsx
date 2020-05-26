@@ -3,7 +3,6 @@ import Grid from "@material-ui/core/Grid";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 import './ProposalReview.scss';
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import { Brick } from "model/brick";
 import { useHistory } from "react-router-dom";
 import { User } from "model/user";
@@ -43,12 +42,13 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
     );
   }
 
+  if (brick.title) {
+    document.title = brick.title;
+  }
+
   return (
     <div className="proposal-page">
-      <div style={{position: 'fixed', top: 0, left: 0, zIndex: 1000}}>
-        <HomeButton link='/build' />
-      </div>
-      <Grid container direction="row" style={{ height: '100%' }} justify="center">
+      <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
         <Grid className="back-button-container" container alignContent="center">
           <div className="back-button" onClick={() => history.push('/build/new-brick/length')} />
         </Grid>
@@ -63,15 +63,6 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
           <h2>When you're ready, start building!</h2>
         </Grid>
         <div className="book-main-container">
-          <Grid className="next-button-container" container alignContent="center">
-            {
-              bookHovered ? (
-                <div>
-                  <div className="next-button" onClick={savingBrick}></div>
-                </div>
-              ) : ""
-            }
-          </Grid>
           <div className="book-container">
             <div className="book" onMouseOver={() => onBookHover()}>
               <div className="back"></div>
@@ -129,9 +120,17 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
               </div>
             </div>
           </div>
+          <Grid className="next-button-container" container alignContent="center">
+            {
+              bookHovered ? (
+                <div>
+                  <div className="next-button" onClick={savingBrick}></div>
+                </div>
+              ) : ""
+            }
+          </Grid>
         </div>
         <div className="red-right-block"></div>
-        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );
