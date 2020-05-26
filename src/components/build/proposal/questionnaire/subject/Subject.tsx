@@ -6,6 +6,7 @@ import { ProposalStep } from "../../model";
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import NextButton from '../../components/nextButton'
 import { Redirect } from "react-router-dom";
+import VersionLabel from "components/baseComponents/VersionLabel";
 
 
 interface SubjectProps {
@@ -299,7 +300,6 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
         </div>
         <ProposalPhonePreview Component={innerComponent} />
         <div className="red-right-block"></div>
-        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );

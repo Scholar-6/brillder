@@ -17,6 +17,7 @@ import ProposalReview from './questionnaire/proposalReview/ProposalReview';
 import { Brick, Author } from "model/brick";
 import { User } from "model/user";
 import CloseProposalDialog from 'components/build/baseComponents/CloseProposalDialog';
+import VersionLabel from "components/baseComponents/VersionLabel";
 
 
 interface ProposalProps {
@@ -145,7 +146,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
       <div style={{position: 'absolute'}}>
         <HomeButton onClick={openDialog} />
       </div>
-      <div style={{ width: '100%', height: '100%' }}>
+      <div style={{ width: '100%', height: '100%' }} className="proposal-router">
         <Route path='/build/new-brick/subject'>
           <SubjectPage subjects={props.user.subjects} subjectId={''} saveSubject={setSubject} />
         </Route>
@@ -167,6 +168,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
         <Route path="/build/new-brick/proposal">
           <ProposalReview brick={state} user={props.user} saveBrick={saveAndMove} />
         </Route>
+        <VersionLabel />
       </div>
       <CloseProposalDialog isOpen={isDialogOpen} close={closeDialog} move={goHome} />
     </MuiThemeProvider>

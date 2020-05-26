@@ -9,6 +9,7 @@ import Navigation from 'components/build/proposal/components/navigation/Navigati
 import { ProposalStep } from "../../model";
 import DocumentCKEditor from "components/baseComponents/DocumentEditor";
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
+import VersionLabel from 'components/baseComponents/VersionLabel';
 
 
 interface PrepProps {
@@ -74,7 +75,6 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
         </Grid>
         <ProposalPhonePreview Component={BriefPreviewComponent} data={parentBrief} />
         <div className="red-right-block"></div>
-        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );

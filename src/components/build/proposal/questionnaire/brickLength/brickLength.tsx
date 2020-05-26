@@ -7,6 +7,7 @@ import './brickLength.scss';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
+import VersionLabel from "components/baseComponents/VersionLabel";
 
 
 export enum BrickLengthEnum {
@@ -83,7 +84,6 @@ const BrickLength:React.FC<BrickLengthProps> = ({ length, saveLength, saveBrick 
         </Grid>
         <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} />
         <div className="red-right-block"></div>
-        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );
