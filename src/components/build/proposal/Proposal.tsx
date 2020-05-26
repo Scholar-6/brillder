@@ -119,6 +119,8 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     }
   }
 
+  document.title = "Brillder";
+
   const saveAndMove = () => {
     saveBrick(state);
     setSaved(true);
