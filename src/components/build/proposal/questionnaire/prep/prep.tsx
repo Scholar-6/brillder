@@ -8,7 +8,6 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
-import VersionLabel from "components/baseComponents/VersionLabel";
 
 
 interface PrepProps {

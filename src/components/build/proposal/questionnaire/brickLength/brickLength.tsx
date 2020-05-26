@@ -7,7 +7,6 @@ import './brickLength.scss';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
-import VersionLabel from "components/baseComponents/VersionLabel";
 
 
 export enum BrickLengthEnum {

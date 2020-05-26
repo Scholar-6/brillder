@@ -6,7 +6,6 @@ import { ProposalStep } from "../../model";
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import NextButton from '../../components/nextButton'
 import { Redirect } from "react-router-dom";
-import VersionLabel from "components/baseComponents/VersionLabel";
 
 
 interface SubjectProps {

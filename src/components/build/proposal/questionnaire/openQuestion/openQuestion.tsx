@@ -6,7 +6,6 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
 import './openQuestion.scss';
-import VersionLabel from 'components/baseComponents/VersionLabel';
 
 
 const HeadComponent:React.FC<any> = ({data}) => {
