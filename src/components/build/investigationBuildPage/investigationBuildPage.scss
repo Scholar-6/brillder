@@ -54,8 +54,13 @@
     }
   }
 
-  .additional-tooltip.tooltip-off img {
-    border: none;
+  .additional-tooltip.tooltip-off {
+    img {
+      border: none;
+    }
+    .tooltip-text {
+      opacity: 0;
+    }
   }
 
   .proposal-link {
