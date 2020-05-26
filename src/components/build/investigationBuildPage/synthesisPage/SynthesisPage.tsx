@@ -12,8 +12,6 @@ export interface SynthesisProps {
 }
 
 const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange, onReview }) => {
-  document.title = "Synthesis";
-
   return (
     <div className="question-type synthesis-page">
       <div className="inner-question-type">

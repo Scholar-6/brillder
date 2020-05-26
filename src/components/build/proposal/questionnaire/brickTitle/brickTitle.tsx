@@ -82,6 +82,10 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
     saveTitles({ ...parentState, alternativeTopics });
   };
 
+  if (parentState.title) {
+    document.title = parentState.title;
+  }
+
   return (
     <div className="tutorial-page brick-title-page">
       <Navigation step={ProposalStep.BrickTitle} onMove={() => saveTitles(parentState)} />
