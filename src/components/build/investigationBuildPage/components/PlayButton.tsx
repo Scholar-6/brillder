@@ -9,15 +9,19 @@ import { Grid } from "@material-ui/core";
 export interface PlayButtonProps {
   tutorialStep: TutorialStep;
   isTutorialSkipped: boolean;
+  isValid: boolean;
 }
 
-const PlayButton: React.FC<PlayButtonProps> = ({tutorialStep, isTutorialSkipped}) => {
+const PlayButton: React.FC<PlayButtonProps> = ({
+  tutorialStep, isTutorialSkipped, isValid
+}) => {
   const renderButtonImage = () => {
     if (tutorialStep === TutorialStep.Play) {
       return <img alt="" src="/feathericons/play-circle-white-green.png" />
-    } else {
-      return <img alt="" src="/feathericons/play-circle-custom-grey.png" />;
+    } else if (isValid) {
+      return <img alt="" src="/feathericons/play-circle-white-green.png" />;
     }
+    return <img alt="" src="/feathericons/play-circle-custom-grey.png" />;
   }
   const renderButton = () => {
     return (

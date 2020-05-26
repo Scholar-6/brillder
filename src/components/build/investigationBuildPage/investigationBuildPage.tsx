@@ -446,12 +446,23 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return "";
   }
 
+  let isValid = false;
+  if (validationRequired) {
+    isValid = true;
+    questions.forEach(q => {
+      let isQuestionValid = validateQuestion(q as any);
+      if (!isQuestionValid) {
+        isValid = false;
+      }
+    });
+  }
+
   return (
     <div className="investigation-build-page">
       <div style={{position: 'fixed'}}>
         <HomeButton onClick={exitAndSave} />
       </div>
-      <PlayButton tutorialStep={step} isTutorialSkipped={isTutorialPassed()} />
+      <PlayButton tutorialStep={step} isTutorialSkipped={isTutorialPassed()} isValid={isValid} />
       <Hidden only={['xs', 'sm']}>
         {renderTutorialLabels()}
         <YourProposalLink
