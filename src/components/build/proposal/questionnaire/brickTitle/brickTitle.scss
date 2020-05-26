@@ -86,6 +86,9 @@ $box-radius: 0.4vw;
         white-space:nowrap;
         text-overflow:ellipsis;
       }
+      .uppercase {
+        text-transform: uppercase ;
+      }
       .brick-title.topic-filled {
         font-size: 0.65vw;
       }
