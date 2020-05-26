@@ -15,6 +15,11 @@ strong {
   font-weight: normal;
 }
 
+.MuiGrid-align-content-xs-center {
+  display: -webkit-inline-box !important;
+ -webkit-box-align: center !important;
+}
+
 .MuiGrid-align-content-xs-center.MuiGrid-justify-xs-center {
   display: -webkit-inline-box !important;
  -webkit-box-align: center !important;
