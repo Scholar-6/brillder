@@ -10,16 +10,17 @@ export interface PlayButtonProps {
   tutorialStep: TutorialStep;
   isTutorialSkipped: boolean;
   isValid: boolean;
+  onClick(): void;
 }
 
 const PlayButton: React.FC<PlayButtonProps> = ({
-  tutorialStep, isTutorialSkipped, isValid
+  tutorialStep, isTutorialSkipped, isValid, onClick
 }) => {
   const renderButtonImage = () => {
     if (tutorialStep === TutorialStep.Play) {
       return <img alt="" src="/feathericons/play-circle-white-green.png" />
     } else if (isValid) {
-      return <img alt="" src="/feathericons/play-circle-white-green.png" />;
+      return <img onClick={() => onClick()} alt="" src="/feathericons/play-circle-white-green.png" />;
     }
     return <img alt="" src="/feathericons/play-circle-custom-grey.png" />;
   }
