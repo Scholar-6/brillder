@@ -19,19 +19,14 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
       <div className="inner-question-type">
         <Grid container direction="row">
           <Grid item md={9}>
-            <div className="text-label-container">
-              <Grid className="text-label" container justify="center" alignContent="center">
-                Synthesis
-              </Grid>
-            </div>
             <DocumentCKEditor
               data={synthesis}
               placeholder=""
               toolbar={[
                 'bold', 'italic', 'fontColor',
                 'superscript', 'subscript', 'strikethrough',
-                'mathType', 'chemType', 'alignment',
-                'bulletedList', 'numberedList', 'insertTable'
+                'mathType', 'insertTable', 'chemType', 'alignment',
+                'bulletedList', 'numberedList'
               ]}
               defaultAlignment="justify"
               onBlur={() => {}}
