@@ -22,7 +22,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({tutorialStep, isTutorialSkipped}
   const renderButton = () => {
     return (
       <div className="play-button-container">
-        <div>Play Preview</div>
+        <div className={isTutorialSkipped ? "hidden" : ""}>Play Preview</div>
         <Grid container justify="center">
           {renderButtonImage()}
         </Grid>
