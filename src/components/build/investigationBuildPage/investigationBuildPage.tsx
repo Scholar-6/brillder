@@ -459,7 +459,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       <div style={{position: 'fixed'}}>
         <HomeButton onClick={exitAndSave} />
       </div>
-      <PlayButton tutorialStep={step} isTutorialSkipped={isTutorialPassed()} isValid={isValid} onClick={moveToReview} />
+      <PlayButton
+        tutorialStep={step}
+        isTutorialSkipped={isTutorialPassed()}
+        isValid={isValid}
+        onClick={moveToReview}
+      />
       <Hidden only={['xs', 'sm']}>
         {renderTutorialLabels()}
         <YourProposalLink
