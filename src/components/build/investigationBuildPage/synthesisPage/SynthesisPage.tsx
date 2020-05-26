@@ -25,7 +25,7 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
               toolbar={[
                 'bold', 'italic', 'fontColor',
                 'superscript', 'subscript', 'strikethrough',
-                'mathType', 'insertTable', 'chemType', 'alignment',
+                'mathType', 'chemType', 'insertTable', 'alignment',
                 'bulletedList', 'numberedList'
               ]}
               defaultAlignment="justify"
