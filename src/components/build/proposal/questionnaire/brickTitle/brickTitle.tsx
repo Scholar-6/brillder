@@ -47,7 +47,7 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
         <img alt="titles" src="/images/new-brick/titles.png" className="titles-image" />
       </Grid>
       <div className="brick-preview-container">
-        <div className={"brick-title " + (title ? 'topic-filled' : '')}>
+        <div className={"brick-title uppercase " + (title ? 'topic-filled' : '')}>
           {title ? title : 'TITLE'}
         </div>
         <div className="brick-topics">
