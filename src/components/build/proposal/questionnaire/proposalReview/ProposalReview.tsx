@@ -60,15 +60,6 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
           <h2>When you're ready, start building!</h2>
         </Grid>
         <div className="book-main-container">
-          <Grid className="next-button-container" container alignContent="center">
-            {
-              bookHovered ? (
-                <div>
-                  <div className="next-button" onClick={savingBrick}></div>
-                </div>
-              ) : ""
-            }
-          </Grid>
           <div className="book-container">
             <div className="book" onMouseOver={() => onBookHover()}>
               <div className="back"></div>
@@ -126,6 +117,15 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
               </div>
             </div>
           </div>
+          <Grid className="next-button-container" container alignContent="center">
+            {
+              bookHovered ? (
+                <div>
+                  <div className="next-button" onClick={savingBrick}></div>
+                </div>
+              ) : ""
+            }
+          </Grid>
         </div>
         <div className="red-right-block"></div>
       </Grid>
