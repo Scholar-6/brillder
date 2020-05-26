@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 
 import "./investigationBuildPage.scss";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
+import PlayButton from 'components/build/investigationBuildPage/components/PlayButton';
 import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
 import TutorialWorkArea, { TutorialStep } from './tutorial/TutorialPanelWorkArea';
 import QuestionTypePage from "./questionType/questionType";
@@ -450,6 +451,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       <div style={{position: 'fixed'}}>
         <HomeButton onClick={exitAndSave} />
       </div>
+      <PlayButton tutorialStep={step} />
       <Hidden only={['xs', 'sm']}>
         {renderTutorialLabels()}
         <YourProposalLink
