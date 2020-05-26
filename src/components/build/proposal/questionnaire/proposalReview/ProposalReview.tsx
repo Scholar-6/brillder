@@ -43,6 +43,10 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
     );
   }
 
+  if (brick.title) {
+    document.title = brick.title;
+  }
+
   return (
     <div className="proposal-page">
       <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
