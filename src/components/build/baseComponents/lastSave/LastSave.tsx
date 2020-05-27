@@ -68,13 +68,13 @@ const LastSave:React.FC<LastSaveProps> = (props) => {
       <Grid container alignContent="center" justify="center">
         <div className={className}>
           <Grid container direction="row" className="saved-info-row">
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <Grid container alignContent="center" justify="center">
                 <img alt="" src="/feathericons/save-white.png" />
               </Grid>
             </Grid>
-            <Grid item xs={9} container alignContent="center">
-              <div>
+            <Grid item xs={10} container alignContent="center">
+              <div className="text-container">
                 {renderText()}
               </div>
             </Grid>
