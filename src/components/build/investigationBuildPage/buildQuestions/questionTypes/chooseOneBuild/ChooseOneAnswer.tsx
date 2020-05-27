@@ -16,6 +16,7 @@ export interface ChooseOneAnswerProps {
   length: number;
   answer: ChooseOneAnswer;
   validationRequired: boolean;
+  checkBoxValid: boolean;
   save(): void;
   removeFromList(index: number): void;
   onChecked(event: any, checked: boolean): void;
@@ -23,7 +24,7 @@ export interface ChooseOneAnswerProps {
 }
 
 const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
-  locked, index, length, answer, validationRequired,
+  locked, index, length, answer, validationRequired, checkBoxValid,
   removeFromList, update, save, onChecked
 }) => {
   const renderDeleteButton = () => {
@@ -68,7 +69,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
       {renderDeleteButton()}
       <Grid container alignContent="center" className={`checkbox-container ${checkboxClass}`}>
         <Checkbox
-          className="left-ckeckbox"
+          className={`left-ckeckbox ${(validationRequired && !checkBoxValid) ? "checkbox-invalid" : ""}`}
           disabled={locked}
           checked={answer.checked}
           onChange={onChecked}
