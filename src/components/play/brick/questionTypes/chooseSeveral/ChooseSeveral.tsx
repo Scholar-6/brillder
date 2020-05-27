@@ -130,22 +130,33 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     }
   }
 
-  renderButton(input: any, index:number) {
+  renderButton(choice: any, index:number) {
+    let className = "choose-choice";
     let active = this.state.activeItems.find(i => i === index) as number;
+
+    if (this.props.isPreview) {
+      if (choice.checked) {
+        className += " active";
+      }
+    } else {
+      if (active >= 0) {
+        className += " active";
+      }
+    }
 
     return (
       <Button
-        className={(active >= 0) ? "choose-choice active" : "choose-choice"}
+        className={className}
         key={index}
         onClick={() => this.setActiveItem(index)}
       >
         <div style={{width: '100%'}}>
         <Grid container direction="row">
           <Grid item xs={1}>
-            {this.renderIcon(input, index)}
+            {this.renderIcon(choice, index)}
           </Grid>
           <Grid item xs={11}>
-            {this.renderData(input)}
+            {this.renderData(choice)}
           </Grid>
         </Grid>
         <Grid container direction="row">
@@ -171,7 +182,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     return (
       <div className="choose-one-live">
         {
-          component.list.map((input: any, index: number) => this.renderButton(input, index))
+          component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }
         <ReviewGlobalHint
           attempt={this.props.attempt}
