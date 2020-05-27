@@ -9,37 +9,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import './PairMatch.scss';
 import CompComponent from '../Comp';
-import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import DenimCrossRect from 'components/play/components/DenimCrossRect';
 import DenimTickRect from 'components/play/components/DenimTickRect';
 import {QuestionValueType} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 import {Answer} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/pairMatchBuild/types';
+import { PairMatchProps, PairMatchState } from './interface';
+import {mark} from './service';
 
-
-interface PairMatchChoice {
-  value: string;
-  index: number;
-  hint: string;
-  option: string;
-}
-
-interface PairMatchComponent {
-  type: number;
-  list: PairMatchChoice[];
-  choices: any[];
-  options: any[];
-}
-
-interface PairMatchProps extends CompQuestionProps {
-  component: PairMatchComponent;
-  answers: number;
-}
-
-interface PairMatchState {
-  userAnswers: any[];
-}
 
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   constructor(props: PairMatchProps) {
@@ -82,24 +60,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   }
 
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
-    let markIncrement = prev ? 2 : 5;
-    attempt.correct = true;
-    attempt.marks = 0;
-    attempt.maxMarks = 0;
-    attempt.answer.forEach((answer: any, index: number, array: any[]) => {
-      attempt.maxMarks += 5;
-      if(answer.index === this.props.component.list[index].index) {
-        if(!prev) {
-          attempt.marks += markIncrement;
-        } else if (prev.answer[index].index !== this.props.component.list[index].index) {
-          attempt.marks += markIncrement;
-        }
-      } else {
-        attempt.correct = false;
-      }
-    })
-    if(attempt.marks === 0 && !prev) attempt.marks = 1;
-    return attempt;
+    return mark(this.props.component.list, attempt, prev);
   }
 
   renderIcon(index: number) {
