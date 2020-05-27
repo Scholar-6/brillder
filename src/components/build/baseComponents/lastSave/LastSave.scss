@@ -18,7 +18,11 @@
   }
 
   .saved-info-row {
-    width: 11vw;
+    width: 10.2vw;
+
+    .text-container {
+      margin-left: 0.4vw;
+    }
   }
 
   .saved-info .tutorial-border {
