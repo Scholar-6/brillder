@@ -96,6 +96,10 @@
     -webkit-box-pack: start !important;
   }
 
+  .checkbox-invalid {
+    color: red;
+  }
+
   .Mui-checked {
     color: $light-green !important;
   }
