@@ -107,13 +107,27 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     return attempt;
   }
 
-  renderIcon(input: any, index: number) {
+  checkChoice(choice: any, index: number) {
     if (this.props.attempt) {
       const {answer} = this.props.attempt;
       const found = answer.find((a:number) => a === index);
       if (found >= 0) {
-        return input.checked ? <DenimTickRect /> : <DenimCrossRect />;
+        if (choice.checked) {
+          return true;
+        } else {
+          return false;
+        }
       }
+    }
+    return null;
+  }
+
+  renderIcon(choice: any, index: number) {
+    const isCorrect = this.checkChoice(choice, index);
+    if (isCorrect === true) {
+      return <DenimTickRect />;
+    } else if (isCorrect === false) {
+      return <DenimCrossRect />;
     }
     return "";
   }
@@ -134,13 +148,18 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     let className = "choose-choice";
     let active = this.state.activeItems.find(i => i === index) as number;
 
+    console.log(this.props.isPreview);
     if (this.props.isPreview) {
       if (choice.checked) {
-        className += " active";
+        className += " correct";
       }
     } else {
       if (active >= 0) {
         className += " active";
+      }
+      const isCorrect = this.checkChoice(choice, index);
+      if (isCorrect === true) {
+        className += " correct";
       }
     }
 
@@ -180,7 +199,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     const { component } = this.props;
 
     return (
-      <div className="choose-one-live">
+      <div className="choose-several-live">
         {
           component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }

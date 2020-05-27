@@ -1,6 +1,6 @@
 @import "_variables";
 
-.choose-one-live {
+.choose-several-live {
   .choose-choice {
     color: white;
     text-align: center;
@@ -18,6 +18,9 @@
   .choose-choice.active {
     padding-top: 4px;
     border: 5px solid white;
+  }
+
+  .choose-choice.correct {
     background: $light-green;
   }
 }
