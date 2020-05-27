@@ -2,18 +2,17 @@
 
 .choose-several-live {
   .choose-choice {
-    color: white;
+    color: $dark-blue;
     text-align: center;
     text-transform: none !important;
     border-radius: 0 !important;
     width: 100%;
-    opacity: 0.8;
+    opacity: 1;
     font-size: $answer-input-text-size;
     font-family: $font-family-regular;
   }
 
-  .choose-choice:nth-child(odd) {background: #0076B4}
-  .choose-choice:nth-child(even) {background: #0A3B7E}
+  .choose-choice {background: #E5E8ED}
 
   .choose-choice.active {
     padding-top: 4px;
