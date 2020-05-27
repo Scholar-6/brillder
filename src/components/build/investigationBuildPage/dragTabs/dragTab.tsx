@@ -29,7 +29,7 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, isValid, selectQue
         </Grid>
         <Grid item container direction="row" alignContent="center" justify="flex-end" className="remove-icon-container">
           {
-            active === true && <ClearIcon className="remove-icon" onClick={removeTab} />
+            active === true && <img alt="" src="/feathericons/x-blue.png" className="remove-icon" onClick={removeTab} />
           }
         </Grid>
       </Grid>

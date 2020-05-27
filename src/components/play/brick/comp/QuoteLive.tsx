@@ -7,10 +7,10 @@ interface TextProps {
   component: any;
 }
 
-const TextLive: React.FC<TextProps> = ({ component }) => {
+const QuoteLive: React.FC<TextProps> = ({ component }) => {
   return <div
     className="quotes-live"
     dangerouslySetInnerHTML={{ __html: component.value}} />;
 }
 
-export default TextLive;
+export default QuoteLive;
