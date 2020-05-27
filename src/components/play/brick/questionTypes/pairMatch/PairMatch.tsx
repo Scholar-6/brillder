@@ -2,7 +2,6 @@
 import React from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -140,7 +139,8 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
               <ListItem
                 key={i}
                 className={
-                  `pair-match-play-option ${(item.optionType === QuestionValueType.Image || item.answerType === QuestionValueType.Image) ? "pair-match-image-choice" : ""}`
+                  `pair-match-play-option ${(item.optionType === QuestionValueType.Image || item.answerType === QuestionValueType.Image)
+                    ? "pair-match-image-choice" : ""}`
                 }
               >
                 {this.renderIcon(i)}
@@ -169,13 +169,8 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
                     `pair-match-play-choice ${(answer.optionType === QuestionValueType.Image || answer.answerType === QuestionValueType.Image) ? "pair-match-image-choice" : ""}`
                   }
                 >
-                  <Grid container direction="row">
-                    <Grid item xs={1} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
-                      <DragIndicatorIcon/>
-                    </Grid>
-                    <Grid item xs={11} container justify="center" alignContent="center" className="pair-match-play-data">
-                      {this.renderAnswer(answer)}
-                    </Grid>
+                  <Grid item xs={12} container justify="center" alignContent="center" className="pair-match-play-data">
+                    {this.renderAnswer(answer)}
                   </Grid>
                 </div>
               ))
