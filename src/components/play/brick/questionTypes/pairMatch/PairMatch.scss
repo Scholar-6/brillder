@@ -1,12 +1,16 @@
+@import '_variables';
+
 .pair-match-play {
+  $font-size: 14px;
   .pair-match-play-option {
     color: white;
-    font-size: 10px !important;
+    color: $dark-blue;
     height: 47px;
     width: 100%;
+    overflow: hidden;
     .pair-match-play-option-text {
-      font-size: 10px;
-      line-height: 3;
+      font-family: $font-family-regular;
+      font-size: $font-size;
       height: 24px;
 
       img {
@@ -37,13 +41,16 @@
   }
 
   .pair-match-play-choice {
-    font-size: 10px;
-    color: black;
+    font-family: $font-family-regular;
+    color: $dark-blue;
+    font-size: $font-size;
     margin: 1px;
     
-    min-height: 46px;
+    height: 46px;
     width: 100%;
     background: #E5E8ED;
+    overflow: hidden;
+
     .pair-match-play-data {
       min-height: 46px;
     }
