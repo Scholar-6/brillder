@@ -7,30 +7,24 @@
     top: 7.7%;
     right: 0;
     width: 34.3vw;
+    color: white;
     text-align: center;
-    > div > div {
-      color: white;
-      font-size: 1.25vw;
-      text-align: center;
-      width: 80%;
-      > div {
-        > img {
-          margin-top: 0.1vw;
-          height: 1.52vw;
-          width: 1.52vw;
-          margin-right: 1.3vw;
-        }
-        > div {
-          display: inline-block;
-        }
-      }
+    img {
+      margin-top: 0.3vw;
+      height: 1.52vw;
+      width: 1.52vw;
+      margin-right: 1.3vw;
     }
+  }
+
+  .saved-info-row {
+    width: 11vw;
   }
 
   .saved-info .tutorial-border {
     border-radius: 0.6vw;
-    width: 46%;
-    padding: 0.8vh 0;
+    padding: 0.1vh 0;
+    padding-left: 0.5vw;
     border: 0.1vw dashed $orange;
   }
 }
