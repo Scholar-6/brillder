@@ -34,6 +34,9 @@
   
   .dropzone:hover {
     color: $orange;
+    .plus-image {
+      background: $orange;
+    }
   }
   
   .dropzone.disabled {
