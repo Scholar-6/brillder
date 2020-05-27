@@ -24,9 +24,12 @@
   .choose-choice.active {
     padding-top: 4px;
     border: 5px solid white;
-    background: $light-green !important;
   }
 
+  .choose-choice.correct {
+    background: $light-green !important;
+  }
+  
   .question-hint-global {
     margin-top: 10px;
   }
