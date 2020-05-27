@@ -11,10 +11,16 @@ const AddImageBtnContent: React.FC = () => {
       container
       direction="row"
       justify="center"
-      alignContent="center"
       className="answer-image-drop-content drop-placeholder"
     >
-      <AddCircleIcon /> <span>jpg.</span>
+      <Grid container className="answer-image-drop-button" direction="row">
+        <Grid xs={6}>
+          <img alt="" className="plus-image" src="/feathericons/plus-white.png" />
+        </Grid>
+        <Grid xs={6}>
+          <span>jpg.</span>
+        </Grid>
+      </Grid>
     </Grid>
   );
 };
