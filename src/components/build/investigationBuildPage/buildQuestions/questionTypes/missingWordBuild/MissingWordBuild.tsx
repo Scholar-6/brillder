@@ -123,7 +123,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
     return name;
   }
 
-  let checkBoxValid = !!validator.getChecked(state.list);
+  let checkBoxValid = !!validator.getChecked(choice.answers);
 
   const renderChoice = (choice: MissingChoice, key: number) => {
     return (
