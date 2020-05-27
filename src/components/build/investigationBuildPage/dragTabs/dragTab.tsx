@@ -1,5 +1,4 @@
 import React from 'react'
-import ClearIcon from '@material-ui/icons/Clear';
 import { Grid } from '@material-ui/core';
 
 export interface DragTabProps {
