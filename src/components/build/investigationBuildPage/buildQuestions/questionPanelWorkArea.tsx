@@ -80,7 +80,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
           <Grid container direction="row">
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
               <Grid container item xs={12} className="left-sidebar" alignItems="center">
-              
                 <ReactSortable
                   list={componentTypes}
                   group={{ name: "cloning-group-name", pull: "clone" }}
@@ -89,7 +88,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   <DragBox
                     locked={locked}
                     name="T" fontSize="3.4vw" label="T E X T"
-                    hoverMarginTop="0.5vw"
+                    hoverMarginTop="0vw"
                     fontFamily="Brandon Grotesque Bold"
                     value={QuestionComponentTypeEnum.Text}
                   />
