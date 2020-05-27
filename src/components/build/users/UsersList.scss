@@ -246,7 +246,6 @@ $grey: #b0b0ad;
       .users-table {
         border: none;
         width: 100%;
-        height: 59vh;
         thead {
           background: $tab-grey;
           color: $dark-blue;
@@ -284,10 +283,12 @@ $grey: #b0b0ad;
           }
         }
         tr.user-row {
+          height: 4.5vh;
           td {
             padding-left: 0.5vw;
             color: $dark-blue;
             font-size: 1.3vw;
+            padding-top: 0;
 
             .edit-button {
               cursor: pointer;
