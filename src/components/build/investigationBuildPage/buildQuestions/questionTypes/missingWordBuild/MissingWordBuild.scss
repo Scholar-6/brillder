@@ -22,6 +22,10 @@
     margin-left: 1.25%;
     width: 97.5%;
 
+    .checkbox-invalid {
+      color: $orange;
+    }
+
     .Mui-checked {
       color: $light-green;
     }
