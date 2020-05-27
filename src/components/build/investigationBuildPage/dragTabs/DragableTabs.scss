@@ -79,7 +79,9 @@ $tile-height: 100%;
       right: 0;
     }
 
-    .remove-icon:hover {
+    .remove-icon {
+      margin-top:0.5vh;
+      height: 3vh;
       cursor: pointer;
     }
   }
