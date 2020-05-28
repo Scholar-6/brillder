@@ -38,10 +38,10 @@ import {
   getActiveQuestion,
   prepareBrickToSave,
   removeQuestionByIndex,
-  convertToSort,
   setQuestionTypeByIndex,
   parseQuestion,
 } from "./questionService/QuestionService";
+import {convertToSort, convertToShortAnswer} from "./questionService/ConvertService";
 import { User } from "model/user";
 
 
@@ -182,17 +182,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setQuestion(index, question);
   };
 
-  const convertToShortAnswer = (type: QuestionTypeEnum) => {
-    const index = getQuestionIndex(activeQuestion);
-    activeQuestion.type = type;
-    const component = getUniqueComponent(activeQuestion);
-    if (component.list && component.list.length > 0) {
-      component.list = [component.list[0]];
-    }
-    const question = Object.assign({}, activeQuestion);
-    setQuestion(index, question);
-  }
-
   const convertQuestionTypes = (type: QuestionTypeEnum) => {
     if (
       type === QuestionTypeEnum.ChooseOne ||
@@ -204,7 +193,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       const question = convertToSort(activeQuestion);
       setQuestion(index, question);
     } else if (type === QuestionTypeEnum.ShortAnswer) {
-      convertToShortAnswer(type);
+      const index = getQuestionIndex(activeQuestion);
+      const question = convertToShortAnswer(activeQuestion);
+      setQuestion(index, question);
     } else {
       setQuestionType(type);
     }
