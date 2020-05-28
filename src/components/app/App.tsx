@@ -54,6 +54,26 @@ const App: React.FC = (props: any) => {
     [],
   );
 
+  const addZendesk = () => {
+    var head = document.getElementsByTagName('head').item(0);
+    if (head) {
+      var script = document.createElement('script');
+      script.setAttribute('id', 'ze-snippet');
+      script.setAttribute('type', 'text/javascript');
+      script.setAttribute(
+        'src',
+        `https://static.zdassets.com/ekr/snippet.js?key=${
+          process.env.REACT_APP_ZENDESK_ID
+            ? process.env.REACT_APP_ZENDESK_ID
+            : '1415bb80-138f-4547-9798-3082b781844a'
+        }`
+      );
+      head.appendChild(script);
+    }
+  }
+
+  addZendesk();
+
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
