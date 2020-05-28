@@ -44,8 +44,8 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
   }
 
   onSubjectChange(event: any, newValue: any[]) {
-    console.log(event.target.value);
     this.setState({...this.state, selected: newValue});
+    this.props.onSubjectChange(newValue);
   }
 
   onSubjectInput(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {

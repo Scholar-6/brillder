@@ -126,7 +126,6 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
 
   const renderChoice = (choice: MissingChoice, key: number) => {
     let checkBoxValid = !!validator.getChecked(choice.answers);
-    console.log(checkBoxValid);
 
     return (
       <div className="choose-several-box" key={key}>
