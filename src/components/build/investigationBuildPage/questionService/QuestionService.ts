@@ -95,16 +95,6 @@ export function removeQuestionByIndex(questions: Question[], index: number) {
   return updatedQuestions;
 }
 
-export function convertToSort(question: Question) {
-  const updatedQuestion = Object.assign({}, question);
-  updatedQuestion.type = QuestionTypeEnum.Sort;
-  updatedQuestion.hint = {
-    status: HintStatus.All,
-    value: question.hint.value,
-    list: []
-  };
-  return updatedQuestion;
-}
 
 export function setQuestionTypeByIndex(questions: Question[], index: number, type: QuestionTypeEnum) {
   return update(questions, { [index]: { type: { $set: type } } });
