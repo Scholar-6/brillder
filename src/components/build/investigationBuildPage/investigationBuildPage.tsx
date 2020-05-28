@@ -41,7 +41,9 @@ import {
   setQuestionTypeByIndex,
   parseQuestion,
 } from "./questionService/QuestionService";
-import {convertToSort, convertToShortAnswer} from "./questionService/ConvertService";
+import {
+  convertToSort, convertToShortAnswer, convertToShuffle
+} from "./questionService/ConvertService";
 import { User } from "model/user";
 
 
@@ -195,6 +197,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     } else if (type === QuestionTypeEnum.ShortAnswer) {
       const index = getQuestionIndex(activeQuestion);
       const question = convertToShortAnswer(activeQuestion);
+      setQuestion(index, question);
+    } else if (type === QuestionTypeEnum.VerticalShuffle || type === QuestionTypeEnum.HorizontalShuffle) {
+      const index = getQuestionIndex(activeQuestion);
+      const question = convertToShuffle(activeQuestion);
       setQuestion(index, question);
     } else {
       setQuestionType(type);
