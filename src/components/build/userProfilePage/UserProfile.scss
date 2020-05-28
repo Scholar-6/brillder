@@ -77,6 +77,12 @@ $base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5),
   width: 100%;
   font-family: $font-family-regular;
 
+  .phone-question-preview-box {
+    top: 10.5vh;
+    height: 90.05vh;
+    width: 27.5vw;
+  }
+
   .profile-block {
     position: relative;
     background: $light-grey;
