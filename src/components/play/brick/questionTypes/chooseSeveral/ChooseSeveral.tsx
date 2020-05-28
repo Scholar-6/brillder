@@ -148,7 +148,6 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     let className = "choose-choice";
     let active = this.state.activeItems.find(i => i === index) as number;
 
-    console.log(this.props.isPreview);
     if (this.props.isPreview) {
       if (choice.checked) {
         className += " correct";
