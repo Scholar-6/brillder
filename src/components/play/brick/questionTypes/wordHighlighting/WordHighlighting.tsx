@@ -92,7 +92,7 @@ class WordHighlighting extends CompComponent<
     const { component } = this.props;
 
     if (this.props.isPreview === true && (!component.words || component.words.length === 0)) {
-      return <div>Words will appear here in correction mode.</div>
+      return <div className="word-highlighting-play">You can have a peek once you highlight the correct words</div>
     }
 
     return (
