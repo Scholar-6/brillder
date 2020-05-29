@@ -1,10 +1,12 @@
 @import '_variables';
 
 .line-highlighting-play {
+  font-size: 1rem;
+  font-family: $font-family-regular;
+  color: $dark-blue;
+
   .lines-container {
     width: 100%;
-    font-family: $font-family-regular;
-    color: $dark-blue;
 
     .line {
       cursor: pointer;
