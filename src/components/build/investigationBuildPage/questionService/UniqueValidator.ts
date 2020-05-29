@@ -139,6 +139,10 @@ const validateLineHighlighting = (comp: any) => {
 }
   
 const validateMissingWord = (comp: any) => {
+  if (!comp.choices) {
+    return false;
+  }
+
   for (let choice of comp.choices as MissingChoice[]) {
     let invalid = choice.answers.find((a:any) => !a.value);
   
