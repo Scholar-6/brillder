@@ -42,7 +42,7 @@ import {
   parseQuestion,
 } from "./questionService/QuestionService";
 import {
-  convertToSort, convertToShortAnswer, convertToShuffle
+  convertToSort, convertToShortAnswer, convertToVerticalShuffle, convertToHorizontalShuffle
 } from "./questionService/ConvertService";
 import { User } from "model/user";
 
@@ -198,9 +198,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       const index = getQuestionIndex(activeQuestion);
       const question = convertToShortAnswer(activeQuestion);
       setQuestion(index, question);
-    } else if (type === QuestionTypeEnum.VerticalShuffle || type === QuestionTypeEnum.HorizontalShuffle) {
+    } else if (type === QuestionTypeEnum.VerticalShuffle) {
       const index = getQuestionIndex(activeQuestion);
-      const question = convertToShuffle(activeQuestion);
+      const question = convertToVerticalShuffle(activeQuestion);
+      setQuestion(index, question);
+    } else if (type === QuestionTypeEnum.HorizontalShuffle) {
+      const index = getQuestionIndex(activeQuestion);
+      const question = convertToHorizontalShuffle(activeQuestion);
       setQuestion(index, question);
     } else {
       setQuestionType(type);
