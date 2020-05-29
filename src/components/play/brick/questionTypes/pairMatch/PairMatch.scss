@@ -33,11 +33,8 @@
       margin-right: 20px;
     }
   }
-  .pair-match-play-option:nth-child(odd) {
-    background: #0076b4;
-  }
-  .pair-match-play-option:nth-child(even) {
-    background: #111f33;
+  .pair-match-play-option {
+    background: $tab-grey;
   }
 
   .answers-list {
