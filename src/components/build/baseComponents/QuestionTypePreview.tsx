@@ -8,6 +8,7 @@ import ChooseOnePreview from "components/build/baseComponents/phonePreview/quest
 import ChooseSeveralPreview from "components/build/baseComponents/phonePreview/questionPreview/ChooseSeveralPreview";
 import VerticalShufflePreview from "components/build/baseComponents/phonePreview/questionPreview/VerticalShufflePreview";
 import HorizontalShufflePreview from "components/build/baseComponents/phonePreview/questionPreview/HorizontalShufflePreview";
+import LogoPage from "components/logoPage/logoPage";
 
 
 interface QuestionTypePreviewProps {
@@ -42,7 +43,7 @@ const QuestionTypePreview:React.FC<QuestionTypePreviewProps> = ({
     return preview;
   }
         
-  return <PhonePreview link={window.location.origin + "/logo-page"} />
+  return <PhonePreview Component={LogoPage} />
 }
 
 export default QuestionTypePreview;
