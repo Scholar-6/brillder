@@ -9,17 +9,15 @@
     padding: 10px 0;
     text-align: center;
     font-family: $font-family-regular;
-    background-color: #ccc;
+    background-color: $tab-grey;
     font-weight: 700;
     font-size: 1rem;
     line-height: 1;
   }
   .sort-category-list-container {
-    background-color: #eee;
+    background-color: $answer-grey;
     min-height: 30px;
     min-width: 200px;
-    outline: #535353 dashed 2px;
-    outline-offset: -5px;
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 10px;
