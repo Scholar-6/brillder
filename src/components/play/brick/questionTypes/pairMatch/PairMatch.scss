@@ -3,8 +3,10 @@
 .pair-match-play {
   $font-size: 14px;
   .pair-match-play-option {
+    text-align: center;
     color: white;
     color: $dark-blue;
+    margin: 1px;
     height: 47px;
     width: 100%;
     overflow: hidden;
@@ -14,7 +16,7 @@
       height: 24px;
 
       img {
-        height: 45px;
+        height: 44px;
       }
     }
     .pair-match-play-option-icon {
@@ -46,19 +48,14 @@
     font-size: $font-size;
     margin: 1px;
     
-    height: 46px;
+    height: 47px;
     width: 100%;
-    background: #E5E8ED;
+    background: $answer-grey;
     overflow: hidden;
 
     .pair-match-play-data {
       min-height: 46px;
     }
-  }
-
-  .pair-match-play-choice:nth-child(1) {
-    min-height: 47px;
-    margin-top: 0;
   }
 
   .pair-match-image-choice {
