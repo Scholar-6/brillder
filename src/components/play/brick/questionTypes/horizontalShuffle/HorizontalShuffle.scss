@@ -1,6 +1,10 @@
+@import "_variables";
+
 .vertical-shuffle-play {
   .MuiCard-root {
     font-size: 1rem !important;
+    color: $dark-blue;
+    font-family: $font-family-regular;
   }
   .vertical-shuffle-choice {
     border: 1px dashed black;
