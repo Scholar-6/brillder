@@ -56,6 +56,7 @@ const App: React.FC = (props: any) => {
   const addZendesk = () => {
     var head = document.getElementsByTagName('head').item(0);
     if (head) {
+      
       var script = document.createElement('script');
       script.setAttribute('id', 'ze-snippet');
       script.setAttribute('type', 'text/javascript');
