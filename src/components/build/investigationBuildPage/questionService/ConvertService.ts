@@ -32,6 +32,9 @@ function stripHtmlQuestionList(question: Question) {
   return question;
 }
 
+export function getQuestionIndex(questions: Question[], question: Question) {
+  return questions.indexOf(question);
+};
 
 export function convertToSort(question: Question) {
   const updatedQuestion = setQuestionType(question, QuestionTypeEnum.Sort);
@@ -81,4 +84,44 @@ export function convertToHorizontalShuffle(question: Question) {
 export function convertToPairMatch(question: Question) {
   const updatedQuestion = setQuestionType(question, QuestionTypeEnum.PairMatch);
   return stripHtmlQuestionList(updatedQuestion);
+}
+
+
+export function convertToQuestionType(
+  questions: Question[], question: Question, type: QuestionTypeEnum,
+  setQuestionCallback: Function
+) {
+ if (type === QuestionTypeEnum.ChooseOne) {
+    const index = getQuestionIndex(questions, question);
+    const updatedQuestion = convertToChooseOne(question);
+    setQuestionCallback(index, updatedQuestion);
+  } else if (type === QuestionTypeEnum.ChooseSeveral) {
+    const index = getQuestionIndex(questions, question);
+    const updatedQuestion = convertToChooseSeveral(question);
+    setQuestionCallback(index, updatedQuestion);
+  } else if (type === QuestionTypeEnum.Sort) {
+    const index = getQuestionIndex(questions, question);
+    const updatedQuestion = convertToSort(question);
+    setQuestionCallback(index, updatedQuestion);
+  } else if (type === QuestionTypeEnum.ShortAnswer) {
+    const index = getQuestionIndex(questions, question);
+    const updatedQuestion = convertToShortAnswer(question);
+    setQuestionCallback(index, updatedQuestion);
+  } else if (type === QuestionTypeEnum.VerticalShuffle) {
+    const index = getQuestionIndex(questions, question);
+    const updatedQuestion = convertToVerticalShuffle(question);
+    setQuestionCallback(index, updatedQuestion);
+  } else if (type === QuestionTypeEnum.HorizontalShuffle) {
+    const index = getQuestionIndex(questions, question);
+    const updatedQuestion = convertToHorizontalShuffle(question);
+    setQuestionCallback(index, updatedQuestion);
+  } else if (type === QuestionTypeEnum.PairMatch) {
+    const index = getQuestionIndex(questions, question);
+    const updatedQuestion = convertToPairMatch(question);
+    setQuestionCallback(index, updatedQuestion);
+  } else {
+    const index = getQuestionIndex(questions, question);
+    const updatedQuestion = setQuestionType(question, type);
+    setQuestionCallback(index, updatedQuestion);
+  }
 }
