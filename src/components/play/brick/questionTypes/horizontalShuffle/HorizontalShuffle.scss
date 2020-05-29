@@ -1,12 +1,15 @@
-
 .vertical-shuffle-play {
+  .MuiCard-root {
+    font-size: 1rem !important;
+  }
   .vertical-shuffle-choice {
-      border: 1px dashed black;
-      color: black;
-      margin: 1px;
-      width: 100%;
-      > div {
-        margin: 10px !important;
-      }
+    border: 1px dashed black;
+    color: black;
+    margin: 1px;
+    font-size: 1rem;
+    width: 100%;
+    > div {
+      margin: 10px !important;
+    }
   }
 }
