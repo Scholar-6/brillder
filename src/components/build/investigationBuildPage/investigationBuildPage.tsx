@@ -424,6 +424,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   });
 
+  if (!synthesis) {
+    isValid = false;
+  }
+
   return (
     <div className="investigation-build-page">
       <div style={{position: 'fixed'}}>

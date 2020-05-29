@@ -2,7 +2,6 @@ import React from "react";
 
 import "./PlayButton.scss";
 import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
-import { useHistory } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 
 
