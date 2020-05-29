@@ -40,10 +40,7 @@ import {
   setQuestionTypeByIndex,
   parseQuestion,
 } from "./questionService/QuestionService";
-import {
-  convertToSort, convertToShortAnswer, convertToVerticalShuffle, convertToHorizontalShuffle,
-  convertToPairMatch, convertToChooseOne, convertToChooseSeveral
-} from "./questionService/ConvertService";
+import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
 
 
@@ -174,38 +171,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const convertQuestionTypes = (type: QuestionTypeEnum) => {
-    if (type === QuestionTypeEnum.ChooseOne) {
-      const index = getQuestionIndex(activeQuestion);
-      const question = convertToChooseOne(activeQuestion);
-      setQuestion(index, question);
-    } else if (type === QuestionTypeEnum.ChooseSeveral) {
-      const index = getQuestionIndex(activeQuestion);
-      const question = convertToChooseSeveral(activeQuestion);
-      setQuestion(index, question);
-    } else if (type === QuestionTypeEnum.Sort) {
-      const index = getQuestionIndex(activeQuestion);
-      const question = convertToSort(activeQuestion);
-      setQuestion(index, question);
-    } else if (type === QuestionTypeEnum.ShortAnswer) {
-      const index = getQuestionIndex(activeQuestion);
-      const question = convertToShortAnswer(activeQuestion);
-      setQuestion(index, question);
-    } else if (type === QuestionTypeEnum.VerticalShuffle) {
-      const index = getQuestionIndex(activeQuestion);
-      const question = convertToVerticalShuffle(activeQuestion);
-      setQuestion(index, question);
-    } else if (type === QuestionTypeEnum.HorizontalShuffle) {
-      const index = getQuestionIndex(activeQuestion);
-      const question = convertToHorizontalShuffle(activeQuestion);
-      setQuestion(index, question);
-    } else if (type === QuestionTypeEnum.PairMatch) {
-      const index = getQuestionIndex(activeQuestion);
-      const question = convertToPairMatch(activeQuestion);
-      setQuestion(index, question);
-    } else {
-      setQuestionType(type);
-    }
-    saveBrick();
+    if (locked) { return; }
+    convertToQuestionType(questions, activeQuestion, type, setQuestionAndSave);
   };
 
   const deleteQuestionByIndex = (index: number) => {
@@ -247,6 +214,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (locked) { return; }
     setQuestions(update(questions, { [index]: { $set: question } }));
   };
+
+  const setQuestionAndSave = (index: number, question: Question) => {
+    let updatedQuestions = update(questions, { [index]: { $set: question } });
+    setQuestions(updatedQuestions);
+    saveBrickQuestions(updatedQuestions);
+  }
 
   const { brick } = props;
 
