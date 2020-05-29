@@ -20,7 +20,6 @@ import InvestigationBuildPage from '../build/investigationBuildPage/investigatio
 import LoginPage from '../authPages/loginPage/loginPage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
 import ChooseUserPage from '../authPages/chooseUserPage/ChooseUserPage';
-import LogoPage from '../logoPage/logoPage';
 import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
 import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
 import SignUpFinished from '../authPages/signUpFinished/SignUpFinished';
@@ -103,7 +102,6 @@ const App: React.FC = (props: any) => {
         <AuthRoute path="/login" exact component={LoginPage} />
         <AuthRoute path="/sign-up-success" exact component={SignUpFinished} />
 
-        <Route path="/logo-page" component={LogoPage} />
         <Route component={AuthRedirectRoute} />
       </Switch>
       <VersionLabel />
