@@ -1,6 +1,9 @@
 @import '_variables';
 
 .sort-play {
+  .MuiTypography-root {
+    font-family: $font-family-regular !important;
+  }
   .sort-category {
     padding: 10px 0;
     text-align: center;
@@ -8,7 +11,7 @@
     font-family: $font-family-regular;
     background-color: #ccc;
     font-weight: 700;
-    font-size: 10px;
+    font-size: 1rem;
     line-height: 1;
   }
   .sort-category-list-container {
