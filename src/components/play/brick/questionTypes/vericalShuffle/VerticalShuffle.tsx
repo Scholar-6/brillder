@@ -51,6 +51,8 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   componentWillUpdate(props: VerticalShuffleProps) {
+    if (!this.props.isPreview) { return; }
+    
     if (props.component && props.component.list) {
       if (this.state.userAnswers !== props.component.list) {
         this.setState({userAnswers: props.component.list});

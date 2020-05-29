@@ -41,6 +41,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   }
 
   componentWillUpdate(props: VerticalShuffleProps) {
+    if (!this.props.isPreview) { return; }
     if (props.component && props.component.list) {
       if (this.state.userAnswers !== props.component.list) {
         this.setState({userAnswers: props.component.list});
@@ -99,7 +100,6 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
           list={this.state.userAnswers}
           animation={150}
           direction="horizontal"
-          group={{ name: "cloning-group-name" }}
           setList={(choices) => this.setUserAnswers(choices)}
         >
           {
