@@ -1,5 +1,15 @@
 @import '_variables';
 
+.proposal-router {
+  .beta-text {
+    z-index: 10;
+    right: 0.5%;
+    bottom: 1.25%;
+    font-size: 2.3vw;
+    color: $dark-blue;
+  }
+}
+
 .tutorial-page {
   h1 {
     font-weight: normal !important;
@@ -29,14 +39,6 @@
     width: 43.8vw;
     border-top-left-radius: 2vw;
     z-index: -1;
-  }
-
-  .beta-text {
-    z-index: 10;
-    right: 0.5%;
-    bottom: 1.25%;
-    font-size: 2.3vw;
-    color: $dark-blue;
   }
 
   .only-tutorial-header {

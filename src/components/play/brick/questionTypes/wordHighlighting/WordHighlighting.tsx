@@ -69,24 +69,37 @@ class WordHighlighting extends CompComponent<
     this.setState({ words: this.state.words });
   }
 
+  renderWord(word: any, index: number) {
+    if (this.props.isPreview) {
+      return (
+        <span
+          key={index}
+          className={word.checked ? "active word" : "word"}
+        >{word.text} </span>
+      );
+    }
+    return (
+      <span
+      key={index}
+      className={word.selected ? "active word" : "word"}
+      onClick={() => this.highlighting(index)}
+    >
+      {word.text} </span>
+    );
+  }
+
   render() {
     const { component } = this.props;
 
     if (this.props.isPreview === true && (!component.words || component.words.length === 0)) {
-      return <div>Words will appear here in correction mode.</div>
+      return <div className="word-highlighting-play">You can have a peek once you highlight the correct words</div>
     }
 
     return (
       <div className="word-highlighting-play">
         <div className="words-container">
           {component.words.map((word: any, index: number) => (
-            <span
-              key={index}
-              className={word.selected ? "active word" : "word"}
-              onClick={() => this.highlighting(index)}
-            >
-              {word.text}&nbsp;
-            </span>
+            this.renderWord(word, index)
           ))}
         </div>
         <br/>

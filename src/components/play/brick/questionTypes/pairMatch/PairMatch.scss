@@ -1,17 +1,26 @@
+@import '_variables';
+
 .pair-match-play {
+  $font-size: 14px;
   .pair-match-play-option {
+    text-align: center;
     color: white;
-    font-size: 10px !important;
-    height: 47px;
+    color: $dark-blue;
+    margin: 1px;
+    padding: 0;
     width: 100%;
     overflow: hidden;
     .pair-match-play-option-text {
-      font-size: 10px;
-      line-height: 3;
+      font-family: $font-family-regular;
+      font-size: $font-size;
       height: 24px;
 
       img {
-        height: 45px;
+        height: 44px;
+      }
+
+      p {
+        text-align: center !important;
       }
     }
     .pair-match-play-option-icon {
@@ -26,45 +35,44 @@
       margin-right: 20px;
     }
   }
-  .pair-match-play-option:nth-child(odd) {
-    background: #0076b4;
-  }
-  .pair-match-play-option:nth-child(even) {
-    background: #111f33;
+  .pair-match-play-option {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: $tab-grey;
   }
 
   .answers-list {
+    display: grid !important;
+    grid-auto-rows: 1fr;
+    flex-wrap: wrap;
     width: 50%;
   }
 
   .pair-match-play-choice {
-    border: 1px dashed black;
-    font-size: 10px;
-    color: black;
-    margin: 1px;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
     width: 100%;
-    overflow: hidden;
-    > div {
-      margin: 10px !important;
-    }
-    img {
-      height: 24px;
+    background: #F5F6F7;
+
+    p {
+      text-align: center !important;
     }
   }
+
   .pair-match-image-choice {
-    height: 110px;
-    img {
-      height: 110px;
-    }
+    padding-bottom: 2px;
   }
   .pair-match-play-option.pair-match-image-choice {
     background: none;
-    height: 113px;
     padding: 0;
     img {
       max-width: 100%;
-      max-height: 113px;
       height: auto;
     }
+  }
+
+  .question-hint-global {
+    margin-top: 10px;
   }
 }

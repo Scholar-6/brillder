@@ -13,6 +13,23 @@
   p {
     display: inline;
   }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  table, td, th {
+    border: 1px solid $dark-blue;
+  }
+  td {
+    min-width: 0;
+    padding: 0;
+  }
 }
 
 .question-hint-global {
@@ -25,4 +42,22 @@
     padding: 2px 5px;
   }
   border-radius: 1px 2px 3px 4px;
+
+  .table {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  table {
+    margin: auto;
+    border-collapse: collapse;
+  }
+  
+  table, td, th {
+    border: 1px solid $dark-blue;
+  }
+  td {
+    min-width: 2em;
+    padding: 0.4em;
+  }
 }

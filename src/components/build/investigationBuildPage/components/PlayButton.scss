@@ -1,0 +1,24 @@
+@import "_variables";
+
+.investigation-build-page {
+  .play-button-container {
+    z-index: 1000;
+    position: fixed;
+    color: white;
+    font-family: $font-family-regular !important;
+    font-size: 1.15vw;
+    top: 1vh;
+    right: 1.4vw;
+    letter-spacing: 0.05vw;
+
+    img {
+      cursor: pointer;
+      border-radius: 100vw;
+      height: 4.5vw;
+    }
+
+    .hidden {
+      opacity: 0;
+    }
+  }
+}

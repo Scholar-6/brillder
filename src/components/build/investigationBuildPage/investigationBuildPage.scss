@@ -14,11 +14,16 @@
 .investigation-build-page {
   height: 100%;
 
+  .exit-arrow {
+    position: fixed;
+    top: 2.6vh;
+    left: 4.7vw;
+    img {
+      height: 2vw;
+    }
+  }
+
   .phone-question-preview {
-    top: 15.3%;
-    right: 6%;
-    //right: 5.4%;
-    
     .custom-component {
       background: white;
       overflow-y: hidden;
@@ -28,39 +33,6 @@
   .investigation-build-background {
     height: 100%;
     background: $dark-blue;
-  }
-
-  .proposal-link {
-    cursor: pointer;
-    position: absolute;
-    top: 33.5vh;
-    left: 1.44vw;
-    font-size: 1.8vw;
-    letter-spacing: 0.3vw;
-    font-family: 'Brandon Grotesque Black';
-    color: $light-blue;
-
-    .proposal-edit-icon {
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url(/images/edit.png);
-      height: 4.5vw;
-      width: 4.5vw;
-      margin-bottom: 0.5vh;
-    }
-    .proposal-text {
-      margin-top: 0vh;
-      margin-left: 0.3vw;
-    }
-  }
-
-  .proposal-link:hover {
-    color: white;
-
-    .proposal-edit-icon {
-      background-image: url(/images/edit-white.png);
-    }
   }
 
   .right-top-drop-icon {
@@ -91,10 +63,6 @@
     opacity: 0.5;
   }
 
-  .question-container {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
   .page-header {
     background: #b2b2b2;
   }
@@ -120,6 +88,37 @@
       background: #002060;
       color: white;
     }
+  }
+
+  .tutorial-top-labels {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 5%;
+    color: white;
+    font-family: $font-family-regular;
+
+    .tutorial-exit-label {
+      width:38%;
+    }
+
+    .tutorial-add-label {
+      width:31%;
+    }
+
+    .tutorial-synthesis-label {
+      width:31%;
+    }
+  }
+
+  .add-question-tutorial-label {
+    position: fixed;
+    vertical-align: bottom;
+    height: 5%;
+    left: 33vw;
+    font-size: 1.3vw;
+    font-family: $font-family-regular;
+    color: white;
   }
 
   @media only screen and (max-width: 959px) {

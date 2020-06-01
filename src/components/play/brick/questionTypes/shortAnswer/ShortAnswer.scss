@@ -6,6 +6,10 @@
     margin-bottom: 20px;
   }
 
+  .short-answer-input.correct .question-hint {
+    background: white !important;
+  }
+
   @media only screen and (max-width: 599px) {
     .short-answer-input {
       width: 100% !important;

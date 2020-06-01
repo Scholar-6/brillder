@@ -4,7 +4,7 @@ import { ReactSortable } from 'react-sortablejs';
 
 
 export interface DropBoxProps {
-  locked: boolean
+  locked: boolean;
   onDrop(type: number):void;
 }
 
@@ -13,7 +13,10 @@ const DropBox: React.FC<DropBoxProps> = ({locked, onDrop}) => {
 
   return (
     <div style={{height:'18vh', position: 'relative'}}>
-      <Grid container justify="center" alignContent="center" className="drop-box-text" style={{height: '100%'}}>
+      <Grid
+        container justify="center" alignContent="center"
+        className="drop-box-text" style={{height: '100%'}}
+      >
         Drag Component Here
       </Grid>
       <ReactSortable

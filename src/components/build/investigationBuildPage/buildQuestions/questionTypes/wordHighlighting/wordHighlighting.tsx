@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import EditIcon from '@material-ui/icons/Edit';
 
 import './wordHighlighting.scss'
+import { UniqueComponentProps } from '../types';
 
 
 export enum WordMode {
@@ -20,11 +21,8 @@ export interface WordHighlightingData {
   mode: WordMode;
 }
 
-export interface WordHighlightingProps {
-  locked: boolean;
+export interface WordHighlightingProps extends UniqueComponentProps {
   data: WordHighlightingData;
-  save(): void;
-  updateComponent(component: any): void;
 }
 
 const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
@@ -83,11 +81,15 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
       return (
         <div className="hightlight-area">
           {
-            state.words.map((word, i) =>
-              <div key={i} style={{display: 'inline-block', marginRight: '5px', background: word.checked ? 'green' : 'inherit'}} onClick={() => {toggleLight(i)}}>
+            state.words ? state.words.map((word, i) =>
+              <div
+                key={i}
+                className={word.checked ? "word active" : "word"}
+                onClick={() => {toggleLight(i)}}
+              >
                 {word.text}
               </div>
-            )
+            ) : ""
           }
         </div>
       );

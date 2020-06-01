@@ -39,12 +39,13 @@ export interface HintProps {
   status?: HintStatus;
   value?: string;
   count?: number;
+  validationRequired?: boolean;
   save(): void;
   onChange(state: HintState): void;
 }
 
 const HintComponent: React.FC<HintProps> = ({
-  index, locked, onChange, save, ...props
+  index, locked, validationRequired, onChange, save, ...props
 }) => {
   let initState = {
     status: HintStatus.All,
@@ -106,8 +107,9 @@ const HintComponent: React.FC<HintProps> = ({
         <Grid container item xs={12} className="hint-container">
           <DocumentCKEditor
             data={state.value}
-            toolbar={['bold']}
+            toolbar={['bold', 'italic', 'insertTable']}
             placeholder="Enter Hint..."
+            validationRequired={validationRequired}
             onBlur={() => save()}
             onChange={onHintChanged}
           />
@@ -136,6 +138,7 @@ const HintComponent: React.FC<HintProps> = ({
             data={state.list[i]}
             toolbar={['bold']}
             placeholder="Enter Hint"
+            validationRequired={validationRequired}
             onBlur={() => save()}
             onChange={(v:any) => {onHintListChanged(v, i)}}
           />
@@ -172,7 +175,8 @@ const HintComponent: React.FC<HintProps> = ({
                 <React.Fragment>
                   <div className="hint-question-mark-hover-title">
                     <span className="question-mark">?</span>
-                    Hints ensure that in reviewing material the learner has to keep re-evaluating.
+                    Hints ensure that the learner has to keep
+                    re-evaluating when reviewing material.
                     This is why our interface does not allow for standard true or false questions:
                     much less can be gained by a blind click at the second time of asking.
                     <div>

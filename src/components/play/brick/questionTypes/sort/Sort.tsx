@@ -1,6 +1,5 @@
 
 import React from 'react';
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -52,6 +51,7 @@ interface SortState {
   data?: any;
 }
 
+
 class Sort extends CompComponent<SortProps, SortState> {
   constructor(props: SortProps) {
     super(props);
@@ -63,6 +63,8 @@ class Sort extends CompComponent<SortProps, SortState> {
       choices = choices.concat(cat.answers);
       userCats.push({choices: [], name: cat.name});
     }
+
+    choices = this.shuffle(choices);
       
     if (!props.attempt) {
       userCats.push({choices: choices, name: 'Unsorted'});
@@ -112,13 +114,23 @@ class Sort extends CompComponent<SortProps, SortState> {
     }
   }
 
+  shuffle(a: any[]) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
   getChoices() {
-    var choices:any = {};
+    let choices:any = {};
     this.props.component.categories.forEach((cat, index) => {
       cat.answers.forEach((choice) => {
         choices[choice.value] = index;
       });
     });
+
+    choices = this.shuffle(choices);
     return choices;
   }
 
@@ -199,7 +211,7 @@ class Sort extends CompComponent<SortProps, SortState> {
                                 ? (this.getState(choice.value) === 1)
                                   ? <DenimTickRect />
                                   : <DenimCrossRect />
-                                : <DragIndicatorIcon/>
+                                : <div></div>
                             }
                           </ListItemIcon>
                           <ListItemText>

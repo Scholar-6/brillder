@@ -4,17 +4,11 @@ import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButto
 
 import './horizontalShuffleBuild.scss'
 import { Grid } from '@material-ui/core';
+import { UniqueComponentProps } from '../types';
 
 
-export interface VerticalShuffleBuildProps {
-  locked: boolean;
-  data: any;
-  save(): void;
-  updateComponent(component: any): void;
-}
-
-const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
-  locked, data, save, updateComponent
+const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
+  locked, data, validationRequired, save, updateComponent
 }) => {
   const [height, setHeight] = React.useState('0%');
   
@@ -68,6 +62,7 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           <input
             disabled={locked}
             value={answer.value}
+            className={!answer.value && validationRequired ? "invalid" : ""}
             onBlur={() => save()}
             onChange={(event) => changed(answer, event)}
             placeholder={"Enter A" + (key + 1) + "..."}
@@ -93,7 +88,7 @@ const HorizontalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
         <div>Enter Answers below in order.</div>
         <div>These will be randomised in the Play Interface.</div>
       </div>
-      <Grid container direction="row">
+      <Grid container direction="row" className="answers-container">
         {
           state.list.map((answer: any, i: number) => renderAnswer(answer, i))
         }

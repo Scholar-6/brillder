@@ -75,6 +75,10 @@ $light-grey: #f4f4f4;
     }
   }
 
+  .question-hint-global.correct {
+    background: white;
+  }
+
   @media only screen and (max-width: 599px) {
     .brick-container {
       text-align: center;
