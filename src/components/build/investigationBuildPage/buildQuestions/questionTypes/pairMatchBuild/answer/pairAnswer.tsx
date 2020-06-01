@@ -5,6 +5,7 @@ import { Grid } from "@material-ui/core";
 import {QuestionValueType} from '../../types';
 import {Answer} from '../types';
 import QuestionImageDropZone from '../../../baseComponents/QuestionImageDropzone';
+import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
 
 
 export interface PairAnswerProps {
@@ -80,16 +81,12 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     <Grid container item xs={6}>
       <div className={`pair-match-answer ${customClass}`}>
         {renderDeleteButton()}
-        <input
-          disabled={locked}
-          value={answer.value}
+        <DocumentCKEditor
+          data={answer.value}
+          toolbar={[]}
           placeholder={"Enter Answer " + (index + 1) + "..."}
-          className={
-            answer.answerType !== QuestionValueType.Image && validationRequired && !answer.value
-              ? "invalid" : ""
-          }
           onBlur={() => save()}
-          onChange={(event:any) => answerChanged(answer, event.target.value)}
+          onChange={value => answerChanged(answer, value)}
         />
         <QuestionImageDropZone
           answer={answer}

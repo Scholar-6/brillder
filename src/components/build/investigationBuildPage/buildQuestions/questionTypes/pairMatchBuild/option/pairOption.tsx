@@ -5,6 +5,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import {QuestionValueType} from '../../types';
 import {Answer} from '../types';
 import QuestionImageDropZone from '../../../baseComponents/QuestionImageDropzone';
+import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
 
 
 export interface PairOptionProps {
@@ -65,16 +66,12 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
   return (
     <Grid container item xs={6}>
       <div className={`pair-match-option ${customClass}`}>
-        <input
-          disabled={locked}
-          value={answer.option}
-          className={
-            answer.optionType !== QuestionValueType.Image && validationRequired && !answer.option
-              ? "invalid" : ""
-          }
-          onBlur={() => save()}
-          onChange={(event) => optionChanged(answer, event.target.value)}
+        <DocumentCKEditor
+          data={answer.option}
+          toolbar={[]}
           placeholder={"Enter Option " + (index + 1) + "..."}
+          onBlur={() => save()}
+          onChange={value => optionChanged(answer, value)}
         />
         <QuestionImageDropZone
           answer={answer}
