@@ -2,6 +2,7 @@
 
 .proposal-page {
   height: 100% !important;
+  color: $dark-blue;
   
   .red-right-block {
     position: fixed;
@@ -305,7 +306,6 @@
         }
 
         .text-title {
-          color: #4a4f56 !important;
           font-family: $font-family-bold;
         }
         .proposal-text {
