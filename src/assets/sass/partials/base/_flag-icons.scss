@@ -1,0 +1,5 @@
+@mixin flag-icon($country) {
+    .flag-icon-#{$country} {
+        background-image: url(#{$flag-icon-css-path + $flag-icon-rect-path + $country + '.svg'});
+    }
+}
