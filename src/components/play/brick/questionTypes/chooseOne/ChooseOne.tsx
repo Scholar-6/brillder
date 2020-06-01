@@ -107,18 +107,32 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     }
   }
 
+  isCorrect(index: number) {
+    if (this.props.attempt?.correct) {
+      if (index === this.props.attempt?.answer) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   renderChoice(choice: ChooseOneChoice, index: number) {
+    let isCorrect = this.isCorrect(index);
     let className = "choose-choice";
     const { activeItem } = this.state;
 
     if (this.props.isPreview) {
       if (choice.checked) {
-        className += " active correct";
+        className += " active";
       }
     } else {
       if (index === activeItem) {
         className += " active";
       }
+    }
+
+    if (isCorrect) {
+      className += " correct";
     }
 
     return (
@@ -132,6 +146,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
           <ReviewEachHint
             isPhonePreview={this.props.isPreview}
             attempt={this.props.attempt}
+            isCorrect={isCorrect}
             index={index}
             hint={this.props.question.hint}
           />
