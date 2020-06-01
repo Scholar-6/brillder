@@ -1,0 +1,199 @@
+@mixin btn-generator ($size) {
+	@if $size == 'xs' {
+		padding: 0px 8px;
+		@extend %fs11;
+		height: 22px;
+		line-height: 22px;
+		&.btn-icon {
+			line-height: 21px;
+			> .icon {
+				width: 21px;
+			}
+			&.left {
+				padding-left: 29px;
+			}
+			&.right {
+				padding-right: 29px;
+			}
+		}
+		&.btn-circle {
+			padding: 12px;
+		}
+		&.btn-social {
+            width: 22px;
+		}
+		&.btn-arrow {
+            &:before {
+                height: 6px;
+                width: 6px;
+            }
+            &:first-child {
+                &:before {
+                    right: -4px;
+                }
+            }
+            &:last-child {
+                &:before {
+                    left: -4px;
+                }
+            }
+        }
+	} @else if $size == 'sm'{
+		padding: 0px 12px;
+		@extend %fs13;
+		height: 30px;
+		line-height: 30px;
+		&.btn-icon {
+			line-height: 26px;
+			> .icon {
+				width: 26px;
+			}
+			&.left {
+				padding-left: 38px;
+			}
+			&.right {
+				padding-right: 38px;
+			}
+		}
+		&.btn-circle {
+			padding: 15px;
+		}
+		&.btn-social {
+            width: 32px;
+		}
+		&.btn-arrow {
+            &:before {
+                height: 12px;
+                width: 12px;
+            }
+            &:first-child {
+                &:before {
+                    right: -7px;
+                }
+            }
+            &:last-child {
+                &:before {
+                    left: -7px;
+                }
+            }
+        }
+	} @else if $size == 'md'{
+		padding: 0px 14px;
+		@extend %fs15;
+		height: 38px;
+		line-height: 38px;
+		&.btn-icon {
+			line-height: 37px;
+			> .icon {
+				width: 34px;
+			}
+			&.left {
+				padding-left: 44px;
+			}
+			&.right {
+				padding-right: 44px;
+			}
+		}
+		&.btn-circle {
+			padding: 18px;
+		}
+		&.btn-social {
+            width: 38px;
+		}
+		&.btn-arrow {
+            &:before {
+                height: 15px;
+                width: 15px;
+            }
+            &:first-child {
+                &:before {
+                    right: -8px;
+                }
+            }
+            &:last-child {
+                &:before {
+                    left: -8px;
+                }
+            }
+        }
+	} @else if $size == 'lg'{
+		padding: 0px 20px;
+		@extend %fs17;
+		height: 46px;
+		line-height: 46px;
+		&.btn-icon {
+			line-height: 45px;
+			> .icon {
+				width: 38px;
+			}
+			&.left {
+				padding-left: 57px;
+			}
+			&.right {
+				padding-right: 57px;
+			}
+		}
+		&.btn-circle {
+			padding: 21px;
+		}
+		&.btn-social {
+            width: 46px;
+		}
+		&.btn-arrow {
+            &:before {
+                height: 18px;
+                width: 18px;
+            }
+            &:first-child {
+                &:before {
+                    right: -9px;
+                }
+            }
+            &:last-child {
+                &:before {
+                    left: -9px;
+                }
+            }
+        }
+	} @else if $size == 'xl'{
+		padding: 0px 35px;
+		@extend %fs19;
+		height: 54px;
+		line-height: 54px;
+		&.btn-icon {
+			line-height: 51px;
+			> .icon {
+				width: 42px;
+			}
+			&.left {
+				padding-left: 77px;
+			}
+			&.right {
+				padding-right: 77px;
+			}
+		}
+		&.btn-circle {
+			padding: 24px;
+		}
+		&.btn-social {
+            width: 52px;
+		}
+		&.btn-arrow {
+            &:before {
+                height: 21px;
+                width: 21px;
+            }
+            &:first-child {
+                &:before {
+                    right: -11px;
+                }
+            }
+            &:last-child {
+                &:before {
+                    left: -11px;
+                }
+            }
+        }
+	}
+	border-radius: 4px;
+}

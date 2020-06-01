@@ -1,0 +1,17 @@
+@mixin grid-gen-12($size) {
+	@for $i-12 from $uik-of-12 through 1 {
+		.uik-#{$size}-#{$i-12} {
+			width: percentage($i-12 / $uik-of-12);
+			float: left;
+		}
+		.uik-#{$size}-pull-#{$i-12} {
+			right: percentage($i-12 / $uik-of-12);
+		}
+		.uik-#{$size}-push-#{$i-12} {
+			left: percentage($i-12 / $uik-of-12);
+		}
+		.uik-#{$size}-offset-#{$i-12} {
+			margin-left: percentage($i-12 / $uik-of-12);
+		}
+	}
+}
