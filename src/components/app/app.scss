@@ -37,7 +37,7 @@ strong {
 
 // styling zendesk widget position
 body {
-  > div:nth-child(8) {
+  > div:nth-child(8), > div:nth-last-child(2) {
     position: fixed;
     bottom: 0;
     height: 55px;
