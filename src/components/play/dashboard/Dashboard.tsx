@@ -408,7 +408,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         <div className="filter-header">
           <div style={{ display: "inline" }}>
             <span className="filter-control">Filter</span>
-			<button className="btn-transparent svgOnHover" onClick={() => {this.state.filterExpanded ? (this.setState(...this.state, filterExpanded: false )) : (this.setState(...this.state, filterExpanded: true ))}}>
+			<button className="btn-transparent svgOnHover" onClick={() => {this.state.filterExpanded ? (this.setState({ ...this.state, filterExpanded: false })) : (this.setState({ ...this.state, filterExpanded: true }))}}>
 				<svg className="svg active">
 					<use href={this.state.filterExpanded ? "./assets/img/icons-sprite.svg#arrow-down" : "./assets/img/icons-sprite.svg#arrow-up"} className="text-white" />
 				</svg>
