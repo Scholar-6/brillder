@@ -88,8 +88,9 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   renderAnswer(answer: Answer) {
     if (answer.answerType && answer.answerType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
+    } else {
+      return <div className="MuiListItemText-root" style={{width: '100%', textAlign: 'center'}}>{answer.value}</div>
     }
-    return answer.value;
   }
 
   render() {
@@ -127,9 +128,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
               this.state.userAnswers.map((answer, i) => (
                 <div key={i} className="pair-match-play-choice">
                   <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
-                    <div>
-                      {this.renderAnswer(answer)}
-                    </div>
+                    {this.renderAnswer(answer)}
                   </div>
                 </div>
               ))
