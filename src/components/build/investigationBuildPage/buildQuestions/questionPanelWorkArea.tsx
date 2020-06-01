@@ -5,9 +5,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
 
 import QuestionComponents from './questionComponents/questionComponents';
-import {getNonEmptyComponent} from '../questionService/QuestionService';
+import {getNonEmptyComponent} from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
-import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from '../../../../model/question';
+import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from 'model/question';
 import DragBox from './drag/dragBox';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import LockComponent from './lock/Lock';
@@ -23,6 +23,7 @@ export interface QuestionProps {
   history: any;
   questionsCount: number;
   synthesis: string;
+  validationRequired: boolean;
   saveBrick(): void;
   setQuestion(index: number, question: Question): void;
   updateComponents(components: any[]): void;
@@ -34,9 +35,10 @@ export interface QuestionProps {
   locked: boolean;
 }
 
-const QuestionPanelWorkArea: React.FC<QuestionProps> = (
-  { brickId, question, history, getQuestionIndex, locked, ...props }
-) => {
+const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
+  brickId, question, history, validationRequired, locked, getQuestionIndex, ...props
+}) => {
+  console.log('question panel init');
   const [componentTypes, setComponentType] = React.useState([
     {id: 1, type: QuestionComponentTypeEnum.Text},
     {id: 2, type: QuestionComponentTypeEnum.Quote},
@@ -45,7 +47,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
     {id: 4, type: QuestionComponentTypeEnum.Graph}
   ]);
   const { type } = question;
-  document.title = QuestionTypeEnum[type];
 
   const setQuestionHint = (hintState: HintState) => {
     if (locked) { return; }
@@ -60,10 +61,14 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
   let typeArray: string[] = Object.keys(QuestionType);
   let index = getQuestionIndex(question);
 
+  console.log('question panel before help arrow');
+
   let showHelpArrow = false;
   if (index === 0) {
     showHelpArrow = getNonEmptyComponent(question.components);
   }
+
+  console.log('question panel before rendering');
 
   return (
     <MuiThemeProvider >
@@ -75,7 +80,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
           <Grid container direction="row">
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
               <Grid container item xs={12} className="left-sidebar" alignItems="center">
-              
                 <ReactSortable
                   list={componentTypes}
                   group={{ name: "cloning-group-name", pull: "clone" }}
@@ -84,7 +88,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
                   <DragBox
                     locked={locked}
                     name="T" fontSize="3.4vw" label="T E X T"
-                    hoverMarginTop="0.5vw"
+                    hoverMarginTop="0vw"
                     fontFamily="Brandon Grotesque Bold"
                     value={QuestionComponentTypeEnum.Text}
                   />
@@ -131,9 +135,11 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = (
                 brickId={brickId}
                 history={history}
                 question={question}
+                validationRequired={validationRequired}
                 saveBrick={props.saveBrick}
                 updateComponents={props.updateComponents}
-                setQuestionHint={setQuestionHint} />
+                setQuestionHint={setQuestionHint}
+              />
             </Grid>
             <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
               <Grid container direction="row" justify="center">

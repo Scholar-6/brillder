@@ -3,12 +3,12 @@ import { Grid, Input } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep } from "../../model";
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import NextButton from '../../components/nextButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { Brick } from "model/brick";
 import {getDate, getMonth, getYear} from 'components/services/brickService';
+
 
 interface BrickTitleProps {
   parentState: Brick
@@ -30,6 +30,16 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
     }
     return data;
   }
+
+  if (!title && !alternativeTopics && !subTopic) {
+    return (
+      <Grid container alignContent="flex-start" className="brick-title-container">
+        <Grid container justify="center">
+          <img alt="titles" src="/images/new-brick/titles.png" className="titles-image big" />
+        </Grid>
+      </Grid>
+    );
+  }
   
   return (
     <Grid container alignContent="flex-start" className="brick-title-container">
@@ -37,7 +47,7 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
         <img alt="titles" src="/images/new-brick/titles.png" className="titles-image" />
       </Grid>
       <div className="brick-preview-container">
-        <div className={"brick-title " + (title ? 'topic-filled' : '')}>
+        <div className={"brick-title uppercase " + (title ? 'topic-filled' : '')}>
           {title ? title : 'TITLE'}
         </div>
         <div className="brick-topics">
@@ -72,9 +82,12 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
     saveTitles({ ...parentState, alternativeTopics });
   };
 
+  if (parentState.title) {
+    document.title = parentState.title;
+  }
+
   return (
     <div className="tutorial-page brick-title-page">
-      <HomeButton link='/build' />
       <Navigation step={ProposalStep.BrickTitle} onMove={() => saveTitles(parentState)} />
       <Grid container direction="row">
         <Grid item className="left-block">
@@ -84,17 +97,20 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
               className="audience-inputs"
               value={parentState.title}
               onChange={(onTitleChange)}
-              placeholder="Enter Proposed Title Here..." />
+              placeholder="Enter Proposed Title Here..."
+            />
             <Input
               className="audience-inputs"
               value={parentState.subTopic}
               onChange={onSubTopicChange}
-              placeholder="Enter Topic..." />
+              placeholder="Enter Topic..."
+            />
             <Input
               className="audience-inputs"
               value={parentState.alternativeTopics}
               onChange={onAltTopicChange}
-              placeholder="Enter Subtopic(s)..." />
+              placeholder="Enter Subtopic(s)..."
+            />
           </Grid>
           <NextButton
             isActive={true}
@@ -106,7 +122,6 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
         </Grid>
         <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
         <div className="red-right-block"></div>
-        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );

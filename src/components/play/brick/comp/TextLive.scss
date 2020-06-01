@@ -1,11 +1,28 @@
 @import '_variables';
 
 .text-play {
+  overflow: auto;
   margin-top: 5px;
   margin-bottom: 5px;
   color: black;
-  font: 500 16px/24px $font-family-regular;
+  font: 500 16px/24px $font-family-regular !important;
   p {
     font: 500 16px/24px $font-family-regular;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  table, td, th {
+    border: 1px solid $dark-blue;
+  }
+  td {
   }
 }

@@ -75,24 +75,45 @@ class LineHighlighting extends CompComponent<
     this.setState({ lines: this.state.lines });
   }
 
+  renderLine(line: any, index: number) {
+    if (this.props.isPreview) {
+      return (
+        <div key={index}>
+          <span
+            className={line.checked ? "active line" : "line"}
+          >
+            {line.text}
+          </span>
+        </div>
+      );
+    }
+    return (
+      <div key={index}>
+        <span
+          className={line.selected ? "active line" : "line"}
+          onClick={() => this.highlighting(index)}
+        >
+          {line.text}
+        </span>
+      </div>
+    );
+  }
+
   render() {
     const { component } = this.props;
     if (this.props.isPreview === true && (!component.lines || component.lines.length === 0)) {
-      return <div>Lines will appear here in correction mode.</div>
+      return (
+        <div className="line-highlighting-play">
+          You can have a peek once you highlight the correct lines
+        </div>
+      );
     }
 
     return (
       <div className="line-highlighting-play">
         <div className="lines-container">
           {component.lines.map((line: any, index: number) => (
-            <div key={index}>
-              <span
-                className={line.selected ? "active line" : "line"}
-                onClick={() => this.highlighting(index)}
-              >
-                {line.text}
-              </span>
-            </div>
+            this.renderLine(line, index)
           ))}
         </div>
         <br/>

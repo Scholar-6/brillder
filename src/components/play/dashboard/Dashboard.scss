@@ -31,6 +31,7 @@ $light-grey: #F3F4F7;
       font-size: 1.45vw;
       padding-left: 1.65vw;
       margin-bottom: 1vh;
+      color: white !important;
 
       .menu-icon-container {
         position: fixed;
@@ -279,7 +280,7 @@ $light-grey: #F3F4F7;
 
   .subjects-filter {
     padding-top: 1.8vh;
-    height: 68.8vh;
+    height: 59.8vh;
     overflow-y: auto;
   }
 

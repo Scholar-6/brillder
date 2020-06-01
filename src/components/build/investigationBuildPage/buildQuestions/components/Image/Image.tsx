@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useDropzone} from 'react-dropzone';
 import { Grid } from '@material-ui/core';
 
@@ -29,6 +29,10 @@ const ImageComponent: React.FC<ImageProps> = ({locked, ...props}) => {
       }, () => { });
     }
   });
+
+  useEffect(() => {
+    setFileName(props.data.value);
+  }, [props]);
 
   return (
     <div className="image-drag-n-drop">

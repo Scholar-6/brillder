@@ -8,6 +8,7 @@
   z-index: 100;
 
   .dropzone {
+    background: inherit !important;
     cursor: pointer;
     margin-left: 0vw;
     margin-right: 0vw;
@@ -34,9 +35,12 @@
   
   .dropzone:hover {
     color: $orange;
+    .plus-image {
+      background: $orange;
+    }
   }
   
   .dropzone.disabled {
-    background: #EBEBE4;
+    background: inherit !important;
   }
 }

@@ -47,6 +47,17 @@
     }
   }
 
+  .ck-color-ui-dropdown {
+    .ck.ck-reset.ck-dropdown__panel {
+      left: 0 !important;
+      right: auto !important;
+      border-radius: 0.2vw;
+
+      .ck.ck-button.ck-off.ck-color-grid__tile {
+        border-radius: 0.2vw;
+      }
+    }
+  }
 
   .ck-content {
     color: $dark-blue;
@@ -61,5 +72,23 @@
     strong {
       font-weight: normal !important;
     }
+
+    .table {
+      display: block;
+    }
+
+    table {
+      td {
+        min-width: 0.5vw;
+        font-size: 1vw;
+        padding: 0;
+      }
+    }
+  }
+}
+
+.document-editor.content-invalid {
+  .ck-content {
+    background: $orange !important;
   }
 }

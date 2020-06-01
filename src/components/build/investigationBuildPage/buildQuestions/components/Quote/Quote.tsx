@@ -9,6 +9,7 @@ export interface QuoteComponentProps {
   locked: boolean;
   index: number;
   data: any;
+  validationRequired: boolean;
   save(): void;
   updateComponent(component: any, index: number): void;
 }
@@ -31,6 +32,7 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, ...
         data={data.value}
         placeholder=""
         toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}
+        validationRequired={props.validationRequired}
         onBlur={() => props.save()}
         onChange={onChange}
       />

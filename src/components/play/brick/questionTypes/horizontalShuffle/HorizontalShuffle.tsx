@@ -41,6 +41,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   }
 
   componentWillUpdate(props: VerticalShuffleProps) {
+    if (!this.props.isPreview) { return; }
     if (props.component && props.component.list) {
       if (this.state.userAnswers !== props.component.list) {
         this.setState({userAnswers: props.component.list});
@@ -56,12 +57,14 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     return this.state.userAnswers;
   }
 
-  getState(entry: number): number {
-    if (this.props.attempt?.answer[entry]) {
-      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')) {
-        return 1;
-      } else { return -1; }
-    } else { return 0; }
+  checkAttemptAnswer(index: number) {
+    if (this.props.attempt && this.props.attempt.answer) {
+      let answer = this.props.attempt.answer[index];
+      if (answer.index == index) {
+        return true;
+      }
+    }
+    return false;
   }
 
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
@@ -89,9 +92,27 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     return attempt;
   }
 
+  renderAnswer(answer: any, i: number) {
+    let isCorrect = this.checkAttemptAnswer(i);
+    return (
+      <Card className={`horizontal-shuffle-answer ${isCorrect ? 'correct' : ''}`} key={i}>
+        <div style={{display: "block"}}>{answer.value}</div>
+        <div style={{display: "block"}}>
+          <ReviewEachHint
+            isPhonePreview={this.props.isPreview}
+            attempt={this.props.attempt}
+            index={i}
+            isCorrect={isCorrect}
+            hint={this.props.question.hint}
+          />
+        </div>
+      </Card>
+    );
+  }
+
   render() {
     return (
-      <div className="vertical-shuffle-play">
+      <div className="horizontal-shuffle-play">
         {
           (this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""
         }
@@ -99,22 +120,11 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
           list={this.state.userAnswers}
           animation={150}
           direction="horizontal"
-          group={{ name: "cloning-group-name" }}
           setList={(choices) => this.setUserAnswers(choices)}
         >
           {
             this.state.userAnswers.map((answer, i) => (
-              <Card style={{display: "inline-block", padding: '10px', margin: '2px', fontSize: '10px'}} key={i}>
-                <div style={{display: "block"}}>{answer.value}</div>
-                <div style={{display: "block"}}>
-                  <ReviewEachHint
-                    isPhonePreview={this.props.isPreview}
-                    attempt={this.props.attempt}
-                    index={i}
-                    hint={this.props.question.hint}
-                  />
-                </div>
-              </Card>
+              this.renderAnswer(answer, i)
             ))
           }
         </ReactSortable>
