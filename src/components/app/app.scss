@@ -8,6 +8,12 @@
   font-size: 2vw;
   letter-spacing: 0.4vw;
   font-family: $font-family-black;
+  line-height: 1;
+
+  .version-number {
+    text-align: center;
+    font-size: 1.3vw;
+  }
 }
 
 strong {
