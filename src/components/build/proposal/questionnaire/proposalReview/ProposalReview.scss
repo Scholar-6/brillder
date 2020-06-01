@@ -308,6 +308,9 @@
         .text-title {
           font-family: $font-family-bold;
         }
+        .text-title.brick-length {
+          margin-top: 1vh;
+        }
         .proposal-text {
           margin-left: 1.3vw;
           margin-bottom: 1vh;
