@@ -1,0 +1,54 @@
+@mixin pagination-size ($size, $border-radius) {
+	@if $size == 'xs' {
+		> li {
+            > a,
+            > strong {
+                padding: 0px 10px;
+                font-size: 10px;
+                height: 25px;
+                line-height: 25px;
+            }
+        }
+	} @else if $size == 'sm' {
+		> li {
+            > a,
+            > strong {
+                padding: 0px 12px;
+                font-size: 12px;
+                height: 30px;
+                line-height: 30px;
+            }
+        }
+	} @else if $size == 'md' {
+		> li {
+            > a,
+            > strong {
+                padding: 0px 14px;
+				font-size: 14px;
+				height: 35px;
+                line-height: 35px;
+            }
+        }
+	} @else if $size == 'lg' {
+		> li {
+			> a,
+			> strong {
+				padding: 0px 16px;
+				font-size: 16px;
+				height: 40px;
+				line-height: 40px;
+			}
+		}
+	} @else if $size == 'xl' {
+		> li {
+			> a,
+			> strong {
+				padding: 0px 18px;
+				font-size: 18px;
+				height: 45px;
+				line-height: 45px;
+			}
+		}
+	}
+	@include border-radius($border-radius);
+}

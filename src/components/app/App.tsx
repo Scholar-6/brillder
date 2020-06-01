@@ -4,9 +4,6 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
-import './app.scss';
-import '../../assets/fonts/icomoon/style.css';
-
 import Pallet from '../play/pallet/Pallet';
 import Dashboard from '../play/dashboard/Dashboard';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
