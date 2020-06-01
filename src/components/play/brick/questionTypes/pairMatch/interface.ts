@@ -23,4 +23,3 @@ export interface PairMatchProps extends CompQuestionProps {
 export interface PairMatchState {
   userAnswers: any[];
 }
-  

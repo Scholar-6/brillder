@@ -38,32 +38,21 @@
   }
 
   .answers-list {
+    display: grid !important;
+    grid-auto-rows: 1fr;
+    flex-wrap: wrap;
     width: 50%;
   }
 
   .pair-match-play-choice {
-    font-family: $font-family-regular;
-    color: $dark-blue;
-    font-size: $font-size;
+    text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
-    
-    height: 47px;
     width: 100%;
-    background: $answer-grey;
-    overflow: hidden;
-
-    .pair-match-play-data {
-      min-height: 46px;
-    }
   }
 
   .pair-match-image-choice {
-    height: 110px;
     padding-bottom: 2px;
-    img {
-      height: 110px;
-    }
   }
   .pair-match-play-option.pair-match-image-choice {
     background: none;
