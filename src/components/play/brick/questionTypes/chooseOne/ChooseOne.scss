@@ -24,6 +24,10 @@
 
   .choose-choice.correct {
     background: $light-green !important;
+
+    .question-hint {
+      background: white;
+    }
   }
   
   .question-hint-global {
