@@ -7,9 +7,7 @@
     color: white;
     color: $dark-blue;
     margin: 1px;
-    height: 100% !important;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding: 0;
     width: 100%;
     overflow: hidden;
     .pair-match-play-option-text {
@@ -34,6 +32,8 @@
     }
   }
   .pair-match-play-option {
+    margin-top: 5px;
+    margin-bottom: 5px;
     background: $tab-grey;
   }
 
@@ -46,9 +46,10 @@
 
   .pair-match-play-choice {
     text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     width: 100%;
+    background: #F5F6F7;
 
     p {
       text-align: center !important;
