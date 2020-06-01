@@ -1,0 +1,45 @@
+@mixin text-shadow ($horizontal, $vertical, $blur, $color) {
+	-webkit-text-shadow: $horizontal $vertical $blur $color;
+	-moz-text-shadow: $horizontal $vertical $blur $color;
+	-ms-text-shadow: $horizontal $vertical $blur $color;
+	-o-text-shadow: $horizontal $vertical $blur $color;
+	text-shadow: $horizontal $vertical $blur $color;
+}
+
+@mixin box-shadow ($shadows) {
+	-webkit-box-shadow: $shadows;
+	-moz-box-shadow: $shadows;
+	-ms-box-shadow: $shadows;
+	-o-box-shadow: $shadows;
+	box-shadow: $shadows;
+}
+
+@mixin box-shadow-dual ($shadows1, $shadows2) {
+	-webkit-box-shadow: $shadows1, $shadows2;
+	-moz-box-shadow: $shadows1, $shadows2;
+	-ms-box-shadow: $shadows1, $shadows2;
+	-o-box-shadow: $shadows1, $shadows2;
+	box-shadow: $shadows1, $shadows2;
+}
+
+@mixin box-shadow-tri ($shadows1, $shadows2, $shadows3) {
+	-webkit-box-shadow: $shadows1, $shadows2, $shadows3;
+	-moz-box-shadow: $shadows1, $shadows2, $shadows3;
+	-ms-box-shadow: $shadows1, $shadows2, $shadows3;
+	-o-box-shadow: $shadows1, $shadows2, $shadows3;
+	box-shadow: $shadows1, $shadows2, $shadows3;
+}
+
+// @function longshadow($color_a, $color_b, $stepnum, $opacity){
+//     $gradient_steps: null;
+//     @for $i from 1 through $stepnum {
+//         $weight: ( ( $i - 1 ) / $stepnum ) * 100;
+//         $colour_mix: mix($color_b, rgba($color_a, $opacity), $weight);
+//         $seperator: null;
+//         @if($i != $stepnum){
+//             $seperator: #{','};
+//         }
+//         $gradient_steps: append( #{$gradient_steps}, #{$i}px #{$i}px $colour_mix $seperator );
+//     }
+//     @return $gradient_steps;
+// }

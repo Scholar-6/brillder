@@ -1,0 +1,440 @@
+%lhInherit {
+	line-height: inherit !important;
+}
+
+%widthAuto {
+	width: auto;
+}
+%width100 {
+	width: 100%;
+}
+%maxWidth100 {
+	max-width: 100%;
+}
+
+%heightAuto {
+	height: auto;
+}
+%height100 {
+	height: 100%;
+}
+
+%posRelative {
+	position: relative;
+}
+%posAbsolute {
+	position: absolute;
+}
+%posFixed {
+	position: fixed;
+}
+
+%fontInherit {
+	font-family: inherit;
+}
+
+%uppercase {
+	text-transform: uppercase;
+}
+
+%fs9 {
+	font-size: 9px;
+}
+%fs10 {
+	font-size: 10px;
+}
+%fs11 {
+	font-size: 11px;
+}
+%fs12 {
+	font-size: 12px;
+}
+%fs13 {
+	font-size: 13px;
+}
+%fs14 {
+	font-size: 14px;
+}
+%fs15 {
+	font-size: 15px;
+}
+%fs16 {
+	font-size: 16px;
+}
+%fs17 {
+	font-size: 17px;
+}
+%fs18 {
+	font-size: 18px;
+}
+%fs19 {
+	font-size: 19px;
+}
+%fs20 {
+	font-size: 20px;
+}
+%fs21 {
+	font-size: 21px;
+}
+%fs22 {
+	font-size: 22px;
+}
+%fs23 {
+	font-size: 23px;
+}
+%fs24 {
+	font-size: 24px;
+}
+%fs25 {
+	font-size: 25px;
+}
+%fs30 {
+	font-size: 30px;
+}
+
+%fw-3 {
+	font-weight: 300;
+}
+%fw-4 {
+	font-weight: 400;
+}
+%fw-5 {
+	font-weight: 500;
+}
+%fw-6 {
+	font-weight: 600;
+}
+%fw-7 {
+	font-weight: 700;
+}
+%fw-8 {
+	font-weight: 800;
+}
+%fw-9 {
+	font-weight: 900;
+}
+
+%noWrap {
+	white-space: nowrap !important;
+}
+
+%displayFlex {
+	display: flex;
+}
+
+%flexNone {
+	flex: none;
+}
+%flexRow {
+	flex-direction: row;
+}
+%flexColumn {
+	flex-direction: column;
+}
+%flexJustifyCenter {
+	justify-content: center;
+}
+%flexAlignStart {
+	align-items: flex-start;
+}
+%flexAlignCenter {
+	align-items: center;
+}
+%flexAlignEnd {
+	align-items: flex-end;
+}
+%flexJustifyCenter {
+	justify-content: center;
+}
+%flexNowrap {
+	flex-wrap: nowrap;
+}
+%flexWrap {
+	flex-wrap: wrap;
+}
+
+%flexFlowColumn {
+	flex-flow: column wrap;
+}
+%flexFlowColReverse {
+	flex-flow: column-reverse wrap;
+}
+%flexFlowRow {
+	flex-flow: row wrap;
+}
+%flexFlowRowReverse {
+	flex-flow: row-reverse wrap;
+}
+%flexFlowWrapReverse {
+	flex-flow: wrap-reverse;
+}
+
+%noUserSelect {
+	@include user-select(none);
+}
+%noDisplay {
+	display: none;
+}
+%noShadow {
+	box-shadow: none;
+}
+%noOutline {
+	outline: none;
+}
+%nolistStyle {
+	list-style: none;
+}
+%noTextDecor {
+	text-decoration: none;
+}
+
+%cursorDisabled {
+	pointer-events: none;
+}
+
+%cursorPointer {
+	cursor: pointer;
+}
+
+%noPointerEvent {
+	pointer-events: none;
+}
+
+%noBg {
+	background: none;
+}
+%bgTransparent {
+	background-color: transparent;
+}
+
+%noRad {
+	border-radius: 0;
+}
+%rad40 {
+	border-radius: 40px;
+}
+%radCircle {
+	border-radius: 50%;
+}
+%themeRadius {
+	border-radius: 4px;
+}
+
+%op0 {
+	@include opacity(0);
+}
+%op03 {
+	@include opacity(0.3);
+}
+%op04 {
+	@include opacity(0.4);
+}
+%op05 {
+	@include opacity(0.5);
+}
+%op1 {
+	@include opacity(1);
+}
+
+%b0 {
+	border: 0;
+}
+%b1 {
+	border-width: 1px;
+	border-style: solid;
+}
+%bb1 {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+%br1 {
+	border-right-width: 1px;
+	border-right-style: solid;
+}
+%bl1 {
+	border-left-width: 1px;
+	border-left-style: solid;
+}
+
+%shDefault {
+	box-shadow: 0 0px 3px 0 var(--black-alpha2);
+}
+%shActive {
+	box-shadow: 0px 2px 5px var(--black-alpha2);
+}
+%sh14 {
+	box-shadow: 0 2px 10px var(--black-alpha2);
+}
+
+%cardDefault {
+	background-color: var(--gray);
+}
+%cardActive {
+	background-color: var(--gray);
+}
+
+%borderGray {
+	border-color: var(--gray);
+}
+%borderGrayDark {
+	border-color: var(--gray-dark);
+}
+
+%borderCollapse {
+	outline: none;
+}
+
+%overflowHidden {
+	overflow: hidden;
+}
+
+%removeAppearence {
+	@include appearance(none);
+}
+
+%p0 {
+	padding: 0px;
+}
+%p3 {
+	padding: 3px;
+}
+%p5 {
+	padding: 5px;
+}
+%p6 {
+	padding: 6px;
+}
+%p7 {
+	padding: 7px;
+}
+%p10 {
+	padding: 10px;
+}
+%p13 {
+	padding: 13px;
+}
+%p14 {
+	padding: 14px;
+}
+%p15 {
+	padding: 15px;
+}
+%p20 {
+	padding: 20px;
+}
+%p28 {
+	padding: 28px;
+}
+
+%marginAuto {
+	margin: auto;
+}
+%m0 {
+	margin: 0px;
+}
+%m5 {
+	margin: 5px;
+}
+%m7 {
+	margin: 7px;
+}
+%m10 {
+	margin: 10px;
+}
+%m15 {
+	margin: 15px;
+}
+%m20 {
+	margin: 20px;
+}
+
+%mb5 {
+	margin-bottom: 5px;
+}
+
+%textCenter {
+	text-align: center;
+}
+%textRight {
+	text-align: right;
+}
+%textLeft {
+	text-align: left;
+}
+
+%textUppercase {
+	text-transform: uppercase;
+}
+
+%pullLeft {
+	float: left;
+}
+%pullRight {
+	float: right;
+}
+%pullNone {
+	float: none;
+}
+
+%transitionAll150 {
+	@include transition(all 150ms ease);
+}
+%transitionAll300 {
+	@include transition(all 300ms ease);
+}
+%transitionAll400 {
+	@include transition(all 400ms ease);
+}
+%transitionAll500 {
+	@include transition(all 500ms ease);
+}
+%transitionAll600 {
+	@include transition(all 600ms ease);
+}
+
+%floatToCenter {
+	@extend %posAbsolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+%floatToXCenter {
+	@extend %posAbsolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+%floatToYCenter {
+	@extend %posAbsolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+%flexCenter {
+	@extend %displayFlex;
+	align-items: center;
+	justify-content: center;
+}
+
+%formValidation {
+	.ng-pristine.ng-invalid:not(form):not(fieldset),
+	.ng-invalid.ng-untouched:not(form):not(fieldset),
+	.ng-invalid.ng-touched:not(form):not(fieldset),
+	.ng-valid.ng-untouched:not(form):not(fieldset),
+	.ng-valid.ng-touched:not(form):not(fieldset) {
+		border-width: 1px !important;
+		border-style: solid !important;
+	}
+	.ng-pristine.ng-invalid:not(form):not(fieldset),
+	.ng-invalid.ng-untouched:not(form):not(fieldset) {
+		border-color: var(--black-light) !important;
+		background-color: transparent !important;
+	}
+	.ng-invalid.ng-touched:not(form):not(fieldset) {
+		border-color: var(--danger) !important;
+		background-color: transparent !important;
+	}
+	.ng-valid.ng-untouched:not(form):not(fieldset),
+	.ng-valid.ng-touched:not(form):not(fieldset) {
+		border-color: var(--success) !important;
+		background-color: transparent !important;
+	}
+}
