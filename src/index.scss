@@ -1573,9 +1573,9 @@ input:focus {
 }
 
 .btn-transparent {
-	background: transparent;
-    border: 0;
-	outline: none;
+	background: transparent !important;
+    border: 0 !important;
+	outline: none !important;
 	cursor: pointer;
 }
 
