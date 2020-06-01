@@ -81,7 +81,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
                   <p style={{fontWeight: 'normal'}}>
                     <MathInHtml value={brick.prep} />
                   </p>
-                  <p className="text-title">
+                  <p className="text-title brick-length">
                     5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>
                   </p>
                 </div>
