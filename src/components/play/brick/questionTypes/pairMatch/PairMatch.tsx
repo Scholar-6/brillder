@@ -82,14 +82,18 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (answer.optionType && answer.optionType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} />;
     }
-    return answer.option;
+    return <div dangerouslySetInnerHTML={{ __html: answer.option }} />
   }
 
   renderAnswer(answer: Answer) {
     if (answer.answerType && answer.answerType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
     } else {
-      return <div className="MuiListItemText-root" style={{width: '100%', textAlign: 'center'}}>{answer.value}</div>
+      return <div
+        className="MuiListItemText-root"
+        style={{width: '100%', textAlign: 'center'}}
+        dangerouslySetInnerHTML={{ __html: answer.value }}
+      />
     }
   }
 
