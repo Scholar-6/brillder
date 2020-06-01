@@ -4,9 +4,11 @@ import {checkVisibility} from '../../services/hintService';
 import {ComponentAttempt} from '../model/model';
 import {Hint, HintStatus} from 'model/question';
 
+
 interface ReviewHintProps {
   attempt?: ComponentAttempt;
   index: number;
+  isCorrect?: boolean;
   isPhonePreview?: boolean;
   hint: Hint;
 }
@@ -14,9 +16,14 @@ interface ReviewHintProps {
 const ReviewEachHint: React.FC<ReviewHintProps> = ({ hint, ...props }) => {
   const isShown = checkVisibility(props.attempt, props.isPhonePreview);
 
+  let hintText = hint.list[props.index];
+  if (props.isCorrect) {
+    hintText = "N.B. " + hintText;
+  }
+
   if (isShown && hint.status === HintStatus.Each && hint.list[props.index]) {
     return (
-      <span className="question-hint" dangerouslySetInnerHTML={{ __html: hint.list[props.index]}} />
+      <span className="question-hint" dangerouslySetInnerHTML={{ __html: hintText}} />
     );
   }
 

@@ -145,6 +145,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   }
 
   renderButton(choice: any, index:number) {
+    let isCorrect:any = false;
     let className = "choose-choice";
     let active = this.state.activeItems.find(i => i === index) as number;
 
@@ -156,9 +157,12 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
       if (active >= 0) {
         className += " active";
       }
-      const isCorrect = this.checkChoice(choice, index);
+      isCorrect = this.checkChoice(choice, index);
       if (isCorrect === true) {
         className += " correct";
+      }
+      if (!isCorrect) {
+        isCorrect = false;
       }
     }
 
@@ -178,12 +182,12 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
           </Grid>
         </Grid>
         <Grid container direction="row">
-          <Grid item xs={1}>
-          </Grid>
+          <Grid item xs={1}></Grid>
           <Grid item xs={11}>
             <ReviewEachHint
               isPhonePreview={this.props.isPreview}
               attempt={this.props.attempt}
+              isCorrect={isCorrect}
               index={index}
               hint={this.props.question.hint}
             />
