@@ -26,18 +26,31 @@ strong {
  -webkit-box-pack: center !important;
 }
 
+
 .MuiGrid-align-content-xs-center.MuiGrid-justify-xs-flex-end {
  -webkit-box-pack: end !important;
-}
-#launcher {
-  left: 0;
-  padding: 0;
-  margin: 0 !important;
-  width: 8vw !important;
-  margin-bottom: 10px !important;
-  margin-left: 1px !important;
 }
 
 #webWidget {
   left: 0;
+}
+
+// styling zendesk widget position
+body {
+  > div:nth-child(8) {
+    position: fixed;
+    bottom: 0;
+    height: 55px;
+    margin-bottom: 10px !important;
+    width: 9.35vw;
+    display: -webkit-inline-box !important;
+    -webkit-box-align: center !important;
+    -webkit-box-pack: center !important;
+    
+    iframe {
+      padding: 0;
+      margin: 0 !important;
+      position: relative !important;
+    }
+  }
 }
