@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
@@ -53,7 +52,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
 
   getState(entry: number): number {
     if (this.props.attempt?.answer[entry]) {
-      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')) {
+      if (
+        this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') ===
+        this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')
+      ) {
         return 1;
       } else { return -1; }
     } else { return 0; }
@@ -117,22 +119,14 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
           <ReactSortable
             list={this.state.userAnswers}
             animation={150}
-            style={{display:"inline-block"}}
             group={{ name: "cloning-group-name" }}
             className="answers-list"
             setList={(choices) => this.setUserAnswers(choices)}
           >
             {
               this.state.userAnswers.map((answer, i) => (
-                <div
-                  style={{display: "block"}} key={i}
-                  className={
-                    `pair-match-play-choice ${(answer.optionType === QuestionValueType.Image || answer.answerType === QuestionValueType.Image) ? "pair-match-image-choice" : ""}`
-                  }
-                >
-                  <Grid item xs={12} container justify="center" alignContent="center" className="pair-match-play-data">
-                    {this.renderAnswer(answer)}
-                  </Grid>
+                <div key={i} className="pair-match-play-choice">
+                  {this.renderAnswer(answer)}
                 </div>
               ))
             }
