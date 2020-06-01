@@ -1,0 +1,17 @@
+@import '_variables';
+
+.beta-text {
+  position: fixed;
+  bottom: 1%;
+  right: 1%;
+  color: $orange;
+  font-size: 2vw;
+  letter-spacing: 0.4vw;
+  font-family: $font-family-black;
+}
+
+strong {
+  font-family: $font-family-black;
+  font-weight: normal;
+}
+
