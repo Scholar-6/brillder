@@ -1,0 +1,33 @@
+@mixin keyframes ($name) {
+	@keyframes #{$name} {
+		@content;
+	}
+}
+
+@mixin animation($animation) {
+	-webkit-animation: $animation;
+	-moz-animation: $animation;
+	-ms-animation: $animation;
+	-o-animation: $animation;
+	animation: $animation;
+}
+
+@mixin animation-dual ($animation1, $animation2) {
+	-webkit-animation: $animation1, $animation2;
+	-moz-animation: $animation1, $animation2;
+	-ms-animation: $animation1, $animation2;
+	-o-animation: $animation1, $animation2;
+	animation: $animation1, $animation2;
+}
+
+// $name = animation-name: keyframe|none|initial|inherit;
+// $delay = animation-delay: time|initial|inherit;
+// $duration = animation-duration: time|initial|inherit;
+// $direction = animation-direction: normal|reverse|alternate|alternate-reverse|initial|inherit;
+// $iteration = animation-iteration-count: number|infinite|initial|inherit;
+
+// USAGE
+// @include animation($name $duration $direction $delay iteration)
+
+// EXAMPLE
+// @include animation(slideDown 2s linear 0ms infinite)

@@ -1,0 +1,15 @@
+@mixin transition ($transition) {
+	-webkit-transition: $transition;
+	-moz-transition: $transition;
+	-ms-transition: $transition;
+	-o-transition: $transition;
+	transition: $transition;
+}
+
+@mixin transition-dual ($transition1, $transition2) {
+	-webkit-transition: $transition1, $transition2;
+	-moz-transition: $transition1, $transition2;
+	-ms-transition: $transition1, $transition2;
+	-o-transition: $transition1, $transition2;
+	transition: $transition1, $transition2;
+}

@@ -1,0 +1,45 @@
+@mixin display($value) {
+	-webkit-display: $value;
+	-khtml-display: $value;
+	-moz-display: $value;
+	-ms-display: $value;
+	-o-display: $value;
+	display: $value;
+}
+
+@mixin appearance($value) {
+	-webkit-appearance: $value;
+	-moz-appearance: $value;
+	-ms-appearance: $value;
+	-o-appearance: $value;
+	appearance: $value;
+}
+
+@mixin opacity($opacity) {
+	opacity: $opacity;
+	$opacity-ie: $opacity * 100;
+	filter: alpha(opacity=$opacity-ie);
+}
+
+@mixin backface-visibility($visibility) {
+    -webkit-backface-visibility: $visibility;
+    -moz-backface-visibility: $visibility;
+    -ms-backface-visibility: $visibility;
+    -o-backface-visibility: $visibility;
+    backface-visibility: $visibility;
+}
+
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+		@content;
+	}
+    &:-moz-placeholder {
+		@content;
+	}
+    &::-moz-placeholder {
+		@content;
+	}
+    &:-ms-input-placeholder {
+        @content;
+    }
+}

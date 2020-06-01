@@ -557,7 +557,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         <div className="filter-header">
           <div style={{ display: "inline" }}>
             <span className="filter-control">Filter</span>
-            {this.state.filterExpanded ? (
+			<button className="svgOnHover" onClick={() => {this.state.filterExpanded ? (this.hideFilter()) : (this.expendFilter())}}>
+				<svg className="svg active">
+					<use href={this.state.filterExpanded ? ("/assets/img/icons-sprite.svg#arrow-down") : ("/assets/img/icons-sprite.svg#arrow-up")} className="text-white" />
+				</svg>
+			</button>
+            {/* {this.state.filterExpanded ? (
               <ExpandLessIcon
                 className="filter-control"
                 style={{ fontSize: "3vw" }}
@@ -569,7 +574,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 style={{ fontSize: "3vw" }}
                 onClick={() => this.expendFilter()}
               />
-            )}
+            )} */}
             {this.state.subjects.some((r: any) => r.checked) ? (
               <ClearIcon
                 className="filter-control"

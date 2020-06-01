@@ -1,0 +1,8 @@
+@mixin user-select($select-value) {
+	-webkit-user-select: $select-value;
+	-khtml-user-select: $select-value;
+	-moz-user-select: $select-value;
+	-ms-user-select: $select-value;
+	-o-user-select: $select-value;
+	user-select: $select-value;
+}
