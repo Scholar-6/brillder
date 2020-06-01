@@ -126,7 +126,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
             {
               this.state.userAnswers.map((answer, i) => (
                 <div key={i} className="pair-match-play-choice">
-                  {this.renderAnswer(answer)}
+                  <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
+                    <div>
+                      {this.renderAnswer(answer)}
+                    </div>
+                  </div>
                 </div>
               ))
             }
