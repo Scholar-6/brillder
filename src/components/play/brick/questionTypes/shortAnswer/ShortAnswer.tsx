@@ -45,14 +45,6 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     return this.state.userAnswers;
   }
 
-  getState(entry: number): number {
-    if (this.props.attempt.answer[entry]) {
-      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].answer.toLowerCase().replace(/ /g, '')) {
-        return 1;
-      } else { return -1; }
-    } else { return 0; }
-  }
-
   checkAttemptAnswer(answer: any, index: number) {
     if (
       this.props.attempt &&
