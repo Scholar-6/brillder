@@ -35,22 +35,8 @@ strong {
   left: 0;
 }
 
-// styling zendesk widget position
-body {
-  > div:nth-child(8), > div:nth-last-child(2) {
-    position: fixed;
-    bottom: 0;
-    height: 55px;
-    margin-bottom: 10px !important;
-    width: 9.35vw;
-    display: -webkit-inline-box !important;
-    -webkit-box-align: center !important;
-    -webkit-box-pack: center !important;
-    
-    iframe {
-      padding: 0;
-      margin: 0 !important;
-      position: relative !important;
-    }
-  }
+#launcher {
+  position: fixed;
+  margin-left: 30px !important;
+  left: 0;
 }
