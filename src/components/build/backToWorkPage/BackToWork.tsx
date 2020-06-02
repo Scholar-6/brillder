@@ -604,18 +604,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         </RadioGroup>
         <div className="filter-header">
           <div style={{ display: "inline" }}>
-            <span className="filter-control">FILTER</span>
+            <span>FILTER</span>
             {this.state.filterExpanded ? (
-              <ExpandLessIcon
-                className="filter-control"
-                style={{ fontSize: "3vw" }}
-                onClick={() =>
-                  this.setState({ ...this.state, filterExpanded: false })
-                }
-              />
+			<ExpandLessIcon style={{ fontSize: "3vw" }}
+			onClick={() => this.setState({ ...this.state, filterExpanded: false })}/>
             ) : (
-              <ExpandMoreIcon
-                className="filter-control"
+			<ExpandMoreIcon
                 style={{ fontSize: "3vw" }}
                 onClick={() =>
                   this.setState({ ...this.state, filterExpanded: true })
@@ -624,7 +618,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             )}
             {filterPresent ? (
               <ClearIcon
-                className="filter-control"
                 style={{ fontSize: "2vw" }}
                 onClick={() => this.removeStatusFilters()}
               />
