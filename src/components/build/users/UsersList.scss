@@ -72,11 +72,6 @@ $grey: #b0b0ad;
   width: 100%;
   font-family: $font-family-regular;
 
-  .subjects-filter {
-    padding-top: 1.8vh;
-    height: 49.1vh;
-    overflow-y: auto;
-  }
 
   .users-upper-part {
     position: relative;
@@ -186,31 +181,6 @@ $grey: #b0b0ad;
               letter-spacing: 0.06vw;
             }
           }
-        }
-        .filter-container {
-          cursor: default;
-          margin-bottom: 0.1vh;
-          margin-right: 0;
-          width: 100%;
-          > span.filter-radio {
-            padding-left: 2vw;
-            padding-right: 0.4vw;
-            svg {
-              height: 2.2vh;
-              width: 2.2vh;
-              color: $orange;
-            }
-          }
-          .MuiFormControlLabel-label {
-            font: 1.05vw $font-family-regular !important;
-            letter-spacing: 0.06vw;
-          }
-          .custom-color svg {
-            color: var(--color) !important;
-          }
-        }
-        .filter-container:nth-child(odd) {
-          width: 100%;
         }
       }
     }

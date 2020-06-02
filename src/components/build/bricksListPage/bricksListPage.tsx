@@ -205,7 +205,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
   filter() {
 	this.filterClear()
-	console.log("filter",this.state)
     let bricks = this.getBricksForFilter();
     let filtered = [];
 
@@ -235,21 +234,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   filterBySubject = (i: number) => {
     let { subjects } = this.state;
 	subjects[i].checked = !subjects[i].checked;
-
-	// this.setState(prevState => {
-	// 	return {
-	// 	  ...prevState,
-	// 	  isClearFilter: true
-	// 	};
-	//   });
-
-	//   console.log("isClearFilter",this.state.isClearFilter)
-	// this.setState({ ...this.state,  isClearFilter: true },()=>{
-	// 	console.log("hideFilter",this.state.isClearFilter)
-	// });
-
-
-	// this.filterClear();
 	this.filter();
   };
 
@@ -451,50 +435,35 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     });
   }
 
-  creatingBrick() {
-    this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
-  }
+	creatingBrick() {
+		this.props.forgetBrick();
+		this.props.history.push("/build/new-brick/subject");
+	}
 
-  showDropdown() {
+	showDropdown() {
+		this.setState({ ...this.state, dropdownShown: true });
+	}
 
-	this.setState({ ...this.state, dropdownShown: true });
+	hideDropdown() {
+		this.setState({ ...this.state, dropdownShown: false });
+	}
 
-  }
+	hideFilter() {
+		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+	}
 
-  hideDropdown() {
-    this.setState({ ...this.state, dropdownShown: false });
-  }
+	expendFilter() {
+		this.setState({
+			...this.state,
+			filterExpanded: true,
+			filterHeight: "auto"
+		});
+	}
 
-  hideFilter() {
-	this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" },()=>{
-		console.log("hideFilter",this.state.isClearFilter)
-	});
-
-  }
-
-  expendFilter() {
-	  console.log("expendFilter")
-    this.setState({
-      ...this.state,
-      filterExpanded: true,
-	  filterHeight: "auto",
-
-	},()=>{
-		console.log("expendFilter",this.state.isClearFilter)
-	});
-
-
-}
-
-
-  filterClear(){
-	  console.log("isClearFilter",this.state.subjects.some((r: any) => r.checked))
-	  this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false})
-	// this.state.subjects.some((r: any) => r.checked) ?( this.setState({isClearFilter: false})) :  (this.setState({isClearFilter: true}))
-
-	console.log("isClearFilter re",this.state.isClearFilter)
-  }
+	filterClear(){
+		console.log("isClearFilter",this.state.subjects.some((r: any) => r.checked))
+		this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false})
+	}
 
   getSortedBrickContainer = (brick: Brick, key: number, index: number, row: any = 0) => {
     let color = "";
@@ -603,35 +572,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 				className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
 				>
 			</button>
-
-			{/* {this.state.subjects.some((r: any) => r.checked) ? (
-			<button className="btn-transparent svgOnHover" onClick={() => this.clearSubjects()}>
-				<svg className="svg active">
-					<use href="/images/icons-sprite.svg#cancel" className="text-white" />
-				</svg>
-			</button>
-			) : (
-				""
-			  )} */}
-            {/* {this.state.filterExpanded ? (
-              <ExpandLessIcon
-                style={{ fontSize: "3vw" }}
-                onClick={() => this.hideFilter()}
-              />
-            ) : (
-              <ExpandMoreIcon
-                style={{ fontSize: "3vw" }}
-                onClick={() => this.expendFilter()}
-              />
-            )}
-            {this.state.subjects.some((r: any) => r.checked) ? (
-              <ClearIcon
-                style={{ fontSize: "2vw" }}
-                onClick={() => this.clearSubjects()}
-              />
-            ) : (
-              ""
-            )}*/}
         </div>
         <SubjectsList
           subjects = {this.state.subjects}
