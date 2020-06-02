@@ -8,7 +8,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import './Hint.scss';
-import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
+import DocumentCKEditor from 'components/baseComponents/ckeditor/DocumentEditor';
 
 const HtmlTooltip = withStyles((theme:any) => ({
   tooltip: {

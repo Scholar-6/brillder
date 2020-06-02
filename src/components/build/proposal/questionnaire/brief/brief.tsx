@@ -7,7 +7,7 @@ import NavigationButtons from '../../components/navigationButtons/NavigationButt
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
-import DocumentCKEditor from "components/baseComponents/DocumentEditor";
+import DocumentCKEditor from "components/baseComponents/ckeditor/DocumentEditor";
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 
