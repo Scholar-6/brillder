@@ -78,7 +78,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     attempt.maxMarks = this.state.choices.length * 5;
 
     this.state.userAnswers.forEach((choice, i) => {
-      if (this.state.choices[i].answers[choice.value].checked === true) {
+      if (this.state.choices[i].answers[choice.value]?.checked === true) {
         attempt.marks += markIncrement;
       } else {
         attempt.correct = false;
@@ -88,6 +88,17 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     attempt.answer = this.state.userAnswers;
     if (attempt.marks === 0 && attempt.answer !== [] && !prev) {
       attempt.marks = 1;
+    }
+
+    let noAnswer = true;
+    for (let answer of attempt.answer) {
+      if (answer.value !== -1) {
+        noAnswer = false;
+      }
+    }
+
+    if (noAnswer) {
+      attempt.marks = 0;
     }
     return attempt;
   }
