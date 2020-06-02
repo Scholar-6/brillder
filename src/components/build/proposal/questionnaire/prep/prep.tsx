@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 
 import './prep.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
-import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
+import DocumentCKEditor from 'components/baseComponents/ckeditor/DocumentEditor';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";

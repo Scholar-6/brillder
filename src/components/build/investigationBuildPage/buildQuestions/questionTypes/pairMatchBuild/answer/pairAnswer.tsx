@@ -5,7 +5,7 @@ import { Grid } from "@material-ui/core";
 import {QuestionValueType} from '../../types';
 import {Answer} from '../types';
 import QuestionImageDropZone from '../../../baseComponents/QuestionImageDropzone';
-import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
+import DocumentCKEditor from 'components/baseComponents/ckeditor/DocumentEditor';
 
 
 export interface PairAnswerProps {

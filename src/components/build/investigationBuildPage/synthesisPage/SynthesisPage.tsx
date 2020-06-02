@@ -1,5 +1,5 @@
 import React from 'react'
-import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
+import DocumentCKEditor from 'components/baseComponents/ckeditor/DocumentEditor';
 
 import './SynthesisPage.scss';
 import { Grid, Button } from '@material-ui/core';
