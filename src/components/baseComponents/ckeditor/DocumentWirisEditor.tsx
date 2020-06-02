@@ -127,10 +127,6 @@ class DocumentWirisEditorComponent extends React.Component<DocumentWirisEditorPr
     this.setState({...this.state, editor});
   }
 
-  componentDidMount() {
-    console.log(this.state.ref);
-  }
-
   render() {
     let config = {
       extraPlugins: [InsertDropDown],
@@ -187,7 +183,10 @@ class DocumentWirisEditorComponent extends React.Component<DocumentWirisEditorPr
           config={config}
           onInit={(e:any) => this.handleOnInit(e)}
           onChange={(e: any, editor: any) => {
-            if (!this.state.focused) { return; }
+            var res = document.getElementsByClassName("wrs_modal_dialogContainer wrs_modal_desktop wrs_stack")
+            if (!this.state.focused && res.length === 0) {
+              return;
+            }
             const data = editor.getData();
             this.props.onChange(data);
             this.replaceHtml("ck-label", "Document colors", "Document colours");
