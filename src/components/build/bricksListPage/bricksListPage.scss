@@ -332,36 +332,7 @@
 			height: 4.5vh;
 			font-size: 2.4vh;
         }
-        .filter-container {
-          cursor: default;
-          margin-bottom: 0.1vh;
-          margin-right: 0;
-          > span.filter-radio {
-            padding-left: 2vw;
-            padding-right: 0.4vw;
-            svg {
-              height: 2.2vh;
-              width: 2.2vh;
-            }
-          }
-          .MuiFormControlLabel-label {
-            font: 1.05vw 'Brandon Grotesque Light' !important;
-            letter-spacing: 0.06vw;
-          }
-          .custom-color svg {
-            color: var(--color) !important;
-          }
-        }
-        .filter-container:nth-child(odd) {
-          width: 100%;
-        }
       }
-    }
-
-    .subjects-filter {
-      padding-top: 1.8vh;
-      height: 59.8vh;
-      overflow-y: auto;
     }
 
     .brick-row-container {
