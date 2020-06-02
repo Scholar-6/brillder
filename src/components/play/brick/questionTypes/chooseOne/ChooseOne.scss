@@ -2,6 +2,7 @@
 
 .choose-one-live {
   .choose-choice {
+    font-family: $font-family-regular;
     margin-top: 5px;
     margin-bottom: 5px;
     color: $dark-blue;
@@ -10,8 +11,8 @@
     border-radius: 0 !important;
     width: 100%;
     font-size: 1vw !important;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 14px;
+    padding-bottom: 14px;
 
     img {
       width: 100%;
