@@ -3,7 +3,6 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import './brickLength.scss';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
@@ -39,7 +38,6 @@ const BrickLength:React.FC<BrickLengthProps> = ({ length, saveLength, saveBrick 
 
   return (
     <div className="tutorial-page brick-length-page">
-      <HomeButton link='/build' />
       <Navigation step={ProposalStep.BrickLength} onMove={() => {}} />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
@@ -85,7 +83,6 @@ const BrickLength:React.FC<BrickLengthProps> = ({ length, saveLength, saveBrick 
         </Grid>
         <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} />
         <div className="red-right-block"></div>
-        <div className="beta-text">BETA</div>
       </Grid>
     </div>
   );

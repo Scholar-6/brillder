@@ -1,4 +1,8 @@
+@import '_variables';
+
 .word-highlight-build {
+  margin-left: 1.25%;
+  width: 97.5%;
   position: relative;
 
   .pencil-icon-container {
@@ -7,7 +11,7 @@
     right: 0;
 
     .active {
-      color: green;
+      color: $light-green;
     }
   }
 
@@ -15,24 +19,39 @@
     width: 98%;
     background: white;
     text-align: left;
-    border: 1px solid grey;
     padding: 0;
     margin: 0;
-    border-radius: 0.2vw;
+    border-radius: 0.4vw;
     padding-left: 1%;
     padding-right: 1%;
     font-size: 1vw;
     line-height: 1.1;
     min-height: 3vh;
+    padding-top: 0.4vh;
+    padding-bottom: 0.4vh;
+    margin-bottom: 0.3vw;
+
+    .word {
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .word.active {
+      background: $light-green;
+    }
   }
 
   textarea {
+    font-family: $font-family-regular;
     width: 98%;
     padding: 0;
     margin: 0;
     padding-left: 1%;
     padding-right: 1%;
     font-size: 1vw !important;
+    border-radius: 0.4vw !important;
+    padding-top: 0.5vh;
+    border: none;
   }
 
   .input-container {

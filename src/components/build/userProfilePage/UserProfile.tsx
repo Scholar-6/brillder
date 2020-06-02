@@ -11,15 +11,14 @@ import { connect } from 'react-redux';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import brickActions from 'redux/actions/brickActions';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
 
 import './UserProfile.scss';
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import authActions from 'redux/actions/auth';
 import { User, UserType, UserStatus, UserProfile, UserRole } from 'model/user';
 import PhonePreview from '../baseComponents/phonePreview/PhonePreview';
 import { Subject } from 'model/brick';
+import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
+import SubjectAutocomplete from './SubjectAutoCompete';
 
 
 const mapState = (state: any) => {
@@ -53,6 +52,7 @@ interface UserProfileState {
   logoutDialogOpen: boolean;
   deleteDialogOpen: boolean;
   dropdownShown: boolean;
+  autoCompleteOpen: boolean;
   roles: any[];
 }
 
@@ -81,6 +81,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       searchString: '',
       isSearching: false,
       dropdownShown: false,
+      autoCompleteOpen: false,
       roles: [
         { roleId: UserType.Student, name: "Student"},
         { roleId: UserType.Teacher, name: "Teacher"},
@@ -203,12 +204,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({...this.state});
   }
 
-  searching(searchString: string) { }
-
-  keySearch(e: any) {
-    if (e.keyCode === 13) {
-      this.search();
-    }
+  searching(searchString: string) {
+    
   }
 
   search() { }
@@ -251,7 +248,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     );
   }
 
-  onSubjectChange(event: any, newValue: any) {
+  onSubjectChange(newValue: any[]) {
     const {user} = this.state;
     user.subjects = newValue;
     this.setState({...this.state, user});
@@ -261,30 +258,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     return (
       <div className="user-profile-page">
         <div className="bricks-upper-part">
-          <Grid container direction="row" className="page-header">
-            <HomeButton link="/build" />
-            <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
-              <Grid container style={{width: '60vw', height: '7vh'}}>
-              <Grid item>
-                <div className="search-button" onClick={() => this.search()}></div>
-              </Grid>
-              <Grid item>
-                <input
-                  className="search-input"
-                  onKeyUp={(e) => this.keySearch(e)}
-                  onChange={(e) => this.searching(e.target.value)}
-                  placeholder="Search by Name, Email or Subject"
-                />
-              </Grid>
-              </Grid>
-              <Grid item style={{width: '32.35vw'}}>
-                <Grid container direction="row" justify="flex-end">
-                  <div className="bell-button"><div></div></div>
-                  <div className="more-button" onClick={() => this.showDropdown()}></div>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+          <PageHeader
+            searchPlaceholder="Search by Name, Email or Subject"
+            search={() => this.search()}
+            searching={(v) => this.searching(v)}
+            showDropdown={() => this.showDropdown()}
+          />
           <Grid container direction="row">
             <Grid item xs={9}>
               <div className="profile-block">
@@ -309,18 +288,18 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   <Grid item className="profile-inputs-container">
                     <div>
                       <Grid>
-                      <input
-                        className="first-name"
-                        value={this.state.user.firstName}
-                        onChange={(e: any) => this.onFirstNameChanged(e)}
-                        placeholder="Name"
-                      />
-                      <input
-                        className="last-name"
-                        value={this.state.user.lastName}
-                        onChange={(e: any) => this.onLastNameChanged(e)}
-                        placeholder="Surname"
-                      />
+                        <input
+                          className="first-name"
+                          value={this.state.user.firstName}
+                          onChange={(e: any) => this.onFirstNameChanged(e)}
+                          placeholder="Name"
+                        />
+                        <input
+                          className="last-name"
+                          value={this.state.user.lastName}
+                          onChange={(e: any) => this.onLastNameChanged(e)}
+                          placeholder="Surname"
+                        />
                       </Grid>
                       <input
                         type="email"
@@ -333,7 +312,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                         value={this.state.user.password}
                         onChange={(e: any) => this.onPasswordChanged(e)}
                         placeholder="* * * * * * * * * * *"
-                        />
+                      />
                     </div>
                   </Grid>
                   <Grid container justify="center" alignContent="flex-start" className="profile-roles-container">
@@ -343,23 +322,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid container direction="row" className="subjects-container">
-                  <Autocomplete
-                    multiple
-                    value={this.state.user.subjects}
-                    options={this.state.subjects}
-                    onChange={(e:any, v: any) => this.onSubjectChange(e, v)}
-                    getOptionLabel={(option:any) => option.name}
-                    renderInput={(params:any) => (
-                      <TextField
-                        {...params}
-                        variant="standard"
-                        label="Subjects: "
-                        placeholder="Subjects"
-                      />
-                    )}
-                  />
-                </Grid>
+                <SubjectAutocomplete
+                  selected={this.state.user.subjects}
+                  onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
+                />
                 <Grid container direction="row" className="big-input-container">
                   <textarea placeholder="Write a short bio here..." />
                 </Grid>

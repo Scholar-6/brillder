@@ -8,6 +8,12 @@
   font-size: 2vw;
   letter-spacing: 0.4vw;
   font-family: $font-family-black;
+  line-height: 1;
+
+  .version-number {
+    text-align: center;
+    font-size: 1.3vw;
+  }
 }
 
 strong {
@@ -15,3 +21,28 @@ strong {
   font-weight: normal;
 }
 
+.MuiGrid-align-content-xs-center {
+  display: -webkit-inline-box !important;
+ -webkit-box-align: center !important;
+}
+
+.MuiGrid-align-content-xs-center.MuiGrid-justify-xs-center {
+  display: -webkit-inline-box !important;
+ -webkit-box-align: center !important;
+ -webkit-box-pack: center !important;
+}
+
+
+.MuiGrid-align-content-xs-center.MuiGrid-justify-xs-flex-end {
+ -webkit-box-pack: end !important;
+}
+
+#webWidget {
+  left: 0;
+}
+
+#launcher {
+  position: fixed;
+  margin-left: 0.9vw !important;
+  left: 0;
+}

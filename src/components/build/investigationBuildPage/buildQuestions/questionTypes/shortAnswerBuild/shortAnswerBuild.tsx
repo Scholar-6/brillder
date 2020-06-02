@@ -4,6 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 import './shortAnswerBuild.scss'
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import { UniqueComponentProps } from '../types';
 
 
 interface ShortAnswerItem {
@@ -14,15 +15,12 @@ interface ShrortAnswerData {
   list: ShortAnswerItem[];
 }
 
-export interface ShortAnswerBuildProps {
+export interface ShortAnswerBuildProps extends UniqueComponentProps {
   data: ShrortAnswerData;
-  locked: boolean;
-  save(): void;
-  updateComponent(component:any):void;
 }
 
 const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
-  locked, data, save, updateComponent
+  locked, data, save, ...props
 }) => {
   const [height, setHeight] = React.useState('0%');
 
@@ -49,7 +47,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
 
   const update = () => {
     setState(Object.assign({}, state));
-    updateComponent(state);
+    props.updateComponent(state);
   }
 
   const changed = (shortAnswer: any, event: any) => {
@@ -87,9 +85,11 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
         <input
           disabled={locked}
           value={shortAnswer.value}
+          className={props.validationRequired && !shortAnswer.value ? "invalid" : ""}
           onBlur={() => save()}
           onChange={(event) => changed(shortAnswer, event)}
-          placeholder="Enter Short Answer..." />
+          placeholder="Enter Short Answer..."
+        />
       </div>
     );
   }
