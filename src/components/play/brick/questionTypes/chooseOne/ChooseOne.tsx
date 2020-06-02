@@ -84,6 +84,10 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     // if there is an answer given and the program is in the live phase, give the student an extra mark.
     else if (attempt.answer != null && !prev) attempt.marks = 1;
     else attempt.marks = 0;
+
+    if (attempt.answer === -1) {
+      attempt.marks = 0;
+    }
     return attempt;
   }
 
