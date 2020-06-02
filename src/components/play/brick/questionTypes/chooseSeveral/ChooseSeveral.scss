@@ -1,6 +1,16 @@
 @import "_variables";
 
 .choose-several-live {
+  .MuiButton-label {
+    div {
+      display: inline;
+      margin: 0 !important;
+    }
+    p {
+      margin: 0 !important;
+      display: inline;
+    }
+  }
   .choose-choice {
     margin-bottom: 5px;
     margin-top: 5px;
