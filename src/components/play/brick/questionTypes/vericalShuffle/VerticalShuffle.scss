@@ -1,13 +1,20 @@
 @import "_variables";
 
 .vertical-shuffle-play {
+  .verical-shuffle-sort-list {
+    width: 100%;
+  }
   .vertical-shuffle-choice {
-    border: 1px dashed black;
+    background: $tab-grey;
     color: black;
     margin: 1px;
+    border-radius: 4px;
+    color: $dark-blue;
+    padding-top: 14px;
+    padding-bottom: 14px;
     width: 100%;
-    > div {
-      margin: 10px !important;
+    .MuiGrid-root {
+      margin: 0;
     }
   }
   .vertical-shuffle-choice.correct .question-hint {
