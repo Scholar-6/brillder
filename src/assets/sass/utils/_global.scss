@@ -173,6 +173,7 @@ code {
 	width: 100% !important;
 	> .filter-radio {
 		padding: 0 !important;
+		margin-right: 5px;
 		svg {
 			height: 2.2vh;
 			width: 2.2vh;
@@ -180,7 +181,7 @@ code {
 		}
 	}
 	.MuiFormControlLabel-label {
-		font: 1.05vw 'Brandon Grotesque Light' !important;
+		font: 1.05vw "Brandon Grotesque Light" !important;
 		letter-spacing: 0.06vw;
 	}
 	.custom-color svg {
