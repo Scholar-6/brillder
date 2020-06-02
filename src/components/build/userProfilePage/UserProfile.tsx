@@ -45,6 +45,7 @@ interface UserProfileProps {
 }
 
 interface UserProfileState {
+  noSubjectDialogOpen: boolean;
   user: UserProfile;
   subjects: Subject[];
   searchString: string;
@@ -88,7 +89,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         { roleId: UserType.Builder, name: "Builder"},
         { roleId: UserType.Editor, name: "Editor"},
         { roleId: UserType.Admin, name: "Admin"}
-      ]
+      ],
+      noSubjectDialogOpen: false,
     };
     if (userId) {
       axios.get(
@@ -144,6 +146,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (user.subjects) {
       userToSave.subjects = user.subjects.map(s => s.id);
     }
+    if (!user.subjects || user.subjects.length === 0) {
+      this.setState({...this.state, noSubjectDialogOpen: true});
+      return;
+    }
     axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/user`, {...userToSave}, {withCredentials: true}
     ).then(res => {
@@ -165,6 +171,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   handleLogoutClose() {
     this.setState({...this.state, logoutDialogOpen: false})
+  }
+
+  handleSubjectDialogClose() {
+    this.setState({...this.state, noSubjectDialogOpen: false})
   }
 
   creatingBrick() {
@@ -399,6 +409,22 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <Grid container direction="row" className="logout-buttons" justify="center">
             <Button className="yes-button" onClick={() => this.logout()}>Yes</Button>
             <Button className="no-button" onClick={() => this.handleLogoutClose()}>No</Button>
+          </Grid>
+        </Dialog>
+        <Dialog
+          open={this.state.noSubjectDialogOpen}
+          onClose={() => this.handleSubjectDialogClose()}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className="delete-brick-dialog"
+        >
+          <div className="dialog-header">
+            <div>You need to assign at least one subject to user</div>
+          </div>
+          <Grid container direction="row" className="row-buttons" justify="center">
+            <Button className="yes-button" onClick={() => this.handleSubjectDialogClose()}>
+              Close
+            </Button>
           </Grid>
         </Dialog>
       </div>
