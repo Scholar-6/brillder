@@ -17,6 +17,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
+import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import authActions from "redux/actions/auth";
@@ -58,6 +59,7 @@ interface BricksListState {
   finalBricks: Brick[];
 
   dropdownShown: boolean;
+  filterHeight: string,
   deleteDialogOpen: boolean;
   deleteBrickId: number;
 }
@@ -84,37 +86,30 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       dropdownShown: false,
       searchBricks: [],
       searchString: "",
+      filterHeight: "auto",
       isSearching: false,
     };
 
-    axios
-      .get(
-        process.env.REACT_APP_BACKEND_HOST +
-          "/bricks/byStatus/" +
-          BrickStatus.Publish,
-        { withCredentials: true }
-      )
-      .then((res) => {
-        this.setState({
-          ...this.state,
-          bricks: res.data,
-          finalBricks: res.data as Brick[],
-        });
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
+    axios.get(
+      process.env.REACT_APP_BACKEND_HOST + "/bricks/byStatus/" + BrickStatus.Publish,
+      { withCredentials: true }
+    ).then((res) => {
+      this.setState({
+        ...this.state,
+        bricks: res.data,
+        finalBricks: res.data as Brick[],
       });
+    }).catch((error) => {
+      alert("Can`t get bricks");
+    });
 
-    axios
-      .get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        this.setState({ ...this.state, subjects: res.data });
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
-      });
+    axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
+      withCredentials: true,
+    }).then((res) => {
+      this.setState({ ...this.state, subjects: res.data });
+    }).catch((error) => {
+      alert("Can`t get bricks");
+    });
   }
 
   logout() {
@@ -193,6 +188,18 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     } else {
       this.setState({ ...state, finalBricks: bricks });
     }
+  }
+
+  hideFilter() {
+    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+  }
+
+  expendFilter() {
+    this.setState({
+      ...this.state,
+      filterExpanded: true,
+      filterHeight: "auto",
+    });
   }
 
   filterBySubject = (i: number) => {
@@ -416,16 +423,12 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             {/* {this.state.filterExpanded ? (
               <ExpandLessIcon
                 style={{ fontSize: "3vw" }}
-                onClick={() =>
-                  this.setState({ ...this.state, filterExpanded: false })
-                }
+                onClick={() => this.hideFilter()}
               />
             ) : (
               <ExpandMoreIcon
                 style={{ fontSize: "3vw" }}
-                onClick={() =>
-                  this.setState({ ...this.state, filterExpanded: true })
-                }
+                onClick={() => this.expendFilter()}
               />
             )} */}
             {this.state.subjects.some((r: any) => r.checked) ? (
@@ -438,6 +441,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             )}
           </div>
         </div>
+        <SubjectsList
+          subjects={this.state.subjects}
+          filterHeight={this.state.filterHeight}
+          filterBySubject={this.filterBySubject}
+        />
         <Grid container direction="row" className="subjects-filter">
           {this.state.filterExpanded
             ? this.state.subjects.map((subject, i) => (

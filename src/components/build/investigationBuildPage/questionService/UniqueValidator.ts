@@ -32,22 +32,26 @@ const validateChooseOne = (comp: any) => {
   return false;
 }
 
+const validateChooseSeveralChecked = (list: any[]) => {
+  let checkedCount = 0;
+  for (let choice of list) {
+    if (choice.checked) {
+      checkedCount++;
+    }
+  }
+  if (checkedCount >= 2) {
+    return true;
+  }
+  return false;
+}
+
 const validateChooseSeveral = (comp: any) => {
   if (comp.list && comp.list.length > 1) {
     let invalid = comp.list.find((a:any) => !a.value);
     if (invalid) {
       return false;
     }
-
-    let checkedCount = 0;
-    for (let choice of comp.list) {
-      if (choice.checked) {
-        checkedCount++;
-      }
-    }
-    if (checkedCount >= 2) {
-      return true;
-    }
+    return validateChooseSeveralChecked(comp.list);
   }
   return false;
 }
@@ -135,6 +139,10 @@ const validateLineHighlighting = (comp: any) => {
 }
   
 const validateMissingWord = (comp: any) => {
+  if (!comp.choices) {
+    return false;
+  }
+
   for (let choice of comp.choices as MissingChoice[]) {
     let invalid = choice.answers.find((a:any) => !a.value);
   
@@ -153,7 +161,9 @@ const validateMissingWord = (comp: any) => {
 
 export default {
   validateShortAnswer,
+  getChecked,
   validateChooseOne,
+  validateChooseSeveralChecked,
   validateChooseSeveral,
   validatePairMatch,
   validateSort,

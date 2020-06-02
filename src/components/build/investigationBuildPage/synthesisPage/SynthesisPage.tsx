@@ -12,8 +12,6 @@ export interface SynthesisProps {
 }
 
 const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange, onReview }) => {
-  document.title = "Synthesis";
-
   return (
     <div className="question-type synthesis-page">
       <div className="inner-question-type">
@@ -22,7 +20,12 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
             <DocumentCKEditor
               data={synthesis}
               placeholder=""
-              toolbar={['bold', 'italic', 'fontColor', 'mathType', 'chemType', 'alignment', 'bulletedList', 'numberedList']}
+              toolbar={[
+                'bold', 'italic', 'fontColor',
+                'superscript', 'subscript', 'strikethrough',
+                'mathType', 'chemType', 'insertTable', 'alignment',
+                'bulletedList', 'numberedList'
+              ]}
               defaultAlignment="justify"
               onBlur={() => {}}
               onChange={onSynthesisChange}

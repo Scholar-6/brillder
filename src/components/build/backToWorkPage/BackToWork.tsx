@@ -24,8 +24,12 @@ import { User, UserType } from "model/user";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
+import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
+
 import ShortBrickDecsiption from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
+import PageHeader from "components/baseComponents/pageHeader/PageHeader";
+
 
 const mapState = (state: any) => {
   return { user: state.user.user };
@@ -70,6 +74,7 @@ interface BackToWorkState {
   filterExpanded: boolean;
   filters: Filters;
   dropdownShown: boolean;
+  failedRequest: boolean;
   shown: boolean;
 }
 
@@ -110,6 +115,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       searchString: "",
       isSearching: false,
       dropdownShown: false,
+      failedRequest: false,
       shown: true,
     };
 
@@ -117,37 +123,31 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       (role) => role.roleId === UserType.Admin
     );
     if (isAdmin) {
-      axios
-        .get(process.env.REACT_APP_BACKEND_HOST + "/bricks", {
-          withCredentials: true,
-        })
-        .then((res) => {
-          this.setState({
-            ...this.state,
-            bricks: res.data,
-            finalBricks: res.data,
-            rawBricks: res.data,
-          });
-        })
-        .catch((error) => {
-          alert("Can`t get bricks");
+      axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks", {
+        withCredentials: true,
+      }).then((res) => {
+        this.setState({
+          ...this.state,
+          bricks: res.data,
+          finalBricks: res.data,
+          rawBricks: res.data,
         });
+      }).catch(() => {
+        this.setState({...this.state, failedRequest: true})
+      });
     } else {
-      axios
-        .get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
-          withCredentials: true,
-        })
-        .then((res) => {
-          this.setState({
-            ...this.state,
-            bricks: res.data,
-            finalBricks: res.data,
-            rawBricks: res.data,
-          });
-        })
-        .catch((error) => {
-          alert("Can`t get bricks");
+      axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
+        withCredentials: true,
+      }).then((res) => {
+        this.setState({
+          ...this.state,
+          bricks: res.data,
+          finalBricks: res.data,
+          rawBricks: res.data,
         });
+      }).catch((error) => {
+        this.setState({...this.state, failedRequest: true})
+      });
     }
   }
 
@@ -506,37 +506,28 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     }
   }
 
-  keySearch(e: any) {
-    if (e.keyCode === 13) {
-      this.search();
-    }
-  }
-
   search() {
     const { searchString } = this.state;
     this.setState({ ...this.state, shown: false });
 
-    axios
-      .post(
-        process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
-        { searchString },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        const searchBricks = res.data.map((brick: any) => brick.body);
-        setTimeout(() => {
-          this.setState({
-            ...this.state,
-            searchBricks,
-            finalBricks: searchBricks,
-            isSearching: true,
-            shown: true,
-          });
-        }, 1400);
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
-      });
+    axios.post(
+      process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
+      { searchString },
+      { withCredentials: true }
+    ).then((res) => {
+      const searchBricks = res.data.map((brick: any) => brick.body);
+      setTimeout(() => {
+        this.setState({
+          ...this.state,
+          searchBricks,
+          finalBricks: searchBricks,
+          isSearching: true,
+          shown: true,
+        });
+      }, 1400);
+    }).catch((error) => {
+      this.setState({...this.state, failedRequest: true})
+    });
   }
 
   renderSortAndFilterBox = () => {
@@ -630,65 +621,41 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           <div className="filter-items">
             <div className="filter-container color1">
               <FormControlLabel
-                className="filter-radio-label"
-                value={this.state.filters.draft}
-                control={
-                  <Checkbox
-                    checked={this.state.filters.draft}
-                    className={"filter-radio sort-by"}
-                  />
-                }
-                onChange={() => this.toggleDraftFilter()}
+                className="filter-container"
+                checked={this.state.filters.draft}
+                onClick={() => this.toggleDraftFilter()}
+                control={<Radio className={"filter-radio custom-color"} />}
                 label="Draft"
-                labelPlacement="end"
               />
               <div className="right-index">{draft}</div>
             </div>
             <div className="filter-container color2">
               <FormControlLabel
-                className="filter-radio-label"
-                value={this.state.filters.review}
-                control={
-                  <Checkbox
-                    checked={this.state.filters.review}
-                    className={"filter-radio sort-by"}
-                  />
-                }
-                onChange={() => this.toggleReviewFilter()}
+                className="filter-container"
+                checked={this.state.filters.review}
+                onClick={() => this.toggleReviewFilter()}
+                control={<Radio className={"filter-radio custom-color"} />}
                 label="Submitted for Review"
-                labelPlacement="end"
               />
               <div className="right-index">{review}</div>
             </div>
             <div className="filter-container color3">
               <FormControlLabel
-                className="filter-radio-label"
-                value={this.state.filters.build}
-                control={
-                  <Checkbox
-                    checked={this.state.filters.build}
-                    className={"filter-radio sort-by"}
-                  />
-                }
-                onChange={() => this.toggleBuildFilter()}
+                className="filter-container"
+                checked={this.state.filters.build}
+                onClick={() => this.toggleBuildFilter()}
+                control={<Radio className={"filter-radio custom-color"} />}
                 label="Build in Progress"
-                labelPlacement="end"
               />
               <div className="right-index">{build}</div>
             </div>
             <div className="filter-container color4">
               <FormControlLabel
-                className="filter-radio-label"
-                value={this.state.filters.publish}
-                control={
-                  <Checkbox
-                    checked={this.state.filters.publish}
-                    className={"filter-radio sort-by"}
-                  />
-                }
-                onChange={() => this.togglePublishFilter()}
+                className="filter-container"
+                checked={this.state.filters.publish}
+                onClick={() => this.togglePublishFilter()}
+                control={<Radio className={"filter-radio custom-color"} />}
                 label="Published"
-                labelPlacement="end"
               />
               <div className="right-index">{publish}</div>
             </div>
@@ -821,44 +788,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return (
       <div className="back-to-work-page">
         <div className="bricks-upper-part">
-          <Grid container direction="row" className="bricks-header">
-            <HomeButton link="/build" />
-            <Grid
-              container
-              className="logout-container"
-              item
-              direction="row"
-              style={{ width: "92.35vw" }}
-            >
-              <Grid container style={{ width: "60vw", height: "7vh" }}>
-                <Grid item>
-                  <div
-                    className="search-button"
-                    onClick={() => this.search()}
-                  ></div>
-                </Grid>
-                <Grid item>
-                  <input
-                    className="search-input"
-                    onKeyUp={(e) => this.keySearch(e)}
-                    onChange={(e) => this.searching(e.target.value)}
-                    placeholder="Search Ongoing Projects & Published Bricks…"
-                  />
-                </Grid>
-              </Grid>
-              <Grid item style={{ width: "32.35vw" }}>
-                <Grid container direction="row" justify="flex-end">
-                  <div className="bell-button">
-                    <div></div>
-                  </div>
-                  <div
-                    className="more-button"
-                    onClick={() => this.showDropdown()}
-                  ></div>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+          <PageHeader
+            searchPlaceholder="Search Ongoing Projects & Published Bricks…"
+            search={() => this.search()}
+            searching={(v) => this.searching(v)}
+            showDropdown={() => this.showDropdown()}
+          />
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
               <div
@@ -1002,6 +937,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           brickId={this.state.deleteBrickId}
           onDelete={(brickId) => this.delete(brickId)}
           close={() => this.handleDeleteClose()}
+        />
+        <FailedRequestDialog
+          isOpen={this.state.failedRequest}
+          close={() => this.setState({...this.state, failedRequest: false})}
         />
       </div>
     );

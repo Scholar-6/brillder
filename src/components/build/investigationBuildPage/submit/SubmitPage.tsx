@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 import "./SubmitPage.scss";
 import { BrickStatus } from "model/brick";
+import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 
 
 interface SubmitBrickProps {
@@ -26,6 +27,7 @@ enum ButtonStatus {
 interface SubmitBrickState {
   status: ButtonStatus;
   progress: number;
+  failedRequest: boolean;
   myRef: any;
 }
 
@@ -36,6 +38,7 @@ class SubmitBrickPage extends Component<SubmitBrickProps, SubmitBrickState> {
     this.state = {
       status: ButtonStatus.Start,
       myRef: React.createRef(),
+      failedRequest: false,
       progress: 0
     };
   }
@@ -87,7 +90,7 @@ class SubmitBrickPage extends Component<SubmitBrickProps, SubmitBrickState> {
       alert(msg);
     })
     .catch(error => {
-      alert('Can`t update brick')
+      this.setState({...this.state, failedRequest: true});
     })
   }
 
@@ -164,6 +167,10 @@ class SubmitBrickPage extends Component<SubmitBrickProps, SubmitBrickState> {
         ) : (
           ""
         )}
+        <FailedRequestDialog
+          isOpen={this.state.failedRequest}
+          close={() => this.setState({...this.state, failedRequest: false})}
+        />
       </Grid>
     );
   }

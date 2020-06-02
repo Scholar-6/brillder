@@ -15,10 +15,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import authActions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
+import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
+import SubjectsList from 'components/baseComponents/subjectsList/SubjectsList';
 
 import { User, UserType, UserStatus } from 'model/user';
-
+import {activateUser} from './userService';
 
 const mapState = (state: any) => {
   return {
@@ -64,6 +65,7 @@ interface UsersListState {
   filterExpanded: boolean;
   logoutDialogOpen: boolean;
   dropdownShown: boolean;
+  filterHeight: string;
 
   sortBy: UserSortBy;
   isAscending: boolean;
@@ -145,6 +147,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       searchString: '',
       isSearching: false,
       dropdownShown: false,
+      filterHeight: 'auto',
 
       sortBy: UserSortBy.None,
       isAscending: false,
@@ -161,7 +164,11 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     });
   }
 
-  getUsers(page: number, subjects: number[] = [], sortBy: UserSortBy = UserSortBy.None, isAscending: any = null) {
+  getUsers(
+    page: number, subjects: number[] = [], sortBy: UserSortBy = UserSortBy.None,
+    isAscending: any = null, search: string = ""
+  ) {
+    let searchString = "";
     let orderBy = null;
 
     if (sortBy === UserSortBy.None) {
@@ -181,12 +188,21 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         orderBy = "user.roles";
       }
     }
+
+    if (search) {
+      searchString = search;
+    } else {
+      if (this.state.isSearching) {
+        searchString = this.state.searchString;
+      }
+    }
+
     axios.post(
       process.env.REACT_APP_BACKEND_HOST + '/users',
       {
         pageSize: this.state.pageSize,
         page: page.toString(),
-        searchString: "",
+        searchString,
         subjectFilters: subjects,
         roleFilters: [],
         orderBy,
@@ -210,6 +226,18 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   handleSortChange = (e: any) => {
+  }
+
+  hideFilter() {
+    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+  }
+
+  expendFilter() {
+    this.setState({
+      ...this.state,
+      filterExpanded: true,
+      filterHeight: "auto",
+    });
   }
 
   getCheckedRoles() {
@@ -237,12 +265,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       this.setState({...this.state, searchString, isSearching: false});
     } else {
       this.setState({...this.state, searchString});
-    }
-  }
-
-  keySearch(e: any) {
-    if (e.keyCode === 13) {
-      this.search();
     }
   }
 
@@ -287,6 +309,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   search() {
+    const { searchString } = this.state;
+    let filterSubjects = this.getCheckedSubjectIds();
+    this.getUsers(0, filterSubjects, this.state.sortBy, this.state.isAscending, searchString);
   }
 
   showDropdown() {
@@ -324,50 +349,45 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   renderSortAndFilterBox = () => {
     return (
       <div className="sort-box">
-        <div className="role-filter-header">Filter by: role</div>
-        <Grid container direction="row" className="roles-row">
-          {
-            this.state.roles.map((role, i) =>
-              <Grid item xs={4} key={i}>
-                <FormControlLabel
-                  className="filter-container"
-                  checked={role.checked}
-                  control={<Radio className={"filter-radio"} />}
-                  label={role.name}
-                />
-              </Grid>
-            )
-          }
-        </Grid>
+        <div className="sort-by-box">
+          <div className="role-filter-header">Filter by: role</div>
+            <Grid container direction="row" className="roles-row">
+              {
+                this.state.roles.map((role, i) =>
+                  <Grid item xs={4} key={i}>
+                    <FormControlLabel
+                      className="filter-container"
+                      checked={role.checked}
+                      control={<Radio className={"filter-radio"} />}
+                      label={role.name}
+                    />
+                  </Grid>
+                )
+              }
+            </Grid>
+          </div>
         <div className="filter-header">
-			<span>Filter by: Subject</span>
-			{this.state.filterExpanded
-				? <ExpandLessIcon  style={{ fontSize: '3vw' }}
-					onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
-				: <ExpandMoreIcon style={{ fontSize: '3vw' }}
-					onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
-			}
-			{this.state.subjects.some((r: any) => r.checked)
-				? <ClearIcon style={{ fontSize: '2vw' }} onClick={() => {}} />
-				: ''
-			}
-		</div>
-        <Grid container direction="row">
-          {
-            this.state.filterExpanded
-              ? this.state.subjects.map((subject, i) =>
-                <Grid item xs={((i % 2) === 1) ? 7 : 5} key={i}>
-                  <FormControlLabel
-                    className="filter-container"
-                    checked={subject.checked}
-                    onClick={() => this.filterBySubject(i)}
-                    control={<Radio className={"filter-radio custom-color"} style={{['--color' as any] : subject.color}} />}
-                    label={subject.name}
-                  />
-                </Grid>
-              ) : ''
-          }
-        </Grid>
+          <div style={{ display: 'inline' }}>
+            <span className='filter-control'>Filter by: Subject</span>
+            {
+              this.state.filterExpanded
+                ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }}
+                  onClick={() => this.hideFilter()} />
+                : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }}
+                  onClick={() => this.expendFilter()} />
+            }
+            {
+              this.state.subjects.some((r: any) => r.checked)
+                ? <ClearIcon className='filter-control' style={{ fontSize: '2vw' }} onClick={() => {}} />
+                : ''
+            }
+          </div>
+        </div>
+        <SubjectsList
+          subjects = {this.state.subjects}
+          filterHeight={this.state.filterHeight}
+          filterBySubject={this.filterBySubject}
+        />
       </div>
     );
   }
@@ -542,29 +562,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     return (
       <div className="user-list-page">
         <div className="users-upper-part">
-          <Grid container direction="row" className="users-header">
-            <HomeButton link="/build" />
-            <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
-              <Grid container style={{width: '60vw', height: '7vh'}}>
-              <Grid item>
-                <div className="search-button" onClick={() => this.search()}></div>
-              </Grid>
-              <Grid item>
-                <input
-                  className="search-input"
-                  onKeyUp={(e) => this.keySearch(e)}
-                  onChange={(e) => this.searching(e.target.value)}
-                  placeholder="Search by Name,  Email or Subject" />
-              </Grid>
-              </Grid>
-              <Grid item style={{width: '32.35vw'}}>
-                <Grid container direction="row" justify="flex-end">
-                  <div className="bell-button"><div></div></div>
-                  <div className="more-button" onClick={() => this.showDropdown()}></div>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+          <PageHeader
+            searchPlaceholder="Search by Name,  Email or Subject"
+            search={() => this.search()}
+            searching={(v) => this.searching(v)}
+            showDropdown={() => this.showDropdown()}
+          />
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
               {this.renderSortAndFilterBox()}
