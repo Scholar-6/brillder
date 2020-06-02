@@ -1,7 +1,7 @@
 @import '_variables';
 
 .pair-match-play {
-  $font-size: 14px;
+  $font-size: 1rem;
   .pair-match-play-option {
     text-align: center;
     color: white;
@@ -50,9 +50,10 @@
 
   .pair-match-play-choice {
     text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 100%;
     background: #F5F6F7;
 
     p {
@@ -70,6 +71,10 @@
       max-width: 100%;
       height: auto;
     }
+  }
+
+  .MuiListItemText-root {
+    font-size: $font-size;
   }
 
   .question-hint-global {
