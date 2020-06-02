@@ -1,15 +1,5 @@
 @import "_variables";
 
-$brick-radius: 1.2vh;
-$main-panel-radius: 2vw;
-
-$min-brick-height: 4.4vw;
-$left: 0.8vw;
-$right: 1.4vw;
-$lighter-blue: #304775;
-$grey: #b0b0ad;
-$light-grey: #f3f4f7;
-
 .brick-list-redirect-dropdown {
   .MuiPaper-root {
     position: fixed;
@@ -339,20 +329,8 @@ $light-grey: #f3f4f7;
           }
         }
         .filter-header {
-          height: 4.5vh;
-          text-transform: uppercase;
-          background: #304775 0% 0% no-repeat padding-box;
-          padding-left: 1.4vw;
-          font-size: 2.4vh;
-          letter-spacing: 0.22vw;
-          .filter-control {
-            height: 100%;
-            vertical-align: middle;
-          }
-          .filter-control:not(:first-child) {
-            margin-left: 0.9vw;
-            cursor: pointer;
-          }
+			height: 4.5vh;
+			font-size: 2.4vh;
         }
         .filter-container {
           cursor: default;

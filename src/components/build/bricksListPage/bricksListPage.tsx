@@ -69,6 +69,8 @@ interface BricksListState {
   dropdownShown: boolean;
   filterHeight: any;
   shown: boolean;
+  isClearFilter: any;
+  isSaeedFilter: boolean;
 }
 
 enum SortBy {
@@ -101,7 +103,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
       dropdownShown: false,
       filterHeight: "auto",
-      shown: true,
+	  shown: true,
+	  isClearFilter: false,
+	  isSaeedFilter: false
     };
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
@@ -200,7 +204,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   filter() {
-    const { state } = this;
+	this.filterClear()
+	console.log("filter",this.state)
     let bricks = this.getBricksForFilter();
     let filtered = [];
 
@@ -213,10 +218,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           filtered.push(brick);
         }
       }
-      this.setState({ ...state, finalBricks: filtered });
+      this.setState({  finalBricks: filtered });
     } else {
-      this.setState({ ...state, finalBricks: bricks });
-    }
+      this.setState({  finalBricks: bricks });
+	}
+
+
   }
 
   getSubjectRow(brick: Brick) {
@@ -226,9 +233,24 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   filterBySubject = (i: number) => {
-    const { subjects } = this.state;
-    subjects[i].checked = !subjects[i].checked;
-    this.filter();
+    let { subjects } = this.state;
+	subjects[i].checked = !subjects[i].checked;
+
+	// this.setState(prevState => {
+	// 	return {
+	// 	  ...prevState,
+	// 	  isClearFilter: true
+	// 	};
+	//   });
+
+	//   console.log("isClearFilter",this.state.isClearFilter)
+	// this.setState({ ...this.state,  isClearFilter: true },()=>{
+	// 	console.log("hideFilter",this.state.isClearFilter)
+	// });
+
+
+	// this.filterClear();
+	this.filter();
   };
 
   clearSubjects = () => {
@@ -435,7 +457,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   showDropdown() {
-    this.setState({ ...this.state, dropdownShown: true });
+
+	this.setState({ ...this.state, dropdownShown: true });
+
   }
 
   hideDropdown() {
@@ -443,15 +467,33 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   hideFilter() {
-    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+	this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" },()=>{
+		console.log("hideFilter",this.state.isClearFilter)
+	});
+
   }
 
   expendFilter() {
+	  console.log("expendFilter")
     this.setState({
       ...this.state,
       filterExpanded: true,
-      filterHeight: "auto",
-    });
+	  filterHeight: "auto",
+
+	},()=>{
+		console.log("expendFilter",this.state.isClearFilter)
+	});
+
+
+}
+
+
+  filterClear(){
+	  console.log("isClearFilter",this.state.subjects.some((r: any) => r.checked))
+	  this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false})
+	// this.state.subjects.some((r: any) => r.checked) ?( this.setState({isClearFilter: false})) :  (this.setState({isClearFilter: true}))
+
+	console.log("isClearFilter re",this.state.isClearFilter)
   }
 
   getSortedBrickContainer = (brick: Brick, key: number, index: number, row: any = 0) => {
@@ -555,36 +597,41 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           </RadioGroup>
         </div>
         <div className="filter-header">
-          <div style={{ display: "inline" }}>
-            <span className="filter-control">Filter</span>
-			<button className="svgOnHover" onClick={() => {this.state.filterExpanded ? (this.hideFilter()) : (this.expendFilter())}}>
+            <span>Filter</span>
+			<button
+				onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearSubjects() : (this.hideFilter()) : (this.expendFilter())}}
+				className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
+				>
+			</button>
+
+			{/* {this.state.subjects.some((r: any) => r.checked) ? (
+			<button className="btn-transparent svgOnHover" onClick={() => this.clearSubjects()}>
 				<svg className="svg active">
-					<use href={this.state.filterExpanded ? ("/assets/img/icons-sprite.svg#arrow-down") : ("/assets/img/icons-sprite.svg#arrow-up")} className="text-white" />
+					<use href="/images/icons-sprite.svg#cancel" className="text-white" />
 				</svg>
 			</button>
+			) : (
+				""
+			  )} */}
             {/* {this.state.filterExpanded ? (
               <ExpandLessIcon
-                className="filter-control"
                 style={{ fontSize: "3vw" }}
                 onClick={() => this.hideFilter()}
               />
             ) : (
               <ExpandMoreIcon
-                className="filter-control"
                 style={{ fontSize: "3vw" }}
                 onClick={() => this.expendFilter()}
               />
-            )} */}
+            )}
             {this.state.subjects.some((r: any) => r.checked) ? (
               <ClearIcon
-                className="filter-control"
                 style={{ fontSize: "2vw" }}
                 onClick={() => this.clearSubjects()}
               />
             ) : (
               ""
-            )}
-          </div>
+            )}*/}
         </div>
         <SubjectsList
           subjects = {this.state.subjects}

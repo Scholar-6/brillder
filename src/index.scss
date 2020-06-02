@@ -1574,9 +1574,10 @@ input:focus {
 
 .btn-transparent {
 	background: transparent !important;
-    border: 0 !important;
+	border: 0 !important;
 	outline: none !important;
-	cursor: pointer;
+	padding: 0 !important;
+	cursor: pointer !important;
 }
 
 .svg {
@@ -1653,5 +1654,83 @@ input:focus {
 	}
 	> span.tooltip-inner {
 		margin: 0px;
+	}
+}
+
+.filter-header {
+	position: relative;
+	text-transform: uppercase;
+	background: $lighter-blue 0% 0% no-repeat padding-box;
+	padding: 0 1.4vw;
+	font-size: 1.2vw;
+	margin-top: 4vh;
+	line-height: 1.2;
+	letter-spacing: 0.22vw;
+	margin-bottom: 1vh;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	.filter-control {
+		height: 100%;
+		vertical-align: middle;
+	}
+	.filter-control:not(:first-child) {
+		margin-left: 0.9vw;
+		cursor: pointer;
+	}
+	.filter-icon {
+		position: relative;
+		width: 30px;
+		height: 30px;
+		cursor: pointer;
+		&.arrow-up,
+		&.arrow-down,
+		&.arrow-cancel {
+			&:before,
+			&:after {
+				content: '';
+				position: absolute;
+				top: 8px;
+				bottom: 0px;
+				width: 2px;
+				height: 13px;
+				@extend %transitionAll300;
+				background-color: #fff;
+			}
+		}
+		&.arrow-up,
+		&.arrow-down {
+			&:before {
+				left: 10px;
+			}
+			&:after {
+				right: 10px;
+			}
+		}
+		&.arrow-up {
+			&:before {
+				transform: rotate(45deg);
+			}
+			&:after {
+				transform: rotate(-45deg);
+			}
+		}
+		&.arrow-down,
+		&.arrow-cancel {
+			&:before {
+				transform: rotate(-45deg);
+			}
+			&:after {
+				transform: rotate(45deg);
+			}
+		}
+		&.arrow-cancel {
+			&:before {
+				left: 45%;
+			}
+			&:after {
+				right: 45%;
+			}
+		}
 	}
 }

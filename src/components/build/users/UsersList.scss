@@ -163,20 +163,9 @@ $grey: #b0b0ad;
           margin-left: 0.3vw;
         }
         .filter-header {
-          text-transform: uppercase;
-          background: #304775 0% 0% no-repeat padding-box;
-          padding-left: 1.4vw;
-          font-size: 2.4vh;
-          height: 6.4vh;
-          letter-spacing: 0.22vw;
-          .filter-control {
-            height: 100%;
-            vertical-align: middle;
-          }
-          .filter-control:not(:first-child) {
-            margin-left: 0.9vw;
-            cursor: pointer;
-          }
+			font-size: 1.3vw;
+			margin-top: 5vh;
+			margin-bottom: 2.8vh;
         }
         .sort-group {
           margin-top: 0.45vh;
