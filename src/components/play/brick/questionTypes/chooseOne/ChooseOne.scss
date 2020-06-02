@@ -1,6 +1,19 @@
 @import '_variables';
 
 .choose-one-live {
+  .MuiButton-label {
+    div {
+      display: inline;
+      margin: 0 !important;
+    }
+    p {
+      margin: 0 !important;
+      width: 0 !important;
+      height: 0 !important;
+      max-width: 0 !important;
+      display: inline;
+    }
+  }
   .choose-choice {
     font-family: $font-family-regular;
     margin-top: 5px;
