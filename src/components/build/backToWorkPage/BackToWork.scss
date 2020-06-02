@@ -1,17 +1,5 @@
 @import "_variables";
 
-$brick-radius: 1.2vh;
-$main-panel-radius: 2vw;
-$grey: #B0B0AD;
-
-$min-brick-height: 4.5vw;
-$left: 0.8vw;
-$right: 1.4vw;
-$yellow: #ff9d00;
-$light-green: #5cc364;
-$lighter-blue: #304775;
-$light-grey: #F3F4F7;
-
 .back-to-work-redirect-dropdown {
   .MuiPaper-root {
     position: fixed;
@@ -141,7 +129,7 @@ $light-grey: #F3F4F7;
           margin-left: 2.8vh;
           left: -4vw;
         }
-  
+
         .next-button {
           position: absolute;
           left: -4vw;
@@ -242,7 +230,7 @@ $light-grey: #F3F4F7;
         width: 6.7vh;
         display: inline-block;
         background-color: $orange;
-  
+
         -webkit-mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
         mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
         -webkit-mask-size: cover;
@@ -273,7 +261,7 @@ $light-grey: #F3F4F7;
     position: relative;
     min-height: 70%;
     padding-left: $left;
-    padding-right: $right;  
+    padding-right: $right;
   }
 
   .main-brick-container {
@@ -456,21 +444,10 @@ $light-grey: #F3F4F7;
           letter-spacing: 0.26vw;
         }
         .filter-header {
-          text-transform: uppercase;
-          background: $lighter-blue;
-          padding-left: 1.3vw;
-          font-size: 1.2vw;
-          margin-top: 4vh;
-          line-height: 1.2;
-          letter-spacing: 0.22vw;
-          margin-bottom: 1vh;
-          .filter-control {
-            vertical-align: middle;
-          }
-          .filter-control:not(:first-child) {
-            margin-left: 0.9vw;
-            cursor: pointer;
-          }
+			background: $lighter-blue;
+			font-size: 1.2vw;
+			line-height: 1.2;
+			margin-bottom: 1vh;
         }
         .sort-group {
           padding-top: 1.6vh;

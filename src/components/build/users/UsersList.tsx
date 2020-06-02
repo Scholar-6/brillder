@@ -195,7 +195,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       {withCredentials: true}
     ).then(res => {
       this.setState({...this.state, users: res.data.pageData, totalCount: res.data.totalCount})
-    }).catch(error => { 
+    }).catch(error => {
       alert('Can`t get users');
     });
   }
@@ -257,7 +257,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         }
         this.setState({...this.state});
       }
-    }).catch(error => { 
+    }).catch(error => {
       alert('Can`t activate user');
     });
   }
@@ -273,7 +273,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         }
         this.setState({...this.state});
       }
-    }).catch(error => { 
+    }).catch(error => {
       alert('Can`t deactivate user');
     });
   }
@@ -327,7 +327,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         <div className="role-filter-header">Filter by: role</div>
         <Grid container direction="row" className="roles-row">
           {
-            this.state.roles.map((role, i) => 
+            this.state.roles.map((role, i) =>
               <Grid item xs={4} key={i}>
                 <FormControlLabel
                   className="filter-container"
@@ -340,22 +340,18 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           }
         </Grid>
         <div className="filter-header">
-          <div style={{ display: 'inline' }}>
-            <span className='filter-control'>Filter by: Subject</span>
-            {
-              this.state.filterExpanded
-                ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }}
-                  onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
-                : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }}
-                  onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
-            }
-            {
-              this.state.subjects.some((r: any) => r.checked)
-                ? <ClearIcon className='filter-control' style={{ fontSize: '2vw' }} onClick={() => {}} />
-                : ''
-            }
-          </div>
-        </div>
+			<span>Filter by: Subject</span>
+			{this.state.filterExpanded
+				? <ExpandLessIcon  style={{ fontSize: '3vw' }}
+					onClick={() => this.setState({ ...this.state, filterExpanded: false })} />
+				: <ExpandMoreIcon style={{ fontSize: '3vw' }}
+					onClick={() => this.setState({ ...this.state, filterExpanded: true })} />
+			}
+			{this.state.subjects.some((r: any) => r.checked)
+				? <ClearIcon style={{ fontSize: '2vw' }} onClick={() => {}} />
+				: ''
+			}
+		</div>
         <Grid container direction="row">
           {
             this.state.filterExpanded
