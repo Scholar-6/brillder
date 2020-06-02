@@ -211,7 +211,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       {withCredentials: true}
     ).then(res => {
       this.setState({...this.state, users: res.data.pageData, totalCount: res.data.totalCount})
-    }).catch(error => { 
+    }).catch(error => {
       alert('Can`t get users');
     });
   }
@@ -279,7 +279,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         }
         this.setState({...this.state});
       }
-    }).catch(error => { 
+    }).catch(error => {
       alert('Can`t activate user');
     });
   }
@@ -295,7 +295,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         }
         this.setState({...this.state});
       }
-    }).catch(error => { 
+    }).catch(error => {
       alert('Can`t deactivate user');
     });
   }
@@ -353,7 +353,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           <div className="role-filter-header">Filter by: role</div>
             <Grid container direction="row" className="roles-row">
               {
-                this.state.roles.map((role, i) => 
+                this.state.roles.map((role, i) =>
                   <Grid item xs={4} key={i}>
                     <FormControlLabel
                       className="filter-container"

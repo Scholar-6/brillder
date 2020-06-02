@@ -414,28 +414,25 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         </div>
         <div className="filter-header">
           <div style={{ display: "inline" }}>
-            <span className="filter-control">Filter</span>
+            <span>Filter</span>
 			<button className="btn-transparent svgOnHover" onClick={() => {this.state.filterExpanded ? (this.setState({ ...this.state, filterExpanded: false })) : (this.setState({ ...this.state, filterExpanded: true }))}}>
 				<svg className="svg active">
-					<use href={this.state.filterExpanded ? "./assets/img/icons-sprite.svg#arrow-down" : "./assets/img/icons-sprite.svg#arrow-up"} className="text-white" />
+					<use href={this.state.filterExpanded ? "/images/icons-sprite.svg#arrow-down" : "/images/icons-sprite.svg#arrow-up"} className="text-white" />
 				</svg>
 			</button>
             {/* {this.state.filterExpanded ? (
               <ExpandLessIcon
-                className="filter-control"
                 style={{ fontSize: "3vw" }}
                 onClick={() => this.hideFilter()}
               />
             ) : (
               <ExpandMoreIcon
-                className="filter-control"
                 style={{ fontSize: "3vw" }}
                 onClick={() => this.expendFilter()}
               />
             )} */}
             {this.state.subjects.some((r: any) => r.checked) ? (
               <ClearIcon
-                className="filter-control"
                 style={{ fontSize: "2vw" }}
                 onClick={() => this.clearSubjects()}
               />
