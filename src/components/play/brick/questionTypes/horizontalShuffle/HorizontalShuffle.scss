@@ -3,9 +3,11 @@
 .horizontal-shuffle-play {
   .horizontal-shuffle-answer {
     display: inline-block;
-    padding: 10px;
+    padding: 14px;
     margin: 2px;
     font-size: 10px;
+    background: $tab-grey;
+    box-shadow: none !important;
   }
   .horizontal-shuffle-answer.correct .question-hint {
     background: white;
