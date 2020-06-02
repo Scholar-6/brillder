@@ -1,5 +1,5 @@
 import React from 'react'
-import DocumentCKEditor from 'components/baseComponents/ckeditor/DocumentEditor';
+import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 import './SynthesisPage.scss';
 import { Grid, Button } from '@material-ui/core';
@@ -17,7 +17,7 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
       <div className="inner-question-type">
         <Grid container direction="row">
           <Grid item md={9}>
-            <DocumentCKEditor
+            <DocumentWirisCKEditor
               data={synthesis}
               placeholder=""
               toolbar={[

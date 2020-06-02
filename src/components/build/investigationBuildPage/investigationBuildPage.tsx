@@ -289,7 +289,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const renderBuildQuestion = () => {
-    console.log('before build question init');
     return (
       <QuestionPanelWorkArea
         brickId={brickId}

@@ -57,6 +57,7 @@ interface DocumentWirisEditorState {
   focused: boolean;
   editor: any;
   ref: any;
+  isWirisInserting: boolean;
 }
 
 class InsertDropDown extends Plugin {
@@ -87,7 +88,8 @@ class DocumentWirisEditorComponent extends React.Component<DocumentWirisEditorPr
       data: props.data,
       focused: false,
       editor: null,
-      ref: React.createRef()
+      ref: React.createRef(),
+      isWirisInserting: false,
     }
   }
 
@@ -125,6 +127,17 @@ class DocumentWirisEditorComponent extends React.Component<DocumentWirisEditorPr
     this.replaceHtml("ck-tooltip__text", "Remove color", "Remove colour");
     
     this.setState({...this.state, editor});
+
+    // listen to wiris events
+    const windowRef = window as any;
+    const wirisBeforeInsertionListener = windowRef.WirisPlugin.Listeners.newListener('onBeforeFormulaInsertion', (res:any) => {
+      this.setState({...this.state, isWirisInserting: true});
+    });
+    var wirisAfterInsertionListener = windowRef.WirisPlugin.Listeners.newListener('onAfterFormulaInsertion', (res:any) => {
+      this.setState({...this.state, isWirisInserting: false});
+    });
+    windowRef.WirisPlugin.Core.addGlobalListener(wirisBeforeInsertionListener);
+    windowRef.WirisPlugin.Core.addGlobalListener(wirisAfterInsertionListener);
   }
 
   render() {
@@ -183,8 +196,7 @@ class DocumentWirisEditorComponent extends React.Component<DocumentWirisEditorPr
           config={config}
           onInit={(e:any) => this.handleOnInit(e)}
           onChange={(e: any, editor: any) => {
-            var res = document.getElementsByClassName("wrs_modal_dialogContainer wrs_modal_desktop wrs_stack")
-            if (!this.state.focused && res.length === 0) {
+            if (!this.state.focused && !this.state.isWirisInserting) {
               return;
             }
             const data = editor.getData();

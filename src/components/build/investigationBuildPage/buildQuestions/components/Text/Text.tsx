@@ -2,7 +2,7 @@
 import React from 'react'
 
 import './Text.scss'
-import DocumentCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
+import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 
 export interface TextComponentProps {
@@ -23,7 +23,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, ...pr
 
   return (
     <div className="question-build-text-editor">
-      <DocumentCKEditor
+      <DocumentWirisCKEditor
         data={data.value}
         placeholder=""
         toolbar={[
