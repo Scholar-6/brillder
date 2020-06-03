@@ -52,10 +52,6 @@ interface BrickRoutingProps {
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  /* Admin preview part */
-  const isPreview = React.useState(true);
-  /* Admin preview part */
-
   let initAttempts:any[] = [];
   props.brick?.questions.forEach(question => initAttempts.push({}));
   
@@ -112,19 +108,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const saveBrickAttempt = () => {
     brickAttempt.brickId = props.brick.id;
     brickAttempt.studentId = props.user.id;
-    if (isPreview) {
-      props.history.push(`/build/brick/${brickId}/build/investigation/publish`);
-    } else {
-      return axios.post(
-        process.env.REACT_APP_BACKEND_HOST + '/play/attempt',
-        brickAttempt,
-        {withCredentials: true}
-      ).then(res => {
-        //props.history.push(`/play/dashboard`);
-      })
-      .catch(error => {
-      });
-    }
+    props.history.push(`/build/brick/${brickId}/build/investigation/publish`);
   }
 
   return (
