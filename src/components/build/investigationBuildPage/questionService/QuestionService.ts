@@ -1,5 +1,8 @@
 import update from "immutability-helper";
 
+import {SetBuildQuestionNumber} from '../../../localStorage/localStorageService';
+
+
 import {
   HintStatus, QuestionComponentTypeEnum, Question, QuestionTypeEnum
 } from "model/question";
@@ -40,6 +43,7 @@ export function activeQuestionByIndex(questions: Question[], index: number) {
   if (updatedQuestions[index]) {
     updatedQuestions = deactiveQuestions(questions)
     updatedQuestions[index].active = true;
+    SetBuildQuestionNumber(index);
   }
   return updatedQuestions;
 }

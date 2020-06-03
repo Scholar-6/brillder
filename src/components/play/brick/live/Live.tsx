@@ -18,12 +18,14 @@ interface LivePageProps {
   status: PlayStatus;
   brickId: number;
   questions: Question[];
+  isPlayPreview?: boolean;
+  previewQuestionIndex?: number;
   updateAttempts(attempt: any, index: number): any;
   finishBrick():void;
 }
 
-const LivePage: React.FC<LivePageProps> = ({ status, questions, updateAttempts, finishBrick, brickId }) => {
-  const [activeStep, setActiveStep] = React.useState(0);
+const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...props }) => {
+  const [activeStep, setActiveStep] = React.useState(props.previewQuestionIndex ? props.previewQuestionIndex : 0);
   let initAnswers: any[] = [];
 
   const [answers, setAnswers] = React.useState(initAnswers);
@@ -32,7 +34,11 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, updateAttempts, 
   const theme = useTheme();
 
   if (status > PlayStatus.Live) {
-    return <Redirect to={`/play/brick/${brickId}/provisionalScore`} />;
+    if (props.isPlayPreview) {
+      return <Redirect to={`/play-preview/brick/${brickId}/provisionalScore`} />;
+    } else {
+      return <Redirect to={`/play/brick/${brickId}/provisionalScore`} />;
+    }
   }
 
   let questionRefs: React.RefObject<QuestionLive>[] = [];
@@ -53,7 +59,7 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, updateAttempts, 
     const copyAnswers = Object.assign([], answers) as any[];
     copyAnswers[activeStep] = questionRefs[activeStep].current?.getAnswer();
     let attempt = questionRefs[activeStep].current?.getAttempt();
-    updateAttempts(attempt, activeStep);
+    props.updateAttempts(attempt, activeStep);
     setAnswers(copyAnswers);
   }
 
@@ -65,8 +71,12 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, updateAttempts, 
       questions.forEach(question => {
         question.edited = false;
       });
-      finishBrick();
-      history.push(`/play/brick/${brickId}/provisionalScore`);
+      props.finishBrick();
+      if (props.isPlayPreview) {
+        history.push(`/play-preview/brick/${brickId}/provisionalScore`);
+      } else {
+        history.push(`/play/brick/${brickId}/provisionalScore`);
+      }
     }
   }
 
