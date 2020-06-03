@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 // @ts-ignore
 import { connect } from "react-redux";
-import queryString from 'query-string';
 
 import '../play/brick/brick.scss';
 import actions from 'redux/actions/brickActions';
@@ -12,14 +11,12 @@ import ProvisionalScore from '../play/brick/provisionalScore/ProvisionalScore';
 import Synthesis from '../play/brick/synthesis/Synthesis';
 import Review from '../play/brick/review/ReviewPage';
 import Ending from '../play/brick/ending/Ending';
-import axios from 'axios';
 
 import { Brick } from 'model/brick';
 import { ComponentAttempt, PlayStatus } from '../play/brick/model/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
-import { UserType } from 'model/user';
 import { Hidden, Grid } from '@material-ui/core';
 
 
