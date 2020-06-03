@@ -31,6 +31,12 @@
       min-width: 31px !important;
     }
 
+    .MuiListItemText-root {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      height: 100%;
+    }
+
     .question-hint {
       margin-right: 20px;
     }
