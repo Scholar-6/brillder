@@ -163,23 +163,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} saveBrick={saveBrickAttempt} />
         </Route>
       </Switch>
-      {
-        isPreview ? (
-          <Hidden only={['xs', 'sm', 'md']}>
-            <Grid container alignContent="center" className="back-to-build">
-              <div
-                className="back-hover-area"
-                onClick={() => props.history.push(`/build/brick/${brickId}/build/investigation/question`)}
-              >
-                <div className="create-icon"></div>
-                <div>BACK</div>
-                <div>TO</div>
-                <div>BUILD</div>
-              </div>
-            </Grid>
-          </Hidden>
-        ) : ""
-      }
+      <Hidden only={['xs', 'sm', 'md']}>
+        <Grid container alignContent="center" className="back-to-build">
+          <div
+            className="back-hover-area"
+            onClick={() => props.history.push(`/build/brick/${brickId}/build/investigation/question`)}
+          >
+            <div className="create-icon"></div>
+            <div>BACK</div>
+            <div>TO</div>
+            <div>BUILD</div>
+          </div>
+        </Grid>
+      </Hidden>
     </div>
   );
 }
