@@ -8,7 +8,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import './Hint.scss';
-import DocumentCKEditor from 'components/baseComponents/ckeditor/DocumentEditor';
+import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 const HtmlTooltip = withStyles((theme:any) => ({
   tooltip: {
@@ -105,9 +105,9 @@ const HintComponent: React.FC<HintProps> = ({
     if (state.status === HintStatus.All || !props.count || props.count === 1) {
       return (
         <Grid container item xs={12} className="hint-container">
-          <DocumentCKEditor
+          <DocumentWirisCKEditor
             data={state.value}
-            toolbar={['bold', 'italic', 'insertTable', 'fontColor']}
+            toolbar={['bold', 'italic', 'insertTable', 'fontColor', 'mathType', 'chemType']}
             placeholder="Enter Hint..."
             validationRequired={validationRequired}
             onBlur={() => save()}
@@ -134,9 +134,9 @@ const HintComponent: React.FC<HintProps> = ({
     for (let i = 0; i < props.count; i++) {
       answerHints.push(
         <Grid key={i} container item xs={12} className="hint-container">
-          <DocumentCKEditor
+          <DocumentWirisCKEditor
             data={state.list[i]}
-            toolbar={['bold', 'fontColor']}
+            toolbar={['bold', 'fontColor', 'mathType', 'chemType',]}
             placeholder="Enter Hint"
             validationRequired={validationRequired}
             onBlur={() => save()}
