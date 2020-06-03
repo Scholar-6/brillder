@@ -13,6 +13,8 @@ import QuestionLive from '../questionPlay/QuestionPlay';
 import TabPanel from '../baseComponents/QuestionTabPanel';
 import { PlayStatus } from '../model/model';
 
+import {SetBuildQuestionNumber} from '../../../localStorage/localStorageService';
+
 
 interface LivePageProps {
   status: PlayStatus;
@@ -49,6 +51,9 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...prop
   const handleStep = (step: number) => () => {
     questions[activeStep].edited = true;
     setActiveStep(step);
+    if (props.isPlayPreview) {
+      SetBuildQuestionNumber(step);
+    }
   };
 
   function isStepComplete(step: number) {
@@ -66,7 +71,13 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...prop
   const next = () => {
     setActiveAnswer();
     questions[activeStep].edited = true;
-    setActiveStep(update(activeStep, { $set: activeStep + 1 }));
+    let newStep = activeStep + 1;
+    setActiveStep(update(activeStep, { $set: newStep }));
+
+    if (props.isPlayPreview) {
+      SetBuildQuestionNumber(newStep);
+    }
+
     if (activeStep >= questions.length - 1) {
       questions.forEach(question => {
         question.edited = false;
