@@ -20,7 +20,6 @@ import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
 import { UserType } from 'model/user';
-import { Hidden, Grid } from '@material-ui/core';
 
 
 export interface BrickAttempt {
@@ -52,18 +51,7 @@ interface BrickRoutingProps {
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  /* Admin preview part */
-  let urlPreview = false;
   const {roles} = props.user;
-  let canBuild = roles.some((role:any) => role.roleId === UserType.Admin || role.roleId === UserType.Builder || role.roleId === UserType.Editor);
-  if (canBuild) {
-    const values = queryString.parse(props.location.search)
-    if (values.preview) {
-      urlPreview = true;
-    }
-  }
-  const [isPreview] = React.useState(urlPreview);
-  /* Admin preview part */
 
   let initAttempts:any[] = [];
   props.brick?.questions.forEach(question => initAttempts.push({}));
@@ -74,7 +62,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
 
   let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor); 
-  if (isPreview === false && cantPlay) {
+  if (cantPlay) {
     return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
   }
 
@@ -126,19 +114,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const saveBrickAttempt = () => {
     brickAttempt.brickId = props.brick.id;
     brickAttempt.studentId = props.user.id;
-    if (isPreview) {
-      props.history.push(`/build/brick/${brickId}/build/investigation/publish`);
-    } else {
-      return axios.post(
-        process.env.REACT_APP_BACKEND_HOST + '/play/attempt',
-        brickAttempt,
-        {withCredentials: true}
-      ).then(res => {
-        props.history.push(`/play/dashboard`);
-      })
-      .catch(error => {
-      });
-    }
+    return axios.post(
+      process.env.REACT_APP_BACKEND_HOST + '/play/attempt',
+      brickAttempt,
+      {withCredentials: true}
+    ).then(res => {
+      props.history.push(`/play/dashboard`);
+    })
+    .catch(error => {
+      alert('Can`t save your attempt');
+    });
   }
 
   return (
@@ -169,23 +154,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} saveBrick={saveBrickAttempt} />
         </Route>
       </Switch>
-      {
-        isPreview ? (
-          <Hidden only={['xs', 'sm', 'md']}>
-            <Grid container alignContent="center" className="back-to-build">
-              <div
-                className="back-hover-area"
-                onClick={() => props.history.push(`/build/brick/${brickId}/build/investigation/question`)}
-              >
-                <div className="create-icon"></div>
-                <div>BACK</div>
-                <div>TO</div>
-                <div>BUILD</div>
-              </div>
-            </Grid>
-          </Hidden>
-        ) : ""
-      }
     </div>
   );
 }
