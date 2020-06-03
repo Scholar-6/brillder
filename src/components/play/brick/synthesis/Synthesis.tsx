@@ -15,6 +15,7 @@ import { PlayStatus } from '../model/model';
 
 
 interface ProvisionalScoreProps {
+  isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
 }
@@ -24,10 +25,14 @@ interface ProvisionalState {
   otherExpanded: boolean;
 }
 
-const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick }) => {
+const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, ...props }) => {
   const history = useHistory();
   if (status === PlayStatus.Live) {
-    history.push(`/play/brick/${brick.id}/intro`);
+    if (props.isPlayPreview) {
+      history.push(`/play-preview/brick/${brick.id}/intro`);
+    } else {
+      history.push(`/play/brick/${brick.id}/intro`);
+    }
   }
   const [state, setState] = React.useState({
     synthesisExpanded: true,
@@ -43,7 +48,11 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick }) =>
   }
 
   const reviewBrick = () => {
-    history.push(`/play/brick/${brick.id}/review`);
+    if (props.isPlayPreview) {
+      history.push(`/play-preview/brick/${brick.id}/review`);
+    } else {
+      history.push(`/play/brick/${brick.id}/review`);
+    }
   }
 
   let newSynthesis = "";
