@@ -75,7 +75,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [isSaving, setSavingStatus] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
-  const [tooltipsOn, setTooltips] = React.useState(true); 
+  const [tooltipsOn, setTooltips] = React.useState(true);
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -259,7 +259,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setSubmitDialog(true);
     } else {
       saveBrick();
-      history.push(`/play-preview/brick/${brickId}/live`);
+      if (isSynthesisPage) {
+        history.push(`/play-preview/brick/${brickId}/intro`);
+      } else {
+        history.push(`/play-preview/brick/${brickId}/live`);
+      }
     }
   }
 
@@ -399,8 +403,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <img alt="" src="/images/exit-arrow.png" />
           </div>
           <Grid container direction="row" style={{height: '100%'}}>
-            <Grid container xs={9} justify="center" style={{height: '100%'}}>
-              <Grid container xs={9} style={{height: '100%'}}>
+            <Grid container item xs={9} justify="center" style={{height: '100%'}}>
+              <Grid container item xs={9} style={{height: '100%'}}>
                 <div className="tutorial-exit-label" style={{height: '100%'}}>
                   <Grid container alignContent="center" style={{height: '100%'}}>
                     Click the red icon to Exit & Save
