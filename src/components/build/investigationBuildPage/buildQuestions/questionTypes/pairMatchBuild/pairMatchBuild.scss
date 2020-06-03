@@ -4,6 +4,16 @@
 .pair-match-build {
   text-align: center;
 
+  .ck-toolbar__items {
+    display: block !important;
+
+    button {
+      padding: 0;
+      margin: 0;
+      display: block !important;
+    }
+  }
+
   .answers-container {
     margin-left: 1.25%;
     width: 97.5%;

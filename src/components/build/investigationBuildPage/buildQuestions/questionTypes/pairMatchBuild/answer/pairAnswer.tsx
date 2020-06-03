@@ -5,7 +5,7 @@ import { Grid } from "@material-ui/core";
 import {QuestionValueType} from '../../types';
 import {Answer} from '../types';
 import QuestionImageDropZone from '../../../baseComponents/QuestionImageDropzone';
-import DocumentCKEditor from 'components/baseComponents/ckeditor/DocumentEditor';
+import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 
 export interface PairAnswerProps {
@@ -81,7 +81,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     <Grid container item xs={6}>
       <div className={`pair-match-answer ${customClass}`}>
         {renderDeleteButton()}
-        <DocumentCKEditor
+        <DocumentWirisCKEditor
           data={answer.value}
           toolbar={[]}
           placeholder={"Enter Answer " + (index + 1) + "..."}
