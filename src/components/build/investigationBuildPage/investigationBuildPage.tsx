@@ -42,6 +42,7 @@ import {
 } from "./questionService/QuestionService";
 import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
+import {GetBuildQuestionNumber} from '../../localStorage/localStorageService';
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -227,19 +228,28 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return <div>...Loading...</div>;
   }
 
-  if (brick.questions && loaded === false) {
-    const parsedQuestions: Question[] = [];
-    for (const question of brick.questions) {
-      try {
-        parseQuestion(question, parsedQuestions);
-      } catch (e) {}
-    }
-    if (parsedQuestions.length > 0) {
-      parsedQuestions[0].active = true;
-      setQuestions(update(questions, { $set: parsedQuestions }));
-      setStatus(update(loaded, { $set: true }));
+  const parseQuestions = () => {
+    if (brick.questions && loaded === false) {
+      const parsedQuestions: Question[] = [];
+      for (const question of brick.questions) {
+        try {
+          parseQuestion(question, parsedQuestions);
+        } catch (e) {}
+      }
+      if (parsedQuestions.length > 0) {
+        let questionIndex = GetBuildQuestionNumber();
+        if (parsedQuestions[questionIndex]) {
+          parsedQuestions[questionIndex].active = true;
+        } else {
+          parsedQuestions[0].active = true;
+        }
+        setQuestions(update(questions, { $set: parsedQuestions }));
+        setStatus(update(loaded, { $set: true }));
+      }
     }
   }
+
+  parseQuestions();
 
   const moveToReview = () => {
     let invalidQuestion = questions.find(question => {
@@ -249,7 +259,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setSubmitDialog(true);
     } else {
       saveBrick();
-      history.push(`/play-preview/brick/${brickId}/intro`);
+      history.push(`/play-preview/brick/${brickId}/live`);
     }
   }
 

@@ -12,6 +12,8 @@ import Synthesis from '../play/brick/synthesis/Synthesis';
 import Review from '../play/brick/review/ReviewPage';
 import Ending from '../play/brick/ending/Ending';
 
+import {GetBuildQuestionNumber} from '../localStorage/localStorageService';
+
 import { Brick } from 'model/brick';
 import { ComponentAttempt, PlayStatus } from '../play/brick/model/model';
 import {
@@ -51,6 +53,8 @@ interface BrickRoutingProps {
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   let initAttempts:any[] = [];
   props.brick?.questions.forEach(question => initAttempts.push({}));
+
+  let buildQuestionNumber = GetBuildQuestionNumber();
   
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
@@ -117,6 +121,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <Route exac path="/play-preview/brick/:brickId/live">
           <Live
             status={status}
+            previewQuestionIndex={buildQuestionNumber}
             isPlayPreview={true}
             questions={props.brick.questions}
             brickId={props.brick.id}
