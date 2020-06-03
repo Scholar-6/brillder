@@ -10,6 +10,12 @@
     background: white !important;
   }
 
+  input.MuiInput-input {
+    height: auto;
+    padding: 0;
+    line-height: 2;
+  }
+
   @media only screen and (max-width: 599px) {
     .short-answer-input {
       width: 100% !important;
