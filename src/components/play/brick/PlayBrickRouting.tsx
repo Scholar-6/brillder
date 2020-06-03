@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 // @ts-ignore
 import { connect } from "react-redux";
-import queryString from 'query-string';
 
 import './brick.scss';
 import actions from 'redux/actions/brickActions';
