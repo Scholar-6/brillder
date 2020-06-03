@@ -271,6 +271,15 @@ $base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5),
           .MuiFormControlLabel-root {
             margin: 0;
           }
+
+          .disabled {
+            .MuiSvgIcon-root {
+              color: #a6aCaF;
+            }
+            .MuiTypography-root {
+              color: #a6aCaF;
+            }
+          }
         }
       }
     }
