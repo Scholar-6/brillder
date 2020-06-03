@@ -249,7 +249,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setSubmitDialog(true);
     } else {
       saveBrick();
-      history.push(`/play/brick/${brickId}/intro?preview=true`);
+      history.push(`/play-preview/brick/${brickId}/intro?preview=true`);
     }
   }
 
