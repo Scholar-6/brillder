@@ -4,18 +4,18 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from "react-redux";
 import queryString from 'query-string';
 
-import './brick.scss';
+import '../play/brick/brick.scss';
 import actions from 'redux/actions/brickActions';
-import Introduction from './introduction/Introduction';
-import Live from './live/Live';
-import ProvisionalScore from './provisionalScore/ProvisionalScore';
-import Synthesis from './synthesis/Synthesis';
-import Review from './review/ReviewPage';
-import Ending from './ending/Ending';
+import Introduction from '../play/brick/introduction/Introduction';
+import Live from '../play/brick/live/Live';
+import ProvisionalScore from '../play/brick/provisionalScore/ProvisionalScore';
+import Synthesis from '../play/brick/synthesis/Synthesis';
+import Review from '../play/brick/review/ReviewPage';
+import Ending from '../play/brick/ending/Ending';
 import axios from 'axios';
 
 import { Brick } from 'model/brick';
-import { ComponentAttempt, PlayStatus } from './model/model';
+import { ComponentAttempt, PlayStatus } from '../play/brick/model/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
@@ -53,16 +53,7 @@ interface BrickRoutingProps {
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   /* Admin preview part */
-  let urlPreview = false;
-  const {roles} = props.user;
-  let canBuild = roles.some((role:any) => role.roleId === UserType.Admin || role.roleId === UserType.Builder || role.roleId === UserType.Editor);
-  if (canBuild) {
-    const values = queryString.parse(props.location.search)
-    if (values.preview) {
-      urlPreview = true;
-    }
-  }
-  const [isPreview] = React.useState(urlPreview);
+  const isPreview = React.useState(true);
   /* Admin preview part */
 
   let initAttempts:any[] = [];
@@ -72,11 +63,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
-
-  let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor); 
-  if (isPreview === false && cantPlay) {
-    return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
-  }
 
   const brickId = parseInt(props.match.params.brickId);
   if (!props.brick || props.brick.id !== brickId || !props.brick.author) {
@@ -134,7 +120,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         brickAttempt,
         {withCredentials: true}
       ).then(res => {
-        props.history.push(`/play/dashboard`);
+        //props.history.push(`/play/dashboard`);
       })
       .catch(error => {
       });
@@ -144,20 +130,28 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   return (
     <div className="play-pages">
       <Switch>
-        <Route exac path="/play/brick/:brickId/intro">
-          <Introduction brick={props.brick} />
+        <Route exac path="/play-preview/brick/:brickId/intro">
+          <Introduction brick={props.brick} isPlayPreview={true} />
         </Route>
-        <Route exac path="/play/brick/:brickId/live">
-          <Live status={status} questions={props.brick.questions} brickId={props.brick.id} updateAttempts={updateAttempts} finishBrick={finishBrick} />
+        <Route exac path="/play-preview/brick/:brickId/live">
+          <Live
+            status={status}
+            isPlayPreview={true}
+            questions={props.brick.questions}
+            brickId={props.brick.id}
+            updateAttempts={updateAttempts}
+            finishBrick={finishBrick}
+          />
         </Route>
-        <Route exac path="/play/brick/:brickId/provisionalScore">
-          <ProvisionalScore status={status} brick={props.brick} attempts={attempts} />
+        <Route exac path="/play-preview/brick/:brickId/provisionalScore">
+          <ProvisionalScore status={status} brick={props.brick} attempts={attempts} isPlayPreview={true} />
         </Route>
-        <Route exac path="/play/brick/:brickId/synthesis">
-          <Synthesis status={status} brick={props.brick} />
+        <Route exac path="/play-preview/brick/:brickId/synthesis">
+          <Synthesis status={status} brick={props.brick} isPlayPreview={true} />
         </Route>
-        <Route exac path="/play/brick/:brickId/review">
+        <Route exac path="/play-preview/brick/:brickId/review">
           <Review
+            isPlayPreview={true}
             status={status}
             questions={props.brick.questions}
             brickId={props.brick.id}
@@ -165,7 +159,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             attempts={attempts}
             finishBrick={finishReview} />
         </Route>
-        <Route exac path="/play/brick/:brickId/ending">
+        <Route exac path="/play-preview/brick/:brickId/ending">
           <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} saveBrick={saveBrickAttempt} />
         </Route>
       </Switch>

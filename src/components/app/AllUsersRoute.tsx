@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions/auth';
 import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
-import { User, UserType } from 'model/user';
+import { User } from 'model/user';
 
 
 interface AllUsersRouteProps {

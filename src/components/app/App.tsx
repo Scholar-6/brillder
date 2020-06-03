@@ -11,6 +11,7 @@ import Pallet from '../play/pallet/Pallet';
 import VersionLabel from 'components/baseComponents/VersionLabel';
 import Dashboard from '../play/dashboard/Dashboard';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
+import PlayPreviewRouting from '../build/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
 import MainPage from '../build/mainPage/mainPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
@@ -87,6 +88,8 @@ const App: React.FC = (props: any) => {
         <StudentRoute path="/play/brick/:brickId" component={PlayBrickRouting} />
         <StudentRoute path="/play/pallet/:palletName" component={Pallet} />
         <StudentRoute path="/play/dashboard" component={Dashboard} />
+
+        <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} />
 
         <BuildRoute path="/build/new-brick" component={Proposal} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} />
