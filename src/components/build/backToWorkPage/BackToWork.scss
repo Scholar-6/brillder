@@ -282,42 +282,7 @@
     }
   }
 
-  .color1 {
-    .round-button { background: $orange;}
-    .right-index {
-      background: $orange;
-    }
-    svg {
-      color: $orange !important;
-    }
-  }
-  .color2 {
-    .round-button { background: $yellow;}
-    .right-index {
-      background: $yellow;
-    }
-    svg {
-      color: $yellow !important;
-    }
-  }
-  .color3 {
-    .round-button { background: white;}
-    .right-index {
-      background: white;
-    }
-    svg {
-      color: white !important;
-    }
-  }
-  .color4 {
-    .round-button { background: $light-green;}
-    .right-index {
-      background: $light-green;
-    }
-    svg {
-      color: $light-green !important;
-    }
-  }
+
 }
 
 @media only screen and (min-width: 1280px) {
