@@ -83,7 +83,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
         {renderDeleteButton()}
         <DocumentWirisCKEditor
           data={answer.value}
-          toolbar={[]}
+          toolbar={['mathType', 'chemType']}
           placeholder={"Enter Answer " + (index + 1) + "..."}
           onBlur={() => save()}
           onChange={value => answerChanged(answer, value)}
