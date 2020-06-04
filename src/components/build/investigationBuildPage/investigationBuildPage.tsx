@@ -286,7 +286,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const submitInvalidBrick = () => {
     saveBrick();
-    history.push(`/build/brick/${brickId}/build/investigation/submit`);
+    history.push(`/build/back-to-work`);
   }
 
   const hideInvalidBrick = () => {
@@ -536,12 +536,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         >
           <div className="dialog-header">
             <div>Some questions are incomplete.</div>
-            <div>These are marked in red.</div>
-            <div>Submit anyway?</div>
+            <div>These are marked in red. Keep working?</div>
           </div>
           <Grid container direction="row" className="row-buttons" justify="center">
-            <Button className="yes-button" onClick={() => submitInvalidBrick()}>Yes, never mind</Button>
-            <Button className="no-button" onClick={() => hideInvalidBrick()}>No, keep working</Button>
+            <Button className="yes-button" onClick={() => hideInvalidBrick()}>Yes</Button>
+            <Button className="no-button" onClick={() => submitInvalidBrick()}>No, Save & exit</Button>
           </Grid>
         </Dialog>
         <DeleteQuestionDialog
