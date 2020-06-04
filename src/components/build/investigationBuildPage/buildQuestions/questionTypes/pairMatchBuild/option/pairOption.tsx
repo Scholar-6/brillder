@@ -5,7 +5,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import {QuestionValueType} from '../../types';
 import {Answer} from '../types';
 import QuestionImageDropZone from '../../../baseComponents/QuestionImageDropzone';
-import DocumentCKEditor from 'components/baseComponents/ckeditor/DocumentEditor';
+import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 
 export interface PairOptionProps {
@@ -66,9 +66,9 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
   return (
     <Grid container item xs={6}>
       <div className={`pair-match-option ${customClass}`}>
-        <DocumentCKEditor
+        <DocumentWirisCKEditor
           data={answer.option}
-          toolbar={[]}
+          toolbar={['mathType', 'chemType']}
           placeholder={"Enter Option " + (index + 1) + "..."}
           onBlur={() => save()}
           onChange={value => optionChanged(answer, value)}
