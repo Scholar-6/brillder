@@ -24,9 +24,9 @@ const ReviewEachHint: React.FC<ReviewHintProps> = ({ hint, ...props }) => {
 
   if (isShown && hint.status === HintStatus.Each && hint.list[props.index]) {
     return (
-      <span className="question-hint">
+      <div className="question-hint">
         <MathInHtml value={hintText} />
-      </span>
+      </div>
     );
   }
 
