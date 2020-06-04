@@ -2,17 +2,28 @@
 
 .beta-text {
   position: fixed;
-  bottom: 1%;
-  right: 1%;
+  bottom: 2.4vh;
+  right: 2.4vh;
   color: $orange;
   font-size: 2vw;
   letter-spacing: 0.4vw;
   font-family: $font-family-black;
   line-height: 1;
 
+  div {
+    display: inline-block;
+  }
+
   .version-number {
-    text-align: center;
-    font-size: 1.3vw;
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    font-size: 0.6vw;
+    letter-spacing: 0.08vw;
+    -moz-transform: scale(-1, -1);
+    -webkit-transform: scale(-1, -1);
+    -o-transform: scale(-1, -1);
+    -ms-transform: scale(-1, -1);
+     transform: scale(-1, -1);
   }
 }
 

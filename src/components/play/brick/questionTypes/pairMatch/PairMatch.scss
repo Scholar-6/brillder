@@ -1,7 +1,7 @@
 @import '_variables';
 
 .pair-match-play {
-  $font-size: 14px;
+  $font-size: 1rem;
   .pair-match-play-option {
     text-align: center;
     color: white;
@@ -10,17 +10,16 @@
     padding: 0;
     width: 100%;
     overflow: hidden;
-    .pair-match-play-option-text {
-      font-family: $font-family-regular;
-      font-size: $font-size;
-      height: 24px;
+    .option-container {
+      width: 100%;
 
-      img {
-        height: 44px;
-      }
+      .MuiListItemText-root {
+        width: 100%;
+        height: 100%;
 
-      p {
-        text-align: center !important;
+        p {
+          text-align: center !important;
+        }
       }
     }
     .pair-match-play-option-icon {
@@ -29,6 +28,12 @@
 
     .MuiListItemIcon-root {
       min-width: 31px !important;
+    }
+
+    .MuiListItemText-root {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      height: 100%;
     }
 
     .question-hint {
@@ -50,9 +55,10 @@
 
   .pair-match-play-choice {
     text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 100%;
     background: #F5F6F7;
 
     p {
@@ -70,6 +76,10 @@
       max-width: 100%;
       height: auto;
     }
+  }
+
+  .MuiListItemText-root {
+    font-size: $font-size;
   }
 
   .question-hint-global {

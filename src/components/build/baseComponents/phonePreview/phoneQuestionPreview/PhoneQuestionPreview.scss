@@ -115,7 +115,7 @@ $background-color: white;
     > div {
       p {
         margin: 0.1vh 0.2vw;
-        font-size: 0.8vw;
+        font-size: 1rem;
       }
       padding-top: 2vh;
       padding-left: 1vw;
@@ -124,6 +124,8 @@ $background-color: white;
   }
 
   .question-hint {
+    display: block !important;
+
     line-height: 2;
     font-size: 1vw !important;
     p {

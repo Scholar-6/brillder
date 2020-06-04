@@ -36,6 +36,10 @@ const mapDispatch = (dispatch: any) => {
 
 const connector = connect(mapState, mapDispatch);
 
+interface UserRoleItem extends UserRole {
+  disabled: boolean;
+}
+
 interface UserProfileProps {
   user: User,
   history: any;
@@ -45,6 +49,7 @@ interface UserProfileProps {
 }
 
 interface UserProfileState {
+  noSubjectDialogOpen: boolean;
   user: UserProfile;
   subjects: Subject[];
   searchString: string;
@@ -53,7 +58,8 @@ interface UserProfileState {
   deleteDialogOpen: boolean;
   dropdownShown: boolean;
   autoCompleteOpen: boolean;
-  roles: any[];
+  isStudent: boolean;
+  roles: UserRoleItem[];
 }
 
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
@@ -61,6 +67,24 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     super(props)
     const {user} = props;
     const {userId} = props.match.params;
+
+    const isBuilder = user.roles.some(role => {
+      const {roleId} = role;
+      return roleId === UserType.Builder || roleId === UserType.Editor || roleId === UserType.Admin;
+    });
+
+    const isEditor = user.roles.some(role => {
+      const {roleId} = role;
+      return roleId === UserType.Editor || roleId === UserType.Admin;
+    });
+
+    const isAdmin = user.roles.some(role => {
+      const {roleId} = role;
+      return roleId === UserType.Admin;
+    });
+
+    const isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
+
     const roles = props.user.roles.map(role => role.roleId);
 
     this.state = {
@@ -82,13 +106,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       isSearching: false,
       dropdownShown: false,
       autoCompleteOpen: false,
+      isStudent: isOnlyStudent,
       roles: [
-        { roleId: UserType.Student, name: "Student"},
-        { roleId: UserType.Teacher, name: "Teacher"},
-        { roleId: UserType.Builder, name: "Builder"},
-        { roleId: UserType.Editor, name: "Editor"},
-        { roleId: UserType.Admin, name: "Admin"}
-      ]
+        { roleId: UserType.Student, name: "Student", disabled: !isBuilder},
+        { roleId: UserType.Teacher, name: "Teacher", disabled: !isBuilder},
+        { roleId: UserType.Builder, name: "Builder", disabled: !isBuilder},
+        { roleId: UserType.Editor, name: "Editor", disabled: !isEditor},
+        { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin}
+      ],
+      noSubjectDialogOpen: false,
     };
     if (userId) {
       axios.get(
@@ -96,7 +122,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       ).then(res => {
         const user = res.data as UserProfile;
 
-        user.roles = res.data.roles.map((role: UserRole) => role.roleId);
+        user.roles = res.data.roles.map((role: UserRoleItem) => role.roleId);
         if (!user.email) {
           user.email = '';
         }
@@ -129,25 +155,57 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     });
   }
 
-  saveUserProfile() {
-    const {user} = this.state;
-    const {id, firstName, lastName, email, roles} = user;
-    const userToSave = {
-      firstName, lastName, email, roles
-    } as any;
+  saveStudentProfile(user: UserProfile) {
+    const userToSave = {} as any;
+    this.prepareUserToSave(userToSave, user);
+    userToSave.roles = user.roles;
+
+    if (!user.subjects || user.subjects.length === 0) {
+      this.setState({...this.state, noSubjectDialogOpen: true});
+      return;
+    }
+    this.save(userToSave);
+  }
+
+  prepareUserToSave(userToSave: any, user: UserProfile) {
+    userToSave.firstName = user.firstName;
+    userToSave.lastName = user.lastName;
+    userToSave.email = user.email;
+
     if (user.password) {
       userToSave.password = user.password;
     }
-    if (id !== -1) {
-      userToSave.id = id;
+    if (user.id !== -1) {
+      userToSave.id = user.id;
     }
     if (user.subjects) {
       userToSave.subjects = user.subjects.map(s => s.id);
     }
+  }
+
+  saveUserProfile() {
+    const {user} = this.state;
+    if (this.state.isStudent) {
+      this.saveStudentProfile(user);
+      return;
+    }
+    const userToSave = { roles: user.roles } as any;
+    this.prepareUserToSave(userToSave, user)
+
+    if (!user.subjects || user.subjects.length === 0) {
+      this.setState({...this.state, noSubjectDialogOpen: true});
+      return;
+    }
+
+    this.save(userToSave);
+  }
+
+  save(userToSave: any) {
     axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/user`, {...userToSave}, {withCredentials: true}
     ).then(res => {
-      if (res.data === 'OK') {
+      if (res.data === 'OK') { 
+        alert('Profile saved');
       }
     }).catch(error => {
       alert('Can`t save user profile');
@@ -165,6 +223,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   handleLogoutClose() {
     this.setState({...this.state, logoutDialogOpen: false})
+  }
+
+  handleSubjectDialogClose() {
+    this.setState({...this.state, noSubjectDialogOpen: false})
   }
 
   creatingBrick() {
@@ -214,7 +276,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     return this.state.user.roles.some(id => id === roleId);
   }
 
-  toggleRole(roleId: number) {
+  toggleRole(roleId: number, disabled: boolean) {
+    if (disabled) { return; }
     let index = this.state.user.roles.indexOf(roleId);
     if (index !== -1) {
       this.state.user.roles.splice(index, 1);
@@ -224,14 +287,25 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({...this.state});
   }
 
-  renderUserRole(role: UserRole) {
+  renderUserRole(role: UserRoleItem) {
     let checked = this.checkUserRole(role.roleId);
+
+    if (this.state.isStudent) {
+      return (
+        <FormControlLabel
+          className="filter-container disabled"
+          checked={checked}
+          control={<Radio className="filter-radio" />}
+          label={role.name}
+        />
+      );
+    }
 
     return (
       <FormControlLabel
-        className="filter-container"
+        className={`filter-container ${role.disabled ? 'disabled' : ''}`}
         checked={checked}
-        onClick={() => this.toggleRole(role.roleId)}
+        onClick={() => this.toggleRole(role.roleId, role.disabled)}
         control={<Radio className="filter-radio" />}
         label={role.name}
       />
@@ -399,6 +473,22 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <Grid container direction="row" className="logout-buttons" justify="center">
             <Button className="yes-button" onClick={() => this.logout()}>Yes</Button>
             <Button className="no-button" onClick={() => this.handleLogoutClose()}>No</Button>
+          </Grid>
+        </Dialog>
+        <Dialog
+          open={this.state.noSubjectDialogOpen}
+          onClose={() => this.handleSubjectDialogClose()}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className="delete-brick-dialog"
+        >
+          <div className="dialog-header">
+            <div>You need to assign at least one subject to user</div>
+          </div>
+          <Grid container direction="row" className="row-buttons" justify="center">
+            <Button className="yes-button" onClick={() => this.handleSubjectDialogClose()}>
+              Close
+            </Button>
           </Grid>
         </Dialog>
       </div>

@@ -19,12 +19,13 @@ interface ReviewPageProps {
   brickId: number;
   questions: Question[];
   attempts: any[];
+  isPlayPreview?: boolean;
   updateAttempts(attempt: any, index: number): any;
   finishBrick():void;
 }
 
 const ReviewPage: React.FC<ReviewPageProps> = (
-  { status, questions, updateAttempts, attempts, finishBrick, brickId }
+  { status, questions, updateAttempts, attempts, finishBrick, brickId, ...props }
 ) => {
   const history = useHistory();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -33,10 +34,18 @@ const ReviewPage: React.FC<ReviewPageProps> = (
   const theme = useTheme();
 
   if (status === PlayStatus.Live) {
-    history.push(`/play/brick/${brickId}/intro`);
+    if (props.isPlayPreview) {
+      history.push(`/play-preview/brick/${brickId}/intro`);
+    } else {
+      history.push(`/play/brick/${brickId}/intro`);
+    }
     return <div>...Loading...</div>
   } else if (status === PlayStatus.Ending) {
-    history.push(`/play/brick/${brickId}/ending`);
+    if (props.isPlayPreview) {
+      history.push(`/play-preview/brick/${brickId}/ending`);
+    } else {
+      history.push(`/play/brick/${brickId}/ending`);
+    }
     return <div>...Loading...</div>
   }
 
@@ -73,7 +82,11 @@ const ReviewPage: React.FC<ReviewPageProps> = (
   
     if (activeStep >= questions.length - 1) {
       finishBrick();
-      history.push(`/play/brick/${brickId}/ending`);
+      if (props.isPlayPreview) {
+        history.push(`/play-preview/brick/${brickId}/ending`);
+      } else {
+        history.push(`/play/brick/${brickId}/ending`);
+      }
     }
   }
 

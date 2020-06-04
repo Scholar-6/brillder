@@ -3,7 +3,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import './ChooseOneAnswer.scss'; 
-import DocumentCKEditor from "components/baseComponents/DocumentEditor";
+import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import QuestionImageDropzone from "../../baseComponents/QuestionImageDropzone";
 import { QuestionValueType } from "../types";
 import {ChooseOneAnswer} from './types';
@@ -83,7 +83,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
         fileName={answer.valueFile}
         update={setImage}
       />
-      <DocumentCKEditor
+      <DocumentWirisCKEditor
         data={answer.value}
         toolbar={['mathType', 'chemType']}
         placeholder="Enter Answer..."

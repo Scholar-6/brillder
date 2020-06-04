@@ -61,6 +61,11 @@ class WordHighlighting extends CompComponent<
     });
 
     if(attempt.marks === 0 && !prev) attempt.marks = 1;
+
+    if (attempt.answer.length === 0) {
+      attempt.marks = 0;
+    }
+
     return attempt;
   }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid } from '@material-ui/core';
 
 import './Quote.scss'
-import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
+import DocumentCKEditor from 'components/baseComponents/ckeditor/DocumentEditor';
 
 
 export interface QuoteComponentProps {
