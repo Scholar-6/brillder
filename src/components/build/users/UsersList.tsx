@@ -582,8 +582,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
               {this.renderSortAndFilterBox()}
             </Grid>
             <Grid item xs={9} style={{position: 'relative'}}>
-              <div className="user-row-container">
-                <div className="user-row-title">
+              <div className="brick-row-container">
+                <div className="brick-row-title">
                   ALL USERS
                 </div>
                 <Grid container direction="row">
