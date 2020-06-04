@@ -10,7 +10,6 @@ import SynthesisPanel from './SynthesisPanel';
 import PlayPanel from './PlayPanel';
 import AdditionalPanel from './AdditionalPanel';
 import { User } from 'model/user';
-import { useHistory } from 'react-router-dom';
 import userActions from 'redux/actions/user';
 
 

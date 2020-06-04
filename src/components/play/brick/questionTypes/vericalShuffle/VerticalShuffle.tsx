@@ -1,5 +1,4 @@
 import React from 'react';
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 
@@ -106,7 +105,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   checkAttemptAnswer(index: number) {
     if (this.props.attempt && this.props.attempt.answer) {
       let answer = this.props.attempt.answer[index];
-      if (answer.index == index) {
+      if (answer.index - index === 0) {
         return true;
       }
     }
