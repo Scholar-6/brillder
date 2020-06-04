@@ -21,7 +21,7 @@ $light-grey: #f4f4f4;
     font-family: 'Brandon Grotesque Black';
     color: $left-grey;
     letter-spacing: 0.3vw;
-      
+
     .create-icon {
       height: 5vw;
       width: 6.35vw;
@@ -40,48 +40,9 @@ $light-grey: #f4f4f4;
     }
   }
 
-  .brick-container {
-    font-family: $font-family-regular;
-    max-width: 800px;
-    width: 100%;
-    text-align: left;
-
-    h3 {
-      color: black;
-      padding: 5px;
-      font-size: 16px;
-      line-height: 28px;
-    }
-
-    h2 {
-      font-size: 24px;
-    }
-
-    h1 {
-      color: black;
-      padding: 5px;
-      line-height: 48px;
-      text-transform: capitalize;
-      font-size: 32px;
-    }
-
-    .MuiExpansionPanel-root {
-      background: $light-grey;
-    }
-
-    .MuiExpansionPanel-root.Mui-expanded {
-      margin: 0 !important;
-      margin-bottom: 16px !important;
-    }
-  }
-
   .question-hint-global.correct {
     background: white;
   }
 
-  @media only screen and (max-width: 599px) {
-    .brick-container {
-      text-align: center;
-    }
-  }
+
 }
