@@ -88,117 +88,282 @@ code {
 	}
 }
 
-.filter-header {
-	position: relative;
-	text-transform: uppercase;
-	background: $lighter-blue 0% 0% no-repeat padding-box;
-	padding: 0 1.4vw;
-	font-size: 1.2vw;
-	margin-top: 4vh;
-	line-height: 1.2;
-	letter-spacing: 0.22vw;
-	margin-bottom: 1vh;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	.filter-control {
-		height: 100%;
-		vertical-align: middle;
-	}
-	.filter-control:not(:first-child) {
-		margin-left: 0.9vw;
-		cursor: pointer;
-	}
-	.filter-icon {
-		position: relative;
-		width: 30px;
-		height: 30px;
-		cursor: pointer;
-		&.arrow-up,
-		&.arrow-down,
-		&.arrow-cancel {
-			&:before,
-			&:after {
-				content: '';
-				position: absolute;
-				top: 50%;
-				width: 2px;
-				border-radius: 2px;
-				height: 13px;
-				@extend %transitionAll300;
-				background-color: #fff;
-			}
-		}
-		&.arrow-up,
-		&.arrow-down {
-			&:before {
-				left: calc(50% - 4px);
-			}
-			&:after {
-				right: calc(50% - 6px);
-			}
-		}
-		&.arrow-up {
-			&:before {
-				transform: translate(-50%, -50%) rotate(-45deg);
-			}
-			&:after {
-				transform: translate(-50%, -50%) rotate(45deg);
-			}
-		}
-		&.arrow-down {
-			&:before {
-				transform: translate(-50%, -50%) rotate(45deg);
-			}
-			&:after {
-				transform: translate(-50%, -50%) rotate(-45deg);
-			}
-		}
-		&.arrow-cancel {
-			&:before {
-				left: 15px;
-				transform: translate(-50%, -50%) rotate(45deg);
-			}
-			&:after {
-				right: 13px;
-				transform: translate(-50%, -50%) rotate(-45deg);
-			}
-		}
-	}
-}
-.filter-container {
-	display: flex !important;
-    align-items: center !important;
-	margin: 0 !important;
-	width: 100% !important;
-	> .filter-radio {
-		padding: 0 !important;
-		margin-right: 5px;
-		svg {
-			height: 2.2vh;
-			width: 2.2vh;
-			color: $orange;
-		}
-	}
-	.MuiFormControlLabel-label {
-		font: 1.05vw "Brandon Grotesque Light" !important;
-		letter-spacing: 0.06vw;
-	}
-	.custom-color svg {
-		color: var(--color) !important;
-	}
-}
+.sorted-row {
+	margin-top: 3.5vh;
+	height: 63.5vh;
+	height: 87.1vh;
+	padding-left: 0;
+	padding-right: 0;
 
-.subjects-filter {
-	padding: 10px;
-	height: 59.8vh;
-	overflow-y: auto;
-	.published-count {
-		font-size: 1.05vw;
-		text-align: center;
-		font-family: 'Brandon Grotesque Light';
+	.sort-and-filter-container {
+		> div {
+			border-top-right-radius: $main-panel-radius;
+			background: $light-blue;
+		}
 	}
-	.MuiGrid-container {
-		margin-bottom: 10px;
+}
+.sort-and-filter-container {
+	color: white;
+	height: 86vh;
+	.sort-box {
+		width: 100%;
+		border-top-right-radius: $main-panel-radius;
+		background: $light-blue;
+		.sort-by-box {
+			padding: 1.4vw;
+			.sort-header {
+				text-transform: uppercase;
+				font-size: 2.3vh;
+				letter-spacing: 0.45vh;
+			}
+			.sort-group {
+				padding: 1.4vw 0 0 0;
+				display: flex;
+				flex-wrap: wrap;
+				flex-direction: row;
+				label {
+					width: max-content !important;
+					margin-left: 0 !important;
+					margin-right: 0 !important;
+					.sortBy {
+						padding: 0 !important;
+						margin-right: 0.15vw !important;
+						svg {
+							height: 2.2vh;
+							width: 2.2vh;
+							color: $orange !important;
+						}
+					}
+					.MuiFormControlLabel-label {
+						font: 1.05vw 'Brandon Grotesque Light' !important;
+						letter-spacing: 0.06vw;
+					}
+				}
+				.MuiGrid-container {
+					.filter-radio {
+						padding: 0 !important;
+						margin-right: 0.15vw !important;
+						svg {
+							color: $orange;
+							padding: 0 !important;
+						}
+					}
+				}
+			}
+		}
+		.indexes-box {
+			.index-box {
+				cursor: pointer;
+				position: relative;
+				padding: 0 0 0 1.4vw;
+				margin-bottom: 0.84vh;
+				font-size: 1.1vw;
+				.filter-radio,
+				.MuiFormControlLabel-root {
+					padding: 0 !important;
+					margin: 0;
+					margin-right: 0.15vw;
+				}
+				.MuiFormControlLabel-label {
+					font: 1.05vw $font-family-regular !important;
+					letter-spacing: 0.06vw;
+				}
+				svg {
+					height: 2.2vh;
+    				width: 2.2vh;
+				}
+				.right-index {
+					position: absolute;
+					color: $dark-blue;
+					background: white;
+					line-height: 1;
+					padding: 0.14vh 0.68vw;
+					border-radius: 0.65vw;
+					font-size: 1vw;
+					right: 1.2vw;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+				&.active {
+					background: $lighter-blue;
+				}
+				&.color1 {
+					.round-button,
+					.right-index {
+						background: $orange;
+					}
+					svg {
+						color: $orange;
+					}
+				}
+				&.color2 {
+					.round-button,
+					.right-index {
+						background: $yellow;
+					}
+					svg {
+						color: $yellow;
+					}
+				}
+				&.color3 {
+					.round-button,
+					.right-index {
+						background: white;
+					}
+					svg {
+						color: white;
+					}
+				}
+				&.color4 {
+					.round-button,
+					.right-index {
+						background: $light-green;
+					}
+					svg {
+						color: $light-green;
+					}
+				}
+			}
+		}
+		.back-sort-box {
+			margin-bottom: 1.4vh;
+			padding-left: 0vw;
+			padding-top: 5.7vh;
+			width: 100%;
+			.filter-items {
+				padding-top: 2.3vh;
+				padding-left: 1.7vw;
+			}
+
+			.filter-container {
+				position: relative;
+				width: 100%;
+
+
+			}
+		}
+		.role-filter-header {
+			margin-top: 1.2vh;
+			margin-left: 1.3vw;
+			text-transform: uppercase;
+			font-size: 2.4vh;
+			letter-spacing: 0.25vw;
+			margin-bottom: 1.7vh;
+		}
+		.roles-row {
+			margin-left: 0.3vw;
+		}
+		.filter-header {
+			position: relative;
+			text-transform: uppercase;
+			background: $lighter-blue 0% 0% no-repeat padding-box;
+			padding: 0.7vw 1.4vw;
+			font-size: 1.2vw;
+			line-height: 1.2;
+			letter-spacing: 0.22vw;
+			margin-bottom: 1vh;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			.filter-control {
+				height: 100%;
+				vertical-align: middle;
+			}
+			.filter-control:not(:first-child) {
+				margin-left: 0.9vw;
+				cursor: pointer;
+			}
+			.filter-icon {
+				position: relative;
+				width: 30px;
+				height: 30px;
+				cursor: pointer;
+				&.arrow-up,
+				&.arrow-down,
+				&.arrow-cancel {
+					&:before,
+					&:after {
+						content: '';
+						position: absolute;
+						top: 50%;
+						width: 2px;
+						border-radius: 2px;
+						height: 13px;
+						@extend %transitionAll300;
+						background-color: #fff;
+					}
+				}
+				&.arrow-up,
+				&.arrow-down {
+					&:before {
+						left: calc(50% - 4px);
+					}
+					&:after {
+						right: calc(50% - 6px);
+					}
+				}
+				&.arrow-up {
+					&:before {
+						transform: translate(-50%, -50%) rotate(-45deg);
+					}
+					&:after {
+						transform: translate(-50%, -50%) rotate(45deg);
+					}
+				}
+				&.arrow-down {
+					&:before {
+						transform: translate(-50%, -50%) rotate(45deg);
+					}
+					&:after {
+						transform: translate(-50%, -50%) rotate(-45deg);
+					}
+				}
+				&.arrow-cancel {
+					&:before {
+						left: 15px;
+						transform: translate(-50%, -50%) rotate(45deg);
+					}
+					&:after {
+						right: 13px;
+						transform: translate(-50%, -50%) rotate(-45deg);
+					}
+				}
+			}
+		}
+		.subjects-filter {
+			padding: 1.4vw;
+			height: 59.8vh;
+			overflow-y: auto;
+			.published-count {
+				font-size: 1.05vw;
+				text-align: center;
+				font-family: 'Brandon Grotesque Light';
+			}
+			.MuiGrid-container {
+				margin-bottom: 0.2vw;
+			}
+		}
+		.filter-container {
+			display: flex !important;
+			align-items: center !important;
+			margin: 0 !important;
+			width: 100% !important;
+			> .filter-radio {
+				padding: 0 !important;
+				margin-right: 0.15vw;
+				svg {
+					height: 2.2vh;
+					width: 2.2vh;
+					color: $orange !important;
+				}
+			}
+			.MuiFormControlLabel-label {
+				font: 1.05vw 'Brandon Grotesque Light' !important;
+				letter-spacing: 0.06vw;
+			}
+			.custom-color svg {
+				color: var(--color) !important;
+			}
+		}
 	}
 }

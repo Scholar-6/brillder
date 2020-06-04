@@ -54,14 +54,16 @@ interface BricksListState {
   sortBy: SortBy;
   subjects: any[];
   sortedIndex: number;
-  filterExpanded: boolean;
   logoutDialogOpen: boolean;
   finalBricks: Brick[];
 
   dropdownShown: boolean;
-  filterHeight: string,
   deleteDialogOpen: boolean;
   deleteBrickId: number;
+
+  	filterExpanded: boolean;
+	filterHeight: string;
+	isClearFilter: any;
 }
 
 enum SortBy {
@@ -78,7 +80,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       sortBy: SortBy.None,
       subjects: [],
       sortedIndex: 0,
-      filterExpanded: true,
       logoutDialogOpen: false,
       deleteDialogOpen: false,
       deleteBrickId: -1,
@@ -86,8 +87,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       dropdownShown: false,
       searchBricks: [],
       searchString: "",
-      filterHeight: "auto",
-      isSearching: false,
+	  isSearching: false,
+
+	  	filterExpanded: true,
+		filterHeight: "auto",
+		isClearFilter: false,
     };
 
     axios.get(
@@ -190,17 +194,18 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  hideFilter() {
-    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-  }
 
-  expendFilter() {
-    this.setState({
-      ...this.state,
-      filterExpanded: true,
-      filterHeight: "auto",
-    });
-  }
+  	//region Hide / Expand / Clear Filter
+	hideFilter() {
+		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+	}
+	expendFilter() {
+		this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
+	}
+	filterClear(){
+		this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false})
+	}
+	//endregion
 
   filterBySubject = (i: number) => {
     const { subjects } = this.state;
@@ -384,63 +389,36 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     return (
       <div className="sort-box">
         <div className="sort-by-box">
-        <div className="sort-header">Sort By</div>
-        <RadioGroup
-          className="sort-group"
-          aria-label="SortBy"
-          name="SortBy"
-          value={this.state.sortBy}
-          onChange={this.handleSortChange}
-        >
-          <Grid container direction="row">
-          <Grid item xs={6}>
-          <FormControlLabel
-            value={SortBy.Popularity}
-            style={{ marginRight: 0, width: "50%" }}
-            control={<Radio className="sortBy" />}
-            label="Popularity"
-          />
-          </Grid>
-          <Grid item xs={6}>
-          <FormControlLabel
-            value={SortBy.Date}
-            style={{ marginRight: 0 }}
-            control={<Radio className="sortBy" />}
-            label="Date Added"
-          />
-          </Grid>
-          </Grid>
-        </RadioGroup>
+        	<div className="sort-header">Sort By</div>
+			<RadioGroup className="sort-group"
+				aria-label="SortBy"
+				name="SortBy"
+				value={this.state.sortBy}
+				onChange={this.handleSortChange}>
+				<Grid container direction="row">
+					<Grid item xs={6}>
+						<FormControlLabel
+							value={SortBy.Popularity}
+							style={{ marginRight: 0, width: "50%" }}
+							control={<Radio className="sortBy" />}
+							label="Popularity"/>
+					</Grid>
+					<Grid item xs={6}>
+						<FormControlLabel
+							value={SortBy.Date}
+							style={{ marginRight: 0 }}
+							control={<Radio className="sortBy" />}
+							label="Date Added"/>
+					</Grid>
+				</Grid>
+			</RadioGroup>
         </div>
         <div className="filter-header">
-          <div style={{ display: "inline" }}>
             <span>Filter</span>
-			<button className="btn-transparent svgOnHover" onClick={() => {this.state.filterExpanded ? (this.setState({ ...this.state, filterExpanded: false })) : (this.setState({ ...this.state, filterExpanded: true }))}}>
-				<svg className="svg active">
-					<use href={this.state.filterExpanded ? "/images/icons-sprite.svg#arrow-down" : "/images/icons-sprite.svg#arrow-up"} className="text-white" />
-				</svg>
+			<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
+				onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearSubjects() : (this.hideFilter()) : (this.expendFilter())}}>
 			</button>
-            {/* {this.state.filterExpanded ? (
-              <ExpandLessIcon
-                style={{ fontSize: "3vw" }}
-                onClick={() => this.hideFilter()}
-              />
-            ) : (
-              <ExpandMoreIcon
-                style={{ fontSize: "3vw" }}
-                onClick={() => this.expendFilter()}
-              />
-            )} */}
-            {this.state.subjects.some((r: any) => r.checked) ? (
-              <ClearIcon
-                style={{ fontSize: "2vw" }}
-                onClick={() => this.clearSubjects()}
-              />
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
+		</div>
         <SubjectsList
           subjects={this.state.subjects}
           filterHeight={this.state.filterHeight}
