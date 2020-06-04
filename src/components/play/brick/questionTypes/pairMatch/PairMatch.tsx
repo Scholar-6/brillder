@@ -116,12 +116,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
                 }
               >
                 {this.renderIcon(i)}
-                <div style={{height: '100%', width: '100%'}}>
-                  <ListItemText>
-                    <span className="pair-match-play-option-text">
-                      {this.renderOption(item as any)}
-                    </span>
-                  </ListItemText>
+                <div className="option-container">
+                  <div className="MuiListItemText-root">
+                    {this.renderOption(item as any)}
+                  </div>
                 </div>
               </ListItem>
             ))
