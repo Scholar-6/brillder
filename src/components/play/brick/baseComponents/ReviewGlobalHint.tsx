@@ -3,6 +3,8 @@ import React from 'react';
 import {checkVisibility} from '../../services/hintService';
 import {ComponentAttempt} from '../model/model';
 import {Hint, HintStatus} from 'model/question';
+import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
+
 
 interface ReviewHintProps {
   attempt?: ComponentAttempt;
@@ -16,7 +18,7 @@ const ReviewGlobalHint: React.FC<ReviewHintProps> = ({ hint, ...props }) => {
   const renderHint = () => {
     return (
       <div className={`question-hint-global ${props.attempt?.correct ? 'correct' : ''}`}>
-        <div dangerouslySetInnerHTML={{ __html: hint.value}} />
+        <MathInHtml value={hint.value} />
       </div>
     );
   }

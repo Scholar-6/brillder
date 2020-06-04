@@ -1,5 +1,4 @@
 import React from 'react';
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 
@@ -106,7 +105,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   checkAttemptAnswer(index: number) {
     if (this.props.attempt && this.props.attempt.answer) {
       let answer = this.props.attempt.answer[index];
-      if (answer.index == index) {
+      if (answer.index - index === 0) {
         return true;
       }
     }
@@ -121,25 +120,18 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
         key={i}
         className={`vertical-shuffle-choice ${isCorrect ? 'correct' : ''}`}
       >
-        <Grid container direction="row">
-          <Grid item xs={1} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
-            <DragIndicatorIcon/>
+          <Grid container direction="row" justify="center">
+            {answer.value}
           </Grid>
-          <Grid item xs={11} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
-            <Grid container direction="row" justify="center">
-              {answer.value}
-            </Grid>
-            <Grid container direction="row" justify="center">
-              <ReviewEachHint
-                isPhonePreview={this.props.isPreview}
-                attempt={this.props.attempt}
-                isCorrect={isCorrect}
-                index={i}
-                hint={this.props.question.hint}
-              />
-            </Grid>
+          <Grid container direction="row" justify="center">
+            <ReviewEachHint
+              isPhonePreview={this.props.isPreview}
+              attempt={this.props.attempt}
+              isCorrect={isCorrect}
+              index={i}
+              hint={this.props.question.hint}
+            />
           </Grid>
-        </Grid>
       </div>
     )
   }
@@ -155,6 +147,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
         <ReactSortable
           list={this.state.userAnswers}
           animation={150}
+          className="verical-shuffle-sort-list"
           style={{display:"inline-block"}}
           group={{ name: "cloning-group-name" }}
           setList={(choices) => this.setUserAnswers(choices)}

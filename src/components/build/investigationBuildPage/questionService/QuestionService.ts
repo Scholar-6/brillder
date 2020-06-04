@@ -1,6 +1,11 @@
 import update from "immutability-helper";
 
 import {
+  CasheBuildQuestion, BuildPlayRedirect
+} from '../../../localStorage/buildLocalStorage';
+
+
+import {
   HintStatus, QuestionComponentTypeEnum, Question, QuestionTypeEnum
 } from "model/question";
 import { Brick } from "model/brick";
@@ -35,11 +40,16 @@ export function deactiveQuestions(questions: Question[]) {
   return updatedQuestions;
 }
 
-export function activeQuestionByIndex(questions: Question[], index: number) {
+export function cashBuildQuestion(brickId: number, questionNumber: number) {
+  CasheBuildQuestion({ brickId, questionNumber } as BuildPlayRedirect);
+}
+
+export function activeQuestionByIndex(brickId: number, questions: Question[], questionNumber: number) {
   let updatedQuestions = questions;
-  if (updatedQuestions[index]) {
+  if (updatedQuestions[questionNumber]) {
     updatedQuestions = deactiveQuestions(questions)
-    updatedQuestions[index].active = true;
+    updatedQuestions[questionNumber].active = true;
+    cashBuildQuestion(brickId, questionNumber);
   }
   return updatedQuestions;
 }

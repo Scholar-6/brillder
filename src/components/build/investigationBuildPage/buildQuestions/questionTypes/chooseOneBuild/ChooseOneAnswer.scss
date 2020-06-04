@@ -19,7 +19,7 @@
       background: white !important;
       position: absolute;
       width: 3.5vh;
-      height: 8.2vh;
+      height: 100%;
       z-index: 1;
     }
     .ck-dropdown__panel {
@@ -38,20 +38,12 @@
       padding-left: 2.5vw;
       padding-right: 5vw;
       padding-top: 4.2vh;
-      height: 4vh;
       text-align: center !important;
       overflow: hidden;
       border-radius: 0.4vw !important;
 
       p {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
         text-align: center !important;
-        display: inline;
-      }
-      br {
-        display: none;
       }
     }
   }
@@ -106,7 +98,7 @@
 
   .checkbox-container {
     position: absolute;
-    height: 8vh;
+    height: 100%;
   }
   .checkbox-container.big-box {
     position: absolute;

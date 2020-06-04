@@ -60,7 +60,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   checkAttemptAnswer(index: number) {
     if (this.props.attempt && this.props.attempt.answer) {
       let answer = this.props.attempt.answer[index];
-      if (answer.index == index) {
+      if (answer.index - index === 0) {
         return true;
       }
     }

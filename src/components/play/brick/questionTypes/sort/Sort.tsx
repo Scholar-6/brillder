@@ -150,7 +150,13 @@ class Sort extends CompComponent<SortProps, SortState> {
     attempt.marks = 0;
     attempt.maxMarks = 0;
 
+    let noAnswer = true;
+    const unsortedCategory = this.props.component.categories.length;
+    
     Object.keys(attempt.answer).forEach((key, index) => {
+      if (attempt.answer[key] !== unsortedCategory) {
+        noAnswer = false;
+      }
       attempt.maxMarks += 5;
       if(attempt.answer[key] !== this.state.choices[key]) {
         attempt.correct = false;
@@ -164,6 +170,11 @@ class Sort extends CompComponent<SortProps, SortState> {
     });
 
     if(attempt.marks === 0 && Object.keys(attempt.answer).length !== 0 && !prev) attempt.marks = 1;
+
+    if (noAnswer) {
+      attempt.marks = 0;
+    }
+
     return attempt;
   }
 

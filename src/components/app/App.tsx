@@ -11,6 +11,7 @@ import Pallet from '../play/pallet/Pallet';
 import VersionLabel from 'components/baseComponents/VersionLabel';
 import Dashboard from '../play/dashboard/Dashboard';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
+import PlayPreviewRouting from '../build/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
 import MainPage from '../build/mainPage/mainPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
@@ -29,6 +30,7 @@ import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
 import StudentRoute from './StudentRoute';
 import AuthRedirectRoute from './AuthRedirectRoute';
+import AllUsersRoute from './AllUsersRoute';
 
 
 const App: React.FC = (props: any) => {
@@ -87,6 +89,8 @@ const App: React.FC = (props: any) => {
         <StudentRoute path="/play/pallet/:palletName" component={Pallet} />
         <StudentRoute path="/play/dashboard" component={Dashboard} />
 
+        <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} />
+
         <BuildRoute path="/build/new-brick" component={Proposal} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} />
@@ -95,7 +99,7 @@ const App: React.FC = (props: any) => {
         <BuildRoute path="/build/back-to-work" component={BackToWorkPage} />
         <BuildRoute path="/build/users" component={UsersListPage} />
         <BuildRoute path="/build/user-profile/:userId" component={UserProfilePage} />
-        <BuildRoute path="/build/user-profile" component={UserProfilePage} />
+        <AllUsersRoute path="/build/user-profile" component={UserProfilePage} />
         <BuildRoute path="/build" component={MainPage} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />

@@ -15,6 +15,7 @@ import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 
 interface IntroductionProps {
+  isPlayPreview?: boolean;
   brick: Brick;
 }
 
@@ -45,7 +46,11 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   }
 
   const startBrick = () => {
-    history.push(`/play/brick/${brick.id}/live`);
+    if (props.isPlayPreview) {
+      history.push(`/play-preview/brick/${brick.id}/live`);
+    } else {
+      history.push(`/play/brick/${brick.id}/live`);
+    }
   }
 
   return (

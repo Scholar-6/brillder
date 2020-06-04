@@ -1,12 +1,25 @@
 @import "_variables";
 
 .choose-several-live {
+  .MuiButton-label {
+    div {
+      display: inline;
+      margin: 0 !important;
+    }
+    p {
+      margin: 0 !important;
+    }
+  }
   .choose-choice {
+    margin-bottom: 5px;
+    margin-top: 5px;
     color: $dark-blue;
     text-align: center;
     text-transform: none !important;
     border-radius: 0 !important;
     width: 100%;
+    padding-top: 14px;
+    padding-bottom: 14px;
     opacity: 1;
     font-size: $answer-input-text-size;
     font-family: $font-family-regular;
