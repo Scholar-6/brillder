@@ -58,7 +58,6 @@ interface BricksListState {
   yoursIndex: number;
   yoursReversed: boolean;
   sortedIndex: number;
-  filterExpanded: boolean;
   logoutDialogOpen: boolean;
   failedRequest: boolean;
   finalBricks: Brick[];
@@ -67,10 +66,11 @@ interface BricksListState {
   deleteBrickId: number;
 
   dropdownShown: boolean;
-  filterHeight: any;
   shown: boolean;
-  isClearFilter: any;
-  isSaeedFilter: boolean;
+
+	filterExpanded: boolean;
+	filterHeight: any;
+	isClearFilter: any;
 }
 
 enum SortBy {
@@ -90,7 +90,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       yoursIndex: 0,
       yoursReversed: false,
       sortedIndex: 0,
-      filterExpanded: true,
       logoutDialogOpen: false,
       deleteDialogOpen: false,
       failedRequest: false,
@@ -102,10 +101,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       isSearching: false,
 
       dropdownShown: false,
-      filterHeight: "auto",
 	  shown: true,
-	  isClearFilter: false,
-	  isSaeedFilter: false
+
+	 	filterExpanded: true,
+		filterHeight: "auto",
+		isClearFilter: false,
     };
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
@@ -448,22 +448,17 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 		this.setState({ ...this.state, dropdownShown: false });
 	}
 
+	//region Hide / Expand / Clear Filter
 	hideFilter() {
 		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
 	}
-
 	expendFilter() {
-		this.setState({
-			...this.state,
-			filterExpanded: true,
-			filterHeight: "auto"
-		});
+		this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
 	}
-
 	filterClear(){
-		console.log("isClearFilter",this.state.subjects.some((r: any) => r.checked))
 		this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false})
 	}
+	//endregion
 
   getSortedBrickContainer = (brick: Brick, key: number, index: number, row: any = 0) => {
     let color = "";
@@ -537,40 +532,35 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     return (
       <div className="sort-box">
         <div className="sort-by-box">
-          <div className="sort-header">Sort By</div>
-          <RadioGroup
-            className="sort-group"
-            aria-label="SortBy"
-            name="SortBy"
-            value={this.state.sortBy}
-            onChange={this.handleSortChange}
-          >
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <FormControlLabel
-                  value={SortBy.Popularity}
-                  style={{ marginRight: 0, width: "47.5%" }}
-                  control={<Radio className="sortBy" />}
-                  label="Popularity"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <FormControlLabel
-                  value={SortBy.Date}
-                  style={{ marginRight: 0 }}
-                  control={<Radio className="sortBy" />}
-                  label="Date Added"
-                />
-              </Grid>
-            </Grid>
-          </RadioGroup>
+			<div className="sort-header">Sort By</div>
+			<RadioGroup
+				className="sort-group"
+				aria-label="SortBy"
+				name="SortBy"
+				value={this.state.sortBy}
+				onChange={this.handleSortChange}>
+				<Grid container direction="row">
+					<Grid item xs={6}>
+						<FormControlLabel
+						value={SortBy.Popularity}
+						style={{ marginRight: 0, width: "47.5%" }}
+						control={<Radio className="sortBy" />}
+						label="Popularity"/>
+					</Grid>
+					<Grid item xs={6}>
+						<FormControlLabel
+						value={SortBy.Date}
+						style={{ marginRight: 0 }}
+						control={<Radio className="sortBy" />}
+						label="Date Added"/>
+					</Grid>
+				</Grid>
+			</RadioGroup>
         </div>
         <div className="filter-header">
             <span>Filter</span>
-			<button
-				onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearSubjects() : (this.hideFilter()) : (this.expendFilter())}}
-				className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
-				>
+			<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
+				onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearSubjects() : (this.hideFilter()) : (this.expendFilter())}}>
 			</button>
         </div>
         <SubjectsList

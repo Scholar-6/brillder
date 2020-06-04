@@ -131,59 +131,7 @@ $grey: #b0b0ad;
   }
 
   .sorted-row {
-    margin-top: 3.5vh;
-    height: 87.1vh;
-    .sort-and-filter-container {
-      color: white;
 
-      .sort-box {
-        border-top-right-radius: $main-panel-radius;
-        width: 100%;
-        background: $light-blue;
-
-        .sort-by-box {
-          padding-top: 1vh;
-          height: 20.5vh;
-        }
-
-        .role-filter-header {
-          margin-top: 1.2vh;
-          margin-left: 1.3vw;
-          text-transform: uppercase;
-          font-size: 2.4vh;
-          letter-spacing: 0.25vw;
-          margin-bottom: 1.7vh;
-        }
-        .roles-row {
-          margin-left: 0.3vw;
-        }
-        .filter-header {
-			font-size: 1.3vw;
-			margin-top: 5vh;
-			margin-bottom: 2.8vh;
-        }
-        .sort-group {
-          margin-top: 0.45vh;
-          margin-left: 0.9vw;
-          display: block;
-          label {
-            .sortBy {
-              padding-left: 1.2vw;
-              padding-right: 0.4vw;
-              svg {
-                height: 2.2vh;
-                width: 2.2vh;
-                color: $orange !important;
-              }
-            }
-            .MuiFormControlLabel-label {
-              font: 1.05vw $font-family-regular !important;
-              letter-spacing: 0.06vw;
-            }
-          }
-        }
-      }
-    }
     .user-row-container {
       position: relative;
       border-top-left-radius: $main-panel-radius;
