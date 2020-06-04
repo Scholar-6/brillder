@@ -27,7 +27,14 @@ interface LivePageProps {
 }
 
 const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...props }) => {
-  const [activeStep, setActiveStep] = React.useState(props.previewQuestionIndex ? props.previewQuestionIndex : 0);
+  let initStep = 0;
+  if (props.previewQuestionIndex) {
+    if (questions[props.previewQuestionIndex]) {
+      initStep = props.previewQuestionIndex;
+    }
+  }
+
+  const [activeStep, setActiveStep] = React.useState(initStep);
   let initAnswers: any[] = [];
 
   const [answers, setAnswers] = React.useState(initAnswers);

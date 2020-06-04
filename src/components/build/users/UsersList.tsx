@@ -8,7 +8,6 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ClearIcon from '@material-ui/icons/Clear';
 import Dialog from '@material-ui/core/Dialog';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -19,7 +18,7 @@ import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
 import SubjectsList from 'components/baseComponents/subjectsList/SubjectsList';
 
 import { User, UserType, UserStatus } from 'model/user';
-import {activateUser} from './userService';
+
 
 const mapState = (state: any) => {
   return {
