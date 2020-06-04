@@ -10,17 +10,12 @@
     padding: 0;
     width: 100%;
     overflow: hidden;
-    .pair-match-play-option-text {
-      font-family: $font-family-regular;
-      font-size: $font-size;
-      height: 24px;
+    .option-container {
+      width: 100%;
 
-      img {
-        height: 44px;
-      }
-
-      p {
-        text-align: center !important;
+      .MuiListItemText-root {
+        width: 100%;
+        height: 100%;
       }
     }
     .pair-match-play-option-icon {
