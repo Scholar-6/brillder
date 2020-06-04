@@ -530,45 +530,45 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
   renderSortAndFilterBox = () => {
     return (
-      <div className="sort-box">
-        <div className="sort-by-box">
-			<div className="sort-header">Sort By</div>
-			<RadioGroup
-				className="sort-group"
-				aria-label="SortBy"
-				name="SortBy"
-				value={this.state.sortBy}
-				onChange={this.handleSortChange}>
-				<Grid container direction="row">
-					<Grid item xs={6}>
-						<FormControlLabel
-						value={SortBy.Popularity}
-						style={{ marginRight: 0, width: "47.5%" }}
-						control={<Radio className="sortBy" />}
-						label="Popularity"/>
+		<div className="sort-box">
+			<div className="sort-by-box">
+				<div className="sort-header">Sort By</div>
+				<RadioGroup
+					className="sort-group"
+					aria-label="SortBy"
+					name="SortBy"
+					value={this.state.sortBy}
+					onChange={this.handleSortChange}>
+					<Grid container direction="row">
+						<Grid item xs={6}>
+							<FormControlLabel
+							value={SortBy.Popularity}
+							style={{ marginRight: 0, width: "47.5%" }}
+							control={<Radio className="sortBy" />}
+							label="Popularity"/>
+						</Grid>
+						<Grid item xs={6}>
+							<FormControlLabel
+							value={SortBy.Date}
+							style={{ marginRight: 0 }}
+							control={<Radio className="sortBy" />}
+							label="Date Added"/>
+						</Grid>
 					</Grid>
-					<Grid item xs={6}>
-						<FormControlLabel
-						value={SortBy.Date}
-						style={{ marginRight: 0 }}
-						control={<Radio className="sortBy" />}
-						label="Date Added"/>
-					</Grid>
-				</Grid>
-			</RadioGroup>
-        </div>
-        <div className="filter-header">
-            <span>Filter</span>
-			<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
-				onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearSubjects() : (this.hideFilter()) : (this.expendFilter())}}>
-			</button>
-        </div>
-        <SubjectsList
-          subjects = {this.state.subjects}
-          filterHeight={this.state.filterHeight}
-          filterBySubject={this.filterBySubject}
-        />
-      </div>
+				</RadioGroup>
+			</div>
+			<div className="filter-header">
+				<span>Filter</span>
+				<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
+					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearSubjects() : (this.hideFilter()) : (this.expendFilter())}}>
+				</button>
+			</div>
+			<SubjectsList
+				subjects = {this.state.subjects}
+				filterHeight={this.state.filterHeight}
+				filterBySubject={this.filterBySubject}
+			/>
+		</div>
     );
   };
 

@@ -376,16 +376,16 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 					name="SortBy"
 					value={this.state.sortBy}
 					onChange={this.handleSortChange}>
-					{this.state.roles.map((role, i) =>
 					<Grid container direction="row">
+						{this.state.roles.map((role, i) =>
 						<Grid item xs={4} key={i}>
 							<FormControlLabel
 							checked={role.checked}
 							control={<Radio className={"filter-radio"} />}
 							label={role.name}/>
 						</Grid>
+          				)}
 					</Grid>
-          			)}
 				</RadioGroup>
 			</div>
 			<div className="filter-header">

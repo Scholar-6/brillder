@@ -417,36 +417,28 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       }
     }
     return (
-      <div className="indexes-box">
-        <div className="sort-header">INBOX</div>
-        <div
-          className={
-            "index-box " + (this.state.filters.viewAll ? "active" : "")
-          }
-          onClick={() => this.showAll()}
-        >
-          View All
-          <div className="right-index">{this.state.rawBricks.length}</div>
-        </div>
-        <div
-          className={
-            "index-box " + (this.state.filters.buildAll ? "active" : "")
-          }
-          onClick={() => this.showBuildAll()}
-        >
-          Build
-          <div className="right-index">{build}</div>
-        </div>
-        <div
-          className={
-            "index-box " + (this.state.filters.editAll ? "active" : "")
-          }
-          onClick={() => this.showEditAll()}
-        >
-          Edit
-          <div className="right-index">{edit}</div>
-        </div>
-      </div>
+		<div className="sort-box">
+		 	<div className="sort-by-box">
+				<div className="sort-header">INBOX</div>
+			</div>
+			<div className="indexes-box">
+				<div className={"index-box " + (this.state.filters.viewAll ? "active" : "")}
+					onClick={() => this.showAll()}>
+					View All
+					<div className="right-index">{this.state.rawBricks.length}</div>
+				</div>
+				<div className={"index-box " + (this.state.filters.buildAll ? "active" : "")}
+					onClick={() => this.showBuildAll()}>
+					Build
+					<div className="right-index">{build}</div>
+				</div>
+				<div className={ "index-box " + (this.state.filters.editAll ? "active" : "")}
+					onClick={() => this.showEditAll()}>
+					Edit
+					<div className="right-index">{edit}</div>
+				</div>
+			</div>
+		</div>
     );
   };
 
@@ -606,18 +598,26 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 					name="SortBy"
 					value={this.state.sortBy}
 					onChange={this.handleSortChange}>
-					<FormControlLabel
-						value={SortBy.Status}
-						control={<Radio className="sortBy" />}
-						label="Status"/>
-					<FormControlLabel
-						value={SortBy.Popularity}
-						control={<Radio className="sortBy" />}
-						label="Popularity"/>
-					<FormControlLabel
-						value={SortBy.Date}
-						control={<Radio className="sortBy" />}
-						label="Last Edit"/>
+					<Grid container direction="row">
+						<Grid item xs={4}>
+							<FormControlLabel
+								value={SortBy.Status}
+								control={<Radio className="sortBy" />}
+								label="Status"/>
+						</Grid>
+						<Grid item xs={4}>
+							<FormControlLabel
+								value={SortBy.Popularity}
+								control={<Radio className="sortBy" />}
+								label="Popularity"/>
+						</Grid>
+						<Grid item xs={4}>
+							<FormControlLabel
+								value={SortBy.Date}
+								control={<Radio className="sortBy" />}
+								label="Last Edit"/>
+						</Grid>
+					</Grid>
 				</RadioGroup>
 			</div>
 			<div className="filter-header">
@@ -626,66 +626,39 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expendFilter())}}>
 				</button>
 			</div>
-			{/* <div style={{ display: "inline" }}>
-				<span>FILTER</span>
-				{this.state.filterExpanded ? (
-					<ExpandLessIcon style={{ fontSize: "3vw" }}
-						onClick={() => this.setState({ ...this.state, filterExpanded: false })}/>
-				) : (
-					<ExpandMoreIcon
-						style={{ fontSize: "3vw" }}
-						onClick={() => this.setState({ ...this.state, filterExpanded: true })}/>
-				)}
-				{filterPresent ? (
-				<ClearIcon
-					style={{ fontSize: "2vw" }}
-					onClick={() => this.removeStatusFilters()}
-				/>
-				) : (
-				""
-				)}
-			</div> */}
 			{this.state.filterExpanded === true ? (
-			<div className="filter-items">
-				<div className="filter-container color1">
-				<FormControlLabel
-					className="filter-container"
-					checked={this.state.filters.draft}
-					onClick={() => this.toggleDraftFilter()}
-					control={<Radio className={"filter-radio custom-color"} />}
-					label="Draft"
-				/>
-				<div className="right-index">{draft}</div>
+		   	<div className="indexes-box">
+				<div className="index-box color1">
+					<FormControlLabel
+						checked={this.state.filters.draft}
+						onClick={() => this.toggleDraftFilter()}
+						control={<Radio className={"filter-radio custom-color"} />}
+						label="Draft"/>
+					<div className="right-index">{draft}</div>
 				</div>
-				<div className="filter-container color2">
-				<FormControlLabel
-					className="filter-container"
-					checked={this.state.filters.review}
-					onClick={() => this.toggleReviewFilter()}
-					control={<Radio className={"filter-radio custom-color"} />}
-					label="Submitted for Review"
-				/>
-				<div className="right-index">{review}</div>
+				<div className="index-box color2">
+					<FormControlLabel
+						checked={this.state.filters.review}
+						onClick={() => this.toggleReviewFilter()}
+						control={<Radio className={"filter-radio custom-color"} />}
+						label="Submitted for Review"/>
+					<div className="right-index">{review}</div>
 				</div>
-				<div className="filter-container color3">
-				<FormControlLabel
-					className="filter-container"
-					checked={this.state.filters.build}
-					onClick={() => this.toggleBuildFilter()}
-					control={<Radio className={"filter-radio custom-color"} />}
-					label="Build in Progress"
-				/>
-				<div className="right-index">{build}</div>
+				<div className="index-box color3">
+					<FormControlLabel
+						checked={this.state.filters.build}
+						onClick={() => this.toggleBuildFilter()}
+						control={<Radio className={"filter-radio custom-color"} />}
+						label="Build in Progress"/>
+					<div className="right-index">{build}</div>
 				</div>
-				<div className="filter-container color4">
-				<FormControlLabel
-					className="filter-container"
-					checked={this.state.filters.publish}
-					onClick={() => this.togglePublishFilter()}
-					control={<Radio className={"filter-radio custom-color"} />}
-					label="Published"
-				/>
-				<div className="right-index">{publish}</div>
+				<div className="index-box color4">
+					<FormControlLabel
+						checked={this.state.filters.publish}
+						onClick={() => this.togglePublishFilter()}
+						control={<Radio className={"filter-radio custom-color"} />}
+						label="Published"/>
+					<div className="right-index">{publish}</div>
 				</div>
 			</div>
 			) : (
