@@ -382,54 +382,7 @@
   }
 
   .sorted-row {
-    margin-top: 3.5vh;
-    height: 87.1vh;
-    .sort-and-filter-container {
-      color: white;
 
-      .sort-box {
-        width: 23.3vw !important;
-        border-top-right-radius: $main-panel-radius;
-        background: $light-blue;
-
-        .sort-by-box {
-          height: 12.9vh;
-          .sort-header {
-            padding-top: 2.2vh;
-            margin-left: 1.4vw;
-            text-transform: uppercase;
-            font-size: 2.3vh;
-            letter-spacing: 0.45vh;
-          }
-          .sort-group {
-            margin-top: 0.65vh;
-            margin-left: 0.8vw;
-            margin-right: 0.6vw;
-            display: block;
-            label {
-              .sortBy {
-                padding-left: 1.2vw;
-                padding-right: 0.4vw;
-                svg {
-                  height: 2.2vh;
-                  width: 2.2vh;
-                  color: $orange !important;
-                }
-              }
-              .MuiFormControlLabel-label {
-                font: 1.05vw 'Brandon Grotesque Light' !important;
-                letter-spacing: 0.06vw;
-              }
-            }
-          }
-        }
-        .filter-header {
-			height: 4.5vh;
-			font-size: 2.4vh;
-        }
-
-      }
-    }
     .brick-row-container {
       position: relative;
       border-top-left-radius: $main-panel-radius;
