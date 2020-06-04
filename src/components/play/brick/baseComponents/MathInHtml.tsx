@@ -18,7 +18,7 @@ class MathInHtml extends Component<MathHtmlProps> {
     }
 
     if (arr.length === 0) {
-      return this.props.value;
+      return <div>{this.props.value}</div>;
     }
 
     return (
