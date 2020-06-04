@@ -3,6 +3,7 @@ import React from 'react';
 import {checkVisibility} from '../../services/hintService';
 import {ComponentAttempt} from '../model/model';
 import {Hint, HintStatus} from 'model/question';
+import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 
 interface ReviewHintProps {
@@ -23,7 +24,9 @@ const ReviewEachHint: React.FC<ReviewHintProps> = ({ hint, ...props }) => {
 
   if (isShown && hint.status === HintStatus.Each && hint.list[props.index]) {
     return (
-      <span className="question-hint" dangerouslySetInnerHTML={{ __html: hintText}} />
+      <span className="question-hint">
+        <MathInHtml value={hintText} />
+      </span>
     );
   }
 

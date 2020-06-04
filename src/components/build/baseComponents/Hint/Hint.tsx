@@ -10,6 +10,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import './Hint.scss';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
+
 const HtmlTooltip = withStyles((theme:any) => ({
   tooltip: {
     backgroundColor: '#193366',
