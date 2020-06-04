@@ -35,6 +35,7 @@ import {
   activeQuestionByIndex,
   deactiveQuestions,
   getActiveQuestion,
+  cashBuildQuestion,
   prepareBrickToSave,
   removeQuestionByIndex,
   setQuestionTypeByIndex,
@@ -151,10 +152,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const updatedQuestions = deactiveQuestions(questions);
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
     setQuestions(update(questions, { $set: updatedQuestions }));
+    cashBuildQuestion(brickId, updatedQuestions.length - 1);
+    saveBrickQuestions(updatedQuestions);
+
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/build/investigation/question`);
     }
-    saveBrickQuestions(updatedQuestions);
   };
 
   const moveToSynthesis = () => {
