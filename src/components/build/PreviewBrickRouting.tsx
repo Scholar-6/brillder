@@ -12,7 +12,7 @@ import Synthesis from '../play/brick/synthesis/Synthesis';
 import Review from '../play/brick/review/ReviewPage';
 import Ending from '../play/brick/ending/Ending';
 
-import {GetBuildQuestionNumber} from '../localStorage/localStorageService';
+import { GetCashedBuildQuestion } from '../localStorage/buildLocalStorage';
 
 import { Brick } from 'model/brick';
 import { ComponentAttempt, PlayStatus } from '../play/brick/model/model';
@@ -54,7 +54,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   let initAttempts:any[] = [];
   props.brick?.questions.forEach(question => initAttempts.push({}));
 
-  let buildQuestionNumber = GetBuildQuestionNumber();
+  let cashedBuildQuestion = GetCashedBuildQuestion();
   
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
@@ -112,6 +112,21 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     props.history.push(`/build/brick/${brickId}/build/investigation/publish`);
   }
 
+  const moveToBuild = () => {
+    props.history.push(`/build/brick/${brickId}/build/investigation/question`);
+  }
+
+  const getBuildQuestionNumber = () => {
+    if (
+      cashedBuildQuestion &&
+      cashedBuildQuestion.questionNumber &&
+      cashedBuildQuestion.isTwoOrMoreRedirect
+    ) {
+      return cashedBuildQuestion.questionNumber;
+    }
+    return 0;
+  }
+
   return (
     <div className="play-pages">
       <Switch>
@@ -121,7 +136,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <Route exac path="/play-preview/brick/:brickId/live">
           <Live
             status={status}
-            previewQuestionIndex={buildQuestionNumber}
+            previewQuestionIndex={getBuildQuestionNumber()}
             isPlayPreview={true}
             questions={props.brick.questions}
             brickId={props.brick.id}
@@ -153,7 +168,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <Grid container alignContent="center" className="back-to-build">
           <div
             className="back-hover-area"
-            onClick={() => props.history.push(`/build/brick/${brickId}/build/investigation/question`)}
+            onClick={() => moveToBuild()}
           >
             <div className="create-icon"></div>
             <div>BACK</div>
