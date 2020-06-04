@@ -42,7 +42,7 @@ import {
 } from "./questionService/QuestionService";
 import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
-import {GetBuildQuestionNumber} from '../../localStorage/localStorageService';
+import {GetCashedBuildQuestion} from '../../localStorage/buildLocalStorage';
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -119,10 +119,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     activeQuestion = {} as Question;
   }
 
+  /* Changing question number by tabs in build */
+  const activateQuestionByIndex = (index: number) => {
+    return activeQuestionByIndex(brickId, questions, index);
+  }
+
   const setPreviousQuestion = () => {
     const index = getQuestionIndex(activeQuestion);
     if (index >= 1) {
-      const updatedQuestions = activeQuestionByIndex(questions, index - 1);
+      const updatedQuestions = activateQuestionByIndex(index - 1);
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
       saveBrick();
@@ -134,12 +139,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const index = getQuestionIndex(activeQuestion);
     let lastIndex = questions.length - 1;
     if (index < lastIndex) {
-      const updatedQuestions = activeQuestionByIndex(questions, index + 1);
+      const updatedQuestions = activateQuestionByIndex(index + 1);
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
       createNewQuestion();
     }
   };
+  /* Changing question in build */
 
   const createNewQuestion = () => {
     const updatedQuestions = deactiveQuestions(questions);
@@ -198,7 +204,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const selectQuestion = (index: number) => {
-    const updatedQuestions = activeQuestionByIndex(questions, index);
+    const updatedQuestions = activateQuestionByIndex(index);
     setQuestions(update(questions, { $set: updatedQuestions }));
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/build/investigation/question`)
@@ -237,9 +243,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         } catch (e) {}
       }
       if (parsedQuestions.length > 0) {
-        let questionIndex = GetBuildQuestionNumber();
-        if (parsedQuestions[questionIndex]) {
-          parsedQuestions[questionIndex].active = true;
+        let buildQuestion = GetCashedBuildQuestion();
+        if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
+          parsedQuestions[buildQuestion.questionNumber].active = true;
         } else {
           parsedQuestions[0].active = true;
         }
@@ -259,10 +265,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setSubmitDialog(true);
     } else {
       saveBrick();
+      let buildQuestion = GetCashedBuildQuestion();
+
       if (isSynthesisPage) {
         history.push(`/play-preview/brick/${brickId}/intro`);
-      } else {
+      } else if (
+        buildQuestion && buildQuestion.questionNumber &&
+        buildQuestion.brickId === brickId &&
+        buildQuestion.isTwoOrMoreRedirect
+      ) {
         history.push(`/play-preview/brick/${brickId}/live`);
+      } else {
+        history.push(`/play-preview/brick/${brickId}/intro`);
       }
     }
   }

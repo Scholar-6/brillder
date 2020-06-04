@@ -1,6 +1,8 @@
 import update from "immutability-helper";
 
-import {SetBuildQuestionNumber} from '../../../localStorage/localStorageService';
+import {
+  CasheBuildQuestion, BuildPlayPage, BuildPlayRedirect
+} from '../../../localStorage/buildLocalStorage';
 
 
 import {
@@ -38,12 +40,12 @@ export function deactiveQuestions(questions: Question[]) {
   return updatedQuestions;
 }
 
-export function activeQuestionByIndex(questions: Question[], index: number) {
+export function activeQuestionByIndex(brickId: number, questions: Question[], questionNumber: number) {
   let updatedQuestions = questions;
-  if (updatedQuestions[index]) {
+  if (updatedQuestions[questionNumber]) {
     updatedQuestions = deactiveQuestions(questions)
-    updatedQuestions[index].active = true;
-    SetBuildQuestionNumber(index);
+    updatedQuestions[questionNumber].active = true;
+    CasheBuildQuestion({ brickId, questionNumber } as BuildPlayRedirect);
   }
   return updatedQuestions;
 }

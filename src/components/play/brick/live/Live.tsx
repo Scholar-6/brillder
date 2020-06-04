@@ -13,7 +13,7 @@ import QuestionLive from '../questionPlay/QuestionPlay';
 import TabPanel from '../baseComponents/QuestionTabPanel';
 import { PlayStatus } from '../model/model';
 
-import {SetBuildQuestionNumber} from '../../../localStorage/localStorageService';
+import {CashQuestionFromPlay} from '../../../localStorage/buildLocalStorage';
 
 
 interface LivePageProps {
@@ -52,7 +52,7 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...prop
     questions[activeStep].edited = true;
     setActiveStep(step);
     if (props.isPlayPreview) {
-      SetBuildQuestionNumber(step);
+      CashQuestionFromPlay(brickId, step);
     }
   };
 
@@ -75,7 +75,7 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...prop
     setActiveStep(update(activeStep, { $set: newStep }));
 
     if (props.isPlayPreview) {
-      SetBuildQuestionNumber(newStep);
+      CashQuestionFromPlay(brickId, newStep);
     }
 
     if (activeStep >= questions.length - 1) {
