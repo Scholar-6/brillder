@@ -108,7 +108,7 @@ const HintComponent: React.FC<HintProps> = ({
         <Grid container item xs={12} className="hint-container">
           <DocumentWirisCKEditor
             data={state.value}
-            toolbar={['bold', 'italic', 'insertTable', 'fontColor', 'mathType', 'chemType']}
+            toolbar={['bold', 'italic', 'fontColor', 'mathType', 'chemType', 'insertTable']}
             placeholder="Enter Hint..."
             validationRequired={validationRequired}
             onBlur={() => save()}
@@ -137,7 +137,7 @@ const HintComponent: React.FC<HintProps> = ({
         <Grid key={i} container item xs={12} className="hint-container">
           <DocumentWirisCKEditor
             data={state.list[i]}
-            toolbar={['bold', 'fontColor', 'mathType', 'chemType',]}
+            toolbar={['bold', 'italic', 'fontColor', 'mathType', 'chemType',]}
             placeholder="Enter Hint"
             validationRequired={validationRequired}
             onBlur={() => save()}
