@@ -5,10 +5,6 @@
 $col-radius: 2vw;
 $col-color: $light-blue;
 
-$mobile-col-radius: 8vw;
-$mobile-col-color: $light-blue;
-$mobile-background: $dark-blue;
-$mobile-arrow-color: #96A0B6;
 
 .choose-user-page {
   height: 100%;
@@ -86,11 +82,13 @@ $mobile-arrow-color: #96A0B6;
   }
 
   .logo-image {
-    height: 46.3vh;
-    margin-bottom: 0.5vh;
-    margin-right: 0.8vw;
+    height: 28vh;
+    margin-bottom: 5vh;
   }
 
+  .logo-text-image {
+    height: 6vh;
+  }
 
   .user-type-btn:hover {
     color: white;
@@ -120,101 +118,5 @@ $mobile-arrow-color: #96A0B6;
     .user-type-name {
       line-height: 1 !important;
     }
-  }
-
-  .mobile-choose-user {
-    background: $mobile-background;
-    height: 100%;
-
-    .first-mobile-row {
-      padding-top: 1.4vh;
-      height: 32.65%;
-      .first-col {
-        width: 9.05%;
-        height: 100%;
-        border-top-right-radius: $mobile-col-radius;
-        border-bottom-right-radius: $mobile-col-radius;
-        background: $mobile-col-color;
-      }
-      .second-col {
-        margin-left: 4.6%;
-        width: 86.35%;
-        height: 100%;
-        border-top-left-radius: $mobile-col-radius;
-        border-bottom-left-radius: $mobile-col-radius;
-        background: $mobile-col-color;
-      }
-    }
-
-    .second-mobile-row {
-      margin-top: 1.85vh;
-      height: 31.4%;
-      .first-col {
-        width: 59.2%;
-        height: 100%;
-        border-top-right-radius: $mobile-col-radius;
-        border-bottom-right-radius: $mobile-col-radius;
-        background: $mobile-col-color;
-      }
-      .second-col {
-        margin-left: 3.8%;
-        width: 37%;
-        height: 100%;
-        border-top-left-radius: $mobile-col-radius;
-        border-bottom-left-radius: $mobile-col-radius;
-        background: $mobile-col-color;
-      }
-    }
-    .third-mobile-row {
-      margin-top: 1.86vh;
-      height: 31.4%;
-      .first-col {
-        width: 20.3%;
-        height: 100%;
-        border-top-right-radius: $mobile-col-radius;
-        border-bottom-right-radius: $mobile-col-radius;
-        background: $mobile-col-color;
-      }
-      .second-col {
-        margin-left: 4.6%;
-        width: 75.1%;
-        height: 100%;
-        border-top-left-radius: $mobile-col-radius;
-        border-bottom-left-radius: $mobile-col-radius;
-        background: $mobile-col-color;
-      }
-    }
-  }
-  .logo-mobile-image {
-    margin-top: 7.1vh;
-    height: 39.43vh;
-    margin-right: 3vw;
-  }
-  .mobile-arrow {
-    margin-top: -1.2vh;
-    height: 5.6vh;
-    width: 20vw;
-    color: $mobile-arrow-color;
-    margin-bottom: 1.3vh;
-  }
-  .user-type-mobile-btn {
-    padding: 0vh 0;
-    background-color: $orange;
-    color: white;
-    margin-top: 1.55vh;
-    margin-bottom: 1vh;
-    border-radius: 1vh;
-    width: 87.7%;
-    font-size: 5.7vh;
-
-    span {
-      font-family: $font-family-light;
-      font-weight: 200 !important;
-      line-height: 1.57;
-      padding-bottom: 0.1vh;
-    }
-  }
-  .user-type-mobile-btn:hover {
-    background-color: $orange;
   }
 }
