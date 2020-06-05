@@ -21,7 +21,7 @@ $light-grey: #f4f4f4;
     font-family: 'Brandon Grotesque Black';
     color: $left-grey;
     letter-spacing: 0.3vw;
-      
+
     .create-icon {
       height: 5vw;
       width: 6.35vw;
@@ -84,11 +84,5 @@ $light-grey: #f4f4f4;
 
   .question-hint-global.correct {
     background: white;
-  }
-
-  @media only screen and (max-width: 599px) {
-    .brick-container {
-      text-align: center;
-    }
   }
 }
