@@ -25,13 +25,16 @@
     padding-left: 1%;
     padding-right: 1%;
     font-size: 1vw;
-    line-height: 1.1;
-    min-height: 3vh;
-    padding-top: 0.4vh;
+    line-height: 1.45;
+    min-height: 14.5vh;
+    padding-top: 0.5vh;
     padding-bottom: 0.4vh;
-    margin-bottom: 0.3vw;
+    margin-top: 0.1vw;
+    margin-bottom: 0.4vw;
 
     .word {
+      cursor: pointer;
+      color: $dark-blue;
       display: inline-block;
       margin-right: 5px;
     }
@@ -45,7 +48,7 @@
     font-family: $font-family-regular;
     width: 98%;
     padding: 0;
-    margin: 0;
+    margin: 0 !important;
     padding-left: 1%;
     padding-right: 1%;
     font-size: 1vw !important;

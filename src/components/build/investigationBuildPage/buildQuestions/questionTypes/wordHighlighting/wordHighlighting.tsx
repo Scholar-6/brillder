@@ -3,12 +3,8 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import './wordHighlighting.scss'
 import { UniqueComponentProps } from '../types';
-import { Word } from 'components/interfaces/word';
+import { BuildWord, SpecialSymbols } from 'components/interfaces/word';
 
-enum SpecialSymbols {
-  LineFeed = 10,
-  Space = 32,
-}
 
 export enum WordMode {
   Input,
@@ -17,7 +13,7 @@ export enum WordMode {
 
 export interface WordHighlightingData {
   text: string;
-  words: Word[];
+  words: BuildWord[];
   mode: WordMode;
 }
 
@@ -45,19 +41,19 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     return text.split(String.fromCharCode(charCode));
   }
 
-  const prepareWords = (text: string):Word[] => {
+  const prepareWords = (text: string) => {
     if (!text) {
       return [];
     }
     let splited = splitByChar(text, SpecialSymbols.LineFeed);
     let lines = splited.map(line => {
-      return {text: line, isBreakLine: true, checked: false} as Word;
+      return {text: line, isBreakLine: true, checked: false} as BuildWord;
     });
-    let words: Word[] = [];
+    let words: BuildWord[] = [];
     lines.forEach(line => {
       let lineWords = splitByChar(line.text, SpecialSymbols.Space);
       for (const index in lineWords) {
-        let word = {text: lineWords[index], checked: false} as Word;
+        let word = {text: lineWords[index], checked: false} as BuildWord;
         if (parseInt(index) === lineWords.length - 1) {
           word.isBreakLine = true;
         }
@@ -94,22 +90,39 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
 
   const renderBox = () => {
     if (state.mode === WordMode.Edit) {
-      return (
-        <div className="hightlight-area">
-          {
-            state.words ? state.words.map((word, i) =>
-              <div
-                key={i}
-                className={word.checked ? "word active" : "word"}
-                onClick={() => {toggleLight(i)}}
-              >
-                {word.text}
-              </div>
-            ) : ""
-          }
-        </div>
-      );
+      return renderEditBox();
     }
+    return renderTextBox();
+  }
+
+  const renderEditBox = () => {
+    return (
+      <div className="hightlight-area">
+        {
+          state.words ? state.words.map((word, i) =>
+            renderEditWord(word, i)
+          ) : ""
+        }
+      </div>
+    );
+  }
+
+  const renderEditWord = (word: BuildWord, index: number) => {
+    return (
+      <span>
+        <span
+          key={index}
+          className={word.checked ? "word active" : "word"}
+          onClick={() => {toggleLight(index)}}
+        >
+          {word.text}
+        </span>
+        {word.isBreakLine ? <br /> : ""}
+      </span>
+    );
+  }
+
+  const renderTextBox = () => {
     return (
       <textarea
         disabled={locked}
@@ -118,7 +131,8 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         onBlur={() => save()}
         value={state.text}
         onChange={updateText}
-        placeholder="Enter Words Here..." />
+        placeholder="Enter Words Here..."
+      />
     );
   }
 
