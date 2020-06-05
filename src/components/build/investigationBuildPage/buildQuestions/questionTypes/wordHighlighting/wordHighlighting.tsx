@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import EditIcon from '@material-ui/icons/Edit';
-import { Key } from 'ts-keycode-enum';
 
 import './wordHighlighting.scss'
 import { UniqueComponentProps } from '../types';
@@ -92,6 +91,12 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     }
   }
 
+  const addSpecialSign = (words: BuildWord[], sign: string, index: number) => {
+    if (index >= 1) {
+      words.push({text: ',', notSelectable: true} as BuildWord);
+    }
+  }
+
   const splitByCommas = (words: BuildWord[]) => {
     let finalWords:BuildWord[] = [];
     words.forEach(word => {
@@ -100,9 +105,7 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         for (let index in commas) {
           let loopWord = { text: commas[index] } as BuildWord;
           let intIndex = parseInt(index);
-          if (intIndex >= 1) {
-            finalWords.push({text: ',', notSelectable: true} as BuildWord);
-          }
+          addSpecialSign(finalWords, ',', intIndex);
           addBreakLineInTheEnd(commas, word, loopWord, intIndex);
           disabledEmptyWord(word);
           finalWords.push(loopWord);
