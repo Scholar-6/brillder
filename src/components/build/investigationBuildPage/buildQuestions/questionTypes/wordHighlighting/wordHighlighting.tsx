@@ -127,7 +127,6 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
       <textarea
         disabled={locked}
         className="words-input"
-        rows={5}
         onBlur={() => save()}
         value={state.text}
         onChange={updateText}
