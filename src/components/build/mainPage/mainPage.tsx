@@ -67,7 +67,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <div className="welcome-col">
             <div className="welcome-box">
               <div>WELCOME</div>
-              <div>TO BRIX,</div>
+              <div className="smaller">TO BRILLDER,</div>
               <div className="welcome-name">
                 {
                   this.props.user.firstName ? this.props.user.firstName : 'NAME'
