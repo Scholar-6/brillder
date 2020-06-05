@@ -22,7 +22,6 @@ export function CasheBuildQuestion(questionObj: BuildPlayRedirect) {
     question = questionObj;
   }
   question.currentPage = BuildPlayPage.Build;
-  console.log(question);
   localStorage.setItem(BuildQuestionCache, JSON.stringify(question));
 }
 
@@ -48,6 +47,5 @@ export function CashQuestionFromPlay(brickId: number, questionNumber: number) {
   }
   question.questionNumber = questionNumber;
   question.currentPage = BuildPlayPage.Play;
-  console.log('Play', question);
   localStorage.setItem(BuildQuestionCache, JSON.stringify(question));
 }

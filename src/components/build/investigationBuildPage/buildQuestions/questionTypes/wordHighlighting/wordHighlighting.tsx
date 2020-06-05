@@ -3,16 +3,16 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import './wordHighlighting.scss'
 import { UniqueComponentProps } from '../types';
+import { Word } from 'components/interfaces/word';
 
+enum SpecialSymbols {
+  LineFeed = 10,
+  Space = 32,
+}
 
 export enum WordMode {
   Input,
   Edit,
-}
-
-export interface Word {
-  text: string,
-  checked: boolean,
 }
 
 export interface WordHighlightingData {
@@ -41,14 +41,30 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     updateComponent(state);
   }
 
+  const splitByChar = (text: string, charCode: number) => {
+    return text.split(String.fromCharCode(charCode));
+  }
+
   const prepareWords = (text: string):Word[] => {
     if (!text) {
       return [];
     }
-    let words = text.split(' ');
-    return words.map(word => {
-      return {text: word, checked: false} as Word;
+    let splited = splitByChar(text, SpecialSymbols.LineFeed);
+    let lines = splited.map(line => {
+      return {text: line, isBreakLine: true, checked: false} as Word;
     });
+    let words: Word[] = [];
+    lines.forEach(line => {
+      let lineWords = splitByChar(line.text, SpecialSymbols.Space);
+      for (const index in lineWords) {
+        let word = {text: lineWords[index], checked: false} as Word;
+        if (parseInt(index) === lineWords.length - 1) {
+          word.isBreakLine = true;
+        }
+        words.push(word);
+      }
+    });
+    return words;
   }
 
   const switchMode = () => {
