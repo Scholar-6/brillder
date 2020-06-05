@@ -4,6 +4,7 @@ export enum SpecialSymbols {
 
   // unselectable symbols
   Comma = 44,
+  Dot = 46,
 }
 
 export interface Word {

@@ -91,21 +91,21 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     }
   }
 
-  const addSpecialSign = (words: BuildWord[], sign: string, index: number) => {
+  const addSpecialSignByCode = (words: BuildWord[], signCode: SpecialSymbols, index: number) => {
     if (index >= 1) {
-      words.push({text: ',', notSelectable: true} as BuildWord);
+      words.push({text: String.fromCharCode(signCode), notSelectable: true} as BuildWord);
     }
   }
 
-  const splitByCommas = (words: BuildWord[]) => {
+  const splitBySpecialSign = (words: BuildWord[], signCode: SpecialSymbols) => {
     let finalWords:BuildWord[] = [];
     words.forEach(word => {
-      let commas = splitByChar(word.text, SpecialSymbols.Comma);
+      let commas = splitByChar(word.text, signCode);
       if (commas.length >= 2) {
         for (let index in commas) {
           let loopWord = { text: commas[index] } as BuildWord;
           let intIndex = parseInt(index);
-          addSpecialSign(finalWords, ',', intIndex);
+          addSpecialSignByCode(finalWords, signCode, intIndex);
           addBreakLineInTheEnd(commas, word, loopWord, intIndex);
           disabledEmptyWord(word);
           finalWords.push(loopWord);
@@ -121,8 +121,9 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     if (!text) { return []; }
     const lines = splitByLines(text);
     const words = splitByWords(lines);
-    const wordsByCommas = splitByCommas(words);
-    return wordsByCommas;
+    const wordsByCommas = splitBySpecialSign(words, SpecialSymbols.Comma);
+    const wordsByDotsAndComas = splitBySpecialSign(wordsByCommas, SpecialSymbols.Dot);
+    return wordsByDotsAndComas;
   }
 
   const switchMode = () => {
