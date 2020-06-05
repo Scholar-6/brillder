@@ -1,4 +1,6 @@
-@import "_variables";
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
 $col-blue: $light-blue;
 $border-radius: 2vw;
@@ -21,7 +23,7 @@ $button-radius: 0.7vw;
         transform-origin: 110% 50%;
       }
       .back-button:hover {
-        transform: scale(1.15, 1.05); 
+        transform: scale(1.15, 1.05);
       }
     }
   }

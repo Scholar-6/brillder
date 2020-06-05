@@ -1,5 +1,6 @@
-@import "_variables";
-@import "../../questionVariables";
+@import '../../../../../../assets/sass/partials/variables';
+@import '../../../../../../assets/sass/partials/mixins';
+@import '../../../../../../assets/sass/partials/extensions';
 
 .categorise-build {
   text-align: center;

@@ -1,4 +1,6 @@
-@import "_variables";
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
 .play-dashboard-redirect-dropdown {
   .MuiPaper-root {
@@ -161,77 +163,4 @@
 }
 
 
-@media only screen and (min-width: 1280px) {
-}
 
-@media only screen and (max-width: 1279px) and (min-width: 960px) {
-  .bricks-list-page {
-    .bricks-sort {
-      .sort-and-search-row {
-        .sort-bricks-by {
-          font-size: 12px;
-          .sort-by {
-            padding-top: 5px;
-          }
-          .sort-element {
-            padding-top: 6px;
-            font-size: 12px;
-          }
-
-          .expanded-icon {
-            height: 24px !important;
-            width: 24px !important;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 959px) and (min-width: 600px) {
-  .bricks-list-page {
-    .bricks-sort {
-      .sort-and-search-row {
-        .sort-bricks-by {
-          font-size: 9px;
-          .sort-by {
-            padding-top: 1px;
-          }
-          .sort-element {
-            padding-top: 2px;
-            font-size: 8px;
-          }
-
-          .expanded-icon {
-            height: 12px !important;
-            width: 12px !important;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 599px) {
-  .bricks-list-page {
-    .bricks-sort {
-      .sort-and-search-row {
-        .sort-bricks-by {
-          font-size: 7px;
-          .sort-by {
-            padding-top: 1px;
-          }
-          .sort-element {
-            padding-top: 2px;
-            font-size: 7px;
-          }
-
-          .expanded-icon {
-            height: 10px !important;
-            width: 10px !important;
-          }
-        }
-      }
-    }
-  }
-}

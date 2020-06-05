@@ -1,4 +1,6 @@
-@import "_variables";
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 $phone-border-color: $tab-grey;
 $background-color: white;
@@ -140,7 +142,7 @@ $background-color: white;
       width: 100%;
       border-collapse: collapse;
     }
-    
+
     table, td, th {
       border: 1px solid $dark-blue;
     }
@@ -166,7 +168,7 @@ $background-color: white;
       margin-right: 0;
       overflow-x: auto;
     }
-    
+
     table, td, th {
       border: 1px solid $dark-blue;
     }

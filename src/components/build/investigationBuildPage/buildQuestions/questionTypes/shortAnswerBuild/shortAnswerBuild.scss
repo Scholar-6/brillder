@@ -1,5 +1,6 @@
-@import "_variables";
-@import "../../questionVariables";
+@import '../../../../../../assets/sass/partials/variables';
+@import '../../../../../../assets/sass/partials/mixins';
+@import '../../../../../../assets/sass/partials/extensions';
 
 .short-answer-build {
   text-align: center;
@@ -30,7 +31,7 @@
     height: 30vh;
     left: 50.8% !important;
     width: 20vw;
-    
+
     .MuiSnackbarContent-root {
       text-align: justify;
       padding: 0 1.7vw 0.8vw 1vw;

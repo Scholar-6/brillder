@@ -1,4 +1,6 @@
-@import '_variables';
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
 .proposal-router {
   .beta-text {
@@ -21,11 +23,11 @@
   ::-webkit-input-placeholder { /* Edge */
     color: #aaa;
   }
-  
+
   :-ms-input-placeholder { /* Internet Explorer */
     color: #aaa;
   }
-  
+
   ::placeholder {
     color: #aaa;
   }
