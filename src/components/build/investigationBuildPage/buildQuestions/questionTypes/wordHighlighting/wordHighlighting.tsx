@@ -76,6 +76,22 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     return words;
   }
 
+  const disabledEmptyWord = (word: BuildWord) => {
+    if (!word.text) {
+      word.notSelectable = true;
+    }
+  }
+
+  const addBreakLineInTheEnd = (
+    wordParts: string[], mainWord: BuildWord, partWord: BuildWord, index: number
+  ) => {
+    if (index === wordParts.length - 1) {
+      if (mainWord.isBreakLine) {
+        partWord.isBreakLine = true;
+      }
+    }
+  }
+
   const splitByCommas = (words: BuildWord[]) => {
     let finalWords:BuildWord[] = [];
     words.forEach(word => {
@@ -83,14 +99,12 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
       if (commas.length >= 2) {
         for (let index in commas) {
           let loopWord = { text: commas[index] } as BuildWord;
-          if (parseInt(index) >= 1) {
+          let intIndex = parseInt(index);
+          if (intIndex >= 1) {
             finalWords.push({text: ',', notSelectable: true} as BuildWord);
           }
-          if (parseInt(index) === commas.length - 1) {
-            if (word.isBreakLine) {
-              loopWord.isBreakLine = true;
-            }
-          }
+          addBreakLineInTheEnd(commas, word, loopWord, intIndex);
+          disabledEmptyWord(word);
           finalWords.push(loopWord);
         }
       } else {
