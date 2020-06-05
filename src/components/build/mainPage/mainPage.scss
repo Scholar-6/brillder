@@ -1,13 +1,7 @@
-@import "_variables";
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
-$col-blue: $light-blue;
-$border-radius: 2vw;
-
-$mobile-col-radius: 8vw;
-$mobile-col-color: $light-blue;
-$mobile-background: $dark-blue;
-$mobile-arrow-color: #96A0B6;
-  
 
 .mainPage {
   background: $dark-blue;
@@ -37,7 +31,7 @@ $mobile-arrow-color: #96A0B6;
         font-family: "Brandon Grotesque Thin";
         color: $orange;
       }
-        
+
     }
   }
 
@@ -96,7 +90,7 @@ $mobile-arrow-color: #96A0B6;
   }
 
   .zoom-item:hover {
-    transform: scale(1.4); 
+    transform: scale(1.4);
 
     .item-description {
       color: white;
@@ -128,7 +122,7 @@ $mobile-arrow-color: #96A0B6;
   .item-description {
     padding-left: 0.2vw;
     text-align: center;
-    font: 1.3vw 'Brandon Grotesque Light';
+    font: 1.3vw $font-family-light;
     letter-spacing: 0.27vw;
     color: #BFC5D2;
   }
@@ -261,7 +255,7 @@ $mobile-arrow-color: #96A0B6;
       text-align: center;
       padding-top: 0vh;
       margin-left: 2vw;
-      font: 3vh 'Brandon Grotesque Light';
+      font: 3vh $font-family-light;
       letter-spacing: 1.3vw;
       color: #BFC5D2;
     }

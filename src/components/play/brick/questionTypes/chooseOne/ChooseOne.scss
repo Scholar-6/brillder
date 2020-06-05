@@ -1,4 +1,6 @@
-@import '_variables';
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 .choose-one-live {
   .MuiButton-label {
@@ -41,7 +43,7 @@
       background: white;
     }
   }
-  
+
   .question-hint-global {
     margin-top: 10px;
   }

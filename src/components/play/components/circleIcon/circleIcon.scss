@@ -1,5 +1,7 @@
 
-@import "_variables";
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .tick-icon {
   font-size: 26px;

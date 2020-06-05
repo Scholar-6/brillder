@@ -73,9 +73,26 @@ $lighter-blue: #304775;
 $light-blue: #193266;
 $light-blue2: #193366;
 $dark-blue: #001C58;
+$left-grey: #E6E6ED;
 $grey: #B0B0AD;
 $light-grey: #F3F4F7;
 
+$base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5),
+  10px 10px 15px rgba(70, 70, 70, 0.12);
+
+$col-blue: $light-blue;
+$border-radius: 2vw;
+
+$main-panel-radius: 2vw;
+$left: 0.8vw;
+$right: 1.4vw;
+
+$mobile-col-radius: 8vw;
+$mobile-col-color: $light-blue;
+$mobile-background: $dark-blue;
+$mobile-arrow-color: #96A0B6;
+
+$font-family-light: 'Brandon Grotesque Light';
 $font-family-regular: 'Brandon Grotesque Regular';
 $font-family-bold: 'Brandon Grotesque Bold';
 $font-family-black: 'Brandon Grotesque Black';
@@ -94,6 +111,11 @@ $bin-size: 1.3vw;
 $left: 0.8vw;
 $right: 1.4vw;
 $answer-input-text-size: 1vw;
+
+$border-radius: 0.6vw;
+$question-radius: 0.6vw;
+
+$answer-height: 3.9vw;
 
 $multiSpinnerColors: #34cc80, #ec5c49, #f6bb67, #ffffff;
 $multiSpinnerDia: 175.6449737548828;

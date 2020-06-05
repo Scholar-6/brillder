@@ -90,21 +90,19 @@ code {
 
 .sorted-row {
 	margin-top: 3.5vh;
-	height: 63.5vh;
-	height: 87.1vh;
+	height: 86vh;
 	padding-left: 0;
 	padding-right: 0;
 	.sort-and-filter-container {
 		color: white;
 		height: 86vh;
-		> div {
-			border-top-right-radius: $main-panel-radius;
-			background: $light-blue;
-		}
+		max-width: calc(25% - 1vw);
+		flex-basis: calc(25% - 1vw);
+		margin-right: 1vw;
+		border-top-right-radius: $main-panel-radius;
+		background: $light-blue;
 		.sort-box {
 			width: 100%;
-			border-top-right-radius: $main-panel-radius;
-			background: $light-blue;
 			.sort-by-box {
 				padding: 1.4vw;
 				.sort-header {
@@ -131,14 +129,14 @@ code {
 							}
 						}
 						.MuiFormControlLabel-label {
-							font: 1.05vw 'Brandon Grotesque Light' !important;
+							font: 1.05vw $font-family-light !important;
 							letter-spacing: 0.06vw;
 						}
 					}
 					.MuiGrid-container {
 						.filter-radio {
 							padding: 0 !important;
-							margin-right: 0.15vw !important;
+							margin-right: 0.5vw !important;
 							svg {
 								color: $orange;
 								padding: 0 !important;
@@ -158,7 +156,7 @@ code {
 					.MuiFormControlLabel-root {
 						padding: 0 !important;
 						margin: 0;
-						margin-right: 0.15vw;
+						margin-right: 0.5vw;
 					}
 					.MuiFormControlLabel-label {
 						font: 1.05vw $font-family-regular !important;
@@ -173,7 +171,7 @@ code {
 						color: $dark-blue;
 						background: white;
 						line-height: 1;
-						padding: 0.14vh 0.68vw;
+						padding: 0.25vw 0.6vw;
 						border-radius: 0.65vw;
 						font-size: 1vw;
 						right: 1.2vw;
@@ -331,7 +329,7 @@ code {
 				.published-count {
 					font-size: 1.05vw;
 					text-align: center;
-					font-family: 'Brandon Grotesque Light';
+					font-family: $font-family-light;
 				}
 				.MuiGrid-container {
 					margin-bottom: 0.2vw;
@@ -344,7 +342,7 @@ code {
 				width: 100% !important;
 				> .filter-radio {
 					padding: 0 !important;
-					margin-right: 0.15vw;
+					margin-right: 0.5vw;
 					svg {
 						height: 2.2vh;
 						width: 2.2vh;
@@ -352,7 +350,7 @@ code {
 					}
 				}
 				.MuiFormControlLabel-label {
-					font: 1.05vw 'Brandon Grotesque Light' !important;
+					font: 1.05vw $font-family-light !important;
 					letter-spacing: 0.06vw;
 				}
 				.custom-color svg {
@@ -361,222 +359,221 @@ code {
 			}
 		}
 	}
-}
-
-.brick-row-container {
-	position: relative;
-	border-top-left-radius: $main-panel-radius;
-	margin-left: 0.5vw;
-	// margin-left: 1.5vw;
-	padding-left: 1.18vw;
-	// padding-left: 1.98vw;
-	background: $light-grey;
-	height: 100%;
-	// height: 86vh;
-	.brick-row-title {
-		padding-left: 1.15vw;
-		// padding-left: 0.35vw;
-		color: $dark-blue;
-		padding-top: 2.3vh;
-		// padding-top: 2vh;
-		padding-bottom: 0;
-		line-height: 1;
-		font-size: 5.2vw;
-		letter-spacing: 1.05vw;
-		font-family: $font-family-black;
-		// font-family: 'Brandon Grotesque Black';
-	}
-	.bricks-list-container {
-		height: 65vh;
-		overflow-y: auto;
-		.main-brick-container {
-			position: relative;
-			padding-left: 0.8vw;
-			width: 100%;
-			.brick-container {
-				position: relative;
-				padding-right: 0;
-				height: $min-brick-height;
-				margin-top: 0.85vw;
-				margin-bottom: 0vw;
-				font-family: $font-family-regular;
-				width: 100%;
-				text-align: left;
-				&:hover {
-					color: #ffffff;
-				}
-				@media only screen and (max-width: 599px) {
-					.brick-container {
-						text-align: center;
-					}
-				}
-				h3 {
-					color: black;
-					padding: 5px;
-					font-size: 16px;
-					line-height: 28px;
-				}
-
-				h2 {
-					font-size: 24px;
-				}
-				h1 {
-					color: black;
-					padding: 5px;
-					line-height: 48px;
-					text-transform: capitalize;
-					font-size: 32px;
-				}
-				.MuiExpansionPanel-root {
-					background: $light-grey;
-				}
-
-				.MuiExpansionPanel-root.Mui-expanded {
-					margin: 0 !important;
-					margin-bottom: 16px !important;
-				}
-				.absolute-container {
-					border-radius: $brick-radius;
-					color: $dark-blue;
-					width: 95%;
-					text-align: left;
-					position: absolute;
-					height: $min-brick-height;
-					&.brick-row-0,
-					&.brick-row-1,
-					&.brick-row-2,
-					&.brick-row-3 {
-						.expended-brick-info {
-							border-top-left-radius: 0 !important;
-						}
-						.left-brick-roller {
-							position: absolute;
-							top: 1.5vh;
-							left: 0.15vw;
-							> div {
-								height: 2.1vw;
-								width: 1.9vw;
-								background-size: 100% 100%;
-								background-repeat: no-repeat;
-								background-position: center;
-								background-image: url(/images/roller-green.png);
-							}
-						}
-						.left-brick-circle {
-							position: absolute;
-							top: 1.3vh;
-							> div {
-								height: 2.1vw;
-								width: 2.1vw;
-								border-radius: 20vw;
-								background-color: $grey;
-							}
-						}
-					}
-					&.brick-row-4,
-					&.brick-row-5 {
-						bottom: 0;
-						.expended-brick-info {
-							border-bottom-left-radius: 0 !important;
-						}
-					}
-				}
-				.edit-button {
-					text-align: center;
-					padding-bottom: 8px;
-				}
-				.right-color-column {
-					border-top-right-radius: $brick-radius;
-					border-bottom-right-radius: $brick-radius;
-					background: white;
-					position: absolute;
-					right: 0;
-					height: 100%;
-					min-height: $min-brick-height;
-					width: 3.3%;
-				}
-			}
-		}
-	}
-	.users-table {
-		border: none;
-		width: 100%;
-		thead {
-			background: $tab-grey;
+	.brick-row-container {
+		position: relative;
+		border-top-left-radius: $main-panel-radius;
+		padding-left: 1.18vw;
+		margin-left: 1vw;
+		background: $light-grey;
+		max-width: calc(75% - 1vw);
+		flex-basis: calc(75% - 1vw);
+		height: 86vh;
+		.brick-row-title {
+			padding-left: 1.15vw;
+			// padding-left: 0.35vw;
 			color: $dark-blue;
+			padding-top: 2.3vh;
+			// padding-top: 2vh;
+			padding-bottom: 0;
+			line-height: 1;
+			font-size: 5.2vw;
+			letter-spacing: 1.05vw;
 			font-family: $font-family-black;
-			font-size: 1.3vw;
-			letter-spacing: 0.25vw;
-			tr {
-				th {
-					padding-top: 0.6vh;
-					padding-bottom: 0.6vh;
+			// font-family: 'Brandon Grotesque Black';
+		}
+		.bricks-list-container {
+			height: 65vh;
+			overflow-y: auto;
+			.main-brick-container {
+				position: relative;
+				padding-left: 0.8vw;
+				width: 100%;
+				.brick-container {
+					position: relative;
+					padding-right: 0;
+					height: $min-brick-height;
+					margin-top: 0.85vw;
+					margin-bottom: 0vw;
+					font-family: $font-family-regular;
+					width: 100%;
 					text-align: left;
-					padding-left: 0.5vw;
+					&:hover {
+						color: #ffffff;
+					}
+					@media only screen and (max-width: 599px) {
+						.brick-container {
+							text-align: center;
+						}
+					}
+					h3 {
+						color: black;
+						padding: 5px;
+						font-size: 16px;
+						line-height: 28px;
+					}
 
-					.sort-button {
-						cursor: pointer;
-						margin-top: 0.3vh;
-						margin-left: 0.4vw;
-						height: 1.5vw;
-						width: 1.5vw;
+					h2 {
+						font-size: 24px;
+					}
+					h1 {
+						color: black;
+						padding: 5px;
+						line-height: 48px;
+						text-transform: capitalize;
+						font-size: 32px;
+					}
+					.MuiExpansionPanel-root {
+						background: $light-grey;
+					}
+
+					.MuiExpansionPanel-root.Mui-expanded {
+						margin: 0 !important;
+						margin-bottom: 16px !important;
+					}
+					.absolute-container {
+						border-radius: $brick-radius;
+						color: $dark-blue;
+						width: 95%;
+						text-align: left;
+						position: absolute;
+						height: $min-brick-height;
+						&.brick-row-0,
+						&.brick-row-1,
+						&.brick-row-2,
+						&.brick-row-3 {
+							.expended-brick-info {
+								border-top-left-radius: 0 !important;
+							}
+							.left-brick-roller {
+								position: absolute;
+								top: 1.5vh;
+								left: 0.15vw;
+								> div {
+									height: 2.1vw;
+									width: 1.9vw;
+									background-size: 100% 100%;
+									background-repeat: no-repeat;
+									background-position: center;
+									background-image: url(/images/roller-green.png);
+								}
+							}
+							.left-brick-circle {
+								position: absolute;
+								top: 1.3vh;
+								> div {
+									height: 2.1vw;
+									width: 2.1vw;
+									border-radius: 20vw;
+									background-color: $grey;
+								}
+							}
+						}
+						&.brick-row-4,
+						&.brick-row-5 {
+							bottom: 0;
+							.expended-brick-info {
+								border-bottom-left-radius: 0 !important;
+							}
+						}
+					}
+					.edit-button {
+						text-align: center;
+						padding-bottom: 8px;
+					}
+					.right-color-column {
+						border-top-right-radius: $brick-radius;
+						border-bottom-right-radius: $brick-radius;
+						background: white;
+						position: absolute;
+						right: 0;
+						height: 100%;
+						min-height: $min-brick-height;
+						width: 3.3%;
 					}
 				}
-
-				.subject-title {
-					width: 5%;
-				}
-				.user-full-name {
-					width: 30%;
-				}
-				.email-column {
-					width: 31.3%;
-				}
-				.edit-button-column {
-					width: 2.5vw;
-				}
 			}
 		}
-		tr.user-row {
-			height: 4.5vh;
-			td {
-				padding-left: 0.5vw;
+		.users-table {
+			border: none;
+			width: calc(100% + 1.18vw);
+			margin-left: -1.18vw;
+			thead {
+				background: $tab-grey;
 				color: $dark-blue;
+				font-family: $font-family-black;
 				font-size: 1.3vw;
-				padding-top: 0;
+				letter-spacing: 0.25vw;
+				tr {
+					th {
+						padding-top: 0.6vh;
+						padding-bottom: 0.6vh;
+						text-align: left;
+						padding-left: 0.5vw;
 
-				.edit-button {
-					cursor: pointer;
-					background-size: 100% 100%;
-					background-repeat: no-repeat;
-					background-position: center;
-					background-image: url(/images/edit.png);
-					height: 1.85vw;
-					width: 1.85vw;
+						.sort-button {
+							cursor: pointer;
+							margin-top: 0.3vh;
+							margin-left: 0.4vw;
+							height: 1.5vw;
+							width: 1.5vw;
+						}
+					}
+
+					.subject-title {
+						width: 5%;
+					}
+					.user-full-name {
+						width: 30%;
+					}
+					.email-column {
+						width: 31.3%;
+					}
+					.edit-button-column {
+						width: 2.5vw;
+					}
 				}
 			}
-			.activate-button-container {
-				padding-left: 2vw;
+			tr.user-row {
+				height: 4.5vh;
+				td {
+					padding-left: 0.5vw;
+					color: $dark-blue;
+					font-size: 1.3vw;
+					padding-top: 0;
+
+					.edit-button {
+						cursor: pointer;
+						background-size: 100% 100%;
+						background-repeat: no-repeat;
+						background-position: center;
+						background-image: url(/images/edit.png);
+						height: 1.85vw;
+						width: 1.85vw;
+					}
+				}
+				.activate-button-container {
+					padding-left: 2vw;
+				}
+			}
+			tr.user-row:nth-child(even) {
+				background: $tab-grey;
+			}
+			.user-last-name {
+				font-family: $font-family-bold;
 			}
 		}
-		tr.user-row:nth-child(even) {
-			background: $tab-grey;
-		}
-		.user-last-name {
-			font-family: $font-family-bold;
-		}
-	}
-	.role-description {
-		width: 100%;
-		text-align: right;
-		font-size: 0.8vw;
-		margin-top: 0.6vh;
-		margin-right: 6vw;
-		color: $dark-blue;
-		letter-spacing: 0.015vw;
+		.role-description {
+			width: 100%;
+			text-align: right;
+			font-size: 0.8vw;
+			margin-top: 0.6vh;
+			margin-right: 6vw;
+			color: $dark-blue;
+			letter-spacing: 0.015vw;
 
-		.bold {
-			font-family: $font-family-bold;
+			.bold {
+				font-family: $font-family-bold;
+			}
 		}
 	}
 }
@@ -588,236 +585,11 @@ code {
 	padding-right: $right;
 }
 
-.brick-hover {
-	position: absolute;
-	z-index: 2;
-	left: 0;
-	width: 100%;
-	height: 32vh !important;
-	.right-color-column {
-		width: 0;
-	}
-}
-
 .your-bricks-list {
 	position: relative;
 	min-height: 70%;
 	padding-left: $left;
 	padding-right: $right;
-}
-.bricks-list-page {
-	overflow: hidden;
-	background: $dark-blue;
-	height: 100%;
-	width: 100%;
-	font-family: $font-family-regular;
-	.bricks-upper-part {
-		position: relative;
-		min-height: 100%;
-		background: $dark-blue;
-
-		h3 {
-			color: white;
-			font-family: $font-family-regular;
-			font-weight: normal;
-			margin-top: 2.5vh;
-			margin-left: 1.05vw;
-			margin-bottom: 1vh;
-			letter-spacing: 0.27vw;
-			font-size: 1.3vw;
-		}
-		.bricks-pagination {
-			position: absolute;
-			bottom: 0;
-			height: 7.5vh;
-			font-size: 0.9vw;
-			color: $dark-blue;
-
-			.grey {
-				color: $grey;
-			}
-
-			.left-pagination {
-				padding-top: 0.35vh;
-				padding-left: 0.15vw;
-				line-height: 1.4;
-			}
-		}
-
-		.bottom-next-button {
-			bottom: 1vh;
-			color: white;
-			> div {
-				position: relative;
-
-				.prev-button {
-					position: absolute;
-					top: -0.6vh;
-					margin-left: 2.8vh;
-					left: -4vw;
-				}
-
-				.next-button {
-					position: absolute;
-					left: -4vw;
-					top: 1vh;
-				}
-
-				.active:hover {
-					cursor: pointer;
-					color: $dark-blue !important;
-				}
-
-				svg {
-					height: 4.7vh;
-					width: 4.7vh;
-					color: $grey;
-				}
-			}
-		}
-	}
-	.bricks-upper-part {
-		position: relative;
-		min-height: 100%;
-		background: $dark-blue;
-
-		.bricks-pagination {
-			position: absolute;
-			bottom: 0;
-			height: 9vh;
-			font-size: 0.9vw;
-			color: $dark-blue;
-
-			.grey {
-				color: $grey;
-			}
-
-			.left-pagination {
-				padding-top: 0.35vh;
-				padding-left: 0.15vw;
-				line-height: 1.4;
-			}
-		}
-
-		.bottom-next-button {
-			bottom: 1vh;
-			color: white;
-			> div {
-				position: relative;
-
-				.prev-button {
-					position: absolute;
-					top: -0.6vh;
-					margin-left: 2.8vh;
-					left: -4vw;
-				}
-
-				.next-button {
-					position: absolute;
-					left: -4vw;
-					top: 1vh;
-				}
-
-				.active:hover {
-					cursor: pointer;
-					color: $dark-blue !important;
-				}
-
-				svg {
-					height: 4.7vh;
-					width: 4.7vh;
-					color: $grey;
-				}
-			}
-		}
-	}
-	.bricks-upper-part {
-		position: relative;
-		min-height: 100%;
-		background: $dark-blue;
-
-		.bricks-pagination {
-			position: absolute;
-			bottom: 0;
-			height: 9vh;
-			font-size: 0.9vw;
-			color: $dark-blue;
-
-			.grey {
-				color: $grey;
-			}
-
-			.left-pagination {
-				padding-top: 0.35vh;
-				padding-left: 0.15vw;
-				line-height: 1.4;
-			}
-		}
-
-		.bottom-next-button {
-			bottom: 1vh;
-			color: white;
-			> div {
-				position: relative;
-
-				.prev-button {
-					position: absolute;
-					top: -0.6vh;
-					margin-left: 2.8vh;
-					left: -4vw;
-				}
-
-				.next-button {
-					position: absolute;
-					left: -4vw;
-					top: 1vh;
-				}
-
-				.active:hover {
-					cursor: pointer;
-					color: $dark-blue !important;
-				}
-
-				svg {
-					height: 4.7vh;
-					width: 4.7vh;
-					color: $grey;
-				}
-			}
-		}
-	}
-	h3 {
-		color: white;
-		font-family: $font-family-regular;
-		font-weight: normal;
-		margin-top: 2.5vh;
-		margin-left: 1.05vw;
-		margin-bottom: 1vh;
-		letter-spacing: 0.27vw;
-		font-size: 1.3vw;
-	}
-
-	.brick-hover {
-		left: -0.8vw;
-		height: 31.1vh !important;
-		position: absolute;
-		z-index: 2;
-		width: 95%;
-	}
-
-	.bigger-hover:hover {
-		height: 35.4vh;
-		.hover-icons-row {
-			height: 11.2vh;
-		}
-	}
-
-	.next-bricks {
-		position: absolute;
-		right: 0;
-		color: white;
-		top: 2vh;
-	}
 }
 
 .hover-icons-row {
@@ -850,6 +622,80 @@ code {
 		height: 3.7vh;
 		bottom: 1vh;
 		padding-right: -31vw;
+	}
+}
+@media only screen and (min-width: 1280px) {
+}
+
+@media only screen and (max-width: 1279px) and (min-width: 960px) {
+	.bricks-list-page {
+		.bricks-sort {
+			.sort-and-search-row {
+				.sort-bricks-by {
+					font-size: 12px;
+					.sort-by {
+						padding-top: 5px;
+					}
+					.sort-element {
+						padding-top: 6px;
+						font-size: 12px;
+					}
+
+					.expanded-icon {
+						height: 24px !important;
+						width: 24px !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 959px) and (min-width: 600px) {
+	.bricks-list-page {
+		.bricks-sort {
+			.sort-and-search-row {
+				.sort-bricks-by {
+					font-size: 9px;
+					.sort-by {
+						padding-top: 1px;
+					}
+					.sort-element {
+						padding-top: 2px;
+						font-size: 8px;
+					}
+
+					.expanded-icon {
+						height: 12px !important;
+						width: 12px !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 599px) {
+	.bricks-list-page {
+		.bricks-sort {
+			.sort-and-search-row {
+				.sort-bricks-by {
+					font-size: 7px;
+					.sort-by {
+						padding-top: 1px;
+					}
+					.sort-element {
+						padding-top: 2px;
+						font-size: 7px;
+					}
+
+					.expanded-icon {
+						height: 10px !important;
+						width: 10px !important;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -982,18 +828,6 @@ h3 {
 	position: absolute;
 	z-index: 2;
 	width: 95%;
-}
-
-.brick-hover {
-	left: -0.8vw;
-	height: 31.1vh !important;
-}
-
-.bigger-hover:hover {
-	height: 35.4vh;
-	.hover-icons-row {
-		height: 11.2vh;
-	}
 }
 
 .next-bricks {

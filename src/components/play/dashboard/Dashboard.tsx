@@ -570,16 +570,14 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             <Grid container item xs={3} className="sort-and-filter-container">
               {this.renderSortAndFilterBox()}
             </Grid>
-            <Grid item xs={9} style={{ position: "relative" }}>
-              <div className="brick-row-container">
-                <div className="brick-row-title">{this.renderTitle()}</div>
-                <div className="bricks-list-container">
-                  <Grid container direction="row">
-                    {this.renderSortedBricks()}
-                  </Grid>
-                </div>
-                {this.renderPagination()}
-              </div>
+            <Grid item xs={9} className="brick-row-container">
+							<div className="brick-row-title">{this.renderTitle()}</div>
+							<div className="bricks-list-container">
+								<Grid container direction="row">
+									{this.renderSortedBricks()}
+								</Grid>
+							</div>
+							{this.renderPagination()}
             </Grid>
           </Grid>
         </div>
