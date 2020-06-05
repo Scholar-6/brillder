@@ -15,22 +15,31 @@
     }
   }
 
-  .hightlight-area {
-    width: 98%;
-    background: white;
+  .hightlight-area, textarea {
     text-align: left;
     padding: 0;
-    margin: 0;
-    border-radius: 0.4vw;
+    margin: 0 !important;
+    width: 98%;
     padding-left: 1%;
     padding-right: 1%;
-    font-size: 1vw;
-    line-height: 1.45;
-    min-height: 14.5vh;
     padding-top: 0.5vh;
+    min-height: 10vh;
+    font-size: 1vw !important;
+    font-family: $font-family-regular;
+    border-radius: 0.4vw !important;
+    line-height: 1.45;
+  }
+
+  textarea {
+    border: none;
+  }
+
+  .hightlight-area {
+    background: white;
     padding-bottom: 0.4vh;
-    margin-top: 0.1vw;
-    margin-bottom: 0.4vw;
+    min-height: 9.6vh;
+    margin-top: 0.1vw !important;
+    margin-bottom: 1vh !important;
 
     .word {
       cursor: pointer;
@@ -42,19 +51,6 @@
     .word.active {
       background: $light-green;
     }
-  }
-
-  textarea {
-    font-family: $font-family-regular;
-    width: 98%;
-    padding: 0;
-    margin: 0 !important;
-    padding-left: 1%;
-    padding-right: 1%;
-    font-size: 1vw !important;
-    border-radius: 0.4vw !important;
-    padding-top: 0.5vh;
-    border: none;
   }
 
   .input-container {
