@@ -1,5 +1,6 @@
-@import "_variables";
-$border-radius: 0.6vw;
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .synthesis-page {
   height: 90%;
@@ -37,7 +38,7 @@ $border-radius: 0.6vw;
         border-top-left-radius: 0.6vw !important;
         border-top-right-radius: 0.6vw !important;
         font-size: 0.8vw;
-        
+
         .ck-toolbar__items {
           height: 5vh;
           .ck-icon {

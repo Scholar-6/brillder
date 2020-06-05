@@ -1,4 +1,6 @@
-@import '_variables';
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 .word-highlighting-play {
   font-size: 1rem;
@@ -15,4 +17,3 @@
     }
   }
 }
-  

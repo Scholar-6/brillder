@@ -1,4 +1,6 @@
-@import '_variables';
+@import '../../../../../../assets/sass/partials/variables';
+@import '../../../../../../assets/sass/partials/mixins';
+@import '../../../../../../assets/sass/partials/extensions';
 
 
 .react-recording {
@@ -12,11 +14,11 @@
     border: 2px dashed #eee;
     background: #FAFAFA;
   }
-  
+
   .dropzone:hover {
       border: 2px dashed #6BB6F1;
   }
-  
+
   .dropzone.disabled {
       background: #EBEBE4;
   }
@@ -33,7 +35,7 @@
     text-transform: none;
     padding: 0.3vh 2vw !important;
   }
-  
+
   .round-circle {
     font-size: 3vh;
     border-radius: 2vh;

@@ -1,4 +1,6 @@
-@import "_variables";
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 .brief-page {
   font-family: $font-family-regular;
@@ -92,7 +94,7 @@
           margin-top: 0.5vh !important;
           margin-bottom: 0.5vh !important;
         }
-      } 
+      }
     }
   }
 

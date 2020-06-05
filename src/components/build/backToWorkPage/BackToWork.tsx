@@ -797,16 +797,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           />
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
-              <div
-                style={{ width: "100%" }}
-                className="sort-and-filter-inner-container"
-              >
-                {this.renderIndexesBox()}
-                {this.renderSortAndFilterBox()}
-              </div>
+							{this.renderIndexesBox()}
+							{this.renderSortAndFilterBox()}
             </Grid>
-            <Grid item xs={9} style={{ position: "relative" }}>
-              <div className="brick-row-container">
+            <Grid item xs={9} className="brick-row-container">
                 <div className="brick-row-title">{this.renderTitle()}</div>
                 <div className="bricks-list-container">
                   <Grid container direction="row" className="bricks-list">
@@ -814,7 +808,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                   </Grid>
                 </div>
                 {this.renderPagination()}
-              </div>
             </Grid>
           </Grid>
         </div>

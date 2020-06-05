@@ -1,4 +1,6 @@
-@import '_variables';
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 .synthesis-preview {
   width: 100%;
@@ -39,7 +41,7 @@
     width: 100%;
     border-collapse: collapse;
   }
-  
+
   table, td, th {
     border: 1px solid $dark-blue;
   }

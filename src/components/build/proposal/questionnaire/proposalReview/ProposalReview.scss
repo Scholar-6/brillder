@@ -1,9 +1,11 @@
-@import "_variables";
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 .proposal-page {
   height: 100% !important;
   color: $dark-blue;
-  
+
   .red-right-block {
     position: fixed;
     right: 0;

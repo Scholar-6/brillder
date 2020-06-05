@@ -1,11 +1,13 @@
-@import "_variables";
-$question-radius: 0.6vw;
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
+
 
 .build-question-page {
   position: relative;
   font-family: $font-family-regular;
   background: white;
- 
+
   border-bottom-left-radius: $question-radius;
   border-bottom-right-radius: $question-radius;
 
@@ -80,8 +82,8 @@ $question-radius: 0.6vw;
     font-size: $base-md-text-size;
     font-family: $font-family-regular;
     div {
-      padding: 0.8vw 1.5vw 0.8vw 0.6vw;      
-    }  
+      padding: 0.8vw 1.5vw 0.8vw 0.6vw;
+    }
 
     svg {
       top: auto !important;

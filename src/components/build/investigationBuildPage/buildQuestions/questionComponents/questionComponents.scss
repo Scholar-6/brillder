@@ -1,4 +1,6 @@
-@import "_variables";
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 .questions {
   width: 100%;
@@ -6,7 +8,7 @@
   .drop-box {
     margin-top: 0.4vh;
     border-radius: $global-drop-border-radius;
-    
+
     background-color: $tab-grey;
   }
 
@@ -25,12 +27,12 @@
       letter-spacing: 0.3vw;
       border-radius: $global-drop-border-radius;
     }
-    margin-bottom: 10px;  
+    margin-bottom: 10px;
   }
-  
+
   @media only screen and (min-width: 1280px)  {
   }
-  
+
   @media only screen and (max-width: 1279px) and (min-width: 960px)  {
     .add-dropbox {
       .add-dropbox-button {
@@ -38,7 +40,7 @@
       }
     }
   }
-  
+
   @media only screen and (max-width: 959px) and (min-width: 600px)  {
     .add-dropbox {
       .add-dropbox-button {
@@ -46,7 +48,7 @@
       }
     }
   }
-  
+
   @media only screen and (max-width: 599px) {
     .add-dropbox {
       .add-dropbox-button {
