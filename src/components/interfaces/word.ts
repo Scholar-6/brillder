@@ -1,6 +1,9 @@
 export enum SpecialSymbols {
   LineFeed = 10,
   Space = 32,
+
+  // unselectable symbols
+  Comma = 44,
 }
 
 export interface Word {

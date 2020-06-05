@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import EditIcon from '@material-ui/icons/Edit';
+import { Key } from 'ts-keycode-enum';
 
 import './wordHighlighting.scss'
 import { UniqueComponentProps } from '../types';
@@ -41,26 +42,70 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     return text.split(String.fromCharCode(charCode));
   }
 
-  const prepareWords = (text: string) => {
-    if (!text) {
-      return [];
-    }
-    let splited = splitByChar(text, SpecialSymbols.LineFeed);
-    let lines = splited.map(line => {
+  const splitByLines = (text: string) => {
+    const splited = splitByChar(text, SpecialSymbols.LineFeed);
+    return splited.map(line => {
       return {text: line, isBreakLine: true, checked: false} as BuildWord;
     });
+  }
+
+  const addSpace = (words: BuildWord[], index: number) => {
+    if (index >= 1) {
+      words.push({text: "\u00A0", notSelectable: true} as BuildWord);
+    }
+  }
+
+  const addBreakLine = (lineStrings: string[], word: BuildWord, index: number) => {
+    if (index === lineStrings.length - 1) {
+      word.isBreakLine = true;
+    }
+  }
+
+  const splitByWords = (lines: BuildWord[]) => {
     let words: BuildWord[] = [];
     lines.forEach(line => {
-      let lineWords = splitByChar(line.text, SpecialSymbols.Space);
-      for (const index in lineWords) {
-        let word = {text: lineWords[index], checked: false} as BuildWord;
-        if (parseInt(index) === lineWords.length - 1) {
-          word.isBreakLine = true;
-        }
+      let lineStrings = splitByChar(line.text, SpecialSymbols.Space);
+      for (const index in lineStrings) {
+        let intIndex = parseInt(index);
+        addSpace(words, intIndex);
+        let word = {text: lineStrings[index], checked: false} as BuildWord;
+        addBreakLine(lineStrings, word, intIndex);
         words.push(word);
       }
     });
     return words;
+  }
+
+  const splitByCommas = (words: BuildWord[]) => {
+    let finalWords:BuildWord[] = [];
+    words.forEach(word => {
+      let commas = splitByChar(word.text, SpecialSymbols.Comma);
+      if (commas.length >= 2) {
+        for (let index in commas) {
+          let loopWord = { text: commas[index] } as BuildWord;
+          if (parseInt(index) >= 1) {
+            finalWords.push({text: ',', notSelectable: true} as BuildWord);
+          }
+          if (parseInt(index) === commas.length - 1) {
+            if (word.isBreakLine) {
+              loopWord.isBreakLine = true;
+            }
+          }
+          finalWords.push(loopWord);
+        }
+      } else {
+        finalWords.push(word);
+      }
+    });
+    return finalWords;
+  }
+
+  const prepareWords = (text: string) => {
+    if (!text) { return []; }
+    const lines = splitByLines(text);
+    const words = splitByWords(lines);
+    const wordsByCommas = splitByCommas(words);
+    return wordsByCommas;
   }
 
   const switchMode = () => {
@@ -83,7 +128,9 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
 
   const toggleLight = (index:number) => {
     if (locked) { return; }
-    state.words[index].checked = !state.words[index].checked;
+    const word = state.words[index];
+    if (word.notSelectable) { return; }
+    state.words[index].checked = !word.checked;
     update();
     save();
   }
@@ -108,13 +155,17 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   }
 
   const renderEditWord = (word: BuildWord, index: number) => {
+    let className = "word";
+    if (word.checked) {
+      className += " active";
+    }
+    if (word.notSelectable) {
+      className += " disabled";
+    }
+
     return (
-      <span>
-        <span
-          key={index}
-          className={word.checked ? "word active" : "word"}
-          onClick={() => {toggleLight(index)}}
-        >
+      <span key={index}>
+        <span className={className} onClick={() => {toggleLight(index)}}>
           {word.text}
         </span>
         {word.isBreakLine ? <br /> : ""}

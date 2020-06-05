@@ -77,14 +77,11 @@ class WordHighlighting extends CompComponent<
   renderWord(word: PlayWord, index: number) {
     if (this.props.isPreview) {
       return (
-        <span>
-          <span
-            key={index}
-            className={word.checked ? "active word" : "word"}
-          >
+        <span key={index}>
+          <span className={word.checked ? "active word" : "word"}>
             {word.text}
           </span>
-          {word.isBreakLine ? <br /> : " "}
+          {word.isBreakLine ? <br /> : ""}
         </span>
       );
     }
