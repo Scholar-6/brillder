@@ -101,6 +101,8 @@ code {
 		margin-right: 1vw;
 		border-top-right-radius: $main-panel-radius;
 		background: $light-blue;
+		flex-wrap: initial;
+    flex-direction: column;
 		.sort-box {
 			width: 100%;
 			.sort-by-box {
@@ -133,38 +135,34 @@ code {
 							letter-spacing: 0.06vw;
 						}
 					}
-					.MuiGrid-container {
-						.filter-radio {
-							padding: 0 !important;
-							margin-right: 0.5vw !important;
-							svg {
-								color: $orange;
-								padding: 0 !important;
-							}
-						}
+				}
+			}
+			.subject-filter,
+			.filter-container,
+			.subject-indexes-box,
+			.indexes-box {
+				.filter-radio,
+				.MuiFormControlLabel-root {
+					padding: 0 !important;
+					margin-right: 0.5vw !important;
+					svg {
+						width: 1.25vw;
+						height: 1.25vw;
+						color: $orange;
+						padding: 0 !important;
 					}
 				}
 			}
+			.subject-indexes-box,
 			.indexes-box {
 				.index-box {
 					cursor: pointer;
 					position: relative;
-					padding: 0 0 0 1.4vw;
-					margin-bottom: 0.84vh;
 					font-size: 1.1vw;
-					.filter-radio,
-					.MuiFormControlLabel-root {
-						padding: 0 !important;
-						margin: 0;
-						margin-right: 0.5vw;
-					}
+
 					.MuiFormControlLabel-label {
-						font: 1.05vw $font-family-regular !important;
+						font: 1.05vw $font-family-light !important;
 						letter-spacing: 0.06vw;
-					}
-					svg {
-						height: 2.2vh;
-						width: 2.2vh;
 					}
 					.right-index {
 						position: absolute;
@@ -174,7 +172,7 @@ code {
 						padding: 0.25vw 0.6vw;
 						border-radius: 0.65vw;
 						font-size: 1vw;
-						right: 1.2vw;
+						right: 1.4vw;
 						top: 50%;
 						transform: translateY(-50%);
 					}
@@ -219,6 +217,21 @@ code {
 					}
 				}
 			}
+			.subject-indexes-box {
+				margin: 1.4vw;
+				width: calc(100% - 2.8vw);
+				.index-box {
+					margin: 0 0 0.4vw 0;
+					.right-index {
+						right: 0;
+					}
+				}
+			}
+			.indexes-box {
+				.index-box {
+					padding: 0.53vw 0 0.53vw 1.4vw;
+				}
+			}
 			.back-sort-box {
 				margin-bottom: 1.4vh;
 				padding-left: 0vw;
@@ -249,11 +262,9 @@ code {
 				position: relative;
 				text-transform: uppercase;
 				background: $lighter-blue 0% 0% no-repeat padding-box;
-				padding: 0.7vw 1.4vw;
+				padding: 0.3vw 1.4vw;
 				font-size: 1.2vw;
-				line-height: 1.2;
 				letter-spacing: 0.22vw;
-				margin-bottom: 1vh;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
@@ -323,8 +334,9 @@ code {
 				}
 			}
 			.subjects-filter {
-				padding: 1.4vw;
-				height: 59.8vh;
+				margin: 1.4vw;
+				width: calc(100% - 2.8vw);
+				height: calc(100vh - 22vw);
 				overflow-y: auto;
 				.published-count {
 					font-size: 1.05vw;
@@ -332,7 +344,7 @@ code {
 					font-family: $font-family-light;
 				}
 				.MuiGrid-container {
-					margin-bottom: 0.2vw;
+					margin-bottom: 0.4vw;
 				}
 			}
 			.filter-container {
@@ -340,15 +352,6 @@ code {
 				align-items: center !important;
 				margin: 0 !important;
 				width: 100% !important;
-				> .filter-radio {
-					padding: 0 !important;
-					margin-right: 0.5vw;
-					svg {
-						height: 2.2vh;
-						width: 2.2vh;
-						color: $orange !important;
-					}
-				}
 				.MuiFormControlLabel-label {
 					font: 1.05vw $font-family-light !important;
 					letter-spacing: 0.06vw;

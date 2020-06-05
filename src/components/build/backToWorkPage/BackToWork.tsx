@@ -627,40 +627,40 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 				</button>
 			</div>
 			{this.state.filterExpanded === true ? (
-		   	<div className="indexes-box">
-				<div className="index-box color1">
-					<FormControlLabel
-						checked={this.state.filters.draft}
-						onClick={() => this.toggleDraftFilter()}
-						control={<Radio className={"filter-radio custom-color"} />}
-						label="Draft"/>
-					<div className="right-index">{draft}</div>
+		   	<div className="subject-indexes-box">
+					<div className="index-box color1">
+						<FormControlLabel
+							checked={this.state.filters.draft}
+							onClick={() => this.toggleDraftFilter()}
+							control={<Radio className={"filter-radio custom-color"} />}
+							label="Draft"/>
+						<div className="right-index">{draft}</div>
+					</div>
+					<div className="index-box color2">
+						<FormControlLabel
+							checked={this.state.filters.review}
+							onClick={() => this.toggleReviewFilter()}
+							control={<Radio className={"filter-radio custom-color"} />}
+							label="Submitted for Review"/>
+						<div className="right-index">{review}</div>
+					</div>
+					<div className="index-box color3">
+						<FormControlLabel
+							checked={this.state.filters.build}
+							onClick={() => this.toggleBuildFilter()}
+							control={<Radio className={"filter-radio custom-color"} />}
+							label="Build in Progress"/>
+						<div className="right-index">{build}</div>
+					</div>
+					<div className="index-box color4">
+						<FormControlLabel
+							checked={this.state.filters.publish}
+							onClick={() => this.togglePublishFilter()}
+							control={<Radio className={"filter-radio custom-color"} />}
+							label="Published"/>
+						<div className="right-index">{publish}</div>
+					</div>
 				</div>
-				<div className="index-box color2">
-					<FormControlLabel
-						checked={this.state.filters.review}
-						onClick={() => this.toggleReviewFilter()}
-						control={<Radio className={"filter-radio custom-color"} />}
-						label="Submitted for Review"/>
-					<div className="right-index">{review}</div>
-				</div>
-				<div className="index-box color3">
-					<FormControlLabel
-						checked={this.state.filters.build}
-						onClick={() => this.toggleBuildFilter()}
-						control={<Radio className={"filter-radio custom-color"} />}
-						label="Build in Progress"/>
-					<div className="right-index">{build}</div>
-				</div>
-				<div className="index-box color4">
-					<FormControlLabel
-						checked={this.state.filters.publish}
-						onClick={() => this.togglePublishFilter()}
-						control={<Radio className={"filter-radio custom-color"} />}
-						label="Published"/>
-					<div className="right-index">{publish}</div>
-				</div>
-			</div>
 			) : (
 			""
 			)}
