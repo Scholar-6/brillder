@@ -581,17 +581,15 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             <Grid container item xs={3} className="sort-and-filter-container">
               {this.renderSortAndFilterBox()}
             </Grid>
-            <Grid item xs={9} style={{position: 'relative'}}>
-              <div className="brick-row-container">
-                <div className="brick-row-title">
-                  ALL USERS
-                </div>
-                <Grid container direction="row">
-                  {this.renderUsers()}
-                  {this.renderRoleDescription()}
-                </Grid>
-                {this.renderPagination()}
-              </div>
+            <Grid item xs={9} className="brick-row-container">
+							<div className="brick-row-title">
+								ALL USERS
+							</div>
+							<Grid container direction="row">
+								{this.renderUsers()}
+								{this.renderRoleDescription()}
+							</Grid>
+							{this.renderPagination()}
             </Grid>
           </Grid>
         </div>

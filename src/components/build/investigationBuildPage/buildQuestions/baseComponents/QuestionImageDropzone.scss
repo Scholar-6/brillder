@@ -1,4 +1,6 @@
-@import '_variables';
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 .question-image-drop {
   position: absolute;
@@ -32,14 +34,14 @@
   .drop-placeholder {
     height: 10%;
   }
-  
+
   .dropzone:hover {
     color: $orange;
     .plus-image {
       background: $orange;
     }
   }
-  
+
   .dropzone.disabled {
     background: inherit !important;
   }

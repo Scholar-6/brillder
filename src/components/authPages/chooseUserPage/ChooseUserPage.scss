@@ -1,4 +1,6 @@
-@import "_variables";
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
 $col-radius: 2vw;
 $col-color: $light-blue;
@@ -111,7 +113,7 @@ $mobile-arrow-color: #96A0B6;
     font-size: 2.55vw;
 
     span {
-      font-family: "Brandon Grotesque Light";
+      font-family: $font-family-light;
       font-weight: 200 !important;
     }
 
@@ -206,7 +208,7 @@ $mobile-arrow-color: #96A0B6;
     font-size: 5.7vh;
 
     span {
-      font-family: "Brandon Grotesque Light";
+      font-family: $font-family-light;
       font-weight: 200 !important;
       line-height: 1.57;
       padding-bottom: 0.1vh;

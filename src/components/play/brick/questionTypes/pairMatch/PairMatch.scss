@@ -1,10 +1,11 @@
-@import '_variables';
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 .pair-match-play {
   $font-size: 1rem;
   .pair-match-play-option {
     text-align: center;
-    color: white;
     color: $dark-blue;
     margin: 1px;
     padding: 0;

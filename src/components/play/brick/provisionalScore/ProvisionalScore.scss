@@ -1,4 +1,6 @@
-@import '_variables';
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .provisional-score-page {
   padding: 1vw;
@@ -57,7 +59,7 @@
     }
   }
 
-  
+
 
   .MuiCircularProgress-colorPrimary {
     color: #0076B4 !important;

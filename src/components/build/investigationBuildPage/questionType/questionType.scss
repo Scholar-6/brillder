@@ -1,5 +1,6 @@
-@import "_variables";
-$question-radius: 0.65vw;
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .question-type {
   position: relative;
@@ -65,14 +66,14 @@ $question-radius: 0.65vw;
   }
 
   .card-description {
-    text-align: center; 
+    text-align: center;
   }
 
   .set-type-button {
     margin: 0 !important;
     padding-top: 6px !important;
     color: $orange;
-  
+
     .set-type-icon {
       font-size: 50px;
     }
@@ -83,7 +84,7 @@ $question-radius: 0.65vw;
 
     .new-question-button {
       margin: 0 !important;
-      
+
       padding: 0 !important;
       color: $orange;
 

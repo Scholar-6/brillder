@@ -1,9 +1,6 @@
-@import "_variables";
-
-$main-panel-radius: 2vw;
-$left: 0.8vw;
-$right: 1.4vw;
-$grey: #b0b0ad;
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
 .users-list-redirect-dropdown {
   .MuiPaper-root {
@@ -62,75 +59,6 @@ $grey: #b0b0ad;
     .view-profile {
       margin-top: 3.4vh;
     }
-  }
-}
-
-.user-list-page {
-  overflow: hidden;
-  background: $dark-blue;
-  height: 100%;
-  width: 100%;
-  font-family: $font-family-regular;
-
-
-  .users-upper-part {
-    position: relative;
-    min-height: 100%;
-    background: $dark-blue;
-
-    .users-pagination {
-      position: absolute;
-      margin-left: 2vw;
-      bottom: 0;
-      height: 9vh;
-      font-size: 0.9vw;
-      color: $dark-blue;
-
-      .grey {
-        color: $grey;
-      }
-
-      .left-pagination {
-        padding-top: 0.35vh;
-        padding-left: 0.15vw;
-        line-height: 1.4;
-      }
-    }
-
-    .bottom-next-button {
-      bottom: 1vh;
-      color: white;
-      > div {
-        position: relative;
-
-        .prev-button {
-          position: absolute;
-          top: -0.6vh;
-          margin-left: 2.8vh;
-          left: -4vw;
-        }
-
-        .next-button {
-          position: absolute;
-          left: -4vw;
-          top: 1vh;
-        }
-
-        .active:hover {
-          cursor: pointer;
-          color: $dark-blue !important;
-        }
-
-        svg {
-          height: 4.7vh;
-          width: 4.7vh;
-          color: $grey;
-        }
-      }
-    }
-  }
-
-  .sorted-row {
   }
 }
 

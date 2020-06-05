@@ -1,10 +1,11 @@
-@import '_variables';
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .quotes-live {
   padding: 5px;
   font: 500 16px/24px $font-family-regular;
   color: black;
-  padding: 5px;
   justify-content: center;
   background: #e1e1e1;
   margin-top:20px;

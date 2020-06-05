@@ -1,4 +1,6 @@
-@import "_variables";
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .investigation-build-page {
   .saved-info {
