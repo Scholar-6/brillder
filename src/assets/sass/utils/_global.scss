@@ -121,29 +121,20 @@ code {
 						width: max-content !important;
 						margin-left: 0 !important;
 						margin-right: 0 !important;
-						.sortBy {
-							padding: 0 !important;
-							margin-right: 0.5vw !important;
-							svg {
-								height: 2.2vh;
-								width: 2.2vh;
-								color: $orange !important;
-							}
-						}
-						.MuiFormControlLabel-label {
-							font: 1.05vw $font-family-light !important;
-							letter-spacing: 0.06vw;
-						}
 					}
 				}
 			}
+			.back-sort-box,
+			.sort-by-box,
 			.subject-filter,
 			.filter-container,
 			.subject-indexes-box,
 			.indexes-box {
 				.filter-radio,
-				.MuiFormControlLabel-root {
+				.MuiFormControlLabel-root,
+				.sortBy {
 					padding: 0 !important;
+					margin: 0 !important;
 					margin-right: 0.5vw !important;
 					svg {
 						width: 1.25vw;
@@ -152,6 +143,10 @@ code {
 						padding: 0 !important;
 					}
 				}
+				.MuiFormControlLabel-label {
+					font: 1.05vw $font-family-light;
+					letter-spacing: 0.06vw;
+				}
 			}
 			.subject-indexes-box,
 			.indexes-box {
@@ -159,11 +154,6 @@ code {
 					cursor: pointer;
 					position: relative;
 					font-size: 1.1vw;
-
-					.MuiFormControlLabel-label {
-						font: 1.05vw $font-family-light !important;
-						letter-spacing: 0.06vw;
-					}
 					.right-index {
 						position: absolute;
 						color: $dark-blue;
@@ -352,10 +342,6 @@ code {
 				align-items: center !important;
 				margin: 0 !important;
 				width: 100% !important;
-				.MuiFormControlLabel-label {
-					font: 1.05vw $font-family-light !important;
-					letter-spacing: 0.06vw;
-				}
 				.custom-color svg {
 					color: var(--color) !important;
 				}
