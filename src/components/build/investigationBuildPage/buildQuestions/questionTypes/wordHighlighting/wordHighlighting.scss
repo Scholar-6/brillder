@@ -45,11 +45,14 @@
       cursor: pointer;
       color: $dark-blue;
       display: inline-block;
-      margin-right: 5px;
     }
 
     .word.active {
       background: $light-green;
+    }
+
+    .word.disabled {
+      cursor: auto;
     }
   }
 
