@@ -706,7 +706,15 @@ code {
 		height: 10.5vh;
 		border-bottom-left-radius: 2vw;
 		background: $light-blue;
-		padding-top: 1vh;
+		padding: 1vw 0;
+		align-items: center;
+		.MuiGrid-container {
+			display: flex;
+			height: 3vw;
+			.MuiGrid-item {
+				height: 3vw;
+			}
+		}
 		.search-input {
 			display: block;
 			background-color: $light-blue;
@@ -714,8 +722,7 @@ code {
 			font-size: 1.7vw;
 			border-radius: 12px;
 			border: none;
-			margin-left: 1.5vw;
-			margin-top: 0.7vh;
+			margin: 0 0 0 1.4vw;
 			letter-spacing: 0.045vw;
 			height: 5.5vh;
 			width: 40vw;
@@ -726,7 +733,7 @@ code {
 		.bell-button,
 		.more-button {
 			cursor: pointer;
-			margin: 0.6vw 2vw 0.6vw 0;
+			margin: 0 2vw 0 0;
 			width: 3vw;
 			height: 3vw;
 			display: inline-block;
@@ -738,7 +745,7 @@ code {
 			}
 		}
 		.search-button {
-			margin: .6vw 0 .6vw 1.4vw;
+			margin: 0 0 0 1.4vw;
 		}
 		.more-button {
 			svg {
