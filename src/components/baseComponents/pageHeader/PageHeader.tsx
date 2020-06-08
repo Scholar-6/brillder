@@ -27,7 +27,14 @@ class PageHeader extends Component<UsersListProps> {
         <Grid container className="logout-container" item direction="row" style={{width: '92.35vw'}}>
           <Grid container style={{width: '60vw', height: '7vh'}}>
             <Grid item>
-              <div className="search-button" onClick={() => this.props.search()}></div>
+              <div className="search-button svgOnHover" onClick={() => this.props.search()}>
+								<svg className="svg svg-default">
+									<use href={sprite + "#search-thin"}/>
+								</svg>
+								<svg className="svg colored">
+									<use href={sprite + "#search-thick"}/>
+								</svg>
+							</div>
             </Grid>
             <Grid item>
               <input
@@ -50,10 +57,10 @@ class PageHeader extends Component<UsersListProps> {
 							</div>
               <div className="more-button svgOnHover" onClick={() => this.props.showDropdown()}>
 								<svg className="svg svg-default">
-									<use href={sprite + "#more-hor-3"}/>
+									<use href={sprite + "#more-thin"}/>
 								</svg>
 								<svg className="svg colored">
-									<use href={sprite + "#more-hor-6"}/>
+									<use href={sprite + "#more-thick"}/>
 								</svg>
 							</div>
             </Grid>
