@@ -18,10 +18,14 @@ code {
 }
 
 .svgOnHover {
+	@extend %posRelative;
 	> .svg {
 		width: 20px;
 		height: 20px;
-		display: inline-flex;
+		visibility: visible;
+		opacity: 1;
+		@extend %transitionAll500;
+		@extend %floatToCenter;
 		&.svg-default,
 		&.svg-blue,
 		&.svg-white,
@@ -32,20 +36,24 @@ code {
 		}
 		&.hover,
 		&.colored {
-			display: none;
+			visibility: hidden;
+			opacity: 0;
 		}
 		&.active {
-			display: inline-flex;
+			visibility: visible;
+				opacity: 1;
 		}
 	}
 	&:hover,
 	&.active {
 		> .svg {
-			display: none;
+			visibility: hidden;
+			opacity: 0;
 			&.hover,
 			&.active,
 			&.colored {
-				display: inline-flex;
+				visibility: visible;
+				opacity: 1;
 			}
 			&.svg-default {
 				color: var(--black-light);
@@ -102,7 +110,7 @@ code {
 		border-top-right-radius: $main-panel-radius;
 		background: $light-blue;
 		flex-wrap: initial;
-    flex-direction: column;
+		flex-direction: column;
 		.sort-box {
 			width: 100%;
 			.sort-by-box {
@@ -690,20 +698,22 @@ code {
 
 .bricks-header {
 	height: 10.5vh;
+}
 
+.page-header {
+	height: 10.5vh;
 	.logout-container {
 		height: 10.5vh;
 		border-bottom-left-radius: 2vw;
 		background: $light-blue;
-		padding-top: 1.7vh;
-
+		padding-top: 1vh;
 		.search-button {
+			height: 6.5vh;
+			width: 6.5vh;
 			cursor: pointer;
 			display: block;
 			margin-left: 1.4vw;
-			height: 6.5vh;
-			width: 6.5vh;
-			margin-top: 0.2vh;
+			margin-top: 0.1vh;
 			margin-right: 0vw;
 			background-size: 100% 100%;
 			background-repeat: no-repeat;
@@ -711,20 +721,17 @@ code {
 			background-image: url(/images/brick-list/search.png);
 			transition: all 0.2s ease-in-out;
 			transform-origin: 70% 50%;
+			&:hover {
+				background-image: url(/images/brick-list/search-hover.png);
+			}
 		}
-		.search-button:hover {
-			background-image: url(/images/brick-list/search-hover.png);
-		}
-
 		.search-input {
 			display: block;
-			border: none;
-			background-color: $light-blue !important;
+			background-color: $light-blue;
 			font-family: $font-family-regular;
 			font-size: 1.7vw;
-			border: red;
 			border-radius: 12px;
-			border: none !important;
+			border: none;
 			margin-left: 1.5vw;
 			margin-top: 0.7vh;
 			letter-spacing: 0.045vw;
@@ -733,53 +740,35 @@ code {
 			padding-right: 2px;
 			color: #acacac;
 		}
-
-		.bell-button {
-			cursor: pointer;
-			display: block;
-			color: white;
-			text-align: center;
-			height: 5.3vh;
-			width: 4.8vh;
-			margin-top: 0.9vh;
-			margin-right: 3.5vw;
-			background-size: 100% 100%;
-			background-repeat: no-repeat;
-			background-position: center;
-			background-image: url(/images/brick-list/bell.png);
-			transition: all 0.2s ease-in-out;
-			transform-origin: 50% 50%;
-
-			> span {
-				margin-top: 1vh;
-			}
-		}
-
-		.bell-button:hover {
-			background-image: url(/images/brick-list/bell-hover.png);
-		}
-
+		.bell-button,
 		.more-button {
 			cursor: pointer;
-			margin-top: 0.9vh;
-			margin-right: 2.2vw;
-			width: 6.7vh;
+			margin: 0.6vw 2vw 0.6vw 0;
+			width: 3vw;
+			height: 3vw;
 			display: inline-block;
-			background-color: $orange;
-
-			-webkit-mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
-			mask: url('/images/more-horizontal.svg') no-repeat 50% 50%;
-			-webkit-mask-size: cover;
-			mask-size: cover;
-
-			transition: all 0.2s ease-in-out;
-			transform-origin: 50% 50%;
+			.svg {
+				width: 3vw !important;
+				height: 3vw !important;
+				color: $orange;
+				stroke: $orange;
+			}
 		}
-
-		.more-button:hover {
-			transform: scale(1.4);
+		.more-button {
+			svg {
+				circle {
+					stroke-width: 3px;
+					stroke: $orange;
+				}
+			}
+			&:hover {
+				svg {
+					circle {
+						stroke-width: 6px;
+					}
+				}
+			}
 		}
-
 		.user-button {
 			cursor: pointer;
 			margin-top: 0.635vh;
@@ -793,11 +782,10 @@ code {
 			background-image: url(/images/brick-list/user.png);
 			transition: all 0.2s ease-in-out;
 			transform-origin: 50% 50%;
-		}
-
-		.user-button:hover {
-			background-image: url(/images/brick-list/user-hover.png);
-			transform: scale(1.4);
+			&:hover {
+				background-image: url(/images/brick-list/user-hover.png);
+				transform: scale(1.4);
+			}
 		}
 	}
 }
