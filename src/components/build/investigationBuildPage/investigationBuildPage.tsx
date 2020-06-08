@@ -33,16 +33,17 @@ import {validateQuestion} from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
   activeQuestionByIndex,
-  getUniqueComponent,
   deactiveQuestions,
   getActiveQuestion,
+  cashBuildQuestion,
   prepareBrickToSave,
   removeQuestionByIndex,
-  convertToSort,
   setQuestionTypeByIndex,
   parseQuestion,
 } from "./questionService/QuestionService";
+import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
+import {GetCashedBuildQuestion} from '../../localStorage/buildLocalStorage';
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -75,7 +76,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [isSaving, setSavingStatus] = React.useState(false);
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
-  const [tooltipsOn, setTooltips] = React.useState(true); 
+  const [tooltipsOn, setTooltips] = React.useState(true);
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -119,10 +120,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     activeQuestion = {} as Question;
   }
 
+  /* Changing question number by tabs in build */
+  const activateQuestionByIndex = (index: number) => {
+    return activeQuestionByIndex(brickId, questions, index);
+  }
+
   const setPreviousQuestion = () => {
     const index = getQuestionIndex(activeQuestion);
     if (index >= 1) {
-      const updatedQuestions = activeQuestionByIndex(questions, index - 1);
+      const updatedQuestions = activateQuestionByIndex(index - 1);
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
       saveBrick();
@@ -134,21 +140,24 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const index = getQuestionIndex(activeQuestion);
     let lastIndex = questions.length - 1;
     if (index < lastIndex) {
-      const updatedQuestions = activeQuestionByIndex(questions, index + 1);
+      const updatedQuestions = activateQuestionByIndex(index + 1);
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
       createNewQuestion();
     }
   };
+  /* Changing question in build */
 
   const createNewQuestion = () => {
     const updatedQuestions = deactiveQuestions(questions);
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
     setQuestions(update(questions, { $set: updatedQuestions }));
+    cashBuildQuestion(brickId, updatedQuestions.length - 1);
+    saveBrickQuestions(updatedQuestions);
+
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/build/investigation/question`);
     }
-    saveBrickQuestions(updatedQuestions);
   };
 
   const moveToSynthesis = () => {
@@ -171,44 +180,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     saveBrickQuestions(updatedQuestions);
   };
 
-  const chooseOneToChooseSeveral = (type: QuestionTypeEnum) => {
-    const index = getQuestionIndex(activeQuestion);
-    const component = getUniqueComponent(activeQuestion);
-    for (const answer of component.list) {
-      answer.checked = false;
-    }
-    activeQuestion.type = type;
-    const question = Object.assign({}, activeQuestion);
-    setQuestion(index, question);
-  };
-
-  const convertToShortAnswer = (type: QuestionTypeEnum) => {
-    const index = getQuestionIndex(activeQuestion);
-    activeQuestion.type = type;
-    const component = getUniqueComponent(activeQuestion);
-    if (component.list && component.list.length > 0) {
-      component.list = [component.list[0]];
-    }
-    const question = Object.assign({}, activeQuestion);
-    setQuestion(index, question);
-  }
-
   const convertQuestionTypes = (type: QuestionTypeEnum) => {
-    if (
-      type === QuestionTypeEnum.ChooseOne ||
-      type === QuestionTypeEnum.ChooseSeveral
-    ) {
-      chooseOneToChooseSeveral(type);
-    } else if (type === QuestionTypeEnum.Sort) {
-      const index = getQuestionIndex(activeQuestion);
-      const question = convertToSort(activeQuestion);
-      setQuestion(index, question);
-    } else if (type === QuestionTypeEnum.ShortAnswer) {
-      convertToShortAnswer(type);
-    } else {
-      setQuestionType(type);
-    }
-    saveBrick();
+    if (locked) { return; }
+    convertToQuestionType(questions, activeQuestion, type, setQuestionAndSave);
   };
 
   const deleteQuestionByIndex = (index: number) => {
@@ -233,7 +207,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const selectQuestion = (index: number) => {
-    const updatedQuestions = activeQuestionByIndex(questions, index);
+    const updatedQuestions = activateQuestionByIndex(index);
     setQuestions(update(questions, { $set: updatedQuestions }));
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/build/investigation/question`)
@@ -251,25 +225,40 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setQuestions(update(questions, { [index]: { $set: question } }));
   };
 
+  const setQuestionAndSave = (index: number, question: Question) => {
+    let updatedQuestions = update(questions, { [index]: { $set: question } });
+    setQuestions(updatedQuestions);
+    saveBrickQuestions(updatedQuestions);
+  }
+
   const { brick } = props;
 
   if (brick.id !== brickId) {
     return <div>...Loading...</div>;
   }
 
-  if (brick.questions && loaded === false) {
-    const parsedQuestions: Question[] = [];
-    for (const question of brick.questions) {
-      try {
-        parseQuestion(question, parsedQuestions);
-      } catch (e) {}
-    }
-    if (parsedQuestions.length > 0) {
-      parsedQuestions[0].active = true;
-      setQuestions(update(questions, { $set: parsedQuestions }));
-      setStatus(update(loaded, { $set: true }));
+  const parseQuestions = () => {
+    if (brick.questions && loaded === false) {
+      const parsedQuestions: Question[] = [];
+      for (const question of brick.questions) {
+        try {
+          parseQuestion(question, parsedQuestions);
+        } catch (e) {}
+      }
+      if (parsedQuestions.length > 0) {
+        let buildQuestion = GetCashedBuildQuestion();
+        if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
+          parsedQuestions[buildQuestion.questionNumber].active = true;
+        } else {
+          parsedQuestions[0].active = true;
+        }
+        setQuestions(update(questions, { $set: parsedQuestions }));
+        setStatus(update(loaded, { $set: true }));
+      }
     }
   }
+
+  parseQuestions();
 
   const moveToReview = () => {
     let invalidQuestion = questions.find(question => {
@@ -279,13 +268,25 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setSubmitDialog(true);
     } else {
       saveBrick();
-      history.push(`/play/brick/${brickId}/intro?preview=true`);
+      let buildQuestion = GetCashedBuildQuestion();
+
+      if (isSynthesisPage) {
+        history.push(`/play-preview/brick/${brickId}/intro`);
+      } else if (
+        buildQuestion && buildQuestion.questionNumber &&
+        buildQuestion.brickId === brickId &&
+        buildQuestion.isTwoOrMoreRedirect
+      ) {
+        history.push(`/play-preview/brick/${brickId}/live`);
+      } else {
+        history.push(`/play-preview/brick/${brickId}/intro`);
+      }
     }
   }
 
   const submitInvalidBrick = () => {
     saveBrick();
-    history.push(`/build/brick/${brickId}/build/investigation/submit`);
+    history.push(`/build/back-to-work`);
   }
 
   const hideInvalidBrick = () => {
@@ -319,7 +320,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const renderBuildQuestion = () => {
-    console.log('before build question init');
     return (
       <QuestionPanelWorkArea
         brickId={brickId}
@@ -420,8 +420,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <img alt="" src="/images/exit-arrow.png" />
           </div>
           <Grid container direction="row" style={{height: '100%'}}>
-            <Grid container xs={9} justify="center" style={{height: '100%'}}>
-              <Grid container xs={9} style={{height: '100%'}}>
+            <Grid container item xs={9} justify="center" style={{height: '100%'}}>
+              <Grid container item xs={9} style={{height: '100%'}}>
                 <div className="tutorial-exit-label" style={{height: '100%'}}>
                   <Grid container alignContent="center" style={{height: '100%'}}>
                     Click the red icon to Exit & Save
@@ -453,6 +453,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       isValid = false;
     }
   });
+
+  if (!synthesis) {
+    isValid = false;
+  }
 
   return (
     <div className="investigation-build-page">
@@ -532,12 +536,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         >
           <div className="dialog-header">
             <div>Some questions are incomplete.</div>
-            <div>These are marked in red.</div>
-            <div>Submit anyway?</div>
+            <div>These are marked in red. Keep working?</div>
           </div>
           <Grid container direction="row" className="row-buttons" justify="center">
-            <Button className="yes-button" onClick={() => submitInvalidBrick()}>Yes, never mind</Button>
-            <Button className="no-button" onClick={() => hideInvalidBrick()}>No, keep working</Button>
+            <Button className="yes-button" onClick={() => hideInvalidBrick()}>Yes</Button>
+            <Button className="no-button" onClick={() => submitInvalidBrick()}>No, Save & exit</Button>
           </Grid>
         </Dialog>
         <DeleteQuestionDialog

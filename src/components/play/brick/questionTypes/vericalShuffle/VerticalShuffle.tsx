@@ -1,6 +1,4 @@
-
 import React from 'react';
-import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 
@@ -37,8 +35,14 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   constructor(props: VerticalShuffleProps) {
     super(props);
 
+    let userAnswers = this.props.component.list;
+
+    if (this.props.attempt) {
+      userAnswers = this.props.attempt.answer;
+    }
+
     this.state = {
-      userAnswers: props.component.list
+      userAnswers: userAnswers
     };
   }
 
@@ -51,19 +55,13 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   componentWillUpdate(props: VerticalShuffleProps) {
+    if (!this.props.isPreview) { return; }
+    
     if (props.component && props.component.list) {
       if (this.state.userAnswers !== props.component.list) {
         this.setState({userAnswers: props.component.list});
       }
     }
-  }
-
-  getState(entry: number): number {
-    if (this.props.attempt?.answer[entry]) {
-      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')) {
-        return 1;
-      } else { return -1; }
-    } else { return 0; }
   }
 
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
@@ -104,6 +102,40 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     return attempt;
   }
 
+  checkAttemptAnswer(index: number) {
+    if (this.props.attempt && this.props.attempt.answer) {
+      let answer = this.props.attempt.answer[index];
+      if (answer.index - index === 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  renderAnswer(answer:any, i: number) {
+    let isCorrect = this.checkAttemptAnswer(i);
+    return (
+      <div
+        style={{display: "block"}}
+        key={i}
+        className={`vertical-shuffle-choice ${isCorrect ? 'correct' : ''}`}
+      >
+          <Grid container direction="row" justify="center">
+            {answer.value}
+          </Grid>
+          <Grid container direction="row" justify="center">
+            <ReviewEachHint
+              isPhonePreview={this.props.isPreview}
+              attempt={this.props.attempt}
+              isCorrect={isCorrect}
+              index={i}
+              hint={this.props.question.hint}
+            />
+          </Grid>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="vertical-shuffle-play">
@@ -115,32 +147,14 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
         <ReactSortable
           list={this.state.userAnswers}
           animation={150}
+          className="verical-shuffle-sort-list"
           style={{display:"inline-block"}}
           group={{ name: "cloning-group-name" }}
           setList={(choices) => this.setUserAnswers(choices)}
         >
           {
             this.state.userAnswers.map((answer, i) => (
-              <div style={{display: "block"}} key={i} className="vertical-shuffle-choice">
-                <Grid container direction="row">
-                  <Grid item xs={1} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
-                    <DragIndicatorIcon/>
-                  </Grid>
-                  <Grid item xs={11} container justify="center" alignContent="center" style={{width: '100%', height: '100%'}}>
-                    <Grid container direction="row" justify="center">
-                      {answer.value}
-                    </Grid>
-                    <Grid container direction="row" justify="center">
-                      <ReviewEachHint
-                        isPhonePreview={this.props.isPreview}
-                        attempt={this.props.attempt}
-                        index={i}
-                        hint={this.props.question.hint}
-                      />
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </div>
+              this.renderAnswer(answer, i)
             ))
           }
         </ReactSortable>

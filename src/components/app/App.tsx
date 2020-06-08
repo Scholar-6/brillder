@@ -11,6 +11,7 @@ import Pallet from '../play/pallet/Pallet';
 import VersionLabel from 'components/baseComponents/VersionLabel';
 import Dashboard from '../play/dashboard/Dashboard';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
+import PlayPreviewRouting from '../build/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
 import MainPage from '../build/mainPage/mainPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
@@ -20,7 +21,6 @@ import InvestigationBuildPage from '../build/investigationBuildPage/investigatio
 import LoginPage from '../authPages/loginPage/loginPage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
 import ChooseUserPage from '../authPages/chooseUserPage/ChooseUserPage';
-import LogoPage from '../logoPage/logoPage';
 import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
 import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
 import SignUpFinished from '../authPages/signUpFinished/SignUpFinished';
@@ -30,6 +30,7 @@ import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
 import StudentRoute from './StudentRoute';
 import AuthRedirectRoute from './AuthRedirectRoute';
+import AllUsersRoute from './AllUsersRoute';
 
 
 const App: React.FC = (props: any) => {
@@ -54,6 +55,27 @@ const App: React.FC = (props: any) => {
     [],
   );
 
+  const addZendesk = () => {
+    var head = document.getElementsByTagName('head').item(0);
+    if (head) {
+      
+      var script = document.createElement('script');
+      script.setAttribute('id', 'ze-snippet');
+      script.setAttribute('type', 'text/javascript');
+      script.setAttribute(
+        'src',
+        `https://static.zdassets.com/ekr/snippet.js?key=${
+          process.env.REACT_APP_ZENDESK_ID
+            ? process.env.REACT_APP_ZENDESK_ID
+            : '1415bb80-138f-4547-9798-3082b781844a'
+        }`
+      );
+      head.appendChild(script);
+    }
+  }
+
+  addZendesk();
+
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
@@ -67,6 +89,8 @@ const App: React.FC = (props: any) => {
         <StudentRoute path="/play/pallet/:palletName" component={Pallet} />
         <StudentRoute path="/play/dashboard" component={Dashboard} />
 
+        <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} />
+
         <BuildRoute path="/build/new-brick" component={Proposal} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} />
@@ -75,7 +99,7 @@ const App: React.FC = (props: any) => {
         <BuildRoute path="/build/back-to-work" component={BackToWorkPage} />
         <BuildRoute path="/build/users" component={UsersListPage} />
         <BuildRoute path="/build/user-profile/:userId" component={UserProfilePage} />
-        <BuildRoute path="/build/user-profile" component={UserProfilePage} />
+        <AllUsersRoute path="/build/user-profile" component={UserProfilePage} />
         <BuildRoute path="/build" component={MainPage} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
@@ -83,7 +107,6 @@ const App: React.FC = (props: any) => {
         <AuthRoute path="/login" exact component={LoginPage} />
         <AuthRoute path="/sign-up-success" exact component={SignUpFinished} />
 
-        <Route path="/logo-page" component={LogoPage} />
         <Route component={AuthRedirectRoute} />
       </Switch>
       <VersionLabel />

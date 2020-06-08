@@ -1,15 +1,9 @@
-@import "_variables";
-
-$col-blue: $light-blue;
-$border-radius: 2vw;
-$button-radius: 0.7vw;
-
-html, body, #root {
-  height: 100%
-}
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
 .login-page {
-  
+
   .MuiSnackbarContent-message {
     font-size: 1.2vw;
     font-family: $font-family-regular;
@@ -31,7 +25,7 @@ html, body, #root {
         transform-origin: 110% 50%;
       }
       .back-button:hover {
-        transform: scale(1.15, 1.05); 
+        transform: scale(1.15, 1.05);
       }
     }
   }
@@ -41,13 +35,13 @@ html, body, #root {
     height: 100%;
 
     .first-item {
-      background: $col-blue;
+      background: $light-blue;
       height: 14.7vh;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }
     .second-item {
-      background: $col-blue;
+      background: $light-blue;
       margin-top: 4.7vh;
       height: 80.6vh;
       border-top-left-radius: $border-radius;
@@ -67,13 +61,13 @@ html, body, #root {
     height: 100%;
 
     .first-item {
-      background: $col-blue;
+      background: $light-blue;
       height: 70.9vh;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }
     .second-item {
-      background: $col-blue;
+      background: $light-blue;
       margin-top: 4.7vh;
       height: 24.4vh;
       border-top-left-radius: $border-radius;
@@ -156,7 +150,7 @@ html, body, #root {
   }
 
   .sign-in-button:hover {
-    background: $orange; 
+    background: $orange;
     box-shadow: none;
     font-family: $font-family-bold;
   }

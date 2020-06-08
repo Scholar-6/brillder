@@ -1,34 +1,35 @@
-@import '_variables';
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 .sort-play {
+  .MuiTypography-root {
+    font-family: $font-family-regular !important;
+  }
   .sort-category {
+    color: $dark-blue;
     padding: 10px 0;
     text-align: center;
-    color: black;
     font-family: $font-family-regular;
-    background-color: #ccc;
+    background-color: $tab-grey;
     font-weight: 700;
-    font-size: 10px;
+    font-size: 1rem;
     line-height: 1;
   }
   .sort-category-list-container {
-    background-color: #eee;
     min-height: 30px;
-    min-width: 200px;
-    outline: #535353 dashed 2px;
-    outline-offset: -5px;
-    padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 10px;
   }
 
   .sortable-list {
-    margin-left: 10px;
     width: 100%;
     height: 100%;
     min-height: 30px;
 
     .sortable-item {
+      background: $grey;
+      margin-bottom: 10px;
       cursor: pointer;
       color: black;
       .MuiListItemIcon-root {

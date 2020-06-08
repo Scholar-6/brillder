@@ -104,16 +104,35 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     // Then, if the attempt scored no marks or negative and the program is in live phase, then give the student a mark.
     if (attempt.marks <= 0 && attempt.answer !== [] && !prev) { attempt.marks = 1; }
     if (attempt.marks <= 0) {attempt.marks = 0; }
+
+    if (attempt.answer.length === 0) {
+      attempt.marks = 0;
+    }
+
     return attempt;
   }
 
-  renderIcon(input: any, index: number) {
+  checkChoice(choice: any, index: number) {
     if (this.props.attempt) {
       const {answer} = this.props.attempt;
       const found = answer.find((a:number) => a === index);
       if (found >= 0) {
-        return input.checked ? <DenimTickRect /> : <DenimCrossRect />;
+        if (choice.checked) {
+          return true;
+        } else {
+          return false;
+        }
       }
+    }
+    return null;
+  }
+
+  renderIcon(choice: any, index: number) {
+    const isCorrect = this.checkChoice(choice, index);
+    if (isCorrect === true) {
+      return <DenimTickRect />;
+    } else if (isCorrect === false) {
+      return <DenimCrossRect />;
     }
     return "";
   }
@@ -130,31 +149,50 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     }
   }
 
-  renderButton(input: any, index:number) {
+  renderButton(choice: any, index:number) {
+    let isCorrect:any = false;
+    let className = "choose-choice";
     let active = this.state.activeItems.find(i => i === index) as number;
+
+    if (this.props.isPreview) {
+      if (choice.checked) {
+        className += " correct";
+      }
+    } else {
+      if (active >= 0) {
+        className += " active";
+      }
+      isCorrect = this.checkChoice(choice, index);
+      if (isCorrect === true) {
+        className += " correct";
+      }
+      if (!isCorrect) {
+        isCorrect = false;
+      }
+    }
 
     return (
       <Button
-        className={(active >= 0) ? "choose-choice active" : "choose-choice"}
+        className={className}
         key={index}
         onClick={() => this.setActiveItem(index)}
       >
         <div style={{width: '100%'}}>
         <Grid container direction="row">
           <Grid item xs={1}>
-            {this.renderIcon(input, index)}
+            {this.renderIcon(choice, index)}
           </Grid>
           <Grid item xs={11}>
-            {this.renderData(input)}
+            {this.renderData(choice)}
           </Grid>
         </Grid>
         <Grid container direction="row">
-          <Grid item xs={1}>
-          </Grid>
+          <Grid item xs={1}></Grid>
           <Grid item xs={11}>
             <ReviewEachHint
               isPhonePreview={this.props.isPreview}
               attempt={this.props.attempt}
+              isCorrect={isCorrect}
               index={index}
               hint={this.props.question.hint}
             />
@@ -169,9 +207,9 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     const { component } = this.props;
 
     return (
-      <div className="choose-one-live">
+      <div className="choose-several-live">
         {
-          component.list.map((input: any, index: number) => this.renderButton(input, index))
+          component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }
         <ReviewGlobalHint
           attempt={this.props.attempt}

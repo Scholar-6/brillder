@@ -1,9 +1,6 @@
-@import "_variables";
-
-$light-grey: #f5f6f7;
-
-$base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5),
-  10px 10px 15px rgba(70, 70, 70, 0.12);
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
 .user-profile-redirect-dropdown {
   .MuiPaper-root {
@@ -76,6 +73,12 @@ $base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5),
   height: 100%;
   width: 100%;
   font-family: $font-family-regular;
+
+  .phone-question-preview-box {
+    top: 10.5vh;
+    height: 90.05vh;
+    width: 27.5vw;
+  }
 
   .profile-block {
     position: relative;
@@ -264,6 +267,15 @@ $base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5),
           }
           .MuiFormControlLabel-root {
             margin: 0;
+          }
+
+          .disabled {
+            .MuiSvgIcon-root {
+              color: #a6aCaF;
+            }
+            .MuiTypography-root {
+              color: #a6aCaF;
+            }
           }
         }
       }

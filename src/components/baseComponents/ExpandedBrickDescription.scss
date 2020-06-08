@@ -1,6 +1,6 @@
-@import '_variables';
-
-$lighter-blue: #304775;
+@import '../../assets/sass/partials/variables';
+@import '../../assets/sass/partials/mixins';
+@import '../../assets/sass/partials/extensions';
 
 .expended-brick-info {
   background: $tab-grey;

@@ -1,22 +1,44 @@
-@import "_variables";
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
-.choose-one-live {
+.choose-several-live {
+  .MuiButton-label {
+    div {
+      display: inline;
+      margin: 0 !important;
+    }
+    p {
+      margin: 0 !important;
+    }
+  }
   .choose-choice {
-    color: white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    color: $dark-blue;
     text-align: center;
     text-transform: none !important;
     border-radius: 0 !important;
     width: 100%;
-    opacity: 0.8;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    opacity: 1;
     font-size: $answer-input-text-size;
     font-family: $font-family-regular;
   }
 
-  .choose-choice:nth-child(odd) {background: #0076B4}
-  .choose-choice:nth-child(even) {background: #0A3B7E}
+  .choose-choice {background: $tab-grey}
 
   .choose-choice.active {
     padding-top: 4px;
     border: 5px solid white;
+  }
+
+  .choose-choice.correct {
+    background: $light-green;
+
+    .question-hint {
+      background: white;
+    }
   }
 }

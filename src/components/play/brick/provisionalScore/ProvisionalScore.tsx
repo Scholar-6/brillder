@@ -11,6 +11,7 @@ import { PlayStatus } from '../model/model';
 
 
 interface ProvisionalScoreProps {
+  isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
   attempts: any[];
@@ -20,10 +21,14 @@ interface ProvisionalState {
   otherExpanded: boolean;
 }
 
-const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, attempts }) => {
+const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, attempts, ...props }) => {
   const history = useHistory();
   if (status === PlayStatus.Live) {
-    history.push(`/play/brick/${brick.id}/intro`);
+    if (props.isPlayPreview) {
+      history.push(`/play-preview/brick/${brick.id}/intro`);
+    } else {
+      history.push(`/play/brick/${brick.id}/intro`);
+    }
   }
 
   const [state, setState] = React.useState({
@@ -35,7 +40,11 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
   }
 
   const startBrick = () => {
-    history.push(`/play/brick/${brick.id}/synthesis`);
+    if (props.isPlayPreview) {
+      history.push(`/play-preview/brick/${brick.id}/synthesis`);
+    } else {
+      history.push(`/play/brick/${brick.id}/synthesis`);
+    }
   }
 
   let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);

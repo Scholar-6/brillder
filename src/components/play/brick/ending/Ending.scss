@@ -1,4 +1,6 @@
-@import "_variables";
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .ending-page {
   padding: 1vw;
@@ -14,7 +16,6 @@
 
     > span {
       font-family: $font-family-regular;
-      color: black;
       font-size: 18px;
       margin-right: 10px;
     }

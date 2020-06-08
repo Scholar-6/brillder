@@ -1,13 +1,32 @@
-@import '_variables';
+@import '../../assets/sass/partials/variables';
+@import '../../assets/sass/partials/mixins';
+@import '../../assets/sass/partials/extensions';
 
 .beta-text {
   position: fixed;
-  bottom: 1%;
-  right: 1%;
+  bottom: 2.4vh;
+  right: 2.4vh;
   color: $orange;
   font-size: 2vw;
   letter-spacing: 0.4vw;
   font-family: $font-family-black;
+  line-height: 1;
+
+  div {
+    display: inline-block;
+  }
+
+  .version-number {
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    font-size: 0.6vw;
+    letter-spacing: 0.08vw;
+    -moz-transform: scale(-1, -1);
+    -webkit-transform: scale(-1, -1);
+    -o-transform: scale(-1, -1);
+    -ms-transform: scale(-1, -1);
+     transform: scale(-1, -1);
+  }
 }
 
 strong {
@@ -26,6 +45,17 @@ strong {
  -webkit-box-pack: center !important;
 }
 
+
 .MuiGrid-align-content-xs-center.MuiGrid-justify-xs-flex-end {
  -webkit-box-pack: end !important;
+}
+
+#webWidget {
+  left: 0;
+}
+
+#launcher {
+  position: fixed;
+  margin-left: 0.9vw !important;
+  left: 0;
 }

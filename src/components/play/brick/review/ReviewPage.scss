@@ -1,4 +1,6 @@
-@import '_variables';
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .question-hint {
   font-size: 10px;
@@ -9,6 +11,7 @@
   padding: 2px 5px;
   border-radius: 1px 2px 3px 4px;
   font-family: $font-family-regular;
+  display: block !important;
 
   p {
     display: inline;
@@ -22,7 +25,7 @@
     margin-left: 0;
     margin-right: 0;
   }
-  
+
   table, td, th {
     border: 1px solid $dark-blue;
   }
@@ -52,7 +55,7 @@
     margin: auto;
     border-collapse: collapse;
   }
-  
+
   table, td, th {
     border: 1px solid $dark-blue;
   }

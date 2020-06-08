@@ -1,8 +1,11 @@
-@import "_variables";
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 .proposal-page {
   height: 100% !important;
-  
+  color: $dark-blue;
+
   .red-right-block {
     position: fixed;
     right: 0;
@@ -305,8 +308,10 @@
         }
 
         .text-title {
-          color: #4a4f56 !important;
           font-family: $font-family-bold;
+        }
+        .text-title.brick-length {
+          margin-top: 1vh;
         }
         .proposal-text {
           margin-left: 1.3vw;

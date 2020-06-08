@@ -1,7 +1,8 @@
-@import "_variables";
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
-$left-grey: #E6E6ED;
-$light-grey: #f4f4f4;
+
 
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
@@ -21,7 +22,7 @@ $light-grey: #f4f4f4;
     font-family: 'Brandon Grotesque Black';
     color: $left-grey;
     letter-spacing: 0.3vw;
-      
+
     .create-icon {
       height: 5vw;
       width: 6.35vw;
@@ -31,6 +32,14 @@ $light-grey: #f4f4f4;
       background-image: url(/images/main-page/create-grey.png);
       margin-bottom: 1.5vh;
     }
+  }
+
+  .MuiExpansionPanelDetails-root, .MuiExpansionPanelSummary-content {
+    color: $dark-blue !important;
+  }
+
+  .MuiInputBase-input {
+    color: $dark-blue;
   }
 
   .back-hover-area:hover {
@@ -45,9 +54,9 @@ $light-grey: #f4f4f4;
     max-width: 800px;
     width: 100%;
     text-align: left;
+    color: $dark-blue;
 
     h3 {
-      color: black;
       padding: 5px;
       font-size: 16px;
       line-height: 28px;
@@ -58,7 +67,6 @@ $light-grey: #f4f4f4;
     }
 
     h1 {
-      color: black;
       padding: 5px;
       line-height: 48px;
       text-transform: capitalize;
@@ -75,9 +83,7 @@ $light-grey: #f4f4f4;
     }
   }
 
-  @media only screen and (max-width: 599px) {
-    .brick-container {
-      text-align: center;
-    }
+  .question-hint-global.correct {
+    background: white;
   }
 }

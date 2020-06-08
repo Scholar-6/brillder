@@ -1,5 +1,6 @@
-@import "_variables";
-@import "../../questionVariables";
+@import '../../../../../../assets/sass/partials/variables';
+@import '../../../../../../assets/sass/partials/mixins';
+@import '../../../../../../assets/sass/partials/extensions';
 
 .horizontal-shuffle-build {
   text-align: center;
@@ -8,11 +9,11 @@
     margin-left: 1.25%;
     width: 97.5%;
   }
-  
+
   p {
     margin: 0;
   }
-  
+
   .component-title {
     > div {
       font-size: $base-sm-text-size;

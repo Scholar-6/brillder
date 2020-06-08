@@ -45,12 +45,15 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     return this.state.userAnswers;
   }
 
-  getState(entry: number): number {
-    if (this.props.attempt.answer[entry]) {
-      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].answer.toLowerCase().replace(/ /g, '')) {
-        return 1;
-      } else { return -1; }
-    } else { return 0; }
+  checkAttemptAnswer(answer: any, index: number) {
+    if (
+      this.props.attempt &&
+      this.props.attempt.answer &&
+      this.props.attempt.answer[index].toLowerCase().replace(/ /g, '') === answer.value.toLowerCase().replace(/ /g, '')
+    ) {
+      return true;
+    }
+    return false;
   }
 
   mark(attempt: any, prev: any): any {
@@ -114,6 +117,29 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     )
   }
 
+  renderAnswer(answer:any, width: number, index: number) {
+    let isCorrect = false;
+    if (this.props.attempt) {
+      isCorrect = this.checkAttemptAnswer(answer, index);
+    }
+    return (
+      <div key={index} className={`short-answer-input ${isCorrect ? 'correct' : ''}`} style={{ width: `${width}%` }}>
+        <Grid container direction="row" justify="center">
+          {this.renderTextField(index)}
+        </Grid>
+        <Grid container direction="row" justify="center">
+          <ReviewEachHint
+            isPhonePreview={this.props.isPreview}
+            attempt={this.props.attempt}
+            isCorrect={isCorrect}
+            index={index}
+            hint={this.props.question.hint}
+          />
+        </Grid>
+      </div>
+    );
+  }
+
   render() {
     const { component } = this.props;
     let width = 100;
@@ -128,21 +154,10 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     return (
       <div className="short-answer-live">
         {
-          component.list.map((i: any, index: number) =>
-            <div key={index} className="short-answer-input" style={{ width: `${width}%` }}>
-              <Grid container direction="row" justify="center">
-                {this.renderTextField(index)}
-              </Grid>
-              <Grid container direction="row" justify="center">
-                <ReviewEachHint
-                  isPhonePreview={this.props.isPreview}
-                  attempt={this.props.attempt}
-                  index={index}
-                  hint={this.props.question.hint}
-                />
-              </Grid>
-            </div>
-          )
+          component.list.map((answer: any, index: number) =>
+            {
+              return this.renderAnswer(answer, width, index)
+            })
         }
         <ReviewGlobalHint attempt={this.props.attempt} isPhonePreview={this.props.isPreview} hint={this.props.question.hint} />
       </div>

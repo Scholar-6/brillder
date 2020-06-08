@@ -1,4 +1,6 @@
-@import '_variables';
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .provisional-score-page {
   padding: 1vw;
@@ -12,9 +14,8 @@
   .start-brick-button {
     margin-right: 0px;
 
-    >span {
+    > span {
       font-family: $font-family-regular;
-      color: black;
       font-size: 18px;
       margin-right: 10px;
     }
@@ -58,7 +59,7 @@
     }
   }
 
-  
+
 
   .MuiCircularProgress-colorPrimary {
     color: #0076B4 !important;

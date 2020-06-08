@@ -5,6 +5,7 @@ import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButto
 import ChooseOneAnswerComponent from './ChooseOneAnswer';
 import {ChooseOneAnswer} from './types';
 import { QuestionValueType, UniqueComponentProps } from '../types';
+import validator from '../../../questionService/UniqueValidator'
 
 
 export interface ChooseOneData {
@@ -19,9 +20,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   locked, data, validationRequired, save, updateComponent
 }) => {
   const [height, setHeight] = React.useState('0%');
-
   useEffect(() => calculateHeight());
-
   const newAnswer = () => ({value: "", checked: false, valueFile: "" });
 
   if (!data.list) {
@@ -31,7 +30,6 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
   }
 
   const [state, setState] = React.useState(data);
-
   useEffect(() => { setState(data) }, [data]);
 
   const update = () => {
@@ -77,6 +75,8 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
     showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
+  let checkBoxValid = !!validator.getChecked(state.list);
+
   return (
     <div className="choose-one-build unique-component">
       <div className="component-title">
@@ -91,6 +91,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
             length={data.list.length}
             answer={answer}
             save={save}
+            checkBoxValid={checkBoxValid}
             validationRequired={validationRequired}
             removeFromList={removeFromList}
             onChecked={onChecked}
@@ -102,7 +103,8 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
         locked={locked}
         addAnswer={addAnswer}
         height={height}
-        label="+ &nbsp;&nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
+        label="+ &nbsp;&nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R"
+      />
     </div>
   )
 }

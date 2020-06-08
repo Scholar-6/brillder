@@ -5,6 +5,7 @@ import './chooseSeveralBuild.scss'
 import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 import {ChooseOneAnswer} from '../chooseOneBuild/types';
 import { QuestionValueType } from '../types';
+import validator from '../../../questionService/UniqueValidator'
 
 
 export interface ChooseSeveralData {
@@ -79,6 +80,8 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
     showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
+  let isChecked = !!validator.validateChooseSeveralChecked(state.list);
+
   return (
     <div className="choose-several-build unique-component">
       <div className="component-title">
@@ -93,6 +96,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
             length={data.list.length}
             answer={answer}
             save={save}
+            checkBoxValid={isChecked}
             validationRequired={validationRequired}
             removeFromList={removeFromList}
             onChecked={onChecked}

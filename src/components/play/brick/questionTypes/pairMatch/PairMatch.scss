@@ -1,17 +1,26 @@
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
+
 .pair-match-play {
+  $font-size: 1rem;
   .pair-match-play-option {
-    color: white;
-    font-size: 10px !important;
-    height: 47px;
+    text-align: center;
+    color: $dark-blue;
+    margin: 1px;
+    padding: 0;
     width: 100%;
     overflow: hidden;
-    .pair-match-play-option-text {
-      font-size: 10px;
-      line-height: 3;
-      height: 24px;
+    .option-container {
+      width: 100%;
 
-      img {
-        height: 45px;
+      .MuiListItemText-root {
+        width: 100%;
+        height: 100%;
+
+        p {
+          text-align: center !important;
+        }
       }
     }
     .pair-match-play-option-icon {
@@ -22,50 +31,56 @@
       min-width: 31px !important;
     }
 
+    .MuiListItemText-root {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      height: 100%;
+    }
+
     .question-hint {
       margin-right: 20px;
     }
   }
-  .pair-match-play-option:nth-child(odd) {
-    background: #0076b4;
-  }
-  .pair-match-play-option:nth-child(even) {
-    background: #111f33;
+  .pair-match-play-option {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: $tab-grey;
   }
 
   .answers-list {
+    display: grid !important;
+    grid-auto-rows: 1fr;
+    flex-wrap: wrap;
     width: 50%;
   }
 
   .pair-match-play-choice {
-    border: 1px dashed black;
-    font-size: 10px;
-    color: black;
-    margin: 1px;
-    width: 100%;
-    overflow: hidden;
-    > div {
-      margin: 10px !important;
-    }
-    img {
-      height: 24px;
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: #F5F6F7;
+
+    p {
+      text-align: center !important;
     }
   }
+
   .pair-match-image-choice {
-    height: 110px;
-    img {
-      height: 110px;
-    }
+    padding-bottom: 2px;
   }
   .pair-match-play-option.pair-match-image-choice {
     background: none;
-    height: 113px;
     padding: 0;
     img {
       max-width: 100%;
-      max-height: 113px;
       height: auto;
     }
+  }
+
+  .MuiListItemText-root {
+    font-size: $font-size;
   }
 
   .question-hint-global {
