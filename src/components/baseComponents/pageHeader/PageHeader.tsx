@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
-
+import sprite from "../../../assets/img/icons-sprite.svg";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import './PageHeader.scss';
 
@@ -40,8 +40,22 @@ class PageHeader extends Component<UsersListProps> {
           </Grid>
           <Grid item style={{width: '32.35vw'}}>
             <Grid container direction="row" justify="flex-end">
-              <div className="bell-button"><div></div></div>
-              <div className="more-button" onClick={() => this.props.showDropdown()}></div>
+              <div className="bell-button svgOnHover">
+								<svg className="svg svg-default">
+									<use href={sprite + "#bell-empty"}/>
+								</svg>
+								<svg className="svg colored">
+									<use href={sprite + "#bell-filled"}/>
+								</svg>
+							</div>
+              <div className="more-button svgOnHover" onClick={() => this.props.showDropdown()}>
+								<svg className="svg svg-default">
+									<use href={sprite + "#more-hor-3"}/>
+								</svg>
+								<svg className="svg colored">
+									<use href={sprite + "#more-hor-6"}/>
+								</svg>
+							</div>
             </Grid>
           </Grid>
         </Grid>
