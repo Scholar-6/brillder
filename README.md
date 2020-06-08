@@ -12,7 +12,7 @@ To run project run next commands:
 If you want zendesk help widget to work
 ### `export REACT_APP_ZENDESK_ID=33210b3d-b3d5-43ba-9b07-70acce8c10b6`
 ### `export REACT_APP_BACKEND_HOST=https://api.scholar6.org`
-### `export REACT_APP_BACKEND_HOST=http://api.scholar6.org`
+### `export REACT_APP_VERSION=$npm_package_version`
 
 ## Run via https
 
