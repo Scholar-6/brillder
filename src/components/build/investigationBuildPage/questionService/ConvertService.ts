@@ -1,3 +1,5 @@
+/* Combinatorics dictates there should be 90 different ways to move from one answer type to another */
+
 import {
   HintStatus, Question, QuestionTypeEnum
 } from "model/question";
