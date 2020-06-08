@@ -9,10 +9,11 @@ To run project run next commands:
 
 ### `npm install`
 ### `npm start`
-If you want zendesk help widget to work
-### `export REACT_APP_ZENDESK_ID=33210b3d-b3d5-43ba-9b07-70acce8c10b6`
-### `export REACT_APP_BACKEND_HOST=https://api.scholar6.org`
-### `export REACT_APP_VERSION=$npm_package_version`
+
+On an ubuntu machine add the following to the /etc/environment file
+### `REACT_APP_ZENDESK_ID=33210b3d-b3d5-43ba-9b07-70acce8c10b6`
+### `REACT_APP_BACKEND_HOST=https://api.scholar6.org`
+### `REACT_APP_VERSION=$npm_package_version`
 
 ## Run via https
 
