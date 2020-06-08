@@ -24,7 +24,7 @@ code {
 		height: 20px;
 		visibility: visible;
 		opacity: 1;
-		@extend %transitionAll500;
+		@extend %transitionAll300;
 		@extend %floatToCenter;
 		&.svg-default,
 		&.svg-blue,
@@ -707,24 +707,6 @@ code {
 		border-bottom-left-radius: 2vw;
 		background: $light-blue;
 		padding-top: 1vh;
-		.search-button {
-			height: 6.5vh;
-			width: 6.5vh;
-			cursor: pointer;
-			display: block;
-			margin-left: 1.4vw;
-			margin-top: 0.1vh;
-			margin-right: 0vw;
-			background-size: 100% 100%;
-			background-repeat: no-repeat;
-			background-position: center;
-			background-image: url(/images/brick-list/search.png);
-			transition: all 0.2s ease-in-out;
-			transform-origin: 70% 50%;
-			&:hover {
-				background-image: url(/images/brick-list/search-hover.png);
-			}
-		}
 		.search-input {
 			display: block;
 			background-color: $light-blue;
@@ -740,6 +722,7 @@ code {
 			padding-right: 2px;
 			color: #acacac;
 		}
+		.search-button,
 		.bell-button,
 		.more-button {
 			cursor: pointer;
@@ -753,6 +736,9 @@ code {
 				color: $orange;
 				stroke: $orange;
 			}
+		}
+		.search-button {
+			margin: .6vw 0 .6vw 1.4vw;
 		}
 		.more-button {
 			svg {
