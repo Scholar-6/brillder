@@ -5,17 +5,17 @@ import CompComponent from "../Comp";
 import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/brick/model/model";
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
-
+import { PlayWord, IPlayWordComponent } from 'components/interfaces/word';
 
 interface WordHighlightingProps extends CompQuestionProps {
-  component: any;
+  component: IPlayWordComponent;
   attempt: ComponentAttempt;
   answers: number[];
 }
 
 interface WordHighlightingState {
   userAnswers: any[];
-  words: any[];
+  words: PlayWord[];
 }
 
 class WordHighlighting extends CompComponent<
@@ -45,7 +45,7 @@ class WordHighlighting extends CompComponent<
     let correct = this.state.words.filter(w => w.checked === true);
     attempt.maxMarks = correct.length * 5;
 
-    this.state.words.forEach((word: any, index: number) => {
+    this.state.words.forEach((word, index) => {
       if (attempt.answer.indexOf(index) !== -1 && word.checked === true) {
         if (!prev) {
           attempt.marks += markIncrement;
@@ -61,6 +61,11 @@ class WordHighlighting extends CompComponent<
     });
 
     if(attempt.marks === 0 && !prev) attempt.marks = 1;
+
+    if (attempt.answer.length === 0) {
+      attempt.marks = 0;
+    }
+
     return attempt;
   }
 
@@ -69,13 +74,15 @@ class WordHighlighting extends CompComponent<
     this.setState({ words: this.state.words });
   }
 
-  renderWord(word: any, index: number) {
+  renderWord(word: PlayWord, index: number) {
     if (this.props.isPreview) {
       return (
-        <span
-          key={index}
-          className={word.checked ? "active word" : "word"}
-        >{word.text} </span>
+        <span key={index}>
+          <span className={word.checked ? "active word" : "word"}>
+            {word.text}
+          </span>
+          {word.isBreakLine ? <br /> : ""}
+        </span>
       );
     }
     return (
@@ -92,7 +99,7 @@ class WordHighlighting extends CompComponent<
     const { component } = this.props;
 
     if (this.props.isPreview === true && (!component.words || component.words.length === 0)) {
-      return <div>Words will appear here in correction mode.</div>
+      return <div className="word-highlighting-play">You can have a peek once you highlight the correct words</div>
     }
 
     return (

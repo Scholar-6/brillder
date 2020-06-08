@@ -1,4 +1,6 @@
-@import '_variables';
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .next-question-button-container {
   .next-question-button {
@@ -6,7 +8,6 @@
     margin-top: 22px;
     font-size: 16px;
     padding-bottom: 85px;
-    color: black;
 
     span.MuiFormControlLabel-label {
       margin-right: 5px;

@@ -1,6 +1,6 @@
 import './UsersList.scss';
 import React, { Component } from 'react';
-import { Grid, FormControlLabel, Radio, Button } from '@material-ui/core';
+import { Grid, FormControlLabel, Radio, Button, RadioGroup } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import axios from 'axios';
@@ -8,7 +8,6 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ClearIcon from '@material-ui/icons/Clear';
 import Dialog from '@material-ui/core/Dialog';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -19,7 +18,7 @@ import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
 import SubjectsList from 'components/baseComponents/subjectsList/SubjectsList';
 
 import { User, UserType, UserStatus } from 'model/user';
-import {activateUser} from './userService';
+
 
 const mapState = (state: any) => {
   return {
@@ -69,6 +68,7 @@ interface UsersListState {
 
   sortBy: UserSortBy;
   isAscending: boolean;
+  isClearFilter: boolean
 }
 
 let anyStyles = withStyles as any;
@@ -150,7 +150,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       filterHeight: 'auto',
 
       sortBy: UserSortBy.None,
-      isAscending: false,
+	  isAscending: false,
+	  isClearFilter: false
     };
 
     this.getUsers(this.state.page);
@@ -211,7 +212,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       {withCredentials: true}
     ).then(res => {
       this.setState({...this.state, users: res.data.pageData, totalCount: res.data.totalCount})
-    }).catch(error => { 
+    }).catch(error => {
       alert('Can`t get users');
     });
   }
@@ -228,17 +229,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   handleSortChange = (e: any) => {
   }
 
-  hideFilter() {
-    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-  }
 
-  expendFilter() {
-    this.setState({
-      ...this.state,
-      filterExpanded: true,
-      filterHeight: "auto",
-    });
-  }
 
   getCheckedRoles() {
     const result = [];
@@ -279,7 +270,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         }
         this.setState({...this.state});
       }
-    }).catch(error => { 
+    }).catch(error => {
       alert('Can`t activate user');
     });
   }
@@ -295,7 +286,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         }
         this.setState({...this.state});
       }
-    }).catch(error => { 
+    }).catch(error => {
       alert('Can`t deactivate user');
     });
   }
@@ -326,7 +317,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     const {subjects} = this.state;
     subjects[i].checked = !subjects[i].checked
     this.filter();
-    this.setState({...this.state});
+	this.setState({...this.state});
+	this.filterClear()
   }
 
   getCheckedSubjectIds() {
@@ -346,50 +338,67 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     this.getUsers(0, filterSubjects);
   }
 
+
+  //region Hide / Expand / Clear Filter
+	clearStatus() {
+		let { state } = this;
+		let { subjects } = state;
+		subjects.forEach((r: any) => (r.checked = false));
+		this.filter();
+		this.filterClear()
+	}
+	hideFilter() {
+		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+	  }
+
+	  expendFilter() {
+		this.setState({
+		  ...this.state,
+		  filterExpanded: true,
+		  filterHeight: "auto",
+		});
+	  }
+	filterClear(){
+		this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false})
+	}
+	//endregion
+
+
   renderSortAndFilterBox = () => {
     return (
-      <div className="sort-box">
-        <div className="sort-by-box">
-          <div className="role-filter-header">Filter by: role</div>
-            <Grid container direction="row" className="roles-row">
-              {
-                this.state.roles.map((role, i) => 
-                  <Grid item xs={4} key={i}>
-                    <FormControlLabel
-                      className="filter-container"
-                      checked={role.checked}
-                      control={<Radio className={"filter-radio"} />}
-                      label={role.name}
-                    />
-                  </Grid>
-                )
-              }
-            </Grid>
-          </div>
-        <div className="filter-header">
-          <div style={{ display: 'inline' }}>
-            <span className='filter-control'>Filter by: Subject</span>
-            {
-              this.state.filterExpanded
-                ? <ExpandLessIcon className='filter-control' style={{ fontSize: '3vw' }}
-                  onClick={() => this.hideFilter()} />
-                : <ExpandMoreIcon className='filter-control' style={{ fontSize: '3vw' }}
-                  onClick={() => this.expendFilter()} />
-            }
-            {
-              this.state.subjects.some((r: any) => r.checked)
-                ? <ClearIcon className='filter-control' style={{ fontSize: '2vw' }} onClick={() => {}} />
-                : ''
-            }
-          </div>
-        </div>
-        <SubjectsList
-          subjects = {this.state.subjects}
-          filterHeight={this.state.filterHeight}
-          filterBySubject={this.filterBySubject}
-        />
-      </div>
-    );
+		<div className="sort-box">
+			<div className="sort-by-box">
+				<div className="sort-header">Filter by: Role</div>
+				<RadioGroup
+					className="sort-group"
+					aria-label="SortBy"
+					name="SortBy"
+					value={this.state.sortBy}
+					onChange={this.handleSortChange}>
+					<Grid container direction="row">
+						{this.state.roles.map((role, i) =>
+						<Grid item xs={4} key={i}>
+							<FormControlLabel
+							checked={role.checked}
+							control={<Radio className={"filter-radio"} />}
+							label={role.name}/>
+						</Grid>
+          				)}
+					</Grid>
+				</RadioGroup>
+			</div>
+			<div className="filter-header">
+				<span>Filter by: Subject</span>
+				<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
+					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expendFilter())}}>
+				</button>
+			</div>
+			<SubjectsList
+				subjects = {this.state.subjects}
+				filterHeight={this.state.filterHeight}
+				filterBySubject={this.filterBySubject}/>
+      	</div>
+	);
   }
 
   renderPagination() {
@@ -572,17 +581,15 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             <Grid container item xs={3} className="sort-and-filter-container">
               {this.renderSortAndFilterBox()}
             </Grid>
-            <Grid item xs={9} style={{position: 'relative'}}>
-              <div className="user-row-container">
-                <div className="user-row-title">
-                  ALL USERS
-                </div>
-                <Grid container direction="row">
-                  {this.renderUsers()}
-                  {this.renderRoleDescription()}
-                </Grid>
-                {this.renderPagination()}
-              </div>
+            <Grid item xs={9} className="brick-row-container">
+							<div className="brick-row-title">
+								ALL USERS
+							</div>
+							<Grid container direction="row">
+								{this.renderUsers()}
+								{this.renderRoleDescription()}
+							</Grid>
+							{this.renderPagination()}
             </Grid>
           </Grid>
         </div>

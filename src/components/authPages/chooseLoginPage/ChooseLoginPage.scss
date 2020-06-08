@@ -1,8 +1,6 @@
-@import "_variables";
-
-$col-blue: $light-blue;
-$border-radius: 2vw;
-$button-radius: 0.7vw;
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
 .pre-login-page {
   background: $dark-blue;
@@ -21,7 +19,7 @@ $button-radius: 0.7vw;
         transform-origin: 110% 50%;
       }
       .back-button:hover {
-        transform: scale(1.15, 1.05); 
+        transform: scale(1.15, 1.05);
       }
     }
   }
@@ -31,13 +29,13 @@ $button-radius: 0.7vw;
     height: 100%;
 
     .first-item {
-      background: $col-blue;
+      background: $light-blue;
       height: 14.7vh;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }
     .second-item {
-      background: $col-blue;
+      background: $light-blue;
       margin-top: 4.7vh;
       height: 80.6vh;
       border-top-left-radius: $border-radius;
@@ -57,13 +55,13 @@ $button-radius: 0.7vw;
     height: 100%;
 
     .first-item {
-      background: $col-blue;
+      background: $light-blue;
       height: 70.9vh;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }
     .second-item {
-      background: $col-blue;
+      background: $light-blue;
       margin-top: 4.7vh;
       height: 24.4vh;
       border-top-left-radius: $border-radius;

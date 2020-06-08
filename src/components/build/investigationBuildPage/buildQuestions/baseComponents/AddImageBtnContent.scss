@@ -1,10 +1,18 @@
 .answer-image-drop-content {
-  svg {
-    height: 1.4vw;
-    width: 1.4vw;
-  }
+  width: 100% !important;
 
   span {
     margin-left: 0.14vw;
+  }
+
+  img {
+    margin-top: 0.04vw;
+    height: 1.3vw !important;
+    border-radius: 100vw;
+    background: #aaa;
+  }
+
+  .answer-image-drop-button {
+    width: 2.7vw;
   }
 }

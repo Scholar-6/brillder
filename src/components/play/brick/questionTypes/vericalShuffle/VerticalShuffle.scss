@@ -1,14 +1,27 @@
-@import "_variables";
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 .vertical-shuffle-play {
-  .vertical-shuffle-choice {
-    border: 1px dashed black;
-    color: black;
-    margin: 1px;
+  .verical-shuffle-sort-list {
     width: 100%;
-    > div {
-      margin: 10px !important;
+  }
+  .vertical-shuffle-choice {
+    background: $tab-grey;
+    font-size: 1rem;
+    font-family: $font-family-regular;
+    margin: 1px;
+    border-radius: 4px;
+    color: $dark-blue;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    width: 100%;
+    .MuiGrid-root {
+      margin: 0;
     }
+  }
+  .vertical-shuffle-choice.correct .question-hint {
+    background: white;
   }
   .question-hint-global {
     margin-top: 10px;

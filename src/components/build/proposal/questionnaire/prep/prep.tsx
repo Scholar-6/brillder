@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 
 import './prep.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
-import DocumentCKEditor from 'components/baseComponents/DocumentEditor';
+import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
@@ -48,7 +48,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
         <Grid className="left-block">
           <h1>Add engaging and relevant</h1>
           <h1>preparatory material.</h1>
-          <DocumentCKEditor
+          <DocumentWirisCKEditor
             data={parentPrep}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
             mediaEmbed={true}

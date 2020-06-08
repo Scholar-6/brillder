@@ -58,7 +58,6 @@ interface BricksListState {
   yoursIndex: number;
   yoursReversed: boolean;
   sortedIndex: number;
-  filterExpanded: boolean;
   logoutDialogOpen: boolean;
   failedRequest: boolean;
   finalBricks: Brick[];
@@ -67,8 +66,11 @@ interface BricksListState {
   deleteBrickId: number;
 
   dropdownShown: boolean;
-  filterHeight: any;
   shown: boolean;
+
+	filterExpanded: boolean;
+	filterHeight: any;
+	isClearFilter: any;
 }
 
 enum SortBy {
@@ -88,7 +90,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       yoursIndex: 0,
       yoursReversed: false,
       sortedIndex: 0,
-      filterExpanded: true,
       logoutDialogOpen: false,
       deleteDialogOpen: false,
       failedRequest: false,
@@ -100,8 +101,11 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       isSearching: false,
 
       dropdownShown: false,
-      filterHeight: "auto",
-      shown: true,
+	  shown: true,
+
+	 	filterExpanded: true,
+		filterHeight: "auto",
+		isClearFilter: false,
     };
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
@@ -200,7 +204,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   filter() {
-    const { state } = this;
+	this.filterClear()
     let bricks = this.getBricksForFilter();
     let filtered = [];
 
@@ -213,10 +217,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           filtered.push(brick);
         }
       }
-      this.setState({ ...state, finalBricks: filtered });
+      this.setState({  finalBricks: filtered });
     } else {
-      this.setState({ ...state, finalBricks: bricks });
-    }
+      this.setState({  finalBricks: bricks });
+	}
+
+
   }
 
   getSubjectRow(brick: Brick) {
@@ -226,9 +232,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   filterBySubject = (i: number) => {
-    const { subjects } = this.state;
-    subjects[i].checked = !subjects[i].checked;
-    this.filter();
+    let { subjects } = this.state;
+	subjects[i].checked = !subjects[i].checked;
+	this.filter();
   };
 
   clearSubjects = () => {
@@ -429,30 +435,30 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     });
   }
 
-  creatingBrick() {
-    this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
-  }
+	creatingBrick() {
+		this.props.forgetBrick();
+		this.props.history.push("/build/new-brick/subject");
+	}
 
-  showDropdown() {
-    this.setState({ ...this.state, dropdownShown: true });
-  }
+	showDropdown() {
+		this.setState({ ...this.state, dropdownShown: true });
+	}
 
-  hideDropdown() {
-    this.setState({ ...this.state, dropdownShown: false });
-  }
+	hideDropdown() {
+		this.setState({ ...this.state, dropdownShown: false });
+	}
 
-  hideFilter() {
-    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-  }
-
-  expendFilter() {
-    this.setState({
-      ...this.state,
-      filterExpanded: true,
-      filterHeight: "auto",
-    });
-  }
+	//region Hide / Expand / Clear Filter
+	hideFilter() {
+		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+	}
+	expendFilter() {
+		this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
+	}
+	filterClear(){
+		this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false})
+	}
+	//endregion
 
   getSortedBrickContainer = (brick: Brick, key: number, index: number, row: any = 0) => {
     let color = "";
@@ -524,69 +530,45 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
   renderSortAndFilterBox = () => {
     return (
-      <div className="sort-box">
-        <div className="sort-by-box">
-          <div className="sort-header">Sort By</div>
-          <RadioGroup
-            className="sort-group"
-            aria-label="SortBy"
-            name="SortBy"
-            value={this.state.sortBy}
-            onChange={this.handleSortChange}
-          >
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <FormControlLabel
-                  value={SortBy.Popularity}
-                  style={{ marginRight: 0, width: "47.5%" }}
-                  control={<Radio className="sortBy" />}
-                  label="Popularity"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <FormControlLabel
-                  value={SortBy.Date}
-                  style={{ marginRight: 0 }}
-                  control={<Radio className="sortBy" />}
-                  label="Date Added"
-                />
-              </Grid>
-            </Grid>
-          </RadioGroup>
-        </div>
-        <div className="filter-header">
-          <div style={{ display: "inline" }}>
-            <span className="filter-control">Filter</span>
-            {this.state.filterExpanded ? (
-              <ExpandLessIcon
-                className="filter-control"
-                style={{ fontSize: "3vw" }}
-                onClick={() => this.hideFilter()}
-              />
-            ) : (
-              <ExpandMoreIcon
-                className="filter-control"
-                style={{ fontSize: "3vw" }}
-                onClick={() => this.expendFilter()}
-              />
-            )}
-            {this.state.subjects.some((r: any) => r.checked) ? (
-              <ClearIcon
-                className="filter-control"
-                style={{ fontSize: "2vw" }}
-                onClick={() => this.clearSubjects()}
-              />
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
-        <SubjectsList
-          subjects = {this.state.subjects}
-          filterHeight={this.state.filterHeight}
-          filterBySubject={this.filterBySubject}
-        />
-      </div>
+		<div className="sort-box">
+			<div className="sort-by-box">
+				<div className="sort-header">Sort By</div>
+				<RadioGroup
+					className="sort-group"
+					aria-label="SortBy"
+					name="SortBy"
+					value={this.state.sortBy}
+					onChange={this.handleSortChange}>
+					<Grid container direction="row">
+						<Grid item xs={6}>
+							<FormControlLabel
+							value={SortBy.Popularity}
+							style={{ marginRight: 0, width: "47.5%" }}
+							control={<Radio className="sortBy" />}
+							label="Popularity"/>
+						</Grid>
+						<Grid item xs={6}>
+							<FormControlLabel
+							value={SortBy.Date}
+							style={{ marginRight: 0 }}
+							control={<Radio className="sortBy" />}
+							label="Date Added"/>
+						</Grid>
+					</Grid>
+				</RadioGroup>
+			</div>
+			<div className="filter-header">
+				<span>Filter</span>
+				<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
+					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearSubjects() : (this.hideFilter()) : (this.expendFilter())}}>
+				</button>
+			</div>
+			<SubjectsList
+				subjects = {this.state.subjects}
+				filterHeight={this.state.filterHeight}
+				filterBySubject={this.filterBySubject}
+			/>
+		</div>
     );
   };
 
@@ -683,19 +665,17 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             <Grid container item xs={3} className="sort-and-filter-container">
               {this.renderSortAndFilterBox()}
             </Grid>
-            <Grid item xs={9} style={{ position: "relative" }}>
-              <div className="brick-row-container">
-                <div className="brick-row-title">{this.renderTitle()}</div>
-                <div className="bricks-list-container">
-                  <Grid container direction="row">
-                    {this.renderYourBrickRow()}
-                  </Grid>
-                  <Grid container direction="row">
-                    {this.renderSortedBricks()}
-                  </Grid>
-                </div>
-                {this.renderPagination()}
-              </div>
+            <Grid item xs={9} className="brick-row-container">
+							<div className="brick-row-title">{this.renderTitle()}</div>
+							<div className="bricks-list-container">
+								<Grid container direction="row">
+									{this.renderYourBrickRow()}
+								</Grid>
+								<Grid container direction="row">
+									{this.renderSortedBricks()}
+								</Grid>
+							</div>
+							{this.renderPagination()}
             </Grid>
           </Grid>
         </div>

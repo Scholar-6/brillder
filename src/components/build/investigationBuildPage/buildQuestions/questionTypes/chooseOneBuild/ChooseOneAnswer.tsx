@@ -3,7 +3,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import './ChooseOneAnswer.scss'; 
-import DocumentCKEditor from "components/baseComponents/DocumentEditor";
+import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import QuestionImageDropzone from "../../baseComponents/QuestionImageDropzone";
 import { QuestionValueType } from "../types";
 import {ChooseOneAnswer} from './types';
@@ -16,6 +16,7 @@ export interface ChooseOneAnswerProps {
   length: number;
   answer: ChooseOneAnswer;
   validationRequired: boolean;
+  checkBoxValid: boolean;
   save(): void;
   removeFromList(index: number): void;
   onChecked(event: any, checked: boolean): void;
@@ -23,7 +24,7 @@ export interface ChooseOneAnswerProps {
 }
 
 const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
-  locked, index, length, answer, validationRequired,
+  locked, index, length, answer, validationRequired, checkBoxValid,
   removeFromList, update, save, onChecked
 }) => {
   const renderDeleteButton = () => {
@@ -68,7 +69,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
       {renderDeleteButton()}
       <Grid container alignContent="center" className={`checkbox-container ${checkboxClass}`}>
         <Checkbox
-          className="left-ckeckbox"
+          className={`left-ckeckbox ${(validationRequired && !checkBoxValid) ? "checkbox-invalid" : ""}`}
           disabled={locked}
           checked={answer.checked}
           onChange={onChecked}
@@ -82,7 +83,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
         fileName={answer.valueFile}
         update={setImage}
       />
-      <DocumentCKEditor
+      <DocumentWirisCKEditor
         data={answer.value}
         toolbar={['mathType', 'chemType']}
         placeholder="Enter Answer..."

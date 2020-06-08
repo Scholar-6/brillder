@@ -1,4 +1,6 @@
-@import '_variables';
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .synthesis-page {
   padding: 1vw;
@@ -34,8 +36,7 @@
   .start-brick-button {
     margin-right: 0px;
 
-    >span {
-      color: black;
+    > span {
       font: 500 16px/24px $font-family-regular;
       margin-right: 5px;
     }
@@ -74,7 +75,7 @@
 
         .score-number {
           font-size: 24px;
-          
+
         }
       }
     }

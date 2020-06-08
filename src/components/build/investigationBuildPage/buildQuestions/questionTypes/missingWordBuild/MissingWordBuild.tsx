@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import './MissingWordBuild.scss'
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 import { UniqueComponentProps } from '../types';
+import validator from '../../../questionService/UniqueValidator'
 
 
 interface Answer {
@@ -122,7 +123,10 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
     return name;
   }
 
+
   const renderChoice = (choice: MissingChoice, key: number) => {
+    let checkBoxValid = !!validator.getChecked(choice.answers);
+
     return (
       <div className="choose-several-box" key={key}>
         <textarea
@@ -141,7 +145,12 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
                 {
                   (choice.answers.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, key)} /> : ""
                 }
-                <Checkbox className="left-ckeckbox" disabled={locked} checked={answer.checked} onChange={(e) => onChecked(choice, e)} value={key} />
+                <Checkbox
+                  className={`left-ckeckbox ${(validationRequired && !checkBoxValid) ? "checkbox-invalid" : ""}`}
+                  disabled={locked}
+                  checked={answer.checked}
+                  onChange={(e) => onChecked(choice, e)} value={key}
+                />
                 <input
                   placeholder="Enter Answer..."
                   className={getInputClass(answer)}

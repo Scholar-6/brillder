@@ -1,5 +1,6 @@
-@import "_variables";
-@import "../../questionVariables";
+@import '../../../../../../assets/sass/partials/variables';
+@import '../../../../../../assets/sass/partials/mixins';
+@import '../../../../../../assets/sass/partials/extensions';
 
 .missing-word-build {
   textarea {
@@ -21,6 +22,10 @@
     margin: 0;
     margin-left: 1.25%;
     width: 97.5%;
+
+    .checkbox-invalid {
+      color: $orange;
+    }
 
     .Mui-checked {
       color: $light-green;

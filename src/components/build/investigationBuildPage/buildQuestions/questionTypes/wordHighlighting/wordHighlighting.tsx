@@ -3,6 +3,7 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import './wordHighlighting.scss'
 import { UniqueComponentProps } from '../types';
+import { BuildWord, SpecialSymbols } from 'components/interfaces/word';
 
 
 export enum WordMode {
@@ -10,14 +11,9 @@ export enum WordMode {
   Edit,
 }
 
-export interface Word {
-  text: string,
-  checked: boolean,
-}
-
 export interface WordHighlightingData {
   text: string;
-  words: Word[];
+  words: BuildWord[];
   mode: WordMode;
 }
 
@@ -41,14 +37,93 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
     updateComponent(state);
   }
 
-  const prepareWords = (text: string):Word[] => {
-    if (!text) {
-      return [];
-    }
-    let words = text.split(' ');
-    return words.map(word => {
-      return {text: word, checked: false} as Word;
+  const splitByChar = (text: string, charCode: number) => {
+    return text.split(String.fromCharCode(charCode));
+  }
+
+  const splitByLines = (text: string) => {
+    const splited = splitByChar(text, SpecialSymbols.LineFeed);
+    return splited.map(line => {
+      return {text: line, isBreakLine: true, checked: false} as BuildWord;
     });
+  }
+
+  const addSpace = (words: BuildWord[], index: number) => {
+    if (index >= 1) {
+      words.push({text: "\u00A0", notSelectable: true} as BuildWord);
+    }
+  }
+
+  const addBreakLine = (lineStrings: string[], word: BuildWord, index: number) => {
+    if (index === lineStrings.length - 1) {
+      word.isBreakLine = true;
+    }
+  }
+
+  const splitByWords = (lines: BuildWord[]) => {
+    let words: BuildWord[] = [];
+    lines.forEach(line => {
+      let lineStrings = splitByChar(line.text, SpecialSymbols.Space);
+      for (const index in lineStrings) {
+        let intIndex = parseInt(index);
+        addSpace(words, intIndex);
+        let word = {text: lineStrings[index], checked: false} as BuildWord;
+        addBreakLine(lineStrings, word, intIndex);
+        words.push(word);
+      }
+    });
+    return words;
+  }
+
+  const disabledEmptyWord = (word: BuildWord) => {
+    if (!word.text) {
+      word.notSelectable = true;
+    }
+  }
+
+  const addBreakLineInTheEnd = (
+    wordParts: string[], mainWord: BuildWord, partWord: BuildWord, index: number
+  ) => {
+    if (index === wordParts.length - 1) {
+      if (mainWord.isBreakLine) {
+        partWord.isBreakLine = true;
+      }
+    }
+  }
+
+  const addSpecialSignByCode = (words: BuildWord[], signCode: SpecialSymbols, index: number) => {
+    if (index >= 1) {
+      words.push({text: String.fromCharCode(signCode), notSelectable: true} as BuildWord);
+    }
+  }
+
+  const splitBySpecialSign = (words: BuildWord[], signCode: SpecialSymbols) => {
+    let finalWords:BuildWord[] = [];
+    words.forEach(word => {
+      let commas = splitByChar(word.text, signCode);
+      if (commas.length >= 2) {
+        for (let index in commas) {
+          let loopWord = { text: commas[index] } as BuildWord;
+          let intIndex = parseInt(index);
+          addSpecialSignByCode(finalWords, signCode, intIndex);
+          addBreakLineInTheEnd(commas, word, loopWord, intIndex);
+          disabledEmptyWord(word);
+          finalWords.push(loopWord);
+        }
+      } else {
+        finalWords.push(word);
+      }
+    });
+    return finalWords;
+  }
+
+  const prepareWords = (text: string) => {
+    if (!text) { return []; }
+    const lines = splitByLines(text);
+    const words = splitByWords(lines);
+    const wordsByCommas = splitBySpecialSign(words, SpecialSymbols.Comma);
+    const wordsByDotsAndComas = splitBySpecialSign(wordsByCommas, SpecialSymbols.Dot);
+    return wordsByDotsAndComas;
   }
 
   const switchMode = () => {
@@ -71,38 +146,61 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
 
   const toggleLight = (index:number) => {
     if (locked) { return; }
-    state.words[index].checked = !state.words[index].checked;
+    const word = state.words[index];
+    if (word.notSelectable) { return; }
+    state.words[index].checked = !word.checked;
     update();
     save();
   }
 
   const renderBox = () => {
     if (state.mode === WordMode.Edit) {
-      return (
-        <div className="hightlight-area">
-          {
-            state.words ? state.words.map((word, i) =>
-              <div
-                key={i}
-                className={word.checked ? "word active" : "word"}
-                onClick={() => {toggleLight(i)}}
-              >
-                {word.text}
-              </div>
-            ) : ""
-          }
-        </div>
-      );
+      return renderEditBox();
     }
+    return renderTextBox();
+  }
+
+  const renderEditBox = () => {
+    return (
+      <div className="hightlight-area">
+        {
+          state.words ? state.words.map((word, i) =>
+            renderEditWord(word, i)
+          ) : ""
+        }
+      </div>
+    );
+  }
+
+  const renderEditWord = (word: BuildWord, index: number) => {
+    let className = "word";
+    if (word.checked) {
+      className += " active";
+    }
+    if (word.notSelectable) {
+      className += " disabled";
+    }
+
+    return (
+      <span key={index}>
+        <span className={className} onClick={() => {toggleLight(index)}}>
+          {word.text}
+        </span>
+        {word.isBreakLine ? <br /> : ""}
+      </span>
+    );
+  }
+
+  const renderTextBox = () => {
     return (
       <textarea
         disabled={locked}
         className="words-input"
-        rows={5}
         onBlur={() => save()}
         value={state.text}
         onChange={updateText}
-        placeholder="Enter Words Here..." />
+        placeholder="Enter Words Here..."
+      />
     );
   }
 

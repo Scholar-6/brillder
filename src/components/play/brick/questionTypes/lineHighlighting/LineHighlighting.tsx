@@ -67,6 +67,11 @@ class LineHighlighting extends CompComponent<
     if (attempt.marks === 0 && !prev) {
       attempt.marks = 1;
     }
+
+    if (attempt.answer.length === 0) {
+      attempt.marks = 0;
+    }
+
     return attempt;
   }
 
@@ -102,7 +107,11 @@ class LineHighlighting extends CompComponent<
   render() {
     const { component } = this.props;
     if (this.props.isPreview === true && (!component.lines || component.lines.length === 0)) {
-      return <div>Lines will appear here in correction mode.</div>
+      return (
+        <div className="line-highlighting-play">
+          You can have a peek once you highlight the correct lines
+        </div>
+      );
     }
 
     return (

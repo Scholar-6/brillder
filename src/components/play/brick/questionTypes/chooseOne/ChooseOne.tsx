@@ -84,6 +84,10 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     // if there is an answer given and the program is in the live phase, give the student an extra mark.
     else if (attempt.answer != null && !prev) attempt.marks = 1;
     else attempt.marks = 0;
+
+    if (attempt.answer === -1) {
+      attempt.marks = 0;
+    }
     return attempt;
   }
 
@@ -107,28 +111,61 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     }
   }
 
-  render() {
+  isCorrect(index: number) {
+    if (this.props.attempt?.correct) {
+      if (index === this.props.attempt?.answer) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  renderChoice(choice: ChooseOneChoice, index: number) {
+    let isCorrect = this.isCorrect(index);
+    let className = "choose-choice";
     const { activeItem } = this.state;
 
+    if (this.props.isPreview) {
+      if (choice.checked) {
+        className += " active";
+      }
+    } else {
+      if (index === activeItem) {
+        className += " active";
+      }
+    }
+
+    if (isCorrect) {
+      className += " correct";
+    }
+
+    return (
+      <Button
+        className={className}
+        key={index}
+        onClick={() => this.setActiveItem(index)}
+      >
+        <div style={{lineHeight: 1}}>
+          {this.renderData(choice)}
+          <ReviewEachHint
+            isPhonePreview={this.props.isPreview}
+            attempt={this.props.attempt}
+            isCorrect={isCorrect}
+            index={index}
+            hint={this.props.question.hint}
+          />
+        </div>
+      </Button>
+    );
+  }
+
+  render() {
     return (
       <div className="choose-one-live">
         {(this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""}
         {
-          this.props.component.list.map((input: any, index: number) =>
-            <Button
-              className={(index === activeItem) ? "choose-choice active" : "choose-choice"}
-              key={index}
-              onClick={() => this.setActiveItem(index)}>
-                <div style={{lineHeight: 1}}>
-                  {this.renderData(input)}
-                  <ReviewEachHint
-                    isPhonePreview={this.props.isPreview}
-                    attempt={this.props.attempt}
-                    index={index}
-                    hint={this.props.question.hint}
-                  />
-                </div>
-            </Button>
+          this.props.component.list.map((choice, index) =>
+            this.renderChoice(choice, index)
           )
         }
         <ReviewGlobalHint

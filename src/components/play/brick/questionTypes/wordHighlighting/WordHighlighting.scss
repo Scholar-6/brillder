@@ -1,10 +1,13 @@
-@import '_variables';
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
 
 .word-highlighting-play {
+  font-size: 1rem;
+  color: $dark-blue;
+  font-family: $font-family-regular;
   .words-container {
     width: 100%;
-    font-family: $font-family-regular;
-    color: $dark-blue;
 
     .word {
       cursor: pointer;
@@ -14,4 +17,3 @@
     }
   }
 }
-  
