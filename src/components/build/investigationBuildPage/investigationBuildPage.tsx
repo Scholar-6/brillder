@@ -540,7 +540,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           </div>
           <Grid container direction="row" className="row-buttons" justify="center">
             <Button className="yes-button" onClick={() => hideInvalidBrick()}>Yes</Button>
-            <Button className="no-button" onClick={() => submitInvalidBrick()}>No, Save & exit</Button>
+            <Button className="no-button" onClick={() => submitInvalidBrick()}>No, Save & Exit</Button>
           </Grid>
         </Dialog>
         <DeleteQuestionDialog
