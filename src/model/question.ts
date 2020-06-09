@@ -24,14 +24,14 @@ export enum QuestionTypeEnum {
   LineHighlighting = 10,
 }
 
-export const QuestionType = {
+export const QuestionTypeObj = {
   ShortAnswer: QuestionTypeEnum.ShortAnswer,
   ChooseOne: QuestionTypeEnum.ChooseOne,
   ChooseSeveral: QuestionTypeEnum.ChooseSeveral,
   VerticalShuffle: QuestionTypeEnum.VerticalShuffle,
   HorizontalShuffle: QuestionTypeEnum.HorizontalShuffle,
   PairMatch: QuestionTypeEnum.PairMatch,
-  Sort: QuestionTypeEnum.Sort,
+  Categorise: QuestionTypeEnum.Sort,
   MissingWord: QuestionTypeEnum.MissingWord,
   WordHighlighting: QuestionTypeEnum.WordHighlighting,
   LineHighlighting: QuestionTypeEnum.LineHighlighting,
