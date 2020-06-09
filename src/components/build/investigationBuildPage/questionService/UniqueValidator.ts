@@ -7,6 +7,13 @@ const getChecked = (list: any[]) => {
   return list.find((a:any) => a.checked === true);
 }
 
+const validateImageAndText = (a: any) => {
+  if (a.type === QuestionValueType.Image) {
+    return !a.valueFile;
+  }
+  return !a.value;
+}
+
 const validateShortAnswer = (comp: any) => {
   if (comp.list && comp.list.length >= 1) {
     let invalid = comp.list.find((a:any) => !a.value);
@@ -20,7 +27,7 @@ const validateShortAnswer = (comp: any) => {
 
 const validateChooseOne = (comp: any) => {
   if (comp.list && comp.list.length > 1) {
-    let invalid = comp.list.find((a:any) => !a.value);
+    let invalid = comp.list.find(validateImageAndText);
     if (invalid) {
       return false;
     }
@@ -47,7 +54,7 @@ const validateChooseSeveralChecked = (list: any[]) => {
 
 const validateChooseSeveral = (comp: any) => {
   if (comp.list && comp.list.length > 1) {
-    let invalid = comp.list.find((a:any) => !a.value);
+    let invalid = comp.list.find(validateImageAndText);
     if (invalid) {
       return false;
     }
@@ -104,7 +111,7 @@ const validateSort = (comp: any) => {
       if (!c.name) {
         return true;
       }
-      const invalid = c.answers.find((a:any) => !a.value);
+      const invalid = c.answers.find(validateImageAndText);
       if (invalid) {
         return true;
       }

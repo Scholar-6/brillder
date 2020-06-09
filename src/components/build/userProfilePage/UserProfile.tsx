@@ -204,7 +204,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/user`, {...userToSave}, {withCredentials: true}
     ).then(res => {
-      if (res.data === 'OK') { 
+      if (res.data === 'OK') {
         alert('Profile saved');
       }
     }).catch(error => {
@@ -267,7 +267,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   searching(searchString: string) {
-    
+
   }
 
   search() { }
@@ -331,7 +331,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   render() {
     return (
       <div className="user-profile-page">
-        <div className="bricks-upper-part">
+        <div className="upper-part">
           <PageHeader
             searchPlaceholder="Search by Name, Email or Subject"
             search={() => this.search()}

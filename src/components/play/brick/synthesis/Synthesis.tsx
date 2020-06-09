@@ -12,6 +12,7 @@ import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
 import OtherInformation from '../baseComponents/OtherInformation';
 import { PlayStatus } from '../model/model';
+import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 
 interface ProvisionalScoreProps {
@@ -73,7 +74,9 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, ...p
               <h2>Synthesis</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography dangerouslySetInnerHTML={{ __html: newSynthesis}} />
+              <Typography>
+                <MathInHtml value={newSynthesis} />
+              </Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <div className="begin-row">

@@ -7,7 +7,7 @@ import { ReactSortable } from "react-sortablejs";
 import QuestionComponents from './questionComponents/questionComponents';
 import {getNonEmptyComponent} from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
-import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionType } from 'model/question';
+import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionTypeObj } from 'model/question';
 import DragBox from './drag/dragBox';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import LockComponent from './lock/Lock';
@@ -57,7 +57,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     props.setQuestion(index, updatedQuestion);
   }
 
-  let typeArray: string[] = Object.keys(QuestionType);
+  let typeArray: string[] = Object.keys(QuestionTypeObj);
   let index = getQuestionIndex(question);
 
   let showHelpArrow = false;
@@ -174,7 +174,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     >
                       {
                         typeArray.map((typeName, i) => {
-                          const type = QuestionType[typeName] as QuestionTypeEnum;
+                          const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
                           return <MenuItem style={{fontFamily: 'Brandon Grotesque Regular'}} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
                         })
                       }

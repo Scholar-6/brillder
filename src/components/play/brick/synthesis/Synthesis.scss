@@ -84,4 +84,27 @@
   .MuiCircularProgress-colorPrimary {
     color: #0076B4 !important;
   }
+
+  .MuiTypography-root {
+    width: 100% !important;
+  }
+
+  .table {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table, td, th {
+    border: 1px solid $dark-blue;
+  }
+  td {
+    min-width: 0;
+    padding: 0;
+  }
 }
