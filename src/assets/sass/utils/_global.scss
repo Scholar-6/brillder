@@ -246,175 +246,173 @@ input:focus {
   }
 }
 
-.page-header {
-  .home-button-container {
-    z-index: 1000;
-    width: calc(6vw - 1vw);
-    border-bottom-right-radius: 2vw;
-    background: $light-blue;
-    height: 10.5vh;
-    padding: 1vw;
-    margin-right: 1vw;
-    .home-button {
-      cursor: pointer;
-      height: 6.3vh;
-      width: 6.3vh;
-      display: block;
-      &:hover {
-        .smoke-container {
-          display: flex;
-        }
+.home-button-container {
+  z-index: 1000;
+  border-bottom-right-radius: 2vw;
+  background: $light-blue;
+  width: calc(6.834vw - 1vw) !important;
+  height: 12.613vh;
+  margin-right: 1vw;
+  padding: .782vw;
+  .home-button {
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    display: block;
+    &:hover {
+      .smoke-container {
+        display: flex;
       }
     }
-    .smoke-container {
-      display: none;
-      position: absolute;
-      width: 2vw;
-      height: 2vw;
-      margin: 0;
-      left: -0.4vw;
-      top: -1.8vw;
-      z-index: 999;
-      .smoke-1,
-      .smoke-2,
-      .smoke-3 {
+  }
+  .smoke-container {
+    display: none;
+    position: absolute;
+    width: 2vw;
+    height: 2vw;
+    margin: 0;
+    left: -0.4vw;
+    top: -1.8vw;
+    z-index: 999;
+    .smoke-1,
+    .smoke-2,
+    .smoke-3 {
+      opacity: 0;
+    }
+    .smoke-1 {
+      animation: shift 2s linear 0.5s infinite;
+    }
+    .smoke-2 {
+      animation: shift-2 3s linear 0.6s infinite;
+    }
+    .smoke-3 {
+      animation: shift-3 4s linear 1.2s infinite;
+    }
+    @keyframes shift {
+      0% {
+        transform: translate(10px, 50px);
+        opacity: 1;
+      }
+      80% {
         opacity: 0;
       }
-      .smoke-1 {
-        animation: shift 2s linear 0.5s infinite;
-      }
-      .smoke-2 {
-        animation: shift-2 3s linear 0.6s infinite;
-      }
-      .smoke-3 {
-        animation: shift-3 4s linear 1.2s infinite;
-      }
-      @keyframes shift {
-        0% {
-          transform: translate(10px, 50px);
-          opacity: 1;
-        }
-        80% {
-          opacity: 0;
-        }
 
-        100% {
-          transform: translate(10px, 0px);
-          opacity: 0;
-        }
+      100% {
+        transform: translate(10px, 0px);
+        opacity: 0;
       }
-      @keyframes shift-2 {
-        0% {
-          transform: translate(0, 50px);
-          opacity: 1;
-        }
-        80% {
-          opacity: 0;
-        }
-        100% {
-          transform: translate(0, 0);
-          opacity: 0;
-        }
+    }
+    @keyframes shift-2 {
+      0% {
+        transform: translate(0, 50px);
+        opacity: 1;
       }
-      @keyframes shift-3 {
-        0% {
-          opacity: 1;
-          transform: translate(0px, 80px);
-        }
-        80% {
-          opacity: 0;
-        }
-        100% {
-          transform: translate(0, 0);
-          opacity: 0;
+      80% {
+        opacity: 0;
+      }
+      100% {
+        transform: translate(0, 0);
+        opacity: 0;
+      }
+    }
+    @keyframes shift-3 {
+      0% {
+        opacity: 1;
+        transform: translate(0px, 80px);
+      }
+      80% {
+        opacity: 0;
+      }
+      100% {
+        transform: translate(0, 0);
+        opacity: 0;
+      }
+    }
+  }
+}
+.logout-container {
+  width: calc(93.16vw - 1vw) !important;
+  height: 12.613vh;
+  margin-left: 1vw;
+  border-bottom-left-radius: 2vw;
+  background: $light-blue;
+  align-items: center;
+  .search-container {
+    display: flex;
+    width: 70%;
+    .MuiGrid-item {
+      height: 3.698vw;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .action-container {
+    width: 30%;
+    justify-content: flex-end;
+  }
+  .search-input {
+    display: block;
+    background-color: $light-blue;
+    font-family: $font-family-regular;
+    font-size: 1.7vw;
+    border-radius: 12px;
+    border: none;
+    margin: 0 0 0 1.4vw;
+    letter-spacing: 0.045vw;
+    height: 5.5vh;
+    width: 40vw;
+    padding-right: 2px;
+    color: #acacac;
+  }
+  .search-button,
+  .bell-button,
+  .more-button {
+    cursor: pointer;
+    margin: 0 2vw 0 0;
+    width: 3.698vw;
+    height: 3.698vw;
+    display: inline-block;
+    .svg {
+      width: 3.698vw !important;
+      height: 3.698vw !important;
+      color: $orange;
+      stroke: $orange;
+    }
+  }
+  .search-button {
+    margin: 0 0 0 1.4vw;
+  }
+  .more-button {
+    svg {
+      circle {
+        stroke-width: 3px;
+        stroke: $orange;
+      }
+    }
+    &:hover {
+      svg {
+        circle {
+          stroke-width: 6px;
         }
       }
     }
   }
-  .logout-container {
-    width: calc(94vw - 1vw);
-    height: 10.5vh;
-    margin-left: 1vw;
-    border-bottom-left-radius: 2vw;
-    background: $light-blue;
-    padding: 1vw 0;
-    align-items: center;
-    .search-container {
-      display: flex;
-      height: 3vw;
-      width: 70%;
-      .MuiGrid-item {
-        height: 3vw;
-      }
-    }
-    .action-container {
-      width: 30%;
-      justify-content: flex-end;
-    }
-    .search-input {
-      display: block;
-      background-color: $light-blue;
-      font-family: $font-family-regular;
-      font-size: 1.7vw;
-      border-radius: 12px;
-      border: none;
-      margin: 0 0 0 1.4vw;
-      letter-spacing: 0.045vw;
-      height: 5.5vh;
-      width: 40vw;
-      padding-right: 2px;
-      color: #acacac;
-    }
-    .search-button,
-    .bell-button,
-    .more-button {
-      cursor: pointer;
-      margin: 0 2vw 0 0;
-      width: 3vw;
-      height: 3vw;
-      display: inline-block;
-      .svg {
-        width: 3vw !important;
-        height: 3vw !important;
-        color: $orange;
-        stroke: $orange;
-      }
-    }
-    .search-button {
-      margin: 0 0 0 1.4vw;
-    }
-    .more-button {
-      svg {
-        circle {
-          stroke-width: 3px;
-          stroke: $orange;
-        }
-      }
-      &:hover {
-        svg {
-          circle {
-            stroke-width: 6px;
-          }
-        }
-      }
-    }
-    .user-button {
-      cursor: pointer;
-      margin-top: 0.635vh;
-      display: block;
-      height: 4.3vh;
-      width: 4.1vh;
-      margin-right: 1.9vw;
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url(/images/brick-list/user.png);
-      transition: all 0.2s ease-in-out;
-      transform-origin: 50% 50%;
-      &:hover {
-        background-image: url(/images/brick-list/user-hover.png);
-        transform: scale(1.4);
-      }
+  .user-button {
+    cursor: pointer;
+    margin-top: 0.635vh;
+    display: block;
+    height: 4.3vh;
+    width: 4.1vh;
+    margin-right: 1.9vw;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(/images/brick-list/user.png);
+    transition: all 0.2s ease-in-out;
+    transform-origin: 50% 50%;
+    &:hover {
+      background-image: url(/images/brick-list/user-hover.png);
+      transform: scale(1.4);
     }
   }
 }
