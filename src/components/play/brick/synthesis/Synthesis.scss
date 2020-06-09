@@ -85,10 +85,14 @@
     color: #0076B4 !important;
   }
 
+  .MuiTypography-root {
+    width: 100% !important;
+  }
+
   .table {
+    width: 100%;
     margin-left: 0;
     margin-right: 0;
-    overflow-y: auto;
   }
 
   table {
