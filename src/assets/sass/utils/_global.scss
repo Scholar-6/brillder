@@ -238,19 +238,48 @@ input:focus {
 
 
 .page-header {
-	height: 10.5vh;
-	.logout-container {
+	.home-button-container {
+		z-index: 1000;
+		width: calc(7vw - 1vw);
+		border-bottom-right-radius: 2vw;
+		background: $light-blue;
 		height: 10.5vh;
+		padding: 1vw 1.4vw;
+		margin-right: 1vw;
+		button.home-button {
+			cursor: pointer;
+			height: 6.3vh;
+			width: 6.3vh;
+			display: block;
+			position: absolute;
+			background-image: url(/images/choose-login/logo.png);
+			transform-origin: 70% 50%;
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+			background-position: center;
+			&:hover {
+			}
+		}
+	}
+	.logout-container {
+		width: calc(93vw - 1vw);
+		height: 10.5vh;
+		margin-left: 1vw;
 		border-bottom-left-radius: 2vw;
 		background: $light-blue;
 		padding: 1vw 0;
 		align-items: center;
-		.MuiGrid-container {
+		.search-container {
 			display: flex;
 			height: 3vw;
+			width: 70%;
 			.MuiGrid-item {
 				height: 3vw;
 			}
+		}
+		.action-container {
+			width: 30%;
+			justify-content: flex-end;
 		}
 		.search-input {
 			display: block;
