@@ -11,14 +11,14 @@
 		L34,7.022z"/>
 	</svg>
 	<svg id="more-thin" viewBox="0 0 38 38">
-		<circle fill="none" stroke="#c43c30" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" cx="19" cy="19" r="1"/>
-		<circle fill="none" stroke="#c43c30" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" cx="31.636" cy="19" r="1"/>
-		<circle fill="none" stroke="#c43c30" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" cx="6.364" cy="19" r="1"/>
+		<circle fill="#c43c30" stroke="#c43c30" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" cx="19" cy="19" r="1"/>
+		<circle fill="#c43c30" stroke="#c43c30" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" cx="31.636" cy="19" r="1"/>
+		<circle fill="#c43c30" stroke="#c43c30" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" cx="6.364" cy="19" r="1"/>
 	</svg>
 	<svg id="more-thick" viewBox="0 0 38 38">
-		<circle fill="none" stroke="#c43c30" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" cx="19" cy="19" r="1"/>
-		<circle fill="none" stroke="#c43c30" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" cx="31.636" cy="19" r="1"/>
-		<circle fill="none" stroke="#c43c30" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" cx="6.364" cy="19" r="1"/>
+		<circle fill="#c43c30" stroke="#c43c30" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" cx="19" cy="19" r="1"/>
+		<circle fill="#c43c30" stroke="#c43c30" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" cx="31.636" cy="19" r="1"/>
+		<circle fill="#c43c30" stroke="#c43c30" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" cx="6.364" cy="19" r="1"/>
 	</svg>
 	<svg id="search-thin" viewBox="0 0 38 38">
 		<circle fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#C33C2F" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" cx="20.402" cy="17.599" r="12.29"/>
@@ -27,6 +27,9 @@
 	<svg id="search-thick" viewBox="0 0 38 38">
 		<circle fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#C33C2F" stroke-width="4" stroke-linecap="round" stroke-miterlimit="10" cx="20.402" cy="17.599" r="12.29"/>
 		<line fill="none" stroke="#C33C2F" stroke-width="4" stroke-linecap="round" stroke-miterlimit="10" x1="11.2" y1="26.8" x2="5.308" y2="32.692"/>
+	</svg>
+	<svg id="logo" viewBox="0 0 38 38">
+
 	</svg>
 	<svg id="bell-empty" viewBox="0 0 38 38">
 		<path fill-rule="evenodd" clip-rule="evenodd" d="M18.51,34c-0.101-0.082-0.23-0.074-0.348-0.103
