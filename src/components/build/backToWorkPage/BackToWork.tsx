@@ -550,13 +550,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   renderSortAndFilterBox = () => {
-    const { filters } = this.state;
-
-    let filterPresent =
-      filters.draft || filters.build || filters.review || filters.publish
-        ? true
-        : false;
-
     let draft = 0;
     let review = 0;
     let build = 0;
