@@ -4,20 +4,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import './categoriseBuild.scss'
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 import { UniqueComponentProps } from '../types';
+import QuestionImageDropZone from '../../baseComponents/QuestionImageDropzone';
+import {SortCategory, QuestionValueType, SortAnswer} from 'components/interfaces/sort';
 
-
-interface Answer {
-  value: string;
-}
-
-interface SortCategory {
-  name: string;
-  answers: Answer[];
-  height: string;
-}
 
 export interface CategoriseData {
-  categories: SortCategory[]
+  categories: SortCategory[];
 }
 
 export interface CategoriseBuildProps extends UniqueComponentProps {
@@ -29,7 +21,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
 }) => {
   const [categoryHeight, setCategoryHeight] = React.useState('0%');
 
-  const newAnswer = () => ({ value: "" });
+  const newAnswer = () => ({ value: "", valueFile: "", type: QuestionValueType.String });
   const newCategory = () => ({ name: "", answers: [newAnswer()], height: '0%' })
 
   if (!data.categories) {
@@ -67,6 +59,8 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
 
   const answerChanged = (answer: any, event: any) => {
     answer.value = event.target.value;
+    answer.valueFile = '';
+    answer.type = QuestionValueType.String;
     update();
   }
 
@@ -99,10 +93,52 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     save();
   }
 
+
+  const renderAnswer = (category: SortCategory, answer: SortAnswer, key: number) => {
+    let customClass = '';
+    if (answer.type === QuestionValueType.Image) {
+      customClass = 'sort-image';
+    }
+
+    const setImage = (fileName: string) => {
+      if (locked) {return;}
+      answer.value = "";
+      answer.valueFile = fileName;
+      answer.type = QuestionValueType.Image;
+      update();
+      save();
+    }
+  
+    return (
+      <div style={{position: 'relative'}} key={key} className={customClass}>
+        {
+          (category.answers.length > 1)
+            ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(category, key)} />
+            : ""
+        }
+        <input
+          disabled={locked}
+          value={answer.value}
+          placeholder="Enter Answer..."
+          className={validationRequired && !answer.value ? "invalid answer" : "answer"}
+          onBlur={() => save()}
+          onChange={(event: any) => { answerChanged(answer, event) }}
+        />
+        <QuestionImageDropZone
+          answer={answer}
+          type={answer.type || QuestionValueType.None}
+          fileName={answer.valueFile}
+          locked={locked}
+          update={setImage}
+        />
+      </div>
+    );
+  }
+
   const renderCategory = (category: SortCategory, key: number) => {
     return (
-      <div>
-        <div className="categorise-box" key={key}>
+      <div key={key}>
+        <div className="categorise-box">
           {
             (state.categories.length > 2) ? <DeleteIcon className="right-top-icon" onClick={() => removeCategory(key)} /> : ""
           }
@@ -115,25 +151,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             onChange={(event) => categoryChanged(category, event)}
           />
           {
-            category.answers.map((answer, key) => {
-              return (
-                <div style={{position: 'relative'}} key={key}>
-                  {
-                    (category.answers.length > 1)
-                      ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(category, key)} />
-                      : ""
-                  }
-                  <input
-                    disabled={locked}
-                    value={answer.value}
-                    placeholder="Enter Answer..."
-                    className={validationRequired && !answer.value ? "invalid" : ""}
-                    onBlur={() => save()}
-                   onChange={(event: any) => { answerChanged(answer, event) }}
-                  />
-                </div>
-              );
-            })
+            category.answers.map((answer, key) => renderAnswer(category, answer, key))
           }
         </div>
         <AddAnswerButton

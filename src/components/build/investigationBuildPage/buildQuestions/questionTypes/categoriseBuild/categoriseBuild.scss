@@ -18,26 +18,7 @@
     margin-left: 1.25%;
     width: 97.5%;
 
-
-    .left-ckeckbox {
-      position: absolute;
-      z-index: 1;
-      padding: 0.45vw;
-      left: 0.1vw;
-      top: 0.5vw;
-      span {
-        svg {
-          height: $bin-size !important;
-          width: $bin-size !important;
-        }
-      }
-    }
-
-    .Mui-checked {
-      color: $orange;
-    }
-
-    input:not([type='checkbox']) {
+    input {
       border-radius: 0.4vw;
       width: 84%;
       text-align: center;
@@ -48,14 +29,15 @@
       opacity: 0.8;
       font-size: $answer-input-text-size;
       font-family: $font-family-regular;
-      height: $answer-height !important;
+      height: 2.3vw !important;
     }
 
-    .MuiCheckbox-root {
-      margin-top: 0.6vw;
+    input.answer {
+      padding-top: 8%;
     }
-    input[type='checkbox'] {
-      height: 100% !important;
+
+    .sort-image input {
+      padding-top: 9.5vh;
     }
   }
 }
