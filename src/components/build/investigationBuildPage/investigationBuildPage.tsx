@@ -87,11 +87,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let initSynthesis = props.brick ? props.brick.synthesis as string : "";
   const [synthesis, setSynthesis] = React.useState(initSynthesis);
   useEffect(() => {
-    if (props.brick && props.brick.synthesis) {
-      setSynthesis(props.brick.synthesis)
-    }
-    if (props.brick && props.brick.locked) {
-      setLock(true);
+    if (props.brick) {
+      if (props.brick.id === brickId) { 
+        if (props.brick.synthesis || props.brick.synthesis === '') {
+          setSynthesis(props.brick.synthesis)
+        }
+        if (props.brick.locked) {
+          setLock(true);
+        }
+      }
     }
   }, [props.brick]);
   /* Synthesis */
