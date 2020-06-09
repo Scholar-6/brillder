@@ -111,7 +111,7 @@ const validateSort = (comp: any) => {
       if (!c.name) {
         return true;
       }
-      const invalid = c.answers.find((a:any) => !a.value);
+      const invalid = c.answers.find(validateImageAndText);
       if (invalid) {
         return true;
       }
