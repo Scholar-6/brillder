@@ -9,6 +9,19 @@ export function parseDataToArray(value: string): Array<string> {
   }
 }
 
-export function isMathJax(el: string) {
+function isMathType(el: string) {
   return el.indexOf('<math xmlns="http://www.w3.org/1998/Math/MathML">') >= 0;
+}
+
+function isChemType(el: string) {
+  return el.indexOf('<math class="wrs_chemistry" xmlns="http://www.w3.org/1998/Math/MathML">');
+}
+
+export function isMathJax(el: string) {
+  if (isMathType(el)) {
+    return true;
+  } else if (isChemType(el)) {
+    return true;
+  }
+  return false;
 }
