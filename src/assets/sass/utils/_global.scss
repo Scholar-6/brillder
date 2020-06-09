@@ -28,6 +28,11 @@ input:focus {
 	outline: none;
 }
 
+.w100 { width: 100% !important; }
+.h100 { height: 100% !important; }
+
+.text-orange { color: $orange !important; }
+
 .btn-transparent {
 	background: transparent !important;
 	border: 0 !important;
@@ -66,7 +71,7 @@ input:focus {
 		}
 		&.active {
 			visibility: visible;
-				opacity: 1;
+			opacity: 1;
 		}
 	}
 	&:hover,
@@ -120,7 +125,6 @@ input:focus {
 		margin: 0px;
 	}
 }
-
 
 .your-bricks-list {
 	position: relative;
@@ -236,21 +240,110 @@ input:focus {
 	}
 }
 
-
 .page-header {
-	height: 10.5vh;
-	.logout-container {
+	.home-button-container {
+		z-index: 1000;
+		width: calc(6vw - 1vw);
+		border-bottom-right-radius: 2vw;
+		background: $light-blue;
 		height: 10.5vh;
+		padding: 1vw;
+		margin-right: 1vw;
+		.home-button {
+			cursor: pointer;
+			height: 6.3vh;
+			width: 6.3vh;
+			display: block;
+			&:hover {
+				.smoke-container {
+					display: flex;
+				}
+			}
+		}
+		.smoke-container {
+			display: none;
+			position: absolute;
+			width: 2vw;
+			height: 2vw;
+			margin: 0;
+			left: -0.4vw;
+			top: -1.8vw;
+			z-index: 999;
+			.smoke-1,
+			.smoke-2,
+			.smoke-3 {
+				opacity: 0;
+			}
+			.smoke-1 {
+				animation: shift 2s linear 0.5s infinite;
+			}
+			.smoke-2 {
+				animation: shift-2 3s linear 0.6s infinite;
+			}
+			.smoke-3 {
+				animation: shift-3 4s linear 1.2s infinite;
+			}
+			@keyframes shift {
+				0% {
+					transform: translate(10px, 50px);
+					opacity: 1;
+				}
+				80% {
+					opacity: 0;
+				}
+
+				100% {
+					transform: translate(10px, 0px);
+					opacity: 0;
+				}
+			}
+			@keyframes shift-2 {
+				0% {
+					transform: translate(0, 50px);
+					opacity: 1;
+				}
+				80% {
+					opacity: 0;
+				}
+				100% {
+					transform: translate(0, 0);
+					opacity: 0;
+				}
+			}
+			@keyframes shift-3 {
+				0% {
+					opacity: 1;
+					transform: translate(0px, 80px);
+				}
+				80% {
+					opacity: 0;
+				}
+				100% {
+					transform: translate(0, 0);
+					opacity: 0;
+				}
+			}
+		}
+	}
+	.logout-container {
+		width: calc(94vw - 1vw);
+		height: 10.5vh;
+		margin-left: 1vw;
 		border-bottom-left-radius: 2vw;
 		background: $light-blue;
 		padding: 1vw 0;
 		align-items: center;
-		.MuiGrid-container {
+		.search-container {
 			display: flex;
 			height: 3vw;
+			width: 70%;
 			.MuiGrid-item {
 				height: 3vw;
 			}
+		}
+		.action-container {
+			width: 30%;
+			justify-content: flex-end;
 		}
 		.search-input {
 			display: block;

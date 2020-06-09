@@ -24,8 +24,8 @@ class PageHeader extends Component<UsersListProps> {
     return (
       <Grid container direction="row" className="page-header">
         <HomeButton link="/build" />
-        <Grid container className="logout-container"  style={{width: '92.35vw'}}>
-          <Grid container style={{width: '60vw'}} direction="row">
+        <Grid container className="logout-container">
+          <Grid container  direction="row" className="search-container">
             <Grid item>
               <div className="search-button svgOnHover" onClick={() => this.props.search()}>
 								<svg className="svg svg-default">
@@ -45,7 +45,7 @@ class PageHeader extends Component<UsersListProps> {
               />
             </Grid>
           </Grid>
-          <Grid container style={{width: '32.35vw'}} direction="row" justify="flex-end">
+          <Grid container direction="row" className="action-container">
             <Grid item>
               <div className="bell-button svgOnHover">
 								<svg className="svg svg-default">
