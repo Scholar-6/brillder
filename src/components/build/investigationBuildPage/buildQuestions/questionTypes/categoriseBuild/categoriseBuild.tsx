@@ -42,8 +42,10 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       }
       category.height = 'auto';
       for (let answer of category.answers) {
-        if (!answer.value) {
-          category.height = "0%";
+        if (answer.type !== QuestionValueType.Image) {
+          if (!answer.value) {
+            category.height = "0%";
+          }
         }
       }
       categories.push(category);
