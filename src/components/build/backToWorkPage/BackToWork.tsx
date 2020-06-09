@@ -788,7 +788,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   render() {
     return (
       <div className="back-to-work-page">
-        <div className="bricks-upper-part">
+        <div className="upper-part">
           <PageHeader
             searchPlaceholder="Search Ongoing Projects & Published Bricks…"
             search={() => this.search()}

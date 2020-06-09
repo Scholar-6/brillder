@@ -570,7 +570,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     const {history} = this.props;
     return (
       <div className="user-list-page">
-        <div className="users-upper-part">
+        <div className="upper-part">
           <PageHeader
             searchPlaceholder="Search by Name,  Email or Subject"
             search={() => this.search()}
