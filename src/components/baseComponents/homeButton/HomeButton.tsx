@@ -109,25 +109,29 @@ class HomeButtonComponent extends React.Component<any, HomeButtonState> {
 					// onMouseLeave={() => this.onMouseLeaveHandler()}
 					onClick={() => this.onClick()}>
 					{/* <div ref={this.state.ref} /> */}\
-					<svg className="svg svg-default">
-						<use href={sprite + "#logo"} />
+					<svg className="svg w100 h100 svg-default">
+						<use href={sprite + "#logo"} className="text-orange" />
 					</svg>
-					<svg className="svg colored">
-						<use href={sprite + "#logo-hover"} />
+					<svg className="svg w100 h100 colored">
+						<use href={sprite + "#logo-home"} className="text-orange" />
 					</svg>
 					<div className="smoke-container">
-						<svg width="80px" height="73px" viewBox="0 0 31 73">
-							<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-								<g className="smokes" transform="translate(2.000000, 2.000000)" stroke="#BEBEBE" stroke-width="5">
-									<g className="smoke-1">
-										<path id="Shape1" d="M0.5,8.8817842e-16 C0.5,8.8817842e-16 3.5,5.875 3.5,11.75 C3.5,17.625 0.5,17.625 0.5,23.5 C0.5,29.375 3.5,29.375 3.5,35.25 C3.5,41.125 0.5,41.125 0.5,47"></path>
-									</g>
-									<g className="smoke-2">
-										<path id="Shape2" d="M0.5,8.8817842e-16 C0.5,8.8817842e-16 3.5,5.875 3.5,11.75 C3.5,17.625 0.5,17.625 0.5,23.5 C0.5,29.375 3.5,29.375 3.5,35.25 C3.5,41.125 0.5,41.125 0.5,47"></path>
-									</g>
-									<g className="smoke-3">
-										<path id="Shape3" d="M0.5,8.8817842e-16 C0.5,8.8817842e-16 3.5,5.875 3.5,11.75 C3.5,17.625 0.5,17.625 0.5,23.5 C0.5,29.375 3.5,29.375 3.5,35.25 C3.5,41.125 0.5,41.125 0.5,47"></path>
-									</g>
+						<svg width="2vw" height="2vw" viewBox="0 0 2vw 2vw">
+							<g className="smokes" fill="#BEBEBE" stroke="none">
+								<g className="smoke-1">
+									<path id="Shape1" d="M13.247,2.505c-2.09-1.363-3.281-2.4-6.472-2.043C3.583,0.818,4.833,5.601,3.438,5.601
+										c-2.063,0-3.655,4.108-2.536,6.084c1.119,1.979,5.873,0,5.873,0c1.268,1.129,2.874,1.805,4.567,1.924c2.487,0,1.899-3.82,1.899-3.82
+										s5.965,0.27,5.447-2.536c-0.146-0.794,1.824-3.089,0-4.749C16.866,0.844,13.247,2.505,13.247,2.505z"/>
+								</g>
+								<g className="smoke-2">
+									<path id="Shape2" d="M13.247,2.505c-2.09-1.363-3.281-2.4-6.472-2.043C3.583,0.818,4.833,5.601,3.438,5.601
+										c-2.063,0-3.655,4.108-2.536,6.084c1.119,1.979,5.873,0,5.873,0c1.268,1.129,2.874,1.805,4.567,1.924c2.487,0,1.899-3.82,1.899-3.82
+										s5.965,0.27,5.447-2.536c-0.146-0.794,1.824-3.089,0-4.749C16.866,0.844,13.247,2.505,13.247,2.505z"/>
+								</g>
+								<g className="smoke-3">
+									<path id="Shape3" d="M13.247,2.505c-2.09-1.363-3.281-2.4-6.472-2.043C3.583,0.818,4.833,5.601,3.438,5.601
+										c-2.063,0-3.655,4.108-2.536,6.084c1.119,1.979,5.873,0,5.873,0c1.268,1.129,2.874,1.805,4.567,1.924c2.487,0,1.899-3.82,1.899-3.82
+										s5.965,0.27,5.447-2.536c-0.146-0.794,1.824-3.089,0-4.749C16.866,0.844,13.247,2.505,13.247,2.505z"/>
 								</g>
 							</g>
 						</svg>
