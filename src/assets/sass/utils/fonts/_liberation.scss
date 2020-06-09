@@ -1,0 +1,11 @@
+@font-face {
+	font-family: 'Liberation Sans V2';
+	src: url('./assets/fonts/LiberationSans/4ce6215c47b0f14c8b89bb15c9914150.eot'); /* IE9*/
+	src: url('./assets/fonts/LiberationSans/4ce6215c47b0f14c8b89bb15c9914150.eot?#iefix') format('embedded-opentype'),
+		/* IE6-IE8 */ url('./assets/fonts/LiberationSans/4ce6215c47b0f14c8b89bb15c9914150.woff2') format('woff2'),
+		/* chrome、firefox */ url('./assets/fonts/LiberationSans/4ce6215c47b0f14c8b89bb15c9914150.woff') format('woff'),
+		/* chrome、firefox */ url('./assets/fonts/LiberationSans/4ce6215c47b0f14c8b89bb15c9914150.ttf')
+			format('truetype'),
+		/* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+			url('./assets/fonts/LiberationSans/4ce6215c47b0f14c8b89bb15c9914150.svg#Liberation Sans V2') format('svg'); /* iOS 4.1- */
+}

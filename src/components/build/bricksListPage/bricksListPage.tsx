@@ -8,13 +8,11 @@ import axios from "axios";
 import { connect } from "react-redux";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import ClearIcon from "@material-ui/icons/Clear";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grow from "@material-ui/core/Grow";
 
 import brickActions from "redux/actions/brickActions";
-import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
@@ -654,7 +652,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   render() {
     return (
       <div className="bricks-list-page">
-        <div className="bricks-upper-part">
+        <div className="upper-part">
           <PageHeader
             searchPlaceholder="Search Subjects, Topics, Titles & more"
             search={() => this.search()}

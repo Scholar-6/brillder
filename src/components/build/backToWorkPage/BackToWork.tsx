@@ -5,14 +5,12 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  Checkbox,
 } from "@material-ui/core";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import ClearIcon from "@material-ui/icons/Clear";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grow from "@material-ui/core/Grow";
@@ -21,7 +19,6 @@ import "./BackToWork.scss";
 import brickActions from "redux/actions/brickActions";
 import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
-import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
@@ -553,13 +550,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   renderSortAndFilterBox = () => {
-    const { filters } = this.state;
-
-    let filterPresent =
-      filters.draft || filters.build || filters.review || filters.publish
-        ? true
-        : false;
-
     let draft = 0;
     let review = 0;
     let build = 0;
@@ -788,7 +778,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   render() {
     return (
       <div className="back-to-work-page">
-        <div className="bricks-upper-part">
+        <div className="upper-part">
           <PageHeader
             searchPlaceholder="Search Ongoing Projects & Published Bricks…"
             search={() => this.search()}

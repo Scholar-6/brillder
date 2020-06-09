@@ -12,7 +12,6 @@ import axios from "axios";
 import { connect } from "react-redux";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import ClearIcon from "@material-ui/icons/Clear";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
@@ -527,8 +526,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   render() {
     return (
       <div className="dashboard-page">
-        <div className="bricks-upper-part">
-          <Grid container direction="row" className="bricks-header">
+        <div className="upper-part">
+          <Grid container direction="row" className="page-header">
             <HomeButton />
             <Grid
               container
