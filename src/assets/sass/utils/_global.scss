@@ -66,7 +66,7 @@ input:focus {
 		}
 		&.active {
 			visibility: visible;
-				opacity: 1;
+			opacity: 1;
 		}
 	}
 	&:hover,
@@ -120,7 +120,6 @@ input:focus {
 		margin: 0px;
 	}
 }
-
 
 .your-bricks-list {
 	position: relative;
@@ -236,7 +235,6 @@ input:focus {
 	}
 }
 
-
 .page-header {
 	.home-button-container {
 		z-index: 1000;
@@ -246,18 +244,76 @@ input:focus {
 		height: 10.5vh;
 		padding: 1vw 1.4vw;
 		margin-right: 1vw;
-		button.home-button {
+		.home-button {
 			cursor: pointer;
 			height: 6.3vh;
 			width: 6.3vh;
 			display: block;
-			position: absolute;
-			background-image: url(/images/choose-login/logo.png);
-			transform-origin: 70% 50%;
-			background-size: 100% 100%;
-			background-repeat: no-repeat;
-			background-position: center;
 			&:hover {
+				.smoke-container {
+					display: flex;
+				}
+			}
+		}
+		.smoke-container {
+			display: none;
+			position: relative;
+			width: 100px;
+			margin: 0 auto;
+			.smoke-1 {
+				animation: shift 5s linear 0.5s infinite;
+				opacity: 0;
+			}
+			.smoke-2 {
+				animation: shift-2 4s linear 0.6s infinite;
+				opacity: 0;
+			}
+			.smoke-3 {
+				animation: shift-3 5s linear 1.2s infinite;
+				opacity: 0;
+			}
+			@keyframes shift {
+				0% {
+					transform: translate(10px, 155%);
+					opacity: 1;
+				}
+				80% {
+					opacity: 0;
+				}
+
+				100% {
+					transform: translate(10px, 0%);
+					opacity: 0;
+				}
+			}
+			@keyframes shift-2 {
+				0% {
+					transform: translate(0, 155%);
+					opacity: 1;
+				}
+				80% {
+					opacity: 0;
+				}
+				100% {
+					transform: translate(0, 0);
+					opacity: 0;
+				}
+			}
+			@keyframes shift-3 {
+				0% {
+					opacity: 1;
+					transform: translate(-10px, 80px);
+				}
+				80% {
+					opacity: 0;
+				}
+				100% {
+					transform: translate(-10px, 0);
+					opacity: 0;
+				}
+			}
+			.smokes {
+				transform: translateX(20px);
 			}
 		}
 	}
