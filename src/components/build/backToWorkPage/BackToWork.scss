@@ -66,3 +66,47 @@
     }
   }
 }
+
+.back-to-work-page {
+  .round-button {
+    height: 2.1vw;
+    width: 2.1vw;
+    border-radius: 100vw;
+  }
+  .color1 {
+    .round-button,
+    .right-index {
+      background: $orange !important;
+    }
+    svg {
+      color: $orange;
+    }
+  }
+  .color2 {
+    .round-button,
+    .right-index {
+      background: $yellow !important;
+    }
+    svg {
+      color: $yellow;
+    }
+  }
+  .color3 {
+    .round-button,
+    .right-index {
+      background: white !important;
+    }
+    svg {
+      color: white;
+    }
+  }
+  .color4 {
+    .round-button,
+    .right-index {
+      background: $light-green !important;
+    }
+    svg {
+      color: $light-green;
+    }
+  }
+}
