@@ -527,8 +527,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   render() {
     return (
       <div className="dashboard-page">
-        <div className="bricks-upper-part">
-          <Grid container direction="row" className="bricks-header">
+        <div className="upper-part">
+          <Grid container direction="row" className="page-header">
             <HomeButton />
             <Grid
               container
