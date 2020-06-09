@@ -15,7 +15,7 @@ export interface TypeButtonProps {
   setType(e: any): void,
 }
 
-const QuestionTypePage: React.FC<TypeButtonProps> = ({
+const TypeButton: React.FC<TypeButtonProps> = ({
   labels, activeType, questionType, setType, onMouseEnter, onMouseLeave
 }) => {
   const renderLabel = (label: string, i:number) => {
@@ -52,4 +52,4 @@ const QuestionTypePage: React.FC<TypeButtonProps> = ({
   );
 }
 
-export default QuestionTypePage
+export default TypeButton
