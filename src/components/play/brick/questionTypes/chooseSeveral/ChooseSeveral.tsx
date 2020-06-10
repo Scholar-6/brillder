@@ -140,11 +140,11 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     } else {
       if (active >= 0) {
         className += " active";
-      }
-      if (isCorrect === true) {
-        className += " correct";
-      } else if (isCorrect === false) {
-        className += " wrong";
+        if (isCorrect === true) {
+          className += " correct";
+        } else if (isCorrect === false) {
+          className += " wrong";
+        }
       }
       if (!isCorrect) {
         isCorrect = false;
