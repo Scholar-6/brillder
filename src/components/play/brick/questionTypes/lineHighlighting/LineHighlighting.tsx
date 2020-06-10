@@ -80,24 +80,29 @@ class LineHighlighting extends CompComponent<
     this.setState({ lines: this.state.lines });
   }
 
-  renderLine(line: any, index: number) {
-    if (this.props.isPreview) {
-      return (
-        <div key={index}>
-          <span
-            className={line.checked ? "active line" : "line"}
-          >
-            {line.text}
-          </span>
-        </div>
-      );
-    }
+  renderLinePreview(line: any, index: number) {
     return (
       <div key={index}>
         <span
-          className={line.selected ? "active line" : "line"}
-          onClick={() => this.highlighting(index)}
+          className={line.checked ? "active line" : "line"}
         >
+          {line.text}
+        </span>
+      </div>
+    );
+  }
+
+  renderLine(line: any, index: number) {
+    if (this.props.isPreview) {
+      return this.renderLinePreview(line, index);
+    }
+    let className = "line";
+    if (line.selected) {
+      className += " active";
+    }
+    return (
+      <div key={index}>
+        <span className={className} onClick={() => this.highlighting(index)}>
           {line.text}
         </span>
       </div>
