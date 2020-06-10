@@ -15,37 +15,19 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange,
   return (
     <div className="question-type synthesis-page">
       <div className="inner-question-type">
-        <Grid container direction="row">
-          <Grid item md={9}>
-            <DocumentWirisCKEditor
-              data={synthesis}
-              placeholder=""
-              toolbar={[
-                'bold', 'italic', 'fontColor',
-                'superscript', 'subscript', 'strikethrough',
-                'mathType', 'chemType', 'insertTable', 'alignment',
-                'bulletedList', 'numberedList'
-              ]}
-              defaultAlignment="justify"
-              onBlur={() => {}}
-              onChange={onSynthesisChange}
-            />
-          </Grid>
-          <Grid container item md={3}>
-            <div style={{width: '100%'}}>
-              <div className="finish-text">Finished?</div>
-              <div style={{textAlign: 'center'}}>
-                <Button className="submit-button" onClick={() => onReview()}>
-                  <div>
-                    <div>Review</div>
-                    <div>&</div>
-                    <div>Submit</div>
-                  </div>
-                </Button>
-              </div>
-            </div>
-          </Grid>
-        </Grid>
+        <DocumentWirisCKEditor
+          data={synthesis}
+          placeholder=""
+          toolbar={[
+            'bold', 'italic', 'fontColor',
+            'superscript', 'subscript', 'strikethrough',
+            'mathType', 'chemType', 'insertTable', 'alignment',
+            'bulletedList', 'numberedList'
+          ]}
+          defaultAlignment="justify"
+          onBlur={() => {}}
+          onChange={onSynthesisChange}
+        />
       </div>
     </div>
   );
