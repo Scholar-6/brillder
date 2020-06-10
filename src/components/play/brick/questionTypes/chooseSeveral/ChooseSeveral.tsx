@@ -52,14 +52,6 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     return this.state.activeItems;
   }
 
-  getState(entry: number): number {
-    if (this.props.attempt.answer[entry]) {
-      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].answer.toLowerCase().replace(/ /g, '')) {
-        return 1;
-      } else { return -1; }
-    } else { return 0; }
-  }
-
   markLiveChoices(attempt: ComponentAttempt, markIncrement: number) {
     const choices = this.props.component.list;
     for (let [index, choice] of choices.entries()) {

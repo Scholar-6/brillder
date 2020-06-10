@@ -2,7 +2,6 @@ import React from 'react'
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 import './SynthesisPage.scss';
-import { Grid, Button } from '@material-ui/core';
 
 
 export interface SynthesisProps {

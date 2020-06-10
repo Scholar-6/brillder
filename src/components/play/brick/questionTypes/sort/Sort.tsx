@@ -205,13 +205,13 @@ class Sort extends CompComponent<SortProps, SortState> {
     return (
       <div className={className} key={i}>
         <ListItem>
-            {
-              this.props.attempt 
-                ? (this.getState(choice.value) === 1)
-                  ? <DenimTickRect />
-                  : <DenimCrossRect />
-                : <div></div>
-            }
+          {
+            this.props.attempt 
+              ? (this.getState(choice.value) === 1)
+                ? <DenimTickRect />
+                : <DenimCrossRect />
+              : <div></div>
+          }
           <ListItemText>
             {this.renderChoiceContent(choice)}
           </ListItemText>
