@@ -35,9 +35,13 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   constructor(props: VerticalShuffleProps) {
     super(props);
 
-    this.state = {
-      userAnswers: props.component.list
-    };
+    let userAnswers = props.component.list;
+
+    if (this.props.attempt) {
+      userAnswers = this.props.attempt.answer;
+    }
+
+    this.state = { userAnswers };
   }
 
   componentWillUpdate(props: VerticalShuffleProps) {
@@ -94,8 +98,17 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
 
   renderAnswer(answer: any, i: number) {
     let isCorrect = this.checkAttemptAnswer(i);
+    let className = "horizontal-shuffle-answer";
+    if (!this.props.isPreview && this.props.attempt) {
+      if (isCorrect) {
+        className += " correct";
+      } else {
+        className += " wrong";
+      }
+    }
+
     return (
-      <Card className={`horizontal-shuffle-answer ${isCorrect ? 'correct' : ''}`} key={i}>
+      <Card className={className} key={i}>
         <div style={{display: "block"}}>{answer.value}</div>
         <div style={{display: "block"}}>
           <ReviewEachHint
