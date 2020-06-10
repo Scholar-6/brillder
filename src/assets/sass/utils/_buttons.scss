@@ -14,6 +14,13 @@
   &.play-green {
     background-color: $light-green;
     color: white;
+    &:hover {
+      animation-name: pulse;
+      animation-duration: 1s;
+      animation-delay: 0s;
+      animation-iteration-count: 5;
+      animation-timing-function: ease;
+    }
   }
   &.play-white {
     background-color: $tab-grey;
