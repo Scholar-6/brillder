@@ -40,7 +40,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   setActiveItem(activeItem: number) {
     let { activeItems } = this.state;
     let found = activeItems.indexOf(activeItem);
-    if (found >= 0) {  
+    if (found >= 0) {
       activeItems.splice(found, 1);
     } else {
       activeItems.push(activeItem);
@@ -143,7 +143,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   renderData(answer: any) {
     if (answer.answerType === QuestionValueType.Image) {
-      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} width="100%" />;
     } else {
       return <MathInHtml value={answer.value} />;
     }
