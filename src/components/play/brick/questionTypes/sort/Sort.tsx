@@ -10,9 +10,8 @@ import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { ReactSortable } from 'react-sortablejs';
-import DenimCrossRect from 'components/play/components/DenimCrossRect';
-import DenimTickRect from 'components/play/components/DenimTickRect';
 import {SortCategory, SortAnswer, QuestionValueType} from 'components/interfaces/sort';
+import { DragAndDropStatus } from '../pairMatch/interface';
 
 
 interface UserCategory {
@@ -35,6 +34,7 @@ interface SortProps {
 }
 
 interface SortState {
+  status: DragAndDropStatus;
   userCats: UserCategory[];
   choices: any;
   data?: any;
@@ -65,7 +65,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       });
     }
 
-    this.state = { userCats, choices: this.getChoices() };
+    this.state = { status: DragAndDropStatus.None, userCats, choices: this.getChoices() };
   }
 
   UNSAFE_componentWillReceiveProps(props: SortProps) {
@@ -169,20 +169,13 @@ class Sort extends CompComponent<SortProps, SortState> {
   updateCategory(list: any[], index:number) {
     let userCats = this.state.userCats;
     userCats[index].choices = list;
-    this.setState({userCats});
-  }
-
-  renderIcon(index: number) {
-    if (this.props.attempt) {
-      return (
-        <ListItemIcon>
-          {
-            (this.props.attempt.answer[index].index === index) ? <DenimTickRect/> : <DenimCrossRect />
-          }
-        </ListItemIcon>
-      );
+    
+    let status = DragAndDropStatus.Changed;
+    if (this.state.status === DragAndDropStatus.None) {
+      status = DragAndDropStatus.Init;
     }
-    return "";
+    
+    this.setState({ status, userCats });
   }
 
   renderChoiceContent(choice: SortAnswer) {
@@ -204,22 +197,17 @@ class Sort extends CompComponent<SortProps, SortState> {
       className += " image-choice";
     }
     if (!this.props.isPreview && this.props.attempt) {
-      if (isCorrect) {
-        className += " correct";
-      } else {
-        className+= " wrong";
+      if (this.state.status !== DragAndDropStatus.Changed) {
+        if (isCorrect) {
+          className += " correct";
+        } else {
+          className+= " wrong";
+        }
       }
     }
     return (
       <div className={className} key={i}>
         <ListItem>
-          {
-            this.props.attempt 
-              ? isCorrect
-                ? <DenimTickRect />
-                : <DenimCrossRect />
-              : <div></div>
-          }
           <ListItemText>
             {this.renderChoiceContent(choice)}
           </ListItemText>
