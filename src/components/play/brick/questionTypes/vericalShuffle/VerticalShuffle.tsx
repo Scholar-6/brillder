@@ -27,7 +27,14 @@ interface VerticalShuffleProps extends CompQuestionProps {
   answers: number;
 }
 
+enum DragAndDropStatus {
+  None,
+  Init,
+  Changed
+}
+
 interface VerticalShuffleState {
+  status: DragAndDropStatus;
   userAnswers: any[];
 }
 
@@ -42,12 +49,17 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     }
 
     this.state = {
+      status: DragAndDropStatus.None,
       userAnswers: userAnswers
     };
   }
 
   setUserAnswers(userAnswers: any[]) {
-    this.setState({ userAnswers });
+    let status = DragAndDropStatus.Changed;
+    if (this.state.status === DragAndDropStatus.None) {
+      status = DragAndDropStatus.Init;
+    }
+    this.setState({ status, userAnswers });
   }
 
   getAnswer(): any[] {
@@ -117,10 +129,12 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     let className = "vertical-shuffle-choice";
 
     if (!this.props.isPreview && this.props.attempt) {
-      if (isCorrect === true) {
-        className += " correct";
-      } else {
-        className += " wrong";
+      if (this.state.status !== DragAndDropStatus.Changed) {
+        if (isCorrect === true) {
+          className += " correct";
+        } else {
+          className += " wrong";
+        }
       }
     }
     
