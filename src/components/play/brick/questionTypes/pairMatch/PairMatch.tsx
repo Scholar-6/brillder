@@ -21,7 +21,7 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   constructor(props: PairMatchProps) {
     super(props);
-
+    
     const {component} = props;
     if (props.isPreview === true) {
       this.state = {
