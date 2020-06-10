@@ -20,6 +20,7 @@ import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
 import { Hidden, Grid } from '@material-ui/core';
+import { setBrillderTitle } from 'components/services/titleService';
 
 
 export interface BrickAttempt {
@@ -66,6 +67,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     props.fetchBrick(brickId);
     return <div>...Loading brick...</div>
   }
+
+  setBrillderTitle(props.brick.title);
 
   const updateAttempts = (attempt:any, index:number) => {
     attempts[index] = attempt;
