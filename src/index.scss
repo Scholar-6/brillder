@@ -2,9 +2,8 @@
 @import './assets/sass/partials/mixins';
 @import './assets/sass/partials/extensions';
 
-@import './assets/sass/utils/global';
-@import './assets/sass/utils/fonts';
-@import './assets/sass/utils/webkit-ui';
-@import './assets/sass/utils/sidebar';
+@import './assets/sass/utils/utils';
+
+@import './assets/sass/animations/animations';
 
 @import './assets/sass/plugins/ckeditor';
