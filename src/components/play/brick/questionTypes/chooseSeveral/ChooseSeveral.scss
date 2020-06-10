@@ -30,11 +30,20 @@
     font-family: $font-family-regular;
   }
 
-  .choose-choice {background: $tab-grey}
+  .choose-choice {
+    background: $tab-grey;
+    width: 100%;
+  }
+
+  .image-choice {
+    background: inherit;
+    border: 4px solid $lighter-grey !important;
+    width: 100%;
+    padding: 0;
+  }
 
   .choose-choice.active {
-    padding-top: 4px;
-    border: 5px solid white;
+    background: $blue !important;
   }
 
   .choose-choice.correct {

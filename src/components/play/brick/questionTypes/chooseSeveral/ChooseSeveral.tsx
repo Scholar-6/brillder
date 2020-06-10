@@ -137,6 +137,14 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     return "";
   }
 
+  renderIconColumn(choice: any, index: number) {
+    return (
+      <div>
+        {this.renderIcon(choice, index)}
+      </div>
+    );
+  }
+
   renderEachHint(index: number) {
 
   }
@@ -150,7 +158,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   }
 
   renderButton(choice: any, index:number) {
-    let isCorrect:any = false;
+    let isCorrect = this.checkChoice(choice, index);
     let className = "choose-choice";
     let active = this.state.activeItems.find(i => i === index) as number;
 
@@ -162,13 +170,16 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
       if (active >= 0) {
         className += " active";
       }
-      isCorrect = this.checkChoice(choice, index);
       if (isCorrect === true) {
         className += " correct";
       }
       if (!isCorrect) {
         isCorrect = false;
       }
+    }
+    
+    if (choice.answerType === QuestionValueType.Image) {
+      className += " image-choice";
     }
 
     return (
@@ -179,10 +190,10 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
       >
         <div style={{width: '100%'}}>
         <Grid container direction="row">
-          <Grid item xs={1}>
-            {this.renderIcon(choice, index)}
-          </Grid>
-          <Grid item xs={11}>
+          {
+            isCorrect !== null ? this.renderIconColumn(choice, index) : ""
+          }
+          <Grid item xs={12}>
             {this.renderData(choice)}
           </Grid>
         </Grid>
@@ -192,7 +203,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
             <ReviewEachHint
               isPhonePreview={this.props.isPreview}
               attempt={this.props.attempt}
-              isCorrect={isCorrect}
+              isCorrect={isCorrect ? isCorrect : false}
               index={index}
               hint={this.props.question.hint}
             />
