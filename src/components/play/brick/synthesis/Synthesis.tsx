@@ -74,9 +74,9 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, ...p
               <h2>Synthesis</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>
+              <div style={{width: '100%'}}>
                 <MathInHtml value={newSynthesis} />
-              </Typography>
+              </div>
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <div className="begin-row">

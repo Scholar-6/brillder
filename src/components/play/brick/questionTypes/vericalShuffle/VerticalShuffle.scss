@@ -16,12 +16,20 @@
     padding-top: 14px;
     padding-bottom: 14px;
     width: 100%;
+    display: block;
     .MuiGrid-root {
       margin: 0;
     }
   }
-  .vertical-shuffle-choice.correct .question-hint {
-    background: white;
+  .vertical-shuffle-choice.correct {
+    background: $light-green;
+
+    .question-hint {
+      background: white;
+    }
+  }
+  .vertical-shuffle-choice.wrong {
+    background: $orange;
   }
   .question-hint-global {
     margin-top: 10px;

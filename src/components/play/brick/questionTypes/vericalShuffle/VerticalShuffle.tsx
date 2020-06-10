@@ -114,26 +114,32 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
   renderAnswer(answer:any, i: number) {
     let isCorrect = this.checkAttemptAnswer(i);
+    let className = "vertical-shuffle-choice";
+
+    if (!this.props.isPreview && this.props.attempt) {
+      if (isCorrect === true) {
+        className += " correct";
+      } else {
+        className += " wrong";
+      }
+    }
+    
     return (
-      <div
-        style={{display: "block"}}
-        key={i}
-        className={`vertical-shuffle-choice ${isCorrect ? 'correct' : ''}`}
-      >
-          <Grid container direction="row" justify="center">
-            {answer.value}
-          </Grid>
-          <Grid container direction="row" justify="center">
-            <ReviewEachHint
-              isPhonePreview={this.props.isPreview}
-              attempt={this.props.attempt}
-              isCorrect={isCorrect}
-              index={i}
-              hint={this.props.question.hint}
-            />
-          </Grid>
+      <div key={i} className={className}>
+        <Grid container direction="row" justify="center">
+          {answer.value}
+        </Grid>
+        <Grid container direction="row" justify="center">
+          <ReviewEachHint
+            isPhonePreview={this.props.isPreview}
+            attempt={this.props.attempt}
+            isCorrect={isCorrect}
+            index={i}
+            hint={this.props.question.hint}
+          />
+        </Grid>
       </div>
-    )
+    );
   }
 
   render() {
