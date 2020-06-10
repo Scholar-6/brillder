@@ -1,0 +1,30 @@
+.play-preview {
+  width: 4.5vw;
+  height: 4.5vw;
+  position: fixed;
+  font-size: 1.15vw;
+  top: 1.4vw;
+  right: 1.4vw;
+  letter-spacing: 0.05vw;
+  z-index: 1000;
+  cursor: pointer;
+  outline: 0 !important;
+  @extend %radCircle;
+  @extend %b0;
+  &.play-green {
+    background-color: $light-green;
+    color: white;
+  }
+  &.play-white {
+    background-color: $tab-grey;
+    color: $grey;
+  }
+  .svg {
+    width: 2.5vw;
+    height: 2.5vw;
+    margin-left: 0.2vw;
+  }
+  .hidden {
+    opacity: 0;
+  }
+}
