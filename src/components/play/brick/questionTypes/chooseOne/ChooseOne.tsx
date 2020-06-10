@@ -117,14 +117,23 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       if (choice.checked) {
         className += " correct";
       }
-    } else {
-      if (index === activeItem) {
-        className += " active";
-      }
+    } else if (index === activeItem) {
+      className += " active";
     }
 
-    if (isCorrect) {
-      className += " correct";
+    if (this.props.attempt && index === activeItem) {
+      let {answer} = this.props.attempt;
+      if (answer >= 0) {
+        let intAnswer = parseInt(answer);
+        console.log(intAnswer, index);
+        if (intAnswer === index) {
+          if (isCorrect) {
+            className += " correct";
+          } else if (isCorrect === false) {
+            className += " wrong";
+          }
+        }
+      }
     }
 
     if (choice.answerType === QuestionValueType.Image) {

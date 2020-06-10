@@ -44,11 +44,15 @@
   }
 
   .choose-choice.correct {
-    background: $light-green !important;
+    background: $light-green;
 
     .question-hint {
       background: white;
     }
+  }
+
+  .choose-choice.wrong {
+    background: $orange;
   }
 
   .question-hint-global {
