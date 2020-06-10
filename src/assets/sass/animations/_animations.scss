@@ -1,0 +1,18 @@
+.animated {
+  animation-fill-mode: both;
+  animation-duration: 400ms;
+  animation-timing-function: easeOutCirc;
+  &.infinite {
+      animation-iteration-count: infinite;
+  }
+}
+
+@for $delay from 1 through 100 {
+  $i: $delay * 100;
+  .delay-#{$i} {
+      animation-delay: $i + ms !important;
+  }
+}
+
+@import './pulse';
+@import './smoke';
