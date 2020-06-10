@@ -223,7 +223,12 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
             item.index = index;
             item.hint = question.hint.list[index];
           }
-          const choices = c.list.map((a:any) => ({ value: a.value, index: a.index}));
+          const choices = c.list.map((a:any) => ({
+            value: a.value,
+            index: a.index,
+            valueFile: a.valueFile,
+            answerType: a.answerType
+          }));
           c.choices = shuffle(choices);
         }
       });
