@@ -135,7 +135,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Introduction brick={props.brick} />
         </Route>
         <Route exac path="/play/brick/:brickId/live">
-          <Live status={status} questions={props.brick.questions} brickId={props.brick.id} updateAttempts={updateAttempts} finishBrick={finishBrick} />
+          <Live
+            status={status}
+            questions={props.brick.questions}
+            brickId={props.brick.id}
+            updateAttempts={updateAttempts}
+            finishBrick={finishBrick}
+          />
         </Route>
         <Route exac path="/play/brick/:brickId/provisionalScore">
           <ProvisionalScore status={status} brick={props.brick} attempts={attempts} />
