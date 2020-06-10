@@ -11,6 +11,11 @@ import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 
+enum DragAndDropStatus {
+  None,
+  Init,
+  Changed
+}
 
 interface HorizontalShuffleChoice {
   value: string;
@@ -28,6 +33,7 @@ interface VerticalShuffleProps extends CompQuestionProps {
 }
 
 interface HorizontalShuffleState {
+  status: DragAndDropStatus;
   userAnswers: any[];
 }
 
@@ -41,7 +47,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
       userAnswers = this.props.attempt.answer;
     }
 
-    this.state = { userAnswers };
+    this.state = { status: DragAndDropStatus.None, userAnswers };
   }
 
   componentWillUpdate(props: VerticalShuffleProps) {
@@ -54,7 +60,11 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   }
 
   setUserAnswers(userAnswers: any[]) {
-    this.setState({ userAnswers });
+    let status = DragAndDropStatus.Changed;
+    if (this.state.status === DragAndDropStatus.None) {
+      status = DragAndDropStatus.Init;
+    }
+    this.setState({ status, userAnswers });
   }
 
   getAnswer(): any[] {
@@ -100,10 +110,12 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     let isCorrect = this.checkAttemptAnswer(i);
     let className = "horizontal-shuffle-answer";
     if (!this.props.isPreview && this.props.attempt) {
-      if (isCorrect) {
-        className += " correct";
-      } else {
-        className += " wrong";
+      if (this.state.status !== DragAndDropStatus.Changed) {
+        if (isCorrect) {
+          className += " correct";
+        } else {
+          className += " wrong";
+        }
       }
     }
 
