@@ -14,7 +14,14 @@
       cursor: pointer;
     }
     .line.active {
+      background: $blue;
+    }
+
+    .line.correct {
       background: $light-green;
+    }
+    .line.wrong {
+      background: $orange;
     }
   }
 }

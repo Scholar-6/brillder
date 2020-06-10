@@ -100,6 +100,15 @@ class LineHighlighting extends CompComponent<
     if (line.selected) {
       className += " active";
     }
+
+    if (this.props.attempt && line.selected) {
+      if (this.props.attempt.answer.indexOf(index) !== -1 && line.checked === true) {
+        className += " correct";
+      } else {
+        className += " wrong";
+      }
+    }
+
     return (
       <div key={index}>
         <span className={className} onClick={() => this.highlighting(index)}>
