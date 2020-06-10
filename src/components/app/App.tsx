@@ -32,8 +32,11 @@ import StudentRoute from './StudentRoute';
 import AuthRedirectRoute from './AuthRedirectRoute';
 import AllUsersRoute from './AllUsersRoute';
 
+import {setBrillderTitle} from 'components/services/titleService';
+
 
 const App: React.FC = (props: any) => {
+  setBrillderTitle();
   let history = useHistory();
 
   axios.interceptors.response.use(function (response) {
