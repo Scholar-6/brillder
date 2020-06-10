@@ -9,8 +9,6 @@ import './PairMatch.scss';
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import DenimCrossRect from 'components/play/components/DenimCrossRect';
-import DenimTickRect from 'components/play/components/DenimTickRect';
 import {QuestionValueType} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 import {Answer} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/pairMatchBuild/types';
 import { PairMatchProps, PairMatchState, DragAndDropStatus } from './interface';
@@ -73,21 +71,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return mark(this.props.component.list, attempt, prev);
   }
 
-  renderIcon(index: number) {
-    if (this.props.attempt) {
-      return (
-        <ListItemIcon>
-          {
-            (this.props.attempt.answer[index].index === index)
-              ? <DenimTickRect/>
-              : <DenimCrossRect />
-          }
-        </ListItemIcon>
-      );
-    }
-    return "";
-  }
-
   renderOptionContent(answer: Answer) {
     if (answer.optionType && answer.optionType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} width="100%" />;
@@ -144,7 +127,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     }
     return (
       <ListItem key={i} className={className}>
-        {this.renderIcon(i)}
         <div className="option-container">
           <div className="MuiListItemText-root">
             {this.renderOptionContent(item as any)}
