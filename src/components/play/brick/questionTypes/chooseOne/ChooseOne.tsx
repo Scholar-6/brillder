@@ -12,12 +12,8 @@ import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import {checkVisibility} from '../../../services/hintService';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
+import {ChooseOneChoice} from 'components/interfaces/chooseOne';
 
-
-interface ChooseOneChoice {
-  value: string;
-  checked: boolean;
-}
 
 interface ChooseOneComponent {
   type: number;
@@ -103,7 +99,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     return "";
   }
 
-  renderData(answer: any) {
+  renderData(answer: ChooseOneChoice) {
     if (answer.answerType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
     } else {
@@ -137,6 +133,10 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
     if (isCorrect) {
       className += " correct";
+    }
+
+    if (choice.answerType === QuestionValueType.Image) {
+      className += " image-choice";
     }
 
     return (
