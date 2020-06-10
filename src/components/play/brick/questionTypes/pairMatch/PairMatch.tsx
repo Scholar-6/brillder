@@ -13,7 +13,7 @@ import DenimCrossRect from 'components/play/components/DenimCrossRect';
 import DenimTickRect from 'components/play/components/DenimTickRect';
 import {QuestionValueType} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 import {Answer} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/pairMatchBuild/types';
-import { PairMatchProps, PairMatchState } from './interface';
+import { PairMatchProps, PairMatchState, DragAndDropStatus } from './interface';
 import {mark} from './service';
 import MathInHtml from '../../baseComponents/MathInHtml';
 
@@ -21,23 +21,21 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   constructor(props: PairMatchProps) {
     super(props);
+    let status = DragAndDropStatus.None;
+    let userAnswers = [];
     
     const {component} = props;
     if (props.isPreview === true) {
-      this.state = {
-        userAnswers: component.list ? component.list : [],
-      };
+      userAnswers = component.list ? component.list : [];
     } else {
       if (this.props.attempt) {
         let choices = this.props.attempt.answer;
-        let userAnswers = Object.assign([], choices);
-        this.state = { userAnswers };
+        userAnswers = Object.assign([], choices);
       } else {
-        this.state = {
-          userAnswers: component.choices ? component.choices : [],
-        };
+        userAnswers =  component.choices ? component.choices : [];
       }
     }
+    this.state ={ status, userAnswers };
   }
 
   componentWillUpdate(props: PairMatchProps) {
@@ -49,7 +47,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   }
 
   setUserAnswers(userAnswers: any[]) {
-    this.setState({ userAnswers });
+    let status = DragAndDropStatus.Changed;
+    if (this.state.status === DragAndDropStatus.None) {
+      status = DragAndDropStatus.Init;
+    }
+    this.setState({ status, userAnswers });
   }
 
   getAnswer(): any[] {
@@ -114,11 +116,13 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       className += " image-choice";
     }
     if (this.props.attempt) {
-      let state = this.getState(answer.index);
-      if (state === 1) {
-        className += " correct";
-      } else {
-        className += " wrong";
+      if (this.state.status !== DragAndDropStatus.Changed) {
+        let state = this.getState(answer.index);
+        if (state === 1) {
+          className += " correct";
+        } else {
+          className += " wrong";
+        }
       }
     }
     return (
