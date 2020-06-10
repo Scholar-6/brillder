@@ -46,6 +46,21 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     this.setState({ userAnswers });
   }
 
+  getAnswer(): any[] {
+    return this.state.userAnswers;
+  }
+
+  getState(entry: number): number {
+    if (this.props.attempt?.answer[entry]) {
+      if (
+        this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') ===
+        this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')
+      ) {
+        return 1;
+      } else { return -1; }
+    } else { return 0; }
+  }
+
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
     return mark(this.props.component.list, attempt, prev);
   }
@@ -55,7 +70,9 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       return (
         <ListItemIcon>
           {
-            (this.props.attempt.answer[index].index === index) ? <DenimTickRect/> : <DenimCrossRect />
+            (this.props.attempt.answer[index].index === index)
+              ? <DenimTickRect/>
+              : <DenimCrossRect />
           }
         </ListItemIcon>
       );

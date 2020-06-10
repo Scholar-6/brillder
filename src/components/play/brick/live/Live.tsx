@@ -100,7 +100,15 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...prop
 
   const renderQuestion = (question: Question, index: number) => {
     let isLastOne = (questions.length - 1) === activeStep;
-    return <QuestionLive question={question} answers={answers[index]} isLastOne={isLastOne} next={next} ref={questionRefs[index]} />
+    return (
+      <QuestionLive
+        question={question}
+        answers={answers[index]}
+        isLastOne={isLastOne}
+        next={next}
+        ref={questionRefs[index]}
+      />
+    );
   }
 
   return (
