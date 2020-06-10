@@ -198,10 +198,13 @@ class Sort extends CompComponent<SortProps, SortState> {
   }
 
   renderChoice(choice: SortAnswer, i: number) {
+    let className="sortable-item";
+    if (choice.answerType === QuestionValueType.Image) {
+      className += " image-choice";
+    }
     return (
-      <div className="sortable-item" key={i}>
+      <div className={className} key={i}>
         <ListItem>
-          <ListItemIcon>
             {
               this.props.attempt 
                 ? (this.getState(choice.value) === 1)
@@ -209,7 +212,6 @@ class Sort extends CompComponent<SortProps, SortState> {
                   : <DenimCrossRect />
                 : <div></div>
             }
-          </ListItemIcon>
           <ListItemText>
             {this.renderChoiceContent(choice)}
           </ListItemText>
