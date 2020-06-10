@@ -28,9 +28,15 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         userAnswers: component.list ? component.list : [],
       };
     } else {
-      this.state = {
-        userAnswers: component.choices ? component.choices : [],
-      };
+      if (this.props.attempt) {
+        let choices = this.props.attempt.answer;
+        let userAnswers = Object.assign([], choices);
+        this.state = { userAnswers };
+      } else {
+        this.state = {
+          userAnswers: component.choices ? component.choices : [],
+        };
+      }
     }
   }
 
@@ -53,7 +59,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   getState(entry: number): number {
     if (this.props.attempt?.answer[entry]) {
       if (
-        this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') ===
+        this.props.attempt.answer[entry].value.toLowerCase().replace(/ /g, '') ===
         this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')
       ) {
         return 1;
@@ -102,12 +108,18 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     }
   }
 
-  renderAnswer(answer: Answer, i: number) {
+  renderAnswer(answer: any, i: number) {
     let className = "pair-match-play-choice";
     if (answer.answerType === QuestionValueType.Image) {
       className += " image-choice";
     }
     if (this.props.attempt) {
+      let state = this.getState(answer.index);
+      if (state === 1) {
+        className += " correct";
+      } else {
+        className += " wrong";
+      }
     }
     return (
       <div key={i} className={className}>

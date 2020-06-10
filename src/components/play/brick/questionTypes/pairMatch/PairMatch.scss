@@ -97,4 +97,10 @@
     width: 100%;
     padding: 0;
   }
+  .correct {
+    background: $light-green;
+  }
+  .wrong {
+    background: $orange;
+  }
 }
