@@ -19,7 +19,7 @@
     margin-bottom: 5px;
     margin-top: 5px;
     color: $dark-blue;
-    text-align: center;
+    text-align: center !important;
     text-transform: none !important;
     border-radius: 0 !important;
     width: 100%;
@@ -28,6 +28,10 @@
     opacity: 1;
     font-size: $answer-input-text-size;
     font-family: $font-family-regular;
+
+    p {
+      text-align: center !important;
+    }
   }
 
   .choose-choice {
@@ -43,7 +47,7 @@
   }
 
   .choose-choice.active {
-    background: $blue !important;
+    background: $blue;
   }
 
   .choose-choice.correct {
@@ -52,5 +56,8 @@
     .question-hint {
       background: white;
     }
+  }
+  .choose-choice.wrong {
+    background: $orange;
   }
 }

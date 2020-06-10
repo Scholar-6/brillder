@@ -4,8 +4,6 @@ import { Button, Grid } from '@material-ui/core';
 import './ChooseSeveral.scss';
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
-import DenimTickRect from 'components/play/components/DenimTickRect';
-import DenimCrossRect from 'components/play/components/DenimCrossRect';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from 'components/play/brick/baseComponents/ReviewGlobalHint';
 import {CompQuestionProps} from '../types';
@@ -119,26 +117,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     return null;
   }
 
-  renderIcon(choice: any, index: number) {
-    const isCorrect = this.checkChoice(choice, index);
-    if (isCorrect === true) {
-      return <DenimTickRect />;
-    } else if (isCorrect === false) {
-      return <DenimCrossRect />;
-    }
-    return "";
-  }
-
-  renderIconColumn(choice: any, index: number) {
-    return (
-      <div>
-        {this.renderIcon(choice, index)}
-      </div>
-    );
-  }
-
   renderEachHint(index: number) {
-
   }
 
   renderData(answer: any) {
@@ -164,6 +143,8 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
       }
       if (isCorrect === true) {
         className += " correct";
+      } else if (isCorrect === false) {
+        className += " wrong";
       }
       if (!isCorrect) {
         isCorrect = false;
@@ -182,9 +163,6 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
       >
         <div style={{width: '100%'}}>
         <Grid container direction="row">
-          {
-            isCorrect !== null ? this.renderIconColumn(choice, index) : ""
-          }
           <Grid item xs={12}>
             {this.renderData(choice)}
           </Grid>
