@@ -127,7 +127,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
     if (this.props.isPreview) {
       if (choice.checked) {
-        className += " active";
+        className += " correct";
       }
     } else {
       if (index === activeItem) {
