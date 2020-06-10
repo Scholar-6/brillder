@@ -7,6 +7,7 @@ import { Brick } from "model/brick";
 import { useHistory } from "react-router-dom";
 import { User } from "model/user";
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
+import { setBrillderTitle } from "components/services/titleService";
 
 
 interface ProposalProps {
@@ -43,7 +44,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
   }
 
   if (brick.title) {
-    document.title = brick.title;
+    setBrillderTitle(brick.title);
   }
 
   return (

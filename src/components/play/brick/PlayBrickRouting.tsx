@@ -19,6 +19,7 @@ import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
 import { UserType } from 'model/user';
+import { setBrillderTitle } from 'components/services/titleService';
 
 
 export interface BrickAttempt {
@@ -70,6 +71,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     props.fetchBrick(brickId);
     return <div>...Loading brick...</div>
   }
+
+  setBrillderTitle(props.brick.title);
 
   const updateAttempts = (attempt:any, index:number) => {
     attempts[index] = attempt;

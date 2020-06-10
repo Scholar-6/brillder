@@ -1,10 +1,14 @@
 
-export function setBrillderTitle() {
-  document.title = "Brillder";
+export function setBrillderTitle(brickTitle?: string) {
+  let title = "Brillder";
+  if (brickTitle) {
+    title = brickTitle;
+  }
   if (process.env.REACT_APP_BACKEND_HOST) {
     let isDev = process.env.REACT_APP_BACKEND_HOST.search('dev') >= 0;
     if (isDev) {
-      document.title = "dev-Brillder";
+      title = "dev-" + title;
     }
   }
+  document.title = title;
 }
