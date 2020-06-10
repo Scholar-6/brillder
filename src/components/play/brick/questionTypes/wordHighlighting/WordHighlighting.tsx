@@ -74,24 +74,45 @@ class WordHighlighting extends CompComponent<
     this.setState({ words: this.state.words });
   }
 
+  renderWordPreview(word: PlayWord, index: number) {
+    return (
+      <span key={index}>
+        <span className={word.checked ? "active word" : "word"}>
+          {word.text}
+        </span>
+        {word.isBreakLine ? <br /> : ""}
+      </span>
+    );
+  }
+
   renderWord(word: PlayWord, index: number) {
     if (this.props.isPreview) {
-      return (
-        <span key={index}>
-          <span className={word.checked ? "active word" : "word"}>
-            {word.text}
-          </span>
-          {word.isBreakLine ? <br /> : ""}
-        </span>
-      );
+      return this.renderWordPreview(word, index);
     }
+    let className = "word";
+    
+    if (word.selected) {
+      className += " active";
+    }
+
+    if (this.props.attempt && word.selected) {
+      let status = this.props.attempt.answer.indexOf(index);
+      if (status !== -1) {
+        if (word.checked === true) {
+          className += " correct";
+        } else {
+          className += " wrong";
+        }
+      }
+    }
+
     return (
       <span
-      key={index}
-      className={word.selected ? "active word" : "word"}
-      onClick={() => this.highlighting(index)}
-    >
-      {word.text} </span>
+        key={index}
+        className={className}
+        onClick={() => this.highlighting(index)}
+      >
+        {word.text} </span>
     );
   }
 

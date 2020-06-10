@@ -13,7 +13,13 @@
       cursor: pointer;
     }
     .word.active {
+      background: $blue;
+    }
+    .word.correct {
       background: $light-green;
+    }
+    .word.wrong {
+      background: $orange;
     }
   }
 }

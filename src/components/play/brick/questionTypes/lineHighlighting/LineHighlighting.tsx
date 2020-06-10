@@ -102,10 +102,13 @@ class LineHighlighting extends CompComponent<
     }
 
     if (this.props.attempt && line.selected) {
-      if (this.props.attempt.answer.indexOf(index) !== -1 && line.checked === true) {
-        className += " correct";
-      } else {
-        className += " wrong";
+      let status = this.props.attempt.answer.indexOf(index);
+      if (status !== -1) {
+        if (line.checked === true) {
+          className += " correct";
+        } else {
+          className += " wrong";
+        }
       }
     }
 
