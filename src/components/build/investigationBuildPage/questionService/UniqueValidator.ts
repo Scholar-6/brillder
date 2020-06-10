@@ -8,7 +8,7 @@ const getChecked = (list: any[]) => {
 }
 
 const validateImageAndText = (a: any) => {
-  if (a.type === QuestionValueType.Image) {
+  if (a.answerType === QuestionValueType.Image) {
     return !a.valueFile;
   }
   return !a.value;

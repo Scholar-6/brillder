@@ -186,7 +186,7 @@ class Sort extends CompComponent<SortProps, SortState> {
   }
 
   renderChoiceContent(choice: SortAnswer) {
-    if (choice.type === QuestionValueType.Image) {
+    if (choice.answerType === QuestionValueType.Image) {
       return (
         <img
           alt="" className="sort-image-choice"
