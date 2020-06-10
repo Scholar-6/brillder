@@ -198,16 +198,24 @@ class Sort extends CompComponent<SortProps, SortState> {
   }
 
   renderChoice(choice: SortAnswer, i: number) {
+    let isCorrect = this.getState(choice.value) === 1;
     let className="sortable-item";
     if (choice.answerType === QuestionValueType.Image) {
       className += " image-choice";
+    }
+    if (!this.props.isPreview && this.props.attempt) {
+      if (isCorrect) {
+        className += " correct";
+      } else {
+        className+= " wrong";
+      }
     }
     return (
       <div className={className} key={i}>
         <ListItem>
           {
             this.props.attempt 
-              ? (this.getState(choice.value) === 1)
+              ? isCorrect
                 ? <DenimTickRect />
                 : <DenimCrossRect />
               : <div></div>
@@ -236,9 +244,7 @@ class Sort extends CompComponent<SortProps, SortState> {
                   setList={(list) => this.updateCategory(list, i)}
                 >
                   {
-                    cat.choices.map((choice:any, i:number) =>
-                      this.renderChoice(choice, i)
-                    )
+                    cat.choices.map((choice, i) => this.renderChoice(choice, i))
                   }
                 </ReactSortable>
               </div>

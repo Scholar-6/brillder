@@ -44,8 +44,13 @@
         padding: 0;
       }
     }
-    .sortable-item:hover {
-      color: grey;
+
+    .sortable-item.correct {
+      background: $light-green;
+    }
+
+    .sortable-item.wrong {
+      background: $orange;
     }
 
     .sort-image-choice {
