@@ -15,7 +15,6 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
