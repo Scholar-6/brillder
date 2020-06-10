@@ -51,14 +51,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     return this.state.activeItem;
   }
 
-  getState(entry: number): number {
-    if (this.props.attempt?.answer[entry]) {
-      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')) {
-        return 1;
-      } else { return -1; }
-    } else { return 0; }
-  }
-
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
     const {component} = this.props;
     // If the question is answered in review phase, add 2 to the mark and not 5.

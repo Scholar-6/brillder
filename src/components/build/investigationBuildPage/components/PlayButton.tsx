@@ -2,8 +2,8 @@ import React from "react";
 
 import "./PlayButton.scss";
 import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
-import { Grid } from "@material-ui/core";
 import sprite from "../../../../assets/img/icons-sprite.svg";
+
 
 export interface PlayButtonProps {
   tutorialStep: TutorialStep;
