@@ -80,14 +80,14 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
 
   renderOption(answer: Answer) {
     if (answer.optionType && answer.optionType === QuestionValueType.Image) {
-      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} />;
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} width="100%" />;
     }
     return <MathInHtml value={answer.option} />;
   }
 
   renderAnswer(answer: Answer) {
     if (answer.answerType && answer.answerType === QuestionValueType.Image) {
-      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} width="100%"/>;
     } else {
       return (
         <div

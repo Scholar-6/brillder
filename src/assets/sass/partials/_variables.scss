@@ -1,84 +1,21 @@
-$colors: (
-	'purple': #a020f0,
-	'maroon': #8d021f,
-	'pink': #d43790,
-	'blue': #3974e2,
-	'madison': #313e4d,
-	'brown': #4f331b,
-	'green': #008000,
-	'olive': #708238,
-	'weed': #185a40,
-	'grass': #9aba5a,
-	'teal': #15b49c,
-	'pelorous': #17a2b8,
-	'red': #c9302c,
-	'poppy-red': #8c2f32,
-	'valencia': #d64646,
-	'orange': #ff681f,
-	'mustard': #f0a13c,
-	'yellow': #ffc107,
-	'salmon': #fa8072,
-	'white': #ffffff,
-	'off-white': #f5f5f5,
-	'gray': #d2d6de,
-	'muted': #777777,
-	'charcoal': #1f282e,
-	'black': #111111,
-	'black-pearl': #071927,
-	'tea-pink': #ff6e87,
-	'slate': #556e85
-	);
-
-$notifColors: (
-	'default': #bdc3c7,
-	'info': #5bc0de,
-	'primary': #428bca,
-	'warning': #f0ad4e,
-	'success': #3c763d,
-	'danger': #d9534f
-);
-
-$skinColors: (
-	'blue': #0073b7,
-	'red': #8c2f32,
-	'orange': #f26a21,
-	'mustard': #f0a13c,
-	'charcoal': #1f282e
-);
-
-$socialColors: (
-	'facebook': #4c69ba,
-	'twitter': #35a2f4,
-	'whatsapp': #34af23,
-	'google': #dd4b39,
-	'youtube': #e60000,
-	'viber': #9069ae,
-	'email': #1d70cc,
-	'vkontakte': #41648a,
-	'instagram': #49769c,
-	'linkedin': #147baf,
-	'bitbucket': #205081
-);
-
 $yellow: #ff9d00;
-$orange: #C43C30;
+$orange: #c43c30;
 $global-light-text-grey: #757576;
 $black-blue: #0b3b7f;
-$white-grey: #E1E1E1;
-$tab-grey: #E5E8ED;
-$light-green: #30C474;
+$white-grey: #e1e1e1;
+$tab-grey: #e5e8ed;
+$light-green: #30c474;
 // $light-green: #5cc364;
-$input-grey: #FAFAFB;
+$input-grey: #fafafb;
 $lighter-blue: #304775;
 $light-blue: #193266;
 $light-blue2: #193366;
-$dark-blue: #001C58;
-$left-grey: #E6E6ED;
-$grey: #B0B0AD;
-$light-grey: #F3F4F7;
+$dark-blue: #001c58;
+$left-grey: #e6e6ed;
+$grey: #b0b0ad;
+$light-grey: #f3f4f7;
 
-$base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5),
-  10px 10px 15px rgba(70, 70, 70, 0.12);
+$base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5), 10px 10px 15px rgba(70, 70, 70, 0.12);
 
 $border-radius: 2vw;
 $question-radius: 0.6vw;
@@ -91,7 +28,7 @@ $right: 1.4vw;
 $mobile-col-radius: 8vw;
 $mobile-col-color: $light-blue;
 $mobile-background: $dark-blue;
-$mobile-arrow-color: #96A0B6;
+$mobile-arrow-color: #96a0b6;
 
 $font-family-light: 'Brandon Grotesque Light';
 $font-family-regular: 'Brandon Grotesque Regular';
@@ -115,36 +52,6 @@ $answer-input-text-size: 1vw;
 
 $answer-height: 3.9vw;
 
-$multiSpinnerColors: #34cc80, #ec5c49, #f6bb67, #ffffff;
-$multiSpinnerDia: 175.6449737548828;
-
-// z-index
-$pretty--z-index-back: 0 !default;
-$pretty--z-index-between: 1 !default;
-$pretty--z-index-front: 500 !default;
-
-// box
-$pretty--curve-radius: 20% !default;
-$pretty--box-size: calc(1em + 2px) !default;
-
-// text
-$pretty--label-text-offset: 1.5em !default;
-$pretty--label-text-offset-switch: 2.5em !default;
-
-// scale
-$pretty--2x: 1.2em !default;
-
-// position
-$pretty-top: 8;
-$pretty-top-switch: ($pretty-top * 2) * 1%;
-$pretty-top-offset: calc((0% - (100% - 1em)) - #{$pretty-top * 1%});
-$pretty-top-offset-switch: calc((0% - (100% - 1em)) - #{$pretty-top-switch});
-
-// dev
-$pretty--debug: false !default;
-$pretty--err-message: 'Error: Invalid input type!' !default;
-
-
 $phone-width: 300px;
 $phone-landscape-width: 568px;
 $tablet-portrait-width: 768px;
@@ -155,35 +62,3 @@ $desktop-width: 1280px;
 $laptop-landscape-width: 1366px;
 $desktop-wide-width: 1440px;
 $ex-desktop-wide-width: 1680px;
-$container-padding: 10px;
-
-$gutter-width: 10px;
-$uik-of-12: 12;
-$i-12: $uik-of-12;
-
-$actionbar-height: 38px;
-$topbar-height: 79px;
-
-$flag-icon-css-path: '../img/flags' !default;
-$flag-icon-rect-path: '/4x3/' !default;
-$flag-icon-square-path: '/1x1/' !default;
-
-$input-margin: 10px;
-$input-caret-position-top: calc(0px - #{$input-margin});
-$input-padding-tb: 12px;
-$input-padding-lr: 12px;
-$input-xs: 10px;
-$input-sm: 12px;
-$input-md: 13px;
-$input-lg: 14px;
-
-$input-height: 25px;
-
-$zindex-dialogs: 99999;
-$zindex-dropdown: 9999;
-$zindex-sticky: 1020;
-$zindex-fixed: 1030;
-$zindex-modal-backdrop: 1040;
-$zindex-modal: 1050;
-$zindex-popover: 1060;
-$zindex-tooltip: 1070;
