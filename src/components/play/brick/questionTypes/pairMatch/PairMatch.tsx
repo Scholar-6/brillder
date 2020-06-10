@@ -78,14 +78,14 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return "";
   }
 
-  renderOption(answer: Answer) {
+  renderOptionContent(answer: Answer) {
     if (answer.optionType && answer.optionType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} width="100%" />;
     }
     return <MathInHtml value={answer.option} />;
   }
 
-  renderAnswer(answer: Answer) {
+  renderAnswerContent(answer: Answer) {
     if (answer.answerType && answer.answerType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} width="100%"/>;
     } else {
@@ -100,28 +100,47 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     }
   }
 
+  renderAnswer(answer: Answer, i: number) {
+    let className = "pair-match-play-choice";
+    if (answer.answerType === QuestionValueType.Image) {
+      className += " image-choice";
+    }
+    return (
+      <div key={i} className={className}>
+        <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
+          {this.renderAnswerContent(answer)}
+        </div>
+      </div>
+    );
+  }
+
+  renderOption(item: any, i: number) {
+    let className = "pair-match-play-option";
+    if (item.optionType === QuestionValueType.Image || item.answerType === QuestionValueType.Image) {
+      className += " pair-match-image-choice";
+    }
+    if (item.optionType === QuestionValueType.Image) {
+      className += " image-choice";
+    }
+    return (
+      <ListItem key={i} className={className}>
+        {this.renderIcon(i)}
+        <div className="option-container">
+          <div className="MuiListItemText-root">
+            {this.renderOptionContent(item as any)}
+          </div>
+        </div>
+      </ListItem>
+    );
+  }
+
   render() {
     return (
       <div className="pair-match-play">
         <Grid container justify="center">
           <List style={{padding: 0}} className="answers-list">
           {
-            this.props.component.list.map((item:any, i) => (
-              <ListItem
-                key={i}
-                className={
-                  `pair-match-play-option ${(item.optionType === QuestionValueType.Image || item.answerType === QuestionValueType.Image)
-                    ? "pair-match-image-choice" : ""}`
-                }
-              >
-                {this.renderIcon(i)}
-                <div className="option-container">
-                  <div className="MuiListItemText-root">
-                    {this.renderOption(item as any)}
-                  </div>
-                </div>
-              </ListItem>
-            ))
+            this.props.component.list.map((item:any, i) => this.renderOption(item, i))
           }
           </List>
           <ReactSortable
@@ -132,13 +151,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
             setList={(choices) => this.setUserAnswers(choices)}
           >
             {
-              this.state.userAnswers.map((answer, i) => (
-                <div key={i} className="pair-match-play-choice">
-                  <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
-                    {this.renderAnswer(answer)}
-                  </div>
-                </div>
-              ))
+              this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
             }
           </ReactSortable>
         </Grid>
