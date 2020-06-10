@@ -107,6 +107,8 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (answer.answerType === QuestionValueType.Image) {
       className += " image-choice";
     }
+    if (this.props.attempt) {
+    }
     return (
       <div key={i} className={className}>
         <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
