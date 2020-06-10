@@ -1,478 +1,477 @@
 .sorted-row {
-	margin-top: 3.5vh;
-	height: 86vh;
-	padding-left: 0;
-	padding-right: 0;
-	.sort-and-filter-container {
-		color: white;
-		height: 86vh;
-		max-width: calc(25% - 1vw);
-		flex-basis: calc(25% - 1vw);
-		margin-right: 1vw;
-		border-top-right-radius: $main-panel-radius;
-		background: $light-blue;
-		flex-wrap: initial;
-		flex-direction: column;
-		.sort-box {
-			width: 100%;
-			.sort-by-box {
-				padding: 1.4vw;
-				.sort-header {
-					text-transform: uppercase;
-					font-size: 2.3vh;
-					letter-spacing: 0.45vh;
-				}
-				.sort-group {
-					padding: 1.4vw 0 0 0;
-					display: flex;
-					flex-wrap: wrap;
-					flex-direction: row;
-					label {
-						width: max-content !important;
-						margin-left: 0 !important;
-						margin-right: 0 !important;
-					}
-				}
-			}
-			.back-sort-box,
-			.sort-by-box,
-			.subject-filter,
-			.filter-container,
-			.subject-indexes-box,
-			.indexes-box {
-				.filter-radio,
-				.MuiFormControlLabel-root,
-				.sortBy {
-					padding: 0 !important;
-					margin: 0 !important;
-					margin-right: 0.5vw !important;
-					svg {
-						width: 1.25vw;
-						height: 1.25vw;
-						color: $orange;
-						padding: 0 !important;
-					}
-				}
-				.MuiFormControlLabel-label {
-					font: 1.05vw $font-family-light;
-					letter-spacing: 0.06vw;
-				}
-			}
-			.subject-indexes-box,
-			.indexes-box {
-				.index-box {
-					cursor: pointer;
-					position: relative;
-					font-size: 1.1vw;
-					.right-index {
-						position: absolute;
-						color: $dark-blue;
-						background: white;
-						line-height: 1;
-						padding: 0.25vw 0.6vw;
-						border-radius: 0.65vw;
-						font-size: 1vw;
-						right: 1.4vw;
-						top: 50%;
-						transform: translateY(-50%);
-					}
-					&.active {
-						background: $lighter-blue;
-					}
-					&.color1 {
-						.round-button,
-						.right-index {
-							background: $orange;
-						}
-						svg {
-							color: $orange;
-						}
-					}
-					&.color2 {
-						.round-button,
-						.right-index {
-							background: $yellow;
-						}
-						svg {
-							color: $yellow;
-						}
-					}
-					&.color3 {
-						.round-button,
-						.right-index {
-							background: white;
-						}
-						svg {
-							color: white;
-						}
-					}
-					&.color4 {
-						.round-button,
-						.right-index {
-							background: $light-green;
-						}
-						svg {
-							color: $light-green;
-						}
-					}
-				}
-			}
-			.subject-indexes-box {
-				margin: 1.4vw;
-				width: calc(100% - 2.8vw);
-				.index-box {
-					margin: 0 0 0.4vw 0;
-					.right-index {
-						right: 0;
-					}
-				}
-			}
-			.indexes-box {
-				.index-box {
-					padding: 0.53vw 0 0.53vw 1.4vw;
-				}
-			}
-			.back-sort-box {
-				margin-bottom: 1.4vh;
-				padding-left: 0vw;
-				padding-top: 5.7vh;
-				width: 100%;
-				.filter-items {
-					padding-top: 2.3vh;
-					padding-left: 1.7vw;
-				}
+  margin-top: 3.5vh;
+  padding-left: 0;
+  padding-right: 0;
+  .sort-and-filter-container {
+    color: white;
+    height: 83.887vh;
+    max-width: calc(25% - 1vw);
+    flex-basis: calc(25% - 1vw);
+    margin-right: 1vw;
+    border-top-right-radius: $main-panel-radius;
+    background: $light-blue;
+    flex-wrap: initial;
+    flex-direction: column;
+    .sort-box {
+      width: 100%;
+      .sort-by-box {
+        padding: 1.4vw;
+        .sort-header {
+          text-transform: uppercase;
+          font-size: 2.3vh;
+          letter-spacing: 0.45vh;
+        }
+        .sort-group {
+          padding: 1.4vw 0 0 0;
+          display: flex;
+          flex-wrap: wrap;
+          flex-direction: row;
+          label {
+            width: max-content !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+          }
+        }
+      }
+      .back-sort-box,
+      .sort-by-box,
+      .subject-filter,
+      .filter-container,
+      .subject-indexes-box,
+      .indexes-box {
+        .filter-radio,
+        .MuiFormControlLabel-root,
+        .sortBy {
+          padding: 0 !important;
+          margin: 0 !important;
+          margin-right: 0.5vw !important;
+          svg {
+            width: 1.25vw;
+            height: 1.25vw;
+            color: $orange;
+            padding: 0 !important;
+          }
+        }
+        .MuiFormControlLabel-label {
+          font: 1.05vw $font-family-light;
+          letter-spacing: 0.06vw;
+        }
+      }
+      .subject-indexes-box,
+      .indexes-box {
+        .index-box {
+          cursor: pointer;
+          position: relative;
+          font-size: 1.1vw;
+          .right-index {
+            position: absolute;
+            color: $dark-blue;
+            background: white;
+            line-height: 1;
+            padding: 0.25vw 0.6vw;
+            border-radius: 0.65vw;
+            font-size: 1vw;
+            right: 1.4vw;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+          &.active {
+            background: $lighter-blue;
+          }
+          &.color1 {
+            .round-button,
+            .right-index {
+              background: $orange;
+            }
+            svg {
+              color: $orange;
+            }
+          }
+          &.color2 {
+            .round-button,
+            .right-index {
+              background: $yellow;
+            }
+            svg {
+              color: $yellow;
+            }
+          }
+          &.color3 {
+            .round-button,
+            .right-index {
+              background: white;
+            }
+            svg {
+              color: white;
+            }
+          }
+          &.color4 {
+            .round-button,
+            .right-index {
+              background: $light-green;
+            }
+            svg {
+              color: $light-green;
+            }
+          }
+        }
+      }
+      .subject-indexes-box {
+        margin: 1.4vw;
+        width: calc(100% - 2.8vw);
+        .index-box {
+          margin: 0 0 0.4vw 0;
+          .right-index {
+            right: 0;
+          }
+        }
+      }
+      .indexes-box {
+        .index-box {
+          padding: 0.53vw 0 0.53vw 1.4vw;
+        }
+      }
+      .back-sort-box {
+        margin-bottom: 1.4vh;
+        padding-left: 0vw;
+        padding-top: 5.7vh;
+        width: 100%;
+        .filter-items {
+          padding-top: 2.3vh;
+          padding-left: 1.7vw;
+        }
 
-				.filter-container {
-					position: relative;
-					width: 100%;
-				}
-			}
-			.role-filter-header {
-				margin-top: 1.2vh;
-				margin-left: 1.3vw;
-				text-transform: uppercase;
-				font-size: 2.4vh;
-				letter-spacing: 0.25vw;
-				margin-bottom: 1.7vh;
-			}
-			.roles-row {
-				margin-left: 0.3vw;
-			}
-			.filter-header {
-				position: relative;
-				text-transform: uppercase;
-				background: $lighter-blue 0% 0% no-repeat padding-box;
-				padding: 0.3vw 1.4vw;
-				font-size: 1.2vw;
-				letter-spacing: 0.22vw;
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				.filter-control {
-					height: 100%;
-					vertical-align: middle;
-				}
-				.filter-control:not(:first-child) {
-					margin-left: 0.9vw;
-					cursor: pointer;
-				}
-				.filter-icon {
-					position: relative;
-					width: 30px;
-					height: 30px;
-					cursor: pointer;
-					&.arrow-up,
-					&.arrow-down,
-					&.arrow-cancel {
-						&:before,
-						&:after {
-							content: '';
-							position: absolute;
-							top: 50%;
-							width: 2px;
-							border-radius: 2px;
-							height: 13px;
-							@extend %transitionAll300;
-							background-color: #fff;
-						}
-					}
-					&.arrow-up,
-					&.arrow-down {
-						&:before {
-							left: calc(50% - 4px);
-						}
-						&:after {
-							right: calc(50% - 6px);
-						}
-					}
-					&.arrow-up {
-						&:before {
-							transform: translate(-50%, -50%) rotate(-45deg);
-						}
-						&:after {
-							transform: translate(-50%, -50%) rotate(45deg);
-						}
-					}
-					&.arrow-down {
-						&:before {
-							transform: translate(-50%, -50%) rotate(45deg);
-						}
-						&:after {
-							transform: translate(-50%, -50%) rotate(-45deg);
-						}
-					}
-					&.arrow-cancel {
-						&:before {
-							left: 15px;
-							transform: translate(-50%, -50%) rotate(45deg);
-						}
-						&:after {
-							right: 13px;
-							transform: translate(-50%, -50%) rotate(-45deg);
-						}
-					}
-				}
-			}
-			.subjects-filter {
-				margin: 1.4vw;
-				width: calc(100% - 2.8vw);
-				height: calc(100vh - 22vw);
-				overflow-y: auto;
-				.published-count {
-					font-size: 1.05vw;
-					text-align: center;
-					font-family: $font-family-light;
-				}
-				.MuiGrid-container {
-					margin-bottom: 0.4vw;
-				}
-			}
-			.filter-container {
-				display: flex !important;
-				align-items: center !important;
-				margin: 0 !important;
-				width: 100% !important;
-				.custom-color svg {
-					color: var(--color) !important;
-				}
-			}
-		}
-	}
-	.brick-row-container {
-		position: relative;
-		border-top-left-radius: $main-panel-radius;
-		padding-left: 1.18vw;
-		margin-left: 1vw;
-		background: $light-grey;
-		max-width: calc(75% - 1vw);
-		flex-basis: calc(75% - 1vw);
-		height: 86vh;
-		.brick-row-title {
-			padding-left: 1.15vw;
-			// padding-left: 0.35vw;
-			color: $dark-blue;
-			padding-top: 2.3vh;
-			// padding-top: 2vh;
-			padding-bottom: 0;
-			line-height: 1;
-			font-size: 5.2vw;
-			letter-spacing: 1.05vw;
-			font-family: $font-family-black;
-			// font-family: 'Brandon Grotesque Black';
-		}
-		.bricks-list-container {
-			height: 65vh;
-			overflow-y: auto;
-			.main-brick-container {
-				position: relative;
-				padding-left: 0.8vw;
-				width: 100%;
-				.brick-container {
-					position: relative;
-					padding-right: 0;
-					height: $min-brick-height;
-					margin-top: 0.85vw;
-					margin-bottom: 0vw;
-					font-family: $font-family-regular;
-					width: 100%;
-					text-align: left;
-					&:hover {
-						color: #ffffff;
-					}
-					@media only screen and (max-width: 599px) {
-						.brick-container {
-							text-align: center;
-						}
-					}
-					h3 {
-						color: black;
-						padding: 5px;
-						font-size: 16px;
-						line-height: 28px;
-					}
+        .filter-container {
+          position: relative;
+          width: 100%;
+        }
+      }
+      .role-filter-header {
+        margin-top: 1.2vh;
+        margin-left: 1.3vw;
+        text-transform: uppercase;
+        font-size: 2.4vh;
+        letter-spacing: 0.25vw;
+        margin-bottom: 1.7vh;
+      }
+      .roles-row {
+        margin-left: 0.3vw;
+      }
+      .filter-header {
+        position: relative;
+        text-transform: uppercase;
+        background: $lighter-blue 0% 0% no-repeat padding-box;
+        padding: 0.3vw 1.4vw;
+        font-size: 1.2vw;
+        letter-spacing: 0.22vw;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .filter-control {
+          height: 100%;
+          vertical-align: middle;
+        }
+        .filter-control:not(:first-child) {
+          margin-left: 0.9vw;
+          cursor: pointer;
+        }
+        .filter-icon {
+          position: relative;
+          width: 30px;
+          height: 30px;
+          cursor: pointer;
+          &.arrow-up,
+          &.arrow-down,
+          &.arrow-cancel {
+            &:before,
+            &:after {
+              content: '';
+              position: absolute;
+              top: 50%;
+              width: 2px;
+              border-radius: 2px;
+              height: 13px;
+              @extend %transitionAll300;
+              background-color: #fff;
+            }
+          }
+          &.arrow-up,
+          &.arrow-down {
+            &:before {
+              left: calc(50% - 4px);
+            }
+            &:after {
+              right: calc(50% - 6px);
+            }
+          }
+          &.arrow-up {
+            &:before {
+              transform: translate(-50%, -50%) rotate(-45deg);
+            }
+            &:after {
+              transform: translate(-50%, -50%) rotate(45deg);
+            }
+          }
+          &.arrow-down {
+            &:before {
+              transform: translate(-50%, -50%) rotate(45deg);
+            }
+            &:after {
+              transform: translate(-50%, -50%) rotate(-45deg);
+            }
+          }
+          &.arrow-cancel {
+            &:before {
+              left: 15px;
+              transform: translate(-50%, -50%) rotate(45deg);
+            }
+            &:after {
+              right: 13px;
+              transform: translate(-50%, -50%) rotate(-45deg);
+            }
+          }
+        }
+      }
+      .subjects-filter {
+        margin: 1.4vw;
+        width: calc(100% - 2.8vw);
+        height: calc(100vh - 22vw);
+        overflow-y: auto;
+        .published-count {
+          font-size: 1.05vw;
+          text-align: center;
+          font-family: $font-family-light;
+        }
+        .MuiGrid-container {
+          margin-bottom: 0.4vw;
+        }
+      }
+      .filter-container {
+        display: flex !important;
+        align-items: center !important;
+        margin: 0 !important;
+        width: 100% !important;
+        .custom-color svg {
+          color: var(--color) !important;
+        }
+      }
+    }
+  }
+  .brick-row-container {
+    position: relative;
+    border-top-left-radius: $main-panel-radius;
+    padding-left: 1.18vw;
+    margin-left: 1vw;
+    background: $light-grey;
+    max-width: calc(75% - 1vw);
+    flex-basis: calc(75% - 1vw);
+    height: 83.887vh;
+    .brick-row-title {
+      padding-left: 1.15vw;
+      // padding-left: 0.35vw;
+      color: $dark-blue;
+      padding-top: 2.3vh;
+      // padding-top: 2vh;
+      padding-bottom: 0;
+      line-height: 1;
+      font-size: 5.2vw;
+      letter-spacing: 1.05vw;
+      font-family: $font-family-black;
+      // font-family: 'Brandon Grotesque Black';
+    }
+    .bricks-list-container {
+      height: 65vh;
+      overflow-y: auto;
+      .main-brick-container {
+        position: relative;
+        padding-left: 0.8vw;
+        width: 100%;
+        .brick-container {
+          position: relative;
+          padding-right: 0;
+          height: $min-brick-height;
+          margin-top: 0.85vw;
+          margin-bottom: 0vw;
+          font-family: $font-family-regular;
+          width: 100%;
+          text-align: left;
+          &:hover {
+            color: #ffffff;
+          }
+          @media only screen and (max-width: 599px) {
+            .brick-container {
+              text-align: center;
+            }
+          }
+          h3 {
+            color: black;
+            padding: 5px;
+            font-size: 16px;
+            line-height: 28px;
+          }
 
-					h2 {
-						font-size: 24px;
-					}
-					h1 {
-						color: black;
-						padding: 5px;
-						line-height: 48px;
-						text-transform: capitalize;
-						font-size: 32px;
-					}
-					.MuiExpansionPanel-root {
-						background: $light-grey;
-					}
+          h2 {
+            font-size: 24px;
+          }
+          h1 {
+            color: black;
+            padding: 5px;
+            line-height: 48px;
+            text-transform: capitalize;
+            font-size: 32px;
+          }
+          .MuiExpansionPanel-root {
+            background: $light-grey;
+          }
 
-					.MuiExpansionPanel-root.Mui-expanded {
-						margin: 0 !important;
-						margin-bottom: 16px !important;
-					}
-					.absolute-container {
-						border-radius: $brick-radius;
-						color: $dark-blue;
-						width: 95%;
-						text-align: left;
-						position: absolute;
-						height: $min-brick-height;
-						&.brick-row-0,
-						&.brick-row-1,
-						&.brick-row-2,
-						&.brick-row-3 {
-							.expended-brick-info {
-								border-top-left-radius: 0 !important;
-							}
-							.left-brick-roller {
-								position: absolute;
-								top: 1.5vh;
-								left: 0.15vw;
-								> div {
-									height: 2.1vw;
-									width: 1.9vw;
-									background-size: 100% 100%;
-									background-repeat: no-repeat;
-									background-position: center;
-									background-image: url(/images/roller-green.png);
-								}
-							}
-							.left-brick-circle {
-								position: absolute;
-								top: 1.3vh;
-								> div {
-									height: 2.1vw;
-									width: 2.1vw;
-									border-radius: 20vw;
-									background-color: $grey;
-								}
-							}
-						}
-						&.brick-row-4,
-						&.brick-row-5 {
-							bottom: 0;
-							.expended-brick-info {
-								border-bottom-left-radius: 0 !important;
-							}
-						}
-					}
-					.edit-button {
-						text-align: center;
-						padding-bottom: 8px;
-					}
-					.right-color-column {
-						border-top-right-radius: $brick-radius;
-						border-bottom-right-radius: $brick-radius;
-						background: white;
-						position: absolute;
-						right: 0;
-						height: 100%;
-						min-height: $min-brick-height;
-						width: 3.3%;
-					}
-				}
-			}
-		}
-		.users-table {
-			border: none;
-			width: calc(100% + 1.18vw);
-			margin-left: -1.18vw;
-			thead {
-				background: $tab-grey;
-				color: $dark-blue;
-				font-family: $font-family-black;
-				font-size: 1.3vw;
-				letter-spacing: 0.25vw;
-				tr {
-					th {
-						padding-top: 0.6vh;
-						padding-bottom: 0.6vh;
-						text-align: left;
-						padding-left: 0.5vw;
+          .MuiExpansionPanel-root.Mui-expanded {
+            margin: 0 !important;
+            margin-bottom: 16px !important;
+          }
+          .absolute-container {
+            border-radius: $brick-radius;
+            color: $dark-blue;
+            width: 95%;
+            text-align: left;
+            position: absolute;
+            height: $min-brick-height;
+            &.brick-row-0,
+            &.brick-row-1,
+            &.brick-row-2,
+            &.brick-row-3 {
+              .expended-brick-info {
+                border-top-left-radius: 0 !important;
+              }
+              .left-brick-roller {
+                position: absolute;
+                top: 1.5vh;
+                left: 0.15vw;
+                > div {
+                  height: 2.1vw;
+                  width: 1.9vw;
+                  background-size: 100% 100%;
+                  background-repeat: no-repeat;
+                  background-position: center;
+                  background-image: url(/images/roller-green.png);
+                }
+              }
+              .left-brick-circle {
+                position: absolute;
+                top: 1.3vh;
+                > div {
+                  height: 2.1vw;
+                  width: 2.1vw;
+                  border-radius: 20vw;
+                  background-color: $grey;
+                }
+              }
+            }
+            &.brick-row-4,
+            &.brick-row-5 {
+              bottom: 0;
+              .expended-brick-info {
+                border-bottom-left-radius: 0 !important;
+              }
+            }
+          }
+          .edit-button {
+            text-align: center;
+            padding-bottom: 8px;
+          }
+          .right-color-column {
+            border-top-right-radius: $brick-radius;
+            border-bottom-right-radius: $brick-radius;
+            background: white;
+            position: absolute;
+            right: 0;
+            height: 100%;
+            min-height: $min-brick-height;
+            width: 3.3%;
+          }
+        }
+      }
+    }
+    .users-table {
+      border: none;
+      width: calc(100% + 1.18vw);
+      margin-left: -1.18vw;
+      thead {
+        background: $tab-grey;
+        color: $dark-blue;
+        font-family: $font-family-black;
+        font-size: 1.3vw;
+        letter-spacing: 0.25vw;
+        tr {
+          th {
+            padding-top: 0.6vh;
+            padding-bottom: 0.6vh;
+            text-align: left;
+            padding-left: 0.5vw;
 
-						.sort-button {
-							cursor: pointer;
-							margin-top: 0.3vh;
-							margin-left: 0.4vw;
-							height: 1.5vw;
-							width: 1.5vw;
-						}
-					}
+            .sort-button {
+              cursor: pointer;
+              margin-top: 0.3vh;
+              margin-left: 0.4vw;
+              height: 1.5vw;
+              width: 1.5vw;
+            }
+          }
 
-					.subject-title {
-						width: 5%;
-					}
-					.user-full-name {
-						width: 30%;
-					}
-					.email-column {
-						width: 31.3%;
-					}
-					.edit-button-column {
-						width: 2.5vw;
-					}
-				}
-			}
-			tr.user-row {
-				height: 4.5vh;
-				td {
-					padding-left: 0.5vw;
-					color: $dark-blue;
-					font-size: 1.3vw;
-					padding-top: 0;
+          .subject-title {
+            width: 5%;
+          }
+          .user-full-name {
+            width: 30%;
+          }
+          .email-column {
+            width: 31.3%;
+          }
+          .edit-button-column {
+            width: 2.5vw;
+          }
+        }
+      }
+      tr.user-row {
+        height: 4.5vh;
+        td {
+          padding-left: 0.5vw;
+          color: $dark-blue;
+          font-size: 1.3vw;
+          padding-top: 0;
 
-					.edit-button {
-						cursor: pointer;
-						background-size: 100% 100%;
-						background-repeat: no-repeat;
-						background-position: center;
-						background-image: url(/images/edit.png);
-						height: 1.85vw;
-						width: 1.85vw;
-					}
-				}
-				.activate-button-container {
-					padding-left: 2vw;
-				}
-			}
-			tr.user-row:nth-child(even) {
-				background: $tab-grey;
-			}
-			.user-last-name {
-				font-family: $font-family-bold;
-			}
-		}
-		.role-description {
-			width: 100%;
-			text-align: right;
-			font-size: 0.8vw;
-			margin-top: 0.6vh;
-			margin-right: 6vw;
-			color: $dark-blue;
-			letter-spacing: 0.015vw;
+          .edit-button {
+            cursor: pointer;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url(/images/edit.png);
+            height: 1.85vw;
+            width: 1.85vw;
+          }
+        }
+        .activate-button-container {
+          padding-left: 2vw;
+        }
+      }
+      tr.user-row:nth-child(even) {
+        background: $tab-grey;
+      }
+      .user-last-name {
+        font-family: $font-family-bold;
+      }
+    }
+    .role-description {
+      width: 100%;
+      text-align: right;
+      font-size: 0.8vw;
+      margin-top: 0.6vh;
+      margin-right: 6vw;
+      color: $dark-blue;
+      letter-spacing: 0.015vw;
 
-			.bold {
-				font-family: $font-family-bold;
-			}
-		}
-	}
+      .bold {
+        font-family: $font-family-bold;
+      }
+    }
+  }
 }
