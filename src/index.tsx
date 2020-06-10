@@ -15,7 +15,6 @@ import actions from 'redux/actions/auth';
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 store.dispatch(actions.isAuthorized());
 
-
 ReactDOM.render(
   <Router>
     <Provider store={store}>
