@@ -125,7 +125,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       let {answer} = this.props.attempt;
       if (answer >= 0) {
         let intAnswer = parseInt(answer);
-        console.log(intAnswer, index);
         if (intAnswer === index) {
           if (isCorrect) {
             className += " correct";
