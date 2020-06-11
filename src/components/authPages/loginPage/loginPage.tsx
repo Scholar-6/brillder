@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Grid, Snackbar } from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Button from "@material-ui/core/Button";
 // @ts-ignore
 import { connect } from "react-redux";
