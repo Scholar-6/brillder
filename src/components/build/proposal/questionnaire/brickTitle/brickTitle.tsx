@@ -8,6 +8,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { Brick } from "model/brick";
 import {getDate, getMonth, getYear} from 'components/services/brickService';
+import { setBrillderTitle } from "components/services/titleService";
 
 
 interface BrickTitleProps {
@@ -83,7 +84,7 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
   };
 
   if (parentState.title) {
-    document.title = parentState.title;
+    setBrillderTitle(parentState.title);
   }
 
   return (

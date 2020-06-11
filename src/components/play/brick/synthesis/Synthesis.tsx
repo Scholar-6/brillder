@@ -3,7 +3,6 @@ import { Grid, Fab, FormControlLabel } from '@material-ui/core';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
@@ -74,9 +73,9 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, ...p
               <h2>Synthesis</h2>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>
+              <div style={{width: '100%'}}>
                 <MathInHtml value={newSynthesis} />
-              </Typography>
+              </div>
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <div className="begin-row">

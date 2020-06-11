@@ -21,7 +21,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
 }) => {
   const [categoryHeight, setCategoryHeight] = React.useState('0%');
 
-  const newAnswer = () => ({ value: "", valueFile: "", type: QuestionValueType.String });
+  const newAnswer = () => ({ value: "", valueFile: "", answerType: QuestionValueType.String });
   const newCategory = () => ({ name: "", answers: [newAnswer()], height: '0%' })
 
   if (!data.categories) {
@@ -42,7 +42,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       }
       category.height = 'auto';
       for (let answer of category.answers) {
-        if (answer.type !== QuestionValueType.Image) {
+        if (answer.answerType !== QuestionValueType.Image) {
           if (!answer.value) {
             category.height = "0%";
           }
@@ -62,7 +62,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   const answerChanged = (answer: any, event: any) => {
     answer.value = event.target.value;
     answer.valueFile = '';
-    answer.type = QuestionValueType.String;
+    answer.answerType = QuestionValueType.String;
     update();
   }
 
@@ -98,7 +98,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
 
   const renderAnswer = (category: SortCategory, answer: SortAnswer, key: number) => {
     let customClass = '';
-    if (answer.type === QuestionValueType.Image) {
+    if (answer.answerType === QuestionValueType.Image) {
       customClass = 'sort-image';
     }
 
@@ -106,7 +106,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       if (locked) {return;}
       answer.value = "";
       answer.valueFile = fileName;
-      answer.type = QuestionValueType.Image;
+      answer.answerType = QuestionValueType.Image;
       update();
       save();
     }
@@ -128,7 +128,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
         />
         <QuestionImageDropZone
           answer={answer}
-          type={answer.type || QuestionValueType.None}
+          type={answer.answerType || QuestionValueType.None}
           fileName={answer.valueFile}
           locked={locked}
           update={setImage}

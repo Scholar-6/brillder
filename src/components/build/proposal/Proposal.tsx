@@ -18,6 +18,7 @@ import { Brick, Author } from "model/brick";
 import { User } from "model/user";
 import CloseProposalDialog from 'components/build/baseComponents/CloseProposalDialog';
 import VersionLabel from "components/baseComponents/VersionLabel";
+import { setBrillderTitle } from "components/services/titleService";
 
 
 interface ProposalProps {
@@ -119,7 +120,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     }
   }
 
-  document.title = "Brillder";
+  setBrillderTitle();
 
   const saveAndMove = () => {
     saveBrick(state);

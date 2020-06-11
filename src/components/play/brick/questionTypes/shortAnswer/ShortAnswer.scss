@@ -1,3 +1,7 @@
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
+
 .short-answer-live {
   display: inline;
   place-content: center space-evenly;
@@ -6,11 +10,20 @@
     margin-bottom: 20px;
   }
 
+  .question-hint {
+    color: $dark-blue;
+  }
+
+  .question-hint-global {
+    color: $dark-blue;
+  }
+
   .short-answer-input.correct .question-hint {
     background: white !important;
   }
 
   input.MuiInput-input {
+    color: $dark-blue;
     height: auto;
     padding: 0;
     line-height: 2;

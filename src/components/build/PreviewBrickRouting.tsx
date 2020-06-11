@@ -20,6 +20,8 @@ import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
 import { Hidden, Grid } from '@material-ui/core';
+import { setBrillderTitle } from 'components/services/titleService';
+import PublishPage from './investigationBuildPage/publish/PublishPage';
 
 
 export interface BrickAttempt {
@@ -67,6 +69,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     return <div>...Loading brick...</div>
   }
 
+  setBrillderTitle(props.brick.title);
+
   const updateAttempts = (attempt:any, index:number) => {
     attempts[index] = attempt;
     setAttempts(attempts);
@@ -78,8 +82,22 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishBrick = () => {
-    let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
-    let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
+    /* If no answer given or no mark provided for question then return acc accumulated score +0 so 
+    it still has an integer value, else return acc + additional mark */
+    let score = attempts.reduce((acc, answer) => {
+      if (!answer || !answer.marks) {
+        return acc + 0;
+      }
+      return acc + answer.marks;
+    }, 0);
+    /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
+    is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
+    let maxScore = attempts.reduce((acc, answer) => {
+      if (!answer.maxMarks) {
+        return acc + 5;
+      }
+      return acc + answer.maxMarks;
+    }, 0);
     var ba : BrickAttempt = {
       brick: props.brick,
       score: score,
@@ -109,7 +127,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const saveBrickAttempt = () => {
     brickAttempt.brickId = props.brick.id;
     brickAttempt.studentId = props.user.id;
-    props.history.push(`/build/brick/${brickId}/build/investigation/publish`);
+    props.history.push(`/play-preview/brick/${brickId}/publish`);
   }
 
   const moveToBuild = () => {
@@ -162,6 +180,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route exac path="/play-preview/brick/:brickId/ending">
           <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} saveBrick={saveBrickAttempt} />
+        </Route>
+        <Route exac path="/play-preview/brick/:brickId/publish">
+          <PublishPage {...props} />
         </Route>
       </Switch>
       <Hidden only={['xs', 'sm', 'md']}>
@@ -238,7 +259,12 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
             item.index = index;
             item.hint = question.hint.list[index];
           }
-          const choices = c.list.map((a:any) => ({ value: a.value, index: a.index}));
+          const choices = c.list.map((a:any) => ({
+            value: a.value,
+            index: a.index,
+            valueFile: a.valueFile,
+            answerType: a.answerType
+          }));
           c.choices = shuffle(choices);
         }
       });

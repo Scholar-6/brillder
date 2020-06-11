@@ -4,8 +4,6 @@ import { Button, Grid } from '@material-ui/core';
 import './ChooseSeveral.scss';
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
-import DenimTickRect from 'components/play/components/DenimTickRect';
-import DenimCrossRect from 'components/play/components/DenimCrossRect';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from 'components/play/brick/baseComponents/ReviewGlobalHint';
 import {CompQuestionProps} from '../types';
@@ -40,7 +38,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   setActiveItem(activeItem: number) {
     let { activeItems } = this.state;
     let found = activeItems.indexOf(activeItem);
-    if (found >= 0) {  
+    if (found >= 0) {
       activeItems.splice(found, 1);
     } else {
       activeItems.push(activeItem);
@@ -50,14 +48,6 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   getAnswer(): number[] {
     return this.state.activeItems;
-  }
-
-  getState(entry: number): number {
-    if (this.props.attempt.answer[entry]) {
-      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].answer.toLowerCase().replace(/ /g, '')) {
-        return 1;
-      } else { return -1; }
-    } else { return 0; }
   }
 
   markLiveChoices(attempt: ComponentAttempt, markIncrement: number) {
@@ -127,30 +117,19 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     return null;
   }
 
-  renderIcon(choice: any, index: number) {
-    const isCorrect = this.checkChoice(choice, index);
-    if (isCorrect === true) {
-      return <DenimTickRect />;
-    } else if (isCorrect === false) {
-      return <DenimCrossRect />;
-    }
-    return "";
-  }
-
   renderEachHint(index: number) {
-
   }
 
   renderData(answer: any) {
     if (answer.answerType === QuestionValueType.Image) {
-      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} width="100%" />;
     } else {
       return <MathInHtml value={answer.value} />;
     }
   }
 
   renderButton(choice: any, index:number) {
-    let isCorrect:any = false;
+    let isCorrect = this.checkChoice(choice, index);
     let className = "choose-choice";
     let active = this.state.activeItems.find(i => i === index) as number;
 
@@ -161,14 +140,19 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     } else {
       if (active >= 0) {
         className += " active";
-      }
-      isCorrect = this.checkChoice(choice, index);
-      if (isCorrect === true) {
-        className += " correct";
+        if (isCorrect === true) {
+          className += " correct";
+        } else if (isCorrect === false) {
+          className += " wrong";
+        }
       }
       if (!isCorrect) {
         isCorrect = false;
       }
+    }
+    
+    if (choice.answerType === QuestionValueType.Image) {
+      className += " image-choice";
     }
 
     return (
@@ -179,10 +163,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
       >
         <div style={{width: '100%'}}>
         <Grid container direction="row">
-          <Grid item xs={1}>
-            {this.renderIcon(choice, index)}
-          </Grid>
-          <Grid item xs={11}>
+          <Grid item xs={12}>
             {this.renderData(choice)}
           </Grid>
         </Grid>
@@ -192,7 +173,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
             <ReviewEachHint
               isPhonePreview={this.props.isPreview}
               attempt={this.props.attempt}
-              isCorrect={isCorrect}
+              isCorrect={isCorrect ? isCorrect : false}
               index={index}
               hint={this.props.question.hint}
             />
@@ -208,6 +189,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
     return (
       <div className="choose-several-live">
+        <p className="help-text">Choose more than one option.</p>
         {
           component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }

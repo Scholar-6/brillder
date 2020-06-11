@@ -5,19 +5,14 @@ import './ChooseOne.scss';
 import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
-import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import {checkVisibility} from '../../../services/hintService';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
+import {ChooseOneChoice} from 'components/interfaces/chooseOne';
 
-
-interface ChooseOneChoice {
-  value: string;
-  checked: boolean;
-}
 
 interface ChooseOneComponent {
   type: number;
@@ -53,14 +48,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   getAnswer(): number {
     return this.state.activeItem;
-  }
-
-  getState(entry: number): number {
-    if (this.props.attempt?.answer[entry]) {
-      if (this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') === this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')) {
-        return 1;
-      } else { return -1; }
-    } else { return 0; }
   }
 
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
@@ -103,7 +90,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     return "";
   }
 
-  renderData(answer: any) {
+  renderData(answer: ChooseOneChoice) {
     if (answer.answerType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
     } else {
@@ -127,16 +114,28 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
     if (this.props.isPreview) {
       if (choice.checked) {
-        className += " active";
+        className += " correct";
       }
-    } else {
-      if (index === activeItem) {
-        className += " active";
+    } else if (index === activeItem) {
+      className += " active";
+    }
+
+    if (this.props.attempt && index === activeItem) {
+      let {answer} = this.props.attempt;
+      if (answer >= 0) {
+        let intAnswer = parseInt(answer);
+        if (intAnswer === index) {
+          if (isCorrect) {
+            className += " correct";
+          } else if (isCorrect === false) {
+            className += " wrong";
+          }
+        }
       }
     }
 
-    if (isCorrect) {
-      className += " correct";
+    if (choice.answerType === QuestionValueType.Image) {
+      className += " image-choice";
     }
 
     return (
@@ -162,7 +161,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   render() {
     return (
       <div className="choose-one-live">
-        {(this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""}
         {
           this.props.component.list.map((choice, index) =>
             this.renderChoice(choice, index)

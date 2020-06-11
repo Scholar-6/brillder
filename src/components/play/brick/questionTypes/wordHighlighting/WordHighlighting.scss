@@ -13,7 +13,17 @@
       cursor: pointer;
     }
     .word.active {
+      background: $blue;
+    }
+    .word.correct {
       background: $light-green;
     }
+    .word.wrong {
+      background: $orange;
+    }
+  }
+  .question-hint,
+  .question-hint-global {
+    color: $dark-blue;
   }
 }

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Grid, Snackbar } from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Button from "@material-ui/core/Button";
 // @ts-ignore
 import { connect } from "react-redux";
@@ -159,7 +158,7 @@ const LoginPage: React.FC<LoginProps> = props => {
     >
       <div className="back-col">
         <div className="back-box">
-          <ArrowBackIcon
+          <div
             className="back-button"
             onClick={() => props.history.push(`/choose-login?userType=${userType}`)}
           />

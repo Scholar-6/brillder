@@ -3,7 +3,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // @ts-ignore
 import { connect } from "react-redux";
 
-import axios from 'axios';
 import ProposalPanel from './ProposalPanel';
 import InvestigationPanel from './InvestigationPanel';
 import SynthesisPanel from './SynthesisPanel';
@@ -33,18 +32,6 @@ export interface TutorialProps {
 
 const TutorialPanelWorkArea: React.FC<TutorialProps> = ({user, step, setStep, getUser, skipTutorial}) => {
   const skip = () => skipTutorial();
-
-  const notShowAgain = () => {
-    axios.put(
-      `${process.env.REACT_APP_BACKEND_HOST}/user/tutorialShowed`, {}, {withCredentials: true}
-    ).then(res => {
-      if (res.data === 'OK') {
-        getUser();
-      }
-    }).catch(error => {
-      alert('Can`t save user profile');
-    });
-  }
 
   const renderStepPanel = () => {
     if (step === TutorialStep.Proposal) {

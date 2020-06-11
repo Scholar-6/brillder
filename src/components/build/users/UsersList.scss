@@ -111,3 +111,12 @@
     }
   }
 }
+
+.user-list-page {
+  .user-row {
+    font-family: $font-family-regular;
+  }
+  .user-first-name {
+    font-family: $font-family-regular !important;
+  }
+}

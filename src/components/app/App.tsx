@@ -32,8 +32,11 @@ import StudentRoute from './StudentRoute';
 import AuthRedirectRoute from './AuthRedirectRoute';
 import AllUsersRoute from './AllUsersRoute';
 
+import {setBrillderTitle} from 'components/services/titleService';
+
 
 const App: React.FC = (props: any) => {
+  setBrillderTitle();
   let history = useHistory();
 
   axios.interceptors.response.use(function (response) {
@@ -100,6 +103,7 @@ const App: React.FC = (props: any) => {
         <BuildRoute path="/build/users" component={UsersListPage} />
         <BuildRoute path="/build/user-profile/:userId" component={UserProfilePage} />
         <AllUsersRoute path="/build/user-profile" component={UserProfilePage} />
+        <AllUsersRoute path="/build/new-profile" component={UserProfilePage} />
         <BuildRoute path="/build" component={MainPage} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />

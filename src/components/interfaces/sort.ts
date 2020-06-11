@@ -7,7 +7,7 @@ export enum QuestionValueType {
 export interface SortAnswer {
   value: string;
   valueFile: string;
-  type: QuestionValueType;
+  answerType: QuestionValueType;
   choosen?: boolean;
 }
   

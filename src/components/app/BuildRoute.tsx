@@ -7,6 +7,7 @@ import actions from '../../redux/actions/auth';
 import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
 import { User, UserType } from 'model/user';
+import {setBrillderTitle} from 'components/services/titleService';
 
 
 interface BuildRouteProps {
@@ -20,7 +21,7 @@ interface BuildRouteProps {
 
 const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }) => {
   const values = queryString.parse(rest.location.search);
-  document.title = "Brillder";
+  setBrillderTitle();
 
   if (values.msg === 'USER_IS_NOT_ACTIVE') {
     return <Redirect to="/sign-up-success" />

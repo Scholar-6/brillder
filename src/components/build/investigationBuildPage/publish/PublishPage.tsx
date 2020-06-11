@@ -126,6 +126,10 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
     }
   }
 
+  moveToPlay() {
+    this.props.history.push('/')
+  }
+
   render() {
     const { status } = this.state;
     return (

@@ -15,11 +15,18 @@ export interface PairMatchComponent {
   options: any[];
 }
 
+export enum DragAndDropStatus {
+  None,
+  Init,
+  Changed
+}
+
 export interface PairMatchProps extends CompQuestionProps {
   component: PairMatchComponent;
   answers: number;
 }
   
 export interface PairMatchState {
+  status: DragAndDropStatus;
   userAnswers: any[];
 }

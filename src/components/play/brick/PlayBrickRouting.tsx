@@ -18,7 +18,7 @@ import { ComponentAttempt, PlayStatus } from './model/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
-import { UserType } from 'model/user';
+import { setBrillderTitle } from 'components/services/titleService';
 
 
 export interface BrickAttempt {
@@ -50,8 +50,6 @@ interface BrickRoutingProps {
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  const {roles} = props.user;
-
   let initAttempts:any[] = [];
   props.brick?.questions.forEach(question => initAttempts.push({}));
   
@@ -60,16 +58,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
 
-  let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor); 
-  if (cantPlay) {
-    return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
-  }
+  // Commented this in order to allow students to also be builders and vice versa, we may need to add this back in (11/5/2020)
+  // let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor); 
+  // if (cantPlay) {
+  //   return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
+  // }
 
   const brickId = parseInt(props.match.params.brickId);
   if (!props.brick || props.brick.id !== brickId || !props.brick.author) {
     props.fetchBrick(brickId);
     return <div>...Loading brick...</div>
   }
+
+  setBrillderTitle(props.brick.title);
 
   const updateAttempts = (attempt:any, index:number) => {
     attempts[index] = attempt;
@@ -82,8 +83,20 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishBrick = () => {
-    let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
-    let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
+    let score = attempts.reduce((acc, answer) => {
+      if (!answer || !answer.marks) {
+        return acc + 0;
+      }
+      return acc + answer.marks;
+    }, 0);
+    /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
+    is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
+    let maxScore = attempts.reduce((acc, answer) => {
+      if (!answer.maxMarks) {
+        return acc + 5;
+      }
+      return acc + answer.maxMarks;
+    }, 0);
     var ba : BrickAttempt = {
       brick: props.brick,
       score: score,
@@ -132,7 +145,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Introduction brick={props.brick} />
         </Route>
         <Route exac path="/play/brick/:brickId/live">
-          <Live status={status} questions={props.brick.questions} brickId={props.brick.id} updateAttempts={updateAttempts} finishBrick={finishBrick} />
+          <Live
+            status={status}
+            questions={props.brick.questions}
+            brickId={props.brick.id}
+            updateAttempts={updateAttempts}
+            finishBrick={finishBrick}
+          />
         </Route>
         <Route exac path="/play/brick/:brickId/provisionalScore">
           <ProvisionalScore status={status} brick={props.brick} attempts={attempts} />
@@ -214,7 +233,12 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
             item.index = index;
             item.hint = question.hint.list[index];
           }
-          const choices = c.list.map((a:any) => ({ value: a.value, index: a.index}));
+          const choices = c.list.map((a:any) => ({
+            value: a.value,
+            index: a.index,
+            valueFile: a.valueFile,
+            answerType: a.answerType
+          }));
           c.choices = shuffle(choices);
         }
       });

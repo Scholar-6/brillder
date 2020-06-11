@@ -54,21 +54,6 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     return this.state.userAnswers;
   }
 
-  getState(entry: number): number {
-    if (this.props.attempt.answer[entry]) {
-      if (
-        this.props.attempt.answer[entry].toLowerCase().replace(/ /g, "") ===
-        this.props.component.list[entry].answer.toLowerCase().replace(/ /g, "")
-      ) {
-        return 1;
-      } else {
-        return -1;
-      }
-    } else {
-      return 0;
-    }
-  }
-
   mark(attempt: any, prev: any): any {
     const markValue = 5;
     const markIncrement = prev ? 2 : markValue;
