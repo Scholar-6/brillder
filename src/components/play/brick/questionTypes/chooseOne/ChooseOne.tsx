@@ -5,7 +5,6 @@ import './ChooseOne.scss';
 import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
-import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
@@ -162,7 +161,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   render() {
     return (
       <div className="choose-one-live">
-        {(this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""}
         {
           this.props.component.list.map((choice, index) =>
             this.renderChoice(choice, index)
