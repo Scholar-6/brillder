@@ -18,11 +18,17 @@
     .back-box {
       .back-button {
         cursor: pointer;
-        width: 4.5vw;
-        height: auto;
+        height: 3.6vw;
+        width: 2vw;
+        margin-left: 15vw;
         color: $orange;
-        transition: all .2s ease-in-out;
-        transform-origin: 110% 50%;
+        transition: all 0.2s ease-in-out;
+        transform-origin: 200% 50%;
+  
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/feathericons/big-chevron-left-orange.png);
       }
       .back-button:hover {
         transform: scale(1.15, 1.05);
