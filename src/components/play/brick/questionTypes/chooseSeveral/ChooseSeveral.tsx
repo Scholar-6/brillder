@@ -189,6 +189,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
     return (
       <div className="choose-several-live">
+        <p className="help-text">Choose more than one option.</p>
         {
           component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }
