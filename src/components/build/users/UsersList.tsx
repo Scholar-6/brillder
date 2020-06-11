@@ -16,6 +16,7 @@ import authActions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
 import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
 import SubjectsList from 'components/baseComponents/subjectsList/SubjectsList';
+import AddUserButton from './AddUserButton';
 
 import { User, UserType, UserStatus } from 'model/user';
 
@@ -150,8 +151,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       filterHeight: 'auto',
 
       sortBy: UserSortBy.None,
-	  isAscending: false,
-	  isClearFilter: false
+      isAscending: false,
+      isClearFilter: false
     };
 
     this.getUsers(this.state.page);
@@ -228,8 +229,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   handleSortChange = (e: any) => {
   }
-
-
 
   getCheckedRoles() {
     const result = [];
@@ -340,25 +339,26 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
 
   //region Hide / Expand / Clear Filter
-	clearStatus() {
-		let { state } = this;
-		let { subjects } = state;
-		subjects.forEach((r: any) => (r.checked = false));
-		this.filter();
-		this.filterClear()
-	}
+  clearStatus() {
+    let { state } = this;
+    let { subjects } = state;
+    subjects.forEach((r: any) => (r.checked = false));
+    this.filter();
+    this.filterClear()
+  }
 	hideFilter() {
 		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-	  }
+	}
 
-	  expendFilter() {
+	expendFilter() {
 		this.setState({
 		  ...this.state,
 		  filterExpanded: true,
 		  filterHeight: "auto",
 		});
-	  }
-	filterClear(){
+	}
+  
+  filterClear() {
 		this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false})
 	}
 	//endregion
@@ -366,7 +366,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   renderSortAndFilterBox = () => {
     return (
-		<div className="sort-box">
+		  <div className="sort-box">
 			<div className="sort-by-box">
 				<div className="sort-header">Filter by: Role</div>
 				<RadioGroup
@@ -397,8 +397,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 				subjects = {this.state.subjects}
 				filterHeight={this.state.filterHeight}
 				filterBySubject={this.filterBySubject}/>
-      	</div>
-	);
+      </div>
+	  );
   }
 
   renderPagination() {
@@ -566,6 +566,21 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     );
   }
 
+  renderTableHeader() {
+    return (
+      <Grid container direction="row">
+        <Grid item xs={7}>
+          <div className="brick-row-title">
+            ALL USERS
+          </div>
+        </Grid>
+        <Grid container item xs={5} justify="flex-end">
+          <AddUserButton history={this.props.history} />
+        </Grid>
+      </Grid>
+    );
+  }
+
   render() {
     const {history} = this.props;
     return (
@@ -582,14 +597,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
               {this.renderSortAndFilterBox()}
             </Grid>
             <Grid item xs={9} className="brick-row-container">
-							<div className="brick-row-title">
-								ALL USERS
-							</div>
-							<Grid container direction="row">
-								{this.renderUsers()}
-								{this.renderRoleDescription()}
-							</Grid>
-							{this.renderPagination()}
+              {this.renderTableHeader()}
+              <Grid container direction="row">
+                {this.renderUsers()}
+                {this.renderRoleDescription()}
+              </Grid>
+              {this.renderPagination()}
             </Grid>
           </Grid>
         </div>

@@ -103,6 +103,7 @@ const App: React.FC = (props: any) => {
         <BuildRoute path="/build/users" component={UsersListPage} />
         <BuildRoute path="/build/user-profile/:userId" component={UserProfilePage} />
         <AllUsersRoute path="/build/user-profile" component={UserProfilePage} />
+        <AllUsersRoute path="/build/new-profile" component={UserProfilePage} />
         <BuildRoute path="/build" component={MainPage} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
