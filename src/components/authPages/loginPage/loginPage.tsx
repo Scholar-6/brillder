@@ -159,7 +159,7 @@ const LoginPage: React.FC<LoginProps> = props => {
     >
       <div className="back-col">
         <div className="back-box">
-          <ArrowBackIcon
+          <div
             className="back-button"
             onClick={() => props.history.push(`/choose-login?userType=${userType}`)}
           />
