@@ -84,8 +84,6 @@ const App: React.FC = (props: any) => {
   }, function (error) {
     return Promise.reject(error);
   });
-  
-  // TODO: remove duplicate build/new-profile and build/user-profile 11/6/2020
 
   return (
     <ThemeProvider theme={theme}>
