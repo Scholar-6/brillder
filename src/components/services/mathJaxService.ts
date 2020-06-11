@@ -14,7 +14,7 @@ function isMathType(el: string) {
 }
 
 function isChemType(el: string) {
-  return el.indexOf('<math class="wrs_chemistry" xmlns="http://www.w3.org/1998/Math/MathML">');
+  return el.indexOf('<math class="wrs_chemistry" xmlns="http://www.w3.org/1998/Math/MathML">') >= 0;
 }
 
 export function isMathJax(el: string) {
