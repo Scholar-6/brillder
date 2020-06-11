@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import { User, UserType } from 'model/user';
-import { Grid, CircularProgress, Hidden } from "@material-ui/core";
+import { Grid, CircularProgress } from "@material-ui/core";
 // @ts-ignore
 import { connect } from 'react-redux';
 

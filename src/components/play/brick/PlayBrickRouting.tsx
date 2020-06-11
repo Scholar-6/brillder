@@ -18,7 +18,6 @@ import { ComponentAttempt, PlayStatus } from './model/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
-import { UserType } from 'model/user';
 import { setBrillderTitle } from 'components/services/titleService';
 
 
@@ -51,8 +50,6 @@ interface BrickRoutingProps {
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  const {roles} = props.user;
-
   let initAttempts:any[] = [];
   props.brick?.questions.forEach(question => initAttempts.push({}));
   
@@ -86,6 +83,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishBrick = () => {
+    console.log(attempts);
     let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
     let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba : BrickAttempt = {
