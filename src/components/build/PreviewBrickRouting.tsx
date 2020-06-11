@@ -21,6 +21,7 @@ import {
 } from 'model/question';
 import { Hidden, Grid } from '@material-ui/core';
 import { setBrillderTitle } from 'components/services/titleService';
+import PublishPage from './investigationBuildPage/publish/PublishPage';
 
 
 export interface BrickAttempt {
@@ -112,7 +113,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const saveBrickAttempt = () => {
     brickAttempt.brickId = props.brick.id;
     brickAttempt.studentId = props.user.id;
-    props.history.push(`/build/brick/${brickId}/build/investigation/publish`);
+    props.history.push(`/play-preview/brick/${brickId}/publish`);
   }
 
   const moveToBuild = () => {
@@ -165,6 +166,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route exac path="/play-preview/brick/:brickId/ending">
           <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} saveBrick={saveBrickAttempt} />
+        </Route>
+        <Route exac path="/play-preview/brick/:brickId/publish">
+          <PublishPage {...props} />
         </Route>
       </Switch>
       <Hidden only={['xs', 'sm', 'md']}>
