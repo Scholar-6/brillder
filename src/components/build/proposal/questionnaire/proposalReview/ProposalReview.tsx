@@ -69,6 +69,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
               <div className="back"></div>
               <div className="page6">
                 <div className="normal-page">
+                  <div className="normal-page-container">
                   <Grid container justify="center">
                     <div className="edit-icon" />
                   </Grid>
@@ -85,6 +86,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
                   <p className="text-title brick-length">
                     5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>
                   </p>
+                  </div>
                 </div>
               </div>
               <div className="page5">

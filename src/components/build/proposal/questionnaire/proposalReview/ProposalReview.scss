@@ -284,13 +284,18 @@
     .page6 {
       background: #fdfdfd;
       .normal-page {
-        margin-left: 2vw;
-        margin-right: 0vw;
-        height: $book-height;
+        height: 100%;
         overflow: auto;
         font-size: 1vw;
 
         font-family: $font-family-regular;
+
+        .normal-page-container {
+          height: 100%;
+          height: $book-height;
+          margin-left: 2vw;
+          margin-right: 2vw;
+        }
 
         .edit-icon {
           margin-top: 2vh;
