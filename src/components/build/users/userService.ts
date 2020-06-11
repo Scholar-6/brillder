@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import { User, UserType, UserStatus } from 'model/user';
-
 
 export function activateUser(userId: number, callback: Function, error: Function) {
   axios.put(
