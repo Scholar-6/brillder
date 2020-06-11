@@ -42,6 +42,9 @@
   .choose-choice.active {
     background: $blue;
   }
+  .question-hint {
+    color: $dark-blue;
+  }
 
   .choose-choice.correct {
     background: $light-green;
@@ -56,6 +59,7 @@
   }
 
   .question-hint-global {
+    color: $dark-blue;
     margin-top: 10px;
   }
 }
