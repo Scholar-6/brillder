@@ -50,6 +50,10 @@
     background: $blue;
   }
 
+  .question-hint {
+    color: $dark-blue;
+  }
+
   .choose-choice.correct {
     background: $light-green;
 
@@ -59,5 +63,9 @@
   }
   .choose-choice.wrong {
     background: $orange;
+  }
+
+  .question-hint-global {
+    color: $dark-blue;
   }
 }

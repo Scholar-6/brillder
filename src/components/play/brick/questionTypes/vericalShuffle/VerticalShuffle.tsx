@@ -6,7 +6,6 @@ import './VerticalShuffle.scss';
 import {CompQuestionProps} from '../types';
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
-import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 
@@ -159,11 +158,6 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   render() {
     return (
       <div className="vertical-shuffle-play">
-        <div>
-          {
-            (this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""
-          }
-        </div>
         <ReactSortable
           list={this.state.userAnswers}
           animation={150}

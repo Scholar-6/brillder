@@ -7,7 +7,6 @@ import './HorizontalShuffle.scss';
 import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
-import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 
@@ -138,9 +137,6 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   render() {
     return (
       <div className="horizontal-shuffle-play">
-        {
-          (this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""
-        }
         <ReactSortable
           list={this.state.userAnswers}
           animation={150}
