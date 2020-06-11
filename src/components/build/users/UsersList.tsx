@@ -533,7 +533,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             return (
               <tr className="user-row" key={i}>
                 <td></td>
-                <td>{user.firstName} <span className="user-last-name">{user.lastName}</span></td>
+                <td>
+                  <span className="user-first-name">{user.firstName} </span>
+                  <span className="user-last-name">{user.lastName}</span>
+                </td>
                 <td>{user.email}</td>
                 <td>{this.renderUserType(user)}</td>
                 <td className="activate-button-container">
