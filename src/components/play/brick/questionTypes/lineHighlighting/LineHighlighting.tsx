@@ -84,7 +84,7 @@ class LineHighlighting extends CompComponent<
     return (
       <div key={index}>
         <span
-          className={line.checked ? "active line" : "line"}
+          className={line.checked ? "correct line" : "line"}
         >
           {line.text}
         </span>
