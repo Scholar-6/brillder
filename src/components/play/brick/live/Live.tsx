@@ -60,6 +60,9 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...prop
     setActiveStep(step);
     if (props.isPlayPreview) {
       CashQuestionFromPlay(brickId, step);
+    } else {
+      let attempt = questionRefs[activeStep].current?.getAttempt();
+      props.updateAttempts(attempt, activeStep);
     }
   };
 
