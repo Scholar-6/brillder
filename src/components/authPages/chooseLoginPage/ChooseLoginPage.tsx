@@ -42,7 +42,7 @@ const ChooseLoginPage:React.FC<ChooseLoginProps> = (props) => {
       <Grid className="pre-login-page" container item justify="center" alignItems="center">
         <div className="back-col">
           <div className="back-box">
-            <ArrowBackIcon className="back-button" onClick={() => props.history.push('/choose-user')} />
+            <div className="back-button" onClick={() => props.history.push('/choose-user')} />
           </div>
         </div>
         <div className="first-col">
