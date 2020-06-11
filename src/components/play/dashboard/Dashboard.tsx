@@ -15,7 +15,6 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
@@ -24,6 +23,8 @@ import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
+import PageHeader from "components/baseComponents/pageHeader/PageHeader";
+
 
 const mapState = (state: any) => {
   return {
@@ -527,44 +528,12 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     return (
       <div className="dashboard-page">
         <div className="upper-part">
-          <Grid container direction="row" className="page-header">
-            <HomeButton />
-            <Grid
-              container
-              className="logout-container"
-              item
-              direction="row"
-              style={{ width: "92.35vw" }}
-            >
-              <Grid container style={{ width: "60vw", height: "7vh" }}>
-                <Grid item>
-                  <div
-                    className="search-button"
-                    onClick={() => this.search()}
-                  ></div>
-                </Grid>
-                <Grid item>
-                  <input
-                    className="search-input"
-                    onKeyUp={(e) => this.keySearch(e)}
-                    onChange={(e) => this.searching(e.target.value)}
-                    placeholder="Search Subjects, Topics, Titles & more"
-                  />
-                </Grid>
-              </Grid>
-              <Grid item style={{ width: "32.35vw" }}>
-                <Grid container direction="row" justify="flex-end">
-                  <div className="bell-button">
-                    <div></div>
-                  </div>
-                  <div
-                    className="more-button"
-                    onClick={() => this.showDropdown()}
-                  ></div>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+          <PageHeader
+            searchPlaceholder="Search Subjects, Topics, Titles & more"
+            search={() => this.search()}
+            searching={(v) => this.searching(v)}
+            showDropdown={() => this.showDropdown()}
+          />
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
               {this.renderSortAndFilterBox()}

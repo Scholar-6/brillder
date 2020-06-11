@@ -47,8 +47,18 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
     }
   }
 
-  let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
-  let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
+  let score = attempts.reduce((acc, answer) => {
+    if (!answer || !answer.marks) {
+      return acc + 0;
+    }
+    return acc + answer.marks;
+  }, 0);
+  let maxScore = attempts.reduce((acc, answer) => {
+    if (!answer.maxMarks) {
+      return acc + 5;
+    }
+    return acc + answer.maxMarks;
+  }, 0);
 
   return (
     <Grid container direction="row" justify="center">

@@ -44,6 +44,7 @@ import {
 import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
 import {GetCashedBuildQuestion} from '../../localStorage/buildLocalStorage';
+import { setBrillderTitle } from "components/services/titleService";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -103,6 +104,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if (!props.brick) {
     return <div>...Loading...</div>;
   }
+
+  setBrillderTitle(props.brick.title);
 
   const getQuestionIndex = (question: Question) => {
     return questions.indexOf(question);

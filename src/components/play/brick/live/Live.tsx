@@ -60,6 +60,9 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...prop
     setActiveStep(step);
     if (props.isPlayPreview) {
       CashQuestionFromPlay(brickId, step);
+    } else {
+      let attempt = questionRefs[activeStep].current?.getAttempt();
+      props.updateAttempts(attempt, activeStep);
     }
   };
 
@@ -100,7 +103,15 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...prop
 
   const renderQuestion = (question: Question, index: number) => {
     let isLastOne = (questions.length - 1) === activeStep;
-    return <QuestionLive question={question} answers={answers[index]} isLastOne={isLastOne} next={next} ref={questionRefs[index]} />
+    return (
+      <QuestionLive
+        question={question}
+        answers={answers[index]}
+        isLastOne={isLastOne}
+        next={next}
+        ref={questionRefs[index]}
+      />
+    );
   }
 
   return (

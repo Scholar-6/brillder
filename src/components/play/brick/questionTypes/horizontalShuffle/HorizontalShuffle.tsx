@@ -7,10 +7,14 @@ import './HorizontalShuffle.scss';
 import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
-import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 
+enum DragAndDropStatus {
+  None,
+  Init,
+  Changed
+}
 
 interface HorizontalShuffleChoice {
   value: string;
@@ -28,6 +32,7 @@ interface VerticalShuffleProps extends CompQuestionProps {
 }
 
 interface HorizontalShuffleState {
+  status: DragAndDropStatus;
   userAnswers: any[];
 }
 
@@ -35,9 +40,13 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   constructor(props: VerticalShuffleProps) {
     super(props);
 
-    this.state = {
-      userAnswers: props.component.list
-    };
+    let userAnswers = props.component.list;
+
+    if (this.props.attempt) {
+      userAnswers = this.props.attempt.answer;
+    }
+
+    this.state = { status: DragAndDropStatus.None, userAnswers };
   }
 
   componentWillUpdate(props: VerticalShuffleProps) {
@@ -50,7 +59,11 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   }
 
   setUserAnswers(userAnswers: any[]) {
-    this.setState({ userAnswers });
+    let status = DragAndDropStatus.Changed;
+    if (this.state.status === DragAndDropStatus.None) {
+      status = DragAndDropStatus.Init;
+    }
+    this.setState({ status, userAnswers });
   }
 
   getAnswer(): any[] {
@@ -94,8 +107,19 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
 
   renderAnswer(answer: any, i: number) {
     let isCorrect = this.checkAttemptAnswer(i);
+    let className = "horizontal-shuffle-answer";
+    if (!this.props.isPreview && this.props.attempt) {
+      if (this.state.status !== DragAndDropStatus.Changed) {
+        if (isCorrect) {
+          className += " correct";
+        } else {
+          className += " wrong";
+        }
+      }
+    }
+
     return (
-      <Card className={`horizontal-shuffle-answer ${isCorrect ? 'correct' : ''}`} key={i}>
+      <Card className={className} key={i}>
         <div style={{display: "block"}}>{answer.value}</div>
         <div style={{display: "block"}}>
           <ReviewEachHint
@@ -113,9 +137,6 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   render() {
     return (
       <div className="horizontal-shuffle-play">
-        {
-          (this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""
-        }
         <ReactSortable
           list={this.state.userAnswers}
           animation={150}

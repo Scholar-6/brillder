@@ -6,7 +6,6 @@ import './VerticalShuffle.scss';
 import {CompQuestionProps} from '../types';
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
-import BlueCrossRectIcon from 'components/play/components/BlueCrossRectIcon';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 
@@ -27,7 +26,14 @@ interface VerticalShuffleProps extends CompQuestionProps {
   answers: number;
 }
 
+enum DragAndDropStatus {
+  None,
+  Init,
+  Changed
+}
+
 interface VerticalShuffleState {
+  status: DragAndDropStatus;
   userAnswers: any[];
 }
 
@@ -42,12 +48,17 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     }
 
     this.state = {
+      status: DragAndDropStatus.None,
       userAnswers: userAnswers
     };
   }
 
   setUserAnswers(userAnswers: any[]) {
-    this.setState({ userAnswers });
+    let status = DragAndDropStatus.Changed;
+    if (this.state.status === DragAndDropStatus.None) {
+      status = DragAndDropStatus.Init;
+    }
+    this.setState({ status, userAnswers });
   }
 
   getAnswer(): any[] {
@@ -114,36 +125,39 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
   renderAnswer(answer:any, i: number) {
     let isCorrect = this.checkAttemptAnswer(i);
+    let className = "vertical-shuffle-choice";
+
+    if (!this.props.isPreview && this.props.attempt) {
+      if (this.state.status !== DragAndDropStatus.Changed) {
+        if (isCorrect === true) {
+          className += " correct";
+        } else {
+          className += " wrong";
+        }
+      }
+    }
+    
     return (
-      <div
-        style={{display: "block"}}
-        key={i}
-        className={`vertical-shuffle-choice ${isCorrect ? 'correct' : ''}`}
-      >
-          <Grid container direction="row" justify="center">
-            {answer.value}
-          </Grid>
-          <Grid container direction="row" justify="center">
-            <ReviewEachHint
-              isPhonePreview={this.props.isPreview}
-              attempt={this.props.attempt}
-              isCorrect={isCorrect}
-              index={i}
-              hint={this.props.question.hint}
-            />
-          </Grid>
+      <div key={i} className={className}>
+        <Grid container direction="row" justify="center">
+          {answer.value}
+        </Grid>
+        <Grid container direction="row" justify="center">
+          <ReviewEachHint
+            isPhonePreview={this.props.isPreview}
+            attempt={this.props.attempt}
+            isCorrect={isCorrect}
+            index={i}
+            hint={this.props.question.hint}
+          />
+        </Grid>
       </div>
-    )
+    );
   }
 
   render() {
     return (
       <div className="vertical-shuffle-play">
-        <div>
-          {
-            (this.props.attempt?.correct === false) ?  <BlueCrossRectIcon /> : ""
-          }
-        </div>
         <ReactSortable
           list={this.state.userAnswers}
           animation={150}

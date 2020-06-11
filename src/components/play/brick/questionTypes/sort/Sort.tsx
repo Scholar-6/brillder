@@ -1,7 +1,6 @@
 
 import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import './Sort.scss';
@@ -10,9 +9,8 @@ import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { ReactSortable } from 'react-sortablejs';
-import DenimCrossRect from 'components/play/components/DenimCrossRect';
-import DenimTickRect from 'components/play/components/DenimTickRect';
 import {SortCategory, SortAnswer, QuestionValueType} from 'components/interfaces/sort';
+import { DragAndDropStatus } from '../pairMatch/interface';
 
 
 interface UserCategory {
@@ -35,6 +33,7 @@ interface SortProps {
 }
 
 interface SortState {
+  status: DragAndDropStatus;
   userCats: UserCategory[];
   choices: any;
   data?: any;
@@ -65,7 +64,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       });
     }
 
-    this.state = { userCats, choices: this.getChoices() };
+    this.state = { status: DragAndDropStatus.None, userCats, choices: this.getChoices() };
   }
 
   UNSAFE_componentWillReceiveProps(props: SortProps) {
@@ -169,24 +168,17 @@ class Sort extends CompComponent<SortProps, SortState> {
   updateCategory(list: any[], index:number) {
     let userCats = this.state.userCats;
     userCats[index].choices = list;
-    this.setState({userCats});
-  }
-
-  renderIcon(index: number) {
-    if (this.props.attempt) {
-      return (
-        <ListItemIcon>
-          {
-            (this.props.attempt.answer[index].index === index) ? <DenimTickRect/> : <DenimCrossRect />
-          }
-        </ListItemIcon>
-      );
+    
+    let status = DragAndDropStatus.Changed;
+    if (this.state.status === DragAndDropStatus.None) {
+      status = DragAndDropStatus.Init;
     }
-    return "";
+    
+    this.setState({ status, userCats });
   }
 
   renderChoiceContent(choice: SortAnswer) {
-    if (choice.type === QuestionValueType.Image) {
+    if (choice.answerType === QuestionValueType.Image) {
       return (
         <img
           alt="" className="sort-image-choice"
@@ -198,18 +190,23 @@ class Sort extends CompComponent<SortProps, SortState> {
   }
 
   renderChoice(choice: SortAnswer, i: number) {
+    let isCorrect = this.getState(choice.value) === 1;
+    let className="sortable-item";
+    if (choice.answerType === QuestionValueType.Image) {
+      className += " image-choice";
+    }
+    if (!this.props.isPreview && this.props.attempt) {
+      if (this.state.status !== DragAndDropStatus.Changed) {
+        if (isCorrect) {
+          className += " correct";
+        } else {
+          className+= " wrong";
+        }
+      }
+    }
     return (
-      <div className="sortable-item" key={i}>
+      <div className={className} key={i}>
         <ListItem>
-          <ListItemIcon>
-            {
-              this.props.attempt 
-                ? (this.getState(choice.value) === 1)
-                  ? <DenimTickRect />
-                  : <DenimCrossRect />
-                : <div></div>
-            }
-          </ListItemIcon>
           <ListItemText>
             {this.renderChoiceContent(choice)}
           </ListItemText>
@@ -234,9 +231,7 @@ class Sort extends CompComponent<SortProps, SortState> {
                   setList={(list) => this.updateCategory(list, i)}
                 >
                   {
-                    cat.choices.map((choice:any, i:number) =>
-                      this.renderChoice(choice, i)
-                    )
+                    cat.choices.map((choice, i) => this.renderChoice(choice, i))
                   }
                 </ReactSortable>
               </div>

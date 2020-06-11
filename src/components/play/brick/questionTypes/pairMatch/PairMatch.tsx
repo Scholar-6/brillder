@@ -3,17 +3,14 @@ import { ReactSortable } from 'react-sortablejs';
 import { Grid } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import './PairMatch.scss';
 import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import DenimCrossRect from 'components/play/components/DenimCrossRect';
-import DenimTickRect from 'components/play/components/DenimTickRect';
 import {QuestionValueType} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 import {Answer} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/pairMatchBuild/types';
-import { PairMatchProps, PairMatchState } from './interface';
+import { PairMatchProps, PairMatchState, DragAndDropStatus } from './interface';
 import {mark} from './service';
 import MathInHtml from '../../baseComponents/MathInHtml';
 
@@ -21,17 +18,21 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   constructor(props: PairMatchProps) {
     super(props);
-
+    let status = DragAndDropStatus.None;
+    let userAnswers = [];
+    
     const {component} = props;
     if (props.isPreview === true) {
-      this.state = {
-        userAnswers: component.list ? component.list : [],
-      };
+      userAnswers = component.list ? component.list : [];
     } else {
-      this.state = {
-        userAnswers: component.choices ? component.choices : [],
-      };
+      if (this.props.attempt) {
+        let choices = this.props.attempt.answer;
+        userAnswers = Object.assign([], choices);
+      } else {
+        userAnswers =  component.choices ? component.choices : [];
+      }
     }
+    this.state ={ status, userAnswers };
   }
 
   componentWillUpdate(props: PairMatchProps) {
@@ -43,7 +44,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   }
 
   setUserAnswers(userAnswers: any[]) {
-    this.setState({ userAnswers });
+    let status = DragAndDropStatus.Changed;
+    if (this.state.status === DragAndDropStatus.None) {
+      status = DragAndDropStatus.Init;
+    }
+    this.setState({ status, userAnswers });
   }
 
   getAnswer(): any[] {
@@ -53,7 +58,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   getState(entry: number): number {
     if (this.props.attempt?.answer[entry]) {
       if (
-        this.props.attempt.answer[entry].toLowerCase().replace(/ /g, '') ===
+        this.props.attempt.answer[entry].value.toLowerCase().replace(/ /g, '') ===
         this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')
       ) {
         return 1;
@@ -65,29 +70,16 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return mark(this.props.component.list, attempt, prev);
   }
 
-  renderIcon(index: number) {
-    if (this.props.attempt) {
-      return (
-        <ListItemIcon>
-          {
-            (this.props.attempt.answer[index].index === index) ? <DenimTickRect/> : <DenimCrossRect />
-          }
-        </ListItemIcon>
-      );
-    }
-    return "";
-  }
-
-  renderOption(answer: Answer) {
+  renderOptionContent(answer: Answer) {
     if (answer.optionType && answer.optionType === QuestionValueType.Image) {
-      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} />;
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.optionFile}`} width="100%" />;
     }
     return <MathInHtml value={answer.option} />;
   }
 
-  renderAnswer(answer: Answer) {
+  renderAnswerContent(answer: Answer) {
     if (answer.answerType && answer.answerType === QuestionValueType.Image) {
-      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
+      return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} width="100%"/>;
     } else {
       return (
         <div
@@ -100,28 +92,56 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     }
   }
 
+  renderAnswer(answer: any, i: number) {
+    let className = "pair-match-play-choice";
+    if (answer.answerType === QuestionValueType.Image) {
+      className += " image-choice";
+    }
+    if (this.props.attempt) {
+      if (this.state.status !== DragAndDropStatus.Changed) {
+        let state = this.getState(answer.index);
+        if (state === 1) {
+          className += " correct";
+        } else {
+          className += " wrong";
+        }
+      }
+    }
+    return (
+      <div key={i} className={className}>
+        <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
+          {this.renderAnswerContent(answer)}
+        </div>
+      </div>
+    );
+  }
+
+  renderOption(item: any, i: number) {
+    let className = "pair-match-play-option";
+    if (item.optionType === QuestionValueType.Image || item.answerType === QuestionValueType.Image) {
+      className += " pair-match-image-choice";
+    }
+    if (item.optionType === QuestionValueType.Image) {
+      className += " image-choice";
+    }
+    return (
+      <ListItem key={i} className={className}>
+        <div className="option-container">
+          <div className="MuiListItemText-root">
+            {this.renderOptionContent(item as any)}
+          </div>
+        </div>
+      </ListItem>
+    );
+  }
+
   render() {
     return (
       <div className="pair-match-play">
         <Grid container justify="center">
           <List style={{padding: 0}} className="answers-list">
           {
-            this.props.component.list.map((item:any, i) => (
-              <ListItem
-                key={i}
-                className={
-                  `pair-match-play-option ${(item.optionType === QuestionValueType.Image || item.answerType === QuestionValueType.Image)
-                    ? "pair-match-image-choice" : ""}`
-                }
-              >
-                {this.renderIcon(i)}
-                <div className="option-container">
-                  <div className="MuiListItemText-root">
-                    {this.renderOption(item as any)}
-                  </div>
-                </div>
-              </ListItem>
-            ))
+            this.props.component.list.map((item:any, i) => this.renderOption(item, i))
           }
           </List>
           <ReactSortable
@@ -132,13 +152,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
             setList={(choices) => this.setUserAnswers(choices)}
           >
             {
-              this.state.userAnswers.map((answer, i) => (
-                <div key={i} className="pair-match-play-choice">
-                  <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
-                    {this.renderAnswer(answer)}
-                  </div>
-                </div>
-              ))
+              this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
             }
           </ReactSortable>
         </Grid>

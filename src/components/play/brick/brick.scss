@@ -12,7 +12,9 @@
 }
 
 .play-pages {
+  height: 100%;
   .back-to-build {
+    cursor: pointer;
     position: fixed;
     height: 100%;
     width: 15vw;

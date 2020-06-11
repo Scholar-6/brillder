@@ -1,0 +1,20 @@
+@include keyframes(pulse) {
+    0% {
+        @include box-shadow(0 0 0 0 rgb(48, 196, 116, 0.5));
+    }
+    70% {
+        @include box-shadow(0 0 0 20px transparent);
+    }
+    100% {
+        @include box-shadow(0 0 0 0 transparent);
+    }
+}
+
+.pulse {
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-delay: 0s;
+    animation-iteration-count: 5;
+    animation-timing-function: ease;
+    animation-play-state: running;
+}
