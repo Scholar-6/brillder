@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // @ts-ignore
 import { connect } from "react-redux";
@@ -22,6 +22,7 @@ import {
 import { Hidden, Grid } from '@material-ui/core';
 import { setBrillderTitle } from 'components/services/titleService';
 import PublishPage from './investigationBuildPage/publish/PublishPage';
+import {prefillAttempts} from 'components/services/PlayService';
 
 
 export interface BrickAttempt {
@@ -62,6 +63,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
+
+  useEffect(() => {
+    if (props.brick) {
+      let initAttempts = prefillAttempts(props.brick.questions);
+      setAttempts(initAttempts);
+    }
+  }, [props.brick]);
 
   const brickId = parseInt(props.match.params.brickId);
   if (!props.brick || props.brick.id !== brickId || !props.brick.author) {
