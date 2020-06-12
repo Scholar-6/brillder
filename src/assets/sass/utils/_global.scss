@@ -258,19 +258,36 @@ input:focus {
   border-bottom-right-radius: 2vw;
   background: $light-blue;
   width: calc(6.834vw - 1vw) !important;
-  height: 12.613vh;
+  height: $header-height;
   margin-right: 1vw;
-  padding: .782vw;
+  padding: 0.35vw .782vw .782vw 0.35vw;
   .home-button {
     cursor: pointer;
     height: 100%;
     width: 100%;
     display: block;
     &:hover {
+      > .svg {
+        @include transition(all 350ms cubic-bezier(0.5, 1, 0.89, 1));
+        transform: scale(0.7) translate(calc(-50% - 1vw), calc(-50% + 0.3vw)) !important;
+      }
       .smoke-container {
         display: flex;
       }
+      .roof {
+        visibility: visible;
+        opacity: 1;
+      }
     }
+  }
+  .roof {
+    width: 100%;
+    height: inherit;
+    @extend %floatToXCenter;
+    top: -1vw;
+    visibility: hidden;
+    opacity: 0;
+    @include transition(all 350ms cubic-bezier(0.5, 1, 0.89, 1));
   }
   .smoke-container {
     display: none;
@@ -278,8 +295,8 @@ input:focus {
     width: 1.1vw;
     height: 2vw;
     margin: 0;
-    left: 0.3vw;
-    top: -1.7vw;
+    left: .7vw;
+    top: -1.43vw;
     z-index: 999;
     .smoke-1,
     .smoke-2,
@@ -287,19 +304,19 @@ input:focus {
       opacity: 0;
     }
     .smoke-1 {
-      @include animation(smoke-1 2s linear 0.5s infinite);
+      @include animation(smoke-1 2s linear 0s infinite);
     }
     .smoke-2 {
-      @include animation(smoke-2 3s linear 0.6s infinite);
+      @include animation(smoke-2 3s linear 0.5s infinite);
     }
     .smoke-3 {
-      @include animation(smoke-3 4s linear 1.2s infinite);
+      @include animation(smoke-3 4s linear 1s infinite);
     }
   }
 }
 .logout-container {
   width: calc(93.16vw - 1vw) !important;
-  height: 12.613vh;
+  height: $header-height;
   margin-left: 1vw;
   border-bottom-left-radius: 2vw;
   background: $light-blue;

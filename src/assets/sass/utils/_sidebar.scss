@@ -1,10 +1,11 @@
 .sorted-row {
-  margin-top: 3.5vh;
+  margin-top: $content-margin-top;
+  height: calc(100vh - #{$header-height - $content-margin-top});
   padding-left: 0;
   padding-right: 0;
   .sort-and-filter-container {
     color: white;
-    height: 83.887vh;
+    height: $content-height;
     max-width: calc(25% - 1vw);
     flex-basis: calc(25% - 1vw);
     margin-right: 1vw;
@@ -265,7 +266,7 @@
     background: $light-grey;
     max-width: calc(75% - 1vw);
     flex-basis: calc(75% - 1vw);
-    height: 83.887vh;
+    height: $content-height;
     .brick-row-title {
       padding-left: 1.15vw;
       // padding-left: 0.35vw;
