@@ -7,8 +7,16 @@ export function prefillAttempts(questions: Question[]) {
   let initAttempts:ComponentAttempt[] = [];
   questions.forEach(question => {
     let initAttempt = { correct: false, marks: 0, maxMarks: 5 } as ComponentAttempt;
-    if (question.type === QuestionTypeEnum.ChooseSeveral) {
+    if (question.type === QuestionTypeEnum.ChooseOne) {
+      initAttempt.answer = -1;
+    } else if (question.type === QuestionTypeEnum.ChooseSeveral) {
       initAttempt.answer = [];
+    } else if (
+      question.type === QuestionTypeEnum.HorizontalShuffle ||
+      question.type === QuestionTypeEnum.VerticalShuffle
+    ) {
+      let uniq = getUniqueComponent(question);
+      initAttempt.answer = Object.assign([], uniq.list);
     } else if (question.type === QuestionTypeEnum.PairMatch) {
       let uniq = getUniqueComponent(question);
       initAttempt.answer = Object.assign([], uniq.choices);
