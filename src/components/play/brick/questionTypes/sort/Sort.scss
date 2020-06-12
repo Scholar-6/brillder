@@ -46,11 +46,11 @@
     }
 
     .sortable-item.correct {
-      background: $light-green;
+      background: $light-green !important;
     }
 
     .sortable-item.wrong {
-      background: $orange;
+      background: $orange !important;
     }
 
     .sort-image-choice {
