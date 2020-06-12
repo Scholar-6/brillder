@@ -10,6 +10,7 @@ import {ComponentAttempt} from 'components/play/brick/model/model';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 
+
 enum DragAndDropStatus {
   None,
   Init,
@@ -43,7 +44,9 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     let userAnswers = props.component.list;
 
     if (this.props.attempt) {
-      userAnswers = this.props.attempt.answer;
+      if (this.props.attempt.answer) {
+        userAnswers = this.props.attempt.answer;
+      }
     }
 
     this.state = { status: DragAndDropStatus.None, userAnswers };
