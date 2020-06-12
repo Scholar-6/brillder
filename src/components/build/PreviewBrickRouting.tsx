@@ -55,7 +55,9 @@ interface BrickRoutingProps {
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   let initAttempts:any[] = [];
-  props.brick?.questions.forEach(question => initAttempts.push({}));
+  if (props.brick) {
+    initAttempts = prefillAttempts(props.brick.questions);
+  }
 
   let cashedBuildQuestion = GetCashedBuildQuestion();
   
