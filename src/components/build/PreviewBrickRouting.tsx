@@ -92,20 +92,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const finishBrick = () => {
     /* If no answer given or no mark provided for question then return acc accumulated score +0 so 
     it still has an integer value, else return acc + additional mark */
-    let score = attempts.reduce((acc, answer) => {
-      if (!answer || !answer.marks) {
-        return acc + 0;
-      }
-      return acc + answer.marks;
-    }, 0);
+    let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
     /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
     is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
-    let maxScore = attempts.reduce((acc, answer) => {
-      if (!answer.maxMarks) {
-        return acc + 5;
-      }
-      return acc + answer.maxMarks;
-    }, 0);
+    let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba : BrickAttempt = {
       brick: props.brick,
       score: score,

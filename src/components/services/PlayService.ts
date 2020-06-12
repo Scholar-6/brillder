@@ -9,7 +9,11 @@ export function prefillAttempts(questions: Question[]) {
     let initAttempt = { correct: false, marks: 0, maxMarks: 5 } as ComponentAttempt;
     if (question.type === QuestionTypeEnum.ChooseOne) {
       initAttempt.answer = -1;
-    } else if (question.type === QuestionTypeEnum.ChooseSeveral) {
+    } else if (
+      question.type === QuestionTypeEnum.ChooseSeveral ||
+      question.type === QuestionTypeEnum.WordHighlighting ||
+      question.type === QuestionTypeEnum.LineHighlighting
+    ) {
       initAttempt.answer = [];
     } else if (
       question.type === QuestionTypeEnum.HorizontalShuffle ||
