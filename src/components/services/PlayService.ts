@@ -15,11 +15,21 @@ export function prefillAttempts(questions: Question[]) {
       question.type === QuestionTypeEnum.HorizontalShuffle ||
       question.type === QuestionTypeEnum.VerticalShuffle
     ) {
-      let uniq = getUniqueComponent(question);
+      const uniq = getUniqueComponent(question);
       initAttempt.answer = Object.assign([], uniq.list);
     } else if (question.type === QuestionTypeEnum.PairMatch) {
-      let uniq = getUniqueComponent(question);
+      const uniq = getUniqueComponent(question);
       initAttempt.answer = Object.assign([], uniq.choices);
+    } else if (question.type === QuestionTypeEnum.Sort) {
+      const {categories} = getUniqueComponent(question);
+      let choices:any = {};
+      let unsortedIndex = categories.length;
+      for (const category of categories) {
+        for (const choice of category.answers) {
+          choices[choice.value] = unsortedIndex;
+        }
+      }
+      initAttempt.answer = choices;
     }
     initAttempts.push(initAttempt);
   });
