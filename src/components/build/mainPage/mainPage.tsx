@@ -10,9 +10,7 @@ import { User } from 'model/user';
 
 
 const mapState = (state: any) => {
-  return { 
-    user: state.user.user
-  }
+  return { user: state.user.user }
 }
 
 const mapDispatch = (dispatch: any) => {
@@ -25,29 +23,45 @@ const mapDispatch = (dispatch: any) => {
 const connector = connect(
   mapState,
   mapDispatch
-)
+);
 
 interface MainPageProps {
-  history: any
-  user: User
-  forgetBrick(): void
-  logout(): void
+  history: any;
+  user: User;
+  forgetBrick(): void;
+  logout(): void;
 }
 
 interface MainPageState {
-  viewHover: boolean,
-  createHober: boolean,
-  backHober: boolean,
+  viewHover: boolean;
+  createHober: boolean;
+  backHober: boolean;
+  animatedName: string;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
   constructor(props:any) {
     super(props);
+
+
     this.state = {
       viewHover: false,
       createHober: false,
       backHober: false,
+      animatedName: '',
     } as any;
+
+    let count = 0;
+    let nameToFill = props.user.firstName ? props.user.firstName as string : 'NAME';
+    let maxCount = nameToFill.length - 1;
+
+    let setNameInterval = setInterval(() => {
+      this.setState({...this.state, animatedName: this.state.animatedName + nameToFill[count]});
+      if (count >= maxCount) {
+        clearInterval(setNameInterval);
+      }
+      count++;
+    }, 150);
   }
 
   viewHoverToggle(viewHover: boolean) {
@@ -69,9 +83,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               <div>WELCOME</div>
               <div className="smaller">TO BRILLDER,</div>
               <div className="welcome-name">
-                {
-                  this.props.user.firstName ? this.props.user.firstName : 'NAME'
-                }
+                {this.state.animatedName}
               </div>
             </div>
           </div>

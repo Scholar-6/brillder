@@ -43,8 +43,12 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
     let userAnswers = this.props.component.list;
 
-    if (this.props.attempt) {
-      userAnswers = this.props.attempt.answer;
+    let {attempt} = this.props;
+
+    if (attempt) {
+      if (attempt.answer) {
+        userAnswers = attempt.answer;
+      }
     }
 
     this.state = {
