@@ -282,7 +282,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 		this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
 	}
 	filterClear(){
-		console.log("filterClear", this.state.filters)
 		let {draft, review, build, publish} = this.state.filters
 		if(draft || review || build || publish){
 			 this.setState({ isClearFilter: true})

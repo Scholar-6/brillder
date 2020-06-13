@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // @ts-ignore
 import { connect } from "react-redux";
@@ -19,6 +19,7 @@ import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
 import { setBrillderTitle } from 'components/services/titleService';
+import {prefillAttempts} from 'components/services/PlayService';
 
 
 export interface BrickAttempt {
@@ -51,12 +52,21 @@ interface BrickRoutingProps {
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   let initAttempts:any[] = [];
-  props.brick?.questions.forEach(question => initAttempts.push({}));
+  if (props.brick) {
+    initAttempts = prefillAttempts(props.brick.questions);
+  }
   
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
+
+  useEffect(() => {
+    if (props.brick) {
+      let initAttempts = prefillAttempts(props.brick.questions);
+      setAttempts(initAttempts);
+    }
+  }, [props.brick]);
 
   // Commented this in order to allow students to also be builders and vice versa, we may need to add this back in (11/5/2020)
   // let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor); 
@@ -82,21 +92,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setReviewAttempts(reviewAttempts);
   }
 
+  /* TODO: extract all of this scoring code into a scoring service 13/6/2020*/
   const finishBrick = () => {
-    let score = attempts.reduce((acc, answer) => {
-      if (!answer || !answer.marks) {
-        return acc + 0;
-      }
-      return acc + answer.marks;
-    }, 0);
+    let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
     /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
     is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
-    let maxScore = attempts.reduce((acc, answer) => {
-      if (!answer.maxMarks) {
-        return acc + 5;
-      }
-      return acc + answer.maxMarks;
-    }, 0);
+    let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba : BrickAttempt = {
       brick: props.brick,
       score: score,

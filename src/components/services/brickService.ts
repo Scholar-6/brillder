@@ -1,4 +1,4 @@
-import { Brick, } from 'model/brick';
+import { Brick } from 'model/brick';
 
 function formatTwoLastDigits(twoLastDigits: number) {
   var formatedTwoLastDigits = "";
