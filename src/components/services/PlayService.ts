@@ -2,6 +2,7 @@ import { Question, QuestionTypeEnum } from 'model/question';
 import { ComponentAttempt } from 'components/play/brick/model/model';
 import {getUniqueComponent} from 'components/build/investigationBuildPage/questionService/QuestionService';
 
+/* Used in Play brick routing to set the brick.props */
 
 export function prefillAttempts(questions: Question[]) {
   let initAttempts:ComponentAttempt[] = [];
