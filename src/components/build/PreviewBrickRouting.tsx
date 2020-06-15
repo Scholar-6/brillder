@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from "react-redux";
 
 import '../play/brick/brick.scss';
+import './PreviewBrickRouting.scss';
 import actions from 'redux/actions/brickActions';
 import Introduction from '../play/brick/introduction/Introduction';
 import Live from '../play/brick/live/Live';
@@ -19,10 +20,14 @@ import { ComponentAttempt, PlayStatus } from '../play/brick/model/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
-import { Hidden, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { setBrillderTitle } from 'components/services/titleService';
 import PublishPage from './investigationBuildPage/publish/PublishPage';
 import {prefillAttempts} from 'components/services/PlayService';
+import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
+
+import {Moment} from 'moment';
+let moment = require('moment');
 
 
 export interface BrickAttempt {
@@ -65,6 +70,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
+  const [startTime, setStartTime] = React.useState(moment() as Moment);
 
   useEffect(() => {
     if (props.brick) {
@@ -146,22 +152,38 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   return (
-    <div className="play-pages">
-      <Switch>
-        <Route exac path="/play-preview/brick/:brickId/intro">
-          <Introduction brick={props.brick} isPlayPreview={true} />
-        </Route>
-        <Route exac path="/play-preview/brick/:brickId/live">
-          <Live
-            status={status}
-            previewQuestionIndex={getBuildQuestionNumber()}
-            isPlayPreview={true}
-            questions={props.brick.questions}
-            brickId={props.brick.id}
-            updateAttempts={updateAttempts}
-            finishBrick={finishBrick}
-          />
-        </Route>
+    <div className="play-preview-pages">
+      <PageHeader 
+        searchPlaceholder="Search Subjects, Topics, Titles & more"
+        search={() => {}}
+        searching={() => {}}
+        showDropdown={() => {}}
+      />
+      <Grid container direction="row">
+      <Grid xs={2} className="back-to-build">
+        <div className="back-hover-area" onClick={() => moveToBuild()}>
+          <div className="create-icon"></div>
+          <div>BACK</div>
+          <div>TO</div>
+          <div>BUILD</div>
+        </div>
+      </Grid>
+      <Grid item xs={10}>
+        <Switch>
+          <Route exac path="/play-preview/brick/:brickId/intro">
+            <Introduction brick={props.brick} isPlayPreview={true} startTime={startTime} />
+          </Route>
+          <Route exac path="/play-preview/brick/:brickId/live">
+            <Live
+              status={status}
+              previewQuestionIndex={getBuildQuestionNumber()}
+              isPlayPreview={true}
+              questions={props.brick.questions}
+              brickId={props.brick.id}
+              updateAttempts={updateAttempts}
+              finishBrick={finishBrick}
+            />
+          </Route>
         <Route exac path="/play-preview/brick/:brickId/provisionalScore">
           <ProvisionalScore status={status} brick={props.brick} attempts={attempts} isPlayPreview={true} />
         </Route>
@@ -185,19 +207,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <PublishPage {...props} />
         </Route>
       </Switch>
-      <Hidden only={['xs', 'sm', 'md']}>
-        <Grid container alignContent="center" className="back-to-build">
-          <div
-            className="back-hover-area"
-            onClick={() => moveToBuild()}
-          >
-            <div className="create-icon"></div>
-            <div>BACK</div>
-            <div>TO</div>
-            <div>BUILD</div>
-          </div>
-        </Grid>
-      </Hidden>
+      </Grid>
+      </Grid>
     </div>
   );
 }

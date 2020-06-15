@@ -1,0 +1,77 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+
+.play-preview-pages {
+  background: $dark-blue;
+  min-height: 100%;
+  .back-to-build {
+    height: 100%;
+    width: 15vw;
+    left: 1.8vw;
+    top: 0;
+    font-size: 1.8vw;
+    font-family: 'Brandon Grotesque Black';
+    color: $left-grey;
+    letter-spacing: 0.3vw;
+
+    .create-icon {
+      height: 5vw;
+      width: 6.35vw;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/images/main-page/create-grey.png);
+      margin-bottom: 1.5vh;
+    }
+  }
+  .page-content {
+    top: 13vh;
+    left: 15vw;
+    width: 60vw;
+  }
+
+  .brick-container {
+    width: 100%;
+    display: block;
+  }
+
+  .brick-container {
+    border-top-left-radius: 20px;
+    background: white;
+    margin-top: 4vh;
+    min-height: 84vh;
+  }
+
+  .introduction-info {
+    padding-top: 60px;
+    .clock-image {
+      height: 30px;
+    }
+
+    .counter {
+      text-align: center;
+      font-family: $font-family-black;
+      font-size: 2vw;
+      color: $dark-blue;
+
+      .counter-seconds {
+        font-size: 1vw;
+      }
+    }
+    .max-length {
+      font-family: $font-family-regular;
+      color: $dark-blue;
+      margin-left: 0.8vw;
+      font-size: 1.8vw;
+    }
+
+    .intro-text-row {
+      margin-top: 40%;
+      font-size: 1.4vw;
+      font-family: $font-family-bold;
+      color: $dark-blue;
+    }
+  }
+}
