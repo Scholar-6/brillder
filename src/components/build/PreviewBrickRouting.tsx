@@ -24,7 +24,7 @@ import { setBrillderTitle } from 'components/services/titleService';
 import PublishPage from './investigationBuildPage/publish/PublishPage';
 import FinishPage from './investigationBuildPage/finish/FinishPage';
 import {prefillAttempts} from 'components/services/PlayService';
-import { UserType } from 'model/user';
+import { UserType, User } from 'model/user';
 
 
 export interface BrickAttempt {
