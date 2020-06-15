@@ -41,9 +41,6 @@ const SignUpFinished: React.FC<LoginProps> = props => {
 					If you have any further questions, please email theteam@scholar6.org
         </div>
 			</div>
-      ) : (
-        <div></div>
-      )
 		</Grid>
 	);
 };
