@@ -127,7 +127,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   let canEdit = canEditBrick(props.brick, props.user);
   locked = canEdit ? locked : true;
-  console.log(locked);
 
   setBrillderTitle(props.brick.title);
 
@@ -362,6 +361,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         synthesis={brick.synthesis}
         questionsCount={questions ? questions.length : 0}
         question={activeQuestion}
+        canEdit={canEdit}
         locked={locked}
         validationRequired={validationRequired}
         getQuestionIndex={getQuestionIndex}
