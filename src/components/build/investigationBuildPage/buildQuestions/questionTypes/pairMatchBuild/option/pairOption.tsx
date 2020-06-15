@@ -67,6 +67,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
     <Grid container item xs={6}>
       <div className={`pair-match-option ${customClass}`}>
         <DocumentWirisCKEditor
+          disabled={locked}
           data={answer.option}
           toolbar={['mathType', 'chemType']}
           placeholder={"Enter Option " + (index + 1) + "..."}

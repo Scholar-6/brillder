@@ -82,6 +82,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
       <div className={`pair-match-answer ${customClass}`}>
         {renderDeleteButton()}
         <DocumentWirisCKEditor
+          disabled={locked}
           data={answer.value}
           toolbar={['mathType', 'chemType']}
           placeholder={"Enter Answer " + (index + 1) + "..."}

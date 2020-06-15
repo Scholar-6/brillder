@@ -10,13 +10,13 @@ export enum BrickStatus {
 }
 
 export interface Author {
-  email: string
-  firstName: string
-  googleId: string
-  id: number
-  lastName: string
-  tutorialPassed: boolean
-  type: UserType
+  email: string;
+  firstName: string;
+  googleId: string;
+  id: number;
+  lastName: string;
+  tutorialPassed: boolean;
+  type: UserType;
 }
 
 export interface Subject {
@@ -26,28 +26,29 @@ export interface Subject {
 }
 
 export interface Brick {
-  id: number
-  subject?: Subject
-  subjectId: number
-  topic: string
-  subTopic: string
-  title: string
-  alternativeTopics: string
-  alternativeSubject: string
-  created: string
-  updated: string
-  openQuestion: string
-  brief: string
-  prep: string
-  synthesis: string
-  brickLength: number
-  type: number
-  questions: Question[]
-  author: Author
-  expanded?: boolean
-  expandFinished?: boolean
-  status: BrickStatus
-  attemptsCount: number
+  id: number;
+  subject?: Subject;
+  subjectId: number;
+  topic: string;
+  subTopic: string;
+  title: string;
+  alternativeTopics: string;
+  alternativeSubject: string;
+  created: string;
+  updated: string;
+  openQuestion: string;
+  brief: string;
+  prep: string;
+  synthesis: string;
+  brickLength: number;
+  type: number;
+  questions: Question[];
+  author: Author;
+  expanded?: boolean;
+  expandFinished?: boolean;
+  status: BrickStatus;
+  attemptsCount: number;
+  locked: boolean;
 }
 
 export enum isAuthenticated {

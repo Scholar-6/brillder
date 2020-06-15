@@ -56,6 +56,7 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
             Outline the purpose of this brick.
           </h1>
           <DocumentWirisCKEditor
+            disabled={false}
             data={parentBrief}
             placeholder="Enter Brief Here..."
             toolbar={[
