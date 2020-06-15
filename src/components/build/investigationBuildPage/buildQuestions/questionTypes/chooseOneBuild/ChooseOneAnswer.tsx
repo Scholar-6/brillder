@@ -84,6 +84,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
         update={setImage}
       />
       <DocumentWirisCKEditor
+        disabled={locked}
         data={answer.value}
         toolbar={['mathType', 'chemType']}
         placeholder="Enter Answer..."

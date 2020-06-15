@@ -49,6 +49,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
           <h1>Add engaging and relevant</h1>
           <h1>preparatory material.</h1>
           <DocumentWirisCKEditor
+            disabled={false}
             data={parentPrep}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
             mediaEmbed={true}
