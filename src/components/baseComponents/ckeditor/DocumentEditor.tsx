@@ -43,6 +43,7 @@ import './DocumentEditor.scss';
 
 export interface DocumentEditorProps {
   data: string;
+  disabled?: boolean;
   toolbar?: any;
   placeholder?: string;
   mediaEmbed?: boolean;
@@ -178,6 +179,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
       <div className={className}>
         <div ref={this.state.ref} />
         <CKEditor
+          disabled={this.props.disabled ? true : false}
           data={this.state.data}
           editor={ClassicEditor}
           config={config}
