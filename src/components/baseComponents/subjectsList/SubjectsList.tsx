@@ -14,22 +14,23 @@ interface PublishedSubjectsProps {
 class SubjectsList extends Component<PublishedSubjectsProps, any> {
   render() {
     return (
-      <Grid container direction="row" className="subjects-filter">
+      <Grid container direction="row" className="filter-container subjects-filter">
 				<AnimateHeight
 					duration={500}
 					height={this.props.filterHeight}
 					style={{ width: "100%" }}>
 					{this.props.subjects.map((subject, i) => (
 						<Grid key={i} container direction="row">
-							<Grid item xs={11}>
+							<Grid item xs={11} className="filter-container subjects-indexes-box">
 								<FormControlLabel
-									className="filter-container"
+									className="index-box"
+									style={{ ["color" as any]: subject.color }}
 									checked={subject.checked}
 									onClick={() => this.props.filterBySubject(i)}
 									control={
-									<Radio
-										className={"filter-radio custom-color"}
-										style={{ ["--color" as any]: subject.color }}/>
+										<Radio className={"filter-radio custom-color"}
+											style={{ ["color" as any]: subject.color }}
+										/>
 									}
 									label={subject.name}
 								/>
