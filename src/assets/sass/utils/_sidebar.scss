@@ -22,7 +22,7 @@
 				width: 100%;
 				box-sizing: border-box;
 				.custom-color svg {
-					color: var(--color) !important;
+					color: var(--color);
 				}
         .filter-radio,
         .MuiFormControlLabel-root,
@@ -64,10 +64,11 @@
       }
       .subject-indexes-box,
       .indexes-box {
+				flex-direction: column;
         .index-box {
           cursor: pointer;
           position: relative;
-          font-size: 1.1vw;
+					font-size: 1.1vw;
           .right-index {
             position: absolute;
             color: $dark-blue;
@@ -104,10 +105,10 @@
           &.color3 {
             .round-button,
             .right-index {
-              background: white;
+              background: $white;
             }
             svg {
-              color: white;
+              color: $white;
             }
           }
           &.color4 {
@@ -123,7 +124,7 @@
       }
       .subject-indexes-box {
         margin: 1.4vw;
-        width: calc(100% - 2.8vw);
+				width: calc(100% - 2.8vw);
         .index-box {
           margin: 0 0 0.4vw 0;
           .right-index {
