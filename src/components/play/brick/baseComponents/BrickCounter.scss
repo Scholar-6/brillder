@@ -3,6 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .brick-counter {
+  position: relative;
   text-align: center;
   font-family: $font-family-black;
   font-size: 2vw;
@@ -10,5 +11,15 @@
 
   .counter-seconds {
     font-size: 1vw;
+  }
+  .intro-arrow {
+    position: absolute;
+    left: -2.5vw;
+    top: 0.3vw;
+
+    img {
+      height: 2vw;
+      width: 2vw;
+    }
   }
 }

@@ -56,6 +56,12 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       history.push(`/play/brick/${brick.id}/live`);
     }
   };
+
+  let color = "#B0B0AD";
+
+  if (brick.subject) {
+    color = brick.subject.color;
+  }
   
   return (
     <Grid container direction="row" justify="center">
@@ -64,7 +70,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <div className="introduction-page">
             <div className="intro-header">
               <div className="left-brick-circle">
-                <div className="round-button"></div>
+                <div className="round-button" style={{ background: `${color}` }}></div>
               </div>
               <h1>{brick.title}</h1>
             </div>
@@ -97,7 +103,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <Grid item xs={4}>
           <div className="introduction-info">
             <div className="intro-header">
-              <BrickCounter startTime={props.startTime} />
+              <BrickCounter isIntroPage={true} startTime={props.startTime} />
               <div className="clock">
                 <div className="clock-image svgOnHover">
                   <svg className="svg w100 h100 active">
