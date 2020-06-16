@@ -12,11 +12,13 @@ import { Brick } from "model/brick";
 import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import BrickCounter from "../baseComponents/BrickCounter";
 import { Moment } from "moment";
+const moment = require("moment");
 
 interface IntroductionProps {
   isPlayPreview?: boolean;
   startTime?: Moment;
   brick: Brick;
+  setStartTime(startTime: any): void;
 }
 
 interface IntroductionState {
@@ -28,7 +30,7 @@ interface IntroductionState {
 const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const history = useHistory();
   const [state, setState] = React.useState({
-    prepExpanded: true,
+    prepExpanded: false,
     briefExpanded: true,
     otherExpanded: false,
   } as IntroductionState);
@@ -38,17 +40,23 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   };
 
   const togglePrep = () => {
+    if (!props.startTime) {
+      props.setStartTime(moment());
+    }
     setState({ ...state, prepExpanded: !state.prepExpanded });
   };
 
   const startBrick = () => {
+    if (!props.startTime) {
+      props.setStartTime(moment());
+    }
     if (props.isPlayPreview) {
       history.push(`/play-preview/brick/${brick.id}/live`);
     } else {
       history.push(`/play/brick/${brick.id}/live`);
     }
   };
-
+  
   return (
     <Grid container direction="row" justify="center">
       <Grid container direction="row">

@@ -29,9 +29,6 @@ import {prefillAttempts} from 'components/services/PlayService';
 import { UserType, User } from 'model/user';
 import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
 
-import {Moment} from 'moment';
-let moment = require('moment');
-
 
 export interface BrickAttempt {
   brickId?: number;
@@ -73,7 +70,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
-  const [startTime, setStartTime] = React.useState(moment() as Moment);
+  const [startTime, setStartTime] = React.useState(undefined);
 
   useEffect(() => {
     if (props.brick) {
