@@ -7,13 +7,15 @@ import './Lock.scss'
 
 
 export interface LockComponentProps {
+  disabled: boolean;
   locked: boolean;
   onChange(): void;
 }
 
-const LockComponent: React.FC<LockComponentProps> = ({locked, onChange}) => {
+const LockComponent: React.FC<LockComponentProps> = ({locked, disabled, onChange}) => {
   const [lock, setLock] = React.useState(locked);
   const toggleLock = () => {
+    if (disabled) { return; }
     setLock(!lock);
     onChange();
   }
@@ -22,7 +24,9 @@ const LockComponent: React.FC<LockComponentProps> = ({locked, onChange}) => {
       <Grid container justify="center" className="lock-container" item sm={12}>
         <div>
           {
-            lock ? <LockIcon className="lock-icon" onClick={toggleLock} /> : <LockOpenIcon className="unlock-icon" onClick={toggleLock} />
+            lock
+              ? <LockIcon className="lock-icon" onClick={toggleLock} />
+              : <LockOpenIcon className="unlock-icon" onClick={toggleLock} />
           }
         </div>
         <div className="lock-text">Lock</div>

@@ -19,6 +19,7 @@ function SplitByCapitalLetters(element: string): string {
 
 export interface QuestionProps {
   brickId: number;
+  canEdit: boolean;
   question: Question;
   history: any;
   questionsCount: number;
@@ -182,7 +183,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   </FormControl>
                 </Grid>
               </Grid>
-              <LockComponent locked={locked} onChange={props.toggleLock} />
+              <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
             </Grid>
           </Grid>
         </Grid>

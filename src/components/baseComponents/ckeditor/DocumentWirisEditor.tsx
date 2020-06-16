@@ -42,6 +42,7 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import './DocumentEditor.scss';
 
 export interface DocumentWirisEditorProps {
+  disabled: boolean;
   data: string;
   toolbar?: any;
   placeholder?: string;
@@ -192,6 +193,7 @@ class DocumentWirisEditorComponent extends React.Component<DocumentWirisEditorPr
         <div ref={this.state.ref} />
         <CKEditor
           data={this.state.data}
+          disabled={this.props.disabled}
           editor={ClassicEditor}
           config={config}
           onInit={(e:any) => this.handleOnInit(e)}

@@ -92,6 +92,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setReviewAttempts(reviewAttempts);
   }
 
+  /* TODO: extract all of this scoring code into a scoring service 13/6/2020*/
   const finishBrick = () => {
     let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
     /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
