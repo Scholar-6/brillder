@@ -185,7 +185,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         searching={() => {}}
         showDropdown={() => {}}
       />
-<<<<<<< HEAD
       <Grid container direction="row" className="sorted-row">
         <Grid container item className="sort-and-filter-container">
           <div className="back-hover-area" onClick={() => moveToBuild()}>
@@ -240,61 +239,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             </Route>
           </Switch>
         </Grid>
-=======
-      <Grid container direction="row">
-      <Grid xs={2} className="back-to-build">
-        <div className="back-hover-area" onClick={() => moveToBuild()}>
-          <div className="create-icon"></div>
-          <div>BACK</div>
-          <div>TO</div>
-          <div>BUILD</div>
-        </div>
-      </Grid>
-      <Grid item xs={10}>
-        <Switch>
-          <Route exac path="/play-preview/brick/:brickId/intro">
-            <Introduction brick={props.brick} isPlayPreview={true} startTime={startTime} />
-          </Route>
-          <Route exac path="/play-preview/brick/:brickId/live">
-            <Live
-              status={status}
-              startTime={startTime}
-              brick={props.brick}
-              previewQuestionIndex={getBuildQuestionNumber()}
-              isPlayPreview={true}
-              questions={props.brick.questions}
-              updateAttempts={updateAttempts}
-              finishBrick={finishBrick}
-            />
-          </Route>
-        <Route exac path="/play-preview/brick/:brickId/provisionalScore">
-          <ProvisionalScore status={status} brick={props.brick} attempts={attempts} isPlayPreview={true} />
-        </Route>
-        <Route exac path="/play-preview/brick/:brickId/synthesis">
-          <Synthesis status={status} brick={props.brick} isPlayPreview={true} />
-        </Route>
-        <Route exac path="/play-preview/brick/:brickId/review">
-          <Review
-            isPlayPreview={true}
-            status={status}
-            questions={props.brick.questions}
-            brickId={props.brick.id}
-            updateAttempts={updateReviewAttempts}
-            attempts={attempts}
-            finishBrick={finishReview} />
-        </Route>
-        <Route exac path="/play-preview/brick/:brickId/ending">
-          <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} saveBrick={saveBrickAttempt} />
-        </Route>
-        <Route exac path="/play-preview/brick/:brickId/publish">
-          <PublishPage {...props} />
-        </Route>
-        <Route exac path="/play-preview/brick/:brickId/finish">
-          <FinishPage {...props} />
-        </Route>
-      </Switch>
-      </Grid>
->>>>>>> 2a8fbd8f7f8bcadf134bd83cca06b84530a3f1cf
       </Grid>
     </div>
   );
