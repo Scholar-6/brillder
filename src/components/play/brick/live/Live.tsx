@@ -206,6 +206,17 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brick, ...props 
 					<div className="intro-text-row">
 						{renderStepper()}
 					</div>
+					<div className="action-footer">
+						<h2>Play</h2>
+						<button type="button" className="play-preview svgOnHover play-green">
+							<svg className="svg svg-default">
+								<use href={sprite + "#play-thin"} />
+							</svg>
+							<svg className="svg colored">
+								<use href={sprite + "#play-thick"} />
+							</svg>
+						</button>
+					</div>
 				</Grid>
 			</Grid>
 		</div>
