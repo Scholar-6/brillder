@@ -13,28 +13,6 @@
 
 .play-pages {
   height: 100%;
-  .back-to-build {
-    cursor: pointer;
-    position: fixed;
-    height: 100%;
-    width: 15vw;
-    left: 1.8vw;
-    top: 0;
-    font-size: 1.8vw;
-    font-family: 'Brandon Grotesque Black';
-    color: $left-grey;
-    letter-spacing: 0.3vw;
-
-    .create-icon {
-      height: 5vw;
-      width: 6.35vw;
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url(/images/main-page/create-grey.png);
-      margin-bottom: 1.5vh;
-    }
-  }
 
   .MuiExpansionPanelDetails-root, .MuiExpansionPanelSummary-content {
     color: $dark-blue !important;
@@ -42,13 +20,6 @@
 
   .MuiInputBase-input {
     color: $dark-blue;
-  }
-
-  .back-hover-area:hover {
-    color: $dark-blue;
-    .create-icon {
-      background-image: url(/images/main-page/create.png);
-    }
   }
 
   .brick-container {

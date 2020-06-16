@@ -357,7 +357,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 		  filterHeight: "auto",
 		});
 	}
-  
+
   filterClear() {
 		this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false})
 	}
@@ -367,7 +367,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   renderSortAndFilterBox = () => {
     return (
 		  <div className="sort-box">
-			<div className="sort-by-box">
+			<div className="filter-container sort-by-box">
 				<div className="sort-header">Filter by: Role</div>
 				<RadioGroup
 					className="sort-group"
