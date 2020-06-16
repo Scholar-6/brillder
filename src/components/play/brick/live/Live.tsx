@@ -11,6 +11,7 @@ import QuestionLive from '../questionPlay/QuestionPlay';
 import TabPanel from '../baseComponents/QuestionTabPanel';
 import { PlayStatus } from '../model/model';
 import BrickCounter from "../baseComponents/BrickCounter";
+import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import {CashQuestionFromPlay} from '../../../localStorage/buildLocalStorage';
 import { Moment } from 'moment';
@@ -166,49 +167,48 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brick, ...props 
   }
 
   return (
-    <Grid container direction='row' justify='center'>
-      <div className='brick-container live-page'>
-        <Grid container direction="row">
-          <Grid item xs={8}>
-            <SwipeableViews
-              axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-              index={activeStep}
-              style={{width: '100%'}}
-              onChangeIndex={handleStep}
-            >
-              {
-                questions.map((question, index) =>
-                  <TabPanel key={index} index={index} value={activeStep} dir={theme.direction}>
-                    <div className="question-index">{index + 1}</div>
-                    {renderQuestion(question, index)}
-                  </TabPanel>
-                )
-              }
-            </SwipeableViews>
-          </Grid>
-          <Grid item xs={4}>
-            <Grid container direction="row">
-              <Grid item xs={8}>
-                <BrickCounter startTime={props.startTime} />
-              </Grid>
-              <Grid item xs={4}>
-                <img
-                  alt=""
-                  className="clock-image"
-                  src="/feathericons/svg/blue-clock.svg"
-                />
-                <span className="max-length">{brick.brickLength}</span>
-              </Grid>
-            </Grid>
-            <Grid container direction="row">
-              <Grid item xs={12}>
-                {renderStepper()}
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </div>
-    </Grid>
+		<div className='brick-container live-page'>
+			<Grid container direction="row">
+				<Grid item xs={8}>
+					<div className="introduction-page">
+						<div className="intro-header">
+						</div>
+						<SwipeableViews
+							axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+							index={activeStep}
+							style={{width: '100%'}}
+							onChangeIndex={handleStep}>
+							{
+								questions.map((question, index) =>
+									<TabPanel key={index} index={index} value={activeStep} dir={theme.direction}>
+										<div className="question-index">{index + 1}</div>
+										{renderQuestion(question, index)}
+									</TabPanel>
+								)
+							}
+						</SwipeableViews>
+					</div>
+				</Grid>
+				<Grid item xs={4}>
+					<div className="introduction-info">
+						<div className="intro-header">
+							<BrickCounter startTime={props.startTime} />
+							<div className="clock">
+								<div className="clock-image svgOnHover">
+									<svg className="svg w100 h100 active">
+										<use href={sprite + "#clock"}/>
+									</svg>
+								</div>
+								<span className="max-length">{brick.brickLength}</span>
+							</div>
+						</div>
+					</div>
+					<div className="intro-text-row">
+						{renderStepper()}
+					</div>
+				</Grid>
+			</Grid>
+		</div>
   );
 }
 
