@@ -41,6 +41,16 @@ input:focus {
 .h-3 {
   height: 3vw !important;
 }
+.w-5 {
+  width: 5vw !important;
+}
+.h-5 {
+  height: 5vw !important;
+}
+
+.text-white {
+  color: #fff !important;
+}
 
 .text-orange {
   color: $orange !important;
@@ -258,7 +268,7 @@ input:focus {
   border-bottom-right-radius: 2vw;
   background: $light-blue;
   width: calc(6.834vw - 1vw) !important;
-  height: $header-height;
+  height: 11.954vh;
   margin-right: 1vw;
   padding: 0.35vw .782vw .782vw 0.35vw;
   .home-button {
@@ -316,7 +326,7 @@ input:focus {
 }
 .logout-container {
   width: calc(93.16vw - 1vw) !important;
-  height: $header-height;
+  height: 11.954vh;
   margin-left: 1vw;
   border-bottom-left-radius: 2vw;
   background: $light-blue;
