@@ -1,0 +1,14 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.brick-counter {
+  text-align: center;
+  font-family: $font-family-black;
+  font-size: 2vw;
+  color: $dark-blue;
+
+  .counter-seconds {
+    font-size: 1vw;
+  }
+}
