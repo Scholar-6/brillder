@@ -7,6 +7,28 @@
     opacity: 0;
 }
 .live-page {
+  .question-index {
+    margin-top: 2vw;
+    font-size: 2vw;
+    background: #E5E8ED;
+    border-radius: 100vw;
+    font-family: $font-family-black;
+    text-align: center;
+    width: 2.3vw;
+    height: 2.3vw;
+    line-height: 1.25;
+  }
+  .stepper {
+    .step {
+      font-size: 2vw;
+      font-family: $font-family-black;
+      color: #D3D4D5;
+    }
+
+    .step.completed {
+      color: $dark-blue;
+    }
+  }
   .edited-step-icon {
     color: $black-blue;
     border-radius: 100%;
