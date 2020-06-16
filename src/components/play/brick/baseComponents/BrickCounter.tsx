@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
+import './BrickCounter.scss';
 import {Moment} from 'moment';
 let moment = require('moment');
-
 
 interface CounterProps {
   startTime?: Moment;
@@ -48,7 +48,7 @@ class BrickCounter extends Component<CounterProps, CounterState> {
 
   render() {
     return (
-      <div className="counter">
+      <div className="brick-counter">
         {this.state.hours}:{this.state.minutes}
         <span className="counter-seconds">{this.state.seconds}</span>
       </div>

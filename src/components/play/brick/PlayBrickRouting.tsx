@@ -148,7 +148,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Live
             status={status}
             questions={props.brick.questions}
-            brickId={props.brick.id}
+            brick={props.brick}
             updateAttempts={updateAttempts}
             finishBrick={finishBrick}
           />

@@ -176,10 +176,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Route exac path="/play-preview/brick/:brickId/live">
             <Live
               status={status}
+              startTime={startTime}
+              brick={props.brick}
               previewQuestionIndex={getBuildQuestionNumber()}
               isPlayPreview={true}
               questions={props.brick.questions}
-              brickId={props.brick.id}
               updateAttempts={updateAttempts}
               finishBrick={finishBrick}
             />
