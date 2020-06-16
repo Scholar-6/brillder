@@ -62,79 +62,77 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   if (brick.subject) {
     color = brick.subject.color;
   }
-  
+
   return (
-    <Grid container direction="row" justify="center">
-      <Grid container direction="row">
-        <Grid item xs={8}>
-          <div className="introduction-page">
-            <div className="intro-header">
-              <div className="left-brick-circle">
-                <div className="round-button" style={{ background: `${color}` }}></div>
-              </div>
-              <h1>{brick.title}</h1>
+    <Grid container direction="row">
+      <Grid item xs={8}>
+        <div className="introduction-page">
+          <div className="intro-header">
+            <div className="left-brick-circle">
+              <div className="round-button" style={{ background: `${color}` }}></div>
             </div>
-            <ExpansionPanel
-              expanded={state.briefExpanded === true}
-              onChange={toggleBrief}>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <h2>Brief</h2>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <div style={{ width: "100%" }}>
-                  <MathInHtml value={brick.brief} />
-                </div>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-            <ExpansionPanel
-              expanded={state.prepExpanded === true}
-              onChange={togglePrep}>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <h2>Prep</h2>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <div style={{ width: "100%" }}>
-                  <MathInHtml value={brick.prep} />
-                </div>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
+            <h1>{brick.title}</h1>
           </div>
-        </Grid>
-        <Grid item xs={4}>
-          <div className="introduction-info">
-            <div className="intro-header">
-              <BrickCounter isIntroPage={true} startTime={props.startTime} />
-              <div className="clock">
-                <div className="clock-image svgOnHover">
-                  <svg className="svg w100 h100 active">
-                    <use href={sprite + "#clock"}/>
-                  </svg>
-                </div>
-                <span className="max-length">{brick.brickLength}</span>
+          <ExpansionPanel
+            expanded={state.briefExpanded === true}
+            onChange={toggleBrief}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <h2>Brief</h2>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <div style={{ width: "100%" }}>
+                <MathInHtml value={brick.brief} />
               </div>
-            </div>
-            <div className="intro-text-row">
-              <p>Bricks are divided into four sections.</p>
-              <ul>
-                <li>Set aside around 5 minutes to prepare</li>
-                <li>8 minutes for the investigation (countdown)</li>
-                <li>Around 4 minutes to take in the Synthesis</li>
-                <li>3 minutes to review answers (countdown)</li>
-              </ul>
-            </div>
-            <div className="action-footer">
-              <h2>Play</h2>
-              <button type="button" className="play-preview svgOnHover play-green" onClick={startBrick}>
-                <svg className="svg svg-default">
-                  <use href={sprite + "#play-thin"} />
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+          <ExpansionPanel
+            expanded={state.prepExpanded === true}
+            onChange={togglePrep}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <h2>Prep</h2>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <div style={{ width: "100%" }}>
+                <MathInHtml value={brick.prep} />
+              </div>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        </div>
+      </Grid>
+      <Grid item xs={4}>
+        <div className="introduction-info">
+          <div className="intro-header">
+            <BrickCounter isIntroPage={true} startTime={props.startTime} />
+            <div className="clock">
+              <div className="clock-image svgOnHover">
+                <svg className="svg w100 h100 active">
+                  <use href={sprite + "#clock"}/>
                 </svg>
-                <svg className="svg colored">
-                  <use href={sprite + "#play-thick"} />
-                </svg>
-              </button>
+              </div>
+              <span className="max-length">{brick.brickLength}</span>
             </div>
           </div>
-        </Grid>
+          <div className="intro-text-row">
+            <p>Bricks are divided into four sections.</p>
+            <ul>
+              <li>Set aside around 5 minutes to prepare</li>
+              <li>8 minutes for the investigation (countdown)</li>
+              <li>Around 4 minutes to take in the Synthesis</li>
+              <li>3 minutes to review answers (countdown)</li>
+            </ul>
+          </div>
+          <div className="action-footer">
+            <h2>Play</h2>
+            <button type="button" className="play-preview svgOnHover play-green" onClick={startBrick}>
+              <svg className="svg svg-default">
+                <use href={sprite + "#play-thin"} />
+              </svg>
+              <svg className="svg colored">
+                <use href={sprite + "#play-thick"} />
+              </svg>
+            </button>
+          </div>
+        </div>
       </Grid>
     </Grid>
   );
