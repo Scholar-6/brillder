@@ -424,20 +424,20 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           filterHeight={this.state.filterHeight}
           filterBySubject={this.filterBySubject}
         />
-        <Grid container direction="row" className="subjects-filter">
+        <Grid container direction="row" className="filter-container subjects-indexes-box">
           {this.state.filterExpanded
             ? this.state.subjects.map((subject, i) => (
               <FormControlLabel
-                className="filter-container"
+								className="index-box"
+								style={{ ["color" as any]: subject.color }}
                 key={i}
                 checked={subject.checked}
                 onClick={() => this.filterBySubject(i)}
                 control={
-                  <Radio
-                    className={"filter-radio custom-color"}
-                    style={{ ["--color" as any]: subject.color }}
-                  />
-                }
+									<Radio className={"filter-radio custom-color"}
+										style={{ ["color" as any]: subject.color }}
+									/>
+								}
                 label={subject.name}
               />
             ))
