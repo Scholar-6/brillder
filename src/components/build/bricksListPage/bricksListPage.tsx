@@ -529,7 +529,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   renderSortAndFilterBox = () => {
     return (
       <div className="sort-box">
-        <div className="sort-by-box">
+        <div className="filter-container sort-by-box">
           <div className="sort-header">Sort By</div>
           <RadioGroup
             className="sort-group"
