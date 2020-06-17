@@ -202,20 +202,20 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brick, ...props 
 								<span className="max-length">{brick.brickLength}</span>
 							</div>
 						</div>
-					</div>
-					<div className="intro-text-row">
-						{renderStepper()}
-					</div>
-					<div className="action-footer">
-						<h2>Play</h2>
-						<button type="button" className="play-preview svgOnHover play-green">
-							<svg className="svg svg-default">
-								<use href={sprite + "#play-thin"} />
-							</svg>
-							<svg className="svg colored">
-								<use href={sprite + "#play-thick"} />
-							</svg>
-						</button>
+						<div className="intro-text-row">
+							{renderStepper()}
+						</div>
+						<div className="action-footer">
+							<h2>Play</h2>
+							<button type="button" className="play-preview svgOnHover play-green">
+								<svg className="svg svg-default">
+									<use href={sprite + "#play-thin"} />
+								</svg>
+								<svg className="svg colored">
+									<use href={sprite + "#play-thick"} />
+								</svg>
+							</button>
+						</div>
 					</div>
 				</Grid>
 			</Grid>
