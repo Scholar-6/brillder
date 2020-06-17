@@ -1,6 +1,4 @@
-import React from 'react';
-import { Fab, Grid, FormControlLabel } from '@material-ui/core';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+  import React from 'react';
 
 import './QuestionPlay.scss';
 import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from "model/question";
@@ -27,10 +25,8 @@ import WordHighlightingComponent from '../questionTypes/wordHighlighting/WordHig
 interface QuestionProps {
   attempt?: ComponentAttempt;
   question: Question;
-  isLastOne: boolean;
   isPhonePreview?: boolean;
   answers: any;
-  next(): void;
 }
 
 interface QuestionState {
@@ -52,13 +48,15 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
 
   getAttempt() : any {
     if (this.props.attempt?.correct === true) {
-      return { answer: this.props.attempt.answer, correct: true, marks: 0, maxMarks: this.props.attempt.maxMarks} as ComponentAttempt;
+      return {
+        answer: this.props.attempt.answer, correct: true, marks: 0, maxMarks: this.props.attempt.maxMarks
+      } as ComponentAttempt;
     }
     return this.state.answerRef.current?.getAttempt();
   }
 
   render() {
-    const { question, isLastOne, next } = this.props;
+    const { question } = this.props;
     const renderUniqueComponent = (component: any, index: number) => {
       let UniqueComponent = {} as any;
       if (question.type === QuestionTypeEnum.ShortAnswer) {
@@ -113,31 +111,10 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
       return <div key={index}></div>
     }
 
-    let text = "Next - Don't panic, you can always come back"
-    if (isLastOne) {
-      text = "Finished - If you are done you are done"
-    }
-
     return (
       <div>
         {
           question.components.map((component, index) => renderComponent(component, index))
-        }
-        {
-          !this.props.isPhonePreview ?
-          <Grid container direction="row" justify="flex-end" className="next-question-button-container">
-            <FormControlLabel
-              className="next-question-button"
-              labelPlacement="start"
-              control={
-                <Fab style={{ background: '#0076B4' }} color="secondary" aria-label="add" onClick={next}>
-                  <PlayArrowIcon />
-                </Fab>
-              }
-              label={text}
-            />
-          </Grid>
-          : ""
         }
       </div>
     )

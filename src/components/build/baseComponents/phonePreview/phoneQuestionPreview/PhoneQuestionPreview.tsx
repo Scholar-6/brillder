@@ -24,7 +24,7 @@ const PhonePreview: React.FC<PhonePreviewProps> = ({ question }) => {
                 <div className="sleep"></div>
                 <div className="screen">
                   <div className="custom-component mobile-question-component" style={{background: "white"}}>
-                    <QuestionPlay question={question} isPhonePreview={true} isLastOne={false} answers={[]} next={() => {}}/>
+                    <QuestionPlay question={question} isPhonePreview={true} answers={[]} />
                   </div>
                 </div>
               </div>
