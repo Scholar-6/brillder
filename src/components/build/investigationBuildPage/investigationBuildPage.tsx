@@ -67,7 +67,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     getNewQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
   const [loaded, setStatus] = React.useState(false);
-  let [locked, setLock] = React.useState(props.brick.locked ? true: false);
+  let [locked, setLock] = React.useState(props.brick.locked ? props.brick.locked: false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
