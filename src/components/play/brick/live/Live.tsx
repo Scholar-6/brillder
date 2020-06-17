@@ -67,13 +67,25 @@ const LivePage: React.FC<LivePageProps> = ({
   });
 
   const handleStep = (step: number) => () => {
+    setActiveAnswer();
     questions[activeStep].edited = true;
-    setActiveStep(step);
+    let newStep = activeStep + 1;
+    setActiveStep(update(activeStep, { $set: step }));
+
     if (props.isPlayPreview) {
-      CashQuestionFromPlay(brick.id, step);
-    } else {
-      let attempt = questionRefs[activeStep].current?.getAttempt();
-      props.updateAttempts(attempt, activeStep);
+      CashQuestionFromPlay(brick.id, newStep);
+    }
+
+    if (activeStep >= questions.length - 1) {
+      questions.forEach((question) => {
+        question.edited = false;
+      });
+      props.finishBrick();
+      if (props.isPlayPreview) {
+        history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
+      } else {
+        history.push(`/play/brick/${brick.id}/provisionalScore`);
+      }
     }
   };
 
@@ -109,13 +121,10 @@ const LivePage: React.FC<LivePageProps> = ({
   };
 
   const renderQuestion = (question: Question, index: number) => {
-    let isLastOne = questions.length - 1 === activeStep;
     return (
       <QuestionLive
         question={question}
         answers={answers[index]}
-        isLastOne={isLastOne}
-        next={next}
         ref={questionRefs[index]}
       />
     );
