@@ -75,18 +75,6 @@ const LivePage: React.FC<LivePageProps> = ({
     if (props.isPlayPreview) {
       CashQuestionFromPlay(brick.id, newStep);
     }
-
-    if (activeStep >= questions.length - 1) {
-      questions.forEach((question) => {
-        question.edited = false;
-      });
-      props.finishBrick();
-      if (props.isPlayPreview) {
-        history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
-      } else {
-        history.push(`/play/brick/${brick.id}/provisionalScore`);
-      }
-    }
   };
 
   const setActiveAnswer = () => {
@@ -98,15 +86,7 @@ const LivePage: React.FC<LivePageProps> = ({
   };
 
   const next = () => {
-    setActiveAnswer();
-    questions[activeStep].edited = true;
-    let newStep = activeStep + 1;
-    setActiveStep(update(activeStep, { $set: newStep }));
-
-    if (props.isPlayPreview) {
-      CashQuestionFromPlay(brick.id, newStep);
-    }
-
+    handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
       questions.forEach((question) => {
         question.edited = false;
@@ -177,10 +157,11 @@ const LivePage: React.FC<LivePageProps> = ({
               />
             </div>
             <div className="action-footer">
-              <h2>Play</h2>
+              <h2>Next</h2>
               <button
                 type="button"
                 className="play-preview svgOnHover play-green"
+                onClick={next}
               >
                 <svg className="svg svg-default">
                   <use href={sprite + "#play-thin"} />
