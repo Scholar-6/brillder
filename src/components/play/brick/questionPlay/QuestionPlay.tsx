@@ -25,10 +25,8 @@ import WordHighlightingComponent from '../questionTypes/wordHighlighting/WordHig
 interface QuestionProps {
   attempt?: ComponentAttempt;
   question: Question;
-  isLastOne: boolean;
   isPhonePreview?: boolean;
   answers: any;
-  next(): void;
 }
 
 interface QuestionState {
@@ -50,13 +48,15 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
 
   getAttempt() : any {
     if (this.props.attempt?.correct === true) {
-      return { answer: this.props.attempt.answer, correct: true, marks: 0, maxMarks: this.props.attempt.maxMarks} as ComponentAttempt;
+      return {
+        answer: this.props.attempt.answer, correct: true, marks: 0, maxMarks: this.props.attempt.maxMarks
+      } as ComponentAttempt;
     }
     return this.state.answerRef.current?.getAttempt();
   }
 
   render() {
-    const { question, isLastOne, next } = this.props;
+    const { question } = this.props;
     const renderUniqueComponent = (component: any, index: number) => {
       let UniqueComponent = {} as any;
       if (question.type === QuestionTypeEnum.ShortAnswer) {

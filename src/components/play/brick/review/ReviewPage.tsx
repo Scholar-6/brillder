@@ -91,12 +91,9 @@ const ReviewPage: React.FC<ReviewPageProps> = (
   }
 
   const renderQuestion = (question: Question, attempt: ComponentAttempt, index: number) => {
-    let isLastOne = (questions.length - 1) === activeStep;
     return <QuestionLive
-      next={next}
       attempt={attempt}
       question={question}
-      isLastOne={isLastOne}
       answers={answers[index]}
       ref={questionRefs[index]} />
   }
