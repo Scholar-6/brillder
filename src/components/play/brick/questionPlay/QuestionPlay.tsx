@@ -1,6 +1,4 @@
-import React from 'react';
-import { Fab, Grid, FormControlLabel } from '@material-ui/core';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+  import React from 'react';
 
 import './QuestionPlay.scss';
 import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from "model/question";
@@ -113,31 +111,10 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
       return <div key={index}></div>
     }
 
-    let text = "Next - Don't panic, you can always come back"
-    if (isLastOne) {
-      text = "Finished - If you are done you are done"
-    }
-
     return (
       <div>
         {
           question.components.map((component, index) => renderComponent(component, index))
-        }
-        {
-          !this.props.isPhonePreview ?
-          <Grid container direction="row" justify="flex-end" className="next-question-button-container">
-            <FormControlLabel
-              className="next-question-button"
-              labelPlacement="start"
-              control={
-                <Fab style={{ background: '#0076B4' }} color="secondary" aria-label="add" onClick={next}>
-                  <PlayArrowIcon />
-                </Fab>
-              }
-              label={text}
-            />
-          </Grid>
-          : ""
         }
       </div>
     )

@@ -148,6 +148,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <Route exac path="/play/brick/:brickId/live">
           <Live
             status={status}
+            attempts={attempts}
             questions={props.brick.questions}
             brick={props.brick}
             updateAttempts={updateAttempts}
