@@ -268,7 +268,7 @@ input:focus {
   border-bottom-right-radius: 2vw;
   background: $light-blue;
   width: calc(6.834vw - 1vw) !important;
-  height: 11.954vh;
+  height: 5.834vw;
   margin-right: 1vw;
   padding: 0.35vw .782vw .782vw 0.35vw;
   .home-button {
@@ -306,7 +306,7 @@ input:focus {
     height: 2vw;
     margin: 0;
     left: .7vw;
-    top: -1.55vh;
+    top: -1.2vw;
     z-index: 999;
     .smoke-1,
     .smoke-2,
@@ -326,7 +326,7 @@ input:focus {
 }
 .logout-container {
   width: calc(93.16vw - 1vw) !important;
-  height: 11.954vh;
+  height: 5.834vw;
   margin-left: 1vw;
   border-bottom-left-radius: 2vw;
   background: $light-blue;
@@ -346,16 +346,14 @@ input:focus {
   }
   .search-input {
     display: block;
-    background-color: $light-blue;
+    background-color: transparent;
     font-family: $font-family-regular;
     font-size: 1.7vw;
     border-radius: 12px;
     border: none;
     margin: 0 0 0 1.4vw;
     letter-spacing: 0.045vw;
-    height: 5.5vh;
-    width: 40vw;
-    padding-right: 2px;
+    width: 100%;
     color: #acacac;
   }
   .search-button,

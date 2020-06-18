@@ -1,14 +1,16 @@
 .sorted-row {
-  margin-top: 3.5vh;
-  height: calc(100vh - 11.954vh - 3.5vh);
+  // margin-top: 3.5vh;
+  // height: calc(100vh - 11.954vh - 3.5vh);
+  margin-top: 2vw;
+  height: calc(100vh - 7.834vw);
   padding-left: 0;
   padding-right: 0;
   .sort-and-filter-container {
-		color: white;
+    color: white;
     flex-basis: inherit;
     max-width: inherit;
     width: calc(25% - 1vw);
-		height: calc(100vh - 15.5vh);
+    height: calc(100vh - 7.834vw);
     margin-right: 1vw;
     border-top-right-radius: $main-panel-radius;
     background: $light-blue;
@@ -17,13 +19,13 @@
     .sort-box {
       width: 100%;
       .filter-container {
-				display: flex;
-				margin: 0;
-				width: 100%;
-				box-sizing: border-box;
-				.custom-color svg {
-					color: var(--color);
-				}
+        display: flex;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+        .custom-color svg {
+          color: var(--color);
+        }
         .filter-radio,
         .MuiFormControlLabel-root,
         .sortBy {
@@ -41,10 +43,10 @@
           font: 1.05vw $font-family-light;
           letter-spacing: 0.06vw;
         }
-			}
-			.sort-by-box {
-				padding: 1.4vw;
-				flex-direction: column;
+      }
+      .sort-by-box {
+        padding: 1.4vw;
+        flex-direction: column;
         .sort-header {
           text-transform: uppercase;
           font-size: 2.3vh;
@@ -64,11 +66,11 @@
       }
       .subject-indexes-box,
       .indexes-box {
-				flex-direction: column;
+        flex-direction: column;
         .index-box {
           cursor: pointer;
           position: relative;
-					font-size: 1.1vw;
+          font-size: 1.1vw;
           .right-index {
             position: absolute;
             color: $dark-blue;
@@ -124,7 +126,7 @@
       }
       .subject-indexes-box {
         margin: 1.4vw;
-				width: calc(100% - 2.8vw);
+        width: calc(100% - 2.8vw);
         .index-box {
           margin: 0 0 0.4vw 0;
           .right-index {
@@ -224,7 +226,8 @@
         }
       }
       .subjects-filter {
-        margin: 1.4vw;
+        margin: 0 1.4vw;
+        padding: 2vh 0 0 0;
         width: calc(100% - 2.8vw);
         height: calc(100vh - 22vw);
         overflow-y: auto;
@@ -237,45 +240,45 @@
           margin-bottom: 0.4vw;
         }
       }
-		}
-		.back-hover-area {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			flex-direction: column;
-			color: $tab-grey;
-			cursor: pointer;
-			.create-icon {
-				margin-bottom: 1vh;
-				width: 6vw;
-				height: 6vw;
-				@extend %transitionAll150;
-			}
-			&:hover {
-				.create-icon {
-					color: $orange;
-					transform: rotate(10deg);
-				}
-			}
-			h3 {
-				font-size: 1.4vw;
-				font-family: 'Brandon Grotesque Black';
-				color: #fff;
-				letter-spacing: 0.3vw;
-				margin: 0;
-			}
-		}
+    }
+    .back-hover-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: $tab-grey;
+      cursor: pointer;
+      .create-icon {
+        margin-bottom: 1vh;
+        width: 6vw;
+        height: 6vw;
+        @extend %transitionAll150;
+      }
+      &:hover {
+        .create-icon {
+          color: $orange;
+          transform: rotate(10deg);
+        }
+      }
+      h3 {
+        font-size: 1.4vw;
+        font-family: 'Brandon Grotesque Black';
+        color: #fff;
+        letter-spacing: 0.3vw;
+        margin: 0;
+      }
+    }
   }
   .brick-row-container {
     position: relative;
     border-top-left-radius: $main-panel-radius;
     padding-left: 1.18vw;
     margin-left: 1vw;
-		background: $light-grey;
-		flex-basis: inherit;
-		max-width: inherit;
+    background: $light-grey;
+    flex-basis: inherit;
+    max-width: inherit;
     width: calc(75% - 1vw);
-		height: calc(100vh - 15.5vh);
+    height: calc(100vh - 7.834vw);
     .brick-row-title {
       padding-left: 1.15vw;
       // padding-left: 0.35vw;
@@ -291,23 +294,22 @@
     }
     .bricks-list-container {
       height: 65vh;
-			overflow-y: auto;
-			.bricks-list-container {
-				height: 62vh !important;
-				overflow: auto;
-				.main-brick-container {
-					.round-button {
-						height: 2.1vw;
-						width: 2.1vw;
-						border-radius: 100vw;
-					}
-
-				}
-			}
+      overflow-y: auto;
+      .bricks-list-container {
+        height: 62vh !important;
+        overflow: auto;
+        .main-brick-container {
+          .round-button {
+            height: 2.1vw;
+            width: 2.1vw;
+            border-radius: 100vw;
+          }
+        }
+      }
       .main-brick-container {
         position: relative;
         padding-left: 0.8vw;
-				width: 100%;
+        width: 100%;
         .brick-container {
           position: relative;
           padding-right: 0;
@@ -324,15 +326,15 @@
             .brick-container {
               text-align: center;
             }
-					}
-					h1 {
+          }
+          h1 {
             color: black;
             padding: 5px;
             line-height: 48px;
             text-transform: capitalize;
             font-size: 32px;
-					}
-					h2 {
+          }
+          h2 {
             font-size: 24px;
           }
           h3 {
@@ -341,42 +343,42 @@
             font-size: 16px;
             line-height: 28px;
           }
-					&.color1 {
-						.round-button,
-						.right-index {
-							background: $orange !important;
-						}
-						svg {
-							color: $orange;
-						}
-					}
-					&.color2 {
-						.round-button,
-						.right-index {
-							background: $yellow !important;
-						}
-						svg {
-							color: $yellow;
-						}
-					}
-					&.color3 {
-						.round-button,
-						.right-index {
-							background: white !important;
-						}
-						svg {
-							color: white;
-						}
-					}
-					&.color4 {
-						.round-button,
-						.right-index {
-							background: $light-green !important;
-						}
-						svg {
-							color: $light-green;
-						}
-					}
+          &.color1 {
+            .round-button,
+            .right-index {
+              background: $orange !important;
+            }
+            svg {
+              color: $orange;
+            }
+          }
+          &.color2 {
+            .round-button,
+            .right-index {
+              background: $yellow !important;
+            }
+            svg {
+              color: $yellow;
+            }
+          }
+          &.color3 {
+            .round-button,
+            .right-index {
+              background: white !important;
+            }
+            svg {
+              color: white;
+            }
+          }
+          &.color4 {
+            .round-button,
+            .right-index {
+              background: $light-green !important;
+            }
+            svg {
+              color: $light-green;
+            }
+          }
           .MuiExpansionPanel-root {
             background: $light-grey;
           }
@@ -391,30 +393,30 @@
             width: 95%;
             text-align: left;
             position: absolute;
-						height: $min-brick-height;
-						.left-brick-roller {
-							position: absolute;
-							top: 1.5vh;
-							left: 0.15vw;
-							> div {
-								height: 2.1vw;
-								width: 1.9vw;
-								background-size: 100% 100%;
-								background-repeat: no-repeat;
-								background-position: center;
-								background-image: url(/images/roller-green.png);
-							}
-						}
-						.left-brick-circle {
-							position: absolute;
-							top: 1.3vh;
-							> div {
-								height: 2.1vw;
-								width: 2.1vw;
-								border-radius: 20vw;
-								background-color: $grey;
-							}
-						}
+            height: $min-brick-height;
+            .left-brick-roller {
+              position: absolute;
+              top: 1.5vh;
+              left: 0.15vw;
+              > div {
+                height: 2.1vw;
+                width: 1.9vw;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-image: url(/images/roller-green.png);
+              }
+            }
+            .left-brick-circle {
+              position: absolute;
+              top: 1.3vh;
+              > div {
+                height: 2.1vw;
+                width: 2.1vw;
+                border-radius: 20vw;
+                background-color: $grey;
+              }
+            }
             &.brick-row-0,
             &.brick-row-1,
             &.brick-row-2,
