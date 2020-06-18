@@ -1,17 +1,16 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
-import "./Live.scss";
 import { Question } from "model/question";
 import { ComponentAttempt } from "../model/model";
 
-interface LiveStepperProps {
+interface ReviewStepperProps {
   attempts: ComponentAttempt[];
   questions: Question[];
   handleStep(questionIndex: number): any;
 }
 
-const LiveStepper: React.FC<LiveStepperProps> = ({
+const ReviewStepper: React.FC<ReviewStepperProps> = ({
   questions,
   handleStep,
   attempts
@@ -71,4 +70,4 @@ const LiveStepper: React.FC<LiveStepperProps> = ({
   );
 };
 
-export default LiveStepper;
+export default ReviewStepper;
