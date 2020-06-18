@@ -138,21 +138,26 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <li>3 minutes to review answers (countdown)</li>
             </ul>
           </div>
-          <div className="action-footer">
-            <h2>Play</h2>
-            <button
-              type="button"
-              className="play-preview svgOnHover play-green"
-              onClick={startBrick}
-            >
-              <svg className="svg svg-default">
-                <use href={sprite + "#play-thin"} />
-              </svg>
-              <svg className="svg colored">
-                <use href={sprite + "#play-thick"} />
-              </svg>
-            </button>
-          </div>
+          <Grid container direction="row" className="action-footer">
+            <Grid container item xs={3}></Grid>
+            <Grid container item xs={6} justify="center">
+              <h2>Play</h2>
+            </Grid>
+            <Grid container item xs={3} justify="center">
+              <button
+                type="button"
+                className="play-preview svgOnHover play-green"
+                onClick={startBrick}
+              >
+                <svg className="svg svg-default">
+                  <use href={sprite + "#play-thin"} />
+                </svg>
+                <svg className="svg colored">
+                  <use href={sprite + "#play-thick"} />
+                </svg>
+              </button>
+            </Grid>
+          </Grid>
         </div>
       </Grid>
     </Grid>

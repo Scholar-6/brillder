@@ -11,8 +11,7 @@ import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
 import { PlayStatus, ComponentAttempt } from "../model/model";
 import sprite from "../../../../assets/img/icons-sprite.svg";
-import ReviewStepper from './ReviewStepper';
-
+import ReviewStepper from "./ReviewStepper";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -77,6 +76,12 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     setAnswers(copyAnswers);
   };
 
+  const prev = () => {
+    setActiveAnswer();
+    questions[activeStep].edited = true;
+    setActiveStep(update(activeStep, { $set: activeStep - 1 }));
+  };
+
   const next = () => {
     setActiveAnswer();
     questions[activeStep].edited = true;
@@ -92,9 +97,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
   };
 
-  const renderQuestion = (
-    question: Question, index: number
-  ) => {
+  const renderQuestion = (question: Question, index: number) => {
     return (
       <QuestionLive
         attempt={attempts[index]}
@@ -104,7 +107,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       />
     );
   };
-  
+
   const renderQuestionContainer = (question: Question, index: number) => {
     let indexClassName = "question-index-container";
     const attempt = attempts[index];
@@ -121,16 +124,25 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         dir={theme.direction}
       >
         <div className={indexClassName}>
-          <div className="question-index">
-            {index + 1}
-          </div>
+          <div className="question-index">{index + 1}</div>
         </div>
         <div className="question-live-play">
           {renderQuestion(question, index)}
         </div>
       </TabPanel>
     );
-  }
+  };
+
+  const renderPrevButton = () => {
+    if (activeStep === 0) {
+      return "";
+    }
+    return (
+      <button className="play-preview svgOnHover play-green" onClick={prev}>
+        Prev
+      </button>
+    );
+  };
 
   return (
     <div className="brick-container review-page">
@@ -147,7 +159,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
           </div>
         </Grid>
         <Grid item xs={4}>
-        <div className="introduction-info">
+          <div className="introduction-info">
             <div className="intro-header">
               <div className="clock">
                 <div className="clock-image svgOnHover">
@@ -164,21 +176,30 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 handleStep={handleStep}
               />
             </div>
-            <div className="action-footer">
-              <h2>Play</h2>
-              <button
-                type="button"
-                className="play-preview svgOnHover play-green"
-                onClick={next}
-              >
-                <svg className="svg svg-default">
-                  <use href={sprite + "#play-thin"} />
-                </svg>
-                <svg className="svg colored">
-                  <use href={sprite + "#play-thick"} />
-                </svg>
-              </button>
-            </div>
+            <Grid container direction="row" className="action-footer">
+              <Grid container item xs={3} justify="center">
+                {renderPrevButton()}
+              </Grid>
+              <Grid container item xs={6} justify="center">
+                <h2>Next</h2>
+                <div>Don’t panic, you can</div>
+                <div>always come back</div>
+              </Grid>
+              <Grid container item xs={3} justify="center">
+                <button
+                  type="button"
+                  className="play-preview svgOnHover play-green"
+                  onClick={next}
+                >
+                  <svg className="svg svg-default">
+                    <use href={sprite + "#play-thin"} />
+                  </svg>
+                  <svg className="svg colored">
+                    <use href={sprite + "#play-thick"} />
+                  </svg>
+                </button>
+              </Grid>
+            </Grid>
           </div>
         </Grid>
       </Grid>
