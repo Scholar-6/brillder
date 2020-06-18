@@ -16,13 +16,9 @@ const LiveStepper: React.FC<LiveStepperProps> = ({
   handleStep,
   attempts
 }) => {
-  function isAttempted(question: Question, questionIndex: number) {
-    console.log(attempts);
-    if (attempts.length - 1 >= questionIndex) {
-      let attempt = attempts[questionIndex];
-      if (question.edited) {
-        return true;
-      }
+  function isAttempted(question: Question) {
+    if (question.edited) {
+      return true;
     }
     return false;
   }
@@ -50,10 +46,10 @@ const LiveStepper: React.FC<LiveStepperProps> = ({
         return (
           <Grid item key={colKey} xs={colWidth}>
             {col.map((question, key) => {
-              let completed = isAttempted(question, questionIndex);
+              let edited = isAttempted(question);
 
               let className = "step";
-              if (completed) {
+              if (edited) {
                 className += " completed";
               }
               questionIndex++;
