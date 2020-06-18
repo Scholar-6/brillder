@@ -15,13 +15,6 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
   handleStep,
   attempts
 }) => {
-  function isAttempted(question: Question) {
-    if (question.edited) {
-      return true;
-    }
-    return false;
-  }
-
   const chunk = (arr: Question[], size: number) =>
     arr.reduce(
       (acc: any, _, i) => (i % size ? acc : [...acc, arr.slice(i, i + size)]),
@@ -45,21 +38,25 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
         return (
           <Grid item key={colKey} xs={colWidth}>
             {col.map((question, key) => {
-              let edited = isAttempted(question);
+              const attempt = attempts[questionIndex];
 
-              let className = "step";
-              if (edited) {
-                className += " completed";
-              }
               questionIndex++;
               let index = questionIndex;
               return (
                 <div
                   key={key}
-                  className={className}
+                  className="step"
                   onClick={handleStep(index - 1)}
                 >
                   {questionIndex}
+                  <img
+                    alt=""
+                    src={
+                      attempt.correct
+                        ? "/feathericons/svg/check-green.svg"
+                        : "/feathericons/svg/x-orange.svg"
+                    }
+                  />
                 </div>
               );
             })}

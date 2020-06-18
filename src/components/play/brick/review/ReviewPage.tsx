@@ -69,10 +69,6 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     setActiveStep(step);
   };
 
-  function isStepComplete(step: number) {
-    return step < activeStep;
-  }
-
   const setActiveAnswer = () => {
     const copyAnswers = Object.assign([], answers) as any[];
     copyAnswers[activeStep] = questionRefs[activeStep].current?.getAnswer();
@@ -97,40 +93,56 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   };
 
   const renderQuestion = (
-    question: Question,
-    attempt: ComponentAttempt,
-    index: number
+    question: Question, index: number
   ) => {
     return (
       <QuestionLive
-        attempt={attempt}
+        attempt={attempts[index]}
         question={question}
         answers={answers[index]}
         ref={questionRefs[index]}
       />
     );
   };
+  
+  const renderQuestionContainer = (question: Question, index: number) => {
+    let indexClassName = "question-index-container";
+    const attempt = attempts[index];
+    if (attempt.correct) {
+      indexClassName += " correct";
+    } else {
+      indexClassName += " wrong";
+    }
+    return (
+      <TabPanel
+        key={index}
+        index={index}
+        value={activeStep}
+        dir={theme.direction}
+      >
+        <div className={indexClassName}>
+          <div className="question-index">
+            {index + 1}
+          </div>
+        </div>
+        <div className="question-live-play">
+          {renderQuestion(question, index)}
+        </div>
+      </TabPanel>
+    );
+  }
 
   return (
-    <div className="brick-container review-page live-page">
+    <div className="brick-container review-page">
       <Grid container direction="row">
         <Grid item xs={8}>
-          <div className="introduction-page">
+          <div className="review-page">
             <SwipeableViews
               axis={theme.direction === "rtl" ? "x-reverse" : "x"}
               index={activeStep}
               onChangeIndex={handleStep}
             >
-              {questions.map((question, index) => (
-                <TabPanel
-                  key={index}
-                  index={index}
-                  value={activeStep}
-                  dir={theme.direction}
-                >
-                  {renderQuestion(question, attempts[index], index)}
-                </TabPanel>
-              ))}
+              {questions.map(renderQuestionContainer)}
             </SwipeableViews>
           </div>
         </Grid>
