@@ -1,28 +1,49 @@
-@import '../../../../assets/sass/partials/variables';
-@import '../../../../assets/sass/partials/mixins';
-@import '../../../../assets/sass/partials/extensions';
-
+@import "../../../../assets/sass/partials/variables";
+@import "../../../../assets/sass/partials/mixins";
+@import "../../../../assets/sass/partials/extensions";
 
 .MuiStepConnector-root.MuiStepConnector-horizontal.MuiStepConnector-alternativeLabel {
-    opacity: 0;
+  opacity: 0;
 }
 .live-page {
-  .question-index {
+  .MuiBox-root {
+    padding: 0;
+  }
+  .question-index-container {
+    margin-left: 1vw;
     margin-top: 2vw;
-    font-size: 2vw;
-    background: #E5E8ED;
-    border-radius: 100vw;
-    font-family: $font-family-black;
-    text-align: center;
+    padding: 0.5vw;
     width: 2.3vw;
     height: 2.3vw;
-    line-height: 1.25;
+    border-radius: 100vw;
+    .question-index {
+      padding: 0;
+      font-size: 2vw;
+      background: #e5e8ed;
+      border-radius: 100vw;
+      font-family: $font-family-black;
+      color: $dark-blue;
+      text-align: center;
+      width: 2.3vw;
+      height: 2.3vw;
+      line-height: 1.25;
+    }
+  }
+  .question-index-container.attempted {
+    background: #82c0ed;
+    .question-index {
+      background: $blue;
+    }
+  }
+  .question-live-play {
+    margin-left: 5vw;
+    margin-right: 3vw;
   }
   .stepper {
     .step {
       font-size: 2vw;
       font-family: $font-family-black;
-      color: #D3D4D5;
+      color: #d3d4d5;
     }
 
     .step.completed {
@@ -37,15 +58,15 @@
     border: 2px solid $black-blue;
   }
   .MuiBox-root {
-      padding-top: 0;
+    padding-top: 0;
   }
   .MuiStepper-root {
-      padding-top: 20px;
-      padding-bottom: 16px;
+    padding-top: 20px;
+    padding-bottom: 16px;
 
-      .MuiStepButton-root  {
-        padding-top: 27px;
-        padding-bottom: 10px;
-      }
+    .MuiStepButton-root {
+      padding-top: 27px;
+      padding-bottom: 10px;
+    }
   }
 }

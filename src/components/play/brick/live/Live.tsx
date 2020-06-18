@@ -66,6 +66,13 @@ const LivePage: React.FC<LivePageProps> = ({
     questionRefs.push(React.createRef());
   });
 
+  const isAttempted = (question: Question) => {
+    if (question.edited) {
+      return true;
+    }
+    return false;
+  }
+
   const handleStep = (step: number) => () => {
     setActiveAnswer();
     questions[activeStep].edited = true;
@@ -110,11 +117,35 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   };
 
+  const renderQuestionContainer = (question: Question, index: number) => {
+    let indexClassName = "question-index-container";
+    if (isAttempted(question)) {
+      indexClassName += " attempted";
+    }
+    return (
+      <TabPanel
+        key={index}
+        index={index}
+        value={activeStep}
+        dir={theme.direction}
+      >
+        <div className={indexClassName}>
+          <div className="question-index">
+            {index + 1}
+          </div>
+        </div>
+        <div className="question-live-play">
+          {renderQuestion(question, index)}
+        </div>
+      </TabPanel>
+    );
+  }
+
   return (
     <div className="brick-container live-page">
       <Grid container direction="row">
         <Grid item xs={8}>
-          <div className="introduction-page">
+          <div className="live-page">
             <div className="intro-header"></div>
             <SwipeableViews
               axis={theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -122,17 +153,7 @@ const LivePage: React.FC<LivePageProps> = ({
               style={{ width: "100%" }}
               onChangeIndex={handleStep}
             >
-              {questions.map((question, index) => (
-                <TabPanel
-                  key={index}
-                  index={index}
-                  value={activeStep}
-                  dir={theme.direction}
-                >
-                  <div className="question-index">{index + 1}</div>
-                  {renderQuestion(question, index)}
-                </TabPanel>
-              ))}
+              {questions.map(renderQuestionContainer)}
             </SwipeableViews>
           </div>
         </Grid>
