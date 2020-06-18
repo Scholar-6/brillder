@@ -76,14 +76,14 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
             <h1>{brick.title}</h1>
           </div>
-          <div>
+          <div className="expend-title">
             Brief
             <img
               alt=""
               src={
                 state.briefExpanded
                   ? "/feathericons/svg/chevron-down-blue.svg"
-                  : "/chevron-down-blue.svg"
+                  : "/feathericons/svg/chevron-right.svg"
               }
               onClick={toggleBrief}
             />
@@ -95,27 +95,25 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           ) : (
             ""
           )}
-          <ExpansionPanel
-            expanded={state.briefExpanded === true}
-            onChange={toggleBrief}
-          >
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <h2>Brief</h2>
-            </ExpansionPanelSummary>
-          </ExpansionPanel>
-          <ExpansionPanel
-            expanded={state.prepExpanded === true}
-            onChange={togglePrep}
-          >
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <h2>Prep</h2>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <div style={{ width: "100%" }}>
-                <MathInHtml value={brick.prep} />
-              </div>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+          <div className="expend-title">
+            Prep
+            <img
+              alt=""
+              src={
+                state.prepExpanded
+                  ? "/feathericons/svg/chevron-down-blue.svg"
+                  : "/feathericons/svg/chevron-right.svg"
+              }
+              onClick={togglePrep}
+            />
+          </div>
+          {state.prepExpanded ? (
+            <div style={{ width: "100%" }}>
+              <MathInHtml value={brick.prep} />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </Grid>
       <Grid item xs={4}>

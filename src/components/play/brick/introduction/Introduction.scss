@@ -115,4 +115,13 @@
   .MuiPaper-root {
     box-shadow: none !important;
   }
+  .expend-title {
+    color: $dark-blue;
+    line-height: 1.3;
+    font-family: $font-family-bold;
+    font-size: 3vw;
+    img {
+      height: 2.3vw;
+    }
+  }
 }
