@@ -32,7 +32,7 @@ class BrickCounter extends Component<CounterProps, CounterState> {
       }
       let end = moment();
       let dif = moment.duration(end.diff(this.props.startTime));
-      let minutes = this.formatTwoLastDigits(dif.minutes());
+      let minutes = this.formatTwoLastDigits(dif.hours() * 60 + dif.minutes());
       let seconds = this.formatTwoLastDigits(dif.seconds());
       let milliseconds = this.formatTwoLastDigits(Math.round(dif.milliseconds() / 10));
       this.setState({minutes, seconds, milliseconds, isCounting: true});
