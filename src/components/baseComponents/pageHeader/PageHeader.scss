@@ -6,7 +6,6 @@
 .user-profile-page,
 .bricks-list-page,
 .back-to-work-page {
-	overflow: hidden;
 	background: $dark-blue;
 	height: 100%;
 	width: 100%;
@@ -27,8 +26,6 @@
 		}
 		.users-pagination,
 		.bricks-pagination {
-			position: absolute;
-			bottom: 0;
 			height: 9vh;
 			font-size: 0.9vw;
 			font-family: $font-family-regular;

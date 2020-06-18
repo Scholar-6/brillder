@@ -69,25 +69,44 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <div className="introduction-page">
           <div className="intro-header">
             <div className="left-brick-circle">
-              <div className="round-button" style={{ background: `${color}` }}></div>
+              <div
+                className="round-button"
+                style={{ background: `${color}` }}
+              ></div>
             </div>
             <h1>{brick.title}</h1>
           </div>
+          <div>
+            Brief
+            <img
+              alt=""
+              src={
+                state.briefExpanded
+                  ? "/feathericons/svg/chevron-down-blue.svg"
+                  : "/chevron-down-blue.svg"
+              }
+              onClick={toggleBrief}
+            />
+          </div>
+          {state.briefExpanded ? (
+            <div style={{ width: "100%" }}>
+              <MathInHtml value={brick.brief} />
+            </div>
+          ) : (
+            ""
+          )}
           <ExpansionPanel
             expanded={state.briefExpanded === true}
-            onChange={toggleBrief}>
+            onChange={toggleBrief}
+          >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <h2>Brief</h2>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <div style={{ width: "100%" }}>
-                <MathInHtml value={brick.brief} />
-              </div>
-            </ExpansionPanelDetails>
           </ExpansionPanel>
           <ExpansionPanel
             expanded={state.prepExpanded === true}
-            onChange={togglePrep}>
+            onChange={togglePrep}
+          >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <h2>Prep</h2>
             </ExpansionPanelSummary>
@@ -106,7 +125,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             <div className="clock">
               <div className="clock-image svgOnHover">
                 <svg className="svg w100 h100 active">
-                  <use href={sprite + "#clock"}/>
+                  <use href={sprite + "#clock"} />
                 </svg>
               </div>
               <span className="max-length">{brick.brickLength}</span>
@@ -123,7 +142,11 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           </div>
           <div className="action-footer">
             <h2>Play</h2>
-            <button type="button" className="play-preview svgOnHover play-green" onClick={startBrick}>
+            <button
+              type="button"
+              className="play-preview svgOnHover play-green"
+              onClick={startBrick}
+            >
               <svg className="svg svg-default">
                 <use href={sprite + "#play-thin"} />
               </svg>
