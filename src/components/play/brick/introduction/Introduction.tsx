@@ -85,7 +85,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             />
           </div>
           {state.briefExpanded ? (
-            <div style={{ width: "100%" }}>
+            <div className="expended-text">
               <MathInHtml value={brick.brief} />
             </div>
           ) : (
@@ -104,7 +104,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             />
           </div>
           {state.prepExpanded ? (
-            <div style={{ width: "100%" }}>
+            <div className="expended-text">
               <MathInHtml value={brick.prep} />
             </div>
           ) : (
