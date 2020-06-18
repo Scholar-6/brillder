@@ -138,8 +138,9 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       return "";
     }
     return (
-      <button className="play-preview svgOnHover play-green" onClick={prev}>
-        Prev
+      <button className="play-preview svgOnHover back-button" onClick={prev}>
+        <img className="svg svg-default" alt="" src="/feathericons/svg/chevron-left-blue.svg" />
+        <img className="svg colored" alt="" src="/feathericons/svg/chevron-left-blue.svg" />
       </button>
     );
   };
@@ -180,7 +181,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
               <Grid container item xs={3} justify="center">
                 {renderPrevButton()}
               </Grid>
-              <Grid container item xs={6} justify="center">
+              <Grid container item xs={6} justify="center" className="fotter-text">
                 <h2>Next</h2>
                 <div>Don’t panic, you can</div>
                 <div>always come back</div>
@@ -191,12 +192,8 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                   className="play-preview svgOnHover play-green"
                   onClick={next}
                 >
-                  <svg className="svg svg-default">
-                    <use href={sprite + "#play-thin"} />
-                  </svg>
-                  <svg className="svg colored">
-                    <use href={sprite + "#play-thick"} />
-                  </svg>
+                  <img className="svg svg-default" alt="" src="/feathericons/svg/chevron-right-white.svg" />
+                  <img className="svg colored" alt="" src="/feathericons/svg/chevron-right-white.svg" />
                 </button>
               </Grid>
             </Grid>
