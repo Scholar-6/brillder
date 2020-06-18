@@ -69,4 +69,19 @@
       padding-bottom: 10px;
     }
   }
+
+  .back-button {
+    height: 3.5vw;
+    width: 3.5vw;
+    .svg {
+      margin: 0 !important;
+    }
+  }
+  .play-preview.play-green {
+    height: 5vw;
+    width: 5vw;
+  }
+  .fotter-text {
+    margin-top: 3vw;
+  }
 }
