@@ -92,6 +92,10 @@ const LivePage: React.FC<LivePageProps> = ({
     setAnswers(copyAnswers);
   };
 
+  const prev = () => {
+    handleStep(activeStep - 1)();
+  }
+
   const next = () => {
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
@@ -141,6 +145,13 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   }
 
+  const renderPrevButton = () => {
+    if (activeStep === 0) { return ""; }
+    return (
+      <button className="play-preview svgOnHover play-green" onClick={prev}>Prev</button>
+    )
+  }
+
   return (
     <div className="brick-container live-page">
       <Grid container direction="row">
@@ -177,8 +188,16 @@ const LivePage: React.FC<LivePageProps> = ({
                 handleStep={handleStep}
               />
             </div>
-            <div className="action-footer">
-              <h2>Next</h2>
+            <Grid container direction="row" className="action-footer">
+              <Grid container item xs={3} justify="center">
+                {renderPrevButton()}
+              </Grid>
+              <Grid container item xs={6} justify="center">
+                <h2>Next</h2>
+                <div>Don’t panic, you can</div>
+                <div>always come back</div>
+              </Grid>
+              <Grid container item xs={3} justify="center">
               <button
                 type="button"
                 className="play-preview svgOnHover play-green"
@@ -191,7 +210,8 @@ const LivePage: React.FC<LivePageProps> = ({
                   <use href={sprite + "#play-thick"} />
                 </svg>
               </button>
-            </div>
+              </Grid>
+            </Grid>
           </div>
         </Grid>
       </Grid>
