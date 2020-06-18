@@ -25,8 +25,7 @@ const LastSave:React.FC<LastSaveProps> = (props) => {
       let timeout = setTimeout(() => setSaving(false), 1000);
       setSaveTimeout(timeout);
     }
-    // Fixed dependency issue here based on this discussion https://github.com/facebook/create-react-app/issues/6880
-  }, [props, saveTimeout]);
+  }, [props]);
 
   const formatTwoDigits = (number: Number) => {
     let str = number.toString();
