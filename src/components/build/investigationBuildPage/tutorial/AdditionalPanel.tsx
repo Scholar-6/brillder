@@ -16,7 +16,7 @@ const AdditionalPanel: React.FC<TutorialProps> = (props) => {
       <div className="tutorial-step-1">
         <Grid container justify="center">
           <div className="zap-border">
-            <img alt="synthesis-icon" src="/feathericons/zap-off-grey.png" className="zap-icon" />
+            <img alt="synthesis-icon" src="/feathericons/zap-off-gray.png" className="zap-icon" />
           </div>
           <div className="zap-border">
             <img alt="synthesis-icon" src="/feathericons/zap-blue.png" className="zap-icon" />

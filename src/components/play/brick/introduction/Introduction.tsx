@@ -145,11 +145,11 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 className="play-preview svgOnHover play-green"
                 onClick={startBrick}
               >
-                <svg className="svg svg-default">
-                  <use href={sprite + "#play-thin"} />
+                <svg className="svg svg-default m-l-02">
+                  <use href={sprite + "#play-thin"} className="text-white" />
                 </svg>
-                <svg className="svg colored">
-                  <use href={sprite + "#play-thick"} />
+                <svg className="svg colored m-l-02">
+                  <use href={sprite + "#play-thick"} className="text-white" />
                 </svg>
               </button>
             </Grid>

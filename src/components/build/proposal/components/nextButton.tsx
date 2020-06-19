@@ -48,7 +48,7 @@ const NextButton:React.FC<NextButtonProps> = (
         src={
           isActive
             ? "/feathericons/chevron-down-orange.png"
-            : "/feathericons/chevron-down-grey.png"
+            : "/feathericons/chevron-down-gray.png"
         }
         onClick={next}
       />

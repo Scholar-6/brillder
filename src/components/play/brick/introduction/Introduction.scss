@@ -27,7 +27,7 @@
             height: 5vw;
             width: 5vw;
             @extend %radCircle;
-            background-color: $grey;
+            background-color: $gray;
           }
         }
         h1 {
@@ -49,7 +49,7 @@
     }
     .introduction-info {
       padding: 4vh 2vw;
-      background-color: $lighter-grey;
+      background-color: $lighter-gray;
       overflow-y: auto;
       height: calc(100vh - 23.5vh);
       position: relative;
@@ -77,7 +77,7 @@
         }
       }
       .intro-text-row {
-        margin-top: 40%;
+        margin-top: 2vw;
         font-size: 1.2vw;
         font-family: $font-family-bold;
         color: $dark-blue;
@@ -86,8 +86,10 @@
         }
       }
       .action-footer {
+        width: 70%;
         position: absolute;
-        left: 0;
+        left: 50%;
+        transform: translateX(-50%);
         bottom: 4vw;
         display: flex;
         align-items: center;
@@ -102,8 +104,23 @@
         .play-preview {
           position: relative;
           left: inherit;
+          right: inherit;
           top: inherit;
-          margin-left: 2vw;
+        }
+        > div {
+          min-width: 4vw;
+          @extend %flexCenter;
+          flex-direction: column;
+          text-align: center;
+          &.direction-info {
+            width: 100%;
+            > span {
+              position: absolute;
+              left: 50%;
+              transform: translateX(-50%);
+              bottom: -2vw;
+            }
+          }
         }
       }
       .max-length {
