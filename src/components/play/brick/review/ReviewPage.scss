@@ -64,3 +64,89 @@
     padding: 0.4em;
   }
 }
+
+.review-page {
+  .MuiBox-root {
+    padding: 0;
+  }
+  .question-index-container {
+    margin-left: 1vw;
+    margin-top: 2vw;
+    padding: 0.5vw;
+    width: 2.3vw;
+    height: 2.3vw;
+    border-radius: 100vw;
+    .question-index {
+      padding: 0;
+      font-size: 2vw;
+      background: #e5e8ed;
+      border-radius: 100vw;
+      font-family: $font-family-black;
+      color: $dark-blue;
+      text-align: center;
+      width: 2.3vw;
+      height: 2.3vw;
+      line-height: 1.25;
+    }
+  }
+  .question-index-container.correct {
+    .question-index {
+      background: $light-green;
+    }
+  }
+
+  .question-index-container.wrong {
+    .question-index {
+      background: $orange;
+    }
+  }
+  .question-live-play {
+    margin-left: 5vw;
+    margin-right: 3vw;
+  }
+  .stepper {
+    .step {
+      font-size: 2vw;
+      font-family: $font-family-black;
+      color: $dark-blue;
+
+      img {
+        height: 2vw;
+      }
+    }
+  }
+  .edited-step-icon {
+    color: $black-blue;
+    border-radius: 100%;
+    font-size: 16px !important;
+    padding: 5px;
+    border: 2px solid $black-blue;
+  }
+  .MuiBox-root {
+    padding-top: 0;
+  }
+  .MuiStepper-root {
+    padding-top: 20px;
+    padding-bottom: 16px;
+
+    .MuiStepButton-root {
+      padding-top: 27px;
+      padding-bottom: 10px;
+    }
+  }
+
+  .back-button {
+    height: 3.5vw;
+    width: 3.5vw;
+    .svg {
+      margin: 0 !important;
+    }
+  }
+  .play-preview.play-green {
+    height: 5vw;
+    width: 5vw;
+  }
+  .fotter-text {
+    margin-top: 3vw;
+  }
+}

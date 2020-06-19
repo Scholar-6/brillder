@@ -1,31 +1,142 @@
-@import '../../../../assets/sass/partials/variables';
-@import '../../../../assets/sass/partials/mixins';
-@import '../../../../assets/sass/partials/extensions';
+@import "../../../../assets/sass/partials/variables";
+@import "../../../../assets/sass/partials/mixins";
+@import "../../../../assets/sass/partials/extensions";
 
-.introduction-page {
-  padding: 1vw;
-
-  .begin-row {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    text-align: right;
+.play-preview-pages {
+  background: $dark-blue;
+  min-height: 100%;
+  .sort-and-filter-container {
+    width: calc(17.15vw - 1vw);
+    align-items: center;
+    justify-content: center;
+  }
+  .brick-row-container {
+    width: calc(82.85vw - 1vw);
+    background-color: $white;
+    .introduction-page {
+      overflow-y: auto;
+      padding: 4vh 2vw 4vh 7vw;
+      height: calc(100vh - 23.5vh);
+      .intro-header {
+        margin-bottom: 10vh;
+        .left-brick-circle {
+          position: absolute;
+          top: 2.4vh;
+          left: 1.4vw;
+          > div {
+            height: 5vw;
+            width: 5vw;
+            @extend %radCircle;
+            background-color: $grey;
+          }
+        }
+        h1 {
+          color: $dark-blue;
+          margin: 0 0 2vh 0;
+          font-size: 2vw;
+          font-family: $font-family-black;
+          text-transform: uppercase;
+        }
+      }
+      .start-brick-button {
+        margin-right: 0px;
+        > span {
+          font-family: $font-family-regular;
+          font-size: 25px;
+          margin-right: 10px;
+        }
+      }
+    }
+    .introduction-info {
+      padding: 4vh 2vw;
+      background-color: $lighter-grey;
+      overflow-y: auto;
+      height: calc(100vh - 23.5vh);
+      position: relative;
+      .intro-header {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        font-size: 2vw;
+        font-family: $font-family-black;
+        color: $dark-blue;
+        .clock {
+          margin-left: 3vw;
+          display: flex;
+          align-items: center;
+          .clock-image {
+            width: 2vw;
+            height: 2vw;
+          }
+        }
+        .counter {
+          .counter-seconds {
+            font-size: 1vw;
+          }
+        }
+      }
+      .intro-text-row {
+        margin-top: 40%;
+        font-size: 1.2vw;
+        font-family: $font-family-bold;
+        color: $dark-blue;
+        ul {
+          padding: 0 0 0 1.5vw;
+        }
+      }
+      .action-footer {
+        position: absolute;
+        left: 0;
+        bottom: 4vw;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        color: $dark-blue;
+        h2 {
+          margin-top: 0;
+          margin-bottom: 0;
+          font-size: 2.6vw;
+          font-family: $font-family-bold;
+        }
+        .play-preview {
+          position: relative;
+          left: inherit;
+          top: inherit;
+          margin-left: 2vw;
+        }
+      }
+      .max-length {
+        font-family: $font-family-regular;
+        color: $dark-blue;
+        margin-left: 0.8vw;
+        font-size: 1.8vw;
+      }
+    }
   }
 
-  .other-header {
-    font-size: 24px !important;
-    font-weight: 400;
+  .MuiPaper-root {
+    box-shadow: none !important;
   }
-
-  h2 {
+  .expend-title {
+    margin-top: 1.5vh;
+    margin-bottom: 1vh;
     color: $dark-blue;
+    line-height: 1.3;
+    font-family: $font-family-bold;
+    font-size: 2.6vw;
+    img {
+      margin-left: 2vw;
+      height: 1.8vw;
+    }
   }
-
-  .start-brick-button {
-    margin-right: 0px;
-    > span {
-      font-family: $font-family-regular;
-      font-size: 25px;
-      margin-right: 10px;
+  .expended-text {
+    width: 100%;
+    color: $dark-blue;
+    font-family: $font-family-regular;
+    font-size: 1vw;
+    p {
+      margin: 0.4vh;
     }
   }
 }
