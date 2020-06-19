@@ -11,8 +11,7 @@ import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
 import { PlayStatus, ComponentAttempt } from "../model/model";
 import sprite from "../../../../assets/img/icons-sprite.svg";
-import ReviewStepper from './ReviewStepper';
-
+import ReviewStepper from "./ReviewStepper";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -69,16 +68,18 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     setActiveStep(step);
   };
 
-  function isStepComplete(step: number) {
-    return step < activeStep;
-  }
-
   const setActiveAnswer = () => {
     const copyAnswers = Object.assign([], answers) as any[];
     copyAnswers[activeStep] = questionRefs[activeStep].current?.getAnswer();
     let attempt = questionRefs[activeStep].current?.getAttempt();
     updateAttempts(attempt, activeStep);
     setAnswers(copyAnswers);
+  };
+
+  const prev = () => {
+    setActiveAnswer();
+    questions[activeStep].edited = true;
+    setActiveStep(update(activeStep, { $set: activeStep - 1 }));
   };
 
   const next = () => {
@@ -96,14 +97,10 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
   };
 
-  const renderQuestion = (
-    question: Question,
-    attempt: ComponentAttempt,
-    index: number
-  ) => {
+  const renderQuestion = (question: Question, index: number) => {
     return (
       <QuestionLive
-        attempt={attempt}
+        attempt={attempts[index]}
         question={question}
         answers={answers[index]}
         ref={questionRefs[index]}
@@ -111,31 +108,59 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     );
   };
 
+  const renderQuestionContainer = (question: Question, index: number) => {
+    let indexClassName = "question-index-container";
+    const attempt = attempts[index];
+    if (attempt.correct) {
+      indexClassName += " correct";
+    } else {
+      indexClassName += " wrong";
+    }
+    return (
+      <TabPanel
+        key={index}
+        index={index}
+        value={activeStep}
+        dir={theme.direction}
+      >
+        <div className={indexClassName}>
+          <div className="question-index">{index + 1}</div>
+        </div>
+        <div className="question-live-play">
+          {renderQuestion(question, index)}
+        </div>
+      </TabPanel>
+    );
+  };
+
+  const renderPrevButton = () => {
+    if (activeStep === 0) {
+      return "";
+    }
+    return (
+      <button className="play-preview svgOnHover back-button" onClick={prev}>
+        <img className="svg svg-default" alt="" src="/feathericons/svg/chevron-left-blue.svg" />
+        <img className="svg colored" alt="" src="/feathericons/svg/chevron-left-blue.svg" />
+      </button>
+    );
+  };
+
   return (
-    <div className="brick-container review-page live-page">
+    <div className="brick-container review-page">
       <Grid container direction="row">
         <Grid item xs={8}>
-          <div className="introduction-page">
+          <div className="review-page">
             <SwipeableViews
               axis={theme.direction === "rtl" ? "x-reverse" : "x"}
               index={activeStep}
               onChangeIndex={handleStep}
             >
-              {questions.map((question, index) => (
-                <TabPanel
-                  key={index}
-                  index={index}
-                  value={activeStep}
-                  dir={theme.direction}
-                >
-                  {renderQuestion(question, attempts[index], index)}
-                </TabPanel>
-              ))}
+              {questions.map(renderQuestionContainer)}
             </SwipeableViews>
           </div>
         </Grid>
         <Grid item xs={4}>
-        <div className="introduction-info">
+          <div className="introduction-info">
             <div className="intro-header">
               <div className="clock">
                 <div className="clock-image svgOnHover">
@@ -152,21 +177,26 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 handleStep={handleStep}
               />
             </div>
-            <div className="action-footer">
-              <h2>Play</h2>
-              <button
-                type="button"
-                className="play-preview svgOnHover play-green"
-                onClick={next}
-              >
-                <svg className="svg svg-default">
-                  <use href={sprite + "#play-thin"} />
-                </svg>
-                <svg className="svg colored">
-                  <use href={sprite + "#play-thick"} />
-                </svg>
-              </button>
-            </div>
+            <Grid container direction="row" className="action-footer">
+              <Grid container item xs={3} justify="center">
+                {renderPrevButton()}
+              </Grid>
+              <Grid container item xs={6} justify="center" className="fotter-text">
+                <h2>Next</h2>
+                <div>Don’t panic, you can</div>
+                <div>always come back</div>
+              </Grid>
+              <Grid container item xs={3} justify="center">
+                <button
+                  type="button"
+                  className="play-preview svgOnHover play-green"
+                  onClick={next}
+                >
+                  <img className="svg svg-default" alt="" src="/feathericons/svg/chevron-right-white.svg" />
+                  <img className="svg colored" alt="" src="/feathericons/svg/chevron-right-white.svg" />
+                </button>
+              </Grid>
+            </Grid>
           </div>
         </Grid>
       </Grid>

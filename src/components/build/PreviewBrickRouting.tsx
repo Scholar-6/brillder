@@ -202,6 +202,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               <Live
                 status={status}
                 attempts={attempts}
+                startTime={startTime}
                 previewQuestionIndex={getBuildQuestionNumber()}
                 isPlayPreview={true}
                 brick={props.brick}

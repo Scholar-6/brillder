@@ -1,10 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Grid } from "@material-ui/core";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import "./Introduction.scss";
@@ -76,46 +72,44 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
             <h1>{brick.title}</h1>
           </div>
-          <div>
+          <div className="expend-title">
             Brief
             <img
               alt=""
               src={
                 state.briefExpanded
                   ? "/feathericons/svg/chevron-down-blue.svg"
-                  : "/chevron-down-blue.svg"
+                  : "/feathericons/svg/chevron-right.svg"
               }
               onClick={toggleBrief}
             />
           </div>
           {state.briefExpanded ? (
-            <div style={{ width: "100%" }}>
+            <div className="expended-text">
               <MathInHtml value={brick.brief} />
             </div>
           ) : (
             ""
           )}
-          <ExpansionPanel
-            expanded={state.briefExpanded === true}
-            onChange={toggleBrief}
-          >
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <h2>Brief</h2>
-            </ExpansionPanelSummary>
-          </ExpansionPanel>
-          <ExpansionPanel
-            expanded={state.prepExpanded === true}
-            onChange={togglePrep}
-          >
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <h2>Prep</h2>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <div style={{ width: "100%" }}>
-                <MathInHtml value={brick.prep} />
-              </div>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+          <div className="expend-title">
+            Prep
+            <img
+              alt=""
+              src={
+                state.prepExpanded
+                  ? "/feathericons/svg/chevron-down-blue.svg"
+                  : "/feathericons/svg/chevron-right.svg"
+              }
+              onClick={togglePrep}
+            />
+          </div>
+          {state.prepExpanded ? (
+            <div className="expended-text">
+              <MathInHtml value={brick.prep} />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </Grid>
       <Grid item xs={4}>
@@ -140,21 +134,26 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <li>3 minutes to review answers (countdown)</li>
             </ul>
           </div>
-          <div className="action-footer">
-            <h2>Play</h2>
-            <button
-              type="button"
-              className="play-preview svgOnHover play-green"
-              onClick={startBrick}
-            >
-              <svg className="svg svg-default">
-                <use href={sprite + "#play-thin"} />
-              </svg>
-              <svg className="svg colored">
-                <use href={sprite + "#play-thick"} />
-              </svg>
-            </button>
-          </div>
+          <Grid container direction="row" className="action-footer">
+            <Grid container item xs={3}></Grid>
+            <Grid container item xs={6} justify="center">
+              <h2>Play</h2>
+            </Grid>
+            <Grid container item xs={3} justify="center">
+              <button
+                type="button"
+                className="play-preview svgOnHover play-green"
+                onClick={startBrick}
+              >
+                <svg className="svg svg-default">
+                  <use href={sprite + "#play-thin"} />
+                </svg>
+                <svg className="svg colored">
+                  <use href={sprite + "#play-thick"} />
+                </svg>
+              </button>
+            </Grid>
+          </Grid>
         </div>
       </Grid>
     </Grid>
