@@ -428,16 +428,12 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           {this.state.filterExpanded
             ? this.state.subjects.map((subject, i) => (
               <FormControlLabel
-								className="index-box"
+								className="index-box custom-color"
 								style={{ ["color" as any]: subject.color }}
                 key={i}
                 checked={subject.checked}
                 onClick={() => this.filterBySubject(i)}
-                control={
-									<Radio className={"filter-radio custom-color"}
-										style={{ ["color" as any]: subject.color }}
-									/>
-								}
+                control={<Radio className={"filter-radio"} />}
                 label={subject.name}
               />
             ))
@@ -481,14 +477,14 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             {this.state.sortedIndex + 18 > this.state.bricks.length
               ? this.state.bricks.length
               : this.state.sortedIndex + 18}
-            <span className="grey">
+            <span className="gray">
               {" "}
               &nbsp;|&nbsp; {this.state.bricks.length}
             </span>
           </div>
           <div>
             {(this.state.sortedIndex + 18) / 18}
-            <span className="grey">
+            <span className="gray">
               {" "}
               &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / 18)}
             </span>

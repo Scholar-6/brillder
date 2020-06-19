@@ -22,20 +22,20 @@ const PlayButton: React.FC<PlayButtonProps> = ({
       return 'play-green animated pulse';
     }
     if (isTutorialSkipped) {
-      return 'play-white';
+      return 'bg-tab-gray';
     }
-    return 'play-white disabled';
+    return 'bg-tab-gray disabled';
   }
   const renderButton = () => {
     return (
       <button type="button" className={"play-preview svgOnHover " + renderButtonClass()} onClick={() => onClick()}>
-        <svg className="svg svg-default">
-          <use href={sprite + "#play-thin"} />
+        <svg className="svg svg-default m-l-02">
+          <use href={sprite + "#play-thin"} className="text-gray" />
         </svg>
-        <svg className="svg colored">
-          <use href={sprite + "#play-thick"} />
+        <svg className="svg colored m-l-02">
+          <use href={sprite + "#play-thick"} className="text-gray" />
         </svg>
-        <span className={isTutorialSkipped ? "hidden" : ""}>Play Preview</span>
+        {/* <span className={//isTutorialSkipped ? "hidden" : ""}>Play Preview</span> */}
       </button>
     );
   }

@@ -11,25 +11,31 @@
   outline: 0 !important;
   @extend %radCircle;
   @extend %b0;
-  &.play-green {
-    background-color: $light-green;
-    color: white;
+  &.play-green,
+  &.play-white {
     &:hover {
-      animation-name: pulse;
       animation-duration: 1s;
       animation-delay: 0s;
       animation-iteration-count: 5;
       animation-timing-function: ease;
     }
   }
+  &.play-green {
+    background-color: $light-green;
+    &:hover {
+      animation-name: pulse-green;
+    }
+  }
   &.play-white {
-    background-color: $tab-grey;
-    color: $grey;
+    background-color: $tab-gray;
+    &:hover {
+      background-color: $dark-blue;
+      animation-name: pulse-blue;
+    }
   }
   .svg {
     width: 3vw;
     height: 3vw;
-    margin-left: 0.2vw;
   }
   .hidden {
     opacity: 0;

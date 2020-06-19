@@ -23,3 +23,14 @@
 		display: none !important;
 	}
 }
+
+input {
+	-webkit-appearance: none;
+}
+input[type="password"] {
+	margin: 0;
+	-webkit-text-security: round;
+	@include placeholder {
+		-webkit-text-security: round;
+	}
+}
