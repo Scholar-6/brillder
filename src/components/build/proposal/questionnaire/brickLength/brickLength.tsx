@@ -26,13 +26,17 @@ const BrickLengthPreviewComponent:React.FC<any> = ({data}) => {
 }
 
 interface BrickLengthProps {
-  length: any
-  saveLength(value: BrickLengthEnum): any
-  saveBrick(data: any): void
+  length: any;
+  canEdit: boolean;
+  saveLength(value: BrickLengthEnum): any;
+  saveBrick(data: any): void;
 }
 
-const BrickLength:React.FC<BrickLengthProps> = ({ length, saveLength, saveBrick }) => {
+const BrickLength:React.FC<BrickLengthProps> = (
+  { length, canEdit, saveLength, saveBrick }
+) => {
   const setBrickLength = (brickLength: BrickLengthEnum) => {
+    if (!canEdit) { return; }
     saveLength(brickLength);
   }
 
