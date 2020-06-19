@@ -414,10 +414,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     }
     return (
 		<div className="sort-box">
-		 	<div className="sort-by-box">
+		 	<div className="filter-container sort-by-box">
 				<div className="sort-header">INBOX</div>
 			</div>
-			<div className="indexes-box">
+			<div className="filter-container indexes-box">
 				<div className={"index-box " + (this.state.filters.viewAll ? "active" : "")}
 					onClick={() => this.showAll()}>
 					View All
@@ -580,7 +580,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
     return (
 		<div className="sort-box">
-		 	<div className="sort-by-box">
+		 	<div className="filter-container sort-by-box">
 				<div className="sort-header">SORT BY</div>
 				<RadioGroup className="sort-group"
 					aria-label="SortBy"
@@ -616,7 +616,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 				</button>
 			</div>
 			{this.state.filterExpanded === true ? (
-		   	<div className="subject-indexes-box">
+		   	<div className="filter-container subject-indexes-box">
 					<div className="index-box color1">
 						<FormControlLabel
 							checked={this.state.filters.draft}

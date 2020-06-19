@@ -1,32 +1,41 @@
-import React from 'react';
-import { Grid, Stepper, Step, StepButton } from '@material-ui/core';
-import CreateIcon from '@material-ui/icons/Create';
-import SwipeableViews from 'react-swipeable-views';
-import { useTheme } from '@material-ui/core/styles';
-import update from 'immutability-helper';
-import { useHistory, Redirect } from 'react-router-dom';
+import React from "react";
+import { Grid } from "@material-ui/core";
+import SwipeableViews from "react-swipeable-views";
+import { useTheme } from "@material-ui/core/styles";
+import update from "immutability-helper";
+import { useHistory, Redirect } from "react-router-dom";
 
-import './Live.scss';
-import CircleIconNumber from 'components/play/components/circleIcon/circleIcon';
-import { Question } from 'model/question';
-import QuestionLive from '../questionPlay/QuestionPlay';
-import TabPanel from '../baseComponents/QuestionTabPanel';
-import { PlayStatus } from '../model/model';
+import "./Live.scss";
+import { Question } from "model/question";
+import QuestionLive from "../questionPlay/QuestionPlay";
+import TabPanel from "../baseComponents/QuestionTabPanel";
+import { PlayStatus, ComponentAttempt } from "../model/model";
+import BrickCounter from "../baseComponents/BrickCounter";
+import sprite from "../../../../assets/img/icons-sprite.svg";
 
-import {CashQuestionFromPlay} from '../../../localStorage/buildLocalStorage';
-
+import { CashQuestionFromPlay } from "../../../localStorage/buildLocalStorage";
+import { Moment } from "moment";
+import { Brick } from "model/brick";
+import LiveStepper from "./LiveStepper";
 
 interface LivePageProps {
   status: PlayStatus;
-  brickId: number;
+  attempts: ComponentAttempt[];
+  brick: Brick;
+  startTime?: Moment;
   questions: Question[];
   isPlayPreview?: boolean;
   previewQuestionIndex?: number;
   updateAttempts(attempt: any, index: number): any;
-  finishBrick():void;
+  finishBrick(): void;
 }
 
-const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...props }) => {
+const LivePage: React.FC<LivePageProps> = ({
+  status,
+  questions,
+  brick,
+  ...props
+}) => {
   let initStep = 0;
   if (props.previewQuestionIndex) {
     if (questions[props.previewQuestionIndex]) {
@@ -44,9 +53,11 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...prop
 
   if (status > PlayStatus.Live) {
     if (props.isPlayPreview) {
-      return <Redirect to={`/play-preview/brick/${brickId}/provisionalScore`} />;
+      return (
+        <Redirect to={`/play-preview/brick/${brick.id}/provisionalScore`} />
+      );
     } else {
-      return <Redirect to={`/play/brick/${brickId}/provisionalScore`} />;
+      return <Redirect to={`/play/brick/${brick.id}/provisionalScore`} />;
     }
   }
 
@@ -55,20 +66,23 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...prop
     questionRefs.push(React.createRef());
   });
 
+  const isAttempted = (question: Question) => {
+    if (question.edited) {
+      return true;
+    }
+    return false;
+  }
+
   const handleStep = (step: number) => () => {
+    setActiveAnswer();
     questions[activeStep].edited = true;
-    setActiveStep(step);
+    let newStep = activeStep + 1;
+    setActiveStep(update(activeStep, { $set: step }));
+
     if (props.isPlayPreview) {
-      CashQuestionFromPlay(brickId, step);
-    } else {
-      let attempt = questionRefs[activeStep].current?.getAttempt();
-      props.updateAttempts(attempt, activeStep);
+      CashQuestionFromPlay(brick.id, newStep);
     }
   };
-
-  function isStepComplete(step: number) {
-    return step < activeStep;
-  }
 
   const setActiveAnswer = () => {
     const copyAnswers = Object.assign([], answers) as any[];
@@ -76,106 +90,132 @@ const LivePage: React.FC<LivePageProps> = ({ status, questions, brickId, ...prop
     let attempt = questionRefs[activeStep].current?.getAttempt();
     props.updateAttempts(attempt, activeStep);
     setAnswers(copyAnswers);
+  };
+
+  const prev = () => {
+    handleStep(activeStep - 1)();
   }
 
   const next = () => {
-    setActiveAnswer();
-    questions[activeStep].edited = true;
-    let newStep = activeStep + 1;
-    setActiveStep(update(activeStep, { $set: newStep }));
-
-    if (props.isPlayPreview) {
-      CashQuestionFromPlay(brickId, newStep);
-    }
-
+    handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
-      questions.forEach(question => {
+      questions.forEach((question) => {
         question.edited = false;
       });
       props.finishBrick();
       if (props.isPlayPreview) {
-        history.push(`/play-preview/brick/${brickId}/provisionalScore`);
+        history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
       } else {
-        history.push(`/play/brick/${brickId}/provisionalScore`);
+        history.push(`/play/brick/${brick.id}/provisionalScore`);
       }
     }
-  }
+  };
 
   const renderQuestion = (question: Question, index: number) => {
-    let isLastOne = (questions.length - 1) === activeStep;
     return (
       <QuestionLive
         question={question}
         answers={answers[index]}
-        isLastOne={isLastOne}
-        next={next}
         ref={questionRefs[index]}
       />
+    );
+  };
+
+  const renderQuestionContainer = (question: Question, index: number) => {
+    let indexClassName = "question-index-container";
+    if (isAttempted(question)) {
+      indexClassName += " attempted";
+    }
+    return (
+      <TabPanel
+        key={index}
+        index={index}
+        value={activeStep}
+        dir={theme.direction}
+      >
+        <div className={indexClassName}>
+          <div className="question-index">
+            {index + 1}
+          </div>
+        </div>
+        <div className="question-live-play">
+          {renderQuestion(question, index)}
+        </div>
+      </TabPanel>
+    );
+  }
+
+  const renderPrevButton = () => {
+    if (activeStep === 0) { return ""; }
+    return (
+      <button className="play-preview svgOnHover back-button" onClick={prev}>
+        <img className="svg svg-default" alt="" src="/feathericons/svg/chevron-left-blue.svg" />
+        <img className="svg colored" alt="" src="/feathericons/svg/chevron-left-blue.svg" />
+      </button>
     );
   }
 
   return (
-    <Grid container direction='row' justify='center'>
-      <div className='brick-container live-page'>
-        <Stepper alternativeLabel nonLinear activeStep={activeStep}>
-          {questions.map((question, index) => {
-            const stepProps: { completed?: boolean } = {};
-            const buttonProps: { optional?: React.ReactNode } = {};
-            if (index === activeStep) {
-              return (
-                <Step key={index} {...stepProps}>
-                  <StepButton
-                    icon={<CircleIconNumber number={index + 1} />}
-                    onClick={handleStep(index)}
-                    completed={isStepComplete(index)}
-                    {...buttonProps}
-                  >
-                  </StepButton>
-                </Step>
-              );
-            }
-            if (question.edited) {
-              return (
-                <Step key={index} {...stepProps}>
-                  <StepButton
-                    icon={<CreateIcon className='edited-step-icon' />}
-                    onClick={handleStep(index)}
-                    completed={isStepComplete(index)}
-                    {...buttonProps}
-                  >
-                  </StepButton>
-                </Step>
-              );
-            }
-            return (
-              <Step key={index} {...stepProps}>
-                <StepButton
-                  icon={<CircleIconNumber customClass='grey-icon ' number={index + 1} />}
-                  onClick={handleStep(index)}
-                  completed={isStepComplete(index)}
-                  {...buttonProps}
-                >
-                </StepButton>
-              </Step>
-            );
-          })}
-        </Stepper>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={activeStep}
-          onChangeIndex={handleStep}
-        >
-          {
-            questions.map((question, index) =>
-              <TabPanel key={index} index={index} value={activeStep} dir={theme.direction}>
-                {renderQuestion(question, index)}
-              </TabPanel>
-            )
-          }
-        </SwipeableViews>
-      </div>
-    </Grid>
+    <div className="brick-container live-page">
+      <Grid container direction="row">
+        <Grid item xs={8}>
+          <div className="live-page">
+            <div className="intro-header"></div>
+            <SwipeableViews
+              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+              index={activeStep}
+              style={{ width: "100%" }}
+              onChangeIndex={handleStep}
+            >
+              {questions.map(renderQuestionContainer)}
+            </SwipeableViews>
+          </div>
+        </Grid>
+        <Grid item xs={4}>
+          <div className="introduction-info">
+            <div className="intro-header">
+              <BrickCounter startTime={props.startTime} />
+              <div className="clock">
+                <div className="clock-image svgOnHover">
+                  <svg className="svg w100 h100 active">
+                    <use href={sprite + "#clock"} />
+                  </svg>
+                </div>
+                <span className="max-length">{brick.brickLength}</span>
+              </div>
+            </div>
+            <div className="intro-text-row">
+              <LiveStepper
+                questions={questions}
+                attempts={props.attempts}
+                handleStep={handleStep}
+              />
+            </div>
+            <Grid container direction="row" className="action-footer">
+              <Grid container item xs={3} justify="center">
+                {renderPrevButton()}
+              </Grid>
+              <Grid container item xs={6} justify="center" className="fotter-text">
+                <h2>Next</h2>
+                <div>Don’t panic, you can</div>
+                <div>always come back</div>
+              </Grid>
+              <Grid container item xs={3} justify="center">
+              <button
+                type="button"
+                className="play-preview svgOnHover play-green"
+                onClick={next}
+              >
+                <img className="svg svg-default" alt="" src="/feathericons/svg/chevron-right-white.svg" />
+                <img className="svg colored" alt="" src="/feathericons/svg/chevron-right-white.svg" />
+              </button>
+              </Grid>
+            </Grid>
+          </div>
+        </Grid>
+      </Grid>
+    </div>
   );
-}
+};
 
 export default LivePage;
