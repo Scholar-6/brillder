@@ -12,6 +12,7 @@ import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 interface PrepProps {
   parentPrep: string;
+  canEdit: boolean;
   savePrep(prep: string):void;
 }
 
@@ -40,7 +41,7 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
   )
 }
 
-const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
+const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, savePrep }) => {
   return (
     <div className="tutorial-page prep-page">
       <Navigation step={ProposalStep.Prep} onMove={() => savePrep(parentPrep)} />
@@ -49,7 +50,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, savePrep }) => {
           <h1>Add engaging and relevant</h1>
           <h1>preparatory material.</h1>
           <DocumentWirisCKEditor
-            disabled={false}
+            disabled={!canEdit}
             data={parentPrep}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
             mediaEmbed={true}
