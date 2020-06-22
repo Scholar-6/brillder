@@ -30,17 +30,17 @@
     }
   }
 
-  .choose-choice {background: $tab-grey}
+  .choose-choice {background: $tab-gray}
 
   .image-choice {
     background: inherit;
-    border: 4px solid $lighter-grey !important;
+    border: 4px solid $lighter-gray !important;
     width: 100%;
     padding: 0;
   }
 
   .choose-choice.active {
-    background: $blue;
+    background: $white-blue;
   }
   .question-hint {
     color: $dark-blue;

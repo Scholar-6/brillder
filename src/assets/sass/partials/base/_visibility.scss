@@ -22,24 +22,24 @@
 }
 
 @mixin backface-visibility($visibility) {
-    -webkit-backface-visibility: $visibility;
-    -moz-backface-visibility: $visibility;
-    -ms-backface-visibility: $visibility;
-    -o-backface-visibility: $visibility;
-    backface-visibility: $visibility;
+	-webkit-backface-visibility: $visibility;
+	-moz-backface-visibility: $visibility;
+	-ms-backface-visibility: $visibility;
+	-o-backface-visibility: $visibility;
+	backface-visibility: $visibility;
 }
 
 @mixin placeholder {
-    &::-webkit-input-placeholder {
+	&::-webkit-input-placeholder {
 		@content;
 	}
-    &:-moz-placeholder {
+	&:-moz-placeholder {
 		@content;
 	}
-    &::-moz-placeholder {
+	&::-moz-placeholder {
 		@content;
 	}
-    &:-ms-input-placeholder {
-        @content;
-    }
+	&:-ms-input-placeholder {
+		@content;
+	}
 }

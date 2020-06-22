@@ -42,9 +42,10 @@ import {
   parseQuestion,
 } from "./questionService/QuestionService";
 import { convertToQuestionType } from "./questionService/ConvertService";
-import { User, UserType } from "model/user";
+import { User } from "model/user";
 import {GetCashedBuildQuestion} from '../../localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
+import { canEditBrick } from "components/services/brickService";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -105,24 +106,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return <div>...Loading...</div>;
   }
 
-  const canEditBrick = (brick: any, user: User) => {
-    let isAdmin = user.roles.some((role:any) => role.roleId === UserType.Admin);
-    if (isAdmin) {
-      return true;
-    }
-    let isEditor = user.roles.some((role:any) => role.roleId === UserType.Editor);
-    if (isEditor) {
-      return true;
-    }
-    let isBuilder = user.roles.some((role:any) => role.roleId === UserType.Builder);
-    if (isBuilder) {
-      if (brick.author?.id === user.id) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   let canEdit = canEditBrick(props.brick, props.user);
   locked = canEdit ? locked : true;
 
@@ -177,6 +160,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   /* Changing question in build */
 
   const createNewQuestion = () => {
+    if (!canEdit) { return; }
     const updatedQuestions = deactiveQuestions(questions);
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
     setQuestions(update(questions, { $set: updatedQuestions }));

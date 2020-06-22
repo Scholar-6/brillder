@@ -148,9 +148,13 @@ const LivePage: React.FC<LivePageProps> = ({
   const renderPrevButton = () => {
     if (activeStep === 0) { return ""; }
     return (
-      <button className="play-preview svgOnHover back-button" onClick={prev}>
-        <img className="svg svg-default" alt="" src="/feathericons/svg/chevron-left-blue.svg" />
-        <img className="svg colored" alt="" src="/feathericons/svg/chevron-left-blue.svg" />
+      <button className="play-preview svgOnHover play-white scale-07" onClick={prev}>
+        <svg className="svg svg-default m-r-02">
+          <use href={sprite + "#arrow-left"} className="text-gray" />
+        </svg>
+        <svg className="svg colored m-r-02">
+          <use href={sprite + "#arrow-left"} className="text-white" />
+        </svg>
       </button>
     );
   }
@@ -191,26 +195,20 @@ const LivePage: React.FC<LivePageProps> = ({
                 handleStep={handleStep}
               />
             </div>
-            <Grid container direction="row" className="action-footer">
-              <Grid container item xs={3} justify="center">
-                {renderPrevButton()}
-              </Grid>
-              <Grid container item xs={6} justify="center" className="fotter-text">
+            <div className="action-footer">
+              <div>{renderPrevButton()}</div>
+              <div className="direction-info">
                 <h2>Next</h2>
-                <div>Don’t panic, you can</div>
-                <div>always come back</div>
-              </Grid>
-              <Grid container item xs={3} justify="center">
-              <button
-                type="button"
-                className="play-preview svgOnHover play-green"
-                onClick={next}
-              >
-                <img className="svg svg-default" alt="" src="/feathericons/svg/chevron-right-white.svg" />
-                <img className="svg colored" alt="" src="/feathericons/svg/chevron-right-white.svg" />
-              </button>
-              </Grid>
-            </Grid>
+                <span>Don’t panic, you can<br />always come back</span>
+              </div>
+              <div>
+                <button type="button" className="play-preview svgOnHover play-green" onClick={next}>
+                  <svg className="svg active m-l-02">
+                    <use href={sprite + "#arrow-right"} />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
         </Grid>
       </Grid>
