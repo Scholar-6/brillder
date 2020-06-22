@@ -8,6 +8,7 @@ import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
+import MathInHtml from '../../baseComponents/MathInHtml';
 
 
 interface VerticalShuffleChoice {
@@ -144,7 +145,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     return (
       <div key={i} className={className}>
         <Grid container direction="row" justify="center">
-          {answer.value}
+          <MathInHtml value={answer.value} />
         </Grid>
         <Grid container direction="row" justify="center">
           <ReviewEachHint
