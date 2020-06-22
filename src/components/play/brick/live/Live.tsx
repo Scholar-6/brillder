@@ -163,8 +163,7 @@ const LivePage: React.FC<LivePageProps> = ({
     <div className="brick-container live-page">
       <Grid container direction="row">
         <Grid item xs={8}>
-          <div className="live-page">
-            <div className="intro-header"></div>
+          <div className="introduction-page">
             <SwipeableViews
               axis={theme.direction === "rtl" ? "x-reverse" : "x"}
               index={activeStep}
