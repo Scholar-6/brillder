@@ -137,11 +137,13 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Grid container direction="row" className="action-footer">
             <Grid container item xs={3}></Grid>
             <Grid container item xs={6} justify="center">
-              <h2>Play</h2>
+              <h1 style={{fontSize: '1vw', textAlign: 'left', width: '100%', margin: '0'}}>Ready?</h1>
+              <h2 style={{fontSize: '2.3vw'}}>Play Brick</h2>
             </Grid>
             <Grid container item xs={3} justify="center">
               <button
                 type="button"
+                style={{marginTop: '1.7vw'}}
                 className="play-preview svgOnHover play-green"
                 onClick={startBrick}
               >
