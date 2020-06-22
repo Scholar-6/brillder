@@ -7,14 +7,8 @@ import './brickLength.scss';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
+import { BrickLengthEnum } from 'model/brick';
 
-
-export enum BrickLengthEnum {
-  None = 0,
-  S20min = 20,
-  S40min = 40,
-  S60min = 60
-}
 
 const BrickLengthPreviewComponent:React.FC<any> = ({data}) => {
   return (

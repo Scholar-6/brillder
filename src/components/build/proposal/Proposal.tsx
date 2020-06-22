@@ -9,7 +9,8 @@ import './Proposal.scss';
 import SubjectPage from './questionnaire/subject/Subject';
 import BrickTitle from './questionnaire/brickTitle/brickTitle';
 import OpenQuestion from './questionnaire/openQuestion/openQuestion';
-import BrickLength, { BrickLengthEnum } from './questionnaire/brickLength/brickLength';
+import { BrickLengthEnum } from 'model/brick';
+import BrickLength from './questionnaire/brickLength/brickLength';
 import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
@@ -37,7 +38,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
   }
   let initState = {
     subjectId,
-    brickLength: 0,
+    brickLength: BrickLengthEnum.None,
     topic: '',
     subTopic: '',
     alternativeTopics: '',
@@ -106,7 +107,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     return brick;
   }
 
-  const setLengthAndSave = (brickLength: number) => {
+  const setLengthAndSave = (brickLength: BrickLengthEnum) => {
     if (!canEdit) { return; }
     let brick = setLength(brickLength);
     saveBrick(brick);
