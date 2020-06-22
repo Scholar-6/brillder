@@ -4,11 +4,11 @@
 
 .brick-counter {
   position: relative;
-  text-align: center;
+  text-align: right;
   font-family: $font-family-black;
   font-size: 2vw;
   color: $dark-blue;
-
+  min-width: 7vw;
   .counter-seconds {
     font-size: 1vw;
   }
