@@ -8,6 +8,8 @@ import { Brick } from "model/brick";
 import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import BrickCounter from "../baseComponents/BrickCounter";
 import { Moment } from "moment";
+import BrickLength from "components/build/proposal/questionnaire/brickLength/brickLength";
+import IntroductionDetails from './IntroductionDetails';
 const moment = require("moment");
 
 interface IntroductionProps {
@@ -125,13 +127,11 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <span className="max-length">{brick.brickLength}</span>
             </div>
           </div>
+          <IntroductionDetails brickLength={brick.brickLength} />
           <div className="intro-text-row">
             <p>Bricks are divided into four sections.</p>
             <ul>
               <li>Set aside around 5 minutes to prepare</li>
-              <li>8 minutes for the investigation (countdown)</li>
-              <li>Around 4 minutes to take in the Synthesis</li>
-              <li>3 minutes to review answers (countdown)</li>
             </ul>
           </div>
           <Grid container direction="row" className="action-footer">
