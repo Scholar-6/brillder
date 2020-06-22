@@ -51,7 +51,7 @@
       padding: 4vh 2vw;
       background-color: $lighter-gray;
       overflow-y: auto;
-      height: calc(100vh - 23.5vh);
+      height: calc(100vh - 24vh);
       position: relative;
       .intro-header {
         position: relative;
@@ -129,6 +129,14 @@
         color: $dark-blue;
         margin-left: 0.8vw;
         font-size: 1.8vw;
+      }
+    }
+    .brick-container {
+      &.live-page {
+        .introduction-page {
+          padding: 0;
+          height: calc(100vh - 16vh);
+        }
       }
     }
   }
