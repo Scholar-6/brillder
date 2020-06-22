@@ -1,5 +1,5 @@
 import { Brick } from 'model/brick';
-import { User, UserType } from 'model/user';
+import { User, UserType, UserRole } from 'model/user';
 
 function formatTwoLastDigits(twoLastDigits: number) {
   var formatedTwoLastDigits = "";
@@ -44,16 +44,40 @@ export function getAuthorRow(brick: Brick) {
   return row;
 }
 
-export function canEditBrick(brick: any, user: User) {
-  let isAdmin = user.roles.some((role:any) => role.roleId === UserType.Admin);
-  if (isAdmin) {
+export function checkBuilder(roles: UserRole[]) {
+  let isBuilder = roles.some((role:any) => role.roleId === UserType.Builder);
+  if (isBuilder) {
     return true;
   }
-  let isEditor = user.roles.some((role:any) => role.roleId === UserType.Editor);
+  return false;
+}
+
+export function checkEditor(roles: UserRole[]) {
+  let isEditor = roles.some((role:any) => role.roleId === UserType.Editor);
   if (isEditor) {
     return true;
   }
-  let isBuilder = user.roles.some((role:any) => role.roleId === UserType.Builder);
+  return false;
+}
+
+export function checkAdmin(roles: UserRole[]) {
+  let isAdmin = roles.some((role:any) => role.roleId === UserType.Admin);
+  if (isAdmin) {
+    return true;
+  }
+  return false;
+}
+
+export function canEditBrick(brick: any, user: User) {
+  let isAdmin = checkAdmin(user.roles);
+  if (isAdmin) {
+    return true;
+  }
+  let isEditor = checkEditor(user.roles);
+  if (isEditor) {
+    return true;
+  }
+  let isBuilder = checkBuilder(user.roles);
   if (isBuilder) {
     if (brick.author?.id === user.id) {
       return true;
