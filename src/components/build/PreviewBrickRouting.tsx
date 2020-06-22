@@ -27,7 +27,7 @@ import PublishPage from './investigationBuildPage/publish/PublishPage';
 import FinishPage from './investigationBuildPage/finish/FinishPage';
 import {prefillAttempts} from 'components/services/PlayService';
 import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
-import { canEditBrick } from 'components/services/brickService';
+import { canEditBrick, checkEditor } from 'components/services/brickService';
 
 
 export interface BrickAttempt {
@@ -135,7 +135,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     brickAttempt.studentId = props.user.id;
     let canEdit = canEditBrick(props.brick, props.user);
     if (canEdit) {
-      props.history.push(`/play-preview/brick/${brickId}/publish`);
+      let editor = checkEditor(props.user.roles);
+      if (editor && props.user.id === props.brick.author.id) {
+        props.history.push(`/play-preview/brick/${brickId}/finish`);
+      } else {
+        props.history.push(`/play-preview/brick/${brickId}/publish`);
+      }
     } else {
       props.history.push(`/play-preview/brick/${brickId}/finish`);
     }
