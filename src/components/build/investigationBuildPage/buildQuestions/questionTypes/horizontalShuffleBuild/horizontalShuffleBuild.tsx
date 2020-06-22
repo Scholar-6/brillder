@@ -4,6 +4,7 @@ import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButto
 
 import './horizontalShuffleBuild.scss'
 import { Grid } from '@material-ui/core';
+import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import { UniqueComponentProps } from '../types';
 
 
@@ -31,9 +32,9 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     calculateHeight();
   }
 
-  const changed = (shortAnswer: any, event: any) => {
+  const changed = (shortAnswer: any, value: string) => {
     if (locked) { return; }
-    shortAnswer.value = event.target.value;
+    shortAnswer.value = value;
     update();
   }
 
@@ -59,13 +60,13 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
           {
             (state.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
           }
-          <input
+          <DocumentWirisCKEditor
             disabled={locked}
-            value={answer.value}
-            className={!answer.value && validationRequired ? "invalid" : ""}
-            onBlur={() => save()}
-            onChange={(event) => changed(answer, event)}
+            data={answer.value}
+            toolbar={['mathType', 'chemType']}
             placeholder={"Enter A" + (key + 1) + "..."}
+            onBlur={() => save()}
+            onChange={value => changed(answer, value)}
           />
         </div>
       </Grid>
