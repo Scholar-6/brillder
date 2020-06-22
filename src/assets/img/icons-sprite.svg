@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-  xmlnsXlink="http://www.w3.org/1999/xlink" width="38px" height="38px" viewBox="0 0 760 38" preserveAspectRatio="none" xml:space="preserve" style="display:none">
+  xmlnsXlink="http://www.w3.org/1999/xlink" width="38px" height="38px" viewBox="0 0 38 38" preserveAspectRatio="none" xml:space="preserve" style="display:none">
+  <svg id="arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+    <polyline points="15 18 9 12 15 6"></polyline>
+  </svg>
+  <svg id="arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
   <svg id="arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up">
     <polyline points="18 15 12 9 6 15"></polyline>
   </svg>

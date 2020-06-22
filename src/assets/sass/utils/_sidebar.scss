@@ -246,7 +246,7 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      color: $tab-grey;
+      color: $tab-gray;
       cursor: pointer;
       .create-icon {
         margin-bottom: 1vh;
@@ -274,7 +274,7 @@
     border-top-left-radius: $main-panel-radius;
     padding-left: 1.18vw;
     margin-left: 1vw;
-    background: $light-grey;
+    background: $light-gray;
     flex-basis: inherit;
     max-width: inherit;
     width: calc(75% - 1vw);
@@ -380,7 +380,7 @@
             }
           }
           .MuiExpansionPanel-root {
-            background: $light-grey;
+            background: $light-gray;
           }
 
           .MuiExpansionPanel-root.Mui-expanded {
@@ -414,7 +414,7 @@
                 height: 2.1vw;
                 width: 2.1vw;
                 border-radius: 20vw;
-                background-color: $grey;
+                background-color: $gray;
               }
             }
             &.brick-row-0,
@@ -455,7 +455,7 @@
       width: calc(100% + 1.18vw);
       margin-left: -1.18vw;
       thead {
-        background: $tab-grey;
+        background: $tab-gray;
         color: $dark-blue;
         font-family: $font-family-black;
         font-size: 1.3vw;
@@ -513,7 +513,7 @@
         }
       }
       tr.user-row:nth-child(even) {
-        background: $tab-grey;
+        background: $tab-gray;
       }
       .user-last-name {
         font-family: $font-family-bold;

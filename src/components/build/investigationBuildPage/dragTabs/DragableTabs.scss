@@ -28,7 +28,7 @@ $tile-height: 100%;
   .drag-tile {
     cursor: pointer;
     height: 100%;
-    background-color: $tab-grey;
+    background-color: $tab-gray;
   }
   .drag-tile:first-child {
     border-top-left-radius: $tab-radius;

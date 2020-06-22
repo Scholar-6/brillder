@@ -731,14 +731,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             {this.state.sortedIndex + 18 > this.state.finalBricks.length
               ? this.state.finalBricks.length
               : this.state.sortedIndex + 18}
-            <span className="grey">
+            <span className="gray">
               {" "}
               &nbsp;|&nbsp; {this.state.finalBricks.length}
             </span>
           </div>
           <div>
             {(this.state.sortedIndex + 18) / 18}
-            <span className="grey">
+            <span className="gray">
               {" "}
               &nbsp;|&nbsp; {Math.ceil(this.state.finalBricks.length / 18)}
             </span>

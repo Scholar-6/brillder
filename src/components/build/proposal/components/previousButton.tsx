@@ -24,7 +24,7 @@ const PreviousButton:React.FC<PrevButtonProps> = ({
         alt=""
         onMouseEnter={onHover}
         onMouseLeave={onOut}
-        src={isActive ? "/feathericons/chevron-up-orange.png" : "/feathericons/chevron-up-grey.png"}
+        src={isActive ? "/feathericons/chevron-up-orange.png" : "/feathericons/chevron-up-gray.png"}
         onClick={prev}
       />
     </Grid>
