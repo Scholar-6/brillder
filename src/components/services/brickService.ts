@@ -45,8 +45,8 @@ export function getAuthorRow(brick: Brick) {
 }
 
 export function checkBuilder(roles: UserRole[]) {
-  let isEditor = roles.some((role:any) => role.roleId === UserType.Builder);
-  if (isEditor) {
+  let isBuilder = roles.some((role:any) => role.roleId === UserType.Builder);
+  if (isBuilder) {
     return true;
   }
   return false;
@@ -61,8 +61,8 @@ export function checkEditor(roles: UserRole[]) {
 }
 
 export function checkAdmin(roles: UserRole[]) {
-  let isEditor = roles.some((role:any) => role.roleId === UserType.Admin);
-  if (isEditor) {
+  let isAdmin = roles.some((role:any) => role.roleId === UserType.Admin);
+  if (isAdmin) {
     return true;
   }
   return false;
