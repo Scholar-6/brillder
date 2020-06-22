@@ -11,6 +11,7 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Dialog from '@material-ui/core/Dialog';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import grey from '@material-ui/core/colors/grey';
 
 import authActions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
@@ -111,7 +112,7 @@ const IOSSwitch = anyStyles((theme:any) => ({
     borderRadius: '2vh',
     border: '0.25vh solid #001C58',
     height: '2.3vh',
-    backgroundColor: theme.palette.gray[50],
+    backgroundColor: grey[50],
     opacity: 1,
   },
   checked: {},
