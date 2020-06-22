@@ -3,30 +3,30 @@ import { Route, Switch } from 'react-router-dom';
 // @ts-ignore
 import { connect } from "react-redux";
 
-import '../play/brick/brick.scss';
+import 'components/play/brick/brick.scss';
 import './PreviewBrickRouting.scss';
 import actions from 'redux/actions/brickActions';
-import Introduction from '../play/brick/introduction/Introduction';
-import Live from '../play/brick/live/Live';
-import ProvisionalScore from '../play/brick/provisionalScore/ProvisionalScore';
-import Synthesis from '../play/brick/synthesis/Synthesis';
-import Review from '../play/brick/review/ReviewPage';
-import Ending from '../play/brick/ending/Ending';
-import sprite from "../../assets/img/icons-sprite.svg";
+import Introduction from 'components/play/brick/introduction/Introduction';
+import Live from 'components/play/brick/live/Live';
+import ProvisionalScore from 'components/play/brick/provisionalScore/ProvisionalScore';
+import Synthesis from 'components/play/brick/synthesis/Synthesis';
+import Review from 'components/play/brick/review/ReviewPage';
+import Ending from 'components/play/brick/ending/Ending'
+import sprite from "../../../assets/img/icons-sprite.svg";
 
-import { GetCashedBuildQuestion } from '../localStorage/buildLocalStorage';
+import { GetCashedBuildQuestion } from '../../localStorage/buildLocalStorage';
 
 import { Brick } from 'model/brick';
-import { ComponentAttempt, PlayStatus } from '../play/brick/model/model';
+import { ComponentAttempt, PlayStatus } from '../../play/brick/model/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
 import { Grid } from '@material-ui/core';
 import { setBrillderTitle } from 'components/services/titleService';
-import PublishPage from './investigationBuildPage/publish/PublishPage';
-import FinishPage from './investigationBuildPage/finish/FinishPage';
+import PublishPage from '../investigationBuildPage/publish/PublishPage';
+import FinishPage from '../investigationBuildPage/finish/FinishPage';
 import {prefillAttempts} from 'components/services/PlayService';
-import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
+import PlayPreviewMenu from './PlayPreviewMenu';
 import { canEditBrick, checkEditor } from 'components/services/brickService';
 
 
@@ -163,12 +163,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   return (
     <div className="play-preview-pages">
-      <PageHeader
-        searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
-        search={() => {}}
-        searching={() => {}}
-        showDropdown={() => {}}
-      />
+      <PlayPreviewMenu user={props.user} history={props.history} />
       <Grid container direction="row" className="sorted-row">
         <Grid container item className="sort-and-filter-container">
           <div className="back-hover-area" onClick={() => moveToBuild()}>
