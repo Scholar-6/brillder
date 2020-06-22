@@ -2,6 +2,13 @@
 import { Question } from "./question";
 import { UserType } from "./user";
 
+export enum BrickLengthEnum {
+  None = 0,
+  S20min = 20,
+  S40min = 40,
+  S60min = 60
+}
+
 export enum BrickStatus {
   Draft = 1,
   Build,
@@ -40,7 +47,7 @@ export interface Brick {
   brief: string;
   prep: string;
   synthesis: string;
-  brickLength: number;
+  brickLength: BrickLengthEnum;
   type: number;
   questions: Question[];
   author: Author;

@@ -8,6 +8,8 @@ import { Brick } from "model/brick";
 import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import BrickCounter from "../baseComponents/BrickCounter";
 import { Moment } from "moment";
+import BrickLength from "components/build/proposal/questionnaire/brickLength/brickLength";
+import IntroductionDetails from './IntroductionDetails';
 const moment = require("moment");
 
 interface IntroductionProps {
@@ -125,30 +127,30 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <span className="max-length">{brick.brickLength}</span>
             </div>
           </div>
+          <IntroductionDetails brickLength={brick.brickLength} />
           <div className="intro-text-row">
             <p>Bricks are divided into four sections.</p>
             <ul>
               <li>Set aside around 5 minutes to prepare</li>
-              <li>8 minutes for the investigation (countdown)</li>
-              <li>Around 4 minutes to take in the Synthesis</li>
-              <li>3 minutes to review answers (countdown)</li>
             </ul>
           </div>
           <Grid container direction="row" className="action-footer">
             <Grid container item xs={3}></Grid>
             <Grid container item xs={6} justify="center">
-              <h2>Play</h2>
+              <h1 style={{fontSize: '1vw', textAlign: 'left', width: '100%', margin: '0'}}>Ready?</h1>
+              <h2 style={{fontSize: '2.3vw'}}>Play Brick</h2>
             </Grid>
             <Grid container item xs={3} justify="center">
               <button
                 type="button"
+                style={{marginTop: '1.7vw'}}
                 className="play-preview svgOnHover play-green"
                 onClick={startBrick}
               >
-                <svg className="svg svg-default">
+                <svg className="svg svg-default m-l-02">
                   <use href={sprite + "#play-thin"} />
                 </svg>
-                <svg className="svg colored">
+                <svg className="svg colored m-l-02">
                   <use href={sprite + "#play-thick"} />
                 </svg>
               </button>

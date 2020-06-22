@@ -606,14 +606,14 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             {this.state.sortedIndex + 15 > this.state.bricks.length
               ? this.state.bricks.length
               : this.state.sortedIndex + 15}
-            <span className="grey">
+            <span className="gray">
               {" "}
               &nbsp;|&nbsp; {this.state.bricks.length}
             </span>
           </div>
           <div>
             {(this.state.sortedIndex + 15) / 15}
-            <span className="grey">
+            <span className="gray">
               {" "}
               &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / 15)}
             </span>

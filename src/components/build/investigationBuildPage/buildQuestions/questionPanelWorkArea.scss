@@ -181,7 +181,7 @@
       max-height: 76vh;
       overflow-x: hidden;
       overflow-y: auto;
-      border: 2px solid $tab-grey;
+      border: 2px solid $tab-gray;
       border-radius: 0.6vw;
       padding: 0px 4px 2px 4px;
       margin-bottom: 25px;
@@ -244,14 +244,14 @@
           background: white;
           color: $dark-blue;
           width: 89%;
-          background: $tab-grey;
+          background: $tab-gray;
           font-family: $font-family-regular;
 
           font-size: 1.3vw;
           text-transform: none;
           font-family: $font-family-regular;
           color: $dark-blue;
-          background: $tab-grey;
+          background: $tab-gray;
           border-radius: $question-radius;
 
           padding: 1.5vh 0;

@@ -3,13 +3,10 @@ import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
 
 
 export interface LastTabProps {
-  columns: number
-  synthesis: string
   tutorialStep: TutorialStep;
-  isSynthesis: boolean
 }
 
-const LastTab: React.FC<LastTabProps> = ({columns, tutorialStep, synthesis, isSynthesis}) => {
+const LastTab: React.FC<LastTabProps> = ({tutorialStep}) => {
   let className = "add-tab last-tab";
   if (tutorialStep === TutorialStep.Investigation) {
     className += " tutorial-border";

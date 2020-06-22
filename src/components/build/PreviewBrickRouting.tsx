@@ -26,8 +26,8 @@ import { setBrillderTitle } from 'components/services/titleService';
 import PublishPage from './investigationBuildPage/publish/PublishPage';
 import FinishPage from './investigationBuildPage/finish/FinishPage';
 import {prefillAttempts} from 'components/services/PlayService';
-import { UserType, User } from 'model/user';
 import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
+import { canEditBrick, checkEditor } from 'components/services/brickService';
 
 
 export interface BrickAttempt {
@@ -130,30 +130,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setStatus(PlayStatus.Ending);
   }
 
-  const canEditBrick = (brick: any, user: User) => {
-    let isAdmin = user.roles.some((role:any) => role.roleId === UserType.Admin);
-    if (isAdmin) {
-      return true;
-    }
-    let isEditor = user.roles.some((role:any) => role.roleId === UserType.Editor);
-    if (isEditor) {
-      return true;
-    }
-    let isBuilder = user.roles.some((role:any) => role.roleId === UserType.Builder);
-    if (isBuilder) {
-      if (brick.author?.id === user.id) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   const saveBrickAttempt = () => {
     brickAttempt.brickId = props.brick.id;
     brickAttempt.studentId = props.user.id;
     let canEdit = canEditBrick(props.brick, props.user);
     if (canEdit) {
-      props.history.push(`/play-preview/brick/${brickId}/publish`);
+      let editor = checkEditor(props.user.roles);
+      if (editor && props.user.id === props.brick.author.id) {
+        props.history.push(`/play-preview/brick/${brickId}/finish`);
+      } else {
+        props.history.push(`/play-preview/brick/${brickId}/publish`);
+      }
     } else {
       props.history.push(`/play-preview/brick/${brickId}/finish`);
     }
