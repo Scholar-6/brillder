@@ -22,6 +22,9 @@
   }
   &.play-green {
     background-color: $light-green;
+    .svg {
+      color: $white;
+    }
     &:hover {
       animation-name: pulse-green;
     }

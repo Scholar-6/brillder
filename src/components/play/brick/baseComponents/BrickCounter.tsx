@@ -65,7 +65,7 @@ class BrickCounter extends Component<CounterProps, CounterState> {
       <div className="brick-counter">
         {this.renderArrow()}
         {this.state.minutes}:{this.state.seconds}
-        <span className="counter-seconds">{this.state.milliseconds}</span>
+        {/* <span className="counter-seconds">{this.state.milliseconds}</span> */}
       </div>
     );
   }
