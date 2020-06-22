@@ -204,7 +204,7 @@ const LivePage: React.FC<LivePageProps> = ({
               <div>
                 <button type="button" className="play-preview svgOnHover play-green" onClick={next}>
                   <svg className="svg active m-l-02">
-                    <use href={sprite + "#arrow-right"} className="text-white" />
+                    <use href={sprite + "#arrow-right"} />
                   </svg>
                 </button>
               </div>
