@@ -160,6 +160,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   /* Changing question in build */
 
   const createNewQuestion = () => {
+    if (!canEdit) { return; }
     const updatedQuestions = deactiveQuestions(questions);
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
     setQuestions(update(questions, { $set: updatedQuestions }));
