@@ -47,13 +47,43 @@ input:focus {
 .h-5 {
   height: 5vw !important;
 }
+.m-l-02 {
+  margin-left: .2vw !important;
+}
+.m-r-02 {
+  margin-right: .2vw !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
 
 .text-white {
-  color: #fff !important;
+  color: $white !important;
 }
 
 .text-orange {
   color: $orange !important;
+}
+
+.text-tab-gray {
+  color: $tab-gray !important;
+}
+
+.text-gray {
+  color: $gray !important;
+}
+
+.bg-tab-gray {
+  color: $tab-gray !important;
+}
+
+.bg-gray {
+  color: $gray !important;
+}
+
+.scale-07 {
+  transform: scale(0.7);
 }
 
 .btn-transparent {
