@@ -11,6 +11,10 @@
 	width: 100%;
 	font-family: $font-family-light;
 
+	.search-input {
+		min-width: 27vw;
+	}
+
 	.upper-part {
 		position: relative;
 		min-height: 100%;
