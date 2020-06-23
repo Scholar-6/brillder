@@ -8,6 +8,7 @@ import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
 import brickActions from "redux/actions/brickActions";
+import sprite from "../../../assets/img/icons-sprite.svg";
 
 import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
@@ -355,26 +356,24 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   />
                 </div>
                 <Grid container direction="row">
-                  <Grid
-                    container
-                    className="profile-image-container"
-                    justify="center"
-                    alignContent="flex-start"
-                  >
-                    <Avatar src="/images/user.svg" className="profile-image" />
-                    <IconButton className="add-image-button">
-                      <AddCircleIcon className="add-image-icon" />
-                    </IconButton>
-                    <Grid
-                      container
-                      justify="center"
-                      alignContent="center"
-                      className="status-container"
-                    >
-                      <FiberManualRecordIcon className="circle-icon" />
+                  <div className="profile-image-container">
+                    <div className="profile-image svgOnHover">
+                      <svg className="svg active">
+                        <use href={sprite + "#user"} className="text-dark-blue" />
+                      </svg>
+                    </div>
+                    <div className="add-image-button svgOnHover">
+                      <svg className="svg active">
+                        <use href={sprite + "#plus"} className="text-white" />
+                      </svg>
+                    </div>
+                    <div className="status-container svgOnHover">
+                      <svg className="svg active">
+                        <use href={sprite + "#circle-filled"} className="text-light-green" />
+                      </svg>
                       <span>Active</span>
-                    </Grid>
-                  </Grid>
+                    </div>
+                  </div>
                   <Grid item className="profile-inputs-container">
                     <div>
                       <Grid>
