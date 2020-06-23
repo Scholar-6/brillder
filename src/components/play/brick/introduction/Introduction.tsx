@@ -65,7 +65,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   if (brick.brickLength === BrickLengthEnum.S40min) {
     timeToSpend = 10;
   } else if (brick.brickLength === BrickLengthEnum.S60min) {
-    timeToSpend = 20;
+    timeToSpend = 15;
   }
 
   return (
