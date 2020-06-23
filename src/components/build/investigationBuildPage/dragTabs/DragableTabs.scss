@@ -67,6 +67,10 @@ $tile-height: 100%;
 
     > div {
       height: 100%;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      display: flex !important;
     }
 
     .tab-number {
