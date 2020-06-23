@@ -121,7 +121,6 @@
       position: relative;
       padding-top: 3.2vh;
       width: 18.7vw;
-
       .profile-image {
         text-align: center;
         height: 11vw;
@@ -163,7 +162,6 @@
         }
       }
     }
-
     .profile-inputs-container {
       padding-top: 4.8vh;
       margin-left: 0.8vw;
@@ -181,16 +179,28 @@
         color: $dark-blue;
         box-shadow: $base-shadow;
       }
-
+      @include placeholder {
+        color: $dark-blue;
+      }
+      input[type='password'] {
+        @include placeholder {
+          > div {
+            font-size: 4vw;
+            line-height: 6.685vh;
+            height: 6.685vh;
+            padding-bottom: 1vh;
+          }
+          // font-size: 2vw;
+        }
+      }
       .first-name {
         width: 41%;
         padding: 0;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
         padding-left: 3%;
-        margin-right: 2%
+        margin-right: 2%;
       }
-
       .last-name {
         width: 51%;
         right: 0;
@@ -198,29 +208,6 @@
         padding-left: 3%;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
-      }
-
-      ::placeholder {
-        color: $dark-blue;
-        opacity: 1;
-      }
-
-      :-ms-input-placeholder {
-        color: $dark-blue;
-      }
-
-      ::-ms-input-placeholder {
-        color: $dark-blue;
-      }
-
-      .last-name::placeholder {
-        font-family: $font-family-bold;
-      }
-      .last-name:-ms-input-placeholder {
-        font-family: $font-family-bold;
-      }
-      .last-name::-ms-input-placeholder {
-        font-family: $font-family-bold;
       }
     }
     .profile-roles-container {
@@ -241,19 +228,15 @@
         padding-top: 1.9vh;
         padding-left: 1.15vw;
         padding-bottom: 1.4vh;
-
         .MuiGrid-item {
           width: 100%;
-
           .MuiSvgIcon-root {
             color: $dark-blue;
             font-size: 1.55vw;
           }
-
           .MuiIconButton-root {
             padding: 0.5vw !important;
           }
-
           .MuiFormControlLabel-label {
             margin-left: 1.15vw;
             font-family: $font-family-regular;
@@ -263,13 +246,12 @@
           .MuiFormControlLabel-root {
             margin: 0;
           }
-
           .disabled {
             .MuiSvgIcon-root {
-              color: #a6aCaF;
+              color: #a6acaf;
             }
             .MuiTypography-root {
-              color: #a6aCaF;
+              color: #a6acaf;
             }
           }
         }
@@ -279,7 +261,6 @@
       margin-top: 0.8vh;
       padding-left: 4.6vw;
       padding-right: 4.2vw;
-
       .MuiAutocomplete-root {
         width: 100%;
       }
@@ -322,7 +303,6 @@
 .alert-dialog {
   position: fixed;
   top: 0;
-
   .MuiDialog-paperScrollPaper {
     position: fixed;
     top: 8.3vh;
@@ -330,7 +310,6 @@
     max-width: 50vw;
     border-radius: 0.8vw;
   }
-
   .logout-dialog-header {
     padding: 3.8vh 1vw 3.5vh 2.2vw;
     font-size: 2.35vw;

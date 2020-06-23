@@ -401,7 +401,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                         type="password"
                         value={this.state.user.password}
                         onChange={(e: any) => this.onPasswordChanged(e)}
-                        placeholder="* * * * * * * * * * *"
+                        placeholder="●●●●●●●●●●●"
                       />
                     </div>
                   </Grid>
