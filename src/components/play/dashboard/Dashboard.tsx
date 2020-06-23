@@ -546,7 +546,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           </Grid>
         </div>
         <Menu
-          className="play-dashboard-redirect-dropdown"
+          className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}
