@@ -87,7 +87,7 @@
         }
       }
       .action-footer {
-        width: 70%;
+        width: 22vw;
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
@@ -96,12 +96,6 @@
         align-items: center;
         justify-content: flex-end;
         color: $dark-blue;
-        h2 {
-          margin-top: 0;
-          margin-bottom: 0;
-          font-size: 2.6vw;
-          font-family: $font-family-bold;
-        }
         .play-preview {
           position: relative;
           left: inherit;
@@ -115,8 +109,27 @@
           text-align: center;
           &.direction-info {
             width: 100%;
+            padding: 0 1vw;
+            position: relative;
+            > h2 {
+              margin-top: 0;
+              margin-bottom: 0;
+              font-size: 2.6vw;
+              font-family: $font-family-bold;
+            }
+            > h3,
             > span {
               position: absolute;
+              color: $dark-blue;
+            }
+            > h3 {
+              top: -1vw;
+              left: 1.8vw;
+              letter-spacing: inherit;
+              margin: 0;
+            }
+            > span {
+              width: 100%;
               left: 50%;
               transform: translateX(-50%);
               bottom: -2vw;
