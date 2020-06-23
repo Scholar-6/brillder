@@ -128,12 +128,6 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
           </div>
           <IntroductionDetails brickLength={brick.brickLength} />
-          <div className="intro-text-row">
-            <p>Bricks are divided into four sections.</p>
-            <ul>
-              <li>Set aside around 5 minutes to prepare</li>
-            </ul>
-          </div>
           <Grid container direction="row" className="action-footer">
             <Grid container item xs={3}></Grid>
             <Grid container item xs={6} justify="center">
