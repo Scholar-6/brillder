@@ -46,6 +46,9 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     {id: 4, type: QuestionComponentTypeEnum.Sound},
     {id: 4, type: QuestionComponentTypeEnum.Graph}
   ]);
+  const [scrollShown, setScroll] = React.useState(false);
+  const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+  const [scrollPosition] = React.useState(0);
   const { type } = question;
 
   const setQuestionHint = (hintState: HintState) => {
@@ -66,14 +69,37 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     showHelpArrow = getNonEmptyComponent(question.components);
   }
 
+  const showScrollArrows = () => setScroll(true);
+  const hideScrollArrows = () => setScroll(false);
+
+  const scrollUp = () => {
+    if (workarea.current) {
+      workarea.current.scrollBy(0, -100);
+    }
+  }
+
+  const scrollDown = () => {
+    if (workarea.current) {
+      let el = workarea.current;
+      el.scrollBy(0, 100);
+    }
+  }
+
   return (
     <MuiThemeProvider >
       <div className="build-question-page" style={{width: '100%', height: '94%'}}>
         {
           showHelpArrow ? <img alt="" className="help-arrow" src="/images/investigation-arrow.png" /> : ""
         }
+        <div className="top-scroll-arrow">
+          <Grid container justify="center">
+            {
+              scrollShown ? <button onClick={scrollUp}>Up</button> : ""
+            }
+          </Grid>
+        </div>
         <Grid container justify="center" className="build-question-column" item xs={12}>
-          <Grid container direction="row">
+          <Grid container direction="row" style={{height: '100%'}}>
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
               <Grid container item xs={12} className="left-sidebar" alignItems="center">
                 <ReactSortable
@@ -124,7 +150,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 />
               </Grid>
             </Grid>
-            <Grid container item xs={5} sm={6} md={6} className="question-components-list">
+            <Grid container item xs={5} sm={6} md={6} className="question-components-list" ref={workarea}>
               <QuestionComponents
                 questionIndex={index}
                 locked={locked}
@@ -187,6 +213,24 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             </Grid>
           </Grid>
         </Grid>
+        <div className="bottom-scroll-area">
+          <Grid container justify="center">
+            {
+              scrollShown
+                ? <div className="bottom-button-container">
+                    <button onClick={scrollDown}>Down</button>
+                    <div className="bottom-text">
+                      Click again to hide
+                      <button onClick={hideScrollArrows}>Hide Arrows</button>
+                    </div>
+                  </div>
+                : <div>
+                    Trouble scrolling? Click the eye to show up/down arrows
+                    <button onClick={showScrollArrows}>Show Arrows</button>
+                  </div>
+            }
+          </Grid>
+        </div>
       </div>
     </MuiThemeProvider>
   );
