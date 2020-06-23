@@ -41,7 +41,7 @@ function OpenQuestion({ selectedQuestion, canEdit, saveOpenQuestion }: any) {
           <p className="sub-header">Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.</p>
           <Input
             className="audience-inputs"
-            disabled={canEdit}
+            disabled={!canEdit}
             value={selectedQuestion}
             onChange={handleChange}
             placeholder="Enter Open Question(s)..."
