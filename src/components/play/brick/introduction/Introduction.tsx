@@ -91,8 +91,8 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <MathInHtml value={brick.brief} />
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
           <div className="expend-title">
             Prep
             <img
@@ -110,8 +110,8 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <MathInHtml value={brick.prep} />
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </div>
       </Grid>
       <Grid item xs={4}>
@@ -128,19 +128,14 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
           </div>
           <IntroductionDetails brickLength={brick.brickLength} />
-          <Grid container direction="row" className="action-footer">
-            <Grid container item xs={3}></Grid>
-            <Grid container item xs={6} justify="center">
-              <h1 style={{fontSize: '1vw', textAlign: 'left', width: '100%', margin: '0'}}>Ready?</h1>
-              <h2 style={{fontSize: '2.3vw'}}>Play Brick</h2>
-            </Grid>
-            <Grid container item xs={3} justify="center">
-              <button
-                type="button"
-                style={{marginTop: '1.7vw'}}
-                className="play-preview svgOnHover play-green"
-                onClick={startBrick}
-              >
+          <div className="action-footer">
+            <div>&nbsp;</div>
+            <div className="direction-info">
+              <h3>Ready?</h3>
+              <h2>Play Brick</h2>
+            </div>
+            <div>
+              <button type="button" className="play-preview svgOnHover play-green" onClick={startBrick}>
                 <svg className="svg svg-default m-l-02">
                   <use href={sprite + "#play-thin"} />
                 </svg>
@@ -148,8 +143,8 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   <use href={sprite + "#play-thick"} />
                 </svg>
               </button>
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </div>
       </Grid>
     </Grid>

@@ -31,7 +31,7 @@
 		}
 		.users-pagination,
 		.bricks-pagination {
-			height: 9vh;
+			height: max-content;
 			font-size: 0.9vw;
 			font-family: $font-family-regular;
 			color: $dark-blue;
