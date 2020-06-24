@@ -67,10 +67,10 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
       <Grid container direction="row">
         <Grid item xs={8}>
           <div className="brick-container">
-            <div>
-              <h3>{brick.brickLength} minutes</h3>
-              <h1>Provisional Score</h1>
+            <div className="p-icon">
+              P
             </div>
+            <h1 className="play-page-header">Provisional Score</h1>
             <Grid container justify="center" className="circle-progress-container">
               <CircularProgress variant="static" className="circle-progress" value={(score * 100) / maxScore} />
               <div className="score-data">
