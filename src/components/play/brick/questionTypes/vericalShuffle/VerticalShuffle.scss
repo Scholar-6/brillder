@@ -24,7 +24,7 @@
     }
   }
   .vertical-shuffle-choice.correct {
-    background: $light-green;
+    background: var(--green);
 
     .question-hint {
       background: white;
