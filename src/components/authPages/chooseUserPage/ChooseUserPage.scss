@@ -92,7 +92,7 @@ $col-color: $light-blue;
 
   .user-type-btn:hover {
     color: white;
-    background: $orange !important;
+    background: var(--valencia) !important;
     span {
       font-family: $font-family-bold !important;
     }
@@ -100,7 +100,7 @@ $col-color: $light-blue;
 
   .user-type-btn {
     padding: 2.85vh 0;
-    background-color: $orange;
+    background-color: var(--valencia);
     color: $dark-blue;
     margin-top: 1.55vh;
     margin-bottom: 1.6vh;
