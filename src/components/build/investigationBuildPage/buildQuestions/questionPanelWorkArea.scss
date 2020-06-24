@@ -64,12 +64,6 @@
     color: $dark-blue;
   }
 
-  button {
-    border-radius: 0.2vw;
-    margin-top: 0.1vw;
-    margin-bottom: 0.1vw;
-  }
-
   .hint-component {
     margin-top: 0.1vw;
     margin-bottom: 0.1vw;
@@ -121,20 +115,28 @@
     }
   }
 
-  .top-scroll-arrow, .bottom-scroll-area {
-    height: 5%;
-  }
-
+  .top-scroll-area,
   .bottom-scroll-area {
+    height: 5%;
+    display: flex;
+    justify-content: center;
+    .top-button-container,
     .bottom-button-container {
-      width: 3vw;
+      width: 25vw;
+      @extend %flexCenter;
       position: relative;
+      padding: 0.3vw 0;
     }
-    .bottom-text {
-      top: 0;
-      left: 4vw;
-      position: absolute;
-      width: 20vw;
+    .scroll-text {
+      @extend %flexCenter;
+      span {
+
+      }
+      button {
+        width: 1.1vw;
+        height: 1.1vw;
+        margin: 0 0.4vw;
+      }
     }
   }
 
