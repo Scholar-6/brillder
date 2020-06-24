@@ -36,6 +36,11 @@
       animation-name: pulse-blue;
     }
   }
+  &.bg-tab-gray {
+    .svg {
+      color: $gray;
+    }
+  }
   .svg {
     width: 3vw;
     height: 3vw;

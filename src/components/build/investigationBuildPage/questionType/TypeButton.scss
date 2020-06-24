@@ -24,13 +24,13 @@
 
   .question-container:hover {
     background: $orange;
-    font-family: "Brandon Grotesque Black";
+    font-family: $font-family-black;
     color: white;
   }
 
   .question-container.active {
     background: $orange;
-    font-family: "Brandon Grotesque Black";
+    font-family: $font-family-black;
     color: white;
   }
 

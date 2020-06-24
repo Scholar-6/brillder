@@ -20,7 +20,7 @@ import {
 } from 'model/question';
 import { setBrillderTitle } from 'components/services/titleService';
 import { prefillAttempts } from 'components/services/PlayService';
-import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
+import PlayBrickMenu from './PlayBrickMenu';
 import { Grid } from '@material-ui/core';
 
 
@@ -144,12 +144,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   return (
     <div className="play-preview-pages">
-      <PageHeader
-        searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
-        search={() => { }}
-        searching={() => { }}
-        showDropdown={() => { }}
-      />
+      <PlayBrickMenu user={props.user} history={props.history} />
       <Grid container direction="row" className="sorted-row">
         <Grid container item className="sort-and-filter-container">
         </Grid>

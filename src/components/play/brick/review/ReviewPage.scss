@@ -104,15 +104,10 @@
     margin-left: 5vw;
     margin-right: 3vw;
   }
+
   .stepper {
     .step {
-      font-size: 2vw;
-      font-family: $font-family-black;
       color: $dark-blue;
-
-      img {
-        height: 2vw;
-      }
     }
   }
   .edited-step-icon {

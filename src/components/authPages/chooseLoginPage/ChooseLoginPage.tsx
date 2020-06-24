@@ -3,6 +3,7 @@ import { History } from 'history'
 import { Redirect } from "react-router-dom";
 import { Button, Grid } from "@material-ui/core";
 import MailIcon from '@material-ui/icons/Mail';
+import sprite from "../../../assets/img/icons-sprite.svg";
 
 import './ChooseLoginPage.scss';
 import { UserLoginType } from 'model/auth';
@@ -12,13 +13,13 @@ interface ChooseLoginProps {
   history: History
 }
 
-const ChooseLoginPage:React.FC<ChooseLoginProps> = (props) => {
+const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
   const moveToLogin = () => {
     props.history.push('/login?userType=' + userType)
   }
 
-  function getUserTypeParam(param: string):UserLoginType {
-    var url_string =  window.location.href;
+  function getUserTypeParam(param: string): UserLoginType {
+    var url_string = window.location.href;
     var url = new URL(url_string);
     let userType = url.searchParams.get(param);
     if (userType) {
@@ -51,12 +52,16 @@ const ChooseLoginPage:React.FC<ChooseLoginProps> = (props) => {
             <Grid>
               <img alt="Logo" src="/images/choose-login/logo.png" className="logo-image" />
             </Grid>
-            <Button className="email-button" onClick={moveToLogin}>
-              <MailIcon className="email-icon" />
+            <Button className="email-button svgOnHover" onClick={moveToLogin}>
+              <svg className="svg active">
+                <use href={sprite + "#email"} />
+              </svg>
               <span>Register &nbsp;|&nbsp; Sign in with email</span>
             </Button>
-            <Button className="google-button" href={googleLink}>
-              <img alt="google-icon" className="google-icon" src="/images/google-icon.png" />
+            <Button className="google-button svgOnHover" href={googleLink}>
+              <svg className="svg active">
+                <use href={sprite + "#gmail"} />
+              </svg>
               <span>Register &nbsp;|&nbsp; Sign in with Google</span>
             </Button>
           </div>
