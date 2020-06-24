@@ -72,10 +72,9 @@ interface BackToWorkState {
   dropdownShown: boolean;
   failedRequest: boolean;
   shown: boolean;
-
-  	filterExpanded: boolean;
-	filterHeight: string;
-	isClearFilter: any;
+  filterExpanded: boolean;
+  filterHeight: string;
+  isClearFilter: any;
 }
 
 enum SortBy {
@@ -114,11 +113,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       isSearching: false,
       dropdownShown: false,
       failedRequest: false,
-	  shown: true,
-
-	  	filterExpanded: true,
-		filterHeight: "auto",
-		isClearFilter: false,
+	    shown: true,
+    	filterExpanded: true,
+      filterHeight: "auto",
+      isClearFilter: false,
     };
 
     const isAdmin = this.props.user.roles.some(
@@ -489,8 +487,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeInboxFilters(filters);
     filters.build = !filters.build;
     const bricks = this.filterBricks(filters);
-	this.setState({ ...this.state, filters, finalBricks: bricks });
-	this.filterClear()
+    this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
+    this.filterClear()
   }
 
   toggleReviewFilter() {
@@ -498,8 +496,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeInboxFilters(filters);
     filters.review = !filters.review;
     const bricks = this.filterBricks(filters);
-	this.setState({ ...this.state, filters, finalBricks: bricks });
-	this.filterClear()
+    this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
+    this.filterClear()
   }
 
   togglePublishFilter() {
@@ -507,8 +505,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeInboxFilters(filters);
     filters.publish = !filters.publish;
     const bricks = this.filterBricks(filters);
-	this.setState({ ...this.state, filters, finalBricks: bricks });
-	this.filterClear()
+    this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
+    this.filterClear()
   }
 
   searching(searchString: string) {
@@ -801,7 +799,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           </Grid>
         </div>
         <Menu
-          className="back-to-work-redirect-dropdown"
+          className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}

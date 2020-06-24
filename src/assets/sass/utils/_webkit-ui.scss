@@ -26,11 +26,9 @@
 
 input {
 	-webkit-appearance: none;
-}
-input[type="password"] {
-	margin: 0;
-	-webkit-text-security: round;
-	@include placeholder {
-		-webkit-text-security: round;
+	&::placeholder,
+	&:-ms-input-placeholder,
+	&::-ms-input-placeholder {
+		font-family: $font-family-bold;
 	}
 }

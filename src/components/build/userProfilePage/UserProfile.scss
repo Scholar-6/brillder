@@ -2,71 +2,6 @@
 @import '../../../assets/sass/partials/mixins';
 @import '../../../assets/sass/partials/extensions';
 
-.user-profile-redirect-dropdown {
-  .MuiPaper-root {
-    position: fixed;
-    right: 0 !important;
-    left: auto !important;
-    top: 10.5vh !important;
-    min-width: 14.9vw !important;
-    min-height: 31.3vh;
-    border-radius: 0;
-    border-bottom-left-radius: 2vw;
-    color: white;
-    background: $light-blue;
-    box-shadow: none;
-
-    .menu-item {
-      cursor: pointer;
-      position: relative;
-      font-family: $font-family-regular !important;
-      font-size: 1.45vw;
-      padding-left: 1.65vw;
-      margin-bottom: 1vh;
-      color: white !important;
-
-      .menu-icon-container {
-        position: fixed;
-        width: 4.5vw;
-        height: 3vh;
-        right: 0vw;
-      }
-
-      .menu-icon {
-        width: 2.2vw;
-      }
-
-      .svg-icon {
-        filter: invert(1);
-      }
-
-      .user-icon {
-        width: 1.93vw;
-      }
-
-      .logout-icon {
-        width: 1.88vw;
-      }
-
-      .back-to-work-icon {
-        width: 1.5vw;
-      }
-      .manage-users-icon {
-        margin-top: 0.13vh;
-        width: 1.9vw;
-      }
-    }
-
-    .first-item {
-      margin-top: 1.7vh;
-    }
-
-    .view-profile {
-      margin-top: 3.4vh;
-    }
-  }
-}
-
 .user-profile-page {
   background: $dark-blue;
   overflow: hidden;
@@ -121,7 +56,10 @@
       position: relative;
       padding-top: 3.2vh;
       width: 18.7vw;
-
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       .profile-image {
         text-align: center;
         height: 11vw;
@@ -129,41 +67,50 @@
         background: #e5e8ed 0% 0% no-repeat padding-box;
         border: 0.25vw solid $light-gray;
         box-shadow: $base-shadow;
-        img {
+        border-radius: 50%;
+        .svg {
           height: 7.8vw;
           width: 7.8vw;
         }
       }
       .add-image-button {
-        padding: 0 !important;
+        width: 4vw;
+        height: 4vw;
         z-index: 100;
         position: absolute;
-        color: $orange;
-        top: 52%;
-        left: 55.8%;
-        .add-image-icon {
-          height: 4.15vw;
-          width: 4.15vw;
+        background-color: #c43c30;
+        bottom: 7vh;
+        right: 4vw;
+        border-radius: 50%;
+        cursor: pointer;
+        .MuiIconButton-label {
+          margin: 0;
+        }
+        .svg {
+          width: 2vw;
+          height: 2vw;
         }
       }
       .status-container {
         margin-top: 2.6vh;
-        margin-right: 2.3vw;
-        height: 3.5vh;
-
-        .circle-icon {
-          margin-top: 0.25vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .svg {
           color: #30c474;
           font-size: 2.35vw;
+          position: inherit;
+          left: inherit;
+          top: inherit;
+          transform: inherit;
         }
         > span {
           margin-left: 0.45vw;
           color: $dark-blue;
-          font-size: 1.85vw;
+          font-size: 1.5vw;
         }
       }
     }
-
     .profile-inputs-container {
       padding-top: 4.8vh;
       margin-left: 0.8vw;
@@ -181,16 +128,28 @@
         color: $dark-blue;
         box-shadow: $base-shadow;
       }
-
+      @include placeholder {
+        color: $dark-blue;
+      }
+      input[type='password'] {
+        @include placeholder {
+          > div {
+            font-size: 4vw;
+            line-height: 6.685vh;
+            height: 6.685vh;
+            padding-bottom: 1vh;
+          }
+          // font-size: 2vw;
+        }
+      }
       .first-name {
         width: 41%;
         padding: 0;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
         padding-left: 3%;
-        margin-right: 2%
+        margin-right: 2%;
       }
-
       .last-name {
         width: 51%;
         right: 0;
@@ -198,29 +157,6 @@
         padding-left: 3%;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
-      }
-
-      ::placeholder {
-        color: $dark-blue;
-        opacity: 1;
-      }
-
-      :-ms-input-placeholder {
-        color: $dark-blue;
-      }
-
-      ::-ms-input-placeholder {
-        color: $dark-blue;
-      }
-
-      .last-name::placeholder {
-        font-family: $font-family-bold;
-      }
-      .last-name:-ms-input-placeholder {
-        font-family: $font-family-bold;
-      }
-      .last-name::-ms-input-placeholder {
-        font-family: $font-family-bold;
       }
     }
     .profile-roles-container {
@@ -241,19 +177,15 @@
         padding-top: 1.9vh;
         padding-left: 1.15vw;
         padding-bottom: 1.4vh;
-
         .MuiGrid-item {
           width: 100%;
-
           .MuiSvgIcon-root {
             color: $dark-blue;
             font-size: 1.55vw;
           }
-
           .MuiIconButton-root {
             padding: 0.5vw !important;
           }
-
           .MuiFormControlLabel-label {
             margin-left: 1.15vw;
             font-family: $font-family-regular;
@@ -263,13 +195,12 @@
           .MuiFormControlLabel-root {
             margin: 0;
           }
-
           .disabled {
             .MuiSvgIcon-root {
-              color: #a6aCaF;
+              color: #a6acaf;
             }
             .MuiTypography-root {
-              color: #a6aCaF;
+              color: #a6acaf;
             }
           }
         }
@@ -279,7 +210,6 @@
       margin-top: 0.8vh;
       padding-left: 4.6vw;
       padding-right: 4.2vw;
-
       .MuiAutocomplete-root {
         width: 100%;
       }
@@ -322,7 +252,6 @@
 .alert-dialog {
   position: fixed;
   top: 0;
-
   .MuiDialog-paperScrollPaper {
     position: fixed;
     top: 8.3vh;
@@ -330,7 +259,6 @@
     max-width: 50vw;
     border-radius: 0.8vw;
   }
-
   .logout-dialog-header {
     padding: 3.8vh 1vw 3.5vh 2.2vw;
     font-size: 2.35vw;

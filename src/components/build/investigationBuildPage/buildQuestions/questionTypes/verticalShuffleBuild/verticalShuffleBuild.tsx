@@ -4,6 +4,7 @@ import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButto
 
 import './verticalShuffleBuild.scss'
 import { UniqueComponentProps } from '../types';
+import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 
 export interface VerticalShuffleBuildProps extends UniqueComponentProps {
@@ -35,9 +36,9 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     calculateHeight();
   }
 
-  const changed = (answer: any, event: any) => {
+  const changed = (answer: any, value: string) => {
     if (locked) { return; }
-    answer.value = event.target.value;
+    answer.value = value;
     update();
   }
 
@@ -67,17 +68,17 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
 
   const renderAnswer = (answer: any, key: number) => {
     return (
-      <div className="short-answer-box" key={key}>
+      <div className="vertical-answer-box" key={key}>
         {
           (state.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
         }
-        <input
+        <DocumentWirisCKEditor
           disabled={locked}
-          value={answer.value}
-          onBlur={() => save()}
-          className={validationRequired && !answer.value ? "invalid" : ""}
-          onChange={(event) => changed(answer, event)}
+          data={answer.value}
+          toolbar={['mathType', 'chemType']}
           placeholder={"Enter Answer " + (key + 1) + "..."}
+          onBlur={() => save()}
+          onChange={value => changed(answer, value)}
         />
       </div>
     );

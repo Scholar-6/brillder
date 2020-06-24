@@ -29,7 +29,7 @@ const QuoteComponent: React.FC<QuoteComponentProps> = ({locked, index, data, ...
         </Grid>
       </div>
       <DocumentCKEditor
-        disabled={true}
+        disabled={locked}
         data={data.value}
         placeholder=""
         toolbar={['bold', 'italic', 'fontColor', 'bulletedList', 'numberedList']}

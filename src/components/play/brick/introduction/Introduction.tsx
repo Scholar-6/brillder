@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core";
 import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import "./Introduction.scss";
-import { Brick } from "model/brick";
+import { Brick, BrickLengthEnum } from "model/brick";
 import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import BrickCounter from "../baseComponents/BrickCounter";
 import { Moment } from "moment";
@@ -61,6 +61,13 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     color = brick.subject.color;
   }
 
+  let timeToSpend = 5;
+  if (brick.brickLength === BrickLengthEnum.S40min) {
+    timeToSpend = 10;
+  } else if (brick.brickLength === BrickLengthEnum.S60min) {
+    timeToSpend = 15;
+  }
+
   return (
     <Grid container direction="row">
       <Grid item xs={8}>
@@ -91,10 +98,11 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <MathInHtml value={brick.brief} />
             </div>
           ) : (
-            ""
-          )}
-          <div className="expend-title">
-            Prep
+              ""
+            )}
+          <Grid container className="expend-title">
+            <Grid className="title">Prep</Grid>
+            <Grid className="image" alignContent="center">
             <img
               alt=""
               src={
@@ -104,14 +112,18 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               }
               onClick={togglePrep}
             />
-          </div>
+            </Grid>
+            <Grid className="help-prep" alignContent="center">
+              Expand to start the timer. Aim to spend around {timeToSpend} minutes on this section.
+            </Grid>
+          </Grid>
           {state.prepExpanded ? (
             <div className="expended-text">
               <MathInHtml value={brick.prep} />
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </div>
       </Grid>
       <Grid item xs={4}>
@@ -128,25 +140,14 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
           </div>
           <IntroductionDetails brickLength={brick.brickLength} />
-          <div className="intro-text-row">
-            <p>Bricks are divided into four sections.</p>
-            <ul>
-              <li>Set aside around 5 minutes to prepare</li>
-            </ul>
-          </div>
-          <Grid container direction="row" className="action-footer">
-            <Grid container item xs={3}></Grid>
-            <Grid container item xs={6} justify="center">
-              <h1 style={{fontSize: '1vw', textAlign: 'left', width: '100%', margin: '0'}}>Ready?</h1>
-              <h2 style={{fontSize: '2.3vw'}}>Play Brick</h2>
-            </Grid>
-            <Grid container item xs={3} justify="center">
-              <button
-                type="button"
-                style={{marginTop: '1.7vw'}}
-                className="play-preview svgOnHover play-green"
-                onClick={startBrick}
-              >
+          <div className="action-footer">
+            <div>&nbsp;</div>
+            <div className="direction-info">
+              <h3>Ready?</h3>
+              <h2>Play Brick</h2>
+            </div>
+            <div>
+              <button type="button" className="play-preview svgOnHover play-green" onClick={startBrick}>
                 <svg className="svg svg-default m-l-02">
                   <use href={sprite + "#play-thin"} />
                 </svg>
@@ -154,8 +155,8 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                   <use href={sprite + "#play-thick"} />
                 </svg>
               </button>
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </div>
       </Grid>
     </Grid>

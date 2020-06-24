@@ -611,7 +611,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           </Grid>
         </div>
         <Menu
-          className="users-list-redirect-dropdown"
+          className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}

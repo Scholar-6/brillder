@@ -11,7 +11,7 @@ import Pallet from '../play/pallet/Pallet';
 import VersionLabel from 'components/baseComponents/VersionLabel';
 import Dashboard from '../play/dashboard/Dashboard';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
-import PlayPreviewRouting from '../build/PreviewBrickRouting';
+import PlayPreviewRouting from '../build/playPreview/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
 import MainPage from '../build/mainPage/mainPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
@@ -103,7 +103,6 @@ const App: React.FC = (props: any) => {
         <BuildRoute path="/build/users" component={UsersListPage} />
         <BuildRoute path="/build/user-profile/:userId" component={UserProfilePage} />
         <AllUsersRoute path="/build/user-profile" component={UserProfilePage} />
-        <AllUsersRoute path="/build/new-profile" component={UserProfilePage} />
         <BuildRoute path="/build" component={MainPage} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />

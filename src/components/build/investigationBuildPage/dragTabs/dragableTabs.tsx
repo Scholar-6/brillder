@@ -138,9 +138,12 @@ const DragableTabs: React.FC<DragTabsProps> = ({
               className={"drag-last-tile-container " + (isSynthesisPage ? "synthesis-tab" : "")}
               cols={1.5555}
             >
-              <Grid className={"drag-tile"} container alignContent="center" justify="center">
-                <SynthesisTab columns={columns} tutorialStep={props.tutorialStep} isSynthesis={isSynthesisPage} synthesis={synthesis} />
-              </Grid>
+              <SynthesisTab
+                columns={columns}
+                tutorialStep={props.tutorialStep}
+                validationRequired={props.validationRequired}
+                synthesis={synthesis}
+              />
             </GridListTile>
           : ""
         }

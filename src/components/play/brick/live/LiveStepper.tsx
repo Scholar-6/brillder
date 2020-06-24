@@ -5,13 +5,15 @@ import "./Live.scss";
 import { Question } from "model/question";
 import { ComponentAttempt } from "../model/model";
 
-interface LiveStepperProps {
+interface StepperProps {
+  activeStep: number;
   attempts: ComponentAttempt[];
   questions: Question[];
   handleStep(questionIndex: number): any;
 }
 
-const LiveStepper: React.FC<LiveStepperProps> = ({
+const LiveStepper: React.FC<StepperProps> = ({
+  activeStep,
   questions,
   handleStep,
   attempts
@@ -51,6 +53,9 @@ const LiveStepper: React.FC<LiveStepperProps> = ({
               let className = "step";
               if (edited) {
                 className += " completed";
+              }
+              if (activeStep === questionIndex) {
+                className += " current";
               }
               questionIndex++;
               let index = questionIndex;
