@@ -7,6 +7,8 @@ let moment = require('moment');
 interface CounterProps {
   isIntroPage?: boolean;
   startTime?: Moment;
+  isStopped?: boolean;
+  onStop?(duration: any): void;
 }
 
 interface CounterState {
@@ -14,19 +16,24 @@ interface CounterState {
   seconds: string;
   milliseconds: string;
   isCounting: boolean;
+  timerInterval: NodeJS.Timeout;
 }
 
 class BrickCounter extends Component<CounterProps, CounterState> {
   constructor(props: CounterProps) {
     super(props);
+
     this.state = {
       seconds: "00",
       minutes: "00",
       milliseconds: "00",
       isCounting: false,
+      timerInterval: this.setTimer()
     }
+  }
 
-    setInterval(() => {
+  setTimer() {
+    return setInterval(() => {
       if (!this.props.startTime) {
         return;
       }
@@ -36,7 +43,25 @@ class BrickCounter extends Component<CounterProps, CounterState> {
       let seconds = this.formatTwoLastDigits(dif.seconds());
       let milliseconds = this.formatTwoLastDigits(Math.round(dif.milliseconds() / 10));
       this.setState({minutes, seconds, milliseconds, isCounting: true});
-    }, 90);
+    }, 1000);
+  }
+
+  componentDidUpdate(prevProps: CounterProps) {
+    if (prevProps.isStopped !== this.props.isStopped) {
+      if (typeof this.props.isStopped === "boolean") {
+        if (this.props.isStopped) {
+          clearInterval(this.state.timerInterval);
+          if (this.props.onStop) {
+            let end = moment();
+            let dif = moment.duration(end.diff(this.props.startTime));
+            this.props.onStop(dif);
+          }
+        } else {
+          
+          this.setState({...this.state, timerInterval: this.setTimer() });
+        }
+      }
+    }
   }
 
   formatTwoLastDigits(twoLastDigits: number) {
