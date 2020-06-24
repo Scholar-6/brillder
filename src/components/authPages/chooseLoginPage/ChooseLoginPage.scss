@@ -15,7 +15,7 @@
         height: 3.6vw;
         width: 2vw;
         margin-left: 15vw;
-        color: $orange;
+        color: var(--valencia);
         transition: all 0.2s ease-in-out;
         transform-origin: 200% 50%;
         background-size: 100% 100%;
@@ -91,7 +91,7 @@
     }
   }
   .email-button {
-    background: $orange;
+    background: var(--valencia);
     .svg,
     span {
       color: $white;

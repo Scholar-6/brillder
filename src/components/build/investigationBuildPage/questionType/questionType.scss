@@ -58,7 +58,7 @@
     }
   }
   .round-button-center:hover {
-    background: $orange;
+    background: var(--valencia);
     color: white;
     .synthesis-icon {
       background-image: url(/images/synthesis-white.png);
@@ -72,7 +72,7 @@
   .set-type-button {
     margin: 0 !important;
     padding-top: 6px !important;
-    color: $orange;
+    color: var(--valencia);
 
     .set-type-icon {
       font-size: 50px;
@@ -86,7 +86,7 @@
       margin: 0 !important;
 
       padding: 0 !important;
-      color: $orange;
+      color: var(--valencia);
 
       span {
         height: 60px !important;
@@ -104,7 +104,7 @@
     bottom: 1.9vh;
     right: 0;
     width: 4vw;
-    color: $orange;
+    color: var(--valencia);
 
     .submit-button {
       z-index: 12;

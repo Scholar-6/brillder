@@ -12,7 +12,7 @@
   border-bottom-right-radius: $question-radius;
 
   .invalid {
-    background: $orange !important;
+    background: var(--valencia) !important;
   }
 
   .help-arrow {
@@ -38,7 +38,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: $orange;
+    background: var(--valencia);
     border-radius: 1vw;
   }
 
@@ -95,7 +95,7 @@
     .new-question-button {
       margin: 0 !important;
       padding-top: 6px !important;
-      color: $orange;
+      color: var(--valencia);
 
       div {
         span {
@@ -168,7 +168,7 @@
 
       .new-question-button {
         padding-top: 6px !important;
-        color: $orange;
+        color: var(--valencia);
 
         div {
           span {
