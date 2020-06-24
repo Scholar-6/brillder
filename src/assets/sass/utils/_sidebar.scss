@@ -279,6 +279,7 @@
     max-width: inherit;
     width: calc(75% - 1vw);
     height: calc(100vh - 7.834vw);
+    overflow-y: auto;
     .brick-row-title {
       padding-left: 1.15vw;
       // padding-left: 0.35vw;

@@ -41,14 +41,7 @@
   }
   .stepper {
     .step {
-      cursor: pointer;
-      font-size: 2vw;
-      font-family: $font-family-black;
       color: #d3d4d5;
-    }
-
-    .step.completed, .step.current {
-      color: $dark-blue;
     }
   }
   .edited-step-icon {
