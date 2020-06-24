@@ -13,7 +13,7 @@
     right: 0;
 
     .active {
-      color: $light-green;
+      color: var(--green);
     }
   }
 
@@ -50,7 +50,7 @@
     }
 
     .word.active {
-      background: $light-green;
+      background: var(--green);
     }
 
     .word.disabled {

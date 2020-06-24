@@ -12,7 +12,7 @@
     box-shadow: none !important;
   }
   .horizontal-shuffle-answer.correct {
-    background: $light-green;
+    background: var(--green);
 
     .question-hint {
       background: white;

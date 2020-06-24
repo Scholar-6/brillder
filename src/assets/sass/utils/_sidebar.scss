@@ -116,10 +116,10 @@
           &.color4 {
             .round-button,
             .right-index {
-              background: $light-green;
+              background: var(--green);
             }
             svg {
-              color: $light-green;
+              color: var(--green);
             }
           }
         }
@@ -374,10 +374,10 @@
           &.color4 {
             .round-button,
             .right-index {
-              background: $light-green !important;
+              background: var(--green) !important;
             }
             svg {
-              color: $light-green;
+              color: var(--green);
             }
           }
           .MuiExpansionPanel-root {

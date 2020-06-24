@@ -1,3 +1,46 @@
+$colors: (
+  'yellow': #ff9d00,
+  'orange': #c43c30,
+  'global-light-text-gray': #757576,
+  'black-blue': #0b3b7f,
+  'white': #ffffff,
+  'white-gray': #e1e1e1,
+  'green': #30c474,
+  'input-gray': #fafafb,
+  'lighter-blue': #304775,
+  'light-blue': #193266,
+  'light-blue2': #193366,
+  'blue': #0681db,
+  'white-blue': #8ad6e8,
+  'lighter-gray': #f5f6f7,
+  'dark-blue': #001c58,
+  'left-gray': #e6e6ed,
+  'tab-gray': #e5e8ed,
+  'light-gray': #f3f4f7,
+  'gray': #b0b0ad,
+  'purple': #a020f0,
+  'maroon': #8d021f,
+  'pink': #d43790,
+  'madison': #313e4d,
+  'brown': #4f331b,
+  'olive': #708238,
+  'weed': #185a40,
+  'grass': #9aba5a,
+  'teal': #15b49c,
+  'pelorous': #17a2b8,
+  'red': #c9302c,
+  'poppy-red': #8c2f32,
+  'valencia': #d64646,
+  'mustard': #f0a13c,
+  'off-white': #f5f5f5,
+  'muted': #777777,
+  'charcoal': #1f282e,
+  'black': #111111,
+  'black-pearl': #071927,
+  'tea-pink': #ff6e87,
+  'slate': #556e85,
+);
+
 $yellow: #ff9d00;
 $orange: #c43c30;
 $global-light-text-gray: #757576;
@@ -5,14 +48,13 @@ $black-blue: #0b3b7f;
 $white: #ffffff;
 $white-gray: #e1e1e1;
 $tab-gray: #e5e8ed;
-$light-green: #30c474;
 $input-gray: #fafafb;
 $lighter-blue: #304775;
 $light-blue: #193266;
 $light-blue2: #193366;
-$blue: #0681DB;
-$white-blue: #8AD6E8;
-$lighter-gray: #F5F6F7;
+$blue: #0681db;
+$white-blue: #8ad6e8;
+$lighter-gray: #f5f6f7;
 $dark-blue: #001c58;
 $left-gray: #e6e6ed;
 $gray: #b0b0ad;
