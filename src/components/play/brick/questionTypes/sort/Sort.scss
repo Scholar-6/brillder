@@ -46,7 +46,7 @@
     }
 
     .sortable-item.correct {
-      background: $light-green !important;
+      background: var(--green) !important;
     }
 
     .sortable-item.wrong {

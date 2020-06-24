@@ -11,6 +11,17 @@
   outline: 0 !important;
   @extend %radCircle;
   @extend %b0;
+  &:after {
+    content: '';
+    width: calc(100% + 1vw);
+    height: calc(100% + 1vw);
+    @extend %floatToCenter;
+    @extend %radCircle;
+    z-index: -1;
+  }
+  .svg {
+    z-index: 1;
+  }
   &.play-green,
   &.play-white {
     &:hover {
@@ -21,7 +32,10 @@
     }
   }
   &.play-green {
-    background-color: $light-green;
+    background-color: var(--green);
+    &:after {
+      background-color: var(--green-alpha3);
+    }
     .svg {
       color: $white;
     }
@@ -31,6 +45,9 @@
   }
   &.play-white {
     background-color: $tab-gray;
+    &:after {
+      background-color: var(--tab-gray-alpha3);
+    }
     &:hover {
       background-color: $dark-blue;
       animation-name: pulse-blue;
