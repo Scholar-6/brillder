@@ -9,13 +9,15 @@ import { BrickLengthEnum } from "model/brick";
 interface CounterProps {
   isIntroPage?: boolean;
   startTime?: Moment;
+  isStopped?: boolean;
   brickLength: BrickLengthEnum;
+  onStop?(duration: any): void;
 }
 
 const TimerWithClock: React.FC<CounterProps> = (props) => {
   return (
     <div className="intro-header">
-      <BrickCounter isIntroPage={props.isIntroPage} startTime={props.startTime} />
+      <BrickCounter isIntroPage={props.isIntroPage} isStopped={props.isStopped} onStop={props.onStop} startTime={props.startTime} />
       <div className="clock">
         <div className="clock-image svgOnHover">
           <svg className="svg w100 h100 active">

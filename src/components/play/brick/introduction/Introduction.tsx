@@ -7,7 +7,7 @@ import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
 import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import TimerWithClock from "../baseComponents/TimerWithClock";
-import { Moment } from "moment";
+import { Moment, duration } from "moment";
 import IntroductionDetails from './IntroductionDetails';
 const moment = require("moment");
 
@@ -19,17 +19,21 @@ interface IntroductionProps {
 }
 
 interface IntroductionState {
+  isStopped: boolean;
   prepExpanded: boolean;
   briefExpanded: boolean;
   otherExpanded: boolean;
+  duration: any;
 }
 
-const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
+const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const history = useHistory();
   const [state, setState] = React.useState({
     prepExpanded: false,
+    isStopped: false,
     briefExpanded: true,
     otherExpanded: false,
+    duration: null,
   } as IntroductionState);
 
   const toggleBrief = () => {
@@ -40,7 +44,17 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (!props.startTime) {
       props.setStartTime(moment());
     }
-    setState({ ...state, prepExpanded: !state.prepExpanded });
+
+    if (!state.prepExpanded && state.duration) {
+      let time = moment().subtract(state.duration);
+      props.setStartTime(time);
+    }
+    
+    if (state.prepExpanded) {
+      setState({ ...state, isStopped: true, prepExpanded: !state.prepExpanded });
+    } else {
+      setState({ ...state, isStopped: false, prepExpanded: !state.prepExpanded });
+    }
   };
 
   const startBrick = () => {
@@ -65,6 +79,11 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     timeToSpend = 10;
   } else if (brick.brickLength === BrickLengthEnum.S60min) {
     timeToSpend = 15;
+  }
+
+  const setDuration = (duration: any) => {
+    console.log(duration)
+    setState({...state, duration});
   }
 
   return (
@@ -101,19 +120,23 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             )}
           <Grid container className="expend-title">
             <Grid className="title">Prep</Grid>
-            <Grid className="image" alignContent="center">
-            <img
-              alt=""
-              src={
-                state.prepExpanded
-                  ? "/feathericons/svg/chevron-down-blue.svg"
-                  : "/feathericons/svg/chevron-right.svg"
-              }
-              onClick={togglePrep}
-            />
+            <Grid>
+              <Grid className="image" container alignContent="center">
+                <img
+                  alt=""
+                  src={
+                    state.prepExpanded
+                      ? "/feathericons/svg/chevron-down-blue.svg"
+                      : "/feathericons/svg/chevron-right.svg"
+                  }
+                  onClick={togglePrep}
+                />
+              </Grid>
             </Grid>
-            <Grid className="help-prep" alignContent="center">
-              Expand to start the timer. Aim to spend around {timeToSpend} minutes on this section.
+            <Grid className="help-prep">
+              <Grid className="help-prep" container alignContent="center">
+                Expand to start the timer. Aim to spend around {timeToSpend} minutes on this section.
+              </Grid>
             </Grid>
           </Grid>
           {state.prepExpanded ? (
@@ -127,7 +150,13 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       </Grid>
       <Grid item xs={4}>
         <div className="introduction-info">
-          <TimerWithClock isIntroPage={true} startTime={props.startTime} brickLength={brick.brickLength} />
+          <TimerWithClock
+            isIntroPage={true}
+            isStopped={state.isStopped}
+            startTime={props.startTime}
+            brickLength={brick.brickLength}
+            onStop={(duration) => setDuration(duration)}
+          />
           <IntroductionDetails brickLength={brick.brickLength} />
           <div className="action-footer">
             <div>&nbsp;</div>
@@ -152,4 +181,4 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   );
 };
 
-export default Introduction;
+export default IntroductionPage;
