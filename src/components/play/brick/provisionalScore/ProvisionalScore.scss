@@ -42,8 +42,12 @@
     margin-bottom: 6px;
 
     .circle-progress {
-      height: 294px !important;
-      width: 294px !important;
+      height: 50vh !important;
+      width:  50vh !important;
+
+      .CircularProgressbar-path {
+        stroke: #FFB55F !important;
+      }
 
       svg {
         overflow: overlay;
@@ -63,12 +67,15 @@
         height: 100%;
 
         .score-precentage {
-          margin-bottom: 5px;
-          font-size: 50px;
+          font-family: $font-family-black;
+          color: $dark-blue;
+          font-size: 14vh;
         }
 
         .score-number {
-          font-size: 24px;
+          font-family: $font-family-bold;
+          color: $dark-blue;
+          font-size: 4vh;
         }
       }
     }

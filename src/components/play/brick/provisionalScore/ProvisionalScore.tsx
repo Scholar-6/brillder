@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 import './ProvisionalScore.scss';
 import { Brick } from 'model/brick';
@@ -72,7 +73,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
             </div>
             <h1>Provisional Score</h1>
             <Grid container justify="center" className="circle-progress-container">
-              <CircularProgress variant="static" className="circle-progress" value={(score * 100) / maxScore} />
+              <CircularProgressbar className="circle-progress" counterClockwise={true} value={(score * 100) / maxScore} />
               <div className="score-data">
                 <Grid container justify="center" alignContent="center">
                   <div>
