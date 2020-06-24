@@ -7,7 +7,7 @@ import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
 import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import TimerWithClock from "../baseComponents/TimerWithClock";
-import { Moment, duration } from "moment";
+import { Moment } from "moment";
 import IntroductionDetails from './IntroductionDetails';
 const moment = require("moment");
 
@@ -58,8 +58,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   };
 
   const startBrick = () => {
+    
     if (!props.startTime) {
       props.setStartTime(moment());
+    } else if (state.isStopped && state.duration) {
+      let time = moment().subtract(state.duration);
+      props.setStartTime(time);
     }
     if (props.isPlayPreview) {
       history.push(`/play-preview/brick/${brick.id}/live`);
@@ -82,7 +86,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   }
 
   const setDuration = (duration: any) => {
-    console.log(duration)
     setState({...state, duration});
   }
 

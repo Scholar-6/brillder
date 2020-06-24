@@ -43,7 +43,7 @@ class BrickCounter extends Component<CounterProps, CounterState> {
       let seconds = this.formatTwoLastDigits(dif.seconds());
       let milliseconds = this.formatTwoLastDigits(Math.round(dif.milliseconds() / 10));
       this.setState({minutes, seconds, milliseconds, isCounting: true});
-    }, 1000);
+    }, 500);
   }
 
   componentDidUpdate(prevProps: CounterProps) {
@@ -55,10 +55,10 @@ class BrickCounter extends Component<CounterProps, CounterState> {
             let end = moment();
             let dif = moment.duration(end.diff(this.props.startTime));
             this.props.onStop(dif);
+            this.setState({...this.state, isCounting: false });
           }
         } else {
-          
-          this.setState({...this.state, timerInterval: this.setTimer() });
+          this.setState({...this.state, isCounting: true, timerInterval: this.setTimer() });
         }
       }
     }
