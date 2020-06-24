@@ -10,7 +10,7 @@ import { Question } from "model/question";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
 import { PlayStatus, ComponentAttempt } from "../model/model";
-import BrickCounter from "../baseComponents/BrickCounter";
+import TimerWithClock from "../baseComponents/TimerWithClock";
 import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import { CashQuestionFromPlay } from "../../../localStorage/buildLocalStorage";
@@ -176,17 +176,7 @@ const LivePage: React.FC<LivePageProps> = ({
         </Grid>
         <Grid item xs={4}>
           <div className="introduction-info">
-            <div className="intro-header">
-              <BrickCounter startTime={props.startTime} />
-              <div className="clock">
-                <div className="clock-image svgOnHover">
-                  <svg className="svg w100 h100 active">
-                    <use href={sprite + "#clock"} />
-                  </svg>
-                </div>
-                <span className="max-length">{brick.brickLength}</span>
-              </div>
-            </div>
+            <TimerWithClock startTime={props.startTime} brickLength={brick.brickLength} />
             <div className="intro-text-row">
               <LiveStepper
                 activeStep={activeStep}
