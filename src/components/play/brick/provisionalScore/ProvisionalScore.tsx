@@ -10,6 +10,7 @@ import { PlayStatus } from '../model/model';
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import { Moment } from 'moment';
 import sprite from "../../../../assets/img/icons-sprite.svg";
+import ReviewStepper from '../review/ReviewStepper';
 
 
 interface ProvisionalScoreProps {
@@ -88,6 +89,13 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
         <Grid item xs={4}>
           <div className="introduction-info">
             <TimerWithClock startTime={props.startTime} brickLength={brick.brickLength} />
+            <div className="intro-text-row">
+            <ReviewStepper
+              questions={brick.questions}
+              attempts={attempts}
+              handleStep={() => {}}
+            />
+            </div>
             <div className="action-footer">
               <div>&nbsp;</div>
               <div className="direction-info">

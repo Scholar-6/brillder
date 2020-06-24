@@ -81,9 +81,13 @@
     }
   }
 
-
-
   .MuiCircularProgress-colorPrimary {
     color: #0076B4 !important;
+  }
+
+  .stepper {
+    .step {
+      color: $dark-blue;
+    }
   }
 }
