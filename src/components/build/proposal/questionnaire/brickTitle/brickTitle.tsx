@@ -96,12 +96,14 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, canEdit, saveTitles
           <h1>What is your brick about?</h1>
           <Grid item className="input-container">
             <Input
+              disabled={!canEdit}
               className="audience-inputs"
               value={parentState.title}
               onChange={(onTitleChange)}
               placeholder="Enter Proposed Title Here..."
             />
             <Input
+              disabled={!canEdit}
               className="audience-inputs"
               value={parentState.subTopic}
               onChange={onSubTopicChange}
