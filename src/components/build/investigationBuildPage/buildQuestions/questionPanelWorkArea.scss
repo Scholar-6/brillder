@@ -122,7 +122,7 @@
     justify-content: center;
     .top-button-container,
     .bottom-button-container {
-      width: 25vw;
+      width: 27vw;
       @extend %flexCenter;
       position: relative;
       padding: 0.3vw 0;
@@ -130,7 +130,7 @@
     .scroll-text {
       @extend %flexCenter;
       span {
-
+        color: $dark-blue;
       }
       button {
         width: 1.1vw;
