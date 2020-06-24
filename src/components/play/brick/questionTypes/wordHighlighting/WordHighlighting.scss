@@ -16,7 +16,7 @@
       background: $white-blue;
     }
     .word.correct {
-      background: $light-green;
+      background: var(--green);
     }
     .word.wrong {
       background: $orange;
