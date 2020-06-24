@@ -43,7 +43,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
           <div className="brick-container">
             <div className="s-icon">S</div>
             <h1 className="play-page-header">Synthesis</h1>
-            <MathInHtml value={newSynthesis} />
+            <MathInHtml value={brick.synthesis} />
           </div>
         </Grid>
         <Grid item xs={4}>
