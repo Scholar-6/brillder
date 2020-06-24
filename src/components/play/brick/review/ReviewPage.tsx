@@ -9,14 +9,19 @@ import "./ReviewPage.scss";
 import { Question } from "model/question";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
-import { PlayStatus, ComponentAttempt } from "../model/model";
+import { PlayStatus } from "../model/model";
 import sprite from "../../../../assets/img/icons-sprite.svg";
 import ReviewStepper from "./ReviewStepper";
+import { Moment } from "moment";
+import TimerWithClock from "../baseComponents/TimerWithClock";
+import { BrickLengthEnum } from "model/brick";
 
 interface ReviewPageProps {
   status: PlayStatus;
   brickId: number;
   questions: Question[];
+  brickLength: BrickLengthEnum;
+  startTime?: Moment;
   attempts: any[];
   isPlayPreview?: boolean;
   updateAttempts(attempt: any, index: number): any;
@@ -165,15 +170,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         </Grid>
         <Grid item xs={4}>
           <div className="introduction-info">
-            <div className="intro-header">
-              <div className="clock">
-                <div className="clock-image svgOnHover">
-                  <svg className="svg w100 h100 active">
-                    <use href={sprite + "#clock"} />
-                  </svg>
-                </div>
-              </div>
-            </div>
+            <TimerWithClock startTime={props.startTime} brickLength={props.brickLength} />
             <div className="intro-text-row">
               <ReviewStepper
                 questions={questions}
