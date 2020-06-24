@@ -164,9 +164,20 @@
     line-height: 1.3;
     font-family: $font-family-bold;
     font-size: 2.6vw;
+    height: 4vw;
     img {
-      margin-left: 2vw;
-      height: 1.8vw;
+      margin-left: 1.5vw;
+      height: 2.1vw;
+    }
+    .image {
+      height: 100%;
+    }
+    .help-prep {
+      margin-left: 1.5vw;
+      color: #B1B1B1;
+      font-size: 1vw;
+      height: 100%;
+      font-family: $font-family-regular;
     }
   }
   .expended-text {
