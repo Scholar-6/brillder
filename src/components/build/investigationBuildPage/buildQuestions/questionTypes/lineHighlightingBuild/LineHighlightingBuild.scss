@@ -39,7 +39,7 @@
       cursor: pointer;
     }
     .line.active {
-      background: $light-green;
+      background: var(--green);
     }
   }
 

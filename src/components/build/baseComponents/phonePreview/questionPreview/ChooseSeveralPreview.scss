@@ -28,7 +28,7 @@
 
   .green-button {
     font-family: $font-family-bold;
-    background: $light-green;
+    background: var(--green);
     color: white;
   }
 }
