@@ -66,7 +66,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
     <div className="brick-container provisional-score-page">
       <Grid container direction="row">
         <Grid item xs={8}>
-          <div className="brick-container">
+          <div className="introduction-page">
             <div className="p-icon">
               P
             </div>
