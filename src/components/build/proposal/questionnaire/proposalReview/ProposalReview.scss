@@ -10,7 +10,7 @@
     position: fixed;
     right: 0;
     bottom: 0;
-    background: $orange;
+    background: var(--valencia);
     height: 74.6vh;
     width: 47.9vw;
     border-top-left-radius: 2vw;
@@ -70,7 +70,7 @@
       height: 3.6vw;
       width: 2vw;
       margin-left: 5.5vw;
-      color: $orange;
+      color: var(--valencia);
       transition: all 0.2s ease-in-out;
       transform-origin: 200% 50%;
 
@@ -87,7 +87,7 @@
     height: 100%;
     width: 15vw;
     right: 0;
-    color: $orange;
+    color: var(--valencia);
 
     .next-button {
       z-index: 12;
@@ -175,7 +175,7 @@
     .front {
       position: relative;
       line-height: 1.45;
-      color: $orange;
+      color: var(--valencia);
       text-align: center;
       font-family: $font-family-black;
       .page-stitch {
@@ -256,7 +256,7 @@
         transform: scale(-1, 1);
 
         padding-top: 3.5vh;
-        color: $orange;
+        color: var(--valencia);
 
         .circle-icon {
           font-size: 7.3vw;

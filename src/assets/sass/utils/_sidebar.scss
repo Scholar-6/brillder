@@ -35,7 +35,7 @@
           svg {
             width: 1.25vw;
             height: 1.25vw;
-            color: $orange;
+            color: var(--valencia);
             padding: 0 !important;
           }
         }
@@ -89,19 +89,19 @@
           &.color1 {
             .round-button,
             .right-index {
-              background: $orange;
+              background: var(--valencia);
             }
             svg {
-              color: $orange;
+              color: var(--valencia);
             }
           }
           &.color2 {
             .round-button,
             .right-index {
-              background: $yellow;
+              background: var(--yellow);
             }
             svg {
-              color: $yellow;
+              color: var(--yellow);
             }
           }
           &.color3 {
@@ -256,7 +256,7 @@
       }
       &:hover {
         .create-icon {
-          color: $orange;
+          color: var(--valencia);
           transform: rotate(10deg);
         }
       }
@@ -347,19 +347,19 @@
           &.color1 {
             .round-button,
             .right-index {
-              background: $orange !important;
+              background: var(--valencia) !important;
             }
             svg {
-              color: $orange;
+              color: var(--valencia);
             }
           }
           &.color2 {
             .round-button,
             .right-index {
-              background: $yellow !important;
+              background: var(--yellow) !important;
             }
             svg {
-              color: $yellow;
+              color: var(--yellow);
             }
           }
           &.color3 {

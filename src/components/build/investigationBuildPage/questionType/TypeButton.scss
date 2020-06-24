@@ -23,13 +23,13 @@
   }
 
   .question-container:hover {
-    background: $orange;
+    background: var(--valencia);
     font-family: $font-family-black;
     color: white;
   }
 
   .question-container.active {
-    background: $orange;
+    background: var(--valencia);
     font-family: $font-family-black;
     color: white;
   }

@@ -31,7 +31,7 @@
     }
 
     .Mui-checked {
-      color: $orange;
+      color: var(--valencia);
     }
 
     input:not([type='checkbox']) {
