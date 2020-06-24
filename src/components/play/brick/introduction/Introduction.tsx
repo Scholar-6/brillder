@@ -6,9 +6,8 @@ import sprite from "../../../../assets/img/icons-sprite.svg";
 import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
 import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
-import BrickCounter from "../baseComponents/BrickCounter";
+import TimerWithClock from "../baseComponents/TimerWithClock";
 import { Moment } from "moment";
-import BrickLength from "components/build/proposal/questionnaire/brickLength/brickLength";
 import IntroductionDetails from './IntroductionDetails';
 const moment = require("moment");
 
@@ -128,17 +127,7 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       </Grid>
       <Grid item xs={4}>
         <div className="introduction-info">
-          <div className="intro-header">
-            <BrickCounter isIntroPage={true} startTime={props.startTime} />
-            <div className="clock">
-              <div className="clock-image svgOnHover">
-                <svg className="svg w100 h100 active">
-                  <use href={sprite + "#clock"} />
-                </svg>
-              </div>
-              <span className="max-length">{brick.brickLength}</span>
-            </div>
-          </div>
+          <TimerWithClock isIntroPage={true} startTime={props.startTime} brickLength={brick.brickLength} />
           <IntroductionDetails brickLength={brick.brickLength} />
           <div className="action-footer">
             <div>&nbsp;</div>
