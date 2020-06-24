@@ -58,7 +58,7 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
           showDropdown={() => this.showDropdown()}
         />
         <Menu
-          className="user-profile-redirect-dropdown"
+          className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}

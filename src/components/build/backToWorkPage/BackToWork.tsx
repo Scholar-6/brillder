@@ -799,7 +799,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           </Grid>
         </div>
         <Menu
-          className="back-to-work-redirect-dropdown"
+          className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}

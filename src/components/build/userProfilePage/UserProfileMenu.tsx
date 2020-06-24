@@ -59,7 +59,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
           showDropdown={() => this.showDropdown()}
         />
         <Menu
-          className="user-profile-redirect-dropdown"
+          className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}

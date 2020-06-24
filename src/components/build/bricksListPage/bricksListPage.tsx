@@ -678,7 +678,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           </Grid>
         </div>
         <Menu
-          className="brick-list-redirect-dropdown"
+          className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}

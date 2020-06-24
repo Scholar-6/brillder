@@ -41,12 +41,26 @@
   <svg id="play-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polygon points="5 3 19 12 5 21 5 3"></polygon>
   </svg>
+  <svg id="circle-empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"></circle>
+  </svg>
+  <svg id="circle-filled" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"></circle>
+  </svg>
+  <svg id="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="12" y1="5" x2="12" y2="19"></line>
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+  </svg>
+  <svg id="user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+    <circle cx="12" cy="7" r="4"></circle>
+  </svg>
   <svg id="clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="10"></circle>
     <polyline points="12 6 12 12 16 14"></polyline>
   </svg>
   <svg id="email" viewBox="0 0 38 38">
-      <path d="M31.363,8.746H6.637C5.181,8.746,4,9.927,4,11.383v15.234c0,1.456,1.181,2.637,2.637,2.637h24.727
+    <path d="M31.363,8.746H6.637C5.181,8.746,4,9.927,4,11.383v15.234c0,1.456,1.181,2.637,2.637,2.637h24.727
 			c1.457,0,2.637-1.181,2.637-2.637V11.383C34,9.927,32.818,8.746,31.363,8.746z M29.254,23.828c-0.369,0.313-0.926,0.27-1.239-0.1
 			l-5.073-5.966l-3.506,2.001c-0.27,0.152-0.601,0.152-0.871,0l-3.507-2l-5.073,5.965c-0.314,0.369-0.869,0.414-1.238,0.101
 			c-0.37-0.313-0.415-0.87-0.101-1.239l4.858-5.712l-4.315-2.463c-0.421-0.241-0.568-0.778-0.328-1.199

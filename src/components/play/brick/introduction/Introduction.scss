@@ -78,12 +78,41 @@
         }
       }
       .intro-text-row {
-        margin-top: 2vw;
+        width: calc(100% - 4vw);
         font-size: 1.15vw;
         font-family: $font-family-bold;
         color: $dark-blue;
-        ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-80%);
+        > p,
+        > ul {
+          margin: 0;
+        }
+        > ul {
+          margin-top: 0.5vw;
           padding: 0 0 0 1.5vw;
+        }
+        .stepper {
+          text-align: center;
+        }
+        .stepper {
+          .step {
+            cursor: pointer;
+            font-size: 2vw;
+            font-family: $font-family-black;
+            color: #d3d4d5;
+            img {
+              height: 2vw;
+            }
+            &.completed,
+            &.current {
+              color: $dark-blue;
+            }
+          }
         }
       }
       .action-footer {
