@@ -134,7 +134,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   <DragBox
                     locked={locked}
                     isImage={true} src="/images/soundicon.png"
-                    label="S O U N D" 
+                    label="S O U N D"
                     hoverMarginTop="0.5vw"
                     fontFamily="Brandon Grotesque Bold"
                     value={QuestionComponentTypeEnum.Sound}
