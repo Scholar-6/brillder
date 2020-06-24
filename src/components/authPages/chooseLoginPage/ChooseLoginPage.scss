@@ -94,8 +94,8 @@
   }
   .email-button {
     background: $orange;
-    color: $white;
-    .svg {
+    .svg,
+    span {
       color: $white;
     }
     &:hover {
@@ -104,11 +104,11 @@
   }
   .google-button {
     background: $white;
-    .btn-icon {
+    span {
       color: $dark-blue;
     }
     &:hover {
-      background: $orange;
+      background: $white;
     }
   }
 }
