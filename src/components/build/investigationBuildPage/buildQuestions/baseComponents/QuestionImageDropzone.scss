@@ -36,9 +36,9 @@
   }
 
   .dropzone:hover {
-    color: $orange;
+    color: var(--valencia);
     .plus-image {
-      background: $orange;
+      background: var(--valencia);
     }
   }
 

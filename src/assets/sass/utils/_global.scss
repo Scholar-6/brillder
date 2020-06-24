@@ -63,7 +63,7 @@ input:focus {
 }
 
 .text-orange {
-  color: $orange !important;
+  color: var(--valencia) !important;
 }
 
 .text-tab-gray {
@@ -401,8 +401,8 @@ input:focus {
     .svg {
       width: 100%;
       height: 100%;
-      color: $orange;
-      stroke: $orange;
+      color: var(--valencia);
+      stroke: var(--valencia);
     }
   }
   .search-button {
