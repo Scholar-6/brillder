@@ -169,7 +169,7 @@ class PlayPreviewMenu extends Component<PreviewMenuProps, PreviewMenuState> {
         </Menu>
         <LogoutDialog
           isOpen={this.state.logoutOpen}
-          close={this.handleLogoutClose}
+          close={() => this.handleLogoutClose()}
           history={this.props.history}
         />
       </div>

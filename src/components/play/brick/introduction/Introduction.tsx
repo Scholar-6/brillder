@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core";
 import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import "./Introduction.scss";
-import { Brick } from "model/brick";
+import { Brick, BrickLengthEnum } from "model/brick";
 import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import BrickCounter from "../baseComponents/BrickCounter";
 import { Moment } from "moment";
@@ -61,6 +61,13 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     color = brick.subject.color;
   }
 
+  let timeToSpend = 5;
+  if (brick.brickLength === BrickLengthEnum.S40min) {
+    timeToSpend = 10;
+  } else if (brick.brickLength === BrickLengthEnum.S60min) {
+    timeToSpend = 15;
+  }
+
   return (
     <Grid container direction="row">
       <Grid item xs={8}>
@@ -93,8 +100,9 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           ) : (
               ""
             )}
-          <div className="expend-title">
-            Prep
+          <Grid container className="expend-title">
+            <Grid className="title">Prep</Grid>
+            <Grid className="image" alignContent="center">
             <img
               alt=""
               src={
@@ -104,7 +112,11 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               }
               onClick={togglePrep}
             />
-          </div>
+            </Grid>
+            <Grid className="help-prep" alignContent="center">
+              Expand to start the timer. Aim to spend around {timeToSpend} minutes on this section.
+            </Grid>
+          </Grid>
           {state.prepExpanded ? (
             <div className="expended-text">
               <MathInHtml value={brick.prep} />
@@ -128,12 +140,6 @@ const Introduction: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
           </div>
           <IntroductionDetails brickLength={brick.brickLength} />
-          <div className="intro-text-row">
-            <p>Bricks are divided into four sections.</p>
-            <ul>
-              <li>Set aside around 5 minutes to prepare</li>
-            </ul>
-          </div>
           <div className="action-footer">
             <div>&nbsp;</div>
             <div className="direction-info">
