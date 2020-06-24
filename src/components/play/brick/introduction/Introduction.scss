@@ -78,11 +78,21 @@
         }
       }
       .intro-text-row {
-        margin-top: 2vw;
         font-size: 1.15vw;
         font-family: $font-family-bold;
         color: $dark-blue;
-        ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-80%);
+        > p,
+        > ul {
+          margin: 0;
+        }
+        > ul {
+          margin-top: 0.5vw;
           padding: 0 0 0 1.5vw;
         }
       }
