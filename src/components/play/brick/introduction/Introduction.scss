@@ -47,6 +47,13 @@
             font-size: 25px;
             margin-right: 10px;
           }
+        h1 {
+          color: $dark-blue;
+          margin: 0 0 2vh 0;
+          font-size: 2vw;
+          font-weight: bold;
+          font-family: $font-family-black;
+          text-transform: uppercase;
         }
         .question-index-container {
           margin: 1.5vw 1.5vw 1.5vw 0.5vw;
