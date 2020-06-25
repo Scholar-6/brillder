@@ -23,11 +23,11 @@ $phone-border-color: $light-blue2;
 
   .volume, .sleep {
     position: absolute;
-    background: $dark-blue !important;
+    background: var(--dark-blue) !important;
   }
 
   .phone {
-    background: $dark-blue;
+    background: var(--dark-blue);
     position: absolute !important;
     top: 0;
     left: 0;
@@ -60,7 +60,7 @@ $phone-border-color: $light-blue2;
           margin-left: 33%;
           height: 0.43vw;
           border-radius: 1vw;
-          background: $dark-blue;
+          background: var(--dark-blue);
         }
 
         .camera {
@@ -69,7 +69,7 @@ $phone-border-color: $light-blue2;
           margin-top: 2%;
           margin-left: 8%;
           border-radius: 100%;
-          background: $dark-blue;
+          background: var(--dark-blue);
         }
       }
     }
@@ -125,7 +125,7 @@ $phone-border-color: $light-blue2;
 
   .custom-component {
     position: relative;
-    background-color: $dark-blue;
+    background-color: var(--dark-blue);
     border-radius: 1.8vw;
     overflow: hidden;
     width: auto;

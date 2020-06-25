@@ -6,7 +6,7 @@
   .question-container {
     cursor: pointer;
     background: $tab-gray;
-    color: $dark-blue;
+    color: var(--dark-blue);
     margin: 0.6vw 0.6vw 0.6vw 0.6vw;
     border-radius: 1.1vw;
     height: 15.35vh;
@@ -23,13 +23,13 @@
   }
 
   .question-container:hover {
-    background: var(--valencia);
+    background: var(--theme-orange);
     font-family: $font-family-black;
     color: white;
   }
 
   .question-container.active {
-    background: var(--valencia);
+    background: var(--theme-orange);
     font-family: $font-family-black;
     color: white;
   }

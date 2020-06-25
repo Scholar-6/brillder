@@ -35,14 +35,26 @@ input:focus {
   height: 100% !important;
 }
 
+.w-2 {
+  width: 2vw !important;
+}
 .w-3 {
   width: 3vw !important;
+}
+.w-4 {
+  width: 4vw !important;
+}
+.w-5 {
+  width: 5vw !important;
+}
+.h-2 {
+  height: 2vw !important;
 }
 .h-3 {
   height: 3vw !important;
 }
-.w-5 {
-  width: 5vw !important;
+.h-4 {
+  height: 4vw !important;
 }
 .h-5 {
   height: 5vw !important;
@@ -59,11 +71,13 @@ input:focus {
 }
 
 .text-white {
-  color: $white !important;
+  color: var(--white) !important;
 }
-
-.text-valencia {
-  color: var(--valencia) !important;
+.text-theme-green {
+  color: var(--theme-green) !important;
+}
+.text-theme-orange {
+  color: var(--theme-orange) !important;
 }
 
 .text-tab-gray {
@@ -71,7 +85,7 @@ input:focus {
 }
 
 .text-dark-blue {
-  color: $dark-blue !important;
+  color: var(--dark-blue) !important;
 }
 
 .text-gray {
@@ -152,13 +166,13 @@ input:focus {
         color: var(--white);
       }
       &.svg-green {
-        color: var(--green);
+        color: var(--theme-green);
       }
       &.svg-red {
         color: var(--red);
       }
       &.svg-orange {
-        color: var(--orange);
+        color: var(--theme-orange);
       }
     }
   }
@@ -192,7 +206,7 @@ input:focus {
 
 .hover-icons-row {
   height: 5.8vh;
-  color: $dark-blue;
+  color: var(--dark-blue);
   width: 100%;
   position: relative;
   .round-button {
@@ -401,8 +415,8 @@ input:focus {
     .svg {
       width: 100%;
       height: 100%;
-      color: var(--valencia);
-      stroke: var(--valencia);
+      color: var(--theme-orange);
+      stroke: var(--theme-orange);
     }
   }
   .search-button {

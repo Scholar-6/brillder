@@ -3,37 +3,6 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .synthesis-page {
-  .s-icon {
-    position: absolute;
-    left: 1vw;
-    border-radius: 100vw;
-    font-family: $font-family-black;
-    color: $dark-blue;
-    background: $tab-gray;
-    font-size: 1.7vw;
-    padding: 0vw 0.7vw;
-  }
-  .play-page-header {
-    font-size: 3.6vw;
-    text-align: center;
-    color: $dark-blue;
-    font-family: $font-family-bold;
-  }
-
-  
-  .intro-text-row {
-    width: calc(100% - 4vw);
-    font-size: 1.15vw;
-    font-family: $font-family-bold;
-    color: $dark-blue;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-80%);
-  }
-
   .synthesis-expansion-panel {
     background: white !important;
     .MuiButtonBase-root {
@@ -65,45 +34,6 @@
     }
   }
 
-  .circle-progress-container {
-    position: relative;
-    margin-top: 14px;
-    margin-bottom: 6px;
-    .circle-progress {
-      height: 294px !important;
-      width: 294px !important;
-
-      svg {
-        overflow: overlay;
-        circle {
-          stroke-width: 4.5 !important;
-        }
-      }
-    }
-
-    .score-data {
-      position: absolute;
-      height: 100%;
-      color: black;
-      text-align: center;
-
-      >div {
-        height: 100%;
-        .score-precentage {
-          margin-bottom: 5px;
-          font-size: 50px;
-        }
-        .score-number {
-          font-size: 24px;
-        }
-      }
-    }
-  }
-
-  .MuiCircularProgress-colorPrimary {
-    color: #0076B4 !important;
-  }
-
   .MuiTypography-root {
     width: 100% !important;
   }
@@ -122,7 +52,7 @@
   table,
   td,
   th {
-    border: 1px solid $dark-blue;
+    border: 1px solid var(--dark-blue);
   }
 
   td {

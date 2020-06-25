@@ -5,7 +5,7 @@
 .vertical-shuffle-preview {
   width: 100%;
   height: 100%;
-  color: $dark-blue;
+  color: var(--dark-blue);
 
   .small-text {
     padding: 26.6% 10% 16% 10%;
@@ -28,7 +28,7 @@
     border: none;
     height: 12.5%;
     background: $tab-gray;
-    color: $dark-blue;
+    color: var(--dark-blue);
 
     .circle-number {
       width: 100%;

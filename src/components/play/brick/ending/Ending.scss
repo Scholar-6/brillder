@@ -6,7 +6,7 @@
   h1 {
     font-size: 3.6vw;
     text-align: center;
-    color: $dark-blue;
+    color: var(--dark-blue);
     margin-top: 0;
     font-family: $font-family-bold;
   }
@@ -25,47 +25,5 @@
       font-size: 18px;
       margin-right: 10px;
     }
-  }
-
-  .circle-progress-container {
-    position: relative;
-    margin-top: 14px;
-    margin-bottom: 6px;
-
-    .circle-progress {
-      height: 294px !important;
-      width: 294px !important;
-
-      svg {
-        overflow: overlay;
-
-        circle {
-          stroke-width: 4.5 !important;
-        }
-      }
-    }
-
-    .score-data {
-      position: absolute;
-      height: 100%;
-      color: black;
-      text-align: center;
-      > div {
-        height: 100%;
-
-        .score-precentage {
-          margin-bottom: 5px;
-          font-size: 50px;
-        }
-
-        .score-number {
-          font-size: 24px;
-        }
-      }
-    }
-  }
-
-  .MuiCircularProgress-colorPrimary {
-    color: #0076b4 !important;
   }
 }

@@ -23,7 +23,7 @@
       margin-bottom: 0vh;
       letter-spacing: 0.01vw;
       font-family: $font-family-regular;
-      color: $dark-blue;
+      color: var(--dark-blue);
     }
   }
 
@@ -33,7 +33,7 @@
   }
   .round-button-center {
     cursor: pointer;
-    color: $dark-blue;
+    color: var(--dark-blue);
     width: 22vw;
     padding-left: 0.3vw;
     background: $color-light-gray;
@@ -58,7 +58,7 @@
     }
   }
   .round-button-center:hover {
-    background: var(--valencia);
+    background: var(--theme-orange);
     color: white;
     .synthesis-icon {
       background-image: url(/images/synthesis-white.png);
@@ -72,7 +72,7 @@
   .set-type-button {
     margin: 0 !important;
     padding-top: 6px !important;
-    color: var(--valencia);
+    color: var(--theme-orange);
 
     .set-type-icon {
       font-size: 50px;
@@ -86,7 +86,7 @@
       margin: 0 !important;
 
       padding: 0 !important;
-      color: var(--valencia);
+      color: var(--theme-orange);
 
       span {
         height: 60px !important;
@@ -104,7 +104,7 @@
     bottom: 1.9vh;
     right: 0;
     width: 4vw;
-    color: var(--valencia);
+    color: var(--theme-orange);
 
     .submit-button {
       z-index: 12;

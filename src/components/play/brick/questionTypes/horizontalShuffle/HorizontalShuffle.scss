@@ -12,20 +12,20 @@
     box-shadow: none !important;
   }
   .horizontal-shuffle-answer.correct {
-    background: var(--green);
+    background: var(--theme-green);
 
     .question-hint {
       background: white;
     }
   }
   .horizontal-shuffle-answer.wrong {
-    background: var(--valencia);
+    background: var(--theme-orange);
   }
 
   .MuiCard-root {
     cursor: pointer;
     font-size: 1rem !important;
-    color: $dark-blue;
+    color: var(--dark-blue);
     font-family: $font-family-regular;
   }
   .vertical-shuffle-choice {
@@ -40,6 +40,6 @@
   }
   .question-hint,
   .question-hint-global {
-    color: $dark-blue;
+    color: var(--dark-blue);
   }
 }
