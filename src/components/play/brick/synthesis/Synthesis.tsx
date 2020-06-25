@@ -7,19 +7,19 @@ import { useHistory } from 'react-router-dom';
 import { PlayStatus } from '../model/model';
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import TimerWithClock from "../baseComponents/TimerWithClock";
-import { Moment } from 'moment';
 import sprite from "../../../../assets/img/icons-sprite.svg";
+const moment = require('moment');
 
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
-  startTime?: Moment;
 }
 
 const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }) => {
   const history = useHistory();
+  const [startTime] = React.useState(moment());
   if (status === PlayStatus.Live) {
     if (props.isPlayPreview) {
       history.push(`/play-preview/brick/${brick.id}/intro`);
@@ -50,7 +50,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
         </Grid>
         <Grid item xs={4}>
           <div className="introduction-info">
-            <TimerWithClock startTime={props.startTime} brickLength={brick.brickLength} />
+            <TimerWithClock isArrowUp={true} startTime={startTime} brickLength={brick.brickLength} />
             <div className="intro-text-row">
               <p>When you’re ready to move on, you will have</p>
               <p>3 minutes to try to improve your score.</p>

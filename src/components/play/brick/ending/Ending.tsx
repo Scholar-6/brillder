@@ -80,10 +80,7 @@ const EndingPage: React.FC<EndingProps> = ({
                 <Grid container justify="center" alignContent="center">
                   <div>
                     <div className="score-precentage">
-                      {Math.round(
-                        (brickAttempt.score * 100) / brickAttempt.maxScore
-                      )}
-                      %
+                      {Math.round((brickAttempt.score * 100) / brickAttempt.maxScore)} %
                     </div>
                     <div className="score-number">
                       {brickAttempt.score}/{brickAttempt.maxScore}
