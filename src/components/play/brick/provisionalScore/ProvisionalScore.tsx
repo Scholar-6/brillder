@@ -24,6 +24,7 @@ interface ProvisionalScoreProps {
 
 const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, attempts, ...props }) => {
   const history = useHistory();
+  const [value, setValue] = React.useState(0);
   if (status === PlayStatus.Live) {
     if (props.isPlayPreview) {
       history.push(`/play-preview/brick/${brick.id}/intro`);
@@ -53,6 +54,9 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
     return acc + answer.maxMarks;
   }, 0);
 
+  // animate react progress bar by changing value form 0 to value
+  setTimeout(() => setValue((score * 100) / maxScore), 400);
+
   return (
     <div className="brick-container provisional-score-page">
       <Grid container direction="row">
@@ -63,7 +67,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
             </div>
             <h1>Provisional Score</h1>
             <Grid container justify="center" className="circle-progress-container">
-              <CircularProgressbar className="circle-progress" strokeWidth={4} counterClockwise={true} value={(score * 100) / maxScore} />
+              <CircularProgressbar className="circle-progress" strokeWidth={4} counterClockwise={true} value={value} />
               <div className="score-data">
                 <Grid container justify="center" alignContent="center">
                   <div>
