@@ -33,9 +33,9 @@ const EndingPage: React.FC<EndingProps> = ({
     <div className="brick-container ending-page">
       <Grid container direction="row">
         <Grid item xs={8}>
-          <div className="brick-container">
-            <div className="fs-icon">
-              FS
+          <div className="introduction-page">
+            <div className="question-index-container">
+              <div className="question-index">FS</div>
             </div>
             <h1>Final Score : Agg.</h1>
             <Grid
