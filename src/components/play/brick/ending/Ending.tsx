@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar } from "react-circular-progressbar";
 
 import "./Ending.scss";
 import { Brick } from "model/brick";
@@ -36,17 +36,48 @@ const EndingPage: React.FC<EndingProps> = ({
       <Grid container direction="row">
         <Grid item xs={8}>
           <div className="brick-container">
+            <div className="fs-icon">
+              FS
+            </div>
             <h1>Final Score : Agg.</h1>
             <Grid
               container
               justify="center"
+              alignContent="center"
               className="circle-progress-container"
             >
               <CircularProgressbar
-                className="circle-progress"
+                className="circle-progress-first"
+                strokeWidth={4}
                 counterClockwise={true}
                 value={(brickAttempt.score * 100) / brickAttempt.maxScore}
               />
+              <Grid
+                container
+                justify="center"
+                alignContent="center"
+                className="score-circle"
+              >
+                <CircularProgressbar
+                  className="circle-progress-second"
+                  counterClockwise={true}
+                  strokeWidth={4}
+                  value={(brickAttempt.score * 100) / brickAttempt.maxScore}
+                />
+              </Grid>
+              <Grid
+                container
+                justify="center"
+                alignContent="center"
+                className="score-circle"
+              >
+                <CircularProgressbar
+                  className="circle-progress-third"
+                  counterClockwise={true}
+                  strokeWidth={4}
+                  value={(brickAttempt.score * 100) / brickAttempt.maxScore}
+                />
+              </Grid>
               <div className="score-data">
                 <Grid container justify="center" alignContent="center">
                   <div>
