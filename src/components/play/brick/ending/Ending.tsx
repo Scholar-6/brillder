@@ -27,9 +27,7 @@ const EndingPage: React.FC<EndingProps> = ({
     history.push(`/play/brick/${brick.id}/intro`);
   }
 
-  const endBrick = () => {
-    saveBrick();
-  };
+  const endBrick = () => saveBrick();
 
   return (
     <div className="brick-container ending-page">

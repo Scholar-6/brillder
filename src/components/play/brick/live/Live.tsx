@@ -10,11 +10,10 @@ import { Question } from "model/question";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
 import { PlayStatus, ComponentAttempt } from "../model/model";
-import TimerWithClock from "../baseComponents/TimerWithClock";
+import CountDown from "../baseComponents/CountDown";
 import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import { CashQuestionFromPlay } from "../../../localStorage/buildLocalStorage";
-import { Moment } from "moment";
 import { Brick } from "model/brick";
 import LiveStepper from "./LiveStepper";
 
@@ -22,7 +21,6 @@ interface LivePageProps {
   status: PlayStatus;
   attempts: ComponentAttempt[];
   brick: Brick;
-  startTime?: Moment;
   questions: Question[];
   isPlayPreview?: boolean;
   previewQuestionIndex?: number;
@@ -44,6 +42,7 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   const [activeStep, setActiveStep] = React.useState(initStep);
+  const [isTimeover, setTimeover] = React.useState(false);
   let initAnswers: any[] = [];
 
   const [answers, setAnswers] = React.useState(initAnswers);
@@ -111,9 +110,12 @@ const LivePage: React.FC<LivePageProps> = ({
     }
   };
 
+  const onEnd = () => setTimeover(true);
+
   const renderQuestion = (question: Question, index: number) => {
     return (
       <QuestionLive
+        isTimeover={isTimeover}
         question={question}
         answers={answers[index]}
         ref={questionRefs[index]}
@@ -176,7 +178,11 @@ const LivePage: React.FC<LivePageProps> = ({
         </Grid>
         <Grid item xs={4}>
           <div className="introduction-info">
-            <TimerWithClock startTime={props.startTime} brickLength={brick.brickLength} />
+            <CountDown
+              isLive={true}
+              onEnd={onEnd}
+              brickLength={brick.brickLength}
+            />
             <div className="intro-text-row">
               <LiveStepper
                 activeStep={activeStep}
