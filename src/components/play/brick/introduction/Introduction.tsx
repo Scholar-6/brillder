@@ -155,7 +155,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <Grid item xs={4}>
           <div className="introduction-info">
             <TimerWithClock
-              isIntroPage={true}
+              isArrowUp={true}
               isStopped={state.isStopped}
               startTime={props.startTime}
               brickLength={brick.brickLength}

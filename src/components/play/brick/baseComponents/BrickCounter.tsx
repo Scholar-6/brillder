@@ -5,7 +5,7 @@ import {Moment} from 'moment';
 let moment = require('moment');
 
 interface CounterProps {
-  isIntroPage?: boolean;
+  isArrowUp?: boolean;
   startTime?: Moment;
   isStopped?: boolean;
   onStop?(duration: any): void;
@@ -75,7 +75,8 @@ class BrickCounter extends Component<CounterProps, CounterState> {
   }
 
   renderArrow() {
-    if (this.props.isIntroPage && this.state.isCounting) {
+    console.log(this.props.isArrowUp, this.state.isCounting)
+    if (this.props.isArrowUp && this.state.isCounting) {
       return (
         <div className="intro-arrow">
           <img alt="" src="/feathericons/svg/arrow-up-blue.svg" />
