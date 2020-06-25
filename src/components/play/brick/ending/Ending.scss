@@ -3,7 +3,13 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .ending-page {
-  padding: 1vw;
+  h1 {
+    font-size: 3.6vw;
+    text-align: center;
+    color: $dark-blue;
+    margin-top: 0;
+    font-family: $font-family-bold;
+  }
 
   .begin-row {
     margin-top: 15px;
