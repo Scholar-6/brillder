@@ -24,7 +24,7 @@ const IntroductionDetails: React.FC<IntroductionProps> = ({brickLength}) => {
   }
 
   return (
-    <div className="intro-text-row">
+    <div className="intro-text-row m-t-10">
       <p>Bricks are divided into four sections.</p>
       <ul>
         <li>Set aside around {prepare} minutes to prepare</li>
