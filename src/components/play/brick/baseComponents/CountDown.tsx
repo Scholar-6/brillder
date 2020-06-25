@@ -7,7 +7,7 @@ import Clock from "./Clock";
 const moment = require("moment");
 
 interface CounterProps {
-  isLive: boolean;
+  isLive?: boolean;
   brickLength: BrickLengthEnum;
   onEnd(): void;
 }

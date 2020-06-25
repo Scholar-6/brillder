@@ -13,7 +13,7 @@ import { PlayStatus } from "../model/model";
 import sprite from "../../../../assets/img/icons-sprite.svg";
 import ReviewStepper from "./ReviewStepper";
 import { Moment } from "moment";
-import TimerWithClock from "../baseComponents/TimerWithClock";
+import CountDown from "../baseComponents/CountDown";
 import { BrickLengthEnum } from "model/brick";
 
 interface ReviewPageProps {
@@ -102,6 +102,10 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
   };
 
+  const onEnd = () => {
+    
+  }
+
   const renderQuestion = (question: Question, index: number) => {
     return (
       <QuestionLive
@@ -170,7 +174,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         </Grid>
         <Grid item xs={4}>
           <div className="introduction-info">
-            <TimerWithClock startTime={props.startTime} brickLength={props.brickLength} />
+            <CountDown brickLength={props.brickLength} onEnd={onEnd}/>
             <div className="intro-text-row">
               <ReviewStepper
                 questions={questions}
