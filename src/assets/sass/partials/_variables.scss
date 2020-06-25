@@ -3,19 +3,19 @@ $colors: (
   'black-blue': #0b3b7f,
   'white': #ffffff,
   'white-gray': #e1e1e1,
-  'green': #30c474,
   'input-gray': #fafafb,
   'lighter-blue': #304775,
   'light-blue': #193266,
   'light-blue2': #193366,
   'blue': #0681db,
   'white-blue': #8ad6e8,
-  'lighter-gray': #f5f6f7,
   'dark-blue': #001c58,
   'left-gray': #e6e6ed,
   'tab-gray': #e5e8ed,
   'light-gray': #f3f4f7,
   'gray': #b0b0ad,
+  'theme-green': #30c474,
+  'theme-orange': #c43c30,
   'purple': #a020f0,
   'maroon': #8d021f,
   'pink': #d43790,
@@ -29,7 +29,6 @@ $colors: (
   'red': #c9302c,
   'poppy-red': #8c2f32,
   'yellow': #ff9d00,
-  'valencia': #c43c30,
   'off-white': #f5f5f5,
   'muted': #777777,
   'charcoal': #1f282e,
@@ -41,7 +40,6 @@ $colors: (
 
 $global-light-text-gray: #757576;
 $black-blue: #0b3b7f;
-$white: #ffffff;
 $white-gray: #e1e1e1;
 $tab-gray: #e5e8ed;
 $input-gray: #fafafb;
@@ -50,11 +48,8 @@ $light-blue: #193266;
 $light-blue2: #193366;
 $blue: #0681db;
 $white-blue: #8ad6e8;
-$lighter-gray: #f5f6f7;
-$dark-blue: #001c58;
 $left-gray: #e6e6ed;
 $gray: #b0b0ad;
-$light-gray: #f3f4f7;
 
 $base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5), 10px 10px 15px rgba(70, 70, 70, 0.12);
 
@@ -68,7 +63,7 @@ $right: 1.4vw;
 
 $mobile-col-radius: 8vw;
 $mobile-col-color: $light-blue;
-$mobile-background: $dark-blue;
+$mobile-background: var(--dark-blue);
 $mobile-arrow-color: #96a0b6;
 
 $font-family-light: 'Brandon Grotesque Light';

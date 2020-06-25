@@ -4,6 +4,8 @@ import { Grid } from "@material-ui/core";
 import { Question } from "model/question";
 import { ComponentAttempt } from "../model/model";
 
+import sprite from "../../../../assets/img/icons-sprite.svg";
+
 interface ReviewStepperProps {
   attempts: ComponentAttempt[];
   questions: Question[];
@@ -45,18 +47,14 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
               return (
                 <div
                   key={key}
-                  className="step"
+                  className="step svgOnHover"
                   onClick={handleStep(index - 1)}
                 >
-                  {questionIndex}
-                  <img
-                    alt=""
-                    src={
-                      attempt.correct
-                        ? "/feathericons/svg/check-green.svg"
-                        : "/feathericons/svg/x-orange.svg"
-                    }
-                  />
+                  <span>{questionIndex}</span>
+                  <svg className="svg w-2 h-2 active m-l-02">
+                    <use href={attempt.correct ? sprite + "#ok" : sprite + "#cancel"}
+                      className={attempt.correct ? "text-theme-green" : "text-theme-orange"} />
+                  </svg>
                 </div>
               );
             })}

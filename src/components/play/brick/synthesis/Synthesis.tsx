@@ -40,9 +40,11 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     <div className="brick-container synthesis-page">
       <Grid container direction="row">
         <Grid item xs={8}>
-          <div className="brick-container">
-            <div className="s-icon">S</div>
-            <h1 className="play-page-header">Synthesis</h1>
+          <div className="introduction-page">
+            <div className="question-index-container">
+              <div className="question-index">S</div>
+            </div>
+            <h1>Synthesis</h1>
             <MathInHtml value={brick.synthesis} />
           </div>
         </Grid>
@@ -60,11 +62,8 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
               </div>
               <div>
                 <button type="button" className="play-preview svgOnHover play-green" onClick={reviewBrick}>
-                  <svg className="svg svg-default m-l-02">
-                    <use href={sprite + "#play-thin"} />
-                  </svg>
-                  <svg className="svg colored m-l-02">
-                    <use href={sprite + "#play-thick"} />
+                  <svg className="svg active m-l-02">
+                    <use href={sprite + "#arrow-right"} />
                   </svg>
                 </button>
               </div>

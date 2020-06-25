@@ -8,7 +8,7 @@
       margin: 0 3vw;
       margin-top: 3.3vh;
       background: #f5f6f7;
-      color: $dark-blue;
+      color: var(--dark-blue);
       border-radius: 0.7vw;
       height: 72vh;
       overflow: auto;
@@ -18,7 +18,7 @@
         padding: 1.65vw 1.728vw 1.3vw 1.728vw;
         border-radius: 0.8vw;
         border-radius: 100vw;
-        border: 0.3vw dashed var(--valencia);
+        border: 0.3vw dashed var(--theme-orange);
 
         .zap-icon {
           height: 5.7vw;
@@ -54,25 +54,25 @@
 
     .button-row {
       margin-top: 2vh;
-      color: $dark-blue;
+      color: var(--dark-blue);
       font-size: 1.5vw;
 
       button {
         cursor: pointer;
         background: white;
-        color: $dark-blue;
+        color: var(--dark-blue);
         border-radius: 0.6vw;
         font-size: 1.5vw;
         padding: 0;
         line-height: 1.36;
         padding: 0 0.8vw;
         font-family: $font-family-bold;
-        border: 0.1vw solid $dark-blue;
+        border: 0.1vw solid var(--dark-blue);
         transition: all 0.2s ease-in-out;
       }
 
       button:hover {
-        background: $dark-blue;
+        background: var(--dark-blue);
         color: white;
       }
 

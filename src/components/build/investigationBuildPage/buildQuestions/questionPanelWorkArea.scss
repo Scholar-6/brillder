@@ -12,7 +12,7 @@
   border-bottom-right-radius: $question-radius;
 
   .invalid {
-    background: var(--valencia) !important;
+    background: var(--theme-orange) !important;
   }
 
   .help-arrow {
@@ -38,7 +38,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--valencia);
+    background: var(--theme-orange);
     border-radius: 1vw;
   }
 
@@ -54,14 +54,14 @@
     margin-top: 0.1vw;
     height: 2.8vw !important;
     font-size: $base-lg-text-size;
-    color: $dark-blue;
+    color: var(--dark-blue);
   }
 
   textarea {
     border-radius: 0.2vw;
     margin-top: 0.1vw;
     font-size: $base-lg-text-size;
-    color: $dark-blue;
+    color: var(--dark-blue);
   }
 
   .hint-component {
@@ -95,7 +95,7 @@
     .new-question-button {
       margin: 0 !important;
       padding-top: 6px !important;
-      color: var(--valencia);
+      color: var(--theme-orange);
 
       div {
         span {
@@ -134,7 +134,7 @@
     .scroll-text {
       @extend %flexCenter;
       span {
-        color: $dark-blue;
+        color: var(--dark-blue);
       }
       button {
         width: 1.1vw;
@@ -172,7 +172,7 @@
 
       .new-question-button {
         padding-top: 6px !important;
-        color: var(--valencia);
+        color: var(--theme-orange);
 
         div {
           span {
@@ -255,7 +255,7 @@
           letter-spacing: 0.2vw;
           width: 100%;
           text-align: center;
-          color: $dark-blue;
+          color: var(--dark-blue);
           font-family: $font-family-bold;
         }
 
@@ -263,7 +263,7 @@
           line-height: 1.3 !important;
           margin-bottom: 0.9vh;
           background: white;
-          color: $dark-blue;
+          color: var(--dark-blue);
           width: 89%;
           background: $tab-gray;
           font-family: $font-family-regular;
@@ -271,7 +271,7 @@
           font-size: 1.3vw;
           text-transform: none;
           font-family: $font-family-regular;
-          color: $dark-blue;
+          color: var(--dark-blue);
           background: $tab-gray;
           border-radius: $question-radius;
 

@@ -5,7 +5,7 @@
 .choose-one-preview {
   width: 100%;
   height: 100%;
-  color: $dark-blue;
+  color: var(--dark-blue);
 
   .small-text {
     padding: 28% 10% 13% 10%;
@@ -15,7 +15,7 @@
 
   button {
     background: $tab-gray;
-    color: $dark-blue;
+    color: var(--dark-blue);
     font-family: $font-family-regular;
     margin-left: 7.5%;
     margin-bottom: 7.5%;
@@ -28,7 +28,7 @@
 
   .green-button {
     font-family: $font-family-bold;
-    background: var(--green);
+    background: var(--theme-green);
     color: white;
   }
 }
