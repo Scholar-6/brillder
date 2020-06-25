@@ -157,7 +157,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               <Live
                 status={status}
                 attempts={attempts}
-                startTime={startTime}
                 questions={props.brick.questions}
                 brick={props.brick}
                 updateAttempts={updateAttempts}

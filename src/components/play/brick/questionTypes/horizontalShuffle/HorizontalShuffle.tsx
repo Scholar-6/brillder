@@ -29,6 +29,7 @@ interface HorizontalShuffleComponent {
 }
 
 interface VerticalShuffleProps extends CompQuestionProps {
+  isTimeover: boolean;
   component: HorizontalShuffleComponent;
   answers: number;
 }
@@ -63,6 +64,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   }
 
   setUserAnswers(userAnswers: any[]) {
+    if (this.props.isTimeover) { return; }
     let status = DragAndDropStatus.Changed;
     if (this.state.status === DragAndDropStatus.None) {
       status = DragAndDropStatus.Init;
