@@ -103,11 +103,8 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
               </div>
               <div>
                 <button type="button" className="play-preview svgOnHover play-green" onClick={startBrick}>
-                  <svg className="svg svg-default m-l-02">
-                    <use href={sprite + "#play-thin"} />
-                  </svg>
-                  <svg className="svg colored m-l-02">
-                    <use href={sprite + "#play-thick"} />
+                  <svg className="svg active m-l-02">
+                    <use href={sprite + "#arrow-right"} />
                   </svg>
                 </button>
               </div>
