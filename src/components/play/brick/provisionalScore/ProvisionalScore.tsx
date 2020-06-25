@@ -21,9 +21,6 @@ interface ProvisionalScoreProps {
   attempts: any[];
 }
 
-interface ProvisionalState {
-  otherExpanded: boolean;
-}
 
 const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, attempts, ...props }) => {
   const history = useHistory();
@@ -33,14 +30,6 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
     } else {
       history.push(`/play/brick/${brick.id}/intro`);
     }
-  }
-
-  const [state, setState] = React.useState({
-    otherExpanded: false,
-  } as ProvisionalState);
-
-  const toggleOther = () => {
-    setState({ ...state, otherExpanded: !state.otherExpanded });
   }
 
   const startBrick = () => {
