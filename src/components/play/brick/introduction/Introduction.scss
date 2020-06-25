@@ -55,7 +55,7 @@
           font-size: 2vw;
           font-weight: bold;
           font-family: $font-family-black;
-          text-transform: uppercase;
+          text-transform: capitalize;
         }
         .question-index-container {
           margin: 1.5vw 1.5vw 1.5vw 0.5vw;
@@ -347,4 +347,8 @@
       margin: 0.4vh;
     }
   }
+}
+
+.play-preview-pages ~ .beta-text {
+  color: var(--dark-blue) !important;
 }
