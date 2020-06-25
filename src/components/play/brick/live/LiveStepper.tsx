@@ -65,7 +65,7 @@ const LiveStepper: React.FC<StepperProps> = ({
                   className={className}
                   onClick={handleStep(index - 1)}
                 >
-                  {questionIndex}
+                  <span>{questionIndex}</span>
                 </div>
               );
             })}

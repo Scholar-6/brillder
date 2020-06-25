@@ -39,7 +39,7 @@
   .round-circle {
     font-size: 3vh;
     border-radius: 2vh;
-    color: var(--valencia);
+    color: var(--theme-orange);
     margin-right: 1vw;
   }
 
@@ -53,7 +53,7 @@
   }
   .stop-record {
     padding-left: 0.3vw !important;
-    background: var(--valencia);
+    background: var(--theme-orange);
     color: white;
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
@@ -83,7 +83,7 @@
       width: 2vh;
       margin-left: 0.3vw;
       margin-right: 1.2vw;
-      color: var(--valencia);
+      color: var(--theme-orange);
     }
   }
 
@@ -109,7 +109,7 @@
 
   .stop-record:hover {
     color: white;
-    background: var(--valencia);
+    background: var(--theme-orange);
     opacity: 0.9;
   }
 }

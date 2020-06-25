@@ -3,23 +3,6 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .provisional-score-page {
-  .p-icon {
-    position: absolute;
-    left: 1vw;
-    border-radius: 100vw;
-    font-family: $font-family-black;
-    color: $dark-blue;
-    background: $tab-gray;
-    font-size: 1.7vw;
-    padding: 0vw 0.7vw;
-  }
-  h1 {
-    font-size: 3.6vw;
-    text-align: center;
-    color: $dark-blue;
-    margin-top: 0;
-    font-family: $font-family-bold;
-  }
   .begin-row {
     margin-top: 15px;
     margin-bottom: 15px;
@@ -35,7 +18,6 @@
       margin-right: 10px;
     }
   }
-
   .circle-progress-container {
     position: relative;
     margin-top: 14px;
@@ -88,10 +70,9 @@
   .CircularProgressbar-trail {
     opacity: 0 !important;
   }
-
   .stepper {
     .step {
-      color: $dark-blue !important;
+      color: var(--dark-blue) !important;
     }
   }
 }

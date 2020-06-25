@@ -56,7 +56,7 @@
     width: $bin-size;
     right: 4.2vh;
     cursor: pointer;
-    color: var(--valencia);
+    color: var(--theme-orange);
     z-index: 2;
   }
 
@@ -90,11 +90,11 @@
   }
 
   .checkbox-invalid {
-    color: var(--valencia);
+    color: var(--theme-orange);
   }
 
   .Mui-checked {
-    color: var(--green) !important;
+    color: var(--theme-green) !important;
   }
 
   .checkbox-container {

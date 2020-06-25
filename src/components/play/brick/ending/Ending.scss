@@ -17,8 +17,8 @@
   h1 {
     font-size: 3.6vw;
     text-align: center;
-    color: $dark-blue;
-    margin: 0;
+    color: var(--dark-blue);
+    margin-top: 0;
     font-family: $font-family-bold;
   }
 
@@ -37,9 +37,7 @@
       margin-right: 10px;
     }
   }
-
   $progress-height: 60vh;
-
   .circle-progress-container {
     position: relative;
     margin-bottom: 6px;
@@ -100,7 +98,6 @@
       }
     }
   }
-
   .MuiCircularProgress-colorPrimary {
     color: #0076b4 !important;
   }

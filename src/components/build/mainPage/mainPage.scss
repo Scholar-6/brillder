@@ -3,7 +3,7 @@
 @import '../../../assets/sass/partials/extensions';
 
 .mainPage {
-  background: $dark-blue;
+  background: var(--dark-blue);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -32,7 +32,7 @@
         font-weight: 600;
         text-transform: uppercase;
         font-family: 'Brandon Grotesque Thin';
-        color: var(--valencia);
+        color: var(--theme-orange);
       }
     }
   }

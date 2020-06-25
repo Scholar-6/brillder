@@ -6,7 +6,7 @@
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  color: $dark-blue;
+  color: var(--dark-blue);
 
   p {
     margin-top: 5%;
@@ -14,7 +14,7 @@
   }
 
   .synthesis-title {
-    color: $dark-blue;
+    color: var(--dark-blue);
     margin-top: 12%;
     margin-bottom: 10%;
     font-size: 1.45vw;
@@ -43,7 +43,7 @@
   }
 
   table, td, th {
-    border: 1px solid $dark-blue;
+    border: 1px solid var(--dark-blue);
   }
   td {
     min-width: 0;

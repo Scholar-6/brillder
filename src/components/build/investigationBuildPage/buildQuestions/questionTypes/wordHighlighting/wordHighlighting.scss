@@ -13,7 +13,7 @@
     right: 0;
 
     .active {
-      color: var(--green);
+      color: var(--theme-green);
     }
   }
 
@@ -45,12 +45,12 @@
 
     .word {
       cursor: pointer;
-      color: $dark-blue;
+      color: var(--dark-blue);
       display: inline-block;
     }
 
     .word.active {
-      background: var(--green);
+      background: var(--theme-green);
     }
 
     .word.disabled {

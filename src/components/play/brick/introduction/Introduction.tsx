@@ -49,7 +49,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       let time = moment().subtract(state.duration);
       props.setStartTime(time);
     }
-    
+
     if (state.prepExpanded) {
       setState({ ...state, isStopped: true, prepExpanded: !state.prepExpanded });
     } else {
@@ -58,7 +58,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   };
 
   const startBrick = () => {
-    
+
     if (!props.startTime) {
       props.setStartTime(moment());
     } else if (state.isStopped && state.duration) {
@@ -86,101 +86,103 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   }
 
   const setDuration = (duration: any) => {
-    setState({...state, duration});
+    setState({ ...state, duration });
   }
 
   return (
-    <Grid container direction="row">
-      <Grid item xs={8}>
-        <div className="introduction-page">
-          <div className="intro-header">
-            <div className="left-brick-circle">
-              <div
-                className="round-button"
-                style={{ background: `${color}` }}
-              ></div>
+    <div className="brick-container">
+      <Grid container direction="row">
+        <Grid item xs={8}>
+          <div className="introduction-page">
+            <div className="intro-header">
+              <div className="left-brick-circle">
+                <div
+                  className="round-button"
+                  style={{ background: `${color}` }}
+                ></div>
+              </div>
+              <h1>{brick.title}</h1>
             </div>
-            <h1>{brick.title}</h1>
-          </div>
-          <div className="expend-title">
-            Brief
+            <div className="expend-title">
+              Brief
             <img
-              alt=""
-              src={
-                state.briefExpanded
-                  ? "/feathericons/svg/chevron-down-blue.svg"
-                  : "/feathericons/svg/chevron-right.svg"
-              }
-              onClick={toggleBrief}
+                alt=""
+                src={
+                  state.briefExpanded
+                    ? "/feathericons/svg/chevron-down-blue.svg"
+                    : "/feathericons/svg/chevron-right.svg"
+                }
+                onClick={toggleBrief}
+              />
+            </div>
+            {state.briefExpanded ? (
+              <div className="expended-text">
+                <MathInHtml value={brick.brief} />
+              </div>
+            ) : (
+                ""
+              )}
+            <Grid container className="expend-title">
+              <Grid className="title">Prep</Grid>
+              <Grid>
+                <Grid className="image" container alignContent="center">
+                  <img
+                    alt=""
+                    src={
+                      state.prepExpanded
+                        ? "/feathericons/svg/chevron-down-blue.svg"
+                        : "/feathericons/svg/chevron-right.svg"
+                    }
+                    onClick={togglePrep}
+                  />
+                </Grid>
+              </Grid>
+              <Grid className="help-prep">
+                <Grid className="help-prep" container alignContent="center">
+                  Expand to start the timer. Aim to spend around {timeToSpend} minutes on this section.
+              </Grid>
+              </Grid>
+            </Grid>
+            {state.prepExpanded ? (
+              <div className="expended-text">
+                <MathInHtml value={brick.prep} />
+              </div>
+            ) : (
+                ""
+              )}
+          </div>
+        </Grid>
+        <Grid item xs={4}>
+          <div className="introduction-info">
+            <TimerWithClock
+              isIntroPage={true}
+              isStopped={state.isStopped}
+              startTime={props.startTime}
+              brickLength={brick.brickLength}
+              onStop={(duration) => setDuration(duration)}
             />
-          </div>
-          {state.briefExpanded ? (
-            <div className="expended-text">
-              <MathInHtml value={brick.brief} />
-            </div>
-          ) : (
-              ""
-            )}
-          <Grid container className="expend-title">
-            <Grid className="title">Prep</Grid>
-            <Grid>
-              <Grid className="image" container alignContent="center">
-                <img
-                  alt=""
-                  src={
-                    state.prepExpanded
-                      ? "/feathericons/svg/chevron-down-blue.svg"
-                      : "/feathericons/svg/chevron-right.svg"
-                  }
-                  onClick={togglePrep}
-                />
-              </Grid>
-            </Grid>
-            <Grid className="help-prep">
-              <Grid className="help-prep" container alignContent="center">
-                Expand to start the timer. Aim to spend around {timeToSpend} minutes on this section.
-              </Grid>
-            </Grid>
-          </Grid>
-          {state.prepExpanded ? (
-            <div className="expended-text">
-              <MathInHtml value={brick.prep} />
-            </div>
-          ) : (
-              ""
-            )}
-        </div>
-      </Grid>
-      <Grid item xs={4}>
-        <div className="introduction-info">
-          <TimerWithClock
-            isIntroPage={true}
-            isStopped={state.isStopped}
-            startTime={props.startTime}
-            brickLength={brick.brickLength}
-            onStop={(duration) => setDuration(duration)}
-          />
-          <IntroductionDetails brickLength={brick.brickLength} />
-          <div className="action-footer">
-            <div>&nbsp;</div>
-            <div className="direction-info">
-              <h3>Ready?</h3>
-              <h2>Play Brick</h2>
-            </div>
-            <div>
-              <button type="button" className="play-preview svgOnHover play-green" onClick={startBrick}>
-                <svg className="svg svg-default m-l-02">
-                  <use href={sprite + "#play-thin"} />
-                </svg>
-                <svg className="svg colored m-l-02">
-                  <use href={sprite + "#play-thick"} />
-                </svg>
-              </button>
+            <IntroductionDetails brickLength={brick.brickLength} />
+            <div className="action-footer">
+              <div>&nbsp;</div>
+              <div className="direction-info">
+                <h3>Ready?</h3>
+                <h2>Play Brick</h2>
+              </div>
+              <div>
+                <button type="button" className="play-preview svgOnHover play-green" onClick={startBrick}>
+                  <svg className="svg svg-default m-l-02">
+                    <use href={sprite + "#play-thin"} />
+                  </svg>
+                  <svg className="svg colored m-l-02">
+                    <use href={sprite + "#play-thick"} />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </Grid>
       </Grid>
-    </Grid>
+    </div>
   );
 };
 

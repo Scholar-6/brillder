@@ -18,7 +18,7 @@
       text-align: center;
       font-family: $font-family-regular;
       font-size: 1.3vw;
-      color: var(--valencia);
+      color: var(--theme-orange);
       top: 0%;
       position: absolute;
       opacity: 0;
@@ -111,7 +111,7 @@
   .step-container.active {
     .step-label {
       opacity: 1;
-      color: var(--valencia);
+      color: var(--theme-orange);
     }
   }
 }
