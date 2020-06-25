@@ -158,7 +158,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     <div className="brick-container review-page">
       <Grid container direction="row">
         <Grid item xs={8}>
-          <div className="review-page">
+          <div className="introduction-page">
             <SwipeableViews
               axis={theme.direction === "rtl" ? "x-reverse" : "x"}
               index={activeStep}

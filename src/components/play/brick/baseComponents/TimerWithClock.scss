@@ -10,7 +10,7 @@
   justify-content: flex-end;
   font-size: 2vw;
   font-family: $font-family-black;
-  color: $dark-blue;
+  color: var(--dark-blue);
   .clock {
     margin-left: 3vw;
     display: flex;

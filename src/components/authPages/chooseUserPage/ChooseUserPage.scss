@@ -8,7 +8,7 @@ $col-color: $light-blue;
 
 .choose-user-page {
   height: 100%;
-  background-color: $dark-blue;
+  background-color: var(--dark-blue);
 
   .first-row {
     height: 24.95%;
@@ -92,7 +92,7 @@ $col-color: $light-blue;
 
   .user-type-btn:hover {
     color: white;
-    background: var(--valencia) !important;
+    background: var(--theme-orange) !important;
     span {
       font-family: $font-family-bold !important;
     }
@@ -100,8 +100,8 @@ $col-color: $light-blue;
 
   .user-type-btn {
     padding: 2.85vh 0;
-    background-color: var(--valencia);
-    color: $dark-blue;
+    background-color: var(--theme-orange);
+    color: var(--dark-blue);
     margin-top: 1.55vh;
     margin-bottom: 1.6vh;
     margin-right: 3.4vw;

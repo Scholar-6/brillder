@@ -10,7 +10,7 @@
     border: none !important;
 
     .ck-button {
-      color: $dark-blue;
+      color: var(--dark-blue);
     }
     .ck-custom-dropdown {
       .ck-splitbutton__action {
@@ -62,13 +62,13 @@
   }
 
   .ck-content {
-    color: $dark-blue;
+    color: var(--dark-blue);
     font-family: $font-family-regular;
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
     border: none !important;
     font-size: 1vw;
-    background: $lighter-gray !important;
+    background: var(--light-gray) !important;
     box-shadow: none !important;
 
     strong {
@@ -91,6 +91,6 @@
 
 .document-editor.content-invalid {
   .ck-content {
-    background: var(--valencia) !important;
+    background: var(--theme-orange) !important;
   }
 }

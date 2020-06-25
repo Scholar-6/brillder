@@ -97,7 +97,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             {
               scrollShown ? <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
                 <svg className="svg active">
-                  <use href={sprite + "#arrow-up"} className="text-valencia" />
+                  <use href={sprite + "#arrow-up"} className="text-theme-orange" />
                 </svg>
               </button> : ""
             }
@@ -224,14 +224,14 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               ? <div className="bottom-button-container">
                 <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
                   <svg className="svg active">
-                    <use href={sprite + "#arrow-down"} className="text-valencia" />
+                    <use href={sprite + "#arrow-down"} className="text-theme-orange" />
                   </svg>
                 </button>
                 <div className="scroll-text">
                   <span>Click again to hide</span>
                   <button className="btn btn-transparent svgOnHover" onClick={hideScrollArrows}>
                     <svg className="svg active">
-                      <use href={sprite + "#eye-on"} className="text-valencia" />
+                      <use href={sprite + "#eye-on"} className="text-theme-orange" />
                     </svg>
                   </button>
                 </div>

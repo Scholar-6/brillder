@@ -32,12 +32,12 @@
     }
   }
   &.play-green {
-    background-color: var(--green);
+    background-color: var(--theme-green);
     &:after {
-      background-color: var(--green-alpha3);
+      background-color: var(--theme-green-alpha3);
     }
     .svg {
-      color: $white;
+      color: var(--white);
     }
     &:hover {
       animation-name: pulse-green;
@@ -49,7 +49,7 @@
       background-color: var(--tab-gray-alpha3);
     }
     &:hover {
-      background-color: $dark-blue;
+      background-color: var(--dark-blue);
       animation-name: pulse-blue;
     }
   }
