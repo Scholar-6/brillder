@@ -124,8 +124,12 @@
     .bottom-button-container {
       width: 27vw;
       @extend %flexCenter;
+      justify-content: flex-end;
       position: relative;
       padding: 0.3vw 0;
+      > button {
+        @extend %floatToCenter;
+      }
     }
     .scroll-text {
       @extend %flexCenter;

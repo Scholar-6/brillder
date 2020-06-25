@@ -94,15 +94,13 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
         }
         <div className="top-scroll-area">
           <div className="top-button-container">
-            <div className="scroll-text">
-              {
-                scrollShown ? <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
-                  <svg className="svg active">
-                    <use href={sprite + "#arrow-up"} className="text-orange" />
-                  </svg>
-                </button> : ""
-              }
-            </div>
+            {
+              scrollShown ? <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
+                <svg className="svg active">
+                  <use href={sprite + "#arrow-up"} className="text-valencia" />
+                </svg>
+              </button> : ""
+            }
           </div>
         </div>
         <Grid container justify="center" className="build-question-column" item xs={12}>
@@ -224,16 +222,16 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
           {
             scrollShown
               ? <div className="bottom-button-container">
+                <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
+                  <svg className="svg active">
+                    <use href={sprite + "#arrow-down"} className="text-valencia" />
+                  </svg>
+                </button>
                 <div className="scroll-text">
-                  <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
-                    <svg className="svg active">
-                      <use href={sprite + "#arrow-down"} className="text-orange" />
-                    </svg>
-                  </button>
                   <span>Click again to hide</span>
                   <button className="btn btn-transparent svgOnHover" onClick={hideScrollArrows}>
                     <svg className="svg active">
-                      <use href={sprite + "#eye-on"} className="text-gray" />
+                      <use href={sprite + "#eye-on"} className="text-valencia" />
                     </svg>
                   </button>
                 </div>
@@ -244,7 +242,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   <span>Trouble scrolling? Click the eye to show up/down arrows</span>
                   <button className="btn btn-transparent svgOnHover" onClick={showScrollArrows}>
                     <svg className="svg active">
-                      <use href={sprite + "#eye-off"} className="text-orange" />
+                      <use href={sprite + "#eye-off"} className="text-gray" />
                     </svg>
                   </button>
                 </div>
