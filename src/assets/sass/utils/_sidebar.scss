@@ -329,7 +329,7 @@
             }
           }
           h1 {
-            color: black;
+            color: var(--dark-blue);
             padding: 5px;
             line-height: 48px;
             text-transform: capitalize;
@@ -339,7 +339,7 @@
             font-size: 24px;
           }
           h3 {
-            color: black;
+            color: var(--dark-blue);
             padding: 5px;
             font-size: 16px;
             line-height: 28px;
