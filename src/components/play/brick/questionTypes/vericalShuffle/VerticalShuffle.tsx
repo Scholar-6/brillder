@@ -23,6 +23,7 @@ interface VerticalShuffleComponent {
 }
 
 interface VerticalShuffleProps extends CompQuestionProps {
+  isTimeover: boolean;
   component: VerticalShuffleComponent;
   answers: number;
 }
@@ -59,6 +60,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   setUserAnswers(userAnswers: any[]) {
+    if (this.props.isTimeover) { return; }
     let status = DragAndDropStatus.Changed;
     if (this.state.status === DragAndDropStatus.None) {
       status = DragAndDropStatus.Init;
@@ -78,6 +80,10 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
         this.setState({userAnswers: props.component.list});
       }
     }
+  }
+
+  componentDidUpdate(props: VerticalShuffleProps) {
+    console.log(props.isTimeover, this.props.isTimeover);
   }
 
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
