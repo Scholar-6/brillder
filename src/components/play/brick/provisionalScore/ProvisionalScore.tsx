@@ -63,7 +63,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
             </div>
             <h1>Provisional Score</h1>
             <Grid container justify="center" className="circle-progress-container">
-              <CircularProgressbar className="circle-progress" counterClockwise={true} value={(score * 100) / maxScore} />
+              <CircularProgressbar className="circle-progress" strokeWidth={4} counterClockwise={true} value={(score * 100) / maxScore} />
               <div className="score-data">
                 <Grid container justify="center" alignContent="center">
                   <div>
