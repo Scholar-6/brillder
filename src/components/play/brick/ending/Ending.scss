@@ -3,25 +3,6 @@
 @import "../../../../assets/sass/partials/extensions";
 
 .ending-page {
-  .fs-icon {
-    position: absolute;
-    top: 1.5vw;
-    left: 1.5vw;
-    border-radius: 100vw;
-    font-family: $font-family-black;
-    color: $dark-blue;
-    background: $tab-gray;
-    font-size: 1.7vw;
-    padding: 0vw 0.2vw;
-  }
-  h1 {
-    font-size: 3.6vw;
-    text-align: center;
-    color: var(--dark-blue);
-    margin-top: 0;
-    font-family: $font-family-bold;
-  }
-
   .begin-row {
     margin-top: 15px;
     margin-bottom: 15px;
