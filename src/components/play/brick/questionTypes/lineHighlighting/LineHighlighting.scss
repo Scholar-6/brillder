@@ -5,7 +5,7 @@
 .line-highlighting-play {
   font-size: 1rem;
   font-family: $font-family-regular;
-  color: var(--dark-blue);
+  color: var(--theme-dark-blue);
 
   .lines-container {
     width: 100%;
@@ -26,6 +26,6 @@
   }
   .question-hint,
   .question-hint-global {
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
   }
 }

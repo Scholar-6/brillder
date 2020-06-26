@@ -4,8 +4,6 @@
 
 .question-type {
   position: relative;
-  $color-light-gray: $tab-gray;
-  $color-light-red2: #A84C3F;
   background: white;
 
   border-bottom-left-radius: $question-radius;
@@ -23,7 +21,7 @@
       margin-bottom: 0vh;
       letter-spacing: 0.01vw;
       font-family: $font-family-regular;
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
     }
   }
 
@@ -31,40 +29,6 @@
     position: absolute;
     bottom: 2vh;
   }
-  .round-button-center {
-    cursor: pointer;
-    color: var(--dark-blue);
-    width: 22vw;
-    padding-left: 0.3vw;
-    background: $color-light-gray;
-    border-radius: 1.2vw;
-
-    .synthesis-icon {
-      margin-left: 0.4vw;
-      margin-top: 0.8vh;
-      height: 3.6vh;
-      width: 5.17vh;
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url(/images/synthesis-icon.png);
-    }
-    .synthesis-text {
-      font-family: $font-family-regular;
-      padding-left: 1.4vw;
-      line-height: 2.05;
-      font-size: 2.6vh;
-      letter-spacing: 0.3vw;
-    }
-  }
-  .round-button-center:hover {
-    background: var(--theme-orange);
-    color: white;
-    .synthesis-icon {
-      background-image: url(/images/synthesis-white.png);
-    }
-  }
-
   .card-description {
     text-align: center;
   }
@@ -121,7 +85,7 @@
     }
   }
 
-  @media only screen and (min-width: 1280px)  {
+  @media only screen and (min-width: 1280px) {
     .set-type-icon {
       font-size: 5vhx;
     }
