@@ -20,13 +20,17 @@
   }
   .score-precentage {
     font-family: $font-family-black;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     font-size: 12.5vh;
   }
   .score-number {
     font-family: $font-family-bold;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     font-size: 4vh;
     text-align: center;
+  }
+
+  .blue {
+    color: var(--theme-dark-blue);
   }
 }

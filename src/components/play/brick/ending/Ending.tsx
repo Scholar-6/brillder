@@ -7,12 +7,14 @@ import { Brick } from "model/brick";
 import { useHistory } from "react-router-dom";
 import { PlayStatus } from "../model/model";
 import { BrickAttempt } from "../PlayBrickRouting";
+import ReviewStepper from '../review/ReviewStepper';
 import sprite from "../../../../assets/img/icons-sprite.svg";
 
 interface EndingProps {
   status: PlayStatus;
   brick: Brick;
   brickAttempt: BrickAttempt;
+  attempts: any[];
   saveBrick(): void;
 }
 
@@ -20,6 +22,7 @@ const EndingPage: React.FC<EndingProps> = ({
   status,
   brick,
   brickAttempt,
+  attempts,
   saveBrick,
 }) => {
   const history = useHistory();
@@ -28,6 +31,9 @@ const EndingPage: React.FC<EndingProps> = ({
   }
 
   const endBrick = () => saveBrick();
+
+  const oldScore = brickAttempt.oldScore ? brickAttempt.oldScore : 0;
+  const {score} = brickAttempt;
 
   return (
     <div className="brick-container ending-page">
@@ -48,7 +54,7 @@ const EndingPage: React.FC<EndingProps> = ({
                 className="circle-progress-first"
                 strokeWidth={4}
                 counterClockwise={true}
-                value={(brickAttempt.score * 100) / brickAttempt.maxScore}
+                value={(oldScore * 100) / brickAttempt.maxScore}
               />
               <Grid
                 container
@@ -60,7 +66,7 @@ const EndingPage: React.FC<EndingProps> = ({
                   className="circle-progress-second"
                   counterClockwise={true}
                   strokeWidth={4}
-                  value={(brickAttempt.score * 100) / brickAttempt.maxScore}
+                  value={(score * 100) / brickAttempt.maxScore}
                 />
               </Grid>
               <Grid
@@ -73,7 +79,7 @@ const EndingPage: React.FC<EndingProps> = ({
                   className="circle-progress-third"
                   counterClockwise={true}
                   strokeWidth={4}
-                  value={(brickAttempt.score * 100) / brickAttempt.maxScore}
+                  value={((oldScore + score) * 50) / brickAttempt.maxScore}
                 />
               </Grid>
               <Grid
@@ -99,7 +105,14 @@ const EndingPage: React.FC<EndingProps> = ({
         </Grid>
         <Grid item xs={4}>
           <div className="introduction-info">
-            <div className="intro-text-row"></div>
+            <div className="intro-text-row">
+              <ReviewStepper
+                isEnd={true}
+                questions={brick.questions}
+                attempts={attempts}
+                handleStep={() => {}}
+              />
+            </div>
             <div className="action-footer">
               <div>&nbsp;</div>
               <div className="direction-info">
