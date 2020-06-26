@@ -74,7 +74,7 @@
           font-size: 1.1vw;
           .right-index {
             position: absolute;
-            color: var(--dark-blue);
+            color: var(--theme-dark-blue);
             background: white;
             line-height: 1;
             padding: 0.25vw 0.6vw;
@@ -283,7 +283,7 @@
     .brick-row-title {
       padding-left: 1.15vw;
       // padding-left: 0.35vw;
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
       padding-top: 2.3vh;
       // padding-top: 2vh;
       padding-bottom: 0;
@@ -329,7 +329,7 @@
             }
           }
           h1 {
-            color: var(--dark-blue);
+            color: var(--theme-dark-blue);
             padding: 5px;
             line-height: 48px;
             text-transform: capitalize;
@@ -339,7 +339,7 @@
             font-size: 24px;
           }
           h3 {
-            color: var(--dark-blue);
+            color: var(--theme-dark-blue);
             padding: 5px;
             font-size: 16px;
             line-height: 28px;
@@ -390,7 +390,7 @@
           }
           .absolute-container {
             border-radius: $brick-radius;
-            color: var(--dark-blue);
+            color: var(--theme-dark-blue);
             width: 95%;
             text-align: left;
             position: absolute;
@@ -457,7 +457,7 @@
       margin-left: -1.18vw;
       thead {
         background: $tab-gray;
-        color: var(--dark-blue);
+        color: var(--theme-dark-blue);
         font-family: $font-family-black;
         font-size: 1.3vw;
         letter-spacing: 0.25vw;
@@ -495,7 +495,7 @@
         height: 4.5vh;
         td {
           padding-left: 0.5vw;
-          color: var(--dark-blue);
+          color: var(--theme-dark-blue);
           font-size: 1.3vw;
           padding-top: 0;
 
@@ -526,7 +526,7 @@
       font-size: 0.8vw;
       margin-top: 0.6vh;
       margin-right: 6vw;
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
       letter-spacing: 0.015vw;
 
       .bold {

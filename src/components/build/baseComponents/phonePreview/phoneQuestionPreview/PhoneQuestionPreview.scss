@@ -107,11 +107,11 @@ $background-color: white;
     overflow-y: auto !important;
 
     .text-play {
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
     }
 
     .quotes-live {
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
     }
 
     > div {
@@ -144,7 +144,7 @@ $background-color: white;
     }
 
     table, td, th {
-      border: 1px solid var(--dark-blue);
+      border: 1px solid var(--theme-dark-blue);
     }
     td {
       min-width: 0;
@@ -170,7 +170,7 @@ $background-color: white;
     }
 
     table, td, th {
-      border: 1px solid var(--dark-blue);
+      border: 1px solid var(--theme-dark-blue);
     }
     td {
       min-width: 0;

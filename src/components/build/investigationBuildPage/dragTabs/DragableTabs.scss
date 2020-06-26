@@ -10,7 +10,7 @@ $tile-height: 100%;
 .drag-tabs {
   display: inline-block;
   width: 100%;
-  background: var(--dark-blue) !important;
+  background: var(--theme-dark-blue) !important;
   height: 6.2%;
 
   .drag-last-tile-container {
@@ -74,7 +74,7 @@ $tile-height: 100%;
     }
 
     .tab-number {
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
       font-family: $font-family-bold;
       font-size: 3.4vh;
     }
@@ -86,7 +86,6 @@ $tile-height: 100%;
     }
 
     .remove-icon {
-      margin-top:0.5vh;
       height: 3vh;
       cursor: pointer;
     }
@@ -94,19 +93,17 @@ $tile-height: 100%;
 
   .last-tab {
     text-align: center;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     font-size: 1.3vw;
     overflow: hidden;
-    font-family: $font-family-bold;
+		font-family: $font-family-bold;
+		width: 3vh;
+		height: 3vh;
   }
 
   .synthesis-tab {
     .drag-tile {
       background: white;
-
-      .last-tab {
-        height: 5vh;
-      }
     }
   }
 
