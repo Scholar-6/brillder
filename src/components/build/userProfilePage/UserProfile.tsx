@@ -359,7 +359,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   <div className="profile-image-container">
                     <div className="profile-image svgOnHover">
                       <svg className="svg active">
-                        <use href={sprite + "#user"} className="text-dark-blue" />
+                        <use href={sprite + "#user"} className="text-theme-dark-blue" />
                       </svg>
                     </div>
                     <div className="add-image-button svgOnHover">

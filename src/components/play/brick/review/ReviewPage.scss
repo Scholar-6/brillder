@@ -27,7 +27,7 @@
   }
 
   table, td, th {
-    border: 1px solid var(--dark-blue);
+    border: 1px solid var(--theme-dark-blue);
   }
   td {
     min-width: 0;
@@ -57,7 +57,7 @@
   }
 
   table, td, th {
-    border: 1px solid var(--dark-blue);
+    border: 1px solid var(--theme-dark-blue);
   }
   td {
     min-width: 2em;
@@ -72,7 +72,7 @@
 
   .stepper {
     .step {
-      color: var(--dark-blue) !important;
+      color: var(--theme-dark-blue) !important;
     }
   }
   .edited-step-icon {

@@ -7,7 +7,7 @@
     font-family: $font-family-regular !important;
   }
   .sort-category {
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     padding: 10px 0;
     text-align: center;
     font-family: $font-family-bold;
@@ -30,7 +30,7 @@
       background: #f5f6f7 !important;
       margin-bottom: 10px;
       cursor: pointer;
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
       .MuiListItemIcon-root {
         min-width: 30px;
       }
@@ -58,7 +58,7 @@
 
     .question-hint,
     .question-hint-global {
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
     }
   }
 }

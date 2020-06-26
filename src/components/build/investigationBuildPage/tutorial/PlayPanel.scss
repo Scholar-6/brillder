@@ -8,7 +8,7 @@
       margin: 0 3vw;
       margin-top: 3.3vh;
       background: #f5f6f7;
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
       border-radius: 0.7vw;
       height: 72vh;
       overflow: auto;
@@ -86,25 +86,25 @@
 
     .button-row {
       margin-top: 2vh;
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
       font-size: 1.5vw;
 
       button {
         cursor: pointer;
         background: white;
-        color: var(--dark-blue);
+        color: var(--theme-dark-blue);
         border-radius: 0.6vw;
         font-size: 1.5vw;
         padding: 0;
         line-height: 1.36;
         padding: 0 0.8vw;
         font-family: $font-family-bold;
-        border: 0.1vw solid var(--dark-blue);
+        border: 0.1vw solid var(--theme-dark-blue);
         transition: all 0.2s ease-in-out;
       }
 
       button:hover {
-        background: var(--dark-blue);
+        background: var(--theme-dark-blue);
         color: white;
       }
 

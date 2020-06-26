@@ -3,7 +3,7 @@
 @import '../../../assets/sass/partials/extensions';
 
 .pre-login-page {
-  background: var(--dark-blue);
+  background: var(--theme-dark-blue);
   height: 100%;
   .back-col {
     height: 13.3vh;
@@ -97,13 +97,13 @@
       color: var(--white);
     }
     &:hover {
-      background: var(--dark-blue);
+      background: var(--theme-dark-blue);
     }
   }
   .google-button {
     background: var(--white);
     span {
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
     }
     &:hover {
       background: var(--white);
