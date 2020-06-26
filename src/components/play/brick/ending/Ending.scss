@@ -18,4 +18,23 @@
       margin-right: 10px;
     }
   }
+  .score-precentage {
+    font-family: $font-family-black;
+    color: var(--theme-dark-blue);
+    font-size: 12.5vh;
+  }
+  .score-number {
+    font-family: $font-family-bold;
+    color: var(--theme-dark-blue);
+    font-size: 4vh;
+    text-align: center;
+  }
+
+  .intro-header {
+    font-size: 1.7vw !important;
+  }
+
+  .blue {
+    color: var(--theme-dark-blue);
+  }
 }

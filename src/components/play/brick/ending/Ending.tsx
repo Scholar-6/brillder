@@ -7,12 +7,15 @@ import { Brick } from "model/brick";
 import { useHistory } from "react-router-dom";
 import { PlayStatus } from "../model/model";
 import { BrickAttempt } from "../PlayBrickRouting";
+import ReviewStepper from '../review/ReviewStepper';
 import sprite from "../../../../assets/img/icons-sprite.svg";
+import Clock from "../baseComponents/Clock";
 
 interface EndingProps {
   status: PlayStatus;
   brick: Brick;
   brickAttempt: BrickAttempt;
+  attempts: any[];
   saveBrick(): void;
 }
 
@@ -20,14 +23,31 @@ const EndingPage: React.FC<EndingProps> = ({
   status,
   brick,
   brickAttempt,
+  attempts,
   saveBrick,
 }) => {
   const history = useHistory();
+  const [minCurrentScore, setMinScore] = React.useState(0);
+  const [maxCurrentScore, setMaxScore] = React.useState(0);
+  const [currentScore, setCurrentScore] = React.useState(0);
+
   if (status === PlayStatus.Live) {
     history.push(`/play/brick/${brick.id}/intro`);
   }
 
   const endBrick = () => saveBrick();
+
+  const oldScore = brickAttempt.oldScore ? brickAttempt.oldScore : 0;
+  const {score, maxScore} = brickAttempt;
+  const currentPScore = Math.round(((score + oldScore) * 50) / maxScore);
+  const minPScore = Math.round((oldScore * 100) / maxScore);
+  const maxPScore = Math.round((score * 100) / maxScore);
+
+  setTimeout(() => {
+    setMinScore((oldScore * 100) / maxScore);
+    setMaxScore((score * 100) / maxScore);
+    setCurrentScore(Math.round((oldScore + score) / maxScore / 2));
+  }, 400);
 
   return (
     <div className="brick-container ending-page">
@@ -48,7 +68,7 @@ const EndingPage: React.FC<EndingProps> = ({
                 className="circle-progress-first"
                 strokeWidth={4}
                 counterClockwise={true}
-                value={(brickAttempt.score * 100) / brickAttempt.maxScore}
+                value={minCurrentScore}
               />
               <Grid
                 container
@@ -60,7 +80,7 @@ const EndingPage: React.FC<EndingProps> = ({
                   className="circle-progress-second"
                   counterClockwise={true}
                   strokeWidth={4}
-                  value={(brickAttempt.score * 100) / brickAttempt.maxScore}
+                  value={maxCurrentScore}
                 />
               </Grid>
               <Grid
@@ -73,27 +93,44 @@ const EndingPage: React.FC<EndingProps> = ({
                   className="circle-progress-third"
                   counterClockwise={true}
                   strokeWidth={4}
-                  value={(brickAttempt.score * 100) / brickAttempt.maxScore}
+                  value={currentScore}
                 />
               </Grid>
-              <div className="score-data">
-                <Grid container justify="center" alignContent="center">
-                  <div>
-                    <div className="score-precentage">
-                      {Math.round((brickAttempt.score * 100) / brickAttempt.maxScore)} %
-                    </div>
-                    <div className="score-number">
-                      {brickAttempt.score}/{brickAttempt.maxScore}
-                    </div>
+              <Grid
+                container
+                justify="center"
+                alignContent="center"
+                className="score-circle"
+              >
+                <div>
+                  <div className="score-precentage">
+                    {currentPScore}%
                   </div>
-                </Grid>
-              </div>
+                  <div className="score-number">
+                    {oldScore}/{maxScore}
+                  </div>
+                  <div className="score-number">
+                    {score}/{maxScore}
+                  </div>
+                </div>
+              </Grid>
             </Grid>
           </div>
         </Grid>
         <Grid item xs={4}>
           <div className="introduction-info">
-            <div className="intro-text-row"></div>
+            <div className="intro-header">
+              <div>Range: {minPScore}%-{maxPScore}%</div>
+              <Clock brickLength={brick.brickLength} />
+            </div>
+            <div className="intro-text-row">
+              <ReviewStepper
+                isEnd={true}
+                questions={brick.questions}
+                attempts={attempts}
+                handleStep={() => {}}
+              />
+            </div>
             <div className="action-footer">
               <div>&nbsp;</div>
               <div className="direction-info">
