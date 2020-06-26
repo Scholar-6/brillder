@@ -4,6 +4,7 @@ import { Grid } from "@material-ui/core";
 import "./Live.scss";
 import { Question } from "model/question";
 import { ComponentAttempt } from "../model/model";
+import sprite from "../../../../assets/img/icons-sprite.svg";
 
 interface StepperProps {
   activeStep: number;
@@ -66,6 +67,15 @@ const LiveStepper: React.FC<StepperProps> = ({
                   onClick={handleStep(index - 1)}
                 >
                   <span>{questionIndex}</span>
+                  {
+                    (question.edited) ?
+                      <Grid container alignContent="center" className="svg w-2 h-2 active m-l-02">
+                        <div className="blue-circle-container">
+                          <div className="blue-circle"></div>
+                        </div>
+                      </Grid>
+                      : ""
+                  }
                 </div>
               );
             })}
