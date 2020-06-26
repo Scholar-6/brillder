@@ -28,6 +28,7 @@ interface QuestionProps {
   question: Question;
   isPhonePreview?: boolean;
   answers: any;
+  onAttempted?(): void;
 }
 
 interface QuestionState {
@@ -86,15 +87,19 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
         return <div key={index}>Not implemented</div>
       }
 
-      return <UniqueComponent
-        ref={this.state.answerRef as React.RefObject<any>}
-        key={index}
-        isTimeover={this.props.isTimeover}
-        attempt={this.props.attempt}
-        answers={this.props.answers}
-        isPreview={this.props.isPhonePreview}
-        question={question}
-        component={component} />
+      return (
+        <UniqueComponent
+          ref={this.state.answerRef as React.RefObject<any>}
+          key={index}
+          isTimeover={this.props.isTimeover}
+          attempt={this.props.attempt}
+          answers={this.props.answers}
+          isPreview={this.props.isPhonePreview}
+          question={question}
+          component={component}
+          onAttempted={this.props.onAttempted}
+        />
+      );
     }
 
     const renderComponent = (component: any, index: number) => {
