@@ -105,11 +105,8 @@ const EndingPage: React.FC<EndingProps> = ({
                   className="play-preview svgOnHover play-green"
                   onClick={endBrick}
                 >
-                  <svg className="svg svg-default m-l-02">
-                    <use href={sprite + "#play-thin"} />
-                  </svg>
-                  <svg className="svg colored m-l-02">
-                    <use href={sprite + "#play-thick"} />
+                  <svg className="svg active m-l-02">
+                    <use href={sprite + "#arrow-right"} />
                   </svg>
                 </button>
               </div>
