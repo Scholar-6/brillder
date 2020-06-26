@@ -69,11 +69,9 @@ const LiveStepper: React.FC<StepperProps> = ({
                   <span>{questionIndex}</span>
                   {
                     (question.edited) ?
-                      <Grid container alignContent="center" className="svg w-2 h-2 active m-l-02">
-                        <div className="blue-circle-container">
-                          <div className="blue-circle"></div>
-                        </div>
-                      </Grid>
+                      <div className="blue-circle-container">
+                        <div className="blue-circle"></div>
+                      </div>
                       : ""
                   }
                 </div>
