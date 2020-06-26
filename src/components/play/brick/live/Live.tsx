@@ -91,9 +91,7 @@ const LivePage: React.FC<LivePageProps> = ({
     setAnswers(copyAnswers);
   };
 
-  const prev = () => {
-    handleStep(activeStep - 1)();
-  }
+  const prev = () => handleStep(activeStep - 1)();
 
   const next = () => {
     handleStep(activeStep + 1)();
@@ -112,6 +110,12 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const onEnd = () => setTimeover(true);
 
+  const onQuestionAttempted = (questionIndex: number) => {
+    if (!questions[questionIndex].edited) {
+      handleStep(questionIndex)();
+    }
+  }
+
   const renderQuestion = (question: Question, index: number) => {
     return (
       <QuestionLive
@@ -119,6 +123,7 @@ const LivePage: React.FC<LivePageProps> = ({
         question={question}
         answers={answers[index]}
         ref={questionRefs[index]}
+        onAttempted={() => onQuestionAttempted(index)}
       />
     );
   };
