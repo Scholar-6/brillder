@@ -45,7 +45,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
               <div className="question-index">S</div>
             </div>
             <h1>Synthesis</h1>
-            <div className="systhesis-content">
+            <div className="synthesis-content">
               <MathInHtml value={brick.synthesis} />
             </div>
           </div>
