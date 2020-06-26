@@ -63,8 +63,8 @@
 				.question-index-container {
 					margin: 1.5vw 1.5vw 1.5vw 0.5vw;
 					padding: 0.5vw;
-					width: 2.3vw;
-					height: 2.3vw;
+					width: 3.3vw;
+					height: 3.3vw;
 					border-radius: 100vw;
 					&.correct {
 						.question-index {
@@ -149,7 +149,8 @@
 					}
 					.stepper {
 						.step {
-							@extend %flexCenter;
+              @extend %posRelative;
+              @extend %flexCenter;
 							justify-content: flex-start;
 							cursor: pointer;
 							font-size: 2vw;
@@ -161,7 +162,19 @@
 							&.completed,
 							&.current {
 								color: var(--theme-dark-blue);
-							}
+              }
+              .blue-circle-container {
+                @extend %floatToXCenter;
+                padding: 0.2vw;
+                border-radius: 100vw;
+                background: #82c0ed;
+                .blue-circle {
+                  height: 0.8vw;
+                  width: 0.8vw;
+                  border-radius: 100vw;
+                  background: var(--blue);
+                }
+              }
 						}
 					}
 				}
@@ -170,7 +183,7 @@
 					position: absolute;
 					left: 50%;
 					transform: translateX(-50%);
-					bottom: 4vw;
+					bottom: 5vw;
 					display: flex;
 					align-items: center;
 					justify-content: flex-end;
@@ -230,10 +243,15 @@
 			&.synthesis-page,
 			&.ending-page {
 				.introduction-page {
-					padding: 0 2vw;
+					padding: 0;
 					height: calc(100vh - 16vh);
 				}
-			}
+      }
+      &.synthesis-page {
+        .synthesis-content {
+          padding: 0 2vw;
+        }
+      }
 			.circle-progress-container {
 				position: relative;
 				width: 100%;
