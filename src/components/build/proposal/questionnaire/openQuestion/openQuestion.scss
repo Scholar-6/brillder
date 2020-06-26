@@ -15,7 +15,7 @@
       font-family: $font-family-black;
       font-weight: normal !important;
       line-height: 1.35;
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
     }
   }
 
@@ -23,7 +23,7 @@
     font-family: $font-family-regular;
     font-size: 1.32vw;
     text-align: center;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
   }
 
   .audience-inputs {
@@ -51,7 +51,7 @@
   .phone-preview-component {
     width: 100%;
     height: 100%;
-    background: var(--dark-blue);
+    background: var(--theme-dark-blue);
 
     img {
       width: auto;

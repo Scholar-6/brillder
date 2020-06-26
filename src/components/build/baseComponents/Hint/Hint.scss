@@ -36,7 +36,7 @@
     padding-right: 0.6vw !important;
   }
 
-  color: var(--dark-blue);
+  color: var(--theme-dark-blue);
   background: white;
   border-radius: 0.4vw;
 
@@ -53,7 +53,7 @@
     font-family: $font-family-regular;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     padding: 0;
     margin: 0.1vw 0;
   }

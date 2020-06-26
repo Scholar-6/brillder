@@ -12,7 +12,7 @@
     font-family: $font-family-regular;
     margin: 1px;
     border-radius: 4px;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     padding-top: 14px;
     padding-bottom: 14px;
     padding-left: 5px;
@@ -35,7 +35,7 @@
   }
   .question-hint,
   .question-hint-global {
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
   }
 
   .question-hint-global {

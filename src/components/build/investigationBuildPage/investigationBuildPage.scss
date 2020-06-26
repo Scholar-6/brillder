@@ -34,7 +34,7 @@
 
   .investigation-build-background {
     height: 100%;
-    background: var(--dark-blue);
+    background: var(--theme-dark-blue);
   }
 
   .right-top-drop-icon {
@@ -145,7 +145,7 @@
     padding: 3.8vh 4vw 3.5vh 1.7vw;
     font-size: 1.9vw;
     letter-spacing: 0;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     font-family: $font-family-regular;
   }
   .row-buttons {
@@ -173,7 +173,7 @@
     }
 
     .no-button {
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
       background: $tab-gray;
       margin-right: 0.2vw;
     }
