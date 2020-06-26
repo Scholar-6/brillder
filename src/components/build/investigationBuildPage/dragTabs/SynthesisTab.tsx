@@ -22,15 +22,15 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
     <Grid
       className={`drag-tile ${
         props.validationRequired && !props.synthesis ? "invalid" : ""
-      }`}
+        }`}
       container
       alignContent="center"
       justify="center"
     >
       <div className="last-tab svgOnHover">
-				<svg className="svg w100 h100 active">
-					<use href={sprite + "#list"} className="text-theme-dark-blue" />
-				</svg>
+        <svg className="svg w100 h100 active">
+          <use href={sprite + "#list"} className="text-theme-dark-blue" />
+        </svg>
       </div>
     </Grid>
   );
