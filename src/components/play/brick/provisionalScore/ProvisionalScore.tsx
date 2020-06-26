@@ -11,6 +11,7 @@ import TimerWithClock from "../baseComponents/TimerWithClock";
 import { Moment } from 'moment';
 import sprite from "../../../../assets/img/icons-sprite.svg";
 import ReviewStepper from '../review/ReviewStepper';
+import Clock from '../baseComponents/Clock';
 
 
 interface ProvisionalScoreProps {
@@ -81,7 +82,9 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
         </Grid>
         <Grid item xs={4}>
           <div className="introduction-info">
-            <TimerWithClock startTime={props.startTime} brickLength={brick.brickLength} />
+            <div className="intro-header">
+              <Clock brickLength={brick.brickLength} />
+            </div>
             <div className="intro-text-row">
             <ReviewStepper
               questions={brick.questions}
