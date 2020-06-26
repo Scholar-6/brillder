@@ -181,7 +181,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 finishBrick={finishReview} />
             </Route>
             <Route exac path="/play/brick/:brickId/ending">
-              <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} saveBrick={saveBrickAttempt} />
+              <Ending
+                status={status}
+                brick={props.brick}
+                attempts={attempts}
+                brickAttempt={brickAttempt}
+                saveBrick={saveBrickAttempt}
+              />
             </Route>
           </Switch>
         </Grid>
