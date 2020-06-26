@@ -3,7 +3,7 @@
 @import '../../../assets/sass/partials/extensions';
 
 .pre-login-page {
-  background: $dark-blue;
+  background: var(--dark-blue);
   height: 100%;
   .back-col {
     height: 13.3vh;
@@ -15,7 +15,7 @@
         height: 3.6vw;
         width: 2vw;
         margin-left: 15vw;
-        color: $orange;
+        color: var(--theme-orange);
         transition: all 0.2s ease-in-out;
         transform-origin: 200% 50%;
         background-size: 100% 100%;
@@ -77,7 +77,7 @@
     text-transform: none;
     font: 1vw $font-family-regular;
     letter-spacing: 0.1vw;
-    width: 23vw;
+    width: 22vw;
     margin-bottom: 2.7vh;
     transition: all 0.2s ease-in-out;
     .svg {
@@ -86,29 +86,30 @@
       width: 2.5vw;
       height: 2.5vw;
     }
-    &:hover {
-      .svg {
-        transform: scale(1.4);
-      }
+    .MuiButton-label {
+      justify-content: flex-start;
     }
   }
   .email-button {
-    background: $orange;
+    background: var(--theme-orange);
     .svg,
     span {
-      color: $white;
+      color: var(--white);
     }
     &:hover {
-      background: $dark-blue;
+      background: var(--dark-blue);
     }
   }
   .google-button {
-    background: $white;
+    background: var(--white);
     span {
-      color: $dark-blue;
+      color: var(--dark-blue);
     }
     &:hover {
-      background: $white;
+      background: var(--white);
+      .svg {
+        transform: scale(1.4);
+      }
     }
   }
 }

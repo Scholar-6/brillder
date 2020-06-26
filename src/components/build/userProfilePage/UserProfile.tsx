@@ -369,7 +369,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                     </div>
                     <div className="status-container svgOnHover">
                       <svg className="svg active">
-                        <use href={sprite + "#circle-filled"} className="text-light-green" />
+                        <use href={sprite + "#circle-filled"} className="text-theme-green" />
                       </svg>
                       <span>Active</span>
                     </div>

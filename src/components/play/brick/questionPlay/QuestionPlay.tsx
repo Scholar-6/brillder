@@ -23,6 +23,7 @@ import WordHighlightingComponent from '../questionTypes/wordHighlighting/WordHig
 
 
 interface QuestionProps {
+  isTimeover?: boolean;
   attempt?: ComponentAttempt;
   question: Question;
   isPhonePreview?: boolean;
@@ -88,6 +89,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
       return <UniqueComponent
         ref={this.state.answerRef as React.RefObject<any>}
         key={index}
+        isTimeover={this.props.isTimeover}
         attempt={this.props.attempt}
         answers={this.props.answers}
         isPreview={this.props.isPhonePreview}

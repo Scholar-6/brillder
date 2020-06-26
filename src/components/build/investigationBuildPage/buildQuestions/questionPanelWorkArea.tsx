@@ -4,8 +4,9 @@ import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
 
+import sprite from "../../../../assets/img/icons-sprite.svg";
 import QuestionComponents from './questionComponents/questionComponents';
-import {getNonEmptyComponent} from '../questionService/ValidateQuestionService';
+import { getNonEmptyComponent } from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionTypeObj } from 'model/question';
 import DragBox from './drag/dragBox';
@@ -40,11 +41,11 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   brickId, question, history, validationRequired, locked, getQuestionIndex, ...props
 }) => {
   const [componentTypes, setComponentType] = React.useState([
-    {id: 1, type: QuestionComponentTypeEnum.Text},
-    {id: 2, type: QuestionComponentTypeEnum.Quote},
-    {id: 3, type: QuestionComponentTypeEnum.Image},
-    {id: 4, type: QuestionComponentTypeEnum.Sound},
-    {id: 4, type: QuestionComponentTypeEnum.Graph}
+    { id: 1, type: QuestionComponentTypeEnum.Text },
+    { id: 2, type: QuestionComponentTypeEnum.Quote },
+    { id: 3, type: QuestionComponentTypeEnum.Image },
+    { id: 4, type: QuestionComponentTypeEnum.Sound },
+    { id: 4, type: QuestionComponentTypeEnum.Graph }
   ]);
   const [scrollShown, setScroll] = React.useState(false);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
@@ -87,19 +88,23 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 
   return (
     <MuiThemeProvider >
-      <div className="build-question-page" style={{width: '100%', height: '94%'}}>
+      <div className="build-question-page" style={{ width: '100%', height: '94%' }}>
         {
           showHelpArrow ? <img alt="" className="help-arrow" src="/images/investigation-arrow.png" /> : ""
         }
-        <div className="top-scroll-arrow">
-          <Grid container justify="center">
+        <div className="top-scroll-area">
+          <div className="top-button-container">
             {
-              scrollShown ? <button onClick={scrollUp}>Up</button> : ""
+              scrollShown ? <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
+                <svg className="svg active">
+                  <use href={sprite + "#arrow-up"} className="text-theme-orange" />
+                </svg>
+              </button> : ""
             }
-          </Grid>
+          </div>
         </div>
         <Grid container justify="center" className="build-question-column" item xs={12}>
-          <Grid container direction="row" style={{height: '100%'}}>
+          <Grid container direction="row" style={{ height: '100%' }}>
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
               <Grid container item xs={12} className="left-sidebar" alignItems="center">
                 <ReactSortable
@@ -180,7 +185,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                           }
                         </Button>
                       </Grid>
-                    : ""
+                      : ""
                   }
                 </Grid>
               </Grid>
@@ -202,7 +207,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                       {
                         typeArray.map((typeName, i) => {
                           const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
-                          return <MenuItem style={{fontFamily: 'Brandon Grotesque Regular'}} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
+                          return <MenuItem style={{ fontFamily: 'Brandon Grotesque Regular' }} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
                         })
                       }
                     </Select>
@@ -214,22 +219,35 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
           </Grid>
         </Grid>
         <div className="bottom-scroll-area">
-          <Grid container justify="center">
-            {
-              scrollShown
-                ? <div className="bottom-button-container">
-                    <button onClick={scrollDown}>Down</button>
-                    <div className="bottom-text">
-                      Click again to hide
-                      <button onClick={hideScrollArrows}>Hide Arrows</button>
-                    </div>
-                  </div>
-                : <div>
-                    Trouble scrolling? Click the eye to show up/down arrows
-                    <button onClick={showScrollArrows}>Show Arrows</button>
-                  </div>
-            }
-          </Grid>
+          {
+            scrollShown
+              ? <div className="bottom-button-container">
+                <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
+                  <svg className="svg active">
+                    <use href={sprite + "#arrow-down"} className="text-theme-orange" />
+                  </svg>
+                </button>
+                <div className="scroll-text">
+                  <span>Click again to hide</span>
+                  <button className="btn btn-transparent svgOnHover" onClick={hideScrollArrows}>
+                    <svg className="svg active">
+                      <use href={sprite + "#eye-on"} className="text-theme-orange" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              :
+              <div className="bottom-button-container">
+                <div className="scroll-text">
+                  <span>Trouble scrolling? Click the eye to show up/down arrows</span>
+                  <button className="btn btn-transparent svgOnHover" onClick={showScrollArrows}>
+                    <svg className="svg active">
+                      <use href={sprite + "#eye-off"} className="text-gray" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+          }
         </div>
       </div>
     </MuiThemeProvider>

@@ -4,7 +4,7 @@
 
 .dashboard-page {
   overflow: hidden;
-  background: $dark-blue;
+  background: var(--dark-blue);
   height: 100%;
   width: 100%;
   font-family: $font-family-regular;
@@ -25,7 +25,7 @@
     padding: 3.8vh 1vw 3.5vh 2.2vw;
     font-size: 2.35vw;
     letter-spacing: 0;
-    color: $dark-blue;
+    color: var(--dark-blue);
   }
   .logout-buttons {
     padding-bottom: 2.3vh;
@@ -47,12 +47,12 @@
 
     .yes-button {
       color: white;
-      background: $orange;
+      background: var(--theme-orange);
       margin-right: 1.4vw !important;
     }
 
     .no-button {
-      color: $dark-blue;
+      color: var(--dark-blue);
       background: $tab-gray;
       margin-right: 0.2vw;
     }
@@ -68,7 +68,7 @@
     padding: 3.8vh 4vw 3.5vh 1.7vw;
     font-size: 2.35vw;
     letter-spacing: 0;
-    color: $dark-blue;
+    color: var(--dark-blue);
   }
   .row-buttons {
     padding-bottom: 2.3vh;
@@ -90,12 +90,12 @@
 
     .yes-button {
       color: white;
-      background: $orange;
+      background: var(--theme-orange);
       margin-right: 1.4vw !important;
     }
 
     .no-button {
-      color: $dark-blue;
+      color: var(--dark-blue);
       background: $tab-gray;
       margin-right: 0.2vw;
     }

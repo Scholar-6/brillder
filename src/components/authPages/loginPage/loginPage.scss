@@ -8,7 +8,7 @@
     font-family: $font-family-regular;
   }
 
-  background: $dark-blue;
+  background: var(--dark-blue);
   height: 100%;
   .back-col {
     text-align: center;
@@ -20,7 +20,7 @@
         height: 3.6vw;
         width: 2vw;
         margin-left: 15vw;
-        color: $orange;
+        color: var(--theme-orange);
         transition: all 0.2s ease-in-out;
         transform-origin: 200% 50%;
 
@@ -88,7 +88,7 @@
     font-family: $font-family-regular;
     width: 70%;
     text-align: center;
-    background: $dark-blue;
+    background: var(--dark-blue);
     border: none;
     border-radius: $button-radius;
     font-size: 1.5vw;
@@ -118,7 +118,7 @@
       .hide-password-icon {
         height: 37%;
         opacity: 0.7;
-        color: $orange;
+        color: var(--theme-orange);
         z-index: 5;
       }
       .hide-password-icon:hover {
@@ -138,7 +138,7 @@
     box-shadow: none;
     width: 9.2vw;
     padding: 0.8vh 1vw 0.6vh 1.23vw;
-    background: $orange;
+    background: var(--theme-orange);
     font-weight: normal !important;
     font-size: 1.2vw;
     letter-spacing: 0.3vw;
@@ -156,7 +156,7 @@
   }
 
   .sign-in-button:hover {
-    background: $orange;
+    background: var(--theme-orange);
     box-shadow: none;
     font-family: $font-family-bold;
   }
@@ -173,13 +173,13 @@
       position: "relative";
       line-height: 1.43;
       font-size: 7.15vh;
-      
+
       .register-success-icon {
         position: absolute;
         top: 0.3vh;
         left: -14.6vh;
         font-size: 10.7vh;
-        color: $orange;
+        color: var(--theme-orange);
       }
     }
     .contact-info {

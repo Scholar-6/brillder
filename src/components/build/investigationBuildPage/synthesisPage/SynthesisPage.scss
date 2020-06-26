@@ -3,8 +3,6 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .synthesis-page {
-  height: 90%;
-
   .inner-question-type {
     padding-right: 1.4vw;
     padding-left: 1.4vw;
@@ -24,7 +22,7 @@
       padding-top: 0;
       margin: 0 45%;
       .text-label {
-        color: $dark-blue;
+        color: var(--dark-blue);
         width: 10%;
         position: absolute;
         z-index: 1;
@@ -80,7 +78,7 @@
     }
 
     .finish-text {
-      color: $dark-blue;
+      color: var(--dark-blue);
       letter-spacing: 0.2vw;
       font-size: 1.3vw;
       text-align: center;
@@ -95,7 +93,7 @@
       font-size: 1.3vw;
       text-transform: none;
       font-family: $font-family-regular;
-      color: $dark-blue;
+      color: var(--dark-blue);
       background: $tab-gray;
       border-radius: $border-radius;
 
@@ -109,7 +107,7 @@
     .submit-button {
       margin-top: 2.4vh;
       padding: 2.7vh 1.725vw;
-      background: $light-green;
+      background: var(--theme-green);
       color: white;
       line-height: 1.5;
       border-radius: $border-radius;

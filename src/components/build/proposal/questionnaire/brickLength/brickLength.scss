@@ -4,7 +4,7 @@
 
 .brick-length-page {
   font-family: $font-family-regular;
-  color: black;
+  color: var(--dark-blue);
 
   .left-block {
     margin-top: 16.7vh;
@@ -17,7 +17,7 @@
       letter-spacing: 0.07vw;
       line-height: 1.35;
       font-family: $font-family-black;
-      color: $dark-blue;
+      color: var(--dark-blue);
     }
 
     h2 {
@@ -25,7 +25,7 @@
       margin-top: 0.2vh;
       margin-left: 0.1vw;
       text-align: left;
-      color:$dark-blue;
+      color:var(--dark-blue);
       font-family: $font-family-regular;
       letter-spacing: 0.02vw;
       font-size: 1.26vw;
@@ -84,7 +84,7 @@
   .phone-preview-component {
     width: 100%;
     height: 100%;
-    background: $dark-blue;
+    background: var(--dark-blue);
     position: relative;
 
     img {

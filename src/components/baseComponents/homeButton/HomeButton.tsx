@@ -39,11 +39,11 @@ class HomeButtonComponent extends React.Component<any, HomeButtonState> {
 				<button type="button" className="btn btn-transparent svgOnHover home-button"
 					onClick={() => this.onClick()}>
 					<svg className="svg w100 h100 active">
-						<use href={sprite + "#logo"} className="text-orange" />
+						<use href={sprite + "#logo"} className="text-theme-orange" />
 					</svg>
 					<div className="roof svgOnHover">
 						<svg className="svg w100 h100 active">
-							<use href={sprite + "#roof"} className="text-orange" />
+							<use href={sprite + "#roof"} className="text-theme-orange" />
 						</svg>
 					</div>
 					<div className="smoke-container">
