@@ -179,7 +179,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 													className="synthesis-button svgOnHover"
 													onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
 												>
-													<svg className="svg w100 h100 active">
+													<svg className="svg w-2 h-2 active">
 														<use href={sprite + "#list"} className="text-theme-dark-blue" />
 													</svg>
 													{
