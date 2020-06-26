@@ -9,6 +9,7 @@ import { PlayStatus } from "../model/model";
 import { BrickAttempt } from "../PlayBrickRouting";
 import ReviewStepper from '../review/ReviewStepper';
 import sprite from "../../../../assets/img/icons-sprite.svg";
+import Clock from "../baseComponents/Clock";
 
 interface EndingProps {
   status: PlayStatus;
@@ -33,7 +34,8 @@ const EndingPage: React.FC<EndingProps> = ({
   const endBrick = () => saveBrick();
 
   const oldScore = brickAttempt.oldScore ? brickAttempt.oldScore : 0;
-  const {score} = brickAttempt;
+  const {score, maxScore} = brickAttempt;
+  const currentPScore = Math.round((score * 100) / maxScore);
 
   return (
     <div className="brick-container ending-page">
@@ -54,7 +56,7 @@ const EndingPage: React.FC<EndingProps> = ({
                 className="circle-progress-first"
                 strokeWidth={4}
                 counterClockwise={true}
-                value={(oldScore * 100) / brickAttempt.maxScore}
+                value={(oldScore * 100) / maxScore}
               />
               <Grid
                 container
@@ -66,7 +68,7 @@ const EndingPage: React.FC<EndingProps> = ({
                   className="circle-progress-second"
                   counterClockwise={true}
                   strokeWidth={4}
-                  value={(score * 100) / brickAttempt.maxScore}
+                  value={(score * 100) / maxScore}
                 />
               </Grid>
               <Grid
@@ -79,7 +81,7 @@ const EndingPage: React.FC<EndingProps> = ({
                   className="circle-progress-third"
                   counterClockwise={true}
                   strokeWidth={4}
-                  value={((oldScore + score) * 50) / brickAttempt.maxScore}
+                  value={((oldScore + score) * 50) / maxScore}
                 />
               </Grid>
               <Grid
@@ -90,13 +92,13 @@ const EndingPage: React.FC<EndingProps> = ({
               >
                 <div>
                   <div className="score-precentage">
-                    {Math.round(
-                      (brickAttempt.score * 100) / brickAttempt.maxScore
-                    )}{" "}
-                    %
+                    {currentPScore}%
                   </div>
                   <div className="score-number">
-                    {brickAttempt.score}/{brickAttempt.maxScore}
+                    {oldScore}/{maxScore}
+                  </div>
+                  <div className="score-number">
+                    {score}/{maxScore}
                   </div>
                 </div>
               </Grid>
@@ -105,6 +107,10 @@ const EndingPage: React.FC<EndingProps> = ({
         </Grid>
         <Grid item xs={4}>
           <div className="introduction-info">
+            <div className="intro-header">
+              <div>Range: {Math.round((oldScore * 100) / maxScore)}%-{currentPScore}%</div>
+              <Clock brickLength={brick.brickLength} />
+            </div>
             <div className="intro-text-row">
               <ReviewStepper
                 isEnd={true}
