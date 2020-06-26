@@ -9,11 +9,11 @@ $colors: (
   'light-blue2': #193366,
   'blue': #0681db,
   'white-blue': #8ad6e8,
-  'dark-blue': #001c58,
   'left-gray': #e6e6ed,
   'tab-gray': #e5e8ed,
   'light-gray': #f3f4f7,
   'gray': #b0b0ad,
+  'theme-dark-blue': #001c58,
   'theme-green': #30c474,
   'theme-orange': #c43c30,
   'purple': #a020f0,
@@ -65,7 +65,7 @@ $progress-height: 60vh;
 
 $mobile-col-radius: 8vw;
 $mobile-col-color: $light-blue;
-$mobile-background: var(--dark-blue);
+$mobile-background: var(--theme-dark-blue);
 $mobile-arrow-color: #96a0b6;
 
 $font-family-light: 'Brandon Grotesque Light';

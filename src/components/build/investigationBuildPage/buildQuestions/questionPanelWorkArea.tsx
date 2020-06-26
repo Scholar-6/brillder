@@ -176,10 +176,12 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                       <Grid container justify="center" alignContent="flex-start">
                         <div className="right-side-text">Last Question?</div>
                         <Button
-                          className="synthesis-button"
+                          className="synthesis-button svgOnHover"
                           onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
                         >
-                          <img alt="add-synthesis" src="/images/synthesis-icon.png" className="inner-icon" />
+                          <svg className="svg w-2 h-2 active">
+                            <use href={sprite + "#list"} className="text-theme-dark-blue" />
+                          </svg>
                           {
                             props.synthesis ? 'Edit Synthesis' : 'Add Synthesis'
                           }

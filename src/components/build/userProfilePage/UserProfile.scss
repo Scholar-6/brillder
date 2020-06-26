@@ -3,7 +3,7 @@
 @import '../../../assets/sass/partials/extensions';
 
 .user-profile-page {
-  background: var(--dark-blue);
+  background: var(--theme-dark-blue);
   overflow: hidden;
   height: 100%;
   width: 100%;
@@ -30,7 +30,7 @@
       letter-spacing: 1.05vw;
       text-align: center;
       font-family: $font-family-black;
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
       line-height: 1;
     }
     .save-button-container {
@@ -106,7 +106,7 @@
         }
         > span {
           margin-left: 0.45vw;
-          color: var(--dark-blue);
+          color: var(--theme-dark-blue);
           font-size: 1.5vw;
         }
       }
@@ -125,11 +125,11 @@
         background: var(--light-gray);
         border-radius: 0.5vw;
         border: none;
-        color: var(--dark-blue);
+        color: var(--theme-dark-blue);
         box-shadow: $base-shadow;
       }
       @include placeholder {
-        color: var(--dark-blue);
+        color: var(--theme-dark-blue);
       }
       input[type='password'] {
         @include placeholder {
@@ -166,7 +166,7 @@
         text-align: center;
         font-size: 1.82vw;
         letter-spacing: 0.36vw;
-        color: var(--dark-blue);
+        color: var(--theme-dark-blue);
         font-family: $font-family-black;
         line-height: 1.41;
       }
@@ -180,7 +180,7 @@
         .MuiGrid-item {
           width: 100%;
           .MuiSvgIcon-root {
-            color: var(--dark-blue);
+            color: var(--theme-dark-blue);
             font-size: 1.55vw;
           }
           .MuiIconButton-root {
@@ -190,7 +190,7 @@
             margin-left: 1.15vw;
             font-family: $font-family-regular;
             font-size: 1.45vw;
-            color: var(--dark-blue);
+            color: var(--theme-dark-blue);
           }
           .MuiFormControlLabel-root {
             margin: 0;
@@ -263,7 +263,7 @@
     padding: 3.8vh 1vw 3.5vh 2.2vw;
     font-size: 2.35vw;
     letter-spacing: 0;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     font-family: $font-family-regular;
   }
 
@@ -292,7 +292,7 @@
     }
 
     .no-button {
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
       background: $tab-gray;
       margin-right: 0.2vw;
     }

@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import './questionType.scss';
 import { QuestionTypeEnum } from 'model/question';
 import TypeButton from './TypeButton'
+import sprite from "../../../../assets/img/icons-sprite.svg";
 
 
 export interface QuestionTypeProps {
@@ -43,20 +44,20 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
   const renderSynthesisButton = () => {
     return (
       <Grid className="round-button-center-container" container direction="row" justify="center">
-        <Grid
-          className="round-button-center"
+        <button className="round-button-center svgOnHover"
           onClick={() => {
             history.push(`/build/brick/${brickId}/build/investigation/synthesis`)
           }}
-          container direction="row" justify="flex-start"
         >
-          <div className="synthesis-icon"></div>
+          <svg className="svg w-2 h-2 active">
+            <use href={sprite + "#list"} />
+          </svg>
           <span className="synthesis-text">
             {
               synthesis ? 'EDIT SYNTHESIS' : 'ADD SYNTHESIS'
             }
           </span>
-        </Grid>
+        </button>
       </Grid>
     );
   }

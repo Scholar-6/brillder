@@ -17,7 +17,7 @@
     padding: 3.8vh 1vw 3.5vh 2.2vw;
     font-size: 2.35vw;
     letter-spacing: 0;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
   }
 
   .logout-buttons {
@@ -45,7 +45,7 @@
     }
 
     .no-button {
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
       background: $tab-gray;
       margin-right: 0.2vw;
     }

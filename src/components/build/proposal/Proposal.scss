@@ -8,7 +8,7 @@
     right: 0.5%;
     bottom: 1.25%;
     font-size: 2.3vw;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
   }
 }
 
@@ -18,7 +18,7 @@
   }
 
   font-family: $font-family-regular;
-  color: var(--dark-blue);
+  color: var(--theme-dark-blue);
 
   ::-webkit-input-placeholder { /* Edge */
     color: #aaa;
@@ -49,7 +49,7 @@
     font-size: 3.9vw;
     letter-spacing: 0.09vw;
     text-align: center;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     margin-bottom: 12.1vh;
 
     p {
