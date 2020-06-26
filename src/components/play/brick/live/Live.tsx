@@ -10,11 +10,10 @@ import { Question } from "model/question";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
 import { PlayStatus, ComponentAttempt } from "../model/model";
-import BrickCounter from "../baseComponents/BrickCounter";
+import CountDown from "../baseComponents/CountDown";
 import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import { CashQuestionFromPlay } from "../../../localStorage/buildLocalStorage";
-import { Moment } from "moment";
 import { Brick } from "model/brick";
 import LiveStepper from "./LiveStepper";
 
@@ -22,7 +21,6 @@ interface LivePageProps {
   status: PlayStatus;
   attempts: ComponentAttempt[];
   brick: Brick;
-  startTime?: Moment;
   questions: Question[];
   isPlayPreview?: boolean;
   previewQuestionIndex?: number;
@@ -44,6 +42,7 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   const [activeStep, setActiveStep] = React.useState(initStep);
+  const [isTimeover, setTimeover] = React.useState(false);
   let initAnswers: any[] = [];
 
   const [answers, setAnswers] = React.useState(initAnswers);
@@ -111,9 +110,12 @@ const LivePage: React.FC<LivePageProps> = ({
     }
   };
 
+  const onEnd = () => setTimeover(true);
+
   const renderQuestion = (question: Question, index: number) => {
     return (
       <QuestionLive
+        isTimeover={isTimeover}
         question={question}
         answers={answers[index]}
         ref={questionRefs[index]}
@@ -176,17 +178,11 @@ const LivePage: React.FC<LivePageProps> = ({
         </Grid>
         <Grid item xs={4}>
           <div className="introduction-info">
-            <div className="intro-header">
-              <BrickCounter startTime={props.startTime} />
-              <div className="clock">
-                <div className="clock-image svgOnHover">
-                  <svg className="svg w100 h100 active">
-                    <use href={sprite + "#clock"} />
-                  </svg>
-                </div>
-                <span className="max-length">{brick.brickLength}</span>
-              </div>
-            </div>
+            <CountDown
+              isLive={true}
+              onEnd={onEnd}
+              brickLength={brick.brickLength}
+            />
             <div className="intro-text-row">
               <LiveStepper
                 activeStep={activeStep}

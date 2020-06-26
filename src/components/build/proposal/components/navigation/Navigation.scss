@@ -18,7 +18,7 @@
       text-align: center;
       font-family: $font-family-regular;
       font-size: 1.3vw;
-      color: $orange;
+      color: var(--theme-orange);
       top: 0%;
       position: absolute;
       opacity: 0;
@@ -39,17 +39,17 @@
     }
     .navigation-question {
       width: 1.6vw;
-      background-image: url(/images/new-brick/head-gray.png);
+      background-image: url(/images/new-brick/head-grey.png);
     }
     .navigation-brief {
-      background-image: url(/images/new-brick/brief-circles-gray.png);
+      background-image: url(/images/new-brick/brief-circles-grey.png);
     }
     .navigation-prep {
       width: 1.5vw;
-      background-image: url(/images/new-brick/prep-gray.png);
+      background-image: url(/images/new-brick/prep-grey.png);
     }
     .navigation-length {
-      background-image: url(/feathericons/clock-gray.png);
+      background-image: url(/feathericons/clock-grey.png);
     }
     .navigation-titles.active {
       background-image: url(/images/new-brick/titles.png);
@@ -111,7 +111,7 @@
   .step-container.active {
     .step-label {
       opacity: 1;
-      color: $orange;
+      color: var(--theme-orange);
     }
   }
 }

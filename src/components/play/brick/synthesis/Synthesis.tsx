@@ -1,50 +1,31 @@
 import React from 'react';
-import { Grid, Fab, FormControlLabel } from '@material-ui/core';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import { Grid } from '@material-ui/core';
 
 import './Synthesis.scss';
 import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
-import OtherInformation from '../baseComponents/OtherInformation';
 import { PlayStatus } from '../model/model';
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
+import TimerWithClock from "../baseComponents/TimerWithClock";
+import sprite from "../../../../assets/img/icons-sprite.svg";
+const moment = require('moment');
 
 
-interface ProvisionalScoreProps {
+interface SynthesisProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
 }
 
-interface ProvisionalState {
-  synthesisExpanded: boolean;
-  otherExpanded: boolean;
-}
-
-const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, ...props }) => {
+const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }) => {
   const history = useHistory();
+  const [startTime] = React.useState(moment());
   if (status === PlayStatus.Live) {
     if (props.isPlayPreview) {
       history.push(`/play-preview/brick/${brick.id}/intro`);
     } else {
       history.push(`/play/brick/${brick.id}/intro`);
     }
-  }
-  const [state, setState] = React.useState({
-    synthesisExpanded: true,
-    otherExpanded: false,
-  } as ProvisionalState);
-
-  const toggleOther = () => {
-    setState({ ...state, otherExpanded: !state.otherExpanded });
-  }
-
-  const toggleSynthesis = () => {
-    setState({ ...state, synthesisExpanded: !state.synthesisExpanded });
   }
 
   const reviewBrick = () => {
@@ -55,52 +36,43 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, ...p
     }
   }
 
-  let newSynthesis = "";
-  if (brick.synthesis) {
-    newSynthesis = brick.synthesis.replace(/(?:\r\n|\r|\n)/g, '<br>');
-  }
-
   return (
-    <Grid container direction="row" justify="center">
-      <div className="brick-container">
-        <div className='synthesis-page'>
-          <div>
-            <h3>{brick.brickLength} minutes</h3>
-            <h1>{brick.title}</h1>
+    <div className="brick-container synthesis-page">
+      <Grid container direction="row">
+        <Grid item xs={8}>
+          <div className="introduction-page">
+            <div className="question-index-container">
+              <div className="question-index">S</div>
+            </div>
+            <h1>Synthesis</h1>
+            <MathInHtml value={brick.synthesis} />
           </div>
-          <ExpansionPanel className="synthesis-expansion-panel" expanded={state.synthesisExpanded === true} onChange={toggleSynthesis}>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <h2>Synthesis</h2>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <div style={{width: '100%'}}>
-                <MathInHtml value={newSynthesis} />
+        </Grid>
+        <Grid item xs={4}>
+          <div className="introduction-info">
+            <TimerWithClock isArrowUp={true} startTime={startTime} brickLength={brick.brickLength} />
+            <div className="intro-text-row">
+              <p>When you’re ready to move on, you will have</p>
+              <p>3 minutes to try to improve your score.</p>
+            </div>
+            <div className="action-footer">
+              <div>&nbsp;</div>
+              <div className="direction-info">
+                <h2>Review</h2>
               </div>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-          <div className="begin-row">
-            <FormControlLabel
-              className="start-brick-button"
-              labelPlacement="start"
-              control={
-                <Fab style={{ background: '#0076B4' }} color="secondary" aria-label="add" onClick={reviewBrick}>
-                  <PlayArrowIcon />
-                </Fab>
-              }
-              label="Review Brick Attempt"
-            />
+              <div>
+                <button type="button" className="play-preview svgOnHover play-green" onClick={reviewBrick}>
+                  <svg className="svg active m-l-02">
+                    <use href={sprite + "#arrow-right"} />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
-          <OtherInformation
-            creator={`${brick.author.firstName} ${brick.author.lastName}`}
-            expanded={state.otherExpanded}
-            toggle={toggleOther}
-            totalUsers={0}
-            averageScore={0}
-            highScore={0}/>
-        </div>
-      </div>
-    </Grid>
+        </Grid>
+      </Grid>
+    </div>
   );
 }
 
-export default ProvisionalScore;
+export default PlaySynthesisPage;

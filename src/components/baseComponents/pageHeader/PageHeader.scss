@@ -7,7 +7,7 @@
 .play-preview-pages,
 .bricks-list-page,
 .back-to-work-page {
-	background: $dark-blue;
+	background: var(--dark-blue);
 	height: 100%;
 	width: 100%;
 	font-family: $font-family-light;
@@ -19,7 +19,7 @@
 	.upper-part {
 		position: relative;
 		min-height: 100%;
-		background: $dark-blue;
+		background: var(--dark-blue);
 		h3 {
 			color: white;
 			font-weight: normal;
@@ -34,7 +34,7 @@
 			height: max-content;
 			font-size: 0.9vw;
 			font-family: $font-family-regular;
-			color: $dark-blue;
+			color: var(--dark-blue);
 			.gray {
 				color: $gray;
 			}
@@ -62,7 +62,7 @@
 				}
 				.active:hover {
 					cursor: pointer;
-					color: $dark-blue !important;
+					color: var(--dark-blue) !important;
 				}
 				svg {
 					height: 4.7vh;

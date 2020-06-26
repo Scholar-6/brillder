@@ -12,7 +12,7 @@
     font-family: $font-family-regular;
     margin: 1px;
     border-radius: 4px;
-    color: $dark-blue;
+    color: var(--dark-blue);
     padding-top: 14px;
     padding-bottom: 14px;
     padding-left: 5px;
@@ -24,18 +24,18 @@
     }
   }
   .vertical-shuffle-choice.correct {
-    background: $light-green;
+    background: var(--theme-green);
 
     .question-hint {
       background: white;
     }
   }
   .vertical-shuffle-choice.wrong {
-    background: $orange;
+    background: var(--theme-orange);
   }
   .question-hint,
   .question-hint-global {
-    color: $dark-blue;
+    color: var(--dark-blue);
   }
 
   .question-hint-global {
