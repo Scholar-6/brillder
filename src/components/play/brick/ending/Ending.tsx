@@ -27,6 +27,10 @@ const EndingPage: React.FC<EndingProps> = ({
   saveBrick,
 }) => {
   const history = useHistory();
+  const [minCurrentScore, setMinScore] = React.useState(0);
+  const [maxCurrentScore, setMaxScore] = React.useState(0);
+  const [currentScore, setCurrentScore] = React.useState(0);
+
   if (status === PlayStatus.Live) {
     history.push(`/play/brick/${brick.id}/intro`);
   }
@@ -35,7 +39,15 @@ const EndingPage: React.FC<EndingProps> = ({
 
   const oldScore = brickAttempt.oldScore ? brickAttempt.oldScore : 0;
   const {score, maxScore} = brickAttempt;
-  const currentPScore = Math.round((score * 100) / maxScore);
+  const currentPScore = Math.round(((score + oldScore) * 50) / maxScore);
+  const minPScore = Math.round((oldScore * 100) / maxScore);
+  const maxPScore = Math.round((score * 100) / maxScore);
+
+  setTimeout(() => {
+    setMinScore((oldScore * 100) / maxScore);
+    setMaxScore((score * 100) / maxScore);
+    setCurrentScore(Math.round((oldScore + score) / maxScore / 2));
+  }, 400);
 
   return (
     <div className="brick-container ending-page">
@@ -56,7 +68,7 @@ const EndingPage: React.FC<EndingProps> = ({
                 className="circle-progress-first"
                 strokeWidth={4}
                 counterClockwise={true}
-                value={(oldScore * 100) / maxScore}
+                value={minCurrentScore}
               />
               <Grid
                 container
@@ -68,7 +80,7 @@ const EndingPage: React.FC<EndingProps> = ({
                   className="circle-progress-second"
                   counterClockwise={true}
                   strokeWidth={4}
-                  value={(score * 100) / maxScore}
+                  value={maxCurrentScore}
                 />
               </Grid>
               <Grid
@@ -81,7 +93,7 @@ const EndingPage: React.FC<EndingProps> = ({
                   className="circle-progress-third"
                   counterClockwise={true}
                   strokeWidth={4}
-                  value={((oldScore + score) * 50) / maxScore}
+                  value={currentScore}
                 />
               </Grid>
               <Grid
@@ -108,7 +120,7 @@ const EndingPage: React.FC<EndingProps> = ({
         <Grid item xs={4}>
           <div className="introduction-info">
             <div className="intro-header">
-              <div>Range: {Math.round((oldScore * 100) / maxScore)}%-{currentPScore}%</div>
+              <div>Range: {minPScore}%-{maxPScore}%</div>
               <Clock brickLength={brick.brickLength} />
             </div>
             <div className="intro-text-row">
