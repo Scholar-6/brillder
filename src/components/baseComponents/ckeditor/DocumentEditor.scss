@@ -10,7 +10,7 @@
     border: none !important;
 
     .ck-button {
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
     }
     .ck-custom-dropdown {
       .ck-splitbutton__action {
@@ -62,7 +62,7 @@
   }
 
   .ck-content {
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     font-family: $font-family-regular;
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;

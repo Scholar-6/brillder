@@ -16,7 +16,7 @@
     font-family: $font-family-regular;
     margin-top: 5px;
     margin-bottom: 5px;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     text-align: center;
     text-transform: none !important;
     border-radius: 0 !important;
@@ -43,7 +43,7 @@
     background: $white-blue;
   }
   .question-hint {
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
   }
 
   .choose-choice.correct {
@@ -59,7 +59,7 @@
   }
 
   .question-hint-global {
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     margin-top: 10px;
   }
 }

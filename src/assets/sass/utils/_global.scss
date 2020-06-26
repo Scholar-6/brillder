@@ -87,8 +87,8 @@ input:focus {
   color: $tab-gray !important;
 }
 
-.text-dark-blue {
-  color: var(--dark-blue) !important;
+.text-theme-dark-blue {
+  color: var(--theme-dark-blue) !important;
 }
 
 .text-gray {
@@ -209,7 +209,7 @@ input:focus {
 
 .hover-icons-row {
   height: 5.8vh;
-  color: var(--dark-blue);
+  color: var(--theme-dark-blue);
   width: 100%;
   position: relative;
   .round-button {

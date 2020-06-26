@@ -6,7 +6,7 @@
   $font-size: 1rem;
   .pair-match-play-option {
     text-align: center;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
     margin: 1px;
     padding: 0;
     width: 100%;
@@ -106,6 +106,6 @@
 
   .question-hint,
   .question-hint-global {
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
   }
 }

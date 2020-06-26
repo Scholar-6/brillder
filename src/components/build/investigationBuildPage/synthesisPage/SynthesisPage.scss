@@ -4,10 +4,7 @@
 
 .synthesis-page {
   .inner-question-type {
-    padding-right: 1.4vw;
-    padding-left: 1.4vw;
-    padding-bottom: 0;
-    padding-top: 2.7vh;
+    padding: 2vw;
 
     .ckeditor-synthesis {
       padding: 1.6vh 1vw;
@@ -22,7 +19,7 @@
       padding-top: 0;
       margin: 0 45%;
       .text-label {
-        color: var(--dark-blue);
+				color: var(--theme-dark-blue);
         width: 10%;
         position: absolute;
         z-index: 1;
@@ -78,7 +75,7 @@
     }
 
     .finish-text {
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
       letter-spacing: 0.2vw;
       font-size: 1.3vw;
       text-align: center;
@@ -93,7 +90,7 @@
       font-size: 1.3vw;
       text-transform: none;
       font-family: $font-family-regular;
-      color: var(--dark-blue);
+      color: var(--theme-dark-blue);
       background: $tab-gray;
       border-radius: $border-radius;
 

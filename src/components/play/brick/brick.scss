@@ -15,11 +15,11 @@
   height: 100%;
 
   .MuiExpansionPanelDetails-root, .MuiExpansionPanelSummary-content {
-    color: var(--dark-blue) !important;
+    color: var(--theme-dark-blue) !important;
   }
 
   .MuiInputBase-input {
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
   }
 
   .brick-container {
@@ -27,7 +27,7 @@
     max-width: 800px;
     width: 100%;
     text-align: left;
-    color: var(--dark-blue);
+    color: var(--theme-dark-blue);
 
     h3 {
       padding: 5px;

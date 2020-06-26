@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
+import sprite from "../../../../assets/img/icons-sprite.svg";
 
 export interface SynthesisTabProps {
   columns: number;
@@ -26,19 +27,10 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
       alignContent="center"
       justify="center"
     >
-      <div className="last-tab">
-        <Grid
-          container
-          justify="center"
-          alignContent="center"
-          style={{ height: "100%" }}
-        >
-          <img
-            alt="add-synthesis"
-            src="/images/synthesis-icon.png"
-            className={className}
-          />
-        </Grid>
+      <div className="last-tab svgOnHover">
+				<svg className="svg w100 h100 active">
+					<use href={sprite + "#list"} className="text-theme-dark-blue" />
+				</svg>
       </div>
     </Grid>
   );

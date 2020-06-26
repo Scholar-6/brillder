@@ -1,3 +1,36 @@
+.round-button-center {
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 22vw;
+	padding-left: 0.3vw;
+	background: $tab-gray;
+	border-radius: 1.2vw;
+	border: 0;
+	color: var(--theme-dark-blue);
+	.svg {
+		color: var(--theme-dark-blue);
+		position: inherit;
+		left: inherit;
+		top: inherit;
+		transform: inherit;
+	}
+	.synthesis-text {
+		font-family: $font-family-regular;
+		line-height: 2.05;
+		font-size: 2.6vh;
+		letter-spacing: 0.3vw;
+	}
+	&:hover {
+		background: var(--theme-orange);
+		color: var(--white);
+		.svg {
+			color: var(--white);
+		}
+	}
+}
+
 .play-preview {
   width: 4.5vw;
   height: 4.5vw;
@@ -49,13 +82,16 @@
       background-color: var(--tab-gray-alpha3);
     }
     &:hover {
-      background-color: var(--dark-blue);
+      background-color: var(--theme-dark-blue);
       animation-name: pulse-blue;
     }
   }
   &.bg-tab-gray {
     .svg {
       color: $gray;
+		}
+		&:after {
+      background-color: var(--tab-gray-alpha3);
     }
   }
   .svg {
