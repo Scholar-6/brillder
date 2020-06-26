@@ -9,10 +9,12 @@ import sprite from "../../../../assets/img/icons-sprite.svg";
 interface ReviewStepperProps {
   attempts: ComponentAttempt[];
   questions: Question[];
+  isEnd?: boolean;
   handleStep(questionIndex: number): any;
 }
 
 const ReviewStepper: React.FC<ReviewStepperProps> = ({
+  isEnd,
   questions,
   handleStep,
   attempts
@@ -50,7 +52,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
                   className="step svgOnHover"
                   onClick={handleStep(index - 1)}
                 >
-                  <span>{questionIndex}</span>
+                  <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
                   <svg className="svg w-2 h-2 active m-l-02">
                     <use href={attempt.correct ? sprite + "#ok" : sprite + "#cancel"}
                       className={attempt.correct ? "text-theme-green" : "text-theme-orange"} />
