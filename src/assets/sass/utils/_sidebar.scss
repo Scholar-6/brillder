@@ -250,8 +250,8 @@
       cursor: pointer;
       .create-icon {
         margin-bottom: 1vh;
-        width: 7vw;
-        height: 7vw;
+        width: 8vw;
+        height: 8vw;
         @extend %transitionAll150;
       }
       &:hover {
@@ -261,7 +261,7 @@
         }
       }
       h3 {
-        font-size: 1.4vw;
+        font-size: 1.6vw;
         font-family: 'Brandon Grotesque Black';
         color: var(--white);
         letter-spacing: 0.3vw;

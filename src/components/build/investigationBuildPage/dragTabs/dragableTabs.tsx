@@ -115,7 +115,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
       <GridList cellHeight={40} className={classes.gridList} cols={columns}>
         <ReactSortable
           list={questions}
-          style={{width: '100%', marginTop: 0, padding: 0, height: '100% '}}
+          className="drag-container"
           group="tabs-group"
           setList={props.setQuestions}>
           {
@@ -124,7 +124,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
         </ReactSortable>
         <GridListTile
           onClick={props.createNewQuestion}
-          className={"drag-last-tile-container"}
+          className={"drag-tile-container"}
           cols={(isSynthesisPresent || isSynthesisPage) ? 1.5555 : 2}
         >
           <Grid className={"drag-tile"} container alignContent="center" justify="center">
@@ -135,7 +135,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
           (isSynthesisPresent || isSynthesisPage)  ?
             <GridListTile
               onClick={props.moveToSynthesis}
-              className={"drag-last-tile-container " + (isSynthesisPage ? "synthesis-tab" : "")}
+              className={"drag-tile-container " + (isSynthesisPage ? "synthesis-tab" : "")}
               cols={1.5555}
             >
               <SynthesisTab

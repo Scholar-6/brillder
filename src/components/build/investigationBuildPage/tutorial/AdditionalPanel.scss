@@ -14,15 +14,19 @@
       overflow: auto;
 
       .zap-border {
+				height: 12.583vh;
+				width: 5.7vw;
         margin: 4vh 2.9vw 0 2.8vw;
         padding: 1.65vw 1.728vw 1.3vw 1.728vw;
-        border-radius: 0.8vw;
-        border-radius: 100vw;
-        border: 0.3vw dashed var(--theme-orange);
-
-        .zap-icon {
-          height: 5.7vw;
-        }
+				@extend %radCircle;
+				border: 0.3vw dashed var(--theme-orange);
+				box-sizing: content-box;
+				.svg {
+					position: inherit;
+					top: inherit;
+					left: inherit;
+					transform: inherit;
+				}
       }
       .center {
         margin: 3.6vh 0;

@@ -2,93 +2,87 @@
 @import '../../../../assets/sass/partials/mixins';
 @import '../../../../assets/sass/partials/extensions';
 $tab-radius: 0.6vw;
-$distance: 0.13vw;
-
-
+$distance: 2px;
 $tile-height: 100%;
 
 .drag-tabs {
   display: inline-block;
   width: 100%;
   background: var(--theme-dark-blue) !important;
-  height: 6.2%;
-
-  .drag-last-tile-container {
+	height: 6.2%;
+	.drag-container {
+		width: 100% !important;
+    margin: 0 !important;
     padding: 0 !important;
     height: 100% !important;
-    padding-left: $distance !important;
-  }
-
-  .drag-tile-container {
-    padding: 0 !important;
-    height: 100% !important;
-    padding-left: $distance !important;
-  }
-
-  .drag-tile {
-    cursor: pointer;
-    height: 100%;
-    background-color: $tab-gray;
-  }
-  .drag-tile:first-child {
-    border-top-left-radius: $tab-radius;
-  }
-  .drag-tile:last-child {
-    border-top-right-radius: $tab-radius;
-  }
-
-  .drag-tile-container:first-child {
-    padding: 0 !important;
-  }
-
-  .drag-tile-container.pre-active {
-    .drag-tile {
-      margin-right: $distance;
-    }
-  }
-
-  .drag-tile-container.active {
-    height: 100% !important;
-
-    padding-left: 0 !important;
-
-    .drag-tile {
-      background: white;
-    }
-  }
+		display: flex;
+		.drag-tile-container {
+			flex: 1;
+		}
+	}
+	.drag-tile-container {
+		padding: 0 !important;
+		height: 100% !important;
+		margin-left: $distance !important;
+		.drag-tile {
+			cursor: pointer;
+			height: 100%;
+			background-color: $tab-gray;
+			&:first-child {
+				border-top-left-radius: $tab-radius;
+			}
+			&:last-child {
+				border-top-right-radius: $tab-radius;
+			}
+		}
+		&:first-child {
+			margin-left: 0 !important;
+		}
+		&.pre-active {
+			.drag-tile {
+				// margin-right: $distance;
+			}
+		}
+		&.active {
+			.drag-tile {
+				background: white;
+			}
+		}
+	}
 
   .draggable-tab {
-    display: inline-block;
-    cursor: pointer;
+		width: 100%;
     height: 100%;
     text-align: center;
     font-size: 1.5vw;
-    width: 100%;
-
+		@extend %flexCenter;
+    cursor: pointer;
     > div {
+			width: 100%;
       height: 100%;
+      display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      display: flex !important;
+			text-align: center;
+			cursor: pointer;
     }
 
     .tab-number {
       color: var(--theme-dark-blue);
       font-family: $font-family-bold;
-      font-size: 3.4vh;
-    }
-
-    .remove-icon-container {
-      height: 100%;
-      position: absolute;
-      right: 0;
+			font-size: 3.4vh;
+			user-select: none;
     }
 
     .remove-icon {
-      height: 3vh;
-      cursor: pointer;
+			width: 1.5vw;
+			height: 3vh;
+			display: none;
+			&.active {
+				display: flex;
+			}
     }
+
   }
 
   .last-tab {
