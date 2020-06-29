@@ -3,13 +3,8 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .synthesis-page {
-  height: 90%;
-
   .inner-question-type {
-    padding-right: 1.4vw;
-    padding-left: 1.4vw;
-    padding-bottom: 0;
-    padding-top: 2.7vh;
+    padding: 2vw;
 
     .ckeditor-synthesis {
       padding: 1.6vh 1vw;
@@ -24,7 +19,7 @@
       padding-top: 0;
       margin: 0 45%;
       .text-label {
-        color: $dark-blue;
+        color: var(--theme-dark-blue);
         width: 10%;
         position: absolute;
         z-index: 1;
@@ -80,7 +75,7 @@
     }
 
     .finish-text {
-      color: $dark-blue;
+      color: var(--theme-dark-blue);
       letter-spacing: 0.2vw;
       font-size: 1.3vw;
       text-align: center;
@@ -95,8 +90,8 @@
       font-size: 1.3vw;
       text-transform: none;
       font-family: $font-family-regular;
-      color: $dark-blue;
-      background: $tab-grey;
+      color: var(--theme-dark-blue);
+      background: $tab-gray;
       border-radius: $border-radius;
 
       .edit-icon {
@@ -109,13 +104,13 @@
     .submit-button {
       margin-top: 2.4vh;
       padding: 2.7vh 1.725vw;
-      background: $light-green;
+      background: var(--theme-green);
       color: white;
       line-height: 1.5;
       border-radius: $border-radius;
       letter-spacing: 0.4vw;
       font-size: 1.4vw;
-      font-family: "Brandon Grotesque Black";
+      font-family: $font-family-black;
     }
   }
 }

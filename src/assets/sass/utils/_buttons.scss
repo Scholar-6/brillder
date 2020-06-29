@@ -1,3 +1,36 @@
+.round-button-center {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 22vw;
+  padding-left: 0.3vw;
+  background: $tab-gray;
+  border-radius: 1.2vw;
+  border: 0;
+  color: var(--theme-dark-blue);
+  .svg {
+    color: var(--theme-dark-blue);
+    position: inherit;
+    left: inherit;
+    top: inherit;
+    transform: inherit;
+  }
+  .synthesis-text {
+    font-family: $font-family-regular;
+    line-height: 2.05;
+    font-size: 2.6vh;
+    letter-spacing: 0.3vw;
+  }
+  &:hover {
+    background: var(--theme-orange);
+    color: var(--white);
+    .svg {
+      color: var(--white);
+    }
+  }
+}
+
 .play-preview {
   width: 4.5vw;
   height: 4.5vw;
@@ -11,25 +44,59 @@
   outline: 0 !important;
   @extend %radCircle;
   @extend %b0;
-  &.play-green {
-    background-color: $light-green;
-    color: white;
+  &:after {
+    content: '';
+    width: calc(100% + 1vw);
+    height: calc(100% + 1vw);
+    @extend %floatToCenter;
+    @extend %radCircle;
+    z-index: -1;
+  }
+  .svg {
+    z-index: 1;
+  }
+  &.play-green,
+  &.play-white {
     &:hover {
-      animation-name: pulse;
       animation-duration: 1s;
       animation-delay: 0s;
       animation-iteration-count: 5;
       animation-timing-function: ease;
     }
   }
+  &.play-green {
+    background-color: var(--theme-green);
+    &:after {
+      background-color: var(--theme-green-alpha3);
+    }
+    .svg {
+      color: var(--white);
+    }
+    &:hover {
+      animation-name: pulse-green;
+    }
+  }
   &.play-white {
-    background-color: $tab-grey;
-    color: $grey;
+    background-color: $tab-gray;
+    &:after {
+      background-color: var(--tab-gray-alpha3);
+    }
+    &:hover {
+      background-color: var(--theme-dark-blue);
+      animation-name: pulse-blue;
+    }
+  }
+  &.bg-tab-gray {
+    .svg {
+      color: $gray;
+    }
+    &:after {
+      background-color: var(--tab-gray-alpha3);
+    }
   }
   .svg {
     width: 3vw;
     height: 3vw;
-    margin-left: 0.2vw;
   }
   .hidden {
     opacity: 0;

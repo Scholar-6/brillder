@@ -388,7 +388,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   renderSortAndFilterBox = () => {
     return (
       <div className="sort-box">
-        <div className="sort-by-box">
+        <div className="filter-container sort-by-box">
         	<div className="sort-header">Sort By</div>
 			<RadioGroup className="sort-group"
 				aria-label="SortBy"
@@ -424,25 +424,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           filterHeight={this.state.filterHeight}
           filterBySubject={this.filterBySubject}
         />
-        <Grid container direction="row" className="subjects-filter">
-          {this.state.filterExpanded
-            ? this.state.subjects.map((subject, i) => (
-              <FormControlLabel
-                className="filter-container"
-                key={i}
-                checked={subject.checked}
-                onClick={() => this.filterBySubject(i)}
-                control={
-                  <Radio
-                    className={"filter-radio custom-color"}
-                    style={{ ["--color" as any]: subject.color }}
-                  />
-                }
-                label={subject.name}
-              />
-            ))
-          : ""}
-        </Grid>
       </div>
     );
   };
@@ -481,14 +462,14 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             {this.state.sortedIndex + 18 > this.state.bricks.length
               ? this.state.bricks.length
               : this.state.sortedIndex + 18}
-            <span className="grey">
+            <span className="gray">
               {" "}
               &nbsp;|&nbsp; {this.state.bricks.length}
             </span>
           </div>
           <div>
             {(this.state.sortedIndex + 18) / 18}
-            <span className="grey">
+            <span className="gray">
               {" "}
               &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / 18)}
             </span>
@@ -529,7 +510,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       <div className="dashboard-page">
         <div className="upper-part">
           <PageHeader
-            searchPlaceholder="Search Subjects, Topics, Titles & more"
+            searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
             search={() => this.search()}
             searching={(v) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
@@ -550,7 +531,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           </Grid>
         </div>
         <Menu
-          className="play-dashboard-redirect-dropdown"
+          className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}

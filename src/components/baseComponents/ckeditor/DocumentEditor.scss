@@ -6,11 +6,11 @@
   .ck-toolbar {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
-    background: $tab-grey !important;
+    background: $tab-gray !important;
     border: none !important;
 
     .ck-button {
-      color: $dark-blue;
+      color: var(--theme-dark-blue);
     }
     .ck-custom-dropdown {
       .ck-splitbutton__action {
@@ -62,13 +62,13 @@
   }
 
   .ck-content {
-    color: $dark-blue;
+    color: var(--theme-dark-blue);
     font-family: $font-family-regular;
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
     border: none !important;
     font-size: 1vw;
-    background: $lighter-grey !important;
+    background: var(--light-gray) !important;
     box-shadow: none !important;
 
     strong {
@@ -91,6 +91,6 @@
 
 .document-editor.content-invalid {
   .ck-content {
-    background: $orange !important;
+    background: var(--theme-orange) !important;
   }
 }

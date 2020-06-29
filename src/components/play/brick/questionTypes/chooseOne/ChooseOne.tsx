@@ -22,6 +22,7 @@ interface ChooseOneComponent {
 interface ChooseOneProps extends CompQuestionProps {
   component: ChooseOneComponent;
   answers: number;
+  onAttempted(): void;
 }
 
 interface ChooseOneState {
@@ -44,6 +45,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   setActiveItem(activeItem: number) {
     this.setState({ activeItem });
+    this.props.onAttempted();
   }
 
   getAnswer(): number {

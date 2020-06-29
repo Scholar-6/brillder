@@ -5,8 +5,8 @@
 .question-type {
   .question-container {
     cursor: pointer;
-    background: $tab-grey;
-    color: $dark-blue;
+    background: $tab-gray;
+    color: var(--theme-dark-blue);
     margin: 0.6vw 0.6vw 0.6vw 0.6vw;
     border-radius: 1.1vw;
     height: 15.35vh;
@@ -23,14 +23,14 @@
   }
 
   .question-container:hover {
-    background: $orange;
-    font-family: "Brandon Grotesque Black";
+    background: var(--theme-orange);
+    font-family: $font-family-black;
     color: white;
   }
 
   .question-container.active {
-    background: $orange;
-    font-family: "Brandon Grotesque Black";
+    background: var(--theme-orange);
+    font-family: $font-family-black;
     color: white;
   }
 

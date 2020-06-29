@@ -529,7 +529,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   renderSortAndFilterBox = () => {
     return (
       <div className="sort-box">
-        <div className="sort-by-box">
+        <div className="filter-container sort-by-box">
           <div className="sort-header">Sort By</div>
           <RadioGroup
             className="sort-group"
@@ -606,14 +606,14 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             {this.state.sortedIndex + 15 > this.state.bricks.length
               ? this.state.bricks.length
               : this.state.sortedIndex + 15}
-            <span className="grey">
+            <span className="gray">
               {" "}
               &nbsp;|&nbsp; {this.state.bricks.length}
             </span>
           </div>
           <div>
             {(this.state.sortedIndex + 15) / 15}
-            <span className="grey">
+            <span className="gray">
               {" "}
               &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / 15)}
             </span>
@@ -654,7 +654,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       <div className="bricks-list-page">
         <div className="upper-part">
           <PageHeader
-            searchPlaceholder="Search Subjects, Topics, Titles & more"
+            searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
             search={() => this.search()}
             searching={(v) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
@@ -678,7 +678,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           </Grid>
         </div>
         <Menu
-          className="brick-list-redirect-dropdown"
+          className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}

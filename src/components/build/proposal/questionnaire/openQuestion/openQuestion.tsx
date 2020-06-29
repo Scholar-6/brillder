@@ -26,7 +26,7 @@ const HeadComponent:React.FC<any> = ({data}) => {
   )
 }
 
-function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
+function OpenQuestion({ selectedQuestion, canEdit, saveOpenQuestion }: any) {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     saveOpenQuestion(event.target.value as number);
   };
@@ -41,6 +41,7 @@ function OpenQuestion({ selectedQuestion, saveOpenQuestion }: any) {
           <p className="sub-header">Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.</p>
           <Input
             className="audience-inputs"
+            disabled={!canEdit}
             value={selectedQuestion}
             onChange={handleChange}
             placeholder="Enter Open Question(s)..."

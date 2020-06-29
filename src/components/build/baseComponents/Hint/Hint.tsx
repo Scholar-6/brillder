@@ -107,6 +107,7 @@ const HintComponent: React.FC<HintProps> = ({
       return (
         <Grid container item xs={12} className="hint-container">
           <DocumentWirisCKEditor
+            disabled={locked}
             data={state.value}
             toolbar={['bold', 'italic', 'fontColor', 'mathType', 'chemType', 'insertTable']}
             placeholder="Enter Hint..."
@@ -136,6 +137,7 @@ const HintComponent: React.FC<HintProps> = ({
       answerHints.push(
         <Grid key={i} container item xs={12} className="hint-container">
           <DocumentWirisCKEditor
+            disabled={locked}
             data={state.list[i]}
             toolbar={['bold', 'italic', 'fontColor', 'mathType', 'chemType',]}
             placeholder="Enter Hint"

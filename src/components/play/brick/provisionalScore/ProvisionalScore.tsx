@@ -1,42 +1,37 @@
 import React from 'react';
-import { Grid, Fab, FormControlLabel } from '@material-ui/core';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { Grid } from '@material-ui/core';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 import './ProvisionalScore.scss';
 import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
-import OtherInformation from '../baseComponents/OtherInformation';
 import { PlayStatus } from '../model/model';
+import TimerWithClock from "../baseComponents/TimerWithClock";
+import { Moment } from 'moment';
+import sprite from "../../../../assets/img/icons-sprite.svg";
+import ReviewStepper from '../review/ReviewStepper';
+import Clock from '../baseComponents/Clock';
 
 
 interface ProvisionalScoreProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
+  startTime?: Moment;
   attempts: any[];
 }
 
-interface ProvisionalState {
-  otherExpanded: boolean;
-}
 
 const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, attempts, ...props }) => {
   const history = useHistory();
+  const [value, setValue] = React.useState(0);
   if (status === PlayStatus.Live) {
     if (props.isPlayPreview) {
       history.push(`/play-preview/brick/${brick.id}/intro`);
     } else {
       history.push(`/play/brick/${brick.id}/intro`);
     }
-  }
-
-  const [state, setState] = React.useState({
-    otherExpanded: false,
-  } as ProvisionalState);
-
-  const toggleOther = () => {
-    setState({ ...state, otherExpanded: !state.otherExpanded });
   }
 
   const startBrick = () => {
@@ -60,47 +55,60 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
     return acc + answer.maxMarks;
   }, 0);
 
+  // animate react progress bar by changing value form 0 to value
+  setTimeout(() => setValue((score * 100) / maxScore), 400);
+
   return (
-    <Grid container direction="row" justify="center">
-      <div className="brick-container">
-        <div className='provisional-score-page'>
-          <div>
-            <h3>{brick.brickLength} minutes</h3>
-            <h1>Provisional Score</h1>
-          </div>
-          <Grid container justify="center" className="circle-progress-container">
-            <CircularProgress variant="static" className="circle-progress" value={(score * 100) / maxScore} />
-            <div className="score-data">
-              <Grid container justify="center" alignContent="center">
-                <div>
-                  <div className="score-precentage">{Math.round((score * 100) / maxScore)}%</div>
-                  <div className="score-number">{score}/{maxScore}</div>
-                </div>
-              </Grid>
+    <div className="brick-container provisional-score-page">
+      <Grid container direction="row">
+        <Grid item xs={8}>
+          <div className="introduction-page">
+            <div className="question-index-container">
+              <div className="question-index">P</div>
             </div>
-          </Grid>
-          <div className="begin-row">
-            <FormControlLabel
-              className="start-brick-button"
-              labelPlacement="start"
-              control={
-                <Fab style={{ background: '#0076B4' }} color="secondary" aria-label="add" onClick={startBrick}>
-                  <PlayArrowIcon />
-                </Fab>
-              }
-              label="Summary"
-            />
+            <h1>Provisional Score</h1>
+            <Grid container justify="center" className="circle-progress-container">
+              <CircularProgressbar className="circle-progress" strokeWidth={4} counterClockwise={true} value={value} />
+              <div className="score-data">
+                <Grid container justify="center" alignContent="center">
+                  <div>
+                    <div className="score-precentage">{Math.round((score * 100) / maxScore)}%</div>
+                    <div className="score-number">{score}/{maxScore}</div>
+                  </div>
+                </Grid>
+              </div>
+            </Grid>
           </div>
-          <OtherInformation
-            creator={`${brick.author.firstName} ${brick.author.lastName}`}
-            expanded={state.otherExpanded}
-            toggle={toggleOther}
-            totalUsers={0}
-            averageScore={0}
-            highScore={0}/>
-        </div>
-      </div>
-    </Grid>
+        </Grid>
+        <Grid item xs={4}>
+          <div className="introduction-info">
+            <div className="intro-header">
+              <Clock brickLength={brick.brickLength} />
+            </div>
+            <div className="intro-text-row">
+            <ReviewStepper
+              questions={brick.questions}
+              attempts={attempts}
+              handleStep={() => {}}
+            />
+            </div>
+            <div className="action-footer">
+              <div>&nbsp;</div>
+              <div className="direction-info">
+                <h2>Synthesis</h2>
+              </div>
+              <div>
+                <button type="button" className="play-preview svgOnHover play-green" onClick={startBrick}>
+                  <svg className="svg active m-l-02">
+                    <use href={sprite + "#arrow-right"} />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </Grid>
+      </Grid>
+    </div>
   );
 }
 

@@ -2,7 +2,7 @@
 @import '../../../../../assets/sass/partials/mixins';
 @import '../../../../../assets/sass/partials/extensions';
 
-$phone-border-color: $tab-grey;
+$phone-border-color: $tab-gray;
 $background-color: white;
 
 .phone-question-preview-box {
@@ -107,11 +107,11 @@ $background-color: white;
     overflow-y: auto !important;
 
     .text-play {
-      color: $dark-blue;
+      color: var(--theme-dark-blue);
     }
 
     .quotes-live {
-      color: $dark-blue;
+      color: var(--theme-dark-blue);
     }
 
     > div {
@@ -144,7 +144,7 @@ $background-color: white;
     }
 
     table, td, th {
-      border: 1px solid $dark-blue;
+      border: 1px solid var(--theme-dark-blue);
     }
     td {
       min-width: 0;
@@ -170,7 +170,7 @@ $background-color: white;
     }
 
     table, td, th {
-      border: 1px solid $dark-blue;
+      border: 1px solid var(--theme-dark-blue);
     }
     td {
       min-width: 0;

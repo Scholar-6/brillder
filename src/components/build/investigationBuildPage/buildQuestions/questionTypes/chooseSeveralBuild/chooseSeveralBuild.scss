@@ -31,14 +31,14 @@
     }
 
     .Mui-checked {
-      color: $orange;
+      color: var(--theme-orange);
     }
 
     input:not([type='checkbox']) {
       width: 84%;
       text-align: center;
       border: none;
-      background: $input-grey;
+      background: $input-gray;
       padding-right: 8%;
       padding-left: 8%;
       border-radius: 0;

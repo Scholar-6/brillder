@@ -3,26 +3,31 @@ import { Route, Switch } from 'react-router-dom';
 // @ts-ignore
 import { connect } from "react-redux";
 
-import '../play/brick/brick.scss';
+import 'components/play/brick/brick.scss';
+import './PreviewBrickRouting.scss';
 import actions from 'redux/actions/brickActions';
-import Introduction from '../play/brick/introduction/Introduction';
-import Live from '../play/brick/live/Live';
-import ProvisionalScore from '../play/brick/provisionalScore/ProvisionalScore';
-import Synthesis from '../play/brick/synthesis/Synthesis';
-import Review from '../play/brick/review/ReviewPage';
-import Ending from '../play/brick/ending/Ending';
+import Introduction from 'components/play/brick/introduction/Introduction';
+import Live from 'components/play/brick/live/Live';
+import ProvisionalScore from 'components/play/brick/provisionalScore/ProvisionalScore';
+import Synthesis from 'components/play/brick/synthesis/Synthesis';
+import Review from 'components/play/brick/review/ReviewPage';
+import Ending from 'components/play/brick/ending/Ending'
+import sprite from "../../../assets/img/icons-sprite.svg";
 
-import { GetCashedBuildQuestion } from '../localStorage/buildLocalStorage';
+import { GetCashedBuildQuestion } from '../../localStorage/buildLocalStorage';
 
 import { Brick } from 'model/brick';
-import { ComponentAttempt, PlayStatus } from '../play/brick/model/model';
+import { ComponentAttempt, PlayStatus } from '../../play/brick/model/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
-import { Hidden, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { setBrillderTitle } from 'components/services/titleService';
-import PublishPage from './investigationBuildPage/publish/PublishPage';
+import PublishPage from '../investigationBuildPage/publish/PublishPage';
+import FinishPage from '../investigationBuildPage/finish/FinishPage';
 import {prefillAttempts} from 'components/services/PlayService';
+import PlayPreviewMenu from './PlayPreviewMenu';
+import { canEditBrick, checkEditor } from 'components/services/brickService';
 
 
 export interface BrickAttempt {
@@ -60,11 +65,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   let cashedBuildQuestion = GetCashedBuildQuestion();
-  
+
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
+  const [startTime, setStartTime] = React.useState(undefined);
 
   useEffect(() => {
     if (props.brick) {
@@ -92,7 +98,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishBrick = () => {
-    /* If no answer given or no mark provided for question then return acc accumulated score +0 so 
+    /* If no answer given or no mark provided for question then return acc accumulated score +0 so
     it still has an integer value, else return acc + additional mark */
     let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
     /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
@@ -127,7 +133,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const saveBrickAttempt = () => {
     brickAttempt.brickId = props.brick.id;
     brickAttempt.studentId = props.user.id;
-    props.history.push(`/play-preview/brick/${brickId}/publish`);
+    let canEdit = canEditBrick(props.brick, props.user);
+    if (canEdit) {
+      let editor = checkEditor(props.user.roles);
+      if (editor && props.user.id === props.brick.author.id) {
+        props.history.push(`/play-preview/brick/${brickId}/finish`);
+      } else {
+        props.history.push(`/play-preview/brick/${brickId}/publish`);
+      }
+    } else {
+      props.history.push(`/play-preview/brick/${brickId}/finish`);
+    }
   }
 
   const moveToBuild = () => {
@@ -146,58 +162,73 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   return (
-    <div className="play-pages">
-      <Switch>
-        <Route exac path="/play-preview/brick/:brickId/intro">
-          <Introduction brick={props.brick} isPlayPreview={true} />
-        </Route>
-        <Route exac path="/play-preview/brick/:brickId/live">
-          <Live
-            status={status}
-            previewQuestionIndex={getBuildQuestionNumber()}
-            isPlayPreview={true}
-            questions={props.brick.questions}
-            brickId={props.brick.id}
-            updateAttempts={updateAttempts}
-            finishBrick={finishBrick}
-          />
-        </Route>
-        <Route exac path="/play-preview/brick/:brickId/provisionalScore">
-          <ProvisionalScore status={status} brick={props.brick} attempts={attempts} isPlayPreview={true} />
-        </Route>
-        <Route exac path="/play-preview/brick/:brickId/synthesis">
-          <Synthesis status={status} brick={props.brick} isPlayPreview={true} />
-        </Route>
-        <Route exac path="/play-preview/brick/:brickId/review">
-          <Review
-            isPlayPreview={true}
-            status={status}
-            questions={props.brick.questions}
-            brickId={props.brick.id}
-            updateAttempts={updateReviewAttempts}
-            attempts={attempts}
-            finishBrick={finishReview} />
-        </Route>
-        <Route exac path="/play-preview/brick/:brickId/ending">
-          <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} saveBrick={saveBrickAttempt} />
-        </Route>
-        <Route exac path="/play-preview/brick/:brickId/publish">
-          <PublishPage {...props} />
-        </Route>
-      </Switch>
-      <Hidden only={['xs', 'sm', 'md']}>
-        <Grid container alignContent="center" className="back-to-build">
-          <div
-            className="back-hover-area"
-            onClick={() => moveToBuild()}
-          >
-            <div className="create-icon"></div>
-            <div>BACK</div>
-            <div>TO</div>
-            <div>BUILD</div>
+    <div className="play-preview-pages">
+      <PlayPreviewMenu user={props.user} history={props.history} />
+      <Grid container direction="row" className="sorted-row">
+        <Grid container item className="sort-and-filter-container">
+          <div className="back-hover-area" onClick={() => moveToBuild()}>
+            <div className="create-icon svgOnHover">
+              <svg className="svg w100 h100 active">
+                <use href={sprite + "#shovel"}/>
+              </svg>
+            </div>
+            <h3>BACK<br/>TO<br/>BUILD</h3>
           </div>
         </Grid>
-      </Hidden>
+        <Grid item className="brick-row-container">
+          <Switch>
+            <Route exac path="/play-preview/brick/:brickId/intro">
+              <Introduction brick={props.brick} isPlayPreview={true} startTime={startTime} setStartTime={setStartTime} />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/live">
+              <Live
+                status={status}
+                attempts={attempts}
+                previewQuestionIndex={getBuildQuestionNumber()}
+                isPlayPreview={true}
+                brick={props.brick}
+                questions={props.brick.questions}
+                updateAttempts={updateAttempts}
+                finishBrick={finishBrick}
+              />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/provisionalScore">
+              <ProvisionalScore status={status} brick={props.brick} startTime={startTime} attempts={attempts} isPlayPreview={true} />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/synthesis">
+              <Synthesis status={status} brick={props.brick} isPlayPreview={true} />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/review">
+              <Review
+                isPlayPreview={true}
+                status={status}
+                questions={props.brick.questions}
+                brickId={props.brick.id}
+                startTime={startTime}
+                brickLength={props.brick.brickLength}
+                updateAttempts={updateReviewAttempts}
+                attempts={attempts}
+                finishBrick={finishReview}
+              />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/ending">
+              <Ending
+                status={status}
+                brick={props.brick}
+                attempts={attempts}
+                brickAttempt={brickAttempt}
+                saveBrick={saveBrickAttempt}
+              />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/publish">
+              <PublishPage {...props} />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/finish">
+              <FinishPage {...props} />
+            </Route>
+          </Switch>
+        </Grid>
+      </Grid>
     </div>
   );
 }
@@ -224,9 +255,9 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
       parsedQuestions.push(question);
     }
   }
-  
+
   let shuffleBrick = Object.assign({}, brick);
-  
+
   shuffleBrick.questions = parsedQuestions;
 
   shuffleBrick.questions.forEach(question => {

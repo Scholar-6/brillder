@@ -2,66 +2,6 @@
 @import '../../../assets/sass/partials/mixins';
 @import '../../../assets/sass/partials/extensions';
 
-.users-list-redirect-dropdown {
-  .MuiPaper-root {
-    position: fixed;
-    right: 0 !important;
-    left: auto !important;
-    top: 10.5vh !important;
-    min-width: 14.9vw !important;
-    min-height: 39.7vh;
-    border-radius: 0;
-    border-bottom-left-radius: 2vw;
-    color: white;
-    background: $light-blue;
-    box-shadow: none;
-
-    .menu-item {
-      position: relative;
-      font-family: $font-family-regular !important;
-      font-size: 1.45vw;
-      padding-left: 1.65vw;
-      margin-bottom: 1vh;
-      color: white !important;
-
-      .menu-icon-container {
-        position: fixed;
-        width: 4.5vw;
-        height: 3vh;
-        right: 0vw;
-      }
-
-      .menu-icon {
-        width: 2.2vw;
-      }
-
-      .svg-icon {
-        filter: invert(1);
-      }
-
-      .user-icon {
-        width: 1.93vw;
-      }
-
-      .logout-icon {
-        width: 1.88vw;
-      }
-
-      .back-to-work-icon {
-        width: 1.5vw;
-      }
-    }
-
-    .first-item {
-      margin-top: 1.7vh;
-    }
-
-    .view-profile {
-      margin-top: 3.4vh;
-    }
-  }
-}
-
 .alert-dialog {
   position: fixed;
   top: 0;
@@ -77,7 +17,7 @@
     padding: 3.8vh 1vw 3.5vh 2.2vw;
     font-size: 2.35vw;
     letter-spacing: 0;
-    color: $dark-blue;
+    color: var(--theme-dark-blue);
   }
 
   .logout-buttons {
@@ -100,13 +40,13 @@
 
     .yes-button {
       color: white;
-      background: $orange;
+      background: var(--theme-orange);
       margin-right: 1.4vw !important;
     }
 
     .no-button {
-      color: $dark-blue;
-      background: $tab-grey;
+      color: var(--theme-dark-blue);
+      background: $tab-gray;
       margin-right: 0.2vw;
     }
   }

@@ -5,14 +5,14 @@
 .drag-box-item {
   cursor: pointer;
   width: 100%;
-  color: $orange;
+  color: var(--theme-orange);
   font-family: 'SuperclarendonW00-Bold';
   font-size: 2vw;
 
   .drag-box-hover {
     font-family: $font-family-regular;
     font-size: 0.81vw;
-    color: $global-light-text-grey;
+    color: $global-light-text-gray;
     opacity: 0;
   }
 }

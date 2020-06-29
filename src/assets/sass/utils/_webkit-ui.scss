@@ -23,3 +23,12 @@
 		display: none !important;
 	}
 }
+
+input {
+	-webkit-appearance: none;
+	&::placeholder,
+	&:-ms-input-placeholder,
+	&::-ms-input-placeholder {
+		font-family: $font-family-bold;
+	}
+}

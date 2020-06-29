@@ -5,16 +5,18 @@ import './SynthesisPage.scss';
 
 
 export interface SynthesisProps {
+  locked: boolean;
   synthesis: string;
   onSynthesisChange(text: string): void
   onReview(): void
 }
 
-const SynthesisPage: React.FC<SynthesisProps> = ({ synthesis, onSynthesisChange, onReview }) => {
+const SynthesisPage: React.FC<SynthesisProps> = ({ locked, synthesis, onSynthesisChange, onReview }) => {
   return (
     <div className="question-type synthesis-page">
       <div className="inner-question-type">
         <DocumentWirisCKEditor
+          disabled={locked}
           data={synthesis}
           placeholder=""
           toolbar={[

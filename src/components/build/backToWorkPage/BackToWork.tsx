@@ -72,10 +72,9 @@ interface BackToWorkState {
   dropdownShown: boolean;
   failedRequest: boolean;
   shown: boolean;
-
-  	filterExpanded: boolean;
-	filterHeight: string;
-	isClearFilter: any;
+  filterExpanded: boolean;
+  filterHeight: string;
+  isClearFilter: any;
 }
 
 enum SortBy {
@@ -114,11 +113,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       isSearching: false,
       dropdownShown: false,
       failedRequest: false,
-	  shown: true,
-
-	  	filterExpanded: true,
-		filterHeight: "auto",
-		isClearFilter: false,
+	    shown: true,
+    	filterExpanded: true,
+      filterHeight: "auto",
+      isClearFilter: false,
     };
 
     const isAdmin = this.props.user.roles.some(
@@ -414,10 +412,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     }
     return (
 		<div className="sort-box">
-		 	<div className="sort-by-box">
+		 	<div className="filter-container sort-by-box">
 				<div className="sort-header">INBOX</div>
 			</div>
-			<div className="indexes-box">
+			<div className="filter-container indexes-box">
 				<div className={"index-box " + (this.state.filters.viewAll ? "active" : "")}
 					onClick={() => this.showAll()}>
 					View All
@@ -489,8 +487,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeInboxFilters(filters);
     filters.build = !filters.build;
     const bricks = this.filterBricks(filters);
-	this.setState({ ...this.state, filters, finalBricks: bricks });
-	this.filterClear()
+    this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
+    this.filterClear()
   }
 
   toggleReviewFilter() {
@@ -498,8 +496,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeInboxFilters(filters);
     filters.review = !filters.review;
     const bricks = this.filterBricks(filters);
-	this.setState({ ...this.state, filters, finalBricks: bricks });
-	this.filterClear()
+    this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
+    this.filterClear()
   }
 
   togglePublishFilter() {
@@ -507,8 +505,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeInboxFilters(filters);
     filters.publish = !filters.publish;
     const bricks = this.filterBricks(filters);
-	this.setState({ ...this.state, filters, finalBricks: bricks });
-	this.filterClear()
+    this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
+    this.filterClear()
   }
 
   searching(searchString: string) {
@@ -580,7 +578,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
     return (
 		<div className="sort-box">
-		 	<div className="sort-by-box">
+		 	<div className="filter-container sort-by-box">
 				<div className="sort-header">SORT BY</div>
 				<RadioGroup className="sort-group"
 					aria-label="SortBy"
@@ -616,7 +614,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 				</button>
 			</div>
 			{this.state.filterExpanded === true ? (
-		   	<div className="subject-indexes-box">
+		   	<div className="filter-container subject-indexes-box">
 					<div className="index-box color1">
 						<FormControlLabel
 							checked={this.state.filters.draft}
@@ -731,14 +729,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             {this.state.sortedIndex + 18 > this.state.finalBricks.length
               ? this.state.finalBricks.length
               : this.state.sortedIndex + 18}
-            <span className="grey">
+            <span className="gray">
               {" "}
               &nbsp;|&nbsp; {this.state.finalBricks.length}
             </span>
           </div>
           <div>
             {(this.state.sortedIndex + 18) / 18}
-            <span className="grey">
+            <span className="gray">
               {" "}
               &nbsp;|&nbsp; {Math.ceil(this.state.finalBricks.length / 18)}
             </span>
@@ -801,7 +799,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           </Grid>
         </div>
         <Menu
-          className="back-to-work-redirect-dropdown"
+          className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}

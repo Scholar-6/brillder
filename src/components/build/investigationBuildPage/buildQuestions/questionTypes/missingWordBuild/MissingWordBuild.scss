@@ -24,11 +24,11 @@
     width: 97.5%;
 
     .checkbox-invalid {
-      color: $orange;
+      color: var(--theme-orange);
     }
 
     .Mui-checked {
-      color: $light-green;
+      color: var(--theme-green);
     }
 
     .left-ckeckbox {
@@ -50,7 +50,7 @@
       height: 55px;
       text-align: center;
       border: none;
-      background: $input-grey;
+      background: $input-gray;
       border-radius: 0.4vw;
       padding-right: 8%;
       padding-left: 8%;

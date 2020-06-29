@@ -24,6 +24,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, ...pr
   return (
     <div className="question-build-text-editor">
       <DocumentWirisCKEditor
+        disabled={locked}
         data={data.value}
         placeholder=""
         toolbar={[

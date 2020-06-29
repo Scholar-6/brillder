@@ -1,12 +1,20 @@
-@import '../../../../assets/sass/partials/variables';
-@import '../../../../assets/sass/partials/mixins';
-@import '../../../../assets/sass/partials/extensions';
-
+@import "../../../../assets/sass/partials/variables";
+@import "../../../../assets/sass/partials/mixins";
+@import "../../../../assets/sass/partials/extensions";
 
 .MuiStepConnector-root.MuiStepConnector-horizontal.MuiStepConnector-alternativeLabel {
-    opacity: 0;
+  opacity: 0;
 }
 .live-page {
+  .MuiBox-root {
+    padding: 0;
+  }
+
+  .stepper {
+    .step {
+      color: #d3d4d5;
+    }
+  }
   .edited-step-icon {
     color: $black-blue;
     border-radius: 100%;
@@ -15,15 +23,18 @@
     border: 2px solid $black-blue;
   }
   .MuiBox-root {
-      padding-top: 0;
+    padding-top: 0;
   }
   .MuiStepper-root {
-      padding-top: 20px;
-      padding-bottom: 16px;
+    padding-top: 20px;
+    padding-bottom: 16px;
 
-      .MuiStepButton-root  {
-        padding-top: 27px;
-        padding-bottom: 10px;
-      }
+    .MuiStepButton-root {
+      padding-top: 27px;
+      padding-bottom: 10px;
+    }
+  }
+  .fotter-text {
+    margin-top: 3vw;
   }
 }

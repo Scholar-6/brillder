@@ -7,14 +7,8 @@ import './brickLength.scss';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
+import { BrickLengthEnum } from 'model/brick';
 
-
-export enum BrickLengthEnum {
-  None = 0,
-  S20min = 20,
-  S40min = 40,
-  S60min = 60
-}
 
 const BrickLengthPreviewComponent:React.FC<any> = ({data}) => {
   return (
@@ -26,13 +20,17 @@ const BrickLengthPreviewComponent:React.FC<any> = ({data}) => {
 }
 
 interface BrickLengthProps {
-  length: any
-  saveLength(value: BrickLengthEnum): any
-  saveBrick(data: any): void
+  length: any;
+  canEdit: boolean;
+  saveLength(value: BrickLengthEnum): any;
+  saveBrick(data: any): void;
 }
 
-const BrickLength:React.FC<BrickLengthProps> = ({ length, saveLength, saveBrick }) => {
+const BrickLength:React.FC<BrickLengthProps> = (
+  { length, canEdit, saveLength, saveBrick }
+) => {
   const setBrickLength = (brickLength: BrickLengthEnum) => {
+    if (!canEdit) { return; }
     saveLength(brickLength);
   }
 

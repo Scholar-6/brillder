@@ -26,7 +26,7 @@
       height: 5.4vw;
       padding: 0.7vw;
       border-radius: 100vw;
-      border: 0.1vw dashed $orange;
+      border: 0.1vw dashed var(--theme-orange);
     }
   }
 
@@ -37,7 +37,7 @@
     top: 33.5vh;
     font-size: 1.8vw;
     letter-spacing: 0.3vw;
-    font-family: "Brandon Grotesque Black";
+    font-family: $font-family-black;
     color: $light-blue;
 
     .proposal-edit-icon {
@@ -79,7 +79,7 @@
     top: 32.5vh;
     padding: 1vh 0.5vw 2.3vh 0.5vw;
     border-radius: 0.65vw;
-    border: 0.1vw dashed $orange;
+    border: 0.1vw dashed var(--theme-orange);
     margin-bottom: 10vw;
   }
 
