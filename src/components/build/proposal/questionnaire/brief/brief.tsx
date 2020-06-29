@@ -20,10 +20,10 @@ interface BriefProps {
 const BriefPreviewComponent:React.FC<any> = ({data}) => {
   if (data) {
     return (
-      <Grid container justify="center" alignContent="flex-start" className="brief-phone-preview">
+      <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
         <img
           alt="head"
-          style={{width: 'auto', marginLeft: '0', marginTop: '9vh', height: '24%'}}
+          className="first-phone-image"
           src="/images/new-brick/brief-circles.png">
         </img>
         <div className="typing-text">
@@ -33,10 +33,10 @@ const BriefPreviewComponent:React.FC<any> = ({data}) => {
     )
   }
   return (
-    <Grid container justify="center" className="brief-phone-preview">
+    <Grid container justify="center" className="phone-preview-component">
       <img
         alt="head"
-        style={{width: 'auto', marginLeft: '0', marginTop: '6.8vh', height: '40%'}}
+        className="first-phone-image"
         src="/images/new-brick/brief-circles.png">
       </img>
     </Grid>
