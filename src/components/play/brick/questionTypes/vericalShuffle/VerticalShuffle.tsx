@@ -8,6 +8,7 @@ import CompComponent from '../Comp';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
+import MathInHtml from '../../baseComponents/MathInHtml';
 
 
 interface VerticalShuffleChoice {
@@ -22,6 +23,7 @@ interface VerticalShuffleComponent {
 }
 
 interface VerticalShuffleProps extends CompQuestionProps {
+  isTimeover: boolean;
   component: VerticalShuffleComponent;
   answers: number;
 }
@@ -58,6 +60,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
   }
 
   setUserAnswers(userAnswers: any[]) {
+    if (this.props.isTimeover) { return; }
     let status = DragAndDropStatus.Changed;
     if (this.state.status === DragAndDropStatus.None) {
       status = DragAndDropStatus.Init;
@@ -77,6 +80,10 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
         this.setState({userAnswers: props.component.list});
       }
     }
+  }
+
+  componentDidUpdate(props: VerticalShuffleProps) {
+    console.log(props.isTimeover, this.props.isTimeover);
   }
 
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
@@ -144,7 +151,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     return (
       <div key={i} className={className}>
         <Grid container direction="row" justify="center">
-          {answer.value}
+          <MathInHtml value={answer.value} />
         </Grid>
         <Grid container direction="row" justify="center">
           <ReviewEachHint

@@ -11,8 +11,9 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 
-interface PrepProps {
+interface BriefProps {
   parentBrief: string;
+  canEdit: boolean;
   saveBrief(brief: string):void;
 }
 
@@ -42,7 +43,7 @@ const BriefPreviewComponent:React.FC<any> = ({data}) => {
   )
 }
 
-const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
+const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief }) => {
   const setBriefText = (value: string) => {
     saveBrief(value)
   }
@@ -56,6 +57,7 @@ const BriefComponent: React.FC<PrepProps> = ({ parentBrief, saveBrief }) => {
             Outline the purpose of this brick.
           </h1>
           <DocumentWirisCKEditor
+            disabled={!canEdit}
             data={parentBrief}
             placeholder="Enter Brief Here..."
             toolbar={[

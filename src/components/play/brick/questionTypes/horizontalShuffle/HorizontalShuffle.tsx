@@ -9,6 +9,7 @@ import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
+import MathInHtml from '../../baseComponents/MathInHtml';
 
 
 enum DragAndDropStatus {
@@ -28,6 +29,7 @@ interface HorizontalShuffleComponent {
 }
 
 interface VerticalShuffleProps extends CompQuestionProps {
+  isTimeover: boolean;
   component: HorizontalShuffleComponent;
   answers: number;
 }
@@ -62,6 +64,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   }
 
   setUserAnswers(userAnswers: any[]) {
+    if (this.props.isTimeover) { return; }
     let status = DragAndDropStatus.Changed;
     if (this.state.status === DragAndDropStatus.None) {
       status = DragAndDropStatus.Init;
@@ -123,7 +126,9 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
 
     return (
       <Card className={className} key={i}>
-        <div style={{display: "block"}}>{answer.value}</div>
+        <div style={{display: "block"}}>
+          <MathInHtml value={answer.value} />
+        </div>
         <div style={{display: "block"}}>
           <ReviewEachHint
             isPhonePreview={this.props.isPreview}

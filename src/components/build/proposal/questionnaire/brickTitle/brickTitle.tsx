@@ -12,8 +12,9 @@ import { setBrillderTitle } from "components/services/titleService";
 
 
 interface BrickTitleProps {
-  parentState: Brick
-  saveTitles(data: any):void
+  parentState: Brick;
+  canEdit: boolean;
+  saveTitles(data: any):void;
 }
 
 const BrickTitlePreviewComponent:React.FC<any> = (props) => {
@@ -67,7 +68,7 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
 }
 
 
-const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
+const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, canEdit, saveTitles }) => {
   const onTitleChange = (event: React.ChangeEvent<{ value: string }>) => {
     const title = event.target.value.substr(0, 40);
     saveTitles({ ...parentState, title });
@@ -95,18 +96,21 @@ const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, saveTitles }) => {
           <h1>What is your brick about?</h1>
           <Grid item className="input-container">
             <Input
+              disabled={!canEdit}
               className="audience-inputs"
               value={parentState.title}
               onChange={(onTitleChange)}
               placeholder="Enter Proposed Title Here..."
             />
             <Input
+              disabled={!canEdit}
               className="audience-inputs"
               value={parentState.subTopic}
               onChange={onSubTopicChange}
               placeholder="Enter Topic..."
             />
             <Input
+              disabled={!canEdit}
               className="audience-inputs"
               value={parentState.alternativeTopics}
               onChange={onAltTopicChange}

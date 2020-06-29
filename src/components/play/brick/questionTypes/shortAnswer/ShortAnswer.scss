@@ -11,11 +11,11 @@
   }
 
   .question-hint {
-    color: $dark-blue;
+    color: var(--theme-dark-blue);
   }
 
   .question-hint-global {
-    color: $dark-blue;
+    color: var(--theme-dark-blue);
   }
 
   .short-answer-input.correct .question-hint {
@@ -23,7 +23,7 @@
   }
 
   input.MuiInput-input {
-    color: $dark-blue;
+    color: var(--theme-dark-blue);
     height: auto;
     padding: 0;
     line-height: 2;

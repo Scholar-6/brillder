@@ -11,6 +11,7 @@ import {CompQuestionProps} from '../types';
 
 interface ShortAnswerProps extends CompQuestionProps {
   component: any;
+  isTimeover: boolean;
   attempt: ComponentAttempt;
   answers: string[];
 }

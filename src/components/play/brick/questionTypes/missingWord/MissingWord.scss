@@ -11,20 +11,20 @@
   .missing-word-choice {
     font-family: $font-family-regular;
     display: inline;
-    color: $dark-blue;
+    color: var(--theme-dark-blue);
     margin-bottom: 20px;
     .missing-select {
       margin-left: 10px;
       margin-right: 10px;
       margin-top: -3px;
       font-family: $font-family-regular;
-      color: $dark-blue;
+      color: var(--theme-dark-blue);
     }
   }
 
   .question-hint,
   .question-hint-global {
-    color: $dark-blue;
+    color: var(--theme-dark-blue);
   }
 
   .question-hint-global {
@@ -33,6 +33,6 @@
 }
 
 .MuiListItem-root {
-  color: $dark-blue !important;
+  color: var(--theme-dark-blue) !important;
   font-family: $font-family-regular !important;
 }

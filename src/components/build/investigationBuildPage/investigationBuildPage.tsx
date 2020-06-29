@@ -45,6 +45,7 @@ import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
 import {GetCashedBuildQuestion} from '../../localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
+import { canEditBrick } from "components/services/brickService";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -67,7 +68,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     getNewQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
   const [loaded, setStatus] = React.useState(false);
-  const [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
+  let [locked, setLock] = React.useState(props.brick ? props.brick.locked: false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
@@ -98,12 +99,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         }
       }
     }
-  }, [props.brick]);
+  }, [props.brick, brickId]);
   /* Synthesis */
 
   if (!props.brick) {
     return <div>...Loading...</div>;
   }
+
+  let canEdit = canEditBrick(props.brick, props.user);
+  locked = canEdit ? locked : true;
 
   setBrillderTitle(props.brick.title);
 
@@ -156,6 +160,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   /* Changing question in build */
 
   const createNewQuestion = () => {
+    if (!canEdit) { return; }
     const updatedQuestions = deactiveQuestions(questions);
     updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
     setQuestions(update(questions, { $set: updatedQuestions }));
@@ -271,6 +276,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     let invalidQuestion = questions.find(question => {
       return !validateQuestion(question);
     });
+
+    if (!synthesis) {
+      invalidQuestion = {} as Question;
+    }
+
     if (invalidQuestion) {
       setSubmitDialog(true);
     } else {
@@ -304,13 +314,17 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const saveBrickQuestions = (updatedQuestions: Question[]) => {
     setSavingStatus(true);
     prepareBrickToSave(brick, updatedQuestions, synthesis);
-    props.saveBrick(brick);
+    if (canEdit === true) {
+      props.saveBrick(brick);
+    }
   }
 
   const saveBrick = () => {
     setSavingStatus(true);
     prepareBrickToSave(brick, questions, synthesis);
-    props.saveBrick(brick);
+    if (canEdit === true) {
+      props.saveBrick(brick);
+    }
   };
 
   const updateComponents = (components: any[]) => {
@@ -334,6 +348,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         synthesis={brick.synthesis}
         questionsCount={questions ? questions.length : 0}
         question={activeQuestion}
+        canEdit={canEdit}
         locked={locked}
         validationRequired={validationRequired}
         getQuestionIndex={getQuestionIndex}
@@ -401,7 +416,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           {renderQuestionComponent}
         </Route>
         <Route path="/build/brick/:brickId/build/investigation/synthesis">
-          <SynthesisPage synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
+          <SynthesisPage locked={locked} synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
         </Route>
       </Switch>
     );

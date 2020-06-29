@@ -9,7 +9,8 @@ import './Proposal.scss';
 import SubjectPage from './questionnaire/subject/Subject';
 import BrickTitle from './questionnaire/brickTitle/brickTitle';
 import OpenQuestion from './questionnaire/openQuestion/openQuestion';
-import BrickLength, { BrickLengthEnum } from './questionnaire/brickLength/brickLength';
+import { BrickLengthEnum } from 'model/brick';
+import BrickLength from './questionnaire/brickLength/brickLength';
 import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
@@ -19,6 +20,7 @@ import { User } from "model/user";
 import CloseProposalDialog from 'components/build/baseComponents/CloseProposalDialog';
 import VersionLabel from "components/baseComponents/VersionLabel";
 import { setBrillderTitle } from "components/services/titleService";
+import { canEditBrick } from "components/services/brickService";
 
 
 interface ProposalProps {
@@ -36,7 +38,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
   }
   let initState = {
     subjectId,
-    brickLength: 0,
+    brickLength: BrickLengthEnum.None,
     topic: '',
     subTopic: '',
     alternativeTopics: '',
@@ -60,6 +62,8 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
   const [saved, setSaved] = React.useState(false);
   const [isDialogOpen, setDialog] = React.useState(false);
 
+  const canEdit = canEditBrick(state, props.user);
+
   useEffect(() => {
     if (brick) {
       if (!brick.author && state.author) {
@@ -75,8 +79,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   const saveLocalState = (data: any) => {
     setBrick(data);
-    setLocalProposal(data);
-  }
+    setLocalProposal(data);  }
 
   const setSubject = (subjectId: number) => {
     saveLocalState({...state, subjectId});
@@ -104,7 +107,8 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     return brick;
   }
 
-  const setLengthAndSave = (brickLength: number) => {
+  const setLengthAndSave = (brickLength: BrickLengthEnum) => {
+    if (!canEdit) { return; }
     let brick = setLength(brickLength);
     saveBrick(brick);
   }
@@ -146,6 +150,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   return (
     <MuiThemeProvider>
+      <div>
       <div style={{position: 'absolute'}}>
         <HomeButton onClick={openDialog} />
       </div>
@@ -154,19 +159,19 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
           <SubjectPage subjects={props.user.subjects} subjectId={''} saveSubject={setSubject} />
         </Route>
         <Route path='/build/new-brick/brick-title'>
-          <BrickTitle parentState={state} saveTitles={setTitles} />
+          <BrickTitle parentState={state} canEdit={canEdit} saveTitles={setTitles} />
         </Route>
         <Route path='/build/new-brick/open-question'>
-          <OpenQuestion selectedQuestion={state.openQuestion} saveOpenQuestion={setOpenQuestion} />
+          <OpenQuestion selectedQuestion={state.openQuestion} canEdit={canEdit} saveOpenQuestion={setOpenQuestion} />
         </Route>
         <Route path='/build/new-brick/brief'>
-          <Brief parentBrief={state.brief} saveBrief={setBrief} />
+          <Brief parentBrief={state.brief} canEdit={canEdit} saveBrief={setBrief} />
         </Route>
         <Route path='/build/new-brick/prep'>
-          <Prep parentPrep={state.prep} savePrep={setPrep} />
+          <Prep parentPrep={state.prep} canEdit={canEdit} savePrep={setPrep} />
         </Route>
         <Route path='/build/new-brick/length'>
-          <BrickLength length={state.brickLength} saveLength={setLength} saveBrick={setLengthAndSave} />
+          <BrickLength length={state.brickLength} canEdit={canEdit} saveLength={setLength} saveBrick={setLengthAndSave} />
         </Route>
         <Route path="/build/new-brick/proposal">
           <ProposalReview brick={state} user={props.user} saveBrick={saveAndMove} />
@@ -174,6 +179,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
         <VersionLabel />
       </div>
       <CloseProposalDialog isOpen={isDialogOpen} close={closeDialog} move={goHome} />
+      </div>
     </MuiThemeProvider>
   );
 }

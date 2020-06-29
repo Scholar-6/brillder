@@ -5,7 +5,7 @@
 .line-highlighting-play {
   font-size: 1rem;
   font-family: $font-family-regular;
-  color: $dark-blue;
+  color: var(--theme-dark-blue);
 
   .lines-container {
     width: 100%;
@@ -14,18 +14,18 @@
       cursor: pointer;
     }
     .line.active {
-      background: $blue;
+      background: $white-blue;
     }
 
     .line.correct {
-      background: $light-green;
+      background: var(--theme-green);
     }
     .line.wrong {
-      background: $orange;
+      background: var(--theme-orange);
     }
   }
   .question-hint,
   .question-hint-global {
-    color: $dark-blue;
+    color: var(--theme-dark-blue);
   }
 }

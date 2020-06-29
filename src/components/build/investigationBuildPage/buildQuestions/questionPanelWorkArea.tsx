@@ -4,8 +4,9 @@ import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
 
+import sprite from "../../../../assets/img/icons-sprite.svg";
 import QuestionComponents from './questionComponents/questionComponents';
-import {getNonEmptyComponent} from '../questionService/ValidateQuestionService';
+import { getNonEmptyComponent } from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
 import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionTypeObj } from 'model/question';
 import DragBox from './drag/dragBox';
@@ -19,6 +20,7 @@ function SplitByCapitalLetters(element: string): string {
 
 export interface QuestionProps {
   brickId: number;
+  canEdit: boolean;
   question: Question;
   history: any;
   questionsCount: number;
@@ -39,12 +41,15 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   brickId, question, history, validationRequired, locked, getQuestionIndex, ...props
 }) => {
   const [componentTypes, setComponentType] = React.useState([
-    {id: 1, type: QuestionComponentTypeEnum.Text},
-    {id: 2, type: QuestionComponentTypeEnum.Quote},
-    {id: 3, type: QuestionComponentTypeEnum.Image},
-    {id: 4, type: QuestionComponentTypeEnum.Sound},
-    {id: 4, type: QuestionComponentTypeEnum.Graph}
+    { id: 1, type: QuestionComponentTypeEnum.Text },
+    { id: 2, type: QuestionComponentTypeEnum.Quote },
+    { id: 3, type: QuestionComponentTypeEnum.Image },
+    { id: 4, type: QuestionComponentTypeEnum.Sound },
+    { id: 4, type: QuestionComponentTypeEnum.Graph }
   ]);
+  const [scrollShown, setScroll] = React.useState(false);
+  const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
+  const [scrollPosition] = React.useState(0);
   const { type } = question;
 
   const setQuestionHint = (hintState: HintState) => {
@@ -65,14 +70,41 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     showHelpArrow = getNonEmptyComponent(question.components);
   }
 
+  const showScrollArrows = () => setScroll(true);
+  const hideScrollArrows = () => setScroll(false);
+
+  const scrollUp = () => {
+    if (workarea.current) {
+      workarea.current.scrollBy(0, -100);
+    }
+  }
+
+  const scrollDown = () => {
+    if (workarea.current) {
+      let el = workarea.current;
+      el.scrollBy(0, 100);
+    }
+  }
+
   return (
     <MuiThemeProvider >
-      <div className="build-question-page" style={{width: '100%', height: '94%'}}>
+      <div className="build-question-page" style={{ width: '100%', height: '94%' }}>
         {
           showHelpArrow ? <img alt="" className="help-arrow" src="/images/investigation-arrow.png" /> : ""
         }
+        <div className="top-scroll-area">
+          <div className="top-button-container">
+            {
+              scrollShown ? <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
+                <svg className="svg active">
+                  <use href={sprite + "#arrow-up"} className="text-theme-orange" />
+                </svg>
+              </button> : ""
+            }
+          </div>
+        </div>
         <Grid container justify="center" className="build-question-column" item xs={12}>
-          <Grid container direction="row">
+          <Grid container direction="row" style={{ height: '100%' }}>
             <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
               <Grid container item xs={12} className="left-sidebar" alignItems="center">
                 <ReactSortable
@@ -107,7 +139,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   <DragBox
                     locked={locked}
                     isImage={true} src="/images/soundicon.png"
-                    label="S O U N D" 
+                    label="S O U N D"
                     hoverMarginTop="0.5vw"
                     fontFamily="Brandon Grotesque Bold"
                     value={QuestionComponentTypeEnum.Sound}
@@ -123,7 +155,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 />
               </Grid>
             </Grid>
-            <Grid container item xs={5} sm={6} md={6} className="question-components-list">
+            <Grid container item xs={5} sm={6} md={6} className="question-components-list" ref={workarea}>
               <QuestionComponents
                 questionIndex={index}
                 locked={locked}
@@ -144,16 +176,18 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                       <Grid container justify="center" alignContent="flex-start">
                         <div className="right-side-text">Last Question?</div>
                         <Button
-                          className="synthesis-button"
+                          className="synthesis-button svgOnHover"
                           onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
                         >
-                          <img alt="add-synthesis" src="/images/synthesis-icon.png" className="inner-icon" />
+                          <svg className="svg w-2 h-2 active">
+                            <use href={sprite + "#list"} className="text-theme-dark-blue" />
+                          </svg>
                           {
                             props.synthesis ? 'Edit Synthesis' : 'Add Synthesis'
                           }
                         </Button>
                       </Grid>
-                    : ""
+                      : ""
                   }
                 </Grid>
               </Grid>
@@ -175,17 +209,48 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                       {
                         typeArray.map((typeName, i) => {
                           const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
-                          return <MenuItem style={{fontFamily: 'Brandon Grotesque Regular'}} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
+                          return <MenuItem style={{ fontFamily: 'Brandon Grotesque Regular' }} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
                         })
                       }
                     </Select>
                   </FormControl>
                 </Grid>
               </Grid>
-              <LockComponent locked={locked} onChange={props.toggleLock} />
+              <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
             </Grid>
           </Grid>
         </Grid>
+        <div className="bottom-scroll-area">
+          {
+            scrollShown
+              ? <div className="bottom-button-container">
+                <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
+                  <svg className="svg active">
+                    <use href={sprite + "#arrow-down"} className="text-theme-orange" />
+                  </svg>
+                </button>
+                <div className="scroll-text">
+                  <span>Click again to hide</span>
+                  <button className="btn btn-transparent svgOnHover" onClick={hideScrollArrows}>
+                    <svg className="svg active">
+                      <use href={sprite + "#eye-on"} className="text-theme-orange" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              :
+              <div className="bottom-button-container">
+                <div className="scroll-text">
+                  <span>Trouble scrolling? Click the eye to show up/down arrows</span>
+                  <button className="btn btn-transparent svgOnHover" onClick={showScrollArrows}>
+                    <svg className="svg active">
+                      <use href={sprite + "#eye-off"} className="text-gray" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+          }
+        </div>
       </div>
     </MuiThemeProvider>
   );

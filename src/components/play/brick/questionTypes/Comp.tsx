@@ -8,7 +8,7 @@ class CompComponent<Props, State> extends React.Component<Props, State> {
 
   getAttempt(): ComponentAttempt {
     let props = this.props as any;
-    let att = this.mark({ answer: this.getAnswer(), correct: false, marks: 0, maxMarks: 0 }, props.attempt);
+    let att = this.mark({ answer: this.getAnswer(), attempted: true, correct: false, marks: 0, maxMarks: 0 }, props.attempt);
     return att;
   };
 

@@ -10,7 +10,7 @@ $tile-height: 100%;
 .drag-tabs {
   display: inline-block;
   width: 100%;
-  background: $dark-blue !important;
+  background: var(--theme-dark-blue) !important;
   height: 6.2%;
 
   .drag-last-tile-container {
@@ -28,7 +28,7 @@ $tile-height: 100%;
   .drag-tile {
     cursor: pointer;
     height: 100%;
-    background-color: $tab-grey;
+    background-color: $tab-gray;
   }
   .drag-tile:first-child {
     border-top-left-radius: $tab-radius;
@@ -67,10 +67,14 @@ $tile-height: 100%;
 
     > div {
       height: 100%;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      display: flex !important;
     }
 
     .tab-number {
-      color: $dark-blue;
+      color: var(--theme-dark-blue);
       font-family: $font-family-bold;
       font-size: 3.4vh;
     }
@@ -82,7 +86,6 @@ $tile-height: 100%;
     }
 
     .remove-icon {
-      margin-top:0.5vh;
       height: 3vh;
       cursor: pointer;
     }
@@ -90,20 +93,17 @@ $tile-height: 100%;
 
   .last-tab {
     text-align: center;
-    color: $dark-blue;
+    color: var(--theme-dark-blue);
     font-size: 1.3vw;
     overflow: hidden;
-    font-family: $font-family-bold;
+		font-family: $font-family-bold;
+		width: 2vw;
+		height: 2vw;
   }
 
   .synthesis-tab {
     .drag-tile {
       background: white;
-
-      .last-tab {
-        background: white;
-        height: 5vh;
-      }
     }
   }
 
@@ -114,7 +114,7 @@ $tile-height: 100%;
   .synthesis-tab-icon.tutorial-border {
     padding: 0.5vh 0.65vw;
     border-radius: 0.55vw;
-    border: 0.1vw dashed $orange;
+    border: 0.1vw dashed var(--theme-orange);
   }
 
   .width-based {
@@ -123,7 +123,7 @@ $tile-height: 100%;
   }
 
   .invalid {
-    background: $orange !important;
+    background: var(--theme-orange) !important;
   }
 
   .add-tab {
@@ -137,7 +137,7 @@ $tile-height: 100%;
   .add-tab.last-tab.tutorial-border {
     border-radius: 100vw;
     padding: 0.21vw 0.25vw 0.1vw 0.25vw;
-    border: 0.1vw dashed $orange;
+    border: 0.1vw dashed var(--theme-orange);
   }
 
   @media only screen and (max-width: 599px) {

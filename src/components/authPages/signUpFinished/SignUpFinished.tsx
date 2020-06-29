@@ -39,11 +39,8 @@ const SignUpFinished: React.FC<LoginProps> = props => {
           </div>
 				<div className="contact-info">
 					If you have any further questions, please email theteam@scholar6.org
-          </div>
+        </div>
 			</div>
-      ) : (
-			<div></div>
-      )
 		</Grid>
 	);
 };

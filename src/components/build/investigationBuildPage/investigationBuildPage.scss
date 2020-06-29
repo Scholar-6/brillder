@@ -8,7 +8,7 @@
 
   .yes-button {
     color: white;
-    background: $orange;
+    background: var(--theme-orange);
     margin-bottom: 4vh;
   }
 }
@@ -34,7 +34,7 @@
 
   .investigation-build-background {
     height: 100%;
-    background: $dark-blue;
+    background: var(--theme-dark-blue);
   }
 
   .right-top-drop-icon {
@@ -42,7 +42,7 @@
     top: 8px;
     right: 1px;
     cursor: pointer;
-    color: $orange;
+    color: var(--theme-orange);
     z-index: 2;
   }
 
@@ -57,7 +57,7 @@
     width: $bin-size;
     right: 0.1vw;
     cursor: pointer;
-    color: $orange;
+    color: var(--theme-orange);
     z-index: 2;
   }
 
@@ -145,7 +145,7 @@
     padding: 3.8vh 4vw 3.5vh 1.7vw;
     font-size: 1.9vw;
     letter-spacing: 0;
-    color: $dark-blue;
+    color: var(--theme-dark-blue);
     font-family: $font-family-regular;
   }
   .row-buttons {
@@ -168,13 +168,13 @@
 
     .yes-button {
       color: white;
-      background: $orange;
+      background: var(--theme-orange);
       margin-right: 1.4vw !important;
     }
 
     .no-button {
-      color: $dark-blue;
-      background: $tab-grey;
+      color: var(--theme-dark-blue);
+      background: $tab-gray;
       margin-right: 0.2vw;
     }
   }

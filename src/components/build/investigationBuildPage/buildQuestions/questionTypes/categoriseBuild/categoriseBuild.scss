@@ -20,16 +20,16 @@
 
     input {
       border-radius: 0.4vw;
-      width: 84%;
+      width: 100%;
       text-align: center;
       border: none;
-      background: $input-grey;
+      background: $input-gray;
       padding-right: 8%;
       padding-left: 8%;
       opacity: 0.8;
       font-size: $answer-input-text-size;
       font-family: $font-family-regular;
-      height: 2.3vw !important;
+      height: auto !important;
     }
 
     input.answer {

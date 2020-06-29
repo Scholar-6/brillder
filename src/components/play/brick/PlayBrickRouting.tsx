@@ -19,7 +19,9 @@ import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
 import { setBrillderTitle } from 'components/services/titleService';
-import {prefillAttempts} from 'components/services/PlayService';
+import { prefillAttempts } from 'components/services/PlayService';
+import PlayBrickMenu from './PlayBrickMenu';
+import { Grid } from '@material-ui/core';
 
 
 export interface BrickAttempt {
@@ -47,19 +49,20 @@ interface BrickRoutingProps {
   user: any;
   history: any;
   location: any;
-  fetchBrick(brickId: number):void;
+  fetchBrick(brickId: number): void;
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  let initAttempts:any[] = [];
+  let initAttempts: any[] = [];
   if (props.brick) {
     initAttempts = prefillAttempts(props.brick.questions);
   }
-  
+
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
+  const [startTime, setStartTime] = React.useState(undefined);
 
   useEffect(() => {
     if (props.brick) {
@@ -82,12 +85,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   setBrillderTitle(props.brick.title);
 
-  const updateAttempts = (attempt:any, index:number) => {
+  const updateAttempts = (attempt: any, index: number) => {
     attempts[index] = attempt;
     setAttempts(attempts);
   }
 
-  const updateReviewAttempts = (attempt:any, index:number) => {
+  const updateReviewAttempts = (attempt: any, index: number) => {
     reviewAttempts[index] = attempt;
     setReviewAttempts(reviewAttempts);
   }
@@ -98,7 +101,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
     is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
     let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
-    var ba : BrickAttempt = {
+    var ba: BrickAttempt = {
       brick: props.brick,
       score: score,
       maxScore: maxScore,
@@ -114,7 +117,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const finishReview = () => {
     let score = reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0) + brickAttempt.score;
     let maxScore = reviewAttempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
-    var ba : BrickAttempt = {
+    var ba: BrickAttempt = {
       score,
       maxScore,
       oldScore: brickAttempt.score,
@@ -130,54 +133,70 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     return axios.post(
       process.env.REACT_APP_BACKEND_HOST + '/play/attempt',
       brickAttempt,
-      {withCredentials: true}
+      { withCredentials: true }
     ).then(res => {
       props.history.push(`/play/dashboard`);
     })
-    .catch(error => {
-      alert('Can`t save your attempt');
-    });
+      .catch(error => {
+        alert('Can`t save your attempt');
+      });
   }
 
   return (
-    <div className="play-pages">
-      <Switch>
-        <Route exac path="/play/brick/:brickId/intro">
-          <Introduction brick={props.brick} />
-        </Route>
-        <Route exac path="/play/brick/:brickId/live">
-          <Live
-            status={status}
-            questions={props.brick.questions}
-            brickId={props.brick.id}
-            updateAttempts={updateAttempts}
-            finishBrick={finishBrick}
-          />
-        </Route>
-        <Route exac path="/play/brick/:brickId/provisionalScore">
-          <ProvisionalScore status={status} brick={props.brick} attempts={attempts} />
-        </Route>
-        <Route exac path="/play/brick/:brickId/synthesis">
-          <Synthesis status={status} brick={props.brick} />
-        </Route>
-        <Route exac path="/play/brick/:brickId/review">
-          <Review
-            status={status}
-            questions={props.brick.questions}
-            brickId={props.brick.id}
-            updateAttempts={updateReviewAttempts}
-            attempts={attempts}
-            finishBrick={finishReview} />
-        </Route>
-        <Route exac path="/play/brick/:brickId/ending">
-          <Ending status={status} brick={props.brick} brickAttempt={brickAttempt} saveBrick={saveBrickAttempt} />
-        </Route>
-      </Switch>
+    <div className="play-preview-pages">
+      <PlayBrickMenu user={props.user} history={props.history} />
+      <Grid container direction="row" className="sorted-row">
+        <Grid container item className="sort-and-filter-container">
+        </Grid>
+        <Grid item className="brick-row-container">
+          <Switch>
+            <Route exac path="/play/brick/:brickId/intro">
+              <Introduction brick={props.brick} startTime={startTime} setStartTime={setStartTime} />
+            </Route>
+            <Route exac path="/play/brick/:brickId/live">
+              <Live
+                status={status}
+                attempts={attempts}
+                questions={props.brick.questions}
+                brick={props.brick}
+                updateAttempts={updateAttempts}
+                finishBrick={finishBrick}
+              />
+            </Route>
+            <Route exac path="/play/brick/:brickId/provisionalScore">
+              <ProvisionalScore status={status} startTime={startTime} brick={props.brick} attempts={attempts} />
+            </Route>
+            <Route exac path="/play/brick/:brickId/synthesis">
+              <Synthesis status={status} brick={props.brick} />
+            </Route>
+            <Route exac path="/play/brick/:brickId/review">
+              <Review
+                status={status}
+                questions={props.brick.questions}
+                brickId={props.brick.id}
+                startTime={startTime}
+                brickLength={props.brick.brickLength}
+                updateAttempts={updateReviewAttempts}
+                attempts={attempts}
+                finishBrick={finishReview} />
+            </Route>
+            <Route exac path="/play/brick/:brickId/ending">
+              <Ending
+                status={status}
+                brick={props.brick}
+                attempts={attempts}
+                brickAttempt={brickAttempt}
+                saveBrick={saveBrickAttempt}
+              />
+            </Route>
+          </Switch>
+        </Grid>
+      </Grid>
     </div>
   );
 }
 
-const parseAndShuffleQuestions = (brick:Brick):Brick => {
+const parseAndShuffleQuestions = (brick: Brick): Brick => {
   /* Parsing each Question object from json <contentBlocks> */
   if (!brick) { return brick; }
   const parsedQuestions: Question[] = [];
@@ -194,21 +213,21 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
           } as Question;
           parsedQuestions.push(q);
         }
-      } catch (e) {}
+      } catch (e) { }
     } else {
       parsedQuestions.push(question);
     }
   }
-  
+
   let shuffleBrick = Object.assign({}, brick);
-  
+
   shuffleBrick.questions = parsedQuestions;
 
   shuffleBrick.questions.forEach(question => {
     if (question.type === QuestionTypeEnum.ChooseOne || question.type === QuestionTypeEnum.ChooseSeveral) {
       question.components.forEach(c => {
         if (c.type === QuestionComponentTypeEnum.Component) {
-          const {hint} = question;
+          const { hint } = question;
           if (hint.status === HintStatus.Each) {
             for (let [index, item] of c.list.entries()) {
               item.hint = question.hint.list[index];
@@ -234,7 +253,7 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
             item.index = index;
             item.hint = question.hint.list[index];
           }
-          const choices = c.list.map((a:any) => ({
+          const choices = c.list.map((a: any) => ({
             value: a.value,
             index: a.index,
             valueFile: a.valueFile,
@@ -257,7 +276,7 @@ const mapState = (state: any) => {
 
 const mapDispatch = (dispatch: any) => {
   return {
-    fetchBrick: (id:number) => dispatch(actions.fetchBrick(id)),
+    fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
   }
 }
 

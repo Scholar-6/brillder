@@ -14,7 +14,7 @@ $box-radius: 0.4vw;
       margin-top: 4.7vh;
       font-size: 3.6vw;
       text-align: center;
-      color: $dark-blue;
+      color: var(--theme-dark-blue);
       margin-bottom: 12.1vh !important;
     }
 
@@ -44,8 +44,8 @@ $box-radius: 0.4vw;
     width: 100%;
     height: 100%;
     padding: 6vh 0vw 0 0vw;
-    background: $dark-blue;
-    color: $orange;
+    background: var(--theme-dark-blue);
+    color: var(--theme-orange);
     font-family: $font-family-regular;
     letter-spacing: 0.1vw;
 

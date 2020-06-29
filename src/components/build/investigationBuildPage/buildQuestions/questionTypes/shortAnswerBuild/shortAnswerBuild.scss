@@ -54,7 +54,7 @@
         font-weight: bold;
         font-family: $font-family-black;
         color: white;
-        background-color: $orange;
+        background-color: var(--theme-orange);
       }
     }
   }
@@ -62,7 +62,7 @@
     width: 2vw;
     text-align: center;
     font-weight: bold;
-    font-family: "Brandon Grotesque Black";
+    font-family: $font-family-black;
     color: white;
     font-size: 1.2vw;
   }

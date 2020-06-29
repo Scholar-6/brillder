@@ -85,7 +85,7 @@
   }
   .user-type-mobile-btn {
     padding: 0vh 0;
-    background-color: $orange;
+    background-color: var(--theme-orange);
     color: white;
     margin-top: 1.55vh;
     margin-bottom: 1vh;
@@ -101,6 +101,6 @@
     }
   }
   .user-type-mobile-btn:hover {
-    background-color: $orange;
+    background-color: var(--theme-orange);
   }
 }

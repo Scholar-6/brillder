@@ -45,10 +45,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           alignContent="flex-end"
         >
           <Grid item xs={4} container justify="flex-start">
-            <div
-              className="round-button"
-              style={{ background: `${color}` }}
-            ></div>
+            <div className="round-button" style={{ background: `${color}` }}></div>
           </Grid>
           <Grid item xs={4} container justify="flex-start">
             {isAdmin ? (

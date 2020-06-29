@@ -3,7 +3,7 @@
 @import '../../../assets/sass/partials/extensions';
 
 .pre-login-page {
-  background: $dark-blue;
+  background: var(--theme-dark-blue);
   height: 100%;
   .back-col {
     height: 13.3vh;
@@ -15,10 +15,9 @@
         height: 3.6vw;
         width: 2vw;
         margin-left: 15vw;
-        color: $orange;
+        color: var(--theme-orange);
         transition: all 0.2s ease-in-out;
         transform-origin: 200% 50%;
-  
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center;
@@ -29,7 +28,6 @@
       }
     }
   }
-
   .first-col {
     width: 29.6vw;
     height: 100%;
@@ -47,7 +45,6 @@
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
       text-align: center;
-
       .logo-image {
         margin-top: 6.1vh;
         margin-bottom: 3.9vh;
@@ -59,7 +56,6 @@
     margin-left: 2.7vw;
     width: 29.7vw;
     height: 100%;
-
     .first-item {
       background: $light-blue;
       height: 70.9vh;
@@ -74,59 +70,46 @@
       border-top-right-radius: $border-radius;
     }
   }
-  .email-button {
-    background: white;
-    text-transform: none;
-    border-radius: $button-radius;
-    padding: 2.5vh 0.4vw 2.5vh 0;
-    font: 1.16vw $font-family-regular;
-    letter-spacing: 0.1vw;
-    width: 23vw;
-    margin-bottom: 2.7vh;
-    transition: all .2s ease-in-out;
-    .email-icon {
-      transition: all .2s ease-in-out;
-      margin-right: 1.4vw;
-      width: 2.6vw;
-      height: auto;
-      color: $dark-blue;
-    }
-  }
-
+  .email-button,
   .google-button {
-    padding: 2.5vh 0 2.5vh 1.2vw;
-    background: $orange;
-    color: white;
-    text-transform: none;
+    padding: 2.5vh;
     border-radius: $button-radius;
-    width: 23vw;
-    font: 1.16vw $font-family-regular;
+    text-transform: none;
+    font: 1vw $font-family-regular;
     letter-spacing: 0.1vw;
+    width: 22vw;
     margin-bottom: 2.7vh;
-    .google-icon {
-      transition: all .2s ease-in-out;
-      margin-right: 2vw;
-      width: 1.5vw;
-      padding-top: 0.532vw;
-      padding-bottom: 0.532vw;
-      height: auto;
-      color: $dark-blue;
+    transition: all 0.2s ease-in-out;
+    .svg {
+      transition: all 0.2s ease-in-out;
+      margin-right: 1vw;
+      width: 2.5vw;
+      height: 2.5vw;
+    }
+    .MuiButton-label {
+      justify-content: flex-start;
     }
   }
-
-  .google-button:hover {
-    background: $orange;
-    .google-icon {
-      transform: scale(1.4);
+  .email-button {
+    background: var(--theme-orange);
+    .svg,
+    span {
+      color: var(--white);
+    }
+    &:hover {
+      background: var(--theme-dark-blue);
     }
   }
-
-  .email-button:hover {
-    background: $dark-blue;
-    opacity: 1;
-    color: white;
-    .email-icon {
-      color: white;
+  .google-button {
+    background: var(--white);
+    span {
+      color: var(--theme-dark-blue);
+    }
+    &:hover {
+      background: var(--white);
+      .svg {
+        transform: scale(1.4);
+      }
     }
   }
 }

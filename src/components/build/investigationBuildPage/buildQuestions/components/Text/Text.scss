@@ -13,7 +13,7 @@
   .text-label-container {
     margin: 0 60%;
     .text-label {
-      color: $dark-blue;
+      color: var(--theme-dark-blue);
       width: 9%;
       position: absolute;
       top: 0;

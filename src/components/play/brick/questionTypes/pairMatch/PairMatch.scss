@@ -6,7 +6,7 @@
   $font-size: 1rem;
   .pair-match-play-option {
     text-align: center;
-    color: $dark-blue;
+    color: var(--theme-dark-blue);
     margin: 1px;
     padding: 0;
     width: 100%;
@@ -44,7 +44,7 @@
   .pair-match-play-option {
     margin-top: 5px;
     margin-bottom: 5px;
-    background: $tab-grey;
+    background: $tab-gray;
   }
 
   .answers-list {
@@ -60,7 +60,7 @@
     padding-right: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
-    background: $lighter-grey;
+    background: var(--light-gray);
 
     p {
       text-align: center !important;
@@ -93,19 +93,19 @@
 
   .image-choice {
     background: inherit;
-    border: 4px solid $lighter-grey !important;
+    border: 4px solid var(--light-gray) !important;
     width: 100%;
     padding: 0;
   }
   .correct {
-    background: $light-green;
+    background: var(--theme-green);
   }
   .wrong {
-    background: $orange;
+    background: var(--theme-orange);
   }
 
   .question-hint,
   .question-hint-global {
-    color: $dark-blue;
+    color: var(--theme-dark-blue);
   }
 }

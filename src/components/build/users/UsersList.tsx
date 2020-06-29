@@ -11,6 +11,7 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Dialog from '@material-ui/core/Dialog';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import grey from '@material-ui/core/colors/grey';
 
 import authActions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
@@ -111,7 +112,7 @@ const IOSSwitch = anyStyles((theme:any) => ({
     borderRadius: '2vh',
     border: '0.25vh solid #001C58',
     height: '2.3vh',
-    backgroundColor: theme.palette.grey[50],
+    backgroundColor: grey[50],
     opacity: 1,
   },
   checked: {},
@@ -357,7 +358,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 		  filterHeight: "auto",
 		});
 	}
-  
+
   filterClear() {
 		this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false})
 	}
@@ -367,7 +368,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   renderSortAndFilterBox = () => {
     return (
 		  <div className="sort-box">
-			<div className="sort-by-box">
+			<div className="filter-container sort-by-box">
 				<div className="sort-header">Filter by: Role</div>
 				<RadioGroup
 					className="sort-group"
@@ -425,11 +426,11 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         <Grid item xs={4} className="left-pagination">
           <div className="first-row">
             {minUser}-{maxUser}
-            <span className="grey"> &nbsp;|&nbsp; {totalCount}</span>
+            <span className="gray"> &nbsp;|&nbsp; {totalCount}</span>
           </div>
           <div>
             {page + 1}
-            <span className="grey"> &nbsp;|&nbsp; {Math.ceil(totalCount / pageSize)}</span>
+            <span className="gray"> &nbsp;|&nbsp; {Math.ceil(totalCount / pageSize)}</span>
           </div>
         </Grid>
         <Grid container item xs={4} justify="center" className="bottom-next-button">
@@ -610,7 +611,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           </Grid>
         </div>
         <Menu
-          className="users-list-redirect-dropdown"
+          className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}
