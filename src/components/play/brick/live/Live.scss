@@ -6,9 +6,6 @@
   opacity: 0;
 }
 .live-page {
-  .MuiBox-root {
-    padding: 0;
-  }
 
   .stepper {
     .step {
@@ -21,20 +18,5 @@
     font-size: 16px !important;
     padding: 5px;
     border: 2px solid $black-blue;
-  }
-  .MuiBox-root {
-    padding-top: 0;
-  }
-  .MuiStepper-root {
-    padding-top: 20px;
-    padding-bottom: 16px;
-
-    .MuiStepButton-root {
-      padding-top: 27px;
-      padding-bottom: 10px;
-    }
-  }
-  .fotter-text {
-    margin-top: 3vw;
   }
 }
