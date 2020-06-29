@@ -24,7 +24,8 @@ const BriefPreviewComponent:React.FC<any> = ({data}) => {
         <img
           alt="head"
           className="first-phone-image"
-          src="/images/new-brick/brief-circles.png">
+          src="/images/new-brick/brief-circles.png"
+          >
         </img>
         <div className="typing-text">
           <MathInHtml value={data} />
@@ -37,6 +38,7 @@ const BriefPreviewComponent:React.FC<any> = ({data}) => {
       <img
         alt="head"
         className="first-phone-image"
+        style={{height: '40%'}}
         src="/images/new-brick/brief-circles.png">
       </img>
     </Grid>

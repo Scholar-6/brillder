@@ -229,7 +229,7 @@
 
 
   .typing-text {
-    top: 53.5%;
+    top: 47.9%;
     left: 0;
     height: 46.5%;
     figure {
@@ -300,7 +300,7 @@
     }
     .typing-text {
       height: 35%;
-      top: 48%;
+      top: 54%;
     }
   }
 }
@@ -435,5 +435,6 @@
     overflow-y: auto;
     padding-left: 1.25vw;
     padding-right: 1.25vw;
+    word-break: break-all;
   }
 }
