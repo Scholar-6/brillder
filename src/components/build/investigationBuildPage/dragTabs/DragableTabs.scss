@@ -9,80 +9,79 @@ $tile-height: 100%;
   display: inline-block;
   width: 100%;
   background: var(--theme-dark-blue) !important;
-	height: 6.2%;
-	.drag-container {
-		width: 100% !important;
+  height: 6.2%;
+  .drag-container {
+    width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     height: 100% !important;
-		display: flex;
-		.drag-tile-container {
-			flex: 1;
-		}
-	}
-	.drag-tile-container {
-		padding: 0 !important;
-		height: 100% !important;
-		margin-left: $distance !important;
-		.drag-tile {
-			cursor: pointer;
-			height: 100%;
-			background-color: $tab-gray;
-			&:first-child {
-				border-top-left-radius: $tab-radius;
-			}
-			&:last-child {
-				border-top-right-radius: $tab-radius;
-			}
-		}
-		&:first-child {
-			margin-left: 0 !important;
-		}
-		&.pre-active {
-			.drag-tile {
-				// margin-right: $distance;
-			}
-		}
-		&.active {
-			.drag-tile {
-				background: white;
-			}
-		}
-	}
+    display: flex;
+    .drag-tile-container {
+      flex: 1;
+    }
+  }
+  .drag-tile-container {
+    padding: 0 !important;
+    height: 100% !important;
+    margin-left: $distance !important;
+    .drag-tile {
+      cursor: pointer;
+      height: 100%;
+      background-color: $tab-gray;
+      &:first-child {
+        border-top-left-radius: $tab-radius;
+      }
+      &:last-child {
+        border-top-right-radius: $tab-radius;
+      }
+    }
+    &:first-child {
+      margin-left: 0 !important;
+    }
+    &.pre-active {
+      .drag-tile {
+        // margin-right: $distance;
+      }
+    }
+    &.active {
+      .drag-tile {
+        background: white;
+      }
+    }
+  }
 
   .draggable-tab {
-		width: 100%;
+    width: 100%;
     height: 100%;
     text-align: center;
     font-size: 1.5vw;
-		@extend %flexCenter;
+    @extend %flexCenter;
     cursor: pointer;
     > div {
-			width: 100%;
+      width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-			text-align: center;
-			cursor: pointer;
+      text-align: center;
+      cursor: pointer;
     }
 
     .tab-number {
       color: var(--theme-dark-blue);
       font-family: $font-family-bold;
-			font-size: 3.4vh;
-			user-select: none;
+      font-size: 3.4vh;
+      user-select: none;
     }
 
     .remove-icon {
-			width: 1.5vw;
-			height: 3vh;
-			display: none;
-			&.active {
-				display: flex;
-			}
+      width: 1.5vw;
+      height: 3vh;
+      display: none;
+      &.active {
+        display: flex;
+      }
     }
-
   }
 
   .last-tab {
@@ -90,9 +89,9 @@ $tile-height: 100%;
     color: var(--theme-dark-blue);
     font-size: 1.3vw;
     overflow: hidden;
-		font-family: $font-family-bold;
-		width: 2vw;
-		height: 2vw;
+    font-family: $font-family-bold;
+    width: 2vw;
+    height: 2vw;
   }
 
   .synthesis-tab {
