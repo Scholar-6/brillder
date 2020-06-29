@@ -6,7 +6,7 @@ import { ReactSortable } from "react-sortablejs";
 import { Grid } from '@material-ui/core';
 
 import './DragableTabs.scss';
-import {validateQuestion} from '../questionService/ValidateQuestionService';
+import { validateQuestion } from '../questionService/ValidateQuestionService';
 import DragTab from './dragTab';
 import LastTab from './lastTab';
 import SynthesisTab from './SynthesisTab';
@@ -87,7 +87,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
     }
 
     return (
-      <GridListTile className={titleClassNames} key={index} cols={cols} style={{display:'inline-block', width: `${width}%`}}>
+      <GridListTile className={titleClassNames} key={index} cols={cols} style={{ display: 'inline-block', width: `${width}%` }}>
         <div className={isValid ? "drag-tile valid" : "drag-tile invalid"}>
           <DragTab
             index={index}
@@ -132,7 +132,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
           </Grid>
         </GridListTile>
         {
-          (isSynthesisPresent || isSynthesisPage)  ?
+          (isSynthesisPresent || isSynthesisPage) ?
             <GridListTile
               onClick={props.moveToSynthesis}
               className={"drag-tile-container " + (isSynthesisPage ? "synthesis-tab" : "")}
@@ -145,7 +145,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
                 synthesis={synthesis}
               />
             </GridListTile>
-          : ""
+            : ""
         }
       </GridList>
     </div>
