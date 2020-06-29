@@ -11,8 +11,10 @@ $phone-border-color: $light-blue2;
   width: 21.2%;
   padding-top: 39.3%;
 
-  .phone .screen {
-    height: 100%;
+  .phone {
+    .screen {
+      height: 100%;
+    }
   }
 
   .marvel-device.iphone5s:before,
@@ -21,7 +23,8 @@ $phone-border-color: $light-blue2;
     background: white !important;
   }
 
-  .volume, .sleep {
+  .volume,
+  .sleep {
     position: absolute;
     background: var(--theme-dark-blue) !important;
   }
@@ -37,7 +40,7 @@ $phone-border-color: $light-blue2;
 
     .phone-border {
       position: relative;
-      height: 96%;
+      height: calc(100% - 2%);
       margin: 2%;
       padding: 0.43vw;
       background-color: $phone-border-color;
@@ -45,7 +48,7 @@ $phone-border-color: $light-blue2;
 
       .upper-panel {
         position: absolute;
-          top: 0;
+        top: 0;
         height: 3%;
         left: 27.5%;
         width: 45%;

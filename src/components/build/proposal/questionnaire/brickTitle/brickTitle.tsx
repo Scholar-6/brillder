@@ -35,16 +35,16 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
 
   if (!title && !alternativeTopics && !subTopic) {
     return (
-      <Grid container alignContent="flex-start" className="brick-title-container">
+      <Grid container alignContent="flex-start" className="phone-preview-component title">
         <Grid container justify="center">
           <img alt="titles" src="/images/new-brick/titles.png" className="titles-image big" />
         </Grid>
       </Grid>
     );
   }
-  
+
   return (
-    <Grid container alignContent="flex-start" className="brick-title-container">
+    <Grid container alignContent="flex-start" className="phone-preview-component title">
       <Grid container justify="center">
         <img alt="titles" src="/images/new-brick/titles.png" className="titles-image" />
       </Grid>
