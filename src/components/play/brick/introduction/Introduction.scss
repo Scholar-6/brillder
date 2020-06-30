@@ -97,6 +97,8 @@
           }
         }
         .question-live-play {
+          overflow-y: scroll;
+          height: calc(100vh - 7.5vw);
           margin: 0 3vw 5vw 4vw;
         }
       }
