@@ -4,10 +4,6 @@
 
 .proposal-router {
   .beta-text {
-    z-index: 10;
-    right: 0.5%;
-    bottom: 1.25%;
-    font-size: 2.3vw;
     color: var(--theme-dark-blue);
   }
 }
@@ -53,11 +49,6 @@
     @extend %textCenter;
     color: var(--theme-dark-blue);
     margin-bottom: 12.1vh;
-
-    p {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
   }
 
   .sub-header {
@@ -78,9 +69,6 @@
     .only-tutorial-header {
       margin: 2.5vw 1vw;
       font-weight: normal !important;
-      p {
-        @extend %m0;
-      }
     }
 
     .page-number {
@@ -213,25 +201,32 @@
 .prep-page {
   .left-block {
     margin-top: 12.5vh;
-
     > h1 {
       margin-left: 9.5vw;
       margin-top: 0;
-      font-size: 3.8vw;
       margin-bottom: 0;
       @extend %textLeft;
       line-height: 1.32;
-      font-family: $font-family-black;
+      font: 3.8vw $font-family-black;
       color: var(--theme-dark-blue);
+      text-align: left;
+      letter-spacing: 0.04vw;
     }
   }
-
+  .prep-phone-preview {
+    width: 100%;
+    height: 100%;
+    background: var(--theme-dark-blue);
+  }
   .typing-text {
     top: 47.9%;
     left: 0;
     height: 46.5%;
     figure {
       margin: 2vh 0;
+    }
+    .youtube-link {
+      padding-left: 1.2vw;
     }
   }
   .screen {
@@ -370,7 +365,6 @@
           font-size: 1vw;
         }
       }
-
       .ck-content {
         border: none !important;
         box-shadow: none !important;
@@ -382,16 +376,8 @@
         padding-top: 0.7vh;
         padding-left: 1.05vw;
         letter-spacing: 0.01vw;
-
-        > p {
-          margin-top: 0.5vh !important;
-          margin-bottom: 0.5vh !important;
-        }
       }
     }
-  }
-  .typing-text {
-    font-size: 1.25vw;
   }
   .first-phone-image {
     @extend %widthAuto;
@@ -411,6 +397,9 @@
       font-weight: normal !important;
     }
   }
+  p {
+    margin: 0.5vh 0;
+  }
   .phone-preview-component {
     @extend %width100;
     @extend %height100;
@@ -429,10 +418,114 @@
     @extend %textLeft;
     overflow: hidden;
     color: var(--white);
-    font-family: $font-family-regular;
+    font: 1vw $font-family-regular;
     overflow-y: auto;
-    padding-left: 1.25vw;
-    padding-right: 1.25vw;
+    padding: 0 1vw;
     word-break: break-all;
+  }
+}
+
+.brick-length-page {
+  font-family: $font-family-regular;
+  color: var(--theme-dark-blue);
+
+  .left-block {
+    margin-top: 16.7vh;
+    margin-left: 12.1vw;
+
+    > h1 {
+      font-weight: normal;
+      margin: 0;
+      font-size: 3.6vw;
+      letter-spacing: 0.07vw;
+      line-height: 1.35;
+      font-family: $font-family-black;
+      color: var(--theme-dark-blue);
+    }
+
+    h2 {
+      margin: 0;
+      margin-top: 0.2vh;
+      margin-left: 0.1vw;
+      text-align: left;
+      color: var(--theme-dark-blue);
+      font-family: $font-family-regular;
+      letter-spacing: 0.02vw;
+      font-size: 1.26vw;
+      margin-bottom: 12vh;
+    }
+  }
+  .brick-length-image-container1 {
+    padding-right: 3vw !important;
+  }
+
+  .brick-length-image-container2 {
+    padding-left: 1.5vw !important;
+    padding-right: 1.5vw !important;
+  }
+  .brick-length-image-container3 {
+    padding-left: 3vw !important;
+  }
+
+  .brick-length-image-container {
+    .brick-length-60-image {
+      background-image: url('/images/60min-icon-blue.png');
+    }
+    .brick-length-60-image:hover,
+    .brick-length-60-image.active {
+      background-image: url('/images/60min-icon-red-hover.png');
+    }
+    .brick-length-40-image {
+      background-image: url('/images/40min-icon-blue.png');
+    }
+    .brick-length-40-image:hover,
+    .brick-length-40-image.active {
+      background-image: url('/images/40min-icon-red-hover.png');
+    }
+    .brick-length-20-image {
+      background-image: url('/images/20min-icon-blue.png');
+    }
+    .brick-length-20-image:hover,
+    .brick-length-20-image.active {
+      background-image: url('/images/20min-icon-red-hover.png');
+    }
+
+    .brick-length-image {
+      width: 100%;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      padding-top: 100%;
+    }
+  }
+
+  .brick-length-row {
+    margin-bottom: 14.2vh;
+  }
+
+  .bottom-time-description {
+    color: #495057;
+    margin-top: 1.2vh;
+  }
+
+  .phone-preview-component {
+    width: 100%;
+    height: 100%;
+    background: var(--theme-dark-blue);
+    position: relative;
+
+    img {
+      width: auto;
+      margin-left: 0vw;
+      margin-top: 11vw;
+      height: 10.5vw;
+    }
+    div {
+      position: absolute;
+      top: 21.8vw;
+      margin-top: 10%;
+      color: white;
+      font-size: 1.2vw;
+      font-family: $font-family-regular;
+    }
   }
 }
