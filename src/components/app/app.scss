@@ -3,23 +3,23 @@
 @import '../../assets/sass/partials/extensions';
 
 .beta-text {
+	width: fit-content;
   position: fixed;
   bottom: 2.4vh;
   right: 2.4vh;
   color: var(--theme-orange);
-  font-size: 2vw;
+	font-size: 2vw;
+	line-height: 2vw;
   letter-spacing: 0.4vw;
 	font-family: $font-family-black;
 	@extend %flexCenter;
   .version-number {
+		width: 0.5vw;
     writing-mode: vertical-lr;
     text-orientation: mixed;
     font-size: 0.5vw;
     letter-spacing: 0.08vw;
-    -moz-transform: scale(-1, -1);
-    -webkit-transform: scale(-1, -1);
-    -o-transform: scale(-1, -1);
-    -ms-transform: scale(-1, -1);
+		@extend %flexCenter;
     transform: scale(-1, -1);
   }
 }
