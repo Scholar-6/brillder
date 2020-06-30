@@ -40,7 +40,7 @@ $background-color: white;
 
     .phone-border {
       position: relative;
-      height: 97.7%;
+      height: 100%;
       background: $phone-border-color;
       padding: 0.8vh;
       border-radius: 2.2vw;
@@ -106,10 +106,6 @@ $background-color: white;
   .mobile-question-component {
     height: 100%;
     overflow-y: auto !important;
-
-    .text-play {
-      color: var(--theme-dark-blue);
-    }
 
     .quotes-live {
       color: var(--theme-dark-blue);

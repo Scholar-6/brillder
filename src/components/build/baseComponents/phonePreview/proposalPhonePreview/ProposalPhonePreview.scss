@@ -40,8 +40,8 @@ $phone-border-color: $light-blue2;
 
     .phone-border {
       position: relative;
-      height: calc(100% - 2%);
-      margin: 2%;
+      height: calc(100% - 1vw);
+      margin: 0.5vw;
       padding: 0.43vw;
       background-color: $phone-border-color;
       border-radius: 2.2vw;
