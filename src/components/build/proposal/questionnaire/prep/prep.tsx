@@ -13,10 +13,10 @@ import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 interface PrepProps {
   parentPrep: string;
   canEdit: boolean;
-  savePrep(prep: string):void;
+  savePrep(prep: string): void;
 }
 
-const PrepPreviewComponent:React.FC<any> = ({data}) => {
+const PrepPreviewComponent: React.FC<any> = ({ data }) => {
   if (data) {
     return (
       <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
@@ -34,7 +34,7 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
     <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
       <img className="first-phone-image"
         alt="head"
-        style={{height: '45%'}}
+        style={{ height: '45%' }}
         src="/images/new-brick/prep.png">
       </img>
     </Grid>
@@ -57,7 +57,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, savePrep }) =
             toolbar={[
               'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
             ]}
-            onBlur={() => {}}
+            onBlur={() => { }}
             onChange={savePrep}
           />
           <NavigationButtons
