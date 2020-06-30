@@ -75,7 +75,6 @@ class BrickCounter extends Component<CounterProps, CounterState> {
   }
 
   renderArrow() {
-    console.log(this.props.isArrowUp, this.state.isCounting)
     if (this.props.isArrowUp && this.state.isCounting) {
       return (
         <div className="intro-arrow">

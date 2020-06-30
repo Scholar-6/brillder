@@ -243,7 +243,8 @@
       }
     }
     .back-hover-area {
-      @extend %floatToCenter;
+			@extend %floatToXCenter;
+			top: 26%;
       @extend %flexCenter;
       flex-direction: column;
       color: $tab-gray;
