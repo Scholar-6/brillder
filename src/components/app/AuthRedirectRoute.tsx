@@ -23,6 +23,11 @@ const AuthRedirect: React.FC<any> = ({ user, ...props }) => {
       props.getUser();
       return <div>...Getting User...</div>
     }
+
+    if(user.firstName === "" || user.lastName === "") {
+      return <Redirect to="/set-profile" />
+    }
+
     const values = queryString.parse(props.location.search)
     if (values.userType) {
       let userType:UserLoginType = parseInt(values.userType as string);

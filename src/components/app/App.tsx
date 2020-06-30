@@ -19,6 +19,7 @@ import BackToWorkPage from '../build/backToWorkPage/BackToWork';
 import UsersListPage from '../build/users/UsersList';
 import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
 import LoginPage from '../authPages/loginPage/loginPage';
+import ProfilePage from '../authPages/profilePage/profilePage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
 import ChooseUserPage from '../authPages/chooseUserPage/ChooseUserPage';
 import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
@@ -104,6 +105,7 @@ const App: React.FC = (props: any) => {
         <BuildRoute path="/build/user-profile/:userId" component={UserProfilePage} />
         <AllUsersRoute path="/build/user-profile" component={UserProfilePage} />
         <BuildRoute path="/build" component={MainPage} />
+        <AllUsersRoute path="/set-profile" exact component={ProfilePage}/>
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
         <AuthRoute path="/choose-user" component={ChooseUserPage} />
