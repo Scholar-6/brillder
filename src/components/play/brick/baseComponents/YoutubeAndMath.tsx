@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 // @ts-ignore
 import MathJax from 'react-mathjax-preview'
-import axios from 'axios';
 
 import {parseDataToArray, isMathJax} from 'components/services/mathJaxService';
 import YoutubeLink from './YoutubeLink';

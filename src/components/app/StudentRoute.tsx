@@ -23,6 +23,9 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
       rest.getUser();
       return <div>...Getting User...</div>
     }
+    if(user.firstName === "" || user.lastName === "") {
+      return <Redirect to="/build/user-profile" />
+    }
     const {roles} = user;
     let can = roles.some((role: any) => {
       const {roleId} = role
