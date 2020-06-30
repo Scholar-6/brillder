@@ -7,18 +7,18 @@ import NextButton from '../../components/nextButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { Brick } from "model/brick";
-import {getDate, getMonth, getYear} from 'components/services/brickService';
+import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
 
 
 interface BrickTitleProps {
   parentState: Brick;
   canEdit: boolean;
-  saveTitles(data: any):void;
+  saveTitles(data: any): void;
 }
 
-const BrickTitlePreviewComponent:React.FC<any> = (props) => {
-  let {subTopic, alternativeTopics, title, author} = props.data;
+const BrickTitlePreviewComponent: React.FC<any> = (props) => {
+  let { subTopic, alternativeTopics, title, author } = props.data;
 
   const date = new Date();
   const dateString = `${getDate(date)}.${getMonth(date)}.${getYear(date)}`;
@@ -56,7 +56,7 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
           <span className={subTopic ? 'topic-filled' : ''}>
             {subTopic ? subTopic : 'Topic'}
           </span> | <span className={alternativeTopics ? 'topic-filled' : ''}>
-            {alternativeTopics ? alternativeTopics: 'Subtopic(s)'}
+            {alternativeTopics ? alternativeTopics : 'Subtopic(s)'}
           </span>
         </div>
         <div className="author-row">
@@ -68,7 +68,7 @@ const BrickTitlePreviewComponent:React.FC<any> = (props) => {
 }
 
 
-const BrickTitle:React.FC<BrickTitleProps> = ({ parentState, canEdit, saveTitles }) => {
+const BrickTitle: React.FC<BrickTitleProps> = ({ parentState, canEdit, saveTitles }) => {
   const onTitleChange = (event: React.ChangeEvent<{ value: string }>) => {
     const title = event.target.value.substr(0, 40);
     saveTitles({ ...parentState, title });
