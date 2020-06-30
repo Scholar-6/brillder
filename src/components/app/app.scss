@@ -9,15 +9,12 @@
   color: var(--theme-orange);
   font-size: 2vw;
   letter-spacing: 0.4vw;
-  font-family: $font-family-black;
-	line-height: 1;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	font-family: $font-family-black;
+	@extend %flexCenter;
   .version-number {
     writing-mode: vertical-lr;
     text-orientation: mixed;
-    font-size: 0.6vw;
+    font-size: 0.5vw;
     letter-spacing: 0.08vw;
     -moz-transform: scale(-1, -1);
     -webkit-transform: scale(-1, -1);
