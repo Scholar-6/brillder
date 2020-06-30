@@ -7,16 +7,6 @@
   width: 97.5%;
   position: relative;
 
-  .pencil-icon-container {
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    .active {
-      color: var(--theme-green);
-    }
-  }
-
   .hightlight-area, textarea {
     text-align: left;
     padding: 0;
