@@ -208,12 +208,12 @@
       @extend %textLeft;
       line-height: 1.32;
       font: 3.8vw $font-family-black;
-			color: var(--theme-dark-blue);
+      color: var(--theme-dark-blue);
       text-align: left;
       letter-spacing: 0.04vw;
     }
-	}
-	.prep-phone-preview {
+  }
+  .prep-phone-preview {
     width: 100%;
     height: 100%;
     background: var(--theme-dark-blue);
@@ -224,8 +224,8 @@
     height: 46.5%;
     figure {
       margin: 2vh 0;
-		}
-		.youtube-link {
+    }
+    .youtube-link {
       padding-left: 1.2vw;
     }
   }
@@ -304,7 +304,7 @@
   .left-block {
     > h1 {
       letter-spacing: 0.04vw;
-		}
+    }
     .document-editor {
       margin-top: 4.6vh;
       margin-left: 9.5vw;
@@ -396,10 +396,10 @@
     h1 {
       font-weight: normal !important;
     }
-	}
-	p {
-		margin: 0.5vh 0;
-	}
+  }
+  p {
+    margin: 0.5vh 0;
+  }
   .phone-preview-component {
     @extend %width100;
     @extend %height100;
@@ -416,7 +416,7 @@
     @extend %posAbsolute;
     @extend %width100;
     @extend %textLeft;
-		overflow: hidden;
+    overflow: hidden;
     color: var(--white);
     font: 1vw $font-family-regular;
     overflow-y: auto;
@@ -448,7 +448,7 @@
       margin-top: 0.2vh;
       margin-left: 0.1vw;
       text-align: left;
-      color:var(--theme-dark-blue);
+      color: var(--theme-dark-blue);
       font-family: $font-family-regular;
       letter-spacing: 0.02vw;
       font-size: 1.26vw;
@@ -469,22 +469,25 @@
 
   .brick-length-image-container {
     .brick-length-60-image {
-      background-image: url("/images/60min-icon-blue.png");
+      background-image: url('/images/60min-icon-blue.png');
     }
-    .brick-length-60-image:hover, .brick-length-60-image.active {
-      background-image: url("/images/60min-icon-red-hover.png");
+    .brick-length-60-image:hover,
+    .brick-length-60-image.active {
+      background-image: url('/images/60min-icon-red-hover.png');
     }
     .brick-length-40-image {
-      background-image: url("/images/40min-icon-blue.png");
+      background-image: url('/images/40min-icon-blue.png');
     }
-    .brick-length-40-image:hover, .brick-length-40-image.active {
-      background-image: url("/images/40min-icon-red-hover.png");
+    .brick-length-40-image:hover,
+    .brick-length-40-image.active {
+      background-image: url('/images/40min-icon-red-hover.png');
     }
     .brick-length-20-image {
-      background-image: url("/images/20min-icon-blue.png");
+      background-image: url('/images/20min-icon-blue.png');
     }
-    .brick-length-20-image:hover, .brick-length-20-image.active {
-      background-image: url("/images/20min-icon-red-hover.png");
+    .brick-length-20-image:hover,
+    .brick-length-20-image.active {
+      background-image: url('/images/20min-icon-red-hover.png');
     }
 
     .brick-length-image {
