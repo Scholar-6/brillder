@@ -276,7 +276,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 	hideFilter() {
 		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
 	}
-	expendFilter() {
+	expandFilter() {
 		this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
 	}
 	filterClear(){
@@ -610,7 +610,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 			<div className="filter-header">
 				<span>Filter</span>
 				<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
-					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expendFilter())}}>
+					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expandFilter())}}>
 				</button>
 			</div>
 			{this.state.filterExpanded === true ? (
