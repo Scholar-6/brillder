@@ -31,6 +31,9 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
       rest.getUser();
       return <div>...Getting User...</div>
     }
+    if(rest.user.firstName === "" || rest.user.lastName === "") {
+      return <Redirect to="/build/user-profile" />
+    }
     const isBuilder = rest.user.roles.some(role => {
       const {roleId} = role;
       return roleId === UserType.Builder || roleId === UserType.Editor || roleId === UserType.Admin;
