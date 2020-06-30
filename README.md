@@ -14,10 +14,9 @@ Run the project locally (Windows and Linux) and connect to the dev-api:
 ** linux /etc/hosts
 ** windows C:\Windows\System32\Drivers\etc\hosts
 `127.0.0.1 local-brillder.scholar6.org`
-* create .env file with the following values (in production they are added to /etc/environment)
+* create .env file with the following values (in production they are added to /etc/environment)  
         REACT_APP_BACKEND_HOST=https://dev-api.scholar6.org  
         REACT_APP_ZENDESK_ID=33210b3d-b3d5-43ba-9b07-70acce8c10b6  
-        REACT_APP_BACKEND_HOST=https://api.scholar6.org  
         REACT_APP_VERSION=$npm_package_version
 * `npm install`
 * `npm start`
