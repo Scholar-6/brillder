@@ -17,7 +17,7 @@
       .introduction-page {
         overflow-y: auto;
         padding: 4vh 2vw 4vh 7vw;
-        height: calc(100vh - 14vh);
+        height: calc(100vh - 7.8vw);
         font-family: $font-family-regular;
         position: relative;
         .intro-header {
@@ -96,14 +96,14 @@
           }
         }
         .question-live-play {
-          margin: 5vw 3vw 0 4vw;
+          margin: 5vw 3vw 5vw 4vw;
         }
       }
       .introduction-info {
         padding: 4vh 2vw;
         background-color: var(--light-gray);
         overflow-y: auto;
-        height: calc(100vh - 16vh);
+        height: calc(100vh - 7.8vw);
         position: relative;
         .intro-header {
           position: relative;
@@ -257,7 +257,7 @@
         }
         .introduction-page {
           padding: 0;
-          height: calc(100vh - 16vh);
+          height: calc(100vh - 7.8vw);
         }
         .fotter-text {
           margin-top: 3vw;
@@ -265,7 +265,8 @@
       }
       &.synthesis-page {
         .synthesis-content {
-          padding: 0 2vw;
+					padding: 0 2vw;
+					margin-top: 3vw;
         }
       }
       .circle-progress-container {

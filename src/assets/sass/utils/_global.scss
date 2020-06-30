@@ -471,3 +471,113 @@ h3 {
   color: white;
   top: 2vh;
 }
+
+.question-hint,
+.question-hint-global {
+	color: var(--theme-dark-blue);
+}
+.question-hint {
+	line-height: 1;
+	margin-top: 2px;
+	background: #ff9d00;
+	padding: 2px 5px;
+	border-radius: 1px 2px 3px 4px;
+	font-family: $font-family-regular;
+	display: block;
+	font-size: 1vw;
+	p {
+		font-size: 1vw;
+		display: inline;
+	}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	table,
+	td,
+	th {
+		border: 1px solid var(--theme-dark-blue);
+	}
+	td {
+		min-width: 0;
+		padding: 0;
+	}
+}
+.question-hint-global {
+	width: 100%;
+	font: 500 16px/24px $font-family-regular;
+	background: #ff9d00;
+	border-radius: 1px 2px 3px 4px;
+	margin-top: 0.5vw;
+	> div {
+		padding: 0.5vw;
+	}
+	p {
+		font-size: 1vw;
+	}
+	.table {
+		margin-left: 0;
+		margin-right: 0;
+		overflow-x: auto;
+	}
+	table {
+		margin: auto;
+		border-collapse: collapse;
+	}
+	table,
+	td,
+	th {
+		border: 1px solid var(--theme-dark-blue);
+	}
+	td {
+		min-width: 2em;
+		padding: 0.4em;
+	}
+	&.correct {
+		background: var(--white);
+	}
+	&.wrong {
+		background: var(--theme-orange);
+	}
+}
+
+.choose-choice {
+	font: $answer-input-text-size $font-family-regular;
+	margin-top: 5px !important;
+	margin-bottom: 5px !important;
+	color: var(--theme-dark-blue) !important;
+	text-align: center;
+	text-transform: none !important;
+	border-radius: 0 !important;
+	width: 100%;
+	padding: 14px 0 !important;
+	background-color: $tab-gray !important;
+	opacity: 1;
+	.MuiButton-label {
+		flex-direction: column;
+	}
+	img {
+		width: 100%;
+	}
+	p {
+		text-align: center !important;
+	}
+	&.active {
+		background: $white-blue;
+	}
+	&.correct {
+		background: var(--theme-green);
+		.question-hint {
+			background: white;
+		}
+	}
+	&.wrong {
+		background: var(--theme-orange);
+	}
+}

@@ -25,7 +25,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
     const { color, isAdmin, brick } = this.props;
 
     return (
-      <div className="expended-brick-info">
+      <div className="expanded-brick-info">
         <div className="hover-text">
           <div className="link-description">{brick.title}</div>
           <div className="link-info">

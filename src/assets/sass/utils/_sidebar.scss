@@ -422,14 +422,14 @@
             &.brick-row-1,
             &.brick-row-2,
             &.brick-row-3 {
-              .expended-brick-info {
+              .expanded-brick-info {
                 border-top-left-radius: 0 !important;
               }
             }
             &.brick-row-4,
             &.brick-row-5 {
               bottom: 0;
-              .expended-brick-info {
+              .expanded-brick-info {
                 border-bottom-left-radius: 0 !important;
               }
             }

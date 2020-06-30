@@ -8,19 +8,13 @@
   .short-answer-input {
     display: inline-block;
     margin-bottom: 20px;
-  }
+	}
 
-  .question-hint {
-    color: var(--theme-dark-blue);
-  }
-
-  .question-hint-global {
-    color: var(--theme-dark-blue);
-  }
-
-  .short-answer-input.correct .question-hint {
-    background: white !important;
-  }
+  .short-answer-input.correct {
+		.question-hint {
+			background: white !important;
+		}
+	}
 
   input.MuiInput-input {
     color: var(--theme-dark-blue);

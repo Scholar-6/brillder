@@ -15,58 +15,12 @@
       width: 100%;
     }
   }
-  .choose-choice {
-    margin-bottom: 5px;
-    margin-top: 5px;
-    color: var(--theme-dark-blue);
-    text-align: center !important;
-    text-transform: none !important;
-    border-radius: 0 !important;
-    width: 100%;
-    padding-top: 14px;
-    padding-bottom: 14px;
-    opacity: 1;
-    font-size: $answer-input-text-size;
-    font-family: $font-family-regular;
-
-    p {
-      text-align: center !important;
-    }
-  }
-
-  .choose-choice {
-    background: $tab-gray;
-    width: 100%;
-  }
 
   .image-choice {
     background: inherit;
     border: 4px solid var(--light-gray) !important;
     width: 100%;
     padding: 0;
-  }
-
-  .choose-choice.active {
-    background: $white-blue;
-  }
-
-  .question-hint {
-    color: var(--theme-dark-blue);
-  }
-
-  .choose-choice.correct {
-    background: var(--theme-green);
-
-    .question-hint {
-      background: white;
-    }
-  }
-  .choose-choice.wrong {
-    background: var(--theme-orange);
-  }
-
-  .question-hint-global {
-    color: var(--theme-dark-blue);
   }
 
   .help-text {
