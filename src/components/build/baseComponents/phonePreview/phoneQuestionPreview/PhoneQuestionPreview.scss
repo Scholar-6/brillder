@@ -25,7 +25,8 @@ $background-color: white;
     overflow: hidden;
   }
 
-  .volume, .sleep {
+  .volume,
+  .sleep {
     position: absolute;
     background: $background-color !important;
   }
