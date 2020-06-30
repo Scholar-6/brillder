@@ -7,7 +7,7 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
-import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
+import YoutubeAndMath from 'components/play/brick/baseComponents/YoutubeAndMath';
 
 
 interface PrepProps {
@@ -25,7 +25,7 @@ const PrepPreviewComponent: React.FC<any> = ({ data }) => {
           src="/images/new-brick/prep.png">
         </img>
         <div className="typing-text">
-          <MathInHtml value={data} />
+          <YoutubeAndMath value={data} />
         </div>
       </Grid>
     )
