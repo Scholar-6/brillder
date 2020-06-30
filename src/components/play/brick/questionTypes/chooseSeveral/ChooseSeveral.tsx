@@ -150,7 +150,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
         isCorrect = false;
       }
     }
-    
+
     if (choice.answerType === QuestionValueType.Image) {
       className += " image-choice";
     }
@@ -161,25 +161,14 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
         key={index}
         onClick={() => this.setActiveItem(index)}
       >
-        <div style={{width: '100%'}}>
-        <Grid container direction="row">
-          <Grid item xs={12}>
-            {this.renderData(choice)}
-          </Grid>
-        </Grid>
-        <Grid container direction="row">
-          <Grid item xs={1}></Grid>
-          <Grid item xs={11}>
-            <ReviewEachHint
-              isPhonePreview={this.props.isPreview}
-              attempt={this.props.attempt}
-              isCorrect={isCorrect ? isCorrect : false}
-              index={index}
-              hint={this.props.question.hint}
-            />
-          </Grid>
-        </Grid>
-        </div>
+				{this.renderData(choice)}
+				<ReviewEachHint
+					isPhonePreview={this.props.isPreview}
+					attempt={this.props.attempt}
+					isCorrect={isCorrect ? isCorrect : false}
+					index={index}
+					hint={this.props.question.hint}
+				/>
       </Button>
     );
   }
