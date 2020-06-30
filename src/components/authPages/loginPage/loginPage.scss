@@ -1,6 +1,6 @@
-@import "../../../assets/sass/partials/variables";
-@import "../../../assets/sass/partials/mixins";
-@import "../../../assets/sass/partials/extensions";
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
 .login-page {
   .MuiSnackbarContent-message {
@@ -80,41 +80,39 @@
     }
   }
 
-  .login-field {
-    margin-bottom: 2.9vh;
-    padding: 2.93vh 0 2.93vh 0 !important;
-    color: white;
-    font-weight: normal;
-    font-family: $font-family-regular;
-    width: 70%;
-    text-align: center;
-    background: var(--theme-dark-blue);
-    border: none;
-    border-radius: $button-radius;
-    font-size: 1.5vw;
-    letter-spacing: 0.3vw;
-    padding-left: 5% !important;
-    padding-right: 5% !important;
-    height: 3.8vh;
-  }
-
-  .password-container {
-    display: block;
+  .input-block {
+    display: flex;
     position: relative;
+    margin: 0 auto;
     margin-bottom: 3vh;
-
+    width: 80%;
+    justify-content: space-between;
     input {
-      width: 80%;
-      margin-bottom: 0;
-      padding-left: 10% !important;
-      padding-right: 10% !important;
+      width: 100%;
+      padding: 4vh 5%;
+      color: white;
+      font: 1.5vw $font-family-regular;
+      text-align: center;
+      background: var(--theme-dark-blue);
+      border-radius: $button-radius;
+      margin: 0;
+      border: none;
+      letter-spacing: 0.3vw;
+      height: 3.8vh;
+      &::-webkit-input-placeholder {
+        color: white;
+        opacity: 0.8;
+      }
     }
-
     .hide-password-icon-container {
-      right: 0.7vw;
-      top: 0%;
-      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: absolute;
+      right: 0;
+      top: 0;
+      padding: 0.5vw 1vw;
+      height: 100%;
       .hide-password-icon {
         height: 37%;
         opacity: 0.7;
@@ -125,40 +123,21 @@
         opacity: 1;
       }
     }
-  }
-
-  ::-webkit-input-placeholder {
-    /* Edge */
-    color: white;
-    opacity: 0.8;
-  }
-
-  .sign-in-button {
-    margin-top: -0.6vh;
-    box-shadow: none;
-    width: 9.2vw;
-    padding: 0.8vh 1vw 0.6vh 1.23vw;
-    background: var(--theme-orange);
-    font-weight: normal !important;
-    font-size: 1.2vw;
-    letter-spacing: 0.3vw;
-    font-family: $font-family-regular;
-    border-radius: 0.7vw;
-    margin-bottom: 2vh;
-  }
-
-  .sign-up-button {
-    margin-right: 1vw;
-  }
-
-  .register-button {
-    margin-right: 1vw;
-  }
-
-  .sign-in-button:hover {
-    background: var(--theme-orange);
-    box-shadow: none;
-    font-family: $font-family-bold;
+    button {
+      box-shadow: none;
+      width: calc(50% - 2vw);
+      padding: 0.8vh 1.2vw;
+      background: var(--theme-orange);
+      font: 1.2vw $font-family-regular;
+      letter-spacing: 0.3vw;
+      border-radius: 0.7vw;
+      margin: 0 0 2vh 0;
+      &:hover {
+        background: var(--theme-orange);
+        box-shadow: none;
+        font-family: $font-family-bold;
+      }
+    }
   }
 
   .register-success {
@@ -170,7 +149,7 @@
 
     .thanks-info {
       cursor: pointer;
-      position: "relative";
+      position: relative;
       line-height: 1.43;
       font-size: 7.15vh;
 

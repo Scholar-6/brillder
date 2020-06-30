@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // @ts-ignore
 import MathJax from 'react-mathjax-preview'
 
-import {parseDataToArray, isMathJax} from 'components/services/mathJaxService';
+import { parseDataToArray, isMathJax } from 'components/services/mathJaxService';
 
 
 interface MathHtmlProps {
@@ -18,22 +18,18 @@ class MathInHtml extends Component<MathHtmlProps> {
     }
 
     if (arr.length === 0) {
-      return <div>{this.props.value}</div>;
+      return <div >{this.props.value}</div>;
     }
 
     return (
-      <div>
-        {
-          arr.map((el:any, i:number) => {
-            const res = isMathJax(el);
-            if (res) {
-              return renderMath(el, i);
-            } else {
-              return <div key={i} dangerouslySetInnerHTML={{ __html: el}} />
-            }
-          })
+      arr.map((el: any, i: number) => {
+        const res = isMathJax(el);
+        if (res) {
+          return renderMath(el, i);
+        } else {
+          return <div  key={i} dangerouslySetInnerHTML={{ __html: el }} />
         }
-      </div>
+      })
     );
   }
 }

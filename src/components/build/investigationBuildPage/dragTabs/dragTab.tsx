@@ -1,6 +1,8 @@
 import React from 'react'
 import { Grid } from '@material-ui/core';
 
+import sprite from "../../../../assets/img/icons-sprite.svg";
+
 export interface DragTabProps {
   id: any
   index: number,
@@ -22,16 +24,14 @@ const DragTab: React.FC<DragTabProps> = ({ id, index, active, isValid, selectQue
 
   return (
     <div className="draggable-tab" onClick={activateTab}>
-      <Grid container direction="row" alignContent="center">
-        <Grid item xs={active ? 10 : 12} className="tab-number">
-          {index + 1}
-        </Grid>
-        <Grid item container direction="row" alignContent="center" justify="flex-end" className="remove-icon-container">
-          {
-            active === true && <img alt="" src="/feathericons/x-blue.png" className="remove-icon" onClick={removeTab} />
-          }
-        </Grid>
-      </Grid>
+      <div className="tab-number">
+        {index + 1}
+      </div>
+      <div className={active ? 'remove-icon svgOnHover active' : 'remove-icon svgOnHover'} onClick={removeTab}>
+        <svg className="svg w100 h100 active">
+          <use href={sprite + "#cancel"} className="text-theme-dark-blue" />
+        </svg>
+      </div>
     </div>
   )
 }
