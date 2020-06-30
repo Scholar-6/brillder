@@ -11,6 +11,8 @@
   letter-spacing: 0.4vw;
   font-family: $font-family-black;
   line-height: 1;
+  display: flex;
+  align-items: center;
 
   div {
     display: inline-block;
@@ -25,7 +27,7 @@
     -webkit-transform: scale(-1, -1);
     -o-transform: scale(-1, -1);
     -ms-transform: scale(-1, -1);
-     transform: scale(-1, -1);
+    transform: scale(-1, -1);
   }
 }
 
@@ -36,18 +38,17 @@ strong {
 
 .MuiGrid-align-content-xs-center {
   display: -webkit-inline-box !important;
- -webkit-box-align: center !important;
+  -webkit-box-align: center !important;
 }
 
 .MuiGrid-align-content-xs-center.MuiGrid-justify-xs-center {
   display: -webkit-inline-box !important;
- -webkit-box-align: center !important;
- -webkit-box-pack: center !important;
+  -webkit-box-align: center !important;
+  -webkit-box-pack: center !important;
 }
 
-
 .MuiGrid-align-content-xs-center.MuiGrid-justify-xs-flex-end {
- -webkit-box-pack: end !important;
+  -webkit-box-pack: end !important;
 }
 
 #webWidget {

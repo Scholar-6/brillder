@@ -6,7 +6,7 @@ import { ReactSortable } from "react-sortablejs";
 import { Grid } from '@material-ui/core';
 
 import './DragableTabs.scss';
-import {validateQuestion} from '../questionService/ValidateQuestionService';
+import { validateQuestion } from '../questionService/ValidateQuestionService';
 import DragTab from './dragTab';
 import LastTab from './lastTab';
 import SynthesisTab from './SynthesisTab';
@@ -87,7 +87,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
     }
 
     return (
-      <GridListTile className={titleClassNames} key={index} cols={cols} style={{display:'inline-block', width: `${width}%`}}>
+      <GridListTile className={titleClassNames} key={index} cols={cols} style={{ display: 'inline-block', width: `${width}%` }}>
         <div className={isValid ? "drag-tile valid" : "drag-tile invalid"}>
           <DragTab
             index={index}
@@ -115,7 +115,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
       <GridList cellHeight={40} className={classes.gridList} cols={columns}>
         <ReactSortable
           list={questions}
-          style={{width: '100%', marginTop: 0, padding: 0, height: '100% '}}
+          className="drag-container"
           group="tabs-group"
           setList={props.setQuestions}>
           {
@@ -124,7 +124,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
         </ReactSortable>
         <GridListTile
           onClick={props.createNewQuestion}
-          className={"drag-last-tile-container"}
+          className={"drag-tile-container"}
           cols={(isSynthesisPresent || isSynthesisPage) ? 1.5555 : 2}
         >
           <Grid className={"drag-tile"} container alignContent="center" justify="center">
@@ -132,10 +132,10 @@ const DragableTabs: React.FC<DragTabsProps> = ({
           </Grid>
         </GridListTile>
         {
-          (isSynthesisPresent || isSynthesisPage)  ?
+          (isSynthesisPresent || isSynthesisPage) ?
             <GridListTile
               onClick={props.moveToSynthesis}
-              className={"drag-last-tile-container " + (isSynthesisPage ? "synthesis-tab" : "")}
+              className={"drag-tile-container " + (isSynthesisPage ? "synthesis-tab" : "")}
               cols={1.5555}
             >
               <SynthesisTab
@@ -145,7 +145,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
                 synthesis={synthesis}
               />
             </GridListTile>
-          : ""
+            : ""
         }
       </GridList>
     </div>

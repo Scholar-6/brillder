@@ -86,11 +86,11 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
               <Clock brickLength={brick.brickLength} />
             </div>
             <div className="intro-text-row">
-            <ReviewStepper
-              questions={brick.questions}
-              attempts={attempts}
-              handleStep={() => {}}
-            />
+              <ReviewStepper
+                questions={brick.questions}
+                attempts={attempts}
+                handleStep={() => { }}
+              />
             </div>
             <div className="action-footer">
               <div>&nbsp;</div>

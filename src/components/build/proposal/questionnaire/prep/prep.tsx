@@ -13,13 +13,13 @@ import YoutubeAndMath from 'components/play/brick/baseComponents/YoutubeAndMath'
 interface PrepProps {
   parentPrep: string;
   canEdit: boolean;
-  savePrep(prep: string):void;
+  savePrep(prep: string): void;
 }
 
-const PrepPreviewComponent:React.FC<any> = ({data}) => {
+const PrepPreviewComponent: React.FC<any> = ({ data }) => {
   if (data) {
     return (
-      <Grid container justify="center" alignContent="flex-start" className="prep-phone-preview">
+      <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
         <img className="first-phone-image"
           alt="head"
           src="/images/new-brick/prep.png">
@@ -31,10 +31,10 @@ const PrepPreviewComponent:React.FC<any> = ({data}) => {
     )
   }
   return (
-    <Grid container justify="center" alignContent="flex-start" className="prep-phone-preview">
+    <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
       <img className="first-phone-image"
         alt="head"
-        style={{height: '45%'}}
+        style={{ height: '45%' }}
         src="/images/new-brick/prep.png">
       </img>
     </Grid>
@@ -57,7 +57,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, savePrep }) =
             toolbar={[
               'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
             ]}
-            onBlur={() => {}}
+            onBlur={() => { }}
             onChange={savePrep}
           />
           <NavigationButtons
