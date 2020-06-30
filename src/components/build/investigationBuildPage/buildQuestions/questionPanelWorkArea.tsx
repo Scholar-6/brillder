@@ -175,6 +175,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     (index >= 1) ?
                       <Grid container justify="center" alignContent="flex-start">
                         <div className="right-side-text">Last Question?</div>
+                        <!-- This is an html element not a React element so does not need capital letter -->
                         <button
                           className="synthesis-button svgOnHover"
                           onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
