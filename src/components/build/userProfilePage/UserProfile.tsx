@@ -8,6 +8,7 @@ import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
 import brickActions from "redux/actions/brickActions";
+import userActions from "redux/actions/user";
 import sprite from "../../../assets/img/icons-sprite.svg";
 
 import "./UserProfile.scss";
@@ -28,6 +29,7 @@ const mapState = (state: any) => {
 const mapDispatch = (dispatch: any) => {
   return {
     forgetBrick: () => dispatch(brickActions.forgetBrick()),
+    getUser: () => dispatch(userActions.getUser())
   };
 };
 
@@ -42,6 +44,7 @@ interface UserProfileProps {
   history: any;
   match: any;
   forgetBrick(): void;
+  getUser(): void;
 }
 
 interface UserProfileState {
@@ -242,6 +245,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         .then((res) => {
           if (res.data === "OK") {
             alert("Profile saved");
+            this.props.getUser();
           }
         })
         .catch((error) => {
