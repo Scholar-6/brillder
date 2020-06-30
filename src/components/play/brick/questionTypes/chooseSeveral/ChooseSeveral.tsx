@@ -3,10 +3,10 @@ import { Button, Grid } from '@material-ui/core';
 
 import './ChooseSeveral.scss';
 import CompComponent from '../Comp';
-import {ComponentAttempt} from 'components/play/brick/model/model';
+import { ComponentAttempt } from 'components/play/brick/model/model';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from 'components/play/brick/baseComponents/ReviewGlobalHint';
-import {CompQuestionProps} from '../types';
+import { CompQuestionProps } from '../types';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 
@@ -53,7 +53,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   markLiveChoices(attempt: ComponentAttempt, markIncrement: number) {
     const choices = this.props.component.list;
     for (let [index, choice] of choices.entries()) {
-      const checked = attempt.answer.find((answer:number) => answer === index);
+      const checked = attempt.answer.find((answer: number) => answer === index);
       if (checked >= 0) {
         if (choice.checked) {
           attempt.marks += markIncrement;
@@ -93,7 +93,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
     // Then, if the attempt scored no marks or negative and the program is in live phase, then give the student a mark.
     if (attempt.marks <= 0 && attempt.answer !== [] && !prev) { attempt.marks = 1; }
-    if (attempt.marks <= 0) {attempt.marks = 0; }
+    if (attempt.marks <= 0) { attempt.marks = 0; }
 
     if (attempt.answer.length === 0) {
       attempt.marks = 0;
@@ -104,8 +104,8 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   checkChoice(choice: any, index: number) {
     if (this.props.attempt) {
-      const {answer} = this.props.attempt;
-      const found = answer.find((a:number) => a === index);
+      const { answer } = this.props.attempt;
+      const found = answer.find((a: number) => a === index);
       if (found >= 0) {
         if (choice.checked) {
           return true;
@@ -128,7 +128,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     }
   }
 
-  renderButton(choice: any, index:number) {
+  renderButton(choice: any, index: number) {
     let isCorrect = this.checkChoice(choice, index);
     let className = "choose-choice";
     let active = this.state.activeItems.find(i => i === index) as number;
@@ -161,14 +161,14 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
         key={index}
         onClick={() => this.setActiveItem(index)}
       >
-				{this.renderData(choice)}
-				<ReviewEachHint
-					isPhonePreview={this.props.isPreview}
-					attempt={this.props.attempt}
-					isCorrect={isCorrect ? isCorrect : false}
-					index={index}
-					hint={this.props.question.hint}
-				/>
+        {this.renderData(choice)}
+        <ReviewEachHint
+          isPhonePreview={this.props.isPreview}
+          attempt={this.props.attempt}
+          isCorrect={isCorrect ? isCorrect : false}
+          index={index}
+          hint={this.props.question.hint}
+        />
       </Button>
     );
   }

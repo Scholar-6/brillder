@@ -8,13 +8,13 @@
   .short-answer-input {
     display: inline-block;
     margin-bottom: 20px;
-	}
+  }
 
   .short-answer-input.correct {
-		.question-hint {
-			background: white !important;
-		}
-	}
+    .question-hint {
+      background: white !important;
+    }
+  }
 
   input.MuiInput-input {
     color: var(--theme-dark-blue);
@@ -25,7 +25,6 @@
 
   @media only screen and (max-width: 599px) {
     .short-answer-input {
-      width: 100% !important;
       display: block;
       width: 100%;
       margin-bottom: 20px;
