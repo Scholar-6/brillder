@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, useLocation } from "react-router-dom";
 // @ts-ignore
 import { connect } from 'react-redux';
 
@@ -18,13 +18,18 @@ interface AllUsersRouteProps {
 }
 
 const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, user, ...rest }) => {
+
+  var location = useLocation();
+  
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!user) {
       rest.getUser();
       return <div>...Getting User...</div>
     }
     if(user.firstName === "" || user.lastName === "") {
-      return <Redirect to="/set-profile" />
+      if(location.pathname != "/build/user-profile") { // Only redirect to the user profile if we're not already there.
+        return <Redirect to="/build/user-profile" />
+      }
     }
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else if (rest.isAuthenticated === isAuthenticated.None) {

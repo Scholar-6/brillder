@@ -25,7 +25,7 @@ const AuthRedirect: React.FC<any> = ({ user, ...props }) => {
     }
 
     if(user.firstName === "" || user.lastName === "") {
-      return <Redirect to="/set-profile" />
+      return <Redirect to="/build/user-profile" />
     }
 
     const values = queryString.parse(props.location.search)
