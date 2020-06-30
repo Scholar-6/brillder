@@ -351,7 +351,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
 	}
 
-	expendFilter() {
+	expandFilter() {
 		this.setState({
 		  ...this.state,
 		  filterExpanded: true,
@@ -391,7 +391,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 			<div className="filter-header">
 				<span>Filter by: Subject</span>
 				<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
-					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expendFilter())}}>
+					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expandFilter())}}>
 				</button>
 			</div>
 			<SubjectsList
