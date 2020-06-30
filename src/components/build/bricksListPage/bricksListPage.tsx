@@ -450,7 +450,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   hideFilter() {
     this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
   }
-  expendFilter() {
+  expandFilter() {
     this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
   }
   filterClear() {
@@ -558,7 +558,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         <div className="filter-header">
           <span>Filter</span>
           <button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up"))}
-            onClick={() => { this.state.filterExpanded ? this.state.isClearFilter ? this.clearSubjects() : (this.hideFilter()) : (this.expendFilter()) }}>
+            onClick={() => { this.state.filterExpanded ? this.state.isClearFilter ? this.clearSubjects() : (this.hideFilter()) : (this.expandFilter()) }}>
           </button>
         </div>
         <SubjectsList
