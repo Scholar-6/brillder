@@ -23,6 +23,9 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
       rest.getUser();
       return <div>...Getting User...</div>
     }
+    if(user.firstName === "" || user.lastName === "") {
+      return <Redirect to="/set-profile" />
+    }
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized();
