@@ -307,22 +307,15 @@
         border-radius: 8px;
         background: white;
       }
-    }
+		}
 
     .pencil-icon-container {
-      position: absolute;
-      top: 0;
-      right: 0;
-
-      svg {
-        cursor: pointer;
-        height: 1.15vw;
-        width: 1.15vw;
-      }
-
-      .active {
-        color: green;
-      }
+      width: 1.5vw;
+			height: 1.5vw;
+			position: absolute;
+			top: 0.25vw;
+			right: 0.25vw;
+			cursor: pointer;
     }
 
     button:hover {
