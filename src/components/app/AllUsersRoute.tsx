@@ -7,7 +7,6 @@ import actions from '../../redux/actions/auth';
 import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
 import { User } from 'model/user';
-import { ProposalStep } from 'components/build/proposal/model';
 
 
 interface AllUsersRouteProps {
