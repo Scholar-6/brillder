@@ -32,7 +32,7 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
       return <div>...Getting User...</div>
     }
     if(rest.user.firstName === "" || rest.user.lastName === "") {
-      return <Redirect to="/set-profile" />
+      return <Redirect to="/build/user-profile" />
     }
     const isBuilder = rest.user.roles.some(role => {
       const {roleId} = role;
