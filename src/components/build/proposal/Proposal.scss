@@ -396,7 +396,10 @@
     h1 {
       font-weight: normal !important;
     }
-  }
+	}
+	p {
+		margin: 0.5vh 0;
+	}
   .phone-preview-component {
     @extend %width100;
     @extend %height100;
