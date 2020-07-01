@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Badge } from '@material-ui/core';
 import sprite from "../../../assets/img/icons-sprite.svg";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import './PageHeader.scss';
+import { ReduxCombinedState } from 'redux/reducers';
 
 
 interface UsersListProps {
@@ -48,13 +49,15 @@ class PageHeader extends Component<UsersListProps> {
           <Grid container direction="row" className="action-container">
             <Grid item>
               <div className="bell-button svgOnHover">
-								<svg className="svg svg-default">
-									<use href={sprite + "#bell-empty"}/>
-								</svg>
-								<svg className="svg colored">
-									<use href={sprite + "#bell-filled"}/>
-								</svg>
-							</div>
+                <svg className="svg svg-default">
+                  <use href={sprite + "#bell-empty"}/>
+                  <text className="bell-text-default" x="50%" y ="50%" textAnchor="middle">{4}</text>
+                </svg>
+                <svg className="svg colored">
+                  <use href={sprite + "#bell-filled"}/>
+                  <text className="bell-text-filled" x="50%" y ="50%" textAnchor="middle" fill="red">{4}</text>
+                </svg>
+              </div>
               <div className="more-button svgOnHover" onClick={() => this.props.showDropdown()}>
 								<svg className="svg svg-default">
 									<use href={sprite + "#more-thin"}/>
