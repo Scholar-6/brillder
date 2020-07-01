@@ -60,7 +60,7 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
     props.isAuthorized();
     return <div>...Checking rights...</div>
   } else {
-    return <Redirect to="/choose-user" />
+    return <Redirect to="/choose-login" />
   }
 }
 

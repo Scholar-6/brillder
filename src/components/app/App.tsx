@@ -20,7 +20,6 @@ import UsersListPage from '../build/users/UsersList';
 import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
 import LoginPage from '../authPages/loginPage/loginPage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
-import ChooseUserPage from '../authPages/chooseUserPage/ChooseUserPage';
 import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
 import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
 import SignUpFinished from '../authPages/signUpFinished/SignUpFinished';
@@ -45,7 +44,7 @@ const App: React.FC = (props: any) => {
   }, function (error) {
     let {url} = error.response.config;
     if (url.search('/auth/login/') === -1) {
-      history.push("/choose-user");
+      history.push("/choose-login");
     }
     return Promise.reject(error);
   });
@@ -116,7 +115,6 @@ const App: React.FC = (props: any) => {
         <BuildRoute path="/build" component={MainPage} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
-        <AuthRoute path="/choose-user" component={ChooseUserPage} />
         <AuthRoute path="/login" exact component={LoginPage} />
         <AuthRoute path="/sign-up-success" exact component={SignUpFinished} />
 

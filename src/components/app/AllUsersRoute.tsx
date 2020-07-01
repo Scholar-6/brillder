@@ -37,7 +37,7 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
     rest.isAuthorized();
     return <div>...Checking rights...</div>;
   } else {
-    return <Redirect to="/choose-user" />;
+    return <Redirect to="/choose-login" />;
   }
 }
 
