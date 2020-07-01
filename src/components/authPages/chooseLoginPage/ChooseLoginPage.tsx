@@ -64,13 +64,7 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
     );
   }
 
-  let userUrl = '';
-  if (userType === UserLoginType.Builder) {
-    userUrl = 'build';
-  } else if (userType === UserLoginType.Student) {
-    userUrl = 'play';
-  }
-  let googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/${userUrl}`;
+  let googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/build`;
   return (
     <div style={{ height: '100%' }}>
       <Hidden only={['xs']}>
