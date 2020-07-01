@@ -186,7 +186,7 @@ class Sort extends CompComponent<SortProps, SortState> {
         />
       );
     }
-    return choice.value;
+    return <div dangerouslySetInnerHTML={{ __html: choice.value}} />;
   }
 
   renderChoice(choice: SortAnswer, i: number) {
@@ -221,7 +221,7 @@ class Sort extends CompComponent<SortProps, SortState> {
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>
-              <div className="sort-category">{cat.name}</div>
+              <div className="sort-category" dangerouslySetInnerHTML={{ __html: cat.name}} />
               <div className="sort-category-list-container">
                 <ReactSortable
                   list={cat.choices as any[]}
