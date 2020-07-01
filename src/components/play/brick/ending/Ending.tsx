@@ -38,7 +38,7 @@ const EndingPage: React.FC<EndingProps> = ({
   const endBrick = () => saveBrick();
 
   const oldScore = brickAttempt.oldScore ? brickAttempt.oldScore : 0;
-  const {score, maxScore} = brickAttempt;
+  const { score, maxScore } = brickAttempt;
   const currentPScore = Math.round(((score + oldScore) * 50) / maxScore);
   const minPScore = Math.round((oldScore * 100) / maxScore);
   const maxPScore = Math.round((score * 100) / maxScore);
@@ -58,63 +58,65 @@ const EndingPage: React.FC<EndingProps> = ({
               <div className="question-index">FS</div>
             </div>
             <h1>Final Score : Agg.</h1>
-            <Grid
-              container
-              justify="center"
-              alignContent="center"
-              className="circle-progress-container"
-            >
-              <CircularProgressbar
-                className="circle-progress-first"
-                strokeWidth={4}
-                counterClockwise={true}
-                value={minCurrentScore}
-              />
+            <div className="question-live-play">
               <Grid
                 container
                 justify="center"
                 alignContent="center"
-                className="score-circle"
+                className="circle-progress-container"
               >
                 <CircularProgressbar
-                  className="circle-progress-second"
-                  counterClockwise={true}
+                  className="circle-progress-first"
                   strokeWidth={4}
-                  value={maxCurrentScore}
-                />
-              </Grid>
-              <Grid
-                container
-                justify="center"
-                alignContent="center"
-                className="score-circle"
-              >
-                <CircularProgressbar
-                  className="circle-progress-third"
                   counterClockwise={true}
-                  strokeWidth={4}
-                  value={currentScore}
+                  value={minCurrentScore}
                 />
+                <Grid
+                  container
+                  justify="center"
+                  alignContent="center"
+                  className="score-circle"
+                >
+                  <CircularProgressbar
+                    className="circle-progress-second"
+                    counterClockwise={true}
+                    strokeWidth={4}
+                    value={maxCurrentScore}
+                  />
+                </Grid>
+                <Grid
+                  container
+                  justify="center"
+                  alignContent="center"
+                  className="score-circle"
+                >
+                  <CircularProgressbar
+                    className="circle-progress-third"
+                    counterClockwise={true}
+                    strokeWidth={4}
+                    value={currentScore}
+                  />
+                </Grid>
+                <Grid
+                  container
+                  justify="center"
+                  alignContent="center"
+                  className="score-circle"
+                >
+                  <div>
+                    <div className="score-precentage">
+                      {currentPScore}%
+                  </div>
+                    <div className="score-number">
+                      {oldScore}/{maxScore}
+                    </div>
+                    <div className="score-number">
+                      {score}/{maxScore}
+                    </div>
+                  </div>
+                </Grid>
               </Grid>
-              <Grid
-                container
-                justify="center"
-                alignContent="center"
-                className="score-circle"
-              >
-                <div>
-                  <div className="score-precentage">
-                    {currentPScore}%
-                  </div>
-                  <div className="score-number">
-                    {oldScore}/{maxScore}
-                  </div>
-                  <div className="score-number">
-                    {score}/{maxScore}
-                  </div>
-                </div>
-              </Grid>
-            </Grid>
+            </div>
           </div>
         </Grid>
         <Grid item xs={4}>
@@ -128,7 +130,7 @@ const EndingPage: React.FC<EndingProps> = ({
                 isEnd={true}
                 questions={brick.questions}
                 attempts={attempts}
-                handleStep={() => {}}
+                handleStep={() => { }}
               />
             </div>
             <div className="action-footer">
