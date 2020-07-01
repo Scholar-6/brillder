@@ -192,7 +192,6 @@ const LivePage: React.FC<LivePageProps> = ({
               <LiveStepper
                 activeStep={activeStep}
                 questions={questions}
-                attempts={props.attempts}
                 handleStep={handleStep}
               />
             </div>
