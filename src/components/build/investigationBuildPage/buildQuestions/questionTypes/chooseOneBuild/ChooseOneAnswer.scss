@@ -55,9 +55,9 @@
   }
 
   .checkbox-container {
+    @extend %flexCenter;
     @extend %floatToYCenter;
     left: 0;
-    width: 50px;
     height: 100%;
     z-index: 999;
     &.big-box {
