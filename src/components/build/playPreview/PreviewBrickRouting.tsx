@@ -28,6 +28,7 @@ import FinishPage from '../investigationBuildPage/finish/FinishPage';
 import {prefillAttempts} from 'components/services/PlayService';
 import PlayPreviewMenu from './PlayPreviewMenu';
 import { canEditBrick, checkEditor } from 'components/services/brickService';
+import { ReduxCombinedState } from 'redux/reducers';
 
 
 export interface BrickAttempt {
@@ -304,18 +305,14 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
   return shuffleBrick;
 }
 
-const mapState = (state: any) => {
-  return {
-    user: state.user.user,
-    brick: parseAndShuffleQuestions(state.brick.brick) as Brick,
-  };
-};
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  brick: parseAndShuffleQuestions(state.brick.brick) as Brick,
+});
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    fetchBrick: (id:number) => dispatch(actions.fetchBrick(id)),
-  }
-}
+const mapDispatch = (dispatch: any) => ({
+  fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
+})
 
 const connector = connect(mapState, mapDispatch);
 

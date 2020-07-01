@@ -26,15 +26,14 @@ import FailedRequestDialog from "components/baseComponents/failedRequestDialog/F
 import ShortBrickDecsiption from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
+import { ReduxCombinedState } from "redux/reducers";
 
 
-const mapState = (state: any) => {
-  return { user: state.user.user };
-};
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
-const mapDispatch = (dispatch: any) => {
-  return { forgetBrick: () => dispatch(brickActions.forgetBrick()) };
-};
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(brickActions.forgetBrick())
+});
 
 const connector = connect(mapState, mapDispatch);
 
