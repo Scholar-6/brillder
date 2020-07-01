@@ -3,11 +3,9 @@ import { Grid } from "@material-ui/core";
 
 import "./Live.scss";
 import { Question } from "model/question";
-import { ComponentAttempt } from "../model/model";
 
 interface StepperProps {
   activeStep: number;
-  attempts: ComponentAttempt[];
   questions: Question[];
   handleStep(questionIndex: number): any;
 }
