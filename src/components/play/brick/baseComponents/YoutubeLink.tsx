@@ -57,7 +57,7 @@ class YoutubeLink extends Component<YoutubeLinkProps, YoutubeLinkState> {
       let link = this.getVideoLink(this.props.value);
       return (
         <div className="youtube-link">
-          <a href={link}>Move to youtube</a>
+          <a href={link}>Play on YouTube</a>
         </div>
       );
     }
