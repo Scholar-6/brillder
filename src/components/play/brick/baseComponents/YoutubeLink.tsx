@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import YouTube from 'react-youtube';
+import { Grid } from '@material-ui/core';
 
 interface YoutubeLinkProps {
   value: string;
@@ -56,9 +57,9 @@ class YoutubeLink extends Component<YoutubeLinkProps, YoutubeLinkState> {
     } else {
       let link = this.getVideoLink(this.props.value);
       return (
-        <div className="youtube-link">
+        <Grid container justify="center" className="youtube-link">
           <a href={link}>Play on YouTube</a>
-        </div>
+        </Grid>
       );
     }
   }
