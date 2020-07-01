@@ -11,11 +11,13 @@ import { ReduxCombinedState } from 'redux/reducers';
 
 
 interface StudentRouteProps {
-  component: any,
-  isAuthenticated: isAuthenticated,
-  user: User,
-  getUser():void,
-  isAuthorized():void,
+  component: any;
+  isAuthenticated: isAuthenticated;
+  isRedirectedToProfile: boolean;
+  user: User;
+  redirected(): void;
+  getUser():void;
+  isAuthorized():void;
 }
 
 const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user, ...rest }) => {
@@ -24,8 +26,12 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
       rest.getUser();
       return <div>...Getting User...</div>
     }
-    if(user.firstName === "" || user.lastName === "") {
-      return <Redirect to="/build/user-profile" />
+
+    if (!rest.isRedirectedToProfile) {
+      if(!user.firstName || !user.lastName) {
+        rest.redirected();
+        return <Redirect to="/build/user-profile" />
+      }
     }
     const {roles} = user;
     let can = roles.some((role: any) => {
@@ -47,13 +53,15 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
 
 const mapState = (state: ReduxCombinedState) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  isRedirectedToProfile: state.auth.isRedirected,
   user: state.user.user,
 })
 
 const mapDispatch = (dispatch: any) => ({
   isAuthorized: () => dispatch(actions.isAuthorized()),
+  redirected: () => dispatch(actions.redirectedToProfile()),
   getUser: () => dispatch(userActions.getUser()),
-})
+});
 
 const connector = connect(mapState, mapDispatch)
 
