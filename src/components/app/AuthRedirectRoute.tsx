@@ -13,12 +13,10 @@ import { ReduxCombinedState } from 'redux/reducers';
 
 interface AuthRedirectProps {
   isAuthenticated: isAuthenticated;
-  isRedirected: boolean;
   user: User;
   location: any;
   getUser():void;
   isAuthorized():void;
-  redirected():void;
 }
 
 const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
@@ -26,13 +24,6 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
     if (!user) {
       props.getUser();
       return <div>...Getting User...</div>
-    }
-
-    if (!props.isRedirected) {
-      if(!user.firstName || !user.lastName) {
-        props.redirected();
-        return <Redirect to="/build/user-profile" />
-      }
     }
 
     const values = queryString.parse(props.location.search)
@@ -75,12 +66,10 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
 
 const mapState = (state: ReduxCombinedState) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  isRedirected: state.auth.isRedirected,
   user: state.user.user,
 });
 
 const mapDispatch = (dispatch: any) => ({
-  redirected: () => dispatch(actions.redirectedToProfile()),
   isAuthorized: () => dispatch(actions.isAuthorized()),
   getUser: () => dispatch(userActions.getUser()),
 });

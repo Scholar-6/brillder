@@ -6,23 +6,23 @@ import { UserLoginType } from 'model/auth';
 export interface AuthState {
   isAuthenticated: isAuthenticated;
   userType: UserLoginType;
-  isRedirected: boolean;
+  isRedirectedToProfile: boolean;
   error: string;
 }
 
 const AccountInitialState: AuthState = {
   isAuthenticated: isAuthenticated.None,
   userType: UserLoginType.None,
-  isRedirected: false,
+  isRedirectedToProfile: false,
   error: ""
 }
 
 export default (state = AccountInitialState, action: any) => {
   switch (action.type) {
     case types.AUTH_PROFILE_REDIRECT:
-      return {...state, isRedirected: true } as AuthState;
+      return {...state, isRedirectedToProfile: true } as AuthState;
     case types.LOGIN_SUCCESS:
-      return { isAuthenticated: isAuthenticated.True, userType: action.userType, isRedirected: state.isRedirected } as AuthState
+      return { ...state, isAuthenticated: isAuthenticated.True, userType: action.userType } as AuthState
     case types.LOGIN_FAILURE:
       return { isAuthenticated: isAuthenticated.False, error: action.error } as AuthState
     case types.LOGOUT_SUCCESS:
