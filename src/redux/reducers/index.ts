@@ -3,6 +3,7 @@ import bricksReducer from './bricks-reducer';
 import brickReducer from './brick-reducer';
 import authReducer, {AuthState} from './auth';
 import userReducer from './user';
+import notificationReducer, {NotificationsState} from './notifications';
 
 
 export interface ReduxCombinedState {
@@ -10,6 +11,7 @@ export interface ReduxCombinedState {
   brick: any;
   auth: AuthState;
   user: any;
+  notifications: NotificationsState;
 }
 
 export default combineReducers({
@@ -17,4 +19,5 @@ export default combineReducers({
   brick: brickReducer,
   auth: authReducer,
   user: userReducer,
+  notifications: notificationReducer,
 });
