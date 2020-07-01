@@ -97,7 +97,7 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const nextFromShuffle = () => {
     setShuffleDialog(false);
-    
+
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
       questions.forEach(question => question.edited = false);
@@ -171,9 +171,9 @@ const LivePage: React.FC<LivePageProps> = ({
   };
 
   const renderQuestionContainer = (question: Question, index: number) => {
-    let indexClassName = "question-index-container";
+    let indexClassName = "question-index-container animated pulse duration-1s iteration-2";
     if (isAttempted(question)) {
-      indexClassName += " attempted pulse duration-2s";
+      indexClassName += " attempted";
     }
     return (
       <TabPanel
