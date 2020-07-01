@@ -53,7 +53,7 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
 
 const mapState = (state: ReduxCombinedState) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  isRedirectedToProfile: state.auth.isRedirected,
+  isRedirectedToProfile: state.auth.isRedirectedToProfile,
   user: state.user.user,
 })
 
