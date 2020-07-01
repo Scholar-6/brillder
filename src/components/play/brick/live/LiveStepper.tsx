@@ -46,7 +46,7 @@ const LiveStepper: React.FC<StepperProps> = ({
         <span>{questionIndex}</span>
         {question.edited ? (
           <div className="blue-circle-container">
-            <div className="blue-circle animated pulse duration-2s"></div>
+            <div className="blue-circle animated pulse duration-1s iteration-2"></div>
           </div>
         ) : (
           ""
