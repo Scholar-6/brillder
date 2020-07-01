@@ -166,6 +166,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
             <SwipeableViews
               axis={theme.direction === "rtl" ? "x-reverse" : "x"}
               index={activeStep}
+              className="swipe-view"
               onChangeIndex={handleStep}
             >
               {questions.map(renderQuestionContainer)}
