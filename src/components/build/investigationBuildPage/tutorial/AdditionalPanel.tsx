@@ -2,8 +2,9 @@ import React from 'react'
 import { Grid } from '@material-ui/core';
 
 import './AdditionalPanel.scss';
-import {TutorialStep} from './TutorialPanelWorkArea';
+import { TutorialStep } from './TutorialPanelWorkArea';
 
+import sprite from "../../../../assets/img/icons-sprite.svg";
 
 export interface TutorialProps {
   next(step: TutorialStep): void;
@@ -15,11 +16,15 @@ const AdditionalPanel: React.FC<TutorialProps> = (props) => {
     <div className="tutorial-additional-panel">
       <div className="tutorial-step-1">
         <Grid container justify="center">
-          <div className="zap-border">
-            <img alt="synthesis-icon" src="/feathericons/zap-off-gray.png" className="zap-icon" />
+          <div className="zap-border svgOnHover">
+            <svg className="svg w100 h100 active">
+              <use href={sprite + "#zap-off"} className="text-gray" />
+            </svg>
           </div>
-          <div className="zap-border">
-            <img alt="synthesis-icon" src="/feathericons/zap-blue.png" className="zap-icon" />
+          <div className="zap-border svgOnHover">
+            <svg className="svg w100 h100 active">
+              <use href={sprite + "#zap"} className="text-theme-dark-blue" />
+            </svg>
           </div>
         </Grid>
         <p className="center">

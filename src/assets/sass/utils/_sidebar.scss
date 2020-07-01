@@ -243,15 +243,16 @@
       }
     }
     .back-hover-area {
-      @extend %floatToCenter;
+      @extend %floatToXCenter;
+      top: 26%;
       @extend %flexCenter;
       flex-direction: column;
       color: $tab-gray;
       cursor: pointer;
       .create-icon {
         margin-bottom: 1vh;
-        width: 7vw;
-        height: 7vw;
+        width: 8vw;
+        height: 8vw;
         @extend %transitionAll150;
       }
       &:hover {
@@ -261,7 +262,7 @@
         }
       }
       h3 {
-        font-size: 1.4vw;
+        font-size: 1.6vw;
         font-family: 'Brandon Grotesque Black';
         color: var(--white);
         letter-spacing: 0.3vw;
@@ -422,14 +423,14 @@
             &.brick-row-1,
             &.brick-row-2,
             &.brick-row-3 {
-              .expended-brick-info {
+              .expanded-brick-info {
                 border-top-left-radius: 0 !important;
               }
             }
             &.brick-row-4,
             &.brick-row-5 {
               bottom: 0;
-              .expended-brick-info {
+              .expanded-brick-info {
                 border-bottom-left-radius: 0 !important;
               }
             }

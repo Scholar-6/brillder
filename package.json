@@ -1,6 +1,6 @@
 {
   "name": "brillder",
-  "version": "3.9.4",
+  "version": "3.10.0",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-alignment": "^19.0.0",
@@ -66,6 +66,7 @@
     "react-scripts": "3.3.1",
     "react-sortablejs": "^2.0.11",
     "react-swipeable-views": "^0.13.6",
+    "react-youtube": "^7.11.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "typescript": "^3.7.5"

@@ -92,7 +92,7 @@ const LoginPage: React.FC<LoginProps> = props => {
       toggleAlertMessage(true);
       setAlertMessage(msg);
     }).catch(error => {
-      const {response} = error;
+      const { response } = error;
       if (response) {
         if (
           response.status === 500 &&
@@ -101,7 +101,7 @@ const LoginPage: React.FC<LoginProps> = props => {
           toggleAlertMessage(true);
           setAlertMessage("Server error");
         } else if (response.status === 401) {
-          const {msg} = response.data;
+          const { msg } = response.data;
           if (msg === 'USER_IS_NOT_ACTIVE') {
             props.history.push('/sign-up-success');
           } else if (msg === 'INVALID_EMAIL_OR_PASSWORD') {
@@ -176,52 +176,37 @@ const LoginPage: React.FC<LoginProps> = props => {
               />
             </Grid>
             <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="login-field"
-                required
-                placeholder="Email"
-              />
-              <br />
-              <div
-                className="password-container"
-                style={{ marginLeft: "10%", width: "80%" }}
-              >
+              <div className="input-block">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  className="login-field"
+                  required
+                  placeholder="Email"
+                />
+              </div>
+              <div className="input-block">
                 <input
                   type={passwordHidden ? "password" : "text"}
                   value={password}
                   className="login-field password"
                   onChange={e => setPassword(e.target.value)}
                   required
-                  style={{fontSize: passwordHidden && password ? "3vw" : "1.5vw"}}
                   placeholder="Password"
                 />
                 <div className="hide-password-icon-container">
-                  <Grid
-                    container
-                    alignContent="center"
-                    style={{ height: "100%" }}
-                  >
-                    <VisibilityIcon
-                      className="hide-password-icon"
-                      onClick={() => setHidden(!passwordHidden)}
-                    />
-                  </Grid>
+                  <VisibilityIcon
+                    className="hide-password-icon"
+                    onClick={() => setHidden(!passwordHidden)}
+                  />
                 </div>
               </div>
-              <div
-                style={{
-                  width: "80%",
-                  marginLeft: "10%",
-                  textAlign: "right"
-                }}
-              >
+              <div className="input-block">
                 <Button
                   variant="contained"
                   color="primary"
-                  className="sign-in-button sign-up-button"
+                  className="sign-up-button"
                   type="button"
                   onClick={() => register(email, password)}
                 >
