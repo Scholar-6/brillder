@@ -6,7 +6,7 @@ import update from "immutability-helper";
 import { useHistory, Redirect } from "react-router-dom";
 
 import "./Live.scss";
-import { Question } from "model/question";
+import { Question, QuestionTypeEnum } from "model/question";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
 import { PlayStatus, ComponentAttempt } from "../model/model";
@@ -16,6 +16,7 @@ import sprite from "../../../../assets/img/icons-sprite.svg";
 import { CashQuestionFromPlay } from "../../../localStorage/buildLocalStorage";
 import { Brick } from "model/brick";
 import LiveStepper from "./LiveStepper";
+import ShuffleAnswerDialog from 'components/baseComponents/failedRequestDialog/ShuffleAnswerDialog';
 
 interface LivePageProps {
   status: PlayStatus;
@@ -42,6 +43,7 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   const [activeStep, setActiveStep] = React.useState(initStep);
+  const [isShuffleOpen, setShuffleDialog] = React.useState(false);
   const [isTimeover, setTimeover] = React.useState(false);
   let initAnswers: any[] = [];
 
@@ -93,7 +95,36 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const prev = () => handleStep(activeStep - 1)();
 
+  const nextShuffle = () => {
+    setShuffleDialog(false);
+    
+    handleStep(activeStep + 1)();
+    if (activeStep >= questions.length - 1) {
+      questions.forEach((question) => {
+        question.edited = false;
+      });
+      props.finishBrick();
+      if (props.isPlayPreview) {
+        history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
+      } else {
+        history.push(`/play/brick/${brick.id}/provisionalScore`);
+      }
+    }
+  }
+
   const next = () => {
+    let question = questions[activeStep];
+    if (
+      question.type === QuestionTypeEnum.PairMatch ||
+      question.type === QuestionTypeEnum.HorizontalShuffle ||
+      question.type === QuestionTypeEnum.VerticalShuffle
+    ) {
+      let attempt = questionRefs[activeStep].current?.getAttempt();
+      if (!attempt.dragged) {
+        setShuffleDialog(true);
+        return;
+      }
+    }
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
       questions.forEach((question) => {
@@ -174,6 +205,7 @@ const LivePage: React.FC<LivePageProps> = ({
             <SwipeableViews
               axis={theme.direction === "rtl" ? "x-reverse" : "x"}
               index={activeStep}
+              className="swipe-view"
               style={{ width: "100%" }}
               onChangeIndex={handleStep}
             >
@@ -192,7 +224,6 @@ const LivePage: React.FC<LivePageProps> = ({
               <LiveStepper
                 activeStep={activeStep}
                 questions={questions}
-                attempts={props.attempts}
                 handleStep={handleStep}
               />
             </div>
@@ -213,6 +244,7 @@ const LivePage: React.FC<LivePageProps> = ({
           </div>
         </Grid>
       </Grid>
+      <ShuffleAnswerDialog isOpen={isShuffleOpen} submit={() => nextShuffle()} close={() => setShuffleDialog(false)} />
     </div>
   );
 };

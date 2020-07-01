@@ -4,6 +4,8 @@ export interface ComponentAttempt {
   marks: number;
   maxMarks: number;
   attempted: boolean;
+  // only for pair match and shuffle attempts
+  dragged?: boolean;
 }
 
 export enum PlayStatus {
