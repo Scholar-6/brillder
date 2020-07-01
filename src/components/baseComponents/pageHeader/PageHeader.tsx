@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Badge } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import sprite from "../../../assets/img/icons-sprite.svg";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import './PageHeader.scss';
@@ -75,11 +75,13 @@ class PageHeader extends Component<UsersListProps> {
               <div className="bell-button svgOnHover">
                 <svg className="svg svg-default">
                   <use href={sprite + "#bell-empty"}/>
-                  <text className="bell-text-default" x="50%" y ="50%" textAnchor="middle">{notificationCount}</text>
+                  {(notificationCount !== 0) &&
+                  <text className="bell-text-default" x="50%" y ="50%" textAnchor="middle">{notificationCount}</text>}
                 </svg>
                 <svg className="svg colored">
                   <use href={sprite + "#bell-filled"}/>
-                  <text className="bell-text-filled" x="50%" y ="50%" textAnchor="middle" fill="red">{notificationCount}</text>
+                  {(notificationCount !== 0) &&
+                  <text className="bell-text-filled" x="50%" y ="50%" textAnchor="middle">{notificationCount}</text>}
                 </svg>
               </div>
               <div className="more-button svgOnHover" onClick={() => this.props.showDropdown()}>
