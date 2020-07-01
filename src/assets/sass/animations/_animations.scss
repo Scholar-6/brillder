@@ -5,13 +5,16 @@
   &.iteration-infinite {
     animation-iteration-count: infinite;
   }
+  &.iteration-2 {
+    animation-iteration-count: 2;
+  }
   &.iteration-5 {
       animation-iteration-count: 5;
   }
-  &.duration-1sec {
+  &.duration-1s {
     animation-duration: 1s;
   }
-  &.duration-2sec {
+  &.duration-2s {
     animation-duration: 2s;
   }
 }
