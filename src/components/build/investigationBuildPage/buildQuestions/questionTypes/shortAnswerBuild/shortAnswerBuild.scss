@@ -20,6 +20,10 @@
       border: none;
     }
   }
+  .right-top-icon {
+    @extend %floatToYCenter;
+    right: 0.4vw;
+  }
 
   .MuiSnackbar-root {
     position: fixed !important;
