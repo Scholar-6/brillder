@@ -308,6 +308,9 @@
         background: white;
       }
     }
+    .input-container {
+      margin: 0.2vw 0 0.4vw 0;
+    }
     .line-highlight-build,
     .word-highlight-build {
       margin-left: 1.25%;
@@ -318,15 +321,15 @@
         text-align: left;
         width: 100%;
         padding: 0.5vh 1%;
+        min-height: 6vh;
         font-size: 1vw !important;
         font: 1vw $font-family-regular;
         border-radius: 0.4vw;
         line-height: 1.45;
         background-color: var(--white);
-        margin: 0.2vw 0 0.4vw 0;
+        margin: 0;
       }
       .hightlight-area {
-        min-height: 10vh;
         line-height: 1.1;
         .line {
           cursor: pointer;
@@ -347,18 +350,9 @@
         }
       }
       textarea {
-        font-family: $font-family-regular;
         width: 98%;
-        min-height: 3vw;
-        padding: 0;
-        padding-top: 0.5vh;
-        margin: 0;
-        padding-left: 1%;
-        padding-right: 1%;
-        font-size: 1vw !important;
         border: 0;
         outline: none !important;
-        border-radius: 0.4vw !important;
       }
       .pencil-icon-container {
         width: 1.5vw;
@@ -367,11 +361,6 @@
         top: 0.25vw;
         right: 0.25vw;
         cursor: pointer;
-      }
-      .input-container {
-        padding-right: 2px;
-        margin-top: 0.1vw;
-        margin-bottom: 0.1vw;
       }
     }
 
