@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
+import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from "@material-ui/core/Avatar";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import IconButton from "@material-ui/core/IconButton";
-import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
+
 import brickActions from "redux/actions/brickActions";
+import userActions from "redux/actions/user";
+import authActions from "redux/actions/auth";
 import sprite from "../../../assets/img/icons-sprite.svg";
 
 import "./UserProfile.scss";
@@ -18,18 +19,17 @@ import SubjectAutocomplete from "./SubjectAutoCompete";
 import { checkAdmin } from "components/services/brickService";
 import UserProfileMenu from "./UserProfileMenu";
 import SubjectDialog from "./SubjectDialog";
+import { ReduxCombinedState } from "redux/reducers";
 
-const mapState = (state: any) => {
-  return {
-    user: state.user.user,
-  };
-};
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+});
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    forgetBrick: () => dispatch(brickActions.forgetBrick()),
-  };
-};
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(brickActions.forgetBrick()),
+  getUser: () => dispatch(userActions.getUser()),
+  redirectedToProfile: () => dispatch(authActions.redirectedToProfile()),
+});
 
 const connector = connect(mapState, mapDispatch);
 
@@ -42,6 +42,8 @@ interface UserProfileProps {
   history: any;
   match: any;
   forgetBrick(): void;
+  redirectedToProfile(): void;
+  getUser(): void;
 }
 
 interface UserProfileState {
@@ -57,6 +59,7 @@ interface UserProfileState {
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   constructor(props: UserProfileProps) {
     super(props);
+    this.props.redirectedToProfile();
     const { userId } = props.match.params;
     // check if admin wanna create new user
     if (userId === "new") {
@@ -242,6 +245,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         .then((res) => {
           if (res.data === "OK") {
             alert("Profile saved");
+            this.props.getUser();
           }
         })
         .catch((error) => {
@@ -346,7 +350,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <Grid container direction="row">
             <Grid item xs={9}>
               <div className="profile-block">
-                <div className="profile-header">NAME</div>
+                <div className="profile-header">{this.state.user.firstName ? this.state.user.firstName : 'NAME'}</div>
                 <div className="save-button-container">
                   <Avatar
                     alt=""
@@ -376,6 +380,14 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   </div>
                   <Grid item className="profile-inputs-container">
                     <div>
+                      <Grid container justify="center">
+                        <FormControlLabel
+                          value="start"
+                          control={<Checkbox color="primary" />}
+                          label="Don`t show during search?"
+                          labelPlacement="end"
+                        />
+                      </Grid>
                       <Grid>
                         <input
                           className="first-name"

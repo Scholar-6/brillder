@@ -8,15 +8,17 @@ import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
 import { User, UserType } from 'model/user';
 import {setBrillderTitle} from 'components/services/titleService';
+import { ReduxCombinedState } from 'redux/reducers';
 
 
 interface BuildRouteProps {
-  component: any,
-  isAuthenticated: isAuthenticated,
-  user: User,
-  location: any,
-  getUser():void,
-  isAuthorized():void,
+  component: any;
+  isAuthenticated: isAuthenticated;
+  isRedirectedToProfile: boolean;
+  user: User;
+  location: any;
+  getUser():void;
+  isAuthorized():void;
 }
 
 const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }) => {
@@ -31,17 +33,23 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
       rest.getUser();
       return <div>...Getting User...</div>
     }
-    if(rest.user.firstName === "" || rest.user.lastName === "") {
-      return <Redirect to="/build/user-profile" />
+
+    let {user} = rest;
+
+    if (!rest.isRedirectedToProfile) {
+      if(!user.firstName || !user.lastName) {
+        return <Redirect to="/build/user-profile" />
+      }
     }
-    const isBuilder = rest.user.roles.some(role => {
+
+    const isBuilder = user.roles.some(role => {
       const {roleId} = role;
       return roleId === UserType.Builder || roleId === UserType.Editor || roleId === UserType.Admin;
     });
     if (isBuilder) {
       return <Route {...rest} render={(props) => <Component {...props} />} />;
     }
-    const isStudent = rest.user.roles.some(role => role.roleId === UserType.Student);
+    const isStudent = user.roles.some(role => role.roleId === UserType.Student);
     if (isStudent) {
       return <Redirect to="/play" />
     }
@@ -54,19 +62,16 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
   }
 }
 
-const mapState = (state: any) => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.user.user,
-  }
-}
+const mapState = (state: ReduxCombinedState) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  isRedirectedToProfile: state.auth.isRedirectedToProfile,
+  user: state.user.user,
+})
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    isAuthorized: () => dispatch(actions.isAuthorized()),
-    getUser: () => dispatch(userActions.getUser()),
-  }
-}
+const mapDispatch = (dispatch: any) => ({
+  isAuthorized: () => dispatch(actions.isAuthorized()),
+  getUser: () => dispatch(userActions.getUser()),
+})
 
 const connector = connect(mapState, mapDispatch)
 

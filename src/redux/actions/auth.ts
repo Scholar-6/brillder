@@ -107,4 +107,11 @@ const isAuthorized = () => {
   }
 }
 
-export default { login, logout, loginSuccess, isAuthorized }
+const redirectedToProfile = () => {
+  return function (dispatch: Dispatch) {
+    dispatch({type: types.AUTH_PROFILE_REDIRECT} as Action);
+  }
+}
+
+
+export default { login, logout, loginSuccess, isAuthorized, redirectedToProfile }

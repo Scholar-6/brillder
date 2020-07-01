@@ -8,6 +8,7 @@ import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
 import { User, UserType } from 'model/user';
 import {setBrillderTitle} from 'components/services/titleService';
+import { ReduxCombinedState } from 'redux/reducers';
 
 
 interface BuildRouteProps {
@@ -51,19 +52,15 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({ component: Component, ...r
   }
 }
 
-const mapState = (state: any) => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.user.user,
-  }
-}
+const mapState = (state: ReduxCombinedState) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.user.user,
+})
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    isAuthorized: () => dispatch(actions.isAuthorized()),
-    getUser: () => dispatch(userActions.getUser()),
-  }
-}
+const mapDispatch = (dispatch: any) => ({
+  isAuthorized: () => dispatch(actions.isAuthorized()),
+  getUser: () => dispatch(userActions.getUser()),
+})
 
 const connector = connect(mapState, mapDispatch)
 

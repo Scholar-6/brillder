@@ -1,8 +1,13 @@
 import {ComponentAttempt} from 'components/play/brick/model/model';
-import {PairMatchChoice} from './interface';
+import {PairMatchChoice, DragAndDropStatus} from './interface';
 
 
-export function mark(list: PairMatchChoice[], attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
+export function mark(
+  list: PairMatchChoice[],
+  attempt: ComponentAttempt,
+  prev: ComponentAttempt,
+  status: DragAndDropStatus
+): ComponentAttempt {
   let markIncrement = prev ? 2 : 5;
   attempt.correct = true;
   attempt.marks = 0;
@@ -20,5 +25,10 @@ export function mark(list: PairMatchChoice[], attempt: ComponentAttempt, prev: C
     }
   });
   if(attempt.marks === 0 && !prev) attempt.marks = 1;
+
+  if (status === DragAndDropStatus.Changed) {
+    attempt.dragged = true;
+  }
+
   return attempt;
 }
