@@ -15,7 +15,6 @@ interface StudentRouteProps {
   isAuthenticated: isAuthenticated;
   isRedirectedToProfile: boolean;
   user: User;
-  redirected(): void;
   getUser():void;
   isAuthorized():void;
 }
@@ -29,7 +28,6 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
 
     if (!rest.isRedirectedToProfile) {
       if(!user.firstName || !user.lastName) {
-        rest.redirected();
         return <Redirect to="/build/user-profile" />
       }
     }
@@ -59,7 +57,6 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   isAuthorized: () => dispatch(actions.isAuthorized()),
-  redirected: () => dispatch(actions.redirectedToProfile()),
   getUser: () => dispatch(userActions.getUser()),
 });
 

@@ -17,7 +17,6 @@ interface BuildRouteProps {
   isRedirectedToProfile: boolean;
   user: User;
   location: any;
-  redirectedToProfile(): void;
   getUser():void;
   isAuthorized():void;
 }
@@ -39,7 +38,6 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
 
     if (!rest.isRedirectedToProfile) {
       if(!user.firstName || !user.lastName) {
-        rest.redirectedToProfile();
         return <Redirect to="/build/user-profile" />
       }
     }
@@ -72,7 +70,6 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   isAuthorized: () => dispatch(actions.isAuthorized()),
-  redirectedToProfile: () => dispatch(actions.redirectedToProfile()),
   getUser: () => dispatch(userActions.getUser()),
 })
 
