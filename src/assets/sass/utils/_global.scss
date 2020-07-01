@@ -423,6 +423,12 @@ input:focus {
       height: 100%;
       color: var(--theme-orange);
       stroke: var(--theme-orange);
+      .bell-text-default {
+        stroke: var(--theme-orange);
+      }
+      .bell-text-filled {
+        stroke: var(--theme-dark-blue);
+      }
     }
   }
   .search-button {
