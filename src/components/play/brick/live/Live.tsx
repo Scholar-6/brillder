@@ -162,7 +162,7 @@ const LivePage: React.FC<LivePageProps> = ({
   const renderQuestionContainer = (question: Question, index: number) => {
     let indexClassName = "question-index-container";
     if (isAttempted(question)) {
-      indexClassName += " attempted";
+      indexClassName += " attempted pulse duration-2s";
     }
     return (
       <TabPanel
