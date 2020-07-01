@@ -19,6 +19,8 @@ const AccountInitialState: AuthState = {
 
 export default (state = AccountInitialState, action: any) => {
   switch (action.type) {
+    case types.AUTH_PROFILE_REDIRECT:
+      return {...state, isRedirected: true } as AuthState;
     case types.LOGIN_SUCCESS:
       return { isAuthenticated: isAuthenticated.True, userType: action.userType, isRedirected: state.isRedirected } as AuthState
     case types.LOGIN_FAILURE:
@@ -26,7 +28,7 @@ export default (state = AccountInitialState, action: any) => {
     case types.LOGOUT_SUCCESS:
       return { isAuthenticated: isAuthenticated.False } as AuthState
     case types.AUTHORIZED_SUCCESS:
-      return { isAuthenticated: isAuthenticated.True} as AuthState;
+      return { ...state, isAuthenticated: isAuthenticated.True } as AuthState;
     case types.AUTHORIZED_FAILURE: 
       return { isAuthenticated: isAuthenticated.False} as AuthState;
     default: return state;
