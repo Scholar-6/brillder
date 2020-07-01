@@ -108,6 +108,10 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     })
 
     if(attempt.marks === 0 && !prev) attempt.marks = 1;
+
+    if (this.state.status === DragAndDropStatus.Changed) {
+      attempt.dragged = true;
+    }
     return attempt;
   }
 

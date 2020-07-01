@@ -117,6 +117,10 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     })
     // Then, if the attempt scored no marks and the program is in live phase, then give the student a mark.
     if(attempt.marks === 0 && !prev) attempt.marks = 1;
+
+    if (this.state.status === DragAndDropStatus.Changed) {
+      attempt.dragged = true;
+    }
     return attempt;
   }
 

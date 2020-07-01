@@ -114,7 +114,11 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const next = () => {
     let question = questions[activeStep];
-    if (question.type === QuestionTypeEnum.PairMatch) {
+    if (
+      question.type === QuestionTypeEnum.PairMatch ||
+      question.type === QuestionTypeEnum.HorizontalShuffle ||
+      question.type === QuestionTypeEnum.VerticalShuffle
+    ) {
       let attempt = questionRefs[activeStep].current?.getAttempt();
       if (!attempt.dragged) {
         setShuffleDialog(true);
