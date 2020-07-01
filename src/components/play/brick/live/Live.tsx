@@ -174,6 +174,7 @@ const LivePage: React.FC<LivePageProps> = ({
             <SwipeableViews
               axis={theme.direction === "rtl" ? "x-reverse" : "x"}
               index={activeStep}
+              className="swipe-view"
               style={{ width: "100%" }}
               onChangeIndex={handleStep}
             >
