@@ -4,8 +4,7 @@
     @content;
   }
 }
-
-// 567 max
+//     567 max
 @mixin only_phoneL {
   @media screen and (max-width:#{$phone-landscape-width - 1}) {
     @content;
