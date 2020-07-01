@@ -14,17 +14,18 @@ import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 interface BriefProps {
   parentBrief: string;
   canEdit: boolean;
-  saveBrief(brief: string):void;
+  saveBrief(brief: string): void;
 }
 
-const BriefPreviewComponent:React.FC<any> = ({data}) => {
+const BriefPreviewComponent: React.FC<any> = ({ data }) => {
   if (data) {
     return (
-      <Grid container justify="center" alignContent="flex-start" className="brief-phone-preview">
+      <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
         <img
           alt="head"
-          style={{width: 'auto', marginLeft: '0', marginTop: '9vh', height: '24%'}}
-          src="/images/new-brick/brief-circles.png">
+          className="first-phone-image"
+          src="/images/new-brick/brief-circles.png"
+        >
         </img>
         <div className="typing-text">
           <MathInHtml value={data} />
@@ -33,10 +34,11 @@ const BriefPreviewComponent:React.FC<any> = ({data}) => {
     )
   }
   return (
-    <Grid container justify="center" className="brief-phone-preview">
+    <Grid container justify="center" className="phone-preview-component">
       <img
         alt="head"
-        style={{width: 'auto', marginLeft: '0', marginTop: '6.8vh', height: '40%'}}
+        className="first-phone-image"
+        style={{ height: '40%' }}
         src="/images/new-brick/brief-circles.png">
       </img>
     </Grid>
@@ -63,7 +65,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief 
             toolbar={[
               'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
             ]}
-            onBlur={() => {}}
+            onBlur={() => { }}
             onChange={setBriefText}
           />
           <NavigationButtons

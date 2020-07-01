@@ -148,4 +148,18 @@
     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
     <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
   </svg>
+  <svg id="zap-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="12.41 6.75 13 2 10.57 4.92"></polyline>
+    <polyline points="18.57 12.91 21 10 15.66 10"></polyline>
+    <polyline points="8 8 3 14 12 14 11 22 16 16"></polyline>
+    <line x1="1" y1="1" x2="23" y2="23"></line>
+  </svg>
+  <svg id="zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+  </svg>
+  <svg id="highlighter" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <path id="Icon_awesome-highlighter" class="st0" d="M1.4,20.8l3.9,1.3l1.4-1.4L4.1,18L1.4,20.8z M6.3,11.4c-0.4,0.4-0.6,0.9-0.4,1.5
+      l0.5,1.7l-2,2l3.7,3.7l2-2l1.7,0.5c0.6,0.1,1.1,0,1.5-0.4l1.4-1.6L7.9,10L6.3,11.4z M22,5.2l-2.5-2.5c-0.8-0.8-2.1-0.8-2.9-0.1
+      L8.8,9.3l6.6,6.6l6.6-7.8C22.8,7.2,22.7,5.9,22,5.2z"/>
+  </svg>
 </svg>
