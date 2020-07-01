@@ -55,7 +55,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
         <PageHeader
           searchPlaceholder="Search by Name, Email or Subject"
           search={() => {}}
-          searching={(v) => {}}
+          searching={(v: string) => {}}
           showDropdown={() => this.showDropdown()}
         />
         <Menu
