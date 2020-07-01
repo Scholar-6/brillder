@@ -4,7 +4,9 @@
 
 .categorise-build {
   text-align: center;
-
+  > div {
+    margin-bottom: 0.4vh;
+  }
   .component-title {
     opacity: 0.8;
     font-size: $base-sm-text-size;
@@ -17,7 +19,9 @@
     margin: 0;
     margin-left: 1.25%;
     width: 97.5%;
-
+    > div {
+      margin-bottom: 0.3vh;
+    }
     input {
       border-radius: 0.4vw;
       width: 100%;
@@ -31,11 +35,9 @@
       font-family: $font-family-regular;
       height: auto !important;
     }
-
     input.answer {
       padding-top: 8%;
     }
-
     .sort-image input {
       padding-top: 9.5vh;
     }
@@ -72,7 +74,10 @@
     .ck-content {
       text-align: center !important;
       overflow: hidden;
-
+      .ck-content {
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
       p {
         text-align: center !important;
       }
@@ -88,9 +93,31 @@
         text-align: center !important;
         overflow: hidden;
         border-radius: 0.4vw !important;
-
         p {
           text-align: center !important;
+        }
+      }
+    }
+    &:first-child {
+      .document-editor {
+        .ck-content {
+          border-bottom-left-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+        }
+      }
+    }
+    &:not(:first-child):not(:last-child) {
+      .document-editor {
+        .ck-content {
+          border-radius: 0 !important;
+        }
+      }
+    }
+    &:last-child {
+      .document-editor {
+        .ck-content {
+          border-top-left-radius: 0 !important;
+          border-top-right-radius: 0 !important;
         }
       }
     }
