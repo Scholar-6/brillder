@@ -95,14 +95,27 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const prev = () => handleStep(activeStep - 1)();
 
-  const nextShuffle = () => {
+  const nextFromShuffle = () => {
     setShuffleDialog(false);
     
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
-      questions.forEach((question) => {
-        question.edited = false;
-      });
+      questions.forEach(question => question.edited = false);
+      props.finishBrick();
+      if (props.isPlayPreview) {
+        history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
+      } else {
+        history.push(`/play/brick/${brick.id}/provisionalScore`);
+      }
+    }
+  }
+
+  const cleanAndNext = () => {
+    setShuffleDialog(false);
+    handleStep(activeStep + 1)();
+    questions[activeStep].edited = false;
+    if (activeStep >= questions.length - 1) {
+      questions.forEach(question => question.edited = false);
       props.finishBrick();
       if (props.isPlayPreview) {
         history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
@@ -127,9 +140,7 @@ const LivePage: React.FC<LivePageProps> = ({
     }
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
-      questions.forEach((question) => {
-        question.edited = false;
-      });
+      questions.forEach(question => question.edited = false);
       props.finishBrick();
       if (props.isPlayPreview) {
         history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
@@ -162,7 +173,7 @@ const LivePage: React.FC<LivePageProps> = ({
   const renderQuestionContainer = (question: Question, index: number) => {
     let indexClassName = "question-index-container";
     if (isAttempted(question)) {
-      indexClassName += " attempted";
+      indexClassName += " attempted pulse duration-2s";
     }
     return (
       <TabPanel
@@ -244,7 +255,12 @@ const LivePage: React.FC<LivePageProps> = ({
           </div>
         </Grid>
       </Grid>
-      <ShuffleAnswerDialog isOpen={isShuffleOpen} submit={() => nextShuffle()} close={() => setShuffleDialog(false)} />
+      <ShuffleAnswerDialog
+        isOpen={isShuffleOpen}
+        submit={() => nextFromShuffle()}
+        hide={() => setShuffleDialog(false)}
+        close={() => cleanAndNext()}
+      />
     </div>
   );
 };
