@@ -7,6 +7,7 @@ import "./FailedRequestDialog.scss";
 
 interface ShuffleAnswerDialogProps {
   isOpen: boolean;
+  hide(): void;
   submit(): void;
   close(): void;
 }
@@ -16,7 +17,7 @@ class ShuffleAnswerDialog extends Component<ShuffleAnswerDialogProps> {
     return (
       <Dialog
         open={this.props.isOpen}
-        onClose={() => this.props.close()}
+        onClose={() => this.props.hide()}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         className="delete-brick-dialog"
