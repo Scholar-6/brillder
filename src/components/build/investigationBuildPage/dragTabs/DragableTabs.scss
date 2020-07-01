@@ -38,11 +38,11 @@ $tile-height: 100%;
     &:first-child {
       margin-left: 0 !important;
     }
-    &.pre-active {
-      .drag-tile {
-        // margin-right: $distance;
-      }
-    }
+    // &.pre-active {
+    //   .drag-tile {
+    //     margin-right: $distance;
+    //   }
+    // }
     &.active {
       .drag-tile {
         background: white;
