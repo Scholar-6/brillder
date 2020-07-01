@@ -155,7 +155,7 @@ const LoginPage: React.FC<LoginProps> = props => {
       <div className="back-col">
         <div className="back-box">
           <svg className="svg active back-button" onClick={() => props.history.push(`/choose-login?userType=${userType}`)}>
-            <use href={sprite + "#arrow-down"} className="theme-orange"/>
+            <use href={sprite + "#arrow-down"} className="theme-orange" />
           </svg>
         </div>
       </div>
@@ -165,9 +165,10 @@ const LoginPage: React.FC<LoginProps> = props => {
           <div>
             <Grid>
               <div className="logo-box">
-                 <svg className="svg active logo-image" onClick={() => props.history.push(`/choose-login?userType=${userType}`)}>
-                  <use href={sprite + "#login"}/>
+                <svg className="svg active logo-image mobile" onClick={() => props.history.push(`/choose-login?userType=${userType}`)}>
+                  <use href={sprite + "#login"} />
                 </svg>
+                <img alt="Logo" src="/images/choose-login/logo.png" className="logo-image website" />
               </div>
             </Grid>
             <form onSubmit={handleSubmit} className="content-box">

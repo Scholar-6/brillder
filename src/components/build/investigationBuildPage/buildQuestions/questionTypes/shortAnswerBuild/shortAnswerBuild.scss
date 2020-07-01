@@ -25,8 +25,9 @@
 
   .MuiSnackbar-root {
     position: fixed !important;
-    z-index: 1000;
+    z-index: 999999;
     font-size: 2vw;
+
     top: 30% !important;
     height: 30vh;
     left: 50.8% !important;
