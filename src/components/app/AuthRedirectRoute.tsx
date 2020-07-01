@@ -9,23 +9,21 @@ import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
 import { User, UserType } from 'model/user';
 import { UserLoginType } from 'model/auth';
+import { ReduxCombinedState } from 'redux/reducers';
 
 interface AuthRedirectProps {
-  isAuthenticated: isAuthenticated,
-  user: User,
-  getUser():void,
-  isAuthorized():void,
+  isAuthenticated: isAuthenticated;
+  user: User;
+  location: any;
+  getUser():void;
+  isAuthorized():void;
 }
 
-const AuthRedirect: React.FC<any> = ({ user, ...props }) => {
+const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
   if (props.isAuthenticated === isAuthenticated.True) {
     if (!user) {
       props.getUser();
       return <div>...Getting User...</div>
-    }
-
-    if(user.firstName === "" || user.lastName === "") {
-      return <Redirect to="/build/user-profile" />
     }
 
     const values = queryString.parse(props.location.search)
@@ -66,19 +64,15 @@ const AuthRedirect: React.FC<any> = ({ user, ...props }) => {
   }
 }
 
-const mapState = (state: any) => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.user.user,
-  }
-}
+const mapState = (state: ReduxCombinedState) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.user.user,
+});
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    isAuthorized: () => dispatch(actions.isAuthorized()),
-    getUser: () => dispatch(userActions.getUser()),
-  }
-}
+const mapDispatch = (dispatch: any) => ({
+  isAuthorized: () => dispatch(actions.isAuthorized()),
+  getUser: () => dispatch(userActions.getUser()),
+});
 
 const connector = connect(mapState, mapDispatch)
 
