@@ -263,7 +263,7 @@
       }
       h3 {
         font-size: 1.6vw;
-        font-family: 'Brandon Grotesque Black';
+        font-family: $font-family-black;
         color: var(--white);
         letter-spacing: 0.3vw;
         margin: 0;
@@ -283,16 +283,13 @@
     overflow-y: auto;
     .brick-row-title {
       padding-left: 1.15vw;
-      // padding-left: 0.35vw;
       color: var(--theme-dark-blue);
       padding-top: 2.3vh;
-      // padding-top: 2vh;
       padding-bottom: 0;
       line-height: 1;
       font-size: 5.2vw;
       letter-spacing: 1.05vw;
       font-family: $font-family-black;
-      // font-family: 'Brandon Grotesque Black';
     }
     .bricks-list-container {
       height: 65vh;

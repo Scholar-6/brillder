@@ -37,7 +37,7 @@ a {
 	outline: none;
 
 	&.link {
-		color: var(--blue);
+		color: var(--theme-dark-blue);
 		text-decoration: underline;
 		@extend %p0;
 		@extend %m0;
@@ -46,7 +46,7 @@ a {
 	&:focus,
 	&:active,
 	&:hover {
-		color: var(--black);
+		color: var(--theme-dark-blue);
 		outline: none;
 	}
 }
@@ -101,7 +101,7 @@ input[type="submit"] {
 }
 
 textarea {
-	font-family: var(--montserrat);
+	font-family: $font-family-regular;
 }
 
 input,

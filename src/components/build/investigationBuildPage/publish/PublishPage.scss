@@ -1,3 +1,7 @@
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
+
 .publish-brick-page {
   height: 100%;
   transition: all 2.4s ease-in-out;
@@ -6,7 +10,7 @@
     cursor: pointer;
     background: #3FCA79;
     color: white;
-    font-family: 'Brandon Grotesque Black';
+    font-family: $font-family-black;
     border: 0.5vw solid #3FCA79;
     font-size: 3vw;
     letter-spacing: 0.6vw;
