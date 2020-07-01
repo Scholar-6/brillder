@@ -8,19 +8,16 @@ import { connect } from 'react-redux';
 
 import './mainMenu.scss'
 import actions from 'redux/actions/auth';
+import { ReduxCombinedState } from "redux/reducers";
 
 
-const mapState = (state: any) => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-  }
-}
+const mapState = (state: ReduxCombinedState) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+})
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    logout: () => dispatch(actions.logout()),
-  }
-}
+const mapDispatch = (dispatch: any) => ({
+  logout: () => dispatch(actions.logout()),
+})
 
 const connector = connect(mapState, mapDispatch);
 

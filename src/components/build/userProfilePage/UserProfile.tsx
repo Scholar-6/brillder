@@ -19,19 +19,16 @@ import SubjectAutocomplete from "./SubjectAutoCompete";
 import { checkAdmin } from "components/services/brickService";
 import UserProfileMenu from "./UserProfileMenu";
 import SubjectDialog from "./SubjectDialog";
+import { ReduxCombinedState } from "redux/reducers";
 
-const mapState = (state: any) => {
-  return {
-    user: state.user.user,
-  };
-};
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+});
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    forgetBrick: () => dispatch(brickActions.forgetBrick()),
-    getUser: () => dispatch(userActions.getUser())
-  };
-};
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(brickActions.forgetBrick()),
+  getUser: () => dispatch(userActions.getUser())
+});
 
 const connector = connect(mapState, mapDispatch);
 

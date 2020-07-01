@@ -24,19 +24,16 @@ import { User, UserType } from "model/user";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
+import { ReduxCombinedState } from "redux/reducers";
 
 
-const mapState = (state: any) => {
-  return {
-    user: state.user.user,
-  };
-};
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+});
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    logout: () => dispatch(authActions.logout()),
-  };
-};
+const mapDispatch = (dispatch: any) => ({
+  logout: () => dispatch(authActions.logout()),
+});
 
 const connector = connect(mapState, mapDispatch);
 

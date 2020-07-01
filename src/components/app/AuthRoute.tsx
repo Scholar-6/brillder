@@ -4,6 +4,7 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import { isAuthenticated } from 'model/brick';
 import { UserLoginType } from 'model/auth';
+import { ReduxCombinedState } from 'redux/reducers';
 
 
 interface AuthRouteProps {
@@ -24,12 +25,10 @@ const AuthRoute: React.FC<AuthRouteProps> = ({ component: Component, ...rest }) 
   }
 }
 
-const mapState = (state: any) => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-    userType: state.auth.userType
-  }
-}
+const mapState = (state: ReduxCombinedState) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  userType: state.auth.userType
+})
 
 const connector = connect(mapState)
 
