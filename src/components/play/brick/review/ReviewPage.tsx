@@ -117,6 +117,13 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     );
   };
 
+  const renderReviewTitle = (attempt: any) => {
+    if (attempt.correct) {
+      return "Correct!"
+    }
+    return "Not quite - try again!";
+  }
+
   const renderQuestionContainer = (question: Question, index: number) => {
     let indexClassName = "question-index-container";
     const attempt = attempts[index];
@@ -136,6 +143,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
           <div className="question-index">{index + 1}</div>
         </div>
         <div className="question-live-play">
+          <div className="question-title">{renderReviewTitle(attempt)}</div>
           {renderQuestion(question, index)}
         </div>
       </TabPanel>

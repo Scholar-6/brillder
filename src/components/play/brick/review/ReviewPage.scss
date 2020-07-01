@@ -3,6 +3,11 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .review-page {
+	.question-title {
+		font-size: 2.5vw;
+		font-family: $font-family-black;
+		color: var(--theme-dark-blue);
+	}
 	.introduction-page {
 		position: relative;
 		overflow-y: hidden !important;
