@@ -19,7 +19,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({
     if (tutorialStep === TutorialStep.Play) {
       return 'play-green disabled';
     } else if (isValid) {
-      return 'play-green animated pulse iteration-5 duration-1sec';
+      return 'play-green animated pulse iteration-5 duration-1s';
     }
     if (isTutorialSkipped) {
       return 'bg-tab-gray';
