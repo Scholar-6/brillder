@@ -39,10 +39,12 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
     }
     let googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/${userUrl}`;
     return (
-      <Grid className="pre-login-page" container item justify="center" alignItems="center">
+      <Grid className="auth-page pre-login-page" container item justify="center" alignItems="center">
         <div className="back-col">
           <div className="back-box">
-            <div className="back-button" onClick={() => props.history.push('/choose-user')} />
+            <svg className="svg active back-button" onClick={() => props.history.push('/choose-user')}>
+              <use href={sprite + "#arrow-down"} />
+            </svg>
           </div>
         </div>
         <div className="first-col">
@@ -50,20 +52,24 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
           </div>
           <div className="second-item">
             <Grid>
-              <img alt="Logo" src="/images/choose-login/logo.png" className="logo-image" />
+              <div className="logo-box">
+                <img alt="Logo" src="/images/choose-login/logo.png" className="logo-image" />
+              </div>
             </Grid>
-            <Button className="email-button svgOnHover" onClick={moveToLogin}>
-              <svg className="svg active">
-                <use href={sprite + "#email"} />
-              </svg>
-              <span>Register &nbsp;|&nbsp; Sign in with email</span>
-            </Button>
-            <Button className="google-button svgOnHover" href={googleLink}>
-              <svg className="svg active">
-                <use href={sprite + "#gmail"} />
-              </svg>
-              <span>Register &nbsp;|&nbsp; Sign in with Google</span>
-            </Button>
+            <div className="button-box">
+              <Button className="email-button svgOnHover" onClick={moveToLogin}>
+                <svg className="svg active">
+                  <use href={sprite + "#email"} />
+                </svg>
+                <span>Register &nbsp;|&nbsp; Sign in with email</span>
+              </Button>
+              <Button className="google-button svgOnHover" href={googleLink}>
+                <svg className="svg active">
+                  <use href={sprite + "#gmail"} />
+                </svg>
+                <span>Register &nbsp;|&nbsp; Sign in with Google</span>
+              </Button>
+            </div>
           </div>
         </div>
         <div className="second-col">

@@ -13,6 +13,7 @@ import { Redirect } from "react-router-dom";
 import { UserLoginType } from "model/auth";
 import { ReduxCombinedState } from "redux/reducers";
 
+import sprite from "../../../assets/img/icons-sprite.svg";
 
 const mapState = (state: ReduxCombinedState) => ({
   error: state.auth.error,
@@ -146,18 +147,16 @@ const LoginPage: React.FC<LoginProps> = props => {
 
   return (
     <Grid
-      className="login-page"
+      className="auth-page login-page"
       container
       item
       justify="center"
-      alignItems="center"
-    >
+      alignItems="center">
       <div className="back-col">
         <div className="back-box">
-          <div
-            className="back-button"
-            onClick={() => props.history.push(`/choose-login?userType=${userType}`)}
-          />
+          <svg className="svg active back-button" onClick={() => props.history.push(`/choose-login?userType=${userType}`)}>
+            <use href={sprite + "#arrow-down"} className="theme-orange"/>
+          </svg>
         </div>
       </div>
       <div className="first-col">
@@ -165,13 +164,13 @@ const LoginPage: React.FC<LoginProps> = props => {
         <div className="second-item">
           <div>
             <Grid>
-              <img
-                alt="Logo"
-                src="/images/choose-login/logo.png"
-                className="logo-image"
-              />
+              <div className="logo-box">
+                 <svg className="svg active logo-image" onClick={() => props.history.push(`/choose-login?userType=${userType}`)}>
+                  <use href={sprite + "#login"}/>
+                </svg>
+              </div>
             </Grid>
-            <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
+            <form onSubmit={handleSubmit} className="content-box">
               <div className="input-block">
                 <input
                   type="email"
@@ -198,7 +197,7 @@ const LoginPage: React.FC<LoginProps> = props => {
                   />
                 </div>
               </div>
-              <div className="input-block">
+              <div className="input-block button-box">
                 <Button
                   variant="contained"
                   color="primary"
