@@ -212,9 +212,9 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         <div>Use Highlighter Icon to click correct word(s).</div>
       </div>
       <div className="pencil-icon-container svgOnHover" onClick={switchMode}>
-				<svg className="svg w100 h100 active">
-					<use href={sprite + "#highlighter"} className={state.mode ? "text-theme-green" : "text-theme-dark-blue"} />
-				</svg>
+        <svg className="svg w100 h100 active">
+          <use href={sprite + "#highlighter"} className={state.mode ? "text-theme-green" : "text-theme-dark-blue"} />
+        </svg>
       </div>
       <div className="input-container">
         {renderBox()}
