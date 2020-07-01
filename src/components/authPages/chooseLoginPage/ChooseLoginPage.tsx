@@ -99,7 +99,7 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
         <Grid className="auth-page pre-login-page" container item justify="center" alignItems="center">
           <div className="back-col">
             <div className="back-box">
-              <svg className="svg active back-button" onClick={() => props.history.push('/choose-user')}>
+              <svg className="svg active back-button" onClick={() => props.history.push('/choose-login')}>
                 <use href={sprite + "#arrow-down"} />
               </svg>
             </div>

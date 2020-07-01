@@ -42,7 +42,7 @@ function MainMenu(props: any) {
 
   const logout = () => {
     props.logout();
-    history.push('/choose-user');
+    history.push('/choose-login');
   }
 
   return (

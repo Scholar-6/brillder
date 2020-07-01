@@ -24,7 +24,7 @@ interface LogoutComponentProps {
 class LogoutDialog extends Component<LogoutComponentProps> {
   logout() {
     this.props.logout();
-    this.props.history.push('/choose-user');
+    this.props.history.push('/choose-login');
   }
 
   handleLogoutClose = () => this.props.close();

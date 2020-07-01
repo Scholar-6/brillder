@@ -46,7 +46,7 @@ const LoginPage: React.FC<LoginProps> = props => {
 
   const type = getQueryParam("userType");
   if (!type) {
-    return <Redirect to="/choose-user" />;
+    return <Redirect to="/choose-login" />;
   }
   const userType = parseInt(type) as UserLoginType;
 
