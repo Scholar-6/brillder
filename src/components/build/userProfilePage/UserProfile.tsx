@@ -349,7 +349,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <Grid container direction="row">
             <Grid item xs={9}>
               <div className="profile-block">
-                <div className="profile-header">NAME</div>
+                <div className="profile-header">{this.state.user.firstName ? this.state.user.firstName : 'NAME'}</div>
                 <div className="save-button-container">
                   <Avatar
                     alt=""
