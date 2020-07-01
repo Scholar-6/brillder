@@ -67,17 +67,19 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
               <div className="question-index">P</div>
             </div>
             <h1>Provisional Score</h1>
-            <Grid container justify="center" className="circle-progress-container">
-              <CircularProgressbar className="circle-progress" strokeWidth={4} counterClockwise={true} value={value} />
-              <div className="score-data">
-                <Grid container justify="center" alignContent="center">
-                  <div>
-                    <div className="score-precentage">{Math.round((score * 100) / maxScore)}%</div>
-                    <div className="score-number">{score}/{maxScore}</div>
-                  </div>
-                </Grid>
-              </div>
-            </Grid>
+            <div className="question-live-play">
+              <Grid container justify="center" className="circle-progress-container">
+                <CircularProgressbar className="circle-progress" strokeWidth={4} counterClockwise={true} value={value} />
+                <div className="score-data">
+                  <Grid container justify="center" alignContent="center">
+                    <div>
+                      <div className="score-precentage">{Math.round((score * 100) / maxScore)}%</div>
+                      <div className="score-number">{score}/{maxScore}</div>
+                    </div>
+                  </Grid>
+                </div>
+              </Grid>
+            </div>
           </div>
         </Grid>
         <Grid item xs={4}>

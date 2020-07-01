@@ -11,21 +11,18 @@ import actions from "redux/actions/auth";
 import "./loginPage.scss";
 import { Redirect } from "react-router-dom";
 import { UserLoginType } from "model/auth";
+import { ReduxCombinedState } from "redux/reducers";
+
 import sprite from "../../../assets/img/icons-sprite.svg";
 
-const mapState = (state: any) => {
-  return {
-    error: state.auth.error,
-    isAuthenticated: state.auth.isAuthenticated
-  };
-};
+const mapState = (state: ReduxCombinedState) => ({
+  error: state.auth.error,
+  isAuthenticated: state.auth.isAuthenticated
+});
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    loginSuccess: (userType: UserLoginType) =>
-      dispatch(actions.loginSuccess(userType))
-  };
-};
+const mapDispatch = (dispatch: any) => ({
+  loginSuccess: (userType: UserLoginType) => dispatch(actions.loginSuccess(userType))
+});
 
 const connector = connect(mapState, mapDispatch);
 
