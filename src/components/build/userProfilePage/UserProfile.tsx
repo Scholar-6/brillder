@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
+import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from "@material-ui/core/Avatar";
 import axios from "axios";
 // @ts-ignore
@@ -349,7 +350,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <Grid container direction="row">
             <Grid item xs={9}>
               <div className="profile-block">
-                <div className="profile-header">NAME</div>
+                <div className="profile-header">{this.state.user.firstName ? this.state.user.firstName : 'NAME'}</div>
                 <div className="save-button-container">
                   <Avatar
                     alt=""
@@ -379,6 +380,14 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   </div>
                   <Grid item className="profile-inputs-container">
                     <div>
+                      <Grid container justify="center">
+                        <FormControlLabel
+                          value="start"
+                          control={<Checkbox color="primary" />}
+                          label="Don`t show during search?"
+                          labelPlacement="end"
+                        />
+                      </Grid>
                       <Grid>
                         <input
                           className="first-name"

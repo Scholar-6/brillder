@@ -59,4 +59,16 @@
   .user-first-name {
     font-family: $font-family-regular !important;
   }
+  .sort-by-box {
+    height: 20vh;
+    overflow-y: auto;
+  }
+  .brick-row-title {
+    height: 15vh;
+    overflow-y: auto;
+  }
+  tr {
+    height: 5vh;
+    overflow-y: auto;
+  }
 }
