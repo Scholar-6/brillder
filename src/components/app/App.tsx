@@ -35,6 +35,7 @@ import AllUsersRoute from './AllUsersRoute';
 import {setBrillderTitle} from 'components/services/titleService';
 
 
+
 const App: React.FC = (props: any) => {
   setBrillderTitle();
   let history = useHistory();
@@ -53,7 +54,16 @@ const App: React.FC = (props: any) => {
     createMuiTheme({
       palette: {
         primary: { main: "#0B3A7E" }
-      }
+      },
+      breakpoints: {
+        values: {
+          xs: 0,
+          sm: 760,
+          md: 960,
+          lg: 1280,
+          xl: 1920,
+        },
+      },
     }),
     [],
   );
