@@ -8,88 +8,88 @@ input, select, table, caption, tbody, tfoot, thead, tr,
 th, td, article, aside, canvas, details, embed, figure,
 figcaption, footer, header, hgroup, menu, nav, output,
 ruby, section, summary, time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	border-collapse: collapse;
-	outline: none;
-	background: none;
-	text-decoration: none;
-	border-spacing: 0;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	text-size-adjust: 100%;
-	-webkit-text-size-adjust: 100%;
-	-ms-text-size-adjust: 100%;
-	font-weight: normal;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-collapse: collapse;
+  outline: none;
+  background: none;
+  text-decoration: none;
+  border-spacing: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  font-weight: normal;
 }
 
 abbr[title],
 abbr[data-original-title] {
-	cursor: help;
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
+  cursor: help;
+  border-bottom-width: 1px;
+  border-bottom-style: dotted;
 }
 
 a {
-	background: transparent;
-	outline: none;
+  background: transparent;
+  outline: none;
 
-	&.link {
-		color: var(--blue);
-		text-decoration: underline;
-		@extend %p0;
-		@extend %m0;
-	}
+  &.link {
+    color: var(--theme-dark-blue);
+    text-decoration: underline;
+    @extend %p0;
+    @extend %m0;
+  }
 
-	&:focus,
-	&:active,
-	&:hover {
-		color: var(--black);
-		outline: none;
-	}
+  &:focus,
+  &:active,
+  &:hover {
+    color: var(--theme-dark-blue);
+    outline: none;
+  }
 }
 
 em,
 dfn {
-	font-style: italic;
+  font-style: italic;
 }
 
 u {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
 svg:not(:root) {
-	overflow: hidden;
+  overflow: hidden;
 }
 
 :focus {
-	outline: 0;
+  outline: 0;
 }
 
 figure {
-	margin: 0;
+  margin: 0;
 }
 
 table {
-	border-collapse: separate;
-	border-spacing: 0;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 caption,
 th,
 td {
-	font-weight: normal;
+  font-weight: normal;
 }
 
 q,
 blockquote {
-	quotes: "\201C""\201D""\2018""\2019";
-	&:before,
-	&:after {
-		content: "";
-	}
+  quotes: "\201C""\201D""\2018""\2019";
+  &:before,
+  &:after {
+    content: "";
+  }
 }
 
 a,
@@ -97,39 +97,39 @@ button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 textarea {
-	font-family: var(--montserrat);
+  font-family: $font-family-regular;
 }
 
 input,
 button,
 select,
 textarea {
-	font-size: inherit;
-	line-height: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 input {
-	line-height: normal;
+  line-height: normal;
 }
 
 button,
 optgroup,
 select,
 textarea {
-	margin: 0;
-	color: inherit;
-	border-radius: 5px;
+  margin: 0;
+  color: inherit;
+  border-radius: 5px;
 }
 
 button {
-	overflow: visible;
+  overflow: visible;
 }
 
 button,
 select {
-	text-transform: none;
+  text-transform: none;
 }
