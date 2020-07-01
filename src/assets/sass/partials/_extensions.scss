@@ -121,7 +121,6 @@
 %displayFlex {
 	display: flex;
 }
-
 %flexNone {
 	flex: none;
 }
@@ -142,9 +141,6 @@
 }
 %flexAlignEnd {
 	align-items: flex-end;
-}
-%flexJustifyCenter {
-	justify-content: center;
 }
 %flexNowrap {
 	flex-wrap: nowrap;
@@ -410,8 +406,16 @@
 }
 %flexCenter {
 	@extend %displayFlex;
-	align-items: center;
-	justify-content: center;
+  @extend %flexAlignCenter;
+  @extend %flexJustifyCenter;
+}
+%flexToYCenter {
+	@extend %displayFlex;
+	@extend %flexAlignCenter;
+}
+%flexToXCenter {
+	@extend %displayFlex;
+	@extend %flexJustifyCenter;
 }
 
 %formValidation {

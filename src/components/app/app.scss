@@ -13,6 +13,16 @@
   letter-spacing: 0.4vw;
 	font-family: $font-family-black;
 	@extend %flexCenter;
+  @include phone {
+    font-size: 6vw;
+  }
+  @include tabletP {
+    font-size: 2vw;
+  }
+  div {
+    display: inline-block;
+  }
+
   .version-number {
 		width: 0.5vw;
     writing-mode: vertical-lr;
