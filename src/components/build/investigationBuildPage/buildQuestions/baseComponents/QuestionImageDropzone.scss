@@ -3,9 +3,8 @@
 @import '../../../../../assets/sass/partials/extensions';
 
 .question-image-drop {
-  position: absolute;
+  @extend %floatToXCenter;
   top: 1.3vh;
-  left: 38%;
   width: 30%;
   z-index: 100;
 
