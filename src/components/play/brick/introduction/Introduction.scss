@@ -403,16 +403,3 @@
 .play-preview-pages ~ .beta-text {
   color: var(--theme-dark-blue) !important;
 }
-
-.youtube-link {
-  padding-left: 1.2vw;
-  margin-top: 1vw;
-  height: 3vw;
-
-  > a {
-    border-radius: 1vw;
-    background: var(--theme-orange) !important;
-    color: white !important;
-    padding: 1vw;
-  }
-}
