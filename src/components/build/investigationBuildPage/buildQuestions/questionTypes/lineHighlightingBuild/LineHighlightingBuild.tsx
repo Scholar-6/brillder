@@ -111,10 +111,10 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
         <div>Enter/Paste Text Below.</div>
         <div>Use Highlighter Icon to click correct line(s).</div>
       </div>
-			<div className="pencil-icon-container svgOnHover" onClick={switchMode}>
-				<svg className="svg w100 h100 active">
-					<use href={sprite + "#highlighter"} className={state.mode ? "text-theme-green" : "text-theme-dark-blue"} />
-				</svg>
+      <div className="pencil-icon-container svgOnHover" onClick={switchMode}>
+        <svg className="svg w100 h100 active">
+          <use href={sprite + "#highlighter"} className={state.mode ? "text-theme-green" : "text-theme-dark-blue"} />
+        </svg>
       </div>
       <div className="input-container">
         {renderBox()}
