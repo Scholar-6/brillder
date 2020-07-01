@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import { User } from "model/user";
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import { setBrillderTitle } from "components/services/titleService";
+import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 
 
 interface ProposalProps {
@@ -81,7 +82,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
                   </div>
                   <p className="text-title">4. Create an engaging and relevant preparatory task.</p>
                   <div style={{fontWeight: 'normal'}}>
-                    <MathInHtml value={brick.prep} />
+                    <YoutubeAndMathInHtml value={brick.prep} />
                   </div>
                   <p className="text-title brick-length">
                     5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>

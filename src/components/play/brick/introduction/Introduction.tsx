@@ -9,6 +9,7 @@ import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import { Moment } from "moment";
 import IntroductionDetails from './IntroductionDetails';
+import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 const moment = require("moment");
 
 interface IntroductionProps {
@@ -129,7 +130,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             </div>
             {state.prepExpanded ? (
               <div className="expanded-text">
-                <MathInHtml value={brick.prep} />
+                <YoutubeAndMathInHtml value={brick.prep} />
               </div>
             ) : (
                 ""
