@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import IconButton from "@material-ui/core/IconButton";
-import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
+
 import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
+import authActions from "redux/actions/auth";
 import sprite from "../../../assets/img/icons-sprite.svg";
 
 import "./UserProfile.scss";
@@ -27,7 +26,8 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
-  getUser: () => dispatch(userActions.getUser())
+  getUser: () => dispatch(userActions.getUser()),
+  redirectedToProfile: () => dispatch(authActions.redirectedToProfile()),
 });
 
 const connector = connect(mapState, mapDispatch);
@@ -41,6 +41,7 @@ interface UserProfileProps {
   history: any;
   match: any;
   forgetBrick(): void;
+  redirectedToProfile(): void;
   getUser(): void;
 }
 
@@ -57,6 +58,7 @@ interface UserProfileState {
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   constructor(props: UserProfileProps) {
     super(props);
+    this.props.redirectedToProfile();
     const { userId } = props.match.params;
     // check if admin wanna create new user
     if (userId === "new") {
