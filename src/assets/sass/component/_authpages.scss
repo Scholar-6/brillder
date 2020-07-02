@@ -2,7 +2,40 @@
   background: var(--theme-dark-blue);
   height: 100%;
   @extend %posRelative;
+  .logo-box {
+    background-color: transparent;
+    @extend %flexCenter;
+    @include phone_and_tabletP {
+      background-color: $light-blue;
+      margin-bottom: 4vh;
+      height: calc(40vh - 2vh);
+      border-bottom-right-radius: 10vw;
+      overflow: hidden;
+    }
+    .logo-image {
+      margin-top: 6.1vh;
+      margin-bottom: 3.9vh;
+      height: 20vh;
+      color: var(--theme-orange);
+
+      @include phone_and_tabletP {
+        height: 20vh;
+      }
+    }
+    .mobile {
+      display: none;
+      @include phone_and_tabletP {
+        display: block;
+      }
+    }
+    .website {
+      @include phone_and_tabletP {
+        display: none;
+      }
+    }
+  }
   .back-col {
+    display: none;
     @include phone_and_tabletP {
       position: absolute;
       top: 48%;
@@ -69,26 +102,6 @@
         margin: 0;
         height: 100vh;
       }
-      .logo-box {
-        @include phone_and_tabletP {
-          background-color: $light-blue;
-          margin-bottom: 4vh;
-          height: calc(50vh - 2vh);
-          border-bottom-right-radius: 10vw;
-          overflow: hidden;
-        }
-        @extend %flexCenter;
-        .logo-image {
-          margin-top: 6.1vh;
-          margin-bottom: 3.9vh;
-          height: 20vh;
-          color: var(--theme-orange);
-
-          @include phone_and_tabletP {
-            height: 20vh;
-          }
-        }
-      }
     }
   }
   .second-col {
@@ -133,7 +146,8 @@
         margin-top: 4vh;
         height: calc(50vh - 2vh);
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
+        justify-content: flex-end;
         padding: 3vh 6vw 0;
       }
       .email-button,
@@ -215,28 +229,6 @@
     }
   }
   &.login-page {
-    .back-button {
-      @include phone_and_tabletP {
-        display: none;
-      }
-    }
-    .logo-box {
-      background-color: transparent;
-      @include phone_and_tabletP {
-        height: calc(35vh - 2vh);
-      }
-      .mobile {
-        display: none;
-        @include phone_and_tabletP {
-          display: block;
-        }
-      }
-      .website {
-        @include phone_and_tabletP {
-          display: none;
-        }
-      }
-    }
     .content-box {
       height: 100%;
       @extend %flexCenter;
@@ -244,13 +236,10 @@
       @include phone_and_tabletP {
         border-top-right-radius: 10vw;
         background-color: $light-blue;
-        height: calc(100vh - 37vh);
+        height: calc(60vh - 2vh);
         padding: 3vh 6vw 0;
       }
       .input-block {
-        @extend %displayFlex;
-        @extend %posRelative;
-        margin-bottom: 3vh;
         @include phone {
           width: 100%;
         }
@@ -263,23 +252,9 @@
           margin: 0px auto 3vh;
         }
         input {
-          @extend %width100;
           color: var(--white);
           text-align: center;
           background: var(--theme-dark-blue);
-          margin: 0;
-          border: none;
-          letter-spacing: 0.3vw;
-          height: 3.8vh;
-          border-radius: 1.7vh;
-          @include phone_and_tabletP {
-            font: 5.5vw 'Brandon Grotesque Regular';
-            padding: 3.5vh 12vw;
-          }
-          @include tabletP {
-            padding: 4vh 5%;
-            font: 1.5vw $font-family-regular;
-          }
           &::-webkit-input-placeholder {
             color: var(--white);
             opacity: 0.8;
@@ -312,7 +287,7 @@
           @include phone_and_tabletP {
             color: $black-blue;
             border-radius: 7vw;
-            font: 6.2vw $font-family-bold;
+            font: 5.2vw $font-family-regular;
             padding: 0.5vh 1.2vw;
           }
           @include tabletP {
@@ -327,6 +302,7 @@
             font-family: $font-family-bold;
           }
           &.sign-up-button {
+            color: var(--white);
             @include tabletP {
               margin-right: 1vw;
             }
@@ -335,8 +311,9 @@
             }
           }
           &.sign-in-button {
+            color: var(--theme-dark-blue);
+            background-color: var(--white);
             @include phone_and_tabletP {
-              background-color: var(--white);
               margin-left: 3vw;
             }
             @include tabletP {
@@ -350,8 +327,6 @@
         top: 24.1vh;
         left: 19.2vw;
         color: var(--white);
-        font-family: $font-family-regular;
-
         .thanks-info {
           cursor: pointer;
           @extend %posRelative;

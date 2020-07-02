@@ -10,6 +10,7 @@
   margin-bottom: 0.17vw;
   .document-editor {
     position: relative;
+    height: calc(100% - 0.4vh);
     > div {
       > .ck-toolbar {
         font-size: 1.4vh;

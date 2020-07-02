@@ -19,8 +19,17 @@ div:focus {
   outline: none;
 }
 
-textarea:focus {
-  outline: none;
+textarea,
+input {
+  font-family: $font-family-regular;
+  &:focus {
+    outline: none;
+  }
+}
+
+.MuiTypography-body1 {
+  font-family: $font-family-regular !important;
+  font-weight: inherit !important;
 }
 
 input:focus {
