@@ -133,7 +133,7 @@ const QuestionComponents = ({
       uniqueComponent = WordHighlightingComponent;
     } else {
       history.push(`/build/brick/${brickId}/build/investigation/question`);
-      return <div>...Loading...</div>
+      return <div className="page-loader">...Loading...</div>
     }
 
     return (
