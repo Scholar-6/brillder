@@ -122,3 +122,12 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
     parsedQuestions.push(q);
   }
 }
+
+export function setLastQuestionId(brick: Brick, questions: Question[]) {
+  const savedQuestions = brick.questions;
+  const updatedQuestions = deactiveQuestions(questions);
+  const lastIndex = updatedQuestions.length - 1;
+  updatedQuestions[lastIndex].active = true;
+  updatedQuestions[lastIndex].id = savedQuestions[lastIndex].id;
+  return updatedQuestions;
+}
