@@ -91,7 +91,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           noSubjectDialogOpen: false,
         };
       } else {
-        props.history.push("/build");
+        props.history.push("/home");
       }
     } else {
       const { user } = props;

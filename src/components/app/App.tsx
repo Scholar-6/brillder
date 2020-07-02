@@ -108,11 +108,11 @@ const App: React.FC = (props: any) => {
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} />
         <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
         <BuildRoute path="/build/bricks-list" component={BricksListPage} />
-        <BuildRoute path="/build/back-to-work" component={BackToWorkPage} />
-        <BuildRoute path="/build/users" component={UsersListPage} />
-        <BuildRoute path="/build/user-profile/:userId" component={UserProfilePage} />
-        <AllUsersRoute path="/build/user-profile" component={UserProfilePage} />
-        <BuildRoute path="/build" component={MainPage} />
+        <BuildRoute path="/back-to-work" component={BackToWorkPage} />
+        <BuildRoute path="/users" component={UsersListPage} />
+        <BuildRoute path="/user-profile/:userId" component={UserProfilePage} />
+        <AllUsersRoute path="/user-profile" component={UserProfilePage} />
+        <BuildRoute path="/home" component={MainPage} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
         <AuthRoute path="/login" exact component={LoginPage} />

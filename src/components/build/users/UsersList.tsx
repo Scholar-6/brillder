@@ -544,7 +544,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                   />
                 </td>
                 <td>
-                  <div className="edit-button" onClick={() => this.props.history.push(`/build/user-profile/${user.id}`)}/>
+                  <div className="edit-button" onClick={() => this.props.history.push(`/user-profile/${user.id}`)}/>
                 </td>
               </tr>
             );
@@ -629,7 +629,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
               </div>
             </Grid>
           </MenuItem>
-          <MenuItem className="menu-item" onClick={() => history.push('/build/back-to-work')}>
+          <MenuItem className="menu-item" onClick={() => history.push('/back-to-work')}>
             Back To Work
             <Grid container className="menu-icon-container" justify="center" alignContent="center">
               <div>
@@ -637,7 +637,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
               </div>
             </Grid>
           </MenuItem>
-          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/build/user-profile')}>
+          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/user-profile')}>
             View Profile
             <Grid container className="menu-icon-container" justify="center" alignContent="center">
               <div>

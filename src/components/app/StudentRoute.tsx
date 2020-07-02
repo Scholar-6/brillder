@@ -28,7 +28,7 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
 
     if (!rest.isRedirectedToProfile) {
       if(!user.firstName || !user.lastName) {
-        return <Redirect to="/build/user-profile" />
+        return <Redirect to="/user-profile" />
       }
     }
     const {roles} = user;
