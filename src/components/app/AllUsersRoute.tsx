@@ -28,8 +28,8 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
       return <div>...Getting User...</div>
     }
     if(user.firstName === "" || user.lastName === "") {
-      if(location.pathname != "/build/user-profile") { // Only redirect to the user profile if we're not already there.
-        return <Redirect to="/build/user-profile" />
+      if(location.pathname != "/user-profile") { // Only redirect to the user profile if we're not already there.
+        return <Redirect to="/user-profile" />
       }
     }
     return <Route {...rest} render={(props) => <Component {...props} />} />;

@@ -106,7 +106,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
           ) ? (
             <MenuItem
               className="menu-item"
-              onClick={() => this.props.history.push("/build/users")}
+              onClick={() => this.props.history.push("/users")}
             >
               Manage Users
               <Grid

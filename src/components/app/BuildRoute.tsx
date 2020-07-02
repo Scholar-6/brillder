@@ -38,7 +38,7 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
 
     if (!rest.isRedirectedToProfile) {
       if(!user.firstName || !user.lastName) {
-        return <Redirect to="/build/user-profile" />
+        return <Redirect to="/user-profile" />
       }
     }
 

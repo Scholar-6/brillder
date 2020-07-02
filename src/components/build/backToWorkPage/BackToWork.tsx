@@ -845,7 +845,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           ) ? (
             <MenuItem
               className="menu-item"
-              onClick={() => this.props.history.push("/build/users")}
+              onClick={() => this.props.history.push("/users")}
             >
               Manage Users
               <Grid
@@ -868,7 +868,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           )}
           <MenuItem
             className="view-profile menu-item"
-            onClick={() => this.props.history.push("/build/user-profile")}
+            onClick={() => this.props.history.push("/user-profile")}
           >
             View Profile
             <Grid

@@ -308,7 +308,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const submitInvalidBrick = () => {
     saveBrick();
-    history.push(`/build/back-to-work`);
+    history.push(`/back-to-work`);
   }
 
   const hideInvalidBrick = () => {
@@ -366,7 +366,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const exitAndSave = () => {
     saveBrick();
-    history.push('/build');
+    history.push('/home');
   }
 
   const renderBuildQuestion = () => {
@@ -613,7 +613,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <div>to use this page</div>
           </div>
           <Grid container direction="row" className="row-buttons" justify="center">
-            <Button className="yes-button" onClick={() => history.push('/build')}>
+            <Button className="yes-button" onClick={() => history.push('/home')}>
               Move
             </Button>
           </Grid>
