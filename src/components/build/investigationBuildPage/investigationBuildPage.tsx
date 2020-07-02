@@ -39,6 +39,7 @@ import {
   prepareBrickToSave,
   removeQuestionByIndex,
   setQuestionTypeByIndex,
+  setLastQuestionId,
   parseQuestion,
 } from "./questionService/QuestionService";
 import { convertToQuestionType } from "./questionService/ConvertService";
@@ -162,12 +163,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const createNewQuestion = () => {
     if (!canEdit) { return; }
-    const updatedQuestions = deactiveQuestions(questions);
-    updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
-    setQuestions(update(questions, { $set: updatedQuestions }));
-    cashBuildQuestion(brickId, updatedQuestions.length - 1);
-    saveBrickQuestions(updatedQuestions);
+    const updatedQuestions = questions.slice();
+    updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, false));
 
+    saveBrickQuestions(updatedQuestions, (brick: any) => {
+      const postUpdatedQuestions = setLastQuestionId(brick, updatedQuestions);
+      setQuestions(update(questions, { $set: postUpdatedQuestions }));
+      cashBuildQuestion(brickId, postUpdatedQuestions.length - 1);
+    });
+    
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/build/investigation/question`);
     }
@@ -312,11 +316,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setSubmitDialog(false);
   }
 
-  const saveBrickQuestions = (updatedQuestions: Question[]) => {
+  const saveBrickQuestions = (updatedQuestions: Question[], callback?: Function) => {
     setSavingStatus(true);
     prepareBrickToSave(brick, updatedQuestions, synthesis);
     if (canEdit === true) {
-      props.saveBrick(brick);
+      props.saveBrick(brick).then((res:any) => {
+        if (callback) {
+          callback(res);
+        }
+      });
     }
   }
 
