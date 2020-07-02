@@ -320,10 +320,17 @@ input:focus {
   z-index: 1000;
   border-bottom-right-radius: 2vw;
   background: $light-blue;
-  width: calc(6.834vw - 1vw) !important;
-  height: 5.834vw;
   margin-right: 1vw;
   padding: 0.35vw 0.782vw 0.782vw 0.35vw;
+  @include phone_and_tabletP {
+    width: calc(10.834vw - 1vw) !important;
+    height: 10.834vw;
+  }
+  @include tabletP {
+    width: calc(6.834vw - 1vw) !important;
+    height: 5.834vw;
+  }
+
   .home-button {
     cursor: pointer;
     height: 100%;

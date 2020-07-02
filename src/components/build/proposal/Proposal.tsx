@@ -151,7 +151,6 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   return (
     <MuiThemeProvider>
-      <div>
       <div style={{position: 'absolute'}}>
         <HomeButton onClick={openDialog} />
       </div>
@@ -180,7 +179,6 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
         <VersionLabel />
       </div>
       <CloseProposalDialog isOpen={isDialogOpen} close={closeDialog} move={goHome} />
-      </div>
     </MuiThemeProvider>
   );
 }
