@@ -65,7 +65,7 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
         >
           <MenuItem
             className="first-item menu-item"
-            onClick={() => this.props.history.push("/build/bricks-list")}
+            onClick={() => this.props.history.push("/play/dashboard")}
           >
             View All Bricks
             <Grid
