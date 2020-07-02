@@ -107,6 +107,7 @@ const App: React.FC = (props: any) => {
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} />
         <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
+        {/*Leaving /build/bricks-list as a route that is useful for admins but not currently used in interface 2/7/2020*/}
         <BuildRoute path="/build/bricks-list" component={BricksListPage} />
         <BuildRoute path="/back-to-work" component={BackToWorkPage} />
         <BuildRoute path="/users" component={UsersListPage} />
