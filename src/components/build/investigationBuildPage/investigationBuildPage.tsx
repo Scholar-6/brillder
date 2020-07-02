@@ -39,6 +39,7 @@ import {
   prepareBrickToSave,
   removeQuestionByIndex,
   setQuestionTypeByIndex,
+  setLastQuestionId,
   parseQuestion,
 } from "./questionService/QuestionService";
 import { convertToQuestionType } from "./questionService/ConvertService";
@@ -80,6 +81,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [tutorialSkipped, skipTutorial] = React.useState(false);
   const [step, setStep] = React.useState(TutorialStep.Proposal);
   const [tooltipsOn, setTooltips] = React.useState(true);
+  // time of last autosave
+  const [lastAutoSave, setLastAutoSave] = React.useState(Date.now());
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -162,12 +165,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const createNewQuestion = () => {
     if (!canEdit) { return; }
-    const updatedQuestions = deactiveQuestions(questions);
-    updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, true));
-    setQuestions(update(questions, { $set: updatedQuestions }));
-    cashBuildQuestion(brickId, updatedQuestions.length - 1);
-    saveBrickQuestions(updatedQuestions);
+    const updatedQuestions = questions.slice();
+    updatedQuestions.push(getNewQuestion(QuestionTypeEnum.None, false));
 
+    saveBrickQuestions(updatedQuestions, (brick: any) => {
+      const postUpdatedQuestions = setLastQuestionId(brick, updatedQuestions);
+      setQuestions(update(questions, { $set: postUpdatedQuestions }));
+      cashBuildQuestion(brickId, postUpdatedQuestions.length - 1);
+    });
+    
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/build/investigation/question`);
     }
@@ -180,9 +186,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     setQuestionType(type);
-    history.push(
-      `/build/brick/${brickId}/build/investigation/question-component`
-    );
+    history.push(`/build/brick/${brickId}/build/investigation/question-component`);
   };
 
   const setQuestionType = (type: QuestionTypeEnum) => {
@@ -312,11 +316,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setSubmitDialog(false);
   }
 
-  const saveBrickQuestions = (updatedQuestions: Question[]) => {
+  const saveBrickQuestions = (updatedQuestions: Question[], callback?: Function) => {
     setSavingStatus(true);
     prepareBrickToSave(brick, updatedQuestions, synthesis);
     if (canEdit === true) {
-      props.saveBrick(brick);
+      props.saveBrick(brick).then((res:any) => {
+        if (callback) {
+          callback(res);
+        }
+      });
     }
   }
 
@@ -327,6 +335,26 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       props.saveBrick(brick);
     }
   };
+
+  const autoSaveBrick = () => {
+    setSavingStatus(true);
+    prepareBrickToSave(brick, questions, synthesis);
+    if (canEdit === true) {
+      let time = Date.now();
+      let delay = 500;
+  
+      try {
+        if (process.env.REACT_APP_BUILD_AUTO_SAVE_DELAY) {
+          delay = parseInt(process.env.REACT_APP_BUILD_AUTO_SAVE_DELAY);
+        }
+      } catch {}
+  
+      if (time - lastAutoSave >= delay) {
+        setLastAutoSave(time);
+        props.saveBrick(brick);
+      }
+    }
+  }
 
   const updateComponents = (components: any[]) => {
     if (locked) { return; }
@@ -359,7 +387,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         setQuestionType={convertQuestionTypes}
         setPreviousQuestion={setPreviousQuestion}
         nextOrNewQuestion={setNextQuestion}
-        saveBrick={saveBrick}
+        saveBrick={autoSaveBrick}
       />
     );
   };
