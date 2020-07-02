@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import { Grid, RadioGroup, FormControlLabel, Radio, Hidden } from "@material-ui/core";
 
 import './Subject.scss';
 import { ProposalStep } from "../../model";
@@ -11,10 +11,10 @@ import { Redirect } from "react-router-dom";
 interface SubjectProps {
   subjectId: any
   subjects: any[]
-  saveSubject(subjectId: number):void
+  saveSubject(subjectId: number): void
 }
 
-const FrenchComponent:React.FC = () => {
+const FrenchComponent: React.FC = () => {
   return (
     <div className="french-preview">
       <div>
@@ -27,7 +27,7 @@ const FrenchComponent:React.FC = () => {
   )
 }
 
-const ArtComponent:React.FC = () => {
+const ArtComponent: React.FC = () => {
   return (
     <div className="art-preview">
       <div>“A work of art is a confession”</div>
@@ -36,7 +36,7 @@ const ArtComponent:React.FC = () => {
   )
 }
 
-const BiologyComponent:React.FC = () => {
+const BiologyComponent: React.FC = () => {
   return (
     <div className="biology-preview">
       <div>“Life is, after all, not a product of morality.”</div>
@@ -45,7 +45,7 @@ const BiologyComponent:React.FC = () => {
   )
 }
 
-const ChineseComponent:React.FC = () => {
+const ChineseComponent: React.FC = () => {
   return (
     <div className="chinese-preview">
       <div>字值千金</div>
@@ -54,7 +54,7 @@ const ChineseComponent:React.FC = () => {
   )
 }
 
-const ClassicsComponent:React.FC = () => {
+const ClassicsComponent: React.FC = () => {
   return (
     <div className="classics-preview">
       <div>“Dis aliter visum”</div>
@@ -63,7 +63,7 @@ const ClassicsComponent:React.FC = () => {
   )
 }
 
-const EconomicsComponent:React.FC = () => {
+const EconomicsComponent: React.FC = () => {
   return (
     <div className="economics-preview">
       <div>
@@ -78,7 +78,7 @@ const EconomicsComponent:React.FC = () => {
   )
 }
 
-const EnglishComponent:React.FC = () => {
+const EnglishComponent: React.FC = () => {
   return (
     <div className="english-preview">
       <div>“What’s in a name?”</div>
@@ -87,14 +87,14 @@ const EnglishComponent:React.FC = () => {
   )
 }
 
-const DramaComponent:React.FC = () => {
+const DramaComponent: React.FC = () => {
   return (
     <div className="drama-preview">
     </div>
   )
 }
 
-const GeographyComponent:React.FC = () => {
+const GeographyComponent: React.FC = () => {
   return (
     <div className="geography-preview">
       <div>
@@ -110,7 +110,7 @@ const GeographyComponent:React.FC = () => {
   )
 }
 
-const HistoryComponent:React.FC = () => {
+const HistoryComponent: React.FC = () => {
   return (
     <div className="history-preview">
       <div>
@@ -124,7 +124,7 @@ const HistoryComponent:React.FC = () => {
   )
 }
 
-const MathsComponent:React.FC = () => {
+const MathsComponent: React.FC = () => {
   return (
     <div className="maths-preview">
       <div>
@@ -138,7 +138,7 @@ const MathsComponent:React.FC = () => {
   )
 }
 
-const PhysicsComponent:React.FC = () => {
+const PhysicsComponent: React.FC = () => {
   return (
     <div className="physics-preview">
       <div>
@@ -152,7 +152,7 @@ const PhysicsComponent:React.FC = () => {
   )
 }
 
-const PsychologyComponent:React.FC = () => {
+const PsychologyComponent: React.FC = () => {
   return (
     <div className="psychology-preview">
       <div>
@@ -165,7 +165,7 @@ const PsychologyComponent:React.FC = () => {
   )
 }
 
-const GermanComponent:React.FC = () => {
+const GermanComponent: React.FC = () => {
   return (
     <div className="german-preview">
       <div>
@@ -178,7 +178,7 @@ const GermanComponent:React.FC = () => {
   )
 }
 
-const TheologyComponent:React.FC = () => {
+const TheologyComponent: React.FC = () => {
   return (
     <div className="philosophy-preview">
       <div>
@@ -193,7 +193,7 @@ const TheologyComponent:React.FC = () => {
   )
 }
 
-const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }) => {
+const SubjectPage: React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }) => {
   const getSubjectName = (subjectId: number) => {
     if (subjectId) {
       const subject = subjects.find(s => s.id === subjectId);
@@ -237,7 +237,7 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
     } else if (subjectName === 'English Literature') {
       return EnglishComponent;
     } else if (subjectName === 'Drama & Theatre') {
-        return DramaComponent;
+      return DramaComponent;
     } else if (subjectName === 'Geography') {
       return GeographyComponent;
     } else if (subjectName === 'German') {
@@ -260,11 +260,11 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
   return (
     <div className="tutorial-page subject-page">
       <Grid container direction="row" style={{ height: '100%' }}>
-        <Grid container justify="flex-start" item xs={10}>
-          <Grid justify="flex-start" container item xs={8}>
+        <Grid container justify="flex-start" className="subject-box" item md={10} xs={12}>
+          <Grid justify="flex-start" container item md={8} xs={12}>
             <div className="subject-container">
               <h1 className="only-tutorial-header">Choose Subject</h1>
-              <Grid container justify="flex-start" item xs={12}>
+              <Grid container  justify="flex-start" item xs={12}>
                 <RadioGroup
                   className="subjects-group"
                   value={subject}
@@ -287,18 +287,22 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
             </div>
           </Grid>
         </Grid>
-        <Grid style={{width: '60vw'}}>
+        <Grid className='pagination-button'>
           {
             subject ? (
               <NextButton isActive={true} step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
             ) : ""
           }
         </Grid>
-        <div className="subject-name">
-          <div>{subjectName}</div>
-        </div>
+        <Hidden only={['xs', 'sm']}>
+          <div className="subject-name">
+            <div>{subjectName}</div>
+          </div>
+        </Hidden>
         <ProposalPhonePreview Component={innerComponent} />
-        <div className="red-right-block"></div>
+        <Hidden only={['xs', 'sm']}>
+          <div className="red-right-block"></div>
+        </Hidden>
       </Grid>
     </div>
   );
