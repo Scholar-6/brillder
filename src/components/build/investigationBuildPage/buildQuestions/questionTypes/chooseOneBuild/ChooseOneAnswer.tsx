@@ -7,7 +7,6 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 import QuestionImageDropzone from "../../baseComponents/QuestionImageDropzone";
 import { QuestionValueType } from "../types";
 import {ChooseOneAnswer} from './types';
-import { Grid } from "@material-ui/core";
 
 
 export interface ChooseOneAnswerProps {
