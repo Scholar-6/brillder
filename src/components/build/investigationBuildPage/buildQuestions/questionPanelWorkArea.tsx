@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Select, FormControl, Button } from '@material-ui/core';
+import { Grid, Select, FormControl } from '@material-ui/core';
 import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
@@ -49,7 +49,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   ]);
   const [scrollShown, setScroll] = React.useState(false);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
-  const [scrollPosition] = React.useState(0);
   const { type } = question;
 
   const setQuestionHint = (hintState: HintState) => {
@@ -175,17 +174,15 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     (index >= 1) ?
                       <Grid container justify="center" alignContent="flex-start">
                         <div className="right-side-text">Last Question?</div>
-                        <Button
+                        <button
                           className="synthesis-button svgOnHover"
                           onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
                         >
                           <svg className="svg w-2 h-2 active">
-                            <use href={sprite + "#list"} className="text-theme-dark-blue" />
+                            <use href={sprite + "#list"}/>
                           </svg>
-                          {
-                            props.synthesis ? 'Edit Synthesis' : 'Add Synthesis'
-                          }
-                        </Button>
+                          <span>{props.synthesis ? 'Edit Synthesis' : 'Add Synthesis'}</span>
+                        </button>
                       </Grid>
                       : ""
                   }

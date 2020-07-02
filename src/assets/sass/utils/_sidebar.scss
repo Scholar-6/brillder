@@ -243,15 +243,16 @@
       }
     }
     .back-hover-area {
-      @extend %floatToCenter;
+      @extend %floatToXCenter;
+      top: 26%;
       @extend %flexCenter;
       flex-direction: column;
       color: $tab-gray;
       cursor: pointer;
       .create-icon {
         margin-bottom: 1vh;
-        width: 7vw;
-        height: 7vw;
+        width: 8vw;
+        height: 8vw;
         @extend %transitionAll150;
       }
       &:hover {
@@ -261,8 +262,8 @@
         }
       }
       h3 {
-        font-size: 1.4vw;
-        font-family: 'Brandon Grotesque Black';
+        font-size: 1.6vw;
+        font-family: $font-family-black;
         color: var(--white);
         letter-spacing: 0.3vw;
         margin: 0;
@@ -282,16 +283,13 @@
     overflow-y: auto;
     .brick-row-title {
       padding-left: 1.15vw;
-      // padding-left: 0.35vw;
       color: var(--theme-dark-blue);
       padding-top: 2.3vh;
-      // padding-top: 2vh;
       padding-bottom: 0;
       line-height: 1;
       font-size: 5.2vw;
       letter-spacing: 1.05vw;
       font-family: $font-family-black;
-      // font-family: 'Brandon Grotesque Black';
     }
     .bricks-list-container {
       height: 65vh;
@@ -422,14 +420,14 @@
             &.brick-row-1,
             &.brick-row-2,
             &.brick-row-3 {
-              .expended-brick-info {
+              .expanded-brick-info {
                 border-top-left-radius: 0 !important;
               }
             }
             &.brick-row-4,
             &.brick-row-5 {
               bottom: 0;
-              .expended-brick-info {
+              .expanded-brick-info {
                 border-bottom-left-radius: 0 !important;
               }
             }

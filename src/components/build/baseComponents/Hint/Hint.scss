@@ -28,9 +28,8 @@
 }
 
 .hint-component {
-  margin-left: 1.25%;
-  width: 97.5%;
-
+  width: calc(100% - 0.8vw);
+  margin: 0.7vh 0.4vw;
   input {
     padding-left: 0.6vw !important;
     padding-right: 0.6vw !important;
@@ -43,11 +42,8 @@
   .hint-input-text {
     text-align: center !important;
     width: 100%;
-    margin: 3px;
-    padding: 8px 0;
     border: none;
     border-top: 1px solid #d9d9d9;
-    margin: 0;
     opacity: 0.8;
     font-size: $answer-input-text-size;
     font-family: $font-family-regular;

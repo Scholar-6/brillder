@@ -7,18 +7,15 @@ import './mainPage.scss';
 import actions from 'redux/actions/auth';
 import brickActions from 'redux/actions/brickActions';
 import { User } from 'model/user';
+import { ReduxCombinedState } from 'redux/reducers';
 
 
-const mapState = (state: any) => {
-  return { user: state.user.user }
-}
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user })
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    forgetBrick: () => dispatch(brickActions.forgetBrick()),
-    logout: () => dispatch(actions.logout())
-  }
-}
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(brickActions.forgetBrick()),
+  logout: () => dispatch(actions.logout())
+})
 
 const connector = connect(
   mapState,

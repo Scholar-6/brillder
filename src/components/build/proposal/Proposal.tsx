@@ -21,6 +21,7 @@ import CloseProposalDialog from 'components/build/baseComponents/CloseProposalDi
 import VersionLabel from "components/baseComponents/VersionLabel";
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
+import { ReduxCombinedState } from "redux/reducers";
 
 
 interface ProposalProps {
@@ -150,7 +151,6 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   return (
     <MuiThemeProvider>
-      <div>
       <div style={{position: 'absolute'}}>
         <HomeButton onClick={openDialog} />
       </div>
@@ -179,25 +179,20 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
         <VersionLabel />
       </div>
       <CloseProposalDialog isOpen={isDialogOpen} close={closeDialog} move={goHome} />
-      </div>
     </MuiThemeProvider>
   );
 }
 
-const mapState = (state: any) => {
-  return {
-    user: state.user.user,
-    brick: state.brick.brick,
-  }
-};
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  brick: state.brick.brick,
+});
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
-    saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
-    createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
-  }
-};
+const mapDispatch = (dispatch: any) => ({
+  fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
+  saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
+  createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
+});
 
 const connector = connect(mapState, mapDispatch);
 

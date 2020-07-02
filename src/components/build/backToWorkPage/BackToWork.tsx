@@ -26,15 +26,14 @@ import FailedRequestDialog from "components/baseComponents/failedRequestDialog/F
 import ShortBrickDecsiption from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
+import { ReduxCombinedState } from "redux/reducers";
 
 
-const mapState = (state: any) => {
-  return { user: state.user.user };
-};
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
-const mapDispatch = (dispatch: any) => {
-  return { forgetBrick: () => dispatch(brickActions.forgetBrick()) };
-};
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(brickActions.forgetBrick())
+});
 
 const connector = connect(mapState, mapDispatch);
 
@@ -276,7 +275,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 	hideFilter() {
 		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
 	}
-	expendFilter() {
+	expandFilter() {
 		this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
 	}
 	filterClear(){
@@ -610,7 +609,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 			<div className="filter-header">
 				<span>Filter</span>
 				<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
-					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expendFilter())}}>
+					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expandFilter())}}>
 				</button>
 			</div>
 			{this.state.filterExpanded === true ? (

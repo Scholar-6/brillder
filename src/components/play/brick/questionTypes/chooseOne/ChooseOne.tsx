@@ -3,15 +3,15 @@ import { Button } from '@material-ui/core';
 
 import './ChooseOne.scss';
 import CompComponent from '../Comp';
-import {CompQuestionProps} from '../types';
-import {ComponentAttempt} from 'components/play/brick/model/model';
+import { CompQuestionProps } from '../types';
+import { ComponentAttempt } from 'components/play/brick/model/model';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import {checkVisibility} from '../../../services/hintService';
+import { checkVisibility } from '../../../services/hintService';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
-import {ChooseOneChoice} from 'components/interfaces/chooseOne';
+import { ChooseOneChoice } from 'components/interfaces/chooseOne';
 
 
 interface ChooseOneComponent {
@@ -53,7 +53,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   }
 
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
-    const {component} = this.props;
+    const { component } = this.props;
     // If the question is answered in review phase, add 2 to the mark and not 5.
     let markIncrement = prev ? 2 : 5;
     attempt.maxMarks = 5;
@@ -82,11 +82,11 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   renderEachHint(index: number) {
     const isShown = checkVisibility(this.props.attempt, this.props.isPreview);
-    const {hint} = this.props.question;
+    const { hint } = this.props.question;
 
     if (isShown && this.props.question.hint.status === HintStatus.Each && hint.list[index]) {
       return (
-        <span className="question-hint" dangerouslySetInnerHTML={{ __html: hint.list[index]}} />
+        <span className="question-hint" dangerouslySetInnerHTML={{ __html: hint.list[index] }} />
       );
     }
     return "";
@@ -123,7 +123,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     }
 
     if (this.props.attempt && index === activeItem) {
-      let {answer} = this.props.attempt;
+      let { answer } = this.props.attempt;
       if (answer >= 0) {
         let intAnswer = parseInt(answer);
         if (intAnswer === index) {
@@ -146,16 +146,14 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
         key={index}
         onClick={() => this.setActiveItem(index)}
       >
-        <div style={{lineHeight: 1}}>
-          {this.renderData(choice)}
-          <ReviewEachHint
-            isPhonePreview={this.props.isPreview}
-            attempt={this.props.attempt}
-            isCorrect={isCorrect}
-            index={index}
-            hint={this.props.question.hint}
-          />
-        </div>
+        {this.renderData(choice)}
+        <ReviewEachHint
+          isPhonePreview={this.props.isPreview}
+          attempt={this.props.attempt}
+          isCorrect={isCorrect}
+          index={index}
+          hint={this.props.question.hint}
+        />
       </Button>
     );
   }

@@ -12,25 +12,6 @@
       margin: 0 !important;
     }
   }
-  .choose-choice {
-    font-family: $font-family-regular;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    color: var(--theme-dark-blue);
-    text-align: center;
-    text-transform: none !important;
-    border-radius: 0 !important;
-    width: 100%;
-    font-size: 1vw !important;
-    padding-top: 14px;
-    padding-bottom: 14px;
-
-    img {
-      width: 100%;
-    }
-  }
-
-  .choose-choice {background: $tab-gray}
 
   .image-choice {
     background: inherit;
@@ -39,27 +20,4 @@
     padding: 0;
   }
 
-  .choose-choice.active {
-    background: $white-blue;
-  }
-  .question-hint {
-    color: var(--theme-dark-blue);
-  }
-
-  .choose-choice.correct {
-    background: var(--theme-green);
-
-    .question-hint {
-      background: white;
-    }
-  }
-
-  .choose-choice.wrong {
-    background: var(--theme-orange);
-  }
-
-  .question-hint-global {
-    color: var(--theme-dark-blue);
-    margin-top: 10px;
-  }
 }

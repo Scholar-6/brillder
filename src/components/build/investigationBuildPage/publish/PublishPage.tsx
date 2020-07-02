@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 import "./PublishPage.scss";
 import { BrickStatus } from "model/brick";
+import { ReduxCombinedState } from "redux/reducers";
 
 
 interface PublishBrickProps {
@@ -205,11 +206,9 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
   }
 }
 
-const mapState = (state: any) => {
-  return {
-    user: state.user.user,
-  }
-}
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+})
 
 const connector = connect(mapState)
 

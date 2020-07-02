@@ -10,6 +10,7 @@ import PlayPanel from './PlayPanel';
 import AdditionalPanel from './AdditionalPanel';
 import { User } from 'model/user';
 import userActions from 'redux/actions/user';
+import { ReduxCombinedState } from 'redux/reducers';
 
 
 export enum TutorialStep {
@@ -57,15 +58,11 @@ const TutorialPanelWorkArea: React.FC<TutorialProps> = ({user, step, setStep, ge
   );
 }
 
-const mapState = (state: any) => {
-  return {}
-}
+const mapState = (state: ReduxCombinedState) => ({})
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    getUser: () => dispatch(userActions.getUser()),
-  }
-}
+const mapDispatch = (dispatch: any) => ({
+  getUser: () => dispatch(userActions.getUser()),
+})
 
 const connector = connect(mapState, mapDispatch);
 

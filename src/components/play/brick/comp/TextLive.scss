@@ -6,9 +6,11 @@
   overflow: auto;
   margin-top: 5px;
   margin-bottom: 5px;
-  font: 500 16px/24px $font-family-regular !important;
+	font: 500 16px/24px $font-family-regular;
+	color: var(--theme-dark-blue);
   p {
-    font: 500 16px/24px $font-family-regular;
+		font: 500 16px/24px $font-family-regular;
+		color: var(--theme-dark-blue);
   }
 
   table {
@@ -23,7 +25,5 @@
 
   table, td, th {
     border: 1px solid var(--theme-dark-blue);
-  }
-  td {
   }
 }

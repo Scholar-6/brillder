@@ -6,6 +6,7 @@ import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButto
 import { UniqueComponentProps } from '../types';
 import QuestionImageDropZone from '../../baseComponents/QuestionImageDropzone';
 import {SortCategory, QuestionValueType, SortAnswer} from 'components/interfaces/sort';
+import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 
 export interface CategoriseData {
@@ -59,8 +60,8 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     updateComponent(state);
   }
 
-  const answerChanged = (answer: any, event: any) => {
-    answer.value = event.target.value;
+  const answerChanged = (answer: SortAnswer, value: string) => {
+    answer.value = value;
     answer.valueFile = '';
     answer.answerType = QuestionValueType.String;
     update();
@@ -78,8 +79,8 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     save();
   }
 
-  const categoryChanged = (category: any, event: any) => {
-    category.name = event.target.value;
+  const categoryChanged = (category: any, value: string) => {
+    category.name = value;
     update();
   }
 
@@ -97,7 +98,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
 
 
   const renderAnswer = (category: SortCategory, answer: SortAnswer, key: number) => {
-    let customClass = '';
+    let customClass = 'categorise-answer ';
     if (answer.answerType === QuestionValueType.Image) {
       customClass = 'sort-image';
     }
@@ -118,13 +119,14 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(category, key)} />
             : ""
         }
-        <input
+        <DocumentWirisEditorComponent
           disabled={locked}
-          value={answer.value}
+          data={answer.value}
           placeholder="Enter Answer..."
-          className={validationRequired && !answer.value ? "invalid answer" : "answer"}
+          toolbar={['superscript', 'subscript', 'mathType', 'chemType']}
+          validationRequired={validationRequired}
           onBlur={() => save()}
-          onChange={(event: any) => { answerChanged(answer, event) }}
+          onChange={value => { answerChanged(answer, value) }}
         />
         <QuestionImageDropZone
           answer={answer}
@@ -144,13 +146,14 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           {
             (state.categories.length > 2) ? <DeleteIcon className="right-top-icon" onClick={() => removeCategory(key)} /> : ""
           }
-          <input
+          <DocumentWirisEditorComponent
             disabled={locked}
-            value={category.name}
+            data={category.name}
             placeholder="Enter Category Heading..."
-            className={validationRequired && !category.name ? "invalid" : ""}
+            toolbar={['superscript', 'subscript', 'mathType', 'chemType']}
+            validationRequired={validationRequired}
             onBlur={() => save()}
-            onChange={(event) => categoryChanged(category, event)}
+            onChange={value => categoryChanged(category, value)}
           />
           {
             category.answers.map((answer, key) => renderAnswer(category, answer, key))

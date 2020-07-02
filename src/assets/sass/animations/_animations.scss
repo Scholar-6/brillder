@@ -2,8 +2,20 @@
   animation-fill-mode: both;
   animation-duration: 400ms;
   animation-timing-function: easeOutCirc;
-  &.infinite {
-      animation-iteration-count: infinite;
+  &.iteration-infinite {
+    animation-iteration-count: infinite;
+  }
+  &.iteration-2 {
+    animation-iteration-count: 2;
+  }
+  &.iteration-5 {
+      animation-iteration-count: 5;
+  }
+  &.duration-1s {
+    animation-duration: 1s;
+  }
+  &.duration-2s {
+    animation-duration: 2s;
   }
 }
 

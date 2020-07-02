@@ -5,6 +5,7 @@ import { Grid, CircularProgress } from "@material-ui/core";
 import { connect } from 'react-redux';
 
 import "./FinishPage.scss";
+import { ReduxCombinedState } from "redux/reducers";
 
 
 interface FinishBrickProps {
@@ -140,11 +141,9 @@ class FinishBrickPage extends Component<FinishBrickProps, FinishBrickState> {
   }
 }
 
-const mapState = (state: any) => {
-  return {
-    user: state.user.user,
-  }
-}
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+})
 
 const connector = connect(mapState)
 
