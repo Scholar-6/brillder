@@ -1,187 +1,3 @@
-.login-page {
-  // .MuiSnackbarContent-message {
-  //   font-size: 1.2vw;
-  //   font-family: $font-family-regular;
-  // }
-  // background: var(--theme-dark-blue);
-  // height: 100%;
-  // .back-col {
-  //   text-align: center;
-  //   height: 13.3vh;
-  //   width: 32.3vw;
-  //   .back-box {
-  //     .back-button {
-  //       cursor: pointer;
-  //       height: 3.6vw;
-  //       width: 2vw;
-  //       margin-left: 15vw;
-  //       color: var(--theme-orange);
-  //       transition: all 0.2s ease-in-out;
-  //       transform-origin: 200% 50%;
-
-  //       background-size: 100% 100%;
-  //       background-repeat: no-repeat;
-  //       background-position: center;
-  //       background-image: url(/feathericons/big-chevron-left-orange.png);
-  //     }
-  //     .back-button:hover {
-  //       transform: scale(1.15, 1.05);
-  //     }
-  //   }
-  // }
-
-  // .first-col {
-  //   width: 29.6vw;
-  //   height: 100%;
-
-  //   .first-item {
-  //     background: $light-blue;
-  //     height: 14.7vh;
-  //     border-bottom-left-radius: $border-radius;
-  //     border-bottom-right-radius: $border-radius;
-  //   }
-  //   .second-item {
-  //     background: $light-blue;
-  //     margin-top: 4.7vh;
-  //     height: 80.6vh;
-  //     border-top-left-radius: $border-radius;
-  //     border-top-right-radius: $border-radius;
-  //     text-align: center;
-
-  //     .logo-image {
-  //       margin-top: 6.1vh;
-  //       margin-bottom: 3.9vh;
-  //       height: 20vh;
-  //     }
-  //   }
-  // }
-  // .second-col {
-  //   margin-left: 2.7vw;
-  //   width: 29.7vw;
-  //   height: 100%;
-
-  //   .first-item {
-  //     background: $light-blue;
-  //     height: 70.9vh;
-  //     border-bottom-left-radius: $border-radius;
-  //     border-bottom-right-radius: $border-radius;
-  //   }
-  //   .second-item {
-  //     background: $light-blue;
-  //     margin-top: 4.7vh;
-  //     height: 24.4vh;
-  //     border-top-left-radius: $border-radius;
-  //     border-top-right-radius: $border-radius;
-  //   }
-  // }
-
-  .input-block {
-    display: flex;
-    position: relative;
-    margin: 0 auto;
-    margin-bottom: 3vh;
-    width: 80%;
-    justify-content: space-between;
-    input {
-      width: 100%;
-      padding: 4vh 5%;
-      color: white;
-      font: 1.5vw $font-family-regular;
-      text-align: center;
-      background: var(--theme-dark-blue);
-      border-radius: $button-radius;
-      margin: 0;
-      border: none;
-      letter-spacing: 0.3vw;
-      height: 3.8vh;
-      &::-webkit-input-placeholder {
-        color: white;
-        opacity: 0.8;
-      }
-    }
-    .hide-password-icon-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      right: 0;
-      top: 0;
-      padding: 0.5vw 1vw;
-      height: 100%;
-      .hide-password-icon {
-        height: 37%;
-        opacity: 0.7;
-        color: var(--theme-orange);
-        z-index: 5;
-      }
-      .hide-password-icon:hover {
-        opacity: 1;
-      }
-    }
-    // button {
-    //   box-shadow: none;
-    //   width: calc(50% - 2vw);
-    //   padding: 0.8vh 1.2vw;
-    //   background: var(--theme-orange);
-    //   font: 1.2vw $font-family-regular;
-    //   letter-spacing: 0.3vw;
-    //   border-radius: 0.7vw;
-    //   margin: 0 0 2vh 0;
-    //   &:hover {
-    //     background: var(--theme-orange);
-    //     box-shadow: none;
-    //     font-family: $font-family-bold;
-    //   }
-    // }
-  }
-
-  // .register-success {
-  //   position: fixed;
-  //   top: 24.1vh;
-  //   left: 19.2vw;
-  //   color: white;
-  //   font-family: $font-family-regular;
-
-  //   .thanks-info {
-  //     cursor: pointer;
-  //     position: relative;
-  //     line-height: 1.43;
-  //     font-size: 7.15vh;
-
-  //     .register-success-icon {
-  //       position: absolute;
-  //       top: 0.3vh;
-  //       left: -14.6vh;
-  //       font-size: 10.7vh;
-  //       color: var(--theme-orange);
-  //     }
-  //   }
-  //   .contact-info {
-  //     margin-top: 16.4vh;
-  //     line-height: 1;
-  //     font-size: 3.6vh;
-  //   }
-  // }
-}
-
-// @media only screen and (max-width: 599px) {
-//   .login-page {
-//     .logo-image {
-//       height: auto !important;
-//       width: 80%;
-//     }
-//     input {
-//       font-size: 3vw !important;
-//     }
-//     button {
-//       padding-top: 1vh;
-//       padding-bottom: 1vh;
-//       font-size: 3vw !important;
-//       width: 100% !important;
-//     }
-//   }
-// }
-
 .auth-page {
   background: var(--theme-dark-blue);
   height: 100%;
@@ -305,91 +121,91 @@
       }
     }
   }
-
   &.pre-login-page {
-    .first-col {
-      .button-box {
+    .button-box {
+      @include phone_and_tabletP {
+        background-color: $button-box;
+        border-top-right-radius: 10vw;
+        overflow: hidden;
+        margin-top: 4vh;
+        height: calc(50vh - 2vh);
+        display: flex;
+        flex-direction: column;
+        padding: 3vh 6vw 0;
+      }
+      .email-button,
+      .google-button {
+        padding: 2.5vh;
+        border-radius: $button-radius;
+        text-transform: none;
+        letter-spacing: 0.1vw;
+        border: 0;
+        margin-bottom: 2.7vh;
+        transition: all 0.2s ease-in-out;
+        @extend %flexCenter;
         @include phone_and_tabletP {
-          background-color: $button-box;
-          border-top-right-radius: 10vw;
-          overflow: hidden;
-          margin-top: 4vh;
-          height: calc(50vh - 2vh);
-          display: flex;
-          flex-direction: column;
-          padding: 3vh 6vw 0;
+          width: 100%;
+          font: 4.8vw $font-family-regular;
+          border-radius: 2vh;
         }
-
-        .email-button,
-        .google-button {
-          padding: 2.5vh;
-          border-radius: $button-radius;
-          text-transform: none;
-
-          letter-spacing: 0.1vw;
-
-          margin-bottom: 2.7vh;
+        @include tabletP {
+          width: 30vw;
+          font: 1.4vw $font-family-regular;
+        }
+        @include desktop {
+          font: 1vw $font-family-regular;
+          width: 22vw;
+        }
+        .svg {
           transition: all 0.2s ease-in-out;
-          @include phone_and_tabletP {
-            width: 100%;
-            font: 4.8vw $font-family-regular;
-            border-radius: 2vh;
+          margin-right: 1vw;
+          position: inherit;
+          top: inherit;
+          left: inherit;
+          transform: inherit;
+          @include phone {
+            width: 9.5vw;
+            height: 9.5vw;
+          }
+          @include phoneL {
+            width: 10.5vw;
+            height: 10.5vw;
           }
           @include tabletP {
-            width: 30vw;
-            font: 1.4vw $font-family-regular;
+            width: 2.5vw;
+            height: 2.5vw;
           }
           @include desktop {
-            font: 1vw $font-family-regular;
-            width: 22vw;
-          }
-          .svg {
-            transition: all 0.2s ease-in-out;
-            margin-right: 1vw;
-            @include phone {
-              width: 9.5vw;
-              height: 9.5vw;
-            }
-            @include phoneL {
-              width: 10.5vw;
-              height: 10.5vw;
-            }
-            @include tabletP {
-              width: 2.5vw;
-              height: 2.5vw;
-            }
-            @include desktop {
-              width: 2.3vw;
-              height: 2.3vw;
-            }
-          }
-          .MuiButton-label {
-            justify-content: flex-start;
+            width: 2.3vw;
+            height: 2.3vw;
           }
         }
-        .email-button {
-          background: var(--theme-orange);
-          @include phone_and_tabletP {
-            order: 2;
-          }
-          .svg,
-          span {
-            color: var(--white);
-          }
-          &:hover {
-            background: var(--theme-dark-blue);
-          }
+        .MuiButton-label {
+          justify-content: flex-start;
         }
-        .google-button {
+      }
+      .email-button {
+        background: var(--theme-orange);
+        @include phone_and_tabletP {
+          order: 2;
+        }
+        .svg,
+        span {
+          color: var(--white);
+        }
+        &:hover {
+          background: var(--theme-dark-blue);
+        }
+      }
+      .google-button {
+        background: var(--white);
+        span {
+          color: var(--theme-dark-blue);
+        }
+        &:hover {
           background: var(--white);
-          span {
-            color: var(--theme-dark-blue);
-          }
-          &:hover {
-            background: var(--white);
-            .svg {
-              transform: scale(1.4);
-            }
+          .svg {
+            transform: scale(1.4);
           }
         }
       }
@@ -401,155 +217,152 @@
         display: none;
       }
     }
-    .first-col {
-      .second-item {
-        .logo-box {
-          background-color: transparent;
-          @include phone_and_tabletP {
-            height: calc(35vh - 2vh);
-          }
+    .logo-box {
+      background-color: transparent;
+      @include phone_and_tabletP {
+        height: calc(35vh - 2vh);
+      }
 
-          .mobile {
-            display: none;
+      .mobile {
+        display: none;
+        @include phone_and_tabletP {
+          display: block;
+        }
+      }
+      .website {
+        @include phone_and_tabletP {
+          display: none;
+        }
+      }
+    }
+    .content-box {
+      height: 100%;
+      border-top-right-radius: 10vw;
+      background-color: $light-blue;
+      @extend %flexCenter;
+      @extend %flexColumn;
+      @include phone_and_tabletP {
+        height: calc(100vh - 32vh);
+        padding: 3vh 6vw 0;
+      }
+      .input-block {
+        @extend %displayFlex;
+        @extend %posRelative;
+        margin-bottom: 3vh;
+        @include tabletL {
+          width: 80%;
+          justify-content: space-between;
+          margin: 0px auto 3vh;
+        }
+        input {
+          @extend %width100;
+          color: var(--white);
+          text-align: center;
+          background: var(--theme-dark-blue);
+          margin: 0;
+          border: none;
+          letter-spacing: 0.3vw;
+          height: 3.8vh;
+          border-radius: 1.7vh;
+          @include phone_and_tabletP {
+            font: 5.5vw 'Brandon Grotesque Regular';
+            padding: 3.5vh 12vw;
+          }
+          @include tabletP {
+            padding: 4vh 5%;
+            font: 1.5vw $font-family-regular;
+          }
+          &::-webkit-input-placeholder {
+            color: var(--white);
+            opacity: 0.8;
+          }
+        }
+        .hide-password-icon-container {
+          @extend %flexCenter;
+          position: absolute;
+          right: 0.3vw;
+          top: 0;
+          padding: 0.5vw 1vw;
+          height: 100%;
+          .hide-password-icon {
+            height: 37%;
+            opacity: 0.7;
+            color: var(--theme-orange);
+            z-index: 5;
+          }
+          .hide-password-icon:hover {
+            opacity: 1;
+          }
+        }
+        button {
+          box-shadow: none;
+          width: calc(50% - 2vw);
+          background: var(--theme-orange);
+          letter-spacing: 0.3vw;
+          margin: 0 0 2vh 0;
+          flex: 1;
+          @include phone_and_tabletP {
+            color: $black-blue;
+            border-radius: 7vw;
+            font: 5.2vw $font-family-regular;
+            padding: 0.5vh 1.2vw;
+          }
+          @include tabletP {
+            font: 1.2vw $font-family-regular;
+            padding: 0.8vh 1.2vw;
+            margin: 0px 0px 2vh;
+            border-radius: 0.7vw;
+          }
+          &:hover {
+            background: var(--theme-orange);
+            box-shadow: none;
+            font-family: $font-family-bold;
+          }
+          &.sign-up-button {
+            @include tabletP {
+              margin-right: 1vw;
+            }
             @include phone_and_tabletP {
-              display: block;
+              margin-right: 3vw;
             }
           }
-          .website {
+          &.sign-in-button {
             @include phone_and_tabletP {
-              display: none;
+              background-color: var(--white);
+              margin-left: 3vw;
+            }
+            @include tabletP {
+              margin-left: 1vw;
             }
           }
         }
-        .content-box {
-          border-top-right-radius: 10vw;
-          background-color: $light-blue;
-          @extend %displayFlex;
-          @extend %flexColumn;
-          @include phone_and_tabletP {
-            height: calc(100vh - 32vh);
-            padding: 3vh 6vw 0;
-          }
-          .input-block {
-            @extend %displayFlex;
-            @extend %posRelative;
-            margin-bottom: 3vh;
-            @include tabletL {
-              width: 80%;
-              justify-content: space-between;
-              margin: 0px auto 3vh;
-            }
-            input {
-              @extend %width100;
-              color: var(--white);
-              text-align: center;
-              background: var(--theme-dark-blue);
-              margin: 0;
-              border: none;
-              letter-spacing: 0.3vw;
-              height: 3.8vh;
-              border-radius: 1.7vh;
-              @include phone_and_tabletP {
-                font: 5.5vw 'Brandon Grotesque Regular';
-                padding: 3.5vh 12vw;
-              }
-              @include tabletP {
-                padding: 4vh 5%;
-                font: 1.5vw $font-family-regular;
-              }
-              &::-webkit-input-placeholder {
-                color: var(--white);
-                opacity: 0.8;
-              }
-            }
-            .hide-password-icon-container {
-              @extend %flexCenter;
-              position: absolute;
-              right: 0.3vw;
-              top: 0;
-              padding: 0.5vw 1vw;
-              height: 100%;
-              .hide-password-icon {
-                height: 37%;
-                opacity: 0.7;
-                color: var(--theme-orange);
-                z-index: 5;
-              }
-              .hide-password-icon:hover {
-                opacity: 1;
-              }
-            }
-            button {
-              box-shadow: none;
-              width: calc(50% - 2vw);
-              background: var(--theme-orange);
-              letter-spacing: 0.3vw;
-              margin: 0 0 2vh 0;
-              flex: 1;
-              @include phone_and_tabletP {
-                color: $black-blue;
-                border-radius: 7vw;
-                font: 5.2vw $font-family-regular;
-                padding: 0.5vh 1.2vw;
-              }
-              @include tabletP {
-                font: 1.2vw $font-family-regular;
-                padding: 0.8vh 1.2vw;
-                margin: 0px 0px 2vh;
-                border-radius: 0.7vw;
-              }
-              &:hover {
-                background: var(--theme-orange);
-                box-shadow: none;
-                font-family: $font-family-bold;
-              }
-              &.sign-up-button {
-                @include tabletP {
-                  margin-right: 1vw;
-                }
-                @include phone_and_tabletP {
-                  margin-right: 3vw;
-                }
-              }
-              &.sign-in-button {
-                @include phone_and_tabletP {
-                  background-color: var(--white);
-                  margin-left: 3vw;
-                }
-                @include tabletP {
-                  margin-left: 1vw;
-                }
-              }
-            }
-          }
+      }
 
-          .register-success {
-            position: fixed;
-            top: 24.1vh;
-            left: 19.2vw;
-            color: white;
-            font-family: $font-family-regular;
+      .register-success {
+        position: fixed;
+        top: 24.1vh;
+        left: 19.2vw;
+        color: white;
+        font-family: $font-family-regular;
 
-            .thanks-info {
-              cursor: pointer;
-              position: relative;
-              line-height: 1.43;
-              font-size: 7.15vh;
+        .thanks-info {
+          cursor: pointer;
+          position: relative;
+          line-height: 1.43;
+          font-size: 7.15vh;
 
-              .register-success-icon {
-                position: absolute;
-                top: 0.3vh;
-                left: -14.6vh;
-                font-size: 10.7vh;
-                color: var(--theme-orange);
-              }
-            }
-            .contact-info {
-              margin-top: 16.4vh;
-              line-height: 1;
-              font-size: 3.6vh;
-            }
+          .register-success-icon {
+            position: absolute;
+            top: 0.3vh;
+            left: -14.6vh;
+            font-size: 10.7vh;
+            color: var(--theme-orange);
           }
+        }
+        .contact-info {
+          margin-top: 16.4vh;
+          line-height: 1;
+          font-size: 3.6vh;
         }
       }
     }
