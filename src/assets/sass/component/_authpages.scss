@@ -306,6 +306,7 @@
             font-family: $font-family-bold;
           }
           &.sign-up-button {
+            color: var(--white);
             @include tabletP {
               margin-right: 1vw;
             }
@@ -314,8 +315,9 @@
             }
           }
           &.sign-in-button {
+            color: var(--theme-dark-blue);
+            background-color: var(--white);
             @include phone_and_tabletP {
-              background-color: var(--white);
               margin-left: 3vw;
             }
             @include tabletP {
