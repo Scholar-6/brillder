@@ -249,21 +249,19 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           <div className="first-item"></div>
           <div className="second-item">
             <div>
-              <Grid>
-                <div className="logo-box">
-                  <svg
-                    className="svg active logo-image mobile"
-                    onClick={() => props.history.push("/choose-login")}
-                  >
-                    <use href={sprite + "#login"} />
-                  </svg>
-                  <img
-                    alt="Logo"
-                    src="/images/choose-login/logo.png"
-                    className="logo-image website"
-                  />
-                </div>
-              </Grid>
+              <div className="logo-box">
+                <svg
+                  className="svg active logo-image mobile"
+                  onClick={() => props.history.push("/choose-login")}
+                >
+                  <use href={sprite + "#login"} />
+                </svg>
+                <img
+                  alt="Logo"
+                  src="/images/choose-login/logo.png"
+                  className="logo-image website"
+                />
+              </div>
               <form onSubmit={handleSubmit} className="content-box">
                 <div className="input-block">
                   <input

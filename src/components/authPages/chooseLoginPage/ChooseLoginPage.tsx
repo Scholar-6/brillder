@@ -81,11 +81,9 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
           <div className="first-item">
           </div>
           <div className="second-item">
-            <Grid>
-              <div className="logo-box">
-                <img alt="Logo" src="/images/choose-login/logo.png" className="logo-image" />
-              </div>
-            </Grid>
+            <div className="logo-box">
+              <img alt="Logo" src="/images/choose-login/logo.png" className="logo-image" />
+            </div>
             <div className="button-box">
               <button className="email-button svgOnHover" onClick={moveToLogin}>
                 <svg className="svg active">

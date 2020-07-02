@@ -69,26 +69,6 @@
         margin: 0;
         height: 100vh;
       }
-      .logo-box {
-        @include phone_and_tabletP {
-          background-color: $light-blue;
-          margin-bottom: 4vh;
-          height: calc(50vh - 2vh);
-          border-bottom-right-radius: 10vw;
-          overflow: hidden;
-        }
-        @extend %flexCenter;
-        .logo-image {
-          margin-top: 6.1vh;
-          margin-bottom: 3.9vh;
-          height: 20vh;
-          color: var(--theme-orange);
-
-          @include phone_and_tabletP {
-            height: 20vh;
-          }
-        }
-      }
     }
   }
   .second-col {
@@ -133,7 +113,8 @@
         margin-top: 4vh;
         height: calc(50vh - 2vh);
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
+        justify-content: flex-end;
         padding: 3vh 6vw 0;
       }
       .email-button,
@@ -222,8 +203,23 @@
     }
     .logo-box {
       background-color: transparent;
+      @extend %flexCenter;
       @include phone_and_tabletP {
-        height: calc(35vh - 2vh);
+        background-color: $light-blue;
+        margin-bottom: 4vh;
+        height: calc(40vh - 2vh);
+        border-bottom-right-radius: 10vw;
+        overflow: hidden;
+      }
+      .logo-image {
+        margin-top: 6.1vh;
+        margin-bottom: 3.9vh;
+        height: 20vh;
+        color: var(--theme-orange);
+
+        @include phone_and_tabletP {
+          height: 20vh;
+        }
       }
       .mobile {
         display: none;
@@ -244,7 +240,7 @@
       @include phone_and_tabletP {
         border-top-right-radius: 10vw;
         background-color: $light-blue;
-        height: calc(100vh - 37vh);
+        height: calc(60vh - 2vh);
         padding: 3vh 6vw 0;
       }
       .input-block {
