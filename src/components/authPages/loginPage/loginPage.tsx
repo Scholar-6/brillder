@@ -9,7 +9,6 @@ import axios from "axios";
 
 import actions from "redux/actions/auth";
 import "./loginPage.scss";
-import { Redirect } from "react-router-dom";
 import { ReduxCombinedState } from "redux/reducers";
 
 import sprite from "../../../assets/img/icons-sprite.svg";

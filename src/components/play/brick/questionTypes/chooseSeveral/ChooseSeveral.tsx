@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import './ChooseSeveral.scss';
 import CompComponent from '../Comp';
