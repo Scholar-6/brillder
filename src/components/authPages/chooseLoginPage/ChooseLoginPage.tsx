@@ -1,34 +1,17 @@
 import React from "react";
 import { History } from 'history'
-import { Redirect } from "react-router-dom";
 import { Button, Grid, Hidden } from "@material-ui/core";
-import MailIcon from '@material-ui/icons/Mail';
 import sprite from "../../../assets/img/icons-sprite.svg";
 
 import './ChooseLoginPage.scss';
-import { UserLoginType } from 'model/auth';
 
 
 interface ChooseLoginProps {
-  history: History
+  history: History;
 }
 
 const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
-  const moveToLogin = () => {
-    props.history.push('/login?userType=' + userType)
-  }
-
-  function getUserTypeParam(param: string): UserLoginType {
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    let userType = url.searchParams.get(param);
-    if (userType) {
-      return parseInt(userType);
-    }
-    return UserLoginType.None;
-  }
-
-  const userType = getUserTypeParam('userType');
+  const moveToLogin = () => props.history.push('/login');
 
   const renderLogo = () => {
     return (
@@ -75,12 +58,8 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
             <div className="third-col"></div>
           </Grid>
           <Grid container direction="row" className="second-row">
-            <div className="first-col">
-              {renderLogo()}
-            </div>
-            <div className="second-col">
-              {renderButtons()}
-            </div>
+            <div className="first-col">{renderLogo()}</div>
+            <div className="second-col">{renderButtons()}</div>
           </Grid>
           <Grid container direction="row" className="third-row">
             <div className="first-col"></div>
