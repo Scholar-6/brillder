@@ -17,6 +17,8 @@ export default (state = NotificationsInitialState, action: any) => {
             return { notifications: action.notifications } as NotificationsState;
         case types.GET_NOTIFICATIONS_FAILURE:
             return { error: action.error } as NotificationsState;
+        case types.RECEIVED_NOTIFICATION:
+            return { notifications: [ ...(state.notifications ?? []), action.notification ] } as NotificationsState;
         default: return state;
     }
 }

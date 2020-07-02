@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
+import { Notification } from '../../model/notifications';
 
 import types from '../types';
 
@@ -31,4 +32,11 @@ const getNotifications = () => {
     }
 }
 
-export default { getNotifications }
+const receivedNotification = () => {
+    return {
+        type: types.RECEIVED_NOTIFICATION,
+        notification: Notification
+    } as Action;
+}
+
+export default { getNotifications, receivedNotification }
