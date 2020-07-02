@@ -47,7 +47,7 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
       }
     }
 
-    let canBuild = user.roles.some((role:any) => 
+    let canBuild = user.roles.some((role:any) =>
       role.roleId === UserType.Admin || role.roleId === UserType.Builder || role.roleId === UserType.Editor
     );
 
@@ -58,7 +58,7 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
     }
   } else if (props.isAuthenticated === isAuthenticated.None) {
     props.isAuthorized();
-    return <div>...Checking rights...</div>
+    return <div className="page-loader">...Checking rights...</div>
   } else {
     return <Redirect to="/choose-login" />
   }

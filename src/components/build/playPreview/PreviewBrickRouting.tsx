@@ -83,7 +83,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const brickId = parseInt(props.match.params.brickId);
   if (!props.brick || props.brick.id !== brickId || !props.brick.author) {
     props.fetchBrick(brickId);
-    return <div>...Loading brick...</div>
+    return <div className="page-loader">...Loading brick...</div>
   }
 
   setBrillderTitle(props.brick.title);
