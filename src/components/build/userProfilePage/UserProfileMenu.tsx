@@ -66,7 +66,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
         >
           <MenuItem
             className="first-item menu-item"
-            onClick={() => this.props.history.push("/build/bricks-list")}
+            onClick={() => this.props.history.push("/play/dashboard")}
           >
             View All Bricks
             <Grid

@@ -613,7 +613,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}
         >
-          <MenuItem className="first-item menu-item" onClick={() => history.push('/build/bricks-list')}>
+          <MenuItem className="first-item menu-item" onClick={() => history.push('/play/dashboard')}>
             View All Bricks
             <Grid container className="menu-icon-container" justify="center" alignContent="center">
               <div>
