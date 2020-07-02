@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import EditIcon from '@material-ui/icons/Edit';
 
 import './wordHighlighting.scss'
 import { UniqueComponentProps } from '../types';
