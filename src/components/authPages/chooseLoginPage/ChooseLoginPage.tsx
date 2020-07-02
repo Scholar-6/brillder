@@ -25,6 +25,8 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
       </Grid>
     );
   }
+  let googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/build`;
+
 
   const renderButtons = () => {
     return (
@@ -36,18 +38,17 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
             </svg>
             <span>Register &nbsp;|&nbsp; Sign in with email</span>
           </button>
-          <button className="google-button svgOnHover">
+          <a className="google-button svgOnHover" href={googleLink}>
             <svg className="svg active">
               <use href={sprite + "#gmail"} />
             </svg>
             <span>Register &nbsp;|&nbsp; Sign in with Google</span>
-          </button>
+          </a>
         </div>
       </Grid>
     );
   }
 
-  let googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/build`;
   return (
     <Grid className="auth-page pre-login-page" container item justify="center" alignItems="center">
       <Hidden only={['xs']}>
