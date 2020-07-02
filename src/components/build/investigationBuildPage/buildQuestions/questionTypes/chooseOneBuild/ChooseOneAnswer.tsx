@@ -2,7 +2,7 @@ import React from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import './ChooseOneAnswer.scss'; 
+import './ChooseOneAnswer.scss';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import QuestionImageDropzone from "../../baseComponents/QuestionImageDropzone";
 import { QuestionValueType } from "../types";
@@ -67,15 +67,15 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   return (
     <div className={className}>
       {renderDeleteButton()}
-      <Grid container alignContent="center" className={`checkbox-container ${checkboxClass}`}>
+      <div className={"checkbox-container " + checkboxClass}>
         <Checkbox
-          className={`left-ckeckbox ${(validationRequired && !checkBoxValid) ? "checkbox-invalid" : ""}`}
+          className={"left-ckeckbox " + (validationRequired && !checkBoxValid) ? "checkbox-invalid" : ""}
           disabled={locked}
           checked={answer.checked}
           onChange={onChecked}
           value={index}
         />
-      </Grid>
+      </div>
       <QuestionImageDropzone
         answer={answer}
         type={answer.answerType || QuestionValueType.None}

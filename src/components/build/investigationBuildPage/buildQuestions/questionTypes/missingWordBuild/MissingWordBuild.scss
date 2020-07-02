@@ -19,9 +19,8 @@
 
   .choose-several-box {
     position: relative;
-    margin: 0;
-    margin-left: 1.25%;
-    width: 97.5%;
+    margin: 0.7vh 0.4vw;
+    width: calc(100% - 0.8vw);
 
     .checkbox-invalid {
       color: var(--theme-orange);
@@ -56,6 +55,9 @@
       padding-left: 8%;
       font-family: $font-family-regular;
       font-size: $answer-input-text-size;
+    }
+    .add-answer-button {
+      width: 100%;
     }
   }
 }
