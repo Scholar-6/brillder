@@ -91,12 +91,12 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
                 </svg>
                 <span>Register &nbsp;|&nbsp; Sign in with email</span>
               </button>
-              <button className="google-button svgOnHover">
+              <a className="google-button svgOnHover" href={googleLink}>
                 <svg className="svg active">
                   <use href={sprite + "#gmail"} />
                 </svg>
                 <span>Register &nbsp;|&nbsp; Sign in with Google</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>

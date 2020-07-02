@@ -5,7 +5,6 @@ input {
     font-size: 1.8vw;
     margin-bottom: 2.5vh;
     padding-left: 1vw;
-    line-height: 2.1;
     background: var(--light-gray);
     border-radius: 0.5vw;
     border: none;
@@ -49,9 +48,8 @@ input {
     margin: 0;
     border: none;
     letter-spacing: 0.3vw;
-    height: 3.8vh;
     border-radius: 1.7vh;
-    padding: 1vw !important;
+    padding: 2.5vh 1vw !important;
     @include phone_and_tabletP {
       font-size: 5.5vw;
     }
