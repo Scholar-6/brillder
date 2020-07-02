@@ -244,9 +244,6 @@
         padding: 3vh 6vw 0;
       }
       .input-block {
-        @extend %displayFlex;
-        @extend %posRelative;
-        margin-bottom: 3vh;
         @include phone {
           width: 100%;
         }
@@ -259,23 +256,9 @@
           margin: 0px auto 3vh;
         }
         input {
-          @extend %width100;
           color: var(--white);
           text-align: center;
           background: var(--theme-dark-blue);
-          margin: 0;
-          border: none;
-          letter-spacing: 0.3vw;
-          height: 3.8vh;
-          border-radius: 1.7vh;
-          @include phone_and_tabletP {
-            font: 5.5vw 'Brandon Grotesque Regular';
-            padding: 3.5vh 12vw;
-          }
-          @include tabletP {
-            padding: 4vh 5%;
-            font: 1.5vw $font-family-regular;
-          }
           &::-webkit-input-placeholder {
             color: var(--white);
             opacity: 0.8;
@@ -308,7 +291,7 @@
           @include phone_and_tabletP {
             color: $black-blue;
             border-radius: 7vw;
-            font: 6.2vw $font-family-bold;
+            font: 5.2vw $font-family-regular;
             padding: 0.5vh 1.2vw;
           }
           @include tabletP {
@@ -346,8 +329,6 @@
         top: 24.1vh;
         left: 19.2vw;
         color: var(--white);
-        font-family: $font-family-regular;
-
         .thanks-info {
           cursor: pointer;
           @extend %posRelative;
