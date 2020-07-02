@@ -22,7 +22,8 @@
     margin-top: 3.6vh;
     width: 72.5vw;
     border-top-right-radius: 2vw;
-
+    overflow-y: auto;
+    padding-bottom: 10vh;
     .profile-header {
       padding-top: 3.1vh;
       margin-left: 1.08vw;
@@ -55,11 +56,10 @@
     }
     .profile-image-container {
       position: relative;
-      padding-top: 3.2vh;
+      padding-top: 5vh;
       width: 18.7vw;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       .profile-image {
         text-align: center;
@@ -79,8 +79,8 @@
         height: 4vw;
         z-index: 100;
         position: absolute;
-        background-color: #c43c30;
-        bottom: 7vh;
+        background-color: var(--theme-orange);
+        top: 18vh;
         right: 4vw;
         border-radius: 50%;
         cursor: pointer;
@@ -114,51 +114,7 @@
     }
     .profile-inputs-container {
       padding-top: 4.8vh;
-      margin-left: 0.8vw;
       width: 32.4vw;
-      input {
-        font-family: $font-family-regular;
-        width: 31.4vw;
-        font-size: 1.8vw;
-        margin-bottom: 2.5vh;
-        padding-left: 1vw;
-        line-height: 2.1;
-        background: var(--light-gray);
-        border-radius: 0.5vw;
-        border: none;
-        color: var(--theme-dark-blue);
-        box-shadow: $base-shadow;
-      }
-      @include placeholder {
-        color: var(--theme-dark-blue);
-      }
-      input[type='password'] {
-        @include placeholder {
-          > div {
-            font-size: 4vw;
-            line-height: 6.685vh;
-            height: 6.685vh;
-            padding-bottom: 1vh;
-          }
-          // font-size: 2vw;
-        }
-      }
-      .first-name {
-        width: 41%;
-        padding: 0;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        padding-left: 3%;
-        margin-right: 2%;
-      }
-      .last-name {
-        width: 51%;
-        right: 0;
-        padding: 0;
-        padding-left: 3%;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
     }
     .profile-roles-container {
       width: 19.2vw;
@@ -207,14 +163,6 @@
         }
       }
     }
-    .subjects-container {
-      margin-top: 0.8vh;
-      padding-left: 4.6vw;
-      padding-right: 4.2vw;
-      .MuiAutocomplete-root {
-        width: 100%;
-      }
-    }
     .big-input-container {
       margin-top: 2.3vh;
       padding-left: 4.5vw;
@@ -223,6 +171,7 @@
         width: 100%;
         height: 15vh;
         background: var(--light-gray);
+        color: var(--theme-dark-blue);
         border: none;
         border-radius: 0.5vw;
         font-family: $font-family-regular;
