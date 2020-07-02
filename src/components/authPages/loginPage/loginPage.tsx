@@ -210,7 +210,13 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   };
 
   return (
-    <div style={{ height: "100%" }}>
+    <Grid
+        className="auth-page login-page"
+        container
+        item
+        justify="center"
+        alignItems="center"
+      >
       <Hidden only={["xs"]}>
         <div className="choose-login-desktop">
           <Grid container direction="row" className="first-row">
@@ -230,97 +236,89 @@ const LoginPage: React.FC<LoginProps> = (props) => {
         </div>
       </Hidden>
       <Hidden only={["sm", "md", "lg", "xl"]}>
-        <Grid
-          className="auth-page login-page"
-          container
-          item
-          justify="center"
-          alignItems="center"
-        >
-          <div className="back-col">
-            <div className="back-box">
-              <svg
-                className="svg active back-button"
-                onClick={() => props.history.push("/choose-login")}
-              >
-                <use href={sprite + "#arrow-down"} className="theme-orange" />
-              </svg>
+        <div className="back-col">
+          <div className="back-box">
+            <svg
+              className="svg active back-button"
+              onClick={() => props.history.push("/choose-login")}
+            >
+              <use href={sprite + "#arrow-down"} className="theme-orange" />
+            </svg>
+          </div>
+        </div>
+        <div className="first-col">
+          <div className="first-item"></div>
+          <div className="second-item">
+            <div>
+              <Grid>
+                <div className="logo-box">
+                  <svg
+                    className="svg active logo-image mobile"
+                    onClick={() => props.history.push("/choose-login")}
+                  >
+                    <use href={sprite + "#login"} />
+                  </svg>
+                  <img
+                    alt="Logo"
+                    src="/images/choose-login/logo.png"
+                    className="logo-image website"
+                  />
+                </div>
+              </Grid>
+              <form onSubmit={handleSubmit} className="content-box">
+                <div className="input-block">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="login-field"
+                    required
+                    placeholder="Email"
+                  />
+                </div>
+                <div className="input-block">
+                  <input
+                    type={passwordHidden ? "password" : "text"}
+                    value={password}
+                    className="login-field password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    placeholder="Password"
+                  />
+                  <div className="hide-password-icon-container">
+                    <VisibilityIcon
+                      className="hide-password-icon"
+                      onClick={() => setHidden(!passwordHidden)}
+                    />
+                  </div>
+                </div>
+                <div className="input-block button-box">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className="sign-up-button"
+                    type="button"
+                    onClick={() => register(email, password)}
+                  >
+                    Sign up
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className="sign-in-button"
+                    type="submit"
+                  >
+                    Sign in
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>
-          <div className="first-col">
-            <div className="first-item"></div>
-            <div className="second-item">
-              <div>
-                <Grid>
-                  <div className="logo-box">
-                    <svg
-                      className="svg active logo-image mobile"
-                      onClick={() => props.history.push("/choose-login")}
-                    >
-                      <use href={sprite + "#login"} />
-                    </svg>
-                    <img
-                      alt="Logo"
-                      src="/images/choose-login/logo.png"
-                      className="logo-image website"
-                    />
-                  </div>
-                </Grid>
-                <form onSubmit={handleSubmit} className="content-box">
-                  <div className="input-block">
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="login-field"
-                      required
-                      placeholder="Email"
-                    />
-                  </div>
-                  <div className="input-block">
-                    <input
-                      type={passwordHidden ? "password" : "text"}
-                      value={password}
-                      className="login-field password"
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      placeholder="Password"
-                    />
-                    <div className="hide-password-icon-container">
-                      <VisibilityIcon
-                        className="hide-password-icon"
-                        onClick={() => setHidden(!passwordHidden)}
-                      />
-                    </div>
-                  </div>
-                  <div className="input-block button-box">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className="sign-up-button"
-                      type="button"
-                      onClick={() => register(email, password)}
-                    >
-                      Sign up
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className="sign-in-button"
-                      type="submit"
-                    >
-                      Sign in
-                    </Button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-          <div className="second-col">
-            <div className="first-item"></div>
-            <div className="second-item"></div>
-          </div>
-        </Grid>
+        </div>
+        <div className="second-col">
+          <div className="first-item"></div>
+          <div className="second-item"></div>
+        </div>
       </Hidden>
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -330,7 +328,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
-    </div>
+    </Grid>
   );
 };
 

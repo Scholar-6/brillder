@@ -1,0 +1,96 @@
+.input-block {
+  @extend %displayFlex;
+  @extend %posRelative;
+  margin-bottom: 3vh;
+  margin: 0 auto;
+  @include tabletL {
+    width: 80%;
+    justify-content: space-between;
+    margin: 0px auto 3vh;
+  }
+  input {
+    @extend %width100;
+    color: var(--white);
+    text-align: center;
+    background: var(--theme-dark-blue);
+    margin: 0;
+    border: none;
+    letter-spacing: 0.3vw;
+    height: 3.8vh;
+    width: 100%;
+    font: 1.5vw $font-family-regular;
+    padding: 4vh 5%;
+    border-radius: $button-radius;
+    @include phone_and_tabletP {
+      font: 5.5vw $font-family-regular;
+      padding: 3.5vh 12vw;
+    }
+    @include tabletP {
+      padding: 4vh 5%;
+      font: 1.5vw $font-family-regular;
+    }
+    &::-webkit-input-placeholder {
+      color: var(--white);
+      opacity: 0.8;
+    }
+  }
+  .hide-password-icon-container {
+    @extend %flexCenter;
+    position: absolute;
+    right: 0.3vw;
+    top: 0;
+    padding: 0.5vw 1vw;
+    height: 100%;
+    .hide-password-icon {
+      height: 37%;
+      opacity: 0.7;
+      color: var(--theme-orange);
+      z-index: 5;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  button {
+    box-shadow: none;
+    width: calc(50% - 2vw);
+    background: var(--theme-orange);
+    letter-spacing: 0.3vw;
+    margin: 0 0 2vh 0;
+    flex: 1;
+    @include phone_and_tabletP {
+      color: $black-blue;
+      border-radius: 7vw;
+      font: 5.2vw $font-family-regular;
+      padding: 0.5vh 1.2vw;
+    }
+    @include tabletP {
+      font: 1.2vw $font-family-regular;
+      padding: 0.8vh 1.2vw;
+      margin: 0px 0px 2vh;
+      border-radius: 0.7vw;
+    }
+    &:hover {
+      background: var(--theme-orange);
+      box-shadow: none;
+      font-family: $font-family-bold;
+    }
+    &.sign-up-button {
+      @include tabletP {
+        margin-right: 1vw;
+      }
+      @include phone_and_tabletP {
+        margin-right: 3vw;
+      }
+    }
+    &.sign-in-button {
+      @include phone_and_tabletP {
+        background-color: var(--white);
+        margin-left: 3vw;
+      }
+      @include tabletP {
+        margin-left: 1vw;
+      }
+    }
+  }
+}
