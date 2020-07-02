@@ -123,7 +123,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           disabled={locked}
           data={answer.value}
           placeholder="Enter Answer..."
-          toolbar={['superscript', 'subscript', 'mathType', 'chemType']}
+          toolbar={['mathType', 'chemType']}
           validationRequired={validationRequired}
           onBlur={() => save()}
           onChange={value => { answerChanged(answer, value) }}
@@ -150,7 +150,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
             disabled={locked}
             data={category.name}
             placeholder="Enter Category Heading..."
-            toolbar={['superscript', 'subscript', 'mathType', 'chemType']}
+            toolbar={['mathType', 'chemType']}
             validationRequired={validationRequired}
             onBlur={() => save()}
             onChange={value => categoryChanged(category, value)}
