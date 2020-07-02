@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Input } from "@material-ui/core";
+import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep } from "../../model";
@@ -93,6 +93,11 @@ const BrickTitle: React.FC<BrickTitleProps> = ({ parentState, canEdit, saveTitle
       <Navigation step={ProposalStep.BrickTitle} onMove={() => saveTitles(parentState)} />
       <Grid container direction="row">
         <Grid item className="left-block">
+
+          {/* <Grid container justify="center">
+            <img alt="titles" src="/images/new-brick/titles.png" className="mobile-view-image" />
+          </Grid> */}
+
           <h1>What is your brick about?</h1>
           <Grid item className="input-container">
             <Input
@@ -124,9 +129,12 @@ const BrickTitle: React.FC<BrickTitleProps> = ({ parentState, canEdit, saveTitle
             onSubmit={saveTitles}
             data={parentState}
           />
+          {/* <h2 className="pagination-text">1 of 4</h2> */}
         </Grid>
         <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
-        <div className="red-right-block"></div>
+        <Hidden only={['xs', 'sm']}>
+          <div className="red-right-block"></div>
+        </Hidden>
       </Grid>
     </div>
   );
