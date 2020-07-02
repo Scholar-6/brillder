@@ -1,4 +1,9 @@
 import types from '../types';
+import { Brick } from 'model/brick';
+
+export interface BricksState {
+  bricks: Brick[];
+}
 
 const BricksInitialState = {
   bricks: [],

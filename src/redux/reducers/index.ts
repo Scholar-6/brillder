@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux';
-import bricksReducer from './bricks-reducer';
-import brickReducer from './brick-reducer';
+import bricksReducer, {BricksState} from './bricks-reducer';
+import brickReducer, {BrickState} from './brick-reducer';
 import authReducer, {AuthState} from './auth';
-import userReducer from './user';
+import userReducer, {UserState} from './user';
 
 
 export interface ReduxCombinedState {
-  bricks: any;
-  brick: any;
+  bricks: BricksState;
+  brick: BrickState;
   auth: AuthState;
-  user: any;
+  user: UserState;
 }
 
 export default combineReducers({
