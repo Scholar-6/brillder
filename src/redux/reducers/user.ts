@@ -1,9 +1,9 @@
 import types from '../types';
 
 
-interface UserState {
-  user: any
-  error: string
+export interface UserState {
+  user: any;
+  error: string;
 }
 
 const AccountInitialState: UserState = {
