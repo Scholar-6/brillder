@@ -12,7 +12,7 @@ const LastTab: React.FC<LastTabProps> = ({ tutorialStep }) => {
     className += " tutorial-border";
   }
   return (
-    <div className={className + " svgOnHover"}>
+    <div className={`svgOnHover ${className}`}>
       <svg className="svg w100 h100 active">
         <use href={sprite + "#plus"} className="text-theme-dark-blue" />
       </svg>
