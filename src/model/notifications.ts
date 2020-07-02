@@ -5,6 +5,7 @@ export interface Sender {
 }
 
 export interface Notification {
+    id: number;
     sender: Sender;
     title: string;
     text: string;
