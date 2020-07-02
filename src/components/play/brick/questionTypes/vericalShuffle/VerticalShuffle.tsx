@@ -82,10 +82,6 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     }
   }
 
-  componentDidUpdate(props: VerticalShuffleProps) {
-    console.log(props.isTimeover, this.props.isTimeover);
-  }
-
   mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
     // If the question is answered in review phase, add 2 to the mark and not 5.
     let markIncrement = prev ? 2 : 5;
@@ -121,6 +117,10 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     })
     // Then, if the attempt scored no marks and the program is in live phase, then give the student a mark.
     if(attempt.marks === 0 && !prev) attempt.marks = 1;
+
+    if (this.state.status === DragAndDropStatus.Changed) {
+      attempt.dragged = true;
+    }
     return attempt;
   }
 

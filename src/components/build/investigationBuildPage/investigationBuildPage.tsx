@@ -46,6 +46,7 @@ import { User } from "model/user";
 import {GetCashedBuildQuestion} from '../../localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
+import { ReduxCombinedState } from "redux/reducers";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -594,20 +595,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   );
 };
 
-const mapState = (state: any) => {
-  return {
-    user: state.user.user,
-    bricks: state.bricks.bricks,
-    brick: state.brick.brick
-  };
-};
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  bricks: state.bricks.bricks,
+  brick: state.brick.brick
+});
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
-    saveBrick: (brick: any) => dispatch(actions.saveBrick(brick))
-  };
-};
+const mapDispatch = (dispatch: any) => ({
+  fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
+  saveBrick: (brick: any) => dispatch(actions.saveBrick(brick))
+});
 
 const connector = connect(mapState, mapDispatch);
 

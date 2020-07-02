@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import EditIcon from '@material-ui/icons/Edit';
 
 import './wordHighlighting.scss'
 import { UniqueComponentProps } from '../types';
 import { BuildWord, SpecialSymbols } from 'components/interfaces/word';
 
+import sprite from "../../../../../../assets/img/icons-sprite.svg";
 
 export enum WordMode {
   Input,
@@ -210,8 +210,10 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
         <div>Enter/Paste Text Below.</div>
         <div>Use Highlighter Icon to click correct word(s).</div>
       </div>
-      <div className="pencil-icon-container">
-        <EditIcon className={state.mode ? "active" : ""} onClick={switchMode} />
+      <div className="pencil-icon-container svgOnHover" onClick={switchMode}>
+        <svg className="svg w100 h100 active">
+          <use href={sprite + "#highlighter"} className={state.mode ? "text-theme-green" : "text-theme-dark-blue"} />
+        </svg>
       </div>
       <div className="input-container">
         {renderBox()}

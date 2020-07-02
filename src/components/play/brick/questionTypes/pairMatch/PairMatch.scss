@@ -36,10 +36,6 @@
       padding-bottom: 8px;
       height: 100%;
     }
-
-    .question-hint {
-      margin-right: 20px;
-    }
   }
   .pair-match-play-option {
     margin-top: 5px;
@@ -87,10 +83,6 @@
     font-size: $font-size;
   }
 
-  .question-hint-global {
-    margin-top: 10px;
-  }
-
   .image-choice {
     background: inherit;
     border: 4px solid var(--light-gray) !important;
@@ -104,8 +96,4 @@
     background: var(--theme-orange);
   }
 
-  .question-hint,
-  .question-hint-global {
-    color: var(--theme-dark-blue);
-  }
 }

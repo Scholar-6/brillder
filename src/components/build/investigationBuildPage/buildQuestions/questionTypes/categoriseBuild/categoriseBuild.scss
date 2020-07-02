@@ -1,11 +1,13 @@
-@import '../../../../../../assets/sass/partials/variables';
-@import '../../../../../../assets/sass/partials/mixins';
-@import '../../../../../../assets/sass/partials/extensions';
+@import "../../../../../../assets/sass/partials/variables";
+@import "../../../../../../assets/sass/partials/mixins";
+@import "../../../../../../assets/sass/partials/extensions";
 
 .categorise-build {
   text-align: center;
-
-  .component-title{
+  > div {
+    margin-bottom: 0.4vh;
+  }
+  .component-title {
     opacity: 0.8;
     font-size: $base-sm-text-size;
     font-family: $font-family-regular;
@@ -17,7 +19,9 @@
     margin: 0;
     margin-left: 1.25%;
     width: 97.5%;
-
+    > div {
+      margin-bottom: 0.3vh;
+    }
     input {
       border-radius: 0.4vw;
       width: 100%;
@@ -31,13 +35,93 @@
       font-family: $font-family-regular;
       height: auto !important;
     }
-
     input.answer {
       padding-top: 8%;
     }
-
     .sort-image input {
       padding-top: 9.5vh;
+    }
+  }
+
+  .document-editor {
+    margin-top: 0.1vw;
+    margin-bottom: 0.1vw;
+
+    position: relative;
+    > div {
+      > .ck-toolbar {
+        width: 2vw;
+        height: 100%;
+        font-size: 1.4vh;
+        right: 0;
+        border-top-right-radius: 0.4vw !important;
+        border-bottom-right-radius: 0.4vw !important;
+        background: white !important;
+        position: absolute;
+        z-index: 1;
+      }
+    }
+    .ck-dropdown__panel {
+      z-index: 100 !important;
+    }
+    .ck-toolbar__items {
+      display: block !important;
+
+      button {
+        padding: 0;
+        margin: 0;
+        display: block !important;
+      }
+    }
+    .ck-content {
+      text-align: center !important;
+      overflow: hidden;
+      .ck-content {
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
+      p {
+        text-align: center !important;
+      }
+    }
+  }
+
+  .categorise-answer {
+    .document-editor {
+      .ck-content {
+        padding-left: 2.5vw;
+        padding-right: 4.5vw;
+        padding-top: 4.2vh;
+        text-align: center !important;
+        overflow: hidden;
+        border-radius: 0.4vw !important;
+        p {
+          text-align: center !important;
+        }
+      }
+    }
+    &:first-child {
+      .document-editor {
+        .ck-content {
+          border-bottom-left-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+        }
+      }
+    }
+    &:not(:first-child):not(:last-child) {
+      .document-editor {
+        .ck-content {
+          border-radius: 0 !important;
+        }
+      }
+    }
+    &:last-child {
+      .document-editor {
+        .ck-content {
+          border-top-left-radius: 0 !important;
+          border-top-right-radius: 0 !important;
+        }
+      }
     }
   }
 }

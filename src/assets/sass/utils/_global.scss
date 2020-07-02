@@ -6,8 +6,7 @@ body,
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Brandon Grotesque Regular', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: $font-family-regular;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -63,10 +62,10 @@ input:focus {
   margin-top: 10vw !important;
 }
 .m-l-02 {
-  margin-left: .2vw !important;
+  margin-left: 0.2vw !important;
 }
 .m-r-02 {
-  margin-right: .2vw !important;
+  margin-right: 0.2vw !important;
 }
 
 .text-center {
@@ -117,13 +116,16 @@ input:focus {
 
 .svg {
   @extend %noUserSelect;
-  @include transition(all 350ms cubic-bezier(0.5, 1, 0.89, 1));
   fill: currentColor;
   // stroke: currentColor;
 }
 
 .svgOnHover {
   @extend %posRelative;
+  > .svg,
+  > span {
+    @include transition(all 350ms cubic-bezier(0.5, 1, 0.89, 1));
+  }
   > .svg {
     width: 20px;
     height: 20px;
@@ -318,10 +320,17 @@ input:focus {
   z-index: 1000;
   border-bottom-right-radius: 2vw;
   background: $light-blue;
-  width: calc(6.834vw - 1vw) !important;
-  height: 5.834vw;
   margin-right: 1vw;
-  padding: 0.35vw .782vw .782vw 0.35vw;
+  padding: 0.35vw 0.782vw 0.782vw 0.35vw;
+  @include phone_and_tabletP {
+    width: calc(10.834vw - 1vw) !important;
+    height: 10.834vw;
+  }
+  @include tabletP {
+    width: calc(6.834vw - 1vw) !important;
+    height: 5.834vw;
+  }
+
   .home-button {
     cursor: pointer;
     height: 100%;
@@ -356,7 +365,7 @@ input:focus {
     width: 1.1vw;
     height: 2vw;
     margin: 0;
-    left: .7vw;
+    left: 0.7vw;
     top: -1.2vw;
     z-index: 999;
     .smoke-1,
@@ -467,4 +476,114 @@ h3 {
   right: 0;
   color: white;
   top: 2vh;
+}
+
+.question-hint,
+.question-hint-global {
+  color: var(--theme-dark-blue);
+}
+.question-hint {
+  line-height: 1;
+  margin-top: 2px;
+  background: #ff9d00;
+  padding: 2px 5px;
+  border-radius: 1px 2px 3px 4px;
+  font-family: $font-family-regular;
+  display: block;
+  font-size: 1vw;
+  p {
+    font-size: 1vw;
+    display: inline;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  table,
+  td,
+  th {
+    border: 1px solid var(--theme-dark-blue);
+  }
+  td {
+    min-width: 0;
+    padding: 0;
+  }
+}
+.question-hint-global {
+  width: 100%;
+  font: 500 16px/24px $font-family-regular;
+  background: #ff9d00;
+  border-radius: 1px 2px 3px 4px;
+  margin-top: 0.5vw;
+  > div {
+    padding: 0.5vw;
+  }
+  p {
+    font-size: 1vw;
+  }
+  .table {
+    margin-left: 0;
+    margin-right: 0;
+    overflow-x: auto;
+  }
+  table {
+    margin: auto;
+    border-collapse: collapse;
+  }
+  table,
+  td,
+  th {
+    border: 1px solid var(--theme-dark-blue);
+  }
+  td {
+    min-width: 2em;
+    padding: 0.4em;
+  }
+  &.correct {
+    background: var(--white);
+  }
+  &.wrong {
+    background: var(--theme-orange);
+  }
+}
+
+.choose-choice {
+  font: $answer-input-text-size $font-family-regular;
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+  color: var(--theme-dark-blue) !important;
+  text-align: center;
+  text-transform: none !important;
+  border-radius: 0 !important;
+  width: 100%;
+  padding: 14px 0 !important;
+  background-color: $tab-gray !important;
+  opacity: 1;
+  .MuiButton-label {
+    flex-direction: column;
+  }
+  img {
+    width: 100%;
+  }
+  p {
+    text-align: center !important;
+  }
+  &.active {
+    background: $white-blue;
+  }
+  &.correct {
+    background: var(--theme-green);
+    .question-hint {
+      background: white;
+    }
+  }
+  &.wrong {
+    background: var(--theme-orange);
+  }
 }

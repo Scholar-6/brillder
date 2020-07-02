@@ -14,6 +14,10 @@
     background-color: $tab-gray;
     font-size: 1rem;
     line-height: 1;
+
+    p {
+      text-align: center !important;
+    }
   }
   .sort-category-list-container {
     min-height: 30px;
@@ -54,11 +58,6 @@
 
     .sort-image-choice {
       width: 100%;
-    }
-
-    .question-hint,
-    .question-hint-global {
-      color: var(--theme-dark-blue);
     }
   }
 }

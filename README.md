@@ -3,34 +3,31 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Development Version
 All changes to development branch are automatically deployed to http://dev-brillder.scholar6.org
 
-## Run Project
+## Run Project  
 
-To run project run next commands:
+Run the project locally (Windows and Linux) and connect to the dev-api:
 
-### `npm install`
-### `npm start`
-
-On an ubuntu machine add the following to the /etc/environment file
-### `REACT_APP_ZENDESK_ID=33210b3d-b3d5-43ba-9b07-70acce8c10b6`
-### `REACT_APP_BACKEND_HOST=https://api.scholar6.org`
-### `REACT_APP_VERSION=$npm_package_version`
-
-## Run via https
-
-### ($env:HTTPS = "true") -and (npm start)
+* Requires Git and NPM
+* `git clone git@github.com:Scholar-6/brillder`
+* `cd brillder`
+* add an entry to the hosts file 
+** linux /etc/hosts
+** windows C:\Windows\System32\Drivers\etc\hosts
+`127.0.0.1 local-brillder.scholar6.org`
+* create .env file with the following values (in production they are added to /etc/environment)  
+        REACT_APP_BACKEND_HOST=https://dev-api.scholar6.org  
+        REACT_APP_ZENDESK_ID=33210b3d-b3d5-43ba-9b07-70acce8c10b6  
+        REACT_APP_VERSION=$npm_package_version
+* `npm install`
+* `npm start`
+* Go to http://local-brillder.scholar6.org:3000
+* If you do not have an account registered on https://dev-brillder.scholar6.org then click signup option
 
 ## Run StoryBook
 
 ### `npm run storybook`
 
 ## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
@@ -65,17 +62,3 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-## Play Folder Structure
-
-play/brick/live/Live - (React function) which shuffle choices in components and will gather and store data from his children. Not refreshable.
-
-play/brick/live/QuestionsComponent - (React function) which have stepper and swipable tabs with animation from material ui. Refreshing every time question changed.
-(!!! Has reference for all questions !!!)
-
-play/brick/live/QuestionLive (need to rename because will be for review too) - (React Class) component for each Question. Render inner components like text, image ... and unique component like Short Answer, SingleChoice and others.
-(!!! Has reference for unique component (ShortAnswer, ...) !!!)
-
-play/brick/live/comp folder containers basic components like Text Image Quote
-
-play/brick/live/questionTypes - folder container unique (React Class) components like ShortAnswer PairAnswer and others

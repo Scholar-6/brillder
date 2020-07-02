@@ -7,14 +7,16 @@ import actions from '../../redux/actions/auth';
 import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
 import { User, UserType } from 'model/user';
+import { ReduxCombinedState } from 'redux/reducers';
 
 
 interface StudentRouteProps {
-  component: any,
-  isAuthenticated: isAuthenticated,
-  user: User,
-  getUser():void,
-  isAuthorized():void,
+  component: any;
+  isAuthenticated: isAuthenticated;
+  isRedirectedToProfile: boolean;
+  user: User;
+  getUser():void;
+  isAuthorized():void;
 }
 
 const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user, ...rest }) => {
@@ -22,6 +24,12 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
     if (!user) {
       rest.getUser();
       return <div>...Getting User...</div>
+    }
+
+    if (!rest.isRedirectedToProfile) {
+      if(!user.firstName || !user.lastName) {
+        return <Redirect to="/build/user-profile" />
+      }
     }
     const {roles} = user;
     let can = roles.some((role: any) => {
@@ -37,23 +45,20 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
     rest.isAuthorized()
     return <div>...Checking rights...</div>
   } else {
-    return <Redirect to="/choose-user" />
+    return <Redirect to="/choose-login" />
   }
 }
 
-const mapState = (state: any) => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.user.user,
-  }
-}
+const mapState = (state: ReduxCombinedState) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  isRedirectedToProfile: state.auth.isRedirectedToProfile,
+  user: state.user.user,
+})
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    isAuthorized: () => dispatch(actions.isAuthorized()),
-    getUser: () => dispatch(userActions.getUser()),
-  }
-}
+const mapDispatch = (dispatch: any) => ({
+  isAuthorized: () => dispatch(actions.isAuthorized()),
+  getUser: () => dispatch(userActions.getUser()),
+});
 
 const connector = connect(mapState, mapDispatch)
 

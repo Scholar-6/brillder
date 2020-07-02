@@ -14,7 +14,7 @@ const HeadComponent:React.FC<any> = ({data}) => {
       <Grid container justify="center" className="phone-preview-component">
         <img alt="head" src="/images/new-brick/head.png"></img>
         <div className="typing-text">
-          <div>{data}</div>
+          <p>{data}</p>
         </div>
       </Grid>
     )
@@ -51,7 +51,7 @@ function OpenQuestion({ selectedQuestion, canEdit, saveOpenQuestion }: any) {
             canSubmit={true}
             onSubmit={saveOpenQuestion}
             data={selectedQuestion}
-            backLink="/build/new-brick/brick-title" 
+            backLink="/build/new-brick/brick-title"
           />
         </Grid>
         <ProposalPhonePreview Component={HeadComponent} data={selectedQuestion} link="" />

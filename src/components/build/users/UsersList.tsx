@@ -20,20 +20,17 @@ import SubjectsList from 'components/baseComponents/subjectsList/SubjectsList';
 import AddUserButton from './AddUserButton';
 
 import { User, UserType, UserStatus } from 'model/user';
+import { ReduxCombinedState } from 'redux/reducers';
 
 
-const mapState = (state: any) => {
-  return {
-    user: state.user.user,
-  }
-}
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+})
 
-const mapDispatch = (dispatch: any) => {
-  return {
-    forgetBrick: () => dispatch(brickActions.forgetBrick()),
-    logout: () => dispatch(authActions.logout()),
-  }
-}
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(brickActions.forgetBrick()),
+  logout: () => dispatch(authActions.logout()),
+})
 
 const connector = connect(mapState, mapDispatch);
 
@@ -221,7 +218,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   logout() {
     this.props.logout();
-    this.props.history.push('/choose-user');
+    this.props.history.push('/choose-login');
   }
 
   move(brickId:number) {
@@ -351,7 +348,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
 	}
 
-	expendFilter() {
+	expandFilter() {
 		this.setState({
 		  ...this.state,
 		  filterExpanded: true,
@@ -391,7 +388,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 			<div className="filter-header">
 				<span>Filter by: Subject</span>
 				<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
-					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expendFilter())}}>
+					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expandFilter())}}>
 				</button>
 			</div>
 			<SubjectsList

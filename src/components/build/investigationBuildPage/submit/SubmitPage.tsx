@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import "./SubmitPage.scss";
 import { BrickStatus } from "model/brick";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
+import { ReduxCombinedState } from "redux/reducers";
 
 
 interface SubmitBrickProps {
@@ -176,11 +177,9 @@ class SubmitBrickPage extends Component<SubmitBrickProps, SubmitBrickState> {
   }
 }
 
-const mapState = (state: any) => {
-  return {
-    user: state.user.user,
-  }
-}
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+})
 
 const connector = connect(mapState)
 
