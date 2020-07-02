@@ -392,12 +392,12 @@ input:focus {
   background: $light-blue;
   align-items: center;
   .search-container {
+    height: 3.698vw;
     display: flex;
+    align-items: center;
     width: 70%;
-    .MuiGrid-item {
-      height: 3.698vw;
-      display: flex;
-      align-items: center;
+    .search-area {
+      width: 100%;
     }
   }
   .action-container {
