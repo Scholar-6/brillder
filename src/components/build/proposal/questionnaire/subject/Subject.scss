@@ -5,8 +5,14 @@
 $box-radius: 0.4vw;
 
 .subject-page {
+  @extend %height100;
+  .subject-box {
+    @include phone_and_tabletP {
+      height: 80%;
+    }
+  }
   .select-label {
-    background: white !important;
+    background: var(--white) !important;
   }
   .select-subject {
     font-size: 1.3vw !important;
@@ -14,39 +20,68 @@ $box-radius: 0.4vw;
   }
   .subject-container {
     margin-left: 8.4vw;
-    width: 100%;
-    position: relative;
+    @extend %width100;
+    @extend %posRelative;
 
     .subjects-group {
-      margin-top: 3vh;
-      margin-bottom: 9vh;
       display: inline;
-      max-height: 40vh;
       overflow: auto;
+
+      @include phone_and_tabletP {
+        max-height: calc(85vh - 16vh);
+      }
+      @include tabletP {
+        max-height: 41vh;
+        margin-top: 3vh;
+        margin-bottom: 9vh;
+      }
 
       .MuiSvgIcon-root {
         color: var(--theme-dark-blue);
-        font-size: 2.4vw;
+        @include phone_and_tabletP {
+          font-size: 5.4vw;
+        }
+        @include tabletP {
+          font-size: 2.4vw;
+        }
       }
       .MuiFormControlLabel-root {
-        width: 20.5vw;
+        @include phone_and_tabletP {
+          width: 100%;
+          padding: 0 4vw;
+          margin-bottom:2vh;
+        }
+        @include tabletP {
+          width: 20.5vw;
+        }
       }
 
       .MuiFormControlLabel-label {
         font-family: $font-family-regular;
         color: var(--theme-dark-blue);
         margin-left: 1.8vw;
-        font-size: 2vw;
+        @include phone_and_tabletP {
+          font-size: 6vw;
+        }
+        @include tabletP {
+          font-size: 2vw;
+        }
       }
     }
   }
 
   .only-tutorial-header {
-    margin-top: 21vh;
     text-align: left;
     font-family: $font-family-black;
-    font-size: 3.9vw;
     margin-bottom: 5% !important;
+    @include phone_and_tabletP {
+      font-size: 10.9vw;
+      text-align: center;
+    }
+    @include tabletP {
+      font-size: 3.9vw;
+      margin-top: 21vh;
+    }
   }
 
   .subject-name {
@@ -55,7 +90,7 @@ $box-radius: 0.4vw;
     right: 8.5%;
     width: 21.2%;
     > div {
-      text-align: center;
+      @extend %textCenter;
       font-size: 2.1vw;
       color: var(--theme-dark-blue);
       font-family: $font-family-black;
@@ -63,9 +98,11 @@ $box-radius: 0.4vw;
     }
   }
 
-  .french-preview, .german-preview, .psychology-preview {
-    color: white;
-    text-align: center;
+  .french-preview,
+  .german-preview,
+  .psychology-preview {
+    color: (--white);
+    @extend %textCenter;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 10vw;
@@ -81,8 +118,8 @@ $box-radius: 0.4vw;
   .art-preview {
     margin-left: 2vw;
     margin-right: 2vw;
-    color: white;
-    text-align: center;
+    color: var(--white);
+    @extend %textCenter;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 10vw;
@@ -98,8 +135,8 @@ $box-radius: 0.4vw;
   .biology-preview {
     margin-left: 1.5vw;
     margin-right: 1.5vw;
-    color: white;
-    text-align: center;
+    color: var(--white);
+    @extend %textCenter;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 8.5vw;
@@ -115,8 +152,8 @@ $box-radius: 0.4vw;
   .chinese-preview {
     margin-left: 1.5vw;
     margin-right: 1.5vw;
-    color: white;
-    text-align: center;
+    color: var(--white);
+    @extend %textCenter;
     > div:nth-child(1) {
       font-size: 3.2vw;
       margin-top: 14.5vw;
@@ -129,11 +166,12 @@ $box-radius: 0.4vw;
     }
   }
 
-  .classics-preview, .english-preview {
+  .classics-preview,
+  .english-preview {
     margin-left: 1.5vw;
     margin-right: 1.5vw;
-    color: white;
-    text-align: center;
+    color: var(--white);
+    @extend %textCenter;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 13vw;
@@ -149,8 +187,8 @@ $box-radius: 0.4vw;
   .drama-preview {
     margin-left: 1.5vw;
     margin-right: 1.5vw;
-    color: white;
-    text-align: center;
+    color: var(--white);
+    @extend %textCenter;
     > div:nth-child(1) {
       font-size: 3.2vw;
       margin-top: 14.5vw;
@@ -163,9 +201,10 @@ $box-radius: 0.4vw;
     }
   }
 
-  .economics-preview, .philosophy-preview {
-    color: white;
-    text-align: center;
+  .economics-preview,
+  .philosophy-preview {
+    color: var(--white);
+    @extend %textCenter;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 6vw;
@@ -181,8 +220,8 @@ $box-radius: 0.4vw;
   .geography-preview {
     margin-left: 2.18vw;
     margin-right: 2.18vw;
-    color: white;
-    text-align: center;
+    color: var(--white);
+    @extend %textCenter;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 4.5vw;
@@ -195,9 +234,12 @@ $box-radius: 0.4vw;
     }
   }
 
-  .physics-preview, .physics-preview, .maths-preview, .history-preview {
-    color: white;
-    text-align: center;
+  .physics-preview,
+  .physics-preview,
+  .maths-preview,
+  .history-preview {
+    color: var(--white);
+    @extend %textCenter;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 8vw;
@@ -216,9 +258,18 @@ $box-radius: 0.4vw;
     }
   }
 
-  @media only screen and (max-width: 599px) {
-    .subject-container {
-      width: 70% !important;
+  .pagination-button {
+    @include phone_and_tabletP{
+      width: 100vw;
+      margin-bottom: 6vh;
+    }
+    @include tabletP{
+      width: 60vw;
     }
   }
+  // @media only screen and (max-width: 599px) {
+  //   .subject-container {
+  //     width: 70% !important;
+  //   }
+  // }
 }
