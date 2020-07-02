@@ -27,8 +27,8 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
       alignContent="center"
       justify="center"
     >
-      <div className="last-tab svgOnHover">
-        <svg className="svg w-2 h-2 active">
+      <div className={`last-tab svgOnHover ${className}`}>
+        <svg className="svg w100 h100 active">
           <use href={sprite + "#list"} className="text-theme-dark-blue" />
         </svg>
       </div>

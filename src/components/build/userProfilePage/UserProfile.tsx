@@ -380,14 +380,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   </div>
                   <Grid item className="profile-inputs-container">
                     <div>
-                      <Grid container justify="center">
-                        <FormControlLabel
-                          value="start"
-                          control={<Checkbox color="primary" />}
-                          label="Don`t show during search?"
-                          labelPlacement="end"
-                        />
-                      </Grid>
                       <Grid>
                         <input
                           className="first-name"
@@ -402,6 +394,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                           placeholder="Surname"
                         />
                       </Grid>
+                      <FormControlLabel
+                          value="start"
+                          control={<Checkbox color="primary" />}
+                          label="Keep me secret: I don't want to be searchable"
+                          labelPlacement="end"
+                        />
                       <input
                         type="email"
                         value={this.state.user.email}
