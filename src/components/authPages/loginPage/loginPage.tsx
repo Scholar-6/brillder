@@ -254,13 +254,8 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                   className="svg active logo-image mobile"
                   onClick={() => props.history.push("/choose-login")}
                 >
-                  <use href={sprite + "#login"} />
+                  <use href={sprite + "#login"} className="text-theme-orange" />
                 </svg>
-                <img
-                  alt="Logo"
-                  src="/images/choose-login/logo.png"
-                  className="logo-image website"
-                />
               </div>
               <form onSubmit={handleSubmit} className="content-box">
                 <div className="input-block">
