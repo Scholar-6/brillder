@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Select, FormControl, Button } from '@material-ui/core';
+import { Grid, Select, FormControl } from '@material-ui/core';
 import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
@@ -49,7 +49,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   ]);
   const [scrollShown, setScroll] = React.useState(false);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
-  const [scrollPosition] = React.useState(0);
   const { type } = question;
 
   const setQuestionHint = (hintState: HintState) => {

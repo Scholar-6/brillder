@@ -7,7 +7,6 @@ import './ProvisionalScore.scss';
 import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
 import { PlayStatus } from '../model/model';
-import TimerWithClock from "../baseComponents/TimerWithClock";
 import { Moment } from 'moment';
 import sprite from "../../../../assets/img/icons-sprite.svg";
 import ReviewStepper from '../review/ReviewStepper';
