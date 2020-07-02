@@ -64,7 +64,7 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
 
   render() {
     return (
-      <Grid container direction="row" className="subjects-container">
+      <div className="big-input-container">
         <Autocomplete
           multiple
           open={this.state.autoCompleteOpen}
@@ -83,7 +83,7 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
             />
           )}
         />
-      </Grid>
+      </div>
     );
   }
 }
