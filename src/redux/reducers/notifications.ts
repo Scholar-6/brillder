@@ -19,6 +19,12 @@ export default (state = NotificationsInitialState, action: any) => {
             return { error: action.error } as NotificationsState;
         case types.RECEIVED_NOTIFICATION:
             return { notifications: [ ...(state.notifications ?? []), action.notification ] } as NotificationsState;
+        case types.NOTIFICATION_CLEAR:
+            return {
+                notifications: state.notifications?.filter(notification => notification.id != action.notificationId)
+            };
+        case types.NOTIFICATION_CLEAR_ALL:
+            return { notifications: [] };
         default: return state;
     }
 }
