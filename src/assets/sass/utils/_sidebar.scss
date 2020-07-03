@@ -345,7 +345,12 @@ $height-desktop-view: calc(100vh - 7.834vw);
       .main-brick-container {
         position: relative;
         padding-left: 0.8vw;
-        width: 100%;
+        @include tabletL {
+          width: 33.33%
+        }
+        @include phone_and_tabletP {
+          width: 100%;
+        }
         .brick-container {
           position: relative;
           padding-right: 0;
@@ -456,12 +461,6 @@ $height-desktop-view: calc(100vh - 7.834vw);
                   width: 8.1vw;
                 }
               }
-              .round-button {
-                @include phone_and_tabletP {
-                  height: 8.1vw;
-                  width: 8.1vw;
-                }
-              }
             }
             &.brick-row-0,
             &.brick-row-1,
@@ -494,15 +493,6 @@ $height-desktop-view: calc(100vh - 7.834vw);
             height: 100%;
             min-height: $min-brick-height;
             width: 3.3%;
-          }
-        }
-        .round-button {
-          height: 2.1vw;
-          width: 2.1vw;
-          border-radius: 100vw;
-          @include phone_and_tabletP {
-            height: 8.1vw;
-            width: 8.1vw;
           }
         }
       }
