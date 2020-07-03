@@ -38,6 +38,11 @@ input {
   }
 }
 
+.MuiCheckbox-root,
+.MuiFormControlLabel-label {
+  color: var(--theme-dark-blue) !important;
+}
+
 .input-block {
   @extend %displayFlex;
   @extend %posRelative;
