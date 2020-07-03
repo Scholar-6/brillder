@@ -73,11 +73,8 @@
     "redux": "^4.0.5",
     "redux-socket.io": "^1.4.0",
     "redux-thunk": "^2.3.0",
-<<<<<<< HEAD
     "socket.io-client": "^2.3.0",
-=======
     "styled-components": "^5.1.1",
->>>>>>> development
     "typescript": "^3.7.5"
   },
   "scripts": {
