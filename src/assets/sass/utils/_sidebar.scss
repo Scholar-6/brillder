@@ -346,7 +346,7 @@ $height-desktop-view: calc(100vh - 7.834vw);
         position: relative;
         padding-left: 0.8vw;
         @include tabletL {
-          width: 33.33%
+          width: 33.33%;
         }
         @include phone_and_tabletP {
           width: 100%;
