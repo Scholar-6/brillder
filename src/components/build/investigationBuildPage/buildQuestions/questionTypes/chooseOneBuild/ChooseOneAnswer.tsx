@@ -56,19 +56,27 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     update();
   }
 
-  let checkboxClass = "";
+  let containerClass = "";
   let className = 'choose-one-box unique-component-box';
   if (answer.answerType === QuestionValueType.Image) {
     className+=' big-answer';
-    checkboxClass='big-box';
+    containerClass='big-box';
+  }
+
+  console.log(validationRequired, checkBoxValid);
+  let checkboxClass = "left-ckeckbox";
+  if (validationRequired) {
+    if (!checkBoxValid) {
+      checkboxClass += " checkbox-invalid";
+    }
   }
 
   return (
     <div className={className}>
       {renderDeleteButton()}
-      <div className={"checkbox-container " + checkboxClass}>
+      <div className={"checkbox-container " + containerClass}>
         <Checkbox
-          className={"left-ckeckbox " + (validationRequired && !checkBoxValid) ? "checkbox-invalid" : ""}
+          className={checkboxClass}
           disabled={locked}
           checked={answer.checked}
           onChange={onChecked}
