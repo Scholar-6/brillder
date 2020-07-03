@@ -58,7 +58,7 @@ class YoutubeLink extends Component<YoutubeLinkProps, YoutubeLinkState> {
       let link = this.getVideoLink(this.props.value);
       return (
         <Grid container justify="center" className="youtube-link">
-          <a href={link}>Play on YouTube</a>
+          <a href={link} rel="noopener noreferrer" target="_blank">Play on YouTube</a>
         </Grid>
       );
     }
