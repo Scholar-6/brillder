@@ -109,3 +109,22 @@ input {
     }
   }
 }
+
+.checkbox-invalid {
+  color: var(--theme-orange) !important;
+  &:hover {
+    background-color: var(--theme-orange-alpha4) !important;
+  }
+  .MuiSvgIcon-root {
+    color: var(--theme-orange) !important;
+  }
+  &.Mui-checked {
+    color: var(--theme-green) !important;
+    &:hover {
+      background-color: var(--theme-green-alpha4) !important;
+    }
+    .MuiSvgIcon-root {
+      color: var(--theme-green) !important;
+    }
+  }
+}
