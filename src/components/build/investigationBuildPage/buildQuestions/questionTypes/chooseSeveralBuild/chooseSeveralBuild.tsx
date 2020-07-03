@@ -81,6 +81,8 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   }
 
   let isChecked = !!validator.validateChooseSeveralChecked(state.list);
+  
+  // TODO: remove console.log 3/7/2020
   console.log(isChecked);
 
   return (
