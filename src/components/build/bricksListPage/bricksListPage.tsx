@@ -1,7 +1,7 @@
 import "./bricksListPage.scss";
 import React, { Component } from "react";
 import {
-  Box, Grid, FormControlLabel, Radio, RadioGroup,
+  Box, Grid, FormControlLabel, Radio, RadioGroup, Hidden,
 } from "@material-ui/core";
 import axios from "axios";
 // @ts-ignore
@@ -475,7 +475,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         style={{ transformOrigin: "0 0 0" }}
         timeout={index * 150}
       >
-        <Grid container key={key} item xs={4} justify="center">
+        <Grid container key={key} item sm={4} justify="center">
           <div className="main-brick-container">
             <Box className="brick-container">
               <div
@@ -657,10 +657,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             showDropdown={() => this.showDropdown()}
           />
           <Grid container direction="row" className="sorted-row">
-            <Grid container item xs={3} className="sort-and-filter-container">
-              {this.renderSortAndFilterBox()}
-            </Grid>
-            <Grid item xs={9} className="brick-row-container">
+            <Hidden only={['xs']}>
+              <Grid container item sm={3} className="sort-and-filter-container">
+                {this.renderSortAndFilterBox()}
+              </Grid>
+            </Hidden>
+            <Grid item sm={9} xs={12} className="brick-row-container">
               <div className="brick-row-title">{this.renderTitle()}</div>
               <div className="bricks-list-container">
                 <Grid container direction="row">
