@@ -81,6 +81,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   }
 
   let isChecked = !!validator.validateChooseSeveralChecked(state.list);
+  console.log(isChecked);
 
   return (
     <div className="choose-several-build unique-component">
