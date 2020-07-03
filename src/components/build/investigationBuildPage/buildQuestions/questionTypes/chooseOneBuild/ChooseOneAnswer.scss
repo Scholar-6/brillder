@@ -3,25 +3,29 @@
 @import '../../../../../../assets/sass/partials/extensions';
 
 .choose-one-box {
-  .question-image-drop {
-    left: 30%;
-
-    .dropzone {
-      background: none;
-    }
-  }
+  position: relative;
+  margin-left: 1.25%;
+  width: 97.5%;
+  margin-top: 0.17vw;
+  margin-bottom: 0.17vw;
   .document-editor {
     position: relative;
-    > div > .ck-toolbar {
-      font-size: 1.4vh;
-      right: 0;
-      border-top-right-radius: 0.4vw !important;
-      border-bottom-right-radius: 0.4vw !important;
-      background: white !important;
-      position: absolute;
-      width: 3.5vh;
-      height: 100%;
-      z-index: 1;
+    height: calc(100% - 0.4vh);
+    > div {
+      > .ck-toolbar {
+        font-size: 1.4vh;
+        right: 0;
+        border-top-right-radius: 0.4vw !important;
+        border-bottom-right-radius: 0.4vw !important;
+        background: white !important;
+        position: absolute;
+        width: 3.5vh;
+        height: 100%;
+        z-index: 1;
+      }
+    }
+    .ck-editor__main {
+      width: calc(100% - 2vw);
     }
     .ck-dropdown__panel {
       z-index: 100 !important;
@@ -37,11 +41,13 @@
     }
     .ck-content {
       padding-left: 2.5vw;
-      padding-right: 5vw;
-      padding-top: 4.2vh;
+      padding-right: 1vw;
+      padding-top: 4vh;
       text-align: center !important;
       overflow: hidden;
       border-radius: 0.4vw !important;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
 
       p {
         text-align: center !important;
@@ -49,90 +55,78 @@
     }
   }
 
+  .checkbox-container {
+    @extend %flexCenter;
+    @extend %floatToYCenter;
+    left: 0;
+    height: 100%;
+    z-index: 999;
+    &.big-box {
+      height: 14vh;
+    }
+  }
+
   .delete-right-top-icon {
     position: absolute;
-    top: 0.2vh;
-    height: $bin-size;
+    top: 0.8vh;
+    right: 2.2vw;
     width: $bin-size;
-    right: 4.2vh;
+    height: $bin-size;
     cursor: pointer;
     color: var(--theme-orange);
     z-index: 2;
-  }
-
-  .delete-right-top-icon:hover {
-    opacity: 0.5;
-  }
-}
-
-.choose-one-box.big-answer {
-  .document-editor {
-    > div > .ck-toolbar {
-      height: 14vh;
-    }
-    .ck-content {
-      padding-top: 10vh;
+    &:hover {
+      opacity: 0.5;
     }
   }
-}
 
-.choose-one-box {
-  position: relative;
-  margin-left: 1.25%;
-  width: 97.5%;
-  margin-top: 0.17vw;
-  margin-bottom: 0.17vw;
-
-  > div {
-    position: absolute;
-    left: 0;
-    -webkit-box-pack: start !important;
-  }
-
-  .checkbox-invalid {
-    color: var(--theme-orange);
-  }
-
-  .Mui-checked {
-    color: var(--theme-green) !important;
-  }
-
-  .checkbox-container {
-    position: absolute;
-    height: 100%;
-  }
-  .checkbox-container.big-box {
-    position: absolute;
-    height: 14vh;
-  }
-
-  .left-ckeckbox {
-    z-index: 1;
-    padding: 0.45vw;
-    opacity: 1 !important;
-
-    span {
-      svg {
-        height: $bin-size !important;
-        width: $bin-size !important;
+  &.big-answer {
+    .document-editor {
+      > div {
+        > .ck-toolbar {
+          height: 14vh;
+        }
+      }
+      .ck-content {
+        padding-top: 10vh;
       }
     }
-  }
 
-  input:not([type='checkbox']) {
-    width: 84%;
-    text-align: center;
-    border: none;
-    background: $input-gray;
-    padding-right: 8%;
-    padding-left: 8%;
-    border-radius: 0;
-    opacity: 0.8;
-    font-size: $answer-input-text-size;
-    font-family: $font-family-regular;
-    height: $answer-height !important;
-  }
-  input[type='checkbox'] {
-    height: 100% !important;
+    .checkbox-invalid {
+      color: var(--theme-orange);
+    }
+
+    .Mui-checked {
+      color: var(--theme-green) !important;
+    }
+
+    .left-ckeckbox {
+      z-index: 1;
+      padding: 0.45vw;
+      opacity: 1 !important;
+      span {
+        svg {
+          height: $bin-size !important;
+          width: $bin-size !important;
+        }
+      }
+    }
+
+    input:not([type='checkbox']) {
+      width: 84%;
+      text-align: center;
+      border: none;
+      background: $input-gray;
+      padding-right: 8%;
+      padding-left: 8%;
+      border-radius: 0;
+      opacity: 0.8;
+      font-size: $answer-input-text-size;
+      font-family: $font-family-regular;
+      height: $answer-height !important;
+    }
+    input[type='checkbox'] {
+      height: 100% !important;
+    }
   }
 }

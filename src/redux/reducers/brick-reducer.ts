@@ -1,6 +1,10 @@
 import types from '../types';
 
-const BrickInitialState = {
+export interface BrickState {
+  brick?: any;
+}
+
+const BrickInitialState: BrickState = {
   brick: null,
 }
 
@@ -16,7 +20,7 @@ export default (state = BrickInitialState, action: any) => {
         brick: action.payload,
         error: ''
       }
-    case types.SUBMIT_PRO_FORMA_SUCCESS:
+    case types.SAVE_BRICK_SUCCESS:
       return {
         brick: action.payload,
         error: ''

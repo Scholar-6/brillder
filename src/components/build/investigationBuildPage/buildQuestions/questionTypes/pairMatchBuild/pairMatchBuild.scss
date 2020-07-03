@@ -31,15 +31,6 @@
     }
   }
 
-  .answers-container {
-    margin-left: 1.25%;
-    width: 97.5%;
-  }
-
-  p {
-    margin: 0;
-  }
-
   .component-title {
     > div {
       font-size: $base-sm-text-size;
@@ -63,7 +54,6 @@
         background: white !important;
         border-radius: 0.4vw !important;
         font-size: $answer-input-text-size;
-        font-family: $font-family-regular;
 
         p {
           text-align: center !important;
@@ -87,8 +77,6 @@
         background: white !important;
         border-radius: 0.4vw !important;
         font-size: $answer-input-text-size;
-        font-family: $font-family-regular;
-
         p {
           text-align: center !important;
         }

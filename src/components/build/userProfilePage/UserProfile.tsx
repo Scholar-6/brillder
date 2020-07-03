@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
+import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from "@material-ui/core/Avatar";
 import axios from "axios";
 // @ts-ignore
@@ -378,29 +379,43 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                     </div>
                   </div>
                   <Grid item className="profile-inputs-container">
-                    <div>
-                      <Grid>
+                    <div className="input-group">
+                      <div className="input-block">
                         <input
-                          className="first-name"
+                          className="first-name style2"
                           value={this.state.user.firstName}
                           onChange={(e: any) => this.onFirstNameChanged(e)}
                           placeholder="Name"
                         />
+                      </div>
+                      <div className="input-block">
                         <input
-                          className="last-name"
+                          className="last-name style2"
                           value={this.state.user.lastName}
                           onChange={(e: any) => this.onLastNameChanged(e)}
                           placeholder="Surname"
                         />
-                      </Grid>
+                      </div>
+                    </div>
+                    <FormControlLabel
+                      value="start"
+                      control={<Checkbox color="primary" />}
+                      label="Keep me secret: I don't want to be searchable"
+                      labelPlacement="end"
+                    />
+                    <div className="input-block">
                       <input
                         type="email"
+                        className="style2"
                         value={this.state.user.email}
                         onChange={(e: any) => this.onEmailChanged(e)}
                         placeholder="username@domain.com"
                       />
+                    </div>
+                    <div className="input-block">
                       <input
                         type="password"
+                        className="style2"
                         value={this.state.user.password}
                         onChange={(e: any) => this.onPasswordChanged(e)}
                         placeholder="●●●●●●●●●●●"
@@ -424,7 +439,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
                 />
                 <Grid container direction="row" className="big-input-container">
-                  <textarea placeholder="Write a short bio here..." />
+                  <textarea className="style2" placeholder="Write a short bio here..." />
                 </Grid>
                 <Grid container direction="row"></Grid>
               </div>

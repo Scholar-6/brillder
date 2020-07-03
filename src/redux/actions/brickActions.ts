@@ -31,14 +31,14 @@ const fetchBrick = (id: number) => {
 
 const saveBrickSuccess = (brick: Brick) => {
   return {
-    type: types.SUBMIT_PRO_FORMA_SUCCESS,
+    type: types.SAVE_BRICK_SUCCESS,
     payload: brick,
   } as Action
 }
 
 const saveBrickFailure = (errorMessage:string) => {
   return {
-    type: types.SUBMIT_PRO_FORMA_FAILURE,
+    type: types.SAVE_BRICK_FAILURE,
     error: errorMessage
   } as Action
 }

@@ -22,7 +22,10 @@ ruby, section, summary, time, mark, audio, video {
 	text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
 	-ms-text-size-adjust: 100%;
-	font-weight: normal;
+}
+
+ul, ol {
+  list-style-position: inside;
 }
 
 abbr[title],

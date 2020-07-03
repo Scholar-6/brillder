@@ -19,9 +19,8 @@
 
   .choose-several-box {
     position: relative;
-    margin: 0;
-    margin-left: 1.25%;
-    width: 97.5%;
+    margin: 0.7vh 0.4vw;
+    width: calc(100% - 0.8vw);
 
     .checkbox-invalid {
       color: var(--theme-orange);
@@ -46,8 +45,8 @@
     }
 
     .input-answer {
-      width: 84%;
-      height: 55px;
+      width: 100%;
+      min-height: $answer-height;
       text-align: center;
       border: none;
       background: $input-gray;
@@ -56,7 +55,9 @@
       padding-left: 8%;
       font-family: $font-family-regular;
       font-size: $answer-input-text-size;
-      height: $answer-height !important;
+    }
+    .add-answer-button {
+      width: 100%;
     }
   }
 }

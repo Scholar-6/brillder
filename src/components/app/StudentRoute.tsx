@@ -39,13 +39,13 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
     if (can) {
       return <Route {...rest} render={(props) => <Component {...props} />} />;
     } else {
-      return <div>...Forbidden...</div>
+      return <div className="page-loader">...Forbidden...</div>
     }
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized()
-    return <div>...Checking rights...</div>
+    return <div className="page-loader">...Checking rights...</div>
   } else {
-    return <Redirect to="/choose-user" />
+    return <Redirect to="/choose-login" />
   }
 }
 

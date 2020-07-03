@@ -50,8 +50,8 @@ class PageHeader extends Component<UsersListProps> {
       <Grid container direction="row" className="page-header">
         <HomeButton link="/build" />
         <Grid container className="logout-container">
-          <Grid container  direction="row" className="search-container">
-            <Grid item>
+          <div className="search-container">
+            <div>
               <div className="search-button svgOnHover" onClick={() => this.props.search()}>
 								<svg className="svg svg-default">
 									<use href={sprite + "#search-thin"}/>
@@ -60,16 +60,16 @@ class PageHeader extends Component<UsersListProps> {
 									<use href={sprite + "#search-thick"}/>
 								</svg>
 							</div>
-            </Grid>
-            <Grid item>
+            </div>
+            <div className="search-area">
               <input
                 className="search-input"
                 onKeyUp={(e) => this.keySearch(e)}
                 onChange={(e) => this.props.searching(e.target.value)}
                 placeholder={this.props.searchPlaceholder}
               />
-            </Grid>
-          </Grid>
+            </div>
+          </div>
           <Grid container direction="row" className="action-container">
             <Grid item>
               <div className="bell-button svgOnHover">

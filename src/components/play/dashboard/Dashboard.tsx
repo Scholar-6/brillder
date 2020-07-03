@@ -115,7 +115,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
   logout() {
     this.props.logout();
-    this.props.history.push("/choose-user");
+    this.props.history.push("/choose-login");
   }
 
   delete(brickId: number) {

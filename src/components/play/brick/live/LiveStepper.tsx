@@ -45,7 +45,7 @@ const LiveStepper: React.FC<StepperProps> = ({
       <Grid item xs={colWidth as any} key={key} className={className} onClick={handleStep(index - 1)}>
         <span>{questionIndex}</span>
         {question.edited ? (
-          <div className="blue-circle-container">
+          <div className="blue-circle-container animated pulse duration-1s iteration-2">
             <div className="blue-circle"></div>
           </div>
         ) : (

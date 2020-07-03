@@ -89,7 +89,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   }
 
   renderSelect(choice: any, index: number) {
-    if (!this.state.userAnswers[index]) { return <div>...Loading...</div>}
+    if (!this.state.userAnswers[index]) { return <div className="page-loader">...Loading...</div>}
     return (
       <Select
         className="missing-select"

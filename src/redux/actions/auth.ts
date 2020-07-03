@@ -3,14 +3,11 @@ import axios from 'axios';
 import { Action, Dispatch } from 'redux';
 
 
-import {LoginModel, UserLoginType} from 'model/auth';
+import {LoginModel} from 'model/auth';
 import { socketLogout } from './socket';
 
-const loginSuccess = (userType: UserLoginType) => {
-  return {
-    type: types.LOGIN_SUCCESS,
-    userType
-  } as Action
+const loginSuccess = () => {
+  return { type: types.LOGIN_SUCCESS } as Action
 }
 
 const loginFailure = (errorMessage:string) => {
@@ -23,12 +20,12 @@ const loginFailure = (errorMessage:string) => {
 const login = (model:LoginModel) => {
   return function (dispatch: Dispatch) {
     return axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/auth/login/${model.userType}`,
+      `${process.env.REACT_APP_BACKEND_HOST}/auth/login/3`,
       model, {withCredentials: true}
     ).then(response => {
       const {data} = response;
       if (data === "OK") {
-        dispatch(loginSuccess(model.userType));
+        dispatch(loginSuccess());
         return;
       }
       let {msg} = data;
