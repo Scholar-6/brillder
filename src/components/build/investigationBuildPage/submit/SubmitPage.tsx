@@ -154,7 +154,7 @@ class SubmitBrickPage extends Component<SubmitBrickProps, SubmitBrickState> {
             className="submit-brick-button"
             ref={this.state.myRef}
             style={{width: '7vw'}}
-            onClick={() => this.props.history.push('/build')}
+            onClick={() => this.props.history.push('/home')}
           >
             <Grid
               container

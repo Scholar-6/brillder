@@ -10,6 +10,7 @@
   margin-bottom: 0.17vw;
   .document-editor {
     position: relative;
+    height: calc(100% - 0.4vh);
     > div {
       > .ck-toolbar {
         font-size: 1.4vh;
@@ -89,14 +90,6 @@
       .ck-content {
         padding-top: 10vh;
       }
-    }
-
-    .checkbox-invalid {
-      color: var(--theme-orange);
-    }
-
-    .Mui-checked {
-      color: var(--theme-green) !important;
     }
 
     .left-ckeckbox {

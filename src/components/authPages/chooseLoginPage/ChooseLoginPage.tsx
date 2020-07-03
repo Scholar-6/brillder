@@ -81,11 +81,14 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
           <div className="first-item">
           </div>
           <div className="second-item">
-            <Grid>
-              <div className="logo-box">
-                <img alt="Logo" src="/images/choose-login/logo.png" className="logo-image" />
-              </div>
-            </Grid>
+            <div className="logo-box">
+              <svg
+                className="svg active logo-image mobile"
+                onClick={() => props.history.push("/choose-login")}
+              >
+                <use href={sprite + "#logo"} className="text-theme-orange" />
+              </svg>
+            </div>
             <div className="button-box">
               <button className="email-button svgOnHover" onClick={moveToLogin}>
                 <svg className="svg active">
@@ -93,12 +96,12 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
                 </svg>
                 <span>Register &nbsp;|&nbsp; Sign in with email</span>
               </button>
-              <button className="google-button svgOnHover">
+              <a className="google-button svgOnHover" href={googleLink}>
                 <svg className="svg active">
                   <use href={sprite + "#gmail"} />
                 </svg>
                 <span>Register &nbsp;|&nbsp; Sign in with Google</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>

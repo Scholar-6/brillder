@@ -25,12 +25,16 @@
 
   .version-number {
 		width: 0.5vw;
+    font-size: 0.5vw;
     writing-mode: vertical-lr;
     text-orientation: mixed;
-    font-size: 0.5vw;
     letter-spacing: 0.08vw;
 		@extend %flexCenter;
     transform: scale(-1, -1);
+    @include phone_and_tabletP {
+      width: 2vw;
+      font-size: 1.5vw;
+    }
   }
 }
 

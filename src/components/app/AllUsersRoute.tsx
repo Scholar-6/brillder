@@ -21,21 +21,21 @@ interface AllUsersRouteProps {
 const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, user, ...rest }) => {
 
   var location = useLocation();
-  
+
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!user) {
       rest.getUser();
       return <div>...Getting User...</div>
     }
     if(user.firstName === "" || user.lastName === "") {
-      if(location.pathname != "/build/user-profile") { // Only redirect to the user profile if we're not already there.
-        return <Redirect to="/build/user-profile" />
+      if(location.pathname != "/user-profile") { // Only redirect to the user profile if we're not already there.
+        return <Redirect to="/user-profile" />
       }
     }
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized();
-    return <div>...Checking rights...</div>;
+    return <div className="page-loader">...Checking rights...</div>;
   } else {
     return <Redirect to="/choose-login" />;
   }

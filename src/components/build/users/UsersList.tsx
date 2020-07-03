@@ -544,7 +544,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                   />
                 </td>
                 <td>
-                  <div className="edit-button" onClick={() => this.props.history.push(`/build/user-profile/${user.id}`)}/>
+                  <div className="edit-button" onClick={() => this.props.history.push(`/user-profile/${user.id}`)}/>
                 </td>
               </tr>
             );
@@ -590,7 +590,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           <PageHeader
             searchPlaceholder="Search by Name,  Email or Subject"
             search={() => this.search()}
-            searching={(v) => this.searching(v)}
+            searching={(v: string) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
           />
           <Grid container direction="row" className="sorted-row">
@@ -613,7 +613,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}
         >
-          <MenuItem className="first-item menu-item" onClick={() => history.push('/build/bricks-list')}>
+          <MenuItem className="first-item menu-item" onClick={() => history.push('/play/dashboard')}>
             View All Bricks
             <Grid container className="menu-icon-container" justify="center" alignContent="center">
               <div>
@@ -629,7 +629,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
               </div>
             </Grid>
           </MenuItem>
-          <MenuItem className="menu-item" onClick={() => history.push('/build/back-to-work')}>
+          <MenuItem className="menu-item" onClick={() => history.push('/back-to-work')}>
             Back To Work
             <Grid container className="menu-icon-container" justify="center" alignContent="center">
               <div>
@@ -637,7 +637,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
               </div>
             </Grid>
           </MenuItem>
-          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/build/user-profile')}>
+          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/user-profile')}>
             View Profile
             <Grid container className="menu-icon-container" justify="center" alignContent="center">
               <div>

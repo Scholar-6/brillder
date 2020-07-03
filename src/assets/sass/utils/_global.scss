@@ -1,11 +1,9 @@
 html,
 body,
 #root {
-  height: 100%;
-}
-
-body {
   margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: $font-family-regular;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -19,8 +17,17 @@ div:focus {
   outline: none;
 }
 
-textarea:focus {
-  outline: none;
+textarea,
+input {
+  font-family: $font-family-regular;
+  &:focus {
+    outline: none;
+  }
+}
+
+.MuiTypography-body1 {
+  font-family: $font-family-regular !important;
+  font-weight: inherit !important;
 }
 
 input:focus {
@@ -429,6 +436,12 @@ input:focus {
       height: 100%;
       color: var(--theme-orange);
       stroke: var(--theme-orange);
+      .bell-text-default {
+        stroke: var(--theme-orange);
+      }
+      .bell-text-filled {
+        stroke: var(--theme-dark-blue);
+      }
     }
   }
   .search-button {
@@ -586,4 +599,14 @@ h3 {
   &.wrong {
     background: var(--theme-orange);
   }
+}
+
+
+.page-loader {
+  width: 100%;
+  height: 100vh;
+  color: var(--white);
+  font-size: 4vw;
+  @extend %flexCenter;
+  background-color: var(--theme-dark-blue);
 }

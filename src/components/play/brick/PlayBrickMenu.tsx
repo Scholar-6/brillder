@@ -54,7 +54,7 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
         <PageHeader
           searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
           search={() => {}}
-          searching={(v) => {}}
+          searching={(v: string) => {}}
           showDropdown={() => this.showDropdown()}
         />
         <Menu
@@ -65,7 +65,7 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
         >
           <MenuItem
             className="first-item menu-item"
-            onClick={() => this.props.history.push("/build/bricks-list")}
+            onClick={() => this.props.history.push("/play/dashboard")}
           >
             View All Bricks
             <Grid
@@ -105,7 +105,7 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
           ) ? (
             <MenuItem
               className="menu-item"
-              onClick={() => this.props.history.push("/build/users")}
+              onClick={() => this.props.history.push("/users")}
             >
               Manage Users
               <Grid
@@ -128,7 +128,7 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
           )}
           <MenuItem
             className="view-profile menu-item"
-            onClick={() => this.props.history.push("/build/user-profile")}
+            onClick={() => this.props.history.push("/user-profile")}
           >
             View Profile
             <Grid
