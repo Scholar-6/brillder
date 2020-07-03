@@ -23,7 +23,7 @@ class PageHeader extends Component<UsersListProps> {
   render() {
     return (
       <Grid container direction="row" className="page-header">
-        <HomeButton link="/build" />
+        <HomeButton link="/home" />
         <Grid container className="logout-container">
           <div className="search-container">
             <div>

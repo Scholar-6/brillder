@@ -87,7 +87,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <div className="first-col">
             <div className="first-item">
               <Grid container justify="center" className="view-item-container">
-                <div className="zoom-item view-item" onClick={() => history.push('/build/bricks-list')}>
+                <div className="zoom-item view-item" onClick={() => history.push('/play/dashboard')}>
                   <img alt="Logo" src="/images/main-page/glasses.png" className="item-image" />
                   <div className="item-description">View All Bricks</div>
                 </div>
@@ -99,7 +99,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
                 </div>
               </Grid>
               <Grid container justify="center" className="back-item-container">
-                <div className="zoom-item back-item" onClick={() => history.push('/build/back-to-work')}>
+                <div className="zoom-item back-item" onClick={() => history.push('/back-to-work')}>
                   <img alt="Logo" src="/images/main-page/backToWork.png" className="item-image" />
                   <div className="item-description">Back To Work</div>
                 </div>
@@ -153,7 +153,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               </Grid>
             </div>
             <Grid container justify="center" style={{width: "100%"}}>
-              <div className="zoom-item view-item" onClick={() => history.push('/build/bricks-list')}>
+              <div className="zoom-item view-item" onClick={() => history.push('/play/dashboard')}>
                 <img alt="Logo" src="/images/main-page/glasses.png" className="item-image" />
                 <div className="item-description">View All Bricks</div>
               </div>
@@ -165,7 +165,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               </div>
             </Grid>
             <Grid container justify="center" style={{width: "100%"}}>
-              <div className="zoom-item back-item" onClick={() => history.push('/build/back-to-work')}>
+              <div className="zoom-item back-item" onClick={() => history.push('/back-to-work')}>
                 <img alt="Logo" src="/images/main-page/backToWork.png" className="item-image" />
                 <div className="item-description">Back To Work</div>
               </div>

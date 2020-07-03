@@ -16,7 +16,7 @@ interface CounterState {
   seconds: string;
   milliseconds: string;
   isCounting: boolean;
-  timerInterval: NodeJS.Timeout;
+  timerInterval: number;
 }
 
 class BrickCounter extends Component<CounterProps, CounterState> {
