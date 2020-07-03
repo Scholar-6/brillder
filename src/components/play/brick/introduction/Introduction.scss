@@ -32,7 +32,7 @@
               height: 5vw;
               width: 5vw;
               @extend %radCircle;
-              background-color: $gray;
+              background-color: var(--gray);
             }
           }
           h1 {
@@ -400,7 +400,7 @@
     }
     .help-prep {
       color: var(--gray);
-      font: 1vw $font-family-regular;
+      font-size: 1vw;
     }
   }
   .expanded-text {
