@@ -4,6 +4,7 @@ import { Action, Dispatch } from 'redux';
 
 
 import {LoginModel, UserLoginType} from 'model/auth';
+import { socketLogout } from './socket';
 
 const loginSuccess = (userType: UserLoginType) => {
   return {
@@ -76,6 +77,7 @@ const logout = () => {
       const {data} = response;
       if (data === "OK") {
         dispatch(logoutSuccess());
+        dispatch(socketLogout());
         return;
       }
       let {msg} = data;
