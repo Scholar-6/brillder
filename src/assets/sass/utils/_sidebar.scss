@@ -262,6 +262,18 @@ $height-desktop-view: calc(100vh - 7.834vw);
         .MuiGrid-container {
           margin-bottom: 0.4vw;
         }
+        .MuiRadio-root {
+          color: inherit !important;
+          .MuiIconButton-label {
+            color: inherit !important;
+            .MuiSvgIcon-root {
+              color: inherit !important;
+            }
+          }
+        }
+        .MuiTypography-root {
+          color: var(--white) !important;
+        }
       }
     }
     .back-hover-area {
