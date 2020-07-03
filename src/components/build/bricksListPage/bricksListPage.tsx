@@ -475,39 +475,37 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         style={{ transformOrigin: "0 0 0" }}
         timeout={index * 150}
       >
-        <Grid container key={key} item sm={4} justify="center">
-          <div className="main-brick-container">
-            <Box className="brick-container">
-              <div
-                className={`absolute-container brick-row-${row + 1} ${
-                  brick.expanded ? "brick-hover" : ""
-                  }`}
-                onMouseEnter={() => this.handleMouseHover(key)}
-                onMouseLeave={() => this.handleMouseLeave(key)}
+        <div className="main-brick-container">
+          <Box className="brick-container">
+            <div
+              className={`absolute-container brick-row-${row + 1} ${
+                brick.expanded ? "brick-hover" : ""
+                }`}
+              onMouseEnter={() => this.handleMouseHover(key)}
+              onMouseLeave={() => this.handleMouseLeave(key)}
+            >
+              <Grid
+                container
+                direction="row"
+                style={{ padding: 0, position: "relative" }}
               >
-                <Grid
-                  container
-                  direction="row"
-                  style={{ padding: 0, position: "relative" }}
-                >
-                  <Grid item xs={brick.expanded ? 12 : 11}>
-                    {brick.expanded ? (
-                      <ExpandedBrickDescription
-                        isAdmin={isAdmin}
-                        color={color}
-                        brick={brick}
-                        move={(brickId) => this.move(brickId)}
-                        onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-                      />
-                    ) : (
-                        <ShortBrickDescription brick={brick} color={color} />
-                      )}
-                  </Grid>
+                <Grid item xs={brick.expanded ? 12 : 11}>
+                  {brick.expanded ? (
+                    <ExpandedBrickDescription
+                      isAdmin={isAdmin}
+                      color={color}
+                      brick={brick}
+                      move={(brickId) => this.move(brickId)}
+                      onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+                    />
+                  ) : (
+                      <ShortBrickDescription brick={brick} color={color} />
+                    )}
                 </Grid>
-              </div>
-            </Box>
-          </div>
-        </Grid>
+              </Grid>
+            </div>
+          </Box>
+        </div>
       </Grow>
     );
   };

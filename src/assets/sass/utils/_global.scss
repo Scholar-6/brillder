@@ -217,36 +217,36 @@ input:focus {
 }
 
 .hover-icons-row {
+  width: 100%;
   height: 5.8vh;
   color: var(--theme-dark-blue);
-  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // position: absolute;
+  // left: 9.2vw;
+  // bottom: 1vh;
   > div {
     position: relative;
-    .round-button {
-      position: absolute;
-      left: -0.2vw;
-      height: 2.1vw;
-      width: 2.1vw;
-      bottom: 1vh;
-      border-radius: 20vw;
-      padding-right: -31vw;
-      background: black;
-    }
-    .bin-button {
-      cursor: pointer;
-      position: absolute;
-      left: 9.2vw;
+    @extend %flexCenter;
+    @include tabletP {
+      width: 3.7vh;
       height: 3.7vh;
-      bottom: 1vh;
-      padding-right: -31vw;
     }
+    @include phone_and_tabletP {
+      height: 8.1vw;
+      width: 8.1vw;
+    }
+    .round-button,
+    .bin-button,
     .play-button {
+      height: 100%;
+      width: 100%;
       cursor: pointer;
-      position: absolute;
-      right: -0.2vw;
-      height: 3.7vh;
-      bottom: 1vh;
-      padding-right: -31vw;
+    }
+    .round-button {
+      border-radius: 50%;
+      background: black;
     }
   }
 }

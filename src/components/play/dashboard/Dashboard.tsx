@@ -58,9 +58,9 @@ interface BricksListState {
   deleteDialogOpen: boolean;
   deleteBrickId: number;
 
-  	filterExpanded: boolean;
-	filterHeight: string;
-	isClearFilter: any;
+  filterExpanded: boolean;
+  filterHeight: string;
+  isClearFilter: any;
 }
 
 enum SortBy {
@@ -84,11 +84,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       dropdownShown: false,
       searchBricks: [],
       searchString: "",
-	  isSearching: false,
+      isSearching: false,
 
-	  	filterExpanded: true,
-		filterHeight: "auto",
-		isClearFilter: false,
+      filterExpanded: true,
+      filterHeight: "auto",
+      isClearFilter: false,
     };
 
     axios.get(
@@ -192,17 +192,17 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
 
-  	//region Hide / Expand / Clear Filter
-	hideFilter() {
-		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-	}
-	expandFilter() {
-		this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
-	}
-	filterClear(){
-		this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false})
-	}
-	//endregion
+  //region Hide / Expand / Clear Filter
+  hideFilter() {
+    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+  }
+  expandFilter() {
+    this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
+  }
+  filterClear() {
+    this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false })
+  }
+  //endregion
 
   filterBySubject = (i: number) => {
     const { subjects } = this.state;
@@ -346,39 +346,37 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
 
     return (
-      <Grid container key={key} item xs={4} justify="center">
-        <div className="main-brick-container">
-          <Box className="brick-container">
-            <div
-              className={`sorted-brick absolute-container brick-row-${row} ${
-                brick.expanded ? "brick-hover" : ""
+      <div className="main-brick-container">
+        <Box className="brick-container">
+          <div
+            className={`sorted-brick absolute-container brick-row-${row} ${
+              brick.expanded ? "brick-hover" : ""
               }`}
-              onMouseEnter={() => this.handleMouseHover(key)}
-              onMouseLeave={() => this.handleMouseLeave(key)}
+            onMouseEnter={() => this.handleMouseHover(key)}
+            onMouseLeave={() => this.handleMouseLeave(key)}
+          >
+            <Grid
+              container
+              direction="row"
+              style={{ padding: 0, position: "relative" }}
             >
-              <Grid
-                container
-                direction="row"
-                style={{ padding: 0, position: "relative" }}
-              >
-                <Grid item xs={brick.expanded ? 12 : 11}>
-                  {brick.expanded ? (
-                    <ExpandedBrickDescription
-                      isAdmin={isAdmin}
-                      color={color}
-                      brick={brick}
-                      move={(brickId) => this.move(brickId)}
-                      onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-                    />
-                  ) : (
+              <Grid item xs={brick.expanded ? 12 : 11}>
+                {brick.expanded ? (
+                  <ExpandedBrickDescription
+                    isAdmin={isAdmin}
+                    color={color}
+                    brick={brick}
+                    move={(brickId) => this.move(brickId)}
+                    onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+                  />
+                ) : (
                     <ShortBrickDescription brick={brick} color={color} />
                   )}
-                </Grid>
               </Grid>
-            </div>
-          </Box>
-        </div>
-      </Grid>
+            </Grid>
+          </div>
+        </Box>
+      </div>
     );
   };
 
@@ -386,36 +384,36 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box">
-        	<div className="sort-header">Sort By</div>
-			<RadioGroup className="sort-group"
-				aria-label="SortBy"
-				name="SortBy"
-				value={this.state.sortBy}
-				onChange={this.handleSortChange}>
-				<Grid container direction="row">
-					<Grid item xs={6}>
-						<FormControlLabel
-							value={SortBy.Popularity}
-							style={{ marginRight: 0, width: "50%" }}
-							control={<Radio className="sortBy" />}
-							label="Popularity"/>
-					</Grid>
-					<Grid item xs={6}>
-						<FormControlLabel
-							value={SortBy.Date}
-							style={{ marginRight: 0 }}
-							control={<Radio className="sortBy" />}
-							label="Date Added"/>
-					</Grid>
-				</Grid>
-			</RadioGroup>
+          <div className="sort-header">Sort By</div>
+          <RadioGroup className="sort-group"
+            aria-label="SortBy"
+            name="SortBy"
+            value={this.state.sortBy}
+            onChange={this.handleSortChange}>
+            <Grid container direction="row">
+              <Grid item xs={6}>
+                <FormControlLabel
+                  value={SortBy.Popularity}
+                  style={{ marginRight: 0, width: "50%" }}
+                  control={<Radio className="sortBy" />}
+                  label="Popularity" />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControlLabel
+                  value={SortBy.Date}
+                  style={{ marginRight: 0 }}
+                  control={<Radio className="sortBy" />}
+                  label="Date Added" />
+              </Grid>
+            </Grid>
+          </RadioGroup>
         </div>
         <div className="filter-header">
-            <span>Filter</span>
-			<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
-				onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearSubjects() : (this.hideFilter()) : (this.expandFilter())}}>
-			</button>
-		</div>
+          <span>Filter</span>
+          <button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up"))}
+            onClick={() => { this.state.filterExpanded ? this.state.isClearFilter ? this.clearSubjects() : (this.hideFilter()) : (this.expandFilter()) }}>
+          </button>
+        </div>
         <SubjectsList
           subjects={this.state.subjects}
           filterHeight={this.state.filterHeight}
@@ -453,7 +451,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
     return (
       <Grid container direction="row" className="bricks-pagination">
-        <Grid item xs={4} className="left-pagination">
+        <Grid item sm={4} className="left-pagination">
           <div className="first-row">
             {this.state.sortedIndex + 1}-
             {this.state.sortedIndex + 18 > this.state.bricks.length
@@ -486,16 +484,16 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 onClick={() => this.moveAllBack()}
               />
             ) : (
-              ""
-            )}
+                ""
+              )}
             {showNext ? (
               <ExpandMoreIcon
                 className={"next-button " + (showNext ? "active" : "")}
                 onClick={() => this.moveAllNext()}
               />
             ) : (
-              ""
-            )}
+                ""
+              )}
           </div>
         </Grid>
       </Grid>
@@ -504,7 +502,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
   render() {
     return (
-      <div className="dashboard-page">
+      <div className="dashboard-page bricks-list-page">
         <div className="upper-part">
           <PageHeader
             searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
@@ -517,13 +515,13 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               {this.renderSortAndFilterBox()}
             </Grid>
             <Grid item xs={9} className="brick-row-container">
-							<div className="brick-row-title">{this.renderTitle()}</div>
-							<div className="bricks-list-container">
-								<Grid container direction="row">
-									{this.renderSortedBricks()}
-								</Grid>
-							</div>
-							{this.renderPagination()}
+              <div className="brick-row-title">{this.renderTitle()}</div>
+              <div className="bricks-list-container">
+                <Grid container direction="row">
+                  {this.renderSortedBricks()}
+                </Grid>
+              </div>
+              {this.renderPagination()}
             </Grid>
           </Grid>
         </div>
