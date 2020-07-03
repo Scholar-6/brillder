@@ -267,39 +267,37 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     );
 
     return (
-      <Grid container key={key} item xs={4} justify="center">
-        <div className="main-brick-container">
-          <Box className="brick-container">
-            <div
-              className={`absolute-container brick-row-0 ${
-                brick.expanded ? "brick-hover" : ""
-                }`}
-              onMouseEnter={() => this.yourBricksMouseHover(key)}
-              onMouseLeave={() => this.yourBricksMouseLeave(key)}
+      <div className="main-brick-container">
+        <Box className="brick-container">
+          <div
+            className={`absolute-container brick-row-0 ${
+              brick.expanded ? "brick-hover" : ""
+              }`}
+            onMouseEnter={() => this.yourBricksMouseHover(key)}
+            onMouseLeave={() => this.yourBricksMouseLeave(key)}
+          >
+            <Grid
+              container
+              direction="row"
+              style={{ padding: 0, position: "relative" }}
             >
-              <Grid
-                container
-                direction="row"
-                style={{ padding: 0, position: "relative" }}
-              >
-                <Grid item xs={brick.expanded ? 12 : 11}>
-                  {brick.expanded ? (
-                    <ExpandedBrickDescription
-                      isAdmin={isAdmin}
-                      color={color}
-                      brick={brick}
-                      move={(brickId) => this.move(brickId)}
-                      onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-                    />
-                  ) : (
-                      <ShortBrickDescription brick={brick} />
-                    )}
-                </Grid>
+              <Grid item xs={brick.expanded ? 12 : 11}>
+                {brick.expanded ? (
+                  <ExpandedBrickDescription
+                    isAdmin={isAdmin}
+                    color={color}
+                    brick={brick}
+                    move={(brickId) => this.move(brickId)}
+                    onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+                  />
+                ) : (
+                    <ShortBrickDescription brick={brick} />
+                  )}
               </Grid>
-            </div>
-          </Box>
-        </div>
-      </Grid>
+            </Grid>
+          </div>
+        </Box>
+      </div>
     );
   };
 
