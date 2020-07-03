@@ -49,6 +49,11 @@
             margin-right: 10px;
           }
         }
+        h1,
+        p {
+          color: var(--theme-dark-blue);
+        }
+
         h1 {
           width: 100%;
           color: var(--theme-dark-blue);
@@ -103,6 +108,9 @@
           margin: 6vh 3vw 1vw 4vw;
           position: absolute;
           top: 0;
+          &.review-content {
+            margin-top: 0;
+          }
         }
         .swipe-view {
           height: calc(100vh - 7.5vw);
@@ -181,7 +189,7 @@
                 @extend %floatToXCenter;
                 padding: 0.2vw;
                 border-radius: 100vw;
-                background: #82c0ed;
+                background: var(--blue-alpha5);
                 .blue-circle {
                   height: 0.8vw;
                   width: 0.8vw;
