@@ -16,7 +16,8 @@ import sprite from "../../../../assets/img/icons-sprite.svg";
 import { CashQuestionFromPlay } from "../../../localStorage/buildLocalStorage";
 import { Brick } from "model/brick";
 import LiveStepper from "./LiveStepper";
-import ShuffleAnswerDialog from 'components/baseComponents/failedRequestDialog/ShuffleAnswerDialog';
+import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";
+import PulsingCircleNumber from "./PulsingCircleNumber";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -43,6 +44,7 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   const [activeStep, setActiveStep] = React.useState(initStep);
+  const [prevStep, setPrevStep] = React.useState(initStep);
   const [isShuffleOpen, setShuffleDialog] = React.useState(false);
   const [isTimeover, setTimeover] = React.useState(false);
   let initAnswers: any[] = [];
@@ -67,14 +69,8 @@ const LivePage: React.FC<LivePageProps> = ({
     questionRefs.push(React.createRef());
   });
 
-  const isAttempted = (question: Question) => {
-    if (question.edited) {
-      return true;
-    }
-    return false;
-  }
-
   const handleStep = (step: number) => () => {
+    setPrevStep(activeStep);
     setActiveAnswer();
     questions[activeStep].edited = true;
     let newStep = activeStep + 1;
@@ -100,7 +96,7 @@ const LivePage: React.FC<LivePageProps> = ({
 
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
-      questions.forEach(question => question.edited = false);
+      questions.forEach((question) => (question.edited = false));
       props.finishBrick();
       if (props.isPlayPreview) {
         history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
@@ -108,14 +104,14 @@ const LivePage: React.FC<LivePageProps> = ({
         history.push(`/play/brick/${brick.id}/provisionalScore`);
       }
     }
-  }
+  };
 
   const cleanAndNext = () => {
     setShuffleDialog(false);
     handleStep(activeStep + 1)();
     questions[activeStep].edited = false;
     if (activeStep >= questions.length - 1) {
-      questions.forEach(question => question.edited = false);
+      questions.forEach((question) => (question.edited = false));
       props.finishBrick();
       if (props.isPlayPreview) {
         history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
@@ -123,7 +119,7 @@ const LivePage: React.FC<LivePageProps> = ({
         history.push(`/play/brick/${brick.id}/provisionalScore`);
       }
     }
-  }
+  };
 
   const next = () => {
     let question = questions[activeStep];
@@ -140,7 +136,7 @@ const LivePage: React.FC<LivePageProps> = ({
     }
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
-      questions.forEach(question => question.edited = false);
+      questions.forEach((question) => (question.edited = false));
       props.finishBrick();
       if (props.isPlayPreview) {
         history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
@@ -156,7 +152,7 @@ const LivePage: React.FC<LivePageProps> = ({
     if (!questions[questionIndex].edited) {
       handleStep(questionIndex)();
     }
-  }
+  };
 
   const renderQuestion = (question: Question, index: number) => {
     return (
@@ -171,10 +167,6 @@ const LivePage: React.FC<LivePageProps> = ({
   };
 
   const renderQuestionContainer = (question: Question, index: number) => {
-    let indexClassName = "question-index-container animated pulse duration-1s iteration-2";
-    if (isAttempted(question)) {
-      indexClassName += " attempted";
-    }
     return (
       <TabPanel
         key={index}
@@ -182,22 +174,27 @@ const LivePage: React.FC<LivePageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-        <div className={indexClassName}>
-          <div className="question-index">
-            {index + 1}
-          </div>
-        </div>
+        <PulsingCircleNumber
+          isPulsing={prevStep === index}
+          edited={question.edited}
+          number={index + 1}
+        />
         <div className="question-live-play">
           {renderQuestion(question, index)}
         </div>
       </TabPanel>
     );
-  }
+  };
 
   const renderPrevButton = () => {
-    if (activeStep === 0) { return ""; }
+    if (activeStep === 0) {
+      return "";
+    }
     return (
-      <button className="play-preview svgOnHover play-white scale-07" onClick={prev}>
+      <button
+        className="play-preview svgOnHover play-white scale-07"
+        onClick={prev}
+      >
         <svg className="svg svg-default m-r-02">
           <use href={sprite + "#arrow-left"} className="text-gray" />
         </svg>
@@ -206,7 +203,7 @@ const LivePage: React.FC<LivePageProps> = ({
         </svg>
       </button>
     );
-  }
+  };
 
   return (
     <div className="brick-container live-page">
@@ -235,6 +232,7 @@ const LivePage: React.FC<LivePageProps> = ({
               <LiveStepper
                 activeStep={activeStep}
                 questions={questions}
+                previousStep={prevStep}
                 handleStep={handleStep}
               />
             </div>
@@ -242,10 +240,18 @@ const LivePage: React.FC<LivePageProps> = ({
               <div>{renderPrevButton()}</div>
               <div className="direction-info">
                 <h2>Next</h2>
-                <span>Don’t panic, you can<br />always come back</span>
+                <span>
+                  Don’t panic, you can
+                  <br />
+                  always come back
+                </span>
               </div>
               <div>
-                <button type="button" className="play-preview svgOnHover play-green" onClick={next}>
+                <button
+                  type="button"
+                  className="play-preview svgOnHover play-green"
+                  onClick={next}
+                >
                   <svg className="svg active m-l-02">
                     <use href={sprite + "#arrow-right"} />
                   </svg>
