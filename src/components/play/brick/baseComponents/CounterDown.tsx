@@ -16,7 +16,7 @@ interface CounterState {
   milliseconds: string;
   isCounting: boolean;
   endTime: Moment;
-  timerInterval: NodeJS.Timeout;
+  timerInterval: number;
 }
 
 class CounterDown extends Component<CounterProps, CounterState> {
