@@ -702,7 +702,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           </MenuItem>
           <MenuItem
             className="menu-item"
-            onClick={() => this.props.history.push("/build/back-to-work")}
+            onClick={() => this.props.history.push("/back-to-work")}
           >
             Back To Work
             <Grid
