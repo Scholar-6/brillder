@@ -507,7 +507,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           <PageHeader
             searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
             search={() => this.search()}
-            searching={(v) => this.searching(v)}
+            searching={(v: string) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
           />
           <Grid container direction="row" className="sorted-row">
