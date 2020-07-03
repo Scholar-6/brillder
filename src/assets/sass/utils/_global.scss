@@ -220,32 +220,34 @@ input:focus {
   height: 5.8vh;
   color: var(--theme-dark-blue);
   width: 100%;
-  position: relative;
-  .round-button {
-    position: absolute;
-    left: -0.2vw;
-    height: 2.1vw;
-    width: 2.1vw;
-    bottom: 1vh;
-    border-radius: 20vw;
-    padding-right: -31vw;
-    background: black;
-  }
-  .bin-button {
-    cursor: pointer;
-    position: absolute;
-    left: 9.2vw;
-    height: 3.7vh;
-    bottom: 1vh;
-    padding-right: -31vw;
-  }
-  .play-button {
-    cursor: pointer;
-    position: absolute;
-    right: -0.2vw;
-    height: 3.7vh;
-    bottom: 1vh;
-    padding-right: -31vw;
+  > div {
+    position: relative;
+    .round-button {
+      position: absolute;
+      left: -0.2vw;
+      height: 2.1vw;
+      width: 2.1vw;
+      bottom: 1vh;
+      border-radius: 20vw;
+      padding-right: -31vw;
+      background: black;
+    }
+    .bin-button {
+      cursor: pointer;
+      position: absolute;
+      left: 9.2vw;
+      height: 3.7vh;
+      bottom: 1vh;
+      padding-right: -31vw;
+    }
+    .play-button {
+      cursor: pointer;
+      position: absolute;
+      right: -0.2vw;
+      height: 3.7vh;
+      bottom: 1vh;
+      padding-right: -31vw;
+    }
   }
 }
 @media only screen and (min-width: 1280px) {
@@ -322,7 +324,13 @@ input:focus {
     }
   }
 }
-
+.help-icon {
+  display: none;
+  @include phone_and_tabletP {
+    display: block;
+    z-index: 1;
+  }
+}
 .home-button-container {
   z-index: 1000;
   border-bottom-right-radius: 2vw;
@@ -330,9 +338,11 @@ input:focus {
   margin-right: 1vw;
   padding: 0.35vw 0.782vw 0.782vw 0.35vw;
   @include phone_and_tabletP {
-    width: calc(10.834vw - 1vw) !important;
-    height: 10.834vw;
+    width: 11% !important;
+    height: 100%;
+    margin-left: 8vw;
   }
+
   @include tabletP {
     width: calc(6.834vw - 1vw) !important;
     height: 5.834vw;
@@ -346,7 +356,9 @@ input:focus {
     &:hover {
       > .svg {
         @include transition(all 350ms cubic-bezier(0.5, 1, 0.89, 1));
-        transform: scale(0.7) translate(calc(-50% - 1vw), calc(-50% + 0.3vw)) !important;
+        @include tabletP {
+          transform: scale(0.7) translate(calc(-50% - 1vw), calc(-50% + 0.3vw)) !important;
+        }
       }
       .smoke-container {
         display: flex;
@@ -365,6 +377,9 @@ input:focus {
     visibility: hidden;
     opacity: 0;
     @include transition(all 350ms cubic-bezier(0.5, 1, 0.89, 1));
+    @include phone_and_tabletP {
+      display: none;
+    }
   }
   .smoke-container {
     display: none;
@@ -375,6 +390,9 @@ input:focus {
     left: 0.7vw;
     top: -1.2vw;
     z-index: 999;
+    @include phone_and_tabletP {
+      display: none;
+    }
     .smoke-1,
     .smoke-2,
     .smoke-3 {
@@ -393,44 +411,97 @@ input:focus {
 }
 .logout-container {
   width: calc(93.16vw - 1vw) !important;
-  height: 5.834vw;
   margin-left: 1vw;
   border-bottom-left-radius: 2vw;
   background: $light-blue;
   align-items: center;
+  @include phone_and_tabletP {
+    height: 9.834vw;
+    margin: 0;
+    width: auto !important;
+    flex-wrap: inherit !important;
+  }
+  @include tabletP {
+    height: 5.834vw;
+  }
+
   .search-container {
     height: 3.698vw;
     display: flex;
     align-items: center;
-    width: 70%;
+    &.active {
+      @include phone_and_tabletP {
+        height: 7.698vw;
+        display: flex;
+        align-items: center;
+        width: 91vw;
+      }
+    }
+    @include tabletP {
+      width: 70%;
+    }
+    .close-search {
+      display: none;
+      @include phone_and_tabletP {
+        display: block;
+        height: 7vh;
+        width: 7vw;
+        transform: rotate(-90deg);
+        color: #acacac;
+      }
+    }
     .search-area {
       width: 100%;
+      @include phone_and_tabletP {
+        display: none;
+        z-index: 1;
+        transition: all 300ms;
+      }
+      .search-input {
+        display: block;
+        background-color: transparent;
+        font-family: $font-family-regular;
+        border: none;
+        border-radius: 12px;
+        margin: 0 0 0 1.4vw;
+        letter-spacing: 0.045vw;
+        width: 100%;
+        color: #acacac;
+        @include phone_and_tabletP {
+          font-size: 3.7vw;
+        }
+        @include tabletP {
+          font-size: 1.7vw;
+        }
+      }
     }
   }
   .action-container {
-    width: 30%;
     justify-content: flex-end;
+    @include phone_and_tabletP {
+      width: 100%;
+      display: flex;
+    }
+    @include tabletP {
+      width: 30%;
+    }
   }
-  .search-input {
-    display: block;
-    background-color: transparent;
-    font-family: $font-family-regular;
-    font-size: 1.7vw;
-    border-radius: 12px;
-    border: none;
-    margin: 0 0 0 1.4vw;
-    letter-spacing: 0.045vw;
-    width: 100%;
-    color: #acacac;
-  }
+
   .search-button,
   .bell-button,
   .more-button {
     cursor: pointer;
-    margin: 0 2vw 0 0;
-    width: 3.698vw;
-    height: 3.698vw;
     display: inline-block;
+    @include phone_and_tabletP {
+      width: 8.698vw;
+      height: 8.698vw;
+      margin-left: 9vw;
+    }
+    @include tabletP {
+      margin: 0 2vw 0 0;
+      width: 3.698vw;
+      height: 3.698vw;
+    }
     .svg {
       width: 100%;
       height: 100%;
@@ -439,7 +510,9 @@ input:focus {
     }
   }
   .search-button {
-    margin: 0 0 0 1.4vw;
+    @include tabletP {
+      margin: 0 0 0 1.4vw;
+    }
   }
   .user-button {
     cursor: pointer;
@@ -594,7 +667,6 @@ h3 {
     background: var(--theme-orange);
   }
 }
-
 
 .page-loader {
   width: 100%;
