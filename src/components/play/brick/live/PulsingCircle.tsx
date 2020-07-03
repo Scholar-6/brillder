@@ -18,13 +18,13 @@ class LiveStepCircle extends React.Component<StepProps> {
       `;
 
       return (
-        <PulsingDiv className="blue-circle-container animated pulse duration-1s iteration-2">
+        <PulsingDiv className="blue-circle-container">
           <div className="blue-circle"></div>
         </PulsingDiv>
       );
     }
     return (
-      <div className="blue-circle-container animated pulse duration-1s iteration-2">
+      <div className="blue-circle-container">
         <div className="blue-circle"></div>
       </div>
     );
