@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Action, Dispatch } from 'redux';
 
 import types from '../types';
+import { socketLogin } from './socket';
 
 
 const getUserSuccess = (user: any) => {
@@ -26,6 +27,7 @@ const getUser = () => {
     ).then(response => {
       const {data} = response;
       dispatch(getUserSuccess(data));
+      dispatch(socketLogin(data.id));
     })
     .catch(error => {
       dispatch(getUserFailure(error.message));
