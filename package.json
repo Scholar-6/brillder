@@ -38,6 +38,7 @@
     "@types/react-swipeable-views": "^0.13.0",
     "@types/redux": "^3.6.0",
     "@types/redux-mock-store": "^1.0.2",
+    "@types/styled-components": "^5.1.0",
     "@wiris/mathtype-ckeditor5": "^7.20.0",
     "axios": "^0.19.1",
     "ckeditor4": "^4.14.0",
@@ -52,6 +53,7 @@
     "raw-loader": "^3.1.0",
     "react": "^16.12.0",
     "react-animate-height": "^2.0.20",
+    "react-animations": "^1.0.0",
     "react-circular-progressbar": "^2.0.3",
     "react-device-frame": "^2.1.4",
     "react-dom": "^16.12.0",
@@ -70,6 +72,7 @@
     "react-youtube": "^7.11.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "styled-components": "^5.1.1",
     "typescript": "^3.7.5"
   },
   "scripts": {
