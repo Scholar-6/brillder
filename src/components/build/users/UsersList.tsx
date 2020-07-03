@@ -218,7 +218,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   logout() {
     this.props.logout();
-    this.props.history.push('/choose-user');
+    this.props.history.push('/choose-login');
   }
 
   move(brickId:number) {

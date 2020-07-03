@@ -21,7 +21,7 @@ interface AllUsersRouteProps {
 const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, user, ...rest }) => {
 
   var location = useLocation();
-  
+
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!user) {
       rest.getUser();
@@ -35,9 +35,9 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized();
-    return <div>...Checking rights...</div>;
+    return <div className="page-loader">...Checking rights...</div>;
   } else {
-    return <Redirect to="/choose-user" />;
+    return <Redirect to="/choose-login" />;
   }
 }
 

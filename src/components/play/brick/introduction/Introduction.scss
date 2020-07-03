@@ -15,11 +15,11 @@
     background-color: var(--white);
     .brick-container {
       .introduction-page {
-        overflow-y: auto;
         padding: 4vh 2vw 4vh 7vw;
         height: calc(100vh - 7.8vw);
         font-family: $font-family-regular;
         position: relative;
+        overflow-y: auto;
         .intro-header {
           margin-bottom: 10vh;
           .left-brick-circle {
@@ -96,9 +96,23 @@
           }
         }
         .question-live-play {
-          overflow-y: scroll;
+          width: calc(100% - 7vw);
+          overflow-y: auto;
+          height: calc(100vh - 24.6vh);
+          padding-bottom: 2vw;
+          margin: 6vh 3vw 1vw 4vw;
+          position: absolute;
+          top: 0;
+        }
+        .swipe-view {
           height: calc(100vh - 7.5vw);
-          margin: 0 3vw 5vw 4vw;
+          .react-swipeable-view-container {
+            height: calc(100vh - 7.5vw);
+
+            > div {
+              overflow-y: hidden !important;
+            }
+          }
         }
       }
       .introduction-info {
@@ -259,21 +273,23 @@
         .introduction-page {
           padding: 0;
           height: calc(100vh - 7.8vw);
+          overflow-y: hidden;
         }
         .fotter-text {
           margin-top: 3vw;
         }
       }
       &.synthesis-page {
-        .synthesis-content {
-          padding: 0 2vw;
-          margin-top: 3vw;
+        .question-live-play {
+          height: calc(100vh - 27.6vh);
+          margin: 12vh 3vw 1vw 4vw;
         }
       }
       .circle-progress-container {
         position: relative;
         width: 100%;
         height: $progress-height;
+        margin-top: 7vh;
         .circle-progress-first {
           height: 50vh;
           width: 50vh;

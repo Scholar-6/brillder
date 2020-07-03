@@ -2,114 +2,132 @@
 @import '../../../assets/sass/partials/mixins';
 @import '../../../assets/sass/partials/extensions';
 
-.pre-login-page {
-  background: var(--theme-dark-blue);
-  height: 100%;
-  .back-col {
-    height: 13.3vh;
-    width: 32.3vw;
-    .back-box {
-      text-align: center;
-      .back-button {
-        cursor: pointer;
-        height: 3.6vw;
-        width: 2vw;
-        margin-left: 15vw;
-        color: var(--theme-orange);
-        transition: all 0.2s ease-in-out;
-        transform-origin: 200% 50%;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/feathericons/big-chevron-left-orange.png);
-      }
-      .back-button:hover {
-        transform: scale(1.15, 1.05);
-      }
-    }
-  }
-  .first-col {
-    width: 29.6vw;
-    height: 100%;
+@import '../../../assets/sass/component/authpages';
 
-    .first-item {
-      background: $light-blue;
-      height: 14.7vh;
-      border-bottom-left-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
+
+.choose-login-desktop {
+  $col-radius: 2vw;
+  $col-color: $light-blue;
+  width: 100%;
+  height: 100%;
+  background-color: var(--theme-dark-blue);
+
+  .first-row {
+    height: 24.95%;
+
+    .first-col {
+      width: 30.5%;
+      height: 100%;
+      border-bottom-right-radius: $col-radius;
+      background: $col-color;
     }
-    .second-item {
-      background: $light-blue;
-      margin-top: 4.7vh;
-      height: 80.6vh;
-      border-top-left-radius: $border-radius;
-      border-top-right-radius: $border-radius;
-      text-align: center;
-      .logo-image {
-        margin-top: 6.1vh;
-        margin-bottom: 3.9vh;
-        height: 20vh;
-      }
+
+    .second-col {
+      margin-left: 2%;
+      width: 50.1%;
+      height: 100%;
+      border-bottom-right-radius: $col-radius;
+      border-bottom-left-radius: $col-radius;
+      background: $col-color;
     }
-  }
-  .second-col {
-    margin-left: 2.7vw;
-    width: 29.7vw;
-    height: 100%;
-    .first-item {
-      background: $light-blue;
-      height: 70.9vh;
-      border-bottom-left-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
-    }
-    .second-item {
-      background: $light-blue;
-      margin-top: 4.7vh;
-      height: 24.4vh;
-      border-top-left-radius: $border-radius;
-      border-top-right-radius: $border-radius;
+
+    .third-col {
+      margin-left: 2%;
+      width: 15.4%;
+      height: 100%;
+      border-bottom-left-radius: $col-radius;
+      background: $col-color;
     }
   }
-  .email-button,
-  .google-button {
-    padding: 2.5vh;
-    border-radius: $button-radius;
-    text-transform: none;
-    font: 1vw $font-family-regular;
-    letter-spacing: 0.1vw;
-    width: 22vw;
-    margin-bottom: 2.7vh;
-    transition: all 0.2s ease-in-out;
-    .svg {
-      transition: all 0.2s ease-in-out;
-      margin-right: 1vw;
-      width: 2.5vw;
-      height: 2.5vw;
+
+  .second-row {
+    height: 58.4%;
+    margin-top: 3.2vh;
+
+    .first-col {
+      margin-left: 1.7%;
+      width: 50.1%;
+      height: 100%;
+      border-radius: $col-radius;
+      background: $col-color;
     }
-    .MuiButton-label {
-      justify-content: flex-start;
+
+    .second-col {
+      margin-left: 1.72%;
+      width: 46.48%;
+      height: 100%;
+      border-top-left-radius: $col-radius;
+      border-bottom-left-radius: $col-radius;
+      background: $col-color;
     }
   }
-  .email-button {
-    background: var(--theme-orange);
-    .svg,
+
+  .third-row {
+    height: 9.82%;
+    margin-top: 3.63vh;
+
+    .first-col {
+      width: 35.25%;
+      height: 100%;
+      border-top-right-radius: $col-radius;
+      background: $col-color;
+    }
+
+    .second-col {
+      margin-left: 2%;
+      width: 50.1%;
+      height: 100%;
+      border-top-right-radius: $col-radius;
+      border-top-left-radius: $col-radius;
+      background: $col-color;
+    }
+
+    .third-col {
+      margin-left: 2%;
+      width: 10.65%;
+      height: 100%;
+      border-top-left-radius: $col-radius;
+      background: $col-color;
+    }
+  }
+
+  .logo-image {
+    height: 28vh;
+    margin-bottom: 5vh;
+  }
+
+  .logo-text-image {
+    height: 6vh;
+  }
+
+  .user-type-btn:hover {
+    color: white;
+    background: var(--theme-orange) !important;
+
     span {
-      color: var(--white);
-    }
-    &:hover {
-      background: var(--theme-dark-blue);
+      font-family: $font-family-bold !important;
     }
   }
-  .google-button {
-    background: var(--white);
+
+  .user-type-btn {
+    padding: 2.85vh 0;
+    background-color: var(--theme-orange);
+    color: var(--theme-dark-blue);
+    margin-top: 1.55vh;
+    margin-bottom: 1.6vh;
+    margin-right: 3.4vw;
+    border-radius: 0.7vw;
+    font-weight: 200 !important;
+    width: 51%;
+    font-size: 2.55vw;
+
     span {
-      color: var(--theme-dark-blue);
+      font-family: $font-family-light;
+      font-weight: 200 !important;
     }
-    &:hover {
-      background: var(--white);
-      .svg {
-        transform: scale(1.4);
-      }
+
+    .user-type-name {
+      line-height: 1 !important;
     }
   }
 }

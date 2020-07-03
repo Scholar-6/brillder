@@ -52,18 +52,19 @@
 
   .right-top-icon {
     position: absolute;
-    top: 1vw;
+    top: 0.4vh;
+    right: 2.2vw;
     height: $bin-size;
     width: $bin-size;
-    right: 0.1vw;
     cursor: pointer;
     color: var(--theme-orange);
     z-index: 2;
+    &:hover {
+      opacity: 0.5;
+    }
   }
 
-  .right-top-icon:hover {
-    opacity: 0.5;
-  }
+  .right-top-icon
 
   .page-header {
     background: #b2b2b2;

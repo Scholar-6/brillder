@@ -18,6 +18,7 @@ Run the project locally (Windows and Linux) and connect to the dev-api:
         REACT_APP_BACKEND_HOST=https://dev-api.scholar6.org  
         REACT_APP_ZENDESK_ID=33210b3d-b3d5-43ba-9b07-70acce8c10b6  
         REACT_APP_VERSION=$npm_package_version
+        REACT_APP_BUILD_AUTO_SAVE_DELAY=500
 * `npm install`
 * `npm start`
 * Go to http://local-brillder.scholar6.org:3000

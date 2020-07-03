@@ -3,58 +3,31 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .review-page {
-	.question-title {
-		font-size: 2.5vw;
-		font-family: $font-family-black;
-		color: var(--theme-dark-blue);
-	}
-	.introduction-page {
-		position: relative;
-		overflow-y: hidden !important;
-	  }
-	
-	  .text-play {
-		margin-top: 7vh;
-	  }
-	
-	  .question-live-play {
-		position: absolute;
-		top: 0;
-		width: 100%;
-		height: calc(100vh - 9vw) !important;
-		margin: 0 !important;
-		padding: 0 3vw 0 4vw;
-		padding-bottom:4vh;
-	  }
-	
-	  .swipe-view {
-		height: calc(100vh - 7.5vw);
-		.react-swipeable-view-container {
-		  height: calc(100vh - 7.5vw);
-	
-		  > div {
-			overflow-y: hidden !important;
-		  }
-		}
-	  }
-	.stepper {
-		.step {
-			color: var(--theme-dark-blue) !important;
-		}
-	}
-	.edited-step-icon {
-		color: $black-blue;
-		border-radius: 100%;
-		font-size: 16px !important;
-		padding: 5px;
-		border: 2px solid $black-blue;
-	}
+  .question-title {
+    font-size: 2.5vw;
+    font-family: $font-family-black;
+    color: var(--theme-dark-blue);
+  }
 
-	.back-button {
-		height: 3.5vw;
-		width: 3.5vw;
-		.svg {
-			margin: 0 !important;
-		}
-	}
+
+  .stepper {
+    .step {
+      color: var(--theme-dark-blue) !important;
+    }
+  }
+  .edited-step-icon {
+    color: $black-blue;
+    border-radius: 100%;
+    font-size: 16px !important;
+    padding: 5px;
+    border: 2px solid $black-blue;
+  }
+
+  .back-button {
+    height: 3.5vw;
+    width: 3.5vw;
+    .svg {
+      margin: 0 !important;
+    }
+  }
 }

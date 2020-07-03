@@ -5,7 +5,6 @@
 .alert-dialog {
   position: fixed;
   top: 0;
-
   .MuiDialog-paperScrollPaper {
     position: fixed;
     top: 8.3vh;
@@ -59,4 +58,32 @@
   .user-first-name {
     font-family: $font-family-regular !important;
   }
+  .sort-by-box {
+    height: 20vh;
+    overflow-y: auto;
+  }
+  .brick-row-title {
+    height: 15vh;
+    overflow-y: auto;
+  }
+  tr {
+    height: 5vh;
+    overflow-y: auto;
+  }
+  .add-user-button {
+    cursor: pointer;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    margin-right: 1.3vw;
+    font-family: $font-family-black;
+    color: var(--theme-dark-blue);
+    font-size: 1vw;
+    .add-user-image {
+      height: 3vw;
+    }
+  }
+}
+
+.user-list-page ~ .beta-text {
+  color: var(--theme-dark-blue);
 }

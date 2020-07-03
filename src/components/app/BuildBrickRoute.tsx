@@ -46,9 +46,9 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({ component: Component, ...r
     return <Redirect to="/" />
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized()
-    return <div>...Checking rights...</div>
+    return <div className="page-loader">...Checking rights...</div>
   } else {
-    return <Redirect to="/choose-user" />
+    return <Redirect to="/choose-login" />
   }
 }
 

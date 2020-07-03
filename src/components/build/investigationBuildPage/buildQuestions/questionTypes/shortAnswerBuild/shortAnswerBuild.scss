@@ -7,26 +7,29 @@
 
   .short-answer-box {
     position: relative;
-    margin-left: 1.25%;
+    margin: 0.4vw;
     width: 97.5%;
-
+    background-color: var(--white);
+    border-radius: 0.4vw;
     input {
-      font-family: $font-family-regular;
       font-size: $answer-input-text-size;
-      width: 84%;
-      padding: 0 8%;
-      height: 55px;
+      width: 100%;
+      padding: 0 2.4vw 0 0.8vw;
+      min-height: $answer-height;
       text-align: center;
       border: none;
-      height: $answer-height !important;
-      border-radius: 0.4vw;
     }
+  }
+  .right-top-icon {
+    @extend %floatToYCenter;
+    right: 0.4vw;
   }
 
   .MuiSnackbar-root {
     position: fixed !important;
-    z-index: 1000;
+    z-index: 999999;
     font-size: 2vw;
+
     top: 30% !important;
     height: 30vh;
     left: 50.8% !important;

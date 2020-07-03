@@ -1,13 +1,10 @@
 html,
 body,
 #root {
-  height: 100%;
-}
-
-body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Brandon Grotesque Regular', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding: 0;
+  height: 100%;
+  font-family: $font-family-regular;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -20,8 +17,17 @@ div:focus {
   outline: none;
 }
 
-textarea:focus {
-  outline: none;
+textarea,
+input {
+  font-family: $font-family-regular;
+  &:focus {
+    outline: none;
+  }
+}
+
+.MuiTypography-body1 {
+  font-family: $font-family-regular !important;
+  font-weight: inherit !important;
 }
 
 input:focus {
@@ -321,10 +327,17 @@ input:focus {
   z-index: 1000;
   border-bottom-right-radius: 2vw;
   background: $light-blue;
-  width: calc(6.834vw - 1vw) !important;
-  height: 5.834vw;
   margin-right: 1vw;
   padding: 0.35vw 0.782vw 0.782vw 0.35vw;
+  @include phone_and_tabletP {
+    width: calc(10.834vw - 1vw) !important;
+    height: 10.834vw;
+  }
+  @include tabletP {
+    width: calc(6.834vw - 1vw) !important;
+    height: 5.834vw;
+  }
+
   .home-button {
     cursor: pointer;
     height: 100%;
@@ -386,12 +399,12 @@ input:focus {
   background: $light-blue;
   align-items: center;
   .search-container {
+    height: 3.698vw;
     display: flex;
+    align-items: center;
     width: 70%;
-    .MuiGrid-item {
-      height: 3.698vw;
-      display: flex;
-      align-items: center;
+    .search-area {
+      width: 100%;
     }
   }
   .action-container {
@@ -586,4 +599,14 @@ h3 {
   &.wrong {
     background: var(--theme-orange);
   }
+}
+
+
+.page-loader {
+  width: 100%;
+  height: 100vh;
+  color: var(--white);
+  font-size: 4vw;
+  @extend %flexCenter;
+  background-color: var(--theme-dark-blue);
 }
