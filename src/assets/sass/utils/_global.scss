@@ -655,12 +655,12 @@ h3 {
     text-align: center !important;
   }
   &.active {
-    background: $white-blue;
+    background: $white-blue !important;
   }
   &.correct {
-    background: var(--theme-green);
+    background: var(--theme-green) !important;
     .question-hint {
-      background: white;
+      background: var(--white) !important;
     }
   }
   &.wrong {
