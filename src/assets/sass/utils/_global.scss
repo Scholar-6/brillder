@@ -1,11 +1,9 @@
 html,
 body,
 #root {
-  height: 100%;
-}
-
-body {
   margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: $font-family-regular;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -595,4 +593,14 @@ h3 {
   &.wrong {
     background: var(--theme-orange);
   }
+}
+
+
+.page-loader {
+  width: 100%;
+  height: 100vh;
+  color: var(--white);
+  font-size: 4vw;
+  @extend %flexCenter;
+  background-color: var(--theme-dark-blue);
 }

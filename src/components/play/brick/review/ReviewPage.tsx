@@ -49,14 +49,14 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     } else {
       history.push(`/play/brick/${brickId}/intro`);
     }
-    return <div>...Loading...</div>;
+    return <div className="page-loader">...Loading...</div>;
   } else if (status === PlayStatus.Ending) {
     if (props.isPlayPreview) {
       history.push(`/play-preview/brick/${brickId}/ending`);
     } else {
       history.push(`/play/brick/${brickId}/ending`);
     }
-    return <div>...Loading...</div>;
+    return <div className="page-loader">...Loading...</div>;
   }
 
   let questionRefs: React.RefObject<QuestionLive>[] = [];
@@ -103,7 +103,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   };
 
   const onEnd = () => {
-    
+
   }
 
   const renderQuestion = (question: Question, index: number) => {
