@@ -95,8 +95,52 @@
 }
 
 .bricks-list-page {
-  .bricks-list-container {
-    height: 62vh !important;
-    overflow: auto;
+  @include phone_and_tabletP {
+    background-color: var(--light-gray);
+  }
+  .upper-part {
+    @include phone_and_tabletP {
+      background-color: var(--light-gray);
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: flex-start;
+    }
+    .page-header {
+      @include phone_and_tabletP {
+        flex-wrap: inherit;
+        height: 6vh;
+        z-index: 999999;
+        padding: 0.7vh 4.5vw 0;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &:before,
+      &:after {
+        @include phone_and_tabletP {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+        }
+      }
+
+      &:before {
+        @include phone_and_tabletP {
+          content: '';
+          background: #193266;
+          z-index: 0;
+          border-radius: 3.5vh 3.5vh 0vh 0vh;
+        }
+      }
+      &:after {
+        @include phone_and_tabletP {
+          content: '';
+          background-color: var(--white);
+          z-index: -1;
+        }
+      }
+    }
   }
 }
