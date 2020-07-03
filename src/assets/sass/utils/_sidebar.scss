@@ -18,7 +18,6 @@ $height-desktop-view: calc(100vh - 7.834vw);
     flex-basis: inherit;
     max-width: inherit;
     width: calc(25% - 1vw);
-
     margin-right: 1vw;
     border-top-right-radius: $main-panel-radius;
     background: $light-blue;
@@ -27,6 +26,7 @@ $height-desktop-view: calc(100vh - 7.834vw);
     position: relative;
     @include phone_and_tabletP {
       height: $height-mobile-view;
+      display: none;
     }
     @include tabletP {
       height: $height-desktop-view;
