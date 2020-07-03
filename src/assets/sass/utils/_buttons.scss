@@ -88,7 +88,7 @@
   }
   &.bg-tab-gray {
     .svg {
-      color: $gray;
+      color: var(--gray);
     }
     &:after {
       background-color: var(--tab-gray-alpha3);

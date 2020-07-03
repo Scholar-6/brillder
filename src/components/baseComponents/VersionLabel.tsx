@@ -1,7 +1,8 @@
 import React from "react";
 
 
-const VersionLabel:React.FC = () => {
+
+const VersionLabel: React.FC = () => {
   return (
     <div className="beta-text">
       <div>BETA</div>
