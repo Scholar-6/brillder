@@ -44,7 +44,6 @@ const LiveStepper: React.FC<StepperProps> = ({
     }
     questionIndex++;
     let index = questionIndex;
-    console.log(activeStep, questionIndex);
     return (
       <Grid item xs={colWidth as any} key={key} className={className} onClick={handleStep(index - 1)}>
         <span>{questionIndex}</span>
