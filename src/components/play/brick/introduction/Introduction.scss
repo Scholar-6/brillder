@@ -105,9 +105,12 @@
           overflow-y: auto;
           height: calc(100vh - 24.6vh);
           padding-bottom: 2vw;
-          margin: 0 3vw 1vw 4vw;
+          margin: 6vh 3vw 1vw 4vw;
           position: absolute;
           top: 0;
+          &.review-content {
+            margin-top: 0;
+          }
         }
         .swipe-view {
           height: calc(100vh - 7.5vw);
@@ -186,7 +189,7 @@
                 @extend %floatToXCenter;
                 padding: 0.2vw;
                 border-radius: 100vw;
-                background: #82c0ed;
+                background: var(--blue-alpha5);
                 .blue-circle {
                   height: 0.8vw;
                   width: 0.8vw;

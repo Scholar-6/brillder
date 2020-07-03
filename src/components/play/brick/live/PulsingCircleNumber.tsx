@@ -19,7 +19,7 @@ class PulsingCircleNumber extends React.Component<StepProps> {
   render() {
     const { number } = this.props;
     let indexClassName =
-      "question-index-container animated pulse duration-1s iteration-2";
+      "question-index-container";
     if (this.isAttempted()) {
       indexClassName += " attempted";
     }

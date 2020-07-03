@@ -142,7 +142,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         <div className={indexClassName}>
           <div className="question-index">{index + 1}</div>
         </div>
-        <div className="question-live-play">
+        <div className="question-live-play review-content">
           <div className="question-title">{renderReviewTitle(attempt)}</div>
           {renderQuestion(question, index)}
         </div>
