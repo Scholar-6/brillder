@@ -40,7 +40,7 @@
         display: none;
       }
       .gray {
-        color: $gray;
+        color: var(--gray);
       }
       .left-pagination {
         padding-top: 0.35vh;
@@ -71,7 +71,7 @@
         svg {
           height: 4.7vh;
           width: 4.7vh;
-          color: $gray;
+          color: var(--gray);
         }
       }
     }

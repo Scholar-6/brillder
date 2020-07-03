@@ -98,7 +98,7 @@ input:focus {
 }
 
 .text-gray {
-  color: $gray !important;
+  color: var(--gray) !important;
 }
 
 .bg-tab-gray {
@@ -106,7 +106,7 @@ input:focus {
 }
 
 .bg-gray {
-  color: $gray !important;
+  color: var(--gray) !important;
 }
 
 .scale-07 {
