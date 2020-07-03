@@ -778,7 +778,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           <PageHeader
             searchPlaceholder="Search Ongoing Projects & Published Bricks…"
             search={() => this.search()}
-            searching={(v) => this.searching(v)}
+            searching={(v: string) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
           />
           <Grid container direction="row" className="sorted-row">

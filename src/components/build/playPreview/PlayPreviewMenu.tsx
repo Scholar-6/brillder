@@ -54,7 +54,7 @@ class PlayPreviewMenu extends Component<PreviewMenuProps, PreviewMenuState> {
         <PageHeader
           searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
           search={() => {}}
-          searching={(v) => {}}
+          searching={(v: string) => {}}
           showDropdown={() => this.showDropdown()}
         />
         <Menu

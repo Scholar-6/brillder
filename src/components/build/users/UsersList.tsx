@@ -590,7 +590,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           <PageHeader
             searchPlaceholder="Search by Name,  Email or Subject"
             search={() => this.search()}
-            searching={(v) => this.searching(v)}
+            searching={(v: string) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
           />
           <Grid container direction="row" className="sorted-row">

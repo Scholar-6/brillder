@@ -71,7 +71,9 @@
     "react-swipeable-views": "^0.13.6",
     "react-youtube": "^7.11.2",
     "redux": "^4.0.5",
+    "redux-socket.io": "^1.4.0",
     "redux-thunk": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "styled-components": "^5.1.1",
     "typescript": "^3.7.5"
   },
@@ -106,6 +108,8 @@
   "devDependencies": {
     "@storybook/react": "^5.3.13",
     "@types/prop-types": "^15.7.3",
+    "@types/redux-socket.io": "^1.4.0",
+    "@types/socket.io-client": "^1.4.33",
     "awesome-typescript-loader": "^5.2.1",
     "copy-webpack-plugin": "^5.1.1",
     "react-app-rewired": "^2.1.6",
