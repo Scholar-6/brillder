@@ -32,7 +32,7 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
       if (userType === UserLoginType.Student) {
         return <Redirect to="/play/dashboard" />
       } else if (userType === UserLoginType.Builder) {
-        return <Redirect to="/build" />
+        return <Redirect to="/home" />
       }
     }
     let path = props.location.pathname;
@@ -40,25 +40,25 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
     let isAdmin = user.roles.some((role:any) => role.roleId === UserType.Admin);
 
     if (isAdmin) {
-      if (path === '/build') {
-        return <Redirect to="/build" />
+      if (path === '/home') {
+        return <Redirect to="/home" />
       } else if (path === '/play') {
         return <Redirect to="/play/dashboard" />
       }
     }
 
-    let canBuild = user.roles.some((role:any) => 
+    let canBuild = user.roles.some((role:any) =>
       role.roleId === UserType.Admin || role.roleId === UserType.Builder || role.roleId === UserType.Editor
     );
 
     if (canBuild) {
-      return <Redirect to="/build" />
+      return <Redirect to="/home" />
     } else {
       return <Redirect to="/play/dashboard" />
     }
   } else if (props.isAuthenticated === isAuthenticated.None) {
     props.isAuthorized();
-    return <div>...Checking rights...</div>
+    return <div className="page-loader">...Checking rights...</div>
   } else {
     return <Redirect to="/choose-login" />
   }

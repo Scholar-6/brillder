@@ -509,7 +509,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           <PageHeader
             searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
             search={() => this.search()}
-            searching={(v) => this.searching(v)}
+            searching={(v: string) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
           />
           <Grid container direction="row" className="sorted-row">
@@ -535,7 +535,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         >
           <MenuItem
             className="view-profile menu-item"
-            onClick={() => this.props.history.push("/build/user-profile")}
+            onClick={() => this.props.history.push("/user-profile")}
           >
             View Profile
             <Grid

@@ -94,7 +94,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [synthesis, setSynthesis] = React.useState(initSynthesis);
   useEffect(() => {
     if (props.brick) {
-      if (props.brick.id === brickId) { 
+      if (props.brick.id === brickId) {
         if (props.brick.synthesis || props.brick.synthesis === '') {
           setSynthesis(props.brick.synthesis)
         }
@@ -107,7 +107,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   /* Synthesis */
 
   if (!props.brick) {
-    return <div>...Loading...</div>;
+    return <div className="page-loader">...Loading...</div>;
   }
 
   let canEdit = canEditBrick(props.brick, props.user);
@@ -128,7 +128,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if (isSynthesisPage === true) {
     if (activeQuestion) {
       unselectQuestions();
-      return <div>...Loading...</div>
+      return <div className="page-loader">...Loading...</div>
     }
   } else if (!activeQuestion) {
     console.log("Can`t find active question");
@@ -173,7 +173,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setQuestions(update(questions, { $set: postUpdatedQuestions }));
       cashBuildQuestion(brickId, postUpdatedQuestions.length - 1);
     });
-    
+
     if (history.location.pathname.slice(-10) === '/synthesis') {
       history.push(`/build/brick/${brickId}/build/investigation/question`);
     }
@@ -251,7 +251,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const { brick } = props;
 
   if (brick.id !== brickId) {
-    return <div>...Loading...</div>;
+    return <div className="page-loader">...Loading...</div>;
   }
 
   const parseQuestions = () => {
@@ -308,7 +308,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const submitInvalidBrick = () => {
     saveBrick();
-    history.push(`/build/back-to-work`);
+    history.push(`/back-to-work`);
   }
 
   const hideInvalidBrick = () => {
@@ -342,13 +342,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (canEdit === true) {
       let time = Date.now();
       let delay = 500;
-  
+
       try {
         if (process.env.REACT_APP_BUILD_AUTO_SAVE_DELAY) {
           delay = parseInt(process.env.REACT_APP_BUILD_AUTO_SAVE_DELAY);
         }
       } catch {}
-  
+
       if (time - lastAutoSave >= delay) {
         setLastAutoSave(time);
         props.saveBrick(brick);
@@ -366,7 +366,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const exitAndSave = () => {
     saveBrick();
-    history.push('/build');
+    history.push('/home');
   }
 
   const renderBuildQuestion = () => {
@@ -613,7 +613,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <div>to use this page</div>
           </div>
           <Grid container direction="row" className="row-buttons" justify="center">
-            <Button className="yes-button" onClick={() => history.push('/build')}>
+            <Button className="yes-button" onClick={() => history.push('/home')}>
               Move
             </Button>
           </Grid>

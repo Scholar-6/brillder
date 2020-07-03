@@ -73,7 +73,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }, [props.brick]);
 
   // Commented this in order to allow students to also be builders and vice versa, we may need to add this back in (11/5/2020)
-  // let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor); 
+  // let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor);
   // if (cantPlay) {
   //   return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
   // }
@@ -81,7 +81,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const brickId = parseInt(props.match.params.brickId);
   if (!props.brick || props.brick.id !== brickId || !props.brick.author) {
     props.fetchBrick(brickId);
-    return <div>...Loading brick...</div>
+    return <div className="page-loader">...Loading brick...</div>
   }
 
   setBrillderTitle(props.brick.title);

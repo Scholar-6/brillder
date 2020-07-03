@@ -38,7 +38,7 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
 
     if (!rest.isRedirectedToProfile) {
       if(!user.firstName || !user.lastName) {
-        return <Redirect to="/build/user-profile" />
+        return <Redirect to="/user-profile" />
       }
     }
 
@@ -56,7 +56,7 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
     return <Redirect to="/" />
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized()
-    return <div>...Checking rights...</div>
+    return <div className="page-loader">...Checking rights...</div>
   } else {
     return <Redirect to="/choose-login" />
   }
