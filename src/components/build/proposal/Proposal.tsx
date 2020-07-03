@@ -146,7 +146,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   const goHome = () => {
     setDialog(false);
-    history.push('/build');
+    history.push('/home');
   }
 
   return (

@@ -3,15 +3,18 @@ import { Grid } from "@material-ui/core";
 
 import "./Live.scss";
 import { Question } from "model/question";
+import PulsingCircle from './PulsingCircle';
 
 interface StepperProps {
   activeStep: number;
+  previousStep: number;
   questions: Question[];
   handleStep(questionIndex: number): any;
 }
 
 const LiveStepper: React.FC<StepperProps> = ({
   activeStep,
+  previousStep,
   questions,
   handleStep,
 }) => {
@@ -41,13 +44,12 @@ const LiveStepper: React.FC<StepperProps> = ({
     }
     questionIndex++;
     let index = questionIndex;
+    console.log(activeStep, questionIndex);
     return (
       <Grid item xs={colWidth as any} key={key} className={className} onClick={handleStep(index - 1)}>
         <span>{questionIndex}</span>
         {question.edited ? (
-          <div className="blue-circle-container animated pulse duration-1s iteration-2">
-            <div className="blue-circle"></div>
-          </div>
+          <PulsingCircle isPulsing={previousStep === questionIndex - 1} />
         ) : (
           ""
         )}
