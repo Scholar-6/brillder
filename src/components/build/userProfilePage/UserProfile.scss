@@ -115,6 +115,12 @@
     .profile-inputs-container {
       padding-top: 4.8vh;
       width: 32.4vw;
+      .MuiSvgIcon-root,
+      .MuiCheckbox-root,
+      .MuiFormControlLabel-root,
+      .MuiFormControlLabel-label {
+        color: var(--theme-dark-blue) !important;
+      }
     }
     .profile-roles-container {
       width: 19.2vw;
@@ -145,7 +151,6 @@
           }
           .MuiFormControlLabel-label {
             margin-left: 1.15vw;
-            font-family: $font-family-regular;
             font-size: 1.45vw;
             color: var(--theme-dark-blue);
           }

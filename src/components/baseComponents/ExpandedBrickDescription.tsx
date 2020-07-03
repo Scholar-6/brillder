@@ -38,16 +38,11 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           <div className="link-info">{this.getSubjectRow(brick)}</div>
           <div className="link-info">Editor: Name Surname</div>
         </div>
-        <Grid
-          container
-          direction="row"
-          className="hover-icons-row"
-          alignContent="flex-end"
-        >
-          <Grid item xs={4} container justify="flex-start">
+        <div className="hover-icons-row">
+          <div>
             <div className="round-button" style={{ background: `${color}` }}></div>
-          </Grid>
-          <Grid item xs={4} container justify="flex-start">
+          </div>
+          <div>
             {isAdmin ? (
               <img
                 alt="bin"
@@ -58,16 +53,16 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
             ) : (
               ""
             )}
-          </Grid>
-          <Grid item xs={4} container justify="flex-end">
+          </div>
+          <div>
             <img
               alt="play"
               className="play-button"
               onClick={() => this.props.move(brick.id)}
               src="/images/brick-list/play.png"
             />
-          </Grid>
-        </Grid>
+          </div>
+        </div>
       </div>
     );
   }

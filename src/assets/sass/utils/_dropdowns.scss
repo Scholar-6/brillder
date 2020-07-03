@@ -1,16 +1,26 @@
 .menu-dropdown {
   .MuiPaper-root {
     position: fixed;
-    right: 0 !important;
-    left: auto !important;
-    top: 10.5vh !important;
     min-width: 14.9vw !important;
     min-height: 31.3vh;
     border-radius: 0;
     border-bottom-left-radius: 2vw;
-    color: white;
+    color: var(--white);
     background: $light-blue;
     box-shadow: none;
+    right: 0 !important;
+    left: auto !important;
+    @include phone_and_tabletP {
+      bottom: 6.5vh !important;
+      right: 3vw !important;
+      top: unset !important;
+      min-width: 38vw !important;
+      min-height: fit-content;
+      border-radius: 0 2vw 0 0;
+    }
+    @include tabletP {
+      top: 10.5vh !important;
+    }
     .menu-item {
       cursor: pointer;
       position: relative;
@@ -18,12 +28,32 @@
       font-size: 1.45vw;
       padding-left: 1.65vw;
       margin: 0.5vh 0;
-      color: white !important;
+      color: var(--white) !important;
+      @include phone_and_tabletP {
+        font-size: 3.45vw;
+        min-height: 4vh;
+      }
+      @include tabletP {
+        font-size: 1.45vw;
+      }
       .menu-icon-container {
-        position: fixed;
         width: 4.5vw;
         height: 3vh;
-        right: 0vw;
+        @include phone_and_tabletP {
+          position: absolute;
+          right: 2vw;
+        }
+        @include tabletP {
+          right: 0vw;
+          position: fixed;
+        }
+        > div {
+          > img {
+            @include phone_and_tabletP {
+              width: 4.2vw;
+            }
+          }
+        }
       }
       .menu-icon {
         width: 2.2vw;
