@@ -3,9 +3,6 @@
 @import '../../../../../assets/sass/partials/extensions';
 
 .sort-play {
-  .MuiTypography-root {
-    font-family: $font-family-regular !important;
-  }
   .sort-category {
     color: var(--theme-dark-blue);
     padding: 10px 0;
