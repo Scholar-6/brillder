@@ -4,28 +4,14 @@
     @content;
   }
 }
-// 567 max
-@mixin only_phoneL {
-  @media screen and (max-width:#{$phone-landscape-width - 1}) {
-    @content;
-  }
-}
-
-// 568
-@mixin phoneL {
-  @media screen and (min-width:#{$phone-landscape-width}) {
-    @content;
-  }
-}
-
-// 767 max
+// 759 max
 @mixin phone_and_tabletP {
   @media screen and (max-width:#{$tablet-portrait-width - 1}) {
     @content;
   }
 }
 
-// 768
+// 760
 @mixin tabletP {
   @media screen and (min-width:#{$tablet-portrait-width}) {
     @content;
@@ -34,7 +20,7 @@
 
 // 1023 max
 @mixin phone_and_tabletL {
-  @media screen and (max-width:#{$phone-and-tablet-portrait-width}) {
+  @media screen and (max-width:#{$tablet-landscape-width - 1}) {
     @content;
   }
 }
