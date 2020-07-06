@@ -287,10 +287,12 @@
         font-family: $font-family-regular;
 
         .normal-page-container {
-          height: 100%;
           height: $book-height;
           margin-left: 2vw;
-          margin-right: 2vw;
+					margin-right: 2vw;
+					iframe {
+						width: 100%;
+					}
         }
 
         .edit-icon {

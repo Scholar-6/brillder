@@ -19,14 +19,18 @@
     }
   }
   .score-precentage {
+    margin-top: 3vh;
     font-family: $font-family-black;
     color: var(--theme-dark-blue);
     font-size: 12.5vh;
+    line-height: 1;
+    overflow: hidden;
   }
   .score-number {
     font-family: $font-family-bold;
     color: var(--theme-dark-blue);
     font-size: 4vh;
+    line-height: 1;
     text-align: center;
   }
 
