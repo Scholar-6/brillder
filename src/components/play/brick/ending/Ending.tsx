@@ -46,7 +46,7 @@ const EndingPage: React.FC<EndingProps> = ({
   setTimeout(() => {
     setMinScore((oldScore * 100) / maxScore);
     setMaxScore((score * 100) / maxScore);
-    setCurrentScore(Math.round((oldScore + score) / maxScore / 2));
+    setCurrentScore(Math.round((oldScore + score) * 50 / maxScore));
   }, 400);
 
   return (
