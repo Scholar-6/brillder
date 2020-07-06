@@ -350,20 +350,23 @@
         }
         .score-data {
           position: absolute;
-          height: 50vh;
+          height: 60vh;
+          width: 50vh;
+          top: 0;
           color: var(--theme-dark-blue);
           text-align: center;
           > div {
-            height: 50vh;
+            height: 60vh;
             .score-precentage {
               font-family: $font-family-black;
               color: var(--theme-dark-blue);
-              margin-bottom: 5px;
+              line-height: 1;
               font-size: 14vh;
             }
             .score-number {
               font-family: $font-family-bold;
               color: var(--theme-dark-blue);
+              line-height: 1;
               font-size: 4vh;
             }
           }
