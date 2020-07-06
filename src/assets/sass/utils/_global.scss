@@ -4,15 +4,9 @@ body,
   margin: 0;
   padding: 0;
   height: 100%;
-}
-
-html,
-body,
-#root,
-.MuiButton-root {
-	font-family: $font-family-regular !important;
-  -webkit-font-smoothing: antialiased !important;
-  -moz-osx-font-smoothing: grayscale !important;
+	font-family: $font-family-regular;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
