@@ -6,24 +6,44 @@ import Dialog from "@material-ui/core/Dialog";
 
 
 interface UserActionsCellProps {
+  isAdmin: boolean;
   history: any;
   userId: number;
 }
 
-const UserActionsCell: React.FC<UserActionsCellProps> = ({history, userId}) => {
+const UserActionsCell: React.FC<UserActionsCellProps> = ({history, isAdmin, userId}) => {
   const [isDialogOpen, setDialog] = React.useState(false);
 
   const closeDeleteDialog = () => setDialog(false);
   const openDeleteDialog = () => setDialog(true);
 
   const deleteUser = () => {
-    closeDeleteDialog();
+    axios.delete(
+      process.env.REACT_APP_BACKEND_HOST + '/user/delete/' + userId, {withCredentials: true}
+    ).then(res => {
+      if (res.data === "OK") {
+        closeDeleteDialog();
+      }
+      closeDeleteDialog();
+      alert('Can`t delete user');
+    }).catch(error => {
+      closeDeleteDialog();
+      alert('Can`t delete user');
+    });
   }
 
   return (
     <td className="user-actions-cell">
-      <div className="delete-button" onClick={openDeleteDialog}/>
-      <div className="edit-button" onClick={() => history.push(`/user-profile/${userId}`)}/>
+      {
+        isAdmin
+         ? <div className="delete-button" onClick={openDeleteDialog}/>
+         : ""
+      }
+      {
+        isAdmin
+          ? <div className="edit-button" onClick={() => history.push(`/user-profile/${userId}`)}/>
+          : ""
+      }
       <Dialog
         open={isDialogOpen}
         onClose={closeDeleteDialog}
