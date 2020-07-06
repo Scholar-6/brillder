@@ -39,17 +39,17 @@ const receivedNotification = (notification: Notification) => {
     } as Action;
 }
 
-const notificationClear = (notificationId: number) => {
+const notificationCleared = (notificationId: number) => {
     return {
         type: types.NOTIFICATION_CLEAR,
         notificationId
     } as Action;
 }
 
-const notificationClearAll = () => {
+const notificationClearedAll = () => {
     return {
         type: types.NOTIFICATION_CLEAR_ALL
     } as Action;
 }
 
-export default { getNotifications, receivedNotification, notificationClear }
+export default { getNotifications, receivedNotification, notificationCleared, notificationClearedAll }
