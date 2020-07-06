@@ -112,9 +112,10 @@ input {
 
 /* Material UI Overwrite */
 
+.MuiButton-label,
 .MuiTypography-body1 {
   font-family: $font-family-regular !important;
-  font-weight: inherit !important;
+  font-weight: normal !important;
 }
 
 .MuiSwitch-switchBase {
