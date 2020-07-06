@@ -25,11 +25,6 @@ input {
   }
 }
 
-.MuiTypography-body1 {
-  font-family: $font-family-regular !important;
-  font-weight: inherit !important;
-}
-
 input:focus {
   outline: none;
 }
@@ -679,4 +674,27 @@ h3 {
   font-size: 4vw;
   @extend %flexCenter;
   background-color: var(--theme-dark-blue);
+}
+
+
+
+/* Material UI Overwrite */
+
+.MuiTypography-body1 {
+  font-family: $font-family-regular !important;
+  font-weight: inherit !important;
+}
+
+.MuiSwitch-switchBase {
+	padding: 0 !important;
+	border-radius: 50% !important;
+	transform: translateX(0.2vw) !important;
+	&.Mui-checked {
+		transform: translateX(1.3vw) !important;
+	}
+	.MuiSwitch-thumb {
+		width: 0.7vw !important;
+		height: 0.7vw !important;
+		margin: 0.2vw 0 !important;
+	}
 }
