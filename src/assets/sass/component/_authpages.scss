@@ -225,6 +225,10 @@
     }
   }
   &.login-page {
+    .logo-box {
+      background-color: transparent;
+      height: calc(40vh - 2vh);
+    }
     .content-box {
       height: 100%;
       @extend %flexCenter;

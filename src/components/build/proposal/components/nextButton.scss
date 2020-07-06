@@ -7,10 +7,10 @@
     > img {
       cursor: pointer;
       margin-bottom: 1.3vh;
-      @include phone_and_tabletP {
+      @include phone_and_tabletL {
         height: 2vh;
       }
-      @include tabletP {
+      @include tabletL {
         height: 3.5vh;
       }
     }

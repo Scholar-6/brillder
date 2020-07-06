@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import './brickLength.scss';
@@ -10,7 +10,7 @@ import { ProposalStep } from "../../model";
 import { BrickLengthEnum } from 'model/brick';
 
 
-const BrickLengthPreviewComponent:React.FC<any> = ({data}) => {
+const BrickLengthPreviewComponent: React.FC<any> = ({ data }) => {
   return (
     <Grid container justify="center" className="phone-preview-component">
       <img alt="head" src="/images/new-brick/brick-length.png"></img>
@@ -26,7 +26,7 @@ interface BrickLengthProps {
   saveBrick(data: any): void;
 }
 
-const BrickLength:React.FC<BrickLengthProps> = (
+const BrickLength: React.FC<BrickLengthProps> = (
   { length, canEdit, saveLength, saveBrick }
 ) => {
   const setBrickLength = (brickLength: BrickLengthEnum) => {
@@ -36,11 +36,10 @@ const BrickLength:React.FC<BrickLengthProps> = (
 
   return (
     <div className="tutorial-page brick-length-page">
-      <Navigation step={ProposalStep.BrickLength} onMove={() => {}} />
+      <Navigation step={ProposalStep.BrickLength} onMove={() => { }} />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
-          <h1>20 minutes are a taster,</h1>
-          <h1>60 minutes are a feast.</h1>
+          <h1>20 minutes are a taster,<br />60 minutes are a feast.</h1>
           <h2 className="length-description">Choose Brick Length. &nbsp;You can always shorten or extend later.</h2>
           <Grid container direction="row" className="brick-length-row">
             <Grid container item xs={4} className="brick-length-image-container brick-length-image-container1">
@@ -80,7 +79,9 @@ const BrickLength:React.FC<BrickLengthProps> = (
           />
         </Grid>
         <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} />
-        <div className="red-right-block"></div>
+        <Hidden only={['xs','sm']}>
+          <div className="red-right-block"></div>
+        </Hidden>
       </Grid>
     </div>
   );
