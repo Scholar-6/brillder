@@ -18,6 +18,7 @@ import brickActions from 'redux/actions/brickActions';
 import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
 import SubjectsList from 'components/baseComponents/subjectsList/SubjectsList';
 import AddUserButton from './AddUserButton';
+import UserActionsCell from './UserActionsCell';
 
 import { User, UserType, UserStatus } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -543,9 +544,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                     onChange={() => this.toggleUser(user)}
                   />
                 </td>
-                <td>
-                  <div className="edit-button" onClick={() => this.props.history.push(`/user-profile/${user.id}`)}/>
-                </td>
+                <UserActionsCell userId={user.id} history={this.props.history}/>
               </tr>
             );
           })
