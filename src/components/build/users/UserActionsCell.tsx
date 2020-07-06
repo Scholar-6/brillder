@@ -9,9 +9,12 @@ interface UserActionsCellProps {
   isAdmin: boolean;
   history: any;
   userId: number;
+  onDelete(userId: number): void;
 }
 
-const UserActionsCell: React.FC<UserActionsCellProps> = ({history, isAdmin, userId}) => {
+const UserActionsCell: React.FC<UserActionsCellProps> = (
+  {history, isAdmin, userId, onDelete}
+) => {
   const [isDialogOpen, setDialog] = React.useState(false);
 
   const closeDeleteDialog = () => setDialog(false);
@@ -23,6 +26,8 @@ const UserActionsCell: React.FC<UserActionsCellProps> = ({history, isAdmin, user
     ).then(res => {
       if (res.data === "OK") {
         closeDeleteDialog();
+        onDelete(userId);
+        return;
       }
       closeDeleteDialog();
       alert('Can`t delete user');
