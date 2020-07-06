@@ -1,7 +1,7 @@
 import "./bricksListPage.scss";
 import React, { Component } from "react";
 import {
-  Box, Grid, FormControlLabel, Radio, RadioGroup,
+  Box, Grid, FormControlLabel, Radio, RadioGroup, Hidden,
 } from "@material-ui/core";
 import axios from "axios";
 // @ts-ignore
@@ -267,39 +267,37 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     );
 
     return (
-      <Grid container key={key} item xs={4} justify="center">
-        <div className="main-brick-container">
-          <Box className="brick-container">
-            <div
-              className={`absolute-container brick-row-0 ${
-                brick.expanded ? "brick-hover" : ""
-                }`}
-              onMouseEnter={() => this.yourBricksMouseHover(key)}
-              onMouseLeave={() => this.yourBricksMouseLeave(key)}
+      <div className="main-brick-container">
+        <Box className="brick-container">
+          <div
+            className={`absolute-container brick-row-0 ${
+              brick.expanded ? "brick-hover" : ""
+              }`}
+            onMouseEnter={() => this.yourBricksMouseHover(key)}
+            onMouseLeave={() => this.yourBricksMouseLeave(key)}
+          >
+            <Grid
+              container
+              direction="row"
+              style={{ padding: 0, position: "relative" }}
             >
-              <Grid
-                container
-                direction="row"
-                style={{ padding: 0, position: "relative" }}
-              >
-                <Grid item xs={brick.expanded ? 12 : 11}>
-                  {brick.expanded ? (
-                    <ExpandedBrickDescription
-                      isAdmin={isAdmin}
-                      color={color}
-                      brick={brick}
-                      move={(brickId) => this.move(brickId)}
-                      onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-                    />
-                  ) : (
-                      <ShortBrickDescription brick={brick} />
-                    )}
-                </Grid>
+              <Grid item xs={brick.expanded ? 12 : 11}>
+                {brick.expanded ? (
+                  <ExpandedBrickDescription
+                    isAdmin={isAdmin}
+                    color={color}
+                    brick={brick}
+                    move={(brickId) => this.move(brickId)}
+                    onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+                  />
+                ) : (
+                    <ShortBrickDescription brick={brick} />
+                  )}
               </Grid>
-            </div>
-          </Box>
-        </div>
-      </Grid>
+            </Grid>
+          </div>
+        </Box>
+      </div>
     );
   };
 
@@ -475,39 +473,37 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         style={{ transformOrigin: "0 0 0" }}
         timeout={index * 150}
       >
-        <Grid container key={key} item xs={4} justify="center">
-          <div className="main-brick-container">
-            <Box className="brick-container">
-              <div
-                className={`absolute-container brick-row-${row + 1} ${
-                  brick.expanded ? "brick-hover" : ""
-                  }`}
-                onMouseEnter={() => this.handleMouseHover(key)}
-                onMouseLeave={() => this.handleMouseLeave(key)}
+        <div className="main-brick-container">
+          <Box className="brick-container">
+            <div
+              className={`absolute-container brick-row-${row + 1} ${
+                brick.expanded ? "brick-hover" : ""
+                }`}
+              onMouseEnter={() => this.handleMouseHover(key)}
+              onMouseLeave={() => this.handleMouseLeave(key)}
+            >
+              <Grid
+                container
+                direction="row"
+                style={{ padding: 0, position: "relative" }}
               >
-                <Grid
-                  container
-                  direction="row"
-                  style={{ padding: 0, position: "relative" }}
-                >
-                  <Grid item xs={brick.expanded ? 12 : 11}>
-                    {brick.expanded ? (
-                      <ExpandedBrickDescription
-                        isAdmin={isAdmin}
-                        color={color}
-                        brick={brick}
-                        move={(brickId) => this.move(brickId)}
-                        onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-                      />
-                    ) : (
-                        <ShortBrickDescription brick={brick} color={color} />
-                      )}
-                  </Grid>
+                <Grid item xs={brick.expanded ? 12 : 11}>
+                  {brick.expanded ? (
+                    <ExpandedBrickDescription
+                      isAdmin={isAdmin}
+                      color={color}
+                      brick={brick}
+                      move={(brickId) => this.move(brickId)}
+                      onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+                    />
+                  ) : (
+                      <ShortBrickDescription brick={brick} color={color} />
+                    )}
                 </Grid>
-              </div>
-            </Box>
-          </div>
-        </Grid>
+              </Grid>
+            </div>
+          </Box>
+        </div>
       </Grow>
     );
   };
@@ -657,10 +653,12 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             showDropdown={() => this.showDropdown()}
           />
           <Grid container direction="row" className="sorted-row">
-            <Grid container item xs={3} className="sort-and-filter-container">
-              {this.renderSortAndFilterBox()}
-            </Grid>
-            <Grid item xs={9} className="brick-row-container">
+            <Hidden only={['xs']}>
+              <Grid container item sm={3} className="sort-and-filter-container">
+                {this.renderSortAndFilterBox()}
+              </Grid>
+            </Hidden>
+            <Grid item sm={9} xs={12} className="brick-row-container">
               <div className="brick-row-title">{this.renderTitle()}</div>
               <div className="bricks-list-container">
                 <Grid container direction="row">
@@ -674,119 +672,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
             </Grid>
           </Grid>
         </div>
-        <Menu
-          className="menu-dropdown"
-          keepMounted
-          open={this.state.dropdownShown}
-          onClose={() => this.hideDropdown()}
-        >
-          <MenuItem
-            className="first-item menu-item"
-            onClick={() => this.creatingBrick()}
-          >
-            Start Building
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon"
-                  alt=""
-                  src="/images/main-page/create-white.png"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-          <MenuItem
-            className="menu-item"
-            onClick={() => this.props.history.push("/back-to-work")}
-          >
-            Back To Work
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="back-to-work-icon"
-                  alt=""
-                  src="/images/main-page/backToWork-white.png"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-          {this.props.user.roles.some(
-            (role) => role.roleId === UserType.Admin
-          ) ? (
-              <MenuItem
-                className="menu-item"
-                onClick={() => this.props.history.push("/build/users")}
-              >
-                Manage Users
-                <Grid
-                  container
-                  className="menu-icon-container"
-                  justify="center"
-                  alignContent="center"
-                >
-                  <div>
-                    <img
-                      className="manage-users-icon svg-icon"
-                      alt=""
-                      src="/images/users.svg"
-                    />
-                  </div>
-                </Grid>
-              </MenuItem>
-            ) : (
-              ""
-            )}
-          <MenuItem
-            className="view-profile menu-item"
-            onClick={() => this.props.history.push("/build/user-profile")}
-          >
-            View Profile
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon svg-icon user-icon"
-                  alt=""
-                  src="/images/user.svg"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-          <MenuItem
-            className="menu-item"
-            onClick={() => this.handleLogoutOpen()}
-          >
-            Logout
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon svg-icon logout-icon"
-                  alt=""
-                  src="/images/log-out.svg"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-        </Menu>
         <LogoutDialog
           history={this.props.history}
           isOpen={this.state.logoutDialogOpen}
