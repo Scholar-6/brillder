@@ -12,17 +12,10 @@
   font-family: $font-family-regular;
   color: var(--theme-dark-blue);
 
-  ::-webkit-input-placeholder {
-    /* Edge */
-    color: #aaa;
-  }
-
-  :-ms-input-placeholder {
-    /* Internet Explorer */
-    color: #aaa;
-  }
-
+  ::-webkit-input-placeholder,
+  :-ms-input-placeholder,
   ::placeholder {
+    /* Edge */
     color: #aaa;
   }
 
@@ -46,9 +39,6 @@
     color: var(--theme-dark-blue);
     margin-bottom: 12.1vh;
   }
-  // .sub-header {
-  //   font-size: 1vw;
-  // }
   .left-card {
     border: 1px solid gray;
     border-radius: 4px;
@@ -92,9 +82,6 @@
 
     h1 {
       font-family: $font-family-black;
-      text-align: center;
-      color: var(--theme-dark-blue);
-
       @include phone_and_tabletL {
         font-size: 9vw !important;
         padding: 0 !important;
@@ -209,10 +196,10 @@
         margin-left: 9.5vw;
         margin-top: 0;
         margin-bottom: 0;
-        text-align: center;
+
         line-height: 1.32;
         font: 3.8vw $font-family-black;
-        color: var(--theme-dark-blue);
+
         text-align: left;
         letter-spacing: 0.04vw;
       }
@@ -249,11 +236,9 @@
     margin-top: 15.5vh;
     > h1 {
       @extend %m0;
-      @extend %textCenter;
       letter-spacing: 0.09vw;
       font-family: $font-family-black;
       line-height: 1.35;
-      color: var(--theme-dark-blue);
       margin: 0 2vw;
       @include phone_and_tabletL {
         font-size: 7.9vw !important;
@@ -511,11 +496,12 @@
       width: 60vw;
     }
     h1 {
+      text-align: center;
+      color: var(--theme-dark-blue);
       @include phone_and_tabletL {
         font-size: 6vw;
         margin-top: 2.7vh;
         margin-bottom: 5.1vh;
-        text-align: center;
       }
       @include phone_and_tabletP {
         font-size: 8vw;
@@ -628,12 +614,12 @@
       margin-top: 16.7vh;
       margin-left: 12.1vw;
     }
-
     > h1 {
+      text-align: center;
+      color: var(--theme-dark-blue);
       letter-spacing: 0.07vw;
       line-height: 1.35;
       font-family: $font-family-black;
-      color: var(--theme-dark-blue);
       @include phone_and_tabletL {
         font-size: 6vw;
         margin-top: 2.7vh;
