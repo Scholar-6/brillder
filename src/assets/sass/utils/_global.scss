@@ -4,9 +4,19 @@ body,
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: $font-family-regular;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root,
+.MuiButton-root {
+	font-family: $font-family-regular !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal !important;
 }
 
 code {
@@ -674,27 +684,4 @@ h3 {
   font-size: 4vw;
   @extend %flexCenter;
   background-color: var(--theme-dark-blue);
-}
-
-
-
-/* Material UI Overwrite */
-
-.MuiTypography-body1 {
-  font-family: $font-family-regular !important;
-  font-weight: inherit !important;
-}
-
-.MuiSwitch-switchBase {
-	padding: 0 !important;
-	border-radius: 50% !important;
-	transform: translateX(0.2vw) !important;
-	&.Mui-checked {
-		transform: translateX(1.3vw) !important;
-	}
-	.MuiSwitch-thumb {
-		width: 0.7vw !important;
-		height: 0.7vw !important;
-		margin: 0.2vw 0 !important;
-	}
 }
