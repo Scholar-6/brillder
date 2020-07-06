@@ -139,13 +139,15 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-        <div className={indexClassName}>
-          <div className="question-index">{index + 1}</div>
-        </div>
-        <div className="question-live-play review-content">
-          <div className="question-title">{renderReviewTitle(attempt)}</div>
-          {renderQuestion(question, index)}
-        </div>
+				<div className="introduction-page">
+					<div className={indexClassName}>
+						<div className="question-index">{index + 1}</div>
+					</div>
+					<div className="question-live-play review-content">
+						<div className="question-title">{renderReviewTitle(attempt)}</div>
+						{renderQuestion(question, index)}
+					</div>
+				</div>
       </TabPanel>
     );
   };

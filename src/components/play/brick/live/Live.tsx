@@ -174,14 +174,16 @@ const LivePage: React.FC<LivePageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-        <PulsingCircleNumber
-          isPulsing={prevStep === index}
-          edited={question.edited}
-          number={index + 1}
-        />
-        <div className="question-live-play">
-          <div className="question-title">Investigation</div>
-          {renderQuestion(question, index)}
+				<div className="introduction-page">
+					<PulsingCircleNumber
+						isPulsing={prevStep === index}
+						edited={question.edited}
+						number={index + 1}
+					/>
+					<div className="question-live-play review-content">
+						<div className="question-title">Investigation</div>
+						{renderQuestion(question, index)}
+					</div>
         </div>
       </TabPanel>
     );

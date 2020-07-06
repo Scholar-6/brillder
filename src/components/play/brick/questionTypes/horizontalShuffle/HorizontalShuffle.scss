@@ -28,14 +28,4 @@
     color: var(--theme-dark-blue);
     font-family: $font-family-regular;
   }
-  .vertical-shuffle-choice {
-    border: 1px dashed black;
-    color: var(--theme-dark-blue);
-    margin: 1px;
-    font-size: 1rem;
-    width: 100%;
-    > div {
-      margin: 10px !important;
-    }
-  }
 }
