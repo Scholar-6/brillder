@@ -47,7 +47,15 @@
 }
 
 .mobile-scroll-bricks {
+  overflow-y: scroll;
+  height: calc(87vw - 6vh);
   .short-description {
+    width: 50vw;
+    height: 50vw;
+    height: calc(87vw - 6vh);
+    position: relative;
+    display: inline-block;
+  }
   .left-brick-circle {
     position: absolute;
     top: 1.3vh;
@@ -62,6 +70,5 @@
       transform: translate(-50%, 0);
       background-color: var(--gray);
     }
-  }
   }
 }
