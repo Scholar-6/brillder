@@ -4,6 +4,9 @@
 
 .tutorial-page {
   .tutorial-prev-container {
+    @include phone_and_tabletL {
+      display: none;
+    }
     > img {
       cursor: pointer;
       height: 3.5vh;
