@@ -22,6 +22,7 @@ import UserActionsCell from './UserActionsCell';
 
 import { User, UserType, UserStatus } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
+import { checkAdmin } from "components/services/brickService";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -65,6 +66,7 @@ interface UsersListState {
   logoutDialogOpen: boolean;
   dropdownShown: boolean;
   filterHeight: string;
+  isAdmin: boolean;
 
   sortBy: UserSortBy;
   isAscending: boolean;
@@ -151,6 +153,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
       sortBy: UserSortBy.None,
       isAscending: false,
+      isAdmin: checkAdmin(props.user.roles),
       isClearFilter: false
     };
 
@@ -544,7 +547,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                     onChange={() => this.toggleUser(user)}
                   />
                 </td>
-                <UserActionsCell userId={user.id} history={this.props.history}/>
+                <UserActionsCell userId={user.id} history={this.props.history} isAdmin={this.state.isAdmin}/>
               </tr>
             );
           })
