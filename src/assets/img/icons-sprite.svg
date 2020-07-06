@@ -1,105 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-  xmlnsXlink="http://www.w3.org/1999/xlink" width="38px" height="38px" viewBox="0 0 38 38" preserveAspectRatio="none" xml:space="preserve" style="display:none">
-  <svg id="arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
-    <polyline points="15 18 9 12 15 6"></polyline>
-  </svg>
-  <svg id="arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
-    <polyline points="9 18 15 12 9 6"></polyline>
-  </svg>
-  <svg id="arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up">
-    <polyline points="18 15 12 9 6 15"></polyline>
-  </svg>
-  <svg id="arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="6 9 12 15 18 9"></polyline>
-  </svg>
-  <svg id="login" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-    <polyline points="10 17 15 12 10 7"></polyline>
-    <line x1="15" y1="12" x2="3" y2="12"></line>
-  </svg>
+	xmlnsXlink="http://www.w3.org/1999/xlink" width="38px" height="38px" viewBox="0 0 38 38" preserveAspectRatio="none" xml:space="preserve" style="display:none">
+	<svg id="arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+		<polyline points="15 18 9 12 15 6"></polyline>
+	</svg>
+	<svg id="arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+		<polyline points="9 18 15 12 9 6"></polyline>
+	</svg>
+	<svg id="arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up">
+		<polyline points="18 15 12 9 6 15"></polyline>
+	</svg>
+	<svg id="arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<polyline points="6 9 12 15 18 9"></polyline>
+	</svg>
+	<svg id="login" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+		<polyline points="10 17 15 12 10 7"></polyline>
+		<line x1="15" y1="12" x2="3" y2="12"></line>
+	</svg>
 
-  <svg id="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="20 6 9 17 4 12"></polyline>
-  </svg>
-  <svg id="cancel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18"></line>
-    <line x1="6" y1="6" x2="18" y2="18"></line>
-  </svg>
-  <svg id="more-thin" viewBox="0 0 24 24" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="1"/>
-    <circle cx="19" cy="12" r="1"/>
-    <circle cx="5" cy="12" r="1"/>
-  </svg>
-  <svg id="more-thick" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="1"/>
-    <circle cx="19" cy="12" r="1"/>
-    <circle cx="5" cy="12" r="1"/>
-  </svg>
-  <svg id="search-thin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-    <circle class="st0" cx="13.1" cy="10.9" r="8.9"/>
-    <line class="st0" x1="6.8" y1="17.2" x2="2" y2="22"/>
-  </svg>
-  <svg id="search-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle class="st0" cx="13.1" cy="10.9" r="8.9"/>
-    <line class="st0" x1="6.8" y1="17.2" x2="2" y2="22"/>
-  </svg>
-  <svg id="play-thin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-  </svg>
-  <svg id="play-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-  </svg>
-  <svg id="circle-empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="10"></circle>
-  </svg>
-  <svg id="circle-filled" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="10"></circle>
-  </svg>
-  <svg id="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="12" y1="5" x2="12" y2="19"></line>
-    <line x1="5" y1="12" x2="19" y2="12"></line>
-  </svg>
-  <svg id="user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-    <circle cx="12" cy="7" r="4"></circle>
-  </svg>
-  <svg id="clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="10"></circle>
-    <polyline points="12 6 12 12 16 14"></polyline>
-  </svg>
-  <svg id="email" viewBox="0 0 24 24">
-    <path d="M0 0h24v24H0z" fill="none"/>
-    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-  </svg>
-  <svg id="gmail" viewBox="0 0 24 24">
-    <path fill="#4285F4" d="M22,12.227c0-0.838-0.068-1.451-0.215-2.086h-9.581v3.787h5.625c-0.113,0.94-0.726,2.358-2.086,3.312
+	<svg id="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<polyline points="20 6 9 17 4 12"></polyline>
+	</svg>
+	<svg id="cancel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<line x1="18" y1="6" x2="6" y2="18"></line>
+		<line x1="6" y1="6" x2="18" y2="18"></line>
+	</svg>
+	<svg id="more-thin" viewBox="0 0 24 24" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+		<circle cx="12" cy="12" r="1"/>
+		<circle cx="19" cy="12" r="1"/>
+		<circle cx="5" cy="12" r="1"/>
+	</svg>
+	<svg id="more-thick" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<circle cx="12" cy="12" r="1"/>
+		<circle cx="19" cy="12" r="1"/>
+		<circle cx="5" cy="12" r="1"/>
+	</svg>
+	<svg id="search-thin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+		<circle class="st0" cx="13.1" cy="10.9" r="8.9"/>
+		<line class="st0" x1="6.8" y1="17.2" x2="2" y2="22"/>
+	</svg>
+	<svg id="search-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<circle class="st0" cx="13.1" cy="10.9" r="8.9"/>
+		<line class="st0" x1="6.8" y1="17.2" x2="2" y2="22"/>
+	</svg>
+	<svg id="play-thin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+		<polygon points="5 3 19 12 5 21 5 3"></polygon>
+	</svg>
+	<svg id="play-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<polygon points="5 3 19 12 5 21 5 3"></polygon>
+	</svg>
+	<svg id="circle-empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<circle cx="12" cy="12" r="10"></circle>
+	</svg>
+	<svg id="circle-filled" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<circle cx="12" cy="12" r="10"></circle>
+	</svg>
+	<svg id="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<line x1="12" y1="5" x2="12" y2="19"></line>
+		<line x1="5" y1="12" x2="19" y2="12"></line>
+	</svg>
+	<svg id="user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+		<circle cx="12" cy="7" r="4"></circle>
+	</svg>
+	<svg id="clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<circle cx="12" cy="12" r="10"></circle>
+		<polyline points="12 6 12 12 16 14"></polyline>
+	</svg>
+	<svg id="email" viewBox="0 0 24 24">
+		<path d="M0 0h24v24H0z" fill="none"/>
+		<path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+	</svg>
+	<svg id="gmail" viewBox="0 0 24 24">
+		<path fill="#4285F4" d="M22,12.227c0-0.838-0.068-1.451-0.215-2.086h-9.581v3.787h5.625c-0.113,0.94-0.726,2.358-2.086,3.312
       l-0.019,0.126l3.027,2.347l0.211,0.021C20.889,17.952,22,15.334,22,12.227"/>
-    <path fill="#34A853" d="M12.204,22.204c2.755,0,5.067-0.907,6.758-2.472l-3.221-2.494c-0.862,0.602-2.019,1.021-3.537,1.021
+		<path fill="#34A853" d="M12.204,22.204c2.755,0,5.067-0.907,6.758-2.472l-3.221-2.494c-0.862,0.602-2.019,1.021-3.537,1.021
       c-2.699,0-4.989-1.78-5.804-4.239l-0.121,0.01L3.13,16.468l-0.041,0.114C4.766,19.914,8.214,22.204,12.204,22.204"/>
-    <path fill="#FBBC05" d="M6.398,14.02c-0.213-0.636-0.34-1.315-0.34-2.02s0.127-1.383,0.33-2.018L6.383,9.848L3.194,7.369
+		<path fill="#FBBC05" d="M6.398,14.02c-0.213-0.636-0.34-1.315-0.34-2.02s0.127-1.383,0.33-2.018L6.383,9.848L3.194,7.369
       l-0.103,0.05C2.396,8.803,2,10.355,2,12s0.396,3.197,1.09,4.58L6.398,14.02"/>
-    <path fill="#EB4335" d="M12.204,5.741c1.916,0,3.209,0.827,3.946,1.52l2.879-2.812c-1.769-1.645-4.07-2.653-6.825-2.653
+		<path fill="#EB4335" d="M12.204,5.741c1.916,0,3.209,0.827,3.946,1.52l2.879-2.812c-1.769-1.645-4.07-2.653-6.825-2.653
       c-3.99,0-7.438,2.291-9.115,5.624l3.3,2.563C7.215,7.521,9.505,5.741,12.204,5.741"/>
-  </svg>
-  <svg id="list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="8" y1="6" x2="21" y2="6"></line>
-    <line x1="8" y1="12" x2="21" y2="12"></line>
-    <line x1="8" y1="18" x2="21" y2="18"></line>
-    <line x1="3" y1="6" x2="3.01" y2="6"></line>
-    <line x1="3" y1="12" x2="3.01" y2="12"></line>
-    <line x1="3" y1="18" x2="3.01" y2="18"></line>
-  </svg>
-  <svg id="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-    <line x1="1" y1="1" x2="23" y2="23"></line>
-  </svg>
-  <svg id="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-    <circle cx="12" cy="12" r="3"></circle>
-  </svg>
-  <svg id="shovel" viewBox="0 0 38 38">
-    <path d="M34,9.414c-0.065,0.141-0.109,0.292-0.197,0.423
+	</svg>
+	<svg id="list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<line x1="8" y1="6" x2="21" y2="6"></line>
+		<line x1="8" y1="12" x2="21" y2="12"></line>
+		<line x1="8" y1="18" x2="21" y2="18"></line>
+		<line x1="3" y1="6" x2="3.01" y2="6"></line>
+		<line x1="3" y1="12" x2="3.01" y2="12"></line>
+		<line x1="3" y1="18" x2="3.01" y2="18"></line>
+	</svg>
+	<svg id="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+		<line x1="1" y1="1" x2="23" y2="23"></line>
+	</svg>
+	<svg id="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+		<circle cx="12" cy="12" r="3"></circle>
+	</svg>
+	<svg id="shovel" viewBox="0 0 38 38">
+		<path d="M34,9.414c-0.065,0.141-0.109,0.292-0.197,0.423
       c-0.144,0.214-0.303,0.406-0.533,0.534c-0.773,0.427-1.544,0.857-2.315,1.287c-0.6,0.334-1.199,0.669-1.798,1.005
       c-0.619,0.348-1.237,0.698-1.856,1.045c-0.445,0.249-0.893,0.494-1.339,0.741c-0.21,0.116-0.412,0.247-0.63,0.346
       c-0.262,0.121-0.545,0.172-0.835,0.138c-0.134-0.016-0.269-0.024-0.399-0.083c-0.224-0.102-0.412-0.241-0.57-0.426
@@ -128,9 +128,9 @@
       c0.73-0.393,1.46-0.783,2.188-1.179c0.263-0.143,0.527-0.279,0.8-0.399c0.094-0.042,0.2-0.025,0.291-0.073c0.095,0,0.19,0,0.283,0
       c0.007,0.006,0.014,0.011,0.021,0.011c0.254-0.029,0.464,0.074,0.67,0.206c0.078,0.05,0.13,0.125,0.192,0.189
       c0.178,0.184,0.354,0.368,0.522,0.561C33.854,8.31,33.999,8.522,34,8.799C34,9.004,34,9.208,34,9.414z"/>
-  </svg>
-  <svg id="logo" viewBox="0 0 38 38" fill="currentColor" stroke="none">
-    <path d="M32.175,34.742h-9.238c-1.008,0-1.824-0.814-1.826-1.822c0-0.002,0-0.002,0-0.004V5.083
+	</svg>
+	<svg id="logo" viewBox="0 0 38 38" fill="currentColor" stroke="none">
+		<path d="M32.175,34.742h-9.238c-1.008,0-1.824-0.814-1.826-1.822c0-0.002,0-0.002,0-0.004V5.083
       c0-1.008,0.818-1.825,1.826-1.825h9.238C33.183,3.258,34,4.076,34,5.083v9.753l-3.74,3.883l2.333,2.367l1.352,1.395v-0.021
       l0.057,0.059v10.398c0.001,1.008-0.814,1.826-1.822,1.826C32.177,34.742,32.176,34.742,32.175,34.742z M17.574,34.742h-5.933
       c-0.756,0-1.369-0.613-1.369-1.369v-0.57h8.67v0.57C18.942,34.129,18.33,34.742,17.574,34.742z M7.536,34.742H4.685
@@ -138,34 +138,44 @@
       C8.22,34.436,7.914,34.742,7.536,34.742z M18.942,32.119l-8.668-0.002v-1.824h8.668V32.119z M18.942,29.609h-8.668V8.277h8.668
       V29.609L18.942,29.609L18.942,29.609z M18.942,7.593h-8.668V5.769h8.668V7.593z M18.942,5.084h-8.668V4.628
       c0-0.756,0.613-1.369,1.369-1.369h5.932c0.756,0,1.367,0.613,1.369,1.369v0.456H18.942z"/>
-  </svg>
-  <svg id="roof" viewBox="0 0 38 14" fill="currentColor" stroke="none">
-    <path d="M33.612,11.711L19.987,0.794c-0.577-0.461-1.397-0.461-1.977,0l-5.933,4.823V2.576
+	</svg>
+	<svg id="roof" viewBox="0 0 38 14" fill="currentColor" stroke="none">
+		<path d="M33.612,11.711L19.987,0.794c-0.577-0.461-1.397-0.461-1.977,0l-5.933,4.823V2.576
       c0-0.079-0.064-0.146-0.146-0.146H7.605c-0.08,0-0.144,0.065-0.144,0.146v6.646l-3.079,2.531C4.159,11.934,4.014,12.2,4,12.486
       c-0.017,0.286,0.093,0.565,0.295,0.771c0.188,0.189,0.446,0.295,0.714,0.295c0.229,0,0.455-0.08,0.634-0.223l13.259-10.67
       c0.025-0.022,0.061-0.032,0.095-0.029c0.032,0,0.064,0.01,0.094,0.029l13.257,10.625c0.182,0.145,0.402,0.225,0.634,0.225
       c0.564-0.004,1.021-0.465,1.02-1.029c0-0.012,0-0.021-0.001-0.037C33.983,12.156,33.842,11.889,33.612,11.711z"/>
-  </svg>
-  <svg id="bell-empty" viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-  </svg>
-  <svg id="bell-filled" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-  </svg>
-  <svg id="zap-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="12.41 6.75 13 2 10.57 4.92"></polyline>
-    <polyline points="18.57 12.91 21 10 15.66 10"></polyline>
-    <polyline points="8 8 3 14 12 14 11 22 16 16"></polyline>
-    <line x1="1" y1="1" x2="23" y2="23"></line>
-  </svg>
-  <svg id="zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-  </svg>
-  <svg id="highlighter" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-    <path id="Icon_awesome-highlighter" class="st0" d="M1.4,20.8l3.9,1.3l1.4-1.4L4.1,18L1.4,20.8z M6.3,11.4c-0.4,0.4-0.6,0.9-0.4,1.5
+	</svg>
+	<svg id="bell-empty" viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+		<path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+	</svg>
+	<svg id="bell-filled" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+		<path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+	</svg>
+	<svg id="zap-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<polyline points="12.41 6.75 13 2 10.57 4.92"></polyline>
+		<polyline points="18.57 12.91 21 10 15.66 10"></polyline>
+		<polyline points="8 8 3 14 12 14 11 22 16 16"></polyline>
+		<line x1="1" y1="1" x2="23" y2="23"></line>
+	</svg>
+	<svg id="zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+	</svg>
+	<svg id="highlighter" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+		<path id="Icon_awesome-highlighter" class="st0" d="M1.4,20.8l3.9,1.3l1.4-1.4L4.1,18L1.4,20.8z M6.3,11.4c-0.4,0.4-0.6,0.9-0.4,1.5
       l0.5,1.7l-2,2l3.7,3.7l2-2l1.7,0.5c0.6,0.1,1.1,0,1.5-0.4l1.4-1.6L7.9,10L6.3,11.4z M22,5.2l-2.5-2.5c-0.8-0.8-2.1-0.8-2.9-0.1
       L8.8,9.3l6.6,6.6l6.6-7.8C22.8,7.2,22.7,5.9,22,5.2z"/>
-  </svg>
+	</svg>
+	<svg id="trash-outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<polyline points="3 6 5 6 21 6"></polyline>
+		<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+		<line x1="10" y1="11" x2="10" y2="17"></line>
+		<line x1="14" y1="11" x2="14" y2="17"></line>
+	</svg>
+	<svg id="edit-outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M12 20h9"></path>
+		<path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+	</svg>
 </svg>

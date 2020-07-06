@@ -169,7 +169,6 @@
           }
           > ul {
             margin-top: 0.5vw;
-            padding: 0 0 0 1.5vw;
           }
           .stepper {
             .step {
@@ -293,7 +292,15 @@
         .question-live-play {
           height: calc(100vh - 27.6vh);
           margin: 12vh 3vw 1vw 4vw;
-        }
+				}
+				.introduction-info {
+					.intro-text-row {
+						position: absolute;
+						top: 50%;
+						transform: translateY(-10vh);
+						margin: 0;
+					}
+				}
       }
       .circle-progress-container {
         position: relative;

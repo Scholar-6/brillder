@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  Hidden,
 } from "@material-ui/core";
 import axios from "axios";
 // @ts-ignore
@@ -523,6 +524,27 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     this.props.history.push("/build/new-brick/subject");
   }
 
+  renderMobileBricks() {
+    let { sortedIndex } = this.state;
+    let bricksList = [];
+    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
+      const brick = this.state.finalBricks[i]
+      if (brick) {
+        let color = "";
+
+        if (!brick.subject) {
+          color = "#B0B0AD";
+        } else {
+          color = brick.subject.color;
+        }
+
+        let row = Math.floor(i / 3);
+        bricksList.push(<ShortBrickDescription brick={brick} color={color} />);
+      }
+    }
+    return bricksList;
+  }
+
   render() {
     return (
       <div className="dashboard-page bricks-list-page">
@@ -548,8 +570,13 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               {this.renderPagination()}
             </Grid>
           </Grid>
+          <Hidden only={["sm", "md", "lg", "xl"]}>
+            <div className="mobile-scroll-bricks">
+              {this.renderMobileBricks()}
+            </div>
+          </Hidden>
         </div>
-        
+
         <Menu
           className="menu-dropdown"
           keepMounted
