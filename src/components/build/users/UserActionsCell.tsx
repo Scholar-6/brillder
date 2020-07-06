@@ -9,13 +9,6 @@ import sprite from "../../../assets/img/icons-sprite.svg";
 interface UserActionsCellProps {
 	isAdmin: boolean;
 	history: any;
-	userId: number;
-}
-
-const UserActionsCell: React.FC<UserActionsCellProps> = ({ history, isAdmin, userId }) => {
-	const [isDialogOpen, setDialog] = React.useState(false);
-  isAdmin: boolean;
-  history: any;
   userId: number;
   onDelete(userId: number): void;
 }
@@ -28,20 +21,6 @@ const UserActionsCell: React.FC<UserActionsCellProps> = (
 	const closeDeleteDialog = () => setDialog(false);
 	const openDeleteDialog = () => setDialog(true);
 
-	const deleteUser = () => {
-		axios.delete(
-			process.env.REACT_APP_BACKEND_HOST + '/user/delete/' + userId, { withCredentials: true }
-		).then(res => {
-			if (res.data === "OK") {
-				closeDeleteDialog();
-			}
-			closeDeleteDialog();
-			alert('Can`t delete user');
-		}).catch(error => {
-			closeDeleteDialog();
-			alert('Can`t delete user');
-		});
-	}
   const deleteUser = () => {
     axios.delete(
       process.env.REACT_APP_BACKEND_HOST + '/user/delete/' + userId, {withCredentials: true}
