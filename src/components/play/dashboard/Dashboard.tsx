@@ -601,7 +601,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           ) ? (
               <MenuItem
                 className="menu-item"
-                onClick={() => this.props.history.push("/build/users")}
+                onClick={() => this.props.history.push("/users")}
               >
                 Manage Users
                 <Grid
@@ -624,7 +624,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             )}
           <MenuItem
             className="view-profile menu-item"
-            onClick={() => this.props.history.push("/build/user-profile")}
+            onClick={() => this.props.history.push("/user-profile")}
           >
             View Profile
             <Grid
