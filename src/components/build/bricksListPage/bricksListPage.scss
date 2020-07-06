@@ -115,7 +115,6 @@
         align-items: center;
         justify-content: center;
       }
-
       &:before,
       &:after {
         @include phone_and_tabletP {
@@ -139,6 +138,13 @@
           content: '';
           background-color: var(--white);
           z-index: -1;
+        }
+      }
+      .home-button-container {
+        @include phone_and_tabletP {
+          width: 11% !important;
+          height: 100%;
+          margin-left: 8vw;
         }
       }
     }
