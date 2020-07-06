@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  Hidden,
 } from "@material-ui/core";
 import axios from "axios";
 // @ts-ignore
@@ -27,6 +28,7 @@ import ShortBrickDescription from "components/baseComponents/ShortBrickDescripti
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { ReduxCombinedState } from "redux/reducers";
+import brickActions from "redux/actions/brickActions";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -35,6 +37,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   logout: () => dispatch(authActions.logout()),
+  forgetBrick: () => dispatch(brickActions.forgetBrick())
 });
 
 const connector = connect(mapState, mapDispatch);
@@ -43,6 +46,7 @@ interface BricksListProps {
   user: User;
   history: any;
   logout(): void;
+  forgetBrick(): void;
 }
 
 interface BricksListState {
@@ -502,6 +506,32 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  creatingBrick() {
+    this.props.forgetBrick();
+    this.props.history.push("/build/new-brick/subject");
+  }
+
+  renderMobileBricks() {
+    let { sortedIndex } = this.state;
+    let bricksList = [];
+    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
+      const brick = this.state.finalBricks[i]
+      if (brick) {
+        let color = "";
+
+        if (!brick.subject) {
+          color = "#B0B0AD";
+        } else {
+          color = brick.subject.color;
+        }
+
+        let row = Math.floor(i / 3);
+        bricksList.push(<ShortBrickDescription brick={brick} color={color} />);
+      }
+    }
+    return bricksList;
+  }
+
   render() {
     return (
       <div className="dashboard-page bricks-list-page">
@@ -526,7 +556,13 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               {this.renderPagination()}
             </Grid>
           </Grid>
+          <Hidden only={["sm", "md", "lg", "xl"]}>
+            <div className="mobile-scroll-bricks">
+              {this.renderMobileBricks()}
+            </div>
+          </Hidden>
         </div>
+
         <Menu
           className="menu-dropdown"
           keepMounted
@@ -534,8 +570,74 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           onClose={() => this.hideDropdown()}
         >
           <MenuItem
+            className="first-item menu-item"
+            onClick={() => this.creatingBrick()}
+          >
+            Start Building
+            <Grid
+              container
+              className="menu-icon-container"
+              justify="center"
+              alignContent="center"
+            >
+              <div>
+                <img
+                  className="menu-icon"
+                  alt=""
+                  src="/images/main-page/create-white.png"
+                />
+              </div>
+            </Grid>
+          </MenuItem>
+          <MenuItem
+            className="menu-item"
+            onClick={() => this.props.history.push("/back-to-work")}
+          >
+            Back To Work
+            <Grid
+              container
+              className="menu-icon-container"
+              justify="center"
+              alignContent="center"
+            >
+              <div>
+                <img
+                  className="back-to-work-icon"
+                  alt=""
+                  src="/images/main-page/backToWork-white.png"
+                />
+              </div>
+            </Grid>
+          </MenuItem>
+          {this.props.user.roles.some(
+            (role) => role.roleId === UserType.Admin
+          ) ? (
+              <MenuItem
+                className="menu-item"
+                onClick={() => this.props.history.push("/build/users")}
+              >
+                Manage Users
+                <Grid
+                  container
+                  className="menu-icon-container"
+                  justify="center"
+                  alignContent="center"
+                >
+                  <div>
+                    <img
+                      className="manage-users-icon svg-icon"
+                      alt=""
+                      src="/images/users.svg"
+                    />
+                  </div>
+                </Grid>
+              </MenuItem>
+            ) : (
+              ""
+            )}
+          <MenuItem
             className="view-profile menu-item"
-            onClick={() => this.props.history.push("/user-profile")}
+            onClick={() => this.props.history.push("/build/user-profile")}
           >
             View Profile
             <Grid
