@@ -563,17 +563,19 @@ h3 {
 
 .question-hint,
 .question-hint-global {
-  color: var(--theme-dark-blue);
+	width: 100%;
+	float: left;
+	color: var(--theme-dark-blue);
+	font-size: 0.8vw;
+	border-radius: 4px;
 }
 .question-hint {
-  line-height: 1;
   margin-top: 2px;
   background: #ff9d00;
   padding: 2px 5px;
   border-radius: 1px 2px 3px 4px;
-  font-family: $font-family-regular;
   display: block;
-  font-size: 1vw;
+
   p {
     font-size: 1vw;
     display: inline;
@@ -599,10 +601,8 @@ h3 {
   }
 }
 .question-hint-global {
-  width: 100%;
-  font: 500 16px/24px $font-family-regular;
   background: #ff9d00;
-  border-radius: 1px 2px 3px 4px;
+
   margin-top: 0.5vw;
   > div {
     padding: 0.5vw;
@@ -644,7 +644,6 @@ h3 {
   color: var(--theme-dark-blue) !important;
   text-align: center;
   text-transform: none !important;
-  border-radius: 4px !important;
   width: 100%;
   padding: 1vh 0 !important;
   background-color: $tab-gray !important;
