@@ -576,8 +576,22 @@
           color: var(--theme-dark-blue);
           font-size: 1.3vw;
           padding-top: 0;
+        }
+        .user-actions-cell {
+          min-width: 4.5vw;
+          .delete-button {
+            display: inline-block;
+            cursor: pointer;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url(/feathericons/svg/trash-2-blue.svg);
+            height: 1.85vw;
+            width: 1.85vw;
+          }
 
           .edit-button {
+            display: inline-block;
             cursor: pointer;
             background-size: 100% 100%;
             background-repeat: no-repeat;
