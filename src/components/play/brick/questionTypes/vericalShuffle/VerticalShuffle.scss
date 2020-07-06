@@ -5,30 +5,6 @@
 .vertical-shuffle-play {
   .verical-shuffle-sort-list {
     width: 100%;
-  }
-  .vertical-shuffle-choice {
-    background: $tab-gray;
-    font-size: 1rem;
-    font-family: $font-family-regular;
-    margin: 1px;
-    border-radius: 4px;
-    color: var(--theme-dark-blue);
-    padding-top: 14px;
-    padding-bottom: 14px;
-    padding-left: 5px;
-    padding-right: 5px;
-    width: 100%;
-    display: block;
-    .MuiGrid-root {
-      margin: 0;
-    }
-  }
-  .vertical-shuffle-choice.correct {
-    background: var(--theme-green);
-
-    .question-hint {
-      background: white;
-    }
-  }
+	}
 
 }
