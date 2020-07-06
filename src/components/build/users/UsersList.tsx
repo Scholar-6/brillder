@@ -365,6 +365,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 	}
 	//endregion
 
+  onUserDeleted(userId: number) {
+    let {users} = this.state;
+    let removeIndex = users.findIndex(user => user.id === userId);
+    users.splice(removeIndex, 1);
+    this.setState({...this.state, users});
+  }
 
   renderSortAndFilterBox = () => {
     return (
@@ -547,7 +553,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                     onChange={() => this.toggleUser(user)}
                   />
                 </td>
-                <UserActionsCell userId={user.id} history={this.props.history} isAdmin={this.state.isAdmin}/>
+                <UserActionsCell
+                  userId={user.id}
+                  history={this.props.history}
+                  isAdmin={this.state.isAdmin}
+                  onDelete={userId => this.onUserDeleted(userId)}
+                />
               </tr>
             );
           })
