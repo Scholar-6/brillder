@@ -27,6 +27,7 @@ interface UsersListProps {
   searching(value: string): void;
   notifications: Notification[];
   showDropdown(): void;
+  showNotifications(event: any): void;
   getNotifications(): void
 }
 interface MyState {
@@ -118,7 +119,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
 
             <Grid container direction="row" className="action-container">
               {/* <Grid item> */}
-              <div className="bell-button svgOnHover">
+              <div className="bell-button svgOnHover" onClick={(evt) => this.props.showNotifications(evt)}>
                 <svg className="svg svg-default">
                   <use href={sprite + "#bell-empty"}/>
                   {(notificationCount !== 0) &&

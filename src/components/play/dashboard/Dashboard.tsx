@@ -28,6 +28,7 @@ import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDes
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
+import NotificationPanel from "components/build/notificationPanel/NotificationPanel";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -60,6 +61,8 @@ interface BricksListState {
   finalBricks: Brick[];
 
   dropdownShown: boolean;
+  notificationsShown: boolean;
+  notificationsTarget?: Element;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
 
@@ -87,6 +90,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       deleteBrickId: -1,
       finalBricks: [],
       dropdownShown: false,
+      notificationsShown: false,
+      notificationsTarget: undefined,
       searchBricks: [],
       searchString: "",
       isSearching: false,
@@ -308,6 +313,14 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     this.setState({ ...this.state, dropdownShown: false });
   }
 
+  showNotifications(event: any) {
+    this.setState({ ...this.state, notificationsShown: true, notificationsTarget: event.currentTarget });
+  }
+
+  hideNotifications() {
+    this.setState({ ...this.state, notificationsShown: false, notificationsTarget: undefined });
+  }
+
   keySearch(e: any) {
     if (e.keyCode === 13) {
       this.search();
@@ -519,6 +532,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
+            showNotifications={(evt: any) => this.showNotifications(evt)}
           />
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
@@ -649,6 +663,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             </Grid>
           </MenuItem>
         </Menu>
+        <NotificationPanel
+          shown={this.state.notificationsShown}
+          handleClose={() => this.hideNotifications()}
+          anchorElement={this.state.notificationsTarget}
+        />
         <LogoutDialog
           history={this.props.history}
           isOpen={this.state.logoutDialogOpen}
