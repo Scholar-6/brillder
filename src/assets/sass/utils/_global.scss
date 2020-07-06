@@ -334,13 +334,13 @@ input:focus {
   z-index: 1000;
   border-bottom-right-radius: 2vw;
   background: $light-blue;
-  margin-right: 1vw;
-  padding: 0.35vw 0.782vw 0.782vw 0.35vw;
   @include phone_and_tabletP {
-    width: calc(11.834vw - 1vw) !important;
-    height: 10.834vw;
+    width: auto !important;
+    padding: 0;
   }
   @include tabletP {
+    margin-right: 1vw;
+    padding: 0.35vw 0.782vw 0.782vw 0.35vw;
     width: calc(6.834vw - 1vw) !important;
     height: 5.834vw;
   }
@@ -415,8 +415,11 @@ input:focus {
   @include phone_and_tabletP {
     height: 9.834vw;
     margin: 0;
-    width: auto !important;
+    width: 100% !important;
     flex-wrap: inherit !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   @include tabletP {
     height: 5.834vw;
@@ -484,15 +487,16 @@ input:focus {
     }
   }
 
+  .help-button,
+  .home-button,
   .search-button,
   .bell-button,
   .more-button {
     cursor: pointer;
     display: inline-block;
     @include phone_and_tabletP {
-      width: 8.698vw;
-      height: 8.698vw;
-      margin-left: 9vw;
+      width: 8vw;
+      height: 8vw;
     }
     @include tabletP {
       margin: 0 2vw 0 0;
