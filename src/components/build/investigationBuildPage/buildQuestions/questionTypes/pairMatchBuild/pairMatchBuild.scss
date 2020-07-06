@@ -39,48 +39,33 @@
     }
   }
 
+	.pair-match-answer,
   .pair-match-option {
     position: relative;
-    margin: 0;
     width: 100%;
-
+		height: 100%;
+		margin: 0.1vh 0;
     .document-editor {
-      .ck-content {
-        margin-top: 0.1vw;
-        margin-bottom: 0.1vw;
-        margin-right: 0.1vw;
-        padding-top: 10%;
-        text-align: center !important;
-        background: white !important;
-        border-radius: 0.4vw !important;
-        font-size: $answer-input-text-size;
-
-        p {
-          text-align: center !important;
-        }
-      }
-    }
-  }
-
-  .pair-match-answer {
-    margin: 0;
-    width: 100%;
-    position: relative;
-
-    .document-editor {
-      .ck-content {
-        margin-top: 0.1vw;
-        margin-bottom: 0.1vw;
-        margin-left: 0.1vw;
-        padding-top: 10%;
-        text-align: center;
-        background: white !important;
-        border-radius: 0.4vw !important;
-        font-size: $answer-input-text-size;
-        p {
-          text-align: center !important;
-        }
-      }
+			height: calc(100% - 0.2vh);
+			// background-color: black;
+			.ck-editor {
+				height: 100%;
+				.ck-editor__main {
+					height: 100%;
+					.ck-content {
+						height: 100%;
+						margin: 0;
+						padding-top: 10%;
+						text-align: center !important;
+						background: white !important;
+						border-radius: 0.4vw !important;
+						font-size: $answer-input-text-size;
+						p {
+							text-align: center !important;
+						}
+					}
+				}
+			}
     }
   }
   .pair-image {

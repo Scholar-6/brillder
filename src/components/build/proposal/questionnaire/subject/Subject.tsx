@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import { Grid, RadioGroup, FormControlLabel, Radio, Hidden } from "@material-ui/core";
 
 import './Subject.scss';
 import { ProposalStep } from "../../model";
@@ -260,8 +260,8 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
   return (
     <div className="tutorial-page subject-page">
       <Grid container direction="row" style={{ height: '100%' }}>
-        <Grid container justify="flex-start" item xs={10}>
-          <Grid justify="flex-start" container item xs={8}>
+        <Grid container justify="flex-start" className="subject-box" item md={10} xs={12}>
+          <Grid justify="flex-start" container item md={8} xs={12}>
             <div className="subject-container">
               <h1 className="only-tutorial-header">Choose Subject</h1>
               <Grid container justify="flex-start" item xs={12}>
@@ -287,18 +287,22 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
             </div>
           </Grid>
         </Grid>
-        <Grid style={{width: '60vw'}}>
+        <Grid className='pagination-button'>
           {
             subject ? (
               <NextButton isActive={true} step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
             ) : ""
           }
         </Grid>
+        <Hidden only={['xs', 'sm']}>
         <div className="subject-name">
           <div>{subjectName}</div>
         </div>
+        </Hidden>
         <ProposalPhonePreview Component={innerComponent} />
+        <Hidden only={['xs', 'sm']}>
         <div className="red-right-block"></div>
+        </Hidden>
       </Grid>
     </div>
   );
