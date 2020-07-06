@@ -55,26 +55,11 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         }}
       >
         <Card>
-          <CardHeader
-            title="Notifications"
-            action={
-              <Button
-                onClick={() => this.markAllAsRead()}
-              >Mark All Read</Button>
-            }
-          />
           <CardContent>
             <List>
               {this.props.notifications && this.props.notifications.map((notification) => (
                 <ListItem key={notification.id}>
                   <ListItemText primary={notification.title} secondary={notification.text} />
-                  <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete" onClick={() => this.markAsRead(notification.id)}>
-                      <SvgIcon className="svg svg-default">
-                        <use href={sprite + "#eye-on"} />
-                      </SvgIcon>
-                    </IconButton>
-                  </ListItemSecondaryAction>
                 </ListItem>
               ))}
             </List>
