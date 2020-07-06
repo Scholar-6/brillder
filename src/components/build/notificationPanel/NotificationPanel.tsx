@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
-import { List, ListItem, ListItemText, Popover, ListItemSecondaryAction, IconButton, SvgIcon, ListSubheader } from '@material-ui/core';
+import { List, ListItem, ListItemText, Popover, ListItemSecondaryAction, IconButton, SvgIcon, Card, CardContent, CardHeader, Button } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
 import sprite from "../../../assets/img/icons-sprite.svg";
 import { Notification } from 'model/notifications';
+import notificationActions from 'redux/actions/notifications';
+import { Dispatch } from 'redux';
 
 const mapState = (state: ReduxCombinedState) => ({
   notifications: state.notifications.notifications
@@ -20,6 +23,22 @@ interface NotificationPanelProps {
 }
 
 class NotificationPanel extends Component<NotificationPanelProps> {
+  markAsRead(id: number) {
+    axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/notifications/markAsRead/${id}`,
+      {},
+      { withCredentials: true }
+    );
+  }
+
+  markAllAsRead() {
+    axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/notifications/unread/markAsRead`,
+      {},
+      { withCredentials: true }
+    );
+  }
+
   render() {
     return (
       <Popover
@@ -35,26 +54,32 @@ class NotificationPanel extends Component<NotificationPanelProps> {
           horizontal: 'right',
         }}
       >
-        <List
-          subheader={
-            <ListSubheader component="div">
-              Notifications
-            </ListSubheader>
-          }
-        >
-          {this.props.notifications && this.props.notifications.map((notification) => (
-            <ListItem>
-              <ListItemText primary={notification.title} secondary={notification.text} />
-              <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="delete">
-                  <SvgIcon className="svg svg-default">
-                    <use href={sprite + "#eye-on"} />
-                  </SvgIcon>
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
-        </List>
+        <Card>
+          <CardHeader
+            title="Notifications"
+            action={
+              <Button
+                onClick={() => this.markAllAsRead()}
+              >Mark All Read</Button>
+            }
+          />
+          <CardContent>
+            <List>
+              {this.props.notifications && this.props.notifications.map((notification) => (
+                <ListItem key={notification.id}>
+                  <ListItemText primary={notification.title} secondary={notification.text} />
+                  <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="delete" onClick={() => this.markAsRead(notification.id)}>
+                      <SvgIcon className="svg svg-default">
+                        <use href={sprite + "#eye-on"} />
+                      </SvgIcon>
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
+            </List>
+          </CardContent>
+        </Card>
       </Popover>
     );
   }
