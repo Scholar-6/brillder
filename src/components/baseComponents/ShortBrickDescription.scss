@@ -48,27 +48,58 @@
 
 .mobile-scroll-bricks {
   overflow-y: scroll;
-  height: calc(87vw - 6vh);
+  height: 30vh;
+  display: flex;
+  width: 100%;
+  align-items: center;
   .short-description {
     width: 50vw;
-    height: 50vw;
     height: calc(87vw - 6vh);
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    &:hover {
+      width: 60vw;
+      @extend %transitionAll300;
+      .left-brick-circle {
+        .round-button {
+          height: 30vw !important;
+          width: 30vw !important;
+        }
+      }
+    }
+    &:not(:hover) {
+      @extend %transitionAll300;
+      width: 40vw;
+      .short-brick-info {
+        .link-description {
+          font-size: 3vw;
+        }
+        .link-info {
+          font-size: 2.9vw;
+        }
+      }
+    }
   }
+
   .left-brick-circle {
-    position: absolute;
-    top: 1.3vh;
-    left: 3vw;
-    left: 25%;
-    margin-right: -50%;
     > div {
-      height: 30vw !important;
-      width: 30vw !important;
       border-radius: 20vw;
-      
-      transform: translate(-50%, 0);
+      margin: 0 auto 1vh;
       background-color: var(--gray);
+      height: 22vw !important;
+      width: 22vw !important;
+    }
+  }
+  .short-brick-info {
+    position: inherit;
+    top: 0;
+    left: 0;
+    padding: 0 3vw;
+    .link-description,
+    .link-info {
+      width: 100%;
     }
   }
 }
