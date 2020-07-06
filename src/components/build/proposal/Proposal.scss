@@ -9,24 +9,13 @@
 }
 
 .tutorial-page {
-  h1 {
-    font-weight: normal !important;
-  }
-
   font-family: $font-family-regular;
   color: var(--theme-dark-blue);
 
-  ::-webkit-input-placeholder {
-    /* Edge */
-    color: #aaa;
-  }
-
-  :-ms-input-placeholder {
-    /* Internet Explorer */
-    color: #aaa;
-  }
-
+  ::-webkit-input-placeholder,
+  :-ms-input-placeholder,
   ::placeholder {
+    /* Edge */
     color: #aaa;
   }
 
@@ -50,11 +39,6 @@
     color: var(--theme-dark-blue);
     margin-bottom: 12.1vh;
   }
-
-  .sub-header {
-    font-size: 1vw;
-  }
-
   .left-card {
     border: 1px solid gray;
     border-radius: 4px;
@@ -68,7 +52,6 @@
 
     .only-tutorial-header {
       margin: 2.5vw 1vw;
-      font-weight: normal !important;
     }
 
     .page-number {
@@ -93,15 +76,22 @@
 //brick-title-page
 .brick-title-page {
   .left-block {
-    margin-top: 10.5vh;
+    @include tabletL {
+      margin-top: 10.5vh;
+    }
 
     h1 {
       font-family: $font-family-black;
-      margin-top: 4.7vh;
-      font-size: 3.6vw;
-      text-align: center;
-      color: var(--theme-dark-blue);
-      margin-bottom: 12.1vh !important;
+      @include phone_and_tabletL {
+        font-size: 9vw !important;
+        padding: 0 !important;
+      }
+
+      @include tabletL {
+        font-size: 3.6vw;
+        margin-top: 4.7vh;
+        margin-bottom: 12.1vh;
+      }
     }
 
     .MuiInputBase-input {
@@ -180,15 +170,15 @@
 //brief-page
 .brief-page {
   font-family: $font-family-regular;
-
   .left-block {
     margin-top: 15.5vh;
-
     > h1 {
-      margin-left: 1.3vw;
-      margin-top: 0.5vh;
-      font-size: 3.2vw;
-      margin-bottom: 4vh;
+      @include tabletL {
+        margin-left: 1.3vw;
+        margin-top: 0.5vh;
+        font-size: 3.2vw;
+        margin-bottom: 4vh;
+      }
     }
   }
   .typing-text {
@@ -202,15 +192,17 @@
   .left-block {
     margin-top: 12.5vh;
     > h1 {
-      margin-left: 9.5vw;
-      margin-top: 0;
-      margin-bottom: 0;
-      @extend %textLeft;
-      line-height: 1.32;
-      font: 3.8vw $font-family-black;
-      color: var(--theme-dark-blue);
-      text-align: left;
-      letter-spacing: 0.04vw;
+      @include tabletL {
+        margin-left: 9.5vw;
+        margin-top: 0;
+        margin-bottom: 0;
+
+        line-height: 1.32;
+        font: 3.8vw $font-family-black;
+
+        text-align: left;
+        letter-spacing: 0.04vw;
+      }
     }
   }
   .prep-phone-preview {
@@ -244,32 +236,62 @@
     margin-top: 15.5vh;
     > h1 {
       @extend %m0;
-      @extend %textCenter;
-      font-size: 3.9vw;
       letter-spacing: 0.09vw;
       font-family: $font-family-black;
       line-height: 1.35;
-      color: var(--theme-dark-blue);
+      margin: 0 2vw;
+      @include phone_and_tabletL {
+        font-size: 7.9vw !important;
+      }
+      @include tabletL {
+        font-size: 3.9vw;
+      }
+    }
+    .input-container {
+      @include phone_and_tabletL {
+        background-color: var(--light-gray);
+        border-radius: 5.1vw;
+        padding: 1vh 2vh 0;
+        height: 15vh;
+        margin-bottom: 4vh;
+      }
+      .audience-inputs {
+        &:before,
+        &:after {
+          @include phone_and_tabletL {
+            display: none;
+          }
+        }
+      }
     }
   }
 
   .sub-header {
     font-family: $font-family-regular;
-    font-size: 1.32vw;
     @extend %textCenter;
     color: var(--theme-dark-blue);
+    @include phone_and_tabletL {
+      display: none;
+    }
+    @include tabletL {
+      font-size: 1.32vw;
+    }
   }
 
   .audience-inputs {
     font-family: $font-family-regular;
-    font-size: 1.4vw !important;
-    margin-top: 6.2vh;
-    margin-left: 9vw;
-    width: 43vw !important;
-    margin-bottom: 18.7vh;
+    @include tabletL {
+      margin-bottom: 18.7vh;
+      font-size: 1.4vw !important;
+      margin-top: 6.2vh;
+      margin-left: 9vw;
+      width: 43vw !important;
+    }
 
     input {
-      padding-bottom: 1.7vh;
+      @include tabletL {
+        padding-bottom: 1.7vh;
+      }
     }
   }
 
@@ -301,31 +323,50 @@
   .left-block {
     > h1 {
       letter-spacing: 0.04vw;
+      @include phone_and_tabletL {
+        padding: 0 5vw;
+        font-size: 8vw;
+      }
     }
     .document-editor {
       margin-top: 4.6vh;
-      margin-left: 9.5vw;
       margin-bottom: 3.5vh;
-      width: 42.7vw;
-
+      @include phone_and_tabletL {
+        width: 100%;
+        padding: 0 5vw;
+      }
+      @include tabletL {
+        width: 42.7vw;
+        margin-left: 9.5vw;
+      }
       .ck-toolbar {
-        border-top-left-radius: 2.1vw !important;
-        border-top-right-radius: 2.1vw !important;
         padding-left: 0;
         background: $tab-gray;
         border: none;
-
+        @include phone_and_tabletL {
+          border-top-left-radius: 5.1vw !important;
+          border-top-right-radius: 5.1vw !important;
+        }
+        @include tabletL {
+          border-top-left-radius: 2.1vw !important;
+          border-top-right-radius: 2.1vw !important;
+        }
         .ck-button {
           padding-top: 0;
           padding-bottom: 0;
           font-size: 1.7vw;
           color: var(--theme-dark-blue);
           margin-right: 0;
-          margin-left: 0;
           padding-right: 0;
           padding-left: 0;
           min-width: 3.2vw;
           min-height: 3.2vw;
+          @include phone_and_tabletP {
+            margin-left: 2vw;
+          }
+          @include tabletL {
+            margin-left: 0vw;
+          }
         }
         .ck-color-table__remove-color {
           color: var(--theme-dark-blue);
@@ -337,6 +378,9 @@
           min-height: 2vw;
         }
         .ck-toolbar__items {
+          @include phone_and_tabletL {
+            padding: 1vh 2vw;
+          }
           .ck-color-ui-dropdown {
             margin-right: 0;
             @extend %m0;
@@ -352,14 +396,51 @@
             margin-left: 0.5vw;
           }
           > .ck:nth-child(4) {
-            margin-left: 16vw;
+            @include phone_and_tabletL {
+              margin-left: 59vw;
+            }
+            @include phone_and_tabletP {
+              margin-left: 25vw;
+            }
+            @include tabletL {
+              margin-left: 16vw;
+            }
           }
           > .ck:nth-child(7) {
             border-top-right-radius: 1.5vw;
           }
         }
         .ck-button__icon {
-          font-size: 1vw;
+          @include phone_and_tabletL {
+            font-size: 2vw;
+          }
+          @include phone_and_tabletP {
+            font-size: 3.7vw;
+          }
+          @include tabletL {
+            font-size: 1vw;
+          }
+        }
+        .ck-dropdown {
+          .ck-button__label {
+            @include phone_and_tabletL {
+              font-size: 2vw;
+              margin-right: 1vw;
+            }
+            @include phone_and_tabletP {
+              font-size: 4vw;
+            }
+          }
+          .ck-dropdown__panel {
+            .ck-button__icon {
+              // @include phone_and_tabletL {
+              //   font-size: 3vw;
+              // }
+              @include phone_and_tabletP {
+                font-size: 5vw;
+              }
+            }
+          }
         }
       }
       .ck-content {
@@ -367,12 +448,30 @@
         box-shadow: none !important;
         background: var(--light-gray);
         height: 38vh;
-        border-bottom-left-radius: 2.1vw !important;
-        border-bottom-right-radius: 2.1vw !important;
-        font-size: 1.5vw;
         padding-top: 0.7vh;
         padding-left: 1.05vw;
         letter-spacing: 0.01vw;
+        @include phone_and_tabletL {
+          font-size: 3vw;
+          height: 30vh;
+          border-bottom-left-radius: 5.1vw !important;
+          border-bottom-right-radius: 5.1vw !important;
+          padding: 1vh 1.5vh 0;
+        }
+        @include phone_and_tabletP {
+          font-size: 6vw;
+          height: 25vh;
+        }
+        @include tabletL {
+          border-bottom-left-radius: 2.1vw !important;
+          border-bottom-right-radius: 2.1vw !important;
+          font-size: 1.5vw;
+        }
+        p {
+          @include phone_and_tabletL {
+            margin: 0;
+          }
+        }
       }
     }
   }
@@ -389,9 +488,88 @@
 .open-question-page,
 .prep-page {
   .left-block {
-    width: 60vw;
+    @include phone_and_tabletL {
+      margin-top: 6.5vh;
+      width: 100%;
+    }
+    @include tabletL {
+      width: 60vw;
+    }
     h1 {
-      font-weight: normal !important;
+      text-align: center;
+      color: var(--theme-dark-blue);
+      @include phone_and_tabletL {
+        font-size: 6vw;
+        margin-top: 2.7vh;
+        margin-bottom: 5.1vh;
+      }
+      @include phone_and_tabletP {
+        font-size: 8vw;
+      }
+      br {
+        @include phone_and_tabletL {
+          display: none;
+        }
+        @include tabletL {
+          display: block;
+        }
+      }
+    }
+    .mobile-view-image {
+      display: none;
+      @extend %textCenter;
+      @include phone_and_tabletL {
+        display: block;
+      }
+      img {
+        height: 18vh;
+        margin: auto;
+        width: 18vh;
+        &.size2 {
+          width: 15vh;
+        }
+      }
+    }
+    .input-container {
+      @include phone_and_tabletL {
+        display: flex;
+        flex-direction: column;
+        margin-left: 5vw;
+        margin-right: 5vw;
+      }
+      > .audience-inputs {
+        @include phone_and_tabletL {
+          width: 100%;
+          font-size: 3.3vw;
+        }
+        @include phone_and_tabletP {
+          font-size: 6.3vw;
+        }
+        &:before {
+          @include phone_and_tabletL {
+            border-color: var(--gray-alpha4);
+          }
+        }
+        input {
+          @include phone_and_tabletL {
+            padding-bottom: 0;
+          }
+        }
+      }
+    }
+    .pagination-text {
+      display: none;
+      color: var(--gray);
+      @include phone_and_tabletL {
+        display: block;
+        position: fixed;
+        bottom: 2vh;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &.m-0 {
+        margin: 0;
+      }
     }
   }
   p {
@@ -427,41 +605,85 @@
   color: var(--theme-dark-blue);
 
   .left-block {
-    margin-top: 16.7vh;
-    margin-left: 12.1vw;
-
+    @include phone_and_tabletL {
+      margin-top: 6.5vh;
+      width: 100%;
+      text-align: center;
+    }
+    @include tabletL {
+      margin-top: 16.7vh;
+      margin-left: 12.1vw;
+    }
     > h1 {
-      font-weight: normal;
-      margin: 0;
-      font-size: 3.6vw;
+      text-align: center;
+      color: var(--theme-dark-blue);
       letter-spacing: 0.07vw;
       line-height: 1.35;
       font-family: $font-family-black;
-      color: var(--theme-dark-blue);
+      @include phone_and_tabletL {
+        font-size: 6vw;
+        margin-top: 2.7vh;
+        margin-bottom: 2.1vh;
+      }
+      @include phone_and_tabletP {
+        font-size: 9vw;
+      }
+      @include tabletL {
+        font-weight: normal;
+        margin: 0;
+        font-size: 3.6vw;
+      }
     }
 
     h2 {
       margin: 0;
-      margin-top: 0.2vh;
-      margin-left: 0.1vw;
+
       text-align: left;
       color: var(--theme-dark-blue);
       font-family: $font-family-regular;
       letter-spacing: 0.02vw;
-      font-size: 1.26vw;
+
       margin-bottom: 12vh;
+      @include phone_and_tabletL {
+        font-size: 4vw;
+        text-align: center;
+        margin-top: 0.1vh;
+      }
+      @include phone_and_tabletP {
+        font-size: 6vw;
+      }
+      @include tabletL {
+        margin-top: 0.2vh;
+        font-size: 1.26vw;
+        margin-left: 0.1vw;
+      }
     }
   }
   .brick-length-image-container1 {
     padding-right: 3vw !important;
+    .brick-length-image {
+      @include phone_and_tabletL {
+        background-position: right;
+      }
+    }
   }
 
   .brick-length-image-container2 {
     padding-left: 1.5vw !important;
     padding-right: 1.5vw !important;
+    .brick-length-image {
+      @include phone_and_tabletL {
+        background-position: center;
+      }
+    }
   }
   .brick-length-image-container3 {
     padding-left: 3vw !important;
+    .brick-length-image {
+      @include phone_and_tabletL {
+        background-position: left;
+      }
+    }
   }
 
   .brick-length-image-container {
@@ -488,15 +710,23 @@
     }
 
     .brick-length-image {
-      width: 100%;
+      @extend %width100;
       background-repeat: no-repeat;
-      background-size: 100% 100%;
       padding-top: 100%;
+      @include phone_and_tabletP {
+        background-size: 90% 90%;
+      }
+      @include tabletP {
+        background-size: 100% 100%;
+      }
     }
   }
 
   .brick-length-row {
     margin-bottom: 14.2vh;
+    @include phone_and_tabletL {
+      padding: 0 2vh;
+    }
   }
 
   .bottom-time-description {
@@ -505,10 +735,10 @@
   }
 
   .phone-preview-component {
-    width: 100%;
-    height: 100%;
+    @extend %width100;
+    @extend %height100;
+    @extend %posRelative;
     background: var(--theme-dark-blue);
-    position: relative;
 
     img {
       width: auto;
@@ -520,7 +750,7 @@
       position: absolute;
       top: 21.8vw;
       margin-top: 10%;
-      color: white;
+      color: var(--white);
       font-size: 1.2vw;
       font-family: $font-family-regular;
     }

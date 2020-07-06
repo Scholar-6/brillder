@@ -4,9 +4,13 @@ body,
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: $font-family-regular;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-family: $font-family-regular;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal !important;
 }
 
 code {
@@ -23,11 +27,6 @@ input {
   &:focus {
     outline: none;
   }
-}
-
-.MuiTypography-body1 {
-  font-family: $font-family-regular !important;
-  font-weight: inherit !important;
 }
 
 input:focus {
@@ -338,11 +337,9 @@ input:focus {
   margin-right: 1vw;
   padding: 0.35vw 0.782vw 0.782vw 0.35vw;
   @include phone_and_tabletP {
-    width: 11% !important;
-    height: 100%;
-    margin-left: 8vw;
+    width: calc(11.834vw - 1vw) !important;
+    height: 10.834vw;
   }
-
   @include tabletP {
     width: calc(6.834vw - 1vw) !important;
     height: 5.834vw;

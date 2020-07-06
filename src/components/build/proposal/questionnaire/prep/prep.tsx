@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 
 import './prep.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
@@ -47,8 +47,10 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, savePrep }) =
       <Navigation step={ProposalStep.Prep} onMove={() => savePrep(parentPrep)} />
       <Grid container direction="row" alignItems="flex-start">
         <Grid className="left-block">
-          <h1>Add engaging and relevant</h1>
-          <h1>preparatory material.</h1>
+          <div className="mobile-view-image">
+            <img className="size2" alt="titles" src="/images/new-brick/prep.png" />
+          </div>
+          <h1>Add engaging and relevant <br /> preparatory material.</h1>
           <DocumentWirisCKEditor
             disabled={!canEdit}
             data={parentPrep}
@@ -67,9 +69,12 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, savePrep }) =
             onSubmit={savePrep}
             backLink="/build/new-brick/brief"
           />
+          <h2 className="pagination-text">4 of 4</h2>
         </Grid>
         <ProposalPhonePreview Component={PrepPreviewComponent} data={parentPrep} />
-        <div className="red-right-block"></div>
+        <Hidden only={['xs','sm']}>
+          <div className="red-right-block"></div>
+        </Hidden>
       </Grid>
     </div>
   );
