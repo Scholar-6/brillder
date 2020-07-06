@@ -11,8 +11,10 @@
     justify-content: center;
   }
   .brick-row-container {
-    width: calc(82.85vw - 1vw);
     background-color: var(--white);
+    @include tabletP {
+      width: calc(82.85vw - 1vw);
+    }
     .brick-container {
       .introduction-page {
         padding: 4vh 2vw 4vh 7vw;
@@ -30,7 +32,7 @@
               height: 5vw;
               width: 5vw;
               @extend %radCircle;
-              background-color: $gray;
+              background-color: var(--gray);
             }
           }
           h1 {
@@ -379,33 +381,33 @@
     font: 2.6vw $font-family-bold;
     height: 4vw;
     display: flex;
-		align-items: center;
-		> span {
-			&:first-child {
-				width: 6vw;
-			}
-		}
-		.arrow {
-			width: 3vw;
-			height: 3vw;
-			margin: 0 1.5vw 0 0;
-			.svg {
-				height: 2.1vw;
-			}
-		}
+    align-items: center;
+    > span {
+      &:first-child {
+        width: 6vw;
+      }
+    }
+    .arrow {
+      width: 3vw;
+      height: 3vw;
+      margin: 0 1.5vw 0 0;
+      .svg {
+        height: 2.1vw;
+      }
+    }
     .image {
       height: 100%;
     }
     .help-prep {
       color: var(--gray);
-      font: 1vw $font-family-regular;
+      font-size: 1vw;
     }
   }
   .expanded-text {
     width: 100%;
     color: var(--theme-dark-blue);
     font: 1vw $font-family-regular;
-		margin: 0 0 1vh 0;
+    margin: 0 0 1vh 0;
   }
 }
 

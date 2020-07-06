@@ -1,22 +1,33 @@
 .sorted-row {
   // margin-top: 3.5vh;
   // height: calc(100vh - 11.954vh - 3.5vh);
-  margin-top: 2vw;
-  height: calc(100vh - 7.834vw);
   padding-left: 0;
   padding-right: 0;
+  @include phone_and_tabletP {
+    height: $height-mobile-view;
+  }
+  @include tabletP {
+    margin-top: 2vw;
+    height: $height-desktop-view;
+  }
   .sort-and-filter-container {
     color: white;
     flex-basis: inherit;
     max-width: inherit;
     width: calc(25% - 1vw);
-    height: calc(100vh - 7.834vw);
     margin-right: 1vw;
     border-top-right-radius: $main-panel-radius;
     background: $light-blue;
     flex-wrap: initial;
     flex-direction: column;
     position: relative;
+    @include phone_and_tabletP {
+      height: $height-mobile-view;
+      display: none;
+    }
+    @include tabletP {
+      height: $height-desktop-view;
+    }
     .sort-box {
       width: 100%;
       .filter-container {
@@ -230,7 +241,15 @@
         margin: 0 1.4vw;
         padding: 2vh 0 0 0;
         width: calc(100% - 2.8vw);
-        height: calc(100vh - 22vw);
+        @include phone_and_tabletP {
+          height: calc(100vh - 55vw);
+        }
+        @include tabletP {
+          height: calc(100vh - 24vw);
+        }
+        @include tabletL {
+          height: calc(100vh - 23vw);
+        }
         overflow-y: auto;
         .published-count {
           font-size: 1.05vw;
@@ -239,6 +258,18 @@
         }
         .MuiGrid-container {
           margin-bottom: 0.4vw;
+        }
+        .MuiRadio-root {
+          color: inherit !important;
+          .MuiIconButton-label {
+            color: inherit !important;
+            .MuiSvgIcon-root {
+              color: inherit !important;
+            }
+          }
+        }
+        .MuiTypography-root {
+          color: var(--white) !important;
         }
       }
     }
@@ -275,40 +306,60 @@
     border-top-left-radius: $main-panel-radius;
     padding-left: 1.18vw;
     margin-left: 1vw;
-    background: var(--light-gray);
     flex-basis: inherit;
     max-width: inherit;
-    width: calc(75% - 1vw);
-    height: calc(100vh - 7.834vw);
     overflow-y: auto;
+    @include phone_and_tabletP {
+      width: 100%;
+      height: $height-mobile-view;
+      padding: 0 4vw;
+      margin: 0;
+      background-color: var(--white);
+      border-top-left-radius: 10vw;
+    }
+    @include tabletP {
+      width: calc(75% - 1vw);
+      height: $height-desktop-view;
+      background: var(--light-gray);
+    }
     .brick-row-title {
       padding-left: 1.15vw;
       color: var(--theme-dark-blue);
-      padding-top: 2.3vh;
       padding-bottom: 0;
       line-height: 1;
-      font-size: 5.2vw;
       letter-spacing: 1.05vw;
-      font-family: $font-family-black;
+      @include phone_and_tabletP {
+        font-size: 7vw;
+        font-weight: 900;
+        padding-top: 1.3vh;
+        border-bottom: 0.2vh solid var(--light-gray);
+        padding-bottom: 0.9vh;
+        margin-bottom: 2.5vh;
+        position: sticky;
+        top: 0;
+        background-color: var(--white);
+        z-index: 10;
+      }
+      @include tabletP {
+        font-family: $font-family-black;
+        padding-top: 2.3vh;
+        font-size: 5.2vw;
+      }
     }
     .bricks-list-container {
-      height: 65vh;
-      overflow-y: auto;
-      .bricks-list-container {
+      @include tabletP {
         height: 62vh !important;
         overflow: auto;
-        .main-brick-container {
-          .round-button {
-            height: 2.1vw;
-            width: 2.1vw;
-            border-radius: 100vw;
-          }
-        }
       }
       .main-brick-container {
         position: relative;
         padding-left: 0.8vw;
-        width: 100%;
+        @include tabletL {
+          width: 33.33%;
+        }
+        @include phone_and_tabletP {
+          width: 100%;
+        }
         .brick-container {
           position: relative;
           padding-right: 0;
@@ -413,7 +464,11 @@
                 height: 2.1vw;
                 width: 2.1vw;
                 border-radius: 20vw;
-                background-color: $gray;
+                background-color: var(--gray);
+                @include phone_and_tabletP {
+                  height: 8.1vw;
+                  width: 8.1vw;
+                }
               }
             }
             &.brick-row-0,
@@ -426,7 +481,9 @@
             }
             &.brick-row-4,
             &.brick-row-5 {
-              bottom: 0;
+              @include tabletP {
+                bottom: 0;
+              }
               .expanded-brick-info {
                 border-bottom-left-radius: 0 !important;
               }
@@ -445,6 +502,29 @@
             height: 100%;
             min-height: $min-brick-height;
             width: 3.3%;
+          }
+        }
+      }
+      > .MuiGrid-container {
+        @include phone_and_tabletP {
+          flex-wrap: inherit;
+          flex-direction: column;
+        }
+        .main-brick-container {
+          .brick-container {
+            @include phone_and_tabletP {
+              height: 19vw;
+            }
+            .short-brick-info {
+              @include phone_and_tabletP {
+                top: 0.5vh;
+                left: 12vw;
+                width: calc(100% - 4vh);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
           }
         }
       }
@@ -496,8 +576,22 @@
           color: var(--theme-dark-blue);
           font-size: 1.3vw;
           padding-top: 0;
+        }
+        .user-actions-cell {
+          min-width: 4.5vw;
+          .delete-button {
+            display: inline-block;
+            cursor: pointer;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url(/feathericons/svg/trash-2-blue.svg);
+            height: 1.85vw;
+            width: 1.85vw;
+          }
 
           .edit-button {
+            display: inline-block;
             cursor: pointer;
             background-size: 100% 100%;
             background-repeat: no-repeat;

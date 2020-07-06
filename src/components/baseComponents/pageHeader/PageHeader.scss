@@ -8,92 +8,95 @@
 .bricks-list-page,
 .dashboard-page,
 .back-to-work-page {
-	background: var(--theme-dark-blue);
-	height: 100%;
-	width: 100%;
-	font-family: $font-family-light;
+  background: var(--theme-dark-blue);
+  height: 100%;
+  width: 100%;
+  font-family: $font-family-light;
 
-	.search-input {
-		width: 100%;
-	}
+  .search-input {
+    width: 100%;
+  }
 
-	.upper-part {
-		position: relative;
-		min-height: 100%;
-		background: var(--theme-dark-blue);
-		h3 {
-			color: white;
-			font-weight: normal;
-			margin-top: 2.5vh;
-			margin-left: 1.05vw;
-			margin-bottom: 1vh;
-			letter-spacing: 0.27vw;
-			font-size: 1.3vw;
-		}
-		.users-pagination,
-		.bricks-pagination {
-			height: max-content;
-			font-size: 0.9vw;
-			font-family: $font-family-regular;
-			color: var(--theme-dark-blue);
-			.gray {
-				color: $gray;
-			}
-			.left-pagination {
-				padding-top: 0.35vh;
-				padding-left: 0.15vw;
-				line-height: 1.4;
-			}
-		}
-		.bottom-next-button {
-			bottom: 1vh;
-			color: white;
-			> div {
-				position: relative;
-				.prev-button {
-					position: absolute;
-					top: -0.6vh;
-					margin-left: 2.8vh;
-					left: -4vw;
-				}
-				.next-button {
-					position: absolute;
-					left: -4vw;
-					top: 1vh;
-				}
-				.active:hover {
-					cursor: pointer;
-					color: var(--theme-dark-blue) !important;
-				}
-				svg {
-					height: 4.7vh;
-					width: 4.7vh;
-					color: $gray;
-				}
-			}
-		}
-		.brick-hover {
-			position: absolute;
-			z-index: 2;
-			left: 0;
-			width: 100%;
-			height: 32vh !important;
-			.right-color-column {
-				width: 0;
-			}
-		}
-		.bigger-hover:hover {
-			height: 35.4vh;
-			.hover-icons-row {
-				height: 11.2vh;
-			}
-		}
+  .upper-part {
+    position: relative;
+    min-height: 100%;
+    background: var(--theme-dark-blue);
+    h3 {
+      color: white;
+      font-weight: normal;
+      margin-top: 2.5vh;
+      margin-left: 1.05vw;
+      margin-bottom: 1vh;
+      letter-spacing: 0.27vw;
+      font-size: 1.3vw;
+    }
+    .users-pagination,
+    .bricks-pagination {
+      height: max-content;
+      font-size: 0.9vw;
+      font-family: $font-family-regular;
+      color: var(--theme-dark-blue);
+      @include phone_and_tabletP {
+        display: none;
+      }
+      .gray {
+        color: var(--gray);
+      }
+      .left-pagination {
+        padding-top: 0.35vh;
+        padding-left: 0.15vw;
+        line-height: 1.4;
+      }
+    }
+    .bottom-next-button {
+      bottom: 1vh;
+      color: white;
+      > div {
+        position: relative;
+        .prev-button {
+          position: absolute;
+          top: -0.6vh;
+          margin-left: 2.8vh;
+          left: -4vw;
+        }
+        .next-button {
+          position: absolute;
+          left: -4vw;
+          top: 1vh;
+        }
+        .active:hover {
+          cursor: pointer;
+          color: var(--theme-dark-blue) !important;
+        }
+        svg {
+          height: 4.7vh;
+          width: 4.7vh;
+          color: var(--gray);
+        }
+      }
+    }
+    .brick-hover {
+      position: absolute;
+      z-index: 2;
+      left: 0;
+      width: 100%;
+      height: 32vh !important;
+      .right-color-column {
+        width: 0;
+      }
+    }
+    .bigger-hover:hover {
+      height: 35.4vh;
+      .hover-icons-row {
+        height: 11.2vh;
+      }
+    }
 
-		.next-bricks {
-			position: absolute;
-			right: 0;
-			color: white;
-			top: 2vh;
-		}
-	}
+    .next-bricks {
+      position: absolute;
+      right: 0;
+      color: white;
+      top: 2vh;
+    }
+  }
 }
