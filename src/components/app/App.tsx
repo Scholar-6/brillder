@@ -7,9 +7,9 @@ import { useHistory } from 'react-router-dom';
 import './app.scss';
 import '../../assets/fonts/icomoon/style.css';
 
-import Pallet from '../play/pallet/Pallet';
 import VersionLabel from 'components/baseComponents/VersionLabel';
 import Dashboard from '../play/dashboard/Dashboard';
+import MobileCategory from '../play/dashboard/MobileCategory';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
 import PlayPreviewRouting from '../build/playPreview/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
@@ -98,7 +98,7 @@ const App: React.FC = (props: any) => {
     <ThemeProvider theme={theme}>
       <Switch>
         <StudentRoute path="/play/brick/:brickId" component={PlayBrickRouting} />
-        <StudentRoute path="/play/pallet/:palletName" component={Pallet} />
+        <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <StudentRoute path="/play/dashboard" component={Dashboard} />
 
         <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} />
