@@ -908,9 +908,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           <Grid item xs={9} className="brick-row-container">
             <div className="brick-row-title">{this.renderTitle()}</div>
             <div className="bricks-list-container">
-              <Grid container direction="row" className="bricks-list">
+              <div className="bricks-list">
                 {this.renderSortedBricks()}
-              </Grid>
+              </div>
             </div>
             {this.renderPagination()}
           </Grid>

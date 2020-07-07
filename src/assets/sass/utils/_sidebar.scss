@@ -353,19 +353,19 @@
       }
       .bricks-list {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(33.33%, 1fr));
+        @include tabletP {
+          grid-template-columns: repeat(auto-fit, minmax(33.33%, 1fr));
+        }
       }
       .main-brick-container {
         display: flex;
         position: relative;
-        padding-left: 0.8vw;
+        padding: 0.8vw 0 0 0.8vw;
+        min-height: 9.4vh;
         .brick-container {
           width: 100%;
           position: relative;
-          padding-right: 0;
           height: $min-brick-height;
-          margin-top: 0.85vw;
-          margin-bottom: 0vw;
           font-family: $font-family-regular;
           text-align: left;
           @include phone_and_tabletP {
@@ -451,30 +451,35 @@
             width: 95%;
             text-align: left;
             height: $min-brick-height;
-            .left-brick-roller {
-              position: absolute;
-              top: 1.5vh;
-              left: 0.15vw;
-              > div {
-                height: 2.1vw;
-                width: 1.9vw;
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-position: center;
-                background-image: url(/images/roller-green.png);
+            .short-description {
+              display: flex;
+              width: 100%;
+              height:100%;
+              .left-brick-roller {
+                position: absolute;
+                top: 1.5vh;
+                left: 0.15vw;
+                > div {
+                  height: 2.1vw;
+                  width: 1.9vw;
+                  background-size: 100% 100%;
+                  background-repeat: no-repeat;
+                  background-position: center;
+                  background-image: url(/images/roller-green.png);
+                }
               }
-            }
-            .left-brick-circle {
-              position: absolute;
-              top: 1.3vh;
-              > div {
-                height: 2.1vw;
-                width: 2.1vw;
-                border-radius: 20vw;
-                background-color: var(--gray);
-                @include phone_and_tabletP {
-                  height: 8.1vw;
-                  width: 8.1vw;
+              .left-brick-circle {
+                position: absolute;
+                top: 1.3vh;
+                > div {
+                  height: 2.1vw;
+                  width: 2.1vw;
+                  border-radius: 20vw;
+                  background-color: var(--gray);
+                  @include phone_and_tabletP {
+                    height: 8.1vw;
+                    width: 8.1vw;
+                  }
                 }
               }
             }
