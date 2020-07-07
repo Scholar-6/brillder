@@ -50,7 +50,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
 
   render() {
     return (
-      <div>
+      <div className="upper-part">
         <PageHeader
           searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
           search={() => {}}

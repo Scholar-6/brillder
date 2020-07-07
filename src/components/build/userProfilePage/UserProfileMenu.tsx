@@ -51,7 +51,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
 
   render() {
     return (
-      <div>
+      <div className="upper-part">
         <PageHeader
           searchPlaceholder="Search by Name, Email or Subject"
           search={() => {}}
@@ -62,19 +62,16 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
           className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
-          onClose={() => this.hideDropdown()}
-        >
+          onClose={() => this.hideDropdown()}>
           <MenuItem
             className="first-item menu-item"
-            onClick={() => this.props.history.push("/play/dashboard")}
-          >
+            onClick={() => this.props.history.push("/play/dashboard")}>
             View All Bricks
             <Grid
               container
               className="menu-icon-container"
               justify="center"
-              alignContent="center"
-            >
+              alignContent="center">
               <div>
                 <img
                   className="menu-icon"
@@ -112,40 +109,36 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
           {this.props.user.roles.some(
             (role) => role.roleId === UserType.Admin
           ) ? (
-            <MenuItem
-              className="menu-item"
-              onClick={() => this.props.history.push("/users")}
-            >
-              Manage Users
-              <Grid
-                container
-                className="menu-icon-container"
-                justify="center"
-                alignContent="center"
-              >
-                <div>
-                  <img
-                    className="manage-users-icon svg-icon"
-                    alt=""
-                    src="/images/users.svg"
-                  />
-                </div>
-              </Grid>
-            </MenuItem>
+					<MenuItem
+						className="menu-item"
+						onClick={() => this.props.history.push("/users")}>
+						Manage Users
+						<Grid
+							container
+							className="menu-icon-container"
+							justify="center"
+							alignContent="center">
+							<div>
+								<img
+									className="manage-users-icon svg-icon"
+									alt=""
+									src="/images/users.svg"
+								/>
+							</div>
+						</Grid>
+					</MenuItem>
           ) : (
             ""
           )}
           <MenuItem
             className="menu-item"
-            onClick={() => this.handleLogoutOpen()}
-          >
+            onClick={() => this.handleLogoutOpen()}>
             Logout
             <Grid
               container
               className="menu-icon-container"
               justify="center"
-              alignContent="center"
-            >
+              alignContent="center">
               <div>
                 <img
                   className="menu-icon svg-icon logout-icon"

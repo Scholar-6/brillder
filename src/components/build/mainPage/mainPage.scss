@@ -42,13 +42,13 @@
     height: 100%;
 
     .first-item {
-      background: $light-blue;
+      background: var(--light-blue);
       height: 89.2vh;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }
     .second-item {
-      background: $light-blue;
+      background: var(--light-blue);
       margin-top: 4.6vh;
       height: 6.2vh;
       border-top-left-radius: $border-radius;
@@ -62,13 +62,13 @@
     height: 100%;
 
     .first-item {
-      background: $light-blue;
+      background: var(--light-blue);
       height: 34.8vh;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }
     .second-item {
-      background: $light-blue;
+      background: var(--light-blue);
       margin-top: 4.6vh;
       height: 60.6vh;
       border-top-left-radius: $border-radius;
