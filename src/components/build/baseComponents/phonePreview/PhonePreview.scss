@@ -121,7 +121,7 @@
       height: calc(100% - 1vw);
       margin: 0.5vw;
       padding: 0.43vw;
-      background-color: $light-blue2;
+      background-color: var(--light-blue2);
       border-radius: 2.2vw;
       .upper-panel {
         position: absolute;
@@ -131,7 +131,7 @@
         width: 45%;
         border-bottom-left-radius: 0.65vw;
         border-bottom-right-radius: 0.65vw;
-        background: $light-blue2;
+        background: var(--light-blue2);
         z-index: 10;
         .speaker {
           width: 36%;

@@ -70,7 +70,7 @@
 
   .step-container:hover {
     .step-label {
-      color: $light-blue2;
+      color: var(--light-blue2);
       opacity: 1;
     }
     .navigation-titles {

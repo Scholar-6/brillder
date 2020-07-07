@@ -75,7 +75,7 @@ interface UsersListState {
 
 let anyStyles = withStyles as any;
 
-const IOSSwitch = anyStyles((theme:any) => ({
+const IOSSwitch = anyStyles((theme: any) => ({
   root: {
     width: '4.5vh',
     height: '2.8vh',
@@ -116,7 +116,7 @@ const IOSSwitch = anyStyles((theme:any) => ({
     opacity: 1,
   },
   checked: {},
-}))((props:any) => {
+}))((props: any) => {
   return (
     <Switch
       disableRipple
@@ -160,9 +160,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     this.getUsers(this.state.page);
 
     axios.get(
-      process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true}
+      process.env.REACT_APP_BACKEND_HOST + '/subjects', { withCredentials: true }
     ).then(res => {
-      this.setState({...this.state, subjects: res.data });
+      this.setState({ ...this.state, subjects: res.data });
     }).catch(error => {
       alert('Can`t get subjects');
     });
@@ -212,9 +212,9 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         orderBy,
         isAscending,
       },
-      {withCredentials: true}
+      { withCredentials: true }
     ).then(res => {
-      this.setState({...this.state, users: res.data.pageData, totalCount: res.data.totalCount})
+      this.setState({ ...this.state, users: res.data.pageData, totalCount: res.data.totalCount })
     }).catch(error => {
       alert('Can`t get users');
     });
@@ -225,7 +225,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     this.props.history.push('/choose-login');
   }
 
-  move(brickId:number) {
+  move(brickId: number) {
     this.props.history.push(`/build/brick/${brickId}/build/investigation/question`)
   }
 
@@ -234,8 +234,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   getCheckedRoles() {
     const result = [];
-    const {state} = this;
-    const {roles} = state;
+    const { state } = this;
+    const { roles } = state;
     for (let role of roles) {
       if (role.checked) {
         result.push(role.type);
@@ -245,31 +245,31 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   handleLogoutOpen() {
-    this.setState({...this.state, logoutDialogOpen: true})
+    this.setState({ ...this.state, logoutDialogOpen: true })
   }
 
   handleLogoutClose() {
-    this.setState({...this.state, logoutDialogOpen: false})
+    this.setState({ ...this.state, logoutDialogOpen: false })
   }
 
   searching(searchString: string) {
     if (searchString.length === 0) {
-      this.setState({...this.state, searchString, isSearching: false});
+      this.setState({ ...this.state, searchString, isSearching: false });
     } else {
-      this.setState({...this.state, searchString});
+      this.setState({ ...this.state, searchString });
     }
   }
 
   activateUser(userId: number) {
     axios.put(
-      `${process.env.REACT_APP_BACKEND_HOST}/user/activate/${userId}`, {}, {withCredentials: true} as any
+      `${process.env.REACT_APP_BACKEND_HOST}/user/activate/${userId}`, {}, { withCredentials: true } as any
     ).then(res => {
       if (res.data === 'OK') {
         const user = this.state.users.find(user => user.id === userId);
         if (user) {
           user.status = UserStatus.Active;
         }
-        this.setState({...this.state});
+        this.setState({ ...this.state });
       }
     }).catch(error => {
       alert('Can`t activate user');
@@ -278,14 +278,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   deactivateUser(userId: number) {
     axios.put(
-      `${process.env.REACT_APP_BACKEND_HOST}/user/deactivate/${userId}`, {}, {withCredentials: true} as any
+      `${process.env.REACT_APP_BACKEND_HOST}/user/deactivate/${userId}`, {}, { withCredentials: true } as any
     ).then(res => {
       if (res.data === 'OK') {
         const user = this.state.users.find(user => user.id === userId);
         if (user) {
           user.status = UserStatus.Disabled;
         }
-        this.setState({...this.state});
+        this.setState({ ...this.state });
       }
     }).catch(error => {
       alert('Can`t deactivate user');
@@ -307,25 +307,25 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   showDropdown() {
-    this.setState({...this.state, dropdownShown: true});
+    this.setState({ ...this.state, dropdownShown: true });
   }
 
   hideDropdown() {
-    this.setState({...this.state, dropdownShown: false});
+    this.setState({ ...this.state, dropdownShown: false });
   }
 
   filterBySubject = (i: number) => {
-    const {subjects} = this.state;
+    const { subjects } = this.state;
     subjects[i].checked = !subjects[i].checked
     this.filter();
-	this.setState({...this.state});
-	this.filterClear()
+    this.setState({ ...this.state });
+    this.filterClear()
   }
 
   getCheckedSubjectIds() {
     const filterSubjects = [];
-    const {state} = this;
-    const {subjects} = state;
+    const { state } = this;
+    const { subjects } = state;
     for (let subject of subjects) {
       if (subject.checked) {
         filterSubjects.push(subject.id);
@@ -348,69 +348,69 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     this.filter();
     this.filterClear()
   }
-	hideFilter() {
-		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-	}
+  hideFilter() {
+    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+  }
 
-	expandFilter() {
-		this.setState({
-		  ...this.state,
-		  filterExpanded: true,
-		  filterHeight: "auto",
-		});
-	}
+  expandFilter() {
+    this.setState({
+      ...this.state,
+      filterExpanded: true,
+      filterHeight: "auto",
+    });
+  }
 
   filterClear() {
-		this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false})
-	}
-	//endregion
+    this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false })
+  }
+  //endregion
 
   onUserDeleted(userId: number) {
-    let {users} = this.state;
+    let { users } = this.state;
     let removeIndex = users.findIndex(user => user.id === userId);
     users.splice(removeIndex, 1);
-    this.setState({...this.state, users});
+    this.setState({ ...this.state, users });
   }
 
   renderSortAndFilterBox = () => {
     return (
-		  <div className="sort-box">
-			<div className="filter-container sort-by-box">
-				<div className="sort-header">Filter by: Role</div>
-				<RadioGroup
-					className="sort-group"
-					aria-label="SortBy"
-					name="SortBy"
-					value={this.state.sortBy}
-					onChange={this.handleSortChange}>
-					<Grid container direction="row">
-						{this.state.roles.map((role, i) =>
-						<Grid item xs={4} key={i}>
-							<FormControlLabel
-							checked={role.checked}
-							control={<Radio className={"filter-radio"} />}
-							label={role.name}/>
-						</Grid>
-          				)}
-					</Grid>
-				</RadioGroup>
-			</div>
-			<div className="filter-header">
-				<span>Filter by: Subject</span>
-				<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
-					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expandFilter())}}>
-				</button>
-			</div>
-			<SubjectsList
-				subjects = {this.state.subjects}
-				filterHeight={this.state.filterHeight}
-				filterBySubject={this.filterBySubject}/>
+      <div className="sort-box">
+        <div className="filter-container sort-by-box">
+          <div className="sort-header">Filter by: Role</div>
+          <RadioGroup
+            className="sort-group"
+            aria-label="SortBy"
+            name="SortBy"
+            value={this.state.sortBy}
+            onChange={this.handleSortChange}>
+            <Grid container direction="row">
+              {this.state.roles.map((role, i) =>
+                <Grid item xs={4} key={i}>
+                  <FormControlLabel
+                    checked={role.checked}
+                    control={<Radio className={"filter-radio"} />}
+                    label={role.name} />
+                </Grid>
+              )}
+            </Grid>
+          </RadioGroup>
+        </div>
+        <div className="filter-header">
+          <span>Filter by: Subject</span>
+          <button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up"))}
+            onClick={() => { this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expandFilter()) }}>
+          </button>
+        </div>
+        <SubjectsList
+          subjects={this.state.subjects}
+          filterHeight={this.state.filterHeight}
+          filterBySubject={this.filterBySubject} />
       </div>
-	  );
+    );
   }
 
   renderPagination() {
-    const {totalCount, users, page, pageSize} = this.state;
+    const { totalCount, users, page, pageSize } = this.state;
     const showPrev = page > 0;
     const currentPage = page;
     const showNext = ((totalCount / pageSize) - currentPage) > 1;
@@ -419,12 +419,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     const maxUser = prevCount + users.length;
 
     const nextPage = () => {
-      this.setState({...this.state, page: page + 1});
+      this.setState({ ...this.state, page: page + 1 });
       this.getUsers(page + 1);
     }
 
     const previousPage = () => {
-      this.setState({...this.state, page: page - 1});
+      this.setState({ ...this.state, page: page - 1 });
       this.getUsers(page - 1);
     }
 
@@ -442,8 +442,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         </Grid>
         <Grid container item xs={4} justify="center" className="bottom-next-button">
           <div>
-            { showPrev ? <ExpandLessIcon onClick={previousPage} className="prev-button active" /> : "" }
-            { showNext ? <ExpandMoreIcon onClick={nextPage} className="next-button active" /> : "" }
+            {showPrev ? <ExpandLessIcon onClick={previousPage} className="prev-button active" /> : ""}
+            {showNext ? <ExpandMoreIcon onClick={nextPage} className="next-button active" /> : ""}
           </div>
         </Grid>
       </Grid>
@@ -474,17 +474,17 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
     if (sortBy === this.state.sortBy) {
       isAscending = !isAscending;
-      this.setState({...this.state, isAscending});
+      this.setState({ ...this.state, isAscending });
     } else {
       isAscending = false;
-      this.setState({...this.state, isAscending, sortBy});
+      this.setState({ ...this.state, isAscending, sortBy });
     }
     let filterSubjects = this.getCheckedSubjectIds();
     this.getUsers(this.state.page, filterSubjects, sortBy, isAscending);
   }
 
   renderSortArrow(currentSortBy: UserSortBy) {
-    const {sortBy, isAscending} = this.state;
+    const { sortBy, isAscending } = this.state;
 
     return (
       <img
@@ -536,33 +536,33 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           {this.renderUserTableHead()}
         </thead>
         <tbody>
-        {
-          this.state.users.map((user:any, i:number) => {
-            return (
-              <tr className="user-row" key={i}>
-                <td></td>
-                <td>
-                  <span className="user-first-name">{user.firstName} </span>
-                  <span className="user-last-name">{user.lastName}</span>
-                </td>
-                <td>{user.email}</td>
-                <td>{this.renderUserType(user)}</td>
-                <td className="activate-button-container">
-                  <IOSSwitch
-                    checked={user.status === UserStatus.Active}
-                    onChange={() => this.toggleUser(user)}
+          {
+            this.state.users.map((user: any, i: number) => {
+              return (
+                <tr className="user-row" key={i}>
+                  <td></td>
+                  <td>
+                    <span className="user-first-name">{user.firstName} </span>
+                    <span className="user-last-name">{user.lastName}</span>
+                  </td>
+                  <td>{user.email}</td>
+                  <td>{this.renderUserType(user)}</td>
+                  <td className="activate-button-container">
+                    <IOSSwitch
+                      checked={user.status === UserStatus.Active}
+                      onChange={() => this.toggleUser(user)}
+                    />
+                  </td>
+                  <UserActionsCell
+                    userId={user.id}
+                    history={this.props.history}
+                    isAdmin={this.state.isAdmin}
+                    onDelete={userId => this.onUserDeleted(userId)}
                   />
-                </td>
-                <UserActionsCell
-                  userId={user.id}
-                  history={this.props.history}
-                  isAdmin={this.state.isAdmin}
-                  onDelete={userId => this.onUserDeleted(userId)}
-                />
-              </tr>
-            );
-          })
-        }
+                </tr>
+              );
+            })
+          }
         </tbody>
       </table>
     );
@@ -596,7 +596,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   render() {
-    const {history} = this.props;
+    const { history } = this.props;
     return (
       <div className="user-list-page">
         <div className="upper-part">
@@ -606,74 +606,72 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             searching={(v: string) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
           />
-          <Grid container direction="row" className="sorted-row">
-            <Grid container item xs={3} className="sort-and-filter-container">
-              {this.renderSortAndFilterBox()}
-            </Grid>
-            <Grid item xs={9} className="brick-row-container">
-              {this.renderTableHeader()}
-              <Grid container direction="row">
-                {this.renderUsers()}
-                {this.renderRoleDescription()}
+          <Menu
+            className="menu-dropdown"
+            keepMounted
+            open={this.state.dropdownShown}
+            onClose={() => this.hideDropdown()}>
+            <MenuItem className="first-item menu-item" onClick={() => history.push('/play/dashboard')}>
+              View All Bricks
+            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
+                <div>
+                  <img className="menu-icon" alt="" src="/images/main-page/glasses-white.png" />
+                </div>
               </Grid>
-              {this.renderPagination()}
-            </Grid>
-          </Grid>
+            </MenuItem>
+            <MenuItem className="menu-item" onClick={() => { }}>
+              Start Building
+            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
+                <div>
+                  <img className="menu-icon" alt="" src="/images/main-page/create-white.png" />
+                </div>
+              </Grid>
+            </MenuItem>
+            <MenuItem className="menu-item" onClick={() => history.push('/back-to-work')}>
+              Back To Work
+            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
+                <div>
+                  <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
+                </div>
+              </Grid>
+            </MenuItem>
+            <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/user-profile')}>
+              View Profile
+            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
+                <div>
+                  <img className="menu-icon svg-icon user-icon" alt="" src="/images/user.svg" />
+                </div>
+              </Grid>
+            </MenuItem>
+            <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
+              Logout
+            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
+                <div>
+                  <img className="menu-icon svg-icon logout-icon" alt="" src="/images/log-out.svg" />
+                </div>
+              </Grid>
+            </MenuItem>
+          </Menu>
         </div>
-        <Menu
-          className="menu-dropdown"
-          keepMounted
-          open={this.state.dropdownShown}
-          onClose={() => this.hideDropdown()}
-        >
-          <MenuItem className="first-item menu-item" onClick={() => history.push('/play/dashboard')}>
-            View All Bricks
-            <Grid container className="menu-icon-container" justify="center" alignContent="center">
-              <div>
-                <img className="menu-icon" alt="" src="/images/main-page/glasses-white.png" />
-              </div>
+        <Grid container direction="row" className="sorted-row">
+          <Grid container item xs={3} className="sort-and-filter-container">
+            {this.renderSortAndFilterBox()}
+          </Grid>
+          <Grid item xs={9} className="brick-row-container">
+            {this.renderTableHeader()}
+            <Grid container direction="row">
+              {this.renderUsers()}
+              {this.renderRoleDescription()}
             </Grid>
-          </MenuItem>
-          <MenuItem className="menu-item" onClick={() => {}}>
-            Start Building
-            <Grid container className="menu-icon-container" justify="center" alignContent="center">
-              <div>
-                <img className="menu-icon" alt="" src="/images/main-page/create-white.png" />
-              </div>
-            </Grid>
-          </MenuItem>
-          <MenuItem className="menu-item" onClick={() => history.push('/back-to-work')}>
-            Back To Work
-            <Grid container className="menu-icon-container" justify="center" alignContent="center">
-              <div>
-                <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
-              </div>
-            </Grid>
-          </MenuItem>
-          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/user-profile')}>
-            View Profile
-            <Grid container className="menu-icon-container" justify="center" alignContent="center">
-              <div>
-                <img className="menu-icon svg-icon user-icon" alt="" src="/images/user.svg" />
-              </div>
-            </Grid>
-          </MenuItem>
-          <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
-            Logout
-            <Grid container className="menu-icon-container" justify="center" alignContent="center">
-              <div>
-                <img className="menu-icon svg-icon logout-icon" alt="" src="/images/log-out.svg" />
-              </div>
-            </Grid>
-          </MenuItem>
-        </Menu>
+            {this.renderPagination()}
+          </Grid>
+        </Grid>
         <Dialog
           open={this.state.logoutDialogOpen}
           onClose={() => this.handleLogoutClose()}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          className="alert-dialog"
-        >
+          className="alert-dialog">
           <div className="logout-dialog-header">
             <div>Are you sure you want</div>
             <div>to log out?</div>
