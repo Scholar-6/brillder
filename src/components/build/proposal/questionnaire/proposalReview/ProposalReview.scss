@@ -183,13 +183,13 @@
           height: 100%;
           right: 0;
           width: 0.8vw;
-          background: $light-blue2;
+          background: var(--light-blue2);
         }
         .horizontal-line {
           position: absolute;
           height: 0.8vw;
           width: 100%;
-          background: $light-blue2;
+          background: var(--light-blue2);
         }
         .top-line-1 {
           top: 7.8vh;
@@ -219,7 +219,7 @@
       .names-row {
         margin-top: 1vh;
         font-size: 2.4vw;
-        color: $light-blue2;
+        color: var(--light-blue2);
       }
     }
 

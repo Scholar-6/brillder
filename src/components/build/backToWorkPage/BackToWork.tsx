@@ -118,8 +118,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       dropdownShown: false,
       notificationsShown: false,
       failedRequest: false,
-	    shown: true,
-    	filterExpanded: true,
+      shown: true,
+      filterExpanded: true,
       filterHeight: "auto",
       isClearFilter: false,
     };
@@ -138,7 +138,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           rawBricks: res.data,
         });
       }).catch(() => {
-        this.setState({...this.state, failedRequest: true})
+        this.setState({ ...this.state, failedRequest: true })
       });
     } else {
       axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
@@ -151,7 +151,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           rawBricks: res.data,
         });
       }).catch((error) => {
-        this.setState({...this.state, failedRequest: true})
+        this.setState({ ...this.state, failedRequest: true })
       });
     }
 
@@ -281,29 +281,29 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, notificationsShown: false });
   }
 
-	//region Hide / Expand / Clear Filter
-	clearStatus() {
-		const { filters } = this.state;
-		this.clearStatusFilters(filters);
-		this.setState({ ...this.state, filters, bricks: this.state.rawBricks });
-		this.filterClear()
-	}
-	hideFilter() {
-		this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-	}
-	expandFilter() {
-		this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
-	}
-	filterClear(){
-		let {draft, review, build, publish} = this.state.filters
-		if(draft || review || build || publish){
-			 this.setState({ isClearFilter: true})
-		}else{
-			this.setState({ isClearFilter: false})
-		}
-		// this.setState({ isClearFilter: this.state.bricks.some((r: any) => r.checked) ? true : false})
-	}
-	//endregion
+  //region Hide / Expand / Clear Filter
+  clearStatus() {
+    const { filters } = this.state;
+    this.clearStatusFilters(filters);
+    this.setState({ ...this.state, filters, bricks: this.state.rawBricks });
+    this.filterClear()
+  }
+  hideFilter() {
+    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+  }
+  expandFilter() {
+    this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
+  }
+  filterClear() {
+    let { draft, review, build, publish } = this.state.filters
+    if (draft || review || build || publish) {
+      this.setState({ isClearFilter: true })
+    } else {
+      this.setState({ isClearFilter: false })
+    }
+    // this.setState({ isClearFilter: this.state.bricks.some((r: any) => r.checked) ? true : false})
+  }
+  //endregion
 
   getSortedBrickContainer = (brick: Brick, key: number, index: number, row: any = 0) => {
     let color = "";
@@ -327,13 +327,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         key={key}
         style={{ transformOrigin: "0 0 0" }}
         timeout={index * 150}
-        >
+      >
         <div className="main-brick-container">
           <Box className={`brick-container ${color}`}>
             <div
               className={`absolute-container brick-row-${row} ${
                 brick.expanded ? "brick-hover" : ""
-              }`}
+                }`}
               onMouseEnter={() => this.handleMouseHover(key)}
               onMouseLeave={() => this.handleMouseLeave(key)}
             >
@@ -352,8 +352,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                       onDelete={(brickId) => this.handleDeleteOpen(brickId)}
                     />
                   ) : (
-                    <ShortBrickDecsiption color={color} brick={brick} />
-                  )}
+                      <ShortBrickDecsiption color={color} brick={brick} />
+                    )}
                 </Grid>
               </Grid>
             </div>
@@ -424,28 +424,28 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       }
     }
     return (
-		<div className="sort-box">
-		 	<div className="filter-container sort-by-box">
-				<div className="sort-header">INBOX</div>
-			</div>
-			<div className="filter-container indexes-box">
-				<div className={"index-box " + (this.state.filters.viewAll ? "active" : "")}
-					onClick={() => this.showAll()}>
-					View All
+      <div className="sort-box">
+        <div className="filter-container sort-by-box">
+          <div className="sort-header">INBOX</div>
+        </div>
+        <div className="filter-container indexes-box">
+          <div className={"index-box " + (this.state.filters.viewAll ? "active" : "")}
+            onClick={() => this.showAll()}>
+            View All
 					<div className="right-index">{this.state.rawBricks.length}</div>
-				</div>
-				<div className={"index-box " + (this.state.filters.buildAll ? "active" : "")}
-					onClick={() => this.showBuildAll()}>
-					Build
+          </div>
+          <div className={"index-box " + (this.state.filters.buildAll ? "active" : "")}
+            onClick={() => this.showBuildAll()}>
+            Build
 					<div className="right-index">{build}</div>
-				</div>
-				<div className={ "index-box " + (this.state.filters.editAll ? "active" : "")}
-					onClick={() => this.showEditAll()}>
-					Edit
+          </div>
+          <div className={"index-box " + (this.state.filters.editAll ? "active" : "")}
+            onClick={() => this.showEditAll()}>
+            Edit
 					<div className="right-index">{edit}</div>
-				</div>
-			</div>
-		</div>
+          </div>
+        </div>
+      </div>
     );
   };
 
@@ -491,8 +491,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeInboxFilters(filters);
     filters.draft = !filters.draft;
     const bricks = this.filterBricks(filters);
-	this.setState({ ...this.state, filters, finalBricks: bricks });
-	this.filterClear()
+    this.setState({ ...this.state, filters, finalBricks: bricks });
+    this.filterClear()
   }
 
   toggleBuildFilter() {
@@ -555,7 +555,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         });
       }, 1400);
     }).catch((error) => {
-      this.setState({...this.state, failedRequest: true})
+      this.setState({ ...this.state, failedRequest: true })
     });
   }
 
@@ -590,80 +590,80 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     }
 
     return (
-		<div className="sort-box">
-		 	<div className="filter-container sort-by-box">
-				<div className="sort-header">SORT BY</div>
-				<RadioGroup className="sort-group"
-					aria-label="SortBy"
-					name="SortBy"
-					value={this.state.sortBy}
-					onChange={this.handleSortChange}>
-					<Grid container direction="row">
-						<Grid item xs={4}>
-							<FormControlLabel
-								value={SortBy.Status}
-								control={<Radio className="sortBy" />}
-								label="Status"/>
-						</Grid>
-						<Grid item xs={4}>
-							<FormControlLabel
-								value={SortBy.Popularity}
-								control={<Radio className="sortBy" />}
-								label="Popularity"/>
-						</Grid>
-						<Grid item xs={4}>
-							<FormControlLabel
-								value={SortBy.Date}
-								control={<Radio className="sortBy" />}
-								label="Last Edit"/>
-						</Grid>
-					</Grid>
-				</RadioGroup>
-			</div>
-			<div className="filter-header">
-				<span>Filter</span>
-				<button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up")) }
-					onClick={() => {this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expandFilter())}}>
-				</button>
-			</div>
-			{this.state.filterExpanded === true ? (
-		   	<div className="filter-container subject-indexes-box">
-					<div className="index-box color1">
-						<FormControlLabel
-							checked={this.state.filters.draft}
-							onClick={() => this.toggleDraftFilter()}
-							control={<Radio className={"filter-radio custom-color"} />}
-							label="Draft"/>
-						<div className="right-index">{draft}</div>
-					</div>
-					<div className="index-box color2">
-						<FormControlLabel
-							checked={this.state.filters.review}
-							onClick={() => this.toggleReviewFilter()}
-							control={<Radio className={"filter-radio custom-color"} />}
-							label="Submitted for Review"/>
-						<div className="right-index">{review}</div>
-					</div>
-					<div className="index-box color3">
-						<FormControlLabel
-							checked={this.state.filters.build}
-							onClick={() => this.toggleBuildFilter()}
-							control={<Radio className={"filter-radio custom-color"} />}
-							label="Build in Progress"/>
-						<div className="right-index">{build}</div>
-					</div>
-					<div className="index-box color4">
-						<FormControlLabel
-							checked={this.state.filters.publish}
-							onClick={() => this.togglePublishFilter()}
-							control={<Radio className={"filter-radio custom-color"} />}
-							label="Published"/>
-						<div className="right-index">{publish}</div>
-					</div>
-				</div>
-			) : (
-			""
-			)}
+      <div className="sort-box">
+        <div className="filter-container sort-by-box">
+          <div className="sort-header">SORT BY</div>
+          <RadioGroup className="sort-group"
+            aria-label="SortBy"
+            name="SortBy"
+            value={this.state.sortBy}
+            onChange={this.handleSortChange}>
+            <Grid container direction="row">
+              <Grid item xs={4}>
+                <FormControlLabel
+                  value={SortBy.Status}
+                  control={<Radio className="sortBy" />}
+                  label="Status" />
+              </Grid>
+              <Grid item xs={4}>
+                <FormControlLabel
+                  value={SortBy.Popularity}
+                  control={<Radio className="sortBy" />}
+                  label="Popularity" />
+              </Grid>
+              <Grid item xs={4}>
+                <FormControlLabel
+                  value={SortBy.Date}
+                  control={<Radio className="sortBy" />}
+                  label="Last Edit" />
+              </Grid>
+            </Grid>
+          </RadioGroup>
+        </div>
+        <div className="filter-header">
+          <span>Filter</span>
+          <button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up"))}
+            onClick={() => { this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expandFilter()) }}>
+          </button>
+        </div>
+        {this.state.filterExpanded === true ? (
+          <div className="filter-container subject-indexes-box">
+            <div className="index-box color1">
+              <FormControlLabel
+                checked={this.state.filters.draft}
+                onClick={() => this.toggleDraftFilter()}
+                control={<Radio className={"filter-radio custom-color"} />}
+                label="Draft" />
+              <div className="right-index">{draft}</div>
+            </div>
+            <div className="index-box color2">
+              <FormControlLabel
+                checked={this.state.filters.review}
+                onClick={() => this.toggleReviewFilter()}
+                control={<Radio className={"filter-radio custom-color"} />}
+                label="Submitted for Review" />
+              <div className="right-index">{review}</div>
+            </div>
+            <div className="index-box color3">
+              <FormControlLabel
+                checked={this.state.filters.build}
+                onClick={() => this.toggleBuildFilter()}
+                control={<Radio className={"filter-radio custom-color"} />}
+                label="Build in Progress" />
+              <div className="right-index">{build}</div>
+            </div>
+            <div className="index-box color4">
+              <FormControlLabel
+                checked={this.state.filters.publish}
+                onClick={() => this.togglePublishFilter()}
+                control={<Radio className={"filter-radio custom-color"} />}
+                label="Published" />
+              <div className="right-index">{publish}</div>
+            </div>
+          </div>
+        ) : (
+            ""
+          )}
       </div>
     );
   };
@@ -769,16 +769,16 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                 onClick={() => this.moveAllBack()}
               />
             ) : (
-              ""
-            )}
+                ""
+              )}
             {showNext ? (
               <ExpandMoreIcon
                 className={"next-button " + (showNext ? "active" : "")}
                 onClick={() => this.moveAllNext()}
               />
             ) : (
-              ""
-            )}
+                ""
+              )}
           </div>
         </Grid>
       </Grid>
@@ -796,142 +796,134 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             showDropdown={() => this.showDropdown()}
             showNotifications={() => this.showNotifications()}
           />
-          <Grid container direction="row" className="sorted-row">
-            <Grid container item xs={3} className="sort-and-filter-container">
-							{this.renderIndexesBox()}
-							{this.renderSortAndFilterBox()}
-            </Grid>
-            <Grid item xs={9} className="brick-row-container">
-                <div className="brick-row-title">{this.renderTitle()}</div>
-                <div className="bricks-list-container">
-                  <Grid container direction="row" className="bricks-list">
-                    {this.renderSortedBricks()}
-                  </Grid>
-                </div>
-                {this.renderPagination()}
-            </Grid>
-          </Grid>
-        </div>
-        <Menu
-          className="menu-dropdown"
-          keepMounted
-          open={this.state.dropdownShown}
-          onClose={() => this.hideDropdown()}
-        >
-          <MenuItem
-            className="first-item menu-item"
-            onClick={() => this.props.history.push("/play/dashboard")}
-          >
-            View All Bricks
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon"
-                  alt=""
-                  src="/images/main-page/glasses-white.png"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-          <MenuItem className="menu-item" onClick={() => this.creatingBrick()}>
-            Start Building
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon"
-                  alt=""
-                  src="/images/main-page/create-white.png"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-          {this.props.user.roles.some(
-            (role) => role.roleId === UserType.Admin
-          ) ? (
+          <Menu
+            className="menu-dropdown"
+            keepMounted
+            open={this.state.dropdownShown}
+            onClose={() => this.hideDropdown()}>
             <MenuItem
-              className="menu-item"
-              onClick={() => this.props.history.push("/users")}
-            >
-              Manage Users
-              <Grid
+              className="first-item menu-item"
+              onClick={() => this.props.history.push("/play/dashboard")}>
+              View All Bricks
+            <Grid
                 container
                 className="menu-icon-container"
                 justify="center"
-                alignContent="center"
-              >
+                alignContent="center">
                 <div>
                   <img
-                    className="manage-users-icon svg-icon"
+                    className="menu-icon"
                     alt=""
-                    src="/images/users.svg"
+                    src="/images/main-page/glasses-white.png"
                   />
                 </div>
               </Grid>
             </MenuItem>
-          ) : (
-            ""
-          )}
-          <MenuItem
-            className="view-profile menu-item"
-            onClick={() => this.props.history.push("/user-profile")}
-          >
-            View Profile
+            <MenuItem className="menu-item" onClick={() => this.creatingBrick()}>
+              Start Building
             <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon svg-icon user-icon"
-                  alt=""
-                  src="/images/user.svg"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-          <MenuItem
-            className="menu-item"
-            onClick={() => this.handleLogoutOpen()}
-          >
-            Logout
+                container
+                className="menu-icon-container"
+                justify="center"
+                alignContent="center">
+                <div>
+                  <img
+                    className="menu-icon"
+                    alt=""
+                    src="/images/main-page/create-white.png"
+                  />
+                </div>
+              </Grid>
+            </MenuItem>
+            {this.props.user.roles.some(
+              (role) => role.roleId === UserType.Admin
+            ) ? (
+                <MenuItem
+                  className="menu-item"
+                  onClick={() => this.props.history.push("/users")}>
+                  Manage Users
+                  <Grid
+                    container
+                    className="menu-icon-container"
+                    justify="center"
+                    alignContent="center"
+                  >
+                    <div>
+                      <img
+                        className="manage-users-icon svg-icon"
+                        alt=""
+                        src="/images/users.svg"
+                      />
+                    </div>
+                  </Grid>
+                </MenuItem>
+              ) : (
+                ""
+              )}
+            <MenuItem
+              className="view-profile menu-item"
+              onClick={() => this.props.history.push("/user-profile")}>
+              View Profile
             <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon svg-icon logout-icon"
-                  alt=""
-                  src="/images/log-out.svg"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-        </Menu>
-        <NotificationPanel
-          shown={this.state.notificationsShown}
-          handleClose={() => this.hideNotifications()}
-          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
-        />
-        <LogoutDialog
-          history={this.props.history}
-          isOpen={this.state.logoutDialogOpen}
-          close={() => this.handleLogoutClose()}
-        />
+                container
+                className="menu-icon-container"
+                justify="center"
+                alignContent="center">
+                <div>
+                  <img
+                    className="menu-icon svg-icon user-icon"
+                    alt=""
+                    src="/images/user.svg"
+                  />
+                </div>
+              </Grid>
+            </MenuItem>
+            <MenuItem
+              className="menu-item"
+              onClick={() => this.handleLogoutOpen()}>
+              Logout
+            <Grid
+                container
+                className="menu-icon-container"
+                justify="center"
+                alignContent="center">
+                <div>
+                  <img
+                    className="menu-icon svg-icon logout-icon"
+                    alt=""
+                    src="/images/log-out.svg"
+                  />
+                </div>
+              </Grid>
+            </MenuItem>
+          </Menu>
+          <NotificationPanel
+            shown={this.state.notificationsShown}
+            handleClose={() => this.hideNotifications()}
+            anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+          />
+          <LogoutDialog
+            history={this.props.history}
+            isOpen={this.state.logoutDialogOpen}
+            close={() => this.handleLogoutClose()}
+          />
+        </div>
+        <Grid container direction="row" className="sorted-row">
+          <Grid container item xs={3} className="sort-and-filter-container">
+            {this.renderIndexesBox()}
+            {this.renderSortAndFilterBox()}
+          </Grid>
+          <Grid item xs={9} className="brick-row-container">
+            <div className="brick-row-title">{this.renderTitle()}</div>
+            <div className="bricks-list-container">
+              <Grid container direction="row" className="bricks-list">
+                {this.renderSortedBricks()}
+              </Grid>
+            </div>
+            {this.renderPagination()}
+          </Grid>
+        </Grid>
+
         <DeleteBrickDialog
           isOpen={this.state.deleteDialogOpen}
           brickId={this.state.deleteBrickId}
@@ -940,7 +932,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         />
         <FailedRequestDialog
           isOpen={this.state.failedRequest}
-          close={() => this.setState({...this.state, failedRequest: false})}
+          close={() => this.setState({ ...this.state, failedRequest: false })}
         />
       </div>
     );

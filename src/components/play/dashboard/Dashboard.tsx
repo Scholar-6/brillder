@@ -1,4 +1,4 @@
-/* TODO: KEEP THIS FILE for when clicking 'view all', so copy code from src/build/bricksListPage.tsx 
+/* TODO: KEEP THIS FILE for when clicking 'view all', so copy code from src/build/bricksListPage.tsx
 i.e. add back button on menu and row along top of 'my bricks'  6/7/2020 */
 import "./Dashboard.scss";
 import React, { Component } from "react";
@@ -600,95 +600,34 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             showDropdown={() => this.showDropdown()}
             showNotifications={(evt: any) => this.showNotifications(evt)}
           />
-          <Hidden only={["xs"]}>
-            <Grid container direction="row" className="sorted-row">
-              <Grid container item xs={3} className="sort-and-filter-container">
-                {this.renderSortAndFilterBox()}
-              </Grid>
-              <Grid item xs={9} className="brick-row-container">
-                <div className="brick-row-title">{this.renderTitle()}</div>
-                <div className="bricks-list-container">
-                  <Grid container direction="row">
-                    {this.renderSortedBricks()}
-                  </Grid>
-                </div>
-                {this.renderPagination()}
-              </Grid>
-            </Grid>
-          </Hidden>
-          <Hidden only={["sm", "md", "lg", "xl"]}>
-            <Grid container direction="row" className="sorted-row mobile-sorted-row">
-              <Grid container item xs={3} className="sort-and-filter-container">
-                {this.renderSortAndFilterBox()}
-              </Grid>
-              <Grid item xs={9} className="brick-row-container">
-                <div
-                  className="brick-row-title"
-                  onClick={() =>
-                    this.props.history.push(`/play/dashboard/${Category.New}`)
-                  }
-                >
-                  New >
-                </div>
-                <div className="bricks-list-container">
-                  <Grid container direction="row">
-                    {this.renderSortedBricks()}
-                  </Grid>
-                </div>
-                {this.renderPagination()}
-                <div
-                  className="brick-row-title"
-                >
-                  Suggested >
-                </div>
-                <div
-                  className="brick-row-title"
-                >
-                  Top in Humanities >
-                </div>
-                <div
-                  className="brick-row-title"
-                >
-                  Top in Stem >
-                </div>
-              </Grid>
-            </Grid>
-            <div className="mobile-scroll-bricks">
-              {this.renderMobileBricks()}
-            </div>
-          </Hidden>
-        </div>
-        <Menu
-          className="menu-dropdown"
-          keepMounted
-          open={this.state.dropdownShown}
-          onClose={() => this.hideDropdown()}
-        >
-          <MenuItem
-            className="first-item menu-item"
-            onClick={() => this.creatingBrick()}
-          >
-            Start Building
+          <Menu
+            className="menu-dropdown"
+            keepMounted
+            open={this.state.dropdownShown}
+            onClose={() => this.hideDropdown()}>
+            <MenuItem
+              className="first-item menu-item"
+              onClick={() => this.creatingBrick()}>
+              Start Building
             <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon"
-                  alt=""
-                  src="/images/main-page/create-white.png"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-          <MenuItem
-            className="menu-item"
-            onClick={() => this.props.history.push("/back-to-work")}
-          >
-            Back To Work
+                container
+                className="menu-icon-container"
+                justify="center"
+                alignContent="center"
+              >
+                <div>
+                  <img
+                    className="menu-icon"
+                    alt=""
+                    src="/images/main-page/create-white.png"
+                  />
+                </div>
+              </Grid>
+            </MenuItem>
+            <MenuItem
+              className="menu-item"
+              onClick={() => this.props.history.push("/back-to-work")}>
+              Back To Work
             <Grid
               container
               className="menu-icon-container"
@@ -735,52 +674,101 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             onClick={() => this.props.history.push("/user-profile")}
           >
             View Profile
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon svg-icon user-icon"
-                  alt=""
-                  src="/images/user.svg"
-                />
-              </div>
-            </Grid>
           </MenuItem>
-          <MenuItem
-            className="menu-item"
-            onClick={() => this.handleLogoutOpen()}
-          >
-            Logout
+          {this.props.user.roles.some(
+              (role) => role.roleId === UserType.Admin
+            ) ? (
+                <MenuItem
+                  className="menu-item"
+                  onClick={() => this.props.history.push("/users")}>
+                  Manage Users
+                  <Grid
+                    container
+                    className="menu-icon-container"
+                    justify="center"
+                    alignContent="center"
+                  >
+                    <div>
+                      <img
+                        className="manage-users-icon svg-icon"
+                        alt=""
+                        src="/images/users.svg"
+                      />
+                    </div>
+                  </Grid>
+                </MenuItem>
+              ) : (
+                ""
+              )}
+            <MenuItem
+              className="view-profile menu-item"
+              onClick={() => this.props.history.push("/user-profile")}>
+              View Profile
             <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon svg-icon logout-icon"
-                  alt=""
-                  src="/images/log-out.svg"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-        </Menu>
-        <NotificationPanel
-          shown={this.state.notificationsShown}
-          handleClose={() => this.hideNotifications()}
-          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
-        />
-        <LogoutDialog
-          history={this.props.history}
-          isOpen={this.state.logoutDialogOpen}
-          close={() => this.handleLogoutClose()}
-        />
+                container
+                className="menu-icon-container"
+                justify="center"
+                alignContent="center"
+              >
+                <div>
+                  <img
+                    className="menu-icon svg-icon user-icon"
+                    alt=""
+                    src="/images/user.svg"
+                  />
+                </div>
+              </Grid>
+            </MenuItem>
+            <MenuItem
+              className="menu-item"
+              onClick={() => this.handleLogoutOpen()}>
+              Logout
+            <Grid
+                container
+                className="menu-icon-container"
+                justify="center"
+                alignContent="center"
+              >
+                <div>
+                  <img
+                    className="menu-icon svg-icon logout-icon"
+                    alt=""
+                    src="/images/log-out.svg"
+                  />
+                </div>
+              </Grid>
+            </MenuItem>
+          </Menu>
+          <NotificationPanel
+            shown={this.state.notificationsShown}
+            handleClose={() => this.hideNotifications()}
+            anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+          />
+          <LogoutDialog
+            history={this.props.history}
+            isOpen={this.state.logoutDialogOpen}
+            close={() => this.handleLogoutClose()}
+          />
+        </div>
+        <Hidden only={["sm", "md", "lg", "xl"]}>
+          <div className="mobile-scroll-bricks">
+            {this.renderMobileBricks()}
+          </div>
+        </Hidden>
+        <Grid container direction="row" className="sorted-row">
+          <Grid container item xs={3} className="sort-and-filter-container">
+            {this.renderSortAndFilterBox()}
+          </Grid>
+          <Grid item xs={9} className="brick-row-container">
+            <div className="brick-row-title">{this.renderTitle()}</div>
+            <div className="bricks-list-container">
+              <Grid container direction="row">
+                {this.renderSortedBricks()}
+              </Grid>
+            </div>
+            {this.renderPagination()}
+          </Grid>
+        </Grid>
         <DeleteBrickDialog
           isOpen={this.state.deleteDialogOpen}
           brickId={this.state.deleteBrickId}
