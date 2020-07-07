@@ -6,7 +6,7 @@ $colors: (
   'input-gray': #fafafb,
   'gray': #b0b0ad,
   'lighter-blue': #304775,
-  'light-blue': #193266,
+	'light-blue': #193266,
   'light-blue2': #193366,
   'blue': #0681db,
   'white-blue': #8ad6e8,
@@ -27,8 +27,6 @@ $black-blue: #0b3b7f;
 $tab-gray: #e5e8ed;
 $input-gray: #fafafb;
 $lighter-blue: #304775;
-$light-blue: #193266;
-$light-blue2: #193366;
 $blue: #0681db;
 $white-blue: #8ad6e8;
 $button-box: #e1e5eb;
@@ -47,7 +45,7 @@ $right: 1.4vw;
 $progress-height: 60vh;
 
 $mobile-col-radius: 8vw;
-$mobile-col-color: $light-blue;
+$mobile-col-color: var(--light-blue);
 $mobile-background: var(--theme-dark-blue);
 $mobile-arrow-color: #96a0b6;
 

@@ -17,7 +17,7 @@
     width: calc(25% - 1vw);
     margin-right: 1vw;
     border-top-right-radius: $main-panel-radius;
-    background: $light-blue;
+    background: var(--light-blue);
     flex-wrap: initial;
     flex-direction: column;
     position: relative;
