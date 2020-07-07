@@ -25,11 +25,9 @@
 }
 
 input,
-input,
 select,
 textarea {
   -webkit-appearance: none;
-  font-family: $font-family-regular;
   &::placeholder,
   &:-ms-input-placeholder,
   &::-ms-input-placeholder {
