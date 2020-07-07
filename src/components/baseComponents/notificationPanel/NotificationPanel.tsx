@@ -59,25 +59,25 @@ class NotificationPanel extends Component<NotificationPanelProps> {
           <CardContent>
             <List>
               {(this.props.notifications &&
-              this.props.notifications.length != 0) ?
-              this.props.notifications.map((notification) => (
-                <ListItem key={notification.id}>
-                  <ListItemIcon>
-                    <SvgIcon fontSize="large">
-                      <svg>
-                        <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
-                      </svg>
-                    </SvgIcon>
-                  </ListItemIcon>
-                  <ListItemText primary={notification.title} secondary={notification.text} />
-                  <div>{moment(notification.timestamp).fromNow()}</div>
-                </ListItem>
-              )) :
-              (
-                <ListItem>
-                  <ListItemText primary="Looks like you don't have any notifications..." />
-                </ListItem>
-              )
+                this.props.notifications.length != 0) ?
+                this.props.notifications.map((notification) => (
+                  <ListItem key={notification.id}>
+                    <ListItemIcon>
+                      <SvgIcon fontSize="large">
+                        <svg>
+                          <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
+                        </svg>
+                      </SvgIcon>
+                    </ListItemIcon>
+                    <ListItemText primary={notification.title} secondary={notification.text} />
+                    <div>{moment(notification.timestamp).fromNow()}</div>
+                  </ListItem>
+                )) :
+                (
+                  <ListItem>
+                    <ListItemText primary="Looks like you don't have any notifications..." />
+                  </ListItem>
+                )
               }
             </List>
           </CardContent>
