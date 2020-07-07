@@ -76,6 +76,9 @@ input {
   }
 }
 
+
+/* Material UI Overwrite */
+
 .MuiAutocomplete-root {
   width: 100%;
   margin: 0 !important;
@@ -109,8 +112,6 @@ input {
     }
   }
 }
-
-/* Material UI Overwrite */
 
 .MuiButton-label,
 .MuiTypography-body1 {
