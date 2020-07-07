@@ -79,12 +79,10 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
-          onClose={() => this.hideDropdown()}
-        >
+          onClose={() => this.hideDropdown()}>
           <MenuItem
             className="first-item menu-item"
-            onClick={() => this.props.history.push("/play/dashboard")}
-          >
+            onClick={() => this.props.history.push("/play/dashboard")}>
             View All Bricks
             <Grid
               container
