@@ -450,25 +450,17 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 						onMouseEnter={() => this.yourBricksMouseHover(key)}
 						onMouseLeave={() => this.yourBricksMouseLeave(key)}
 					>
-						<Grid
-							container
-							direction="row"
-							style={{ padding: 0, position: "relative" }}
-						>
-							<Grid item xs={brick.expanded ? 12 : 11}>
-								{brick.expanded ? (
-									<ExpandedBrickDescription
-										isAdmin={isAdmin}
-										color={color}
-										brick={brick}
-										move={(brickId) => this.move(brickId)}
-										onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-									/>
-								) : (
-										<ShortBrickDescription brick={brick} />
-									)}
-							</Grid>
-						</Grid>
+            {brick.expanded ? (
+              <ExpandedBrickDescription
+                isAdmin={isAdmin}
+                color={color}
+                brick={brick}
+                move={(brickId) => this.move(brickId)}
+                onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+              />
+            ) : (
+                <ShortBrickDescription brick={brick} />
+              )}
 					</div>
 				</Box>
 			</div>
@@ -498,25 +490,17 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             onMouseEnter={() => this.handleMouseHover(key)}
             onMouseLeave={() => this.handleMouseLeave(key)}
           >
-            <Grid
-              container
-              direction="row"
-              style={{ padding: 0, position: "relative" }}
-            >
-              <Grid item xs={brick.expanded ? 12 : 11}>
-                {brick.expanded ? (
-                  <ExpandedBrickDescription
-                    isAdmin={isAdmin}
-                    color={color}
-                    brick={brick}
-                    move={(brickId) => this.move(brickId)}
-                    onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-                  />
-                ) : (
-                  <ShortBrickDescription brick={brick} color={color} />
-                )}
-              </Grid>
-            </Grid>
+            {brick.expanded ? (
+              <ExpandedBrickDescription
+                isAdmin={isAdmin}
+                color={color}
+                brick={brick}
+                move={(brickId) => this.move(brickId)}
+                onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+              />
+            ) : (
+              <ShortBrickDescription brick={brick} color={color} />
+            )}
           </div>
         </Box>
       </div>
@@ -717,7 +701,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 alignContent="center"
               >
                 <div>
-                  <img  
+                  <img
                     className="menu-icon"
                     alt=""
                     src="/images/main-page/create-white.png"
@@ -844,14 +828,12 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               </div>
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
-              <Hidden only={["xs"]}>
-                <Grid container direction="row">
-	 							  {this.renderYourBrickRow()}
-  							</Grid>
-              </Hidden>
-              <Grid container direction="row">
+              <div className="bricks-list">
+                <Hidden only={["xs"]}>
+                    {this.renderYourBrickRow()}
+                </Hidden>
                 {this.renderSortedBricks()}
-              </Grid>
+              </div>
             </div>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title">Suggested ></div>
