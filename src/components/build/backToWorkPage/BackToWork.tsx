@@ -27,6 +27,8 @@ import ShortBrickDecsiption from "components/baseComponents/ShortBrickDescriptio
 import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { ReduxCombinedState } from "redux/reducers";
+import ReactDOM from "react-dom";
+import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -69,6 +71,7 @@ interface BackToWorkState {
   deleteBrickId: number;
   filters: Filters;
   dropdownShown: boolean;
+  notificationsShown: boolean;
   failedRequest: boolean;
   shown: boolean;
   filterExpanded: boolean;
@@ -84,6 +87,8 @@ enum SortBy {
 }
 
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
+  pageHeader: React.RefObject<any>;
+
   constructor(props: BackToWorkProps) {
     super(props);
     this.state = {
@@ -111,6 +116,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       searchString: "",
       isSearching: false,
       dropdownShown: false,
+      notificationsShown: false,
       failedRequest: false,
 	    shown: true,
     	filterExpanded: true,
@@ -148,6 +154,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         this.setState({...this.state, failedRequest: true})
       });
     }
+
+    this.pageHeader = React.createRef();
   }
 
   delete(brickId: number) {
@@ -263,6 +271,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   hideDropdown() {
     this.setState({ ...this.state, dropdownShown: false });
+  }
+
+  showNotifications() {
+    this.setState({ ...this.state, notificationsShown: true });
+  }
+
+  hideNotifications() {
+    this.setState({ ...this.state, notificationsShown: false });
   }
 
 	//region Hide / Expand / Clear Filter
@@ -773,11 +789,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return (
       <div className="back-to-work-page bricks-list-page">
         <div className="upper-part">
-          <PageHeader
+          <PageHeader ref={this.pageHeader}
             searchPlaceholder="Search Ongoing Projects & Published Bricks…"
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
+            showNotifications={() => this.showNotifications()}
           />
           <Grid container direction="row" className="sorted-row">
             <Grid container item xs={3} className="sort-and-filter-container">
@@ -905,6 +922,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             </Grid>
           </MenuItem>
         </Menu>
+        <NotificationPanel
+          shown={this.state.notificationsShown}
+          handleClose={() => this.hideNotifications()}
+          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+        />
         <LogoutDialog
           history={this.props.history}
           isOpen={this.state.logoutDialogOpen}
