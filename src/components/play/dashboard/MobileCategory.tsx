@@ -377,25 +377,17 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             onMouseEnter={() => this.handleMouseHover(key)}
             onMouseLeave={() => this.handleMouseLeave(key)}
           >
-            <Grid
-              container
-              direction="row"
-              style={{ padding: 0, position: "relative" }}
-            >
-              <Grid item xs={brick.expanded ? 12 : 11}>
-                {brick.expanded ? (
-                  <ExpandedBrickDescription
-                    isAdmin={isAdmin}
-                    color={color}
-                    brick={brick}
-                    move={(brickId) => this.move(brickId)}
-                    onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-                  />
-                ) : (
-                    <ShortBrickDescription brick={brick} color={color} />
-                  )}
-              </Grid>
-            </Grid>
+            {brick.expanded ? (
+              <ExpandedBrickDescription
+                isAdmin={isAdmin}
+                color={color}
+                brick={brick}
+                move={(brickId) => this.move(brickId)}
+                onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+              />
+            ) : (
+                <ShortBrickDescription brick={brick} color={color} />
+              )}
           </div>
         </Box>
       </div>
