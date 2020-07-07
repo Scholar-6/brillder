@@ -54,7 +54,7 @@ class WordHighlighting extends CompComponent<
             attempt.marks += markIncrement;
           }
         }
-      } else if (word.checked === false && attempt.answer.indexOf(index) === -1) {
+      } else if (!word.checked && attempt.answer.indexOf(index) === -1) {
       } else {
         attempt.correct = false;
       }
