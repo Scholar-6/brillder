@@ -109,7 +109,10 @@ const HintComponent: React.FC<HintProps> = ({
           <DocumentWirisCKEditor
             disabled={locked}
             data={state.value}
-            toolbar={['bold', 'italic', 'fontColor', 'mathType', 'chemType', 'insertTable']}
+            toolbar={[
+              'bold', 'italic', 'fontColor', 'superscript', 'subscript',
+              'mathType', 'chemType', 'insertTable'
+            ]}
             placeholder="Enter Hint..."
             validationRequired={validationRequired}
             onBlur={() => save()}
@@ -139,7 +142,9 @@ const HintComponent: React.FC<HintProps> = ({
           <DocumentWirisCKEditor
             disabled={locked}
             data={state.list[i]}
-            toolbar={['bold', 'italic', 'fontColor', 'mathType', 'chemType',]}
+            toolbar={[
+              'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'mathType', 'chemType'
+            ]}
             placeholder="Enter Hint"
             validationRequired={validationRequired}
             onBlur={() => save()}
