@@ -628,14 +628,12 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               ? this.state.bricks.length
               : this.state.sortedIndex + pageSize}
             <span className="gray">
-              {" "}
               &nbsp;|&nbsp; {this.state.bricks.length}
             </span>
           </div>
           <div>
             {(this.state.sortedIndex + pageSize) / pageSize}
             <span className="gray">
-              {" "}
               &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / pageSize)}
             </span>
           </div>
