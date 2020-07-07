@@ -750,38 +750,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             ) ? (
               <MenuItem
                 className="menu-item"
-                onClick={() => this.props.history.push("/users")}
-              >
-                Manage Users
-                <Grid
-                  container
-                  className="menu-icon-container"
-                  justify="center"
-                  alignContent="center"
-                >
-                  <div>
-                    <img
-                      className="manage-users-icon svg-icon"
-                      alt=""
-                      src="/images/users.svg"
-                    />
-                  </div>
-                </Grid>
-              </MenuItem>
-            ) : (
-              ""
-            )}
-            <MenuItem
-              className="view-profile menu-item"
-              onClick={() => history.push("/user-profile")}
-            >
-              View Profile
-            </MenuItem>
-            {this.props.user.roles.some(
-              (role) => role.roleId === UserType.Admin
-            ) ? (
-              <MenuItem
-                className="menu-item"
                 onClick={() => history.push("/users")}
               >
                 Manage Users
