@@ -6,6 +6,8 @@ import { Grid } from "@material-ui/core";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { User, UserType } from "model/user";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
+import ReactDOM from "react-dom";
+import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 
 interface UserMenuProps {
   history: any;
@@ -15,17 +17,23 @@ interface UserMenuProps {
 
 interface UserMenuState {
   dropdownShown: boolean;
+  notificationsShown: boolean;
   logoutOpen: boolean;
 }
 
 class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
+  pageHeader: React.RefObject<any>;
+
   constructor(props: UserMenuProps) {
     super(props);
 
     this.state = {
       dropdownShown: false,
+      notificationsShown: false,
       logoutOpen: false,
     };
+
+    this.pageHeader = React.createRef();
   }
 
   showDropdown() {
@@ -34,6 +42,14 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
 
   hideDropdown() {
     this.setState({ ...this.state, dropdownShown: false });
+  }
+
+  showNotifications() {
+    this.setState({ ...this.state, notificationsShown: true });
+  }
+
+  hideNotifications() {
+    this.setState({ ...this.state, notificationsShown: false });
   }
 
   creatingBrick() {
@@ -52,11 +68,12 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
   render() {
     return (
       <div className="upper-part">
-        <PageHeader
+        <PageHeader ref={this.pageHeader}
           searchPlaceholder="Search by Name, Email or Subject"
           search={() => {}}
           searching={(v: string) => {}}
           showDropdown={() => this.showDropdown()}
+          showNotifications={() => this.showNotifications()}
         />
         <Menu
           className="menu-dropdown"
@@ -149,6 +166,11 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
             </Grid>
           </MenuItem>
         </Menu>
+        <NotificationPanel
+          shown={this.state.notificationsShown}
+          handleClose={() => this.hideNotifications()}
+          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+        />
         <LogoutDialog
           isOpen={this.state.logoutOpen}
           close={this.handleLogoutClose}

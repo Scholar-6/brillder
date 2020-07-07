@@ -21,15 +21,13 @@ describe('user actions', () => {
             subjects: [],
             status: UserStatus.Active
         };
-        const expectedActions = [
-            { type: types.GET_USER_SUCCESS, user: mockUser }
-        ];
+        const expectedAction = { type: types.GET_USER_SUCCESS, user: mockUser };
 
         mockAxios.get.mockResolvedValue({ data: mockUser });
         
         await store.dispatch(user.getUser());
 
-        expect(store.getActions()).toStrictEqual(expectedActions);
+        expect(store.getActions()).toContainEqual(expectedAction);
         expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
 })

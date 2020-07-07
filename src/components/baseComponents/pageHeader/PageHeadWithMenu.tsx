@@ -7,6 +7,9 @@ import PageHeader from "./PageHeader";
 import { User, UserType } from "model/user";
 import LogoutDialog from "../logoutDialog/LogoutDialog";
 
+import ReactDOM from 'react-dom';
+import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
+
 interface HeaderMenuProps {
   history: any;
   user: User;
@@ -14,17 +17,23 @@ interface HeaderMenuProps {
 
 interface HeaderMenuState {
   dropdownShown: boolean;
+  notificationsShown: boolean;
   logoutOpen: boolean;
 }
 
 class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
+  pageHeader: React.RefObject<any>;
+
   constructor(props: HeaderMenuProps) {
     super(props);
 
     this.state = {
       dropdownShown: false,
+      notificationsShown: false,
       logoutOpen: false,
     };
+
+    this.pageHeader = React.createRef();
   }
 
   showDropdown() {
@@ -33,6 +42,14 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
 
   hideDropdown() {
     this.setState({ ...this.state, dropdownShown: false });
+  }
+
+  showNotifications() {
+    this.setState({ ...this.state, notificationsShown: true });
+  }
+
+  hideNotifications() {
+    this.setState({ ...this.state, notificationsShown: false });
   }
 
   creatingBrick() {
@@ -51,11 +68,12 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
   render() {
     return (
       <div className="upper-part">
-        <PageHeader
+        <PageHeader ref={this.pageHeader}
           searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
           search={() => {}}
           searching={(v: string) => {}}
           showDropdown={() => this.showDropdown()}
+          showNotifications={() => this.showNotifications()}
         />
         <Menu
           className="menu-dropdown"
@@ -175,6 +193,11 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
             </Grid>
           </MenuItem>
         </Menu>
+        <NotificationPanel
+          shown={this.state.notificationsShown}
+          handleClose={() => this.hideNotifications()}
+          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+        />
         <LogoutDialog
           isOpen={this.state.logoutOpen}
           close={() => this.handleLogoutClose()}
