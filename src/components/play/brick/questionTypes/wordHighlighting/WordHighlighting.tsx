@@ -125,6 +125,7 @@ class WordHighlighting extends CompComponent<
 
     return (
       <div className="word-highlighting-play">
+        <p className="help-text">Choose more than one option.</p>
         <div className="words-container">
           {component.words.map((word: any, index: number) => (
             this.renderWord(word, index)
