@@ -354,11 +354,11 @@
       .main-brick-container {
         position: relative;
         padding-left: 0.8vw;
-        @include tabletL {
-          width: 33.33%;
-        }
         @include phone_and_tabletP {
           width: 100%;
+        }
+        @include tabletP {
+          width: 33.33%;
         }
         .brick-container {
           position: relative;
