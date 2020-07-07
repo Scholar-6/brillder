@@ -94,7 +94,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
     }
 
     return (
-      <Grid container direction="row" className={!searchVisible ? "page-header" : "page-header active"}>
+      <div className={!searchVisible ? "page-header" : "page-header active"}>
         <Hidden only={['sm', 'md', 'lg', 'xl',]}>
           <div className="logout-container">
 
@@ -172,7 +172,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
             </Grid>
           </Grid >
         </Hidden>
-      </Grid >
+      </div>
     );
   }
 }

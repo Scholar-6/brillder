@@ -6,7 +6,7 @@
     background-color: transparent;
     @extend %flexCenter;
     @include phone_and_tabletP {
-      background-color: $light-blue;
+      background-color: var(--light-blue);
       margin-bottom: 4vh;
       height: calc(50vh - 2vh);
       border-bottom-right-radius: 10vw;
@@ -131,7 +131,7 @@
     }
     .first-item,
     .second-item {
-      background: $light-blue;
+      background: var(--light-blue);
       @include phone_and_tabletP {
         background-color: transparent;
       }
@@ -235,7 +235,7 @@
       @extend %flexColumn;
       @include phone_and_tabletP {
         border-top-right-radius: 10vw;
-        background-color: $light-blue;
+        background-color: var(--light-blue);
         height: calc(60vh - 2vh);
         padding: 3vh 6vw 0;
       }
