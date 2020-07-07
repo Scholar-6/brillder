@@ -17,20 +17,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-div:focus {
-  outline: none;
-}
-
-textarea,
-input {
-  font-family: $font-family-regular;
-  &:focus {
-    outline: none;
-  }
-}
-
-input:focus {
-  outline: none;
+input,
+select,
+textarea {
+	font-family: $font-family-regular !important;
 }
 
 .w100 {
