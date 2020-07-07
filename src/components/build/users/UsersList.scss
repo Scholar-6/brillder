@@ -72,13 +72,13 @@
   }
   .add-user-button {
     cursor: pointer;
-    margin-top: 1vw;
-    margin-bottom: 1vw;
-    margin-right: 1.3vw;
+    margin: 3vh 1.3vw;
     font-family: $font-family-black;
     color: var(--theme-dark-blue);
     font-size: 1vw;
+    height: max-content;
     .add-user-image {
+      width: 3vw;
       height: 3vw;
     }
   }
