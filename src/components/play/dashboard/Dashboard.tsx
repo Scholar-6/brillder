@@ -29,7 +29,7 @@ import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDes
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
-import NotificationPanel from "components/build/notificationPanel/NotificationPanel";
+import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 import ReactDOM from "react-dom";
 
 
@@ -552,7 +552,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     return (
       <div className="dashboard-page bricks-list-page">
         <div className="upper-part">
-          <PageHeader ref={this.pageHeader}z
+          <PageHeader ref={this.pageHeader}
             searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
