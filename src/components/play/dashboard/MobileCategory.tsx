@@ -565,6 +565,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                   {this.renderSortedBricks()}
                 </Grid>
               </div>
+              <div className="brick-row-title">Suggested ></div>
+              <div className="brick-row-title">Top in Humanities ></div>
+              <div className="brick-row-title">Top in Stem ></div>
               {this.renderPagination()}
             </Grid>
           </Grid>
