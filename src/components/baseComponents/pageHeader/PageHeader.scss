@@ -25,18 +25,17 @@
 			bottom: 0;
 			width: 100%;
 			display: flex;
-			flex-direction: column-reverse;
+			flex-direction: column;
 			justify-content: flex-end;
 			z-index: 1;
 		}
 		.page-header {
 			display: flex;
 			@include phone_and_tabletP {
-				padding: 0.5vw 4vw;
+				padding: 2vw 4vw;
 				border-radius: 3.5vh 3.5vh 0vh 0vh;
 				background: var(--light-blue);
 				flex-wrap: inherit;
-				height: 6vh;
 				z-index: 999998;
 				position: relative;
 				align-items: center;
@@ -47,7 +46,6 @@
 			}
 			.logout-container {
 				@include phone_and_tabletP {
-					height: 9.834vw;
 					margin: 0;
 					width: 100% !important;
 					flex-wrap: inherit !important;
