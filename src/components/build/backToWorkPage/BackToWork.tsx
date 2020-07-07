@@ -57,26 +57,26 @@ interface Filters {
 }
 
 interface BackToWorkState {
-  bricks: Brick[];
-  finalBricks: Brick[];
-  rawBricks: Brick[];
-  searchBricks: Array<Brick>;
-  searchString: string;
-  isSearching: boolean;
-  sortBy: SortBy;
-  sortedIndex: number;
-  sortedReversed: boolean;
-  logoutDialogOpen: boolean;
-  deleteDialogOpen: boolean;
-  deleteBrickId: number;
-  filters: Filters;
-  dropdownShown: boolean;
-  notificationsShown: boolean;
-  failedRequest: boolean;
-  shown: boolean;
-  filterExpanded: boolean;
-  filterHeight: string;
-  isClearFilter: any;
+	bricks: Brick[];
+	finalBricks: Brick[];
+	rawBricks: Brick[];
+	searchBricks: Array<Brick>;
+	searchString: string;
+	isSearching: boolean;
+	sortBy: SortBy;
+	sortedIndex: number;
+	sortedReversed: boolean;
+	logoutDialogOpen: boolean;
+	deleteDialogOpen: boolean;
+	deleteBrickId: number;
+	filters: Filters;
+	dropdownShown: boolean;
+	notificationsShown: boolean;
+	failedRequest: boolean;
+	shown: boolean;
+	filterExpanded: boolean;
+	filterHeight: string;
+	isClearFilter: any;
 }
 
 enum SortBy {
@@ -87,199 +87,199 @@ enum SortBy {
 }
 
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
-  pageHeader: React.RefObject<any>;
+	pageHeader: React.RefObject<any>;
 
-  constructor(props: BackToWorkProps) {
-    super(props);
-    this.state = {
-      bricks: [],
-      finalBricks: [],
-      rawBricks: [],
-      sortBy: SortBy.None,
-      sortedIndex: 0,
-      sortedReversed: false,
-      logoutDialogOpen: false,
-      deleteDialogOpen: false,
-      deleteBrickId: -1,
-      filters: {
-        viewAll: true,
-        buildAll: false,
-        editAll: false,
+	constructor(props: BackToWorkProps) {
+		super(props);
+		this.state = {
+			bricks: [],
+			finalBricks: [],
+			rawBricks: [],
+			sortBy: SortBy.None,
+			sortedIndex: 0,
+			sortedReversed: false,
+			logoutDialogOpen: false,
+			deleteDialogOpen: false,
+			deleteBrickId: -1,
+			filters: {
+				viewAll: true,
+				buildAll: false,
+				editAll: false,
 
-        draft: false,
-        review: false,
-        build: false,
-        publish: false,
-      },
+				draft: false,
+				review: false,
+				build: false,
+				publish: false,
+			},
 
-      searchBricks: [],
-      searchString: "",
-      isSearching: false,
-      dropdownShown: false,
-      notificationsShown: false,
-      failedRequest: false,
-	    shown: true,
-    	filterExpanded: true,
-      filterHeight: "auto",
-      isClearFilter: false,
-    };
+			searchBricks: [],
+			searchString: "",
+			isSearching: false,
+			dropdownShown: false,
+			notificationsShown: false,
+			failedRequest: false,
+			shown: true,
+			filterExpanded: true,
+			filterHeight: "auto",
+			isClearFilter: false,
+		};
 
-    const isAdmin = this.props.user.roles.some(
-      (role) => role.roleId === UserType.Admin
-    );
-    if (isAdmin) {
-      axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks", {
-        withCredentials: true,
-      }).then((res) => {
-        this.setState({
-          ...this.state,
-          bricks: res.data,
-          finalBricks: res.data,
-          rawBricks: res.data,
-        });
-      }).catch(() => {
-        this.setState({...this.state, failedRequest: true})
-      });
-    } else {
-      axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
-        withCredentials: true,
-      }).then((res) => {
-        this.setState({
-          ...this.state,
-          bricks: res.data,
-          finalBricks: res.data,
-          rawBricks: res.data,
-        });
-      }).catch((error) => {
-        this.setState({...this.state, failedRequest: true})
-      });
-    }
+		const isAdmin = this.props.user.roles.some(
+			(role) => role.roleId === UserType.Admin
+		);
+		if (isAdmin) {
+			axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks", {
+				withCredentials: true,
+			}).then((res) => {
+				this.setState({
+					...this.state,
+					bricks: res.data,
+					finalBricks: res.data,
+					rawBricks: res.data,
+				});
+			}).catch(() => {
+				this.setState({ ...this.state, failedRequest: true })
+			});
+		} else {
+			axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
+				withCredentials: true,
+			}).then((res) => {
+				this.setState({
+					...this.state,
+					bricks: res.data,
+					finalBricks: res.data,
+					rawBricks: res.data,
+				});
+			}).catch((error) => {
+				this.setState({ ...this.state, failedRequest: true })
+			});
+		}
 
-    this.pageHeader = React.createRef();
-  }
+		this.pageHeader = React.createRef();
+	}
 
-  delete(brickId: number) {
-    let { finalBricks, searchBricks, bricks } = this.state;
-    let brick = finalBricks.find((brick) => brick.id === brickId);
-    if (brick) {
-      let index = finalBricks.indexOf(brick);
-      if (index >= 0) {
-        finalBricks.splice(index, 1);
-      }
+	delete(brickId: number) {
+		let { finalBricks, searchBricks, bricks } = this.state;
+		let brick = finalBricks.find((brick) => brick.id === brickId);
+		if (brick) {
+			let index = finalBricks.indexOf(brick);
+			if (index >= 0) {
+				finalBricks.splice(index, 1);
+			}
 
-      index = bricks.indexOf(brick);
-      if (index >= 0) {
-        bricks.splice(index, 1);
-      }
+			index = bricks.indexOf(brick);
+			if (index >= 0) {
+				bricks.splice(index, 1);
+			}
 
-      index = searchBricks.indexOf(brick);
-      if (index >= 0) {
-        this.state.searchBricks.splice(index, 1);
-      }
-    }
-    this.setState({ ...this.state, deleteDialogOpen: false });
-  }
+			index = searchBricks.indexOf(brick);
+			if (index >= 0) {
+				this.state.searchBricks.splice(index, 1);
+			}
+		}
+		this.setState({ ...this.state, deleteDialogOpen: false });
+	}
 
-  move(brickId: number) {
-    this.props.history.push(
-      `/build/brick/${brickId}/build/investigation/question`
-    );
-  }
+	move(brickId: number) {
+		this.props.history.push(
+			`/build/brick/${brickId}/build/investigation/question`
+		);
+	}
 
-  handleSortChange = (e: any) => {
-    let sortBy = parseInt(e.target.value) as SortBy;
-    const { state } = this;
-    let bricks = Object.assign([], state.finalBricks) as Brick[];
-    if (sortBy === SortBy.Date) {
-      bricks = bricks.sort((a, b) => {
-        const createdA = new Date(a.updated).getTime();
-        const createdB = new Date(b.updated).getTime();
-        return createdA > createdB ? 1 : -1;
-      });
-    } else if (sortBy === SortBy.Status) {
-      bricks = bricks.sort((a, b) => (a.status > b.status ? 1 : -1));
-    } else if (sortBy === SortBy.Popularity) {
-      bricks = bricks.sort((a, b) =>
-        a.attemptsCount > b.attemptsCount ? 1 : -1
-      );
-    }
-    this.setState({ ...state, finalBricks: bricks, sortBy });
-  };
+	handleSortChange = (e: any) => {
+		let sortBy = parseInt(e.target.value) as SortBy;
+		const { state } = this;
+		let bricks = Object.assign([], state.finalBricks) as Brick[];
+		if (sortBy === SortBy.Date) {
+			bricks = bricks.sort((a, b) => {
+				const createdA = new Date(a.updated).getTime();
+				const createdB = new Date(b.updated).getTime();
+				return createdA > createdB ? 1 : -1;
+			});
+		} else if (sortBy === SortBy.Status) {
+			bricks = bricks.sort((a, b) => (a.status > b.status ? 1 : -1));
+		} else if (sortBy === SortBy.Popularity) {
+			bricks = bricks.sort((a, b) =>
+				a.attemptsCount > b.attemptsCount ? 1 : -1
+			);
+		}
+		this.setState({ ...state, finalBricks: bricks, sortBy });
+	};
 
-  moveAllBack() {
-    let index = this.state.sortedIndex;
-    if (index >= 18) {
-      this.setState({ ...this.state, sortedIndex: index - 18 });
-    }
-  }
+	moveAllBack() {
+		let index = this.state.sortedIndex;
+		if (index >= 18) {
+			this.setState({ ...this.state, sortedIndex: index - 18 });
+		}
+	}
 
-  moveAllNext() {
-    let index = this.state.sortedIndex;
-    if (index + 18 <= this.state.finalBricks.length) {
-      this.setState({ ...this.state, sortedIndex: index + 18 });
-    }
-  }
+	moveAllNext() {
+		let index = this.state.sortedIndex;
+		if (index + 18 <= this.state.finalBricks.length) {
+			this.setState({ ...this.state, sortedIndex: index + 18 });
+		}
+	}
 
-  handleMouseHover(index: number) {
-    this.state.finalBricks.forEach((brick) => (brick.expanded = false));
-    this.setState({ ...this.state });
-    setTimeout(() => {
-      let { finalBricks } = this.state;
-      finalBricks.forEach((brick) => (brick.expanded = false));
-      if (!finalBricks[index].expandFinished) {
-        finalBricks[index].expanded = true;
-      }
-      this.setState({ ...this.state });
-    }, 400);
-  }
+	handleMouseHover(index: number) {
+		this.state.finalBricks.forEach((brick) => (brick.expanded = false));
+		this.setState({ ...this.state });
+		setTimeout(() => {
+			let { finalBricks } = this.state;
+			finalBricks.forEach((brick) => (brick.expanded = false));
+			if (!finalBricks[index].expandFinished) {
+				finalBricks[index].expanded = true;
+			}
+			this.setState({ ...this.state });
+		}, 400);
+	}
 
-  handleMouseLeave(key: number) {
-    let { finalBricks } = this.state;
-    finalBricks.forEach((brick) => (brick.expanded = false));
-    finalBricks[key].expandFinished = true;
-    this.setState({ ...this.state });
-    setTimeout(() => {
-      finalBricks[key].expandFinished = false;
-      this.setState({ ...this.state });
-    }, 400);
-  }
+	handleMouseLeave(key: number) {
+		let { finalBricks } = this.state;
+		finalBricks.forEach((brick) => (brick.expanded = false));
+		finalBricks[key].expandFinished = true;
+		this.setState({ ...this.state });
+		setTimeout(() => {
+			finalBricks[key].expandFinished = false;
+			this.setState({ ...this.state });
+		}, 400);
+	}
 
-  handleLogoutOpen() {
-    this.setState({ ...this.state, logoutDialogOpen: true });
-  }
+	handleLogoutOpen() {
+		this.setState({ ...this.state, logoutDialogOpen: true });
+	}
 
-  handleLogoutClose() {
-    this.setState({ ...this.state, logoutDialogOpen: false });
-  }
+	handleLogoutClose() {
+		this.setState({ ...this.state, logoutDialogOpen: false });
+	}
 
-  handleDeleteOpen(deleteBrickId: number) {
-    this.setState({ ...this.state, deleteDialogOpen: true, deleteBrickId });
-  }
+	handleDeleteOpen(deleteBrickId: number) {
+		this.setState({ ...this.state, deleteDialogOpen: true, deleteBrickId });
+	}
 
-  handleDeleteClose() {
-    this.setState({ ...this.state, deleteDialogOpen: false });
-  }
+	handleDeleteClose() {
+		this.setState({ ...this.state, deleteDialogOpen: false });
+	}
 
-  creatingBrick() {
-    this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
-  }
+	creatingBrick() {
+		this.props.forgetBrick();
+		this.props.history.push("/build/new-brick/subject");
+	}
 
-  showDropdown() {
-    this.setState({ ...this.state, dropdownShown: true });
-  }
+	showDropdown() {
+		this.setState({ ...this.state, dropdownShown: true });
+	}
 
-  hideDropdown() {
-    this.setState({ ...this.state, dropdownShown: false });
-  }
+	hideDropdown() {
+		this.setState({ ...this.state, dropdownShown: false });
+	}
 
-  showNotifications() {
-    this.setState({ ...this.state, notificationsShown: true });
-  }
+	showNotifications() {
+		this.setState({ ...this.state, notificationsShown: true });
+	}
 
-  hideNotifications() {
-    this.setState({ ...this.state, notificationsShown: false });
-  }
+	hideNotifications() {
+		this.setState({ ...this.state, notificationsShown: false });
+	}
 
 	//region Hide / Expand / Clear Filter
 	clearStatus() {
@@ -789,11 +789,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 		return (
 			<div className="back-to-work-page bricks-list-page">
 				<div className="upper-part">
-					<PageHeader
+					<PageHeader ref={this.pageHeader}
 						searchPlaceholder="Search Ongoing Projects & Published Bricks…"
 						search={() => this.search()}
 						searching={(v: string) => this.searching(v)}
 						showDropdown={() => this.showDropdown()}
+						showNotifications={() => this.showNotifications()}
 					/>
 					<Menu
 						className="menu-dropdown"
@@ -804,7 +805,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 							className="first-item menu-item"
 							onClick={() => this.props.history.push("/play/dashboard")}>
 							View All Bricks
-            	<Grid
+            <Grid
 								container
 								className="menu-icon-container"
 								justify="center"
@@ -820,7 +821,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 						</MenuItem>
 						<MenuItem className="menu-item" onClick={() => this.creatingBrick()}>
 							Start Building
-            	<Grid
+            <Grid
 								container
 								className="menu-icon-container"
 								justify="center"
@@ -845,7 +846,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 										container
 										className="menu-icon-container"
 										justify="center"
-										alignContent="center">
+										alignContent="center"
+									>
 										<div>
 											<img
 												className="manage-users-icon svg-icon"
@@ -862,7 +864,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 							className="view-profile menu-item"
 							onClick={() => this.props.history.push("/user-profile")}>
 							View Profile
-            	<Grid
+            <Grid
 								container
 								className="menu-icon-container"
 								justify="center"
@@ -880,7 +882,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 							className="menu-item"
 							onClick={() => this.handleLogoutOpen()}>
 							Logout
-            	<Grid
+            <Grid
 								container
 								className="menu-icon-container"
 								justify="center"
@@ -895,296 +897,46 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 							</Grid>
 						</MenuItem>
 					</Menu>
+					<NotificationPanel
+						shown={this.state.notificationsShown}
+						handleClose={() => this.hideNotifications()}
+						anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+					/>
 					<LogoutDialog
 						history={this.props.history}
 						isOpen={this.state.logoutDialogOpen}
 						close={() => this.handleLogoutClose()}
 					/>
 				</div>
-			) : (
-			""
-			)}
-      </div>
-    );
-  };
+				<Grid container direction="row" className="sorted-row">
+					<Grid container item xs={3} className="sort-and-filter-container">
+						{this.renderIndexesBox()}
+						{this.renderSortAndFilterBox()}
+					</Grid>
+					<Grid item xs={9} className="brick-row-container">
+						<div className="brick-row-title">{this.renderTitle()}</div>
+						<div className="bricks-list-container">
+							<Grid container direction="row" className="bricks-list">
+								{this.renderSortedBricks()}
+							</Grid>
+						</div>
+						{this.renderPagination()}
+					</Grid>
+				</Grid>
 
-  renderSortedBricks = () => {
-    let { sortedIndex } = this.state;
-    let BackToWork = [];
-    let count = 0;
-    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
-      if (this.state.finalBricks[i]) {
-        let row = Math.floor(count / 3);
-        BackToWork.push(
-          this.getSortedBrickContainer(this.state.finalBricks[i], i, count, row)
-        );
-        count++;
-      }
-    }
-    return BackToWork;
-  };
-
-  renderTitle = () => {
-    const { filters } = this.state;
-    if (filters.viewAll) {
-      return "ALL PROJECTS";
-    } else if (filters.buildAll) {
-      return "BUILD";
-    } else if (filters.editAll) {
-      return "EDIT";
-    } else if (
-      filters.draft &&
-      !filters.build &&
-      !filters.review &&
-      !filters.publish
-    ) {
-      return "DRAFT";
-    } else if (
-      !filters.draft &&
-      filters.build &&
-      !filters.review &&
-      !filters.publish
-    ) {
-      return "BUILD IN PROGRESS";
-    } else if (
-      !filters.draft &&
-      !filters.build &&
-      filters.review &&
-      !filters.publish
-    ) {
-      return "REVIEW";
-    } else if (
-      !filters.draft &&
-      !filters.build &&
-      !filters.review &&
-      filters.publish
-    ) {
-      return "PUBLISHED";
-    } else {
-      return "FILTERED";
-    }
-  };
-
-  renderPagination() {
-    if (this.state.finalBricks.length <= 18) {
-      return "";
-    }
-
-    const showPrev = this.state.sortedIndex >= 18;
-    const showNext =
-      this.state.sortedIndex + 18 <= this.state.finalBricks.length;
-
-    return (
-      <Grid container direction="row" className="bricks-pagination">
-        <Grid item xs={4} className="left-pagination">
-          <div className="first-row">
-            {this.state.sortedIndex + 1}-
-            {this.state.sortedIndex + 18 > this.state.finalBricks.length
-              ? this.state.finalBricks.length
-              : this.state.sortedIndex + 18}
-            <span className="gray">
-              {" "}
-              &nbsp;|&nbsp; {this.state.finalBricks.length}
-            </span>
-          </div>
-          <div>
-            {(this.state.sortedIndex + 18) / 18}
-            <span className="gray">
-              {" "}
-              &nbsp;|&nbsp; {Math.ceil(this.state.finalBricks.length / 18)}
-            </span>
-          </div>
-        </Grid>
-        <Grid
-          container
-          item
-          xs={4}
-          justify="center"
-          className="bottom-next-button"
-        >
-          <div>
-            {showPrev ? (
-              <ExpandLessIcon
-                className={"prev-button " + (showPrev ? "active" : "")}
-                onClick={() => this.moveAllBack()}
-              />
-            ) : (
-              ""
-            )}
-            {showNext ? (
-              <ExpandMoreIcon
-                className={"next-button " + (showNext ? "active" : "")}
-                onClick={() => this.moveAllNext()}
-              />
-            ) : (
-              ""
-            )}
-          </div>
-        </Grid>
-      </Grid>
-    );
-  }
-
-  render() {
-    return (
-      <div className="back-to-work-page bricks-list-page">
-        <div className="upper-part">
-          <PageHeader ref={this.pageHeader}
-            searchPlaceholder="Search Ongoing Projects & Published Bricks…"
-            search={() => this.search()}
-            searching={(v: string) => this.searching(v)}
-            showDropdown={() => this.showDropdown()}
-            showNotifications={() => this.showNotifications()}
-          />
-          <Grid container direction="row" className="sorted-row">
-            <Grid container item xs={3} className="sort-and-filter-container">
-							{this.renderIndexesBox()}
-							{this.renderSortAndFilterBox()}
-            </Grid>
-            <Grid item xs={9} className="brick-row-container">
-                <div className="brick-row-title">{this.renderTitle()}</div>
-                <div className="bricks-list-container">
-                  <Grid container direction="row" className="bricks-list">
-                    {this.renderSortedBricks()}
-                  </Grid>
-                </div>
-                {this.renderPagination()}
-            </Grid>
-          </Grid>
-        </div>
-        <Menu
-          className="menu-dropdown"
-          keepMounted
-          open={this.state.dropdownShown}
-          onClose={() => this.hideDropdown()}
-        >
-          <MenuItem
-            className="first-item menu-item"
-            onClick={() => this.props.history.push("/play/dashboard")}
-          >
-            View All Bricks
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon"
-                  alt=""
-                  src="/images/main-page/glasses-white.png"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-          <MenuItem className="menu-item" onClick={() => this.creatingBrick()}>
-            Start Building
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon"
-                  alt=""
-                  src="/images/main-page/create-white.png"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-          {this.props.user.roles.some(
-            (role) => role.roleId === UserType.Admin
-          ) ? (
-            <MenuItem
-              className="menu-item"
-              onClick={() => this.props.history.push("/users")}
-            >
-              Manage Users
-              <Grid
-                container
-                className="menu-icon-container"
-                justify="center"
-                alignContent="center"
-              >
-                <div>
-                  <img
-                    className="manage-users-icon svg-icon"
-                    alt=""
-                    src="/images/users.svg"
-                  />
-                </div>
-              </Grid>
-            </MenuItem>
-          ) : (
-            ""
-          )}
-          <MenuItem
-            className="view-profile menu-item"
-            onClick={() => this.props.history.push("/user-profile")}
-          >
-            View Profile
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon svg-icon user-icon"
-                  alt=""
-                  src="/images/user.svg"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-          <MenuItem
-            className="menu-item"
-            onClick={() => this.handleLogoutOpen()}
-          >
-            Logout
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon svg-icon logout-icon"
-                  alt=""
-                  src="/images/log-out.svg"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
-        </Menu>
-        <NotificationPanel
-          shown={this.state.notificationsShown}
-          handleClose={() => this.hideNotifications()}
-          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
-        />
-        <LogoutDialog
-          history={this.props.history}
-          isOpen={this.state.logoutDialogOpen}
-          close={() => this.handleLogoutClose()}
-        />
-        <DeleteBrickDialog
-          isOpen={this.state.deleteDialogOpen}
-          brickId={this.state.deleteBrickId}
-          onDelete={(brickId) => this.delete(brickId)}
-          close={() => this.handleDeleteClose()}
-        />
-        <FailedRequestDialog
-          isOpen={this.state.failedRequest}
-          close={() => this.setState({...this.state, failedRequest: false})}
-        />
-      </div>
-    );
-  }
+				<DeleteBrickDialog
+					isOpen={this.state.deleteDialogOpen}
+					brickId={this.state.deleteBrickId}
+					onDelete={(brickId) => this.delete(brickId)}
+					close={() => this.handleDeleteClose()}
+				/>
+				<FailedRequestDialog
+					isOpen={this.state.failedRequest}
+					close={() => this.setState({ ...this.state, failedRequest: false })}
+				/>
+			</div>
+		);
+	}
 }
 
 export default connector(BackToWorkPage);
