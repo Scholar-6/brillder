@@ -627,14 +627,12 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             {this.state.sortedIndex + pageSize > this.state.bricks.length
               ? this.state.bricks.length
               : this.state.sortedIndex + pageSize}
-            <span className="gray">
-              &nbsp;|&nbsp; {this.state.bricks.length}
+            <span className="gray"> | {this.state.bricks.length}
             </span>
           </div>
           <div>
             {(this.state.sortedIndex + pageSize) / pageSize}
-            <span className="gray">
-              &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / pageSize)}
+            <span className="gray"> | {Math.ceil(this.state.bricks.length / pageSize)}
             </span>
           </div>
         </Grid>
@@ -873,9 +871,9 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               </div>
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
-            <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
-              New >
-            </div>
+              <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
+                New >
+              </div>
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
               <Hidden only={["xs"]}>
@@ -887,6 +885,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 {this.renderSortedBricks()}
               </Grid>
             </div>
+            <Hidden only={["sm", "md", "lg", "xl"]}>
+              <div className="brick-row-title">Suggested ></div>
+              <div className="brick-row-title">Top in Humanities ></div>
+              <div className="brick-row-title">Top in Stem ></div>
+            </Hidden>
             {this.renderPagination()}
           </Grid>
         </Grid>
