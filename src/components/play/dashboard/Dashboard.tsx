@@ -677,6 +677,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             close={() => this.handleLogoutClose()}
           />
         </div>
+        <Hidden only={["sm", "md", "lg", "xl"]}>
+          <div className="mobile-scroll-bricks">
+            {this.renderMobileBricks()}
+          </div>
+        </Hidden>
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
             {this.renderSortAndFilterBox()}
@@ -691,11 +696,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             {this.renderPagination()}
           </Grid>
         </Grid>
-        <Hidden only={["sm", "md", "lg", "xl"]}>
-          <div className="mobile-scroll-bricks">
-            {this.renderMobileBricks()}
-          </div>
-        </Hidden>
         <DeleteBrickDialog
           isOpen={this.state.deleteDialogOpen}
           brickId={this.state.deleteBrickId}
