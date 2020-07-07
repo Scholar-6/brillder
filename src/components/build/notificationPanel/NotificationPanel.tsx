@@ -57,11 +57,19 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         <Card>
           <CardContent>
             <List>
-              {this.props.notifications && this.props.notifications.map((notification) => (
+              {(this.props.notifications &&
+              this.props.notifications.length != 0) ?
+              this.props.notifications.map((notification) => (
                 <ListItem key={notification.id}>
                   <ListItemText primary={notification.title} secondary={notification.text} />
                 </ListItem>
-              ))}
+              )) :
+              (
+                <ListItem>
+                  <ListItemText primary="Looks like you don't have any notifications..." />
+                </ListItem>
+              )
+              }
             </List>
           </CardContent>
         </Card>
