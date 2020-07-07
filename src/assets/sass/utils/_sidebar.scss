@@ -578,14 +578,17 @@
           padding-top: 0;
         }
         .user-actions-cell {
-          min-width: 4.5vw;
+          min-width: 5.5vw;
           .delete-button,
           .edit-button {
             display: inline-block;
             cursor: pointer;
             height: 1.85vw;
             width: 1.85vw;
-          }
+					}
+					.edit-button {
+						margin-left: 1vw;
+					}
         }
         .activate-button-container {
           padding-left: 2vw;

@@ -13,15 +13,9 @@
     overflow: hidden;
     .option-container {
       width: 100%;
-
-      .MuiListItemText-root {
-        width: 100%;
-        height: 100%;
-
-        p {
-          text-align: center !important;
-        }
-      }
+			p {
+				text-align: center !important;
+			}
     }
     .pair-match-play-option-icon {
       display: inline-block;
@@ -68,15 +62,12 @@
   }
 
   .pair-match-image-choice {
-    padding-bottom: 2px;
-  }
-  .pair-match-play-option.pair-match-image-choice {
-    background: none;
-    padding: 0;
-    img {
-      max-width: 100%;
-      height: auto;
-    }
+    padding: 0.5vw;
+		background: none;
+		img {
+			max-width: 20%;
+			height: auto;
+		}
   }
 
   .MuiListItemText-root {

@@ -63,10 +63,6 @@ u {
 	text-decoration: underline;
 }
 
-svg:not(:root) {
-	overflow: hidden;
-}
-
 :focus {
 	outline: 0;
 }
@@ -103,10 +99,6 @@ input[type="submit"] {
 	cursor: pointer;
 }
 
-textarea {
-	font-family: var(--montserrat);
-}
-
 input,
 button,
 select,
@@ -117,6 +109,17 @@ textarea {
 
 input {
 	line-height: normal;
+}
+
+div:focus {
+  outline: none;
+}
+
+input,
+textarea {
+  &:focus {
+    outline: none;
+  }
 }
 
 button,
