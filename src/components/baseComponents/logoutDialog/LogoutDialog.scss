@@ -5,13 +5,23 @@
 .logout-dialog {
   position: fixed;
   top: 0;
-
+  z-index: 999999 !important;
   .MuiDialog-paperScrollPaper {
     position: fixed;
     top: 8.3vh;
     right: 7vw;
     max-width: 50vw;
     border-radius: 0.8vw;
+    @include phone_and_tabletL {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+    }
+    @include phone_and_tabletP {
+      max-width: 80vw;
+      width: 80vw;
+    }
   }
 
   .logout-dialog-header {
@@ -20,13 +30,14 @@
     letter-spacing: 0;
     color: var(--theme-dark-blue);
     font-family: $font-family-regular;
+    @include phone_and_tabletP {
+      font-size: 5vw;
+    }
   }
   .logout-buttons {
     padding-bottom: 2.3vh;
 
     button {
-      min-width: 9.55vw;
-      font-size: 2vw;
       border-radius: 0.6vw;
       text-transform: none;
       font-weight: normal !important;
@@ -36,6 +47,14 @@
       font-family: $font-family-regular;
       > span {
         width: 100%;
+      }
+      @include phone_and_tabletP {
+        min-width: 23.55vw;
+        font-size: 6vw;
+      }
+      @include tabletP {
+        min-width: 9.55vw;
+        font-size: 2vw;
       }
     }
 

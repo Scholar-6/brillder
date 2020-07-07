@@ -6,8 +6,13 @@
   .tutorial-next-container {
     > img {
       cursor: pointer;
-      height: 3.5vh;
       margin-bottom: 1.3vh;
+      @include phone_and_tabletL {
+        height: 2vh;
+      }
+      @include tabletL {
+        height: 3.5vh;
+      }
     }
   }
 }

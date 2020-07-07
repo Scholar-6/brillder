@@ -3,22 +3,22 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Grid } from "@material-ui/core";
 
-import PageHeader from "components/baseComponents/pageHeader/PageHeader";
+import PageHeader from "./PageHeader";
 import { User, UserType } from "model/user";
-import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
+import LogoutDialog from "../logoutDialog/LogoutDialog";
 
-interface PlayMenuProps {
+interface HeaderMenuProps {
   history: any;
   user: User;
 }
 
-interface PlayMenuState {
+interface HeaderMenuState {
   dropdownShown: boolean;
   logoutOpen: boolean;
 }
 
-class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
-  constructor(props: PlayMenuProps) {
+class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
+  constructor(props: HeaderMenuProps) {
     super(props);
 
     this.state = {
@@ -100,6 +100,14 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
               </div>
             </Grid>
           </MenuItem>
+          <MenuItem className="menu-item" onClick={() => this.props.history.push('/back-to-work')}>
+            Back To Work
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
+              </div>
+            </Grid>
+          </MenuItem>
           {this.props.user.roles.some(
             (role) => role.roleId === UserType.Admin
           ) ? (
@@ -177,4 +185,4 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
   }
 }
 
-export default PlayBrickMenu;
+export default PageHeadWithMenu;

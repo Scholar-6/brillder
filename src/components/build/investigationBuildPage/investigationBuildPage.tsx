@@ -504,6 +504,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       isValid = false;
     }
   });
+  
+  const switchQuestions = (questions: Question[]) => {
+    setQuestions(questions);
+    saveBrickQuestions(questions);
+  }
 
   if (!synthesis) {
     isValid = false;
@@ -552,7 +557,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
                 style={{ height: "90%", width: "75vw", minWidth: 'none' }}
               >
                 <DragableTabs
-                  setQuestions={setQuestions}
+                  setQuestions={switchQuestions}
                   questions={questions}
                   synthesis={synthesis}
                   validationRequired={validationRequired}

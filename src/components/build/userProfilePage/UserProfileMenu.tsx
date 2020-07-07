@@ -101,6 +101,14 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
               </div>
             </Grid>
           </MenuItem>
+          <MenuItem className="menu-item" onClick={() => this.props.history.push('/back-to-work')}>
+            Back To Work
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
+              </div>
+            </Grid>
+          </MenuItem>
           {this.props.user.roles.some(
             (role) => role.roleId === UserType.Admin
           ) ? (
