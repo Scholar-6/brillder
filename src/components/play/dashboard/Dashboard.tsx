@@ -18,6 +18,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import sprite from "../../../assets/img/icons-sprite.svg";
 
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
@@ -591,6 +592,13 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   render() {
     return (
       <div className="dashboard-page bricks-list-page">
+        <div className="page-navigation">
+          <div className="btn btn-transparent glasses svgOnHover">
+            <svg className="svg w100 h100 active">
+              <use href={sprite + "#glasses"} className="text-theme-dark-blue" />
+            </svg>
+          </div>
+        </div>
         <div className="upper-part">
           <PageHeader
             ref={this.pageHeader}
