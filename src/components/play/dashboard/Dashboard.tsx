@@ -717,7 +717,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 alignContent="center"
               >
                 <div>
-                  <img  
+                  <img
                     className="menu-icon"
                     alt=""
                     src="/images/main-page/create-white.png"
@@ -845,13 +845,9 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
               <Hidden only={["xs"]}>
-                <Grid container direction="row">
 	 							  {this.renderYourBrickRow()}
-  							</Grid>
               </Hidden>
-              <Grid container direction="row">
-                {this.renderSortedBricks()}
-              </Grid>
+              {this.renderSortedBricks()}
             </div>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title">Suggested ></div>
