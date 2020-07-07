@@ -337,25 +337,17 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
               onMouseEnter={() => this.handleMouseHover(key)}
               onMouseLeave={() => this.handleMouseLeave(key)}
             >
-              <Grid
-                container
-                direction="row"
-                style={{ padding: 0, position: "relative" }}
-              >
-                <Grid item xs={brick.expanded ? 12 : 11}>
-                  {brick.expanded ? (
-                    <ExpandedBrickDecsiption
-                      isAdmin={isAdmin}
-                      color={color}
-                      brick={brick}
-                      move={(brickId) => this.move(brickId)}
-                      onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-                    />
-                  ) : (
-                      <ShortBrickDecsiption color={color} brick={brick} />
-                    )}
-                </Grid>
-              </Grid>
+              {brick.expanded ? (
+                <ExpandedBrickDecsiption
+                  isAdmin={isAdmin}
+                  color={color}
+                  brick={brick}
+                  move={(brickId) => this.move(brickId)}
+                  onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+                />
+              ) : (
+                  <ShortBrickDecsiption color={color} brick={brick} />
+                )}
             </div>
           </Box>
         </div>
@@ -916,9 +908,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           <Grid item xs={9} className="brick-row-container">
             <div className="brick-row-title">{this.renderTitle()}</div>
             <div className="bricks-list-container">
-              <Grid container direction="row" className="bricks-list">
+              <div className="bricks-list">
                 {this.renderSortedBricks()}
-              </Grid>
+              </div>
             </div>
             {this.renderPagination()}
           </Grid>
