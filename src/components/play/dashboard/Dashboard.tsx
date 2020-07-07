@@ -872,7 +872,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
               New >
             </div>
-            <div className="bricks-list-container">
+            <div className="bricks-list-container bricks-container-mobile">
               <Hidden only={["xs"]}>
                 <Grid container direction="row">
 	 							  {this.renderYourBrickRow()}
