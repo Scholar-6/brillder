@@ -39,7 +39,12 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   UNSAFE_componentWillReceiveProps(props: MissingWordProps) {
     if (props.component) {
       let userAnswers: any[] = [];
-      props.component.choices.forEach(() => userAnswers.push({ value: -1 }));
+
+      if (props.attempt?.answer?.length > 0) {
+        props.attempt.answer.forEach((a: number) => userAnswers.push(a));
+      } else {
+        props.component.choices.forEach(() => userAnswers.push({ value: -1 }));
+      }
       this.setState({ userAnswers });
     }
   }
@@ -105,6 +110,28 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     );
   }
 
+  renderEachHint(index: number) {
+    if (this.props.attempt) {
+      let isCorrect = false;
+      let choice = this.props.component.choices[index];
+      let attemptedAnswer = this.props.attempt.answer[index].value;
+      let answer = choice.answers[attemptedAnswer];
+      if (answer.checked) {
+        isCorrect = true;
+      }
+      return (
+        <ReviewEachHint
+          isPhonePreview={this.props.isPreview}
+          attempt={this.props.attempt}
+          isCorrect={isCorrect}
+          index={index}
+          hint={this.props.question.hint}
+        />
+      );
+    }
+    return "";
+  }
+
   render() {
     const { component } = this.props;
 
@@ -118,12 +145,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
               {choice.after}
             </span>
             <Grid container direction="row" justify="center">
-              <ReviewEachHint
-                isPhonePreview={this.props.isPreview}
-                attempt={this.props.attempt}
-                index={index}
-                hint={this.props.question.hint}
-              />
+              {this.renderEachHint(index)}
             </Grid>
           </div>
         ))}
