@@ -3,12 +3,12 @@ i.e. add back button on menu and row along top of 'my bricks'  6/7/2020 */
 import "./Dashboard.scss";
 import React, { Component } from "react";
 import {
-	Box,
-	Grid,
-	FormControlLabel,
-	Radio,
-	RadioGroup,
-	Hidden,
+  Box,
+  Grid,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Hidden,
 } from "@material-ui/core";
 import axios from "axios";
 // @ts-ignore
@@ -34,21 +34,21 @@ import ReactDOM from "react-dom";
 
 
 const mapState = (state: ReduxCombinedState) => ({
-	user: state.user.user,
+  user: state.user.user,
 });
 
 const mapDispatch = (dispatch: any) => ({
-	logout: () => dispatch(authActions.logout()),
-	forgetBrick: () => dispatch(brickActions.forgetBrick())
+  logout: () => dispatch(authActions.logout()),
+  forgetBrick: () => dispatch(brickActions.forgetBrick())
 });
 
 const connector = connect(mapState, mapDispatch);
 
 interface BricksListProps {
-	user: User;
-	history: any;
-	logout(): void;
-	forgetBrick(): void;
+  user: User;
+  history: any;
+  logout(): void;
+  forgetBrick(): void;
 }
 
 interface BricksListState {
@@ -73,9 +73,9 @@ interface BricksListState {
 }
 
 enum SortBy {
-	None,
-	Date,
-	Popularity,
+  None,
+  Date,
+  Popularity,
 }
 
 class DashboardPage extends Component<BricksListProps, BricksListState> {
@@ -477,17 +477,17 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           <div className="first-row">
             {this.state.sortedIndex + 1}-
             {this.state.sortedIndex + 18 > this.state.bricks.length
-							? this.state.bricks.length
-							: this.state.sortedIndex + 18}
-						<span className="gray">
-							{" "}
+              ? this.state.bricks.length
+              : this.state.sortedIndex + 18}
+            <span className="gray">
+              {" "}
               &nbsp;|&nbsp; {this.state.bricks.length}
-						</span>
-					</div>
-					<div>
-						{(this.state.sortedIndex + 18) / 18}
-						<span className="gray">
-							{" "}
+            </span>
+          </div>
+          <div>
+            {(this.state.sortedIndex + 18) / 18}
+            <span className="gray">
+              {" "}
               &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / 18)}
             </span>
           </div>
