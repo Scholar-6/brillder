@@ -133,6 +133,11 @@
           @include phone_and_tabletP {
             width: 8vw;
             height: 8vw;
+            padding: 10px;
+            border-radius: 50%;
+            &:hover {
+              box-shadow: 0px 0px 0 10px var(--theme-orange-alpha2);
+            }
           }
           @include tabletP {
             margin: 0 2vw 0 0;
