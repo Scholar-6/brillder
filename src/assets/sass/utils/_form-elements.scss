@@ -110,7 +110,29 @@ input {
   }
 }
 
-.checkbox-invalid {
+/* Material UI Overwrite */
+
+.MuiButton-label,
+.MuiTypography-body1 {
+  font-family: $font-family-regular !important;
+  font-weight: normal !important;
+}
+
+.MuiSwitch-switchBase {
+	padding: 0 !important;
+	border-radius: 50% !important;
+	transform: translateX(0.2vw) !important;
+	&.Mui-checked {
+		transform: translateX(1.3vw) !important;
+	}
+	.MuiSwitch-thumb {
+		width: 0.7vw !important;
+		height: 0.7vw !important;
+		margin: 0.2vw 0 !important;
+	}
+}
+
+.left-ckeckbox {
   color: var(--theme-orange) !important;
   &:hover {
     background-color: var(--theme-orange-alpha4) !important;

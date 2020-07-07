@@ -63,8 +63,6 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
     containerClass='big-box';
   }
 
-  // TODO: remove console.log
-  console.log(validationRequired, checkBoxValid);
   let checkboxClass = "left-ckeckbox";
   if (validationRequired) {
     if (!checkBoxValid) {

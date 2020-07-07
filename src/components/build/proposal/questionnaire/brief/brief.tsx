@@ -1,6 +1,6 @@
 /*eslint no-useless-escape: "off"*/
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 
 import './brief.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
@@ -55,6 +55,9 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief 
       <Navigation step={ProposalStep.Brief} onMove={() => saveBrief(parentBrief)} />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
+          <div className="mobile-view-image">
+            <img alt="titles" src="/images/new-brick/brief-circles.png" />
+          </div>
           <h1 className="only-tutorial-header">
             Outline the purpose of this brick.
           </h1>
@@ -75,9 +78,12 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief 
             onSubmit={saveBrief}
             backLink="/build/new-brick/open-question"
           />
+          <h2 className="pagination-text m-0">3 of 4</h2>
         </Grid>
         <ProposalPhonePreview Component={BriefPreviewComponent} data={parentBrief} />
-        <div className="red-right-block"></div>
+        <Hidden only={['xs','sm']}>
+          <div className="red-right-block"></div>
+        </Hidden>
       </Grid>
     </div>
   );
