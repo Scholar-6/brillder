@@ -79,28 +79,29 @@
         }
 
         .search-container {
-          height: 3.698vw;
           display: flex;
           align-items: center;
-          &.active {
-            @include phone_and_tabletP {
-              height: 7.698vw;
-              display: flex;
-              align-items: center;
+          @include phone_and_tabletP {
+            display: flex;
+            align-items: center;
+            &.active {
               width: 91vw;
             }
           }
           @include tabletP {
             width: 70%;
+            height: 3.698vw;
           }
+
+          .open-search,
           .close-search {
-            display: none;
             @include phone_and_tabletP {
-              display: block;
-              height: 7vh;
+              display: flex;
               width: 7vw;
-              transform: rotate(-90deg);
-              color: #acacac;
+              height: 7vw;
+            }
+            @include tabletP {
+              display: none;
             }
           }
           .search-area {
@@ -109,6 +110,9 @@
               display: none;
               z-index: 1;
               transition: all 300ms;
+              &.active {
+                display: flex;
+              }
             }
             .search-input {
               display: block;
@@ -116,14 +120,15 @@
               font-family: $font-family-regular;
               border: none;
               border-radius: 12px;
-              margin: 0 0 0 1.4vw;
               letter-spacing: 0.045vw;
               width: 100%;
               color: #acacac;
               @include phone_and_tabletP {
                 font-size: 3.7vw;
+                padding: 0.7vh 0.6vw 0.7vh 9vw;
               }
               @include tabletP {
+                margin: 0 0 0 1.4vw;
                 font-size: 1.7vw;
               }
             }

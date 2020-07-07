@@ -110,23 +110,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
               <HomeButton link="/home" />
             }
             <div className={searchVisible ? "search-container active animated slideInLeft" : "search-container"}>
-              {searchVisible ?
-                <svg className="svg svg-default close-search" onClick={() => this.toggleSearch()}>
-                  <use href={sprite + "#arrow-up"} />
-                </svg>
-                :
-                <div className="search-button svgOnHover" onClick={() => this.renderSearch()}>
-                  <svg className="svg svg-default">
-                    <use href={sprite + "#search-thin"} />
-                  </svg>
-                  <svg className="svg colored">
-                    <use href={sprite + "#search-thick"} />
-                  </svg>
-                </div>
-              }
-              <div className="search-area"
-                style={searchVisible ? { display: "block", } : {}}
-              >
+              <div className={searchVisible ? 'search-area active' : 'search-area'}>
                 <input
                   className="search-input"
                   onKeyUp={(e) => this.keySearch(e)}
@@ -134,6 +118,22 @@ class PageHeader extends Component<UsersListProps, MyState> {
                   placeholder={this.props.searchPlaceholder}
                 />
               </div>
+              {searchVisible ?
+                <div className="btn btn-transparent close-search svgOnHover" onClick={() => this.toggleSearch()}>
+                  <svg className="svg w100 h100">
+                    <use href={sprite + "#arrow-right"} className="text-tab-gray" />
+                  </svg>
+                </div>
+                :
+                <div className="btn btn-transparent open-search svgOnHover" onClick={() => this.renderSearch()}>
+                  <svg className="svg w100 h100 svg-default">
+                    <use href={sprite + "#search-thin"} className="text-theme-orange" />
+                  </svg>
+                  <svg className="svg w100 h100 colored">
+                    <use href={sprite + "#search-thick"} className="text-theme-orange" />
+                  </svg>
+                </div>
+              }
             </div>
             {
               !searchVisible &&
