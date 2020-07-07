@@ -4,7 +4,7 @@
     @content;
   }
 }
-// 759    max
+// 759 max
 @mixin phone_and_tabletP {
   @media screen and (max-width:#{$tablet-portrait-width - 1}) {
     @content;
