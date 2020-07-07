@@ -18,7 +18,7 @@ const mapDispatch = (dispatch: any) => ({
   getNotifications: () => dispatch(notificationActions.getNotifications())
 });
 
-const connector = connect(mapState, mapDispatch);
+const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
 
 
 interface UsersListProps {

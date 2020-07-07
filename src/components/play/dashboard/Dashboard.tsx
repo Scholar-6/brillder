@@ -29,6 +29,7 @@ import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
 import NotificationPanel from "components/build/notificationPanel/NotificationPanel";
+import ReactDOM from "react-dom";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -62,7 +63,6 @@ interface BricksListState {
 
   dropdownShown: boolean;
   notificationsShown: boolean;
-  notificationsTarget?: Element;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
 
@@ -78,6 +78,8 @@ enum SortBy {
 }
 
 class DashboardPage extends Component<BricksListProps, BricksListState> {
+  pageHeader: React.RefObject<any>;
+
   constructor(props: BricksListProps) {
     super(props);
     this.state = {
@@ -91,7 +93,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       finalBricks: [],
       dropdownShown: false,
       notificationsShown: false,
-      notificationsTarget: undefined,
       searchBricks: [],
       searchString: "",
       isSearching: false,
@@ -121,6 +122,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }).catch((error) => {
       alert("Can`t get bricks");
     });
+
+    this.pageHeader = React.createRef();
   }
 
   logout() {
@@ -314,11 +317,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   showNotifications(event: any) {
-    this.setState({ ...this.state, notificationsShown: true, notificationsTarget: event.currentTarget });
+    this.setState({ ...this.state, notificationsShown: true });
   }
 
   hideNotifications() {
-    this.setState({ ...this.state, notificationsShown: false, notificationsTarget: undefined });
+    this.setState({ ...this.state, notificationsShown: false });
   }
 
   keySearch(e: any) {
@@ -527,7 +530,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     return (
       <div className="dashboard-page bricks-list-page">
         <div className="upper-part">
-          <PageHeader
+          <PageHeader ref={this.pageHeader}z
             searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
@@ -666,7 +669,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         <NotificationPanel
           shown={this.state.notificationsShown}
           handleClose={() => this.hideNotifications()}
-          anchorElement={this.state.notificationsTarget}
+          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
         />
         <LogoutDialog
           history={this.props.history}
