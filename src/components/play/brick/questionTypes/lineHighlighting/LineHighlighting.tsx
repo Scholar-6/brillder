@@ -133,7 +133,7 @@ class LineHighlighting extends CompComponent<
 
     return (
       <div className="line-highlighting-play">
-        <p className="help-text">Choose more than one option.</p>
+        <p className="help-text">Click to highlight.</p>
         <div className="lines-container">
           {component.lines.map((line: any, index: number) => (
             this.renderLine(line, index)
