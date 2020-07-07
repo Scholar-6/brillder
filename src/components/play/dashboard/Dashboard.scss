@@ -8,14 +8,6 @@
   height: 100%;
   width: 100%;
   font-family: $font-family-regular;
-
-  
-  @include phone_and_tabletP {
-    .bricks-container-mobile {
-      height: 10vh;
-      overflow: scroll;
-    }
-  }
 }
 
 .alert-dialog {

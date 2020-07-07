@@ -325,12 +325,11 @@
     .brick-row-title {
       padding-left: 1.15vw;
       color: var(--theme-dark-blue);
-      padding-bottom: 0;
       line-height: 1;
-      letter-spacing: 1.05vw;
+      letter-spacing: 0.4vw;
       @include phone_and_tabletP {
-        font-size: 7vw;
-        font-weight: 900;
+        font-size: 5vw;
+        font-family: $font-family-bold;
         padding-top: 1.3vh;
         border-bottom: 0.2vh solid var(--light-gray);
         padding-bottom: 0.9vh;
@@ -343,6 +342,7 @@
       @include tabletP {
         font-family: $font-family-black;
         padding-top: 2.3vh;
+        padding-bottom: 0;
         font-size: 5.2vw;
       }
     }
@@ -350,6 +350,12 @@
       @include tabletP {
         height: 62vh !important;
         overflow: auto;
+      }
+      &.bricks-container-mobile {
+        overflow: hidden;
+        @include phone_and_tabletP {
+          overflow-y: auto;
+        }
       }
       .bricks-list {
         display: grid;
