@@ -103,17 +103,20 @@
       background-color: var(--light-gray);
       display: flex;
       flex-direction: column-reverse;
-      justify-content: flex-start;
+      justify-content: flex-end;
     }
     .page-header {
       @include phone_and_tabletP {
         flex-wrap: inherit;
         height: 6vh;
-        z-index: 999999;
+        z-index: 999998;
         padding: 0.7vh 4.5vw 0;
         position: relative;
         align-items: center;
         justify-content: center;
+        &.active {
+          z-index: 999999;
+        }
       }
       &:before,
       &:after {
@@ -140,13 +143,15 @@
           z-index: -1;
         }
       }
-      .home-button-container {
-        @include phone_and_tabletP {
-          width: 11% !important;
-          height: 100%;
-          margin-left: 8vw;
-        }
-      }
     }
+  }
+}
+.zEWidget-launcher {
+  @include phone_and_tabletP {
+    background-color: red !important;
+    left: 5% !important;
+    bottom: -1vh !important;
+    width: 17vw !important;
+    opacity: 0 !important;
   }
 }
