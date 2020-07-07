@@ -679,9 +679,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           <Grid item xs={9} className="brick-row-container">
             <div className="brick-row-title">New ></div>
             <div className="bricks-list-container">
-              <Grid container direction="row">
-                {this.renderSortedBricks()}
-              </Grid>
+              {this.renderSortedBricks()}
             </div>
             {this.renderPagination()}
           </Grid>

@@ -274,25 +274,17 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 						onMouseEnter={() => this.yourBricksMouseHover(key)}
 						onMouseLeave={() => this.yourBricksMouseLeave(key)}
 					>
-						<Grid
-							container
-							direction="row"
-							style={{ padding: 0, position: "relative" }}
-						>
-							<Grid item xs={brick.expanded ? 12 : 11}>
-								{brick.expanded ? (
-									<ExpandedBrickDescription
-										isAdmin={isAdmin}
-										color={color}
-										brick={brick}
-										move={(brickId) => this.move(brickId)}
-										onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-									/>
-								) : (
-										<ShortBrickDescription brick={brick} />
-									)}
-							</Grid>
-						</Grid>
+            {brick.expanded ? (
+              <ExpandedBrickDescription
+                isAdmin={isAdmin}
+                color={color}
+                brick={brick}
+                move={(brickId) => this.move(brickId)}
+                onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+              />
+            ) : (
+                <ShortBrickDescription brick={brick} />
+              )}
 					</div>
 				</Box>
 			</div>
@@ -665,12 +657,8 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 					<Grid item sm={9} xs={12} className="brick-row-container">
 						<div className="brick-row-title">{this.renderTitle()}</div>
 						<div className="bricks-list-container">
-							<Grid container direction="row">
-								{this.renderYourBrickRow()}
-							</Grid>
-							<Grid container direction="row">
-								{this.renderSortedBricks()}
-							</Grid>
+              {this.renderYourBrickRow()}
+              {this.renderSortedBricks()}
 						</div>
 						{this.renderPagination()}
 					</Grid>
