@@ -867,9 +867,16 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             {this.renderSortAndFilterBox()}
           </Grid>
           <Grid item xs={9} className="brick-row-container">
+            <Hidden only={['xs']}>
+              <div className="brick-row-title">
+                ALL BRICKS
+              </div>
+            </Hidden>
+            <Hidden only={["sm", "md", "lg", "xl"]}>
             <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
               New >
             </div>
+            </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
               <Hidden only={["xs"]}>
                 <Grid container direction="row">
