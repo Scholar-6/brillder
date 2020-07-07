@@ -1,27 +1,36 @@
-import "./bricksListPage.scss";
+/* TODO: KEEP THIS FILE for when clicking 'view all', so copy code from src/build/bricksListPage.tsx 
+i.e. add back button on menu and row along top of 'my bricks'  6/7/2020 */
+import "./Dashboard.scss";
 import React, { Component } from "react";
 import {
-  Box, Grid, FormControlLabel, Radio, RadioGroup, Hidden,
+  Box,
+  Grid,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Hidden,
 } from "@material-ui/core";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import Grow from "@material-ui/core/Grow";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
-import brickActions from "redux/actions/brickActions";
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
-import { Brick, BrickStatus } from "model/brick";
-import { User, UserType } from "model/user";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
-import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
-
+import authActions from "redux/actions/auth";
+import { Brick, BrickStatus } from "model/brick";
+import { User, UserType } from "model/user";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { ReduxCombinedState } from "redux/reducers";
+import brickActions from "redux/actions/brickActions";
+import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
+import ReactDOM from "react-dom";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -29,7 +38,8 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  forgetBrick: () => dispatch(brickActions.forgetBrick()),
+  logout: () => dispatch(authActions.logout()),
+  forgetBrick: () => dispatch(brickActions.forgetBrick())
 });
 
 const connector = connect(mapState, mapDispatch);
@@ -37,32 +47,28 @@ const connector = connect(mapState, mapDispatch);
 interface BricksListProps {
   user: User;
   history: any;
+  logout(): void;
   forgetBrick(): void;
 }
 
 interface BricksListState {
-  yourBricks: Array<Brick>;
   bricks: Array<Brick>;
   searchBricks: Array<Brick>;
   searchString: string;
   isSearching: boolean;
   sortBy: SortBy;
   subjects: any[];
-  yoursIndex: number;
-  yoursReversed: boolean;
   sortedIndex: number;
   logoutDialogOpen: boolean;
-  failedRequest: boolean;
   finalBricks: Brick[];
 
+  dropdownShown: boolean;
+  notificationsShown: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
 
-  dropdownShown: boolean;
-  shown: boolean;
-
   filterExpanded: boolean;
-  filterHeight: any;
+  filterHeight: string;
   isClearFilter: any;
 }
 
@@ -72,49 +78,33 @@ enum SortBy {
   Popularity,
 }
 
-class BricksListPage extends Component<BricksListProps, BricksListState> {
+class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
+  pageHeader: React.RefObject<any>;
+
   constructor(props: BricksListProps) {
     super(props);
     this.state = {
-      yourBricks: [],
       bricks: [],
       sortBy: SortBy.None,
       subjects: [],
-      yoursIndex: 0,
-      yoursReversed: false,
       sortedIndex: 0,
       logoutDialogOpen: false,
       deleteDialogOpen: false,
-      failedRequest: false,
       deleteBrickId: -1,
       finalBricks: [],
-
+      dropdownShown: false,
+      notificationsShown: false,
       searchBricks: [],
       searchString: "",
       isSearching: false,
-
-      dropdownShown: false,
-      shown: true,
 
       filterExpanded: true,
       filterHeight: "auto",
       isClearFilter: false,
     };
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
-      withCredentials: true,
-    }).then((res) => {
-      let bricks = res.data as Brick[];
-      bricks = bricks.filter((brick) => {
-        return brick.status === BrickStatus.Publish;
-      });
-      this.setState({ ...this.state, yourBricks: bricks });
-    }).catch((error) => {
-      this.setState({ ...this.state, failedRequest: true });
-    });
-
     axios.get(
-      `${process.env.REACT_APP_BACKEND_HOST}/bricks/byStatus/${BrickStatus.Publish}`,
+      process.env.REACT_APP_BACKEND_HOST + "/bricks/byStatus/" + BrickStatus.Publish,
       { withCredentials: true }
     ).then((res) => {
       this.setState({
@@ -123,7 +113,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
         finalBricks: res.data as Brick[],
       });
     }).catch((error) => {
-      this.setState({ ...this.state, failedRequest: true });
+      alert("Can`t get bricks");
     });
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
@@ -131,31 +121,30 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     }).then((res) => {
       this.setState({ ...this.state, subjects: res.data });
     }).catch((error) => {
-      this.setState({ ...this.state, failedRequest: true });
+      alert("Can`t get bricks");
     });
+
+    this.pageHeader = React.createRef();
+  }
+
+  logout() {
+    this.props.logout();
+    this.props.history.push("/choose-login");
   }
 
   delete(brickId: number) {
-    let { bricks, yourBricks } = this.state;
+    let { bricks } = this.state;
     let brick = bricks.find((brick) => brick.id === brickId);
     if (brick) {
       let index = bricks.indexOf(brick);
       bricks.splice(index, 1);
     }
 
-    brick = yourBricks.find((brick) => brick.id === brickId);
-    if (brick) {
-      let index = yourBricks.indexOf(brick);
-      yourBricks.splice(index, 1);
-    }
-
     this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
   move(brickId: number) {
-    this.props.history.push(
-      `/build/brick/${brickId}/build/investigation/question`
-    );
+    this.props.history.push(`/play/brick/${brickId}/intro`);
   }
 
   handleSortChange = (e: any) => {
@@ -197,7 +186,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   filter() {
-    this.filterClear()
+    const { state } = this;
     let bricks = this.getBricksForFilter();
     let filtered = [];
 
@@ -210,22 +199,27 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           filtered.push(brick);
         }
       }
-      this.setState({ finalBricks: filtered });
+      this.setState({ ...state, finalBricks: filtered });
     } else {
-      this.setState({ finalBricks: bricks });
+      this.setState({ ...state, finalBricks: bricks });
     }
-
-
   }
 
-  getSubjectRow(brick: Brick) {
-    return `${brick.subject ? brick.subject.name : "SUBJECT Code"} | No. ${
-      brick.attemptsCount
-      } of Plays`;
+
+  //region Hide / Expand / Clear Filter
+  hideFilter() {
+    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
   }
+  expandFilter() {
+    this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
+  }
+  filterClear() {
+    this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false })
+  }
+  //endregion
 
   filterBySubject = (i: number) => {
-    let { subjects } = this.state;
+    const { subjects } = this.state;
     subjects[i].checked = !subjects[i].checked;
     this.filter();
   };
@@ -234,76 +228,32 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     const { state } = this;
     const { subjects } = state;
     subjects.forEach((r: any) => (r.checked = false));
-    this.filter();
+    this.setState({ ...state });
   };
 
   moveAllBack() {
     let index = this.state.sortedIndex;
-    if (index >= 15) {
-      this.setState({ ...this.state, sortedIndex: index - 15 });
+    if (index >= 18) {
+      this.setState({ ...this.state, sortedIndex: index - 18 });
     }
   }
 
   moveAllNext() {
     let index = this.state.sortedIndex;
-    if (index + 15 <= this.state.bricks.length) {
-      this.setState({ ...this.state, sortedIndex: index + 15 });
+    if (index + 18 <= this.state.bricks.length) {
+      this.setState({ ...this.state, sortedIndex: index + 18 });
     }
   }
 
-  getBrickContainer = (brick: Brick, key: number) => {
-    let color = "";
-
-    if (!brick.subject) {
-      color = "#B0B0AD";
-    } else {
-      color = brick.subject.color;
-    }
-
-    const isAdmin = this.props.user.roles.some(
-      (role: any) => role.roleId === UserType.Admin
-    );
-
-    return (
-      <div className="main-brick-container">
-        <Box className="brick-container">
-          <div
-            className={`absolute-container brick-row-0 ${
-              brick.expanded ? "brick-hover" : ""
-              }`}
-            onMouseEnter={() => this.yourBricksMouseHover(key)}
-            onMouseLeave={() => this.yourBricksMouseLeave(key)}
-          >
-            <Grid
-              container
-              direction="row"
-              style={{ padding: 0, position: "relative" }}
-            >
-              <Grid item xs={brick.expanded ? 12 : 11}>
-                {brick.expanded ? (
-                  <ExpandedBrickDescription
-                    isAdmin={isAdmin}
-                    color={color}
-                    brick={brick}
-                    move={(brickId) => this.move(brickId)}
-                    onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-                  />
-                ) : (
-                    <ShortBrickDescription brick={brick} />
-                  )}
-              </Grid>
-            </Grid>
-          </div>
-        </Box>
-      </div>
-    );
-  };
-
-  handleMouseHover(index: number) {
-    let { finalBricks } = this.state;
+  hideBricks() {
+    const { finalBricks } = this.state;
     finalBricks.forEach((brick) => {
       brick.expanded = false;
     });
+  }
+
+  handleMouseHover(index: number) {
+    this.hideBricks();
     this.setState({ ...this.state });
     setTimeout(() => {
       let { finalBricks } = this.state;
@@ -318,51 +268,14 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   }
 
   handleMouseLeave(key: number) {
-    let { bricks, yourBricks } = this.state;
-    yourBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
-    bricks.forEach((brick) => {
-      brick.expanded = false;
-    });
-    bricks[key].expandFinished = true;
-    this.setState({ ...this.state });
-    setTimeout(() => {
-      bricks[key].expandFinished = false;
-      this.setState({ ...this.state });
-    }, 400);
-  }
-
-  yourBricksMouseHover(index: number) {
-    let { yourBricks, finalBricks } = this.state;
+    let { finalBricks } = this.state;
     finalBricks.forEach((brick) => {
       brick.expanded = false;
     });
-    yourBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
+    finalBricks[key].expandFinished = true;
     this.setState({ ...this.state });
     setTimeout(() => {
-      let { yourBricks } = this.state;
-      yourBricks.forEach((brick) => {
-        brick.expanded = false;
-      });
-      if (!yourBricks[index].expandFinished) {
-        yourBricks[index].expanded = true;
-      }
-      this.setState({ ...this.state });
-    }, 400);
-  }
-
-  yourBricksMouseLeave(key: number) {
-    let { yourBricks } = this.state;
-    yourBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
-    yourBricks[key].expandFinished = true;
-    this.setState({ ...this.state });
-    setTimeout(() => {
-      yourBricks[key].expandFinished = false;
+      finalBricks[key].expandFinished = false;
       this.setState({ ...this.state });
     }, 400);
   }
@@ -396,41 +309,6 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  keySearch(e: any) {
-    if (e.keyCode === 13) {
-      this.search();
-    }
-  }
-
-  search() {
-    const { searchString } = this.state;
-    this.setState({ ...this.state, shown: false });
-
-    axios.post(
-      process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
-      { searchString },
-      { withCredentials: true }
-    ).then((res) => {
-      const searchBricks = res.data.map((brick: any) => brick.body);
-      setTimeout(() => {
-        this.setState({
-          ...this.state,
-          searchBricks,
-          finalBricks: searchBricks,
-          isSearching: true,
-          shown: true,
-        });
-      }, 1400);
-    }).catch((error) => {
-      this.setState({ ...this.state, failedRequest: true });
-    });
-  }
-
-  creatingBrick() {
-    this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
-  }
-
   showDropdown() {
     this.setState({ ...this.state, dropdownShown: true });
   }
@@ -439,19 +317,44 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     this.setState({ ...this.state, dropdownShown: false });
   }
 
-  //region Hide / Expand / Clear Filter
-  hideFilter() {
-    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
+  showNotifications(event: any) {
+    this.setState({ ...this.state, notificationsShown: true });
   }
-  expandFilter() {
-    this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
-  }
-  filterClear() {
-    this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false })
-  }
-  //endregion
 
-  getSortedBrickContainer = (brick: Brick, key: number, index: number, row: any = 0) => {
+  hideNotifications() {
+    this.setState({ ...this.state, notificationsShown: false });
+  }
+
+  keySearch(e: any) {
+    if (e.keyCode === 13) {
+      this.search();
+    }
+  }
+
+  search() {
+    const { searchString } = this.state;
+    axios
+      .post(
+        process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
+        { searchString },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        this.hideBricks();
+        const searchBricks = res.data.map((brick: any) => brick.body);
+        this.setState({
+          ...this.state,
+          searchBricks,
+          finalBricks: searchBricks,
+          isSearching: true,
+        });
+      })
+      .catch((error) => {
+        alert("Can`t get bricks");
+      });
+  }
+
+  getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
     let color = "";
 
     if (!brick.subject) {
@@ -465,56 +368,38 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     );
 
     return (
-      <Grow
-        in={this.state.shown}
-        key={key}
-        style={{ transformOrigin: "0 0 0" }}
-        timeout={index * 150}
-      >
-        <div className="main-brick-container">
-          <Box className="brick-container">
-            <div
-              className={`absolute-container brick-row-${row + 1} ${
-                brick.expanded ? "brick-hover" : ""
-                }`}
-              onMouseEnter={() => this.handleMouseHover(key)}
-              onMouseLeave={() => this.handleMouseLeave(key)}
+      <div className="main-brick-container">
+        <Box className="brick-container">
+          <div
+            className={`sorted-brick absolute-container brick-row-${row} ${
+              brick.expanded ? "brick-hover" : ""
+              }`}
+            onMouseEnter={() => this.handleMouseHover(key)}
+            onMouseLeave={() => this.handleMouseLeave(key)}
+          >
+            <Grid
+              container
+              direction="row"
+              style={{ padding: 0, position: "relative" }}
             >
-              <Grid
-                container
-                direction="row"
-                style={{ padding: 0, position: "relative" }}
-              >
-                <Grid item xs={brick.expanded ? 12 : 11}>
-                  {brick.expanded ? (
-                    <ExpandedBrickDescription
-                      isAdmin={isAdmin}
-                      color={color}
-                      brick={brick}
-                      move={(brickId) => this.move(brickId)}
-                      onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-                    />
-                  ) : (
-                      <ShortBrickDescription brick={brick} color={color} />
-                    )}
-                </Grid>
+              <Grid item xs={brick.expanded ? 12 : 11}>
+                {brick.expanded ? (
+                  <ExpandedBrickDescription
+                    isAdmin={isAdmin}
+                    color={color}
+                    brick={brick}
+                    move={(brickId) => this.move(brickId)}
+                    onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+                  />
+                ) : (
+                    <ShortBrickDescription brick={brick} color={color} />
+                  )}
               </Grid>
-            </div>
-          </Box>
-        </div>
-      </Grow>
+            </Grid>
+          </div>
+        </Box>
+      </div>
     );
-  };
-
-  renderYourBrickRow = () => {
-    let bricksList = [];
-    let index = 0;
-    for (let i = index; i < index + 3; i++) {
-      if (this.state.yourBricks[i]) {
-        bricksList.push(this.getBrickContainer(this.state.yourBricks[i], i));
-      }
-    }
-    return bricksList;
   };
 
   renderSortAndFilterBox = () => {
@@ -522,8 +407,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
       <div className="sort-box">
         <div className="filter-container sort-by-box">
           <div className="sort-header">Sort By</div>
-          <RadioGroup
-            className="sort-group"
+          <RadioGroup className="sort-group"
             aria-label="SortBy"
             name="SortBy"
             value={this.state.sortBy}
@@ -532,7 +416,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               <Grid item xs={6}>
                 <FormControlLabel
                   value={SortBy.Popularity}
-                  style={{ marginRight: 0, width: "47.5%" }}
+                  style={{ marginRight: 0, width: "50%" }}
                   control={<Radio className="sortBy" />}
                   label="Popularity" />
               </Grid>
@@ -561,52 +445,46 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     );
   };
 
-  renderTitle = () => {
-    return "ALL BRICKS";
-  };
-
   renderSortedBricks = () => {
     let { sortedIndex } = this.state;
     let bricksList = [];
-    let count = 0;
-    for (let i = 0 + sortedIndex; i < 15 + sortedIndex; i++) {
+    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
       if (this.state.finalBricks[i]) {
-        let row = Math.floor(count / 3);
+        let row = Math.floor(i / 3);
         bricksList.push(
-          this.getSortedBrickContainer(this.state.finalBricks[i], i, count, row)
+          this.getSortedBrickContainer(this.state.finalBricks[i], i, row)
         );
-        count++;
       }
     }
     return bricksList;
   };
 
   renderPagination() {
-    if (this.state.bricks.length <= 15) {
+    if (this.state.bricks.length <= 18) {
       return "";
     }
 
-    const showPrev = this.state.sortedIndex >= 15;
-    const showNext = this.state.sortedIndex + 15 <= this.state.bricks.length;
+    const showPrev = this.state.sortedIndex >= 18;
+    const showNext = this.state.sortedIndex + 18 <= this.state.bricks.length;
 
     return (
       <Grid container direction="row" className="bricks-pagination">
-        <Grid item xs={4} className="left-pagination">
+        <Grid item sm={4} className="left-pagination">
           <div className="first-row">
             {this.state.sortedIndex + 1}-
-            {this.state.sortedIndex + 15 > this.state.bricks.length
+            {this.state.sortedIndex + 18 > this.state.bricks.length
               ? this.state.bricks.length
-              : this.state.sortedIndex + 15}
+              : this.state.sortedIndex + 18}
             <span className="gray">
               {" "}
               &nbsp;|&nbsp; {this.state.bricks.length}
             </span>
           </div>
           <div>
-            {(this.state.sortedIndex + 15) / 15}
+            {(this.state.sortedIndex + 18) / 18}
             <span className="gray">
               {" "}
-              &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / 15)}
+              &nbsp;|&nbsp; {Math.ceil(this.state.bricks.length / 18)}
             </span>
           </div>
         </Grid>
@@ -640,28 +518,49 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  creatingBrick() {
+    this.props.forgetBrick();
+    this.props.history.push("/build/new-brick/subject");
+  }
+
+  renderMobileBricks() {
+    let { sortedIndex } = this.state;
+    let bricksList = [];
+    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
+      const brick = this.state.finalBricks[i]
+      if (brick) {
+        let color = "";
+
+        if (!brick.subject) {
+          color = "#B0B0AD";
+        } else {
+          color = brick.subject.color;
+        }
+
+        bricksList.push(<ShortBrickDescription brick={brick} color={color} />);
+      }
+    }
+    return bricksList;
+  }
+
   render() {
     return (
-      <div className="bricks-list-page">
+      <div className="dashboard-page bricks-list-page">
         <div className="upper-part">
-          <PageHeader
+          <PageHeader ref={this.pageHeader}
             searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
+            showNotifications={(evt: any) => this.showNotifications(evt)}
           />
           <Grid container direction="row" className="sorted-row">
-            <Hidden only={['xs']}>
-              <Grid container item sm={3} className="sort-and-filter-container">
-                {this.renderSortAndFilterBox()}
-              </Grid>
-            </Hidden>
-            <Grid item sm={9} xs={12} className="brick-row-container">
-              <div className="brick-row-title">{this.renderTitle()}</div>
+            <Grid container item xs={3} className="sort-and-filter-container">
+              {this.renderSortAndFilterBox()}
+            </Grid>
+            <Grid item xs={9} className="brick-row-container">
+              <div className="brick-row-title">New ></div>
               <div className="bricks-list-container">
-                <Grid container direction="row">
-                  {this.renderYourBrickRow()}
-                </Grid>
                 <Grid container direction="row">
                   {this.renderSortedBricks()}
                 </Grid>
@@ -669,7 +568,131 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               {this.renderPagination()}
             </Grid>
           </Grid>
+          <Hidden only={["sm", "md", "lg", "xl"]}>
+            <div className="mobile-scroll-bricks">
+              {this.renderMobileBricks()}
+            </div>
+          </Hidden>
         </div>
+
+        <Menu
+          className="menu-dropdown"
+          keepMounted
+          open={this.state.dropdownShown}
+          onClose={() => this.hideDropdown()}
+        >
+          <MenuItem
+            className="first-item menu-item"
+            onClick={() => this.creatingBrick()}
+          >
+            Start Building
+            <Grid
+              container
+              className="menu-icon-container"
+              justify="center"
+              alignContent="center"
+            >
+              <div>
+                <img
+                  className="menu-icon"
+                  alt=""
+                  src="/images/main-page/create-white.png"
+                />
+              </div>
+            </Grid>
+          </MenuItem>
+          <MenuItem
+            className="menu-item"
+            onClick={() => this.props.history.push("/back-to-work")}
+          >
+            Back To Work
+            <Grid
+              container
+              className="menu-icon-container"
+              justify="center"
+              alignContent="center"
+            >
+              <div>
+                <img
+                  className="back-to-work-icon"
+                  alt=""
+                  src="/images/main-page/backToWork-white.png"
+                />
+              </div>
+            </Grid>
+          </MenuItem>
+          {this.props.user.roles.some(
+            (role) => role.roleId === UserType.Admin
+          ) ? (
+              <MenuItem
+                className="menu-item"
+                onClick={() => this.props.history.push("/users")}
+              >
+                Manage Users
+                <Grid
+                  container
+                  className="menu-icon-container"
+                  justify="center"
+                  alignContent="center"
+                >
+                  <div>
+                    <img
+                      className="manage-users-icon svg-icon"
+                      alt=""
+                      src="/images/users.svg"
+                    />
+                  </div>
+                </Grid>
+              </MenuItem>
+            ) : (
+              ""
+            )}
+          <MenuItem
+            className="view-profile menu-item"
+            onClick={() => this.props.history.push("/user-profile")}
+          >
+            View Profile
+            <Grid
+              container
+              className="menu-icon-container"
+              justify="center"
+              alignContent="center"
+            >
+              <div>
+                <img
+                  className="menu-icon svg-icon user-icon"
+                  alt=""
+                  src="/images/user.svg"
+                />
+              </div>
+            </Grid>
+          </MenuItem>
+          <MenuItem
+            className="menu-item"
+            onClick={() => this.handleLogoutOpen()}
+          >
+            Logout
+            <Grid
+              container
+              className="menu-icon-container"
+              justify="center"
+              alignContent="center"
+            >
+              <div>
+                <img
+                  className="menu-icon svg-icon logout-icon"
+                  alt=""
+                  src="/images/log-out.svg"
+                />
+              </div>
+            </Grid>
+          </MenuItem>
+        </Menu>
+        <NotificationPanel
+          shown={this.state.notificationsShown}
+          handleClose={() => this.hideNotifications()}
+          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+        />
         <LogoutDialog
           history={this.props.history}
           isOpen={this.state.logoutDialogOpen}
@@ -681,13 +704,9 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
           close={() => this.handleDeleteClose()}
           onDelete={(brickId) => this.delete(brickId)}
         />
-        <FailedRequestDialog
-          isOpen={this.state.failedRequest}
-          close={() => this.setState({ ...this.state, failedRequest: false })}
-        />
       </div>
     );
   }
 }
 
-export default connector(BricksListPage);
+export default connector(MobileCategoryPage);
