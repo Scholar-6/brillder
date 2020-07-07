@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
-import { List, ListItem, ListItemText, Popover, ListItemSecondaryAction, IconButton, SvgIcon, Card, CardContent, CardHeader, Button } from '@material-ui/core';
+import { List, ListItem, ListItemText, Popover, ListItemSecondaryAction, IconButton, SvgIcon, Card, CardContent, CardHeader, Button, ListItemIcon, ListItemAvatar } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
 import sprite from "../../../assets/img/icons-sprite.svg";
-import { Notification } from 'model/notifications';
+import { Notification, notificationTypeColors } from 'model/notifications';
 import notificationActions from 'redux/actions/notifications';
 import { Dispatch } from 'redux';
+import moment from 'moment';
 
 const mapState = (state: ReduxCombinedState) => ({
   notifications: state.notifications.notifications
@@ -61,7 +62,15 @@ class NotificationPanel extends Component<NotificationPanelProps> {
               this.props.notifications.length != 0) ?
               this.props.notifications.map((notification) => (
                 <ListItem key={notification.id}>
+                  <ListItemIcon>
+                    <SvgIcon fontSize="large">
+                      <svg>
+                        <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
+                      </svg>
+                    </SvgIcon>
+                  </ListItemIcon>
                   <ListItemText primary={notification.title} secondary={notification.text} />
+                  <div>{moment(notification.timestamp).fromNow()}</div>
                 </ListItem>
               )) :
               (

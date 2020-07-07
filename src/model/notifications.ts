@@ -19,6 +19,7 @@ export interface Notification {
     text: string;
     type: NotificationType;
     read: boolean;
+    timestamp: Date;
 }
 
 export const notificationTypeColors = {
