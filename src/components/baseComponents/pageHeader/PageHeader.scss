@@ -18,6 +18,22 @@
   .search-input {
     width: 100%;
   }
+  .page-navigation {
+    @extend %floatToXCenter;
+    top: 1vh;
+    width: 100%;
+    z-index: 9999;
+    @include phone_and_tabletP {
+      @extend %flexCenter;
+    }
+    @include tabletP {
+      display: none;
+    }
+    .glasses {
+      width: 9vw;
+      height: 3vh;
+    }
+  }
   .upper-part {
     position: relative;
     @include phone_and_tabletP {

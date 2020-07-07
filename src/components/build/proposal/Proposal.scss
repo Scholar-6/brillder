@@ -2,12 +2,6 @@
 @import '../../../assets/sass/partials/mixins';
 @import '../../../assets/sass/partials/extensions';
 
-.proposal-router {
-  .beta-text {
-    color: var(--theme-dark-blue);
-  }
-}
-
 .tutorial-page {
   font-family: $font-family-regular;
   color: var(--theme-dark-blue);
@@ -755,4 +749,8 @@
       font-family: $font-family-regular;
     }
   }
+}
+
+.tutorial-page ~ .beta-text {
+  color: var(--theme-dark-blue);
 }
