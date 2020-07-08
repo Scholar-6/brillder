@@ -17,7 +17,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       font-size: 3.8vw;
-      width: 75vw;
+      width: 100%;
     }
     @include tabletP {
       font-size: 0.8vw;
@@ -48,7 +48,7 @@
 
 .mobile-scroll-bricks {
   overflow-y: scroll;
-  height: 30vh;
+  height: 39.5vh;
   display: flex;
   width: 100%;
   align-items: center;
@@ -82,7 +82,21 @@
       }
     }
   }
-  
+  .left-brick-roller {
+    position: absolute;
+    top: 1.5vh;
+    left: 0.15vw;
+    > div {
+      margin-left: 10vw;
+      margin-top: 12vw;
+      height: 20vw;
+      width: 20vw;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/images/roller-green.png);
+    }
+  }
   .left-brick-circle {
     > div {
       border-radius: 20vw;
@@ -104,13 +118,17 @@
   }
 }
 
-.short-description.mobile-expanded {
-  .short-brick-info {
-    width: calc(100% - 4vh - 15vw) !important;
-  }
-  .play-button-link {
-    position: absolute;
-    right: 0;
+.short-description {
+  &.mobile-expanded {
+    .short-brick-info {
+      width: calc(100% - 10vw - 15vw) !important;
+    }
+    .play-button-link {
+      width: 10vw;
+      height: 10vh;
+      position: absolute;
+      right: 0;
+    }
   }
 }
 
