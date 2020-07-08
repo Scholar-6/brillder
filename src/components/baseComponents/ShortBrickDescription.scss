@@ -17,7 +17,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       font-size: 3.8vw;
-      width: 75vw;
+      width: 100%;
     }
     @include tabletP {
       font-size: 0.8vw;
@@ -118,13 +118,17 @@
   }
 }
 
-.short-description.mobile-expanded {
-  .short-brick-info {
-    width: calc(100% - 4vh - 15vw) !important;
-  }
-  .play-button-link {
-    position: absolute;
-    right: 0;
+.short-description {
+  &.mobile-expanded {
+    .short-brick-info {
+      width: calc(100% - 10vw - 15vw) !important;
+    }
+    .play-button-link {
+      width: 10vw;
+      height: 10vh;
+      position: absolute;
+      right: 0;
+    }
   }
 }
 
