@@ -7,9 +7,12 @@ import sprite from "../../assets/img/icons-sprite.svg";
 
 interface ShortDescriptionProps {
   brick: Brick;
+  index?: number;
   color?: string;
   isMobile?: boolean;
   isExpanded?: boolean;
+  onClick?(): void;
+  move?(): void;
 }
 
 class ShortBrickDescription extends Component<ShortDescriptionProps> {
@@ -31,7 +34,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
 
   renderPlayButton() {
     return (
-      <div className="play-button-link svgOnHover">
+      <div className="play-button-link svgOnHover" onClick={() => this.props.move ? this.props.move() : {}}>
         <svg className="svg w80 h80 svg-default">
           <use href={sprite + "#play-thin"} className="text-gray" />
         </svg>
@@ -43,14 +46,18 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   }
 
   render() {
-    const { color, brick, isMobile, isExpanded } = this.props;
+    const { color, brick, isMobile, isExpanded, index } = this.props;
     let className = "short-description";
 
     if (isMobile && isExpanded) {
       className += " mobile-expanded";
     }
+    if (index !== undefined && index >= 0) {
+      className += " mobile-short-" + index;
+    }
+
     return (
-      <div className={className}>
+      <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
         {color ? this.renderCircle(color) : this.renderRoler()}
         <div className="short-brick-info">
           <div className="link-description"><span>{brick.title}</span></div>
