@@ -20,7 +20,7 @@
   }
   .page-navigation {
     @extend %floatToXCenter;
-    top: 1vh;
+    top: 0.5vh;
     width: 100%;
     z-index: 9999;
     @include phone_and_tabletP {
@@ -49,7 +49,7 @@
       display: flex;
       @include phone_and_tabletP {
         padding: 2vw 4vw;
-        border-radius: 3.5vh 3.5vh 0vh 0vh;
+        border-radius: 0;
         background: var(--light-blue);
         flex-wrap: inherit;
         z-index: 999998;
@@ -293,4 +293,26 @@
       line-height: 1.4;
     }
   }
+}
+
+.back-to-work-page {
+  .sorted-row {
+    @include phone_and_tabletP {
+      height: $back-to-work-height-mobile-view;
+    }
+    .sort-and-filter-container {
+      @include phone_and_tabletP {
+        height: $back-to-work-height-mobile-view;
+      }
+    }
+    .brick-row-container {
+      @include phone_and_tabletP {
+        height: $back-to-work-height-mobile-view;
+      }
+    }
+  }
+}
+
+.back-to-work-page ~ .beta-text {
+  color: var(--theme-dark-blue) !important;
 }
