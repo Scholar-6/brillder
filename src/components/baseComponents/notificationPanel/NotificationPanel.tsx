@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
-import { List, ListItem, ListItemText, Popover, ListItemSecondaryAction, IconButton, SvgIcon, Card, CardContent, CardHeader, Button, ListItemIcon, ListItemAvatar } from '@material-ui/core';
+import { List, ListItem, ListItemText, Popover, ListItemSecondaryAction, IconButton, SvgIcon, Card, CardContent, CardHeader, Button, ListItemIcon, ListItemAvatar, Grid, CardActions } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
 import sprite from "../../../assets/img/icons-sprite.svg";
 import { Notification, notificationTypeColors } from 'model/notifications';
@@ -62,15 +62,32 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                 this.props.notifications.length != 0) ?
                 this.props.notifications.map((notification) => (
                   <ListItem key={notification.id}>
-                    <ListItemIcon>
-                      <SvgIcon fontSize="large">
-                        <svg>
-                          <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
-                        </svg>
-                      </SvgIcon>
-                    </ListItemIcon>
-                    <ListItemText primary={notification.title} secondary={notification.text} />
-                    <div>{moment(notification.timestamp).fromNow()}</div>
+                    <Grid container direction="row" alignItems="center" spacing={2}>
+                      <Grid item>
+                        <ListItemIcon>
+                          <SvgIcon fontSize="large">
+                            <svg>
+                              <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
+                            </svg>
+                          </SvgIcon>
+                        </ListItemIcon>
+                      </Grid>
+                      <Grid item>
+                        <ListItemText primary={notification.title} secondary={notification.text} />
+                      </Grid>
+                      <Grid item direction="column">
+                        <Grid>{moment(notification.timestamp).fromNow()}</Grid>
+                        <Grid>
+                          <IconButton onClick={() => this.markAsRead(notification.id)}>
+                            <SvgIcon>
+                              <svg className="svg">
+                                <use href={sprite + "#cancel"} />
+                              </svg>
+                            </SvgIcon>
+                          </IconButton>
+                        </Grid>
+                      </Grid>
+                    </Grid>
                   </ListItem>
                 )) :
                 (
@@ -81,6 +98,16 @@ class NotificationPanel extends Component<NotificationPanelProps> {
               }
             </List>
           </CardContent>
+          <CardActions>
+            <div>Clear All</div>
+            <IconButton onClick={() => this.markAllAsRead()}>
+              <SvgIcon>
+                <svg className="svg">
+                  <use href={sprite + "#cancel"} />
+                </svg>
+              </SvgIcon>
+            </IconButton>
+          </CardActions>
         </Card>
       </Popover>
     );
