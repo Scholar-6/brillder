@@ -48,7 +48,7 @@
 
 .mobile-scroll-bricks {
   overflow-y: scroll;
-  height: 30vh;
+  height: 39.5vh;
   display: flex;
   width: 100%;
   align-items: center;
@@ -82,7 +82,21 @@
       }
     }
   }
-  
+  .left-brick-roller {
+    position: absolute;
+    top: 1.5vh;
+    left: 0.15vw;
+    > div {
+      margin-left: 10vw;
+      margin-top: 12vw;
+      height: 20vw;
+      width: 20vw;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/images/roller-green.png);
+    }
+  }
   .left-brick-circle {
     > div {
       border-radius: 20vw;
