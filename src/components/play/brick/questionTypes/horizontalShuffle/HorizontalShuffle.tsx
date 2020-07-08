@@ -149,6 +149,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   render() {
     return (
       <div className="horizontal-shuffle-play">
+        <p className="help-text">Drag to rearrange.</p>
         <ReactSortable
           list={this.state.userAnswers}
           animation={150}
