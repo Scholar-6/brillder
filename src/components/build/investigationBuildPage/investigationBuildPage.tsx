@@ -317,14 +317,26 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   const saveBrickQuestions = (updatedQuestions: Question[], callback?: Function) => {
-    setSavingStatus(true);
-    prepareBrickToSave(brick, updatedQuestions, synthesis);
     if (canEdit === true) {
+      setSavingStatus(true);
+      prepareBrickToSave(brick, updatedQuestions, synthesis);
+
       props.saveBrick(brick).then((res:any) => {
         if (callback) {
           callback(res);
         }
       });
+    }
+  }
+
+  const saveSwitchedBrickQuestions = (updatedQuestions: Question[]) => {
+    if (canEdit === true) {
+      setSavingStatus(true);
+      prepareBrickToSave(brick, updatedQuestions, synthesis);
+        for (let [index, question] of brick.questions.entries()) {
+        question.order = index;
+      }
+      props.saveBrick(brick);
     }
   }
 
@@ -507,7 +519,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   
   const switchQuestions = (questions: Question[]) => {
     setQuestions(questions);
-    saveBrickQuestions(questions);
+    saveSwitchedBrickQuestions(questions);
   }
 
   if (!synthesis) {
