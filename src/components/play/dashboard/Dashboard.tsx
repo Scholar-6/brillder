@@ -666,7 +666,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   render() {
     const {history} = this.props;
     return (
-      <div className="dashboard-page bricks-list-page">
+      <div className="dashboard-page">
         <div className="page-navigation">
           <div className="btn btn-transparent glasses svgOnHover">
             <svg className="svg w100 h100 active">
