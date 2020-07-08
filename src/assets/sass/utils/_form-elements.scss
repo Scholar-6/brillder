@@ -30,6 +30,9 @@ input {
   @extend %displayFlex;
   margin-left: -0.5vw;
   margin-right: -0.5vw;
+  @include phone_and_tabletP {
+    flex-direction: column;
+  }
   > div,
   > input {
     flex: 1;

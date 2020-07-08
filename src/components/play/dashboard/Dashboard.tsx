@@ -908,6 +908,20 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               <div className="brick-row-title">
                 ALL BRICKS
               </div>
+              <div className="core-public-toggle">
+                <a className="btn btn btn-transparent ">
+                  <span>Core</span>
+                  <div className="svgOnHover">
+                    <svg className="svg active selected">
+                      <use href={sprite + "#box"} className="text-theme-dark-blue" />
+                    </svg>
+                    <svg className="svg active">
+                      <use href={sprite + "#globe"} className="text-theme-dark-blue" />
+                    </svg>
+                  </div>
+                  <span>Public</span>
+                </a>
+              </div>
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>

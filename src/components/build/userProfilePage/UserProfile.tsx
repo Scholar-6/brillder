@@ -347,103 +347,95 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           history={this.props.history}
         />
         <Grid container direction="row">
-          <Grid item xs={9}>
-            <div className="profile-block">
-              <div className="profile-header">{this.state.user.firstName ? this.state.user.firstName : 'NAME'}</div>
-              <div className="save-button-container">
-                <Avatar
-                  alt=""
-                  src="/feathericons/save-blue.png"
-                  className="save-image"
-                  onClick={() => this.saveUserProfile()}
-                />
+          <div className="profile-block">
+            <div className="profile-header">{this.state.user.firstName ? this.state.user.firstName : 'NAME'}</div>
+            <div className="save-button-container">
+              <Avatar
+                alt=""
+                src="/feathericons/save-blue.png"
+                className="save-image"
+                onClick={() => this.saveUserProfile()}
+              />
+            </div>
+            <div className="profile-fields">
+              <div className="profile-image-container">
+                <div className="profile-image svgOnHover">
+                  <svg className="svg active">
+                    <use href={sprite + "#user"} className="text-theme-dark-blue" />
+                  </svg>
+                </div>
+                <div className="add-image-button svgOnHover">
+                  <svg className="svg active">
+                    <use href={sprite + "#plus"} className="text-white" />
+                  </svg>
+                </div>
+                <div className="status-container svgOnHover">
+                  <svg className="svg active">
+                    <use href={sprite + "#circle-filled"} className="text-theme-green" />
+                  </svg>
+                  <span>Active</span>
+                </div>
               </div>
-              <Grid container direction="row">
-                <div className="profile-image-container">
-                  <div className="profile-image svgOnHover">
-                    <svg className="svg active">
-                      <use href={sprite + "#user"} className="text-theme-dark-blue" />
-                    </svg>
+              <div className="profile-inputs-container">
+                <div className="input-group">
+                  <div className="input-block">
+                    <input
+                      className="first-name style2"
+                      value={this.state.user.firstName}
+                      onChange={(e: any) => this.onFirstNameChanged(e)}
+                      placeholder="Name"
+                    />
                   </div>
-                  <div className="add-image-button svgOnHover">
-                    <svg className="svg active">
-                      <use href={sprite + "#plus"} className="text-white" />
-                    </svg>
-                  </div>
-                  <div className="status-container svgOnHover">
-                    <svg className="svg active">
-                      <use href={sprite + "#circle-filled"} className="text-theme-green" />
-                    </svg>
-                    <span>Active</span>
+                  <div className="input-block">
+                    <input
+                      className="last-name style2"
+                      value={this.state.user.lastName}
+                      onChange={(e: any) => this.onLastNameChanged(e)}
+                      placeholder="Surname"
+                    />
                   </div>
                 </div>
-                <Grid item className="profile-inputs-container">
-                  <div className="input-group">
-                    <div className="input-block">
-                      <input
-                        className="first-name style2"
-                        value={this.state.user.firstName}
-                        onChange={(e: any) => this.onFirstNameChanged(e)}
-                        placeholder="Name"
-                      />
-                    </div>
-                    <div className="input-block">
-                      <input
-                        className="last-name style2"
-                        value={this.state.user.lastName}
-                        onChange={(e: any) => this.onLastNameChanged(e)}
-                        placeholder="Surname"
-                      />
-                    </div>
-                  </div>
-                  <FormControlLabel
-                    value="start"
-                    control={<Checkbox color="primary" />}
-                    label="Keep me secret: I don't want to be searchable"
-                    labelPlacement="end"
+                <FormControlLabel
+                  value="start"
+                  control={<Checkbox color="primary" />}
+                  label="Keep me secret: I don't want to be searchable"
+                  labelPlacement="end"
+                />
+                <div className="input-block">
+                  <input
+                    type="email"
+                    className="style2"
+                    value={this.state.user.email}
+                    onChange={(e: any) => this.onEmailChanged(e)}
+                    placeholder="username@domain.com"
                   />
-                  <div className="input-block">
-                    <input
-                      type="email"
-                      className="style2"
-                      value={this.state.user.email}
-                      onChange={(e: any) => this.onEmailChanged(e)}
-                      placeholder="username@domain.com"
-                    />
-                  </div>
-                  <div className="input-block">
-                    <input
-                      type="password"
-                      className="style2"
-                      value={this.state.user.password}
-                      onChange={(e: any) => this.onPasswordChanged(e)}
-                      placeholder="●●●●●●●●●●●"
-                    />
-                  </div>
+                </div>
+                <div className="input-block">
+                  <input
+                    type="password"
+                    className="style2"
+                    value={this.state.user.password}
+                    onChange={(e: any) => this.onPasswordChanged(e)}
+                    placeholder="●●●●●●●●●●●"
+                  />
+                </div>
+              </div>
+              <div className="profile-roles-container">
+                <div className="roles-title">ROLES</div>
+                <Grid container className="roles-box">
+                  {this.renderRoles()}
                 </Grid>
-                <Grid
-                  container
-                  justify="center"
-                  alignContent="flex-start"
-                  className="profile-roles-container"
-                >
-                  <div className="roles-title">ROLES</div>
-                  <Grid container className="roles-box">
-                    {this.renderRoles()}
-                  </Grid>
-                </Grid>
-              </Grid>
-              <SubjectAutocomplete
-                selected={this.state.user.subjects}
-                onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
-              />
-              <Grid container direction="row" className="big-input-container">
-                <textarea className="style2" placeholder="Write a short bio here..." />
-              </Grid>
-              <Grid container direction="row"></Grid>
+              </div>
             </div>
-          </Grid>
-          <Grid item xs={3} className="profile-phone-preview">
+            <SubjectAutocomplete
+              selected={this.state.user.subjects}
+              onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
+            />
+            <Grid container direction="row" className="big-input-container">
+              <textarea className="style2" placeholder="Write a short bio here..." />
+            </Grid>
+          </div>
+          <div className="profile-phone-preview">
             <Grid
               container
               justify="center"
@@ -454,7 +446,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 <PhonePreview />
               </div>
             </Grid>
-          </Grid>
+          </div>
         </Grid>
         <SubjectDialog
           isOpen={this.state.noSubjectDialogOpen}
