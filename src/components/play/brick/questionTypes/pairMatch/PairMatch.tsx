@@ -136,6 +136,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   render() {
     return (
       <div className="pair-match-play">
+        <p className="help-text">Drag to rearrange.</p>
         <Grid container justify="center">
           <List style={{padding: 0}} className="answers-list">
           {
