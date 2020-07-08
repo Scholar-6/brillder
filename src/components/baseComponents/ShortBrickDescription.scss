@@ -82,7 +82,7 @@
       }
     }
   }
-
+  
   .left-brick-circle {
     > div {
       border-radius: 20vw;
@@ -103,3 +103,14 @@
     }
   }
 }
+
+.short-description.mobile-expanded {
+  .short-brick-info {
+    width: calc(100% - 4vh - 15vw) !important;
+  }
+  .play-button-link {
+    position: absolute;
+    right: 0;
+  }
+}
+

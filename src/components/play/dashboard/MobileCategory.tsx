@@ -252,7 +252,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     });
   }
 
-  handleMouseHover(index: number) {
+  handleMouseClick(index: number) {
     this.hideBricks();
     this.setState({ ...this.state });
     setTimeout(() => {
@@ -263,19 +263,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       if (!finalBricks[index].expandFinished) {
         finalBricks[index].expanded = true;
       }
-      this.setState({ ...this.state });
-    }, 400);
-  }
-
-  handleMouseLeave(key: number) {
-    let { finalBricks } = this.state;
-    finalBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
-    finalBricks[key].expandFinished = true;
-    this.setState({ ...this.state });
-    setTimeout(() => {
-      finalBricks[key].expandFinished = false;
       this.setState({ ...this.state });
     }, 400);
   }
@@ -363,10 +350,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       color = brick.subject.color;
     }
 
-    const isAdmin = this.props.user.roles.some(
-      (role: any) => role.roleId === UserType.Admin
-    );
-
     return (
       <div className="main-brick-container">
         <Box className="brick-container">
@@ -374,20 +357,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             className={`sorted-brick absolute-container brick-row-${row} ${
               brick.expanded ? "brick-hover" : ""
               }`}
-            onMouseEnter={() => this.handleMouseHover(key)}
-            onMouseLeave={() => this.handleMouseLeave(key)}
+            onClick={() => this.handleMouseClick(key)}
           >
-            {brick.expanded ? (
-              <ExpandedBrickDescription
-                isAdmin={isAdmin}
-                color={color}
-                brick={brick}
-                move={(brickId) => this.move(brickId)}
-                onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-              />
-            ) : (
-                <ShortBrickDescription brick={brick} color={color} />
-              )}
+            <ShortBrickDescription brick={brick} color={color} isMobile={true} isExpanded={brick.expanded} />
           </div>
         </Box>
       </div>

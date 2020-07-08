@@ -8,6 +8,8 @@ import './ShortBrickDescription.scss';
 interface ShortDescriptionProps {
   brick: Brick;
   color?: string;
+  isMobile?: boolean;
+  isExpanded?: boolean;
 }
 
 class ShortBrickDescription extends Component<ShortDescriptionProps> {
@@ -27,10 +29,21 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     );
   }
 
-  render() {
-    const { color, brick } = this.props;
+  renderPlayButton() {
     return (
-      <div className="short-description">
+      <div className="play-button-link">Play</div>
+    )
+  }
+
+  render() {
+    const { color, brick, isMobile, isExpanded } = this.props;
+    let className = "short-description";
+
+    if (isMobile && isExpanded) {
+      className += " mobile-expanded";
+    }
+    return (
+      <div className={className}>
         {color ? this.renderCircle(color) : this.renderRoler()}
         <div className="short-brick-info">
           <div className="link-description"><span>{brick.title}</span></div>
@@ -39,6 +52,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
           </div>
           <div className="link-info">{getAuthorRow(brick)}</div>
         </div>
+        {isExpanded ? this.renderPlayButton() : ""}
       </div>
     );
   }
