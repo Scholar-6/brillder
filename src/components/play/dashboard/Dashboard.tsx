@@ -586,7 +586,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       if (this.state.finalBricks[i]) {
         let row = Math.floor(i / 3);
         bricksList.push(
-          this.getSortedBrickContainer(this.state.finalBricks[i], i, row)
+          this.getSortedBrickContainer(this.state.finalBricks[i], i, row + 1)
         );
       }
     }
