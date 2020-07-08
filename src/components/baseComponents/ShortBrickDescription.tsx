@@ -11,6 +11,7 @@ interface ShortDescriptionProps {
   color?: string;
   isMobile?: boolean;
   isExpanded?: boolean;
+  move?(): void;
 }
 
 class ShortBrickDescription extends Component<ShortDescriptionProps> {
@@ -32,7 +33,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
 
   renderPlayButton() {
     return (
-      <div className="play-button-link svgOnHover">
+      <div className="play-button-link svgOnHover" onClick={() => this.props.move ? this.props.move() : {}}>
         <svg className="svg w80 h80 svg-default">
           <use href={sprite + "#play-thin"} className="text-gray" />
         </svg>

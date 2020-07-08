@@ -29,6 +29,7 @@ import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
+import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
@@ -543,6 +544,18 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   };
 
   //region Mobile
+  renderMobileExpandedBrick(brick: Brick) {
+    let color = this.getBrickColor(brick);
+
+    return (
+      <ExpandedMobileBrick
+        brick={brick}
+        color={color}
+        move={brickId => this.move(brickId)}
+      />
+    );
+  }
+
   renderSortedMobileBrickContainer = (brick: Brick, key: number, row: any = 0) => {
     let color = this.getBrickColor(brick);
 
@@ -555,7 +568,13 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             }`}
             onClick={() => this.handleMobileClick(key)}
           >
-            <ShortBrickDescription brick={brick} color={color} isMobile={true} isExpanded={brick.expanded} />
+            <ShortBrickDescription
+              brick={brick}
+              color={color}
+              isMobile={true}
+              isExpanded={brick.expanded}
+              move={() => this.move(brick.id)}
+            />
           </div>
         </Box>
       </div>
@@ -576,6 +595,12 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderMobileBricks() {
+    let expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
+
+    if (expandedBrick) {
+      return this.renderMobileExpandedBrick(expandedBrick);
+    }
+
     let bricksList = [];
     for (const brick of this.state.yourBricks) {
       bricksList.push(<ShortBrickDescription brick={brick} />);
