@@ -35,6 +35,9 @@ import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 import ReactDOM from "react-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
+
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -591,7 +594,16 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         bricksList.push(this.renderSortedMobileBrickContainer(finalBricks[i], i, row + 1));
       }
     }
-    return bricksList;
+    return (
+<Swiper
+      spaceBetween={50}
+      slidesPerView={3}
+      onSlideChange={() => console.log('slide change')}
+      onSwiper={(swiper) => console.log(swiper)}
+    >
+      {bricksList.map(b => <SwiperSlide>{b}</SwiperSlide>)}
+    </Swiper>
+    );
   }
 
   renderMobileBricks() {
