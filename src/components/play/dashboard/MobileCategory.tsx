@@ -363,7 +363,13 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             className={className}
             onClick={() => this.handleMouseClick(key)}
           >
-            <ShortBrickDescription brick={brick} color={color} isMobile={true} isExpanded={brick.expanded} />
+            <ShortBrickDescription
+              brick={brick}
+              color={color}
+              isMobile={true}
+              isExpanded={brick.expanded}
+              move={() => this.move(brick.id)}
+            />
           </div>
         </Box>
       </div>
