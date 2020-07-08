@@ -612,7 +612,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     for (const brick of this.state.yourBricks) {
       bricksList.push(<ShortBrickDescription brick={brick} />);
     }
-    return bricksList;
+    return (
+      <Swiper slidesPerView={2}>
+        {bricksList.map(b => <SwiperSlide style={{width: '50vw'}}>{b}</SwiperSlide>)}
+      </Swiper>
+    );
   }
   //region Mobile
 
