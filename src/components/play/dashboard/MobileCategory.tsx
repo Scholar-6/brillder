@@ -25,7 +25,7 @@ import authActions from "redux/actions/auth";
 import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
-import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
+import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
@@ -253,18 +253,18 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   handleMouseClick(index: number) {
-    this.hideBricks();
-    this.setState({ ...this.state });
-    setTimeout(() => {
-      let { finalBricks } = this.state;
-      finalBricks.forEach((brick) => {
-        brick.expanded = false;
-      });
-      if (!finalBricks[index].expandFinished) {
-        finalBricks[index].expanded = true;
-      }
+    let { finalBricks } = this.state;
+    if (finalBricks[index].expanded === true) {
+      finalBricks[index].expanded = false;
       this.setState({ ...this.state });
-    }, 400);
+      return;
+    }
+    this.hideBricks();
+    finalBricks.forEach(brick => brick.expanded = false);
+    if (!finalBricks[index].expandFinished) {
+      finalBricks[index].expanded = true;
+    }
+    this.setState({ ...this.state });
   }
 
   handleLogoutOpen() {
@@ -350,13 +350,17 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       color = brick.subject.color;
     }
 
+    let className = `sorted-brick absolute-container brick-row-${row}`;
+
+    if (brick.expanded) {
+      className += " brick-hover";
+    }
+
     return (
       <div className="main-brick-container">
         <Box className="brick-container">
           <div
-            className={`sorted-brick absolute-container brick-row-${row} ${
-              brick.expanded ? "brick-hover" : ""
-              }`}
+            className={className}
             onClick={() => this.handleMouseClick(key)}
           >
             <ShortBrickDescription brick={brick} color={color} isMobile={true} isExpanded={brick.expanded} />
@@ -487,20 +491,42 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.props.history.push("/build/new-brick/subject");
   }
 
+
+
+  renderExpandedBrick(brick: Brick) {
+    let color = this.getBrickColor(brick);
+
+    return (
+      <ExpandedMobileBrick
+        brick={brick}
+        color={color}
+        move={brickId => this.move(brickId)}
+      />
+    );
+  }
+
+  getBrickColor(brick: Brick) {
+    let color = "";
+    if (!brick.subject) {
+      color = "#B0B0AD";
+    } else {
+      color = brick.subject.color;
+    }
+    return color;
+  }
+
   renderMobileBricks() {
+    let expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
+
+    if (expandedBrick) {
+      return this.renderExpandedBrick(expandedBrick);
+    }
     let { sortedIndex } = this.state;
     let bricksList = [];
     for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
       const brick = this.state.finalBricks[i]
       if (brick) {
-        let color = "";
-
-        if (!brick.subject) {
-          color = "#B0B0AD";
-        } else {
-          color = brick.subject.color;
-        }
-
+        let color = this.getBrickColor(brick);
         bricksList.push(<ShortBrickDescription brick={brick} color={color} />);
       }
     }
