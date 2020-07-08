@@ -35,6 +35,9 @@ import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 import ReactDOM from "react-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
+
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -591,7 +594,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         bricksList.push(this.renderSortedMobileBrickContainer(finalBricks[i], i, row + 1));
       }
     }
-    return bricksList;
+    return (
+      <Swiper>
+        {bricksList.map(b => <SwiperSlide style={{width: '90vw'}}>{b}</SwiperSlide>)}
+      </Swiper>
+    );
   }
 
   renderMobileBricks() {
@@ -605,7 +612,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     for (const brick of this.state.yourBricks) {
       bricksList.push(<ShortBrickDescription brick={brick} />);
     }
-    return bricksList;
+    return (
+      <Swiper slidesPerView={2}>
+        {bricksList.map(b => <SwiperSlide style={{width: '50vw'}}>{b}</SwiperSlide>)}
+      </Swiper>
+    );
   }
   //region Mobile
 
@@ -899,8 +910,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               </div>
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
-              <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
-                New >
+              <div className="brick-row-title">
+                New <a onClick={() => history.push(`/play/dashboard/${Category.New}`)}>></a>
               </div>
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
