@@ -10,13 +10,6 @@ import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
-import {
-  CarouselProvider,
-  Slider,
-  Slide,
-  ButtonBack,
-  ButtonNext,
-} from "pure-react-carousel";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -39,6 +32,7 @@ interface MainPageState {
   createHober: boolean;
   backHober: boolean;
   animatedName: string;
+  swiper: any;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
@@ -50,6 +44,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       createHober: false,
       backHober: false,
       animatedName: "",
+      swiper: null
     } as any;
 
     let count = 0;
@@ -135,22 +130,43 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     );
   }
 
+  swipeNext() {
+    if (this.state.swiper) {
+      this.state.swiper.slideNext();
+    }
+  }
+
+  swipePrev() {
+    if (this.state.swiper) {
+      this.state.swiper.slidePrev();
+    }
+  }
+
   renderMobilePage() {
     return (
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="mobile-main-page">
           <Grid container justify="center">
-            <div onClick={() => {}}>
+            <div onClick={() => this.swipePrev()}>
               <img alt="" className="prev-image" src="/feathericons/chevron-up-grey.png" />
             </div>
           </Grid>
-          <Swiper slidesPerView={3} loop={true} loopedSlides={20} direction="vertical" style={{height: '80%'}}>
+          <Swiper
+            slidesPerView={3}
+            loop={true}
+            loopedSlides={20}
+            direction="vertical"
+            style={{height: '80%'}}
+            onSwiper={swiper => {
+              this.setState({...this.state, swiper});
+            }}
+          >
             <SwiperSlide>{this.renderViewAllButton()}</SwiperSlide>
             <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>
             <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>
           </Swiper>
           <Grid container justify="center">
-            <div onClick={() => {}}>
+            <div onClick={() => this.swipeNext()}>
               <img alt="" className="next-image" src="/feathericons/chevron-down-grey.png" />
             </div>
           </Grid>
