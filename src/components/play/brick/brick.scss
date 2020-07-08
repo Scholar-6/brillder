@@ -2,8 +2,6 @@
 @import '../../../assets/sass/partials/mixins';
 @import '../../../assets/sass/partials/extensions';
 
-
-
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
   .MuiTypography-root {
@@ -14,7 +12,8 @@
 .play-pages {
   height: 100%;
 
-  .MuiExpansionPanelDetails-root, .MuiExpansionPanelSummary-content {
+  .MuiExpansionPanelDetails-root,
+  .MuiExpansionPanelSummary-content {
     color: var(--theme-dark-blue) !important;
   }
 
@@ -53,6 +52,32 @@
     .MuiExpansionPanel-root.Mui-expanded {
       margin: 0 !important;
       margin-bottom: 16px !important;
+    }
+  }
+}
+.play-preview-pages {
+  .sorted-row {
+    @include phone_and_tabletP {
+      height: $back-to-work-height-mobile-view;
+    }
+    .sort-and-filter-container {
+      @include phone_and_tabletP {
+        height: $back-to-work-height-mobile-view;
+      }
+    }
+    .brick-row-container {
+      @include phone_and_tabletP {
+        border-radius: 0;
+        height: $back-to-work-height-mobile-view;
+      }
+      .brick-container {
+        .MuiGrid-container {
+          @include phone_and_tabletP {
+            display: flex;
+            flex-direction: column;
+          }
+        }
+      }
     }
   }
 }
