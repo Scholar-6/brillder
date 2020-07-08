@@ -8,6 +8,8 @@ import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
 import {
   CarouselProvider,
   Slider,
@@ -137,19 +139,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return (
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="mobile-main-page">
-          <CarouselProvider
-            naturalSlideWidth={100}
-            orientation="vertical"
-            naturalSlideHeight={125}
-            infinite={true}
-            totalSlides={3}
-          >
-            <Slider>
-              <Slide index={0}>{this.renderViewAllButton()}</Slide>
-              <Slide index={1}>{this.renderCreateButton()}</Slide>
-              <Slide index={2}>{this.renderWorkButton()}</Slide>
-            </Slider>
-          </CarouselProvider>
+          <Swiper slidesPerView={3} loop={true} loopedSlides={20} direction="vertical" style={{height: '100%'}}>
+            <SwiperSlide>{this.renderViewAllButton()}</SwiperSlide>
+            <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>
+            <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>
+          </Swiper>
         </div>
       </Hidden>
     );
