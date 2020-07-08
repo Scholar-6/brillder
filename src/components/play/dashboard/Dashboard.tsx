@@ -595,14 +595,9 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       }
     }
     return (
-<Swiper
-      spaceBetween={50}
-      slidesPerView={3}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
-    >
-      {bricksList.map(b => <SwiperSlide>{b}</SwiperSlide>)}
-    </Swiper>
+      <Swiper>
+        {bricksList.map(b => <SwiperSlide style={{width: '90vw'}}>{b}</SwiperSlide>)}
+      </Swiper>
     );
   }
 

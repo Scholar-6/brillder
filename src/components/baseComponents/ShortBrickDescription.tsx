@@ -11,6 +11,7 @@ interface ShortDescriptionProps {
   color?: string;
   isMobile?: boolean;
   isExpanded?: boolean;
+  onClick?(): void;
   move?(): void;
 }
 
@@ -56,7 +57,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     }
 
     return (
-      <div className={className}>
+      <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
         {color ? this.renderCircle(color) : this.renderRoler()}
         <div className="short-brick-info">
           <div className="link-description"><span>{brick.title}</span></div>
