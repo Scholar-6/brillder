@@ -1,7 +1,7 @@
 @import '../../../../assets/sass/partials/variables';
 @import '../../../../assets/sass/partials/mixins';
 @import '../../../../assets/sass/partials/extensions';
-
+$height:calc(100vh - 55.8vw);
 .play-preview-pages {
   background: var(--theme-dark-blue);
   min-height: 100%;
@@ -17,18 +17,20 @@
     }
     .brick-container {
       @include phone_and_tabletP {
-        height: 100%;
+        height: calc(100vh - 21vh);
+        overflow-y: auto;
       }
       .introduction-page {
         font-family: $font-family-regular;
         position: relative;
-        overflow-y: auto;
         @include phone_and_tabletP {
           height: 100%;
         }
         @include tabletP {
+          overflow-y: auto;
           padding: 4vh 2vw 4vh 7vw;
-          height: calc(100vh - 7.8vw);
+          // height: calc(100vh - 7.8vw);
+          height: $height;
         }
 
         .intro-header {
@@ -98,6 +100,10 @@
             padding-left: 0 !important;
             font-size: 3vh !important;
             text-align: center !important;
+            height: 6vw;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
         .question-index-container {
@@ -138,7 +144,7 @@
         .question-live-play {
           width: calc(100% - 7vw);
           overflow-y: auto;
-          height: calc(100vh - 24.6vh);
+          height: calc(100vh - 55.8vw);
           padding-bottom: 2vw;
           margin: 6vh 3vw 1vw 4vw;
           position: absolute;
@@ -170,10 +176,9 @@
         }
         @include tabletP {
           position: relative;
-        }
-        @include tabletP {
           padding: 4vh 2vw;
-          height: calc(100vh - 7.8vw);
+           // height: calc(100vh - 7.8vw);
+           height: $height;
         }
         .intro-header {
           position: relative;
@@ -196,10 +201,10 @@
           .brick-counter {
             @include phone_and_tabletP {
               position: fixed;
-              right: 5vw;
-              top: 0vw;
-              font-size: 8vw;
-              color: var(--gray);
+              right: 0vw;
+              top: 1vw;
+              font-size: 6vw;
+              padding-right: 5vw;
             }
           }
           .clock-image {
@@ -288,19 +293,19 @@
           }
         }
         .action-footer {
-          position: absolute;
-          left: 50%;
-          transform: translateX(-50%);
-
           display: flex;
-
           color: var(--theme-dark-blue);
           @include phone_and_tabletP {
+            position: fixed;
             align-items: flex-end;
             justify-content: flex-end;
-            bottom: 3vw;
+            bottom: 13vw;
+            right: 4vw;
           }
           @include tabletP {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
             align-items: center;
             justify-content: flex-end;
             width: 22vw;
@@ -312,8 +317,8 @@
             right: inherit;
             top: inherit;
             @include phone_and_tabletP {
-              width: 26vw;
-              height: 26vw;
+              width: 20vw;
+              height: 20vw;
             }
             .svg {
               @include phone_and_tabletP {
@@ -342,7 +347,7 @@
 
                 font-family: $font-family-bold;
                 @include phone_and_tabletP {
-                  font-size: 11.6vw;
+                  font-size: 8.4vw;
                   width: max-content;
                 }
                 @include tabletP {
@@ -359,8 +364,8 @@
                 letter-spacing: inherit;
                 margin: 0;
                 @include phone_and_tabletP {
-                  font-size: 6vw;
-                  top: -6vw;
+                  font-size: 5.1vw;
+                  top: -4vw;
                 }
                 @include tabletP {
                   top: -1vw;
@@ -409,7 +414,8 @@
         }
         .introduction-page {
           padding: 0;
-          height: calc(100vh - 7.8vw);
+           // height: calc(100vh - 7.8vw);
+           height: $height;
           overflow-y: hidden;
         }
         .fotter-text {
@@ -578,8 +584,14 @@
   }
   .help-text {
     font-family: $font-family-regular;
-    font-size: 0.8vw;
+
     margin-bottom: 3px;
+    @include phone_and_tabletP {
+      font-size: 6vw;
+    }
+    @include tabletP {
+      font-size: 0.8vw;
+    }
   }
 }
 

@@ -242,8 +242,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 </button>
               </div>
             </div>
-
           </div>
+
           <div className="expand-title">
             <span>Brief</span>
             <div className="arrow svgOnHover" onClick={toggleBrief}>
