@@ -18,6 +18,8 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
+import sprite from "../../../assets/img/icons-sprite.svg";
+
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
@@ -680,10 +682,12 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             {this.renderSortAndFilterBox()}
           </Grid>
           <Grid item xs={9} className="brick-row-container">
-            <div className="brick-row-title">
-              New
-              <a onClick={() => this.props.history.push('/play/dashboard')}>
-                <img alt="" style={{height: '5vw'}} src="/feathericons/svg/chevron-down-blue.svg" />
+            <div className="brick-row-title" onClick={() => this.props.history.push('/play/dashboard')}>
+              <a className="btn btn-transparent svgOnHover">
+                <span>New</span>
+                <svg className="svg active">
+                  <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
+                </svg>
               </a>
             </div>
             <div className="bricks-list-container">
