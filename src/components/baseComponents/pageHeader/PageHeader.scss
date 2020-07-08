@@ -1,6 +1,6 @@
-@import '../../../assets/sass/partials/variables';
-@import '../../../assets/sass/partials/mixins';
-@import '../../../assets/sass/partials/extensions';
+@import "../../../assets/sass/partials/variables";
+@import "../../../assets/sass/partials/mixins";
+@import "../../../assets/sass/partials/extensions";
 
 .user-list-page,
 .user-profile-page,
@@ -215,24 +215,6 @@
       letter-spacing: 0.27vw;
       font-size: 1.3vw;
     }
-    .users-pagination,
-    .bricks-pagination {
-      height: max-content;
-      font-size: 0.9vw;
-      font-family: $font-family-regular;
-      color: var(--theme-dark-blue);
-      @include phone_and_tabletP {
-        display: none;
-      }
-      .gray {
-        color: var(--gray);
-      }
-      .left-pagination {
-        padding-top: 0.35vh;
-        padding-left: 0.15vw;
-        line-height: 1.4;
-      }
-    }
     .bottom-next-button {
       bottom: 1vh;
       color: white;
@@ -291,6 +273,24 @@
       bottom: -1vh !important;
       width: 17vw !important;
       opacity: 0 !important;
+    }
+  }
+  .users-pagination,
+  .bricks-pagination {
+    height: max-content;
+    font-size: 0.9vw;
+    font-family: $font-family-regular;
+    color: var(--theme-dark-blue);
+    @include phone_and_tabletP {
+      display: none;
+    }
+    .gray {
+      color: var(--gray);
+    }
+    .left-pagination {
+      padding-top: 0.35vh;
+      padding-left: 0.15vw;
+      line-height: 1.4;
     }
   }
 }
