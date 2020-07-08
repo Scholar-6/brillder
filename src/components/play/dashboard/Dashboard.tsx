@@ -899,8 +899,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               </div>
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
-              <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
-                New >
+              <div className="brick-row-title">
+                New <a onClick={() => history.push(`/play/dashboard/${Category.New}`)}>></a>
               </div>
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
