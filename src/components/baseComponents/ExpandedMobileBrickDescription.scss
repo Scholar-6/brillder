@@ -6,7 +6,7 @@
   .expanded-mobile-brick-info {
     width: 100%;
     height: calc(43.5vh - 4vh);
-    padding: 2vh 8vw;
+    padding: 4vh 8vw 0 8vw;
     background: transparent;
     .brick-icons {
       @extend %flexCenter;
