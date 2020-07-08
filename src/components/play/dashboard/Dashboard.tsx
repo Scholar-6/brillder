@@ -340,6 +340,18 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }, 400);
   }
 
+  handleMobileClick(index: number) {
+    let { finalBricks } = this.state;
+    if (finalBricks[index].expanded === true) {
+      this.hideBricks();
+      this.setState({ ...this.state });
+      return;
+    }
+    this.hideBricks();
+    finalBricks[index].expanded = true;
+    this.setState({ ...this.state });
+  }
+
   handleMouseLeave(key: number) {
     let { finalBricks } = this.state;
     finalBricks.forEach((brick) => {
@@ -427,14 +439,24 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       });
   }
 
-  getBrickContainer = (brick: Brick, key: number) => {
-		let color = "";
+  creatingBrick() {
+    this.props.forgetBrick();
+    this.props.history.push("/build/new-brick/subject");
+  }
 
-		if (!brick.subject) {
-			color = "#B0B0AD";
-		} else {
-			color = brick.subject.color;
-		}
+  getBrickColor(brick: Brick) {
+    let color = "";
+
+    if (!brick.subject) {
+      color = "#B0B0AD";
+    } else {
+      color = brick.subject.color;
+    }
+    return color;
+  }
+
+  renderBrickContainer = (brick: Brick, key: number) => {
+		let color = this.getBrickColor(brick);
 
 		const isAdmin = this.props.user.roles.some(
 			(role: any) => role.roleId === UserType.Admin
@@ -465,9 +487,9 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 				</Box>
 			</div>
 		);
-	};
-
-  getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
+  };
+  
+  renderSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
     let color = "";
 
     if (!brick.subject) {
@@ -506,6 +528,61 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       </div>
     );
   };
+
+  renderSortedBricks = () => {
+    let { sortedIndex } = this.state;
+    let bricksList = [];
+    for (let i = 0 + sortedIndex; i < this.state.pageSize + sortedIndex; i++) {
+      const {finalBricks} = this.state;
+      if (finalBricks[i]) {
+        let row = Math.floor(i / 3);
+        bricksList.push(this.renderSortedBrickContainer(finalBricks[i], i, row + 1));
+      }
+    }
+    return bricksList;
+  };
+
+  //region Mobile
+  renderSortedMobileBrickContainer = (brick: Brick, key: number, row: any = 0) => {
+    let color = this.getBrickColor(brick);
+
+    return (
+      <div className="main-brick-container">
+        <Box className="brick-container">
+          <div
+            className={`sorted-brick absolute-container brick-row-${row} ${
+              brick.expanded ? "brick-hover" : ""
+            }`}
+            onClick={() => this.handleMobileClick(key)}
+          >
+            <ShortBrickDescription brick={brick} color={color} isMobile={true} isExpanded={brick.expanded} />
+          </div>
+        </Box>
+      </div>
+    );
+  };
+
+  renderSortedMobileBricks = () => {
+    let { sortedIndex } = this.state;
+    let bricksList = [];
+    for (let i = 0 + sortedIndex; i < this.state.pageSize + sortedIndex; i++) {
+      const {finalBricks} = this.state;
+      if (finalBricks[i]) {
+        let row = Math.floor(i / 3);
+        bricksList.push(this.renderSortedMobileBrickContainer(finalBricks[i], i, row + 1));
+      }
+    }
+    return bricksList;
+  }
+
+  renderMobileBricks() {
+    let bricksList = [];
+    for (const brick of this.state.yourBricks) {
+      bricksList.push(<ShortBrickDescription brick={brick} />);
+    }
+    return bricksList;
+  }
+  //region Mobile
 
   renderSortAndFilterBox = () => {
     return (
@@ -572,26 +649,13 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 		let bricksList = [];
 		let index = 0;
 		for (let i = index; i < index + 3; i++) {
-			if (this.state.yourBricks[i]) {
-				bricksList.push(this.getBrickContainer(this.state.yourBricks[i], i));
+      const {yourBricks} = this.state;
+			if (yourBricks[i]) {
+				bricksList.push(this.renderBrickContainer(yourBricks[i], i));
 			}
 		}
 		return bricksList;
 	};
-
-  renderSortedBricks = () => {
-    let { sortedIndex } = this.state;
-    let bricksList = [];
-    for (let i = 0 + sortedIndex; i < this.state.pageSize + sortedIndex; i++) {
-      if (this.state.finalBricks[i]) {
-        let row = Math.floor(i / 3);
-        bricksList.push(
-          this.getSortedBrickContainer(this.state.finalBricks[i], i, row + 1)
-        );
-      }
-    }
-    return bricksList;
-  };
 
   renderPagination() {
     if (this.state.bricks.length <= this.state.pageSize) {
@@ -648,19 +712,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         </Grid>
       </Grid>
     );
-  }
-
-  creatingBrick() {
-    this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
-  }
-
-  renderMobileBricks() {
-    let bricksList = [];
-    for (const brick of this.state.yourBricks) {
-      bricksList.push(<ShortBrickDescription brick={brick} />);
-    }
-    return bricksList;
   }
 
   render() {
@@ -830,9 +881,12 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             <div className="bricks-list-container bricks-container-mobile">
               <div className="bricks-list">
                 <Hidden only={["xs"]}>
-                    {this.renderYourBrickRow()}
+                  {this.renderYourBrickRow()}
+                  {this.renderSortedBricks()}
                 </Hidden>
-                {this.renderSortedBricks()}
+                <Hidden only={['sm', 'md', 'lg', 'xl']}>
+                  {this.renderSortedMobileBricks()}
+                </Hidden>
               </div>
             </div>
             <Hidden only={["sm", "md", "lg", "xl"]}>
