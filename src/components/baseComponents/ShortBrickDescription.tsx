@@ -7,6 +7,7 @@ import sprite from "../../assets/img/icons-sprite.svg";
 
 interface ShortDescriptionProps {
   brick: Brick;
+  index?: number;
   color?: string;
   isMobile?: boolean;
   isExpanded?: boolean;
@@ -43,12 +44,16 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   }
 
   render() {
-    const { color, brick, isMobile, isExpanded } = this.props;
+    const { color, brick, isMobile, isExpanded, index } = this.props;
     let className = "short-description";
 
     if (isMobile && isExpanded) {
       className += " mobile-expanded";
     }
+    if (index !== undefined && index >= 0) {
+      className += " mobile-short-" + index;
+    }
+
     return (
       <div className={className}>
         {color ? this.renderCircle(color) : this.renderRoler()}
