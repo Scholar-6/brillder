@@ -535,7 +535,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   render() {
     return (
-      <div className="dashboard-page bricks-list-page">
+      <div className="dashboard-page">
         <div className="upper-part">
           <PageHeader ref={this.pageHeader}
             searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
