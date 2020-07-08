@@ -2,41 +2,40 @@
 @import '../../assets/sass/partials/mixins';
 @import '../../assets/sass/partials/extensions';
 
-.expanded-mobile-brick-info {
-  width: 100%;
-  background: $tab-gray;
-  border-radius: 0.5vw;
-  padding: 1.3vh;
-  position: absolute;
-  z-index: 2;
-  .hover-text {
-    height: 21vh;
-    font-family: $font-family-regular;
-    overflow: hidden;
-    font-size: 1.7vh;
-    .link-description {
-      text-transform: uppercase;
-      font-size: 1.7vh;
-      font-family: $font-family-bold;
-      line-height: 1.2;
-      overflow: hidden;
-      height: 1.7vh;
-      margin-bottom: 0.5vh;
+.mobile-scroll-bricks {
+  .expanded-mobile-brick-info {
+    width: 100%;
+    height: calc(43.5vh - 4vh);
+    padding: 2vh 8vw;
+    background: transparent;
+    .brick-icons {
+      @extend %flexCenter;
+      margin-bottom: 4vh;
+      .round-button {
+        @extend %radCircle;
+        width: 25vw;
+        height: 25vw;
+        .svg {
+          margin-left: 1.52vw;
+        }
+      }
     }
-
-    .link-info {
-      color: $lighter-blue;
-      line-height: 1.3;
-      font-size: 1.6vh;
-      font-family: $font-family-regular;
-      max-height: 1.9vh;
-      overflow-y: hidden;
-      margin-bottom: 0.5vh;
-    }
-    .hovered-open-question {
-      margin-top: 2.5vh;
-      max-height: 3.6vh;
-      margin-bottom: 1.7vh;
+    .brick-description {
+      .link-description {
+        text-transform: uppercase;
+        font-size: 1.7vh;
+        font-family: 'Brandon Grotesque Bold';
+      }
+      .link-info {
+        color: var(--lighter-blue);
+        font-size: 1.6vh;
+        font-family: $font-family-regular;
+      }
+      .hovered-open-question {
+        margin-top: 2.5vh;
+        max-height: 3.6vh;
+        margin-bottom: 1.7vh;
+      }
     }
   }
 }
