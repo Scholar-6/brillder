@@ -2088,6 +2088,12 @@ h3 {
   opacity: 1;
   float: left;
 }
+@media screen and (max-width: 759px) {
+  .vertical-shuffle-choice,
+.choose-choice {
+    font-size: 6vw;
+  }
+}
 .vertical-shuffle-choice .MuiGrid-root,
 .choose-choice .MuiGrid-root {
   margin: 0 !important;
