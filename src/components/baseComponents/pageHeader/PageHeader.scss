@@ -294,3 +294,21 @@
     }
   }
 }
+
+.back-to-work-page {
+  .sorted-row {
+    @include phone_and_tabletP {
+      height: $back-to-work-height-mobile-view;
+    }
+    .sort-and-filter-container {
+      @include phone_and_tabletP {
+        height: $back-to-work-height-mobile-view;
+      }
+    }
+    .brick-row-container {
+      @include phone_and_tabletP {
+        height: $back-to-work-height-mobile-view;
+      }
+    }
+  }
+}

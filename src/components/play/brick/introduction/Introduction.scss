@@ -16,23 +16,47 @@
       width: calc(82.85vw - 1vw);
     }
     .brick-container {
+      @include phone_and_tabletP {
+        height: 100%;
+      }
       .introduction-page {
-        padding: 4vh 2vw 4vh 7vw;
-        height: calc(100vh - 7.8vw);
         font-family: $font-family-regular;
         position: relative;
         overflow-y: auto;
+        @include phone_and_tabletP {
+          height: 100%;
+        }
+        @include tabletP {
+          padding: 4vh 2vw 4vh 7vw;
+          height: calc(100vh - 7.8vw);
+        }
+
         .intro-header {
-          margin-bottom: 10vh;
+          @include phone_and_tabletP {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 3vh;
+          }
+          @include tabletP {
+            margin-bottom: 10vh;
+          }
           .left-brick-circle {
             position: absolute;
             top: 2.4vh;
             left: 0.5vw;
+            @include phone_and_tabletP {
+              position: unset;
+            }
             > div {
               height: 5vw;
               width: 5vw;
               @extend %radCircle;
               background-color: var(--gray);
+              @include phone_and_tabletP {
+                height: 20vw;
+                width: 20vw;
+              }
             }
           }
           h1 {
@@ -68,6 +92,13 @@
           top: 0;
           font-size: 3.6vw;
           text-align: center;
+          @include phone_and_tabletP {
+            position: unset;
+            transform: translate(0);
+            padding-left: 0 !important;
+            font-size: 3vh !important;
+            text-align: center !important;
+          }
         }
         .question-index-container {
           margin: 1.5vw 1.5vw 1.5vw 0.5vw;
@@ -114,12 +145,12 @@
           top: 0;
           &.review-content {
             margin-top: 2.5vh;
-					}
-					.question-title {
-						font-size: 2.5vw;
-						font-family: $font-family-black;
-						color: var(--theme-dark-blue);
-					}
+          }
+          .question-title {
+            font-size: 2.5vw;
+            font-family: $font-family-black;
+            color: var(--theme-dark-blue);
+          }
         }
         .swipe-view {
           height: calc(100vh - 7.5vw);
@@ -133,18 +164,54 @@
         }
       }
       .introduction-info {
-        padding: 4vh 2vw;
         background-color: var(--light-gray);
-        height: calc(100vh - 7.8vw);
-        position: relative;
+        @include phone_and_tabletP {
+          border-radius: 1vh;
+        }
+        @include tabletP {
+          position: relative;
+        }
+        @include tabletP {
+          padding: 4vh 2vw;
+          height: calc(100vh - 7.8vw);
+        }
         .intro-header {
           position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
           font-size: 2vw;
           font-family: $font-family-black;
           color: var(--theme-dark-blue);
+          @include phone_and_tabletP {
+            display: inline-block;
+            padding: 0;
+            position: absolute;
+            right: 5vw;
+            margin-top: 2vw;
+          }
+          @include tabletP {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+          }
+
+          .brick-counter {
+            @include phone_and_tabletP {
+              position: fixed;
+              right: 5vw;
+              top: 0vw;
+              font-size: 8vw;
+              color: var(--gray);
+            }
+          }
+          .clock-image {
+            @include phone_and_tabletP {
+              width: 5vw;
+              height: 5vw;
+            }
+            @include tabletP {
+              width: 2vw;
+              height: 2vw;
+            }
+          }
           .clock {
             margin-left: 3vw;
             display: flex;
@@ -159,6 +226,11 @@
             .counter-seconds {
               font-size: 1vw;
             }
+            // @include phone_and_tabletP {
+            //   position: absolute;
+            //   top: 0;
+            //   right: 0;
+            // }
           }
         }
         .intro-text-row {
@@ -169,7 +241,14 @@
           display: flex;
           flex-direction: column;
           justify-content: center;
-          margin-top: 3vw;
+          @include phone_and_tabletP {
+            margin-top: 1vw !important;
+            padding: 3vw;
+            font-size: 4.4vw;
+          }
+          @include tabletP {
+            margin-top: 3vw;
+          }
           > p,
           > ul {
             margin: 0;
@@ -209,26 +288,50 @@
           }
         }
         .action-footer {
-          width: 22vw;
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
-          bottom: 5vw;
+
           display: flex;
-          align-items: center;
-          justify-content: flex-end;
+
           color: var(--theme-dark-blue);
+          @include phone_and_tabletP {
+            align-items: flex-end;
+            justify-content: flex-end;
+            bottom: 3vw;
+          }
+          @include tabletP {
+            align-items: center;
+            justify-content: flex-end;
+            width: 22vw;
+            bottom: 5vw;
+          }
           .play-preview {
             position: relative;
             left: inherit;
             right: inherit;
             top: inherit;
+            @include phone_and_tabletP {
+              width: 26vw;
+              height: 26vw;
+            }
+            .svg {
+              @include phone_and_tabletP {
+                width: 13vw;
+                height: 13vw;
+              }
+            }
           }
           > div {
-            min-width: 4vw;
             @extend %flexCenter;
             flex-direction: column;
             text-align: center;
+            @include phone_and_tabletP {
+              margin-left: 5vw;
+            }
+            @include tabletP {
+              min-width: 4vw;
+            }
             &.direction-info {
               width: 100%;
               padding: 0 1vw;
@@ -236,8 +339,15 @@
               > h2 {
                 margin-top: 0;
                 margin-bottom: 0;
-                font-size: 2.6vw;
+
                 font-family: $font-family-bold;
+                @include phone_and_tabletP {
+                  font-size: 11.6vw;
+                  width: max-content;
+                }
+                @include tabletP {
+                  font-size: 2.6vw;
+                }
               }
               > h3,
               > span {
@@ -245,10 +355,16 @@
                 color: var(--theme-dark-blue);
               }
               > h3 {
-                top: -1vw;
                 left: 1.8vw;
                 letter-spacing: inherit;
                 margin: 0;
+                @include phone_and_tabletP {
+                  font-size: 6vw;
+                  top: -6vw;
+                }
+                @include tabletP {
+                  top: -1vw;
+                }
               }
               > span {
                 width: 100%;
@@ -264,7 +380,12 @@
           font-family: $font-family-regular;
           color: var(--theme-dark-blue);
           margin-left: 0.8vw;
-          font-size: 1.8vw;
+          @include phone_and_tabletP {
+            font-size: 4.8vw;
+          }
+          @include tabletP {
+            font-size: 1.8vw;
+          }
         }
       }
       &.live-page,
@@ -299,15 +420,15 @@
         .question-live-play {
           height: calc(100vh - 27.6vh);
           margin: 12vh 3vw 1vw 4vw;
-				}
-				.introduction-info {
-					.intro-text-row {
-						position: absolute;
-						top: 50%;
-						transform: translateY(-10vh);
-						margin: 0;
-					}
-				}
+        }
+        .introduction-info {
+          .intro-text-row {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-10vh);
+            margin: 0;
+          }
+        }
       }
       .circle-progress-container {
         position: relative;
@@ -392,22 +513,41 @@
     box-shadow: none !important;
   }
   .expand-title {
-    margin: 5vh 0 1vh 0;
     color: var(--theme-dark-blue);
     line-height: 1.3;
-    font: 2.6vw $font-family-bold;
-    height: 4vw;
     display: flex;
     align-items: center;
+    @include phone_and_tabletP {
+      margin-top: 2vh;
+      font: 6vw $font-family-bold;
+    }
+    @include tabletP {
+      height: 4vw;
+      margin: 5vh 0 1vh 0;
+
+      font: 2.6vw $font-family-bold;
+    }
     > span {
+      @include phone_and_tabletP {
+        font-size: 9vw;
+      }
       &:first-child {
-        width: 6vw;
+        @include tabletP {
+          width: 6vw;
+        }
       }
     }
     .arrow {
-      width: 3vw;
-      height: 3vw;
-      margin: 0 1.5vw 0 0;
+      @include phone_and_tabletP {
+        width: 10vw;
+        height: 10vw;
+        margin-left: 5vw;
+      }
+      @include tabletP {
+        margin: 0 1.5vw 0 0;
+        width: 3vw;
+        height: 3vw;
+      }
       .svg {
         height: 2.1vw;
       }
@@ -417,14 +557,24 @@
     }
     .help-prep {
       color: var(--gray);
-      font-size: 1vw;
+      @include phone_and_tabletP {
+        font-size: 4vw;
+      }
+      @include tabletP {
+        font-size: 1vw;
+      }
     }
   }
   .expanded-text {
     width: 100%;
     color: var(--theme-dark-blue);
-    font: 1vw $font-family-regular;
     margin: 0 0 1vh 0;
+    @include phone_and_tabletP {
+      font: 6vw $font-family-regular;
+    }
+    @include tabletP {
+      font: 1vw $font-family-regular;
+    }
   }
   .help-text {
     font-family: $font-family-regular;
