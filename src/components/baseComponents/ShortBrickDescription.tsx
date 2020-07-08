@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './ShortBrickDescription.scss';
-
+import sprite from "../../assets/img/icons-sprite.svg";
 
 interface ShortDescriptionProps {
   brick: Brick;
@@ -31,7 +31,14 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
 
   renderPlayButton() {
     return (
-      <div className="play-button-link">Play</div>
+      <div className="play-button-link svgOnHover">
+        <svg className="svg w80 h80 svg-default">
+          <use href={sprite + "#play-thin"} className="text-gray" />
+        </svg>
+        <svg className="svg w80 h80 colored">
+          <use href={sprite + "#play-thick"} className="text-gray" />
+        </svg>
+      </div>
     )
   }
 

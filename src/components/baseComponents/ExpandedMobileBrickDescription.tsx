@@ -26,25 +26,23 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
       <div className="expanded-mobile-brick-info">
         <div className="brick-icons">
           <div className="round-button svgOnHover" style={{ background: `${color}` }} onClick={() => this.props.move(brick.id)}>
-            <svg className="svg svg-default">
-              <use href={sprite + "#play-thin"} />
+            <svg className="svg w80 h80 svg-default">
+              <use href={sprite + "#play-thin"} className="text-white" />
             </svg>
-            <svg className="svg svg-default">
-              <use href={sprite + "#play-thick"} />
+            <svg className="svg w80 h80 colored">
+              <use href={sprite + "#play-thick"} className="text-white" />
             </svg>
           </div>
         </div>
         <div className="brick-description">
           <div className="link-description">{brick.title}</div>
           <div className="link-info">
-            {brick.subTopic} | {brick.alternativeTopics}
+            <div>{brick.subTopic} | {brick.alternativeTopics}</div>
+            <div>{getAuthorRow(brick)}</div>
+            <div>{brick.openQuestion}</div>
+            <div>{this.getSubjectRow(brick)}</div>
+            <div>Editor: Name Surname</div>
           </div>
-          <div className="link-info">{getAuthorRow(brick)}</div>
-          <div className="hovered-open-question link-info">
-            {brick.openQuestion}
-          </div>
-          <div className="link-info">{this.getSubjectRow(brick)}</div>
-          <div className="link-info">Editor: Name Surname</div>
         </div>
       </div>
     );
