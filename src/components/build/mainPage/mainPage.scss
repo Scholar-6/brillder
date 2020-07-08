@@ -231,4 +231,8 @@
     height: 2vh;
     text-align: center;
   }
+  .swiper-slide-active,
+  .swiper-slide-duplicate-prev {
+    opacity: 0.5;
+  }
 }
