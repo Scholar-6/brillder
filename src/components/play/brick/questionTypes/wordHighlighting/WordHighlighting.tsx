@@ -54,7 +54,7 @@ class WordHighlighting extends CompComponent<
             attempt.marks += markIncrement;
           }
         }
-      } else if (word.checked === false && attempt.answer.indexOf(index) === -1) {
+      } else if (!word.checked && attempt.answer.indexOf(index) === -1) {
       } else {
         attempt.correct = false;
       }
@@ -125,6 +125,7 @@ class WordHighlighting extends CompComponent<
 
     return (
       <div className="word-highlighting-play">
+        <p className="help-text">Click to highlight.</p>
         <div className="words-container">
           {component.words.map((word: any, index: number) => (
             this.renderWord(word, index)

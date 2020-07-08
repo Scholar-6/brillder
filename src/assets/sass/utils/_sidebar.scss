@@ -17,7 +17,7 @@
     width: calc(25% - 1vw);
     margin-right: 1vw;
     border-top-right-radius: $main-panel-radius;
-    background: $light-blue;
+    background: var(--light-blue);
     flex-wrap: initial;
     flex-direction: column;
     position: relative;
@@ -325,12 +325,11 @@
     .brick-row-title {
       padding-left: 1.15vw;
       color: var(--theme-dark-blue);
-      padding-bottom: 0;
       line-height: 1;
-      letter-spacing: 1.05vw;
+      letter-spacing: 0.4vw;
       @include phone_and_tabletP {
-        font-size: 7vw;
-        font-weight: 900;
+        font-size: 5vw;
+        font-family: $font-family-bold;
         padding-top: 1.3vh;
         border-bottom: 0.2vh solid var(--light-gray);
         padding-bottom: 0.9vh;
@@ -343,6 +342,7 @@
       @include tabletP {
         font-family: $font-family-black;
         padding-top: 2.3vh;
+        padding-bottom: 0;
         font-size: 5.2vw;
       }
     }
@@ -351,31 +351,44 @@
         height: 62vh !important;
         overflow: auto;
       }
-      .main-brick-container {
-        position: relative;
-        padding-left: 0.8vw;
-        @include tabletL {
-          width: 33.33%;
-        }
+      &.bricks-container-mobile {
+        overflow: hidden;
         @include phone_and_tabletP {
-          width: 100%;
+          overflow-y: auto;
         }
+      }
+      .bricks-list {
+        display: grid;
+        @include tabletP {
+          grid-template-columns: repeat(auto-fit, minmax(33.33%, 1fr));
+        }
+      }
+      .main-brick-container {
+        display: flex;
+        position: relative;
+        padding: 0.8vw 0 0 0.8vw;
+        min-height: 9.4vh;
         .brick-container {
-          position: relative;
-          padding-right: 0;
-          height: $min-brick-height;
-          margin-top: 0.85vw;
-          margin-bottom: 0vw;
-          font-family: $font-family-regular;
           width: 100%;
+          position: relative;
+          height: $min-brick-height;
+          font-family: $font-family-regular;
           text-align: left;
+          @include phone_and_tabletP {
+            text-align: center;
+          }
+          .short-brick-info {
+            @include phone_and_tabletP {
+              top: 0.5vh;
+              left: 12vw;
+              width: calc(100% - 4vh);
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
           &:hover {
             color: var(--white);
-          }
-          @media only screen and (max-width: 599px) {
-            .brick-container {
-              text-align: center;
-            }
           }
           h1 {
             color: var(--theme-dark-blue);
@@ -438,36 +451,41 @@
             margin-bottom: 16px !important;
           }
           .absolute-container {
+            position: absolute;
             border-radius: $brick-radius;
             color: var(--theme-dark-blue);
             width: 95%;
             text-align: left;
-            position: absolute;
             height: $min-brick-height;
-            .left-brick-roller {
-              position: absolute;
-              top: 1.5vh;
-              left: 0.15vw;
-              > div {
-                height: 2.1vw;
-                width: 1.9vw;
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-position: center;
-                background-image: url(/images/roller-green.png);
+            .short-description {
+              display: flex;
+              width: 100%;
+              height:100%;
+              .left-brick-roller {
+                position: absolute;
+                top: 1.5vh;
+                left: 0.15vw;
+                > div {
+                  height: 2.1vw;
+                  width: 1.9vw;
+                  background-size: 100% 100%;
+                  background-repeat: no-repeat;
+                  background-position: center;
+                  background-image: url(/images/roller-green.png);
+                }
               }
-            }
-            .left-brick-circle {
-              position: absolute;
-              top: 1.3vh;
-              > div {
-                height: 2.1vw;
-                width: 2.1vw;
-                border-radius: 20vw;
-                background-color: var(--gray);
-                @include phone_and_tabletP {
-                  height: 8.1vw;
-                  width: 8.1vw;
+              .left-brick-circle {
+                position: absolute;
+                top: 1.3vh;
+                > div {
+                  height: 2.1vw;
+                  width: 2.1vw;
+                  border-radius: 20vw;
+                  background-color: var(--gray);
+                  @include phone_and_tabletP {
+                    height: 8.1vw;
+                    width: 8.1vw;
+                  }
                 }
               }
             }
@@ -481,10 +499,8 @@
             }
             &.brick-row-4,
             &.brick-row-5 {
-              @include tabletP {
-                bottom: 0;
-              }
               .expanded-brick-info {
+                bottom: 0;
                 border-bottom-left-radius: 0 !important;
               }
             }
@@ -502,29 +518,6 @@
             height: 100%;
             min-height: $min-brick-height;
             width: 3.3%;
-          }
-        }
-      }
-      > .MuiGrid-container {
-        @include phone_and_tabletP {
-          flex-wrap: inherit;
-          flex-direction: column;
-        }
-        .main-brick-container {
-          .brick-container {
-            @include phone_and_tabletP {
-              height: 19vw;
-            }
-            .short-brick-info {
-              @include phone_and_tabletP {
-                top: 0.5vh;
-                left: 12vw;
-                width: calc(100% - 4vh);
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              }
-            }
           }
         }
       }
@@ -578,14 +571,17 @@
           padding-top: 0;
         }
         .user-actions-cell {
-          min-width: 4.5vw;
+          min-width: 5.5vw;
           .delete-button,
           .edit-button {
             display: inline-block;
             cursor: pointer;
             height: 1.85vw;
             width: 1.85vw;
-          }
+					}
+					.edit-button {
+						margin-left: 1vw;
+					}
         }
         .activate-button-container {
           padding-left: 2vw;

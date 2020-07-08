@@ -1,6 +1,6 @@
-@import '../../../assets/sass/partials/variables';
-@import '../../../assets/sass/partials/mixins';
-@import '../../../assets/sass/partials/extensions';
+@import "../../../assets/sass/partials/variables";
+@import "../../../assets/sass/partials/mixins";
+@import "../../../assets/sass/partials/extensions";
 
 .user-list-page,
 .user-profile-page,
@@ -12,15 +12,200 @@
   height: 100%;
   width: 100%;
   font-family: $font-family-light;
-
+  @include phone_and_tabletP {
+    background-color: var(--light-gray);
+  }
   .search-input {
     width: 100%;
   }
-
+  .page-navigation {
+    @extend %floatToXCenter;
+    top: 1vh;
+    width: 100%;
+    z-index: 9999;
+    @include phone_and_tabletP {
+      @extend %flexCenter;
+    }
+    @include tabletP {
+      display: none;
+    }
+    .glasses {
+      width: 9vw;
+      height: 3vh;
+    }
+  }
   .upper-part {
     position: relative;
-    min-height: 100%;
-    background: var(--theme-dark-blue);
+    @include phone_and_tabletP {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      z-index: 1;
+    }
+    .page-header {
+      display: flex;
+      @include phone_and_tabletP {
+        padding: 2vw 4vw;
+        border-radius: 3.5vh 3.5vh 0vh 0vh;
+        background: var(--light-blue);
+        flex-wrap: inherit;
+        z-index: 999998;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        &.active {
+          z-index: 999999;
+        }
+      }
+      .logout-container {
+        @include phone_and_tabletP {
+          margin: 0;
+          width: 100% !important;
+          flex-wrap: inherit !important;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        @include tabletP {
+          height: 5.834vw;
+          width: calc(93.16vw - 1vw) !important;
+          margin-left: 1vw;
+          border-bottom-left-radius: 2vw;
+          background: var(--light-blue);
+          align-items: center;
+        }
+
+        .search-container {
+          display: flex;
+          align-items: center;
+          @include phone_and_tabletP {
+            display: flex;
+            align-items: center;
+            &.active {
+              width: 91vw;
+            }
+          }
+          @include tabletP {
+            width: 70%;
+            height: 3.698vw;
+          }
+
+          .open-search,
+          .close-search {
+            @include phone_and_tabletP {
+              display: flex;
+              width: 7vw;
+              height: 7vw;
+            }
+            @include tabletP {
+              display: none;
+            }
+          }
+          .search-area {
+            width: 100%;
+            @include phone_and_tabletP {
+              display: none;
+              z-index: 1;
+              transition: all 300ms;
+              &.active {
+                display: flex;
+              }
+            }
+            .search-input {
+              display: block;
+              background-color: transparent;
+              font-family: $font-family-regular;
+              border: none;
+              border-radius: 12px;
+              letter-spacing: 0.045vw;
+              width: 100%;
+              color: #acacac;
+              @include phone_and_tabletP {
+                font-size: 3.7vw;
+                padding: 0.7vh 0.6vw 0.7vh 9vw;
+              }
+              @include tabletP {
+                margin: 0 0 0 1.4vw;
+                font-size: 1.7vw;
+              }
+            }
+          }
+        }
+        .action-container {
+          justify-content: flex-end;
+          @include phone_and_tabletP {
+            width: 100%;
+            display: flex;
+          }
+          @include tabletP {
+            width: 30%;
+          }
+        }
+        .help-button,
+        .home-button,
+        .search-button,
+        .bell-button,
+        .more-button {
+          cursor: pointer;
+          display: inline-block;
+          @include phone_and_tabletP {
+            width: 8vw;
+            height: 8vw;
+            padding: 10px;
+            border-radius: 50%;
+            &:hover {
+              box-shadow: 0px 0px 0 10px var(--theme-orange-alpha2);
+            }
+          }
+          @include tabletP {
+            margin: 0 2vw 0 0;
+            width: 3.698vw;
+            height: 3.698vw;
+          }
+          .svg {
+            width: 100%;
+            height: 100%;
+            color: var(--theme-orange);
+            stroke: var(--theme-orange);
+            .bell-text-default {
+              stroke: var(--theme-orange);
+            }
+            .bell-text-filled {
+              stroke: var(--theme-dark-blue);
+            }
+          }
+        }
+        .help-button {
+          opacity: 0;
+        }
+        .search-button {
+          @include tabletP {
+            margin: 0 0 0 1.4vw;
+          }
+        }
+        .user-button {
+          cursor: pointer;
+          margin-top: 0.635vh;
+          display: block;
+          height: 4.3vh;
+          width: 4.1vh;
+          margin-right: 1.9vw;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-image: url(/images/brick-list/user.png);
+          transition: all 0.2s ease-in-out;
+          transform-origin: 50% 50%;
+          &:hover {
+            background-image: url(/images/brick-list/user-hover.png);
+            transform: scale(1.4);
+          }
+        }
+      }
+    }
     h3 {
       color: white;
       font-weight: normal;
@@ -29,24 +214,6 @@
       margin-bottom: 1vh;
       letter-spacing: 0.27vw;
       font-size: 1.3vw;
-    }
-    .users-pagination,
-    .bricks-pagination {
-      height: max-content;
-      font-size: 0.9vw;
-      font-family: $font-family-regular;
-      color: var(--theme-dark-blue);
-      @include phone_and_tabletP {
-        display: none;
-      }
-      .gray {
-        color: var(--gray);
-      }
-      .left-pagination {
-        padding-top: 0.35vh;
-        padding-left: 0.15vw;
-        line-height: 1.4;
-      }
     }
     .bottom-next-button {
       bottom: 1vh;
@@ -97,6 +264,33 @@
       right: 0;
       color: white;
       top: 2vh;
+    }
+  }
+  .zEWidget-launcher {
+    @include phone_and_tabletP {
+      background-color: red !important;
+      left: 5% !important;
+      bottom: -1vh !important;
+      width: 17vw !important;
+      opacity: 0 !important;
+    }
+  }
+  .users-pagination,
+  .bricks-pagination {
+    height: max-content;
+    font-size: 0.9vw;
+    font-family: $font-family-regular;
+    color: var(--theme-dark-blue);
+    @include phone_and_tabletP {
+      display: none;
+    }
+    .gray {
+      color: var(--gray);
+    }
+    .left-pagination {
+      padding-top: 0.35vh;
+      padding-left: 0.15vw;
+      line-height: 1.4;
     }
   }
 }

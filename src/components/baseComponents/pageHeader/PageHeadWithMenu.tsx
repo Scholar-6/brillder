@@ -3,28 +3,37 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Grid } from "@material-ui/core";
 
-import PageHeader from "components/baseComponents/pageHeader/PageHeader";
+import PageHeader from "./PageHeader";
 import { User, UserType } from "model/user";
-import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
+import LogoutDialog from "../logoutDialog/LogoutDialog";
 
-interface PlayMenuProps {
+import ReactDOM from 'react-dom';
+import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
+
+interface HeaderMenuProps {
   history: any;
   user: User;
 }
 
-interface PlayMenuState {
+interface HeaderMenuState {
   dropdownShown: boolean;
+  notificationsShown: boolean;
   logoutOpen: boolean;
 }
 
-class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
-  constructor(props: PlayMenuProps) {
+class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
+  pageHeader: React.RefObject<any>;
+
+  constructor(props: HeaderMenuProps) {
     super(props);
 
     this.state = {
       dropdownShown: false,
+      notificationsShown: false,
       logoutOpen: false,
     };
+
+    this.pageHeader = React.createRef();
   }
 
   showDropdown() {
@@ -33,6 +42,14 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
 
   hideDropdown() {
     this.setState({ ...this.state, dropdownShown: false });
+  }
+
+  showNotifications() {
+    this.setState({ ...this.state, notificationsShown: true });
+  }
+
+  hideNotifications() {
+    this.setState({ ...this.state, notificationsShown: false });
   }
 
   creatingBrick() {
@@ -50,23 +67,22 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
 
   render() {
     return (
-      <div>
-        <PageHeader
+      <div className="upper-part">
+        <PageHeader ref={this.pageHeader}
           searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
           search={() => {}}
           searching={(v: string) => {}}
           showDropdown={() => this.showDropdown()}
+          showNotifications={() => this.showNotifications()}
         />
         <Menu
           className="menu-dropdown"
           keepMounted
           open={this.state.dropdownShown}
-          onClose={() => this.hideDropdown()}
-        >
+          onClose={() => this.hideDropdown()}>
           <MenuItem
             className="first-item menu-item"
-            onClick={() => this.props.history.push("/play/dashboard")}
-          >
+            onClick={() => this.props.history.push("/play/dashboard")}>
             View All Bricks
             <Grid
               container
@@ -97,6 +113,14 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
                   alt=""
                   src="/images/main-page/create-white.png"
                 />
+              </div>
+            </Grid>
+          </MenuItem>
+          <MenuItem className="menu-item" onClick={() => this.props.history.push('/back-to-work')}>
+            Back To Work
+            <Grid container className="menu-icon-container" justify="center" alignContent="center">
+              <div>
+                <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
               </div>
             </Grid>
           </MenuItem>
@@ -167,6 +191,11 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
             </Grid>
           </MenuItem>
         </Menu>
+        <NotificationPanel
+          shown={this.state.notificationsShown}
+          handleClose={() => this.hideNotifications()}
+          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+        />
         <LogoutDialog
           isOpen={this.state.logoutOpen}
           close={() => this.handleLogoutClose()}
@@ -177,4 +206,4 @@ class PlayBrickMenu extends Component<PlayMenuProps, PlayMenuState> {
   }
 }
 
-export default PlayBrickMenu;
+export default PageHeadWithMenu;

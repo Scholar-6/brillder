@@ -1,0 +1,41 @@
+@import '../../assets/sass/partials/variables';
+@import '../../assets/sass/partials/mixins';
+@import '../../assets/sass/partials/extensions';
+
+.mobile-scroll-bricks {
+  .expanded-mobile-brick-info {
+    width: 100%;
+    height: calc(43.5vh - 4vh);
+    padding: 2vh 8vw;
+    background: transparent;
+    .brick-icons {
+      @extend %flexCenter;
+      margin-bottom: 4vh;
+      .round-button {
+        @extend %radCircle;
+        width: 25vw;
+        height: 25vw;
+        .svg {
+          margin-left: 1.52vw;
+        }
+      }
+    }
+    .brick-description {
+      .link-description {
+        text-transform: uppercase;
+        font-size: 1.7vh;
+        font-family: 'Brandon Grotesque Bold';
+      }
+      .link-info {
+        color: var(--lighter-blue);
+        font-size: 1.6vh;
+        font-family: $font-family-regular;
+      }
+      .hovered-open-question {
+        margin-top: 2.5vh;
+        max-height: 3.6vh;
+        margin-bottom: 1.7vh;
+      }
+    }
+  }
+}

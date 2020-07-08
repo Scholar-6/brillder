@@ -1,13 +1,15 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import { useHistory } from "react-router-dom";
 
 import './ProposalReview.scss';
 import { Brick } from "model/brick";
-import { useHistory } from "react-router-dom";
 import { User } from "model/user";
-import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
+import { BrickLengthEnum } from 'model/brick';
 import { setBrillderTitle } from "components/services/titleService";
+
+import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 
 
@@ -48,6 +50,16 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
     setBrillderTitle(brick.title);
   }
 
+  const getSpendTime = () => {
+    let timeMinutes = 4;
+    if (brick.brickLength === BrickLengthEnum.S40min) {
+      timeMinutes = 8;
+    } else if (brick.brickLength === BrickLengthEnum.S60min) {
+      timeMinutes = 12;
+    }
+    return timeMinutes;
+  }
+
   return (
     <div className="proposal-page">
       <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
@@ -62,6 +74,7 @@ const ProposalReview: React.FC<ProposalProps> = ({brick, user, saveBrick}) => {
           <h2>Slide your mouse over the cover to</h2>
           <h2>open it. &nbsp;Click back to edit.</h2>
           <div className="text-line-2"></div>
+          <div style={{fontSize: '2.2vw'}}>Aim to spend {getSpendTime()} minutes on this section.</div>
           <h2>When you're ready, start building!</h2>
         </Grid>
         <div className="book-main-container">
