@@ -199,7 +199,7 @@
 
     .view-item {
       text-align: center;
-      padding-top: 7.5vh;
+      padding-top: 4vh;
       .item-image {
         height: 11.3vh;
       }
@@ -207,7 +207,6 @@
 
     .create-item {
       text-align: center;
-      padding-top: 6.7vh;
       .item-image {
         height: 16.9vh;
       }
@@ -216,14 +215,24 @@
       }
     }
     .back-item {
-      padding-top: 6.9vh;
+      padding-top: 2vh;
       .item-image {
         height: 19.6vh;
       }
     }
   }
-
-  li {
-    padding-bottom: 0 !important;
+  .prev-image {
+    margin-top: 6vh;
+  }
+  .next-image {
+    margin-top: 3vh;
+  }
+  .prev-image,.next-image {
+    height: 2vh;
+    text-align: center;
+  }
+  .swiper-slide-active,
+  .swiper-slide-duplicate-prev {
+    opacity: 0.5;
   }
 }

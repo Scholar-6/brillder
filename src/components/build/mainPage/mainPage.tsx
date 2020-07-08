@@ -8,13 +8,8 @@ import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
-import {
-  CarouselProvider,
-  Slider,
-  Slide,
-  ButtonBack,
-  ButtonNext,
-} from "pure-react-carousel";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -37,6 +32,7 @@ interface MainPageState {
   createHober: boolean;
   backHober: boolean;
   animatedName: string;
+  swiper: any;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
@@ -48,6 +44,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       createHober: false,
       backHober: false,
       animatedName: "",
+      swiper: null
     } as any;
 
     let count = 0;
@@ -133,23 +130,46 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     );
   }
 
+  swipeNext() {
+    if (this.state.swiper) {
+      this.state.swiper.slideNext();
+    }
+  }
+
+  swipePrev() {
+    if (this.state.swiper) {
+      this.state.swiper.slidePrev();
+    }
+  }
+
   renderMobilePage() {
     return (
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="mobile-main-page">
-          <CarouselProvider
-            naturalSlideWidth={100}
-            orientation="vertical"
-            naturalSlideHeight={125}
-            infinite={true}
-            totalSlides={3}
+          <Grid container justify="center">
+            <div onClick={() => this.swipePrev()}>
+              <img alt="" className="prev-image" src="/feathericons/chevron-up-grey.png" />
+            </div>
+          </Grid>
+          <Swiper
+            slidesPerView={3}
+            loop={true}
+            loopedSlides={20}
+            direction="vertical"
+            style={{height: '80%'}}
+            onSwiper={swiper => {
+              this.setState({...this.state, swiper});
+            }}
           >
-            <Slider>
-              <Slide index={0}>{this.renderViewAllButton()}</Slide>
-              <Slide index={1}>{this.renderCreateButton()}</Slide>
-              <Slide index={2}>{this.renderWorkButton()}</Slide>
-            </Slider>
-          </CarouselProvider>
+            <SwiperSlide>{this.renderViewAllButton()}</SwiperSlide>
+            <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>
+            <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>
+          </Swiper>
+          <Grid container justify="center">
+            <div onClick={() => this.swipeNext()}>
+              <img alt="" className="next-image" src="/feathericons/chevron-down-grey.png" />
+            </div>
+          </Grid>
         </div>
       </Hidden>
     );
