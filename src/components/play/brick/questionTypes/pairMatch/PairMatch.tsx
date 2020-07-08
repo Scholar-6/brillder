@@ -20,7 +20,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     super(props);
     let status = DragAndDropStatus.None;
     let userAnswers = [];
-    
+
     const {component} = props;
     if (props.isPreview === true) {
       userAnswers = component.list ? component.list : [];
@@ -127,9 +127,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     return (
       <ListItem key={i} className={className}>
         <div className="option-container">
-          <div className="MuiListItemText-root">
-            {this.renderOptionContent(item as any)}
-          </div>
+					{this.renderOptionContent(item as any)}
         </div>
       </ListItem>
     );
@@ -138,6 +136,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   render() {
     return (
       <div className="pair-match-play">
+        <p className="help-text">Drag to rearrange.</p>
         <Grid container justify="center">
           <List style={{padding: 0}} className="answers-list">
           {

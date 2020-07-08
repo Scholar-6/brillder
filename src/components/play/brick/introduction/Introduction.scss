@@ -424,8 +424,13 @@
     font: 1vw $font-family-regular;
     margin: 0 0 1vh 0;
   }
+  .help-text {
+    font-family: $font-family-regular;
+    font-size: 0.8vw;
+    margin-bottom: 3px;
+  }
 }
 
 .play-preview-pages ~ .beta-text {
-  color: var(--theme-dark-blue) !important;
+  color: var(--theme-orange) !important;
 }

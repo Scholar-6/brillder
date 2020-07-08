@@ -3,10 +3,12 @@
 @import '../../assets/sass/partials/extensions';
 
 .expanded-brick-info {
+  width: 100%;
   background: $tab-gray;
   border-radius: 0.5vw;
   padding: 1.3vh;
-
+  position: absolute;
+  z-index: 2;
   .hover-text {
     height: 21vh;
     font-family: $font-family-regular;
