@@ -527,7 +527,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       const brick = this.state.finalBricks[i]
       if (brick) {
         let color = this.getBrickColor(brick);
-        bricksList.push(<ShortBrickDescription brick={brick} color={color} />);
+        bricksList.push(<ShortBrickDescription brick={brick} index={i} color={color} />);
       }
     }
     return bricksList;
