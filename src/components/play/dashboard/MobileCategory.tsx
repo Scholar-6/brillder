@@ -31,6 +31,8 @@ import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 import ReactDOM from "react-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -536,7 +538,12 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         bricksList.push(<ShortBrickDescription brick={brick} index={i} color={color} />);
       }
     }
-    return bricksList;
+
+    return (
+      <Swiper slidesPerView={2}>
+        {bricksList.map(b => <SwiperSlide style={{width: '50vw'}}>{b}</SwiperSlide>)}
+      </Swiper>
+    );
   }
 
   render() {
