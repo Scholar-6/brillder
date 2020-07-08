@@ -139,11 +139,21 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return (
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="mobile-main-page">
-          <Swiper slidesPerView={3} loop={true} loopedSlides={20} direction="vertical" style={{height: '100%'}}>
+          <Grid container justify="center">
+            <div onClick={() => {}}>
+              <img alt="" className="prev-image" src="/feathericons/chevron-up-grey.png" />
+            </div>
+          </Grid>
+          <Swiper slidesPerView={3} loop={true} loopedSlides={20} direction="vertical" style={{height: '80%'}}>
             <SwiperSlide>{this.renderViewAllButton()}</SwiperSlide>
             <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>
             <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>
           </Swiper>
+          <Grid container justify="center">
+            <div onClick={() => {}}>
+              <img alt="" className="next-image" src="/feathericons/chevron-down-grey.png" />
+            </div>
+          </Grid>
         </div>
       </Hidden>
     );
