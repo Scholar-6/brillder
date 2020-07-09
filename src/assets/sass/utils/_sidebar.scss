@@ -438,6 +438,9 @@
             text-align: center;
           }
           .short-brick-info {
+            position: absolute;
+            top: 0.3vh;
+            left: 3vw;
             @include phone_and_tabletP {
               top: 0.5vh;
               left: 12vw;
@@ -445,6 +448,43 @@
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
+            }
+            .link-description {
+              text-transform: uppercase;
+              font-family: $font-family-bold;
+              line-height: 1.1;
+              margin-bottom: 0.5vh;
+              @include phone_and_tabletP {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                font-size: 3.8vw;
+                width: 100%;
+              }
+              @include tabletP {
+                font-size: 0.8vw;
+                overflow: hidden;
+                width: 19vw;
+              }
+            }
+            .link-info {
+              color: $lighter-blue;
+              line-height: 1.3;
+              font-family: $font-family-regular;
+              overflow-y: hidden;
+              margin-bottom: 0.1vh;
+
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              @include phone_and_tabletP {
+                font-size: 3.8vw;
+                width: 75vw;
+              }
+              @include tabletP {
+                font-size: 0.9vw;
+                width: 19vw;
+              }
             }
           }
           &:hover {
@@ -525,13 +565,9 @@
                 position: absolute;
                 top: 1.5vh;
                 left: 0.15vw;
-                > div {
+                .roller-button {
+                  width: 2.1vw;
                   height: 2.1vw;
-                  width: 1.9vw;
-                  background-size: 100% 100%;
-                  background-repeat: no-repeat;
-                  background-position: center;
-                  background-image: url(/images/roller-green.png);
                 }
               }
               .left-brick-circle {
@@ -546,6 +582,17 @@
                     height: 8.1vw;
                     width: 8.1vw;
                   }
+                }
+              }
+              &.mobile-expanded {
+                .short-brick-info {
+                  width: calc(100% - 10vw - 15vw) !important;
+                }
+                .play-button-link {
+                  width: 10vw;
+                  height: 10vh;
+                  position: absolute;
+                  right: 0;
                 }
               }
             }
