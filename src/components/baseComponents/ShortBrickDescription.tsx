@@ -19,7 +19,11 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   renderRoler() {
     return (
       <div className="left-brick-roller">
-        <div className="roller-button" />
+        <div className="btn btn-transparent roller-button svgOnHover">
+          <svg className="svg w100 h100 active">
+            <use href={sprite + "#roller"} className="text-theme-green" />
+          </svg>
+        </div>
       </div>
     );
   }

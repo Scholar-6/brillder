@@ -1,6 +1,7 @@
 @import '../../../../assets/sass/partials/variables';
 @import '../../../../assets/sass/partials/mixins';
 @import '../../../../assets/sass/partials/extensions';
+
 .play-preview-pages {
   background: var(--theme-dark-blue);
   min-height: 100%;
@@ -27,6 +28,7 @@
         }
         @include tabletP {
           overflow-y: auto;
+          height: calc(100vh - 15.8vh);
           padding: 4vh 2vw 4vh 7vw;
         }
 
@@ -278,7 +280,7 @@
               &.current {
                 color: var(--theme-dark-blue);
               }
-              .blue-circle-main-container{
+              .blue-circle-main-container {
                 @extend %floatToXCenter;
                 width: 1.2vw;
                 height: 1.2vw;
@@ -421,10 +423,10 @@
           padding: 0;
           overflow-y: hidden;
           @include phone_and_tabletP {
-             height: calc(100vh - 55.8vw);
+            height: calc(100vh - 55.8vw);
           }
           @include tabletP {
-             height: calc(100vh - 7.8vw);
+            height: calc(100vh - 7.8vw);
           }
         }
         .fotter-text {
