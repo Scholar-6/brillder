@@ -3,6 +3,12 @@
 @import '../../../assets/sass/partials/extensions';
 
 .document-editor {
+  .ck-dropdown {
+    margin-right: 0 !important;
+  }
+  .upload-button-custom span {
+    font-family: $font-family-bold !important;
+  }
   .ck-toolbar {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
