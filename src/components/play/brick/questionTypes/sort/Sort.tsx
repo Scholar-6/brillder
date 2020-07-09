@@ -175,7 +175,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       status = DragAndDropStatus.Init;
     }
 
-    if (status === DragAndDropStatus.Changed) {
+    if (status === DragAndDropStatus.Changed && this.props.onAttempted) {
       this.props.onAttempted();
     }
     
