@@ -1,4 +1,15 @@
-@import '../../../../../assets/sass/partials/variables';
-@import '../../../../../assets/sass/partials/mixins';
-@import '../../../../../assets/sass/partials/extensions';
+.unique-component {
+  .document-editor {
+    height: 500px;
+    .ck-toolbar_grouping {
+      width: 4vh !important;
 
+      .ck-toolbar__items {
+        width: 2vh !important;
+      }
+      .ck-button {
+          width: 2vh !important;
+      }
+    }
+  }
+}
