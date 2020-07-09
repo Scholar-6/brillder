@@ -43,7 +43,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     } else {
       activeItems.push(activeItem);
     }
-    if (activeItems.length >= 2) {
+    if (activeItems.length >= 2 && this.props.onAttempted) {
       this.props.onAttempted();
     }
     this.setState({ activeItems });
