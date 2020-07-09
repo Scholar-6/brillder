@@ -168,7 +168,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   };
 
   const renderBriefExpandText = () => {
-    if (state.briefExpanded) {
+    if (state.briefExpanded) { 
       return (
         <div className="expanded-text">
           <YoutubeAndMathInHtml value={brick.brief} />
@@ -190,16 +190,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   };
 
   const renderTimer = () => {
-    return (
-      <TimerWithClock
-        isArrowUp={true}
-        isStopped={state.isStopped}
-        startTime={props.startTime}
-        brickLength={brick.brickLength}
-        onStop={(duration) => setDuration(duration)}
-      />
-    );
-  };
+
+  }
 
   return (
     <div className="brick-container">
@@ -224,7 +216,13 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           </Grid>
           <Grid item sm={4} xs={12}>
             <div className="introduction-info">
-              {renderTimer()}
+              <TimerWithClock
+                isArrowUp={true}
+                isStopped={state.isStopped}
+                startTime={props.startTime}
+                brickLength={brick.brickLength}
+                onStop={(duration) => setDuration(duration)}
+              />
               <IntroductionDetails brickLength={brick.brickLength} />
               {renderPlayButton()}
             </div>
@@ -245,7 +243,13 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           </div>
 
           <div className="introduction-info">
-            {renderTimer}
+            <TimerWithClock
+              isArrowUp={true}
+              isStopped={state.isStopped}
+              startTime={props.startTime}
+              brickLength={brick.brickLength}
+              onStop={(duration) => setDuration(duration)}
+            />
             <IntroductionDetails brickLength={brick.brickLength} />
           </div>
           {renderBriefTitle()}
