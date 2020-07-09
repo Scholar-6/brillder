@@ -363,13 +363,15 @@
     .core-public-toggle {
       position: absolute;
       right: 3vw;
-      top: 6vh;
+      top: 5.3vh;
       display: flex;
       align-items: center;
+      font-family: $font-family-bold;
       .btn {
         display: flex;
         align-items: center;
         span {
+          color: var(--light-blue2) !important;
           &:first-child {
             margin-right: 1vw;
           }

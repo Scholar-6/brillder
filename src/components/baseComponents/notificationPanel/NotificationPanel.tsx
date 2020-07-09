@@ -45,6 +45,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
       <Popover
         open={this.props.shown}
         onClose={this.props.handleClose}
+        anchorReference={this.props.anchorElement ? "anchorEl" : "none"}
         anchorEl={this.props.anchorElement}
         anchorOrigin={{
           vertical: 'bottom',
@@ -98,6 +99,8 @@ class NotificationPanel extends Component<NotificationPanelProps> {
               }
             </List>
           </CardContent>
+          {(this.props.notifications &&
+            this.props.notifications.length != 0) &&
           <CardActions>
             <div>Clear All</div>
             <IconButton onClick={() => this.markAllAsRead()}>
@@ -107,7 +110,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                 </svg>
               </SvgIcon>
             </IconButton>
-          </CardActions>
+          </CardActions>}
         </Card>
       </Popover>
     );
