@@ -8,6 +8,7 @@ import { Brick, BrickLengthEnum } from "model/brick";
 import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import { Moment } from "moment";
+import PrepareText from './PrepareText';
 import IntroductionDetails from "./IntroductionDetails";
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 const moment = require("moment");
@@ -159,19 +160,23 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             />
           </svg>
         </div>
-        <span className="help-prep">
-          Expand to start the timer. Aim to spend around {timeToSpend} minutes
-          on this section.
-        </span>
+        {!state.prepExpanded ? (
+          <span className="help-prep">
+            Expand to start the timer. Aim to spend around {timeToSpend} minutes
+            on this section.
+          </span>
+        ) : (
+          ""
+        )}
       </div>
     );
   };
 
   const renderBriefExpandText = () => {
-    if (state.briefExpanded) { 
+    if (state.briefExpanded) {
       return (
         <div className="expanded-text">
-          <YoutubeAndMathInHtml value={brick.brief} />
+          <MathInHtml value={brick.brief} />
         </div>
       );
     }
@@ -190,8 +195,48 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   };
 
   const renderTimer = () => {
+    return (
+      <TimerWithClock
+        isArrowUp={true}
+        isStopped={state.isStopped}
+        startTime={props.startTime}
+        brickLength={brick.brickLength}
+        onStop={(duration) => setDuration(duration)}
+      />
+    );
+  };
 
-  }
+  const renderHeader = () => {
+    return (
+      <div className="intro-header">
+        <div className="left-brick-circle">
+          <div
+            className="round-button"
+            style={{ background: `${color}` }}
+          ></div>
+        </div>
+        <h1>{brick.title}</h1>
+      </div>
+    );
+  };
+
+  const renderMobileHeader = () => {
+    if (state.prepExpanded) {
+      return (
+        <div className="intro-header expanded-intro-header">
+          <div className="left-brick-circle">
+            <div
+              className="round-button"
+              style={{ background: `${color}` }}
+            ></div>
+          </div>
+          <h1>{brick.title}</h1>
+          <p><PrepareText brickLength={brick.brickLength} /></p>
+        </div>
+      );
+    }
+    return renderHeader();
+  };
 
   return (
     <div className="brick-container">
@@ -199,15 +244,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <Grid container direction="row">
           <Grid item sm={8} xs={12}>
             <div className="introduction-page">
-              <div className="intro-header">
-                <div className="left-brick-circle">
-                  <div
-                    className="round-button"
-                    style={{ background: `${color}` }}
-                  ></div>
-                </div>
-                <h1>{brick.title}</h1>
-              </div>
+              {renderHeader()}
               {renderBriefTitle()}
               {renderBriefExpandText()}
               {renderPrepTitle()}
@@ -216,13 +253,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           </Grid>
           <Grid item sm={4} xs={12}>
             <div className="introduction-info">
-              <TimerWithClock
-                isArrowUp={true}
-                isStopped={state.isStopped}
-                startTime={props.startTime}
-                brickLength={brick.brickLength}
-                onStop={(duration) => setDuration(duration)}
-              />
+              {renderTimer()}
               <IntroductionDetails brickLength={brick.brickLength} />
               {renderPlayButton()}
             </div>
@@ -232,95 +263,20 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="introduction-page">
-          <div className="intro-header">
-            <div className="left-brick-circle">
-              <div
-                className="round-button"
-                style={{ background: `${color}` }}></div>
-            </div>
-            <h1>{brick.title}</h1>
-          </div>
-
+          {renderMobileHeader()}
           <div className="introduction-info">
-            <TimerWithClock
-              isArrowUp={true}
-              isStopped={state.isStopped}
-              startTime={props.startTime}
-              brickLength={brick.brickLength}
-              onStop={(duration) => setDuration(duration)}
-            />
-            <IntroductionDetails brickLength={brick.brickLength} />
-            <div className="action-footer">
-              <div>&nbsp;</div>
-              <div className="direction-info">
-                <h3>Ready?</h3>
-                <h2>Play Brick</h2>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  className="play-preview svgOnHover play-green"
-                  onClick={startBrick}
-                >
-                  <svg className="svg svg-default m-l-02">
-                    <use href={sprite + "#play-thin"} />
-                  </svg>
-                  <svg className="svg colored m-l-02">
-                    <use href={sprite + "#play-thick"} />
-                  </svg>
-                </button>
-              </div>
-            </div>
+            {renderTimer()}
+            {!state.prepExpanded ? (
+              <IntroductionDetails brickLength={brick.brickLength} />
+            ) : (
+              ""
+            )}
+            {renderPlayButton()}
           </div>
-
-          <div className="expand-title">
-            <span>Brief</span>
-            <div className="arrow svgOnHover" onClick={toggleBrief}>
-              <svg className="svg w100 h100 active">
-                <use
-                  href={
-                    state.briefExpanded
-                      ? sprite + "#arrow-down"
-                      : sprite + "#arrow-right"
-                  }
-                  className="text-theme-dark-blue"
-                />
-              </svg>
-            </div>
-          </div>
-          {state.briefExpanded ? (
-            <div className="expanded-text">
-              <MathInHtml value={brick.brief} />
-            </div>
-          ) : (
-            ""
-          )}
-          <div className="expand-title">
-            <span>Prep</span>
-            <div className="arrow svgOnHover" onClick={togglePrep}>
-              <svg className="svg w100 h100 active">
-                <use
-                  href={
-                    state.prepExpanded
-                      ? sprite + "#arrow-down"
-                      : sprite + "#arrow-right"
-                  }
-                  className="text-theme-dark-blue"
-                />
-              </svg>
-            </div>
-            <span className="help-prep">
-              Expand to start the timer. Aim to spend around {timeToSpend}{" "}
-              minutes on this section.
-            </span>
-          </div>
-          {state.prepExpanded ? (
-            <div className="expanded-text">
-              <YoutubeAndMathInHtml value={brick.prep} />
-            </div>
-          ) : (
-            ""
-          )}
+          {renderBriefTitle()}
+          {renderBriefExpandText()}
+          {renderPrepTitle()}
+          {renderPrepExpandText()}
         </div>
       </Hidden>
     </div>
