@@ -45,6 +45,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
       <Popover
         open={this.props.shown}
         onClose={this.props.handleClose}
+        anchorReference={this.props.anchorElement ? "anchorEl" : "none"}
         anchorEl={this.props.anchorElement}
         anchorOrigin={{
           vertical: 'bottom',
