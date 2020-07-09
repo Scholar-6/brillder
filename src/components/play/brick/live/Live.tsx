@@ -69,7 +69,6 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const handleStep = (step: number) => () => {
     setActiveAnswer();
-    questions[activeStep].edited = true;
     let newStep = activeStep + 1;
 
     if (props.isPlayPreview) {
@@ -150,6 +149,7 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const onQuestionAttempted = (questionIndex: number) => {
     if (!questions[questionIndex].edited) {
+      questions[activeStep].edited = true;
       handleStep(questionIndex)();
     }
   };
