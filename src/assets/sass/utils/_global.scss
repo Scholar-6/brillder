@@ -514,7 +514,11 @@ h3 {
 	padding: 1vh 0 !important;
 	background-color: $tab-gray !important;
 	opacity: 1;
-	float: left;
+  float: left;
+  @include phone_and_tabletP {
+    font-size: 6vw;
+  }
+
 	.MuiGrid-root {
 		margin: 0 !important;
 	}
