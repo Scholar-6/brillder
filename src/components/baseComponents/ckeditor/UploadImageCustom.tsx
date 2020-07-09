@@ -2,6 +2,9 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 // @ts-ignore
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
+// @ts-ignore
+import imageIcon from '@ckeditor/ckeditor5-core/theme/icons/image.svg';
+
 import { uploadFile } from "components/services/uploadFile";
 
 class UploadImageCustom extends Plugin {
@@ -18,7 +21,7 @@ class UploadImageCustom extends Plugin {
 
       view.set({
         label: "Insert image",
-        withText: true,
+        icon: imageIcon,
         tooltip: true,
       });
 
