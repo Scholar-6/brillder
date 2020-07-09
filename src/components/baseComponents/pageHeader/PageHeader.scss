@@ -313,6 +313,9 @@
   }
 }
 
+.play-preview-pages ~ .beta-text,
+.bricks-list-page ~ .beta-text,
+.dashboard-page ~ .beta-text,
 .back-to-work-page ~ .beta-text {
   color: var(--theme-dark-blue) !important;
 }
