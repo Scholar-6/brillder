@@ -236,8 +236,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             <div className="left-brick-circle">
               <div
                 className="round-button"
-                style={{ background: `${color}` }}
-              ></div>
+                style={{ background: `${color}` }}></div>
             </div>
             <h1>{brick.title}</h1>
           </div>
@@ -251,12 +250,77 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               onStop={(duration) => setDuration(duration)}
             />
             <IntroductionDetails brickLength={brick.brickLength} />
+            <div className="action-footer">
+              <div>&nbsp;</div>
+              <div className="direction-info">
+                <h3>Ready?</h3>
+                <h2>Play Brick</h2>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="play-preview svgOnHover play-green"
+                  onClick={startBrick}
+                >
+                  <svg className="svg svg-default m-l-02">
+                    <use href={sprite + "#play-thin"} />
+                  </svg>
+                  <svg className="svg colored m-l-02">
+                    <use href={sprite + "#play-thick"} />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
-          {renderBriefTitle()}
-          {renderBriefExpandText()}
-          {renderPrepTitle()}
-          {renderPrepExpandText()}
-          {renderPlayButton()}
+
+          <div className="expand-title">
+            <span>Brief</span>
+            <div className="arrow svgOnHover" onClick={toggleBrief}>
+              <svg className="svg w100 h100 active">
+                <use
+                  href={
+                    state.briefExpanded
+                      ? sprite + "#arrow-down"
+                      : sprite + "#arrow-right"
+                  }
+                  className="text-theme-dark-blue"
+                />
+              </svg>
+            </div>
+          </div>
+          {state.briefExpanded ? (
+            <div className="expanded-text">
+              <MathInHtml value={brick.brief} />
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="expand-title">
+            <span>Prep</span>
+            <div className="arrow svgOnHover" onClick={togglePrep}>
+              <svg className="svg w100 h100 active">
+                <use
+                  href={
+                    state.prepExpanded
+                      ? sprite + "#arrow-down"
+                      : sprite + "#arrow-right"
+                  }
+                  className="text-theme-dark-blue"
+                />
+              </svg>
+            </div>
+            <span className="help-prep">
+              Expand to start the timer. Aim to spend around {timeToSpend}{" "}
+              minutes on this section.
+            </span>
+          </div>
+          {state.prepExpanded ? (
+            <div className="expanded-text">
+              <YoutubeAndMathInHtml value={brick.prep} />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </Hidden>
     </div>
