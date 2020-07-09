@@ -760,6 +760,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               <use href={sprite + "#glasses"} className="text-theme-dark-blue" />
             </svg>
           </div>
+          <div className="breadcrumbs">All</div>
         </div>
         <div className="upper-part">
           <PageHeader
@@ -913,10 +914,10 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                   <span>Core</span>
                   <div className="svgOnHover">
                     <svg className="svg active selected">
-                      <use href={sprite + "#box"} className="text-theme-dark-blue" />
+                      <use href={sprite + "#box"} className="text-light-blue2" />
                     </svg>
                     <svg className="svg active">
-                      <use href={sprite + "#globe"} className="text-theme-dark-blue" />
+                      <use href={sprite + "#globe"} className="text-light-blue2" />
                     </svg>
                   </div>
                   <span>Public</span>
@@ -928,7 +929,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 <a className="btn btn-transparent svgOnHover">
                   <span>New</span>
                   <svg className="svg active">
-                    <use href={sprite + "#arrow-down"} className="text-theme-dark-blue" />
+                    <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
                   </svg>
                 </a>
               </div>

@@ -551,6 +551,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   render() {
     return (
       <div className="dashboard-page">
+        <div className="page-navigation">
+          <div className="btn btn-transparent glasses svgOnHover">
+            <svg className="svg w100 h100 active">
+              <use href={sprite + "#glasses"} className="text-theme-dark-blue" />
+            </svg>
+          </div>
+          <div className="breadcrumbs">New</div>
+        </div>
         <div className="upper-part">
           <PageHeader ref={this.pageHeader}
             searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
@@ -686,7 +694,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               <a className="btn btn-transparent svgOnHover">
                 <span>New</span>
                 <svg className="svg active">
-                  <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
+                  <use href={sprite + "#arrow-down"} className="text-theme-dark-blue" />
                 </svg>
               </a>
             </div>
