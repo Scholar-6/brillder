@@ -1,6 +1,7 @@
 @import '../../../../assets/sass/partials/variables';
 @import '../../../../assets/sass/partials/mixins';
 @import '../../../../assets/sass/partials/extensions';
+
 .play-preview-pages {
   background: var(--theme-dark-blue);
   min-height: 100%;
@@ -28,6 +29,7 @@
         }
         @include tabletP {
           overflow-y: auto;
+          height: calc(100vh - 15.8vh);
           padding: 4vh 2vw 4vh 7vw;
         }
 
