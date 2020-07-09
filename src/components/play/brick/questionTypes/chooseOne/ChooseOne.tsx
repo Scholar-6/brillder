@@ -22,7 +22,6 @@ interface ChooseOneComponent {
 interface ChooseOneProps extends CompQuestionProps {
   component: ChooseOneComponent;
   answers: number;
-  onAttempted(): void;
 }
 
 interface ChooseOneState {

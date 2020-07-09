@@ -71,6 +71,7 @@ class WordHighlighting extends CompComponent<
 
   highlighting(index: number) {
     this.state.words[index].selected = !this.state.words[index].selected;
+    this.props.onAttempted();
     this.setState({ words: this.state.words });
   }
 

@@ -61,7 +61,11 @@ strong {
 #webWidget {
   left: 0;
   width: 100% !important;
+  @include desktop {
+    width: 357px !important;
+  }
 }
+
 
 #launcher {
   position: fixed;

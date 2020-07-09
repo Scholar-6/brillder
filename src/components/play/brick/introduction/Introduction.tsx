@@ -97,6 +97,102 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     setState({ ...state, duration });
   };
 
+  const renderPlayButton = () => {
+    return (
+      <div className="action-footer">
+        <div>&nbsp;</div>
+        <div className="direction-info">
+          <h3>Ready?</h3>
+          <h2>Play Brick</h2>
+        </div>
+        <div>
+          <button
+            type="button"
+            className="play-preview svgOnHover play-green"
+            onClick={startBrick}
+          >
+            <svg className="svg svg-default m-l-02">
+              <use href={sprite + "#play-thin"} />
+            </svg>
+            <svg className="svg colored m-l-02">
+              <use href={sprite + "#play-thick"} />
+            </svg>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderBriefTitle = () => {
+    return (
+      <div className="expand-title">
+        <span>Brief</span>
+        <div className="arrow svgOnHover" onClick={toggleBrief}>
+          <svg className="svg w100 h100 active">
+            <use
+              href={
+                state.briefExpanded
+                  ? sprite + "#arrow-down"
+                  : sprite + "#arrow-right"
+              }
+              className="text-theme-dark-blue"
+            />
+          </svg>
+        </div>
+      </div>
+    );
+  };
+
+  const renderPrepTitle = () => {
+    return (
+      <div className="expand-title">
+        <span>Prep</span>
+        <div className="arrow svgOnHover" onClick={togglePrep}>
+          <svg className="svg w100 h100 active">
+            <use
+              href={
+                state.prepExpanded
+                  ? sprite + "#arrow-down"
+                  : sprite + "#arrow-right"
+              }
+              className="text-theme-dark-blue"
+            />
+          </svg>
+        </div>
+        <span className="help-prep">
+          Expand to start the timer. Aim to spend around {timeToSpend} minutes
+          on this section.
+        </span>
+      </div>
+    );
+  };
+
+  const renderBriefExpandText = () => {
+    if (state.briefExpanded) { 
+      return (
+        <div className="expanded-text">
+          <YoutubeAndMathInHtml value={brick.brief} />
+        </div>
+      );
+    }
+    return "";
+  };
+
+  const renderPrepExpandText = () => {
+    if (state.prepExpanded) {
+      return (
+        <div className="expanded-text">
+          <YoutubeAndMathInHtml value={brick.prep} />
+        </div>
+      );
+    }
+    return "";
+  };
+
+  const renderTimer = () => {
+
+  }
+
   return (
     <div className="brick-container">
       <Hidden only={["xs"]}>
@@ -112,54 +208,10 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 </div>
                 <h1>{brick.title}</h1>
               </div>
-              <div className="expand-title">
-                <span>Brief</span>
-                <div className="arrow svgOnHover" onClick={toggleBrief}>
-                  <svg className="svg w100 h100 active">
-                    <use
-                      href={
-                        state.briefExpanded
-                          ? sprite + "#arrow-down"
-                          : sprite + "#arrow-right"
-                      }
-                      className="text-theme-dark-blue"
-                    />
-                  </svg>
-                </div>
-              </div>
-              {state.briefExpanded ? (
-                <div className="expanded-text">
-                  <MathInHtml value={brick.brief} />
-                </div>
-              ) : (
-                ""
-              )}
-              <div className="expand-title">
-                <span>Prep</span>
-                <div className="arrow svgOnHover" onClick={togglePrep}>
-                  <svg className="svg w100 h100 active">
-                    <use
-                      href={
-                        state.prepExpanded
-                          ? sprite + "#arrow-down"
-                          : sprite + "#arrow-right"
-                      }
-                      className="text-theme-dark-blue"
-                    />
-                  </svg>
-                </div>
-                <span className="help-prep">
-                  Expand to start the timer. Aim to spend around {timeToSpend}{" "}
-                  minutes on this section.
-                </span>
-              </div>
-              {state.prepExpanded ? (
-                <div className="expanded-text">
-                  <YoutubeAndMathInHtml value={brick.prep} />
-                </div>
-              ) : (
-                ""
-              )}
+              {renderBriefTitle()}
+              {renderBriefExpandText()}
+              {renderPrepTitle()}
+              {renderPrepExpandText()}
             </div>
           </Grid>
           <Grid item sm={4} xs={12}>
@@ -172,29 +224,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 onStop={(duration) => setDuration(duration)}
               />
               <IntroductionDetails brickLength={brick.brickLength} />
-              <div className="action-footer">
-                <div>&nbsp;</div>
-                <div className="direction-info">
-                  <h3>Ready?</h3>
-                  <h2>Play Brick</h2>
-                </div>
-
-                <div>
-                  <button
-                    type="button"
-                    className="play-preview svgOnHover play-green"
-                    onClick={startBrick}
-                  >
-                    <svg className="svg svg-default m-l-02">
-                      <use href={sprite + "#play-thin"} />
-                    </svg>
-                    <svg className="svg colored m-l-02">
-                      <use href={sprite + "#play-thick"} />
-                    </svg>
-                  </button>
-                </div>
-
-              </div>
+              {renderPlayButton()}
             </div>
           </Grid>
         </Grid>

@@ -65,6 +65,9 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     if (this.state.status === DragAndDropStatus.None) {
       status = DragAndDropStatus.Init;
     }
+    if (this.state.status === DragAndDropStatus.Changed) {
+      this.props.onAttempted();
+    }
     this.setState({ status, userAnswers });
   }
 
