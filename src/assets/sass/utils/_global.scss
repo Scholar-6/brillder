@@ -505,6 +505,49 @@ h3 {
 	}
 }
 
+.vertical-shuffle-choice,
+.choose-choice {
+	display: block;
+	font: $answer-input-text-size $font-family-regular;
+	margin: 0.5vh 0 !important;
+	color: var(--theme-dark-blue) !important;
+	text-align: center;
+	text-transform: none !important;
+	width: 100%;
+	padding: 1vh 0 !important;
+	background-color: $tab-gray !important;
+	opacity: 1;
+  float: left;
+  @include phone_and_tabletP {
+    font-size: 6vw;
+  }
+
+	.MuiGrid-root {
+		margin: 0 !important;
+	}
+	.MuiButton-label {
+		flex-direction: column;
+	}
+	img {
+		width: 100%;
+	}
+	p {
+		text-align: center !important;
+	}
+	&.active {
+		background: $white-blue !important;
+	}
+	&.correct {
+		background: var(--theme-green) !important;
+		.question-hint {
+			background: var(--white) !important;
+		}
+	}
+	&.wrong {
+		background: var(--theme-orange);
+	}
+}
+
 .page-loader {
 	width: 100%;
 	height: 100vh;
