@@ -22,6 +22,8 @@ class UploadImageCustom extends Plugin {
         tooltip: true,
       });
 
+      view.class = "upload-button-custom";
+
       view.on("execute", () => {
         let el = document.createElement("input");
         el.setAttribute("type", "file");
