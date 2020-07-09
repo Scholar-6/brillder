@@ -48,7 +48,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (this.state.status === DragAndDropStatus.None) {
       status = DragAndDropStatus.Init;
     }
-    if (status === DragAndDropStatus.Changed) {
+    if (status === DragAndDropStatus.Changed && this.props.onAttempted) {
       this.props.onAttempted();
     }
     this.setState({ status, userAnswers });

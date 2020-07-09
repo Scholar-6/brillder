@@ -1,45 +1,40 @@
-import React from 'react'
-// @ts-ignore 
-import CKEditor from '@ckeditor/ckeditor5-react';
+import React from "react";
 // @ts-ignore
-import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import CKEditor from "@ckeditor/ckeditor5-react";
 // @ts-ignore
-import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
+import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 // @ts-ignore
-import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
 // @ts-ignore
-import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
+import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
 // @ts-ignore
-import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
+import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic";
 // @ts-ignore
-import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
+import Superscript from "@ckeditor/ckeditor5-basic-styles/src/superscript";
 // @ts-ignore
-import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
+import Strikethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough";
 // @ts-ignore
-import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+import Subscript from "@ckeditor/ckeditor5-basic-styles/src/subscript";
 // @ts-ignore
-import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
+import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
 // @ts-ignore
-import List from '@ckeditor/ckeditor5-list/src/list';
+import FontColor from "@ckeditor/ckeditor5-font/src/fontcolor";
 // @ts-ignore
-import MathType from '@wiris/mathtype-ckeditor5/src/plugin';
+import List from "@ckeditor/ckeditor5-list/src/list";
 // @ts-ignore
-import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
+import MathType from "@wiris/mathtype-ckeditor5/src/plugin";
 // @ts-ignore
-import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed";
 // @ts-ignore
-import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
+import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 // @ts-ignore
-import { addToolbarToDropdown, createDropdown } from "@ckeditor/ckeditor5-ui/src/dropdown/utils";
+import Table from "@ckeditor/ckeditor5-table/src/table";
 // @ts-ignore
-import SplitButtonView from "@ckeditor/ckeditor5-ui/src/dropdown/button/splitbuttonview";
+import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar";
 // @ts-ignore
-import Table from '@ckeditor/ckeditor5-table/src/table';
-// @ts-ignore
-import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
-
-
-import './DocumentEditor.scss';
+import Image from "@ckeditor/ckeditor5-image/src/image";
+import "./DocumentEditor.scss";
+import UploadImageCustom from './UploadImageCustom';
 
 export interface DocumentWirisEditorProps {
   disabled: boolean;
@@ -61,28 +56,10 @@ interface DocumentWirisEditorState {
   isWirisInserting: boolean;
 }
 
-class InsertDropDown extends Plugin {
-  editor: any = null;
-  constructor( editor:any ) {
-    super(editor);
-    this.editor = editor;
-  }
-
-  init() {
-    const editor = this.editor;
-    editor.ui.componentFactory.add("InsertDropDown", (locale:any) => {
-      const dropdownView = createDropdown(locale, SplitButtonView);
-      dropdownView.class="ck-custom-dropdown";
-      const buttons:any[] = [];
-      buttons.push(editor.ui.componentFactory.create('subscript'));
-      buttons.push(editor.ui.componentFactory.create('strikethrough'));
-      addToolbarToDropdown(dropdownView, buttons);
-      return dropdownView;
-    });
-  }
-}
-
-class DocumentWirisEditorComponent extends React.Component<DocumentWirisEditorProps, DocumentWirisEditorState> {
+class DocumentWirisEditorComponent extends React.Component<
+  DocumentWirisEditorProps,
+  DocumentWirisEditorState
+> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -91,14 +68,14 @@ class DocumentWirisEditorComponent extends React.Component<DocumentWirisEditorPr
       editor: null,
       ref: React.createRef(),
       isWirisInserting: false,
-    }
+    };
   }
 
   UNSAFE_componentWillReceiveProps(props: DocumentWirisEditorProps) {
     if (this.state.editor) {
       let data = this.state.editor.getData();
       if (props.data !== data) {
-        this.state.editor.setData(props.data ? props.data : '');
+        this.state.editor.setData(props.data ? props.data : "");
       }
     }
   }
@@ -113,67 +90,94 @@ class DocumentWirisEditorComponent extends React.Component<DocumentWirisEditorPr
         }
       }
     }
-  }
+  };
 
   handleOnInit = (editor: any) => {
-    editor.locale.contentLanguageDirection = '';
-    editor.execute( 'alignment', { value: 'justify' } );
+    editor.locale.contentLanguageDirection = "";
+    editor.execute("alignment", { value: "justify" });
 
-    const {current} = this.state.ref;
+    const { current } = this.state.ref;
     if (current) {
       current.appendChild(editor.ui.view.toolbar.element);
     }
 
     this.replaceHtml("ck-button__label", "Remove color", "Remove colour");
     this.replaceHtml("ck-tooltip__text", "Remove color", "Remove colour");
-    
-    this.setState({...this.state, editor});
+
+    this.setState({ ...this.state, editor });
 
     // listen to wiris events
     const windowRef = window as any;
-    const wirisBeforeInsertionListener = windowRef.WirisPlugin.Listeners.newListener('onBeforeFormulaInsertion', (res:any) => {
-      this.setState({...this.state, isWirisInserting: true});
-    });
-    var wirisAfterInsertionListener = windowRef.WirisPlugin.Listeners.newListener('onAfterFormulaInsertion', (res:any) => {
-      this.setState({...this.state, isWirisInserting: false});
-    });
+    const wirisBeforeInsertionListener = windowRef.WirisPlugin.Listeners.newListener(
+      "onBeforeFormulaInsertion",
+      (res: any) => {
+        this.setState({ ...this.state, isWirisInserting: true });
+      }
+    );
+    var wirisAfterInsertionListener = windowRef.WirisPlugin.Listeners.newListener(
+      "onAfterFormulaInsertion",
+      (res: any) => {
+        this.setState({ ...this.state, isWirisInserting: false });
+      }
+    );
     windowRef.WirisPlugin.Core.addGlobalListener(wirisBeforeInsertionListener);
     windowRef.WirisPlugin.Core.addGlobalListener(wirisAfterInsertionListener);
-  }
+  };
 
   render() {
     let config = {
-      extraPlugins: [InsertDropDown],
+      extraPlugins: [UploadImageCustom],
       plugins: [
-        Essentials, Paragraph,
-        Bold, Italic, Strikethrough, Superscript, Subscript,
-        FontColor, List, MathType, Alignment,
-        Table, TableToolbar
+        Essentials,
+        Paragraph,
+        Bold,
+        Italic,
+        Strikethrough,
+        Superscript,
+        Subscript,
+        FontColor,
+        List,
+        MathType,
+        Alignment,
+        Table,
+        TableToolbar,
+        Image,
       ],
       fontColor: {
-        colors: [{
-          color: '#C43C30',
-          label: 'Red'
-        }, {
-          color: '#0681DB',
-          label: 'Blue'
-        }, {
-          color: '#30C474',
-          label: 'Green'
-        }]
+        colors: [
+          {
+            color: "#C43C30",
+            label: "Red",
+          },
+          {
+            color: "#0681DB",
+            label: "Blue",
+          },
+          {
+            color: "#30C474",
+            label: "Green",
+          },
+        ],
       },
       toolbar: [
-        'bold', 'italic', 'fontColor', 'superscript', 'insertDropDown', 'mathType', 'chemType',
-        'bulletedList', 'numberedList',
+        "bold",
+        "italic",
+        "fontColor",
+        "superscript",
+        "uploadImageCustom",
+        "mathType",
+        "chemType",
+        "bulletedList",
+        "numberedList",
       ],
       mediaEmbed: { previewsInData: true },
-      placeholder: ''
+      placeholder: "",
     };
 
     /* MediaEmbed plugin enables media links in editor */
     if (this.props.mediaEmbed) {
       config.plugins.push(MediaEmbed);
-      config.toolbar.push('mediaEmbed');
+      config.toolbar.push("mediaEmbed");
     }
 
     if (this.props.toolbar) {
@@ -183,9 +187,9 @@ class DocumentWirisEditorComponent extends React.Component<DocumentWirisEditorPr
       config.placeholder = this.props.placeholder;
     }
 
-    let className="document-editor";
+    let className = "document-editor";
     if (this.props.validationRequired && !this.state.data) {
-      className+=" content-invalid";
+      className += " content-invalid";
     }
 
     return (
@@ -196,7 +200,7 @@ class DocumentWirisEditorComponent extends React.Component<DocumentWirisEditorPr
           disabled={this.props.disabled}
           editor={ClassicEditor}
           config={config}
-          onInit={(e:any) => this.handleOnInit(e)}
+          onInit={(e: any) => this.handleOnInit(e)}
           onChange={(e: any, editor: any) => {
             if (!this.state.focused && !this.state.isWirisInserting) {
               return;
@@ -204,13 +208,13 @@ class DocumentWirisEditorComponent extends React.Component<DocumentWirisEditorPr
             const data = editor.getData();
             this.props.onChange(data);
             this.replaceHtml("ck-label", "Document colors", "Document colours");
-            this.setState({...this.state, data});
+            this.setState({ ...this.state, data });
           }}
           onFocus={() => {
-            this.setState({...this.state, focused: true });
+            this.setState({ ...this.state, focused: true });
           }}
           onBlur={() => {
-            this.setState({...this.state, focused: false });
+            this.setState({ ...this.state, focused: false });
             this.props.onBlur();
           }}
         />
