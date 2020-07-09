@@ -8,6 +8,7 @@ import { Brick, BrickLengthEnum } from "model/brick";
 import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import { Moment } from "moment";
+import PrepareText from './PrepareText';
 import IntroductionDetails from "./IntroductionDetails";
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 const moment = require("moment");
@@ -175,7 +176,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (state.briefExpanded) {
       return (
         <div className="expanded-text">
-          <YoutubeAndMathInHtml value={brick.brief} />
+          <MathInHtml value={brick.brief} />
         </div>
       );
     }
@@ -230,6 +231,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             ></div>
           </div>
           <h1>{brick.title}</h1>
+          <p><PrepareText brickLength={brick.brickLength} /></p>
         </div>
       );
     }
