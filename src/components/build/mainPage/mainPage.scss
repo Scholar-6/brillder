@@ -85,22 +85,6 @@
     padding-top: 14.5vh;
   }
 
-  .zoom-item {
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.2s ease-in-out;
-    transform-origin: 50% 75%;
-  }
-
-  .zoom-item:hover {
-    transform: scale(1.4);
-
-    .item-description {
-      color: white;
-      font-family: $font-family-bold;
-    }
-  }
-
   .create-item-container {
     width: 100%;
     padding-top: 8.3vh;

@@ -104,7 +104,7 @@
           }
         }
         .question-index-container {
-          margin: 1.5vw 1.5vw 1.5vw 0.5vw;
+          margin: 1vw 1.5vw 2vw 0;
           padding: 0.5vw;
           width: 3.3vw;
           height: 3.3vw;
@@ -152,7 +152,7 @@
             height: 75.4vh;
           }
           &.review-content {
-            margin-top: 2.5vh;
+            margin-top: 2vh;
           }
           .question-title {
             font-size: 2.5vw;
@@ -445,7 +445,7 @@
           }
         }
       }
-      
+
       .action-footer {
         position: absolute;
         @include only_phone {
