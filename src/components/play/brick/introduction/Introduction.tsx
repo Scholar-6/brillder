@@ -206,8 +206,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             <div className="left-brick-circle">
               <div
                 className="round-button"
-                style={{ background: `${color}` }}
-              ></div>
+                style={{ background: `${color}` }}></div>
             </div>
             <h1>{brick.title}</h1>
           </div>
@@ -242,8 +241,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
                 </button>
               </div>
             </div>
-
           </div>
+
           <div className="expand-title">
             <span>Brief</span>
             <div className="arrow svgOnHover" onClick={toggleBrief}>

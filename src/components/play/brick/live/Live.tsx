@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid,Hidden} from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
 import update from "immutability-helper";
@@ -210,60 +210,117 @@ const LivePage: React.FC<LivePageProps> = ({
 
   return (
     <div className="brick-container live-page">
-      <Grid container direction="row">
-        <Grid item xs={8}>
-          <div className="introduction-page">
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={activeStep}
-              className="swipe-view"
-              style={{ width: "100%" }}
-              onChangeIndex={handleStep}
-            >
-              {questions.map(renderQuestionContainer)}
-            </SwipeableViews>
-          </div>
-        </Grid>
-        <Grid item xs={4}>
-          <div className="introduction-info">
-            <CountDown
-              isLive={true}
-              onEnd={onEnd}
-              brickLength={brick.brickLength}
-            />
-            <div className="intro-text-row">
-              <LiveStepper
-                activeStep={activeStep}
-                questions={questions}
-                previousStep={prevStep}
-                handleStep={handleStep}
+      <Hidden only={["xs"]}>
+        <Grid container direction="row">
+          <Grid item xs={8}>
+            <div className="introduction-page">
+              <SwipeableViews
+                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                index={activeStep}
+                className="swipe-view"
+                style={{ width: "100%" }}
+                onChangeIndex={handleStep}
+              >
+                {questions.map(renderQuestionContainer)}
+              </SwipeableViews>
+            </div>
+          </Grid>
+          <Grid item xs={4}>
+            <div className="introduction-info">
+              <CountDown
+                isLive={true}
+                onEnd={onEnd}
+                brickLength={brick.brickLength}
               />
+              <div className="intro-text-row">
+                <LiveStepper
+                  activeStep={activeStep}
+                  questions={questions}
+                  previousStep={prevStep}
+                  handleStep={handleStep}
+                />
+              </div>
+              <div className="action-footer">
+                <div>{renderPrevButton()}</div>
+                <div className="direction-info">
+                  <h2>Next</h2>
+                  <span>
+                    Don’t panic, you can
+                    <br />
+                    always come back
+                  </span>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    className="play-preview svgOnHover play-green"
+                    onClick={next}
+                  >
+                    <svg className="svg active m-l-02">
+                      <use href={sprite + "#arrow-right"} />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="action-footer">
-              <div>{renderPrevButton()}</div>
-              <div className="direction-info">
-                <h2>Next</h2>
-                <span>
-                  Don’t panic, you can
-                  <br />
-                  always come back
-                </span>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  className="play-preview svgOnHover play-green"
-                  onClick={next}
-                >
-                  <svg className="svg active m-l-02">
-                    <use href={sprite + "#arrow-right"} />
-                  </svg>
-                </button>
-              </div>
+          </Grid>
+        </Grid>
+      </Hidden>
+
+      <Hidden only={["sm", "md", "lg", "xl"]}>
+      <div className="introduction-info">
+          <CountDown
+            isLive={true}
+            onEnd={onEnd}
+            brickLength={brick.brickLength}
+          />
+          <div className="intro-text-row">
+            <Hidden only={["sm","md","lg","xl"]}>
+              <span className="heading">Investigation</span>
+            </Hidden>
+            <LiveStepper
+              activeStep={activeStep}
+              questions={questions}
+              previousStep={prevStep}
+              handleStep={handleStep}
+            />
+          </div>
+          <div className="action-footer">
+            <div>{renderPrevButton()}</div>
+            <div className="direction-info">
+              <h2>Next</h2>
+              <span>
+                Don’t panic, you can
+                <br />
+                always come back
+              </span>
+            </div>
+            <div>
+              <button
+                type="button"
+                className="play-preview svgOnHover play-green"
+                onClick={next}
+              >
+                <svg className="svg active m-l-02">
+                  <use href={sprite + "#arrow-right"} />
+                </svg>
+              </button>
             </div>
           </div>
-        </Grid>
-      </Grid>
+        </div>
+        <div className="introduction-page">
+          <SwipeableViews
+            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={activeStep}
+            className="swipe-view"
+            style={{ width: "100%" }}
+            onChangeIndex={handleStep}
+          >
+            {questions.map(renderQuestionContainer)}
+          </SwipeableViews>
+        </div>
+
+      </Hidden>
       <ShuffleAnswerDialog
         isOpen={isShuffleOpen}
         submit={() => nextFromShuffle()}
