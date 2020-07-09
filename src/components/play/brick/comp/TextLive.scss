@@ -7,17 +7,11 @@
   margin-top: 5px;
   margin-bottom: 5px;
   color: var(--theme-dark-blue);
-  @include phone_and_tabletP {
-    font-size: 6vw;
-  }
   @include tabletP {
     font-size: 1vw;
   }
   p {
     color: var(--theme-dark-blue);
-    @include phone_and_tabletP {
-      font-size: 6vw;
-    }
     @include tabletP {
       font-size: 1vw;
     }
