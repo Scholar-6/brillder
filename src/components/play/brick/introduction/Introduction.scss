@@ -272,8 +272,12 @@
               &.current {
                 color: var(--theme-dark-blue);
               }
-              .blue-circle-container {
+              .blue-circle-main-container{
                 @extend %floatToXCenter;
+                width: 1.2vw;
+                height: 1.2vw;
+              }
+              .blue-circle-container {
                 padding: 0.2vw;
                 border-radius: 100vw;
                 background: var(--blue-alpha5);
