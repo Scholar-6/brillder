@@ -65,20 +65,20 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   let questionRefs: React.RefObject<QuestionLive>[] = [];
-  questions.forEach(() => {
-    questionRefs.push(React.createRef());
-  });
+  questions.forEach(() => questionRefs.push(React.createRef()));
 
   const handleStep = (step: number) => () => {
-    setPrevStep(activeStep);
     setActiveAnswer();
     questions[activeStep].edited = true;
     let newStep = activeStep + 1;
-    setActiveStep(update(activeStep, { $set: step }));
 
     if (props.isPlayPreview) {
       CashQuestionFromPlay(brick.id, newStep);
     }
+    setTimeout(() => {
+      setPrevStep(activeStep);
+      setActiveStep(step);
+    }, 100);
   };
 
   const setActiveAnswer = () => {
@@ -174,16 +174,16 @@ const LivePage: React.FC<LivePageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-				<div className="introduction-page">
-					<PulsingCircleNumber
-						isPulsing={prevStep === index}
-						edited={question.edited}
-						number={index + 1}
-					/>
-					<div className="question-live-play review-content">
-						<div className="question-title">Investigation</div>
-						{renderQuestion(question, index)}
-					</div>
+        <div className="introduction-page">
+          <PulsingCircleNumber
+            isPulsing={true}
+            edited={question.edited}
+            number={index + 1}
+          />
+          <div className="question-live-play review-content">
+            <div className="question-title">Investigation</div>
+            {renderQuestion(question, index)}
+          </div>
         </div>
       </TabPanel>
     );

@@ -77,6 +77,7 @@ class LineHighlighting extends CompComponent<
 
   highlighting(index: number) {
     this.state.lines[index].selected = !this.state.lines[index].selected;
+    this.props.onAttempted();
     this.setState({ lines: this.state.lines });
   }
 
