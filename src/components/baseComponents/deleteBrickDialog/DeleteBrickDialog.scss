@@ -5,21 +5,28 @@
 .delete-brick-dialog {
   .MuiDialog-paperScrollPaper {
     border-radius: 0.8vw;
+    @include phone_and_tabletP {
+      margin: 0;
+      width: 60vw;
+    }
   }
 
   .dialog-header {
     padding: 3.8vh 4vw 3.5vh 1.7vw;
-    font-size: 2.35vw;
     letter-spacing: 0;
     color: var(--theme-dark-blue);
     font-family: $font-family-regular;
+    @include phone_and_tabletP {
+      font-size: 5.35vw !important;
+    }
+    @include tabletP {
+      font-size: 2.35vw;
+    }
   }
   .row-buttons {
     padding-bottom: 2.3vh;
 
     button {
-      min-width: 9.55vw;
-      font-size: 1.7vw;
       border-radius: 0.6vw;
       text-transform: none;
       font-weight: normal !important;
@@ -27,6 +34,14 @@
       padding-bottom: 1.1vh;
       line-height: 1;
       font-family: $font-family-regular;
+      @include phone_and_tabletP {
+        font-size: 4.35vw !important;
+        min-width: 16.55vw !important;
+      }
+      @include tabletP {
+        font-size: 1.7vw;
+        min-width: 9.55vw;
+      }
       > span {
         width: 100%;
       }

@@ -1,15 +1,109 @@
-@import "../../../../assets/sass/partials/variables";
-@import "../../../../assets/sass/partials/mixins";
-@import "../../../../assets/sass/partials/extensions";
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .MuiStepConnector-root.MuiStepConnector-horizontal.MuiStepConnector-alternativeLabel {
   opacity: 0;
 }
 .live-page {
+  .introduction-info {
+    @include phone_and_tabletP {
+      position: relative !important;
+    }
+    .brick-counter {
+      @include phone_and_tabletP {
+        position: absolute !important;
+        right: -7vw !important;
+        top: -2vw !important;
+      }
+    }
+    .intro-text-row {
+      @include phone_and_tabletP {
+        padding-top: 0 !important;
+      }
+      .heading {
+        @include phone_and_tabletP {
+          text-align: center;
+          font-size: 6vw;
+        }
+      }
+      .stepper {
+        width: 100%;
+        display: flex;
+        box-sizing: border-box;
+        @include phone_and_tabletP {
+          overflow-y: hidden;
+        }
+        @include tabletP {
+          flex-wrap: wrap;
+        }
+        > .step {
+          color: #d3d4d5;
+          @include phone_and_tabletP {
+            display: inline-flex !important;
+            flex: 1;
+            justify-content: center !important;
+            min-width: 12vw;
 
-  .stepper {
-    .step {
-      color: #d3d4d5;
+          }
+          @include tabletP {
+            flex-grow: 0;
+            max-width: 33.333333%;
+            flex-basis: 33.333333%;
+          }
+          span {
+            @include phone_and_tabletP {
+              font-size: 5vw;
+              margin-right: 3vw;
+            }
+          }
+          .blue-circle-container {
+            @include phone_and_tabletP {
+              left: 70% !important;
+            }
+            .blue-circle {
+              @include phone_and_tabletP {
+                height: 2.8vw !important;
+                width: 2.8vw !important;
+              }
+            }
+          }
+        }
+      }
+    }
+    .action-footer {
+      @include phone_and_tabletP {
+        width: 100%;
+        justify-content: center !important;
+        align-items: center !important;
+      }
+      .direction-info {
+        h2 {
+          @include phone_and_tabletP {
+            position: absolute;
+            bottom: 0;
+          }
+        }
+        span {
+          @include phone_and_tabletP {
+            bottom: -9vw !important;
+            line-height: 5vw !important;
+          }
+        }
+      }
+    }
+  }
+  .introduction-page {
+    .question-index-container,
+    .question-title {
+      @include phone_and_tabletP {
+        display: none;
+      }
+    }
+  }
+  .play-clock {
+    @include phone_and_tabletP {
+      display: none;
     }
   }
   .edited-step-icon {

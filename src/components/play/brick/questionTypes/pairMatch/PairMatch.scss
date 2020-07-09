@@ -41,7 +41,12 @@
     display: grid !important;
     grid-auto-rows: 1fr;
     flex-wrap: wrap;
-    width: 50%;
+    @include phone_and_tabletP {
+      width: 100%;
+    }
+    @include tabletP {
+      width: 50%;
+    }
   }
 
   .pair-match-play-choice {
