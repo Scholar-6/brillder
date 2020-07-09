@@ -102,7 +102,9 @@
     }
   }
   .play-clock {
-    display: none;
+    @include phone_and_tabletP {
+      display: none;
+    }
   }
   .edited-step-icon {
     color: $black-blue;

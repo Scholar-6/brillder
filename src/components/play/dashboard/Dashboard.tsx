@@ -29,11 +29,15 @@ import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
+import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 import ReactDOM from "react-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
+
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -114,8 +118,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     axios
       .get(
         process.env.REACT_APP_BACKEND_HOST +
-          "/bricks/byStatus/" +
-          BrickStatus.Publish,
+        "/bricks/byStatus/" +
+        BrickStatus.Publish,
         { withCredentials: true }
       )
       .then((res) => {
@@ -278,7 +282,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
   moveAllNext() {
     let index = this.state.sortedIndex;
-    const {pageSize} = this.state;
+    const { pageSize } = this.state;
     if (index + pageSize <= this.state.bricks.length) {
       this.setState({ ...this.state, sortedIndex: index + this.state.pageSize });
     }
@@ -338,6 +342,18 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       }
       this.setState({ ...this.state });
     }, 400);
+  }
+
+  handleMobileClick(index: number) {
+    let { finalBricks } = this.state;
+    if (finalBricks[index].expanded === true) {
+      this.hideBricks();
+      this.setState({ ...this.state });
+      return;
+    }
+    this.hideBricks();
+    finalBricks[index].expanded = true;
+    this.setState({ ...this.state });
   }
 
   handleMouseLeave(key: number) {
@@ -427,29 +443,39 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       });
   }
 
-  getBrickContainer = (brick: Brick, key: number) => {
-		let color = "";
+  creatingBrick() {
+    this.props.forgetBrick();
+    this.props.history.push("/build/new-brick/subject");
+  }
 
-		if (!brick.subject) {
-			color = "#B0B0AD";
-		} else {
-			color = brick.subject.color;
-		}
+  getBrickColor(brick: Brick) {
+    let color = "";
 
-		const isAdmin = this.props.user.roles.some(
-			(role: any) => role.roleId === UserType.Admin
-		);
+    if (!brick.subject) {
+      color = "#B0B0AD";
+    } else {
+      color = brick.subject.color;
+    }
+    return color;
+  }
 
-		return (
-			<div className="main-brick-container">
-				<Box className="brick-container">
-					<div
-						className={`absolute-container brick-row-0 ${
-							brick.expanded ? "brick-hover" : ""
-							}`}
-						onMouseEnter={() => this.yourBricksMouseHover(key)}
-						onMouseLeave={() => this.yourBricksMouseLeave(key)}
-					>
+  renderBrickContainer = (brick: Brick, key: number) => {
+    let color = this.getBrickColor(brick);
+
+    const isAdmin = this.props.user.roles.some(
+      (role: any) => role.roleId === UserType.Admin
+    );
+
+    return (
+      <div className="main-brick-container">
+        <Box className="brick-container">
+          <div
+            className={`absolute-container brick-row-0 ${
+              brick.expanded ? "brick-hover" : ""
+              }`}
+            onMouseEnter={() => this.yourBricksMouseHover(key)}
+            onMouseLeave={() => this.yourBricksMouseLeave(key)}
+          >
             {brick.expanded ? (
               <ExpandedBrickDescription
                 isAdmin={isAdmin}
@@ -461,13 +487,13 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             ) : (
                 <ShortBrickDescription brick={brick} />
               )}
-					</div>
-				</Box>
-			</div>
-		);
-	};
+          </div>
+        </Box>
+      </div>
+    );
+  };
 
-  getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
+  renderSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
     let color = "";
 
     if (!brick.subject) {
@@ -486,7 +512,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           <div
             className={`sorted-brick absolute-container brick-row-${row} ${
               brick.expanded ? "brick-hover" : ""
-            }`}
+              }`}
             onMouseEnter={() => this.handleMouseHover(key)}
             onMouseLeave={() => this.handleMouseLeave(key)}
           >
@@ -499,13 +525,100 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 onDelete={(brickId) => this.handleDeleteOpen(brickId)}
               />
             ) : (
-              <ShortBrickDescription brick={brick} color={color} />
-            )}
+                <ShortBrickDescription brick={brick} color={color} />
+              )}
           </div>
         </Box>
       </div>
     );
   };
+
+  renderSortedBricks = () => {
+    let { sortedIndex } = this.state;
+    let bricksList = [];
+    for (let i = 0 + sortedIndex; i < this.state.pageSize + sortedIndex; i++) {
+      const { finalBricks } = this.state;
+      if (finalBricks[i]) {
+        let row = Math.floor(i / 3);
+        bricksList.push(this.renderSortedBrickContainer(finalBricks[i], i, row + 1));
+      }
+    }
+    return bricksList;
+  };
+
+  //region Mobile
+  renderMobileExpandedBrick(brick: Brick) {
+    let color = this.getBrickColor(brick);
+
+    return (
+      <ExpandedMobileBrick
+        brick={brick}
+        color={color}
+        move={brickId => this.move(brickId)}
+      />
+    );
+  }
+
+  renderSortedMobileBrickContainer = (brick: Brick, key: number, row: any = 0) => {
+    let color = this.getBrickColor(brick);
+
+    return (
+      <div className="main-brick-container">
+        <Box className="brick-container">
+          <div
+            className={`sorted-brick absolute-container brick-row-${row} ${
+              brick.expanded ? "brick-hover" : ""
+              }`}
+            onClick={() => this.handleMobileClick(key)}
+          >
+            <ShortBrickDescription
+              brick={brick}
+              color={color}
+              isMobile={true}
+              isExpanded={brick.expanded}
+              move={() => this.move(brick.id)}
+            />
+          </div>
+        </Box>
+      </div>
+    );
+  };
+
+  renderSortedMobileBricks = () => {
+    let { sortedIndex } = this.state;
+    let bricksList = [];
+    for (let i = 0 + sortedIndex; i < this.state.pageSize + sortedIndex; i++) {
+      const { finalBricks } = this.state;
+      if (finalBricks[i]) {
+        let row = Math.floor(i / 3);
+        bricksList.push(this.renderSortedMobileBrickContainer(finalBricks[i], i, row + 1));
+      }
+    }
+    return (
+      <Swiper>
+        {bricksList.map(b => <SwiperSlide style={{ width: '90vw' }}>{b}</SwiperSlide>)}
+      </Swiper>
+    );
+  }
+
+  renderMobileBricks() {
+    let expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
+
+    if (expandedBrick) {
+      return this.renderMobileExpandedBrick(expandedBrick);
+    }
+
+    let bricksList = [];
+    for (const brick of this.state.yourBricks) {
+      bricksList.push(<ShortBrickDescription brick={brick} />);
+    }
+    return (
+      <Swiper slidesPerView={2}>
+        {bricksList.map(b => <SwiperSlide style={{ width: '50vw' }}>{b}</SwiperSlide>)}
+      </Swiper>
+    );
+  }
+  //region Mobile
 
   renderSortAndFilterBox = () => {
     return (
@@ -569,25 +682,12 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   };
 
   renderYourBrickRow = () => {
-		let bricksList = [];
-		let index = 0;
-		for (let i = index; i < index + 3; i++) {
-			if (this.state.yourBricks[i]) {
-				bricksList.push(this.getBrickContainer(this.state.yourBricks[i], i));
-			}
-		}
-		return bricksList;
-	};
-
-  renderSortedBricks = () => {
-    let { sortedIndex } = this.state;
     let bricksList = [];
-    for (let i = 0 + sortedIndex; i < this.state.pageSize + sortedIndex; i++) {
-      if (this.state.finalBricks[i]) {
-        let row = Math.floor(i / 3);
-        bricksList.push(
-          this.getSortedBrickContainer(this.state.finalBricks[i], i, row + 1)
-        );
+    let index = 0;
+    for (let i = index; i < index + 3; i++) {
+      const { yourBricks } = this.state;
+      if (yourBricks[i]) {
+        bricksList.push(this.renderBrickContainer(yourBricks[i], i));
       }
     }
     return bricksList;
@@ -598,7 +698,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       return "";
     }
 
-    const {pageSize, sortedIndex} = this.state;
+    const { pageSize, sortedIndex } = this.state;
 
     const showPrev = sortedIndex >= pageSize;
     const showNext = sortedIndex + pageSize <= this.state.bricks.length;
@@ -634,37 +734,24 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 onClick={() => this.moveAllBack()}
               />
             ) : (
-              ""
-            )}
+                ""
+              )}
             {showNext ? (
               <ExpandMoreIcon
                 className={"next-button " + (showNext ? "active" : "")}
                 onClick={() => this.moveAllNext()}
               />
             ) : (
-              ""
-            )}
+                ""
+              )}
           </div>
         </Grid>
       </Grid>
     );
   }
 
-  creatingBrick() {
-    this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
-  }
-
-  renderMobileBricks() {
-    let bricksList = [];
-    for (const brick of this.state.yourBricks) {
-      bricksList.push(<ShortBrickDescription brick={brick} />);
-    }
-    return bricksList;
-  }
-
   render() {
-    const {history} = this.props;
+    const { history } = this.props;
     return (
       <div className="dashboard-page">
         <div className="page-navigation">
@@ -732,29 +819,29 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             {this.props.user.roles.some(
               (role) => role.roleId === UserType.Admin
             ) ? (
-              <MenuItem
-                className="menu-item"
-                onClick={() => history.push("/users")}
-              >
-                Manage Users
-                <Grid
-                  container
-                  className="menu-icon-container"
-                  justify="center"
-                  alignContent="center"
+                <MenuItem
+                  className="menu-item"
+                  onClick={() => history.push("/users")}
                 >
-                  <div>
-                    <img
-                      className="manage-users-icon svg-icon"
-                      alt=""
-                      src="/images/users.svg"
-                    />
-                  </div>
-                </Grid>
-              </MenuItem>
-            ) : (
-              ""
-            )}
+                  Manage Users
+                  <Grid
+                    container
+                    className="menu-icon-container"
+                    justify="center"
+                    alignContent="center"
+                  >
+                    <div>
+                      <img
+                        className="manage-users-icon svg-icon"
+                        alt=""
+                        src="/images/users.svg"
+                      />
+                    </div>
+                  </Grid>
+                </MenuItem>
+              ) : (
+                ""
+              )}
             <MenuItem
               className="view-profile menu-item"
               onClick={() => history.push("/user-profile")}
@@ -821,24 +908,67 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               <div className="brick-row-title">
                 ALL BRICKS
               </div>
+              <div className="core-public-toggle">
+                <a className="btn btn btn-transparent ">
+                  <span>Core</span>
+                  <div className="svgOnHover">
+                    <svg className="svg active selected">
+                      <use href={sprite + "#box"} className="text-theme-dark-blue" />
+                    </svg>
+                    <svg className="svg active">
+                      <use href={sprite + "#globe"} className="text-theme-dark-blue" />
+                    </svg>
+                  </div>
+                  <span>Public</span>
+                </a>
+              </div>
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
-                New >
+                <a className="btn btn-transparent svgOnHover">
+                  <span>New</span>
+                  <svg className="svg active">
+                    <use href={sprite + "#arrow-down"} className="text-theme-dark-blue" />
+                  </svg>
+                </a>
               </div>
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
               <div className="bricks-list">
                 <Hidden only={["xs"]}>
-                    {this.renderYourBrickRow()}
+                  {this.renderYourBrickRow()}
+                  {this.renderSortedBricks()}
                 </Hidden>
-                {this.renderSortedBricks()}
+                <Hidden only={['sm', 'md', 'lg', 'xl']}>
+                  {this.renderSortedMobileBricks()}
+                </Hidden>
               </div>
             </div>
             <Hidden only={["sm", "md", "lg", "xl"]}>
-              <div className="brick-row-title">Suggested ></div>
-              <div className="brick-row-title">Top in Humanities ></div>
-              <div className="brick-row-title">Top in Stem ></div>
+              <div className="brick-row-title">
+                <a className="btn btn-transparent svgOnHover">
+                  <span>Suggest</span>
+                  <svg className="svg active">
+                    <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
+                  </svg>
+                </a>
+              </div>
+              <div className="brick-row-title">
+                <a className="btn btn-transparent svgOnHover">
+                  <span>Top in Humanities</span>
+                  <svg className="svg active">
+                    <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
+                  </svg>
+                </a>
+              </div>
+              <div className="brick-row-title">
+                <a className="btn btn-transparent svgOnHover">
+                  <span>Top in Stem</span>
+                  <svg className="svg active">
+                    <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
+                  </svg>
+                </a>
+              </div>
             </Hidden>
             {this.renderPagination()}
           </Grid>
