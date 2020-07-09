@@ -8,4 +8,5 @@ export interface CompQuestionProps {
   attempt?: ComponentAttempt;
   isPreview?: boolean;
   answers: any;
+  onAttempted(): void;
 }

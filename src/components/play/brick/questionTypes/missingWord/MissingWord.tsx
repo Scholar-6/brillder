@@ -53,6 +53,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     let userAnswers = this.state.userAnswers;
     userAnswers[index].value = e.target.value as number;
     this.setState({ userAnswers });
+    this.props.onAttempted();
   }
 
   getAnswer(): number[] {
