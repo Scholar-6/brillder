@@ -2995,10 +2995,24 @@ textarea:-webkit-autofill:focus {
     border-bottom: 0.2vh solid var(--light-gray);
     padding-bottom: 0.9vh;
     margin-bottom: 2.5vh;
-    position: sticky;
-    top: 0;
     background-color: var(--white);
     z-index: 10;
+    display: flex;
+    align-items: center;
+  }
+  .sorted-row .brick-row-container .brick-row-title .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sorted-row .brick-row-container .brick-row-title .btn span {
+    margin: 0;
+  }
+  .sorted-row .brick-row-container .brick-row-title .btn .svg {
+    position: inherit;
+    top: inherit;
+    left: inherit;
+    transform: inherit;
   }
 }
 @media screen and (min-width: 760px) {
@@ -3008,6 +3022,40 @@ textarea:-webkit-autofill:focus {
     padding-bottom: 0;
     font-size: 5.2vw;
   }
+}
+.sorted-row .brick-row-container .core-public-toggle {
+  position: absolute;
+  right: 3vw;
+  top: 6vh;
+  display: flex;
+  align-items: center;
+}
+.sorted-row .brick-row-container .core-public-toggle .btn {
+  display: flex;
+  align-items: center;
+}
+.sorted-row .brick-row-container .core-public-toggle .btn span:first-child {
+  margin-right: 1vw;
+}
+.sorted-row .brick-row-container .core-public-toggle .btn span:last-child {
+  margin-left: 1vw;
+}
+.sorted-row .brick-row-container .core-public-toggle .btn .svgOnHover {
+  border-radius: 40%;
+  height: calc(1vw + 20px);
+  background-color: var(--tab-gray);
+}
+.sorted-row .brick-row-container .core-public-toggle .btn .svgOnHover .svg {
+  position: inherit;
+  top: inherit;
+  left: inherit;
+  transform: inherit;
+  padding: 0.5vw;
+  background-color: var(--tab-gray);
+  border-radius: 50%;
+}
+.sorted-row .brick-row-container .core-public-toggle .btn .svgOnHover .svg.selected {
+  background-color: var(--theme-green);
 }
 @media screen and (min-width: 760px) {
   .sorted-row .brick-row-container .bricks-list-container {
@@ -3021,6 +3069,12 @@ textarea:-webkit-autofill:focus {
 @media screen and (max-width: 759px) {
   .sorted-row .brick-row-container .bricks-list-container.bricks-container-mobile {
     overflow-y: auto;
+  }
+  .sorted-row .brick-row-container .bricks-list-container.bricks-container-mobile .swiper-container {
+    width: 100% !important;
+  }
+  .sorted-row .brick-row-container .bricks-list-container.bricks-container-mobile .swiper-container .swiper-wrapper .swiper-slide {
+    width: 100% !important;
   }
 }
 .sorted-row .brick-row-container .bricks-list-container .bricks-list {
@@ -3417,6 +3471,11 @@ input.style2[type=password]:-ms-input-placeholder > div {
   margin-left: -0.5vw;
   margin-right: -0.5vw;
 }
+@media screen and (max-width: 759px) {
+  .input-group {
+    flex-direction: column;
+  }
+}
 .input-group > div,
 .input-group > input {
   flex: 1;
@@ -3563,12 +3622,12 @@ input.style2[type=password]:-ms-input-placeholder > div {
 }
 @media screen and (max-width: 759px) {
   .menu-dropdown .MuiPaper-root {
-    bottom: 6.5vh !important;
+    bottom: 5.9vh !important;
     right: 3vw !important;
     top: unset !important;
     min-width: 38vw !important;
     min-height: fit-content;
-    border-radius: 0 2vw 0 0;
+    border-radius: 2vw 2vw 0 0;
   }
 }
 @media screen and (min-width: 760px) {
@@ -3576,68 +3635,73 @@ input.style2[type=password]:-ms-input-placeholder > div {
     top: 10.5vh !important;
   }
 }
-.menu-dropdown .MuiPaper-root .menu-item {
+@media screen and (max-width: 759px) {
+  .menu-dropdown .MuiPaper-root .MuiList-root {
+    padding: 0 !important;
+  }
+}
+.menu-dropdown .MuiPaper-root .MuiList-root .menu-item {
   cursor: pointer;
   position: relative;
   font-family: "Brandon Grotesque Regular" !important;
   font-size: 1.45vw;
-  padding-left: 1.65vw;
-  margin: 0.5vh 0;
   color: var(--white) !important;
+  margin: 0;
 }
 @media screen and (max-width: 759px) {
-  .menu-dropdown .MuiPaper-root .menu-item {
+  .menu-dropdown .MuiPaper-root .MuiList-root .menu-item {
     font-size: 3.45vw;
     min-height: 4vh;
+    padding: 2vw;
   }
 }
 @media screen and (min-width: 760px) {
-  .menu-dropdown .MuiPaper-root .menu-item {
+  .menu-dropdown .MuiPaper-root .MuiList-root .menu-item {
+    padding: 0.8vw 1.6vw;
     font-size: 1.45vw;
+    display: flex;
+    align-items: center;
   }
 }
-.menu-dropdown .MuiPaper-root .menu-item .menu-icon-container {
+.menu-dropdown .MuiPaper-root .MuiList-root .menu-item .menu-icon-container {
   width: 4.5vw;
   height: 3vh;
 }
 @media screen and (max-width: 759px) {
-  .menu-dropdown .MuiPaper-root .menu-item .menu-icon-container {
+  .menu-dropdown .MuiPaper-root .MuiList-root .menu-item .menu-icon-container {
     position: absolute;
     right: 2vw;
   }
 }
 @media screen and (min-width: 760px) {
-  .menu-dropdown .MuiPaper-root .menu-item .menu-icon-container {
+  .menu-dropdown .MuiPaper-root .MuiList-root .menu-item .menu-icon-container {
     right: 0vw;
     position: fixed;
   }
 }
 @media screen and (max-width: 759px) {
-  .menu-dropdown .MuiPaper-root .menu-item .menu-icon-container > div > img {
+  .menu-dropdown .MuiPaper-root .MuiList-root .menu-item .menu-icon-container > div > img {
     width: 4.2vw;
   }
 }
-.menu-dropdown .MuiPaper-root .menu-item .menu-icon {
+.menu-dropdown .MuiPaper-root .MuiList-root .menu-item .menu-icon {
   width: 2.2vw;
 }
-.menu-dropdown .MuiPaper-root .menu-item .svg-icon {
+.menu-dropdown .MuiPaper-root .MuiList-root .menu-item .svg-icon {
   filter: invert(1);
 }
-.menu-dropdown .MuiPaper-root .menu-item .user-icon {
+.menu-dropdown .MuiPaper-root .MuiList-root .menu-item .user-icon {
   width: 1.93vw;
 }
-.menu-dropdown .MuiPaper-root .menu-item .logout-icon {
+.menu-dropdown .MuiPaper-root .MuiList-root .menu-item .logout-icon {
   width: 1.88vw;
 }
-.menu-dropdown .MuiPaper-root .menu-item .back-to-work-icon {
+.menu-dropdown .MuiPaper-root .MuiList-root .menu-item .back-to-work-icon {
   width: 1.5vw;
 }
-.menu-dropdown .MuiPaper-root .menu-item .manage-users-icon {
+.menu-dropdown .MuiPaper-root .MuiList-root .menu-item .manage-users-icon {
   margin-top: 0.13vh;
   width: 1.9vw;
-}
-.menu-dropdown .MuiPaper-root .first-item {
-  margin-top: 1.7vh;
 }
 
 .animated {

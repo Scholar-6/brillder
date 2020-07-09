@@ -164,71 +164,6 @@
     }
   }
 
-  .mobile-main-page-background {
-    background: $mobile-background;
-    height: 100%;
-    width: 100%;
-
-    .first-mobile-row {
-      padding-top: 1.4vh;
-      height: 32.65%;
-      .first-col {
-        width: 12.7%;
-        height: 100%;
-        border-top-right-radius: $mobile-col-radius;
-        border-bottom-right-radius: $mobile-col-radius;
-        background: $mobile-col-color;
-      }
-      .second-col {
-        margin-left: 3.8%;
-        width: 83.5%;
-        height: 100%;
-        border-top-left-radius: $mobile-col-radius;
-        border-bottom-left-radius: $mobile-col-radius;
-        background: $mobile-col-color;
-      }
-    }
-
-    .second-mobile-row {
-      margin-top: 1.81vh;
-      height: 31.1%;
-      .first-col {
-        width: 67%;
-        height: 100%;
-        border-top-right-radius: $mobile-col-radius;
-        border-bottom-right-radius: $mobile-col-radius;
-        background: $mobile-col-color;
-      }
-      .second-col {
-        margin-left: 3.8%;
-        width: 29.2%;
-        height: 100%;
-        border-top-left-radius: $mobile-col-radius;
-        border-bottom-left-radius: $mobile-col-radius;
-        background: $mobile-col-color;
-      }
-    }
-    .third-mobile-row {
-      margin-top: 1.86vh;
-      height: 31.2%;
-      .first-col {
-        width: 38%;
-        height: 100%;
-        border-top-right-radius: $mobile-col-radius;
-        border-bottom-right-radius: $mobile-col-radius;
-        background: $mobile-col-color;
-      }
-      .second-col {
-        margin-left: 4.6%;
-        width: 57.4%;
-        height: 100%;
-        border-top-left-radius: $mobile-col-radius;
-        border-bottom-left-radius: $mobile-col-radius;
-        background: $mobile-col-color;
-      }
-    }
-  }
-
   .mobile-main-page {
     position: fixed;
     top: 0;
@@ -264,7 +199,7 @@
 
     .view-item {
       text-align: center;
-      padding-top: 7.5vh;
+      padding-top: 4vh;
       .item-image {
         height: 11.3vh;
       }
@@ -272,7 +207,6 @@
 
     .create-item {
       text-align: center;
-      padding-top: 6.7vh;
       .item-image {
         height: 16.9vh;
       }
@@ -281,10 +215,24 @@
       }
     }
     .back-item {
-      padding-top: 6.9vh;
+      padding-top: 2vh;
       .item-image {
         height: 19.6vh;
       }
     }
+  }
+  .prev-image {
+    margin-top: 6vh;
+  }
+  .next-image {
+    margin-top: 3vh;
+  }
+  .prev-image,.next-image {
+    height: 2vh;
+    text-align: center;
+  }
+  .swiper-slide-active,
+  .swiper-slide-duplicate-prev {
+    opacity: 0.5;
   }
 }

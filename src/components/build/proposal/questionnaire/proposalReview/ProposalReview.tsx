@@ -1,13 +1,14 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import { useHistory } from "react-router-dom";
 
 import './ProposalReview.scss';
 import { Brick } from "model/brick";
-import { useHistory } from "react-router-dom";
 import { User } from "model/user";
-import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import { setBrillderTitle } from "components/services/titleService";
+
+import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 
 

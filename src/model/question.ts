@@ -44,17 +44,18 @@ export enum HintStatus {
 }
 
 export interface Hint {
-  value: string,
-  list: string[],
-  status: HintStatus
+  value: string;
+  list: string[];
+  status: HintStatus;
 }
 
 export interface Question {
-  id: number,
-  active: boolean,
-  type: QuestionTypeEnum,
-  hint: Hint
-  components: any[]
-  edited?: boolean
-  contentBlocks? : string
+  id: number;
+  active: boolean;
+  type: QuestionTypeEnum;
+  hint: Hint;
+  components: any[];
+  edited?: boolean;
+  contentBlocks? : string;
+  order: number;
 }

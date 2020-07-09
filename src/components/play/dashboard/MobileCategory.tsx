@@ -18,6 +18,8 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
+import sprite from "../../../assets/img/icons-sprite.svg";
+
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
@@ -31,6 +33,8 @@ import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 import ReactDOM from "react-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -363,7 +367,13 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             className={className}
             onClick={() => this.handleMouseClick(key)}
           >
-            <ShortBrickDescription brick={brick} color={color} isMobile={true} isExpanded={brick.expanded} />
+            <ShortBrickDescription
+              brick={brick}
+              color={color}
+              isMobile={true}
+              isExpanded={brick.expanded}
+              move={() => this.move(brick.id)}
+            />
           </div>
         </Box>
       </div>
@@ -527,10 +537,15 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       const brick = this.state.finalBricks[i]
       if (brick) {
         let color = this.getBrickColor(brick);
-        bricksList.push(<ShortBrickDescription brick={brick} color={color} />);
+        bricksList.push(<ShortBrickDescription brick={brick} index={i} color={color} />);
       }
     }
-    return bricksList;
+
+    return (
+      <Swiper slidesPerView={2}>
+        {bricksList.map(b => <SwiperSlide style={{width: '50vw'}}>{b}</SwiperSlide>)}
+      </Swiper>
+    );
   }
 
   render() {
@@ -667,7 +682,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             {this.renderSortAndFilterBox()}
           </Grid>
           <Grid item xs={9} className="brick-row-container">
-            <div className="brick-row-title">New ></div>
+            <div className="brick-row-title" onClick={() => this.props.history.push('/play/dashboard')}>
+              <a className="btn btn-transparent svgOnHover">
+                <span>New</span>
+                <svg className="svg active">
+                  <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
+                </svg>
+              </a>
+            </div>
             <div className="bricks-list-container">
               {this.renderSortedBricks()}
             </div>

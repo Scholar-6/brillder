@@ -5,6 +5,7 @@ import './Synthesis.scss';
 import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
 import { PlayStatus } from '../model/model';
+import { BrickLengthEnum } from 'model/brick';
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import sprite from "../../../../assets/img/icons-sprite.svg";
@@ -35,6 +36,16 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
       history.push(`/play/brick/${brick.id}/review`);
     }
   }
+  
+  const getSpendTime = () => {
+    let timeMinutes = 4;
+    if (brick.brickLength === BrickLengthEnum.S40min) {
+      timeMinutes = 8;
+    } else if (brick.brickLength === BrickLengthEnum.S60min) {
+      timeMinutes = 12;
+    }
+    return timeMinutes;
+  }
 
   return (
     <div className="brick-container synthesis-page">
@@ -54,6 +65,8 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
           <div className="introduction-info">
             <TimerWithClock isArrowUp={true} startTime={startTime} brickLength={brick.brickLength} />
             <div className="intro-text-row">
+              <div>Aim to spend {getSpendTime()} minutes on this section.</div>
+              <br />
               <p>When you’re ready to move on, you will have</p>
               <p>3 minutes to try to improve your score.</p>
             </div>
