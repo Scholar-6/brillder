@@ -291,95 +291,6 @@
             }
           }
         }
-        .action-footer {
-          position: absolute;
-          left: 50%;
-          transform: translateX(-50%);
-
-          display: flex;
-
-          color: var(--theme-dark-blue);
-          @include phone_and_tabletP {
-            align-items: flex-end;
-            justify-content: flex-end;
-            bottom: 3vw;
-          }
-          @include tabletP {
-            align-items: center;
-            justify-content: flex-end;
-            width: 22vw;
-            bottom: 5vw;
-          }
-          .play-preview {
-            position: relative;
-            left: inherit;
-            right: inherit;
-            top: inherit;
-            @include phone_and_tabletP {
-              width: 26vw;
-              height: 26vw;
-            }
-            .svg {
-              @include phone_and_tabletP {
-                width: 13vw;
-                height: 13vw;
-              }
-            }
-          }
-          > div {
-            @extend %flexCenter;
-            flex-direction: column;
-            text-align: center;
-            @include phone_and_tabletP {
-              margin-left: 5vw;
-            }
-            @include tabletP {
-              min-width: 4vw;
-            }
-            &.direction-info {
-              width: 100%;
-              padding: 0 1vw;
-              position: relative;
-              > h2 {
-                margin-top: 0;
-                margin-bottom: 0;
-
-                font-family: $font-family-bold;
-                @include phone_and_tabletP {
-                  font-size: 11.6vw;
-                  width: max-content;
-                }
-                @include tabletP {
-                  font-size: 2.6vw;
-                }
-              }
-              > h3,
-              > span {
-                position: absolute;
-                color: var(--theme-dark-blue);
-              }
-              > h3 {
-                left: 1.8vw;
-                letter-spacing: inherit;
-                margin: 0;
-                @include phone_and_tabletP {
-                  font-size: 6vw;
-                  top: -6vw;
-                }
-                @include tabletP {
-                  top: -1vw;
-                }
-              }
-              > span {
-                width: 100%;
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: -2vw;
-                line-height: 1vw;
-              }
-            }
-          }
-        }
         .max-length {
           font-family: $font-family-regular;
           color: var(--theme-dark-blue);
@@ -431,6 +342,100 @@
             top: 50%;
             transform: translateY(-10vh);
             margin: 0;
+          }
+        }
+      }
+      
+      .action-footer {
+        position: absolute;
+        @include only_phone {
+          margin-top: 3vh;
+          position: relative;
+        }
+        left: 50%;
+        transform: translateX(-50%);
+
+        display: flex;
+
+        color: var(--theme-dark-blue);
+        @include phone_and_tabletP {
+          align-items: flex-end;
+          justify-content: flex-end;
+          bottom: 3vw;
+        }
+        @include tabletP {
+          align-items: center;
+          justify-content: flex-end;
+          width: 22vw;
+          bottom: 5vw;
+        }
+        .play-preview {
+          position: relative;
+          left: inherit;
+          right: inherit;
+          top: inherit;
+          @include phone_and_tabletP {
+            width: 26vw;
+            height: 26vw;
+          }
+          .svg {
+            @include phone_and_tabletP {
+              width: 13vw;
+              height: 13vw;
+            }
+          }
+        }
+        > div {
+          @extend %flexCenter;
+          flex-direction: column;
+          text-align: center;
+          @include phone_and_tabletP {
+            margin-left: 5vw;
+          }
+          @include tabletP {
+            min-width: 4vw;
+          }
+          &.direction-info {
+            width: 100%;
+            padding: 0 1vw;
+            position: relative;
+            > h2 {
+              margin-top: 0;
+              margin-bottom: 0;
+
+              font-family: $font-family-bold;
+              @include phone_and_tabletP {
+                font-size: 11.6vw;
+                width: max-content;
+              }
+              @include tabletP {
+                font-size: 2.6vw;
+              }
+            }
+            > h3,
+            > span {
+              position: absolute;
+              color: var(--theme-dark-blue);
+            }
+            > h3 {
+              left: 1.8vw;
+              letter-spacing: inherit;
+              margin: 0;
+              @include phone_and_tabletP {
+                font-size: 6vw;
+                top: -6vw;
+              }
+              @include tabletP {
+                top: -1vw;
+              }
+            }
+            > span {
+              width: 100%;
+              left: 50%;
+              transform: translateX(-50%);
+              bottom: -2vw;
+              line-height: 1vw;
+            }
           }
         }
       }
