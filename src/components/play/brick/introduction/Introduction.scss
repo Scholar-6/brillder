@@ -16,7 +16,7 @@
     }
     .brick-container {
       @include phone_and_tabletP {
-        height: calc(100vh - 21vh);
+        height: calc(100% - 20%);
         overflow-y: auto;
       }
       .introduction-page {
@@ -24,6 +24,7 @@
         position: relative;
         @include phone_and_tabletP {
           height: 100%;
+          position: relative;
         }
         @include tabletP {
           overflow-y: auto;
@@ -36,9 +37,28 @@
             flex-direction: column;
             align-items: center;
             padding-top: 3vh;
+            position: relative;
           }
           @include tabletP {
             margin-bottom: 10vh;
+          }
+          > .intro-header {
+            @include phone_and_tabletP {
+              position: absolute;
+              padding: 0;
+              right: 0;
+            }
+            .play-clock {
+              @include phone_and_tabletP {
+                display: none;
+              }
+            }
+            .brick-counter {
+              @include phone_and_tabletP {
+                font-size: 5vw;
+                padding-right: 5vw;
+              }
+            }
           }
           .left-brick-circle {
             position: absolute;
@@ -53,8 +73,8 @@
               @extend %radCircle;
               background-color: var(--gray);
               @include phone_and_tabletP {
-                height: 20vw;
-                width: 20vw;
+                height: 17vw;
+                width: 17vw;
               }
             }
           }
@@ -204,7 +224,7 @@
               position: fixed;
               right: 0vw;
               top: 1vw;
-              font-size: 6vw;
+              font-size: 5vw;
               padding-right: 5vw;
             }
           }
@@ -278,10 +298,17 @@
               &.current {
                 color: var(--theme-dark-blue);
               }
-              .blue-circle-main-container{
+              .blue-circle-main-container {
                 @extend %floatToXCenter;
-                width: 1.2vw;
-                height: 1.2vw;
+                @include phone_and_tabletP {
+                  left:60%;
+                  top: 50%;
+                  transform: translate(0,-50%);
+                }
+                @include tabletP {
+                  width: 1.2vw;
+                  height: 1.2vw;
+                }
               }
               .blue-circle-container {
                 padding: 0.2vw;
@@ -305,7 +332,7 @@
             align-items: flex-end;
             justify-content: flex-end;
             bottom: 13vw;
-            right: 4vw;
+            right: 0vw;
           }
           @include tabletP {
             position: absolute;
@@ -316,28 +343,13 @@
             width: 22vw;
             bottom: 5vw;
           }
-          .play-preview {
-            position: relative;
-            left: inherit;
-            right: inherit;
-            top: inherit;
-            @include phone_and_tabletP {
-              width: 20vw;
-              height: 20vw;
-            }
-            .svg {
-              @include phone_and_tabletP {
-                width: 13vw;
-                height: 13vw;
-              }
-            }
-          }
+
           > div {
             @extend %flexCenter;
             flex-direction: column;
             text-align: center;
             @include phone_and_tabletP {
-              margin-left: 5vw;
+              margin: 0 3vw;
             }
             @include tabletP {
               min-width: 4vw;
@@ -421,10 +433,10 @@
           padding: 0;
           overflow-y: hidden;
           @include phone_and_tabletP {
-             height: calc(100vh - 55.8vw);
+            height: calc(100vh - 55.8vw);
           }
           @include tabletP {
-             height: calc(100vh - 7.8vw);
+            height: calc(100vh - 7.8vw);
           }
         }
         .fotter-text {
@@ -448,36 +460,28 @@
 
       .action-footer {
         position: absolute;
-        @include only_phone {
-          margin-top: 3vh;
-          position: relative;
-        }
-        left: 50%;
-        transform: translateX(-50%);
-
         display: flex;
-
         color: var(--theme-dark-blue);
         @include phone_and_tabletP {
           align-items: flex-end;
           justify-content: flex-end;
           bottom: 3vw;
+          margin-top: 3vh;
+          position: relative;
         }
         @include tabletP {
           align-items: center;
           justify-content: flex-end;
           width: 22vw;
           bottom: 5vw;
+          left: 50%;
+          transform: translateX(-50%);
         }
         .play-preview {
           position: relative;
           left: inherit;
           right: inherit;
           top: inherit;
-          @include phone_and_tabletP {
-            width: 26vw;
-            height: 26vw;
-          }
           .svg {
             @include phone_and_tabletP {
               width: 13vw;
@@ -638,7 +642,7 @@
     }
     > span {
       @include phone_and_tabletP {
-        font-size: 9vw;
+        font-size: 7vw;
       }
       &:first-child {
         @include tabletP {
@@ -667,7 +671,7 @@
     .help-prep {
       color: var(--gray);
       @include phone_and_tabletP {
-        font-size: 4vw;
+        font-size: 3vw;
       }
       @include tabletP {
         font-size: 1vw;
@@ -678,9 +682,9 @@
     width: 100%;
     color: var(--theme-dark-blue);
     margin: 0 0 1vh 0;
-    @include phone_and_tabletP {
-      font: 6vw $font-family-regular;
-    }
+    // @include phone_and_tabletP {
+    //   font: 6vw $font-family-regular;
+    // }
     @include tabletP {
       font: 1vw $font-family-regular;
     }
@@ -690,7 +694,7 @@
 
     margin-bottom: 3px;
     @include phone_and_tabletP {
-      font-size: 6vw;
+      font-size: 3vw;
     }
     @include tabletP {
       font-size: 0.8vw;

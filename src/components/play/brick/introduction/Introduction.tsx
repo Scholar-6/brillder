@@ -109,7 +109,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <div>
           <button
             type="button"
-            className="play-preview svgOnHover play-green"
+            className={state.prepExpanded ? "play-preview svgOnHover play-green": "play-preview svgOnHover play-gray"}
             onClick={startBrick}
           >
             <svg className="svg svg-default m-l-02">
@@ -209,6 +209,9 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderHeader = () => {
     return (
       <div className="intro-header">
+        <Hidden only={["sm", "md", "lg", "xl"]}>
+          {renderTimer()}
+        </Hidden>
         <div className="left-brick-circle">
           <div
             className="round-button"
@@ -224,6 +227,9 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (state.prepExpanded) {
       return (
         <div className="intro-header expanded-intro-header">
+          <Hidden only={["sm", "md", "lg", "xl"]}>
+            {renderTimer()}
+          </Hidden>
           <div className="left-brick-circle">
             <div
               className="round-button"
@@ -265,7 +271,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <div className="introduction-page">
           {renderMobileHeader()}
           <div className="introduction-info">
-            {renderTimer()}
+
             {!state.prepExpanded ? (
               <IntroductionDetails brickLength={brick.brickLength} />
             ) : (
