@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
-import { Grid } from "@material-ui/core";
 import './ExpandedBrickDescription.scss';
 
 
