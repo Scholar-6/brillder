@@ -39,7 +39,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   setUserAnswer(e: any, index: number) {
     let userAnswers = this.state.userAnswers;
     userAnswers[index] = e.target.value;
-    if (e.target.value) {
+    if (e.target.value && this.props.onAttempted) {
       this.props.onAttempted();
     }
     this.setState({ userAnswers });

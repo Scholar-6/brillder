@@ -70,7 +70,8 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
       status = DragAndDropStatus.Init;
     }
 
-    if (this.state.status === DragAndDropStatus.Changed) {
+    if (this.state.status === DragAndDropStatus.Changed
+      && this.props.onAttempted) {
       this.props.onAttempted();
     }
 

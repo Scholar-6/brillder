@@ -44,7 +44,9 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   setActiveItem(activeItem: number) {
     this.setState({ activeItem });
-    this.props.onAttempted();
+    if (this.props.onAttempted) {
+      this.props.onAttempted();
+    }
   }
 
   getAnswer(): number {
