@@ -84,6 +84,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
         <DocumentWirisCKEditor
           disabled={locked}
           data={answer.value}
+          validationRequired={validationRequired}
           toolbar={['mathType', 'chemType']}
           placeholder={"Enter Answer " + (index + 1) + "..."}
           onBlur={() => save()}

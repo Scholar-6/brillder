@@ -8,7 +8,7 @@ import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 
 
 interface LineHighlightingProps extends CompQuestionProps {
-  attempt: ComponentAttempt;
+  attempt: ComponentAttempt<any>;
   answers: number[];
 }
 

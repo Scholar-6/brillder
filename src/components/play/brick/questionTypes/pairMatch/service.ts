@@ -4,10 +4,10 @@ import {PairMatchChoice, DragAndDropStatus} from './interface';
 
 export function mark(
   list: PairMatchChoice[],
-  attempt: ComponentAttempt,
-  prev: ComponentAttempt,
+  attempt: ComponentAttempt<any>,
+  prev: ComponentAttempt<any>,
   status: DragAndDropStatus
-): ComponentAttempt {
+) {
   let markIncrement = prev ? 2 : 5;
   attempt.correct = true;
   attempt.marks = 0;

@@ -1,11 +1,17 @@
-@import '../../../../../../assets/sass/partials/variables';
-@import '../../../../../../assets/sass/partials/mixins';
-@import '../../../../../../assets/sass/partials/extensions';
+@import "../../../../../../assets/sass/partials/variables";
+@import "../../../../../../assets/sass/partials/mixins";
+@import "../../../../../../assets/sass/partials/extensions";
 
-.button-box {
-  .add-answer-button {
-    padding: 2.5vh 0 !important;
-    font-family: $font-family-bold;
-    font-size: 1.2vw;
+@import "../../../investigationBuildPage.scss";
+
+.add-button-container {
+  margin-top: $space-between-boxes;
+  margin-bottom: $space-between-boxes;
+  .button-box {
+    .add-answer-button {
+      padding: 2.5vh 0 !important;
+      font-family: $font-family-bold;
+      font-size: 1.2vw;
+    }
   }
 }

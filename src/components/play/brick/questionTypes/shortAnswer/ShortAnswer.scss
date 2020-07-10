@@ -16,18 +16,7 @@
     }
   }
 
-  input.MuiInput-input {
-    color: var(--theme-dark-blue);
-    height: auto;
-    padding: 0;
-    line-height: 2;
-  }
-
-  @media only screen and (max-width: 599px) {
-    .short-answer-input {
-      display: block;
-      width: 100%;
-      margin-bottom: 20px;
-    }
+  .document-editor {
+    width: 90%;
   }
 }

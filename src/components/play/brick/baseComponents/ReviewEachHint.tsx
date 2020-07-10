@@ -7,7 +7,7 @@ import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 
 interface ReviewHintProps {
-  attempt?: ComponentAttempt;
+  attempt?: ComponentAttempt<any>;
   index: number;
   isCorrect?: boolean;
   isPhonePreview?: boolean;

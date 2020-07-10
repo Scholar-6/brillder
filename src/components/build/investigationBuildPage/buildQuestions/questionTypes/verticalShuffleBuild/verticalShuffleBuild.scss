@@ -5,10 +5,6 @@
 .vertical-shuffle-build {
   text-align: center;
 
-  .right-top-icon {
-    right: 1.5vw;
-  }
-
   .component-title{
     > div {
       font-size: $base-sm-text-size;
@@ -59,8 +55,7 @@
         margin-right: 0.1vw;
         padding-top: 0;
         text-align: center !important;
-        background: white !important;
-        border-radius: 0.4vw !important;
+        background: white;
         font-size: $answer-input-text-size;
 
         p {

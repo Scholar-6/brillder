@@ -7,18 +7,11 @@
 
   .short-answer-box {
     position: relative;
-    margin: 0.4vw;
+    margin-left: 0.4vw;
+    margin-right: 0.4vw;
     width: 97.5%;
     background-color: var(--white);
-    border-radius: 0.4vw;
-    input {
-      font-size: $answer-input-text-size;
-      width: 100%;
-      padding: 0 2.4vw 0 0.8vw;
-      min-height: $answer-height;
-      text-align: center;
-      border: none;
-    }
+    border-radius: $global-drop-border-radius;
   }
   .right-top-icon {
     @extend %floatToYCenter;

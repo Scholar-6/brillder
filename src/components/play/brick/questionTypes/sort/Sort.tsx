@@ -28,7 +28,7 @@ interface SortComponent {
 interface SortProps extends CompQuestionProps {
   question: Question;
   component: SortComponent;
-  attempt?: ComponentAttempt;
+  attempt?: ComponentAttempt<any>;
   answers: number;
   isPreview?: boolean;
 }
@@ -132,7 +132,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     return choices;
   }
 
-  mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
+  mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
     let markIncrement = prev ? 2 : 5;
     attempt.correct = true;
     attempt.marks = 0;

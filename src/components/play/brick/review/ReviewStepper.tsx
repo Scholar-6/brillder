@@ -7,7 +7,7 @@ import { ComponentAttempt } from "../model/model";
 import sprite from "../../../../assets/img/icons-sprite.svg";
 
 interface ReviewStepperProps {
-  attempts: ComponentAttempt[];
+  attempts: ComponentAttempt<any>[];
   questions: Question[];
   isEnd?: boolean;
   handleStep(questionIndex: number): any;
