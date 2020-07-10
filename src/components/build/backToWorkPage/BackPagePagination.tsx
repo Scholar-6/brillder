@@ -5,6 +5,8 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 
 import { } from "./BackToWork";
 
+import sprite from "../../../assets/img/icons-sprite.svg";
+
 interface BackPageTitleProps {
   sortedIndex: number;
   bricksLength: number;
@@ -35,10 +37,13 @@ const BackPagePagination: React.FC<BackPageTitleProps> = ({
   const renderNextButton = () => {
     if (showNext) {
       return (
-        <ExpandMoreIcon
-          className={"next-button " + (showNext ? "active" : "")}
-          onClick={() => moveNext()}
-        />
+        <button
+          className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
+          onClick={() => moveNext()}>
+          <svg className="svg w100 h100 active">
+            <use href={sprite + "#arrow-down"} />
+          </svg>
+        </button>
       );
     }
     return "";
@@ -47,10 +52,12 @@ const BackPagePagination: React.FC<BackPageTitleProps> = ({
   const renderBackButton = () => {
     if (showPrev) {
       return (
-        <ExpandLessIcon
-          className={"prev-button " + (showPrev ? "active" : "")}
-          onClick={() => moveBack()}
-        />
+        <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
+          onClick={() => moveBack()}>
+          <svg className="svg w100 h100 active">
+            <use href={sprite + "#arrow-up"} />
+          </svg>
+        </button>
       );
     }
     return "";
