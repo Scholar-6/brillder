@@ -338,7 +338,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     } else {
       this.setState({ isClearFilter: false })
     }
-    // this.setState({ isClearFilter: this.state.bricks.some((r: any) => r.checked) ? true : false})
   }
   //endregion
 
@@ -522,8 +521,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   };
 
   prepareBrickData(data: any[], brick: Brick, number: number, index: number) {
-    let row = Math.floor(number / 3);
-    data.push({ brick: brick, key: index, index: number, row });
+    data.push({ brick: brick, key: index, index: number, row: number });
   }
 
   renderGroupedBricks = () => {
