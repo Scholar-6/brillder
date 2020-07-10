@@ -1,26 +1,42 @@
 import React, { Component } from "react";
-import { Box, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
-import Grow from "@material-ui/core/Grow";
 
 import "./BackToWork.scss";
 import brickActions from "redux/actions/brickActions";
 import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
+import { checkAdmin } from "components/services/brickService";
+
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 
-import ShortBrickDecsiption from "components/baseComponents/ShortBrickDescription";
-import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
 import { ReduxCombinedState } from "redux/reducers";
 import FilterSidebar from './FilterSidebar';
 import BackPageTitle from './BackPageTitle';
 import BackPagePagination from './BackPagePagination';
+import BackPagePaginationV2 from './BackPagePaginationV2';
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import BrickBlock from './BrickBlock';
 
+enum ThreeColumnNames {
+  Draft = "draft",
+  Review = "review",
+  Publish = "publish",
+};
+
+interface BricksContent {
+  rawBricks: Brick[];
+  finalBricks: Brick[];
+}
+
+export interface ThreeColumns {
+  draft: BricksContent;
+  review: BricksContent;
+  publish: BricksContent;
+}
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -58,7 +74,6 @@ interface BackToWorkState {
   finalBricks: Brick[]; // bricks to display
   rawBricks: Brick[]; // loaded bricks
 
-  searchBricks: Array<Brick>;
   searchString: string;
   isSearching: boolean;
   sortBy: SortBy;
@@ -74,7 +89,7 @@ interface BackToWorkState {
   shown: boolean;
   isClearFilter: boolean;
   pageSize: number;
-  threeColumns: any;
+  threeColumns: ThreeColumns;
 }
 
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
@@ -101,7 +116,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         publish: false,
       },
 
-      searchBricks: [],
       searchString: "",
       isSearching: false,
       dropdownShown: false,
@@ -127,48 +141,60 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       }
     };
 
-    const isAdmin = this.props.user.roles.some(
-      (role) => role.roleId === UserType.Admin
-    );
+    this.getBricks();
+  }
+
+  //region loading and setting bricks
+  setColumnBricksByStatus(res: ThreeColumns, name: ThreeColumnNames, bricks: Brick[], status: BrickStatus) {
+    let bs = this.filterByStatus(bricks, status);
+    res[name] = { rawBricks: bs, finalBricks: bs };
+  }
+
+  prepareTreeRows(bricks: Brick[]) {
+    let threeColumns = {} as ThreeColumns;
+    this.setColumnBricksByStatus(threeColumns, ThreeColumnNames.Draft, bricks, BrickStatus.Draft);
+    this.setColumnBricksByStatus(threeColumns, ThreeColumnNames.Review, bricks, BrickStatus.Review);
+    this.setColumnBricksByStatus(threeColumns, ThreeColumnNames.Publish, bricks, BrickStatus.Publish);
+    return threeColumns;
+  }
+
+  setBricks(bricks: Brick[]) {
+    const threeColumns = this.prepareTreeRows(bricks);
+    this.setState({
+      ...this.state,
+      finalBricks: bricks,
+      rawBricks: bricks,
+      threeColumns
+    });
+  }
+
+  getBricks() {
+    const isAdmin = checkAdmin(this.props.user.roles);
     if (isAdmin) {
       axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks", {
         withCredentials: true,
-      }).then((res) => {
-        this.setState({
-          ...this.state,
-          finalBricks: res.data,
-          rawBricks: res.data,
-        });
-      }).catch(() => {
-        this.setState({ ...this.state, failedRequest: true })
-      });
+      }).then(res => {
+        this.setBricks(res.data);
+      }).catch(() => this.setState({ ...this.state, failedRequest: true }));
     } else {
       axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
         withCredentials: true,
       }).then((res) => {
-        this.setState({
-          ...this.state,
-          finalBricks: res.data,
-          rawBricks: res.data,
-        });
+        this.setBricks(res.data);
       }).catch(() => {
         this.setState({ ...this.state, failedRequest: true })
       });
     }
   }
+  //region loading and setting bricks
 
   delete(brickId: number) {
-    let { finalBricks, searchBricks } = this.state;
+    let { finalBricks } = this.state;
     let brick = finalBricks.find((brick) => brick.id === brickId);
     if (brick) {
       let index = finalBricks.indexOf(brick);
       if (index >= 0) {
         finalBricks.splice(index, 1);
-      }
-
-      index = searchBricks.indexOf(brick);
-      if (index >= 0) {
-        this.state.searchBricks.splice(index, 1);
       }
     }
     this.setState({ ...this.state, deleteDialogOpen: false });
@@ -208,6 +234,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     }
   }
 
+  //region hover for normal bricks
   handleMouseHover(index: number) {
     this.state.finalBricks.forEach((brick) => (brick.expanded = false));
     this.setState({ ...this.state });
@@ -224,17 +251,70 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   handleMouseLeave(key: number) {
     let { finalBricks } = this.state;
     finalBricks.forEach((brick) => (brick.expanded = false));
-    if (finalBricks[key]) {
-      finalBricks[key].expandFinished = true;
+    finalBricks[key].expandFinished = true;
+    this.setState({ ...this.state });
+    setTimeout(() => {
+      finalBricks[key].expandFinished = false;
       this.setState({ ...this.state });
-      setTimeout(() => {
-        if (finalBricks[key]) {
-          finalBricks[key].expandFinished = false;
-          this.setState({ ...this.state });
-        }
-      }, 400);
+    }, 400);
+  }
+  //region hover for normal bricks
+
+  //region hover for three column bricks
+  getThreeColumnBrick(name: ThreeColumnNames, key: number) {
+    return this.state.threeColumns[name].finalBricks[key];
+  }
+
+  expandThreeColumnBrick(name: ThreeColumnNames, key: number) {
+    let brick = this.getThreeColumnBrick(name, key);
+    if (!brick.expandFinished) {
+      brick.expanded = true;
     }
   }
+
+  hideAllBricks() {
+    this.state.finalBricks.forEach((brick) => (brick.expanded = false));
+  }
+
+  getThreeColumnName(status: BrickStatus) {
+    let name = ThreeColumnNames.Draft;
+    if (status === BrickStatus.Publish) {
+      name = ThreeColumnNames.Publish;
+    } else if (status === BrickStatus.Review) {
+      name = ThreeColumnNames.Review;
+    }
+    return name;
+  }
+
+  onThreeColumnsMouseHover(index: number, status: BrickStatus) {
+    this.hideAllBricks();
+
+    let key = Math.floor(index / 3);
+    this.setState({ ...this.state });
+
+    setTimeout(() => {
+      this.hideAllBricks();
+      let name = this.getThreeColumnName(status);
+      this.expandThreeColumnBrick(name, key);
+      this.setState({ ...this.state });
+    }, 400);
+  }
+
+  onThreeColumnsMouseLeave(index: number, status: BrickStatus) {
+    this.hideAllBricks();
+
+    let key = Math.ceil(index / 3);
+    let name = this.getThreeColumnName(status);
+    let brick = this.getThreeColumnBrick(name, key)
+
+    brick.expandFinished = true;
+    this.setState({ ...this.state });
+    setTimeout(() => {
+      brick.expandFinished = false;
+      this.setState({ ...this.state });
+    }, 400);
+  }
+  //region hover for three column bricks
 
   handleDeleteOpen(deleteBrickId: number) {
     this.setState({ ...this.state, deleteDialogOpen: true, deleteBrickId });
@@ -259,7 +339,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     } else {
       this.setState({ isClearFilter: false })
     }
-    // this.setState({ isClearFilter: this.state.bricks.some((r: any) => r.checked) ? true : false})
   }
   //endregion
 
@@ -395,13 +474,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       { withCredentials: true }
     ).then((res) => {
       const searchBricks = res.data.map((brick: any) => brick.body);
+      const threeColumns = this.prepareTreeRows(searchBricks);
       setTimeout(() => {
         this.setState({
           ...this.state,
-          searchBricks,
           finalBricks: searchBricks,
           isSearching: true,
           shown: true,
+          threeColumns
         });
       }, 1400);
     }).catch((error) => {
@@ -411,7 +491,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   renderSortedBricks = () => {
     let { sortedIndex } = this.state;
-    let data:any[] = [];
+    let data: any[] = [];
     let count = 0;
     for (let i = 0 + sortedIndex; i < this.state.pageSize + sortedIndex; i++) {
       if (this.state.finalBricks[i]) {
@@ -426,31 +506,99 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       }
     }
     return data.map(item => {
-      console.log(item.key, item.index, item.row)
       return <BrickBlock
         brick={item.brick}
-        index2={item.key}
         index={item.index}
         row={item.row}
         user={this.props.user}
         shown={this.state.shown}
         history={this.props.history}
         handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
-        handleMouseHover={key2 => this.handleMouseHover(key2)}
-        handleMouseLeave={key2 => this.handleMouseLeave(key2)}
+        handleMouseHover={key2 => this.handleMouseHover(item.key)}
+        handleMouseLeave={key2 => this.handleMouseLeave(item.key)}
       />
     });
   };
 
+  prepareBrickData(data: any[], brick: Brick, number: number, index: number) {
+    data.push({ brick: brick, key: index, index: number, row: number });
+  }
+
   renderGroupedBricks = () => {
-    return "";
+    let { sortedIndex } = this.state;
+    let data: any[] = [];
+    let count = 0;
+
+    for (let i = 0 + sortedIndex; i < (this.state.pageSize / 3) + sortedIndex; i++) {
+      let brick = this.state.threeColumns.draft.finalBricks[i];
+      if (brick) {
+        this.prepareBrickData(data, brick, i, count);
+        count++;
+      } else {
+        this.prepareBrickData(data, {} as Brick, i, count);
+        count++;
+      }
+      brick = this.state.threeColumns.review.finalBricks[i];
+      if (brick) {
+        this.prepareBrickData(data, brick, i, count);
+        count++;
+      } else {
+        this.prepareBrickData(data, {} as Brick, i, count);
+        count++;
+      }
+      brick = this.state.threeColumns.publish.finalBricks[i];
+      if (brick) {
+        this.prepareBrickData(data, brick, i, count);
+        count++;
+      } else {
+        this.prepareBrickData(data, {} as Brick, i, count);
+        count++;
+      }
+    }
+    return data.map(item => {
+      return <BrickBlock
+        brick={item.brick}
+        index={item.key}
+        row={item.row}
+        user={this.props.user}
+        shown={this.state.shown}
+        history={this.props.history}
+        handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
+        handleMouseHover={() => this.onThreeColumnsMouseHover(item.key, item.brick.status)}
+        handleMouseLeave={() => this.onThreeColumnsMouseLeave(item.key, item.brick.status)}
+      />
+    });
   }
 
   renderBricks = () => {
     if (this.state.filters.viewAll) {
-      //return this.renderGroupedBricks();
+      return this.renderGroupedBricks();
     }
     return this.renderSortedBricks();
+  }
+
+  renderPagination = () => {
+    let { sortedIndex, pageSize, finalBricks } = this.state;
+    if (this.state.filters.viewAll) {
+      return (
+        <BackPagePaginationV2
+          sortedIndex={sortedIndex}
+          pageSize={pageSize}
+          threeColumns={this.state.threeColumns}
+          moveNext={() => this.moveAllNext()}
+          moveBack={() => this.moveAllBack()}
+        />
+      )
+    }
+    return (
+      <BackPagePagination
+        sortedIndex={sortedIndex}
+        pageSize={pageSize}
+        bricksLength={finalBricks.length}
+        moveNext={() => this.moveAllNext()}
+        moveBack={() => this.moveAllBack()}
+      />
+    );
   }
 
   render() {
@@ -489,14 +637,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                 {this.renderBricks()}
               </div>
             </div>
-
-            <BackPagePagination
-              sortedIndex={this.state.sortedIndex}
-              pageSize={this.state.pageSize}
-              bricksLength={this.state.finalBricks.length}
-              moveNext={() => this.moveAllNext()}
-              moveBack={() => this.moveAllBack()}
-            />
+            {this.renderPagination()}
           </Grid>
         </Grid>
         <DeleteBrickDialog
