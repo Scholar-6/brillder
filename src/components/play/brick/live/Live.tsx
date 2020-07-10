@@ -21,7 +21,7 @@ import PulsingCircleNumber from "./PulsingCircleNumber";
 
 interface LivePageProps {
   status: PlayStatus;
-  attempts: ComponentAttempt[];
+  attempts: ComponentAttempt<any>[];
   brick: Brick;
   questions: Question[];
   isPlayPreview?: boolean;

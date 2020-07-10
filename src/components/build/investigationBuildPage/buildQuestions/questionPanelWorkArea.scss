@@ -326,7 +326,7 @@
         padding: 0.5vh 1%;
         min-height: 6vh;
         font-size: 1vw;
-        border-radius: 0.4vw;
+        border-radius: $global-drop-border-radius;
         line-height: 1.45;
         background-color: var(--white);
         margin: 0;

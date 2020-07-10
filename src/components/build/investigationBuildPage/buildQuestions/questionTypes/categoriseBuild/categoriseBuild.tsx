@@ -111,9 +111,9 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       update();
       save();
     }
-  
+
     return (
-      <div style={{position: 'relative'}} key={key} className={customClass}>
+      <div key={key} className={customClass}>
         {
           (category.answers.length > 1)
             ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(category, key)} />
@@ -170,7 +170,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   }
 
   return (
-    <div className="categorise-build">
+    <div className="categorise-build unique-component">
       {
         state.categories.map((category, i) => renderCategory(category, i))
       }

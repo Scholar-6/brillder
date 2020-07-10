@@ -33,7 +33,7 @@ export interface BrickAttempt {
   oldScore?: number;
   maxScore: number;
   student?: any;
-  answers: ComponentAttempt[];
+  answers: ComponentAttempt<any>[];
 }
 
 function shuffle(a: any[]) {

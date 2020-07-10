@@ -56,13 +56,14 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     let column = (key % 3) + 1;
     return (
       <Grid container item xs={4} key={key}>
-        <div className={`horizontal-shuffle-box horizontal-column-${column}`}>
+        <div className={`horizontal-shuffle-box unique-component horizontal-column-${column}`}>
           {
             (state.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
           }
           <DocumentWirisCKEditor
             disabled={locked}
             data={answer.value}
+            validationRequired={validationRequired}
             toolbar={['mathType', 'chemType']}
             placeholder={"Enter A" + (key + 1) + "..."}
             onBlur={() => save()}
