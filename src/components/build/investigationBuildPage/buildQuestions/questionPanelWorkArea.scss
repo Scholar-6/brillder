@@ -15,8 +15,7 @@
   }
 
   .answers-container {
-    margin-left: 1.25%;
-    width: 97.5%;
+    width: 100%;
   }
 
   p {
@@ -58,17 +57,12 @@
 
   input {
     border-radius: 0.2vw;
-    margin-bottom: 0.1vw;
-    margin-top: 0.1vw;
-    height: 2.8vw !important;
+    margin-bottom: 0.2vw;
     font-size: $base-lg-text-size;
     color: var(--theme-dark-blue);
   }
 
   textarea {
-    border-radius: 0.2vw;
-    margin-top: 0.1vw;
-    font-size: $base-lg-text-size;
     color: var(--theme-dark-blue);
   }
 
@@ -157,6 +151,7 @@
 
     .unique-component-wrapper {
       margin: 0.2vh 0;
+      padding: 0.4vw 0.4vw 0 0.4vw;
       width: 100%;
     }
 
@@ -205,9 +200,9 @@
       max-height: 100%;
       overflow-x: hidden;
       overflow-y: auto;
-      border: 2px solid $tab-gray;
+      border: 2px solid var(--tab-gray);
       border-radius: 0.6vw;
-      padding: 0px 4px 2px 4px;
+      padding: 0.2vw 0.2vw 0 0.2vw;
       margin-bottom: 25px;
     }
 
@@ -312,12 +307,11 @@
       }
     }
     .input-container {
-      margin: 0.2vw 0 0.4vw 0;
+      margin-bottom: 0.2vw;
     }
     .line-highlight-build,
     .word-highlight-build {
-      margin-left: 1.25%;
-      width: 97.5%;
+      width: 100%;
       position: relative;
       .hightlight-area,
       textarea {

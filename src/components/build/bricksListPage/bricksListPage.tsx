@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Grow from "@material-ui/core/Grow";
+import sprite from "../../../assets/img/icons-sprite.svg";
 
 import brickActions from "redux/actions/brickActions";
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
@@ -594,32 +595,31 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 						</span>
 					</div>
 				</Grid>
-				<Grid
-					container
-					item
-					xs={4}
-					justify="center"
-					className="bottom-next-button"
-				>
-					<div>
-						{showPrev ? (
-							<ExpandLessIcon
-								className={"prev-button " + (showPrev ? "active" : "")}
-								onClick={() => this.moveAllBack()}
-							/>
-						) : (
-								""
-							)}
-						{showNext ? (
-							<ExpandMoreIcon
-								className={"next-button " + (showNext ? "active" : "")}
-								onClick={() => this.moveAllNext()}
-							/>
-						) : (
-								""
-							)}
-					</div>
-				</Grid>
+        <Grid container item xs={4} justify="center">
+          <div className="bottom-next-button">
+            {showPrev ? (
+              <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
+                onClick={() => this.moveAllBack()}>
+                <svg className="svg w100 h100 active">
+                  <use href={sprite + "#arrow-up"} />
+                </svg>
+              </button>
+            ) : (
+                ""
+              )}
+            {showNext ? (
+              <button
+                className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
+                onClick={() => this.moveAllNext()}>
+                <svg className="svg w100 h100 active">
+                  <use href={sprite + "#arrow-down"} />
+                </svg>
+              </button>
+            ) : (
+                ""
+              )}
+          </div>
+        </Grid>
 			</Grid>
 		);
 	}
