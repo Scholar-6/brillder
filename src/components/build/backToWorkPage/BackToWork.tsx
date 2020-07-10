@@ -17,13 +17,11 @@ import FailedRequestDialog from "components/baseComponents/failedRequestDialog/F
 
 import ShortBrickDecsiption from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
-import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { ReduxCombinedState } from "redux/reducers";
-import ReactDOM from "react-dom";
-import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 import FilterSidebar from './FilterSidebar';
 import BackPageTitle from './BackPageTitle';
 import BackPagePagination from './BackPagePagination';
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -81,8 +79,6 @@ interface BackToWorkState {
 }
 
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
-  pageHeader: React.RefObject<any>;
-
   constructor(props: BackToWorkProps) {
     super(props);
     this.state = {
@@ -147,8 +143,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         this.setState({ ...this.state, failedRequest: true })
       });
     }
-
-    this.pageHeader = React.createRef();
   }
 
   delete(brickId: number) {
@@ -519,12 +513,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return (
       <div className="back-to-work-page">
         <div className="upper-part">
-          <PageHeader ref={this.pageHeader}
-            searchPlaceholder="Search Ongoing Projects & Published Bricks…"
+          <PageHeadWithMenu
+            page={PageEnum.BackToWork}
+            user={this.props.user}
+            placeholder={"Search Ongoing Projects & Published Bricks…"}
+            history={this.props.history}
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
-            showDropdown={() => this.showDropdown()}
-            showNotifications={() => this.showNotifications()}
           />
           <Menu
             className="menu-dropdown"
@@ -627,11 +622,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
               </Grid>
             </MenuItem>
           </Menu>
-          <NotificationPanel
-            shown={this.state.notificationsShown}
-            handleClose={() => this.hideNotifications()}
-            anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
-          />
           <LogoutDialog
             history={this.props.history}
             isOpen={this.state.logoutDialogOpen}
