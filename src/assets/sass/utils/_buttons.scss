@@ -64,6 +64,7 @@
     }
   }
   &.play-green,
+  &.play-gray,
   &.play-white {
     &:hover {
       animation-duration: 1s;
@@ -82,6 +83,18 @@
     }
     &:hover {
       animation-name: pulse-green;
+    }
+  }
+  &.play-gray {
+    background-color: var(--gray);
+    &:after {
+      background-color: var(--gray-alpha3);
+    }
+    .svg {
+      color: var(--tab-gray);
+    }
+    &:hover {
+      animation-name: pulse-gray;
     }
   }
   &.play-white {
