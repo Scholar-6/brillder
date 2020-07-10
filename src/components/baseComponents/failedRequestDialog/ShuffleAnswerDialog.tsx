@@ -24,14 +24,16 @@ class ShuffleAnswerDialog extends Component<ShuffleAnswerDialogProps> {
         <div className="dialog-header">
           <div>Is this your answer?</div>
         </div>
-        <Grid container direction="row" className="dialog-footer" justify="center">
-          <Button className="yes-button" onClick={() => this.props.submit()}>
-            Yes
-          </Button>
-          <Button className="no-button" onClick={() => this.props.close()}>
-            No, skip
-          </Button>
-        </Grid>
+        <div className="dialog-footer">
+          <button className="btn btn-md bg-theme-orange yes-button"
+            onClick={() => this.props.submit()}>
+            <span>Yes</span>
+          </button>
+          <button className="btn btn-md bg-gray no-button"
+            onClick={() => this.props.close()}>
+            <span>No, skip</span>
+          </button>
+        </div>
       </Dialog>
     );
   }
