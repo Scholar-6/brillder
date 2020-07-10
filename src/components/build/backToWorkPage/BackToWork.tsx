@@ -427,15 +427,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.filterClear()
   }
 
-  toggleBuildFilter() {
-    const { filters } = this.state;
-    this.removeInboxFilters(filters);
-    filters.build = !filters.build;
-    const bricks = this.filterBricks(filters);
-    this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
-    this.filterClear()
-  }
-
   toggleReviewFilter() {
     const { filters } = this.state;
     this.removeInboxFilters(filters);
@@ -639,7 +630,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             clearStatus={() => this.clearStatus()}
             toggleDraftFilter={() => this.toggleDraftFilter()}
             toggleReviewFilter={() => this.toggleReviewFilter()}
-            toggleBuildFilter={() => this.toggleBuildFilter()}
             togglePublishFilter={e => this.togglePublishFilter(e)}
             showAll={() => this.showAll()}
             showBuildAll={() => this.showBuildAll()}
