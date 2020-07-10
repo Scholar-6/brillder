@@ -53,7 +53,7 @@ const QuestionComponents = ({
     setComponents(compsCopy);
   }
 
-  const removeInnerComponent = (componentIndex:number) => {
+  const removeInnerComponent = (componentIndex: number) => {
     if (locked) { return; }
     const comps = Object.assign([], components) as any[];
     comps.splice(componentIndex, 1);
@@ -65,7 +65,7 @@ const QuestionComponents = ({
   const addInnerComponent = () => {
     if (locked) { return; }
     const comps = Object.assign([], components) as any[];
-    comps.push({type: 0});
+    comps.push({ type: 0 });
     setComponents(comps);
     updateComponents(comps);
     saveBrick();
@@ -73,7 +73,7 @@ const QuestionComponents = ({
 
   let canRemove = (components.length > 3) ? true : false;
 
-  const updateComponentByIndex = (compData: any, index:number) => {
+  const updateComponentByIndex = (compData: any, index: number) => {
     let copyComponents = Object.assign([], components) as any[];
     copyComponents[index] = compData;
     setComponents(copyComponents);
@@ -211,12 +211,18 @@ const QuestionComponents = ({
         aria-describedby="alert-dialog-description"
         className="dialog-box">
         <div className="dialog-header">
-          <div>Permanently delete this component?</div>
+          <div>Permanently delete<br />this component?</div>
         </div>
-        <Grid container direction="row" className="dialog-footer" justify="center">
-          <Button className="yes-button" onClick={removeComponentType}>Yes, delete</Button>
-          <Button className="no-button" onClick={hideDialog}>No, keep</Button>
-        </Grid>
+        <div className="dialog-footer">
+          <button className="btn btn-md bg-theme-orange yes-button"
+            onClick={removeComponentType}>
+            <span>Yes, delete</span>
+          </button>
+          <button className="btn btn-md bg-gray no-button"
+            onClick={hideDialog}>
+            <span>No, keep</span>
+          </button>
+        </div>
       </Dialog>
     </div>
   );
