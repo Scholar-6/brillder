@@ -7,11 +7,18 @@
 
   .short-answer-box {
     position: relative;
-    margin-left: 0.4vw;
-    margin-right: 0.4vw;
-    width: 97.5%;
+    width: 100%;
+    margin-bottom: 0.4vw;
     background-color: var(--white);
     border-radius: $global-drop-border-radius;
+    .document-editor {
+			.ck-editor {
+        .ck-editor__main {
+          border-top-right-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+        }
+      }
+    }
   }
   .right-top-icon {
     @extend %floatToYCenter;

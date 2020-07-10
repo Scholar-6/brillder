@@ -65,7 +65,6 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                 this.props.notifications.length != 0) ?
                 this.props.notifications.map((notification) => (
                   <ListItem key={notification.id}>
-
                     <ListItemIcon className="left-brick-circle">
                       <SvgIcon fontSize="large">
                         <svg>
@@ -73,11 +72,9 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                         </svg>
                       </SvgIcon>
                     </ListItemIcon>
-
                     <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
                     <Grid direction="column">
                       <Grid className="notification-time">{moment(notification.timestamp).fromNow()}</Grid>
-
                       <IconButton className="delete-notification" onClick={() => this.markAsRead(notification.id)}>
                         <SvgIcon>
                           <svg className="svg">

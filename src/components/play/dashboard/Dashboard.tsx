@@ -720,27 +720,26 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             </span>
           </div>
         </Grid>
-        <Grid
-          container
-          item
-          xs={4}
-          justify="center"
-          className="bottom-next-button"
-        >
-          <div>
+        <Grid container item xs={4} justify="center">
+          <div className="bottom-next-button">
             {showPrev ? (
-              <ExpandLessIcon
-                className={"prev-button " + (showPrev ? "active" : "")}
-                onClick={() => this.moveAllBack()}
-              />
+              <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
+                onClick={() => this.moveAllBack()}>
+                <svg className="svg w100 h100 active">
+                  <use href={sprite + "#arrow-up"} />
+                </svg>
+              </button>
             ) : (
                 ""
               )}
             {showNext ? (
-              <ExpandMoreIcon
-                className={"next-button " + (showNext ? "active" : "")}
-                onClick={() => this.moveAllNext()}
-              />
+              <button
+                className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
+                onClick={() => this.moveAllNext()}>
+                <svg className="svg w100 h100 active">
+                  <use href={sprite + "#arrow-down"} />
+                </svg>
+              </button>
             ) : (
                 ""
               )}
@@ -935,15 +934,19 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               </div>
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
-              <div className="bricks-list">
-                <Hidden only={["xs"]}>
+              <Hidden only={["xs"]}>
+                <div className="bricks-list">
                   {this.renderYourBrickRow()}
+                </div>
+                <div className="bricks-list">
                   {this.renderSortedBricks()}
-                </Hidden>
-                <Hidden only={['sm', 'md', 'lg', 'xl']}>
+                </div>
+              </Hidden>
+              <Hidden only={['sm', 'md', 'lg', 'xl']}>
+                <div className="bricks-list">
                   {this.renderSortedMobileBricks()}
-                </Hidden>
-              </div>
+                </div>
+              </Hidden>
             </div>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title">

@@ -1,3 +1,28 @@
+.btn {
+  @extend %transitionAll300;
+  text-transform: none;
+  border-radius: $global-drop-border-radius;
+  @extend %b0;
+  font-family: $font-family-bold;
+  letter-spacing: 0.2vw;
+  &.btn-block {
+    width: 100%;
+  }
+  &.btn-xl {
+    padding: 2.5vh 0;
+    font-size: 1.2vw;
+    @include phone_and_tabletL {
+      font-size: 1.6vw;
+    }
+    @include phone_and_tabletP {
+      font-size: 1.2vw;
+    }
+    @include tabletL {
+      font-size: 1vw;
+    }
+  }
+}
+
 .round-button-center {
   cursor: pointer;
   display: flex;
@@ -64,6 +89,7 @@
     }
   }
   &.play-green,
+  &.play-gray,
   &.play-white {
     &:hover {
       animation-duration: 1s;
@@ -82,6 +108,18 @@
     }
     &:hover {
       animation-name: pulse-green;
+    }
+  }
+  &.play-gray {
+    background-color: var(--gray);
+    &:after {
+      background-color: var(--gray-alpha3);
+    }
+    .svg {
+      color: var(--tab-gray);
+    }
+    &:hover {
+      animation-name: pulse-gray;
     }
   }
   &.play-white {
