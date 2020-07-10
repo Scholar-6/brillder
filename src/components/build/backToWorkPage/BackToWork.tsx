@@ -260,7 +260,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   //region hover for normal bricks
 
   //region hover for three column bricks
-
   getThreeColumnBrick(name: ThreeColumnNames, key: number) {
     return this.state.threeColumns[name].finalBricks[key];
   }
@@ -287,10 +286,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   onThreeColumnsMouseHover(index: number, status: BrickStatus) {
-    console.log(status)
-    let key = Math.floor(index / 3);
     this.hideAllBricks();
+
+    let key = Math.floor(index / 3);
     this.setState({ ...this.state });
+
     setTimeout(() => {
       this.hideAllBricks();
       let name = this.getThreeColumnName(status);
@@ -300,10 +300,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   onThreeColumnsMouseLeave(index: number, status: BrickStatus) {
-    let key = Math.ceil(index / 3);
-
     this.hideAllBricks();
 
+    let key = Math.ceil(index / 3);
     let name = this.getThreeColumnName(status);
     let brick = this.getThreeColumnBrick(name, key)
 
@@ -475,12 +474,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       { withCredentials: true }
     ).then((res) => {
       const searchBricks = res.data.map((brick: any) => brick.body);
+      const threeColumns = this.prepareTreeRows(searchBricks);
       setTimeout(() => {
         this.setState({
           ...this.state,
           finalBricks: searchBricks,
           isSearching: true,
           shown: true,
+          threeColumns
         });
       }, 1400);
     }).catch((error) => {
