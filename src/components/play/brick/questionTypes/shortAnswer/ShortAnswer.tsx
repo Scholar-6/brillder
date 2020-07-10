@@ -12,7 +12,7 @@ import {
   ShortAnswerItem,
 } from "components/build/investigationBuildPage/buildQuestions/questionTypes/shortAnswerBuild/interface";
 import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
-import DocumentEditorComponent from "components/baseComponents/ckeditor/DocumentEditor";
+import DocumentWirisEditorComponent from "components/baseComponents/ckeditor/DocumentWirisEditor";
 
 interface ShortAnswerProps extends CompQuestionProps {
   component: ShrortAnswerData;
@@ -77,25 +77,19 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     // The maximum number of marks is the number of entries * 5.
     attempt.maxMarks = this.props.component.list.length * 5;
 
+
     this.props.component.list.forEach((answer, index) => {
       // if there is an answer given...
       if (this.state.userAnswers[index]) {
-        // and the answer is equal to the answer in the database (lowercase and whitespace stripped)
         let answerValue = stripHtml(answer.value);
-        if (
-          this.formatAnswer(this.state.userAnswers[index]) ===
-          this.formatAnswer(answerValue)
-        ) {
+        if (stripHtml(this.state.userAnswers[index]) === answerValue) {
           // and the program is in the live phase...
           if (!prev) {
             // increase the marks by 5.
             attempt.marks += markIncrement;
           }
           // or the answer was already correct before the review...
-          else if (
-            this.formatAnswer(prev.answer[index]) !==
-            this.formatAnswer(answerValue)
-          ) {
+          else if (stripHtml(prev.answer[index]) !== answerValue) {
             // increase the marks by 2.
             attempt.marks += markIncrement;
           }
@@ -124,11 +118,12 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
       value = this.props.component.list[index].value;
     }
     return (
-      <DocumentEditorComponent
+      <DocumentWirisEditorComponent
         data={value}
+        disabled={false}
         onChange={v => this.setUserAnswer(v, index)}
         toolbar={["superscript", "subscript"]}
-        onBlur={() => {}}
+        onBlur={() => { }}
         placeholder={`Answer ${index + 1}`}
       />
     );
