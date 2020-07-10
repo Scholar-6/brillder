@@ -516,7 +516,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       isValid = false;
     }
   });
-  
+
   const switchQuestions = (questions: Question[]) => {
     setQuestions(questions);
     saveSwitchedBrickQuestions(questions);
@@ -600,13 +600,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           onClose={() => setSubmitDialog(false)}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          className="submit-brick-dialog"
-        >
+          className="dialog-box">
           <div className="dialog-header">
             <div>Some questions are incomplete.</div>
             <div>These are marked in red. Keep working?</div>
           </div>
-          <Grid container direction="row" className="row-buttons" justify="center">
+          <Grid container direction="row" className="dialog-footer" justify="center">
             <Button className="yes-button" onClick={() => hideInvalidBrick()}>Yes</Button>
             <Button className="no-button" onClick={() => submitInvalidBrick()}>No, Save & Exit</Button>
           </Grid>
@@ -623,13 +622,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           open={true}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          className="mobile-brick-dialog"
-        >
-          <div className="mobile-dialog-header" style={{padding: '4vh 4vw'}}>
+          className="dialog-box">
+          <div className="dialog-header">
             <div>You need desktop browser</div>
             <div>to use this page</div>
           </div>
-          <Grid container direction="row" className="row-buttons" justify="center">
+          <Grid container direction="row" className="dialog-footer" justify="center">
             <Button className="yes-button" onClick={() => history.push('/home')}>
               Move
             </Button>
