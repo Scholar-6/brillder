@@ -14,6 +14,7 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grow from "@material-ui/core/Grow";
+import sprite from "../../../assets/img/icons-sprite.svg";
 
 import "./BackToWork.scss";
 import brickActions from "redux/actions/brickActions";
@@ -747,27 +748,26 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             </span>
           </div>
         </Grid>
-        <Grid
-          container
-          item
-          xs={4}
-          justify="center"
-          className="bottom-next-button"
-        >
-          <div>
+        <Grid container item xs={4} justify="center">
+          <div className="bottom-next-button">
             {showPrev ? (
-              <ExpandLessIcon
-                className={"prev-button " + (showPrev ? "active" : "")}
-                onClick={() => this.moveAllBack()}
-              />
+              <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
+                onClick={() => this.moveAllBack()}>
+                <svg className="svg w100 h100 active">
+                  <use href={sprite + "#arrow-up"} />
+                </svg>
+              </button>
             ) : (
                 ""
               )}
             {showNext ? (
-              <ExpandMoreIcon
-                className={"next-button " + (showNext ? "active" : "")}
-                onClick={() => this.moveAllNext()}
-              />
+              <button
+                className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
+                onClick={() => this.moveAllNext()}>
+                <svg className="svg w100 h100 active">
+                  <use href={sprite + "#arrow-down"} />
+                </svg>
+              </button>
             ) : (
                 ""
               )}
