@@ -65,8 +65,7 @@ const UserActionsCell: React.FC<UserActionsCellProps> = (
 				aria-describedby="alert-dialog-description"
 				className="dialog-box">
 				<div className="dialog-header">
-					<div>Permanently delete</div>
-					<div>this user?</div>
+					<div>Permanently delete this user?</div>
 				</div>
 				<Grid container direction="row" className="dialog-footer" justify="center">
 					<Button className="yes-button" onClick={deleteUser}>
