@@ -673,13 +673,18 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           aria-describedby="alert-dialog-description"
           className="dialog-box">
           <div className="dialog-header">
-            <div>Are you sure you want</div>
-            <div>to log out?</div>
+            <div>Are you sure<br />you want to log out?</div>
           </div>
-          <Grid container direction="row" className="dialog-footer" justify="center">
-            <Button className="yes-button" onClick={() => this.logout()}>Yes</Button>
-            <Button className="no-button" onClick={() => this.handleLogoutClose()}>No</Button>
-          </Grid>
+          <div className="dialog-footer">
+            <button className="btn btn-md bg-theme-orange yes-button"
+              onClick={() => this.logout()}>
+              <span>Yes</span>
+            </button>
+            <button className="btn btn-md bg-gray no-button"
+              onClick={() => this.handleLogoutClose()}>
+              <span>No</span>
+            </button>
+          </div>
         </Dialog>
       </div>
     )
