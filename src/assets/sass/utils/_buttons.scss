@@ -8,6 +8,18 @@
   &.btn-block {
     width: 100%;
   }
+  &.btn-md {
+    @include phone_and_tabletP {
+      padding: 1vw 2vw;
+      font-size: 4.35vw;
+      border-radius: 1.8vw;
+    }
+    @include tabletP {
+      padding: 0.5vw 1vw;
+      font-size: 1.5vw;
+      border-radius: 0.6vw;
+    }
+  }
   &.btn-xl {
     padding: 2.5vh 0;
     font-size: 1.2vw;
