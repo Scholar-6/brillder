@@ -81,7 +81,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
   }
 
   let isChecked = !!validator.validateChooseSeveralChecked(state.list);
-  
+
   return (
     <div className="choose-several-build unique-component">
       <div className="component-title">
@@ -108,7 +108,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
         locked={locked}
         addAnswer={addAnswer}
         height={height}
-        label="+ &nbsp;&nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
+        label="+ ANSWER" />
     </div>
   )
 }

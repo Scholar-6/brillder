@@ -95,7 +95,7 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
         locked={locked}
         addAnswer={addAnswer}
         height={height}
-        label="+ &nbsp;&nbsp; P &nbsp; A &nbsp; I &nbsp; R"
+        label="+ PAIR"
       />
     </div>
   )

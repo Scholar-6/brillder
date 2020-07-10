@@ -18,7 +18,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   useEffect(() => calculateHeight());
 
   const newAnswer = () => ({value: ""});
-  
+
   if (!data.list) {
     data.list = [newAnswer(), newAnswer(), newAnswer()];
   } else if (data.list.length < 3) {
@@ -98,7 +98,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
         locked={locked}
         addAnswer={addAnswer}
         height={height}
-        label="+ &nbsp;&nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
+        label="+ ANSWER" />
     </div>
   )
 }
