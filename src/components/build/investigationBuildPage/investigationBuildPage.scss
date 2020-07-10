@@ -84,12 +84,7 @@ $space-between-boxes: 0.1vw;
   }
 
   .button-box {
-    .add-answer-button {
-      width: 97.5%;
-      border-radius: $global-drop-border-radius;
-      background: #002060;
-      color: white;
-    }
+    margin: 0.2vw 0;
   }
 
   .tutorial-top-labels {
@@ -123,16 +118,5 @@ $space-between-boxes: 0.1vw;
     color: white;
   }
 
-  @media only screen and (max-width: 959px) {
-    .add-answer-button {
-      font-size: 1.61vw !important;
-    }
-  }
-
-  @media only screen and (max-width: 600px) {
-    .add-answer-button {
-      font-size: 1.11vw !important;
-    }
-  }
 }
 

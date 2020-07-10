@@ -107,7 +107,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
         locked={locked}
         addAnswer={addShortAnswer}
         height={height}
-        label="+ &nbsp;&nbsp; S &nbsp; H &nbsp; O &nbsp; R &nbsp; T &nbsp; &nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R"
+        label="+ SHORT ANSWER"
       />
       <Snackbar
         anchorOrigin={{
