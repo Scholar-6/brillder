@@ -3,16 +3,12 @@ import { Box, Grid } from "@material-ui/core";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import Grow from "@material-ui/core/Grow";
-import sprite from "../../../assets/img/icons-sprite.svg";
 
 import "./BackToWork.scss";
 import brickActions from "redux/actions/brickActions";
 import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
-import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 
@@ -23,6 +19,7 @@ import FilterSidebar from './FilterSidebar';
 import BackPageTitle from './BackPageTitle';
 import BackPagePagination from './BackPagePagination';
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import BrickBlock from './BrickBlock';
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -59,8 +56,9 @@ export interface Filters {
 
 interface BackToWorkState {
   bricks: Brick[];
-  finalBricks: Brick[];
-  rawBricks: Brick[];
+  finalBricks: Brick[]; // bricks to display
+  rawBricks: Brick[]; // loaded bricks
+
   searchBricks: Array<Brick>;
   searchString: string;
   isSearching: boolean;
@@ -77,6 +75,7 @@ interface BackToWorkState {
   shown: boolean;
   isClearFilter: boolean;
   pageSize: number;
+  threeColumns: any;
 }
 
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
@@ -92,6 +91,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       logoutDialogOpen: false,
       deleteDialogOpen: false,
       deleteBrickId: -1,
+
       filters: {
         viewAll: true,
         buildAll: false,
@@ -111,7 +111,19 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       failedRequest: false,
       shown: true,
       isClearFilter: false,
-      pageSize: 18
+      pageSize: 18,
+
+      threeColumns: {
+        draft: {
+          
+        },
+        review: {
+
+        },
+        publish: {
+
+        },
+      }
     };
 
     const isAdmin = this.props.user.roles.some(
@@ -166,12 +178,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       }
     }
     this.setState({ ...this.state, deleteDialogOpen: false });
-  }
-
-  move(brickId: number) {
-    this.props.history.push(
-      `/build/brick/${brickId}/build/investigation/question`
-    );
   }
 
   handleSortChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -232,41 +238,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     }, 400);
   }
 
-  handleLogoutOpen() {
-    this.setState({ ...this.state, logoutDialogOpen: true });
-  }
-
-  handleLogoutClose() {
-    this.setState({ ...this.state, logoutDialogOpen: false });
-  }
-
   handleDeleteOpen(deleteBrickId: number) {
     this.setState({ ...this.state, deleteDialogOpen: true, deleteBrickId });
   }
 
   handleDeleteClose() {
     this.setState({ ...this.state, deleteDialogOpen: false });
-  }
-
-  creatingBrick() {
-    this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
-  }
-
-  showDropdown() {
-    this.setState({ ...this.state, dropdownShown: true });
-  }
-
-  hideDropdown() {
-    this.setState({ ...this.state, dropdownShown: false });
-  }
-
-  showNotifications() {
-    this.setState({ ...this.state, notificationsShown: true });
-  }
-
-  hideNotifications() {
-    this.setState({ ...this.state, notificationsShown: false });
   }
 
   //region Hide / Expand / Clear Filter
@@ -276,6 +253,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, filters, bricks: this.state.rawBricks });
     this.filterClear()
   }
+
   filterClear() {
     let { draft, review, build, publish } = this.state.filters
     if (draft || review || build || publish) {
@@ -286,56 +264,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     // this.setState({ isClearFilter: this.state.bricks.some((r: any) => r.checked) ? true : false})
   }
   //endregion
-
-  getSortedBrickContainer = (brick: Brick, key: number, index: number, row: any = 0) => {
-    let color = "";
-    if (brick.status === BrickStatus.Draft) {
-      color = "color1";
-    } else if (brick.status === BrickStatus.Review) {
-      color = "color2";
-    } else if (brick.status === BrickStatus.Build) {
-      color = "color3";
-    } else if (brick.status === BrickStatus.Publish) {
-      color = "color4";
-    }
-
-    const isAdmin = this.props.user.roles.some(
-      (role: any) => role.roleId === UserType.Admin
-    );
-
-    return (
-      <Grow
-        in={this.state.shown}
-        key={key}
-        style={{ transformOrigin: "0 0 0" }}
-        timeout={index * 150}
-      >
-        <div className="main-brick-container">
-          <Box className={`brick-container ${color}`}>
-            <div
-              className={`absolute-container brick-row-${row} ${
-                brick.expanded ? "brick-hover" : ""
-                }`}
-              onMouseEnter={() => this.handleMouseHover(key)}
-              onMouseLeave={() => this.handleMouseLeave(key)}
-            >
-              {brick.expanded ? (
-                <ExpandedBrickDecsiption
-                  isAdmin={isAdmin}
-                  color={color}
-                  brick={brick}
-                  move={(brickId) => this.move(brickId)}
-                  onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-                />
-              ) : (
-                  <ShortBrickDecsiption color={color} brick={brick} />
-                )}
-            </div>
-          </Box>
-        </div>
-      </Grow>
-    );
-  };
 
   clearStatusFilters(filters: Filters) {
     filters.draft = false;
@@ -381,7 +309,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, filters, finalBricks: bricks });
   }
 
-  filterByStatus(bricks: Brick[], status: BrickStatus): Brick[] {
+  filterByStatus(bricks: Brick[], status: BrickStatus) {
     return bricks.filter((b) => b.status === status);
   }
 
@@ -437,18 +365,17 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   togglePublishFilter(e: React.ChangeEvent<any>) {
-    console.log(e.target.checked)
     e.stopPropagation();
     const { filters } = this.state;
     this.removeInboxFilters(filters);
     filters.publish = !filters.publish;
-    console.log(e, filters.publish);
     const bricks = this.filterBricks(filters);
     this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
     this.filterClear()
   }
 
   searching(searchString: string) {
+    console.log(this.state.bricks);
     if (searchString.length === 0) {
       this.setState({
         ...this.state,
@@ -493,13 +420,35 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       if (this.state.finalBricks[i]) {
         let row = Math.floor(count / 3);
         BackToWork.push(
-          this.getSortedBrickContainer(this.state.finalBricks[i], i, count, row)
+          <BrickBlock
+            brick={this.state.finalBricks[i]}
+            key={i}
+            index={count}
+            row={row}
+            user={this.props.user}
+            shown={this.state.shown}
+            history={this.props.history}
+            handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
+            handleMouseHover={key => this.handleMouseHover(key)}
+            handleMouseLeave={key => this.handleMouseLeave(key)}
+          />
         );
         count++;
       }
     }
     return BackToWork;
   };
+
+  renderGroupedBricks = () => {
+    return "";
+  }
+
+  renderBricks = () => {
+    if (this.state.filters.viewAll) {
+      return this.renderGroupedBricks();
+    }
+    return this.renderSortedBricks();
+  }
 
   render() {
     return (
@@ -530,12 +479,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             showEditAll={() => this.showEditAll()}
           />
           <Grid item xs={9} className="brick-row-container">
-            <div className="brick-row-title"><BackPageTitle filters={this.state.filters} /></div>
+            <BackPageTitle filters={this.state.filters} />
+
             <div className="bricks-list-container">
               <div className="bricks-list">
-                {this.renderSortedBricks()}
+                {this.renderBricks()}
               </div>
             </div>
+
             <BackPagePagination
               sortedIndex={this.state.sortedIndex}
               pageSize={this.state.pageSize}
@@ -545,7 +496,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             />
           </Grid>
         </Grid>
-
         <DeleteBrickDialog
           isOpen={this.state.deleteDialogOpen}
           brickId={this.state.deleteBrickId}

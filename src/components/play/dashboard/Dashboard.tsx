@@ -14,8 +14,6 @@ import { Category } from "./interface";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import sprite from "../../../assets/img/icons-sprite.svg";
