@@ -121,7 +121,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
   }
 
   render() {
-    let placeholder = "Search Subjects, Topics, Titles &amp; more";
+    let placeholder = "Search Subjects, Topics, Titles & more";
     if (this.props.placeholder) {
       placeholder = this.props.placeholder;
     }

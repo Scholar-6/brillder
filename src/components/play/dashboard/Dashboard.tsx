@@ -762,7 +762,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         <div className="upper-part">
           <PageHeader
             ref={this.pageHeader}
-            searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
+            searchPlaceholder="Search Subjects, Topics, Titles & more"
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
