@@ -9,11 +9,12 @@ import ReviewGlobalHint from 'components/play/brick/baseComponents/ReviewGlobalH
 import { CompQuestionProps } from '../types';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
+import { ChooseOneAnswer } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/chooseOneBuild/types';
 
 
 interface ChooseSeveralProps extends CompQuestionProps {
   component: any;
-  attempt: any;
+  attempt: ComponentAttempt<number[]>;
   answers: number[];
 }
 
@@ -53,7 +54,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     return this.state.activeItems;
   }
 
-  markLiveChoices(attempt: ComponentAttempt, markIncrement: number) {
+  markLiveChoices(attempt: ComponentAttempt<any>, markIncrement: number) {
     const choices = this.props.component.list;
     for (let [index, choice] of choices.entries()) {
       const checked = attempt.answer.find((answer: number) => answer === index);
@@ -83,7 +84,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     return count;
   }
 
-  mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
+  mark(attempt: ComponentAttempt<number[]>, prev: ComponentAttempt<number[]>) {
     let correctAnswers = this.getCorrectAnswers();
     const markValue = 5;
     const markIncrement = prev ? Math.floor(markValue / correctAnswers) : markValue;
@@ -105,11 +106,11 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     return attempt;
   }
 
-  checkChoice(choice: any, index: number) {
+  checkChoice(choice: ChooseOneAnswer, index: number) {
     if (this.props.attempt) {
       const { answer } = this.props.attempt;
       const found = answer.find((a: number) => a === index);
-      if (found >= 0) {
+      if (found && found >= 0) {
         if (choice.checked) {
           return true;
         } else {
@@ -123,7 +124,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   renderEachHint(index: number) {
   }
 
-  renderData(answer: any) {
+  renderData(answer: ChooseOneAnswer) {
     if (answer.answerType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} width="100%" />;
     } else {
@@ -131,7 +132,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     }
   }
 
-  renderButton(choice: any, index: number) {
+  renderButton(choice: ChooseOneAnswer, index: number) {
     let isCorrect = this.checkChoice(choice, index);
     let className = "choose-choice";
     let active = this.state.activeItems.find(i => i === index) as number;

@@ -1,23 +1,27 @@
-import React from 'react';
-import { TextField, Grid } from '@material-ui/core';
-import CompComponent from '../Comp';
+import React from "react";
+import { TextField, Grid } from "@material-ui/core";
+import CompComponent from "../Comp";
 
-import './ShortAnswer.scss';
-import { ComponentAttempt } from 'components/play/brick/model/model';
-import ReviewEachHint from '../../baseComponents/ReviewEachHint';
-import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import {CompQuestionProps} from '../types';
-
+import "./ShortAnswer.scss";
+import { ComponentAttempt } from "components/play/brick/model/model";
+import ReviewEachHint from "../../baseComponents/ReviewEachHint";
+import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
+import { CompQuestionProps } from "../types";
+import {
+  ShrortAnswerData,
+  ShortAnswerItem,
+} from "components/build/investigationBuildPage/buildQuestions/questionTypes/shortAnswerBuild/interface";
+import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
 
 interface ShortAnswerProps extends CompQuestionProps {
-  component: any;
+  component: ShrortAnswerData;
   isTimeover: boolean;
-  attempt: ComponentAttempt;
+  attempt: ComponentAttempt<string[]>;
   answers: string[];
 }
 
 interface ShortAnswerState {
-  userAnswers: string[]
+  userAnswers: string[];
 }
 
 class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
@@ -30,13 +34,13 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     } else if (props.attempt?.answer?.length > 0) {
       props.attempt.answer.forEach((a: string) => userAnswers.push(a));
     } else {
-      props.component.list.forEach(() => userAnswers.push(''));
+      props.component.list.forEach(() => userAnswers.push(""));
     }
 
     this.state = { userAnswers } as ShortAnswerState;
   }
 
-  setUserAnswer(e: any, index: number) {
+  setUserAnswer(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) {
     let userAnswers = this.state.userAnswers;
     userAnswers[index] = e.target.value;
     if (e.target.value && this.props.onAttempted) {
@@ -45,41 +49,52 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     this.setState({ userAnswers });
   }
 
-  getAnswer(): string[] {
-    return this.state.userAnswers;
+  formatAnswer(value: string) {
+    return value.toLocaleLowerCase().replace(/ /g, "");
   }
 
-  checkAttemptAnswer(answer: any, index: number) {
+  getAnswer = (): string[] => this.state.userAnswers;
+
+  checkAttemptAnswer(answer: ShortAnswerItem, index: number) {
+    const answerValue = stripHtml(answer.value);
+    const attepmtValue = this.props.attempt.answer[index];
     if (
       this.props.attempt &&
       this.props.attempt.answer &&
-      this.props.attempt.answer[index].toLowerCase().replace(/ /g, '') === answer.value.toLowerCase().replace(/ /g, '')
+      this.formatAnswer(attepmtValue) === this.formatAnswer(answerValue)
     ) {
       return true;
     }
     return false;
   }
 
-  mark(attempt: any, prev: any): any {
+  mark(attempt: ComponentAttempt<string[]>, prev: ComponentAttempt<string[]>) {
     // If the question is answered in review phase, add 2 to the mark and not 5.
     let markIncrement = prev ? 2 : 5;
     attempt.correct = true;
     attempt.marks = 0;
     // The maximum number of marks is the number of entries * 5.
     attempt.maxMarks = this.props.component.list.length * 5;
-    // For every entry...
-    this.props.component.list.forEach((answer:any, index: number) => {
+
+    this.props.component.list.forEach((answer, index) => {
       // if there is an answer given...
       if (this.state.userAnswers[index]) {
         // and the answer is equal to the answer in the database (lowercase and whitespace stripped)
-        if (this.state.userAnswers[index].toLowerCase().replace(/ /g, '') === answer.value.toLowerCase().replace(/ /g, '')) {
+        let answerValue = stripHtml(answer.value);
+        if (
+          this.formatAnswer(this.state.userAnswers[index]) ===
+          this.formatAnswer(answerValue)
+        ) {
           // and the program is in the live phase...
           if (!prev) {
             // increase the marks by 5.
             attempt.marks += markIncrement;
           }
           // or the answer was already correct before the review...
-          else if (prev.answer[index].toLowerCase().replace(/ /g, '') !== answer.value.toLowerCase().replace(/ /g, '')) {
+          else if (
+            this.formatAnswer(prev.answer[index]) !==
+            this.formatAnswer(answerValue)
+          ) {
             // increase the marks by 2.
             attempt.marks += markIncrement;
           }
@@ -95,22 +110,18 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         // the answer is not correct.
         attempt.correct = false;
       }
-    })
+    });
     // Then, if there are no marks, and there are no empty entries, and the program is in live phase, give the student a mark.
-    if (attempt.marks === 0 && this.state.userAnswers.indexOf("") === -1 && !prev) attempt.marks = 1;
+    let emptyAnswer = this.state.userAnswers.indexOf("");
+    if (attempt.marks === 0 && emptyAnswer === -1 && !prev) attempt.marks = 1;
     return attempt;
   }
 
   renderTextField(index: number) {
     if (this.props.isPreview) {
-      let {value} = this.props.component.list[index];
-      return (
-        <TextField
-          value={value}
-          onChange={e => this.setUserAnswer(e, index)}
-          label={`Answer ${index + 1}`}
-        />
-      )
+      let { value } = this.props.component.list[index];
+      let valueString = stripHtml(value);
+      return <TextField value={valueString} label={`Answer ${index + 1}`} />;
     }
     return (
       <TextField
@@ -118,16 +129,20 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         onChange={e => this.setUserAnswer(e, index)}
         label={`Answer ${index + 1}`}
       />
-    )
+    );
   }
 
-  renderAnswer(answer:any, width: number, index: number) {
+  renderAnswer(answer: ShortAnswerItem, width: number, index: number) {
     let isCorrect = false;
     if (this.props.attempt) {
       isCorrect = this.checkAttemptAnswer(answer, index);
     }
     return (
-      <div key={index} className={`short-answer-input ${isCorrect ? 'correct' : ''}`} style={{ width: `${width}%` }}>
+      <div
+        key={index}
+        className={`short-answer-input ${isCorrect ? "correct" : ""}`}
+        style={{ width: `${width}%` }}
+      >
         <Grid container direction="row" justify="center">
           {this.renderTextField(index)}
         </Grid>
@@ -151,19 +166,18 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
       width = (100 - 1) / component.list.length;
     }
 
-    if (this.props.isPreview) {
-      width = 100;
-    }
+    if (this.props.isPreview) width = 100;
 
     return (
       <div className="short-answer-live">
-        {
-          component.list.map((answer: any, index: number) =>
-            {
-              return this.renderAnswer(answer, width, index)
-            })
-        }
-        <ReviewGlobalHint attempt={this.props.attempt} isPhonePreview={this.props.isPreview} hint={this.props.question.hint} />
+        {component.list.map((answer, index) => {
+          return this.renderAnswer(answer, width, index);
+        })}
+        <ReviewGlobalHint
+          attempt={this.props.attempt}
+          isPhonePreview={this.props.isPreview}
+          hint={this.props.question.hint}
+        />
       </div>
     );
   }

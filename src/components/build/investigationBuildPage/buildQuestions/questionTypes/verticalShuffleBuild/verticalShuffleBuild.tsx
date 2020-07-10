@@ -75,6 +75,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
         <DocumentWirisCKEditor
           disabled={locked}
           data={answer.value}
+          validationRequired={validationRequired}
           toolbar={['mathType', 'chemType']}
           placeholder={"Enter Answer " + (key + 1) + "..."}
           onBlur={() => save()}
@@ -85,7 +86,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   }
 
   return (
-    <div className="vertical-shuffle-build">
+    <div className="vertical-shuffle-build unique-component">
       <div className="component-title">
         <div>Enter Answers below in order.</div>
         <div>These will be randomised in the Play Interface.</div>

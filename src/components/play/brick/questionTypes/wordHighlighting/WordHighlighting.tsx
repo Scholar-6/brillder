@@ -9,7 +9,7 @@ import { PlayWord, IPlayWordComponent } from 'components/interfaces/word';
 
 interface WordHighlightingProps extends CompQuestionProps {
   component: IPlayWordComponent;
-  attempt: ComponentAttempt;
+  attempt: ComponentAttempt<any>;
   answers: number[];
 }
 

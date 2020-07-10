@@ -1,5 +1,5 @@
-export interface ComponentAttempt {
-  answer: any;
+export interface ComponentAttempt<T> {
+  answer: T;
   correct: boolean;
   marks: number;
   maxMarks: number;

@@ -37,7 +37,7 @@
 
   color: var(--theme-dark-blue);
   background: white;
-  border-radius: 0.4vw;
+  border-radius: $global-drop-border-radius;
 
   .hint-input-text {
     text-align: center !important;

@@ -69,6 +69,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
         <DocumentWirisCKEditor
           disabled={locked}
           data={answer.option}
+          validationRequired={validationRequired}
           toolbar={['mathType', 'chemType']}
           placeholder={"Enter Option " + (index + 1) + "..."}
           onBlur={() => save()}

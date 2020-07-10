@@ -2,6 +2,8 @@
 @import '../../../assets/sass/partials/mixins';
 @import '../../../assets/sass/partials/extensions';
 
+$space-between-boxes: 0.1vw;
+
 .mobile-brick-dialog {
   font-size: 5vw;
   padding: 4vh 4vw !important;
@@ -52,7 +54,6 @@
 
   .right-top-icon {
     position: absolute;
-    top: 0.4vh;
     right: 2.2vw;
     height: $bin-size;
     width: $bin-size;
