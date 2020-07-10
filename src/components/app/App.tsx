@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 import './app.scss';
-import '../../assets/fonts/icomoon/style.css';
 
 import VersionLabel from 'components/baseComponents/VersionLabel';
 import Dashboard from '../play/dashboard/Dashboard';
