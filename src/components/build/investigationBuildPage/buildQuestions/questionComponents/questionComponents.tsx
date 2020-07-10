@@ -211,8 +211,7 @@ const QuestionComponents = ({
         aria-describedby="alert-dialog-description"
         className="dialog-box">
         <div className="dialog-header">
-          <div>Permanently delete</div>
-          <div>this component?</div>
+          <div>Permanently delete this component?</div>
         </div>
         <Grid container direction="row" className="dialog-footer" justify="center">
           <Button className="yes-button" onClick={removeComponentType}>Yes, delete</Button>

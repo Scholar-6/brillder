@@ -36,8 +36,7 @@ class DeleteBrickDialog extends Component<DeleteDialogProps> {
         aria-describedby="alert-dialog-description"
         className="dialog-box">
         <div className="dialog-header">
-          <div>Permanently delete</div>
-          <div>this brick?</div>
+          <div>Permanently delete this brick?</div>
         </div>
         <Grid container direction="row" className="dialog-footer" justify="center">
           <Button className="yes-button" onClick={() => this.delete()}>

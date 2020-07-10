@@ -9,6 +9,7 @@ import { Notification, notificationTypeColors } from 'model/notifications';
 import notificationActions from 'redux/actions/notifications';
 import { Dispatch } from 'redux';
 import moment from 'moment';
+import './NotificationPanel.scss';
 
 const mapState = (state: ReduxCombinedState) => ({
   notifications: state.notifications.notifications
@@ -47,6 +48,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         onClose={this.props.handleClose}
         anchorReference={this.props.anchorElement ? "anchorEl" : "none"}
         anchorEl={this.props.anchorElement}
+        className="notification-box"
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
@@ -56,38 +58,33 @@ class NotificationPanel extends Component<NotificationPanelProps> {
           horizontal: 'right',
         }}
       >
-        <Card>
+        <Card className="notification-content">
           <CardContent>
-            <List>
+            <List className="notification-list">
               {(this.props.notifications &&
                 this.props.notifications.length != 0) ?
                 this.props.notifications.map((notification) => (
                   <ListItem key={notification.id}>
-                    <Grid container direction="row" alignItems="center" spacing={2}>
-                      <Grid item>
-                        <ListItemIcon>
-                          <SvgIcon fontSize="large">
-                            <svg>
-                              <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
-                            </svg>
-                          </SvgIcon>
-                        </ListItemIcon>
-                      </Grid>
-                      <Grid item>
-                        <ListItemText primary={notification.title} secondary={notification.text} />
-                      </Grid>
-                      <Grid item direction="column">
-                        <Grid>{moment(notification.timestamp).fromNow()}</Grid>
-                        <Grid>
-                          <IconButton onClick={() => this.markAsRead(notification.id)}>
-                            <SvgIcon>
-                              <svg className="svg">
-                                <use href={sprite + "#cancel"} />
-                              </svg>
-                            </SvgIcon>
-                          </IconButton>
-                        </Grid>
-                      </Grid>
+
+                    <ListItemIcon className="left-brick-circle">
+                      <SvgIcon fontSize="large">
+                        <svg>
+                          <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
+                        </svg>
+                      </SvgIcon>
+                    </ListItemIcon>
+
+                    <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
+                    <Grid direction="column">
+                      <Grid className="notification-time">{moment(notification.timestamp).fromNow()}</Grid>
+
+                      <IconButton className="delete-notification" onClick={() => this.markAsRead(notification.id)}>
+                        <SvgIcon>
+                          <svg className="svg">
+                            <use href={sprite + "#cancel"} />
+                          </svg>
+                        </SvgIcon>
+                      </IconButton>
                     </Grid>
                   </ListItem>
                 )) :
@@ -101,16 +98,16 @@ class NotificationPanel extends Component<NotificationPanelProps> {
           </CardContent>
           {(this.props.notifications &&
             this.props.notifications.length != 0) &&
-          <CardActions>
-            <div>Clear All</div>
-            <IconButton onClick={() => this.markAllAsRead()}>
-              <SvgIcon>
-                <svg className="svg">
-                  <use href={sprite + "#cancel"} />
-                </svg>
-              </SvgIcon>
-            </IconButton>
-          </CardActions>}
+            <CardActions className="clear-notification">
+              <div>Clear All</div>
+              <IconButton onClick={() => this.markAllAsRead()}>
+                <SvgIcon>
+                  <svg className="svg text-white">
+                    <use href={sprite + "#circle-cancel"} />
+                  </svg>
+                </SvgIcon>
+              </IconButton>
+            </CardActions>}
         </Card>
       </Popover>
     );

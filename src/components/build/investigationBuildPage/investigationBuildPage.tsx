@@ -602,8 +602,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           aria-describedby="alert-dialog-description"
           className="dialog-box">
           <div className="dialog-header">
-            <div>Some questions are incomplete.</div>
-            <div>These are marked in red. Keep working?</div>
+            <div>Some questions are incomplete. These are marked in red. Keep working?</div>
           </div>
           <Grid container direction="row" className="dialog-footer" justify="center">
             <Button className="yes-button" onClick={() => hideInvalidBrick()}>Yes</Button>
@@ -624,8 +623,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           aria-describedby="alert-dialog-description"
           className="dialog-box">
           <div className="dialog-header">
-            <div>You need desktop browser</div>
-            <div>to use this page</div>
+            <div>You need desktop browser to use this page</div>
           </div>
           <Grid container direction="row" className="dialog-footer" justify="center">
             <Button className="yes-button" onClick={() => history.push('/home')}>

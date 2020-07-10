@@ -21,8 +21,7 @@ const DeleteQuestionDialog:React.FC<DeleteQuestionDialogProps> = ({
       aria-describedby="alert-dialog-description"
       className="dialog-box">
       <div className="dialog-header">
-        <div>Permanently delete</div>
-        <div>this question?</div>
+        <div>Permanently delete this question?</div>
       </div>
       <Grid container direction="row" className="dialog-footer" justify="center">
         <Button className="yes-button" onClick={() => deleteQuestion(index)}>Yes, delete</Button>
