@@ -3,9 +3,10 @@
 @import '../../../../../assets/sass/partials/extensions';
 
 .question-image-drop {
-  width: 30%;
+  position: absolute;
+  width: calc(100% - 2.2vw);
   top: 1vh;
-  @extend %floatToXCenter;
+  left: 0;
   z-index: 200;
   .dropzone {
     background: inherit !important;
