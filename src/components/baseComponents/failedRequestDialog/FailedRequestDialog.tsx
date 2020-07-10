@@ -22,11 +22,12 @@ class FailedRequestDialog extends Component<DeleteDialogProps> {
         <div className="dialog-header">
           <div>Sorry, we've run into a brick wall. Click refresh and see if we can get over it.</div>
         </div>
-        <Grid container direction="row" className="dialog-footer" justify="center">
-          <Button className="yes-button" onClick={() => this.props.close()}>
-            Close
-          </Button>
-        </Grid>
+        <div className="dialog-footer">
+          <button className="btn btn-md bg-theme-orange yes-button"
+            onClick={() => this.props.close()}>
+            <span>Close</span>
+          </button>
+        </div>
       </Dialog>
     );
   }

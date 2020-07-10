@@ -10,7 +10,7 @@ interface DeleteQuestionDialogProps {
   deleteQuestion(index: number): void;
 }
 
-const DeleteQuestionDialog:React.FC<DeleteQuestionDialogProps> = ({
+const DeleteQuestionDialog: React.FC<DeleteQuestionDialogProps> = ({
   open, index, setDialog, deleteQuestion
 }) => {
   return (
@@ -21,13 +21,18 @@ const DeleteQuestionDialog:React.FC<DeleteQuestionDialogProps> = ({
       aria-describedby="alert-dialog-description"
       className="dialog-box">
       <div className="dialog-header">
-        <div>Permanently delete</div>
-        <div>this question?</div>
+        <div>Permanently delete<br />this question?</div>
       </div>
-      <Grid container direction="row" className="dialog-footer" justify="center">
-        <Button className="yes-button" onClick={() => deleteQuestion(index)}>Yes, delete</Button>
-        <Button className="no-button" onClick={() => setDialog(false)}>No, keep</Button>
-      </Grid>
+      <div className="dialog-footer">
+        <button className="btn btn-md bg-theme-orange yes-button"
+          onClick={() => deleteQuestion(index)}>
+          <span>Yes, delete</span>
+        </button>
+        <button className="btn btn-md bg-gray no-button"
+          onClick={() => setDialog(false)}>
+          <span>No, keep</span>
+        </button>
+      </div>
     </Dialog>
   );
 }
