@@ -55,7 +55,6 @@ export interface Filters {
 }
 
 interface BackToWorkState {
-  bricks: Brick[];
   finalBricks: Brick[]; // bricks to display
   rawBricks: Brick[]; // loaded bricks
 
@@ -82,7 +81,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   constructor(props: BackToWorkProps) {
     super(props);
     this.state = {
-      bricks: [],
       finalBricks: [],
       rawBricks: [],
       sortBy: SortBy.None,
@@ -115,13 +113,16 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
       threeColumns: {
         draft: {
-          
+          rawBricks: [],
+          finalBricks: []
         },
         review: {
-
+          rawBricks: [],
+          finalBricks: []
         },
         publish: {
-
+          rawBricks: [],
+          finalBricks: []
         },
       }
     };
@@ -135,7 +136,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       }).then((res) => {
         this.setState({
           ...this.state,
-          bricks: res.data,
           finalBricks: res.data,
           rawBricks: res.data,
         });
@@ -148,28 +148,22 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       }).then((res) => {
         this.setState({
           ...this.state,
-          bricks: res.data,
           finalBricks: res.data,
           rawBricks: res.data,
         });
-      }).catch((error) => {
+      }).catch(() => {
         this.setState({ ...this.state, failedRequest: true })
       });
     }
   }
 
   delete(brickId: number) {
-    let { finalBricks, searchBricks, bricks } = this.state;
+    let { finalBricks, searchBricks } = this.state;
     let brick = finalBricks.find((brick) => brick.id === brickId);
     if (brick) {
       let index = finalBricks.indexOf(brick);
       if (index >= 0) {
         finalBricks.splice(index, 1);
-      }
-
-      index = bricks.indexOf(brick);
-      if (index >= 0) {
-        bricks.splice(index, 1);
       }
 
       index = searchBricks.indexOf(brick);
@@ -230,12 +224,16 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   handleMouseLeave(key: number) {
     let { finalBricks } = this.state;
     finalBricks.forEach((brick) => (brick.expanded = false));
-    finalBricks[key].expandFinished = true;
-    this.setState({ ...this.state });
-    setTimeout(() => {
-      finalBricks[key].expandFinished = false;
+    if (finalBricks[key]) {
+      finalBricks[key].expandFinished = true;
       this.setState({ ...this.state });
-    }, 400);
+      setTimeout(() => {
+        if (finalBricks[key]) {
+          finalBricks[key].expandFinished = false;
+          this.setState({ ...this.state });
+        }
+      }, 400);
+    }
   }
 
   handleDeleteOpen(deleteBrickId: number) {
@@ -250,8 +248,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   clearStatus() {
     const { filters } = this.state;
     this.clearStatusFilters(filters);
-    this.setState({ ...this.state, filters, bricks: this.state.rawBricks });
-    this.filterClear()
+    this.setState({ ...this.state, filters });
+    this.filterClear();
   }
 
   filterClear() {
@@ -375,12 +373,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   searching(searchString: string) {
-    console.log(this.state.bricks);
     if (searchString.length === 0) {
       this.setState({
         ...this.state,
         searchString,
-        finalBricks: this.state.bricks,
+        finalBricks: this.state.rawBricks,
         isSearching: false,
       });
     } else {
@@ -445,7 +442,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   renderBricks = () => {
     if (this.state.filters.viewAll) {
-      return this.renderGroupedBricks();
+      //return this.renderGroupedBricks();
     }
     return this.renderSortedBricks();
   }
