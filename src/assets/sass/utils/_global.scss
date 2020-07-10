@@ -476,7 +476,6 @@ h3 {
   padding: 2px 5px;
   border-radius: 1px 2px 3px 4px;
   display: block;
-
   p {
     font-size: 1vw;
     display: inline;
@@ -551,14 +550,13 @@ h3 {
   text-align: center;
   text-transform: none !important;
   width: 100%;
-  padding: 1vh 0 !important;
+  padding: 1vh 0 0 0 !important;
   background-color: $tab-gray !important;
   opacity: 1;
   float: left;
   @include phone_and_tabletP {
     font-size: 6vw;
   }
-
   .MuiGrid-root {
     margin: 0 !important;
   }
@@ -571,6 +569,16 @@ h3 {
   p {
     text-align: center !important;
   }
+}
+
+.horizontal-shuffle-answer,
+.pair-match-play-option,
+.missing-word-choice,
+.vertical-shuffle-choice,
+.short-answer-input,
+.pair-match-play-choice,
+.pair-match-image-choice,
+.choose-choice {
   &.active {
     background: $white-blue !important;
   }
@@ -582,6 +590,15 @@ h3 {
   }
   &.wrong {
     background: var(--theme-orange);
+  }
+}
+
+.pair-match-image-choice {
+  padding: 0.5vw;
+  background: none;
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
