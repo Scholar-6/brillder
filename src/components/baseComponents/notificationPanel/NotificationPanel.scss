@@ -4,9 +4,7 @@
 
 .notification-box {
   .MuiCardContent-root {
-    @include phone_and_tabletP {
-      padding: 1vw 2vw;
-    }
+    padding: 1vw !important;
   }
   .MuiPopover-paper {
     @include phone_and_tabletP {
@@ -18,7 +16,7 @@
     }
     @include tabletP {
       border-radius: 0 0 0 2.5vw;
-      left: calc(100% - 35vw) !important;
+      left: calc(100% - 37vw) !important;
     }
     @include tabletL {
       left: calc(100% - 30vw) !important;
@@ -34,7 +32,7 @@
       }
       @include tabletP {
         border-radius: 0 0 0 2.5vw;
-        width: 35vw;
+        width: 37vw;
       }
       @include tabletL {
         width: 30vw;
@@ -58,58 +56,70 @@
               font-size: 2.8rem;
             }
           }
-          .notification-detail {
-            border-bottom: 0.02vh solid var(--theme-dark-blue);
-            @include phone_and_tabletP {
-              padding-bottom: 1vh;
+          .content-box {
+            display: flex;
+            width: calc(100% - 56px);
+            .notification-detail-single {
+              @extend %textCenter;
             }
-            @include tabletP {
-              padding-bottom: 0.5vw;
+            .notification-detail,
+            .notification-detail-single {
+              margin: 0;
+              .MuiListItemText-primary,
+              .MuiTypography-colorTextSecondary {
+                @include phone_and_tabletP {
+                  font-size: 3.5vw;
+                }
+                @include tabletP {
+                  font-size: 1.1vw;
+                }
+                @include tabletL {
+                  font-size: 0.9vw;
+                }
+                @include desktop {
+                  font-size: 0.8vw;
+                }
+              }
+              .MuiListItemText-primary {
+                color: var(--white);
+                text-transform: uppercase;
+              }
             }
-            .MuiListItemText-primary,
-            .MuiTypography-colorTextSecondary {
+            .notification-detail {
+              margin: 0;
+              border-bottom: 0.02vh solid var(--theme-dark-blue);
               @include phone_and_tabletP {
-                font-size: 3.5vw;
+                padding-bottom: 1vh;
               }
               @include tabletP {
-                font-size: 1.1vw;
+                padding-bottom: 0.5vw;
               }
-              @include tabletL {
+              .MuiTypography-colorTextSecondary {
+                color: var(--white-alpha6);
+              }
+            }
+            .notification-time {
+              color: var(--white);
+              text-align: center;
+              white-space: nowrap;
+              margin-top: 0.4vh;
+              @include phone_and_tabletP {
+                font-size: 2.5vw;
+              }
+              @include tabletP {
                 font-size: 0.9vw;
               }
-              @include desktop {
+              @include tabletL {
                 font-size: 0.8vw;
               }
+              @include desktop {
+                font-size: 0.7vw;
+              }
             }
-            .MuiListItemText-primary {
+            .delete-notification {
               color: var(--white);
-              text-transform: uppercase;
-            }
-            .MuiTypography-colorTextSecondary {
-              color: var(--white-alpha6);
-            }
-          }
-          .notification-time {
-            color: var(--white);
-            text-align: center;
-            @include phone_and_tabletP {
-              font-size: 2.5vw;
-            }
-            @include tabletP {
-              font-size: 0.9vw;
-            }
-            @include tabletL {
-              font-size: 0.8vw;
-            }
-            @include desktop {
-              font-size: 0.7vw;
-            }
-          }
-          .delete-notification {
-            color: var(--white);
-            @include tabletP {
-              padding-top: 0;
-              padding-bottom: 0;
+              padding: 0;
+              @extend %width100;
             }
           }
         }
@@ -141,7 +151,7 @@
       }
       @include tabletP {
         font-size: 1vw;
-        height: 6vh;
+        height: 4.5vh;
         button {
           padding-top: 0vw;
           padding-bottom: 0vw;
