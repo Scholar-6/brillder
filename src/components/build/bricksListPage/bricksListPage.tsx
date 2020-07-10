@@ -6,8 +6,6 @@ import {
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Grow from "@material-ui/core/Grow";
 import sprite from "../../../assets/img/icons-sprite.svg";
 

@@ -45,7 +45,7 @@ const BackPageTitle: React.FC<BackPageTitleProps> = ({ filters }) => {
   } else {
     title = "FILTERED";
   }
-  return <span>{title}</span>
+  return <div className="brick-row-title">{title}</div>;
 }
 
 export default BackPageTitle;
