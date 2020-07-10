@@ -10,9 +10,21 @@ import LogoutDialog from "../logoutDialog/LogoutDialog";
 import ReactDOM from 'react-dom';
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 
+
+export enum PageEnum {
+  None,
+  BackToWork,
+  ViewAll,
+  Play
+}
+
 interface HeaderMenuProps {
   history: any;
   user: User;
+  placeholder?: string;
+  page: PageEnum;
+  search(): void;
+  searching(v: string): void;
 }
 
 interface HeaderMenuState {
@@ -65,13 +77,60 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
     this.setState({ ...this.state, logoutOpen: false });
   }
 
+  renderViewAllItem() {
+    if (this.props.page !== PageEnum.ViewAll) {
+      return (
+        <MenuItem
+          className="first-item menu-item"
+          onClick={() => this.props.history.push("/play/dashboard")}>
+          View All Bricks
+          <Grid
+            container
+            className="menu-icon-container"
+            justify="center"
+            alignContent="center"
+          >
+            <div>
+              <img
+                className="menu-icon"
+                alt=""
+                src="/images/main-page/glasses-white.png"
+              />
+            </div>
+          </Grid>
+        </MenuItem>
+      )
+    }
+    return "";
+  }
+
+  renderBackToWorkItem() {
+    if (this.props.page !== PageEnum.BackToWork) {
+      return (
+        <MenuItem className="menu-item" onClick={() => this.props.history.push('/back-to-work')}>
+          Back To Work
+          <Grid container className="menu-icon-container" justify="center" alignContent="center">
+            <div>
+              <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
+            </div>
+          </Grid>
+        </MenuItem>
+      );
+    }
+    return "";
+  }
+
   render() {
+    let placeholder = "Search Subjects, Topics, Titles &amp; more";
+    if (this.props.placeholder) {
+      placeholder = this.props.placeholder;
+    }
     return (
       <div className="upper-part">
         <PageHeader ref={this.pageHeader}
-          searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
-          search={() => {}}
-          searching={(v: string) => {}}
+          searchPlaceholder={placeholder}
+          search={() => this.props.search()}
+          searching={(v: string) => this.props.searching(v)}
           showDropdown={() => this.showDropdown()}
           showNotifications={() => this.showNotifications()}
         />
@@ -80,25 +139,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           keepMounted
           open={this.state.dropdownShown}
           onClose={() => this.hideDropdown()}>
-          <MenuItem
-            className="first-item menu-item"
-            onClick={() => this.props.history.push("/play/dashboard")}>
-            View All Bricks
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon"
-                  alt=""
-                  src="/images/main-page/glasses-white.png"
-                />
-              </div>
-            </Grid>
-          </MenuItem>
+          {this.renderViewAllItem()}
           <MenuItem className="menu-item" onClick={() => this.creatingBrick()}>
             Start Building
             <Grid
@@ -116,40 +157,33 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
               </div>
             </Grid>
           </MenuItem>
-          <MenuItem className="menu-item" onClick={() => this.props.history.push('/back-to-work')}>
-            Back To Work
-            <Grid container className="menu-icon-container" justify="center" alignContent="center">
-              <div>
-                <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
-              </div>
-            </Grid>
-          </MenuItem>
+          {this.renderBackToWorkItem()}
           {this.props.user.roles.some(
             (role) => role.roleId === UserType.Admin
           ) ? (
-            <MenuItem
-              className="menu-item"
-              onClick={() => this.props.history.push("/users")}
-            >
-              Manage Users
-              <Grid
-                container
-                className="menu-icon-container"
-                justify="center"
-                alignContent="center"
+              <MenuItem
+                className="menu-item"
+                onClick={() => this.props.history.push("/users")}
               >
-                <div>
-                  <img
-                    className="manage-users-icon svg-icon"
-                    alt=""
-                    src="/images/users.svg"
-                  />
-                </div>
-              </Grid>
-            </MenuItem>
-          ) : (
-            ""
-          )}
+                Manage Users
+                <Grid
+                  container
+                  className="menu-icon-container"
+                  justify="center"
+                  alignContent="center"
+                >
+                  <div>
+                    <img
+                      className="manage-users-icon svg-icon"
+                      alt=""
+                      src="/images/users.svg"
+                    />
+                  </div>
+                </Grid>
+              </MenuItem>
+            ) : (
+              ""
+            )}
           <MenuItem
             className="view-profile menu-item"
             onClick={() => this.props.history.push("/user-profile")}

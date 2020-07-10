@@ -98,8 +98,6 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     attempt.marks = 0;
     attempt.maxMarks = 0;
 
-    console.log(attempt);
-    
     attempt.answer.forEach((answer: any, index: number, array: any[]) => {
       if (index !== 0) {
         attempt.maxMarks += 5;
