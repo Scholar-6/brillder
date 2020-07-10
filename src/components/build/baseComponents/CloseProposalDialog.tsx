@@ -19,8 +19,7 @@ class CloseProposalDialog extends Component<CloseProposalDialogProps> {
         aria-describedby="alert-dialog-description"
         className="dialog-box">
         <div className="dialog-header">
-          <div>Your changes will not be saved.</div>
-          <div>Exit anyway?</div>
+          <div>Your changes will not be saved. Exit anyway?</div>
         </div>
         <Grid container direction="row" className="dialog-footer" justify="center">
           <Button className="yes-button" onClick={() => this.props.move()}>
