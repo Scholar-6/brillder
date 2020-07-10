@@ -1,16 +1,8 @@
 import React, { Component } from "react";
-import {
-  Box,
-  Grid,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-} from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grow from "@material-ui/core/Grow";
@@ -31,6 +23,7 @@ import ReactDOM from "react-dom";
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 import FilterSidebar from './FilterSidebar';
 import BackPageTitle from './BackPageTitle';
+import BackPagePagination from './BackPagePagination';
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -522,66 +515,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return BackToWork;
   };
 
-  renderPagination() {
-    if (this.state.finalBricks.length <= this.state.pageSize) {
-      return "";
-    }
-
-    const showPrev = this.state.sortedIndex >= this.state.pageSize;
-    const showNext =
-      this.state.sortedIndex + this.state.pageSize <= this.state.finalBricks.length;
-
-    return (
-      <Grid container direction="row" className="bricks-pagination">
-        <Grid item xs={4} className="left-pagination">
-          <div className="first-row">
-            {this.state.sortedIndex + 1}-
-            {this.state.sortedIndex + this.state.pageSize > this.state.finalBricks.length
-              ? this.state.finalBricks.length
-              : this.state.sortedIndex + this.state.pageSize}
-            <span className="gray">
-              {" "}
-              &nbsp;|&nbsp; {this.state.finalBricks.length}
-            </span>
-          </div>
-          <div>
-            {(this.state.sortedIndex + this.state.pageSize) / this.state.pageSize}
-            <span className="gray">
-              {" "}
-              &nbsp;|&nbsp; {Math.ceil(this.state.finalBricks.length / this.state.pageSize)}
-            </span>
-          </div>
-        </Grid>
-        <Grid
-          container
-          item
-          xs={4}
-          justify="center"
-          className="bottom-next-button"
-        >
-          <div>
-            {showPrev ? (
-              <ExpandLessIcon
-                className={"prev-button " + (showPrev ? "active" : "")}
-                onClick={() => this.moveAllBack()}
-              />
-            ) : (
-                ""
-              )}
-            {showNext ? (
-              <ExpandMoreIcon
-                className={"next-button " + (showNext ? "active" : "")}
-                onClick={() => this.moveAllNext()}
-              />
-            ) : (
-                ""
-              )}
-          </div>
-        </Grid>
-      </Grid>
-    );
-  }
-
   render() {
     return (
       <div className="back-to-work-page">
@@ -728,7 +661,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                 {this.renderSortedBricks()}
               </div>
             </div>
-            {this.renderPagination()}
+            <BackPagePagination
+              sortedIndex={this.state.sortedIndex}
+              pageSize={this.state.pageSize}
+              bricksLength={this.state.finalBricks.length}
+              moveNext={() => this.moveAllNext()}
+              moveBack={() => this.moveAllBack()}
+            />
           </Grid>
         </Grid>
 
