@@ -227,33 +227,6 @@
       letter-spacing: 0.27vw;
       font-size: 1.3vw;
     }
-    .bottom-next-button {
-      bottom: 1vh;
-      color: white;
-      > div {
-        position: relative;
-        .prev-button {
-          position: absolute;
-          top: -0.6vh;
-          margin-left: 2.8vh;
-          left: -4vw;
-        }
-        .next-button {
-          position: absolute;
-          left: -4vw;
-          top: 1vh;
-        }
-        .active:hover {
-          cursor: pointer;
-          color: var(--theme-dark-blue) !important;
-        }
-        svg {
-          height: 4.7vh;
-          width: 4.7vh;
-          color: var(--gray);
-        }
-      }
-    }
     .brick-hover {
       position: absolute;
       z-index: 2;
@@ -303,6 +276,24 @@
       padding-top: 0.35vh;
       padding-left: 0.15vw;
       line-height: 1.4;
+    }
+    .bottom-next-button {
+      bottom: 1vh;
+      position: relative;
+      .btn {
+        height: 4.7vh;
+        width: 4.7vh;
+        margin: 0 0.5vh;
+        cursor: pointer;
+        .svg {
+          color: var(--gray);
+        }
+        &.active:hover {
+          .svg {
+            color: var(--theme-dark-blue);
+          }
+        }
+      }
     }
   }
 }
