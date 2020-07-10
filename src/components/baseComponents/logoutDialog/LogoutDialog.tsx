@@ -36,8 +36,7 @@ class LogoutDialog extends Component<LogoutComponentProps> {
         onClose={() => this.handleLogoutClose()}
         className="dialog-box">
         <div className="dialog-header">
-          <div>Are you sure you want</div>
-          <div>to log out?</div>
+          <div>Are you sure you want to log out?</div>
         </div>
         <Grid container direction="row" className="dialog-footer" justify="center">
           <Button className="yes-button" onClick={() => this.logout()}>Yes</Button>
