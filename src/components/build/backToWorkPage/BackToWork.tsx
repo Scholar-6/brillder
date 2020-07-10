@@ -233,6 +233,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     }
   }
 
+  //region hover for normal bricks
   handleMouseHover(index: number) {
     this.state.finalBricks.forEach((brick) => (brick.expanded = false));
     this.setState({ ...this.state });
@@ -249,17 +250,71 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   handleMouseLeave(key: number) {
     let { finalBricks } = this.state;
     finalBricks.forEach((brick) => (brick.expanded = false));
-    if (finalBricks[key]) {
-      finalBricks[key].expandFinished = true;
+    finalBricks[key].expandFinished = true;
+    this.setState({ ...this.state });
+    setTimeout(() => {
+      finalBricks[key].expandFinished = false;
       this.setState({ ...this.state });
-      setTimeout(() => {
-        if (finalBricks[key]) {
-          finalBricks[key].expandFinished = false;
-          this.setState({ ...this.state });
-        }
-      }, 400);
+    }, 400);
+  }
+  //region hover for normal bricks
+
+  //region hover for three column bricks
+
+  getThreeColumnBrick(name: ThreeColumnNames, key: number) {
+    return this.state.threeColumns[name].finalBricks[key];
+  }
+
+  expandThreeColumnBrick(name: ThreeColumnNames, key: number) {
+    let brick = this.getThreeColumnBrick(name, key);
+    if (!brick.expandFinished) {
+      brick.expanded = true;
     }
   }
+
+  hideAllBricks() {
+    this.state.finalBricks.forEach((brick) => (brick.expanded = false));
+  }
+
+  getThreeColumnName(status: BrickStatus) {
+    let name = ThreeColumnNames.Draft;
+    if (status === BrickStatus.Publish) {
+      name = ThreeColumnNames.Publish;
+    } else if (status === BrickStatus.Review) {
+      name = ThreeColumnNames.Review;
+    }
+    return name;
+  }
+
+  onThreeColumnsMouseHover(index: number, status: BrickStatus) {
+    console.log(status)
+    let key = Math.floor(index / 3);
+    this.hideAllBricks();
+    this.setState({ ...this.state });
+    setTimeout(() => {
+      this.hideAllBricks();
+      let name = this.getThreeColumnName(status);
+      this.expandThreeColumnBrick(name, key);
+      this.setState({ ...this.state });
+    }, 400);
+  }
+
+  onThreeColumnsMouseLeave(index: number, status: BrickStatus) {
+    let key = Math.ceil(index / 3);
+
+    this.hideAllBricks();
+
+    let name = this.getThreeColumnName(status);
+    let brick = this.getThreeColumnBrick(name, key)
+
+    brick.expandFinished = true;
+    this.setState({ ...this.state });
+    setTimeout(() => {
+      brick.expandFinished = false;
+      this.setState({ ...this.state });
+    }, 400);
+  }
+  //region hover for three column bricks
 
   handleDeleteOpen(deleteBrickId: number) {
     this.setState({ ...this.state, deleteDialogOpen: true, deleteBrickId });
@@ -475,8 +530,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     let data: any[] = [];
     let count = 0;
 
-    console.log(sortedIndex);
-
     for (let i = 0 + sortedIndex; i < (this.state.pageSize / 3) + sortedIndex; i++) {
       let brick = this.state.threeColumns.draft.finalBricks[i];
       if (brick) {
@@ -510,8 +563,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         shown={this.state.shown}
         history={this.props.history}
         handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
-        handleMouseHover={key2 => this.handleMouseHover(key2)}
-        handleMouseLeave={key2 => this.handleMouseLeave(key2)}
+        handleMouseHover={() => this.onThreeColumnsMouseHover(item.key, item.brick.status)}
+        handleMouseLeave={() => this.onThreeColumnsMouseLeave(item.key, item.brick.status)}
       />
     });
   }
