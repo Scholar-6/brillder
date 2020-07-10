@@ -29,6 +29,8 @@ import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { ReduxCombinedState } from "redux/reducers";
 import ReactDOM from "react-dom";
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
+import FilterSidebar from './FilterSidebar';
+import BackPageTitle from './BackPageTitle';
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -45,7 +47,14 @@ interface BackToWorkProps {
   forgetBrick(): void;
 }
 
-interface Filters {
+export enum SortBy {
+  None,
+  Date,
+  Popularity,
+  Status,
+}
+
+export interface Filters {
   viewAll: boolean;
   buildAll: boolean;
   editAll: boolean;
@@ -74,16 +83,8 @@ interface BackToWorkState {
   notificationsShown: boolean;
   failedRequest: boolean;
   shown: boolean;
-  filterExpanded: boolean;
-  filterHeight: string;
-  isClearFilter: any;
-}
-
-enum SortBy {
-  None,
-  Date,
-  Popularity,
-  Status,
+  isClearFilter: boolean;
+  pageSize: number;
 }
 
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
@@ -119,9 +120,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       notificationsShown: false,
       failedRequest: false,
       shown: true,
-      filterExpanded: true,
-      filterHeight: "auto",
       isClearFilter: false,
+      pageSize: 18
     };
 
     const isAdmin = this.props.user.roles.some(
@@ -186,7 +186,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     );
   }
 
-  handleSortChange = (e: any) => {
+  handleSortChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let sortBy = parseInt(e.target.value) as SortBy;
     const { state } = this;
     let bricks = Object.assign([], state.finalBricks) as Brick[];
@@ -208,15 +208,15 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   moveAllBack() {
     let index = this.state.sortedIndex;
-    if (index >= 18) {
-      this.setState({ ...this.state, sortedIndex: index - 18 });
+    if (index >= this.state.pageSize) {
+      this.setState({ ...this.state, sortedIndex: index - this.state.pageSize });
     }
   }
 
   moveAllNext() {
     let index = this.state.sortedIndex;
-    if (index + 18 <= this.state.finalBricks.length) {
-      this.setState({ ...this.state, sortedIndex: index + 18 });
+    if (index + this.state.pageSize <= this.state.finalBricks.length) {
+      this.setState({ ...this.state, sortedIndex: index + this.state.pageSize });
     }
   }
 
@@ -288,12 +288,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, filters, bricks: this.state.rawBricks });
     this.filterClear()
   }
-  hideFilter() {
-    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-  }
-  expandFilter() {
-    this.setState({ ...this.state, filterExpanded: true, filterHeight: "auto" });
-  }
   filterClear() {
     let { draft, review, build, publish } = this.state.filters
     if (draft || review || build || publish) {
@@ -362,8 +356,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     filters.publish = false;
   }
 
-
-
   removeAllFilters(filters: Filters) {
     filters.viewAll = false;
     filters.buildAll = false;
@@ -400,46 +392,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     let bricks = this.filterByStatus(this.state.rawBricks, BrickStatus.Draft);
     this.setState({ ...this.state, filters, finalBricks: bricks });
   }
-
-  renderIndexesBox = () => {
-    let build = 0;
-    let edit = 0;
-    for (let b of this.state.rawBricks) {
-      if (b.status === BrickStatus.Draft) {
-        build += 1;
-      }
-    }
-
-    for (let b of this.state.rawBricks) {
-      if (b.status !== BrickStatus.Draft) {
-        edit += 1;
-      }
-    }
-    return (
-      <div className="sort-box">
-        <div className="filter-container sort-by-box">
-          <div className="sort-header">INBOX</div>
-        </div>
-        <div className="filter-container indexes-box">
-          <div className={"index-box " + (this.state.filters.viewAll ? "active" : "")}
-            onClick={() => this.showAll()}>
-            View All
-					<div className="right-index">{this.state.rawBricks.length}</div>
-          </div>
-          <div className={"index-box " + (this.state.filters.buildAll ? "active" : "")}
-            onClick={() => this.showBuildAll()}>
-            Build
-					<div className="right-index">{build}</div>
-          </div>
-          <div className={"index-box " + (this.state.filters.editAll ? "active" : "")}
-            onClick={() => this.showEditAll()}>
-            Edit
-					<div className="right-index">{edit}</div>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   filterByStatus(bricks: Brick[], status: BrickStatus): Brick[] {
     return bricks.filter((b) => b.status === status);
@@ -505,10 +457,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.filterClear()
   }
 
-  togglePublishFilter() {
+  togglePublishFilter(e: React.ChangeEvent<any>) {
+    console.log(e.target.checked)
+    e.stopPropagation();
     const { filters } = this.state;
     this.removeInboxFilters(filters);
     filters.publish = !filters.publish;
+    console.log(e, filters.publish);
     const bricks = this.filterBricks(filters);
     this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
     this.filterClear()
@@ -551,120 +506,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     });
   }
 
-  renderSortAndFilterBox = () => {
-    let draft = 0;
-    let review = 0;
-    let build = 0;
-    let publish = 0;
-
-    for (let b of this.state.rawBricks) {
-      if (b.status === BrickStatus.Draft) {
-        draft += 1;
-      }
-    }
-
-    for (let b of this.state.rawBricks) {
-      if (b.status === BrickStatus.Review) {
-        review += 1;
-      }
-    }
-
-    for (let b of this.state.rawBricks) {
-      if (b.status === BrickStatus.Build) {
-        build += 1;
-      }
-    }
-
-    for (let b of this.state.rawBricks) {
-      if (b.status === BrickStatus.Publish) {
-        publish += 1;
-      }
-    }
-
-    return (
-      <div className="sort-box">
-        <div className="filter-container sort-by-box">
-          <div className="sort-header">SORT BY</div>
-          <RadioGroup className="sort-group"
-            aria-label="SortBy"
-            name="SortBy"
-            value={this.state.sortBy}
-            onChange={this.handleSortChange}>
-            <Grid container direction="row">
-              <Grid item xs={4}>
-                <FormControlLabel
-                  value={SortBy.Status}
-                  control={<Radio className="sortBy" />}
-                  label="Status" />
-              </Grid>
-              <Grid item xs={4}>
-                <FormControlLabel
-                  value={SortBy.Popularity}
-                  control={<Radio className="sortBy" />}
-                  label="Popularity" />
-              </Grid>
-              <Grid item xs={4}>
-                <FormControlLabel
-                  value={SortBy.Date}
-                  control={<Radio className="sortBy" />}
-                  label="Last Edit" />
-              </Grid>
-            </Grid>
-          </RadioGroup>
-        </div>
-        <div className="filter-header">
-          <span>Filter</span>
-          <button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up"))}
-            onClick={() => { this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expandFilter()) }}>
-          </button>
-        </div>
-        {this.state.filterExpanded === true ? (
-          <div className="filter-container subject-indexes-box">
-            <div className="index-box color1">
-              <FormControlLabel
-                checked={this.state.filters.draft}
-                onClick={() => this.toggleDraftFilter()}
-                control={<Radio className={"filter-radio custom-color"} />}
-                label="Draft" />
-              <div className="right-index">{draft}</div>
-            </div>
-            <div className="index-box color2">
-              <FormControlLabel
-                checked={this.state.filters.review}
-                onClick={() => this.toggleReviewFilter()}
-                control={<Radio className={"filter-radio custom-color"} />}
-                label="Submitted for Review" />
-              <div className="right-index">{review}</div>
-            </div>
-            <div className="index-box color3">
-              <FormControlLabel
-                checked={this.state.filters.build}
-                onClick={() => this.toggleBuildFilter()}
-                control={<Radio className={"filter-radio custom-color"} />}
-                label="Build in Progress" />
-              <div className="right-index">{build}</div>
-            </div>
-            <div className="index-box color4">
-              <FormControlLabel
-                checked={this.state.filters.publish}
-                onClick={() => this.togglePublishFilter()}
-                control={<Radio className={"filter-radio custom-color"} />}
-                label="Published" />
-              <div className="right-index">{publish}</div>
-            </div>
-          </div>
-        ) : (
-            ""
-          )}
-      </div>
-    );
-  };
-
   renderSortedBricks = () => {
     let { sortedIndex } = this.state;
     let BackToWork = [];
     let count = 0;
-    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
+    for (let i = 0 + sortedIndex; i < this.state.pageSize + sortedIndex; i++) {
       if (this.state.finalBricks[i]) {
         let row = Math.floor(count / 3);
         BackToWork.push(
@@ -676,74 +522,33 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return BackToWork;
   };
 
-  renderTitle = () => {
-    const { filters } = this.state;
-    if (filters.viewAll) {
-      return "ALL PROJECTS";
-    } else if (filters.buildAll) {
-      return "BUILD";
-    } else if (filters.editAll) {
-      return "EDIT";
-    } else if (
-      filters.draft &&
-      !filters.build &&
-      !filters.review &&
-      !filters.publish
-    ) {
-      return "DRAFT";
-    } else if (
-      !filters.draft &&
-      filters.build &&
-      !filters.review &&
-      !filters.publish
-    ) {
-      return "BUILD IN PROGRESS";
-    } else if (
-      !filters.draft &&
-      !filters.build &&
-      filters.review &&
-      !filters.publish
-    ) {
-      return "REVIEW";
-    } else if (
-      !filters.draft &&
-      !filters.build &&
-      !filters.review &&
-      filters.publish
-    ) {
-      return "PUBLISHED";
-    } else {
-      return "FILTERED";
-    }
-  };
-
   renderPagination() {
-    if (this.state.finalBricks.length <= 18) {
+    if (this.state.finalBricks.length <= this.state.pageSize) {
       return "";
     }
 
-    const showPrev = this.state.sortedIndex >= 18;
+    const showPrev = this.state.sortedIndex >= this.state.pageSize;
     const showNext =
-      this.state.sortedIndex + 18 <= this.state.finalBricks.length;
+      this.state.sortedIndex + this.state.pageSize <= this.state.finalBricks.length;
 
     return (
       <Grid container direction="row" className="bricks-pagination">
         <Grid item xs={4} className="left-pagination">
           <div className="first-row">
             {this.state.sortedIndex + 1}-
-            {this.state.sortedIndex + 18 > this.state.finalBricks.length
+            {this.state.sortedIndex + this.state.pageSize > this.state.finalBricks.length
               ? this.state.finalBricks.length
-              : this.state.sortedIndex + 18}
+              : this.state.sortedIndex + this.state.pageSize}
             <span className="gray">
               {" "}
               &nbsp;|&nbsp; {this.state.finalBricks.length}
             </span>
           </div>
           <div>
-            {(this.state.sortedIndex + 18) / 18}
+            {(this.state.sortedIndex + this.state.pageSize) / this.state.pageSize}
             <span className="gray">
               {" "}
-              &nbsp;|&nbsp; {Math.ceil(this.state.finalBricks.length / 18)}
+              &nbsp;|&nbsp; {Math.ceil(this.state.finalBricks.length / this.state.pageSize)}
             </span>
           </div>
         </Grid>
@@ -901,12 +706,23 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           />
         </div>
         <Grid container direction="row" className="sorted-row">
-          <Grid container item xs={3} className="sort-and-filter-container">
-            {this.renderIndexesBox()}
-            {this.renderSortAndFilterBox()}
-          </Grid>
+          <FilterSidebar
+            rawBricks={this.state.rawBricks}
+            filters={this.state.filters}
+            sortBy={this.state.sortBy}
+            isClearFilter={this.state.isClearFilter}
+            handleSortChange={e => this.handleSortChange(e)}
+            clearStatus={() => this.clearStatus()}
+            toggleDraftFilter={() => this.toggleDraftFilter()}
+            toggleReviewFilter={() => this.toggleReviewFilter()}
+            toggleBuildFilter={() => this.toggleBuildFilter()}
+            togglePublishFilter={e => this.togglePublishFilter(e)}
+            showAll={() => this.showAll()}
+            showBuildAll={() => this.showBuildAll()}
+            showEditAll={() => this.showEditAll()}
+          />
           <Grid item xs={9} className="brick-row-container">
-            <div className="brick-row-title">{this.renderTitle()}</div>
+            <div className="brick-row-title"><BackPageTitle filters={this.state.filters} /></div>
             <div className="bricks-list-container">
               <div className="bricks-list">
                 {this.renderSortedBricks()}
