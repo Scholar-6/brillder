@@ -8,64 +8,19 @@
   width: 100%;
 
   .drop-box {
-    margin-top: 0.4vh;
+    margin-bottom: 0.2vw;
     border-radius: $global-drop-border-radius;
 
     background-color: $tab-gray;
   }
 
   .add-dropbox {
-    margin: 0 !important;
-    .add-dropbox-button {
-      margin-top: 0.4vh;
-      width: 100%;
-      border: none;
-      padding: 3.4vh 0;
-      text-transform: none;
-      background: var(--theme-orange);
-      color: white;
-      font-size: 1.25vw;
-      font-family: $font-family-bold;
-      letter-spacing: 0.3vw;
-      border-radius: $global-drop-border-radius;
-    }
-    margin-bottom: 10px;
-  }
-
-  @media only screen and (min-width: 1280px)  {
-  }
-
-  @media only screen and (max-width: 1279px) and (min-width: 960px)  {
-    .add-dropbox {
-      .add-dropbox-button {
-        font-size: 1.2vw;
-      }
-    }
-  }
-
-  @media only screen and (max-width: 959px) and (min-width: 600px)  {
-    .add-dropbox {
-      .add-dropbox-button {
-        font-size: 1.4vw !important;
-      }
-    }
-  }
-
-  @media only screen and (max-width: 599px) {
-    .add-dropbox {
-      .add-dropbox-button {
-        font-size: 1vw;
-        height: 35px;
-      }
-    }
+    margin-bottom: 0.2vw;
   }
 }
 
 .unique-component {
   .document-editor {
-    margin-top: $space-between-boxes;
-    margin-bottom: $space-between-boxes;
-
     position: relative;
     > div {
       > .ck-toolbar {

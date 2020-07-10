@@ -47,9 +47,11 @@
 		margin: 0.1vh 0;
     .document-editor {
 			height: calc(100% - 0.2vh);
-			// background-color: black;
 			.ck-editor {
-				height: 100%;
+        height: 100%;
+        width: calc(100% - 2.2vw);
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
 				.ck-editor__main {
 					height: 100%;
 					.ck-content {

@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
-import Checkbox from '@material-ui/core/Checkbox'; 
+import Checkbox from '@material-ui/core/Checkbox';
 
 import './MissingWordBuild.scss'
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
@@ -171,7 +171,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
         </textarea>
         <AddAnswerButton
           locked={locked} addAnswer={() => { addAnswer(choice) }} height={choice.height}
-          label="+ &nbsp;&nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R"
+          label="+ ANSWER"
         />
       </div>
     );
@@ -184,7 +184,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
       }
       <AddAnswerButton
         locked={locked} addAnswer={addChoice} height={height}
-        label="+ &nbsp;&nbsp; M &nbsp; I &nbsp; S &nbsp; S &nbsp; I &nbsp; N &nbsp; G &nbsp; &nbsp; W &nbsp; O &nbsp; R &nbsp; D"
+        label="+ MISSING WORD"
       />
     </div>
   )
