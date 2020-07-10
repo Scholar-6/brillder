@@ -46,7 +46,7 @@
         max-height: 30vh;
         overflow-x: auto;
         padding: 0;
-        @include phone_and_tabletP{
+        @include phone_and_tabletP {
           max-height: 26vh;
         }
         li {
@@ -108,21 +108,23 @@
           .delete-notification {
             color: var(--white);
             @include tabletP {
-                padding-top: 0;
-                padding-bottom: 0;
-            }
-
-            svg {
-              @include phone {
-                width: 7vw;
-                height: 7vw;
-              }
-              @include tabletP {
-                width: 2vw;
-                height: 2vw;
-              }
+              padding-top: 0;
+              padding-bottom: 0;
             }
           }
+        }
+      }
+    }
+    .clear-notification,
+    .notification-content .delete-notification {
+      svg {
+        @include phone {
+          width: 7vw;
+          height: 7vw;
+        }
+        @include tabletP {
+          width: 2vw;
+          height: 2vw;
         }
       }
     }
@@ -143,6 +145,11 @@
         button {
           padding-top: 0vw;
           padding-bottom: 0vw;
+        }
+      }
+      .MuiCardActions-spacing {
+        > :not(:first-child) {
+          margin-left: 0;
         }
       }
     }
