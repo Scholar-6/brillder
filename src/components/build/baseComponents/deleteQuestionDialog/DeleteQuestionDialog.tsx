@@ -19,13 +19,12 @@ const DeleteQuestionDialog:React.FC<DeleteQuestionDialogProps> = ({
       onClose={() => setDialog(false)}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
-      className="delete-brick-dialog"
-    >
+      className="dialog-box">
       <div className="dialog-header">
         <div>Permanently delete</div>
         <div>this question?</div>
       </div>
-      <Grid container direction="row" className="row-buttons" justify="center">
+      <Grid container direction="row" className="dialog-footer" justify="center">
         <Button className="yes-button" onClick={() => deleteQuestion(index)}>Yes, delete</Button>
         <Button className="no-button" onClick={() => setDialog(false)}>No, keep</Button>
       </Grid>

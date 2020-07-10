@@ -209,13 +209,12 @@ const QuestionComponents = ({
         onClose={hideDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className="delete-brick-dialog"
-      >
+        className="dialog-box">
         <div className="dialog-header">
           <div>Permanently delete</div>
           <div>this component?</div>
         </div>
-        <Grid container direction="row" className="row-buttons" justify="center">
+        <Grid container direction="row" className="dialog-footer" justify="center">
           <Button className="yes-button" onClick={removeComponentType}>Yes, delete</Button>
           <Button className="no-button" onClick={hideDialog}>No, keep</Button>
         </Grid>
