@@ -15,7 +15,6 @@ interface FilterSidebarProps {
   clearStatus(): void;
   toggleDraftFilter(): void;
   toggleReviewFilter(): void;
-  toggleBuildFilter(): void;
   togglePublishFilter(e: React.ChangeEvent<any>): void;
   showAll(): void;
   showBuildAll(): void;
@@ -165,13 +164,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
                 control={<Radio onClick={() => this.props.toggleReviewFilter()} className={"filter-radio custom-color"} />}
                 label="Submitted for Review" />
               <div className="right-index">{review}</div>
-            </div>
-            <div className="index-box color3">
-              <FormControlLabel
-                checked={this.props.filters.build}
-                control={<Radio onClick={() => this.props.toggleBuildFilter()} className={"filter-radio custom-color"} />}
-                label="Build in Progress" />
-              <div className="right-index">{build}</div>
             </div>
             <div className="index-box color4">
               <FormControlLabel
