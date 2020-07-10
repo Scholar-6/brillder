@@ -10,9 +10,21 @@ import LogoutDialog from "../logoutDialog/LogoutDialog";
 import ReactDOM from 'react-dom';
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 
+
+export enum PageEnum {
+  None,
+  BackToWork,
+  ViewAll,
+  Play
+}
+
 interface HeaderMenuProps {
   history: any;
   user: User;
+  placeholder?: string;
+  page: PageEnum;
+  search(): void;
+  searching(v: string): void;
 }
 
 interface HeaderMenuState {
@@ -65,13 +77,22 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
     this.setState({ ...this.state, logoutOpen: false });
   }
 
+  renderViewAllItem() {
+    if (this.props.page !== PageEnum.ViewAll) {
+    }
+  }
+
   render() {
+    let placeholder = "Search Subjects, Topics, Titles &amp; more";
+    if (this.props.placeholder) {
+      placeholder = this.props.placeholder;
+    }
     return (
       <div className="upper-part">
         <PageHeader ref={this.pageHeader}
-          searchPlaceholder="Search Subjects, Topics, Titles &amp; more"
-          search={() => {}}
-          searching={(v: string) => {}}
+          searchPlaceholder={placeholder}
+          search={() => this.props.search()}
+          searching={(v: string) => this.props.searching(v)}
           showDropdown={() => this.showDropdown()}
           showNotifications={() => this.showNotifications()}
         />
