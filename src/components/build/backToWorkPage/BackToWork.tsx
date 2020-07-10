@@ -411,29 +411,35 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   renderSortedBricks = () => {
     let { sortedIndex } = this.state;
-    let BackToWork = [];
+    let data:any[] = [];
     let count = 0;
     for (let i = 0 + sortedIndex; i < this.state.pageSize + sortedIndex; i++) {
       if (this.state.finalBricks[i]) {
         let row = Math.floor(count / 3);
-        BackToWork.push(
-          <BrickBlock
-            brick={this.state.finalBricks[i]}
-            key={i}
-            index={count}
-            row={row}
-            user={this.props.user}
-            shown={this.state.shown}
-            history={this.props.history}
-            handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
-            handleMouseHover={key => this.handleMouseHover(key)}
-            handleMouseLeave={key => this.handleMouseLeave(key)}
-          />
-        );
+        data.push({
+          brick: this.state.finalBricks[i],
+          key: i,
+          index: count,
+          row
+        });
         count++;
       }
     }
-    return BackToWork;
+    return data.map(item => {
+      console.log(item.key, item.index, item.row)
+      return <BrickBlock
+        brick={item.brick}
+        index2={item.key}
+        index={item.index}
+        row={item.row}
+        user={this.props.user}
+        shown={this.state.shown}
+        history={this.props.history}
+        handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
+        handleMouseHover={key2 => this.handleMouseHover(key2)}
+        handleMouseLeave={key2 => this.handleMouseLeave(key2)}
+      />
+    });
   };
 
   renderGroupedBricks = () => {
