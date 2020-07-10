@@ -23,8 +23,6 @@
 
   .choose-several-box {
     position: relative;
-    margin: 0.7vh 0.4vw;
-    width: calc(100% - 0.8vw);
 
     .left-ckeckbox {
       position: absolute;
@@ -41,19 +39,14 @@
     }
 
     .input-answer {
-      width: 84%;
+      width: 100%;
       min-height: $answer-height;
       text-align: center;
       border: none;
       background: $input-gray;
       border-radius: 0.4vw;
-      padding-right: 8%;
-      padding-left: 8%;
       font-family: $font-family-regular;
       font-size: $answer-input-text-size;
-    }
-    .add-answer-button {
-      width: 100%;
     }
   }
 }

@@ -199,10 +199,10 @@ const QuestionComponents = ({
           ))
         }
       </ReactSortable>
-      <Grid container direction="row" className="add-dropbox">
-        <Button disabled={locked} className="add-dropbox-button" onClick={addInnerComponent}>
-          + QUESTION COMPONENT
-        </Button>
+      <Grid container direction="row" className={"add-dropbox " + (locked ? 'hide' : '')}>
+        <button className="btn btn-xl btn-block bg-theme-orange" onClick={addInnerComponent}>
+          <span>+ QUESTION COMPONENT</span>
+        </button>
       </Grid>
       <Dialog
         open={dialogOpen}

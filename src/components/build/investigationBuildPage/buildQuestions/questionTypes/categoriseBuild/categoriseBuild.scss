@@ -17,21 +17,19 @@
   .categorise-box {
     position: relative;
     margin: 0;
-    margin-left: 1.25%;
-    width: 97.5%;
+    width: 100%;
     > div {
-      margin-bottom: 0.3vh;
+      margin-bottom: 0.2vw;
     }
     .sort-image input {
       padding-top: 9.5vh;
     }
   }
-
   .document-editor {
+    position: relative;
     margin-top: 0.1vw;
     margin-bottom: 0.1vw;
-
-    position: relative;
+    height: calc(100% - 0.2vh);
     > div {
       > .ck-toolbar {
         width: 2vw;
@@ -57,52 +55,66 @@
         display: block !important;
       }
     }
-    .ck-content {
-      text-align: center !important;
-      overflow: hidden;
+    .ck-editor {
+      height: 100%;
+      width: calc(100% - 2.2vw);
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
       .ck-content {
-        border-bottom-left-radius: 0 !important;
-        border-bottom-right-radius: 0 !important;
-      }
-      p {
-        text-align: center !important;
-      }
-    }
-  }
-
-  .categorise-answer {
-    .document-editor {
-      .ck-content {
-        padding-left: 2.5vw;
-        padding-right: 4.5vw;
-        padding-top: 4.2vh;
+        padding-top: 4vh;
         text-align: center !important;
         overflow: hidden;
+        .ck-content {
+          border-bottom-left-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+        }
         p {
           text-align: center !important;
         }
       }
     }
+  }
+
+
+  .categorise-answer {
+    .document-editor {
+      .ck-editor {
+        .ck-content {
+          padding: 0 2.5vw;
+          text-align: center !important;
+          overflow: hidden;
+          p {
+            text-align: center !important;
+          }
+        }
+      }
+    }
     &:first-child {
       .document-editor {
-        .ck-content {
-          border-bottom-left-radius: 0 !important;
-          border-bottom-right-radius: 0 !important;
+        .ck-editor {
+          .ck-content {
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+          }
         }
       }
     }
     &:not(:first-child):not(:last-child) {
       .document-editor {
-        .ck-content {
-          border-radius: 0 !important;
+        .ck-editor {
+          .ck-content {
+            border-radius: 0 !important;
+          }
         }
       }
     }
     &:last-child {
       .document-editor {
-        .ck-content {
-          border-top-left-radius: 0 !important;
-          border-top-right-radius: 0 !important;
+        .ck-editor {
+          .ck-content {
+            border-top-left-radius: 0 !important;
+            border-top-right-radius: 0 !important;
+          }
         }
       }
     }
