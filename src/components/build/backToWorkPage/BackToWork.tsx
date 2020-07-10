@@ -475,23 +475,29 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     let data: any[] = [];
     let count = 0;
 
+    console.log(sortedIndex);
+
     for (let i = 0 + sortedIndex; i < (this.state.pageSize / 3) + sortedIndex; i++) {
-      let i = 0;
       let brick = this.state.threeColumns.draft.finalBricks[i];
       if (brick) {
         this.prepareBrickData(data, brick, i, count);
         count++;
       } else {
+        this.prepareBrickData(data, {} as Brick, i, count)
       }
       brick = this.state.threeColumns.review.finalBricks[i];
       if (brick) {
         this.prepareBrickData(data, brick, i, count);
         count++;
+      } else {
+        this.prepareBrickData(data, {} as Brick, i, count);
       }
       brick = this.state.threeColumns.publish.finalBricks[i];
       if (brick) {
         this.prepareBrickData(data, brick, i, count);
         count++;
+      } else {
+        this.prepareBrickData(data, {} as Brick, i, count)
       }
     }
     return data.map(item => {

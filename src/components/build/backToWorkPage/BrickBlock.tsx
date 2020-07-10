@@ -37,12 +37,19 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index2, index, 
 
   const move = () => props.history.push(`/build/brick/${brick.id}/build/investigation/question`);
 
+  if (!brick.id) {
+    return (
+      <div className="main-brick-container">
+      </div>
+    );
+  }
+
   return (
     <Grow
       in={props.shown}
       key={index2}
       style={{ transformOrigin: "0 0 0" }}
-      timeout={index * 150}
+      timeout={index2 * 150}
     >
       <div className="main-brick-container">
         <Box className={`brick-container ${color}`}>
