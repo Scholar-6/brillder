@@ -22,21 +22,6 @@
     > div {
       margin-bottom: 0.3vh;
     }
-    input {
-      border-radius: 0.4vw;
-      width: 100%;
-      text-align: center;
-      border: none;
-      background: $input-gray;
-      padding-right: 8%;
-      padding-left: 8%;
-      opacity: 0.8;
-      font-size: $answer-input-text-size;
-      height: auto !important;
-    }
-    input.answer {
-      padding-top: 8%;
-    }
     .sort-image input {
       padding-top: 9.5vh;
     }
@@ -93,7 +78,6 @@
         padding-top: 4.2vh;
         text-align: center !important;
         overflow: hidden;
-        border-radius: 0.4vw !important;
         p {
           text-align: center !important;
         }

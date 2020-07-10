@@ -3,6 +3,11 @@
 @import '../../../../../../assets/sass/partials/extensions';
 
 .missing-word-build {
+  .right-top-icon {
+    @extend %floatToCenter;
+    left: auto;
+    right: 0vw;
+  }
   textarea {
     width: 88.5%;
     padding: 0;
@@ -36,7 +41,7 @@
     }
 
     .input-answer {
-      width: 100%;
+      width: 84%;
       min-height: $answer-height;
       text-align: center;
       border: none;

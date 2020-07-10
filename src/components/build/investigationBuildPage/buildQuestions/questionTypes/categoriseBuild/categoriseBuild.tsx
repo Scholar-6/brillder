@@ -170,7 +170,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   }
 
   return (
-    <div className="categorise-build">
+    <div className="categorise-build unique-component">
       {
         state.categories.map((category, i) => renderCategory(category, i))
       }

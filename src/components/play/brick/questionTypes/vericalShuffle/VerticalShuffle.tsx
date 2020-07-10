@@ -85,7 +85,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     }
   }
 
-  mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
+  mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
     // If the question is answered in review phase, add 2 to the mark and not 5.
     let markIncrement = prev ? 2 : 5;
     attempt.correct = true;

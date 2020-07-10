@@ -12,7 +12,7 @@ import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 
 interface MissingWordProps extends CompQuestionProps {
   component: any;
-  attempt: ComponentAttempt;
+  attempt: ComponentAttempt<any>;
   answers: number[];
 }
 

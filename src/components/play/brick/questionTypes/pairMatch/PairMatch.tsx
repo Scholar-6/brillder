@@ -67,7 +67,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     } else { return 0; }
   }
 
-  mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
+  mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
     return mark(this.props.component.list, attempt, prev, this.state.status);
   }
 
