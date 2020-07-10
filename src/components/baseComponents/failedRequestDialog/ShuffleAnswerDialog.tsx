@@ -20,12 +20,11 @@ class ShuffleAnswerDialog extends Component<ShuffleAnswerDialogProps> {
         onClose={() => this.props.hide()}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className="delete-brick-dialog"
-      >
+        className="dialog-box">
         <div className="dialog-header">
           <div>Is this your answer?</div>
         </div>
-        <Grid container direction="row" className="row-buttons" justify="center">
+        <Grid container direction="row" className="dialog-footer" justify="center">
           <Button className="yes-button" onClick={() => this.props.submit()}>
             Yes
           </Button>
