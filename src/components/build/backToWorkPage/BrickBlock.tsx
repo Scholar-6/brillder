@@ -22,7 +22,6 @@ interface BrickBlockProps {
 }
 
 const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index2, index, row = 0, ...props }) => {
-  console.log(index2, index, row)
   let color = "";
   if (brick.status === BrickStatus.Draft) {
     color = "color1";
