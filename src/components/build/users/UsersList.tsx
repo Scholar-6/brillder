@@ -671,12 +671,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           onClose={() => this.handleLogoutClose()}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          className="alert-dialog">
-          <div className="logout-dialog-header">
+          className="dialog-box">
+          <div className="dialog-header">
             <div>Are you sure you want</div>
             <div>to log out?</div>
           </div>
-          <Grid container direction="row" className="logout-buttons" justify="center">
+          <Grid container direction="row" className="dialog-footer" justify="center">
             <Button className="yes-button" onClick={() => this.logout()}>Yes</Button>
             <Button className="no-button" onClick={() => this.handleLogoutClose()}>No</Button>
           </Grid>

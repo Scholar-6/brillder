@@ -2,55 +2,6 @@
 @import '../../../assets/sass/partials/mixins';
 @import '../../../assets/sass/partials/extensions';
 
-.alert-dialog {
-  position: fixed;
-  top: 0;
-  .MuiDialog-paperScrollPaper {
-    position: fixed;
-    top: 8.3vh;
-    right: 7vw;
-    border-radius: 0.8vw;
-  }
-
-  .logout-dialog-header {
-    padding: 3.8vh 1vw 3.5vh 2.2vw;
-    font-size: 2.35vw;
-    letter-spacing: 0;
-    color: var(--theme-dark-blue);
-  }
-
-  .logout-buttons {
-    padding-bottom: 2.3vh;
-
-    button {
-      min-width: 9.55vw;
-      font-size: 2vw;
-      border-radius: 0.6vw;
-      text-transform: none;
-      font-weight: normal !important;
-      padding-top: 1.1vh;
-      padding-bottom: 1.1vh;
-      line-height: 1;
-      font-family: $font-family-regular;
-      > span {
-        width: 100%;
-      }
-    }
-
-    .yes-button {
-      color: white;
-      background: var(--theme-orange);
-      margin-right: 1.4vw !important;
-    }
-
-    .no-button {
-      color: var(--theme-dark-blue);
-      background: $tab-gray;
-      margin-right: 0.2vw;
-    }
-  }
-}
-
 .user-list-page {
   .user-row {
     font-family: $font-family-regular;

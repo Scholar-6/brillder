@@ -5,9 +5,6 @@
 .logo-page {
   height: 100%;
   background: white;
-  &:focus-within{
-    z-index: 999999;
-  }
   .brick-logo-image {
     width: 50%;
     padding-bottom: 9%;
