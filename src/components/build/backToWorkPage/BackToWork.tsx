@@ -17,6 +17,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import FilterSidebar from './FilterSidebar';
 import BackPageTitle from './BackPageTitle';
 import BackPagePagination from './BackPagePagination';
+import BackPagePaginationV2 from './BackPagePaginationV2';
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import BrickBlock from './BrickBlock';
 
@@ -31,7 +32,7 @@ interface BricksContent {
   finalBricks: Brick[];
 }
 
-interface ThreeColumns {
+export interface ThreeColumns {
   draft: BricksContent;
   review: BricksContent;
   publish: BricksContent;
@@ -507,15 +508,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return data.map(item => {
       return <BrickBlock
         brick={item.brick}
-        index2={item.key}
         index={item.index}
         row={item.row}
         user={this.props.user}
         shown={this.state.shown}
         history={this.props.history}
         handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
-        handleMouseHover={key2 => this.handleMouseHover(key2)}
-        handleMouseLeave={key2 => this.handleMouseLeave(key2)}
+        handleMouseHover={key2 => this.handleMouseHover(item.key)}
+        handleMouseLeave={key2 => this.handleMouseLeave(item.key)}
       />
     });
   };
@@ -535,7 +535,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         this.prepareBrickData(data, brick, i, count);
         count++;
       } else {
-        this.prepareBrickData(data, {} as Brick, i, count)
+        this.prepareBrickData(data, {} as Brick, i, count);
+        count++;
       }
       brick = this.state.threeColumns.review.finalBricks[i];
       if (brick) {
@@ -543,20 +544,21 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         count++;
       } else {
         this.prepareBrickData(data, {} as Brick, i, count);
+        count++;
       }
       brick = this.state.threeColumns.publish.finalBricks[i];
       if (brick) {
         this.prepareBrickData(data, brick, i, count);
         count++;
       } else {
-        this.prepareBrickData(data, {} as Brick, i, count)
+        this.prepareBrickData(data, {} as Brick, i, count);
+        count++;
       }
     }
     return data.map(item => {
       return <BrickBlock
         brick={item.brick}
-        index2={item.key}
-        index={item.index}
+        index={item.key}
         row={item.row}
         user={this.props.user}
         shown={this.state.shown}
@@ -577,6 +579,17 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   renderPagination = () => {
     let { sortedIndex, pageSize, finalBricks } = this.state;
+    if (this.state.filters.viewAll) {
+      return (
+        <BackPagePaginationV2
+          sortedIndex={sortedIndex}
+          pageSize={pageSize}
+          threeColumns={this.state.threeColumns}
+          moveNext={() => this.moveAllNext()}
+          moveBack={() => this.moveAllBack()}
+        />
+      )
+    }
     return (
       <BackPagePagination
         sortedIndex={sortedIndex}

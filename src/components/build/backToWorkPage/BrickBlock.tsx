@@ -11,17 +11,16 @@ import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDesc
 interface BrickBlockProps {
   brick: Brick;
   user: User;
-  index2: number;
   index: number;
   row: number;
   shown: boolean;
   history: any;
   handleDeleteOpen(brickId: number): void;
-  handleMouseHover(key: number): void;
-  handleMouseLeave(key: number): void;
+  handleMouseHover(e: any): void;
+  handleMouseLeave(e: any): void;
 }
 
-const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index2, index, row = 0, ...props }) => {
+const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0, ...props }) => {
   let color = "";
   if (brick.status === BrickStatus.Draft) {
     color = "color1";
@@ -47,17 +46,17 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index2, index, 
   return (
     <Grow
       in={props.shown}
-      key={index2}
+      key={index}
       style={{ transformOrigin: "0 0 0" }}
-      timeout={index2 * 150}
+      timeout={index * 150}
     >
       <div className="main-brick-container">
         <Box className={`brick-container ${color}`}>
           <div
             className={`absolute-container brick-row-${row} ${
               brick.expanded ? "brick-hover" : ""}`}
-            onMouseEnter={() => props.handleMouseHover(index2)}
-            onMouseLeave={() => props.handleMouseLeave(index2)}
+            onMouseEnter={props.handleMouseHover}
+            onMouseLeave={props.handleMouseLeave}
           >
             {brick.expanded ? (
               <ExpandedBrickDecsiption
