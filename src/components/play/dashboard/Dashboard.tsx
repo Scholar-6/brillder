@@ -935,15 +935,19 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               </div>
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
-              <div className="bricks-list">
-                <Hidden only={["xs"]}>
+              <Hidden only={["xs"]}>
+                <div className="bricks-list">
                   {this.renderYourBrickRow()}
+                </div>
+                <div className="bricks-list">
                   {this.renderSortedBricks()}
-                </Hidden>
-                <Hidden only={['sm', 'md', 'lg', 'xl']}>
+                </div>
+              </Hidden>
+              <Hidden only={['sm', 'md', 'lg', 'xl']}>
+                <div className="bricks-list">
                   {this.renderSortedMobileBricks()}
-                </Hidden>
-              </div>
+                </div>
+              </Hidden>
             </div>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title">
