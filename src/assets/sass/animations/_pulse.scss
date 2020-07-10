@@ -1,3 +1,14 @@
+@include keyframes(pulse-gray) {
+  0% {
+      @include box-shadow(0 0 0 0 rgba(176, 176, 173, 0.5));
+  }
+  70% {
+      @include box-shadow(0 0 0 20px transparent);
+  }
+  100% {
+      @include box-shadow(0 0 0 0 transparent);
+  }
+}
 @include keyframes(pulse-green) {
     0% {
         @include box-shadow(0 0 0 0 rgba(48, 196, 116, 0.5));

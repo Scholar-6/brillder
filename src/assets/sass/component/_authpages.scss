@@ -225,6 +225,11 @@
     }
   }
   &.login-page {
+    @include phone_and_tabletP {
+      &:focus-within {
+        z-index: 999999;
+      }
+    }
     .logo-box {
       background-color: transparent;
       height: calc(40vh - 2vh);

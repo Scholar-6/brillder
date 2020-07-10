@@ -109,7 +109,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <div>
           <button
             type="button"
-            className={state.prepExpanded ? "play-preview svgOnHover play-green": "play-preview svgOnHover play-gray"}
+            className={state.prepExpanded ? "play-preview svgOnHover play-green" : "play-preview svgOnHover play-gray"}
             onClick={startBrick}
           >
             <svg className="svg svg-default m-l-02">
@@ -166,8 +166,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             on this section.
           </span>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </div>
     );
   };
@@ -229,14 +229,22 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <div className="intro-header expanded-intro-header">
           <Hidden only={["sm", "md", "lg", "xl"]}>
             {renderTimer()}
+            <div className="flex f-align-center">
+              <div className="left-brick-circle">
+                <div
+                  className="round-button"
+                  style={{ background: `${color}` }}
+                ></div>
+              </div>
+              <h1>{brick.title}</h1>
+            </div>
           </Hidden>
-          <div className="left-brick-circle">
-            <div
-              className="round-button"
-              style={{ background: `${color}` }}
-            ></div>
-          </div>
-          <h1>{brick.title}</h1>
+          <Hidden only={["xs"]}>
+            <div className="left-brick-circle">
+              <div className="round-button" style={{ background: `${color}` }}></div>
+            </div>
+            <h1>{brick.title}</h1>
+          </Hidden>
           <p><PrepareText brickLength={brick.brickLength} /></p>
         </div>
       );
@@ -275,8 +283,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             {!state.prepExpanded ? (
               <IntroductionDetails brickLength={brick.brickLength} />
             ) : (
-              ""
-            )}
+                ""
+              )}
             {renderPlayButton()}
           </div>
           {renderBriefTitle()}
