@@ -17,13 +17,12 @@ class CloseProposalDialog extends Component<CloseProposalDialogProps> {
         onClose={() => this.props.close()}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className="delete-brick-dialog"
-      >
+        className="dialog-box">
         <div className="dialog-header">
           <div>Your changes will not be saved.</div>
           <div>Exit anyway?</div>
         </div>
-        <Grid container direction="row" className="row-buttons" justify="center">
+        <Grid container direction="row" className="dialog-footer" justify="center">
           <Button className="yes-button" onClick={() => this.props.move()}>
             Yes
           </Button>
