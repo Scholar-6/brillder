@@ -1,9 +1,5 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-
-import { } from "./BackToWork";
 
 import sprite from "../../../assets/img/icons-sprite.svg";
 
