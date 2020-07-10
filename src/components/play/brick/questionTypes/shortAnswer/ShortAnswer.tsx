@@ -12,6 +12,7 @@ import {
   ShortAnswerItem,
 } from "components/build/investigationBuildPage/buildQuestions/questionTypes/shortAnswerBuild/interface";
 import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
+import DocumentEditorComponent from "components/baseComponents/ckeditor/DocumentEditor";
 
 interface ShortAnswerProps extends CompQuestionProps {
   component: ShrortAnswerData;
@@ -40,10 +41,10 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     this.state = { userAnswers } as ShortAnswerState;
   }
 
-  setUserAnswer(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) {
+  setUserAnswer(value: string, index: number) {
     let userAnswers = this.state.userAnswers;
-    userAnswers[index] = e.target.value;
-    if (e.target.value && this.props.onAttempted) {
+    userAnswers[index] = value;
+    if (value && this.props.onAttempted) {
       this.props.onAttempted();
     }
     this.setState({ userAnswers });
@@ -117,17 +118,18 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     return attempt;
   }
 
-  renderTextField(index: number) {
+  renderCkeditor(index: number) {
+    let value = this.state.userAnswers[index];
     if (this.props.isPreview) {
-      let { value } = this.props.component.list[index];
-      let valueString = stripHtml(value);
-      return <TextField value={valueString} label={`Answer ${index + 1}`} />;
+      value = this.props.component.list[index].value;
     }
     return (
-      <TextField
-        value={this.state.userAnswers[index]}
-        onChange={e => this.setUserAnswer(e, index)}
-        label={`Answer ${index + 1}`}
+      <DocumentEditorComponent
+        data={value}
+        onChange={v => this.setUserAnswer(v, index)}
+        toolbar={["superscript", "subscript"]}
+        onBlur={() => {}}
+        placeholder={`Answer ${index + 1}`}
       />
     );
   }
@@ -144,7 +146,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         style={{ width: `${width}%` }}
       >
         <Grid container direction="row" justify="center">
-          {this.renderTextField(index)}
+          {this.renderCkeditor(index)}
         </Grid>
         <Grid container direction="row" justify="center">
           <ReviewEachHint
