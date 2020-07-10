@@ -20,7 +20,7 @@ import {
 } from 'model/question';
 import { setBrillderTitle } from 'components/services/titleService';
 import { prefillAttempts } from 'components/services/PlayService';
-import PageHeadWithMenu from 'components/baseComponents/pageHeader/PageHeadWithMenu';
+import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
 import { Grid } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
 
@@ -145,7 +145,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   return (
     <div className="play-preview-pages">
-      <PageHeadWithMenu user={props.user} history={props.history} />
+      <PageHeadWithMenu page={PageEnum.Play} user={props.user} history={props.history} search={() => {}} searching={()=> {}} />
       <Grid container direction="row" className="sorted-row">
         <Grid container item className="sort-and-filter-container">
         </Grid>
