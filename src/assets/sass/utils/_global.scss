@@ -113,24 +113,31 @@ textarea {
 .bg-tab-gray {
   color: $tab-gray !important;
 }
-.bg-gray {
-  color: var(--gray) !important;
-}
 .bg-light-blue {
-  background-color: var(--light-blue);
+  background-color: var(--light-blue) !important;
   &.btn {
     color: var(--white);
     &:hover {
-      background-color: var(--theme-dark-blue);
+      background-color: var(--theme-dark-blue) !important;
+    }
+  }
+}
+.bg-gray {
+  background-color: var(--tab-gray) !important;
+  &.btn {
+    color: var(--theme-dark-blue);
+    &:hover {
+      color: var(--white);
+      background-color: var(--theme-dark-blue) !important;
     }
   }
 }
 .bg-theme-orange {
-  background-color: var(--theme-orange);
+  background-color: var(--theme-orange) !important;
   &.btn {
     color: var(--white);
     &:hover {
-      background-color: var(--theme-dark-orange);
+      background-color: var(--theme-dark-orange) !important;
     }
   }
 }
