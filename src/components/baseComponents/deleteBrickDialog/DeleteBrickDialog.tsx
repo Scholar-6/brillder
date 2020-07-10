@@ -34,20 +34,18 @@ class DeleteBrickDialog extends Component<DeleteDialogProps> {
         onClose={() => this.handleDeleteClose()}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className="delete-brick-dialog"
-      >
+        className="dialog-box">
         <div className="dialog-header">
           <div>Permanently delete</div>
           <div>this brick?</div>
         </div>
-        <Grid container direction="row" className="row-buttons" justify="center">
+        <Grid container direction="row" className="dialog-footer" justify="center">
           <Button className="yes-button" onClick={() => this.delete()}>
             Yes, delete
           </Button>
           <Button
             className="no-button"
-            onClick={() => this.handleDeleteClose()}
-          >
+            onClick={() => this.handleDeleteClose()}>
             No, keep
           </Button>
         </Grid>

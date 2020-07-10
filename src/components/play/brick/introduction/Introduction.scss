@@ -17,7 +17,7 @@
     }
     .brick-container {
       @include phone_and_tabletP {
-        height: calc(100% - 20%);
+        height: calc(100% - 15%);
         overflow-y: auto;
       }
       .introduction-page {
@@ -34,6 +34,7 @@
         }
 
         .intro-header {
+          @extend %transitionAll600;
           @include phone_and_tabletP {
             display: flex;
             flex-direction: column;
@@ -43,6 +44,46 @@
           }
           @include tabletP {
             margin-bottom: 10vh;
+          }
+          &.expanded-intro-header {
+            @include phone_and_tabletP {
+              align-items: flex-start;
+              padding-top: 2vh;
+            }
+            .brick-counter {
+              @include phone_and_tabletP {
+                transition: all 300ms;
+                font-size: 6vw !important;
+                padding-right: 1vw !important;
+              }
+            }
+            .left-brick-circle {
+              .round-button {
+                @include phone_and_tabletP {
+                  transition: all 300ms;
+                  height: 8vw;
+                  width: 8vw;
+                }
+              }
+            }
+            h1 {
+              @include phone_and_tabletP {
+                transition: all 300ms;
+                margin: 0;
+                width: calc(100vw - 38vw);
+                font-size: 5vw !important;
+                text-align: left !important;
+                height: 2.5vh;
+                padding-left: 2vw !important;
+              }
+            }
+            p {
+              @include phone_and_tabletP {
+                transition: all 300ms;
+                width: 100%;
+                text-align: center;
+              }
+            }
           }
           > .intro-header {
             @include phone_and_tabletP {
@@ -70,22 +111,26 @@
               position: unset;
             }
             > div {
-              height: 5vw;
-              width: 5vw;
               @extend %radCircle;
               background-color: var(--gray);
               @include phone_and_tabletP {
                 height: 17vw;
                 width: 17vw;
               }
+              @include tabletP {
+                height: 5vw;
+                width: 5vw;
+              }
             }
           }
           h1 {
-            font-size: 2vw;
             text-transform: uppercase;
             margin: 2.5vw 0;
-            text-align: left;
-            padding-left: 7vw;
+            @include tabletP {
+              font-size: 2vw;
+              text-align: left;
+              padding-left: 7vw;
+            }
           }
         }
         .start-brick-button {
@@ -119,7 +164,7 @@
             padding-left: 0 !important;
             font-size: 3vh !important;
             text-align: center !important;
-            height: 6vw;
+            height: 4vh;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -303,9 +348,9 @@
               .blue-circle-main-container {
                 @extend %floatToXCenter;
                 @include phone_and_tabletP {
-                  left:60%;
+                  left: 60%;
                   top: 50%;
-                  transform: translate(0,-50%);
+                  transform: translate(0, -50%);
                 }
                 @include tabletP {
                   width: 1.2vw;
@@ -333,7 +378,7 @@
             position: fixed;
             align-items: flex-end;
             justify-content: flex-end;
-            bottom: 13vw;
+            bottom: 6.5vh;
             right: 0vw;
           }
           @include tabletP {
