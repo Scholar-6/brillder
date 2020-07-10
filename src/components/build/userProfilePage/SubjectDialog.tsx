@@ -16,15 +16,14 @@ const SubjectDialog: React.FC<SubjectDialogProps> = ({ isOpen, close }) => {
       aria-describedby="alert-dialog-description"
       className="dialog-box">
       <div className="dialog-header">
-        <div>You need to assign at least one subject to user</div>
+        <div>You need to assign at<br />least one subject to user</div>
       </div>
-      <Grid container direction="row" className="dialog-footer" justify="center">
-        <Button
-          className="yes-button"
+      <div className="dialog-footer">
+        <button className="btn btn-md bg-theme-orange yes-button"
           onClick={() => close()}>
-          Close
-        </Button>
-      </Grid>
+          <span>Close</span>
+        </button>
+      </div>
     </Dialog>
   );
 };
