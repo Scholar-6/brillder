@@ -35,7 +35,7 @@ class HomeButtonComponent extends React.Component<any, HomeButtonState> {
 
   render() {
     return (
-      <Grid container direction="row" className="home-button-container">
+      <div className="home-button-container">
         <button type="button" className="btn btn-transparent svgOnHover home-button"
           onClick={() => this.onClick()}>
           <svg className="svg w100 h100 active">
@@ -68,7 +68,7 @@ class HomeButtonComponent extends React.Component<any, HomeButtonState> {
             </svg>
           </div>
         </button>
-      </Grid>
+      </div>
     );
   }
 }
