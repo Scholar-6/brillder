@@ -17,3 +17,91 @@
 .MuiInputLabel-animated {
   font-family: $font-family-regular !important;
 }
+
+.question-hint,
+.question-hint-global {
+  width: 100%;
+  float: left;
+  color: var(--theme-dark-blue);
+  font-size: 0.8vw;
+  border-radius: 4px;
+  img {
+    width: 100%;
+  }
+}
+.question-hint {
+  margin: 2% !important;
+  background: #ff9d00;
+  padding: 2px 5px;
+  border-radius: 1px 2px 3px 4px;
+  display: block;
+  p {
+    font-size: 1vw;
+    display: inline;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  table,
+  td,
+  th {
+    border: 1px solid var(--theme-dark-blue);
+  }
+  td {
+    min-width: 0;
+    padding: 0;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+.question-hint-global {
+  background: #ff9d00;
+  margin-top: 0.5vw;
+  padding: 0.5vw;
+  > div {
+    margin-bottom: 0.4vw;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &:only-child {
+      margin-bottom: 0;
+    }
+  }
+  p {
+    font-size: 1vw;
+    line-height: initial;
+  }
+  .table {
+    margin-left: 0;
+    margin-right: 0;
+    overflow-x: auto;
+  }
+  table {
+    margin: auto;
+    border-collapse: collapse;
+  }
+  table,
+  td,
+  th {
+    border: 1px solid var(--theme-dark-blue);
+  }
+  td {
+    min-width: 2em;
+    padding: 0.4em;
+  }
+  &.correct {
+    background: var(--white);
+  }
+  &.wrong {
+    background: var(--theme-orange);
+  }
+}

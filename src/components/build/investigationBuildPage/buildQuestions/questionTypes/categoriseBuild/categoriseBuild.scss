@@ -57,17 +57,13 @@
     }
     .ck-editor {
       height: 100%;
-      width: calc(100% - 2.2vw);
-      border-top-right-radius: 0 !important;
-      border-bottom-right-radius: 0 !important;
+      width: calc(100% - 1.97vw);
       .ck-content {
         padding-top: 4vh;
         text-align: center !important;
         overflow: hidden;
-        .ck-content {
-          border-bottom-left-radius: 0 !important;
-          border-bottom-right-radius: 0 !important;
-        }
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
         p {
           text-align: center !important;
         }
