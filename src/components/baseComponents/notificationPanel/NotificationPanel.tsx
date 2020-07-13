@@ -76,13 +76,11 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
                       <Grid direction="column" justify="center">
                         <Grid className="notification-time">{moment(notification.timestamp).fromNow()}</Grid>
-                        <IconButton aria-label="clear" className="delete-notification" onClick={() => this.markAsRead(notification.id)}>
-                          <SvgIcon>
+                        <button className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>
                             <svg className="svg">
                               <use href={sprite + "#cancel"} />
                             </svg>
-                          </SvgIcon>
-                        </IconButton>
+                        </button>
                       </Grid>
                     </div>
                   </ListItem>
