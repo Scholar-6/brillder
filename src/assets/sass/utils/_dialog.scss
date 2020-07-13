@@ -25,19 +25,15 @@
     }
   }
   .dialog-footer {
-    display: grid;
+    display: flex;
     justify-content: space-between;
-    @include phone_and_tabletP {
-      grid-template-columns: repeat(auto-fit, calc(50% - 2vw));
-      grid-gap: 2vw;
-    }
-    @include tabletP {
-      grid-template-columns: repeat(auto-fit, calc(50% - 1vw));
-      grid-gap: 1vw;
-    }
+    margin: 0 -0.5vw;
     .btn {
       width: 100%;
+      margin: 0 0.5vw;
       font-family: $font-family-regular !important;
+      white-space: nowrap;
+      box-sizing: content-box;
     }
   }
 }
