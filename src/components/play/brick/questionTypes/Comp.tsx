@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './questionTypes.scss';
 import {ComponentAttempt} from '../model/model';
 
 
