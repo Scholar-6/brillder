@@ -42,6 +42,13 @@
             padding-top: 3vh;
             position: relative;
           }
+          > .intro-header {
+            @include phone_and_tabletP {
+              position: absolute;
+              padding: 0;
+              right: 0;
+            }
+          }
           @include tabletP {
             margin-bottom: 10vh;
           }
@@ -85,22 +92,15 @@
               }
             }
           }
-          > .intro-header {
+          .play-clock {
             @include phone_and_tabletP {
-              position: absolute;
-              padding: 0;
-              right: 0;
+              display: none;
             }
-            .play-clock {
-              @include phone_and_tabletP {
-                display: none;
-              }
-            }
-            .brick-counter {
-              @include phone_and_tabletP {
-                font-size: 5vw;
-                padding-right: 5vw;
-              }
+          }
+          .brick-counter {
+            @include phone_and_tabletP {
+              font-size: 5vw;
+              padding-right: 5vw;
             }
           }
           .left-brick-circle {
@@ -123,15 +123,6 @@
               }
             }
           }
-          h1 {
-            text-transform: uppercase;
-            margin: 2.5vw 0;
-            @include tabletP {
-              font-size: 2vw;
-              text-align: left;
-              padding-left: 7vw;
-            }
-          }
         }
         .start-brick-button {
           margin-right: 0px;
@@ -147,27 +138,32 @@
         ol {
           color: var(--theme-dark-blue);
         }
-
         h1 {
+          text-transform: uppercase;
           width: 100%;
           color: var(--theme-dark-blue);
-          margin: 1vw 0;
           font-family: $font-family-black;
-          text-transform: capitalize;
-          @extend %floatToXCenter;
-          top: 0;
-          font-size: 3.6vw;
-          text-align: center;
           @include phone_and_tabletP {
             position: unset;
             transform: translate(0);
-            padding-left: 0 !important;
-            font-size: 3vh !important;
-            text-align: center !important;
+            font-size: 3.6vw;
+            text-align: center;
             height: 4vh;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+          }
+          @include tabletP {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            margin: 1vw 0;
+            min-height: 10.3vh;
+            font-size: 2vw;
+            text-align: left;
+            padding-left: 7vw;
           }
         }
         .question-index-container {
@@ -259,6 +255,12 @@
             position: absolute;
             right: 5vw;
             margin-top: 2vw;
+            .brick-counter {
+              display:none;
+            }
+            .play-clock {
+              display:flex;
+            }
           }
           @include tabletP {
             display: flex;
@@ -268,7 +270,7 @@
 
           .brick-counter {
             @include phone_and_tabletP {
-              position: fixed;
+              position: absolute;
               right: 0vw;
               top: 1vw;
               font-size: 5vw;

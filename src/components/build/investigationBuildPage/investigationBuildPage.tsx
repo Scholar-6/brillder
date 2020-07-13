@@ -612,7 +612,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             </button>
             <button className="btn btn-md bg-gray no-button"
               onClick={() => submitInvalidBrick()}>
-              <span>No, Save &amp; Exit</span>
+              <span>No, Save & Exit</span>
             </button>
           </div>
         </Dialog>

@@ -72,22 +72,24 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                         </svg>
                       </SvgIcon>
                     </ListItemIcon>
-                    <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
-                    <Grid direction="column">
-                      <Grid className="notification-time">{moment(notification.timestamp).fromNow()}</Grid>
-                      <IconButton aria-label="clear" className="delete-notification" onClick={() => this.markAsRead(notification.id)}>
-                        <SvgIcon>
-                          <svg className="svg">
-                            <use href={sprite + "#cancel"} />
-                          </svg>
-                        </SvgIcon>
-                      </IconButton>
-                    </Grid>
+                    <div className="content-box">
+                      <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
+                      <Grid direction="column" justify="center">
+                        <Grid className="notification-time">{moment(notification.timestamp).fromNow()}</Grid>
+                        <IconButton aria-label="clear" className="delete-notification" onClick={() => this.markAsRead(notification.id)}>
+                          <SvgIcon>
+                            <svg className="svg">
+                              <use href={sprite + "#cancel"} />
+                            </svg>
+                          </SvgIcon>
+                        </IconButton>
+                      </Grid>
+                    </div>
                   </ListItem>
                 )) :
                 (
-                  <ListItem>
-                    <ListItemText primary="Looks like you don't have any notifications..." />
+                  <ListItem className="content-box">
+                    <ListItemText className="notification-detail-single" primary="Looks like you don't have any notifications..." />
                   </ListItem>
                 )
               }
