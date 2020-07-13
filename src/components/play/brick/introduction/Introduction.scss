@@ -42,6 +42,13 @@
             padding-top: 3vh;
             position: relative;
           }
+          > .intro-header {
+            @include phone_and_tabletP {
+              position: absolute;
+              padding: 0;
+              right: 0;
+            }
+          }
           @include tabletP {
             margin-bottom: 10vh;
           }
@@ -118,10 +125,7 @@
           }
           h1 {
             text-transform: uppercase;
-            margin: 1vw 0;
-            min-height: 10.3vh;
-            display: flex;
-            align-items: center;
+            margin: 2vw 0;
             @include tabletP {
               font-size: 2vw;
               text-align: left;
@@ -255,6 +259,12 @@
             position: absolute;
             right: 5vw;
             margin-top: 2vw;
+            .brick-counter {
+              display:none;
+            }
+            .play-clock {
+              display:flex;
+            }
           }
           @include tabletP {
             display: flex;
@@ -264,7 +274,7 @@
 
           .brick-counter {
             @include phone_and_tabletP {
-              position: fixed;
+              position: absolute;
               right: 0vw;
               top: 1vw;
               font-size: 5vw;
