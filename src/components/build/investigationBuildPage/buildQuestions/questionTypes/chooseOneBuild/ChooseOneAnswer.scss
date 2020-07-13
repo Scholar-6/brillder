@@ -39,9 +39,7 @@
       }
     }
     .ck-content {
-      padding-left: 2.5vw;
-      padding-right: 1vw;
-      padding-top: 4vh;
+      padding: 4vh 0 0 2.2vw;
       text-align: center !important;
       overflow: hidden;
       border-top-right-radius: 0 !important;
@@ -62,6 +60,12 @@
     &.big-box {
       height: 14vh;
     }
+  }
+
+  .checkbox-container ~ .question-image-drop {
+    width: calc(100% - 4.2vw);
+    top: 1vh;
+    left: 2.2vw;
   }
 
   .delete-right-top-icon {
