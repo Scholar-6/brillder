@@ -59,45 +59,6 @@
           .content-box {
             display: flex;
             width: calc(100% - 56px);
-            .notification-detail-single {
-              @extend %textCenter;
-            }
-            .notification-detail,
-            .notification-detail-single {
-              margin: 0;
-              .MuiListItemText-primary,
-              .MuiTypography-colorTextSecondary {
-                @include phone_and_tabletP {
-                  font-size: 3.5vw;
-                }
-                @include tabletP {
-                  font-size: 1.1vw;
-                }
-                @include tabletL {
-                  font-size: 0.9vw;
-                }
-                @include desktop {
-                  font-size: 0.8vw;
-                }
-              }
-              .MuiListItemText-primary {
-                color: var(--white);
-                text-transform: uppercase;
-              }
-            }
-            .notification-detail {
-              margin: 0;
-              border-bottom: 0.02vh solid var(--theme-dark-blue);
-              @include phone_and_tabletP {
-                padding-bottom: 1vh;
-              }
-              @include tabletP {
-                padding-bottom: 0.5vw;
-              }
-              .MuiTypography-colorTextSecondary {
-                color: var(--white-alpha6);
-              }
-            }
             .notification-time {
               color: var(--white);
               text-align: center;
@@ -120,6 +81,45 @@
               color: var(--white);
               padding: 0;
               @extend %width100;
+            }
+          }
+          .notification-detail-single {
+            @extend %textCenter;
+          }
+          .notification-detail,
+          .notification-detail-single {
+            margin: 0;
+            .MuiListItemText-primary,
+            .MuiTypography-colorTextSecondary {
+              @include phone_and_tabletP {
+                font-size: 3.5vw;
+              }
+              @include tabletP {
+                font-size: 1.1vw;
+              }
+              @include tabletL {
+                font-size: 0.9vw;
+              }
+              @include desktop {
+                font-size: 0.8vw;
+              }
+            }
+            .MuiListItemText-primary {
+              color: var(--white);
+              text-transform: uppercase;
+            }
+          }
+          .notification-detail {
+            margin: 0;
+            border-bottom: 0.02vh solid var(--theme-dark-blue);
+            @include phone_and_tabletP {
+              padding-bottom: 1vh;
+            }
+            @include tabletP {
+              padding-bottom: 0.5vw;
+            }
+            .MuiTypography-colorTextSecondary {
+              color: var(--white-alpha6);
             }
           }
         }

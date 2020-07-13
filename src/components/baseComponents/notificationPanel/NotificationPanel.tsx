@@ -88,7 +88,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                   </ListItem>
                 )) :
                 (
-                  <ListItem>
+                  <ListItem className="content-box">
                     <ListItemText className="notification-detail-single" primary="Looks like you don't have any notifications..." />
                   </ListItem>
                 )

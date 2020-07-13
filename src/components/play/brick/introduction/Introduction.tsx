@@ -233,8 +233,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               <div className="left-brick-circle">
                 <div
                   className="round-button"
-                  style={{ background: `${color}` }}
-                ></div>
+                  style={{ background: `${color}` }}></div>
               </div>
               <h1>{brick.title}</h1>
             </div>
@@ -281,7 +280,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <div className="introduction-info">
 
             {!state.prepExpanded ? (
-              <IntroductionDetails brickLength={brick.brickLength} />
+              <div>
+                <Hidden only={["sm", "md", "lg", "xl"]}>
+                  {renderTimer()}
+                </Hidden>
+                <IntroductionDetails brickLength={brick.brickLength} />
+              </div>
             ) : (
                 ""
               )}
