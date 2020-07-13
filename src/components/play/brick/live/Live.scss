@@ -15,6 +15,7 @@
         position: absolute !important;
         right: -7vw !important;
         top: -1vw !important;
+        display: block !important;
       }
     }
     .intro-text-row {
@@ -44,7 +45,6 @@
             flex: 1;
             justify-content: center !important;
             min-width: 12vw;
-
           }
           @include tabletP {
             flex-grow: 0;
@@ -103,7 +103,7 @@
   }
   .play-clock {
     @include phone_and_tabletP {
-      display: none;
+      display: none !important;
     }
   }
   .edited-step-icon {
@@ -112,5 +112,12 @@
     font-size: 16px !important;
     padding: 5px;
     border: 2px solid $black-blue;
+  }
+  .ck-editor__main {
+    .ck-content {
+      @include phone_and_tabletP {
+        font-size: 4vw;
+      }
+    }
   }
 }
