@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import "./BackToWork.scss";
 import brickActions from "redux/actions/brickActions";
 import { Brick, BrickStatus } from "model/brick";
-import { User, UserType } from "model/user";
+import { User } from "model/user";
 import { checkAdmin } from "components/services/brickService";
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
@@ -231,6 +231,31 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     let index = this.state.sortedIndex;
     if (index + this.state.pageSize <= this.state.finalBricks.length) {
       this.setState({ ...this.state, sortedIndex: index + this.state.pageSize });
+    }
+  }
+
+  moveThreeColumnsBack() {
+    let index = this.state.sortedIndex;
+    if (index >= this.state.pageSize / 3) {
+      this.setState({ ...this.state, sortedIndex: index - (this.state.pageSize / 3) });
+    }
+  }
+
+  moveThreeColumnsNext() {
+    const {threeColumns} = this.state;
+    const getLongestColumn = () => {
+      let draftLength = threeColumns.draft.finalBricks.length;
+      let reviewLength = threeColumns.review.finalBricks.length;
+      let publishLenght = threeColumns.publish.finalBricks.length;
+      return Math.max(draftLength, reviewLength, publishLenght);
+    }
+
+    const longest = getLongestColumn();
+    const {pageSize} = this.state;
+
+    let index = this.state.sortedIndex;
+    if (index + pageSize / 3 <= longest) {
+      this.setState({ ...this.state, sortedIndex: index + (pageSize / 3) });
     }
   }
 
@@ -511,6 +536,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         index={item.index}
         row={item.row}
         user={this.props.user}
+        key={item.index}
         shown={this.state.shown}
         history={this.props.history}
         handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
@@ -560,6 +586,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         brick={item.brick}
         index={item.key}
         row={item.row}
+        key={item.key}
         user={this.props.user}
         shown={this.state.shown}
         history={this.props.history}
@@ -585,8 +612,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           sortedIndex={sortedIndex}
           pageSize={pageSize}
           threeColumns={this.state.threeColumns}
-          moveNext={() => this.moveAllNext()}
-          moveBack={() => this.moveAllBack()}
+          moveNext={() => this.moveThreeColumnsNext()}
+          moveBack={() => this.moveThreeColumnsBack()}
         />
       )
     }

@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import CompComponent from "../Comp";
 
 import "./ShortAnswer.scss";
