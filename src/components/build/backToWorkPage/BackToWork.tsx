@@ -234,6 +234,31 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     }
   }
 
+  moveThreeColumnsBack() {
+    let index = this.state.sortedIndex;
+    if (index >= this.state.pageSize / 3) {
+      this.setState({ ...this.state, sortedIndex: index - (this.state.pageSize / 3) });
+    }
+  }
+
+  moveThreeColumnsNext() {
+    const {threeColumns} = this.state;
+    const getLongestColumn = () => {
+      let draftLength = threeColumns.draft.finalBricks.length;
+      let reviewLength = threeColumns.review.finalBricks.length;
+      let publishLenght = threeColumns.publish.finalBricks.length;
+      return Math.max(draftLength, reviewLength, publishLenght);
+    }
+
+    const longest = getLongestColumn();
+    const {pageSize} = this.state;
+
+    let index = this.state.sortedIndex;
+    if (index + pageSize / 3 <= longest) {
+      this.setState({ ...this.state, sortedIndex: index + (pageSize / 3) });
+    }
+  }
+
   //region hover for normal bricks
   handleMouseHover(index: number) {
     this.state.finalBricks.forEach((brick) => (brick.expanded = false));
@@ -585,8 +610,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           sortedIndex={sortedIndex}
           pageSize={pageSize}
           threeColumns={this.state.threeColumns}
-          moveNext={() => this.moveAllNext()}
-          moveBack={() => this.moveAllBack()}
+          moveNext={() => this.moveThreeColumnsNext()}
+          moveBack={() => this.moveThreeColumnsBack()}
         />
       )
     }
