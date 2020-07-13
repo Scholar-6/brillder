@@ -370,7 +370,10 @@ textarea {
     padding: 0;
   }
   @include tabletP {
-    z-index: 1000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
     border-bottom-right-radius: 2vw;
     background: var(--light-blue);
     margin-right: 1vw;

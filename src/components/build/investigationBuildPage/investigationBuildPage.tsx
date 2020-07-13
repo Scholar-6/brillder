@@ -528,9 +528,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   return (
     <div className="investigation-build-page">
-      <div style={{ position: 'fixed' }}>
-        <HomeButton onClick={exitAndSave} />
-      </div>
+      <HomeButton onClick={exitAndSave} />
       <PlayButton
         tutorialStep={step}
         isTutorialSkipped={isTutorialPassed()}

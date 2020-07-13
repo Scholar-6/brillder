@@ -147,7 +147,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
         </Hidden>
         <Hidden only={['xs']} >
           <HomeButton link="/home" />
-          <Grid container className="logout-container">
+          <div className="logout-container">
             <div className="search-container">
               <div className="search-button svgOnHover" onClick={() => this.props.search()}>
                 <svg className="svg svg-default">
@@ -170,7 +170,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
               {this.renderBellButton(notificationCount)}
               {this.renderMoreButton()}
             </Grid>
-          </Grid >
+          </div >
         </Hidden>
       </div>
     );

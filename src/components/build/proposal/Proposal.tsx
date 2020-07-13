@@ -151,9 +151,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   return (
     <MuiThemeProvider>
-      <div style={{position: 'absolute'}}>
-        <HomeButton onClick={openDialog} />
-      </div>
+      <HomeButton onClick={openDialog} />
       <div style={{ width: '100%', height: '100%' }} className="proposal-router">
         <Route path='/build/new-brick/subject'>
           <SubjectPage subjects={props.user.subjects} subjectId={''} saveSubject={setSubject} />
