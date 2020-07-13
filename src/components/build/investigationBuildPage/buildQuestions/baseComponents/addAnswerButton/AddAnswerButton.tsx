@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button } from '@material-ui/core';
 import AnimateHeight from 'react-animate-height';
 
 import './AddAnswerButton.scss'

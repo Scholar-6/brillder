@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Grid, Button } from '@material-ui/core';
 // @ts-ignore
 import { connect } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';

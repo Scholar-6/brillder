@@ -60,6 +60,12 @@ const BackPagePaginationV2: React.FC<BackPageTitleProps> = ({
   return (
     <Grid container direction="row" className="bricks-pagination">
       <Grid item xs={4} className="left-pagination">
+        <div>
+          {(sortedIndex + pageSize) / pageSize}
+          <span className="gray">
+            {" "} &nbsp;|&nbsp; {Math.ceil(longest / pageSize)}
+          </span>
+        </div>
       </Grid>
       <Grid container item xs={4} justify="center" className="bottom-next-button">
         <div>

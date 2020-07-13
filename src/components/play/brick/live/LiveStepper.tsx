@@ -1,5 +1,4 @@
 import React from "react";
-import { Grid, Hidden } from "@material-ui/core";
 
 import "./Live.scss";
 import { Question } from "model/question";
