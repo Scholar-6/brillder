@@ -76,7 +76,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
                       <Grid direction="column" justify="center">
                         <Grid className="notification-time">{moment(notification.timestamp).fromNow()}</Grid>
-                        <IconButton className="delete-notification" onClick={() => this.markAsRead(notification.id)}>
+                        <IconButton aria-label="clear" className="delete-notification" onClick={() => this.markAsRead(notification.id)}>
                           <SvgIcon>
                             <svg className="svg">
                               <use href={sprite + "#cancel"} />
@@ -99,7 +99,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
             this.props.notifications.length != 0) &&
             <CardActions className="clear-notification">
               <div>Clear All</div>
-              <IconButton onClick={() => this.markAllAsRead()}>
+              <IconButton aria-label="clear-all" onClick={() => this.markAllAsRead()}>
                 <SvgIcon>
                   <svg className="svg text-white">
                     <use href={sprite + "#circle-cancel"} />
