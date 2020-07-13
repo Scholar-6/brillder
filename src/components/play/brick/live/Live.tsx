@@ -2,7 +2,6 @@ import React from "react";
 import { Grid,Hidden} from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
-import update from "immutability-helper";
 import { useHistory, Redirect } from "react-router-dom";
 
 import "./Live.scss";

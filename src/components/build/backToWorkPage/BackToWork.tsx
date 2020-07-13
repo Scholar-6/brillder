@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import "./BackToWork.scss";
 import brickActions from "redux/actions/brickActions";
 import { Brick, BrickStatus } from "model/brick";
-import { User, UserType } from "model/user";
+import { User } from "model/user";
 import { checkAdmin } from "components/services/brickService";
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
@@ -536,6 +536,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         index={item.index}
         row={item.row}
         user={this.props.user}
+        key={item.index}
         shown={this.state.shown}
         history={this.props.history}
         handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
@@ -585,6 +586,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         brick={item.brick}
         index={item.key}
         row={item.row}
+        key={item.key}
         user={this.props.user}
         shown={this.state.shown}
         history={this.props.history}

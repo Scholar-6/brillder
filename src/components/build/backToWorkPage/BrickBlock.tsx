@@ -46,7 +46,6 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
   return (
     <Grow
       in={props.shown}
-      key={index}
       style={{ transformOrigin: "0 0 0" }}
       timeout={index * 150}
     >
