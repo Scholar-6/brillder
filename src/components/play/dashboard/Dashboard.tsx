@@ -911,7 +911,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 ALL BRICKS
               </div>
               <div className="core-public-toggle">
-                <a className="btn btn btn-transparent ">
+                <button className="btn btn btn-transparent ">
                   <span>Core</span>
                   <div className="svgOnHover">
                     <svg className="svg active selected">
@@ -924,18 +924,18 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                     </svg>
                   </div>
                   <span>Public</span>
-                </a>
+                </button>
               </div>
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
-                <a className="btn btn-transparent svgOnHover">
+                <button className="btn btn-transparent svgOnHover">
                   <span>New</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
                   </svg>
-                </a>
+                </button>
               </div>
             </Hidden>
             <div className="bricks-list-container bricks-container-mobile">
@@ -955,31 +955,31 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             </div>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title">
-                <a className="btn btn-transparent svgOnHover">
+                <button className="btn btn-transparent svgOnHover">
                   <span>Suggest</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
                   </svg>
-                </a>
+                </button>
               </div>
               <div className="brick-row-title">
-                <a className="btn btn-transparent svgOnHover">
+                <button className="btn btn-transparent svgOnHover">
                   <span>Top in Humanities</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
                   </svg>
-                </a>
+                </button>
               </div>
               <div className="brick-row-title">
-                <a className="btn btn-transparent svgOnHover">
+                <button className="btn btn-transparent svgOnHover">
                   <span>Top in Stem</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
                   </svg>
-                </a>
+                </button>
               </div>
             </Hidden>
             {this.renderPagination()}
