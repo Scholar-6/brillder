@@ -8,7 +8,7 @@ import './MissingWordBuild.scss'
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
-
+import sprite from "../../../../../../assets/img/icons-sprite.svg";
 
 interface Answer {
   value: string;
@@ -104,7 +104,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
     update();
   }
 
-  const onChecked = (choice: MissingChoice, event:any) => {
+  const onChecked = (choice: MissingChoice, event: any) => {
     if (locked) { return; }
     const index = event.target.value;
     for (let answer of choice.answers) {
@@ -131,17 +131,24 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
       <div className="choose-several-box" key={key}>
         <textarea
           value={choice.before}
-          onChange={(event) => {beforeChanged(choice, event)}}
+          onChange={(event) => { beforeChanged(choice, event) }}
           disabled={locked}
           rows={3}
           placeholder="Text before choice..."></textarea>
         {
-          (state.choices.length > 1) ? <DeleteIcon className="right-top-icon" onClick={() => removeChoice(key)} /> : ""
+          (state.choices.length > 1)
+            ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeChoice(key)}>
+              <svg className="svg active back-button">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#trash-outline"} className="theme-orange" />
+              </svg>
+            </button>
+            : ""
         }
         {
           choice.answers.map((answer, key) => {
             return (
-              <div style={{position: 'relative'}} key={key}>
+              <div style={{ position: 'relative' }} key={key}>
                 {
                   (choice.answers.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, key)} /> : ""
                 }
@@ -167,7 +174,7 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
           disabled={locked}
           rows={3}
           placeholder="Text after choice..."
-          onChange={(event) => {afterChanged(choice, event)}}>
+          onChange={(event) => { afterChanged(choice, event) }}>
         </textarea>
         <AddAnswerButton
           locked={locked} addAnswer={() => { addAnswer(choice) }} height={choice.height}
