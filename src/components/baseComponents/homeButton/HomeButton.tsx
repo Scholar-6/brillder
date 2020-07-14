@@ -1,5 +1,4 @@
 import React from 'react'
-import { Grid } from '@material-ui/core';
 import { withRouter } from "react-router-dom";
 
 import sprite from "../../../assets/img/icons-sprite.svg";

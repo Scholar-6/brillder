@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
-import { List, ListItem, ListItemText, Popover, ListItemSecondaryAction, IconButton, SvgIcon, Card, CardContent, CardHeader, Button, ListItemIcon, ListItemAvatar, Grid, CardActions } from '@material-ui/core';
+import { List, ListItem, ListItemText, Popover, IconButton, SvgIcon, Card, CardContent, ListItemIcon, Grid, CardActions } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
 import sprite from "../../../assets/img/icons-sprite.svg";
 import { Notification, notificationTypeColors } from 'model/notifications';
-import notificationActions from 'redux/actions/notifications';
-import { Dispatch } from 'redux';
+//import notificationActions from 'redux/actions/notifications';
+//import { Dispatch } from 'redux';
 import moment from 'moment';
 import './NotificationPanel.scss';
 
