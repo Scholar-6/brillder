@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import './pageLoader.scss';
-import ReactLogo from '../../../assets/img/dot-loader.svg';
+import LoaderLogo from 'assets/img/dot-loader.svg';
 class PageLoader extends Component<pageLoaderProps> {
   render() {
     let { content } = this.props
     return (
       <div className="page-loader">
-        {/* <img src="/assets/img/dot-loader.svg" alt="" /> */}
-        <img src={ReactLogo} alt="React Logo" />
+        <img src={LoaderLogo} alt="Loader logo" />
         <span>{content}</span>
       </div>
     );
