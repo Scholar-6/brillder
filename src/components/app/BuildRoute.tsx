@@ -31,7 +31,11 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!rest.user) {
       rest.getUser();
-      return <div>...Getting User...</div>
+      return <div>
+
+        ...Getting User...
+
+        </div>
     }
 
     let {user} = rest;
