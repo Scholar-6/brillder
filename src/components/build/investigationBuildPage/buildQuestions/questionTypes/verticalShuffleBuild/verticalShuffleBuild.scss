@@ -4,60 +4,18 @@
 
 .vertical-shuffle-build {
   text-align: center;
-
-  .component-title{
-    > div {
-      font-size: $base-sm-text-size;
-      font-family: $font-family-regular;
-      letter-spacing: 2px;
-    }
-  }
   p {
     margin: 0;
   }
-
   .vertical-answer-box {
     position: relative;
     width: 100%;
-    .document-editor {
-      position: relative;
-      > div > .ck-toolbar {
-        font-size: 1.4vh;
-        right: 0;
-        border-top-right-radius: 0.4vw !important;
-        border-bottom-right-radius: 0.4vw !important;
-        background: white !important;
-        position: absolute;
-        height: 100%;
-        z-index: 1;
-      }
-      .ck-dropdown__panel {
-        z-index: 100 !important;
-      }
-      .ck-toolbar__items {
-        display: block !important;
-
-        button {
-          padding: 0;
-          margin: 0;
-          display: block !important;
-        }
-      }
-    }
-
-    .document-editor {
+    margin-bottom: 0.4vh;
+  }
+  .document-editor {
+    .ck-editor {
       .ck-content {
-        margin-top: 0.1vw;
-        margin-bottom: 0.1vw;
-        margin-right: 0.1vw;
-        padding-top: 0;
-        text-align: center !important;
-        background: white;
-        font-size: $answer-input-text-size;
-
-        p {
-          text-align: center !important;
-        }
+        padding: 0.2vw !important;
       }
     }
   }

@@ -105,7 +105,7 @@ const HintComponent: React.FC<HintProps> = ({
   const renderHintInputs = () => {
     if (state.status === HintStatus.All || !props.count || props.count === 1) {
       return (
-        <Grid container item xs={12} className="hint-container">
+        <div className="hint-container">
           <DocumentWirisCKEditor
             disabled={locked}
             data={state.value}
@@ -118,7 +118,7 @@ const HintComponent: React.FC<HintProps> = ({
             onBlur={() => save()}
             onChange={onHintChanged}
           />
-        </Grid>
+        </div>
       );
     }
     const answerHints: any[] = [];
@@ -128,7 +128,7 @@ const HintComponent: React.FC<HintProps> = ({
       for (let i = 0; i < props.count; i++) {
         if (state.list.length < props.count) {
           list.push('');
-          
+
         } else {
           setState({...state, list});
           return <div>...Preparing hints...</div>
@@ -138,7 +138,7 @@ const HintComponent: React.FC<HintProps> = ({
 
     for (let i = 0; i < props.count; i++) {
       answerHints.push(
-        <Grid key={i} container item xs={12} className="hint-container">
+        <div className="hint-container">
           <DocumentWirisCKEditor
             disabled={locked}
             data={state.list[i]}
@@ -151,7 +151,7 @@ const HintComponent: React.FC<HintProps> = ({
             onBlur={() => save()}
             onChange={(v:any) => {onHintListChanged(v, i)}}
           />
-        </Grid>
+        </div>
       );
     }
     return answerHints;
