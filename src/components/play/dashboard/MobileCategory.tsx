@@ -691,13 +691,13 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <div className="brick-row-title" onClick={() => this.props.history.push('/play/dashboard')}>
-              <a className="btn btn-transparent svgOnHover">
+              <button className="btn btn-transparent svgOnHover">
                 <span>New</span>
                 <svg className="svg active">
                   {/*eslint-disable-next-line*/}
                   <use href={sprite + "#arrow-down"} className="text-theme-dark-blue" />
                 </svg>
-              </a>
+              </button>
             </div>
             <div className="bricks-list-container">
               {this.renderSortedBricks()}
