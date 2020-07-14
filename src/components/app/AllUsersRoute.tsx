@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import actions from '../../redux/actions/auth';
 import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
+import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import { User } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 
@@ -25,7 +26,7 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!user) {
       rest.getUser();
-      return <div>...Getting User...</div>
+      return <PageLoader content="...Getting User..." />;
     }
     if(user.firstName === "" || user.lastName === "") {
       if(location.pathname != "/user-profile") { // Only redirect to the user profile if we're not already there.
@@ -35,7 +36,7 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized();
-    return <div className="page-loader">...Checking rights...</div>;
+    return <PageLoader content="...Checking rights..." />;
   } else {
     return <Redirect to="/choose-login" />;
   }

@@ -23,6 +23,7 @@ import { prefillAttempts } from 'components/services/PlayService';
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
 import { Grid } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
+import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 export interface BrickAttempt {
@@ -81,7 +82,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const brickId = parseInt(props.match.params.brickId);
   if (!props.brick || props.brick.id !== brickId || !props.brick.author) {
     props.fetchBrick(brickId);
-    return <div className="page-loader">...Loading brick...</div>
+    return <PageLoader content="...Loading brick..." />;
   }
 
   setBrillderTitle(props.brick.title);
