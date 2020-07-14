@@ -18,13 +18,15 @@
     font-size: 0.8vw;
     font-family: $font-family-black !important;
     color: #aaa;
+    width: 80%;
+    margin: 0 auto;
     svg {
       height: 1.4vw;
       width: 1.4vw;
     }
-
-    img {
-      height: 8.5vh;
+    > img {
+      max-height: 8vh;
+      width: auto;
     }
   }
   .dropzone:hover {

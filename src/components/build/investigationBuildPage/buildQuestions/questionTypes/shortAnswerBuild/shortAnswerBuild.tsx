@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Snackbar from "@material-ui/core/Snackbar";
-
+import sprite from "../../../../../../assets/img/icons-sprite.svg";
 import "./shortAnswerBuild.scss";
 import AddAnswerButton from "../../baseComponents/addAnswerButton/AddAnswerButton";
 import { UniqueComponentProps } from "../types";
@@ -75,10 +75,12 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
   const renderDeleteButton = (index: number) => {
     if (state.list.length > 1) {
       return (
-        <DeleteIcon
-        className="right-top-icon"
-        onClick={() => removeFromList(index)}
-      />
+        <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(index)}>
+          <svg className="svg active back-button">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#trash-outline"} className="theme-orange" />
+          </svg>
+        </button>
       )
     }
     return "";

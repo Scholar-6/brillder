@@ -3,11 +3,6 @@
 @import '../../../../../../assets/sass/partials/extensions';
 
 .missing-word-build {
-  .right-top-icon {
-    @extend %floatToCenter;
-    left: auto;
-    right: 0vw;
-  }
   textarea {
     width: 88.5%;
     padding: 0;

@@ -6,7 +6,8 @@ import './ChooseOneAnswer.scss';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import QuestionImageDropzone from "../../baseComponents/QuestionImageDropzone";
 import { QuestionValueType } from "../types";
-import {ChooseOneAnswer} from './types';
+import { ChooseOneAnswer } from './types';
+import sprite from "../../../../../../assets/img/icons-sprite.svg";
 
 
 export interface ChooseOneAnswerProps {
@@ -29,10 +30,12 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   const renderDeleteButton = () => {
     if (length > 3) {
       return (
-        <DeleteIcon
-          className="delete-right-top-icon"
-          onClick={() => removeFromList(index)}
-        />
+        <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(index)}>
+          <svg className="svg active back-button">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#trash-outline"} className="theme-orange" />
+          </svg>
+        </button>
       );
     }
 
@@ -40,7 +43,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   }
 
   const setImage = (fileName: string) => {
-    if (locked) {return;}
+    if (locked) { return; }
     answer.value = "";
     answer.valueFile = fileName;
     answer.answerType = QuestionValueType.Image;
@@ -49,7 +52,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   }
 
   const onTextChanged = (answer: ChooseOneAnswer, value: string) => {
-    if (locked) {return;}
+    if (locked) { return; }
     answer.value = value;
     answer.valueFile = "";
     answer.answerType = QuestionValueType.String;
@@ -59,8 +62,8 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   let containerClass = "";
   let className = 'choose-one-box unique-component-box';
   if (answer.answerType === QuestionValueType.Image) {
-    className+=' big-answer';
-    containerClass='big-box';
+    className += ' big-answer';
+    containerClass = 'big-box';
   }
 
   let checkboxClass = "left-ckeckbox";

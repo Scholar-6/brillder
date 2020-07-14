@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-
+import sprite from "../../../../../../../assets/img/icons-sprite.svg";
 import {QuestionValueType} from '../../types';
 import {Answer} from '../types';
 import QuestionImageDropZone from '../../../baseComponents/QuestionImageDropzone';
@@ -31,11 +31,12 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
   const renderDeleteButton = () => {
     if (answer.optionType === QuestionValueType.Image) {
       return (
-        <DeleteIcon
-          className="right-top-icon"
-          style={{ right: "1%", top: "2%" }}
-          onClick={() => removeImage()}
-        />
+        <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeImage()}>
+          <svg className="svg active back-button">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#trash-outline"} className="theme-orange" />
+          </svg>
+        </button>
       );
     }
     return "";
@@ -65,7 +66,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
 
   return (
     <Grid container item xs={6}>
-      <div className={`pair-match-option ${customClass}`}>
+      <div className={`unique-component pair-match-option ${customClass}`}>
         <DocumentWirisCKEditor
           disabled={locked}
           data={answer.option}

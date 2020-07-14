@@ -31,15 +31,15 @@
   width: 100%;
   margin-bottom: 0.4vw;
   overflow: hidden;
+  color: var(--theme-dark-blue);
+  border-radius: $global-drop-border-radius;
+  .MuiGrid-container {
+    background: var(--white);
+  }
   input {
     padding-left: 0.6vw !important;
     padding-right: 0.6vw !important;
   }
-
-  color: var(--theme-dark-blue);
-  background: white;
-  border-radius: $global-drop-border-radius;
-
   .hint-input-text {
     text-align: center !important;
     width: 100%;
@@ -54,7 +54,6 @@
     padding: 0;
     margin: 0.1vw 0;
   }
-
   .hint-type-text {
     font-family: $font-family-regular;
     color: $global-light-text-gray;
@@ -62,7 +61,6 @@
     text-align: left;
     font-size: $base-sm-text-size;
   }
-
   .hint-toggle-group {
     button {
       font-family: $font-family-regular;
@@ -71,7 +69,6 @@
       text-transform: none !important;
     }
   }
-
   .hint-question-circle {
     font-size: 2.5vw;
     color: var(--theme-orange);
@@ -96,20 +93,18 @@
       font-size: 1.2vw;
     }
   }
-
   .hint-container {
+    margin: 0.1vw 0;
+    float: left;
+    width: 100%;
+    &:first-child {
+      margin: 0 !important;
+    }
     .document-editor {
       width: 100%;
-
-      .ck-toolbar {
-        background: var(--off-white) !important;
-        .ck-toolbar__items {
-          background: var(--off-white) !important;
-        }
-      }
-
       .ck-content {
-        background: white;
+        padding: 0.5vw !important;
+        background: var(--light-gray) !important;
       }
     }
   }

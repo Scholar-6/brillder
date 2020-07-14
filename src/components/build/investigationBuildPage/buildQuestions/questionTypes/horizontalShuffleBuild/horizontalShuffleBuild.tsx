@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
@@ -6,6 +6,8 @@ import './horizontalShuffleBuild.scss'
 import { Grid } from '@material-ui/core';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import { UniqueComponentProps } from '../types';
+
+import sprite from "../../../../../../assets/img/icons-sprite.svg";
 
 
 const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
@@ -58,7 +60,14 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
       <Grid container item xs={4} key={key}>
         <div className={`horizontal-shuffle-box unique-component horizontal-column-${column}`}>
           {
-            (state.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
+            (state.list.length > 3)
+              ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(key)}>
+                <svg className="svg active back-button">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#trash-outline"} className="theme-orange" />
+                </svg>
+              </button>
+              : ""
           }
           <DocumentWirisCKEditor
             disabled={locked}

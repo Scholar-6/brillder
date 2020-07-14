@@ -15,7 +15,7 @@ export interface AnswerProps {
   answer: any;
   update(fileName: string): void;
 }
-  
+
 const QuestionImageDropzone: React.FC<AnswerProps> = ({
   locked, answer, fileName, type, update
 }) => {
@@ -31,16 +31,7 @@ const QuestionImageDropzone: React.FC<AnswerProps> = ({
 
   const renderImagePreview = () => {
     return (
-      <Grid
-        container direction="row"
-        justify="center" alignContent="center"
-        style={{height: '100%'}}
-      >
-        <img
-          alt=""
-          src={`${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`}
-        />
-      </Grid>
+      <img src={`${process.env.REACT_APP_BACKEND_HOST}/files/${fileName}`} alt="" width="100%" height="auto"/>
     );
   }
 

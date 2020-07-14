@@ -10,8 +10,13 @@
   .drop-box {
     margin-bottom: 0.2vw;
     border-radius: $global-drop-border-radius;
-
-    background-color: $tab-gray;
+    .drop-box-text {
+      font-size: 1.6vw;
+      font-family: $font-family-bold;
+      color: var(--gray);
+      background-color: var(--tab-gray);
+      border-radius: 0.4vw;
+    }
   }
 
   .add-dropbox {
@@ -19,67 +24,33 @@
   }
 }
 
-.unique-component {
-  .document-editor {
-    position: relative;
-    > div {
-      > .ck-toolbar {
-        width: 2vw;
-        height: 100%;
-        font-size: 1.4vh;
-        right: 0;
-        border-top-right-radius: 0.4vw !important;
-        border-bottom-right-radius: 0.4vw !important;
-        background: white !important;
-        position: absolute;
-        z-index: 1;
-      }
-    }
-    .ck-dropdown__panel {
-      z-index: 100 !important;
-    }
-
-    .ck-toolbar__items {
-      display: block !important;
-
-      button {
-        padding: 0;
-        margin: 0;
-        display: block !important;
-      }
-    }
-    .ck-content {
-      text-align: center !important;
-      border-radius: $global-drop-border-radius !important;
-      overflow: hidden;
-      .ck-content {
-        border-bottom-left-radius: 0 !important;
-        border-bottom-right-radius: 0 !important;
-      }
-      p {
-        text-align: center !important;
-      }
-    }
-    .ck-toolbar_grouping {
-      padding: 0;
-      width: 4vh !important;
-
-      .ck-toolbar {
-        padding:0;
-      }
-      .ck-toolbar__items {
-        width: 2vh !important;
-      }
-      .ck-button {
-        margin-left:0.5vh !important;
-        width: 2vh !important;
-      }
-    }
+.component-title {
+  margin-bottom: 0.4vh;
+  div {
+    font-size: $base-sm-text-size;
+    font-family: $font-family-regular;
+    letter-spacing: 2px;
   }
+}
 
-  .content-invalid {
+.unique-component {
+  margin: 0.1vh 0;
+  position: relative;
+  width: 100%;
+  .ck-content {
+    background: var(--tab-gray) !important;
+  }
+}
+
+.unique-component-wrapper {
+  margin: 0.2vh 0;
+  padding: 0.4vw 0.4vw 0 0.4vw;
+  width: 100%;
+  background-color: var(--tab-gray);
+  border-radius: 0.4vw;
+  .unique-component {
     .ck-content {
-      background: var(--theme-orange) !important;
+      background: var(--light-gray) !important;
     }
   }
 }
