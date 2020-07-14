@@ -97,7 +97,6 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
       <textarea
         disabled={locked}
         className="lines-input"
-        rows={5}
         value={state.text}
         onBlur={() => save()}
         onChange={updateText} placeholder="Enter Lines Here..." />
