@@ -8,47 +8,7 @@
   margin-top: 0.17vw;
   margin-bottom: 0.17vw;
   .document-editor {
-    position: relative;
     height: calc(100% - 0.4vh);
-    > div {
-      > .ck-toolbar {
-        font-size: 1.4vh;
-        right: 0;
-        border-top-right-radius: 0.4vw !important;
-        border-bottom-right-radius: 0.4vw !important;
-        background: white !important;
-        position: absolute;
-        width: 3.5vh;
-        height: 100%;
-        z-index: 1;
-      }
-    }
-    .ck-editor__main {
-      width: calc(100% - 1.75vw);
-    }
-    .ck-dropdown__panel {
-      z-index: 100 !important;
-    }
-    .ck-toolbar__items {
-      display: block !important;
-
-      button {
-        padding: 0;
-        margin: 0;
-        display: block !important;
-      }
-    }
-    .ck-content {
-      padding: 4vh 0 0 2.2vw;
-      text-align: center !important;
-      overflow: hidden;
-      border-top-right-radius: 0 !important;
-      border-bottom-right-radius: 0 !important;
-
-      p {
-        text-align: center !important;
-      }
-    }
   }
 
   .checkbox-container {

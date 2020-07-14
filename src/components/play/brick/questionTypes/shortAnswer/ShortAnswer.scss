@@ -3,13 +3,27 @@
 @import '../../../../../assets/sass/partials/extensions';
 
 .short-answer-live {
-  display: inline;
-  place-content: center space-evenly;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
   .short-answer-input {
     display: inline-block;
-    margin-bottom: 20px;
+    margin-bottom: 0.5vh;
   }
   .document-editor {
-    width: 90%;
+    width: 100%;
+    .ck-editor {
+      width: 100%;
+      .ck-content {
+        background-color: var(--tab-gray);
+        padding: 0.5vw !important;
+        p {
+          margin: 0;
+        }
+      }
+    }
+    .ck-toolbar {
+      display: none !important;
+    }
   }
 }
