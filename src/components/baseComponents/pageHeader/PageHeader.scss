@@ -72,12 +72,15 @@
           z-index: 999999;
         }
       }
+      @include tabletP {
+        justify-content: flex-end;
+      }
       .logout-container {
+        display: flex;
         @include phone_and_tabletP {
           margin: 0;
           width: 100% !important;
           flex-wrap: inherit !important;
-          display: flex;
           align-items: center;
           justify-content: space-between;
         }
