@@ -96,6 +96,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             {
               scrollShown ? <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
                 <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
                   <use href={sprite + "#arrow-up"} className="text-theme-orange" />
                 </svg>
               </button> : ""
@@ -179,6 +180,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                           onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
                         >
                           <svg className="svg w-2 h-2 active">
+                            {/*eslint-disable-next-line*/}
                             <use href={sprite + "#list"}/>
                           </svg>
                           <span>{props.synthesis ? 'Edit Synthesis' : 'Add Synthesis'}</span>

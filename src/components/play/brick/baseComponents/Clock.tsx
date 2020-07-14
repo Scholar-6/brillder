@@ -13,6 +13,7 @@ const Clock: React.FC<CounterProps> = (props) => {
     <div className="play-clock">
       <div className="clock-image svgOnHover">
         <svg className="svg w100 h100 active">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#clock"} />
         </svg>
       </div>

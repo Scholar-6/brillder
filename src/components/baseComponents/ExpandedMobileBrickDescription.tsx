@@ -27,9 +27,11 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
         <div className="brick-icons">
           <div className="round-button svgOnHover" style={{ background: `${color}` }} onClick={() => this.props.move(brick.id)}>
             <svg className="svg w80 h80 svg-default">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#play-thin"} className="text-white" />
             </svg>
             <svg className="svg w80 h80 colored">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#play-thick"} className="text-white" />
             </svg>
           </div>

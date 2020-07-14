@@ -113,9 +113,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             onClick={startBrick}
           >
             <svg className="svg svg-default m-l-02">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#play-thin"} />
             </svg>
             <svg className="svg colored m-l-02">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#play-thick"} />
             </svg>
           </button>
@@ -130,6 +132,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <span>Brief</span>
         <div className="arrow svgOnHover" onClick={toggleBrief}>
           <svg className="svg w100 h100 active">
+            {/*eslint-disable-next-line*/}
             <use
               href={
                 state.briefExpanded
@@ -150,6 +153,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <span>Prep</span>
         <div className="arrow svgOnHover" onClick={togglePrep}>
           <svg className="svg w100 h100 active">
+            {/*eslint-disable-next-line*/}
             <use
               href={
                 state.prepExpanded

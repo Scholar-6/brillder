@@ -43,6 +43,7 @@ const UserActionsCell: React.FC<UserActionsCellProps> = (
         isAdmin
           ? <div className="delete-button svgOnHover" onClick={openDeleteDialog}>
             <svg className="svg w100 h100 active">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#trash-outline"} className="text-theme-dark-blue" />
             </svg>
           </div>
@@ -52,6 +53,7 @@ const UserActionsCell: React.FC<UserActionsCellProps> = (
         isAdmin
           ? <div className="edit-button" onClick={() => history.push(`/user-profile/${userId}`)}>
             <svg className="svg w100 h100 active">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#edit-outline"} className="text-theme-dark-blue" />
             </svg>
           </div>

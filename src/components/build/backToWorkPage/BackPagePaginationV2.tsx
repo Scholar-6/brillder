@@ -35,6 +35,7 @@ const BackPagePaginationV2: React.FC<BackPageTitleProps> = ({
           className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
           onClick={() => moveNext()}>
           <svg className="svg w100 h100 active">
+            {/*eslint-disable-next-line*/}
             <use href={sprite + "#arrow-down"} />
           </svg>
         </button>
@@ -49,6 +50,7 @@ const BackPagePaginationV2: React.FC<BackPageTitleProps> = ({
         <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
           onClick={() => moveBack()}>
           <svg className="svg w100 h100 active">
+            {/*eslint-disable-next-line*/}
             <use href={sprite + "#arrow-up"} />
           </svg>
         </button>

@@ -34,12 +34,14 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
         <div className="button-box">
           <button className="email-button svgOnHover" onClick={moveToLogin}>
             <svg className="svg active">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#email"} />
             </svg>
             <span>Register &nbsp;|&nbsp; Sign in with email</span>
           </button>
           <a className="google-button svgOnHover" href={googleLink}>
             <svg className="svg active">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#gmail"} />
             </svg>
             <span>Register &nbsp;|&nbsp; Sign in with Google</span>
@@ -73,6 +75,7 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
         <div className="back-col">
           <div className="back-box">
             <svg className="svg active back-button" onClick={() => props.history.push('/choose-login')}>
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#arrow-down"} />
             </svg>
           </div>
@@ -86,18 +89,21 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
                 className="svg active logo-image mobile"
                 onClick={() => props.history.push("/choose-login")}
               >
+                {/*eslint-disable-next-line*/}
                 <use href={sprite + "#logo"} className="text-theme-orange" />
               </svg>
             </div>
             <div className="button-box">
               <button className="email-button svgOnHover" onClick={moveToLogin}>
                 <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
                   <use href={sprite + "#email"} />
                 </svg>
                 <span>Register &nbsp;|&nbsp; Sign in with email</span>
               </button>
               <a className="google-button svgOnHover" href={googleLink}>
                 <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
                   <use href={sprite + "#gmail"} />
                 </svg>
                 <span>Register &nbsp;|&nbsp; Sign in with Google</span>

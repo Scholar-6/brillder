@@ -50,6 +50,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
           }}
         >
           <svg className="svg w-2 h-2 active">
+            {/*eslint-disable-next-line*/}
             <use href={sprite + "#list"} />
           </svg>
           <span className="synthesis-text">

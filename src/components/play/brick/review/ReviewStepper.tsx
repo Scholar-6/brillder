@@ -44,6 +44,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
       >
         <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
         <svg className="svg w-2 h-2 active m-l-02">
+          {/*eslint-disable-next-line*/}
           <use
             href={attempt.correct ? sprite + "#ok" : sprite + "#cancel"}
             className={

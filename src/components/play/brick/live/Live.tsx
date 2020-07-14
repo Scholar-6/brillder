@@ -198,9 +198,11 @@ const LivePage: React.FC<LivePageProps> = ({
         onClick={prev}
       >
         <svg className="svg svg-default m-r-02">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#arrow-left"} className="text-gray" />
         </svg>
         <svg className="svg colored m-r-02">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#arrow-left"} className="text-white" />
         </svg>
       </button>
@@ -256,6 +258,7 @@ const LivePage: React.FC<LivePageProps> = ({
                     onClick={next}
                   >
                     <svg className="svg active m-l-02">
+                      {/*eslint-disable-next-line*/}
                       <use href={sprite + "#arrow-right"} />
                     </svg>
                   </button>
@@ -301,6 +304,7 @@ const LivePage: React.FC<LivePageProps> = ({
                 onClick={next}
               >
                 <svg className="svg active m-l-02">
+                  {/*eslint-disable-next-line*/}
                   <use href={sprite + "#arrow-right"} />
                 </svg>
               </button>

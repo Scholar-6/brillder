@@ -78,6 +78,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                         <Grid className="notification-time">{moment(notification.timestamp).fromNow()}</Grid>
                         <button className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>
                             <svg className="svg">
+                              {/*eslint-disable-next-line*/}
                               <use href={sprite + "#cancel"} />
                             </svg>
                         </button>
@@ -100,6 +101,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
               <IconButton aria-label="clear-all" onClick={() => this.markAllAsRead()}>
                 <SvgIcon>
                   <svg className="svg text-white">
+                    {/*eslint-disable-next-line*/}
                     <use href={sprite + "#circle-cancel"} />
                   </svg>
                 </SvgIcon>
