@@ -18,6 +18,7 @@ import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHig
 import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/question';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import { getNonEmptyComponent } from "../../questionService/ValidateQuestionService";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 
 type QuestionComponentsProps = {
@@ -133,7 +134,7 @@ const QuestionComponents = ({
       uniqueComponent = WordHighlightingComponent;
     } else {
       history.push(`/build/brick/${brickId}/build/investigation/question`);
-      return <div className="page-loader">...Loading...</div>
+      return <PageLoader content="...Loading..." />;
     }
 
     return (
