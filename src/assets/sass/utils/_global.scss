@@ -370,7 +370,10 @@ textarea {
     padding: 0;
   }
   @include tabletP {
-    z-index: 1000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
     border-bottom-right-radius: 2vw;
     background: var(--light-blue);
     margin-right: 1vw;
@@ -468,7 +471,7 @@ h3 {
   text-align: center;
   text-transform: none !important;
   width: 100%;
-  padding: 0 !important;
+  padding: 0.5vh 0 !important;
   background-color: $tab-gray !important;
   opacity: 1;
   float: left;
