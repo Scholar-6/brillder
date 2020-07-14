@@ -31,7 +31,6 @@ import AuthRedirectRoute from './AuthRedirectRoute';
 import AllUsersRoute from './AllUsersRoute';
 
 import {setBrillderTitle} from 'components/services/titleService';
-import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 
