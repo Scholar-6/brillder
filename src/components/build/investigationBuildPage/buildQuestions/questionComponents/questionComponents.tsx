@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ReactSortable } from "react-sortablejs";
-import { Grid, Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 
 import './questionComponents.scss';

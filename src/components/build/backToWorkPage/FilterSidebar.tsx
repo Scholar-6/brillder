@@ -79,7 +79,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   renderSortAndFilterBox = () => {
     let draft = 0;
     let review = 0;
-    let build = 0;
     let publish = 0;
 
     for (let b of this.props.rawBricks) {
@@ -91,12 +90,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     for (let b of this.props.rawBricks) {
       if (b.status === BrickStatus.Review) {
         review += 1;
-      }
-    }
-
-    for (let b of this.props.rawBricks) {
-      if (b.status === BrickStatus.Build) {
-        build += 1;
       }
     }
 
