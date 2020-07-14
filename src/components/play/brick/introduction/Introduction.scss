@@ -17,7 +17,7 @@
     }
     .brick-container {
       @include phone_and_tabletP {
-        height: calc(100% - 15%);
+        height: calc(100% - 16vh);
         overflow-y: auto;
       }
       .introduction-page {
@@ -32,7 +32,6 @@
           height: calc(100vh - 15.8vh);
           padding: 4vh 2vw 4vh 7vw;
         }
-
         .intro-header {
           @extend %transitionAll600;
           @include phone_and_tabletP {
@@ -146,9 +145,9 @@
           @include phone_and_tabletP {
             position: unset;
             transform: translate(0);
-            font-size: 3.6vw;
-            text-align: center;
-            height: 4vh;
+            padding-left: 0 !important;
+            font-size: 3vh !important;
+            text-align: center !important;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
