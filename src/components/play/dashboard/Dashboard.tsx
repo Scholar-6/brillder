@@ -1,3 +1,4 @@
+
 /* TODO: KEEP THIS FILE for when clicking 'view all', so copy code from src/build/bricksListPage.tsx
 i.e. add back button on menu and row along top of 'my bricks'  6/7/2020 */
 import "./Dashboard.scss";
@@ -724,6 +725,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
                 onClick={() => this.moveAllBack()}>
                 <svg className="svg w100 h100 active">
+                  {/*eslint-disable-next-line*/}
                   <use href={sprite + "#arrow-up"} />
                 </svg>
               </button>
@@ -735,6 +737,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
                 onClick={() => this.moveAllNext()}>
                 <svg className="svg w100 h100 active">
+                  {/*eslint-disable-next-line*/}
                   <use href={sprite + "#arrow-down"} />
                 </svg>
               </button>
@@ -754,6 +757,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         <div className="page-navigation">
           <div className="btn btn-transparent glasses svgOnHover">
             <svg className="svg w100 h100 active">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#glasses"} className="text-theme-dark-blue" />
             </svg>
           </div>
@@ -911,9 +915,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                   <span>Core</span>
                   <div className="svgOnHover">
                     <svg className="svg active selected">
+                      {/*eslint-disable-next-line*/}
                       <use href={sprite + "#box"} className="text-light-blue2" />
                     </svg>
                     <svg className="svg active">
+                      {/*eslint-disable-next-line*/}
                       <use href={sprite + "#globe"} className="text-light-blue2" />
                     </svg>
                   </div>
@@ -926,6 +932,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 <a className="btn btn-transparent svgOnHover">
                   <span>New</span>
                   <svg className="svg active">
+                    {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
                   </svg>
                 </a>
@@ -951,6 +958,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 <a className="btn btn-transparent svgOnHover">
                   <span>Suggest</span>
                   <svg className="svg active">
+                    {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
                   </svg>
                 </a>
@@ -959,6 +967,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 <a className="btn btn-transparent svgOnHover">
                   <span>Top in Humanities</span>
                   <svg className="svg active">
+                    {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
                   </svg>
                 </a>
@@ -967,6 +976,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
                 <a className="btn btn-transparent svgOnHover">
                   <span>Top in Stem</span>
                   <svg className="svg active">
+                    {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
                   </svg>
                 </a>

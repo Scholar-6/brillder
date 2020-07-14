@@ -241,6 +241,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
               className="svg active back-button"
               onClick={() => props.history.push("/choose-login")}
             >
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#arrow-down"} className="theme-orange" />
             </svg>
           </div>
@@ -254,6 +255,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                   className="svg active logo-image mobile"
                   onClick={() => props.history.push("/choose-login")}
                 >
+                  {/*eslint-disable-next-line*/}
                   <use href={sprite + "#login"} className="text-theme-orange" />
                 </svg>
               </div>

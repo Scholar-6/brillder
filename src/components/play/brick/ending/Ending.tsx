@@ -145,6 +145,7 @@ const EndingPage: React.FC<EndingProps> = ({
                   onClick={endBrick}
                 >
                   <svg className="svg active m-l-02">
+                    {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-right"} />
                   </svg>
                 </button>

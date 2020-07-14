@@ -470,6 +470,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
                 onClick={() => this.moveAllBack()}>
                 <svg className="svg w100 h100 active">
+                  {/*eslint-disable-next-line*/}
                   <use href={sprite + "#arrow-up"} />
                 </svg>
               </button>
@@ -481,6 +482,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
                 onClick={() => this.moveAllNext()}>
                 <svg className="svg w100 h100 active">
+                  {/*eslint-disable-next-line*/}
                   <use href={sprite + "#arrow-down"} />
                 </svg>
               </button>
@@ -551,6 +553,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         <div className="page-navigation">
           <div className="btn btn-transparent glasses svgOnHover">
             <svg className="svg w100 h100 active">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#glasses"} className="text-theme-dark-blue" />
             </svg>
           </div>
@@ -691,6 +694,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
               <a className="btn btn-transparent svgOnHover">
                 <span>New</span>
                 <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
                   <use href={sprite + "#arrow-down"} className="text-theme-dark-blue" />
                 </svg>
               </a>

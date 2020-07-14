@@ -599,6 +599,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
               <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
                 onClick={() => this.moveAllBack()}>
                 <svg className="svg w100 h100 active">
+                  {/*eslint-disable-next-line*/}
                   <use href={sprite + "#arrow-up"} />
                 </svg>
               </button>
@@ -610,6 +611,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
                 className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
                 onClick={() => this.moveAllNext()}>
                 <svg className="svg w100 h100 active">
+                  {/*eslint-disable-next-line*/}
                   <use href={sprite + "#arrow-down"} />
                 </svg>
               </button>

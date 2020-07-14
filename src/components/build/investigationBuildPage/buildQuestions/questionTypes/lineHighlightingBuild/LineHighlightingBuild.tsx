@@ -111,6 +111,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
       </div>
       <div className="pencil-icon-container svgOnHover" onClick={switchMode}>
         <svg className="svg w100 h100 active">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#highlighter"} className={state.mode ? "text-theme-green" : "text-theme-dark-blue"} />
         </svg>
       </div>
