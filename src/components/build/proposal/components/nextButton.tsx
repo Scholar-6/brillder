@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 
 import { ProposalStep } from "../model";
 import './nextButton.scss';
-import { Grid } from "@material-ui/core";
-
+import { Grid, Button } from "@material-ui/core";
+import sprite from "assets/img/icons-sprite.svg";
 interface NextButtonProps {
   isActive: boolean
   step: ProposalStep
@@ -42,17 +42,11 @@ const NextButton:React.FC<NextButtonProps> = (
   }
 
   return (
-    <Grid container justify="center" className="tutorial-next-container">
-      <img
-        alt=""
-        src={
-          isActive
-            ? "/feathericons/chevron-down-orange.png"
-            : "/feathericons/chevron-down-gray.png"
-        }
-        onClick={next}
-      />
-    </Grid>
+    <button className="btn btn-transparent tut-next svgOnHover" onClick={next}>
+      <svg className="svg active h100 w100">
+        <use href={ sprite + "#arrow-down"} className={isActive ? "text-theme-orange":"text-gray" } />
+      </svg>
+    </button>
   );
 }
 

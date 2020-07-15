@@ -2,8 +2,8 @@ import React from "react";
 import { useHistory } from 'react-router-dom';
 
 import './previousButton.scss';
-import { Grid } from "@material-ui/core";
-
+import { Grid, Button } from "@material-ui/core";
+import sprite from "assets/img/icons-sprite.svg";
 interface PrevButtonProps {
   to: string
   isActive: boolean
@@ -19,15 +19,14 @@ const PreviousButton:React.FC<PrevButtonProps> = ({
   const prev = () => history.push(to);
 
   return (
-    <Grid container justify="center" className="tutorial-prev-container">
-      <img
-        alt=""
-        onMouseEnter={onHover}
-        onMouseLeave={onOut}
-        src={isActive ? "/feathericons/chevron-up-orange.png" : "/feathericons/chevron-up-gray.png"}
-        onClick={prev}
-      />
-    </Grid>
+    <button className="btn btn-transparent tut-prev svgOnHover"
+      onMouseEnter={onHover}
+      onMouseLeave={onOut}
+      onClick={prev}>
+      <svg className="svg active h100 w100">
+        <use href={ sprite + "#arrow-up"} className={isActive ? "text-theme-orange":"text-gray" } />
+      </svg>
+    </button>
   );
 }
 
