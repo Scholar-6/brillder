@@ -81,6 +81,22 @@
       padding-left: 1vw;
       padding-right: 1vw;
     }
+    .MuiButton-label {
+      div {
+        display: inline;
+        margin: 0 0 0.5vh 0 !important;
+        &:last-child,
+        &:only-child {
+          margin: 0 !important;
+        }
+      }
+      p {
+        margin: 0 !important;
+      }
+      img {
+        width: 100%;
+      }
+    }
   }
 }
 
@@ -175,7 +191,7 @@
       .phone-border {
         position: relative;
         height: 100%;
-        background-color: $tab-gray;
+        background-color: var(--tab-gray);
         padding: 0.8vh;
         border-radius: 2.2vw;
       }
