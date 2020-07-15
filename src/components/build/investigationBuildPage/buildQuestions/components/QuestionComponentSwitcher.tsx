@@ -1,5 +1,4 @@
 import React from 'react'
-import DeleteIcon from '@material-ui/icons/Delete';
 import sprite from "../../../../../assets/img/icons-sprite.svg";
 import { QuestionComponentTypeEnum, Hint } from 'model/question';
 import TextComponent from './Text/Text'
