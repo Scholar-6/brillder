@@ -54,7 +54,7 @@ $space-between-boxes: 0.1vw;
     width: $bin-size;
     cursor: pointer;
     color: var(--theme-orange);
-    z-index: 2;
+    z-index: 999;
     &:hover {
       opacity: 0.5;
     }
