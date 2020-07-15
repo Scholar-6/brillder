@@ -10,8 +10,8 @@ $space-between-boxes: 0.1vw;
 }
 
 .investigation-build-page {
-  height: 100%;
-
+  height: 100vh;
+  overflow: hidden;
   .exit-arrow {
     position: fixed;
     top: 2.6vh;
@@ -48,7 +48,7 @@ $space-between-boxes: 0.1vw;
 
   .right-top-icon {
     position: absolute;
-    right: 2.2vw !important;
+    right: 0.3vw !important;
     top: 0.3vw !important;
     height: $bin-size;
     width: $bin-size;
@@ -91,15 +91,15 @@ $space-between-boxes: 0.1vw;
     font-family: $font-family-regular;
 
     .tutorial-exit-label {
-      width:38%;
+      width: 38%;
     }
 
     .tutorial-add-label {
-      width:31%;
+      width: 31%;
     }
 
     .tutorial-synthesis-label {
-      width:31%;
+      width: 31%;
     }
   }
 
@@ -113,4 +113,128 @@ $space-between-boxes: 0.1vw;
     color: white;
   }
 
+  .your-proposal-container {
+    width: 9.35vw;
+  }
+  .additional-tooltip {
+    margin-top: 4vh;
+    font-size: 1.2vw;
+    font-family: $font-family-regular;
+    letter-spacing: 0;
+    text-align: center;
+    color: white;
+
+    button {
+      cursor: pointer;
+      background: inherit;
+      outline: none;
+      border: none;
+    }
+
+    img {
+      margin-top: 2.5vh;
+      height: 5.4vw;
+      padding: 0.7vw;
+      border-radius: 100vw;
+      border: 0.1vw dashed var(--theme-orange);
+    }
+  }
+
+  .proposal-container {
+    background: inherit;
+    cursor: pointer;
+    position: absolute;
+    top: 33.5vh;
+    font-size: 1.8vw;
+    letter-spacing: 0.3vw;
+    font-family: $font-family-black;
+    color: var(--light-blue);
+
+    .proposal-edit-icon {
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/images/edit.png);
+      height: 4.5vw;
+      width: 4.5vw;
+      margin-bottom: 0.5vh;
+    }
+    .proposal-text {
+      margin-top: 0vh;
+      margin-left: 0.3vw;
+    }
+  }
+
+  .additional-tooltip.tooltip-off {
+    img {
+      border: none;
+    }
+    .tooltip-text {
+      opacity: 0;
+    }
+  }
+
+  .white {
+    color: white !important;
+    .proposal-edit-icon {
+      height: 3.5vw;
+      width: 3.5vw;
+      background-image: url(/images/edit-white.png);
+      margin-bottom: 1vh;
+    }
+  }
+
+  .white.proposal .proposal-link {
+    left: 0.83vw;
+    top: 32.5vh;
+    padding: 1vh 0.5vw 2.3vh 0.5vw;
+    border-radius: 0.65vw;
+    border: 0.1vw dashed var(--theme-orange);
+    margin-bottom: 10vw;
+  }
+
+  .white.proposal:focus {
+    outline: none;
+    border: none;
+  }
+
+  .proposal-container:hover {
+    color: white;
+
+    .proposal-edit-icon {
+      background-image: url(/images/edit-white.png);
+    }
+  }
+
+  .saved-info {
+    position: fixed;
+    font-family: $font-family-regular;
+    top: 7.7%;
+    right: 0;
+    width: 34.3vw;
+    color: white;
+    text-align: center;
+    img {
+      margin-top: 0.3vw;
+      height: 1.52vw;
+      width: 1.52vw;
+      margin-right: 1.3vw;
+    }
+  }
+
+  .saved-info-row {
+    width: 10.7vw;
+
+    .text-container {
+      font-size: 1.05vw;
+      margin-left: 0.4vw;
+    }
+  }
+
+  .saved-info .tutorial-border {
+    border-radius: 0.6vw;
+    padding: 0.1vh 0;
+    padding-left: 0.5vw;
+    border: 0.1vw dashed var(--theme-orange);
+  }
 }
