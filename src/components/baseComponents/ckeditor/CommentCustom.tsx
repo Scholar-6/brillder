@@ -6,6 +6,9 @@ import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
 import { toWidget } from '@ckeditor/ckeditor5-widget/src/utils';
 // @ts-ignore
 import Widget from '@ckeditor/ckeditor5-widget/src/widget';
+import ReactDOM from 'react-dom';
+import CommentButton from '../comments/CommentButton';
+import React from 'react';
 
 class CommentCustom extends Plugin {
 
@@ -37,6 +40,7 @@ class CommentCustom extends Plugin {
             view.on('execute', () => {
                 editor.model.change((writer: any) => {
                     const commentElement = writer.createElement('comment', {
+                        id: 1,
                         text: "This is a comment."
                     });
 
@@ -64,28 +68,39 @@ class CommentCustom extends Plugin {
         conversion.for('upcast').elementToElement({
             view: {
                 name: 'span',
-                classes: ['comment']
+                classes: ['comment-button']
             },
             model: (viewElement: any, modelWriter: any) => {
                 const text = viewElement.getChild(0).data;
 
-                return modelWriter.createElement('comment', { text });
+                return modelWriter.createElement('comment', {
+                    id: parseInt(viewElement.getAttribute('data-id')),
+                    text: "This is a comment!"
+                });
             }
         });
 
         conversion.for('editingDowncast').elementToElement({
             model: 'comment',
             view: (modelItem: any, viewWriter: any) => {
-                const text = modelItem.getAttribute('text');
+                const id: number = modelItem.getAttribute('id');
+                const text: string = modelItem.getAttribute('text');
 
-                const commentView = viewWriter.createContainerElement('span', {
-                    class: 'comment'
-                });
+                const reactWrapper = viewWriter.createUIElement('div', {
+                    class: 'comment__react-wrapper'
+                }, function (domDocument: any) {
+                    // @ts-ignore
+                    const domElement = this.toDomElement(domDocument);
 
-                const innerText = viewWriter.createText(text);
-                viewWriter.insert(viewWriter.createPositionAt(commentView, 0), innerText);
+                    ReactDOM.render(
+                        <CommentButton commentId={id} text={text} />,
+                        domElement
+                    );
 
-                return toWidget(commentView, viewWriter);
+                    return domElement;
+                })
+
+                return toWidget(reactWrapper, viewWriter);
             }
         });
 
