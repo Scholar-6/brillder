@@ -27,7 +27,7 @@ const NavigationButtons:React.FC<NavigationButtonsProps> = (
   }
 
   return (
-    <div className="">
+    <div className="tutorial-pagination">
       <NextButton
         isActive={active}
         step={step}
