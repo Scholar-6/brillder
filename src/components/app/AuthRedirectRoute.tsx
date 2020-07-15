@@ -10,7 +10,7 @@ import { isAuthenticated } from 'model/brick';
 import { User, UserType } from 'model/user';
 import { UserLoginType } from 'model/auth';
 import { ReduxCombinedState } from 'redux/reducers';
-
+import PageLoader from 'components/baseComponents/loaders/pageLoader';
 interface AuthRedirectProps {
   isAuthenticated: isAuthenticated;
   user: User;
@@ -23,7 +23,7 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
   if (props.isAuthenticated === isAuthenticated.True) {
     if (!user) {
       props.getUser();
-      return <div>...Getting User...</div>
+      return <PageLoader content="...Getting User..." />;
     }
 
     const values = queryString.parse(props.location.search)
@@ -58,7 +58,7 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
     }
   } else if (props.isAuthenticated === isAuthenticated.None) {
     props.isAuthorized();
-    return <div className="page-loader">...Checking rights...</div>
+    return <PageLoader content="...Checking rights..." />;
   } else {
     return <Redirect to="/choose-login" />
   }

@@ -8,6 +8,7 @@ import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
 import { User, UserType } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
+import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 interface StudentRouteProps {
@@ -23,7 +24,7 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!user) {
       rest.getUser();
-      return <div>...Getting User...</div>
+      return <PageLoader content="...Getting User..." />;
     }
 
     if (!rest.isRedirectedToProfile) {
@@ -39,11 +40,11 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
     if (can) {
       return <Route {...rest} render={(props) => <Component {...props} />} />;
     } else {
-      return <div className="page-loader">...Forbidden...</div>
+      return <PageLoader content="...Forbidden..." />;
     }
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized()
-    return <div className="page-loader">...Checking rights...</div>
+    return <PageLoader content="...Checking rights..." />;
   } else {
     return <Redirect to="/choose-login" />
   }

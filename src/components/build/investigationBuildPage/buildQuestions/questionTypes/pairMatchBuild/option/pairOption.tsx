@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import sprite from "../../../../../../../assets/img/icons-sprite.svg";
 import {QuestionValueType} from '../../types';
 import {Answer} from '../types';
