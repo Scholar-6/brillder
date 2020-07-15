@@ -48,6 +48,7 @@ import { GetCashedBuildQuestion } from '../../localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -107,7 +108,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   /* Synthesis */
 
   if (!props.brick) {
-    return <div className="page-loader">...Loading...</div>;
+    return <PageLoader content="...Loading..." />;
   }
 
   let canEdit = canEditBrick(props.brick, props.user);
@@ -128,7 +129,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if (isSynthesisPage === true) {
     if (activeQuestion) {
       unselectQuestions();
-      return <div className="page-loader">...Loading...</div>
+      return <PageLoader content="...Loading..." />;
     }
   } else if (!activeQuestion) {
     console.log("Can`t find active question");
@@ -251,7 +252,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const { brick } = props;
 
   if (brick.id !== brickId) {
-    return <div className="page-loader">...Loading...</div>;
+    return <PageLoader content="...Loading..." />;
   }
 
   const parseQuestions = () => {
