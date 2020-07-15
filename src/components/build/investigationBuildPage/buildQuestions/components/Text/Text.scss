@@ -5,14 +5,16 @@
 .question-build-text-editor {
   position: relative;
   width: 100%;
-  .ck-content {
-    background-color: var(--tab-gray) !important;
-    padding: 0.5vw !important;
+  .ck-editor {
+    width: 100%;
+    .ck-editor__main {
+      .ck-content {
+        background-color: var(--tab-gray) !important;
+        padding: 0.5vw !important;
+        text-align: left !important;
+      }
+    }
   }
-  strong {
-    font-weight: bold !important;
-  }
-
   .text-label-container {
     margin: 0 60%;
     .text-label {
