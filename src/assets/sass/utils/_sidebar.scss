@@ -400,7 +400,7 @@
     }
     .bricks-list-container {
       @include tabletP {
-        height: 62vh !important;
+        height: 64vh !important;
         overflow: auto;
       }
       &.bricks-container-mobile {
@@ -675,7 +675,7 @@
         td {
           padding-left: 0.5vw;
           color: var(--theme-dark-blue);
-          font-size: 1.3vw;
+          font-size: 1vw;
           padding-top: 0;
         }
         .user-actions-cell {

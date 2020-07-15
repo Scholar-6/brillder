@@ -9,6 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import './Hint.scss';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
+import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 const HtmlTooltip = withStyles((theme:any) => ({
@@ -131,7 +132,7 @@ const HintComponent: React.FC<HintProps> = ({
 
         } else {
           setState({...state, list});
-          return <div>...Preparing hints...</div>
+          return <PageLoader content="...Preparing hints..." />;
         }
       }
     }
