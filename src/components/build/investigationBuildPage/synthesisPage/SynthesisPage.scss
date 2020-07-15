@@ -28,47 +28,6 @@
       }
     }
 
-    .document-editor {
-      .ck-toolbar {
-        border-top-left-radius: 0.6vw !important;
-        border-top-right-radius: 0.6vw !important;
-        font-size: 0.8vw;
-
-        .ck-toolbar__items {
-          height: 5vh;
-          .ck-icon {
-            font-size: 1.5vh;
-          }
-
-          .ck-button {
-            padding: 0;
-            margin: 0;
-            margin-left: 0.1vw;
-            margin-right: 0.1vw;
-          }
-        }
-      }
-      .ck-toolbar_vertical {
-        border-radius: 0 !important;
-        .ck-toolbar__items {
-          height: 5vh;
-          width: 20vh;
-          flex-flow: row wrap;
-          .ck-button {
-            width: 5vh;
-            border-radius: 0;
-          }
-        }
-      }
-
-      .ck-content {
-        font-size: 1vw;
-        height: 70vh;
-        border-top: none !important;
-        border: 1px solid var(--ck-color-toolbar-border);
-      }
-    }
-
     .finish-text {
       color: var(--theme-dark-blue);
       letter-spacing: 0.2vw;
