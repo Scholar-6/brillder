@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import DeleteIcon from '@material-ui/icons/Delete';
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 
 import './horizontalShuffleBuild.scss'
