@@ -16,7 +16,7 @@
       .ck-content {
         height: 100%;
         margin: 0;
-        padding-top: 4vh;
+        padding: 6vh 1vw 1vh 2.2vw;
         text-align: center;
         font-size: $answer-input-text-size;
         box-shadow: none !important;
@@ -24,6 +24,7 @@
         color: var(--theme-dark-blue);
         p {
           color: var(--theme-dark-blue);
+          margin: 0 !important;
         }
         .table {
           display: block;
@@ -52,63 +53,42 @@
     .ck-toolbar__items {
       background: var(--white) !important;
       display: block !important;
-      .ck-tooltip,
-      .ck-button__icon {
-        // @include phone_and_tabletL {
-        //   font-size: 2vw;
-        // }
-        // @include phone_and_tabletP {
-        //   font-size: 3.7vw;
-        // }
-        // @include tabletL {
-        //   font-size: 1vw;
-        // }
-      }
-      .ck-dropdown__panel {
-        .ck-button__icon {
-          @include phone_and_tabletL {
-            font-size: 3vw;
-          }
-          @include phone_and_tabletP {
-            font-size: 5vw;
-          }
-        }
-        .ck-color-table {
-          width: max-content;
+      .ck-dropdown {
+        padding: 0 0.2vw !important;
+        margin: 0 !important;
+        .ck-dropdown__panel {
+          z-index: 100 !important;
+          position: absolute;
+          left: 0;
+          right: inherit;
+          width: 100%;
+          top: 0 !important;
+          bottom: inherit;
           background-color: var(--white);
+          height: 100%;
+          box-shadow: none;
+          border: 0;
+          .ck-button__icon {
+            @include phone_and_tabletL {
+              font-size: 3vw;
+            }
+            @include phone_and_tabletP {
+              font-size: 5vw;
+            }
+          }
+          .ck-color-table {
+            width: max-content;
+            background-color: var(--white);
+          }
         }
       }
-    }
-    .ck-dropdown {
-      padding: 0 0.2vw !important;
-      margin: 0 !important;
-    }
-    .ck-dropdown__panel {
-      z-index: 100 !important;
-      position: absolute;
-      left: 0;
-      right: inherit;
-      width: 100%;
-      top: 0;
-      bottom: inherit;
-      background-color: var(--white);
-      height: 100%;
-      box-shadow: none;
-      border: 0;
-    }
-    .ck-color-ui-dropdown {
-      .ck.ck-reset.ck-dropdown__panel {
-        left: 0 !important;
-        right: auto !important;
-        border-radius: 0.2vw;
-
-        .ck.ck-button.ck-off.ck-color-grid__tile {
+      .ck-color-ui-dropdown {
+        .ck-dropdown__panel {
+          left: 0 !important;
+          right: auto !important;
           border-radius: 0.2vw;
         }
       }
-    }
-    &.ck-toolbar_grouping {
-      padding: 0;
     }
     .ck-custom-dropdown {
       .ck-splitbutton__action {

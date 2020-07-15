@@ -250,7 +250,7 @@
           background: white;
           color: var(--theme-dark-blue);
           width: 89%;
-          background-color: $tab-gray;
+          background-color: var(--tab-gray);
           border: 0;
           font: 1.3vw $font-family-regular;
           text-transform: none;
@@ -268,9 +268,9 @@
           }
           &:hover {
             background-color: var(--theme-dark-blue);
-            color: $tab-gray;
+            color: var(--tab-gray);
             .svg {
-              color: $tab-gray;
+              color: var(--tab-gray);
             }
           }
         }

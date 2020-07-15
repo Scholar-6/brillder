@@ -5,7 +5,7 @@
 .question-type {
   .question-container {
     cursor: pointer;
-    background: $tab-gray;
+    background: var(--tab-gray);
     color: var(--theme-dark-blue);
     margin: 0.6vw 0.6vw 0.6vw 0.6vw;
     border-radius: 1.1vw;
