@@ -35,6 +35,7 @@ import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar";
 import Image from "@ckeditor/ckeditor5-image/src/image";
 import "./DocumentEditor.scss";
 import UploadImageCustom from './UploadImageCustom';
+import CommentCustom from './CommentCustom';
 
 export interface DocumentWirisEditorProps {
   disabled: boolean;
@@ -126,7 +127,7 @@ class DocumentWirisEditorComponent extends React.Component<
 
   render() {
     let config = {
-      extraPlugins: [UploadImageCustom],
+      extraPlugins: [UploadImageCustom, CommentCustom],
       plugins: [
         Essentials,
         Paragraph,
@@ -169,6 +170,7 @@ class DocumentWirisEditorComponent extends React.Component<
         "chemType",
         "bulletedList",
         "numberedList",
+        "addComment",
       ],
       mediaEmbed: { previewsInData: true },
       placeholder: "",
