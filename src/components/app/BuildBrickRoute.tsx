@@ -9,6 +9,7 @@ import { isAuthenticated } from 'model/brick';
 import { User, UserType } from 'model/user';
 import {setBrillderTitle} from 'components/services/titleService';
 import { ReduxCombinedState } from 'redux/reducers';
+import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 interface BuildRouteProps {
@@ -30,7 +31,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({ component: Component, ...r
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!rest.user) {
       rest.getUser();
-      return <div>...Getting User...</div>
+      return  <PageLoader content="...Getting User..." />;
     }
     const isBuilder = rest.user.roles.some(role => {
       const {roleId} = role;
@@ -46,7 +47,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({ component: Component, ...r
     return <Redirect to="/" />
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized()
-    return <div className="page-loader">...Checking rights...</div>
+    return <PageLoader content="...Checking rights..." />;
   } else {
     return <Redirect to="/choose-login" />
   }

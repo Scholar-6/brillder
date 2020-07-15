@@ -4,6 +4,7 @@ import './LineHighlightingBuild.scss'
 import { UniqueComponentProps } from '../types';
 
 import sprite from "../../../../../../assets/img/icons-sprite.svg";
+import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 enum LineMode {
   Input,
@@ -79,7 +80,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
     if (state.mode === LineMode.Edit) {
       if (!state.lines) {
         switchMode();
-        return <div>...Switching mode...</div>;
+        return <PageLoader content="...Switching mode..." />;
       }
       return (
         <div className="hightlight-area">
