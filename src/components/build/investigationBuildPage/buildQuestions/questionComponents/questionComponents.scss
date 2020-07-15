@@ -36,10 +36,15 @@
   margin: 0.1vh 0;
   position: relative;
   width: 100%;
-  .ck-content {
-    background: var(--tab-gray) !important;
-    p {
-      text-align: center !important;
+  .right-top-icon {
+    right: 2.2vw !important;
+  }
+  .ck-editor {
+    .ck-content {
+      background: var(--tab-gray) !important;
+      p {
+        text-align: center !important;
+      }
     }
   }
   .ck-toolbar {
