@@ -45,7 +45,7 @@
       text-transform: none;
       font-family: $font-family-regular;
       color: var(--theme-dark-blue);
-      background: $tab-gray;
+      background: var(--tab-gray);
       border-radius: $border-radius;
 
       .edit-icon {

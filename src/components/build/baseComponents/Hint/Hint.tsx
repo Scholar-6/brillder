@@ -12,7 +12,7 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
-const HtmlTooltip = withStyles((theme:any) => ({
+const HtmlTooltip = withStyles((theme: any) => ({
   tooltip: {
     backgroundColor: '#193366',
     padding: '1.5vh 1vw',
@@ -86,7 +86,7 @@ const HintComponent: React.FC<HintProps> = ({
 
   const onHintListChanged = (value: string, index: number) => {
     if (locked) { return; }
-    let {list} = state;
+    let { list } = state;
     list[index] = value;
     onChange({ ...state, list });
   }
@@ -94,11 +94,11 @@ const HintComponent: React.FC<HintProps> = ({
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
     if (locked) { return; }
     if (status === HintStatus.All) {
-      setState({...state, status, list: []});
-      onChange({...state, status, list: []});
+      setState({ ...state, status, list: [] });
+      onChange({ ...state, status, list: [] });
     } else {
-      setState({...state, status});
-      onChange({...state, status});
+      setState({ ...state, status });
+      onChange({ ...state, status });
     }
     save();
   };
@@ -131,7 +131,7 @@ const HintComponent: React.FC<HintProps> = ({
           list.push('');
 
         } else {
-          setState({...state, list});
+          setState({ ...state, list });
           return <PageLoader content="...Preparing hints..." />;
         }
       }
@@ -150,7 +150,7 @@ const HintComponent: React.FC<HintProps> = ({
             placeholder="Enter Hint"
             validationRequired={validationRequired}
             onBlur={() => save()}
-            onChange={(v:any) => {onHintListChanged(v, i)}}
+            onChange={(v: any) => { onHintListChanged(v, i) }}
           />
         </div>
       );
@@ -160,14 +160,14 @@ const HintComponent: React.FC<HintProps> = ({
 
   return (
     <div className="hint-component">
-      <Grid container direction="row">
-        <Grid container item xs={3} alignContent="center">
-          <Grid className="hint-type-text" style={{ width: '100%' }}>
+      <div className="hint-header">
+        <div>
+          <div className="hint-type-text">
             <div>H I N T</div>
             <div>T Y P E</div>
-          </Grid>
-        </Grid>
-        <Grid container item xs={7} justify="flex-start" alignContent="center">
+          </div>
+        </div>
+        <div>
           <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
             <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.Each}>
               Each Answer
@@ -176,10 +176,10 @@ const HintComponent: React.FC<HintProps> = ({
               All Answers
             </ToggleButton>
           </ToggleButtonGroup>
-        </Grid>
-        <Grid container item xs={2} alignContent="center" justify="flex-end" style={{position: 'relative'}}>
+        </div>
+        <div>
           <FiberManualRecordIcon className="hint-question-circle" />
-          <Grid container alignContent="center" justify="center" className="hint-type">
+          <div className="hint-type">
             <HtmlTooltip
               title={
                 <React.Fragment>
@@ -198,10 +198,12 @@ const HintComponent: React.FC<HintProps> = ({
             >
               <span className="question-mark">?</span>
             </HtmlTooltip>
-          </Grid>
-        </Grid>
-      </Grid>
-      {renderHintInputs()}
+          </div>
+        </div>
+      </div>
+      <div className="hint-content">
+        {renderHintInputs()}
+      </div>
     </div>
   );
 }

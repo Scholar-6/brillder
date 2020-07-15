@@ -27,7 +27,7 @@
     border-radius: 1vw;
     border: none;
     height: 12.5%;
-    background: $tab-gray;
+    background: var(--tab-gray);
     color: var(--theme-dark-blue);
 
     .circle-number {
