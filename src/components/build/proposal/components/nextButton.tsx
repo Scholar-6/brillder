@@ -36,6 +36,8 @@ const NextButton:React.FC<NextButtonProps> = (
         case ProposalStep.Prep:
           return history.push(`${url}/length`);
         case ProposalStep.BrickLength:
+          return history.push(`${url}/editor`)
+        case ProposalStep.BrickEditor:
           return history.push(`${url}/proposal`);
       }
     }

@@ -95,4 +95,33 @@ const createBrick = (brick:any) => {
   }
 }
 
-export default { fetchBrick, createBrick, saveBrick, forgetBrick }
+const assignEditorSuccess = (brick: Brick) => {
+  return {
+    type: types.ASSIGN_EDITOR_SUCCESS,
+    payload: brick,
+  } as Action
+}
+
+const assignEditorFailure = (errorMessage:string) => {
+  return {
+    type: types.ASSIGN_EDITOR_FAILURE,
+    error: errorMessage
+  } as Action
+}
+
+const assignEditor = (brick: any) => {
+  return function (dispatch: Dispatch) {
+    brick.type = 1;
+    return axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/brick/assignEditor`,
+      { brickId: brick.id, editorId: brick.editor.id }, {withCredentials: true}
+    ).then(response => {
+      const brick = response.data as Brick;
+      dispatch(assignEditorSuccess(brick));
+    }).catch(error => {
+      dispatch(assignEditorFailure(error.message))
+    });
+  }
+}
+
+export default { fetchBrick, createBrick, saveBrick, forgetBrick, assignEditor }

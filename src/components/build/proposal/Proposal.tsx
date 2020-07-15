@@ -9,7 +9,7 @@ import './Proposal.scss';
 import SubjectPage from './questionnaire/subject/Subject';
 import BrickTitle from './questionnaire/brickTitle/brickTitle';
 import OpenQuestion from './questionnaire/openQuestion/openQuestion';
-import { BrickLengthEnum } from 'model/brick';
+import { BrickLengthEnum, Editor } from 'model/brick';
 import BrickLength from './questionnaire/brickLength/brickLength';
 import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
@@ -22,6 +22,7 @@ import VersionLabel from "components/baseComponents/VersionLabel";
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
+import BrickEditor from "./questionnaire/brickEditor/brickEditor";
 
 
 interface ProposalProps {
@@ -29,6 +30,7 @@ interface ProposalProps {
   user: User;
   saveBrick(brick: Brick): void;
   createBrick(brick: Brick): void;
+  assignEditor(brick: Brick): void;
   history: any;
 }
 
@@ -107,6 +109,12 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     saveLocalState(brick);
     return brick;
   }
+  
+  const setEditor = (editor?: Editor) => {
+    let brick = { ...state, editor } as Brick;
+    saveLocalState(brick);
+    return brick;
+  }
 
   const setLengthAndSave = (brickLength: BrickLengthEnum) => {
     if (!canEdit) { return; }
@@ -125,10 +133,17 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     }
   }
 
+  const assignEditor = () => {
+    if(state.editor) {
+      props.assignEditor(state);
+    }
+  }
+
   setBrillderTitle();
 
   const saveAndMove = () => {
     saveBrick(state);
+    assignEditor();
     setSaved(true);
   }
 
@@ -171,6 +186,9 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
         <Route path='/build/new-brick/length'>
           <BrickLength length={state.brickLength} canEdit={canEdit} saveLength={setLength} saveBrick={setLengthAndSave} />
         </Route>
+        <Route path='/build/new-brick/editor'>
+          <BrickEditor parentState={state} canEdit={canEdit} setEditor={setEditor} />
+        </Route>
         <Route path="/build/new-brick/proposal">
           <ProposalReview brick={state} user={props.user} saveBrick={saveAndMove} />
         </Route>
@@ -190,6 +208,7 @@ const mapDispatch = (dispatch: any) => ({
   fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
+  assignEditor: (brick: any) => dispatch(actions.assignEditor(brick)),
 });
 
 const connector = connect(mapState, mapDispatch);

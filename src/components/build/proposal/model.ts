@@ -6,5 +6,6 @@ export enum ProposalStep {
     Prep = 5,
     Synthesis = 6,
     BrickLength = 7,
-    ProposalReview = 8,
+    BrickEditor = 8,
+    ProposalReview = 9,
 }
