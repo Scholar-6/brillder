@@ -192,6 +192,13 @@
       border-radius: 0.6vw;
       padding: 0.2vw 0.2vw 0 0.2vw;
       margin-bottom: 25px;
+      .questions {
+        .drop-box {
+          .right-top-icon {
+            right: 0.3vw !important;
+          }
+        }
+      }
     }
 
     .parent-left-sidebar {
