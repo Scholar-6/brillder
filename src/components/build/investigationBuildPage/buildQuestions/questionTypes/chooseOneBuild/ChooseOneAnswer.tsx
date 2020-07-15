@@ -1,5 +1,4 @@
 import React from "react";
-import DeleteIcon from "@material-ui/icons/Delete";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import './ChooseOneAnswer.scss';

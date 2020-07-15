@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import DeleteIcon from "@material-ui/icons/Delete";
 import Snackbar from "@material-ui/core/Snackbar";
 import sprite from "../../../../../../assets/img/icons-sprite.svg";
 import "./shortAnswerBuild.scss";

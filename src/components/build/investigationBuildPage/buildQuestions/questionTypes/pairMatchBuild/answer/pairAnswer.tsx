@@ -1,5 +1,4 @@
 import React from "react";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { Grid } from "@material-ui/core";
 import sprite from "../../../../../../../assets/img/icons-sprite.svg";
 import { QuestionValueType } from '../../types';
