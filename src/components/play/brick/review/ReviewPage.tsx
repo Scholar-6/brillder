@@ -15,6 +15,7 @@ import ReviewStepper from "./ReviewStepper";
 import { Moment } from "moment";
 import CountDown from "../baseComponents/CountDown";
 import { BrickLengthEnum } from "model/brick";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -49,14 +50,14 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     } else {
       history.push(`/play/brick/${brickId}/intro`);
     }
-    return <div className="page-loader">...Loading...</div>;
+    return <PageLoader content="...Loading..." />;
   } else if (status === PlayStatus.Ending) {
     if (props.isPlayPreview) {
       history.push(`/play-preview/brick/${brickId}/ending`);
     } else {
       history.push(`/play/brick/${brickId}/ending`);
     }
-    return <div className="page-loader">...Loading...</div>;
+    return <PageLoader content="...Loading..." />;
   }
 
   let questionRefs: React.RefObject<QuestionLive>[] = [];

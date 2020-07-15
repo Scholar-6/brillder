@@ -17,7 +17,7 @@
         height: 100%;
         margin: 0;
         padding-top: 4vh;
-        text-align: center !important;
+        text-align: center;
         font-size: $answer-input-text-size;
         box-shadow: none !important;
         border: 0 !important;
@@ -26,7 +26,6 @@
         color: var(--theme-dark-blue);
         p {
           color: var(--theme-dark-blue);
-          text-align: center !important;
         }
         .table {
           display: block;
@@ -47,13 +46,6 @@
     }
   }
   .ck-toolbar {
-    width: 2vw;
-    height: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 1;
-    padding-left: 0.2vw;
     font-size: 1.4vh;
     border-top-right-radius: 0.4vw !important;
     border-bottom-right-radius: 0.4vw !important;
@@ -62,20 +54,30 @@
     .ck-toolbar__items {
       background: var(--white) !important;
       display: block !important;
-      .ck-button {
-        min-width: inherit !important;
-        min-height: inherit !important;
-        width: 2vw;
-        height: 2vw;
-        border: 0;
-        margin: 0 !important;
-        padding: 0 0.2vw;
-        color: var(--theme-dark-blue);
-        .ck-button__label {
-          font-family: $font-family-regular;
+      .ck-tooltip,
+      .ck-button__icon {
+        // @include phone_and_tabletL {
+        //   font-size: 2vw;
+        // }
+        // @include phone_and_tabletP {
+        //   font-size: 3.7vw;
+        // }
+        // @include tabletL {
+        //   font-size: 1vw;
+        // }
+      }
+      .ck-dropdown__panel {
+        .ck-button__icon {
+          @include phone_and_tabletL {
+            font-size: 3vw;
+          }
+          @include phone_and_tabletP {
+            font-size: 5vw;
+          }
         }
-        .ck-icon {
-          font-size: 0.5vw;
+        .ck-color-table {
+          width: max-content;
+          background-color: var(--white);
         }
       }
     }

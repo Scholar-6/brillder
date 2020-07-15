@@ -6,8 +6,6 @@ import Switch from '@material-ui/core/Switch';
 import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Dialog from '@material-ui/core/Dialog';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -23,6 +21,8 @@ import UserActionsCell from './UserActionsCell';
 import { User, UserType, UserStatus } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import { checkAdmin } from "components/services/brickService";
+
+import sprite from "../../../assets/img/icons-sprite.svg";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -442,8 +442,24 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         </Grid>
         <Grid container item xs={4} justify="center" className="bottom-next-button">
           <div>
-            {showPrev ? <ExpandLessIcon onClick={previousPage} className="prev-button active" /> : ""}
-            {showNext ? <ExpandMoreIcon onClick={nextPage} className="next-button active" /> : ""}
+            {showPrev
+              ? <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
+                onClick={previousPage}>
+                <svg className="svg w100 h100 active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#arrow-up"} />
+                </svg>
+              </button>
+              : ""}
+            {showNext
+              ? <button className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
+                onClick={nextPage}>
+                <svg className="svg w100 h100 active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#arrow-down"} />
+                </svg>
+              </button>
+              : ""}
           </div>
         </Grid>
       </Grid>
