@@ -60,7 +60,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   }
 
   let containerClass = "";
-  let className = 'choose-one-box unique-component-box';
+  let className = 'choose-one-box unique-component';
   if (answer.answerType === QuestionValueType.Image) {
     className += ' big-answer';
     containerClass = 'big-box';

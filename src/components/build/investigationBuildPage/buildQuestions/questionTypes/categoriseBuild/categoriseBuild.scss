@@ -14,23 +14,42 @@
     > div {
       margin-bottom: 0.2vw;
     }
-    .sort-image input {
-      padding-top: 9.5vh;
-    }
-  }
-  .categorise-answer {
-    .document-editor {
+    >.document-editor {
+      position: relative;
       .ck-editor {
         .ck-content {
-          padding: 0 2.5vw;
-          text-align: center !important;
-          overflow: hidden;
-          p {
-            text-align: center !important;
-          }
+          padding: 1vw !important
         }
       }
     }
+  }
+  > .document-editor {
+    .ck-editor {
+      .ck-content {
+        padding: 1vw;
+        text-align: center !important;
+        overflow: hidden;
+        p {
+          text-align: center !important;
+        }
+      }
+    }
+  }
+  .sort-image {
+    position: relative;
+    input {
+      padding-top: 9.5vh;
+    }
+    .document-editor {
+      .ck-editor {
+        .ck-content {
+          padding: 9vh 1vw 1vw 1vw;
+        }
+      }
+    }
+  }
+  .categorise-answer {
+    position: relative;
     &:first-child {
       .document-editor {
         .ck-editor {
