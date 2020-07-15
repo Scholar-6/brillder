@@ -25,6 +25,55 @@
     }
   }
 
+  .document-editor {
+    .ck-toolbar {
+      .ck-toolbar__items {
+        height: 5vh;
+        background-color: var(--tab-gray) !important;
+        padding: 1vh 0.5vw;
+        .ck-icon {
+          font-size: 1.5vh;
+        }
+        .ck-button {
+          padding: 0;
+          margin: 0;
+          margin-left: 0.1vw;
+          margin-right: 0.1vw;
+          .ck-button__icon,
+          .ck-button__label {
+            color: var(--theme-dark-blue) !important;
+          }
+        }
+      }
+    }
+    .ck-toolbar_vertical {
+      border-radius: 0 !important;
+      .ck-toolbar__items {
+        height: 5vh;
+        width: 20vh;
+        flex-flow: row wrap;
+        .ck-button {
+          width: 5vh;
+          border-radius: 0;
+        }
+      }
+    }
+    .ck-editor {
+      width: 100%;
+      .ck-content {
+        font-size: 1vw;
+        height: 70vh;
+        border-top: none !important;
+        border: 1px solid var(--ck-color-toolbar-border);
+        background-color: var(--light-gray) !important;
+        padding: 0 0.5vw;
+        p {
+          text-align: left;
+        }
+      }
+    }
+  }
+
   .round-button-center-container {
     position: absolute;
     bottom: 2vh;
