@@ -308,7 +308,6 @@
     margin-left: 1vw;
     flex-basis: inherit;
     max-width: inherit;
-    overflow-y: auto;
     @include phone_and_tabletP {
       width: 100%;
       height: $height-mobile-view;
@@ -318,6 +317,7 @@
       border-top-left-radius: 10vw;
     }
     @include tabletP {
+      overflow-y: auto;
       width: calc(75% - 1vw);
       height: $height-desktop-view;
       background: var(--light-gray);
@@ -333,8 +333,7 @@
         padding-top: 1.3vh;
         border-bottom: 0.2vh solid var(--light-gray);
         padding-bottom: 0.9vh;
-        margin-bottom: 2.5vh;
-        background-color: var(--white);
+        margin-bottom: 0.5vh;
         z-index: 10;
         display: flex;
         align-items: center;
@@ -360,6 +359,7 @@
         font-size: 5.2vw;
       }
     }
+
     .core-public-toggle {
       position: absolute;
       right: 3vw;
@@ -399,6 +399,10 @@
       }
     }
     .bricks-list-container {
+      @include phone_and_tabletP {
+        height: calc(48.5vh - 4.2vh);
+        overflow-y: auto;
+      }
       @include tabletP {
         height: 64vh !important;
         overflow: auto;
