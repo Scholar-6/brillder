@@ -216,7 +216,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     return (
       <Swiper slidesPerView={2}>
-        {bricksList.map((b, i) => <SwiperSlide key={i} style={{ width: '50vw' }}>{b}</SwiperSlide>)}
+        {bricksList.map((b, i) => <SwiperSlide key={i} onClick={() => this.handleMouseClick(i)} style={{ width: '50vw' }}>{b}</SwiperSlide>)}
       </Swiper>
     );
   }
