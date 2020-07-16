@@ -14,7 +14,7 @@
   }
 
   button {
-    background: $tab-gray;
+    background: var(--tab-gray);
     color: var(--theme-dark-blue);
     font-family: $font-family-regular;
     margin-left: 7.5%;

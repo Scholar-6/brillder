@@ -1,0 +1,196 @@
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
+
+.question-type {
+  position: relative;
+  background: white;
+
+  border-bottom-left-radius: $question-radius;
+  border-bottom-right-radius: $question-radius;
+  border-top: none;
+  width: 100%;
+  height: 94%;
+
+  .inner-question-type {
+    padding: 0.7vh 4vh 2vh 4vh;
+
+    .label-question-type {
+      margin-left: 0.6vw;
+      font-size: 1.4vw;
+      margin-bottom: 0vh;
+      letter-spacing: 0.01vw;
+      font-family: $font-family-regular;
+      color: var(--theme-dark-blue);
+    }
+  }
+
+  .document-editor {
+    .ck-toolbar {
+      .ck-toolbar__items {
+        height: 5vh;
+        background-color: var(--tab-gray) !important;
+        padding: 1vh 0.5vw;
+        .ck-icon {
+          font-size: 1.5vh;
+        }
+        .ck-button {
+          padding: 0;
+          margin: 0;
+          margin-left: 0.1vw;
+          margin-right: 0.1vw;
+          .ck-button__icon,
+          .ck-button__label {
+            color: var(--theme-dark-blue) !important;
+          }
+        }
+      }
+    }
+    .ck-toolbar_vertical {
+      border-radius: 0 !important;
+      .ck-toolbar__items {
+        height: 5vh;
+        width: 20vh;
+        flex-flow: row wrap;
+        .ck-button {
+          width: 5vh;
+          border-radius: 0;
+        }
+      }
+    }
+    .ck-editor {
+      width: 100%;
+      .ck-content {
+        font-size: 1vw;
+        height: 70vh;
+        border-top: none !important;
+        border: 1px solid var(--ck-color-toolbar-border);
+        background-color: var(--light-gray) !important;
+        padding: 0 0.5vw;
+        p {
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  .question-container {
+    cursor: pointer;
+    background: var(--tab-gray);
+    color: var(--theme-dark-blue);
+    margin: 0.6vw 0.6vw 0.6vw 0.6vw;
+    border-radius: 1.1vw;
+    height: 15.35vh;
+    font-size: 1.5vw;
+    padding: 0;
+    font-family: $font-family-regular;
+    font-weight: bold;
+
+    .link-description {
+      text-align: center;
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+
+  .question-container:hover {
+    background: var(--theme-orange);
+    font-family: $font-family-black;
+    color: white;
+  }
+
+  .question-container.active {
+    background: var(--theme-orange);
+    font-family: $font-family-black;
+    color: white;
+  }
+
+  @media only screen and (max-width: 1279px) and (min-width: 960px)  {
+    .question-container {
+      font-size: 1.4vw !important;
+      margin: 0.8vw 0.8vw 0.8vw 0.8vw !important;
+    }
+  }
+
+  @media only screen and (max-width: 959px) and (min-width: 600px)  {
+    .question-container {
+      font-size: 2vw !important;
+      margin: 1.1vw 1.1vw 1.1vw 1.1vw !important;
+      border-radius: 2vw;
+    }
+  }
+
+  @media only screen and (max-width: 599px) {
+    .question-container {
+      font-size: 2.3vw !important;
+      margin: 7px 7px 7px 12px !important;
+      border-radius: 8px;
+      height: 12vh;
+    }
+  }
+  .round-button-center-container {
+    position: absolute;
+    bottom: 2vh;
+  }
+  .card-description {
+    text-align: center;
+  }
+
+  .set-type-button {
+    margin: 0 !important;
+    padding-top: 6px !important;
+    color: var(--theme-orange);
+
+    .set-type-icon {
+      font-size: 50px;
+    }
+  }
+
+  .round-button-container {
+    display: inline;
+
+    .new-question-button {
+      margin: 0 !important;
+
+      padding: 0 !important;
+      color: var(--theme-orange);
+
+      span {
+        height: 60px !important;
+        width: 60px !important;
+      }
+
+      .new-question-icon {
+        font-size: 50px;
+      }
+    }
+  }
+
+  .submit-button-container {
+    position: absolute;
+    bottom: 1.9vh;
+    right: 0;
+    width: 4vw;
+    color: var(--theme-orange);
+
+    .submit-button {
+      z-index: 12;
+      cursor: pointer;
+      height: 5vh;
+      width: 5vh;
+      transition: all 0.2s ease-in-out;
+      transform-origin: -100% 50%;
+
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/feathericons/chevron-right-orange.png);
+    }
+  }
+
+  @media only screen and (min-width: 1280px) {
+    .set-type-icon {
+      font-size: 5vhx;
+    }
+  }
+}

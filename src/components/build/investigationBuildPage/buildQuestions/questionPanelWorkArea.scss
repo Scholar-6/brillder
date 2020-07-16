@@ -192,13 +192,6 @@
       border-radius: 0.6vw;
       padding: 0.2vw 0.2vw 0 0.2vw;
       margin-bottom: 25px;
-      .questions {
-        .drop-box {
-          .right-top-icon {
-            right: 0.3vw !important;
-          }
-        }
-      }
     }
 
     .parent-left-sidebar {
@@ -250,7 +243,7 @@
           background: white;
           color: var(--theme-dark-blue);
           width: 89%;
-          background-color: $tab-gray;
+          background-color: var(--tab-gray);
           border: 0;
           font: 1.3vw $font-family-regular;
           text-transform: none;
@@ -268,9 +261,9 @@
           }
           &:hover {
             background-color: var(--theme-dark-blue);
-            color: $tab-gray;
+            color: var(--tab-gray);
             .svg {
-              color: $tab-gray;
+              color: var(--tab-gray);
             }
           }
         }

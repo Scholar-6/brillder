@@ -3,27 +3,6 @@
 @import '../../../../../assets/sass/partials/extensions';
 
 .choose-several-live {
-  .MuiButton-label {
-    div {
-      display: inline;
-      margin: 0 0 0.5vh 0 !important;
-      &:last-child,
-      &:only-child {
-        margin: 0 !important;
-      }
-    }
-    p {
-      margin: 0 !important;
-    }
-    img {
-      width: 100%;
-    }
-    .question-hint {
-      width: 96%;
-      margin: 2% !important;
-    }
-  }
-
   .image-choice {
     background: inherit;
     border: 4px solid var(--light-gray) !important;

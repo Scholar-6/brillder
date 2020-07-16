@@ -42,7 +42,7 @@
   align-items: center;
   width: 22vw;
   padding-left: 0.3vw;
-  background: $tab-gray;
+  background: var(--tab-gray);
   border-radius: 1.2vw;
   border: 0;
   color: var(--theme-dark-blue);
@@ -135,7 +135,7 @@
     }
   }
   &.play-white {
-    background-color: $tab-gray;
+    background-color: var(--tab-gray);
     &:after {
       background-color: var(--tab-gray-alpha3);
     }
