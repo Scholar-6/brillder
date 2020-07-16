@@ -41,19 +41,7 @@ interface BricksListState {
   searchBricks: Array<Brick>;
   searchString: string;
   isSearching: boolean;
-  sortBy: SortBy;
-  subjects: any[];
-  sortedIndex: number;
   finalBricks: Brick[];
-
-  dropdownShown: boolean;
-  notificationsShown: boolean;
-}
-
-enum SortBy {
-  None,
-  Date,
-  Popularity,
 }
 
 class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
@@ -61,12 +49,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     super(props);
     this.state = {
       bricks: [],
-      sortBy: SortBy.None,
-      subjects: [],
-      sortedIndex: 0,
       finalBricks: [],
-      dropdownShown: false,
-      notificationsShown: false,
       searchBricks: [],
       searchString: "",
       isSearching: false,
@@ -84,39 +67,15 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }).catch(() => {
       alert("Can`t get bricks");
     });
-
-    axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
-      withCredentials: true,
-    }).then((res) => {
-      this.setState({ ...this.state, subjects: res.data });
-    }).catch(() => {
-      alert("Can`t get bricks");
-    });
   }
 
   move(brickId: number) {
     this.props.history.push(`/play/brick/${brickId}/intro`);
   }
 
-  moveAllBack() {
-    let index = this.state.sortedIndex;
-    if (index >= 18) {
-      this.setState({ ...this.state, sortedIndex: index - 18 });
-    }
-  }
-
-  moveAllNext() {
-    let index = this.state.sortedIndex;
-    if (index + 18 <= this.state.bricks.length) {
-      this.setState({ ...this.state, sortedIndex: index + 18 });
-    }
-  }
-
   hideBricks() {
     const { finalBricks } = this.state;
-    finalBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
+    finalBricks.forEach(brick => brick.expanded = false);
   }
 
   handleMouseClick(index: number) {
@@ -145,22 +104,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     } else {
       this.setState({ ...this.state, searchString });
     }
-  }
-
-  showDropdown() {
-    this.setState({ ...this.state, dropdownShown: true });
-  }
-
-  hideDropdown() {
-    this.setState({ ...this.state, dropdownShown: false });
-  }
-
-  showNotifications(event: any) {
-    this.setState({ ...this.state, notificationsShown: true });
-  }
-
-  hideNotifications() {
-    this.setState({ ...this.state, notificationsShown: false });
   }
 
   search() {
@@ -222,14 +165,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   };
 
   renderSortedBricks = () => {
-    let { sortedIndex } = this.state;
     let bricksList = [];
-    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
+    for (let i = 0; i < this.state.finalBricks.length; i++) {
       if (this.state.finalBricks[i]) {
         let row = Math.floor(i / 3);
-        bricksList.push(
-          this.getSortedBrickContainer(this.state.finalBricks[i], i, row)
-        );
+        bricksList.push(this.getSortedBrickContainer(this.state.finalBricks[i], i, row));
       }
     }
     return bricksList;
@@ -268,9 +208,8 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (expandedBrick) {
       return this.renderExpandedBrick(expandedBrick);
     }
-    let { sortedIndex } = this.state;
     let bricksList = [];
-    for (let i = 0 + sortedIndex; i < 18 + sortedIndex; i++) {
+    for (let i = 0; i < this.state.finalBricks.length; i++) {
       const brick = this.state.finalBricks[i]
       if (brick) {
         let color = this.getBrickColor(brick);
