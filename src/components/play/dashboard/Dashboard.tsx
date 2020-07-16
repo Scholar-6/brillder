@@ -15,25 +15,19 @@ import { Category } from "./interface";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import sprite from "../../../assets/img/icons-sprite.svg";
 
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
-import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
-import authActions from "redux/actions/auth";
 import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
-import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
-import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
-import ReactDOM from "react-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 
@@ -43,7 +37,6 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  logout: () => dispatch(authActions.logout()),
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
 });
 
@@ -52,7 +45,6 @@ const connector = connect(mapState, mapDispatch);
 interface BricksListProps {
   user: User;
   history: any;
-  logout(): void;
   forgetBrick(): void;
 }
 
@@ -65,11 +57,9 @@ interface BricksListState {
   sortBy: SortBy;
   subjects: any[];
   sortedIndex: number;
-  logoutDialogOpen: boolean;
   finalBricks: Brick[];
 
   dropdownShown: boolean;
-  notificationsShown: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
 
@@ -97,12 +87,10 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       sortBy: SortBy.None,
       subjects: [],
       sortedIndex: 0,
-      logoutDialogOpen: false,
       deleteDialogOpen: false,
       deleteBrickId: -1,
       finalBricks: [],
       dropdownShown: false,
-      notificationsShown: false,
       searchBricks: [],
       searchString: "",
       isSearching: false,
@@ -114,56 +102,42 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       failedRequest: false,
     };
 
-    axios
-      .get(
-        process.env.REACT_APP_BACKEND_HOST +
-        "/bricks/byStatus/" +
-        BrickStatus.Publish,
-        { withCredentials: true }
-      )
-      .then((res) => {
-        this.setState({
-          ...this.state,
-          bricks: res.data,
-          finalBricks: res.data as Brick[],
-        });
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
+    axios.get(
+      process.env.REACT_APP_BACKEND_HOST +
+      "/bricks/byStatus/" +
+      BrickStatus.Publish,
+      { withCredentials: true }
+    ).then((res) => {
+      this.setState({
+        ...this.state,
+        bricks: res.data,
+        finalBricks: res.data as Brick[],
       });
+    }).catch((error) => {
+      alert("Can`t get bricks");
+    });
 
-    axios
-      .get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        this.setState({ ...this.state, subjects: res.data });
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
-      });
+    axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
+      withCredentials: true,
+    }).then((res) => {
+      this.setState({ ...this.state, subjects: res.data });
+    }).catch((error) => {
+      alert("Can`t get bricks");
+    });
 
-    axios
-      .get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        let bricks = res.data as Brick[];
-        bricks = bricks.filter((brick) => {
-          return brick.status === BrickStatus.Publish;
-        });
-        this.setState({ ...this.state, yourBricks: bricks });
-      })
-      .catch((error) => {
-        this.setState({ ...this.state, failedRequest: true });
+    axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
+      withCredentials: true,
+    }).then((res) => {
+      let bricks = res.data as Brick[];
+      bricks = bricks.filter((brick) => {
+        return brick.status === BrickStatus.Publish;
       });
+      this.setState({ ...this.state, yourBricks: bricks });
+    }).catch((error) => {
+      this.setState({ ...this.state, failedRequest: true });
+    });
 
     this.pageHeader = React.createRef();
-  }
-
-  logout() {
-    this.props.logout();
-    this.props.history.push("/choose-login");
   }
 
   delete(brickId: number) {
@@ -368,14 +342,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }, 400);
   }
 
-  handleLogoutOpen() {
-    this.setState({ ...this.state, logoutDialogOpen: true });
-  }
-
-  handleLogoutClose() {
-    this.setState({ ...this.state, logoutDialogOpen: false });
-  }
-
   handleDeleteOpen(deleteBrickId: number) {
     this.setState({ ...this.state, deleteDialogOpen: true, deleteBrickId });
   }
@@ -403,14 +369,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
   hideDropdown() {
     this.setState({ ...this.state, dropdownShown: false });
-  }
-
-  showNotifications(event: any) {
-    this.setState({ ...this.state, notificationsShown: true });
-  }
-
-  hideNotifications() {
-    this.setState({ ...this.state, notificationsShown: false });
   }
 
   keySearch(e: any) {
@@ -764,136 +722,13 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           <div className="breadcrumbs">All</div>
         </div>
         <div className="upper-part">
-          <PageHeader
-            ref={this.pageHeader}
-            searchPlaceholder="Search Subjects, Topics, Titles & more"
+          <PageHeadWithMenu
+            page={PageEnum.ViewAll}
+            user={this.props.user}
+            placeholder={"Search Ongoing Projects & Published Bricks…"}
+            history={this.props.history}
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
-            showDropdown={() => this.showDropdown()}
-            showNotifications={(evt: any) => this.showNotifications(evt)}
-          />
-          <Menu
-            className="menu-dropdown"
-            keepMounted
-            open={this.state.dropdownShown}
-            onClose={() => this.hideDropdown()}
-          >
-            <MenuItem
-              className="first-item menu-item"
-              onClick={() => this.creatingBrick()}
-            >
-              Start Building
-              <Grid
-                container
-                className="menu-icon-container"
-                justify="center"
-                alignContent="center"
-              >
-                <div>
-                  <img
-                    className="menu-icon"
-                    alt=""
-                    src="/images/main-page/create-white.png"
-                  />
-                </div>
-              </Grid>
-            </MenuItem>
-            <MenuItem
-              className="menu-item"
-              onClick={() => history.push("/back-to-work")}
-            >
-              Back To Work
-              <Grid
-                container
-                className="menu-icon-container"
-                justify="center"
-                alignContent="center"
-              >
-                <div>
-                  <img
-                    className="back-to-work-icon"
-                    alt=""
-                    src="/images/main-page/backToWork-white.png"
-                  />
-                </div>
-              </Grid>
-            </MenuItem>
-            {this.props.user.roles.some(
-              (role) => role.roleId === UserType.Admin
-            ) ? (
-                <MenuItem
-                  className="menu-item"
-                  onClick={() => history.push("/users")}
-                >
-                  Manage Users
-                  <Grid
-                    container
-                    className="menu-icon-container"
-                    justify="center"
-                    alignContent="center"
-                  >
-                    <div>
-                      <img
-                        className="manage-users-icon svg-icon"
-                        alt=""
-                        src="/images/users.svg"
-                      />
-                    </div>
-                  </Grid>
-                </MenuItem>
-              ) : (
-                ""
-              )}
-            <MenuItem
-              className="view-profile menu-item"
-              onClick={() => history.push("/user-profile")}
-            >
-              View Profile
-              <Grid
-                container
-                className="menu-icon-container"
-                justify="center"
-                alignContent="center"
-              >
-                <div>
-                  <img
-                    className="menu-icon svg-icon user-icon"
-                    alt=""
-                    src="/images/user.svg"
-                  />
-                </div>
-              </Grid>
-            </MenuItem>
-            <MenuItem
-              className="menu-item"
-              onClick={() => this.handleLogoutOpen()}
-            >
-              Logout
-              <Grid
-                container
-                className="menu-icon-container"
-                justify="center"
-                alignContent="center"
-              >
-                <div>
-                  <img
-                    className="menu-icon svg-icon logout-icon"
-                    alt=""
-                    src="/images/log-out.svg"
-                  />
-                </div>
-              </Grid>
-            </MenuItem>
-          </Menu>
-          <NotificationPanel
-            shown={this.state.notificationsShown}
-            handleClose={() => this.hideNotifications()}
-            anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
-          />
-          <LogoutDialog
-            history={this.props.history}
-            isOpen={this.state.logoutDialogOpen}
-            close={() => this.handleLogoutClose()}
           />
         </div>
         <Hidden only={["sm", "md", "lg", "xl"]}>
