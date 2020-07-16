@@ -287,7 +287,7 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
             </div>
           </Grid>
         </Grid>
-        <Grid className='pagination-button'>
+        <Grid className='tutorial-pagination'>
           {
             subject ? (
               <NextButton isActive={true} step={ProposalStep.Subject} canSubmit={true} onSubmit={saveSubject} data={subject} />
