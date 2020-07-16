@@ -38,7 +38,6 @@ interface BricksListProps {
 
 interface BricksListState {
   bricks: Array<Brick>;
-  searchBricks: Array<Brick>;
   searchString: string;
   isSearching: boolean;
   finalBricks: Brick[];
@@ -50,7 +49,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     this.state = {
       bricks: [],
       finalBricks: [],
-      searchBricks: [],
       searchString: "",
       isSearching: false,
     };
@@ -119,7 +117,6 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         const searchBricks = res.data.map((brick: any) => brick.body);
         this.setState({
           ...this.state,
-          searchBricks,
           finalBricks: searchBricks,
           isSearching: true,
         });
@@ -145,7 +142,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     }
 
     return (
-      <div className="main-brick-container">
+      <div key={key} className="main-brick-container">
         <Box className="brick-container">
           <div
             className={className}
@@ -219,7 +216,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     return (
       <Swiper slidesPerView={2}>
-        {bricksList.map(b => <SwiperSlide style={{ width: '50vw' }}>{b}</SwiperSlide>)}
+        {bricksList.map((b, i) => <SwiperSlide key={i} style={{ width: '50vw' }}>{b}</SwiperSlide>)}
       </Swiper>
     );
   }
