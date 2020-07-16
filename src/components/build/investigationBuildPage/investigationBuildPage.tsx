@@ -152,6 +152,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   };
 
+  const saveSynthesis = (text: string) => {
+    setSynthesis(text);
+    autoSaveBrick();
+  }
+
   const setNextQuestion = () => {
     const index = getQuestionIndex(activeQuestion);
     let lastIndex = questions.length - 1;
@@ -458,7 +463,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           {renderQuestionComponent}
         </Route>
         <Route path="/build/brick/:brickId/build/investigation/synthesis">
-          <SynthesisPage locked={locked} synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
+          <SynthesisPage locked={locked} synthesis={synthesis} onSynthesisChange={saveSynthesis} />
         </Route>
       </Switch>
     );
