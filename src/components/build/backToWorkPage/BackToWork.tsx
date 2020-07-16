@@ -292,7 +292,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   expandThreeColumnBrick(name: ThreeColumnNames, key: number) {
     let brick = this.getThreeColumnBrick(name, key);
-    if (!brick.expandFinished) {
+    if (brick && !brick.expandFinished) {
       brick.expanded = true;
     }
   }
@@ -364,9 +364,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   filterClear() {
     let { draft, review, build, publish } = this.state.filters
     if (draft || review || build || publish) {
-      this.setState({ isClearFilter: true })
+      this.setState({ isClearFilter: true, sortedIndex: 0 })
     } else {
-      this.setState({ isClearFilter: false })
+      this.setState({ isClearFilter: false, sortedIndex: 0 })
     }
   }
   //endregion
@@ -392,6 +392,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({
       ...this.state,
       filters,
+      sortedIndex: 0,
       finalBricks: this.state.rawBricks,
     });
   }
@@ -404,7 +405,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     bricks.push(
       ...this.filterByStatus(this.state.rawBricks, BrickStatus.Publish)
     );
-    this.setState({ ...this.state, filters, finalBricks: bricks });
+    this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks: bricks });
   }
 
   showBuildAll() {
@@ -412,7 +413,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeAllFilters(filters);
     filters.buildAll = true;
     let bricks = this.filterByStatus(this.state.rawBricks, BrickStatus.Draft);
-    this.setState({ ...this.state, filters, finalBricks: bricks });
+    this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks: bricks });
   }
 
   filterByStatus(bricks: Brick[], status: BrickStatus) {
