@@ -24,7 +24,7 @@
 
   .checkbox-container ~ .question-image-drop {
     width: calc(100% - 4.2vw);
-    top: 1vh;
+    top: 2vh;
     left: 2.2vw;
   }
 
@@ -39,43 +39,6 @@
     z-index: 10;
     &:hover {
       opacity: 0.5;
-    }
-  }
-
-  &.big-answer {
-    .document-editor {
-      .ck-content {
-        padding-top: 8.3vh;
-      }
-    }
-
-    .left-ckeckbox {
-      z-index: 1;
-      padding: 0.45vw;
-      opacity: 1 !important;
-      span {
-        svg {
-          height: $bin-size !important;
-          width: $bin-size !important;
-        }
-      }
-    }
-
-    input:not([type='checkbox']) {
-      width: 84%;
-      text-align: center;
-      border: none;
-      background: $input-gray;
-      padding-right: 8%;
-      padding-left: 8%;
-      border-radius: 0;
-      opacity: 0.8;
-      font-size: $answer-input-text-size;
-      font-family: $font-family-regular;
-      height: $answer-height !important;
-    }
-    input[type='checkbox'] {
-      height: 100% !important;
     }
   }
 }

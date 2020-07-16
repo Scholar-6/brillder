@@ -12,7 +12,28 @@
     /* Edge */
     color: #aaa;
   }
-
+  .tutorial-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    .tut-next,
+    .tut-prev {
+      margin-bottom: 1.3vh;
+      @include phone_and_tabletL {
+        height: 8vw;
+        width: 8vw;
+      }
+      @include tabletP {
+        height: 4.5vw;
+        width: 4.5vw;
+        margin-top: -1vw;
+      }
+      @include tabletL {
+        margin-top: 0vw;
+      }
+    }
+  }
   .red-right-block {
     position: fixed;
     right: 0;
@@ -168,7 +189,6 @@
     margin-top: 15.5vh;
     > h1 {
       @include tabletL {
-        margin-left: 1.3vw;
         margin-top: 0.5vh;
         font-size: 3.2vw;
         margin-bottom: 4vh;
@@ -469,7 +489,7 @@
       text-align: center;
       color: var(--theme-dark-blue);
       @include phone_and_tabletL {
-        font-size: 6vw;
+        font-size: 5vw;
         margin-top: 2.7vh;
         margin-bottom: 5.1vh;
       }

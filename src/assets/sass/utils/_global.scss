@@ -100,7 +100,7 @@ textarea {
 }
 
 .text-tab-gray {
-  color: $tab-gray !important;
+  color: var(--tab-gray) !important;
 }
 
 .text-light-blue2 {
@@ -115,7 +115,7 @@ textarea {
 }
 
 .bg-tab-gray {
-  color: $tab-gray !important;
+  color: var(--tab-gray) !important;
 }
 .bg-light-blue {
   background-color: var(--light-blue) !important;
@@ -476,7 +476,7 @@ h3 {
   text-transform: none !important;
   width: 100%;
   padding: 0.5vh 0 !important;
-  background-color: $tab-gray !important;
+  background-color: var(--tab-gray) !important;
   opacity: 1;
   float: left;
   @include phone_and_tabletP {

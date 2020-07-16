@@ -33,8 +33,13 @@
   overflow: hidden;
   color: var(--theme-dark-blue);
   border-radius: $global-drop-border-radius;
-  .MuiGrid-container {
-    background: var(--white);
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  .hint-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
   }
   input {
     padding-left: 0.6vw !important;
@@ -94,19 +99,33 @@
     }
   }
   .hint-container {
-    margin: 0.1vw 0;
+    margin: 0;
     float: left;
     width: 100%;
-    &:first-child {
-      margin: 0 !important;
+    &:only-child {
+      .document-editor {
+        border-bottom-left-radius: 0.4vw !important;
+        border-bottom-right-radius: 0.4vw !important;
+        .ck-editor {
+          .ck-content {
+            border-bottom-left-radius: 0.4vw !important;
+            border-bottom-right-radius: 0.4vw !important;
+          }
+        }
+      }
     }
     .document-editor {
       width: 100%;
+      border-radius: 0 !important;
       .ck-editor {
         width: 100%;
         .ck-content {
           padding: 0.5vw !important;
           background: var(--light-gray) !important;
+          border-radius: 0 !important;
+          p {
+            text-align: left !important;
+          }
         }
       }
     }

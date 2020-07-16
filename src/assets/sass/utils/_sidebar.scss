@@ -278,7 +278,7 @@
       top: 26%;
       @extend %flexCenter;
       flex-direction: column;
-      color: $tab-gray;
+      color: var(--tab-gray);
       cursor: pointer;
       .create-icon {
         margin-bottom: 1vh;
@@ -635,7 +635,7 @@
       width: calc(100% + 1.18vw);
       margin-left: -1.18vw;
       thead {
-        background: $tab-gray;
+        background: var(--tab-gray);
         color: var(--theme-dark-blue);
         font-family: $font-family-black;
         font-size: 1.3vw;
@@ -696,7 +696,7 @@
         }
       }
       tr.user-row:nth-child(even) {
-        background: $tab-gray;
+        background: var(--tab-gray);
       }
       .user-last-name {
         font-family: $font-family-bold;

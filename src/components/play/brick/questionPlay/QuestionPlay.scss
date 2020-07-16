@@ -30,7 +30,8 @@
   }
 }
 .question-hint {
-  margin: 2% !important;
+  width: calc(100% - 0.5vw);
+  margin: 0 0.5vw !important;
   background: #ff9d00;
   padding: 2px 5px;
   border-radius: 1px 2px 3px 4px;
