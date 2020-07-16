@@ -2,8 +2,7 @@ import React from 'react'
 import { Grid, Box } from '@material-ui/core';
 import { QuestionTypeEnum } from 'model/question';
 
-import './TypeButton.scss';
-
+import './type.scss';
 
 export interface TypeButtonProps {
   labels: string[],

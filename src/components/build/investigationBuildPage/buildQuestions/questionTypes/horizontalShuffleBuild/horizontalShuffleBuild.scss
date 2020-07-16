@@ -8,6 +8,13 @@
     position: relative;
     width: 99%;
     margin: 0;
+    .document-editor {
+      .ck-editor {
+        .ck-content {
+          padding: 1vw;
+        }
+      }
+    }
   }
   .horizontal-column-1 {
     margin-right: 1%;

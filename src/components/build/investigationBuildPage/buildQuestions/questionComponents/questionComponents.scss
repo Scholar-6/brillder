@@ -2,8 +2,6 @@
 @import '../../../../../assets/sass/partials/mixins';
 @import '../../../../../assets/sass/partials/extensions';
 
-@import '../../investigationBuildPage.scss';
-
 .questions {
   width: 100%;
 
@@ -38,10 +36,15 @@
   margin: 0.1vh 0;
   position: relative;
   width: 100%;
-  .ck-content {
-    background: var(--tab-gray) !important;
-    p {
-      text-align: center !important;
+  .right-top-icon {
+    right: 2.2vw !important;
+  }
+  .ck-editor {
+    .ck-content {
+      background: var(--tab-gray) !important;
+      p {
+        text-align: center !important;
+      }
     }
   }
   .ck-toolbar {
@@ -84,46 +87,42 @@
       }
     }
   }
-  .unique-component-box {
-    &.big-answer {
-      .document-editor {
-        .ck-content {
-          padding-top: 9vh;
-          padding-bottom: 0;
-          p {
-            margin: 2vh 0 !important;
-          }
+  &.big-answer {
+    .document-editor {
+      .ck-content {
+        padding-top: 9vh;
+        padding-bottom: 0;
+        p {
+          margin: 2vh 0 !important;
         }
-      }
-      .left-ckeckbox {
-        z-index: 1;
-        padding: 0.45vw;
-        opacity: 1 !important;
-        span {
-          svg {
-            height: $bin-size !important;
-            width: $bin-size !important;
-          }
-        }
-      }
-      input:not([type='checkbox']) {
-        width: 84%;
-        text-align: center;
-        border: none;
-        background: $input-gray;
-        padding-right: 8%;
-        padding-left: 8%;
-        border-radius: 0;
-        opacity: 0.8;
-        font-size: $answer-input-text-size;
-        font-family: $font-family-regular;
-        height: $answer-height !important;
-      }
-      input[type='checkbox'] {
-        height: 100% !important;
       }
     }
-    .right-top-icon {
+    .left-ckeckbox {
+      z-index: 1;
+      padding: 0.45vw;
+      opacity: 1 !important;
+      span {
+        svg {
+          height: $bin-size !important;
+          width: $bin-size !important;
+        }
+      }
+    }
+    input:not([type='checkbox']) {
+      width: 84%;
+      text-align: center;
+      border: none;
+      background: $input-gray;
+      padding-right: 8%;
+      padding-left: 8%;
+      border-radius: 0;
+      opacity: 0.8;
+      font-size: $answer-input-text-size;
+      font-family: $font-family-regular;
+      height: $answer-height !important;
+    }
+    input[type='checkbox'] {
+      height: 100% !important;
     }
   }
 }
