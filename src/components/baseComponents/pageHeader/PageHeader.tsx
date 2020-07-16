@@ -106,7 +106,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
               <div className="help-button svgOnHover">
                 <svg className="svg svg-default">
                   {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#help"} />
+                  <use href={sprite + "#help-thin"} />
                 </svg>
               </div>
             }
