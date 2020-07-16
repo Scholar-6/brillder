@@ -7,7 +7,7 @@ class PageLoader extends Component<pageLoaderProps> {
     return (
       <div className="page-loader">
         <img src={LoaderLogo} alt="Loader logo" />
-        <span>{content}</span>
+        {/* <span>{content}</span> */}
       </div>
     );
   }
