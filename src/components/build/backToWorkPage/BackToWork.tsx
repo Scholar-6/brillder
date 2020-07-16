@@ -242,7 +242,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   moveThreeColumnsNext() {
-    const {threeColumns} = this.state;
+    const { threeColumns } = this.state;
     const getLongestColumn = () => {
       let draftLength = threeColumns.draft.finalBricks.length;
       let reviewLength = threeColumns.review.finalBricks.length;
@@ -251,7 +251,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     }
 
     const longest = getLongestColumn();
-    const {pageSize} = this.state;
+    const { pageSize } = this.state;
 
     let index = this.state.sortedIndex;
     if (index + pageSize / 3 <= longest) {
@@ -320,7 +320,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     setTimeout(() => {
       this.hideAllBricks();
       let name = this.getThreeColumnName(status);
-      this.expandThreeColumnBrick(name, key);
+      this.expandThreeColumnBrick(name, key + this.state.sortedIndex);
       this.setState({ ...this.state });
     }, 400);
   }
@@ -330,14 +330,18 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
     let key = Math.ceil(index / 3);
     let name = this.getThreeColumnName(status);
-    let brick = this.getThreeColumnBrick(name, key)
+    let brick = this.getThreeColumnBrick(name, key + this.state.sortedIndex);
 
-    brick.expandFinished = true;
-    this.setState({ ...this.state });
-    setTimeout(() => {
-      brick.expandFinished = false;
+    if (brick) {
+      brick.expandFinished = true;
       this.setState({ ...this.state });
-    }, 400);
+      setTimeout(() => {
+        if (brick) {
+          brick.expandFinished = false;
+          this.setState({ ...this.state });
+        }
+      }, 400);
+    }
   }
   //region hover for three column bricks
 
@@ -353,7 +357,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   clearStatus() {
     const { filters } = this.state;
     this.clearStatusFilters(filters);
-    this.setState({ ...this.state, filters });
+    this.setState({ ...this.state, sortedIndex: 0, filters });
     this.filterClear();
   }
 
@@ -540,14 +544,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         shown={this.state.shown}
         history={this.props.history}
         handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
-        handleMouseHover={key2 => this.handleMouseHover(item.key)}
-        handleMouseLeave={key2 => this.handleMouseLeave(item.key)}
+        handleMouseHover={() => this.handleMouseHover(item.key)}
+        handleMouseLeave={() => this.handleMouseLeave(item.key)}
       />
     });
   };
 
-  prepareBrickData(data: any[], brick: Brick, number: number, index: number) {
-    data.push({ brick: brick, key: index, index: number, row: number });
+  prepareBrickData(data: any[], brick: Brick, index: number, key: number, row: number) {
+    data.push({ brick: brick, key, index, row });
   }
 
   renderGroupedBricks = () => {
@@ -557,27 +561,28 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
     for (let i = 0 + sortedIndex; i < (this.state.pageSize / 3) + sortedIndex; i++) {
       let brick = this.state.threeColumns.draft.finalBricks[i];
+      let row = i - this.state.sortedIndex;
       if (brick) {
-        this.prepareBrickData(data, brick, i, count);
+        this.prepareBrickData(data, brick, i, count, row);
         count++;
       } else {
-        this.prepareBrickData(data, {} as Brick, i, count);
+        this.prepareBrickData(data, {} as Brick, i, count, row);
         count++;
       }
       brick = this.state.threeColumns.review.finalBricks[i];
       if (brick) {
-        this.prepareBrickData(data, brick, i, count);
+        this.prepareBrickData(data, brick, i, count, row);
         count++;
       } else {
-        this.prepareBrickData(data, {} as Brick, i, count);
+        this.prepareBrickData(data, {} as Brick, i, count, row);
         count++;
       }
       brick = this.state.threeColumns.publish.finalBricks[i];
       if (brick) {
-        this.prepareBrickData(data, brick, i, count);
+        this.prepareBrickData(data, brick, i, count, row);
         count++;
       } else {
-        this.prepareBrickData(data, {} as Brick, i, count);
+        this.prepareBrickData(data, {} as Brick, i, count, row);
         count++;
       }
     }
@@ -670,7 +675,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         <DeleteBrickDialog
           isOpen={this.state.deleteDialogOpen}
           brickId={this.state.deleteBrickId}
-          onDelete={(brickId) => this.delete(brickId)}
+          onDelete={(brickId: number) => this.delete(brickId)}
           close={() => this.handleDeleteClose()}
         />
         <FailedRequestDialog
