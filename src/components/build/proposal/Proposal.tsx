@@ -122,28 +122,28 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
     saveBrick(brick);
   }
 
-  const saveBrick = (tempBrick: Brick) => {
+  const saveBrick = async (tempBrick: Brick) => {
     if (tempBrick.id) {
-      props.saveBrick(tempBrick);
+      await props.saveBrick(tempBrick);
     } else if (brick && brick.id) {
       tempBrick.id = brick.id;
-      props.saveBrick(tempBrick);
+      await props.saveBrick(tempBrick);
     } else {
-      props.createBrick(tempBrick);
+      await props.createBrick(tempBrick);
     }
   }
 
-  const assignEditor = () => {
+  const assignEditor = async () => {
     if(state.editor) {
-      props.assignEditor(state);
+      await props.assignEditor(state);
     }
   }
 
   setBrillderTitle();
 
-  const saveAndMove = () => {
-    saveBrick(state);
-    assignEditor();
+  const saveAndMove = async () => {
+    await saveBrick(state);
+    await assignEditor();
     setSaved(true);
   }
 
@@ -184,7 +184,7 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
           <Prep parentPrep={state.prep} canEdit={canEdit} savePrep={setPrep} />
         </Route>
         <Route path='/build/new-brick/length'>
-          <BrickLength length={state.brickLength} canEdit={canEdit} saveLength={setLength} saveBrick={setLengthAndSave} />
+          <BrickLength length={state.brickLength} canEdit={canEdit} saveLength={setLength} saveBrick={setLength} />
         </Route>
         <Route path='/build/new-brick/editor'>
           <BrickEditor parentState={state} canEdit={canEdit} setEditor={setEditor} />
