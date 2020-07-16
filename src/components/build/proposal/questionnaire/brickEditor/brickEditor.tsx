@@ -3,12 +3,12 @@ import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickEditor.scss';
 import { ProposalStep } from "../../model";
-import NextButton from '../../components/nextButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { Brick, Editor } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
+import NavigationButtons from "../../components/navigationButtons/NavigationButtons";
 
 
 interface BrickTitleProps {
@@ -72,12 +72,12 @@ const BrickEditor: React.FC<BrickTitleProps> = ({ parentState, canEdit, setEdito
               placeholder="Enter editor's User ID here..."
             />
           </Grid>
-          <NextButton
-            isActive={true}
+          <NavigationButtons
             step={ProposalStep.BrickEditor}
-            canSubmit={true}
+            canSubmit={parentState.editor !== undefined}
             onSubmit={saveEditor}
             data={parentState.editor}
+            backLink="/build/new-brick/length"
           />
           <h2 className="pagination-text">1 of 4</h2>
         </Grid>
