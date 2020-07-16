@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 
 import { ProposalStep } from "../model";
 import './nextButton.scss';
-import { Grid, Button } from "@material-ui/core";
 import sprite from "assets/img/icons-sprite.svg";
 interface NextButtonProps {
   isActive: boolean

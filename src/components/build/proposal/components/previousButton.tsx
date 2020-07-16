@@ -2,7 +2,6 @@ import React from "react";
 import { useHistory } from 'react-router-dom';
 
 import './previousButton.scss';
-import { Grid, Button } from "@material-ui/core";
 import sprite from "assets/img/icons-sprite.svg";
 interface PrevButtonProps {
   to: string
