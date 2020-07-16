@@ -4,7 +4,15 @@
 
 .question-build-quote-editor {
   width: 100%;
-
+  .document-editor {
+    .ck-editor {
+      width: 100%;
+      .ck-content {
+        padding: 1vw;
+        background-color: var(--tab-gray) !important;
+      }
+    }
+  }
   input {
     width: 84%;
     height: 55px;
