@@ -466,7 +466,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
 
     return (
-      <div className="main-brick-container">
+      <div key={key} className="main-brick-container">
         <Box className="brick-container">
           <div
             className={`absolute-container brick-row-0 ${
@@ -506,7 +506,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
 
     return (
-      <div className="main-brick-container">
+      <div key={key} className="main-brick-container">
         <Box className="brick-container">
           <div
             className={`sorted-brick absolute-container brick-row-${row} ${
@@ -595,7 +595,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }
     return (
       <Swiper>
-        {bricksList.map(b => <SwiperSlide style={{ width: '90vw' }}>{b}</SwiperSlide>)}
+        {bricksList.map((b, i) => <SwiperSlide key={i} style={{ width: '90vw' }}>{b}</SwiperSlide>)}
       </Swiper>
     );
   }
@@ -613,7 +613,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }
     return (
       <Swiper slidesPerView={2}>
-        {bricksList.map(b => <SwiperSlide style={{ width: '50vw' }}>{b}</SwiperSlide>)}
+        {bricksList.map((b, i) => <SwiperSlide key={i} style={{ width: '50vw' }}>{b}</SwiperSlide>)}
       </Swiper>
     );
   }
