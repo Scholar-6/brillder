@@ -11,16 +11,7 @@ import { setBrillderTitle } from "components/services/titleService";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
-
-
-enum BrickFieldNames {
-  openQuestion = "openQuestion",
-  brief = "brief",
-  prep = "prep",
-  title = "title",
-  subTopic = "subTopic",
-  alternativeTopics = "alternativeTopics"
-};
+import {BrickFieldNames} from '../../model';
 
 
 interface ProposalProps {
@@ -29,10 +20,10 @@ interface ProposalProps {
   canEdit: boolean;
   history: History;
   saveBrick(): void;
+  setBrickField(name: BrickFieldNames, value: string): void;
 }
 
 interface ProposalState {
-  brick: Brick;
   bookHovered: boolean;
   mode: boolean; // true - edit mode, false - view mode
 }
@@ -41,14 +32,18 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
     this.state = {
-      brick: props.brick,
       mode: false,
       bookHovered: false
     }
   }
 
   onBookHover() { setTimeout(() => this.setState({ bookHovered: true }), 800) }
-  switchMode() { this.setState({ mode: !this.state.mode }) }
+  
+  switchMode() {
+    if (this.props.canEdit) {
+      this.setState({ mode: !this.state.mode });
+    }
+  }
 
   renderEditButton() {
     let className = "edit-icon";
@@ -58,23 +53,17 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     return <div onClick={() => this.switchMode()} className={className} />;
   }
 
-  onBrickFieldChanged(name: BrickFieldNames, value: string) {
-    let brick = this.state.brick;
-    brick[name] = value;
-    this.setState({ brick });
-  }
-
   renderEditableField(name: BrickFieldNames) {
-    const { mode, brick } = this.state;
-    if (mode) {
-      return <input onChange={e => this.onBrickFieldChanged(name, e.target.value)} value={brick[name]} />
+    const { brick } = this.props;
+    if (this.state.mode) {
+      return <input onChange={e => this.props.setBrickField(name, e.target.value)} value={brick[name]} />
     }
     return brick[name];
   }
 
   renderMathField(name: BrickFieldNames) {
-    const { mode, brick } = this.state;
-    if (mode) {
+    const { brick } = this.props;
+    if (this.state.mode) {
       return (
         <DocumentWirisCKEditor
           disabled={!this.props.canEdit}
@@ -84,7 +73,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
           ]}
           onBlur={() => { }}
-          onChange={v => this.onBrickFieldChanged(name, v)}
+          onChange={v => this.props.setBrickField(name, v)}
         />
       );
     }
@@ -92,8 +81,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   }
 
   renderYoutubeAndMathField(name: BrickFieldNames) {
-    const { mode, brick } = this.state;
-    if (mode) {
+    const { brick } = this.props;
+    if (this.state.mode) {
       return (
         <DocumentWirisCKEditor
           disabled={!this.props.canEdit}
@@ -104,7 +93,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
           ]}
           onBlur={() => { }}
-          onChange={v => this.onBrickFieldChanged(name, v)}
+          onChange={v => this.props.setBrickField(name, v)}
         />
       );
     }
@@ -112,7 +101,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   }
 
   render() {
-    const { brick } = this.state;
+    const { brick } = this.props;
 
     if (brick.title) {
       setBrillderTitle(brick.title);
