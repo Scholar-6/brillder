@@ -3,13 +3,12 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .quotes-live {
-  padding: 5px;
-  font: 500 16px/24px $font-family-regular;
+  padding: 0.5vw;
   color: var(--theme-dark-blue);
   justify-content: center;
   background: var(--off-white);
-  margin-top:20px;
   margin-bottom: 10px;
   overflow-x: auto;
   white-space: nowrap;
+  border-radius: 0.4vw;
 }

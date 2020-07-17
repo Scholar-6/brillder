@@ -3,6 +3,31 @@
 @import '../../../assets/sass/partials/extensions';
 
 .user-list-page {
+
+  .user-header {
+    position: relative;
+    height: 14vh;
+    .brick-row-title {
+      padding: 0;
+    }
+    @extend %flexCenter;
+    justify-content: space-between;
+    .add-user-button {
+      cursor: pointer;
+      margin: 0 1.3vw;
+      font-family: $font-family-black;
+      color: var(--theme-dark-blue);
+      font-size: 1vw;
+      width: 6vw;
+      height: max-content;
+      @extend %flexCenter;
+      flex-direction: column;
+      > img {
+        width: 60%;
+        height: 60%;
+      }
+    }
+  }
   .user-row {
     font-family: $font-family-regular;
   }
@@ -13,26 +38,11 @@
     height: 20vh;
     overflow-y: auto;
   }
-  .brick-row-title {
-    height: 15vh;
-    overflow-y: auto;
-  }
   tr {
     height: 5vh;
     overflow-y: auto;
   }
-  .add-user-button {
-    cursor: pointer;
-    margin: 3vh 1.3vw;
-    font-family: $font-family-black;
-    color: var(--theme-dark-blue);
-    font-size: 1vw;
-    height: max-content;
-    .add-user-image {
-      width: 3vw;
-      height: 3vw;
-    }
-  }
+
 }
 
 .user-list-page ~ .beta-text {
