@@ -23,6 +23,9 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { checkAdmin } from "components/services/brickService";
 
 import sprite from "../../../assets/img/icons-sprite.svg";
+import NotificationPanel from 'components/baseComponents/notificationPanel/NotificationPanel';
+import ReactDOM from 'react-dom';
+import TimerWithClock from 'components/play/brick/baseComponents/TimerWithClock';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -65,6 +68,7 @@ interface UsersListState {
   filterExpanded: boolean;
   logoutDialogOpen: boolean;
   dropdownShown: boolean;
+  notificationsShown: boolean;
   filterHeight: string;
   isAdmin: boolean;
 
@@ -127,6 +131,8 @@ const IOSSwitch = anyStyles((theme: any) => ({
 
 
 class UsersListPage extends Component<UsersListProps, UsersListState> {
+  pageHeader: React.RefObject<any>;
+
   constructor(props: UsersListProps) {
     super(props)
     this.state = {
@@ -149,6 +155,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       searchString: '',
       isSearching: false,
       dropdownShown: false,
+      notificationsShown: false,
       filterHeight: 'auto',
 
       sortBy: UserSortBy.None,
@@ -166,6 +173,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     }).catch(error => {
       alert('Can`t get subjects');
     });
+
+    this.pageHeader = React.createRef();
   }
 
   getUsers(
@@ -312,6 +321,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   hideDropdown() {
     this.setState({ ...this.state, dropdownShown: false });
+  }
+
+  showNotifications() {
+    this.setState({ ...this.state, notificationsShown: true });
+  }
+
+  hideNotifications() {
+    this.setState({ ...this.state, notificationsShown: false });
   }
 
   filterBySubject = (i: number) => {
@@ -614,11 +631,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     return (
       <div className="user-list-page">
         <div className="upper-part">
-          <PageHeader
+          <PageHeader ref={this.pageHeader}
             searchPlaceholder="Search by Name,  Email or Subject"
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
+            showNotifications={() => this.showNotifications()}
           />
           <Menu
             className="menu-dropdown"
@@ -678,6 +696,11 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             {this.renderPagination()}
           </Grid>
         </Grid>
+        <NotificationPanel
+          shown={this.state.notificationsShown}
+          handleClose={() => this.hideNotifications()}
+          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+        />
         <Dialog
           open={this.state.logoutDialogOpen}
           onClose={() => this.handleLogoutClose()}

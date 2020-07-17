@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 // @ts-ignore
 import { connect } from 'react-redux';
+import { History } from 'history';
 
 import actions from '../../../redux/actions/brickActions';
 import './Proposal.scss';
@@ -22,6 +23,7 @@ import VersionLabel from "components/baseComponents/VersionLabel";
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
+import { BrickFieldNames } from './model';
 
 
 interface ProposalProps {
@@ -29,10 +31,10 @@ interface ProposalProps {
   user: User;
   saveBrick(brick: Brick): void;
   createBrick(brick: Brick): void;
-  history: any;
+  history: History;
 }
 
-const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
+const Proposal: React.FC<ProposalProps> = ({ brick, history, ...props }) => {
   let subjectId = 0;
   if (props.user.subjects.length === 1) {
     subjectId = props.user.subjects[0].id;
@@ -80,10 +82,11 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   const saveLocalState = (data: any) => {
     setBrick(data);
-    setLocalProposal(data);  }
+    setLocalProposal(data);
+  }
 
   const setSubject = (subjectId: number) => {
-    saveLocalState({...state, subjectId});
+    saveLocalState({ ...state, subjectId });
   }
 
   const setTitles = (titles: any) => {
@@ -100,6 +103,11 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
 
   const setPrep = (prep: string) => {
     saveLocalState({ ...state, prep } as Brick)
+  }
+
+  const setBrickField = (name: BrickFieldNames, value: string) => {
+    state[name] = value;
+    saveLocalState({ ...state });
   }
 
   const setLength = (brickLength: BrickLengthEnum) => {
@@ -172,7 +180,14 @@ const Proposal: React.FC<ProposalProps> = ({brick, history, ...props}) => {
           <BrickLength length={state.brickLength} canEdit={canEdit} saveLength={setLength} saveBrick={setLengthAndSave} />
         </Route>
         <Route path="/build/new-brick/proposal">
-          <ProposalReview brick={state} user={props.user} saveBrick={saveAndMove} />
+          <ProposalReview
+            brick={state}
+            history={history}
+            canEdit={canEdit}
+            user={props.user}
+            setBrickField={setBrickField}
+            saveBrick={saveAndMove}
+          />
         </Route>
         <VersionLabel />
       </div>
