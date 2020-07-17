@@ -20,6 +20,7 @@ import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDes
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import { ReduxCombinedState } from "redux/reducers";
 import DashboardFilter, { SortBy } from './DashboardFilter';
+import DashboardPagination from './DashboardPagination';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -532,64 +533,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     return bricksList;
   };
 
-  renderPagination() {
-    if (this.state.bricks.length <= this.state.pageSize) {
-      return "";
-    }
-
-    const { pageSize, sortedIndex } = this.state;
-
-    const showPrev = sortedIndex >= pageSize;
-    const showNext = sortedIndex + pageSize <= this.state.bricks.length;
-
-    return (
-      <Grid container direction="row" className="bricks-pagination">
-        <Grid item sm={4} className="left-pagination">
-          <div className="first-row">
-            {this.state.sortedIndex + 1}-
-            {this.state.sortedIndex + pageSize > this.state.bricks.length
-              ? this.state.bricks.length
-              : this.state.sortedIndex + pageSize}
-            <span className="gray"> | {this.state.bricks.length}
-            </span>
-          </div>
-          <div>
-            {(this.state.sortedIndex + pageSize) / pageSize}
-            <span className="gray"> | {Math.ceil(this.state.bricks.length / pageSize)}
-            </span>
-          </div>
-        </Grid>
-        <Grid container item xs={4} justify="center">
-          <div className="bottom-next-button">
-            {showPrev ? (
-              <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
-                onClick={() => this.moveAllBack()}>
-                <svg className="svg w100 h100 active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#arrow-up"} />
-                </svg>
-              </button>
-            ) : (
-                ""
-              )}
-            {showNext ? (
-              <button
-                className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
-                onClick={() => this.moveAllNext()}>
-                <svg className="svg w100 h100 active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#arrow-down"} />
-                </svg>
-              </button>
-            ) : (
-                ""
-              )}
-          </div>
-        </Grid>
-      </Grid>
-    );
-  }
-
   renderEmptyCategory(name: string) {
     return (
       <div className="brick-row-title">
@@ -708,7 +651,13 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               {this.renderEmptyCategory("Top in Humanities")}
               {this.renderEmptyCategory("Top in Stem")}
             </Hidden>
-            {this.renderPagination()}
+            <DashboardPagination
+              pageSize={this.state.pageSize}
+              sortedIndex={this.state.sortedIndex}
+              bricksLength={this.state.bricks.length}
+              moveAllNext={() => this.moveAllNext()}
+              moveAllBack={() => this.moveAllBack()}
+            />
           </Grid>
         </Grid>
         <DeleteBrickDialog
