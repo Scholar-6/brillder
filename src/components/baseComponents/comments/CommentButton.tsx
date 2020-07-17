@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { SvgIcon, Fab, Popover, Typography } from '@material-ui/core';
 import sprite from "assets/img/icons-sprite.svg";
+import CommentPopup from './CommentPopup';
 
 interface CommentButtonProps {
     commentId: number;
@@ -44,7 +45,7 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
                     horizontal: 'center',
                 }}
             >
-                <Typography>{props.text}</Typography>
+                <CommentPopup />
             </Popover>
         </span>
     );
