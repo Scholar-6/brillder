@@ -59,6 +59,11 @@
 }
 
 .mobile-synthesis-page {
+  height: 90vh !important;
+  overflow: hidden !important;
+  .introduction-page {
+    height: 80vh !important;
+  }
   h1 {
     position: absolute !important;
     top: 0.2vw !important;

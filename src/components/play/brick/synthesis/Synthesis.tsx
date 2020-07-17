@@ -67,36 +67,38 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   }
 
   return (
-    <div className="brick-container synthesis-page">
+    <div>
       <Hidden only={['xs']}>
-        <Grid container direction="row">
-          <Grid item xs={8}>
-            <div className="introduction-page">
-              <div className="question-index-container">
-                <div className="question-index">S</div>
+        <div className="brick-container synthesis-page">
+          <Grid container direction="row">
+            <Grid item xs={8}>
+              <div className="introduction-page">
+                <div className="question-index-container">
+                  <div className="question-index">S</div>
+                </div>
+                <h1>Synthesis</h1>
+                <div className="question-live-play synthesis-content">
+                  <MathInHtml value={brick.synthesis} />
+                </div>
               </div>
-              <h1>Synthesis</h1>
-              <div className="question-live-play synthesis-content">
-                <MathInHtml value={brick.synthesis} />
+            </Grid>
+            <Grid item xs={4}>
+              <div className="introduction-info">
+                <TimerWithClock isArrowUp={true} startTime={startTime} brickLength={brick.brickLength} />
+                <div className="intro-text-row">
+                  <div>Aim to spend {getSpendTime()} minutes on this section.</div>
+                  <br />
+                  <p>When you’re ready to move on, you will have</p>
+                  <p>3 minutes to try to improve your score.</p>
+                </div>
+                {renderFooter()}
               </div>
-            </div>
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <div className="introduction-info">
-              <TimerWithClock isArrowUp={true} startTime={startTime} brickLength={brick.brickLength} />
-              <div className="intro-text-row">
-                <div>Aim to spend {getSpendTime()} minutes on this section.</div>
-                <br />
-                <p>When you’re ready to move on, you will have</p>
-                <p>3 minutes to try to improve your score.</p>
-              </div>
-              {renderFooter()}
-            </div>
-          </Grid>
-        </Grid>
+        </div>
       </Hidden>
       <Hidden only={['sm', 'md', 'lg', 'xl']}>
-        <div className="mobile-synthesis-page">
+        <div className="brick-container synthesis-page mobile-synthesis-page">
           <div className="introduction-page">
             <div className="question-index-container">
               <div className="question-index">S</div>
