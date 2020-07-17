@@ -5,6 +5,7 @@
 .synthesis-page {
   .synthesis-expansion-panel {
     background: white !important;
+
     .MuiButtonBase-root {
       padding-left: 10px;
       padding-bottom: 14px;
@@ -23,6 +24,7 @@
 
   .start-brick-button {
     margin-right: 0px;
+
     >span {
       font: 16px/24px $font-family-regular;
       margin-right: 5px;
@@ -53,5 +55,28 @@
   td {
     min-width: 0;
     padding: 0;
+  }
+}
+
+.mobile-synthesis-page {
+  height: 90vh !important;
+  overflow: hidden !important;
+  .introduction-page {
+    height: 80vh !important;
+  }
+  h1 {
+    position: absolute !important;
+    top: 0.2vw !important;
+  }
+
+  .question-index-container {
+    width: 7vw !important;
+    height: 7vw !important;
+
+    .question-index {
+      width: 7vw !important;
+      height: 7vw !important;
+      font-size: 6vw !important;
+    }
   }
 }

@@ -24,3 +24,37 @@
     }
   }
 }
+
+.mobile-provisional-score {
+  height: 90vh;
+  overflow: hidden !important;
+  h1 {
+    position: absolute !important;
+    top: 0.2vw !important;
+  }
+  .question-index-container {
+    width: 7vw !important;
+    height: 7vw !important;
+    .question-index {
+      width: 7vw !important;
+      height: 7vw !important;
+      font-size: 6vw !important;
+    }
+  }
+  .introduction-page {
+    height: 80vh !important;
+  }
+  .question-live-play {
+    margin: 0 !important;
+    width: 100% !important;
+
+    .circle-progress {
+      width: 90vw !important;
+      height: 90vw !important;
+    }
+    .score-data {
+      width: 90vw !important;
+      height: 90vw !important;
+    }
+  }
+}

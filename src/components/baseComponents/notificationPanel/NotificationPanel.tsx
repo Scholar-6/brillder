@@ -74,7 +74,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                     </ListItemIcon>
                     <div className="content-box">
                       <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
-                      <Grid direction="column" justify="center">
+                      <Grid>
                         <Grid className="notification-time">{moment(notification.timestamp).fromNow()}</Grid>
                         <button className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>
                             <svg className="svg">

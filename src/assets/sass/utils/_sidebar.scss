@@ -400,9 +400,8 @@
     }
     .bricks-list-container {
       @include phone_and_tabletP {
-        height: calc(48.5vh - 2.1vh);
         overflow-y: auto;
-        padding-top: 6vw;
+        padding: 3vw 0;
       }
       @include tabletP {
         height: 64vh !important;
@@ -432,8 +431,10 @@
       .main-brick-container {
         display: flex;
         position: relative;
-        padding: 0.8vw 0 0 0.8vw;
+        @include phone_and_tabletP {
+        }
         @include tabletP {
+          padding: 0.8vw 0 0 0.8vw;
           min-height: 9.4vh;
         }
         .brick-container {
