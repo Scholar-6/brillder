@@ -21,6 +21,9 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
 
     return (
         <span className="comment" data-id={props.commentId}>
+            <span className="comment-content">
+                {props.children}
+            </span>
             <Fab onClick={handlePress} color="primary" size="small">
                 <SvgIcon>
                     <svg>

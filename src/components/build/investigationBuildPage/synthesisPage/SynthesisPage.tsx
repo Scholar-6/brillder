@@ -23,7 +23,7 @@ const SynthesisPage: React.FC<SynthesisProps> = ({ locked, synthesis, onSynthesi
             'bold', 'italic', 'fontColor',
             'superscript', 'subscript', 'strikethrough',
             'mathType', 'chemType', 'insertTable', 'alignment',
-            'bulletedList', 'numberedList', 'uploadImageCustom'
+            'bulletedList', 'numberedList', 'uploadImageCustom', 'addComment'
           ]}
           defaultAlignment="justify"
           onBlur={() => {}}
