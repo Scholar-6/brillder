@@ -1,10 +1,18 @@
 import React from 'react';
 
-import { Button } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 
-const CommentPopup: React.FC = (props) => {
+interface CommentPopupProps {
+    commentId: number;
+    text: string;
+}
+
+const CommentPopup: React.FC<CommentPopupProps> = (props) => {
     return (
-    <Button>Delete Comment</Button>
+    <Grid container direction="column">
+        <Button>Delete Comment</Button>
+        <Typography>{props.text}</Typography>
+    </Grid>
     );
 }
 
