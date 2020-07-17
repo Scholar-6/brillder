@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Hidden } from '@material-ui/core';
 
 import './Synthesis.scss';
 import { Brick } from 'model/brick';
@@ -36,7 +36,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
       history.push(`/play/brick/${brick.id}/review`);
     }
   }
-  
+
   const getSpendTime = () => {
     let timeMinutes = 4;
     if (brick.brickLength === BrickLengthEnum.S40min) {
@@ -47,10 +47,56 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     return timeMinutes;
   }
 
+  const renderFooter = () => {
+    return (
+      <div className="action-footer">
+        <div>&nbsp;</div>
+        <div className="direction-info">
+          <h2>Review</h2>
+        </div>
+        <div>
+          <button type="button" className="play-preview svgOnHover play-green" onClick={reviewBrick}>
+            <svg className="svg active m-l-02">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#arrow-right"} />
+            </svg>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="brick-container synthesis-page">
-      <Grid container direction="row">
-        <Grid item xs={8}>
+      <Hidden only={['xs']}>
+        <Grid container direction="row">
+          <Grid item xs={8}>
+            <div className="introduction-page">
+              <div className="question-index-container">
+                <div className="question-index">S</div>
+              </div>
+              <h1>Synthesis</h1>
+              <div className="question-live-play synthesis-content">
+                <MathInHtml value={brick.synthesis} />
+              </div>
+            </div>
+          </Grid>
+          <Grid item xs={4}>
+            <div className="introduction-info">
+              <TimerWithClock isArrowUp={true} startTime={startTime} brickLength={brick.brickLength} />
+              <div className="intro-text-row">
+                <div>Aim to spend {getSpendTime()} minutes on this section.</div>
+                <br />
+                <p>When you’re ready to move on, you will have</p>
+                <p>3 minutes to try to improve your score.</p>
+              </div>
+              {renderFooter()}
+            </div>
+          </Grid>
+        </Grid>
+      </Hidden>
+      <Hidden only={['sm', 'md', 'lg', 'xl']}>
+        <div className="mobile-synthesis-page">
           <div className="introduction-page">
             <div className="question-index-container">
               <div className="question-index">S</div>
@@ -60,33 +106,9 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
               <MathInHtml value={brick.synthesis} />
             </div>
           </div>
-        </Grid>
-        <Grid item xs={4}>
-          <div className="introduction-info">
-            <TimerWithClock isArrowUp={true} startTime={startTime} brickLength={brick.brickLength} />
-            <div className="intro-text-row">
-              <div>Aim to spend {getSpendTime()} minutes on this section.</div>
-              <br />
-              <p>When you’re ready to move on, you will have</p>
-              <p>3 minutes to try to improve your score.</p>
-            </div>
-            <div className="action-footer">
-              <div>&nbsp;</div>
-              <div className="direction-info">
-                <h2>Review</h2>
-              </div>
-              <div>
-                <button type="button" className="play-preview svgOnHover play-green" onClick={reviewBrick}>
-                  <svg className="svg active m-l-02">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#arrow-right"} />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </Grid>
-      </Grid>
+          {renderFooter()}
+        </div>
+      </Hidden>
     </div>
   );
 }
