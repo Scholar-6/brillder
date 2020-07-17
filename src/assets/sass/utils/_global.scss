@@ -488,9 +488,9 @@ h3 {
   }
   .MuiButton-label {
     flex-direction: column;
-  }
-  img {
-    width: 100%;
+    img {
+      width: calc(100% - 0.6vw);
+    }
   }
   p {
     text-align: center !important;
