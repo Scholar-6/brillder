@@ -45,7 +45,7 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
                     horizontal: 'center',
                 }}
             >
-                <CommentPopup />
+                <CommentPopup text={props.text} commentId={props.commentId} />
             </Popover>
         </span>
     );
