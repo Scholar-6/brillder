@@ -54,7 +54,7 @@ class CommentCustom extends Plugin {
 
         editor.editing.view.document.on('delete', (evt: any, data: any) => {
             const items = Array.from<any>(editor.model.document.selection.getFirstRange().getItems())
-            const filteredItems = items.filter(item => item.name == "comment");
+            const filteredItems = items.filter(item => item.name === "comment");
             if(filteredItems.length > 0) {
                 data.stopPropagation();
                 data.preventDefault();
@@ -72,9 +72,6 @@ class CommentCustom extends Plugin {
             });
 
             view.on('execute', () => {
-                const selection = editor.model.document.selection;
-                let selectedElement: any;
-
                 editor.model.change((writer: any) => {
                     const commentElement = writer.createElement('comment', {
                         commentId: 1,
@@ -127,6 +124,12 @@ class CommentCustom extends Plugin {
                     class: 'comment'
                 });
 
+                const deleteComment = (commentId: number) => {
+                    this.editor.model.change((writer: any) => {
+                        writer.remove(modelItem);
+                    });
+                };
+
                 const reactWrapper = viewWriter.createUIElement('span', {
                     class: 'comment__react-wrapper'
                 }, function (domDocument: any) {
@@ -136,7 +139,7 @@ class CommentCustom extends Plugin {
                     ReactDOM.render(
                         <Provider store={store}>
                             <ThemeProvider theme={theme}>
-                                <CommentButton commentId={commentId} text={text} />
+                                <CommentButton deleteComment={deleteComment} commentId={commentId} text={text} />
                             </ThemeProvider>
                         </Provider>,
                         domElement
