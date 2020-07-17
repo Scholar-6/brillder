@@ -82,6 +82,11 @@
       padding-right: 1vw;
     }
     .MuiButton-label {
+      flex-direction: column;
+      img {
+        width: calc(100% - 0.6vw);
+        margin-bottom: 0.3vw;
+      }
       div {
         display: inline;
         margin: 0 0 0.5vh 0 !important;
@@ -92,9 +97,6 @@
       }
       p {
         margin: 0 !important;
-      }
-      img {
-        width: 100%;
       }
     }
   }
