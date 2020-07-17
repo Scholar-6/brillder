@@ -38,7 +38,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
   }
 
   onBookHover() { setTimeout(() => this.setState({ bookHovered: true }), 800) }
-  
+
   switchMode() {
     if (this.props.canEdit) {
       this.setState({ mode: !this.state.mode });
@@ -152,13 +152,13 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                         {this.renderEditableField(BrickFieldNames.openQuestion)}
                       </p>
                       <p className="text-title">3. Outline the purpose of your brick.</p>
-                      <div className="proposal-text">
+                      <p className="proposal-text">
                         {this.renderMathField(BrickFieldNames.brief)}
-                      </div>
+                      </p>
                       <p className="text-title">4. Create an engaging and relevant preparatory task.</p>
-                      <div style={{ fontWeight: 'normal' }}>
+                      <p className="proposal-text">
                         {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
-                      </div>
+                      </p>
                       <p className="text-title brick-length">
                         5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>
                       </p>

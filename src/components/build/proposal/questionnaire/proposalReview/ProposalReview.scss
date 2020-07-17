@@ -324,6 +324,16 @@
         .proposal-text {
           margin-left: 1.3vw;
           margin-bottom: 1vh;
+          .document-editor {
+            width: 100%;
+            .ck-editor {
+              width: 100%;
+              .ck-content {
+                background-color: var(--tab-gray);
+                padding: 1vw;
+              }
+            }
+          }
         }
 
         input {
