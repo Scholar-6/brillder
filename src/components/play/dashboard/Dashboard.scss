@@ -8,4 +8,17 @@
   height: 100%;
   width: 100%;
   font-family: $font-family-regular;
+
+  
+}
+
+.mobile-category {
+  .brick-row-title {
+    height: calc(5vw + 2.6vh);
+    margin-bottom: 0 !important;
+  }
+  .bricks-list-container {
+    height: calc(100vh - 46vh - 5vw - 2.6vh);
+    overflow-y: scroll;
+  }
 }
