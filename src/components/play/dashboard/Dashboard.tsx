@@ -708,6 +708,20 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  renderEmptyCategory(name: string) {
+    return (
+      <div className="brick-row-title">
+        <button className="btn btn-transparent svgOnHover">
+          <span>{name}</span>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
+          </svg>
+        </button>
+      </div>
+    );
+  }
+
   render() {
     const { history } = this.props;
     return (
@@ -789,33 +803,9 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               </Hidden>
             </div>
             <Hidden only={["sm", "md", "lg", "xl"]}>
-              <div className="brick-row-title">
-                <button className="btn btn-transparent svgOnHover">
-                  <span>Suggest</span>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
-                  </svg>
-                </button>
-              </div>
-              <div className="brick-row-title">
-                <button className="btn btn-transparent svgOnHover">
-                  <span>Top in Humanities</span>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
-                  </svg>
-                </button>
-              </div>
-              <div className="brick-row-title">
-                <button className="btn btn-transparent svgOnHover">
-                  <span>Top in Stem</span>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
-                  </svg>
-                </button>
-              </div>
+              {this.renderEmptyCategory("Suggest")}
+              {this.renderEmptyCategory("Top in Humanities")}
+              {this.renderEmptyCategory("Top in Stem")}
             </Hidden>
             {this.renderPagination()}
           </Grid>

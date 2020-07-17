@@ -44,7 +44,7 @@ class DeleteBrickDialog extends Component<DeleteDialogProps> {
           </button>
           <button className="btn btn-md bg-gray no-button"
             onClick={() => this.handleDeleteClose()}>
-            <span>Yes, delete</span>
+            <span>No, keep</span>
           </button>
         </div>
       </Dialog>
