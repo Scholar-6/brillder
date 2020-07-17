@@ -229,10 +229,9 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   hideBricks() {
-    const { finalBricks } = this.state;
-    finalBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
+    const { finalBricks, yourBricks } = this.state;
+    finalBricks.forEach(b => b.expanded = false);
+    yourBricks.forEach(b => b.expanded = false);
   }
 
   yourBricksMouseHover(index: number) {
@@ -293,6 +292,12 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }
     this.hideBricks();
     finalBricks[index].expanded = true;
+    this.setState({ ...this.state });
+  }
+
+  handleYourMobileClick(brick: Brick) {
+    this.hideBricks();
+    brick.expanded = true;
     this.setState({ ...this.state });
   }
 
@@ -525,8 +530,14 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  renderMobileBricks() {
-    let expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
+  renderMobileUpperBricks() {
+    let expandedBrick = this.state.yourBricks.find(b => b.expanded === true);
+
+    if (expandedBrick) {
+      return this.renderMobileExpandedBrick(expandedBrick);
+    }
+
+    expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
 
     if (expandedBrick) {
       return this.renderMobileExpandedBrick(expandedBrick);
@@ -534,7 +545,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
     let bricksList = [];
     for (const brick of this.state.yourBricks) {
-      bricksList.push(<ShortBrickDescription brick={brick} />);
+      bricksList.push(<ShortBrickDescription brick={brick} onClick={() => this.handleYourMobileClick(brick)} />);
     }
     return (
       <Swiper slidesPerView={2}>
@@ -628,19 +639,46 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  renderMobileGlassIcon() {
+    return (
+      <div className="page-navigation">
+        <div className="btn btn-transparent glasses svgOnHover">
+          <svg className="svg w100 h100 active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#glasses"} className="text-theme-dark-blue" />
+          </svg>
+        </div>
+        <div className="breadcrumbs">All</div>
+      </div>
+    );
+  }
+
+  renderPublicCoreToggle() {
+    return (
+      <div className="core-public-toggle">
+        <button className="btn btn btn-transparent ">
+          <span>Core</span>
+          <div className="svgOnHover">
+            <svg className="svg active selected">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#box"} className="text-light-blue2" />
+            </svg>
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#globe"} className="text-light-blue2" />
+            </svg>
+          </div>
+          <span>Public</span>
+        </button>
+      </div>
+    );
+  }
+
   render() {
     const { history } = this.props;
     return (
       <div className="dashboard-page">
-        <div className="page-navigation">
-          <div className="btn btn-transparent glasses svgOnHover">
-            <svg className="svg w100 h100 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#glasses"} className="text-theme-dark-blue" />
-            </svg>
-          </div>
-          <div className="breadcrumbs">All</div>
-        </div>
+        {this.renderMobileGlassIcon()}
         <div className="upper-part">
           <PageHeadWithMenu
             page={PageEnum.ViewAll}
@@ -648,12 +686,12 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             placeholder={"Search Ongoing Projects & Published Bricks…"}
             history={this.props.history}
             search={() => this.search()}
-            searching={(v: string) => this.searching(v)}
+            searching={v => this.searching(v)}
           />
         </div>
         <Hidden only={["sm", "md", "lg", "xl"]}>
           <div className="mobile-scroll-bricks">
-            {this.renderMobileBricks()}
+            {this.renderMobileUpperBricks()}
           </div>
         </Hidden>
         <Grid container direction="row" className="sorted-row">
@@ -672,22 +710,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               <div className="brick-row-title">
                 ALL BRICKS
               </div>
-              <div className="core-public-toggle">
-                <button className="btn btn btn-transparent ">
-                  <span>Core</span>
-                  <div className="svgOnHover">
-                    <svg className="svg active selected">
-                      {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#box"} className="text-light-blue2" />
-                    </svg>
-                    <svg className="svg active">
-                      {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#globe"} className="text-light-blue2" />
-                    </svg>
-                  </div>
-                  <span>Public</span>
-                </button>
-              </div>
+              {this.renderPublicCoreToggle()}
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
