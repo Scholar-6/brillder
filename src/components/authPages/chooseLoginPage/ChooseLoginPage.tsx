@@ -1,5 +1,5 @@
 import React from "react";
-import { History } from 'history'
+import { History } from 'history';
 import { Grid, Hidden } from "@material-ui/core";
 import sprite from "../../../assets/img/icons-sprite.svg";
 
