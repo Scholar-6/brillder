@@ -14,7 +14,14 @@
 
   .inner-question-type {
     padding: 0.7vh 4vh 2vh 4vh;
+    .document-editor {
+      .ck-editor {
+        .ck-content {
+          padding: 1vw;
+        }
+      }
 
+    }
     .label-question-type {
       margin-left: 0.6vw;
       font-size: 1.4vw;

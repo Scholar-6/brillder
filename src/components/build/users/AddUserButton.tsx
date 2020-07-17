@@ -13,12 +13,8 @@ const AddUserButton: React.FC<AddUserButtonProps> = ({history}) => {
 
   return (
     <div className="add-user-button" onClick={moveToNewUser} >
-      <Grid container justify="center">
-        <img alt="" className="add-user-image" src="/feathericons/svg/user-plus-blue.svg" />
-      </Grid>
-      <Grid container justify="center">
-        ADD USER
-      </Grid>
+      <img alt="" src="/feathericons/svg/user-plus-blue.svg" />
+      <span>ADD USER</span>
     </div>
   );
 }
