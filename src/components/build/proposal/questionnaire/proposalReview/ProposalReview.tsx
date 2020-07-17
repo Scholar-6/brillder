@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { History } from 'history';
+import sprite from "../../../../../assets/img/icons-sprite.svg";
 
 import './ProposalReview.scss';
 import { Brick } from "model/brick";
@@ -11,7 +12,7 @@ import { setBrillderTitle } from "components/services/titleService";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
-import {BrickFieldNames} from '../../model';
+import { BrickFieldNames } from '../../model';
 
 
 interface ProposalProps {
@@ -50,7 +51,12 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     if (this.state.mode) {
       className += " active";
     }
-    return <div onClick={() => this.switchMode()} className={className} />;
+    return <button onClick={() => this.switchMode()} className={"btn btn-transparent svgOnHover " + className}>
+      <svg className="svg w100 h100 active">
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#edit-outline"} />
+      </svg>
+    </button>;
   }
 
   renderEditableField(name: BrickFieldNames) {
