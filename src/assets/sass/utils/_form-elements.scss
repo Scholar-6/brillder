@@ -137,12 +137,17 @@ input {
 }
 
 .left-ckeckbox {
-  color: var(--theme-orange) !important;
-  &:hover {
-    background-color: var(--theme-orange-alpha4) !important;
-  }
   .MuiSvgIcon-root {
+    color: var(--gray) !important;
+    &:hover {
+      background-color: var(--gray-alpha4) !important;
+    }
+  }
+  &:not(.Mui-checked) {
     color: var(--theme-orange) !important;
+    &:hover {
+      background-color: var(--theme-orange-alpha4) !important;
+    }
   }
   &.Mui-checked {
     color: var(--theme-green) !important;

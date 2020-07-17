@@ -401,6 +401,7 @@
     .bricks-list-container {
       @include phone_and_tabletP {
         overflow-y: auto;
+        padding: 3vw 0;
       }
       @include tabletP {
         height: 64vh !important;
@@ -430,28 +431,35 @@
       .main-brick-container {
         display: flex;
         position: relative;
-        padding: 0.8vw 0 0 0.8vw;
-        min-height: 9.4vh;
+        @include phone_and_tabletP {
+        }
+        @include tabletP {
+          padding: 0.8vw 0 0 0.8vw;
+          min-height: 9.4vh;
+        }
         .brick-container {
           width: 100%;
           position: relative;
-          height: $min-brick-height;
           font-family: $font-family-regular;
           text-align: left;
           @include phone_and_tabletP {
             text-align: center;
+            margin-bottom: 2vw;
+          }
+          @include tabletP {
+            height: $min-brick-height;
           }
           .short-brick-info {
-            position: absolute;
-            top: 0.3vh;
-            left: 3vw;
             @include phone_and_tabletP {
-              top: 0.5vh;
-              left: 12vw;
               width: calc(100% - 4vh);
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
+            }
+            @include tabletP {
+              position: absolute;
+              top: 0.3vh;
+              left: 3vw;
             }
             .link-description {
               text-transform: uppercase;
@@ -555,16 +563,21 @@
             margin-bottom: 16px !important;
           }
           .absolute-container {
-            position: absolute;
             border-radius: $brick-radius;
             color: var(--theme-dark-blue);
-            width: 95%;
             text-align: left;
-            height: $min-brick-height;
+            @include tabletP {
+              height: $min-brick-height;
+              position: absolute;
+              width: 95%;
+            }
             .short-description {
               display: flex;
               width: 100%;
               height: 100%;
+              @include phone_and_tabletP {
+                align-items: center;
+              }
               .left-brick-roller {
                 position: absolute;
                 top: 1.5vh;
@@ -575,16 +588,21 @@
                 }
               }
               .left-brick-circle {
-                position: absolute;
-                top: 1.3vh;
+                @include phone_and_tabletP {
+                  margin-right: 3vw;
+                }
+                @include tabletP {
+                  position: absolute;
+                  top: 1.3vh;
+                }
                 > div {
                   height: 2.1vw;
                   width: 2.1vw;
                   border-radius: 20vw;
                   background-color: var(--gray);
                   @include phone_and_tabletP {
-                    height: 8.1vw;
-                    width: 8.1vw;
+                    height: 9.5vw;
+                    width: 9.5vw;
                   }
                 }
               }
@@ -594,9 +612,15 @@
                 }
                 .play-button-link {
                   width: 10vw;
-                  height: 10vh;
-                  position: absolute;
-                  right: 0;
+                  @include phone_and_tabletP {
+                    margin-left: 3vw;
+                    height: 7vh;
+                  }
+                  @include tabletP {
+                    position: absolute;
+                    right: 0;
+                    height: 10vh;
+                  }
                 }
               }
             }
