@@ -117,37 +117,39 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
   }
 
   return (
-    <div className="brick-container provisional-score-page">
+    <div>
       <Hidden only={['xs']}>
-        <Grid container direction="row">
-          <Grid item xs={8}>
-            <div className="introduction-page">
-              <div className="question-index-container">
-                <div className="question-index">P</div>
+        <div className="brick-container provisional-score-page">
+          <Grid container direction="row">
+            <Grid item xs={8}>
+              <div className="introduction-page">
+                <div className="question-index-container">
+                  <div className="question-index">P</div>
+                </div>
+                <h1>Provisional Score</h1>
+                {renderProgressBar()}
               </div>
-              <h1>Provisional Score</h1>
-              {renderProgressBar()}
-            </div>
+            </Grid>
+            <Grid item xs={4}>
+              <div className="introduction-info">
+                <div className="intro-header">
+                  <Clock brickLength={brick.brickLength} />
+                </div>
+                <div className="intro-text-row">
+                  <ReviewStepper
+                    questions={brick.questions}
+                    attempts={attempts}
+                    handleStep={() => { }}
+                  />
+                </div>
+                {renderFooter()}
+              </div>
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <div className="introduction-info">
-              <div className="intro-header">
-                <Clock brickLength={brick.brickLength} />
-              </div>
-              <div className="intro-text-row">
-                <ReviewStepper
-                  questions={brick.questions}
-                  attempts={attempts}
-                  handleStep={() => { }}
-                />
-              </div>
-              {renderFooter()}
-            </div>
-          </Grid>
-        </Grid>
+        </div>
       </Hidden>
       <Hidden only={['sm', 'md', 'lg', 'xl',]}>
-        <div className="mobile-provisional-score">
+        <div className="brick-container provisional-score-page mobile-provisional-score">
           <div className="introduction-page">
             <div className="question-index-container">
               <div className="question-index">P</div>
