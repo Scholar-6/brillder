@@ -3,23 +3,18 @@
 i.e. add back button on menu and row along top of 'my bricks'  6/7/2020 */
 import "./Dashboard.scss";
 import React, { Component } from "react";
-import {
-  Box,
-  Grid,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Hidden,
-} from "@material-ui/core";
+import { Box, Grid, Hidden } from "@material-ui/core";
 import { Category } from "./interface";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
+
 import sprite from "../../../assets/img/icons-sprite.svg";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
-import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
@@ -28,8 +23,7 @@ import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDes
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper.scss';
+import DashboardFilter, { SortBy } from './DashboardFilter';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -63,22 +57,12 @@ interface BricksListState {
   deleteDialogOpen: boolean;
   deleteBrickId: number;
 
-  filterExpanded: boolean;
-  filterHeight: string;
   isClearFilter: any;
   failedRequest: boolean;
   pageSize: number;
 }
 
-enum SortBy {
-  None,
-  Date,
-  Popularity,
-}
-
 class DashboardPage extends Component<BricksListProps, BricksListState> {
-  pageHeader: React.RefObject<any>;
-
   constructor(props: BricksListProps) {
     super(props);
     this.state = {
@@ -96,8 +80,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       isSearching: false,
       pageSize: 15,
 
-      filterExpanded: true,
-      filterHeight: "auto",
       isClearFilter: false,
       failedRequest: false,
     };
@@ -136,8 +118,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }).catch((error) => {
       this.setState({ ...this.state, failedRequest: true });
     });
-
-    this.pageHeader = React.createRef();
   }
 
   delete(brickId: number) {
@@ -214,16 +194,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   //region Hide / Expand / Clear Filter
-  hideFilter() {
-    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-  }
-  expandFilter() {
-    this.setState({
-      ...this.state,
-      filterExpanded: true,
-      filterHeight: "auto",
-    });
-  }
   filterClear() {
     this.setState({
       isClearFilter: this.state.subjects.some((r: any) => r.checked)
@@ -577,67 +547,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
   //region Mobile
 
-  renderSortAndFilterBox = () => {
-    return (
-      <div className="sort-box">
-        <div className="filter-container sort-by-box">
-          <div className="sort-header">Sort By</div>
-          <RadioGroup
-            className="sort-group"
-            aria-label="SortBy"
-            name="SortBy"
-            value={this.state.sortBy}
-            onChange={this.handleSortChange}
-          >
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <FormControlLabel
-                  value={SortBy.Popularity}
-                  style={{ marginRight: 0, width: "50%" }}
-                  control={<Radio className="sortBy" />}
-                  label="Popularity"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <FormControlLabel
-                  value={SortBy.Date}
-                  style={{ marginRight: 0 }}
-                  control={<Radio className="sortBy" />}
-                  label="Date Added"
-                />
-              </Grid>
-            </Grid>
-          </RadioGroup>
-        </div>
-        <div className="filter-header">
-          <span>Filter</span>
-          <button
-            className={
-              "btn-transparent filter-icon " +
-              (this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? "arrow-cancel"
-                  : "arrow-down"
-                : "arrow-up")
-            }
-            onClick={() => {
-              this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? this.clearSubjects()
-                  : this.hideFilter()
-                : this.expandFilter();
-            }}
-          ></button>
-        </div>
-        <SubjectsList
-          subjects={this.state.subjects}
-          filterHeight={this.state.filterHeight}
-          filterBySubject={this.filterBySubject}
-        />
-      </div>
-    );
-  };
-
   renderYourBrickRow = () => {
     let bricksList = [];
     let index = 0;
@@ -752,7 +661,14 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         </Hidden>
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
-            {this.renderSortAndFilterBox()}
+            <DashboardFilter
+              sortBy={this.state.sortBy}
+              subjects={this.state.subjects}
+              isClearFilter={this.state.isClearFilter}
+              handleSortChange={e => this.handleSortChange(e)}
+              clearSubjects={() => this.clearSubjects()}
+              filterBySubject={index => this.filterBySubject(index)}
+            />
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={['xs']}>
