@@ -52,6 +52,16 @@ class CommentCustom extends Plugin {
             viewToModelPositionOutsideModelElement( this.editor.model, (viewElement: any) => viewElement.hasClass( 'comment' ) )
         );
 
+        editor.editing.view.document.on('delete', (evt: any, data: any) => {
+            const items = Array.from<any>(editor.model.document.selection.getFirstRange().getItems())
+            const filteredItems = items.filter(item => item.name == "comment");
+            if(filteredItems.length > 0) {
+                data.stopPropagation();
+                data.preventDefault();
+                evt.stop();
+            }
+        }, { priority: 'highest' });
+
         editor.ui.componentFactory.add('addComment', (locale: any) => {
             const view = new ButtonView(locale);
 
@@ -62,6 +72,9 @@ class CommentCustom extends Plugin {
             });
 
             view.on('execute', () => {
+                const selection = editor.model.document.selection;
+                let selectedElement: any;
+
                 editor.model.change((writer: any) => {
                     const commentElement = writer.createElement('comment', {
                         commentId: 1,
