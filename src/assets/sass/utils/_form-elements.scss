@@ -143,10 +143,13 @@ input {
       background-color: var(--gray-alpha4) !important;
     }
   }
-  &:not(.Mui-checked) {
+  &.checkbox-invalid {
     color: var(--theme-orange) !important;
     &:hover {
       background-color: var(--theme-orange-alpha4) !important;
+    }
+    svg {
+      color: var(--theme-orange) !important;
     }
   }
   &.Mui-checked {
@@ -154,7 +157,7 @@ input {
     &:hover {
       background-color: var(--theme-green-alpha4) !important;
     }
-    .MuiSvgIcon-root {
+    svg {
       color: var(--theme-green) !important;
     }
   }
