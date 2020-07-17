@@ -19,7 +19,6 @@ import ShortBrickDescription from "components/baseComponents/ShortBrickDescripti
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import { ReduxCombinedState } from "redux/reducers";
-import brickActions from "redux/actions/brickActions";
 import DashboardFilter, { SortBy } from './DashboardFilter';
 
 
@@ -27,16 +26,11 @@ const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
 });
 
-const mapDispatch = (dispatch: any) => ({
-  forgetBrick: () => dispatch(brickActions.forgetBrick()),
-});
-
-const connector = connect(mapState, mapDispatch);
+const connector = connect(mapState);
 
 interface BricksListProps {
   user: User;
   history: any;
-  forgetBrick(): void;
 }
 
 interface BricksListState {
@@ -236,18 +230,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
   yourBricksMouseHover(index: number) {
     let { yourBricks, finalBricks } = this.state;
-    finalBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
-    yourBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
+    this.hideBricks();
     this.setState({ ...this.state });
     setTimeout(() => {
       let { yourBricks } = this.state;
-      yourBricks.forEach((brick) => {
-        brick.expanded = false;
-      });
+      this.hideBricks();
       if (!yourBricks[index].expandFinished) {
         yourBricks[index].expanded = true;
       }
@@ -257,9 +244,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
   yourBricksMouseLeave(key: number) {
     let { yourBricks } = this.state;
-    yourBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
+    this.hideBricks();
     yourBricks[key].expandFinished = true;
     this.setState({ ...this.state });
     setTimeout(() => {
@@ -273,9 +258,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     this.setState({ ...this.state });
     setTimeout(() => {
       let { finalBricks } = this.state;
-      finalBricks.forEach((brick) => {
-        brick.expanded = false;
-      });
+      this.hideBricks();
       if (!finalBricks[index].expandFinished) {
         finalBricks[index].expanded = true;
       }
@@ -303,9 +286,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
   handleMouseLeave(key: number) {
     let { finalBricks } = this.state;
-    finalBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
+    this.hideBricks();
     finalBricks[key].expandFinished = true;
     this.setState({ ...this.state });
     setTimeout(() => {
@@ -335,19 +316,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  showDropdown() {
-    this.setState({ ...this.state, dropdownShown: true });
-  }
-
-  hideDropdown() {
-    this.setState({ ...this.state, dropdownShown: false });
-  }
-
-  keySearch(e: any) {
-    if (e.keyCode === 13) {
-      this.search();
-    }
-  }
+  showDropdown() { this.setState({ ...this.state, dropdownShown: true }) }
+  hideDropdown() { this.setState({ ...this.state, dropdownShown: false }) }
 
   search() {
     const { searchString } = this.state;
@@ -370,11 +340,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       .catch((error) => {
         alert("Can`t get bricks");
       });
-  }
-
-  creatingBrick() {
-    this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
   }
 
   getBrickColor(brick: Brick) {
