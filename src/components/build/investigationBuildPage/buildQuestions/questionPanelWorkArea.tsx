@@ -118,6 +118,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     hoverMarginTop="0vw"
                     fontFamily="Brandon Grotesque Bold"
                     value={QuestionComponentTypeEnum.Text}
+                    className="text-box"
                   />
                   <DragBox
                     locked={locked}
