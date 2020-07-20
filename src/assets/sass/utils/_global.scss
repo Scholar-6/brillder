@@ -469,13 +469,14 @@ h3 {
 .vertical-shuffle-choice,
 .choose-choice {
   display: block;
-  font: $answer-input-text-size $font-family-regular;
-  margin: 0.5vh 0 !important;
+  font-size: $answer-input-text-size;
+  margin: 0.3vw 0 !important;
+  padding: 0.3vw 0 !important;
   color: var(--theme-dark-blue) !important;
   text-align: center;
   text-transform: none !important;
   width: 100%;
-  padding: 0.5vh 0 !important;
+  border-radius: 0.4vw !important;
   background-color: var(--tab-gray) !important;
   opacity: 1;
   float: left;
@@ -487,9 +488,9 @@ h3 {
   }
   .MuiButton-label {
     flex-direction: column;
-  }
-  img {
-    width: 100%;
+    img {
+      width: calc(100% - 0.6vw);
+    }
   }
   p {
     text-align: center !important;

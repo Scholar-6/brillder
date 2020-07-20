@@ -70,16 +70,15 @@
             font-family: $font-family-bold;
             line-height: 1.1;
             margin-bottom: 0.5vh;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             @include phone_and_tabletP {
-              // overflow: hidden;
-              // white-space: nowrap;
-              // text-overflow: ellipsis;
               font-size: 3.8vw;
               width: 100%;
             }
             @include tabletP {
               font-size: 0.8vw;
-              overflow: hidden;
               width: 19vw;
             }
           }
@@ -88,11 +87,11 @@
             line-height: 1.3;
             font-family: $font-family-regular;
             margin-bottom: 0.1vh;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             @include phone_and_tabletP {
-              width: 100%;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
               font-size: 3.8vw;
             }
             @include tabletP {

@@ -5,7 +5,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import sprite from "../../../../assets/img/icons-sprite.svg";
 import './Hint.scss';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
@@ -17,6 +17,8 @@ const HtmlTooltip = withStyles((theme: any) => ({
     padding: '1.5vh 1vw',
     maxWidth: '17vw',
     border: 0,
+    fontSize: '0.8vw',
+    fontFamily: 'Brandon Grotesque Regular',
   },
 }))(Tooltip);
 
@@ -162,8 +164,7 @@ const HintComponent: React.FC<HintProps> = ({
       <div className="hint-header">
         <div>
           <div className="hint-type-text">
-            <div>H I N T</div>
-            <div>T Y P E</div>
+            <span>HINT<br />TYPE</span>
           </div>
         </div>
         <div>
@@ -177,13 +178,11 @@ const HintComponent: React.FC<HintProps> = ({
           </ToggleButtonGroup>
         </div>
         <div>
-          <FiberManualRecordIcon className="hint-question-circle" />
-          <div className="hint-type">
+          <div className="hint-question-circle">
             <HtmlTooltip
               title={
                 <React.Fragment>
-                  <div className="hint-question-mark-hover-title">
-                    <span className="question-mark">?</span>
+                  <div>
                     Hints ensure that the learner has to keep
                     re-evaluating when reviewing material.
                     This is why our interface does not allow for standard true or false questions:
@@ -193,9 +192,13 @@ const HintComponent: React.FC<HintProps> = ({
                     </div>
                   </div>
                 </React.Fragment>
-              }
-            >
-              <span className="question-mark">?</span>
+            }>
+              <button className="btn btn-transparent svgOnHover question-mark">
+                <svg className="svg w80 h80 active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#help-thin"} />
+                </svg>
+              </button>
             </HtmlTooltip>
           </div>
         </div>
