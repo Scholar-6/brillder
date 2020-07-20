@@ -1,0 +1,1 @@
+export default jest.genMockFromModule('@ckeditor/ckeditor5-editor-classic/src/classiceditor');
