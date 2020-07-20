@@ -23,6 +23,9 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { checkAdmin } from "components/services/brickService";
 
 import sprite from "../../../assets/img/icons-sprite.svg";
+import NotificationPanel from 'components/baseComponents/notificationPanel/NotificationPanel';
+import ReactDOM from 'react-dom';
+import TimerWithClock from 'components/play/brick/baseComponents/TimerWithClock';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -65,6 +68,7 @@ interface UsersListState {
   filterExpanded: boolean;
   logoutDialogOpen: boolean;
   dropdownShown: boolean;
+  notificationsShown: boolean;
   filterHeight: string;
   isAdmin: boolean;
 
@@ -127,6 +131,8 @@ const IOSSwitch = anyStyles((theme: any) => ({
 
 
 class UsersListPage extends Component<UsersListProps, UsersListState> {
+  pageHeader: React.RefObject<any>;
+
   constructor(props: UsersListProps) {
     super(props)
     this.state = {
@@ -149,6 +155,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       searchString: '',
       isSearching: false,
       dropdownShown: false,
+      notificationsShown: false,
       filterHeight: 'auto',
 
       sortBy: UserSortBy.None,
@@ -166,6 +173,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     }).catch(error => {
       alert('Can`t get subjects');
     });
+
+    this.pageHeader = React.createRef();
   }
 
   getUsers(
@@ -314,6 +323,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     this.setState({ ...this.state, dropdownShown: false });
   }
 
+  showNotifications() {
+    this.setState({ ...this.state, notificationsShown: true });
+  }
+
+  hideNotifications() {
+    this.setState({ ...this.state, notificationsShown: false });
+  }
+
   filterBySubject = (i: number) => {
     const { subjects } = this.state;
     subjects[i].checked = !subjects[i].checked
@@ -429,40 +446,42 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     }
 
     return (
-      <Grid container direction="row" className="users-pagination">
-        <Grid item xs={4} className="left-pagination">
-          <div className="first-row">
-            {minUser}-{maxUser}
-            <span className="gray"> &nbsp;|&nbsp; {totalCount}</span>
-          </div>
-          <div>
-            {page + 1}
-            <span className="gray"> &nbsp;|&nbsp; {Math.ceil(totalCount / pageSize)}</span>
-          </div>
+      <div className="users-pagination">
+        <Grid container direction="row">
+          <Grid item xs={4} className="left-pagination">
+            <div className="first-row">
+              {minUser}-{maxUser}
+              <span className="gray"> &nbsp;|&nbsp; {totalCount}</span>
+            </div>
+            <div>
+              {page + 1}
+              <span className="gray"> &nbsp;|&nbsp; {Math.ceil(totalCount / pageSize)}</span>
+            </div>
+          </Grid>
+          <Grid container item xs={4} justify="center" className="bottom-next-button">
+            <div>
+              {showPrev
+                ? <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
+                  onClick={previousPage}>
+                  <svg className="svg w100 h100 active">
+                    {/*eslint-disable-next-line*/}
+                    <use href={sprite + "#arrow-up"} />
+                  </svg>
+                </button>
+                : ""}
+              {showNext
+                ? <button className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
+                  onClick={nextPage}>
+                  <svg className="svg w100 h100 active">
+                    {/*eslint-disable-next-line*/}
+                    <use href={sprite + "#arrow-down"} />
+                  </svg>
+                </button>
+                : ""}
+            </div>
+          </Grid>
         </Grid>
-        <Grid container item xs={4} justify="center" className="bottom-next-button">
-          <div>
-            {showPrev
-              ? <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
-                onClick={previousPage}>
-                <svg className="svg w100 h100 active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#arrow-up"} />
-                </svg>
-              </button>
-              : ""}
-            {showNext
-              ? <button className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
-                onClick={nextPage}>
-                <svg className="svg w100 h100 active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#arrow-down"} />
-                </svg>
-              </button>
-              : ""}
-          </div>
-        </Grid>
-      </Grid>
+      </div>
     );
   }
 
@@ -547,40 +566,42 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   renderUsers() {
     if (!this.state.users) { return "" }
     return (
-      <table className="users-table" cellSpacing="0" cellPadding="0">
-        <thead>
-          {this.renderUserTableHead()}
-        </thead>
-        <tbody>
-          {
-            this.state.users.map((user: any, i: number) => {
-              return (
-                <tr className="user-row" key={i}>
-                  <td></td>
-                  <td>
-                    <span className="user-first-name">{user.firstName} </span>
-                    <span className="user-last-name">{user.lastName}</span>
-                  </td>
-                  <td>{user.email}</td>
-                  <td>{this.renderUserType(user)}</td>
-                  <td className="activate-button-container">
-                    <IOSSwitch
-                      checked={user.status === UserStatus.Active}
-                      onChange={() => this.toggleUser(user)}
+      <div className="users-table">
+        <table cellSpacing="0" cellPadding="0">
+          <thead>
+            {this.renderUserTableHead()}
+          </thead>
+          <tbody>
+            {
+              this.state.users.map((user: any, i: number) => {
+                return (
+                  <tr className="user-row" key={i}>
+                    <td></td>
+                    <td>
+                      <span className="user-first-name">{user.firstName} </span>
+                      <span className="user-last-name">{user.lastName}</span>
+                    </td>
+                    <td>{user.email}</td>
+                    <td>{this.renderUserType(user)}</td>
+                    <td className="activate-button-container">
+                      <IOSSwitch
+                        checked={user.status === UserStatus.Active}
+                        onChange={() => this.toggleUser(user)}
+                      />
+                    </td>
+                    <UserActionsCell
+                      userId={user.id}
+                      history={this.props.history}
+                      isAdmin={this.state.isAdmin}
+                      onDelete={userId => this.onUserDeleted(userId)}
                     />
-                  </td>
-                  <UserActionsCell
-                    userId={user.id}
-                    history={this.props.history}
-                    isAdmin={this.state.isAdmin}
-                    onDelete={userId => this.onUserDeleted(userId)}
-                  />
-                </tr>
-              );
-            })
-          }
-        </tbody>
-      </table>
+                  </tr>
+                );
+              })
+            }
+          </tbody>
+        </table>
+      </div>
     );
   }
 
@@ -598,16 +619,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
   renderTableHeader() {
     return (
-      <Grid container direction="row">
-        <Grid item xs={7}>
-          <div className="brick-row-title">
-            ALL USERS
-          </div>
-        </Grid>
-        <Grid container item xs={5} justify="flex-end">
-          <AddUserButton history={this.props.history} />
-        </Grid>
-      </Grid>
+      <div className="user-header">
+        <h1 className="brick-row-title">ALL USERS</h1>
+        <AddUserButton history={this.props.history} />
+      </div>
     );
   }
 
@@ -616,11 +631,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     return (
       <div className="user-list-page">
         <div className="upper-part">
-          <PageHeader
+          <PageHeader ref={this.pageHeader}
             searchPlaceholder="Search by Name,  Email or Subject"
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
             showDropdown={() => this.showDropdown()}
+            showNotifications={() => this.showNotifications()}
           />
           <Menu
             className="menu-dropdown"
@@ -675,13 +691,16 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             {this.renderTableHeader()}
-            <Grid container direction="row">
-              {this.renderUsers()}
-              {this.renderRoleDescription()}
-            </Grid>
+            {this.renderUsers()}
+            {this.renderRoleDescription()}
             {this.renderPagination()}
           </Grid>
         </Grid>
+        <NotificationPanel
+          shown={this.state.notificationsShown}
+          handleClose={() => this.hideNotifications()}
+          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
+        />
         <Dialog
           open={this.state.logoutDialogOpen}
           onClose={() => this.handleLogoutClose()}

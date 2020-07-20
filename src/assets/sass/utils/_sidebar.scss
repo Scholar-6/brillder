@@ -308,7 +308,6 @@
     margin-left: 1vw;
     flex-basis: inherit;
     max-width: inherit;
-    overflow-y: auto;
     @include phone_and_tabletP {
       width: 100%;
       height: $height-mobile-view;
@@ -318,6 +317,7 @@
       border-top-left-radius: 10vw;
     }
     @include tabletP {
+      overflow-y: auto;
       width: calc(75% - 1vw);
       height: $height-desktop-view;
       background: var(--light-gray);
@@ -333,8 +333,7 @@
         padding-top: 1.3vh;
         border-bottom: 0.2vh solid var(--light-gray);
         padding-bottom: 0.9vh;
-        margin-bottom: 2.5vh;
-        background-color: var(--white);
+        margin-bottom: 0.5vh;
         z-index: 10;
         display: flex;
         align-items: center;
@@ -360,6 +359,7 @@
         font-size: 5.2vw;
       }
     }
+
     .core-public-toggle {
       position: absolute;
       right: 3vw;
@@ -399,6 +399,10 @@
       }
     }
     .bricks-list-container {
+      @include phone_and_tabletP {
+        overflow-y: auto;
+        padding: 3vw 0;
+      }
       @include tabletP {
         height: 64vh !important;
         overflow: auto;
@@ -427,28 +431,35 @@
       .main-brick-container {
         display: flex;
         position: relative;
-        padding: 0.8vw 0 0 0.8vw;
-        min-height: 9.4vh;
+        @include phone_and_tabletP {
+        }
+        @include tabletP {
+          padding: 0.8vw 0 0 0.8vw;
+          min-height: 9.4vh;
+        }
         .brick-container {
           width: 100%;
           position: relative;
-          height: $min-brick-height;
           font-family: $font-family-regular;
           text-align: left;
           @include phone_and_tabletP {
             text-align: center;
+            margin-bottom: 2vw;
+          }
+          @include tabletP {
+            height: $min-brick-height;
           }
           .short-brick-info {
-            position: absolute;
-            top: 0.3vh;
-            left: 3vw;
             @include phone_and_tabletP {
-              top: 0.5vh;
-              left: 12vw;
               width: calc(100% - 4vh);
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
+            }
+            @include tabletP {
+              position: absolute;
+              top: 0.3vh;
+              left: 3vw;
             }
             .link-description {
               text-transform: uppercase;
@@ -552,16 +563,21 @@
             margin-bottom: 16px !important;
           }
           .absolute-container {
-            position: absolute;
             border-radius: $brick-radius;
             color: var(--theme-dark-blue);
-            width: 95%;
             text-align: left;
-            height: $min-brick-height;
+            @include tabletP {
+              height: $min-brick-height;
+              position: absolute;
+              width: 95%;
+            }
             .short-description {
               display: flex;
               width: 100%;
               height: 100%;
+              @include phone_and_tabletP {
+                align-items: center;
+              }
               .left-brick-roller {
                 position: absolute;
                 top: 1.5vh;
@@ -572,16 +588,21 @@
                 }
               }
               .left-brick-circle {
-                position: absolute;
-                top: 1.3vh;
+                @include phone_and_tabletP {
+                  margin-right: 3vw;
+                }
+                @include tabletP {
+                  position: absolute;
+                  top: 1.3vh;
+                }
                 > div {
                   height: 2.1vw;
                   width: 2.1vw;
                   border-radius: 20vw;
                   background-color: var(--gray);
                   @include phone_and_tabletP {
-                    height: 8.1vw;
-                    width: 8.1vw;
+                    height: 9.5vw;
+                    width: 9.5vw;
                   }
                 }
               }
@@ -591,9 +612,15 @@
                 }
                 .play-button-link {
                   width: 10vw;
-                  height: 10vh;
-                  position: absolute;
-                  right: 0;
+                  @include phone_and_tabletP {
+                    margin-left: 3vw;
+                    height: 7vh;
+                  }
+                  @include tabletP {
+                    position: absolute;
+                    right: 0;
+                    height: 10vh;
+                  }
                 }
               }
             }
@@ -631,89 +658,97 @@
       }
     }
     .users-table {
-      border: none;
       width: calc(100% + 1.18vw);
       margin-left: -1.18vw;
-      thead {
-        background: var(--tab-gray);
-        color: var(--theme-dark-blue);
-        font-family: $font-family-black;
-        font-size: 1.3vw;
-        letter-spacing: 0.25vw;
-        tr {
-          th {
-            padding-top: 0.6vh;
-            padding-bottom: 0.6vh;
-            text-align: left;
-            padding-left: 0.5vw;
+      height: 60.5vh;
+      overflow-y: auto;
+      > table {
+        width: 100%;
+        border: none;
+        thead {
+          background: var(--tab-gray);
+          color: var(--theme-dark-blue);
+          font-family: $font-family-black;
+          font-size: 1.3vw;
+          letter-spacing: 0.25vw;
+          tr {
+            th {
+              padding-top: 0.6vh;
+              padding-bottom: 0.6vh;
+              text-align: left;
+              padding-left: 0.5vw;
 
-            .sort-button {
-              cursor: pointer;
-              margin-top: 0.3vh;
-              margin-left: 0.4vw;
-              height: 1.5vw;
-              width: 1.5vw;
+              .sort-button {
+                cursor: pointer;
+                margin-top: 0.3vh;
+                margin-left: 0.4vw;
+                height: 1.5vw;
+                width: 1.5vw;
+              }
+            }
+
+            .subject-title {
+              width: 5%;
+            }
+            .user-full-name {
+              width: 30%;
+            }
+            .email-column {
+              width: 31.3%;
+            }
+            .edit-button-column {
+              width: 2.5vw;
             }
           }
-
-          .subject-title {
-            width: 5%;
+        }
+        tr.user-row {
+          height: 4.5vh;
+          td {
+            padding-left: 0.5vw;
+            color: var(--theme-dark-blue);
+            font-size: 1vw;
+            padding-top: 0;
           }
-          .user-full-name {
-            width: 30%;
+          .user-actions-cell {
+            min-width: 5.5vw;
+            .delete-button,
+            .edit-button {
+              display: inline-block;
+              cursor: pointer;
+              height: 1.85vw;
+              width: 1.85vw;
+            }
+            .edit-button {
+              margin-left: 1vw;
+            }
           }
-          .email-column {
-            width: 31.3%;
-          }
-          .edit-button-column {
-            width: 2.5vw;
+          .activate-button-container {
+            padding-left: 2vw;
           }
         }
-      }
-      tr.user-row {
-        height: 4.5vh;
-        td {
-          padding-left: 0.5vw;
-          color: var(--theme-dark-blue);
-          font-size: 1vw;
-          padding-top: 0;
+        tr.user-row:nth-child(even) {
+          background: var(--tab-gray);
         }
-        .user-actions-cell {
-          min-width: 5.5vw;
-          .delete-button,
-          .edit-button {
-            display: inline-block;
-            cursor: pointer;
-            height: 1.85vw;
-            width: 1.85vw;
-          }
-          .edit-button {
-            margin-left: 1vw;
-          }
+        .user-last-name {
+          font-family: $font-family-bold;
         }
-        .activate-button-container {
-          padding-left: 2vw;
-        }
-      }
-      tr.user-row:nth-child(even) {
-        background: var(--tab-gray);
-      }
-      .user-last-name {
-        font-family: $font-family-bold;
       }
     }
     .role-description {
       width: 100%;
+      height: 2.5vh;
       text-align: right;
       font-size: 0.8vw;
-      margin-top: 0.6vh;
-      margin-right: 6vw;
+      margin: 0.5vh;
       color: var(--theme-dark-blue);
       letter-spacing: 0.015vw;
 
       .bold {
         font-family: $font-family-bold;
       }
+    }
+    .users-pagination {
+      height: 6vh;
     }
   }
 }

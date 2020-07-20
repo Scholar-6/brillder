@@ -24,8 +24,8 @@ $box-radius: 0.4vw;
     @extend %posRelative;
 
     .subjects-group {
-			display: inline;
-			overflow: hidden;
+      display: inline;
+      overflow: hidden;
       overflow-y: auto;
 
       @include phone_and_tabletP {
@@ -43,19 +43,19 @@ $box-radius: 0.4vw;
           font-size: 5.4vw;
         }
         @include tabletP {
-        font-size: 2.4vw;
-      }
+          font-size: 2.4vw;
+        }
       }
       .MuiFormControlLabel-root {
-				margin: 0 !important;
+        margin: 0 !important;
         @include phone_and_tabletP {
           width: 100%;
           padding: 0 4vw;
-          margin-bottom:2vh !important;
+          margin-bottom: 2vh !important;
         }
         @include tabletP {
-        width: 20.5vw;
-      }
+          width: 20.5vw;
+        }
       }
 
       .MuiFormControlLabel-label {
@@ -65,10 +65,10 @@ $box-radius: 0.4vw;
           font-size: 6vw;
         }
         @include tabletP {
-        font-size: 2vw;
+          font-size: 2vw;
+        }
       }
     }
-  }
   }
 
   .only-tutorial-header {
@@ -259,18 +259,18 @@ $box-radius: 0.4vw;
     }
   }
 
-  .pagination-button {
-    @include phone_and_tabletP{
+  .tutorial-pagination {
+    @include phone_and_tabletP {
       width: 100vw;
       margin-bottom: 6vh;
     }
-    @include tabletP{
+    @include tabletP {
       width: 60vw;
     }
-    }
+  }
   // @media only screen and (max-width: 599px) {
   //   .subject-container {
   //     width: 70% !important;
   //   }
   // }
-  }
+}

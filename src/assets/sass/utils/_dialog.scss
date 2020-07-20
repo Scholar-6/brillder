@@ -2,12 +2,13 @@
   z-index: 999999 !important;
   .MuiDialog-paperScrollPaper {
     @extend %m0;
-    width: max-content;
     @include phone_and_tabletP {
       padding: 2.5vw;
       border-radius: 2vw;
+      width: 90%;
     }
     @include tabletP {
+      width: max-content;
       padding: 1.5vw;
       border-radius: 0.8vw;
     }
