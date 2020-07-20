@@ -11,7 +11,6 @@
     margin-bottom: 0.5vh;
     background-color: var(--tab-gray);
     border-radius: 0.4vw;
-    padding-bottom: 0.4vw;
   }
   .document-editor {
     width: 100%;
@@ -19,9 +18,10 @@
       width: 100%;
       .ck-content {
         background-color: var(--tab-gray);
-        padding: 0.5vw !important;
+        padding: 0.3vw 0.3vw 0 0.3vw !important;
         p {
           margin: 0;
+          text-align: center;
         }
       }
     }
