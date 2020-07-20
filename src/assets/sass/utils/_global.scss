@@ -469,9 +469,8 @@ h3 {
 .vertical-shuffle-choice,
 .choose-choice {
   display: block;
-  font-size: $answer-input-text-size;
-  margin: 0.3vw 0 !important;
-  padding: 0.3vw 0 !important;
+  margin: 0 0 0.3vw 0 !important;
+  padding: 0.3vw 0 0 0 !important;
   color: var(--theme-dark-blue) !important;
   text-align: center;
   text-transform: none !important;
