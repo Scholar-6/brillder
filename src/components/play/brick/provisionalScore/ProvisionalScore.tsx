@@ -117,7 +117,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
   }
 
   return (
-    <div>
+    <div className="h100 w100">
       <Hidden only={['xs']}>
         <div className="brick-container provisional-score-page">
           <Grid container direction="row">

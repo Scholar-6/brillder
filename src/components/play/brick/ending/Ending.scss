@@ -1,6 +1,6 @@
-@import "../../../../assets/sass/partials/variables";
-@import "../../../../assets/sass/partials/mixins";
-@import "../../../../assets/sass/partials/extensions";
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .ending-page {
   .begin-row {
@@ -12,7 +12,7 @@
   .start-brick-button {
     margin-right: 0px;
 
-    >span {
+    > span {
       font-family: $font-family-regular;
       font-size: 18px;
       margin-right: 10px;
@@ -46,10 +46,9 @@
 }
 
 .mobile-ending-page {
-  height: 90vh !important;
-  .introduction-page {
-    height: 80vh !important;
-  }
+  height: calc(100vh - 6vh) !important;
+  position: relative;
+  overflow-y: inherit !important;
   .question-live-play {
     margin-left: 0 !important;
     margin-right: 0 !important;
@@ -72,7 +71,7 @@
     position: absolute !important;
     top: 0.2vw !important;
   }
-  
+
   .question-index-container {
     width: 7vw !important;
     height: 7vw !important;
