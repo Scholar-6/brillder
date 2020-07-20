@@ -1,0 +1,167 @@
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
+
+.notification-box {
+  .MuiCardContent-root {
+    padding: 1vw !important;
+  }
+  .MuiPopover-paper {
+    @include phone_and_tabletP {
+      left: 0 !important;
+      top: unset !important;
+      bottom: 6vh;
+      border-radius: 2.5vw 0 0 0;
+      overflow: unset !important;
+    }
+    @include tabletP {
+      border-radius: 0 0 0 2.5vw;
+      left: calc(100% - 37vw) !important;
+    }
+    @include tabletL {
+      left: calc(100% - 30vw) !important;
+    }
+    @include desktop {
+      left: calc(100% - 25vw) !important;
+    }
+    .notification-content {
+      background-color: var(--light-blue);
+      @include phone_and_tabletP {
+        width: 100vw;
+        border-radius: 2.5vw 0 0 0;
+      }
+      @include tabletP {
+        border-radius: 0 0 0 2.5vw;
+        width: 37vw;
+      }
+      @include tabletL {
+        width: 30vw;
+      }
+      @include desktop {
+        width: 25vw;
+      }
+      .notification-list {
+        max-height: 30vh;
+        overflow-x: auto;
+        padding: 0;
+        @include phone_and_tabletP {
+          max-height: 26vh;
+        }
+        li {
+          padding: 0;
+          @extend %displayFlex;
+          @extend %flexAlignCenter;
+          .left-brick-circle {
+            .MuiSvgIcon-fontSizeLarge {
+              font-size: 2.8rem;
+            }
+          }
+          .content-box {
+            display: flex;
+            width: calc(100% - 56px);
+            .notification-time {
+              color: var(--white);
+              text-align: center;
+              white-space: nowrap;
+              margin-top: 0.4vh;
+              @include phone_and_tabletP {
+                font-size: 2.5vw;
+              }
+              @include tabletP {
+                font-size: 0.9vw;
+              }
+              @include tabletL {
+                font-size: 0.8vw;
+              }
+              @include desktop {
+                font-size: 0.7vw;
+              }
+            }
+            .delete-notification {
+              color: var(--white);
+              padding: 0;
+              @extend %width100;
+            }
+          }
+          .notification-detail-single {
+            @extend %textCenter;
+          }
+          .notification-detail,
+          .notification-detail-single {
+            margin: 0;
+            .MuiListItemText-primary,
+            .MuiTypography-colorTextSecondary {
+              @include phone_and_tabletP {
+                font-size: 3.5vw;
+              }
+              @include tabletP {
+                font-size: 1.1vw;
+              }
+              @include tabletL {
+                font-size: 0.9vw;
+              }
+              @include desktop {
+                font-size: 0.8vw;
+              }
+            }
+            .MuiListItemText-primary {
+              color: var(--white);
+              text-transform: uppercase;
+            }
+          }
+          .notification-detail {
+            margin: 0;
+            border-bottom: 0.02vh solid var(--theme-dark-blue);
+            @include phone_and_tabletP {
+              padding-bottom: 1vh;
+            }
+            @include tabletP {
+              padding-bottom: 0.5vw;
+            }
+            .MuiTypography-colorTextSecondary {
+              color: var(--white-alpha6);
+            }
+          }
+        }
+      }
+    }
+    .clear-notification,
+    .notification-content .delete-notification {
+      svg {
+        @include phone {
+          width: 7vw;
+          height: 7vw;
+        }
+        @include tabletP {
+          width: 2vw;
+          height: 2vw;
+        }
+      }
+    }
+    .clear-notification {
+      background-color: var(--theme-orange);
+      color: var(--white);
+      justify-content: flex-end;
+      padding: 0;
+      @include phone_and_tabletP {
+        font-size: 3.5vw;
+        button {
+          padding: 2vw;
+        }
+      }
+      @include tabletP {
+        font-size: 1vw;
+        height: 4.5vh;
+        button {
+          padding-top: 0vw;
+          padding-bottom: 0vw;
+        }
+      }
+      .MuiCardActions-spacing {
+        > :not(:first-child) {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}

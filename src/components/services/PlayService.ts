@@ -7,10 +7,10 @@ import {getUniqueComponent} from 'components/build/investigationBuildPage/questi
 
 export function prefillAttempts(questions: Question[]) {
   
-  let initAttempts:ComponentAttempt[] = [];
+  let initAttempts:ComponentAttempt<any>[] = [];
   
   questions.forEach(question => {
-    let initAttempt = { correct: false, marks: 0, maxMarks: 5 } as ComponentAttempt;
+    let initAttempt = { correct: false, marks: 0, maxMarks: 5 } as ComponentAttempt<any>;
     
     if 
       (question.type === QuestionTypeEnum.ChooseOne) 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ReactSortable } from "react-sortablejs";
-import { Grid, Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 
 import './questionComponents.scss';
@@ -18,6 +18,7 @@ import WordHighlightingComponent from '../questionTypes/wordHighlighting/wordHig
 import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/question';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import { getNonEmptyComponent } from "../../questionService/ValidateQuestionService";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 
 type QuestionComponentsProps = {
@@ -53,7 +54,7 @@ const QuestionComponents = ({
     setComponents(compsCopy);
   }
 
-  const removeInnerComponent = (componentIndex:number) => {
+  const removeInnerComponent = (componentIndex: number) => {
     if (locked) { return; }
     const comps = Object.assign([], components) as any[];
     comps.splice(componentIndex, 1);
@@ -65,7 +66,7 @@ const QuestionComponents = ({
   const addInnerComponent = () => {
     if (locked) { return; }
     const comps = Object.assign([], components) as any[];
-    comps.push({type: 0});
+    comps.push({ type: 0 });
     setComponents(comps);
     updateComponents(comps);
     saveBrick();
@@ -73,7 +74,7 @@ const QuestionComponents = ({
 
   let canRemove = (components.length > 3) ? true : false;
 
-  const updateComponentByIndex = (compData: any, index:number) => {
+  const updateComponentByIndex = (compData: any, index: number) => {
     let copyComponents = Object.assign([], components) as any[];
     copyComponents[index] = compData;
     setComponents(copyComponents);
@@ -133,7 +134,7 @@ const QuestionComponents = ({
       uniqueComponent = WordHighlightingComponent;
     } else {
       history.push(`/build/brick/${brickId}/build/investigation/question`);
-      return <div className="page-loader">...Loading...</div>
+      return <PageLoader content="...Loading..." />;
     }
 
     return (
@@ -199,26 +200,30 @@ const QuestionComponents = ({
           ))
         }
       </ReactSortable>
-      <Grid container direction="row" className="add-dropbox">
-        <Button disabled={locked} className="add-dropbox-button" onClick={addInnerComponent}>
-          + QUESTION COMPONENT
-        </Button>
+      <Grid container direction="row" className={"add-dropbox " + (locked ? 'hide' : '')}>
+        <button className="btn btn-xl btn-block bg-theme-orange" onClick={addInnerComponent}>
+          <span>+ QUESTION COMPONENT</span>
+        </button>
       </Grid>
       <Dialog
         open={dialogOpen}
         onClose={hideDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className="delete-brick-dialog"
-      >
+        className="dialog-box">
         <div className="dialog-header">
-          <div>Permanently delete</div>
-          <div>this component?</div>
+          <div>Permanently delete<br />this component?</div>
         </div>
-        <Grid container direction="row" className="row-buttons" justify="center">
-          <Button className="yes-button" onClick={removeComponentType}>Yes, delete</Button>
-          <Button className="no-button" onClick={hideDialog}>No, keep</Button>
-        </Grid>
+        <div className="dialog-footer">
+          <button className="btn btn-md bg-theme-orange yes-button"
+            onClick={removeComponentType}>
+            <span>Yes, delete</span>
+          </button>
+          <button className="btn btn-md bg-gray no-button"
+            onClick={hideDialog}>
+            <span>No, keep</span>
+          </button>
+        </div>
       </Dialog>
     </div>
   );

@@ -2,71 +2,70 @@
 @import '../../../../assets/sass/partials/mixins';
 @import '../../../../assets/sass/partials/extensions';
 
-
 .phone-question-preview,
 .proposal-phone-preview {
-	.phone {
+  .phone {
     .screen {
       height: 100%;
     }
-	}
-	.volume,
+  }
+  .volume,
   .sleep {
-		position: absolute;
-	}
-	.sensor {
-		width: 0.7vw !important;
-		top: 2.3vw !important;
-		left: 50% !important;
-		height: 0.7vw !important;
-		margin-left: -3.6vw !important;
-		border-radius: 100% !important;
-	}
+    position: absolute;
+  }
+  .sensor {
+    width: 0.7vw !important;
+    top: 2.3vw !important;
+    left: 50% !important;
+    height: 0.7vw !important;
+    margin-left: -3.6vw !important;
+    border-radius: 100% !important;
+  }
 
-	.volume {
-		left: -0.7vw !important;
-		position: absolute;
-		border-top-left-radius: 0.3vw;
-		border-bottom-left-radius: 0.3vw;
-		width: 0.6vw;
-	}
+  .volume {
+    left: -0.7vw !important;
+    position: absolute;
+    border-top-left-radius: 0.3vw;
+    border-bottom-left-radius: 0.3vw;
+    width: 0.6vw;
+  }
 
-	.volume1 {
-		top: 3.9vw;
-		height: 2vw;
-	}
+  .volume1 {
+    top: 3.9vw;
+    height: 2vw;
+  }
 
-	.volume2 {
-		top: 8.1vw;
-		height: 2.4vw;
-	}
+  .volume2 {
+    top: 8.1vw;
+    height: 2.4vw;
+  }
 
-	.volume3 {
-		top: 12vw;
-		height: 2.4vw;
-	}
-	.sleep {
-		border-top-right-radius: 0.4vw;
-		border-bottom-right-radius: 0.4vw;
-		position: absolute;
-		top: 8.55vw;
-		right: -0.76vw;
-		width: 0.6vw;
-		height: 5.7vw;
-	}
-	.custom-component {
+  .volume3 {
+    top: 12vw;
+    height: 2.4vw;
+  }
+  .sleep {
+    border-top-right-radius: 0.4vw;
+    border-bottom-right-radius: 0.4vw;
+    position: absolute;
+    top: 8.55vw;
+    right: -0.76vw;
+    width: 0.6vw;
+    height: 5.7vw;
+  }
+  .custom-component {
     position: relative;
     overflow: hidden;
     width: auto;
     height: 100%;
-	}
-	iframe {
+  }
+  iframe {
     display: inline;
     border: none;
     width: 100%;
     height: 100%;
-	}
-	.mobile-question-component {
+  }
+  .mobile-question-component {
     height: 100%;
     overflow-y: auto !important;
     .quotes-live {
@@ -81,15 +80,25 @@
       padding-top: 2vh;
       padding-left: 1vw;
       padding-right: 1vw;
-		}
-		.pair-match-image-choice {
-			padding: 0.5vw;
-			background: none;
-			img {
-				max-width: 100%;
-				height: auto;
-			}
-		}
+    }
+    .MuiButton-label {
+      flex-direction: column;
+      img {
+        width: calc(100% - 0.6vw);
+        margin-bottom: 0.3vw;
+      }
+      div {
+        display: inline;
+        margin: 0 0 0.5vh 0 !important;
+        &:last-child,
+        &:only-child {
+          margin: 0 !important;
+        }
+      }
+      p {
+        margin: 0 !important;
+      }
+    }
   }
 }
 
@@ -163,46 +172,40 @@
   right: 0;
   width: 34.3vw;
   height: 100%;
-	.phone-question-preview {
-		.screen {
-			height: 100% !important;
-			border-top-right-radius: 1.7vw;
-			border-bottom-left-radius: 1.7vw;
-			border-bottom-right-radius: 1.7vw;
-			overflow: hidden;
-		}
-		.volume,
-		.sleep {
-			background: var(--white) !important;
-		}
-		.phone {
-			background: var(--white);
-			height: 70vh !important;
-			width: 34vh !important;
-			border-radius: 2.6vw !important;
-			padding: 2%;
-			.phone-border {
-				position: relative;
-				height: 100%;
-				background-color: $tab-gray;
-				padding: 0.8vh;
-				border-radius: 2.2vw;
-			}
-			.sensor {
-				position: absolute;
-			}
-			.sleep {
-				right: -0.7vw;
-			}
-		}
-		.custom-component {
-			border-radius: 1.6vw;
-		}
-		.mobile-question-component {
-			.quotes-live {
-				color: var(--theme-dark-blue);
-			}
-		}
-	}
+  .phone-question-preview {
+    .screen {
+      height: 100% !important;
+      border-top-right-radius: 1.7vw;
+      border-bottom-left-radius: 1.7vw;
+      border-bottom-right-radius: 1.7vw;
+      overflow: hidden;
+    }
+    .volume,
+    .sleep {
+      background: var(--white) !important;
+    }
+    .phone {
+      background: var(--white);
+      height: 70vh !important;
+      width: 34vh !important;
+      border-radius: 2.6vw !important;
+      padding: 2%;
+      .phone-border {
+        position: relative;
+        height: 100%;
+        background-color: var(--tab-gray);
+        padding: 0.8vh;
+        border-radius: 2.2vw;
+      }
+      .sensor {
+        position: absolute;
+      }
+      .sleep {
+        right: -0.7vw;
+      }
+    }
+    .custom-component {
+      border-radius: 1.6vw;
+    }
+  }
 }
-

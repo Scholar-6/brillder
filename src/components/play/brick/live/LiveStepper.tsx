@@ -1,5 +1,4 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
 
 import "./Live.scss";
 import { Question } from "model/question";
@@ -45,21 +44,21 @@ const LiveStepper: React.FC<StepperProps> = ({
     questionIndex++;
     let index = questionIndex;
     return (
-      <Grid item xs={colWidth as any} key={key} className={className} onClick={handleStep(index - 1)}>
+      <div  key={key} className={className} onClick={handleStep(index - 1)}>
         <span>{questionIndex}</span>
         {question.edited ? (
           <PulsingCircle isPulsing={previousStep === questionIndex - 1} />
         ) : (
           ""
         )}
-      </Grid>
+      </div>
     );
   };
 
   return (
-    <Grid container direction="row" className="stepper">
-      {questions.map((question, index) => renderQuestionStep(question, index, colWidth))}
-    </Grid>
+    <div  className="stepper">
+        {questions.map((question, index) => renderQuestionStep(question, index, colWidth))}
+    </div>
   );
 };
 

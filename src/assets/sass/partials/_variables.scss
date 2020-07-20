@@ -6,31 +6,30 @@ $colors: (
   'input-gray': #fafafb,
   'gray': #b0b0ad,
   'lighter-blue': #304775,
-	'light-blue': #193266,
   'light-blue2': #193366,
   'blue': #0681db,
   'white-blue': #8ad6e8,
-  'left-gray': #e6e6ed,
+  'tab-dark-gray': #e6e6ed,
   'tab-gray': #e5e8ed,
   'light-gray': #f3f4f7,
+	'light-blue': #193266,
   'theme-dark-blue': #001c58,
   'theme-green': #30c474,
   'theme-orange': #c43c30,
+  'theme-dark-orange': #9e281d,
   'pelorous': #17a2b8,
   'yellow': #ff9d00,
-  'off-white': #f5f5f5,
+  'off-white': #f5f6f7,
   'muted': #777777,
 );
 
 $global-light-text-gray: #757576;
 $black-blue: #0b3b7f;
-$tab-gray: #e5e8ed;
 $input-gray: #fafafb;
 $lighter-blue: #304775;
 $blue: #0681db;
 $white-blue: #8ad6e8;
 $button-box: #e1e5eb;
-$left-gray: #e6e6ed;
 
 $base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5), 10px 10px 15px rgba(70, 70, 70, 0.12);
 
@@ -69,8 +68,8 @@ $left: 0.8vw;
 $right: 1.4vw;
 $answer-input-text-size: 1vw;
 
-$height-mobile-view: calc(100vh - 46vh);
-$back-to-work-height-mobile-view: calc(100vh - 6vh);
+$height-mobile-view: calc(100vh - 48.5vh);
+$back-to-work-height-mobile-view: 100vh;
 $height-desktop-view: calc(100vh - 7.834vw);
 
 $answer-height: 3.9vw;

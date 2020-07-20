@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Grid, Button } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 
 import "./FailedRequestDialog.scss";
@@ -20,19 +19,20 @@ class ShuffleAnswerDialog extends Component<ShuffleAnswerDialogProps> {
         onClose={() => this.props.hide()}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className="delete-brick-dialog"
-      >
+        className="dialog-box">
         <div className="dialog-header">
           <div>Is this your answer?</div>
         </div>
-        <Grid container direction="row" className="row-buttons" justify="center">
-          <Button className="yes-button" onClick={() => this.props.submit()}>
-            Yes
-          </Button>
-          <Button className="no-button" onClick={() => this.props.close()}>
-            No, skip
-          </Button>
-        </Grid>
+        <div className="dialog-footer">
+          <button className="btn btn-md bg-theme-orange yes-button"
+            onClick={() => this.props.submit()}>
+            <span>Yes</span>
+          </button>
+          <button className="btn btn-md bg-gray no-button"
+            onClick={() => this.props.close()}>
+            <span>No, skip</span>
+          </button>
+        </div>
       </Dialog>
     );
   }

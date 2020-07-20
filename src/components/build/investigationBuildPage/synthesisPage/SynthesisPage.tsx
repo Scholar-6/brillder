@@ -8,30 +8,45 @@ export interface SynthesisProps {
   locked: boolean;
   synthesis: string;
   onSynthesisChange(text: string): void
-  onReview(): void
 }
 
-const SynthesisPage: React.FC<SynthesisProps> = ({ locked, synthesis, onSynthesisChange, onReview }) => {
-  return (
-    <div className="question-type synthesis-page">
-      <div className="inner-question-type">
-        <DocumentWirisCKEditor
-          disabled={locked}
-          data={synthesis}
-          placeholder=""
-          toolbar={[
-            'bold', 'italic', 'fontColor',
-            'superscript', 'subscript', 'strikethrough',
-            'mathType', 'chemType', 'insertTable', 'alignment',
-            'bulletedList', 'numberedList'
-          ]}
-          defaultAlignment="justify"
-          onBlur={() => {}}
-          onChange={onSynthesisChange}
-        />
+interface SynthesisState {
+  synthesis: string;
+}
+
+class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
+  constructor(props: SynthesisProps) {
+    super(props);
+    this.state = {
+      synthesis: props.synthesis
+    }
+  }
+  onSynthesisChange(text: string) {
+    this.setState({synthesis: text});
+    this.props.onSynthesisChange(text);
+  }
+  render() {
+    return (
+      <div className="question-type synthesis-page">
+        <div className="inner-question-type">
+          <DocumentWirisCKEditor
+            disabled={this.props.locked}
+            data={this.state.synthesis}
+            placeholder=""
+            toolbar={[
+              'bold', 'italic', 'fontColor',
+              'superscript', 'subscript', 'strikethrough',
+              'mathType', 'chemType', 'insertTable', 'alignment',
+              'bulletedList', 'numberedList', 'uploadImageCustom'
+            ]}
+            defaultAlignment="justify"
+            onBlur={() => { }}
+            onChange={(text) => this.onSynthesisChange(text)}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default SynthesisPage

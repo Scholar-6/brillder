@@ -18,11 +18,13 @@ const AdditionalPanel: React.FC<TutorialProps> = (props) => {
         <Grid container justify="center">
           <div className="zap-border svgOnHover">
             <svg className="svg w100 h100 active">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#zap-off"} className="text-gray" />
             </svg>
           </div>
           <div className="zap-border svgOnHover">
             <svg className="svg w100 h100 active">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#zap"} className="text-theme-dark-blue" />
             </svg>
           </div>

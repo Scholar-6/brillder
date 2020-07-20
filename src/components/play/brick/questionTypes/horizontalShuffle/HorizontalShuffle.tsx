@@ -69,6 +69,12 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     if (this.state.status === DragAndDropStatus.None) {
       status = DragAndDropStatus.Init;
     }
+
+    if (this.state.status === DragAndDropStatus.Changed
+      && this.props.onAttempted) {
+      this.props.onAttempted();
+    }
+
     this.setState({ status, userAnswers });
   }
 
@@ -86,12 +92,12 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     return false;
   }
 
-  mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
+  mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
     let markIncrement = prev ? 2 : 5;
     attempt.correct = true;
     attempt.marks = 0;
     attempt.maxMarks = 0;
-    
+
     attempt.answer.forEach((answer: any, index: number, array: any[]) => {
       if (index !== 0) {
         attempt.maxMarks += 5;

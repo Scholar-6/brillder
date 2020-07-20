@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Grid, Button } from '@material-ui/core';
 // @ts-ignore
 import { connect } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,7 +11,7 @@ const mapDispatch = (dispatch: any) => {
   return { logout: () => dispatch(authActions.logout()) }
 }
 
-const mapState = () => {};
+const mapState = () => { };
 
 interface LogoutComponentProps {
   isOpen: boolean;
@@ -34,16 +33,21 @@ class LogoutDialog extends Component<LogoutComponentProps> {
       <Dialog
         open={this.props.isOpen}
         onClose={() => this.handleLogoutClose()}
-        className="logout-dialog"
-      >
-        <div className="logout-dialog-header">
-          <div>Are you sure you want</div>
-          <div>to log out?</div>
+        className="dialog-box">
+        <div className="dialog-header">
+          <div>Are you sure</div>
+          <div>you want to log out?</div>
         </div>
-        <Grid container direction="row" className="logout-buttons" justify="center">
-          <Button className="yes-button" onClick={() => this.logout()}>Yes</Button>
-          <Button className="no-button" onClick={() => this.handleLogoutClose()}>No</Button>
-        </Grid>
+        <div className="dialog-footer">
+          <button className="btn btn-md bg-theme-orange yes-button"
+            onClick={() => this.logout()}>
+            <span>Yes</span>
+          </button>
+          <button className="btn btn-md bg-gray no-button"
+            onClick={() => this.handleLogoutClose()}>
+            <span>No</span>
+          </button>
+        </div>
       </Dialog>
     );
   }

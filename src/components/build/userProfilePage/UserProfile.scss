@@ -13,6 +13,9 @@
     top: 10.5vh;
     height: 90.05vh;
     width: 27.5vw;
+    @include phone_and_tabletP {
+      display: none;
+    }
   }
 
   .profile-block {
@@ -24,6 +27,12 @@
     border-top-right-radius: 2vw;
     overflow-y: auto;
     padding-bottom: 10vh;
+    @include phone_and_tabletP {
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+      height: calc(100vh - 6vh);
+    }
     .profile-header {
       padding-top: 3.1vh;
       margin-left: 1.08vw;
@@ -34,12 +43,21 @@
       color: var(--theme-dark-blue);
       line-height: 1;
       text-transform: uppercase;
+      @include phone_and_tabletP {
+        font-size: 15.4vw;
+      }
     }
     .save-button-container {
       position: absolute;
       top: 1.9vh;
       right: 1vw;
-
+      @include phone_and_tabletP {
+        position: fixed;
+        bottom: 10vh;
+        right: 5vw;
+        top: inherit;
+        z-index: 999;
+      }
       .save-image {
         cursor: pointer;
         text-align: center;
@@ -48,121 +66,181 @@
         background: #e5e8ed 0% 0% no-repeat padding-box;
         border: 0.25vw solid var(--light-gray);
         box-shadow: $base-shadow;
+        @include phone_and_tabletP {
+          height: 15vw;
+          width: 15vw;
+        }
         img {
           height: 1.9vw;
           width: 1.9vw;
+          @include phone_and_tabletP {
+            height: 5vw;
+            width: 5vw;
+          }
         }
       }
     }
-    .profile-image-container {
-      position: relative;
-      padding-top: 5vh;
-      width: 18.7vw;
+    .profile-fields {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      .profile-image {
-        text-align: center;
-        height: 11vw;
-        width: 11vw;
-        background: #e5e8ed 0% 0% no-repeat padding-box;
-        border: 0.25vw solid var(--light-gray);
-        box-shadow: $base-shadow;
-        border-radius: 50%;
-        .svg {
-          height: 7.8vw;
-          width: 7.8vw;
-        }
-      }
-      .add-image-button {
-        width: 4vw;
-        height: 4vw;
-        z-index: 100;
-        position: absolute;
-        background-color: var(--theme-orange);
-        top: 18vh;
-        right: 4vw;
-        border-radius: 50%;
-        cursor: pointer;
-        .MuiIconButton-label {
-          margin: 0;
-        }
-        .svg {
-          width: 2vw;
-          height: 2vw;
-        }
-      }
-      .status-container {
-        margin-top: 2.6vh;
-        display: flex;
-        align-items: center;
+      justify-content: space-between;
+      padding-left: 4.5vw;
+      padding-right: 4.2vw;
+      @include phone_and_tabletP {
+        flex-direction: column;
         justify-content: center;
-        .svg {
-          color: #30c474;
-          font-size: 2.35vw;
-          position: inherit;
-          left: inherit;
-          top: inherit;
-          transform: inherit;
+        align-items: center;
+      }
+      .profile-image-container {
+        position: relative;
+        padding-top: 5vh;
+        width: 13.5vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        @include phone_and_tabletP {
+          width: max-content;
         }
-        > span {
-          margin-left: 0.45vw;
-          color: var(--theme-dark-blue);
-          font-size: 1.5vw;
+        .profile-image {
+          text-align: center;
+          height: 11vw;
+          width: 11vw;
+          background: #e5e8ed 0% 0% no-repeat padding-box;
+          border: 0.25vw solid var(--light-gray);
+          box-shadow: $base-shadow;
+          border-radius: 50%;
+          @include phone_and_tabletP {
+            height: 30vw;
+            width: 30vw;
+          }
+          .svg {
+            height: 7.8vw;
+            width: 7.8vw;
+            @include phone_and_tabletP {
+              height: 20vw;
+              width: 20vw;
+            }
+          }
         }
-      }
-    }
-    .profile-inputs-container {
-      padding-top: 4.8vh;
-      width: 32.4vw;
-      .MuiSvgIcon-root,
-      .MuiCheckbox-root,
-      .MuiFormControlLabel-root,
-      .MuiFormControlLabel-label {
-        color: var(--theme-dark-blue) !important;
-      }
-    }
-    .profile-roles-container {
-      width: 19.2vw;
-      .roles-title {
-        width: 100%;
-        text-align: center;
-        font-size: 1.82vw;
-        letter-spacing: 0.36vw;
-        color: var(--theme-dark-blue);
-        font-family: $font-family-black;
-        line-height: 1.41;
-      }
-      .roles-box {
-        width: 13.2vw;
-        border-radius: 0.3vw;
-        box-shadow: $base-shadow;
-        padding-top: 1.9vh;
-        padding-left: 1.15vw;
-        padding-bottom: 1.4vh;
-        .MuiGrid-item {
-          width: 100%;
-          .MuiSvgIcon-root {
-            color: var(--theme-dark-blue);
-            font-size: 1.55vw;
+        .add-image-button {
+          width: 4vw;
+          height: 4vw;
+          z-index: 100;
+          position: absolute;
+          background-color: var(--theme-orange);
+          top: 20vh;
+          right: 1vw;
+          border-radius: 50%;
+          cursor: pointer;
+          @include phone_and_tabletP {
+            height: 12vw;
+            width: 12vw;
+            top: 15vh;
+            right: 0vw;
           }
-          .MuiIconButton-root {
-            padding: 0.5vw !important;
-          }
-          .MuiFormControlLabel-label {
-            margin-left: 1.15vw;
-            font-size: 1.45vw;
-            color: var(--theme-dark-blue);
-          }
-          .MuiFormControlLabel-root {
+          .MuiIconButton-label {
             margin: 0;
           }
-          .disabled {
-            .MuiSvgIcon-root {
-              color: #a6acaf;
+          .svg {
+            width: 2vw;
+            height: 2vw;
+            @include phone_and_tabletP {
+              height: 7vw;
+              width: 7vw;
             }
-            .MuiTypography-root {
-              color: #a6acaf;
+          }
+        }
+        .status-container {
+          margin-top: 2.6vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .svg {
+            color: #30c474;
+            font-size: 2.35vw;
+            position: inherit;
+            left: inherit;
+            top: inherit;
+            transform: inherit;
+          }
+          > span {
+            margin-left: 0.45vw;
+            color: var(--theme-dark-blue);
+            font-size: 1.5vw;
+          }
+        }
+      }
+      .profile-inputs-container {
+        padding-top: 4.8vh;
+        width: 32.4vw;
+        margin: 0 3vw;
+        @include phone_and_tabletP {
+          width: 100%;
+        }
+        .MuiSvgIcon-root,
+        .MuiCheckbox-root,
+        .MuiFormControlLabel-root,
+        .MuiFormControlLabel-label {
+          color: var(--theme-dark-blue) !important;
+        }
+      }
+      .profile-roles-container {
+        width: 13.5vw;
+        @include phone_and_tabletP {
+          width: 100%;
+        }
+        .roles-title {
+          width: 100%;
+          text-align: center;
+          font-size: 1.82vw;
+          letter-spacing: 0.36vw;
+          color: var(--theme-dark-blue);
+          font-family: $font-family-black;
+          line-height: 1.41;
+          @include phone_and_tabletP {
+            font-size: 6vw;
+          }
+        }
+        .roles-box {
+          width: 100%;
+          border-radius: 0.3vw;
+          box-shadow: $base-shadow;
+          padding-top: 1.9vh;
+          padding-left: 1.15vw;
+          padding-bottom: 1.4vh;
+          @include phone_and_tabletP {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(33.33%, 1fr));
+          }
+          .MuiGrid-item {
+            width: 100%;
+            .MuiSvgIcon-root {
+              color: var(--theme-dark-blue);
+              font-size: 1.55vw;
+              @include phone_and_tabletP {
+                font-size: 5vw;
+              }
+            }
+            .MuiIconButton-root {
+              padding: 0.5vw !important;
+            }
+            .MuiFormControlLabel-label {
+              margin-left: 1.15vw;
+              font-size: 1.45vw;
+              color: var(--theme-dark-blue);
+              @include phone_and_tabletP {
+                font-size: 4vw;
+              }
+            }
+            .MuiFormControlLabel-root {
+              margin: 0;
+            }
+            .disabled {
+              .MuiSvgIcon-root {
+                color: #a6acaf;
+              }
+              .MuiTypography-root {
+                color: #a6acaf;
+              }
             }
           }
         }
@@ -184,6 +262,9 @@
         padding-left: 0.65vw;
         font-size: 1.8vw;
         max-height: 18vh;
+        @include phone_and_tabletP {
+          font-size: 4vw;
+        }
       }
     }
   }
@@ -199,56 +280,6 @@
     }
     .custom-component {
       background-color: white;
-    }
-  }
-}
-
-.alert-dialog {
-  position: fixed;
-  top: 0;
-  .MuiDialog-paperScrollPaper {
-    position: fixed;
-    top: 8.3vh;
-    right: 7vw;
-    max-width: 50vw;
-    border-radius: 0.8vw;
-  }
-  .logout-dialog-header {
-    padding: 3.8vh 1vw 3.5vh 2.2vw;
-    font-size: 2.35vw;
-    letter-spacing: 0;
-    color: var(--theme-dark-blue);
-    font-family: $font-family-regular;
-  }
-
-  .logout-buttons {
-    padding-bottom: 2.3vh;
-
-    button {
-      min-width: 9.55vw;
-      font-size: 2vw;
-      border-radius: 0.6vw;
-      text-transform: none;
-      font-weight: normal !important;
-      padding-top: 1.1vh;
-      padding-bottom: 1.1vh;
-      line-height: 1;
-      font-family: $font-family-regular;
-      > span {
-        width: 100%;
-      }
-    }
-
-    .yes-button {
-      color: white;
-      background: var(--theme-orange);
-      margin-right: 1.4vw !important;
-    }
-
-    .no-button {
-      color: var(--theme-dark-blue);
-      background: $tab-gray;
-      margin-right: 0.2vw;
     }
   }
 }

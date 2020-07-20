@@ -48,12 +48,13 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (this.state.status === DragAndDropStatus.None) {
       status = DragAndDropStatus.Init;
     }
+    if (status === DragAndDropStatus.Changed && this.props.onAttempted) {
+      this.props.onAttempted();
+    }
     this.setState({ status, userAnswers });
   }
 
-  getAnswer(): any[] {
-    return this.state.userAnswers;
-  }
+  getAnswer(): any[] { return this.state.userAnswers; }
 
   getState(entry: number): number {
     if (this.props.attempt?.answer[entry]) {
@@ -66,7 +67,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     } else { return 0; }
   }
 
-  mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
+  mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
     return mark(this.props.component.list, attempt, prev, this.state.status);
   }
 

@@ -30,6 +30,7 @@ class PulsingCircleNumber extends React.Component<StepProps> {
         animation: 0.5s ${pulseAnimation};
       `;
 
+
       return (
         <PulsingDiv className={indexClassName}>
           <div className="question-index">{number}</div>

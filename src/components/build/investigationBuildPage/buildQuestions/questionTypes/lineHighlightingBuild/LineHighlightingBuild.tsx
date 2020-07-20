@@ -4,6 +4,7 @@ import './LineHighlightingBuild.scss'
 import { UniqueComponentProps } from '../types';
 
 import sprite from "../../../../../../assets/img/icons-sprite.svg";
+import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 enum LineMode {
   Input,
@@ -79,7 +80,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
     if (state.mode === LineMode.Edit) {
       if (!state.lines) {
         switchMode();
-        return <div>...Switching mode...</div>;
+        return <PageLoader content="...Switching mode..." />;
       }
       return (
         <div className="hightlight-area">
@@ -97,7 +98,6 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
       <textarea
         disabled={locked}
         className="lines-input"
-        rows={5}
         value={state.text}
         onBlur={() => save()}
         onChange={updateText} placeholder="Enter Lines Here..." />
@@ -112,6 +112,7 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
       </div>
       <div className="pencil-icon-container svgOnHover" onClick={switchMode}>
         <svg className="svg w100 h100 active">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#highlighter"} className={state.mode ? "text-theme-green" : "text-theme-dark-blue"} />
         </svg>
       </div>

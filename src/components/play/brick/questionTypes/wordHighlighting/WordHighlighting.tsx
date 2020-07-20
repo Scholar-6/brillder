@@ -9,7 +9,7 @@ import { PlayWord, IPlayWordComponent } from 'components/interfaces/word';
 
 interface WordHighlightingProps extends CompQuestionProps {
   component: IPlayWordComponent;
-  attempt: ComponentAttempt;
+  attempt: ComponentAttempt<any>;
   answers: number[];
 }
 
@@ -71,6 +71,9 @@ class WordHighlighting extends CompComponent<
 
   highlighting(index: number) {
     this.state.words[index].selected = !this.state.words[index].selected;
+    if (this.props.onAttempted) {
+      this.props.onAttempted();
+    }
     this.setState({ words: this.state.words });
   }
 

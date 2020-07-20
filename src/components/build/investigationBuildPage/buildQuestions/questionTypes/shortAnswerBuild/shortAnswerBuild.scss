@@ -7,22 +7,15 @@
 
   .short-answer-box {
     position: relative;
-    margin: 0.4vw;
-    width: 97.5%;
+    width: 100%;
+    margin-bottom: 0.4vw;
     background-color: var(--white);
-    border-radius: 0.4vw;
-    input {
-      font-size: $answer-input-text-size;
-      width: 100%;
-      padding: 0 2.4vw 0 0.8vw;
-      min-height: $answer-height;
-      text-align: center;
-      border: none;
+    border-radius: $global-drop-border-radius;
+    .document-editor {
+			.ck-content {
+        padding: 1vw;
+      }
     }
-  }
-  .right-top-icon {
-    @extend %floatToYCenter;
-    right: 0.4vw;
   }
 
   .MuiSnackbar-root {

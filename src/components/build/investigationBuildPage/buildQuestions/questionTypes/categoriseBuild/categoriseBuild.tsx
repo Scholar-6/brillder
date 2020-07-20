@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
-import DeleteIcon from '@material-ui/icons/Delete';
 
 import './categoriseBuild.scss'
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 import { UniqueComponentProps } from '../types';
 import QuestionImageDropZone from '../../baseComponents/QuestionImageDropzone';
-import {SortCategory, QuestionValueType, SortAnswer} from 'components/interfaces/sort';
+import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfaces/sort';
 import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/DocumentWirisEditor';
-
+import sprite from "../../../../../../assets/img/icons-sprite.svg";
 
 export interface CategoriseData {
   categories: SortCategory[];
@@ -104,19 +103,24 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     }
 
     const setImage = (fileName: string) => {
-      if (locked) {return;}
+      if (locked) { return; }
       answer.value = "";
       answer.valueFile = fileName;
       answer.answerType = QuestionValueType.Image;
       update();
       save();
     }
-  
+
     return (
-      <div style={{position: 'relative'}} key={key} className={customClass}>
+      <div key={key} className={customClass}>
         {
           (category.answers.length > 1)
-            ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(category, key)} />
+            ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeAnswer(category, key)}>
+              <svg className="svg active back-button">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#trash-outline"} className="theme-orange" />
+              </svg>
+            </button>
             : ""
         }
         <DocumentWirisEditorComponent
@@ -144,7 +148,14 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
       <div key={key}>
         <div className="categorise-box">
           {
-            (state.categories.length > 2) ? <DeleteIcon className="right-top-icon" onClick={() => removeCategory(key)} /> : ""
+            (state.categories.length > 2)
+              ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeCategory(key)}>
+                <svg className="svg active back-button">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#trash-outline"} className="theme-orange" />
+                </svg>
+              </button>
+              : ""
           }
           <DocumentWirisEditorComponent
             disabled={locked}
@@ -163,14 +174,14 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           locked={locked}
           addAnswer={() => addAnswer(category)}
           height={category.height}
-          label="+ &nbsp;&nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R"
+          label="+ ANSWER"
         />
       </div>
     );
   }
 
   return (
-    <div className="categorise-build">
+    <div className="categorise-build unique-component">
       {
         state.categories.map((category, i) => renderCategory(category, i))
       }
@@ -178,7 +189,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
         locked={locked}
         addAnswer={addCategory}
         height={categoryHeight}
-        label="+ &nbsp;&nbsp; C &nbsp; A &nbsp; T &nbsp; E &nbsp; G &nbsp; O &nbsp; R &nbsp; Y"
+        label="+ CATEGORY"
       />
     </div>
   )

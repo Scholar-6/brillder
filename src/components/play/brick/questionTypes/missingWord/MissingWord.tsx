@@ -8,11 +8,12 @@ import {CompQuestionProps} from '../types';
 import { ComponentAttempt } from "components/play/brick/model/model";
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 
 interface MissingWordProps extends CompQuestionProps {
   component: any;
-  attempt: ComponentAttempt;
+  attempt: ComponentAttempt<any>;
   answers: number[];
 }
 
@@ -53,6 +54,9 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     let userAnswers = this.state.userAnswers;
     userAnswers[index].value = e.target.value as number;
     this.setState({ userAnswers });
+    if (this.props.onAttempted) {
+      this.props.onAttempted();
+    }
   }
 
   getAnswer(): number[] {
@@ -94,7 +98,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   }
 
   renderSelect(choice: any, index: number) {
-    if (!this.state.userAnswers[index]) { return <div className="page-loader">...Loading...</div>}
+    if (!this.state.userAnswers[index]) { return <PageLoader content="...Loading..." />;}
     return (
       <Select
         className="missing-select"

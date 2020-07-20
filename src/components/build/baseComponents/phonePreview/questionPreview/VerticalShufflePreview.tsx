@@ -10,16 +10,9 @@ class VerticalShufflePreview extends Component<any, any> {
     return (
       <div className="phone-preview-component vertical-shuffle-preview">
         <Grid container justify="center" className="small-text">
-          Place the following events in chronological order
+          Place the following events
+          in chronological order
         </Grid>
-        <button>
-          <div>
-            <Grid container justify="center" alignContent="center" className="circle-number">
-              <Avatar>1</Avatar>
-            </Grid>
-          </div>
-          Trial of Socrates
-        </button>
         <button>
           <div>
             <Grid container justify="center" alignContent="center" className="circle-number">
@@ -35,6 +28,14 @@ class VerticalShufflePreview extends Component<any, any> {
             </Grid>
           </div>
           Philip II of Macedon assassinated
+        </button>
+        <button>
+          <div>
+            <Grid container justify="center" alignContent="center" className="circle-number">
+              <Avatar>1</Avatar>
+            </Grid>
+          </div>
+          Trial of Socrates
         </button>
       </div>
     )

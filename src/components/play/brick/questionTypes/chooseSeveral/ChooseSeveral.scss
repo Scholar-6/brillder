@@ -3,19 +3,6 @@
 @import '../../../../../assets/sass/partials/extensions';
 
 .choose-several-live {
-  .MuiButton-label {
-    div {
-      display: inline;
-      margin: 0 !important;
-    }
-    p {
-      margin: 0 !important;
-    }
-    img {
-      width: 100%;
-    }
-  }
-
   .image-choice {
     background: inherit;
     border: 4px solid var(--light-gray) !important;
@@ -25,7 +12,12 @@
 
   .help-text {
     font-family: $font-family-regular;
-    font-size: 0.8vw;
     margin-bottom: 3px;
+    @include phone_and_tabletP {
+      font-size: 3vw;
+    }
+    @include tabletP {
+      font-size: 0.8vw;
+    }
   }
 }

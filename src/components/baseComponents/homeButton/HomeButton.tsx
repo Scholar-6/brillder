@@ -1,5 +1,4 @@
 import React from 'react'
-import { Grid } from '@material-ui/core';
 import { withRouter } from "react-router-dom";
 
 import sprite from "../../../assets/img/icons-sprite.svg";
@@ -35,14 +34,16 @@ class HomeButtonComponent extends React.Component<any, HomeButtonState> {
 
   render() {
     return (
-      <Grid container direction="row" className="home-button-container">
+      <div className="home-button-container">
         <button type="button" className="btn btn-transparent svgOnHover home-button"
           onClick={() => this.onClick()}>
           <svg className="svg w100 h100 active">
+            {/*eslint-disable-next-line*/}
             <use href={sprite + "#logo"} className="text-theme-orange" />
           </svg>
           <div className="roof svgOnHover">
             <svg className="svg w100 h100 active">
+              {/*eslint-disable-next-line*/}
               <use href={sprite + "#roof"} className="text-theme-orange" />
             </svg>
           </div>
@@ -68,7 +69,7 @@ class HomeButtonComponent extends React.Component<any, HomeButtonState> {
             </svg>
           </div>
         </button>
-      </Grid>
+      </div>
     );
   }
 }

@@ -5,11 +5,18 @@
 .question-build-text-editor {
   position: relative;
   width: 100%;
-
-  strong {
-    font-weight: bold !important;
+  .ck-editor {
+    width: 100%;
+    .ck-editor__main {
+      .ck-content {
+        background-color: var(--tab-gray) !important;
+        padding: 0.5vw !important;
+        text-align: left !important;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+      }
+    }
   }
-
   .text-label-container {
     margin: 0 60%;
     .text-label {
@@ -21,53 +28,5 @@
       height: 5.5vh;
       font-size: 1.1vw;
     }
-  }
-
-  .ck-toolbar {
-    padding-left: 0.2vw;
-    height: 2.6vw;
-    border-top-left-radius: 0.4vw !important;
-    border-top-right-radius: 0.4vw !important;
-
-    .ck-toolbar__items {
-      font-size: 1.05vw;
-    }
-  }
-
-  .ck-dropdown__panel {
-    z-index: 1000;
-  }
-
-  .ck-color-table {
-    z-index: 10000;
-  }
-
-  .ck-content {
-    border-bottom-left-radius: 0.4vw !important;
-    border-bottom-right-radius: 0.4vw !important;
-    box-shadow: none !important;
-    border-top: none !important;
-  }
-
-  .ck.ck-reset.ck-dropdown__panel.ck-dropdown__panel_se.ck-dropdown__panel-visible {
-    left: auto;
-    right: 0;
-  }
-
-  .ck-toolbar__items {
-    .ck-button {
-      min-width: 0;
-      border: 0;
-      margin-right: 0;
-      padding-left: 0.2vw;
-      padding-right: 0.2vw;
-
-      .ck-icon {
-        font-size: 0.8vw;
-      }
-    }
-  }
-  .ck-insert-table-dropdown__grid {
-    z-index: 100000;
   }
 }

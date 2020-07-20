@@ -4,55 +4,11 @@
 
 .choose-one-box {
   position: relative;
-  margin-left: 1.25%;
-  width: 97.5%;
+  width: 100%;
   margin-top: 0.17vw;
   margin-bottom: 0.17vw;
   .document-editor {
-    position: relative;
     height: calc(100% - 0.4vh);
-    > div {
-      > .ck-toolbar {
-        font-size: 1.4vh;
-        right: 0;
-        border-top-right-radius: 0.4vw !important;
-        border-bottom-right-radius: 0.4vw !important;
-        background: white !important;
-        position: absolute;
-        width: 3.5vh;
-        height: 100%;
-        z-index: 1;
-      }
-    }
-    .ck-editor__main {
-      width: calc(100% - 1.75vw);
-    }
-    .ck-dropdown__panel {
-      z-index: 100 !important;
-    }
-    .ck-toolbar__items {
-      display: block !important;
-
-      button {
-        padding: 0;
-        margin: 0;
-        display: block !important;
-      }
-    }
-    .ck-content {
-      padding-left: 2.5vw;
-      padding-right: 1vw;
-      padding-top: 4vh;
-      text-align: center !important;
-      overflow: hidden;
-      border-radius: 0.4vw !important;
-      border-top-right-radius: 0 !important;
-      border-bottom-right-radius: 0 !important;
-
-      p {
-        text-align: center !important;
-      }
-    }
   }
 
   .checkbox-container {
@@ -66,6 +22,12 @@
     }
   }
 
+  .checkbox-container ~ .question-image-drop {
+    width: calc(100% - 4.2vw);
+    top: 2vh;
+    left: 2.2vw;
+  }
+
   .delete-right-top-icon {
     position: absolute;
     top: 0.8vh;
@@ -74,51 +36,9 @@
     height: $bin-size;
     cursor: pointer;
     color: var(--theme-orange);
-    z-index: 2;
+    z-index: 10;
     &:hover {
       opacity: 0.5;
-    }
-  }
-
-  &.big-answer {
-    .document-editor {
-      > div {
-        > .ck-toolbar {
-          height: 14vh;
-        }
-      }
-      .ck-content {
-        padding-top: 10vh;
-      }
-    }
-
-    .left-ckeckbox {
-      z-index: 1;
-      padding: 0.45vw;
-      opacity: 1 !important;
-      span {
-        svg {
-          height: $bin-size !important;
-          width: $bin-size !important;
-        }
-      }
-    }
-
-    input:not([type='checkbox']) {
-      width: 84%;
-      text-align: center;
-      border: none;
-      background: $input-gray;
-      padding-right: 8%;
-      padding-left: 8%;
-      border-radius: 0;
-      opacity: 0.8;
-      font-size: $answer-input-text-size;
-      font-family: $font-family-regular;
-      height: $answer-height !important;
-    }
-    input[type='checkbox'] {
-      height: 100% !important;
     }
   }
 }

@@ -15,6 +15,7 @@ import ReviewStepper from "./ReviewStepper";
 import { Moment } from "moment";
 import CountDown from "../baseComponents/CountDown";
 import { BrickLengthEnum } from "model/brick";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -49,14 +50,14 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     } else {
       history.push(`/play/brick/${brickId}/intro`);
     }
-    return <div className="page-loader">...Loading...</div>;
+    return <PageLoader content="...Loading..." />;
   } else if (status === PlayStatus.Ending) {
     if (props.isPlayPreview) {
       history.push(`/play-preview/brick/${brickId}/ending`);
     } else {
       history.push(`/play/brick/${brickId}/ending`);
     }
-    return <div className="page-loader">...Loading...</div>;
+    return <PageLoader content="...Loading..." />;
   }
 
   let questionRefs: React.RefObject<QuestionLive>[] = [];
@@ -159,9 +160,11 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     return (
       <button className="play-preview svgOnHover play-white scale-07" onClick={prev}>
       <svg className="svg svg-default m-r-02">
+        {/*eslint-disable-next-line*/}
         <use href={sprite + "#arrow-left"} className="text-gray" />
       </svg>
       <svg className="svg colored m-r-02">
+        {/*eslint-disable-next-line*/}
         <use href={sprite + "#arrow-left"} className="text-white" />
       </svg>
     </button>
@@ -202,6 +205,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
               <div>
                 <button type="button" className="play-preview svgOnHover play-green" onClick={next}>
                   <svg className="svg active m-l-02">
+                    {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-right"} />
                   </svg>
                 </button>

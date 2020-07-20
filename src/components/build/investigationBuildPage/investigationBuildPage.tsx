@@ -29,7 +29,7 @@ import {
   QuestionTypeEnum,
 } from "model/question";
 import actions from "../../../redux/actions/brickActions";
-import {validateQuestion} from "./questionService/ValidateQuestionService";
+import { validateQuestion } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
   activeQuestionByIndex,
@@ -44,10 +44,11 @@ import {
 } from "./questionService/QuestionService";
 import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
-import {GetCashedBuildQuestion} from '../../localStorage/buildLocalStorage';
+import { GetCashedBuildQuestion } from '../../localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -70,7 +71,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     getNewQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
   const [loaded, setStatus] = React.useState(false);
-  let [locked, setLock] = React.useState(props.brick ? props.brick.locked: false);
+  let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
@@ -107,7 +108,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   /* Synthesis */
 
   if (!props.brick) {
-    return <div className="page-loader">...Loading...</div>;
+    return <PageLoader content="...Loading..." />;
   }
 
   let canEdit = canEditBrick(props.brick, props.user);
@@ -128,7 +129,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if (isSynthesisPage === true) {
     if (activeQuestion) {
       unselectQuestions();
-      return <div className="page-loader">...Loading...</div>
+      return <PageLoader content="...Loading..." />;
     }
   } else if (!activeQuestion) {
     console.log("Can`t find active question");
@@ -150,6 +151,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       history.push('/build/new-brick/proposal');
     }
   };
+
+  const saveSynthesis = (text: string) => {
+    setSynthesis(text);
+    autoSaveBrick();
+  }
 
   const setNextQuestion = () => {
     const index = getQuestionIndex(activeQuestion);
@@ -251,7 +257,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const { brick } = props;
 
   if (brick.id !== brickId) {
-    return <div className="page-loader">...Loading...</div>;
+    return <PageLoader content="...Loading..." />;
   }
 
   const parseQuestions = () => {
@@ -260,7 +266,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       for (const question of brick.questions) {
         try {
           parseQuestion(question, parsedQuestions);
-        } catch (e) {}
+        } catch (e) { }
       }
       if (parsedQuestions.length > 0) {
         let buildQuestion = GetCashedBuildQuestion();
@@ -321,7 +327,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setSavingStatus(true);
       prepareBrickToSave(brick, updatedQuestions, synthesis);
 
-      props.saveBrick(brick).then((res:any) => {
+      props.saveBrick(brick).then((res: any) => {
         if (callback) {
           callback(res);
         }
@@ -333,7 +339,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (canEdit === true) {
       setSavingStatus(true);
       prepareBrickToSave(brick, updatedQuestions, synthesis);
-        for (let [index, question] of brick.questions.entries()) {
+      for (let [index, question] of brick.questions.entries()) {
         question.order = index;
       }
       props.saveBrick(brick);
@@ -359,7 +365,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         if (process.env.REACT_APP_BUILD_AUTO_SAVE_DELAY) {
           delay = parseInt(process.env.REACT_APP_BUILD_AUTO_SAVE_DELAY);
         }
-      } catch {}
+      } catch { }
 
       if (time - lastAutoSave >= delay) {
         setLastAutoSave(time);
@@ -457,7 +463,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           {renderQuestionComponent}
         </Route>
         <Route path="/build/brick/:brickId/build/investigation/synthesis">
-          <SynthesisPage locked={locked} synthesis={synthesis} onSynthesisChange={setSynthesis} onReview={moveToReview} />
+          <SynthesisPage locked={locked} synthesis={synthesis} onSynthesisChange={saveSynthesis} />
         </Route>
       </Switch>
     );
@@ -482,21 +488,21 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           <div className="exit-arrow">
             <img alt="" src="/images/exit-arrow.png" />
           </div>
-          <Grid container direction="row" style={{height: '100%'}}>
-            <Grid container item xs={9} justify="center" style={{height: '100%'}}>
-              <Grid container item xs={9} style={{height: '100%'}}>
-                <div className="tutorial-exit-label" style={{height: '100%'}}>
-                  <Grid container alignContent="center" style={{height: '100%'}}>
+          <Grid container direction="row" style={{ height: '100%' }}>
+            <Grid container item xs={9} justify="center" style={{ height: '100%' }}>
+              <Grid container item xs={9} style={{ height: '100%' }}>
+                <div className="tutorial-exit-label" style={{ height: '100%' }}>
+                  <Grid container alignContent="center" style={{ height: '100%' }}>
                     Click the red icon to Exit & Save
                   </Grid>
                 </div>
-                <div className="tutorial-add-label" style={{height: '100%'}}>
-                  <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
+                <div className="tutorial-add-label" style={{ height: '100%' }}>
+                  <Grid container alignContent="center" justify="center" style={{ height: '100%' }}>
                     Add Question Panel
                   </Grid>
                 </div>
-                <div className="tutorial-synthesis-label" style={{height: '100%'}}>
-                  <Grid container alignContent="center" justify="center" style={{height: '100%'}}>
+                <div className="tutorial-synthesis-label" style={{ height: '100%' }}>
+                  <Grid container alignContent="center" justify="center" style={{ height: '100%' }}>
                     Synthesis
                   </Grid>
                 </div>
@@ -516,7 +522,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       isValid = false;
     }
   });
-  
+
   const switchQuestions = (questions: Question[]) => {
     setQuestions(questions);
     saveSwitchedBrickQuestions(questions);
@@ -528,9 +534,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   return (
     <div className="investigation-build-page">
-      <div style={{position: 'fixed'}}>
-        <HomeButton onClick={exitAndSave} />
-      </div>
+      <HomeButton onClick={exitAndSave} />
       <PlayButton
         tutorialStep={step}
         isTutorialSkipped={isTutorialPassed()}
@@ -600,16 +604,21 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           onClose={() => setSubmitDialog(false)}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          className="submit-brick-dialog"
-        >
+          className="dialog-box">
           <div className="dialog-header">
             <div>Some questions are incomplete.</div>
             <div>These are marked in red. Keep working?</div>
           </div>
-          <Grid container direction="row" className="row-buttons" justify="center">
-            <Button className="yes-button" onClick={() => hideInvalidBrick()}>Yes</Button>
-            <Button className="no-button" onClick={() => submitInvalidBrick()}>No, Save & Exit</Button>
-          </Grid>
+          <div className="dialog-footer">
+            <button className="btn btn-md bg-theme-orange yes-button"
+              onClick={() => hideInvalidBrick()}>
+              <span>Yes</span>
+            </button>
+            <button className="btn btn-md bg-gray no-button"
+              onClick={() => submitInvalidBrick()}>
+              <span>No, Save & Exit</span>
+            </button>
+          </div>
         </Dialog>
         <DeleteQuestionDialog
           open={deleteDialogOpen}
@@ -623,13 +632,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           open={true}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          className="mobile-brick-dialog"
-        >
-          <div className="mobile-dialog-header" style={{padding: '4vh 4vw'}}>
-            <div>You need desktop browser</div>
-            <div>to use this page</div>
+          className="dialog-box">
+          <div className="dialog-header">
+            <div>You need desktop browser to use this page</div>
           </div>
-          <Grid container direction="row" className="row-buttons" justify="center">
+          <Grid container direction="row" className="dialog-footer" justify="center">
             <Button className="yes-button" onClick={() => history.push('/home')}>
               Move
             </Button>

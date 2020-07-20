@@ -16,10 +16,18 @@
     position: absolute;
     left: -2.5vw;
     top: 0.3vw;
+    @include phone_and_tabletP {
+      left: -5.5vw;
+      top: 0vw;
+    }
 
     img {
       height: 2vw;
       width: 2vw;
+      @include phone_and_tabletP {
+        height: 4vw;
+        width: 4vw;
+      }
     }
   }
 }

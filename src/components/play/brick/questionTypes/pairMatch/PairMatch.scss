@@ -7,10 +7,11 @@
   .pair-match-play-option {
     text-align: center;
     color: var(--theme-dark-blue);
-    margin: 1px;
+    margin: 5px 1px;
     padding: 0;
     width: 100%;
     overflow: hidden;
+    background-color: var(--tab-gray);
     .option-container {
       width: 100%;
 			p {
@@ -31,17 +32,16 @@
       height: 100%;
     }
   }
-  .pair-match-play-option {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    background: $tab-gray;
-  }
-
   .answers-list {
     display: grid !important;
     grid-auto-rows: 1fr;
     flex-wrap: wrap;
-    width: 50%;
+    @include phone_and_tabletP {
+      width: 100%;
+    }
+    @include tabletP {
+      width: 50%;
+    }
   }
 
   .pair-match-play-choice {
@@ -61,15 +61,6 @@
     }
   }
 
-  .pair-match-image-choice {
-    padding: 0.5vw;
-		background: none;
-		img {
-			max-width: 20%;
-			height: auto;
-		}
-  }
-
   .MuiListItemText-root {
     font-size: $font-size;
   }
@@ -79,15 +70,5 @@
     border: 4px solid var(--light-gray) !important;
     width: 100%;
     padding: 0;
-  }
-  .correct {
-    background: var(--theme-green);
-  }
-  .wrong {
-    background: var(--theme-orange);
-  }
-
-  .question-hint-global.correct {
-    background: white;
   }
 }

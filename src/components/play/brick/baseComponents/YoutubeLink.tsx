@@ -37,6 +37,7 @@ class YoutubeLink extends Component<YoutubeLinkProps, YoutubeLinkState> {
 
   getParameterByName(name: string, url: string) {
     if (!url) url = window.location.href;
+    /*eslint-disable-next-line*/
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
       results = regex.exec(url);
