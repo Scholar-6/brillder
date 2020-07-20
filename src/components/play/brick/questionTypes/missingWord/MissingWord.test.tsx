@@ -20,7 +20,6 @@ describe("Missing word play and validation", () => {
           value: "",
           checked: false
         }],
-        value: "",
       }],
     }
     render(
@@ -33,5 +32,62 @@ describe("Missing word play and validation", () => {
         onAttempted={() => { }}
       />
     );
+  });
+  
+  // tests for validation service
+  // value and option should be filled in pair match
+  it("Test validation. should be valid", () => {
+    let component: any = {
+      type: QuestionComponentTypeEnum.Component,
+      choices: [{
+        before: "",
+        after: "",
+        answers: [{
+          value: "test",
+          checked: true
+        },{
+          value: "test",
+          checked: false
+        }],
+      }],
+    }
+    let res = validator.validateMissingWord(component);
+    expect(res).toBe(true);
+  });
+  it("Test validation. Value text required. should be invalid", () => {
+    let component: any = {
+      type: QuestionComponentTypeEnum.Component,
+      choices: [{
+        before: "",
+        after: "",
+        answers: [{
+          value: "",
+          checked: true
+        },{
+          value: "test",
+          checked: false
+        }],
+      }],
+    }
+    let res = validator.validateMissingWord(component);
+    expect(res).toBe(false);
+  });
+  it("Test validation. Checked answer required. should be invalid", () => {
+    let component: any = {
+      type: QuestionComponentTypeEnum.Component,
+      choices: [{
+        before: "",
+        after: "",
+        answers: [{
+          value: "test",
+          checked: false
+        },{
+          value: "test",
+          checked: false
+        }],
+      }],
+    }
+    let res = validator.validateMissingWord(component);
+    expect(res).toBe(false);
   });
 })
