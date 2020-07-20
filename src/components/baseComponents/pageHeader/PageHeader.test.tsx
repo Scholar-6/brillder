@@ -27,11 +27,15 @@ const mockNotification = {
 
 describe("notification panel", () => {
   it("should create Header", () => {
-    const store = mockStore({});
+    const store = mockStore({
+      notifications: {
+        notifications: [mockNotification]
+      }
+    });
 
     render(
       <Provider store={store}>
-        <PageHead history={null} user={{roles:[]}} notifications={[mockNotification]} search={()=>{}} page={1} searching={()=>{}} />
+        <PageHead history={null} user={{ roles: [] }} search={() => { }} page={1} searching={() => { }} />
       </Provider>
     );
   });

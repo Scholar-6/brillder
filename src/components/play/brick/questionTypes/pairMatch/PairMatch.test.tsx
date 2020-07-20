@@ -5,7 +5,7 @@ import { PairMatchComponent } from './interface';
 import { QuestionComponentTypeEnum, Question, QuestionTypeObj } from 'model/question';
 import validator from 'components/build/investigationBuildPage/questionService/UniqueValidator';
 
-describe("Pair match", () => {
+describe("Pair match play and validation", () => {
   it("should create PairMatch", () => {
     let question: Question = {
       id: 66,
