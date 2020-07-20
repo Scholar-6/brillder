@@ -19,9 +19,7 @@
   &:not(.active) {
     .text-box {
       .drag-box-name {
-        &:hover {
-          animation: pulse1 1.5s ease infinite;
-        }
+        animation: pulse1 1.5s ease infinite;
       }
     }
   }
