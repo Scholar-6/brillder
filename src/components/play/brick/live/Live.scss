@@ -71,27 +71,6 @@
         }
       }
     }
-    .action-footer {
-      @include phone_and_tabletP {
-        width: 100%;
-        justify-content: center !important;
-        align-items: center !important;
-      }
-      .direction-info {
-        h2 {
-          @include phone_and_tabletP {
-            position: absolute;
-            bottom: 0;
-          }
-        }
-        span {
-          @include phone_and_tabletP {
-            bottom: -9vw !important;
-            line-height: 5vw !important;
-          }
-        }
-      }
-    }
   }
   .introduction-page {
     .question-index-container,

@@ -23,8 +23,10 @@
   width: 100%;
   float: left;
   color: var(--theme-dark-blue);
-  font-size: 0.8vw;
   border-radius: 0.4vw;
+  @include tabletP {
+    font-size: 0.8vw;
+  }
   img {
     width: 100%;
   }
@@ -38,8 +40,10 @@
   border-top-right-radius: 0px;
   display: block;
   p {
-    font-size: 1vw;
     display: inline;
+    @include tabletP {
+      font-size: 1vw;
+    }
   }
   table {
     width: 100%;
@@ -79,8 +83,10 @@
     }
   }
   p {
-    font-size: 1vw;
     line-height: initial;
+    @include tabletP {
+      font-size: 1vw;
+    }
   }
   .table {
     margin-left: 0;

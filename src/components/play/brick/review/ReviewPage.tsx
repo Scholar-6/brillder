@@ -174,7 +174,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   return (
     <div className="brick-container review-page">
       <Grid container direction="row">
-        <Grid item xs={8}>
+        <Grid item sm={8} xs={12}>
           <div className="introduction-page">
             <SwipeableViews
               axis={theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -186,7 +186,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
             </SwipeableViews>
           </div>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item sm={4} xs={12}>
           <div className="introduction-info">
             <CountDown brickLength={props.brickLength} onEnd={onEnd}/>
             <div className="intro-text-row">

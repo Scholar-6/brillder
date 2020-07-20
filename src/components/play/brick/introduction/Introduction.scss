@@ -17,7 +17,7 @@
     }
     .brick-container {
       @include phone_and_tabletP {
-        height: calc(100% - 16vh);
+        height: calc(100% - 18vh);
         overflow-y: auto;
       }
       .introduction-page {
@@ -79,7 +79,6 @@
                 width: calc(100vw - 38vw);
                 font-size: 5vw !important;
                 text-align: left !important;
-                height: 2.5vh;
                 padding-left: 2vw !important;
               }
             }
@@ -189,32 +188,42 @@
           }
           .question-index {
             padding: 0;
-            font-size: 2vw;
             background: #e5e8ed;
             border-radius: 100vw;
             font-family: $font-family-black;
             color: var(--theme-dark-blue);
             text-align: center;
-            width: 2.3vw;
-            height: 2.3vw;
             line-height: 1.25;
+            @include phone_and_tabletP {
+              width: 6vw;
+              height: 6vw;
+              font-size: inherit;
+            }
+            @include tabletP {
+              font-size: 2vw;
+              width: 2.3vw;
+              height: 2.3vw;
+            }
           }
         }
         .question-live-play {
           width: calc(100% - 7vw);
           overflow-y: auto;
           padding-bottom: 2vw;
-          margin: 6vh 3vw 1vw 4vw;
           position: absolute;
           top: 0;
           @include phone_and_tabletP {
             height: calc(100vh - 55.8vw);
+            margin-top: 4vw;
           }
           @include tabletP {
+            margin: 6vh 3vw 1vw 4vw;
             height: 75.4vh;
           }
           &.review-content {
-            margin-top: 2vh;
+            @include tabletP {
+              margin-top: 2vh;
+            }
           }
           .question-title {
             font-size: 2.5vw;
@@ -223,10 +232,13 @@
           }
         }
         .swipe-view {
-          height: calc(100vh - 7.5vw);
-          .react-swipeable-view-container {
+          @include tabletP {
             height: calc(100vh - 7.5vw);
-
+          }
+          .react-swipeable-view-container {
+            @include tabletP {
+              height: calc(100vh - 7.5vw);
+            }
             > div {
               overflow-y: hidden !important;
             }
@@ -255,10 +267,10 @@
             right: 5vw;
             margin-top: 2vw;
             .brick-counter {
-              display:none;
+              display: none;
             }
             .play-clock {
-              display:flex;
+              display: flex;
             }
           }
           @include tabletP {
@@ -381,6 +393,7 @@
             justify-content: flex-end;
             bottom: 6.5vh;
             right: 0vw;
+            width: 100%;
           }
           @include tabletP {
             position: absolute;
@@ -494,7 +507,13 @@
       &.synthesis-page {
         .question-live-play {
           height: calc(100vh - 27.6vh);
-          margin: 12vh 3vw 1vw 4vw;
+          @include phone_and_tabletP {
+            width: 100vw;
+            margin: 4vh 0 0;
+          }
+          @include tabletP {
+            margin: 12vh 3vw 1vw 4vw;
+          }
         }
         .introduction-info {
           .intro-text-row {
@@ -505,19 +524,53 @@
           }
         }
       }
+      &.mobile-provisional-score,
+      &.mobile-synthesis-page,
+      &.mobile-ending-page {
+        .action-footer {
+          @include phone_and_tabletP {
+            position: absolute !important;
+            right: 0;
+          }
+        }
+      }
+      &.live-page,
+      &.review-page {
+        .action-footer {
+          @include phone_and_tabletP {
+            width: 100%;
+            justify-content: center !important;
+            align-items: center !important;
+          }
+          .direction-info {
+            h2 {
+              @include phone_and_tabletP {
+                position: absolute;
+                bottom: 0;
+              }
+            }
+            span {
+              @include phone_and_tabletP {
+                bottom: -9vw !important;
+                line-height: 5vw !important;
+              }
+            }
+          }
+        }
+      }
 
       .action-footer {
-        position: absolute;
-        display: flex;
+        @extend %displayFlex;
         color: var(--theme-dark-blue);
         @include phone_and_tabletP {
           align-items: flex-end;
           justify-content: flex-end;
-          bottom: 3vw;
+          bottom: 0.5vh;
           margin-top: 3vh;
           position: relative;
         }
         @include tabletP {
+          position: absolute;
           align-items: center;
           justify-content: flex-end;
           width: 22vw;
@@ -554,7 +607,6 @@
             > h2 {
               margin-top: 0;
               margin-bottom: 0;
-
               font-family: $font-family-bold;
               @include phone_and_tabletP {
                 font-size: 11.6vw;
@@ -595,7 +647,12 @@
         position: relative;
         width: 100%;
         height: $progress-height;
-        margin-top: 7vh;
+        @include phone_and_tabletP {
+          margin-top: 15vh;
+        }
+        @include tabletP {
+          margin-top: 7vh;
+        }
         .circle-progress-first {
           height: 50vh;
           width: 50vh;
@@ -742,7 +799,7 @@
 
     margin-bottom: 3px;
     @include phone_and_tabletP {
-      font-size: 3vw;
+      font-size: 4vw;
     }
     @include tabletP {
       font-size: 0.8vw;
