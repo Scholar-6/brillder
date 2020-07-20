@@ -1,8 +1,7 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid,Hidden} from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
-import update from "immutability-helper";
 import { useHistory, Redirect } from "react-router-dom";
 
 import "./Live.scss";
@@ -21,7 +20,7 @@ import PulsingCircleNumber from "./PulsingCircleNumber";
 
 interface LivePageProps {
   status: PlayStatus;
-  attempts: ComponentAttempt[];
+  attempts: ComponentAttempt<any>[];
   brick: Brick;
   questions: Question[];
   isPlayPreview?: boolean;
@@ -65,20 +64,19 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   let questionRefs: React.RefObject<QuestionLive>[] = [];
-  questions.forEach(() => {
-    questionRefs.push(React.createRef());
-  });
+  questions.forEach(() => questionRefs.push(React.createRef()));
 
   const handleStep = (step: number) => () => {
-    setPrevStep(activeStep);
     setActiveAnswer();
-    questions[activeStep].edited = true;
     let newStep = activeStep + 1;
-    setActiveStep(update(activeStep, { $set: step }));
 
     if (props.isPlayPreview) {
       CashQuestionFromPlay(brick.id, newStep);
     }
+    setTimeout(() => {
+      setPrevStep(activeStep);
+      setActiveStep(step);
+    }, 100);
   };
 
   const setActiveAnswer = () => {
@@ -150,6 +148,7 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const onQuestionAttempted = (questionIndex: number) => {
     if (!questions[questionIndex].edited) {
+      questions[activeStep].edited = true;
       handleStep(questionIndex)();
     }
   };
@@ -174,16 +173,16 @@ const LivePage: React.FC<LivePageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-				<div className="introduction-page">
-					<PulsingCircleNumber
-						isPulsing={prevStep === index}
-						edited={question.edited}
-						number={index + 1}
-					/>
-					<div className="question-live-play review-content">
-						<div className="question-title">Investigation</div>
-						{renderQuestion(question, index)}
-					</div>
+        <div className="introduction-page">
+          <PulsingCircleNumber
+            isPulsing={true}
+            edited={question.edited}
+            number={index + 1}
+          />
+          <div className="question-live-play review-content">
+            <div className="question-title">Investigation</div>
+            {renderQuestion(question, index)}
+          </div>
         </div>
       </TabPanel>
     );
@@ -199,9 +198,11 @@ const LivePage: React.FC<LivePageProps> = ({
         onClick={prev}
       >
         <svg className="svg svg-default m-r-02">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#arrow-left"} className="text-gray" />
         </svg>
         <svg className="svg colored m-r-02">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#arrow-left"} className="text-white" />
         </svg>
       </button>
@@ -210,60 +211,119 @@ const LivePage: React.FC<LivePageProps> = ({
 
   return (
     <div className="brick-container live-page">
-      <Grid container direction="row">
-        <Grid item xs={8}>
-          <div className="introduction-page">
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={activeStep}
-              className="swipe-view"
-              style={{ width: "100%" }}
-              onChangeIndex={handleStep}
-            >
-              {questions.map(renderQuestionContainer)}
-            </SwipeableViews>
-          </div>
-        </Grid>
-        <Grid item xs={4}>
-          <div className="introduction-info">
-            <CountDown
-              isLive={true}
-              onEnd={onEnd}
-              brickLength={brick.brickLength}
-            />
-            <div className="intro-text-row">
-              <LiveStepper
-                activeStep={activeStep}
-                questions={questions}
-                previousStep={prevStep}
-                handleStep={handleStep}
+      <Hidden only={["xs"]}>
+        <Grid container direction="row">
+          <Grid item xs={8}>
+            <div className="introduction-page">
+              <SwipeableViews
+                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                index={activeStep}
+                className="swipe-view"
+                style={{ width: "100%" }}
+                onChangeIndex={handleStep}
+              >
+                {questions.map(renderQuestionContainer)}
+              </SwipeableViews>
+            </div>
+          </Grid>
+          <Grid item xs={4}>
+            <div className="introduction-info">
+              <CountDown
+                isLive={true}
+                onEnd={onEnd}
+                brickLength={brick.brickLength}
               />
+              <div className="intro-text-row">
+                <LiveStepper
+                  activeStep={activeStep}
+                  questions={questions}
+                  previousStep={prevStep}
+                  handleStep={handleStep}
+                />
+              </div>
+              <div className="action-footer">
+                <div>{renderPrevButton()}</div>
+                <div className="direction-info">
+                  <h2>Next</h2>
+                  <span>
+                    Don’t panic, you can
+                    <br />
+                    always come back
+                  </span>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    className="play-preview svgOnHover play-green"
+                    onClick={next}
+                  >
+                    <svg className="svg active m-l-02">
+                      {/*eslint-disable-next-line*/}
+                      <use href={sprite + "#arrow-right"} />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="action-footer">
-              <div>{renderPrevButton()}</div>
-              <div className="direction-info">
-                <h2>Next</h2>
-                <span>
-                  Don’t panic, you can
-                  <br />
-                  always come back
-                </span>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  className="play-preview svgOnHover play-green"
-                  onClick={next}
-                >
-                  <svg className="svg active m-l-02">
-                    <use href={sprite + "#arrow-right"} />
-                  </svg>
-                </button>
-              </div>
+          </Grid>
+        </Grid>
+      </Hidden>
+
+      <Hidden only={["sm", "md", "lg", "xl"]}>
+      <div className="introduction-info">
+          <CountDown
+            isLive={true}
+            onEnd={onEnd}
+            brickLength={brick.brickLength}
+          />
+          <div className="intro-text-row">
+            <Hidden only={["sm","md","lg","xl"]}>
+              <span className="heading">Investigation</span>
+            </Hidden>
+            <LiveStepper
+              activeStep={activeStep}
+              questions={questions}
+              previousStep={prevStep}
+              handleStep={handleStep}
+            />
+          </div>
+          <div className="action-footer">
+            <div>{renderPrevButton()}</div>
+            <div className="direction-info">
+              <h2>Next</h2>
+              <span>
+                Don’t panic, you can
+                <br />
+                always come back
+              </span>
+            </div>
+            <div>
+              <button
+                type="button"
+                className="play-preview svgOnHover play-green"
+                onClick={next}
+              >
+                <svg className="svg active m-l-02">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#arrow-right"} />
+                </svg>
+              </button>
             </div>
           </div>
-        </Grid>
-      </Grid>
+        </div>
+        <div className="introduction-page">
+          <SwipeableViews
+            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={activeStep}
+            className="swipe-view"
+            style={{ width: "100%" }}
+            onChangeIndex={handleStep}
+          >
+            {questions.map(renderQuestionContainer)}
+          </SwipeableViews>
+        </div>
+
+      </Hidden>
       <ShuffleAnswerDialog
         isOpen={isShuffleOpen}
         submit={() => nextFromShuffle()}

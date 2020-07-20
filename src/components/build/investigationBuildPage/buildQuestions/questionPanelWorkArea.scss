@@ -15,8 +15,7 @@
   }
 
   .answers-container {
-    margin-left: 1.25%;
-    width: 97.5%;
+    width: 100%;
   }
 
   p {
@@ -50,25 +49,14 @@
     border-radius: 1vw;
   }
 
-  .component-title {
-    div {
-      font-size: 0.74vw;
-    }
-  }
-
   input {
     border-radius: 0.2vw;
-    margin-bottom: 0.1vw;
-    margin-top: 0.1vw;
-    height: 2.8vw !important;
+    margin-bottom: 0.2vw;
     font-size: $base-lg-text-size;
     color: var(--theme-dark-blue);
   }
 
   textarea {
-    border-radius: 0.2vw;
-    margin-top: 0.1vw;
-    font-size: $base-lg-text-size;
     color: var(--theme-dark-blue);
   }
 
@@ -154,12 +142,6 @@
     border-top: none;
     font-size: 14px;
     color: var(--theme-dark-blue);
-
-    .unique-component-wrapper {
-      margin: 0.2vh 0;
-      width: 100%;
-    }
-
     .question-lock-container {
       margin-bottom: 7px;
     }
@@ -205,16 +187,11 @@
       max-height: 100%;
       overflow-x: hidden;
       overflow-y: auto;
-      border: 2px solid $tab-gray;
+      border: 2px solid var(--tab-gray);
+      background-color: var(--light-gray);
       border-radius: 0.6vw;
-      padding: 0px 4px 2px 4px;
+      padding: 0.2vw 0.2vw 0 0.2vw;
       margin-bottom: 25px;
-    }
-
-    .drop-box-text {
-      font-size: 1.6vw;
-      font-family: $font-family-bold;
-      color: #8a8d90;
     }
 
     .parent-left-sidebar {
@@ -266,7 +243,7 @@
           background: white;
           color: var(--theme-dark-blue);
           width: 89%;
-          background-color: $tab-gray;
+          background-color: var(--tab-gray);
           border: 0;
           font: 1.3vw $font-family-regular;
           text-transform: none;
@@ -284,9 +261,9 @@
           }
           &:hover {
             background-color: var(--theme-dark-blue);
-            color: $tab-gray;
+            color: var(--tab-gray);
             .svg {
-              color: $tab-gray;
+              color: var(--tab-gray);
             }
           }
         }
@@ -312,12 +289,11 @@
       }
     }
     .input-container {
-      margin: 0.2vw 0 0.4vw 0;
+      margin-bottom: 0.2vw;
     }
     .line-highlight-build,
     .word-highlight-build {
-      margin-left: 1.25%;
-      width: 97.5%;
+      width: 100%;
       position: relative;
       .hightlight-area,
       textarea {
@@ -326,7 +302,7 @@
         padding: 0.5vh 1%;
         min-height: 6vh;
         font-size: 1vw;
-        border-radius: 0.4vw;
+        border-radius: $global-drop-border-radius;
         line-height: 1.45;
         background-color: var(--white);
         margin: 0;
@@ -386,19 +362,11 @@
       .left-button-container {
         padding-left: 15px !important;
       }
-
-      .drop-box-text {
-        font-size: 1.6vw;
-      }
     }
 
     @media only screen and (max-width: 599px) {
       .left-button-container {
         padding-left: 15px !important;
-      }
-
-      .drop-box-text {
-        font-size: 1.3vw;
       }
     }
   }

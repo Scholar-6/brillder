@@ -24,7 +24,7 @@ import WordHighlightingComponent from '../questionTypes/wordHighlighting/WordHig
 
 interface QuestionProps {
   isTimeover?: boolean;
-  attempt?: ComponentAttempt;
+  attempt?: ComponentAttempt<any>;
   question: Question;
   isPhonePreview?: boolean;
   answers: any;
@@ -52,7 +52,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     if (this.props.attempt?.correct === true) {
       return {
         answer: this.props.attempt.answer, correct: true, marks: 0, maxMarks: this.props.attempt.maxMarks
-      } as ComponentAttempt;
+      } as ComponentAttempt<any>;
     }
     return this.state.answerRef.current?.getAttempt();
   }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@material-ui/core';
 
-import './questionType.scss';
+import './type.scss';
 import { QuestionTypeEnum } from 'model/question';
 import TypeButton from './TypeButton'
 import sprite from "../../../../assets/img/icons-sprite.svg";
@@ -50,6 +50,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
           }}
         >
           <svg className="svg w-2 h-2 active">
+            {/*eslint-disable-next-line*/}
             <use href={sprite + "#list"} />
           </svg>
           <span className="synthesis-text">
@@ -72,7 +73,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               activeType={type}
               questionType={QuestionTypeEnum.ShortAnswer}
               setType={setCurrentType}
-              labels={["S H O R T", "A N S W E R"]}
+              labels={["SHORT", "ANSWER"]}
               isActive={false}
               onMouseEnter={onHover}
               onMouseLeave={removeHover}
@@ -83,7 +84,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               activeType={type}
               questionType={QuestionTypeEnum.ChooseOne}
               setType={setCurrentType}
-              labels={["C H O O S E", "O N E"]}
+              labels={["CHOOSE", "ONE"]}
               isActive={false}
               onMouseEnter={onHover}
               onMouseLeave={removeHover}
@@ -94,7 +95,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               activeType={type}
               questionType={QuestionTypeEnum.ChooseSeveral}
               setType={setCurrentType}
-              labels={["C H O O S E", "S E V E R A L"]}
+              labels={["CHOOSE", "SEVERAL"]}
               isActive={false}
               onMouseEnter={onHover}
               onMouseLeave={removeHover}
@@ -107,7 +108,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               activeType={type}
               questionType={QuestionTypeEnum.VerticalShuffle}
               setType={setCurrentType}
-              labels={["V E R T I C A L", "S H U F F L E"]}
+              labels={["VERTICAL", "SHUFFLE"]}
               isActive={false}
               onMouseEnter={onHover}
               onMouseLeave={removeHover}
@@ -118,7 +119,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               activeType={type}
               questionType={QuestionTypeEnum.HorizontalShuffle}
               setType={setCurrentType}
-              labels={["H O R I Z O N T A L", "S H U F F L E"]}
+              labels={["HORIZONTAL", "SHUFFLE"]}
               isActive={false}
               onMouseEnter={onHover}
               onMouseLeave={removeHover}
@@ -131,7 +132,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               activeType={type}
               questionType={QuestionTypeEnum.PairMatch}
               setType={setCurrentType}
-              labels={["P A I R", "M A T C H"]}
+              labels={["PAIR", "MATCH"]}
               isActive={false}
               onMouseEnter={onHover}
               onMouseLeave={removeHover}
@@ -142,7 +143,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               activeType={type}
               questionType={QuestionTypeEnum.Sort}
               setType={setCurrentType}
-              labels={["C A T E G O R I S E"]}
+              labels={["CATEGORISE"]}
               isActive={false}
               onMouseEnter={onHover}
               onMouseLeave={removeHover}
@@ -153,7 +154,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               activeType={type}
               questionType={QuestionTypeEnum.MissingWord}
               setType={setCurrentType}
-              labels={["M I S S I N G", "W O R D"]}
+              labels={["MISSING", "WORD"]}
               isActive={false}
               onMouseEnter={onHover}
               onMouseLeave={removeHover}
@@ -166,7 +167,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               activeType={type}
               questionType={QuestionTypeEnum.WordHighlighting}
               setType={setCurrentType}
-              labels={["W O R D", "H I G H L I G H T I N G"]}
+              labels={["WORD", "HIGHLIGHTING"]}
               isActive={false}
               onMouseEnter={onHover}
               onMouseLeave={removeHover}
@@ -177,7 +178,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
               activeType={type}
               questionType={QuestionTypeEnum.LineHighlighting}
               setType={setCurrentType}
-              labels={["L I N E", "H I G H L I G H T I N G"]}
+              labels={["LINE", "HIGHLIGHTING"]}
               isActive={false}
               onMouseEnter={onHover}
               onMouseLeave={removeHover}

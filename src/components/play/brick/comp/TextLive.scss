@@ -6,11 +6,15 @@
   overflow: auto;
   margin-top: 5px;
   margin-bottom: 5px;
-	font-size: 1vw;
-	color: var(--theme-dark-blue);
+  color: var(--theme-dark-blue);
+  @include tabletP {
+    font-size: 1vw;
+  }
   p {
-		font-size: 1vw;
-		color: var(--theme-dark-blue);
+    color: var(--theme-dark-blue);
+    @include tabletP {
+      font-size: 1vw;
+    }
   }
 
   table {

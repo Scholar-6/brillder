@@ -96,7 +96,7 @@ const BrickTitle: React.FC<BrickTitleProps> = ({ parentState, canEdit, saveTitle
           <div className="mobile-view-image">
             <img alt="titles" src="/images/new-brick/titles.png" />
           </div>
-          <h1>What is your brick about?</h1>
+          <h1>What is your<br/>brick about?</h1>
           <Grid item className="input-container">
             <Input
               disabled={!canEdit}
@@ -120,13 +120,15 @@ const BrickTitle: React.FC<BrickTitleProps> = ({ parentState, canEdit, saveTitle
               placeholder="Enter Subtopic(s)..."
             />
           </Grid>
-          <NextButton
-            isActive={true}
-            step={ProposalStep.BrickTitle}
-            canSubmit={true}
-            onSubmit={saveTitles}
-            data={parentState}
-          />
+          <div className="tutorial-pagination">
+            <NextButton
+              isActive={true}
+              step={ProposalStep.BrickTitle}
+              canSubmit={true}
+              onSubmit={saveTitles}
+              data={parentState}
+            />
+          </div>
           <h2 className="pagination-text">1 of 4</h2>
         </Grid>
         <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />

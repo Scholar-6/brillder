@@ -4,7 +4,16 @@
 
 .question-build-quote-editor {
   width: 100%;
-
+  .document-editor {
+    .ck-editor {
+      width: 100%;
+      .ck-content {
+        padding: 1vw;
+        text-align: left;
+        background-color: var(--tab-gray) !important;
+      }
+    }
+  }
   input {
     width: 84%;
     height: 55px;
@@ -26,30 +35,5 @@
       height: 5.5vh;
       font-size: 1.1vw;
     }
-  }
-  .ck-toolbar {
-    height: 2.6vw;
-    border-top-left-radius: 0.4vw !important;
-    border-top-right-radius: 0.4vw !important;
-
-    .ck-button {
-      font-size: 0.85vw;
-    }
-  }
-
-  .ck-color-ui-dropdown {
-    margin-right: 50% !important;
-  }
-
-  .ck-dropdown__panel {
-    z-index: 1000;
-  }
-
-  .ck-content {
-    border-bottom-left-radius: 0.4vw !important;
-    border-bottom-right-radius: 0.4vw !important;
-    box-shadow: none !important;
-    border-top: none !important;
-    border: 1px solid var(--ck-color-toolbar-border);
   }
 }

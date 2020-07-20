@@ -6,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import './Sort.scss';
 import { Question } from "model/question";
 import CompComponent from '../Comp';
+import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/brick/model/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { ReactSortable } from 'react-sortablejs';
@@ -24,10 +25,10 @@ interface SortComponent {
   categories: SortCategory[];
 }
 
-interface SortProps {
+interface SortProps extends CompQuestionProps {
   question: Question;
   component: SortComponent;
-  attempt?: ComponentAttempt;
+  attempt?: ComponentAttempt<any>;
   answers: number;
   isPreview?: boolean;
 }
@@ -131,7 +132,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     return choices;
   }
 
-  mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
+  mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
     let markIncrement = prev ? 2 : 5;
     attempt.correct = true;
     attempt.marks = 0;
@@ -172,6 +173,10 @@ class Sort extends CompComponent<SortProps, SortState> {
     let status = DragAndDropStatus.Changed;
     if (this.state.status === DragAndDropStatus.None) {
       status = DragAndDropStatus.Init;
+    }
+
+    if (status === DragAndDropStatus.Changed && this.props.onAttempted) {
+      this.props.onAttempted();
     }
     
     this.setState({ status, userCats });

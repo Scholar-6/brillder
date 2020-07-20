@@ -60,11 +60,13 @@ class PageHeader extends Component<UsersListProps, MyState> {
     return (
       <div className="bell-button svgOnHover" onClick={(evt) => this.props.showNotifications(evt)}>
         <svg className="svg svg-default">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#bell-empty"} />
           {(notificationCount !== 0) &&
             <text className="bell-text-default" x="50%" y="50%" textAnchor="middle">{notificationCount}</text>}
         </svg>
         <svg className="svg colored">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#bell-filled"} />
           {(notificationCount !== 0) &&
             <text className="bell-text-filled" x="50%" y="50%" textAnchor="middle">{notificationCount}</text>}
@@ -76,9 +78,11 @@ class PageHeader extends Component<UsersListProps, MyState> {
     return (
       <div className="more-button svgOnHover" onClick={() => this.props.showDropdown()}>
         <svg className="svg svg-default">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#more-thin"} />
         </svg>
         <svg className="svg colored">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#more-thick"} />
         </svg>
       </div>
@@ -101,7 +105,8 @@ class PageHeader extends Component<UsersListProps, MyState> {
             {!searchVisible &&
               <div className="help-button svgOnHover">
                 <svg className="svg svg-default">
-                  <use href={sprite + "#help"} />
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#help-thin"} />
                 </svg>
               </div>
             }
@@ -121,15 +126,18 @@ class PageHeader extends Component<UsersListProps, MyState> {
               {searchVisible ?
                 <div className="btn btn-transparent close-search svgOnHover" onClick={() => this.toggleSearch()}>
                   <svg className="svg w100 h100">
+                    {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-right"} className="text-tab-gray" />
                   </svg>
                 </div>
                 :
                 <div className="btn btn-transparent open-search svgOnHover" onClick={() => this.renderSearch()}>
                   <svg className="svg w100 h100 svg-default">
+                    {/*eslint-disable-next-line*/}
                     <use href={sprite + "#search-thin"} className="text-theme-orange" />
                   </svg>
                   <svg className="svg w100 h100 colored">
+                    {/*eslint-disable-next-line*/}
                     <use href={sprite + "#search-thick"} className="text-theme-orange" />
                   </svg>
                 </div>
@@ -147,7 +155,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
         </Hidden>
         <Hidden only={['xs']} >
           <HomeButton link="/home" />
-          <Grid container className="logout-container">
+          <div className="logout-container">
             <div className="search-container">
               <div className="search-button svgOnHover" onClick={() => this.props.search()}>
                 <svg className="svg svg-default">
@@ -170,7 +178,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
               {this.renderBellButton(notificationCount)}
               {this.renderMoreButton()}
             </Grid>
-          </Grid >
+          </div >
         </Hidden>
       </div>
     );

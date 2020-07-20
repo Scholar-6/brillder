@@ -1,9 +1,8 @@
 import React from "react";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { Grid } from "@material-ui/core";
-
-import {QuestionValueType} from '../../types';
-import {Answer} from '../types';
+import sprite from "../../../../../../../assets/img/icons-sprite.svg";
+import { QuestionValueType } from '../../types';
+import { Answer } from '../types';
 import QuestionImageDropZone from '../../../baseComponents/QuestionImageDropzone';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
@@ -43,21 +42,23 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
     if (locked) { return; }
     if (answer.answerType === QuestionValueType.Image) {
       return (
-        <DeleteIcon
-          className="right-top-icon"
-          style={{ right: "1%", top: "2%" }}
-          onClick={() => removeImage()}
-        />
+        <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeImage()}>
+          <svg className="svg active back-button">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#trash-outline"} className="theme-orange" />
+          </svg>
+        </button>
       );
     }
 
     if (length > 3) {
       return (
-        <DeleteIcon
-          className="right-top-icon"
-          style={{ right: "1%", top: '2%' }}
-          onClick={() => removeFromList(index)}
-        />
+        <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(index)}>
+          <svg className="svg active back-button">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#trash-outline"} className="theme-orange" />
+          </svg>
+        </button>
       );
     }
     return "";
@@ -69,7 +70,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
   }
 
   const setImage = (fileName: string) => {
-    if (locked) {return;}
+    if (locked) { return; }
     answer.value = "";
     answer.valueFile = fileName;
     answer.answerType = 2;
@@ -79,11 +80,12 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
 
   return (
     <Grid container item xs={6}>
-      <div className={`pair-match-answer ${customClass}`}>
+      <div className={`unique-component pair-match-answer ${customClass}`}>
         {renderDeleteButton()}
         <DocumentWirisCKEditor
           disabled={locked}
           data={answer.value}
+          validationRequired={validationRequired}
           toolbar={['mathType', 'chemType']}
           placeholder={"Enter Answer " + (index + 1) + "..."}
           onBlur={() => save()}

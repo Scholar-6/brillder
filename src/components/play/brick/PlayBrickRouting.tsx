@@ -20,9 +20,10 @@ import {
 } from 'model/question';
 import { setBrillderTitle } from 'components/services/titleService';
 import { prefillAttempts } from 'components/services/PlayService';
-import PageHeadWithMenu from 'components/baseComponents/pageHeader/PageHeadWithMenu';
+import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
 import { Grid } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
+import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 export interface BrickAttempt {
@@ -33,7 +34,7 @@ export interface BrickAttempt {
   oldScore?: number;
   maxScore: number;
   student?: any;
-  answers: ComponentAttempt[];
+  answers: ComponentAttempt<any>[];
 }
 
 function shuffle(a: any[]) {
@@ -81,7 +82,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const brickId = parseInt(props.match.params.brickId);
   if (!props.brick || props.brick.id !== brickId || !props.brick.author) {
     props.fetchBrick(brickId);
-    return <div className="page-loader">...Loading brick...</div>
+    return <PageLoader content="...Loading brick..." />;
   }
 
   setBrillderTitle(props.brick.title);
@@ -145,7 +146,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   return (
     <div className="play-preview-pages">
-      <PageHeadWithMenu user={props.user} history={props.history} />
+      <PageHeadWithMenu page={PageEnum.Play} user={props.user} history={props.history} search={() => {}} searching={()=> {}} />
       <Grid container direction="row" className="sorted-row">
         <Grid container item className="sort-and-filter-container">
         </Grid>

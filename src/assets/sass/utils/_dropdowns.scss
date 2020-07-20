@@ -38,8 +38,10 @@
           padding: 2vw;
         }
         @include tabletP {
-          padding: 0.65vw;
+          padding: 0.8vw 1.6vw;
           font-size: 1.45vw;
+          display: flex;
+          align-items: center;
         }
         .menu-icon-container {
           width: 4.5vw;

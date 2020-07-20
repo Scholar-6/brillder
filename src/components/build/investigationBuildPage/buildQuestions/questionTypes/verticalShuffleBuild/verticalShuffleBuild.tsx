@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react'
-import DeleteIcon from '@material-ui/icons/Delete';
+import React, { useEffect } from 'react'
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
-
+import sprite from "../../../../../../assets/img/icons-sprite.svg";
 import './verticalShuffleBuild.scss'
 import { UniqueComponentProps } from '../types';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
@@ -17,8 +16,8 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
 
   useEffect(() => calculateHeight());
 
-  const newAnswer = () => ({value: ""});
-  
+  const newAnswer = () => ({ value: "" });
+
   if (!data.list) {
     data.list = [newAnswer(), newAnswer(), newAnswer()];
   } else if (data.list.length < 3) {
@@ -44,7 +43,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
 
   const addAnswer = () => {
     if (locked) { return; }
-    state.list.push({ value: ""});
+    state.list.push({ value: "" });
     update();
     save();
   }
@@ -70,11 +69,19 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     return (
       <div className="vertical-answer-box" key={key}>
         {
-          (state.list.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeFromList(key)} /> : ""
+          (state.list.length > 3)
+            ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(key)}>
+              <svg className="svg active back-button">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#trash-outline"} className="theme-orange" />
+              </svg>
+            </button>
+            : ""
         }
         <DocumentWirisCKEditor
           disabled={locked}
           data={answer.value}
+          validationRequired={validationRequired}
           toolbar={['mathType', 'chemType']}
           placeholder={"Enter Answer " + (key + 1) + "..."}
           onBlur={() => save()}
@@ -85,19 +92,19 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
   }
 
   return (
-    <div className="vertical-shuffle-build">
+    <div className="vertical-shuffle-build unique-component">
       <div className="component-title">
         <div>Enter Answers below in order.</div>
         <div>These will be randomised in the Play Interface.</div>
       </div>
       {
-        state.list.map((answer:any, i:number) => renderAnswer(answer, i))
+        state.list.map((answer: any, i: number) => renderAnswer(answer, i))
       }
       <AddAnswerButton
         locked={locked}
         addAnswer={addAnswer}
         height={height}
-        label="+ &nbsp;&nbsp; A &nbsp; N &nbsp; S &nbsp; W &nbsp; E &nbsp; R" />
+        label="+ ANSWER" />
     </div>
   )
 }

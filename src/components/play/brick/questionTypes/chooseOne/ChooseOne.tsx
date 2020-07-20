@@ -21,8 +21,8 @@ interface ChooseOneComponent {
 
 interface ChooseOneProps extends CompQuestionProps {
   component: ChooseOneComponent;
+  attempt: ComponentAttempt<number>;
   answers: number;
-  onAttempted(): void;
 }
 
 interface ChooseOneState {
@@ -45,14 +45,16 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   setActiveItem(activeItem: number) {
     this.setState({ activeItem });
-    this.props.onAttempted();
+    if (this.props.onAttempted) {
+      this.props.onAttempted();
+    }
   }
 
   getAnswer(): number {
     return this.state.activeItem;
   }
 
-  mark(attempt: ComponentAttempt, prev: ComponentAttempt): ComponentAttempt {
+  mark(attempt: ComponentAttempt<number>, prev: ComponentAttempt<number>) {
     const { component } = this.props;
     // If the question is answered in review phase, add 2 to the mark and not 5.
     let markIncrement = prev ? 2 : 5;
@@ -125,8 +127,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     if (this.props.attempt && index === activeItem) {
       let { answer } = this.props.attempt;
       if (answer >= 0) {
-        let intAnswer = parseInt(answer);
-        if (intAnswer === index) {
+        if (answer === index) {
           if (isCorrect) {
             className += " correct";
           } else if (isCorrect === false) {

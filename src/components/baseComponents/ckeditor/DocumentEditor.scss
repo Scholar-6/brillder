@@ -3,14 +3,93 @@
 @import '../../../assets/sass/partials/extensions';
 
 .document-editor {
+  border-radius: $global-drop-border-radius !important;
+  background-color: var(--white);
+  height: calc(100% - 0.2vh);
+  position: relative;
+  overflow: hidden;
+  .ck-editor {
+    height: 100%;
+    width: calc(100% - 2vw);
+    .ck-editor__main {
+      height: 100%;
+      .ck-content {
+        height: 100%;
+        margin: 0;
+        padding: 6vh 1vw 1vh 2.2vw;
+        text-align: center;
+        font-size: $answer-input-text-size;
+        box-shadow: none !important;
+        border: 0 !important;
+        color: var(--theme-dark-blue);
+        p {
+          color: var(--theme-dark-blue);
+          margin: 0 !important;
+        }
+        .table {
+          display: block;
+        }
+        table {
+          td {
+            min-width: 0.5vw;
+            font-size: 1vw;
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+  &.content-invalid {
+    .ck-content {
+      background: var(--theme-orange) !important;
+    }
+  }
   .ck-toolbar {
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-    background: $tab-gray !important;
+    font-size: 1.4vh;
+    border-top-right-radius: 0.4vw !important;
+    border-bottom-right-radius: 0.4vw !important;
+    background: var(--white) !important;
     border: none !important;
-
-    .ck-button {
-      color: var(--theme-dark-blue);
+    padding: 0 !important;
+    .ck-toolbar__items {
+      background: var(--white) !important;
+      display: block !important;
+      .ck-dropdown {
+        padding: 0 0.2vw !important;
+        margin: 0 !important;
+        .ck-dropdown__panel {
+          z-index: 100 !important;
+          position: absolute;
+          left: 0;
+          right: inherit;
+          width: 100%;
+          top: 0 !important;
+          bottom: inherit;
+          background-color: var(--white);
+          height: 100%;
+          box-shadow: none;
+          border: 0;
+          .ck-button__icon {
+            @include phone_and_tabletL {
+              font-size: 3vw;
+            }
+            @include phone_and_tabletP {
+              font-size: 5vw;
+            }
+          }
+          .ck-color-table {
+            width: max-content;
+            background-color: var(--white);
+          }
+        }
+      }
+      .ck-color-ui-dropdown {
+        .ck-dropdown__panel {
+          left: 0 !important;
+          right: auto !important;
+          border-radius: 0.2vw;
+        }
+      }
     }
     .ck-custom-dropdown {
       .ck-splitbutton__action {
@@ -40,56 +119,24 @@
       }
     }
 
-    .ck.ck-button.ck-on:not(.ck-disabled):hover, a.ck.ck-button.ck-on:not(.ck-disabled):hover {
-      background-color:transparent !important;
-    }
-
-    .ck-button__label {
-      font-family: $font-family-regular;
+    .ck.ck-button.ck-on:not(.ck-disabled):hover,
+    a.ck.ck-button.ck-on:not(.ck-disabled):hover {
+      background-color: transparent !important;
     }
   }
 
-  .ck-color-ui-dropdown {
-    .ck.ck-reset.ck-dropdown__panel {
-      left: 0 !important;
-      right: auto !important;
-      border-radius: 0.2vw;
-
-      .ck.ck-button.ck-off.ck-color-grid__tile {
-        border-radius: 0.2vw;
-      }
-    }
+  .ck-color-table {
+    z-index: 10000;
   }
 
-  .ck-content {
-    color: var(--theme-dark-blue);
-    border-top-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
-    border: none !important;
-    font-size: 1vw;
-    background: var(--light-gray) !important;
-    box-shadow: none !important;
-
-    strong {
-      font-weight: normal !important;
-    }
-
-    .table {
-      display: block;
-    }
-
-    table {
-      td {
-        min-width: 0.5vw;
-        font-size: 1vw;
-        padding: 0;
-      }
-    }
+  .ck.ck-reset.ck-dropdown__panel.ck-dropdown__panel_se.ck-dropdown__panel-visible {
+    left: auto;
+    right: 0;
   }
-}
-
-.document-editor.content-invalid {
-  .ck-content {
-    background: var(--theme-orange) !important;
+  .ck-insert-table-dropdown__grid {
+    z-index: 100000;
+  }
+  .upload-button-custom span {
+    font-family: $font-family-bold !important;
   }
 }

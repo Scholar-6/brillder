@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 // I think this is redundant until the service worker is registered below...
 import * as serviceWorker from './serviceWorker';
 import App from './components/app/App';

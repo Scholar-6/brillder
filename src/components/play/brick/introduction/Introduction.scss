@@ -17,29 +17,90 @@
     }
     .brick-container {
       @include phone_and_tabletP {
-        height: 100%;
+        height: calc(100% - 16vh);
+        overflow-y: auto;
       }
       .introduction-page {
         font-family: $font-family-regular;
         position: relative;
-        overflow-y: auto;
         @include phone_and_tabletP {
           height: 100%;
+          position: relative;
         }
         @include tabletP {
+          overflow-y: auto;
+          height: calc(100vh - 15.8vh);
           padding: 4vh 2vw 4vh 7vw;
-          height: calc(100vh - 7.8vw);
         }
-
         .intro-header {
+          @extend %transitionAll600;
           @include phone_and_tabletP {
             display: flex;
             flex-direction: column;
             align-items: center;
             padding-top: 3vh;
+            position: relative;
+          }
+          > .intro-header {
+            @include phone_and_tabletP {
+              position: absolute;
+              padding: 0;
+              right: 0;
+            }
           }
           @include tabletP {
             margin-bottom: 10vh;
+          }
+          &.expanded-intro-header {
+            @include phone_and_tabletP {
+              align-items: flex-start;
+              padding-top: 2vh;
+            }
+            .brick-counter {
+              @include phone_and_tabletP {
+                transition: all 300ms;
+                font-size: 6vw !important;
+                padding-right: 1vw !important;
+              }
+            }
+            .left-brick-circle {
+              .round-button {
+                @include phone_and_tabletP {
+                  transition: all 300ms;
+                  height: 8vw;
+                  width: 8vw;
+                }
+              }
+            }
+            h1 {
+              @include phone_and_tabletP {
+                transition: all 300ms;
+                margin: 0;
+                width: calc(100vw - 38vw);
+                font-size: 5vw !important;
+                text-align: left !important;
+                height: 2.5vh;
+                padding-left: 2vw !important;
+              }
+            }
+            p {
+              @include phone_and_tabletP {
+                transition: all 300ms;
+                width: 100%;
+                text-align: center;
+              }
+            }
+          }
+          .play-clock {
+            @include phone_and_tabletP {
+              display: none;
+            }
+          }
+          .brick-counter {
+            @include phone_and_tabletP {
+              font-size: 5vw;
+              padding-right: 5vw;
+            }
           }
           .left-brick-circle {
             position: absolute;
@@ -49,22 +110,17 @@
               position: unset;
             }
             > div {
-              height: 5vw;
-              width: 5vw;
               @extend %radCircle;
               background-color: var(--gray);
               @include phone_and_tabletP {
-                height: 20vw;
-                width: 20vw;
+                height: 17vw;
+                width: 17vw;
+              }
+              @include tabletP {
+                height: 5vw;
+                width: 5vw;
               }
             }
-          }
-          h1 {
-            font-size: 2vw;
-            text-transform: uppercase;
-            margin: 2.5vw 0;
-            text-align: left;
-            padding-left: 7vw;
           }
         }
         .start-brick-button {
@@ -81,27 +137,36 @@
         ol {
           color: var(--theme-dark-blue);
         }
-
         h1 {
+          text-transform: uppercase;
           width: 100%;
           color: var(--theme-dark-blue);
-          margin: 1vw 0;
           font-family: $font-family-black;
-          text-transform: capitalize;
-          @extend %floatToXCenter;
-          top: 0;
-          font-size: 3.6vw;
-          text-align: center;
           @include phone_and_tabletP {
             position: unset;
             transform: translate(0);
             padding-left: 0 !important;
             font-size: 3vh !important;
             text-align: center !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          @include tabletP {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            margin: 1vw 0;
+            min-height: 10.3vh;
+            font-size: 2vw;
+            text-align: left;
+            padding-left: 7vw;
           }
         }
         .question-index-container {
-          margin: 1.5vw 1.5vw 1.5vw 0.5vw;
+          margin: 1vw 1.5vw 2vw 0;
           padding: 0.5vw;
           width: 3.3vw;
           height: 3.3vw;
@@ -138,13 +203,18 @@
         .question-live-play {
           width: calc(100% - 7vw);
           overflow-y: auto;
-          height: calc(100vh - 24.6vh);
           padding-bottom: 2vw;
           margin: 6vh 3vw 1vw 4vw;
           position: absolute;
           top: 0;
+          @include phone_and_tabletP {
+            height: calc(100vh - 55.8vw);
+          }
+          @include tabletP {
+            height: 75.4vh;
+          }
           &.review-content {
-            margin-top: 2.5vh;
+            margin-top: 2vh;
           }
           .question-title {
             font-size: 2.5vw;
@@ -170,8 +240,6 @@
         }
         @include tabletP {
           position: relative;
-        }
-        @include tabletP {
           padding: 4vh 2vw;
           height: calc(100vh - 7.8vw);
         }
@@ -186,6 +254,12 @@
             position: absolute;
             right: 5vw;
             margin-top: 2vw;
+            .brick-counter {
+              display:none;
+            }
+            .play-clock {
+              display:flex;
+            }
           }
           @include tabletP {
             display: flex;
@@ -195,11 +269,11 @@
 
           .brick-counter {
             @include phone_and_tabletP {
-              position: fixed;
-              right: 5vw;
-              top: 0vw;
-              font-size: 8vw;
-              color: var(--gray);
+              position: absolute;
+              right: 0vw;
+              top: 1vw;
+              font-size: 5vw;
+              padding-right: 5vw;
             }
           }
           .clock-image {
@@ -272,8 +346,19 @@
               &.current {
                 color: var(--theme-dark-blue);
               }
-              .blue-circle-container {
+              .blue-circle-main-container {
                 @extend %floatToXCenter;
+                @include phone_and_tabletP {
+                  left: 60%;
+                  top: 50%;
+                  transform: translate(0, -50%);
+                }
+                @include tabletP {
+                  width: 1.2vw;
+                  height: 1.2vw;
+                }
+              }
+              .blue-circle-container {
                 padding: 0.2vw;
                 border-radius: 100vw;
                 background: var(--blue-alpha5);
@@ -288,46 +373,31 @@
           }
         }
         .action-footer {
-          position: absolute;
-          left: 50%;
-          transform: translateX(-50%);
-
           display: flex;
-
           color: var(--theme-dark-blue);
           @include phone_and_tabletP {
+            position: fixed;
             align-items: flex-end;
             justify-content: flex-end;
-            bottom: 3vw;
+            bottom: 6.5vh;
+            right: 0vw;
           }
           @include tabletP {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
             align-items: center;
             justify-content: flex-end;
             width: 22vw;
             bottom: 5vw;
           }
-          .play-preview {
-            position: relative;
-            left: inherit;
-            right: inherit;
-            top: inherit;
-            @include phone_and_tabletP {
-              width: 26vw;
-              height: 26vw;
-            }
-            .svg {
-              @include phone_and_tabletP {
-                width: 13vw;
-                height: 13vw;
-              }
-            }
-          }
+
           > div {
             @extend %flexCenter;
             flex-direction: column;
             text-align: center;
             @include phone_and_tabletP {
-              margin-left: 5vw;
+              margin: 0 3vw;
             }
             @include tabletP {
               min-width: 4vw;
@@ -342,7 +412,7 @@
 
                 font-family: $font-family-bold;
                 @include phone_and_tabletP {
-                  font-size: 11.6vw;
+                  font-size: 8.4vw;
                   width: max-content;
                 }
                 @include tabletP {
@@ -359,8 +429,8 @@
                 letter-spacing: inherit;
                 margin: 0;
                 @include phone_and_tabletP {
-                  font-size: 6vw;
-                  top: -6vw;
+                  font-size: 5.1vw;
+                  top: -4vw;
                 }
                 @include tabletP {
                   top: -1vw;
@@ -409,8 +479,13 @@
         }
         .introduction-page {
           padding: 0;
-          height: calc(100vh - 7.8vw);
           overflow-y: hidden;
+          @include phone_and_tabletP {
+            height: calc(100vh - 55.8vw);
+          }
+          @include tabletP {
+            height: calc(100vh - 7.8vw);
+          }
         }
         .fotter-text {
           margin-top: 3vw;
@@ -427,6 +502,92 @@
             top: 50%;
             transform: translateY(-10vh);
             margin: 0;
+          }
+        }
+      }
+
+      .action-footer {
+        position: absolute;
+        display: flex;
+        color: var(--theme-dark-blue);
+        @include phone_and_tabletP {
+          align-items: flex-end;
+          justify-content: flex-end;
+          bottom: 3vw;
+          margin-top: 3vh;
+          position: relative;
+        }
+        @include tabletP {
+          align-items: center;
+          justify-content: flex-end;
+          width: 22vw;
+          bottom: 5vw;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        .play-preview {
+          position: relative;
+          left: inherit;
+          right: inherit;
+          top: inherit;
+          .svg {
+            @include phone_and_tabletP {
+              width: 13vw;
+              height: 13vw;
+            }
+          }
+        }
+        > div {
+          @extend %flexCenter;
+          flex-direction: column;
+          text-align: center;
+          @include phone_and_tabletP {
+            margin-left: 5vw;
+          }
+          @include tabletP {
+            min-width: 4vw;
+          }
+          &.direction-info {
+            width: 100%;
+            padding: 0 1vw;
+            position: relative;
+            > h2 {
+              margin-top: 0;
+              margin-bottom: 0;
+
+              font-family: $font-family-bold;
+              @include phone_and_tabletP {
+                font-size: 11.6vw;
+                width: max-content;
+              }
+              @include tabletP {
+                font-size: 2.6vw;
+              }
+            }
+            > h3,
+            > span {
+              position: absolute;
+              color: var(--theme-dark-blue);
+            }
+            > h3 {
+              left: 1.8vw;
+              letter-spacing: inherit;
+              margin: 0;
+              @include phone_and_tabletP {
+                font-size: 6vw;
+                top: -6vw;
+              }
+              @include tabletP {
+                top: -1vw;
+              }
+            }
+            > span {
+              width: 100%;
+              left: 50%;
+              transform: translateX(-50%);
+              bottom: -2vw;
+              line-height: 1vw;
+            }
           }
         }
       }
@@ -457,8 +618,8 @@
           }
         }
         .circle-progress {
-          height: 50vh !important;
-          width: 50vh !important;
+          height: 50vh;
+          width: 50vh;
           .CircularProgressbar-path {
             stroke: #ffb55f !important;
           }
@@ -529,7 +690,7 @@
     }
     > span {
       @include phone_and_tabletP {
-        font-size: 9vw;
+        font-size: 7vw;
       }
       &:first-child {
         @include tabletP {
@@ -558,7 +719,7 @@
     .help-prep {
       color: var(--gray);
       @include phone_and_tabletP {
-        font-size: 4vw;
+        font-size: 3vw;
       }
       @include tabletP {
         font-size: 1vw;
@@ -569,17 +730,23 @@
     width: 100%;
     color: var(--theme-dark-blue);
     margin: 0 0 1vh 0;
-    @include phone_and_tabletP {
-      font: 6vw $font-family-regular;
-    }
+    // @include phone_and_tabletP {
+    //   font: 6vw $font-family-regular;
+    // }
     @include tabletP {
       font: 1vw $font-family-regular;
     }
   }
   .help-text {
     font-family: $font-family-regular;
-    font-size: 0.8vw;
+
     margin-bottom: 3px;
+    @include phone_and_tabletP {
+      font-size: 3vw;
+    }
+    @include tabletP {
+      font-size: 0.8vw;
+    }
   }
 }
 

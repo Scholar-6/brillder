@@ -3,20 +3,22 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import { Grid } from '@material-ui/core';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import sprite from "../../../../assets/img/icons-sprite.svg";
 import './Hint.scss';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
+import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
-const HtmlTooltip = withStyles((theme:any) => ({
+const HtmlTooltip = withStyles((theme: any) => ({
   tooltip: {
     backgroundColor: '#193366',
     padding: '1.5vh 1vw',
     maxWidth: '17vw',
     border: 0,
+    fontSize: '0.8vw',
+    fontFamily: 'Brandon Grotesque Regular',
   },
 }))(Tooltip);
 
@@ -85,7 +87,7 @@ const HintComponent: React.FC<HintProps> = ({
 
   const onHintListChanged = (value: string, index: number) => {
     if (locked) { return; }
-    let {list} = state;
+    let { list } = state;
     list[index] = value;
     onChange({ ...state, list });
   }
@@ -93,11 +95,11 @@ const HintComponent: React.FC<HintProps> = ({
   const handleStatusChange = (event: React.MouseEvent<HTMLElement>, status: HintStatus) => {
     if (locked) { return; }
     if (status === HintStatus.All) {
-      setState({...state, status, list: []});
-      onChange({...state, status, list: []});
+      setState({ ...state, status, list: [] });
+      onChange({ ...state, status, list: [] });
     } else {
-      setState({...state, status});
-      onChange({...state, status});
+      setState({ ...state, status });
+      onChange({ ...state, status });
     }
     save();
   };
@@ -105,20 +107,20 @@ const HintComponent: React.FC<HintProps> = ({
   const renderHintInputs = () => {
     if (state.status === HintStatus.All || !props.count || props.count === 1) {
       return (
-        <Grid container item xs={12} className="hint-container">
+        <div className="hint-container">
           <DocumentWirisCKEditor
             disabled={locked}
             data={state.value}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
-              'mathType', 'chemType', 'insertTable'
+              'mathType', 'chemType', 'insertTable', 'uploadImageCustom'
             ]}
             placeholder="Enter Hint..."
             validationRequired={validationRequired}
             onBlur={() => save()}
             onChange={onHintChanged}
           />
-        </Grid>
+        </div>
       );
     }
     const answerHints: any[] = [];
@@ -128,29 +130,30 @@ const HintComponent: React.FC<HintProps> = ({
       for (let i = 0; i < props.count; i++) {
         if (state.list.length < props.count) {
           list.push('');
-          
+
         } else {
-          setState({...state, list});
-          return <div>...Preparing hints...</div>
+          setState({ ...state, list });
+          return <PageLoader content="...Preparing hints..." />;
         }
       }
     }
 
     for (let i = 0; i < props.count; i++) {
       answerHints.push(
-        <Grid key={i} container item xs={12} className="hint-container">
+        <div className="hint-container">
           <DocumentWirisCKEditor
             disabled={locked}
             data={state.list[i]}
             toolbar={[
-              'bold', 'italic', 'fontColor', 'superscript', 'subscript', 'mathType', 'chemType'
+              'bold', 'italic', 'fontColor', 'superscript', 'subscript',
+              'mathType', 'chemType', 'imageUploadCustom'
             ]}
             placeholder="Enter Hint"
             validationRequired={validationRequired}
             onBlur={() => save()}
-            onChange={(v:any) => {onHintListChanged(v, i)}}
+            onChange={(v: any) => { onHintListChanged(v, i) }}
           />
-        </Grid>
+        </div>
       );
     }
     return answerHints;
@@ -158,14 +161,13 @@ const HintComponent: React.FC<HintProps> = ({
 
   return (
     <div className="hint-component">
-      <Grid container direction="row">
-        <Grid container item xs={3} alignContent="center">
-          <Grid className="hint-type-text" style={{ width: '100%' }}>
-            <div>H I N T</div>
-            <div>T Y P E</div>
-          </Grid>
-        </Grid>
-        <Grid container item xs={7} justify="flex-start" alignContent="center">
+      <div className="hint-header">
+        <div>
+          <div className="hint-type-text">
+            <span>HINT<br />TYPE</span>
+          </div>
+        </div>
+        <div>
           <ToggleButtonGroup className="hint-toggle-group" value={state.status} exclusive onChange={handleStatusChange}>
             <ToggleButton className="hint-toggle-button" disabled={locked} value={HintStatus.Each}>
               Each Answer
@@ -174,15 +176,13 @@ const HintComponent: React.FC<HintProps> = ({
               All Answers
             </ToggleButton>
           </ToggleButtonGroup>
-        </Grid>
-        <Grid container item xs={2} alignContent="center" justify="flex-end" style={{position: 'relative'}}>
-          <FiberManualRecordIcon className="hint-question-circle" />
-          <Grid container alignContent="center" justify="center" className="hint-type">
+        </div>
+        <div>
+          <div className="hint-question-circle">
             <HtmlTooltip
               title={
                 <React.Fragment>
-                  <div className="hint-question-mark-hover-title">
-                    <span className="question-mark">?</span>
+                  <div>
                     Hints ensure that the learner has to keep
                     re-evaluating when reviewing material.
                     This is why our interface does not allow for standard true or false questions:
@@ -192,14 +192,20 @@ const HintComponent: React.FC<HintProps> = ({
                     </div>
                   </div>
                 </React.Fragment>
-              }
-            >
-              <span className="question-mark">?</span>
+            }>
+              <button className="btn btn-transparent svgOnHover question-mark">
+                <svg className="svg w80 h80 active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#help-thin"} />
+                </svg>
+              </button>
             </HtmlTooltip>
-          </Grid>
-        </Grid>
-      </Grid>
-      {renderHintInputs()}
+          </div>
+        </div>
+      </div>
+      <div className="hint-content">
+        {renderHintInputs()}
+      </div>
     </div>
   );
 }

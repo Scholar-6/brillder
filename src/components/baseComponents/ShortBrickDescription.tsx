@@ -19,7 +19,12 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   renderRoler() {
     return (
       <div className="left-brick-roller">
-        <div className="roller-button" />
+        <div className="btn btn-transparent roller-button svgOnHover">
+          <svg className="svg w100 h100 active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#roller"} className="text-theme-green" />
+          </svg>
+        </div>
       </div>
     );
   }
@@ -35,10 +40,12 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   renderPlayButton() {
     return (
       <div className="play-button-link svgOnHover" onClick={() => this.props.move ? this.props.move() : {}}>
-        <svg className="svg w80 h80 svg-default">
+        <svg className="svg w100 h100 svg-default">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#play-thin"} className="text-gray" />
         </svg>
-        <svg className="svg w80 h80 colored">
+        <svg className="svg w100 h100 colored">
+          {/*eslint-disable-next-line*/}
           <use href={sprite + "#play-thick"} className="text-gray" />
         </svg>
       </div>

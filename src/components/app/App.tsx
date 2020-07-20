@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 import './app.scss';
-import '../../assets/fonts/icomoon/style.css';
 
 import VersionLabel from 'components/baseComponents/VersionLabel';
 import Dashboard from '../play/dashboard/Dashboard';
@@ -70,7 +69,7 @@ const App: React.FC = (props: any) => {
   const addZendesk = () => {
     var head = document.getElementsByTagName('head').item(0);
     if (head) {
-      
+
       var script = document.createElement('script');
       script.setAttribute('id', 'ze-snippet');
       script.setAttribute('type', 'text/javascript');

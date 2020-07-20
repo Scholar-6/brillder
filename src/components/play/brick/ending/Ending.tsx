@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import { CircularProgressbar } from "react-circular-progressbar";
 
 import "./Ending.scss";
@@ -49,80 +49,129 @@ const EndingPage: React.FC<EndingProps> = ({
     setCurrentScore(Math.round((oldScore + score) * 50 / maxScore));
   }, 400);
 
+  const renderProgressBars = () => {
+    return (
+      <div className="question-live-play">
+        <Grid
+          container
+          justify="center"
+          alignContent="center"
+          className="circle-progress-container"
+        >
+          <CircularProgressbar
+            className="circle-progress-first"
+            strokeWidth={4}
+            counterClockwise={true}
+            value={minCurrentScore}
+          />
+          <Grid
+            container
+            justify="center"
+            alignContent="center"
+            className="score-circle"
+          >
+            <CircularProgressbar
+              className="circle-progress-second"
+              counterClockwise={true}
+              strokeWidth={4}
+              value={maxCurrentScore}
+            />
+          </Grid>
+          <Grid
+            container
+            justify="center"
+            alignContent="center"
+            className="score-circle"
+          >
+            <CircularProgressbar
+              className="circle-progress-third"
+              counterClockwise={true}
+              strokeWidth={4}
+              value={currentScore}
+            />
+          </Grid>
+          <Grid
+            container
+            justify="center"
+            alignContent="center"
+            className="score-circle"
+          >
+            <div>
+              <div className="score-precentage">{currentPScore}%</div>
+              <div className="score-number">{oldScore}/{maxScore}</div>
+              <div className="score-number">{score}/{maxScore}</div>
+            </div>
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
+
+  const renderFooter = () => {
+    return (
+      <div className="action-footer">
+        <div>&nbsp;</div>
+        <div className="direction-info">
+          <h2>Summary</h2>
+        </div>
+        <div>
+          <button
+            type="button"
+            className="play-preview svgOnHover play-green"
+            onClick={endBrick}
+          >
+            <svg className="svg active m-l-02">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#arrow-right"} />
+            </svg>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="brick-container ending-page">
-      <Grid container direction="row">
-        <Grid item xs={8}>
+    <div>
+      <Hidden only={['xs']}>
+        <div className="brick-container ending-page">
+          <Grid container direction="row">
+            <Grid item xs={8}>
+              <div className="introduction-page">
+                <div className="question-index-container">
+                  <div className="question-index">FS</div>
+                </div>
+                <h1>Final Score : Agg.</h1>
+                {renderProgressBars()}
+              </div>
+            </Grid>
+            <Grid item xs={4}>
+              <div className="introduction-info">
+                <div className="intro-header">
+                  <div>Range: {minPScore}%-{maxPScore}%</div>
+                  <Clock brickLength={brick.brickLength} />
+                </div>
+                <div className="intro-text-row">
+                  <ReviewStepper
+                    isEnd={true}
+                    questions={brick.questions}
+                    attempts={attempts}
+                    handleStep={() => { }}
+                  />
+                </div>
+                {renderFooter()}
+              </div>
+            </Grid>
+          </Grid>
+        </div>
+      </Hidden>
+      <Hidden only={['sm', 'md', 'lg', 'xl']}>
+        <div className="brick-container mobile-ending-page ending-page">
           <div className="introduction-page">
             <div className="question-index-container">
               <div className="question-index">FS</div>
             </div>
             <h1>Final Score : Agg.</h1>
-            <div className="question-live-play">
-              <Grid
-                container
-                justify="center"
-                alignContent="center"
-                className="circle-progress-container"
-              >
-                <CircularProgressbar
-                  className="circle-progress-first"
-                  strokeWidth={4}
-                  counterClockwise={true}
-                  value={minCurrentScore}
-                />
-                <Grid
-                  container
-                  justify="center"
-                  alignContent="center"
-                  className="score-circle"
-                >
-                  <CircularProgressbar
-                    className="circle-progress-second"
-                    counterClockwise={true}
-                    strokeWidth={4}
-                    value={maxCurrentScore}
-                  />
-                </Grid>
-                <Grid
-                  container
-                  justify="center"
-                  alignContent="center"
-                  className="score-circle"
-                >
-                  <CircularProgressbar
-                    className="circle-progress-third"
-                    counterClockwise={true}
-                    strokeWidth={4}
-                    value={currentScore}
-                  />
-                </Grid>
-                <Grid
-                  container
-                  justify="center"
-                  alignContent="center"
-                  className="score-circle"
-                >
-                  <div>
-                    <div className="score-precentage">
-                      {currentPScore}%
-                  </div>
-                    <div className="score-number">
-                      {oldScore}/{maxScore}
-                    </div>
-                    <div className="score-number">
-                      {score}/{maxScore}
-                    </div>
-                  </div>
-                </Grid>
-              </Grid>
-            </div>
-          </div>
-        </Grid>
-        <Grid item xs={4}>
-          <div className="introduction-info">
             <div className="intro-header">
-              <div>Range: {minPScore}%-{maxPScore}%</div>
               <Clock brickLength={brick.brickLength} />
             </div>
             <div className="intro-text-row">
@@ -133,26 +182,11 @@ const EndingPage: React.FC<EndingProps> = ({
                 handleStep={() => { }}
               />
             </div>
-            <div className="action-footer">
-              <div>&nbsp;</div>
-              <div className="direction-info">
-                <h2>Summary</h2>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  className="play-preview svgOnHover play-green"
-                  onClick={endBrick}
-                >
-                  <svg className="svg active m-l-02">
-                    <use href={sprite + "#arrow-right"} />
-                  </svg>
-                </button>
-              </div>
-            </div>
+            {renderProgressBars()}
           </div>
-        </Grid>
-      </Grid>
+            {renderFooter()}
+        </div>
+      </Hidden>
     </div>
   );
 };

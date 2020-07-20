@@ -1,6 +1,5 @@
 import React from 'react'
-import DeleteIcon from '@material-ui/icons/Delete';
-
+import sprite from "../../../../../assets/img/icons-sprite.svg";
 import { QuestionComponentTypeEnum, Hint } from 'model/question';
 import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'
@@ -43,7 +42,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     return count;
   }
 
-  const setComponentType = (type:number) => {
+  const setComponentType = (type: number) => {
     component.type = type;
     updateComponent(component, index);
     props.saveBrick();
@@ -53,16 +52,17 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
 
   if (type === QuestionComponentTypeEnum.None) {
     return (
-      <div style={{position: 'relative', width: '100%'}}>
+      <div style={{ position: 'relative', width: '100%' }}>
         {
           props.canRemove
-          ?
-            <DeleteIcon
-              className="right-top-icon"
-              style={{right: '2px', top: '7px'}}
-              onClick={() => props.removeComponent(index)}
-            />
-          : ""
+            ?
+            <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => props.removeComponent(index)}>
+              <svg className="svg active back-button">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#trash-outline"} className="theme-orange" />
+              </svg>
+            </button>
+            : ""
         }
         <DropBox locked={locked} onDrop={setComponentType} />
       </div>
@@ -112,16 +112,17 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     )
   }
   return (
-    <div style={{position: 'relative', width: '100%'}}>
+    <div style={{ position: 'relative', width: '100%' }}>
       {
         !locked
-        ?
-          <DeleteIcon
-            className="right-top-icon"
-            style={{right: '2px', top: '7px'}}
-            onClick={props.setEmptyType}
-          />
-        : ""
+          ?
+          <button className="btn btn-transparent right-top-icon svgOnHover" onClick={props.setEmptyType}>
+            <svg className="svg active back-button">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#trash-outline"} className="theme-orange" />
+            </svg>
+          </button>
+          : ""
       }
       <InnerComponent
         locked={locked}
