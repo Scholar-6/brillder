@@ -32,10 +32,11 @@ export interface BoxProps {
   marginLeft?: any,
   hoverMarginTop?: any,
   fontFamily?: string,
+  className?: string,
 }
 
 const DragBox: React.FC<BoxProps> = ({
-  name, fontSize, isImage, src, label, marginTop, marginLeft, hoverMarginTop, fontFamily, locked, letterSpacing
+  name, fontSize, isImage, src, label, marginTop, marginLeft, hoverMarginTop, fontFamily, locked, letterSpacing,className
 }) => {
   const renderContent = () => {
     if (isImage) {
@@ -45,7 +46,7 @@ const DragBox: React.FC<BoxProps> = ({
       </div>
     }
     return (
-      <div>
+      <div className={className}>
         <div className="drag-box-name" style={{fontFamily, letterSpacing, marginLeft }}>{name}</div>
         <HoverBox label={label} marginTop={hoverMarginTop} />
       </div>

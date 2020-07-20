@@ -28,6 +28,7 @@
     left: 8.2vw;
     width: 9.5vw;
     z-index: 1000;
+    pointer-events: none;
   }
 
   .ck-placeholder:before {
