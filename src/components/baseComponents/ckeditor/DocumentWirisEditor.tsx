@@ -124,7 +124,7 @@ class DocumentWirisEditorComponent extends React.Component<
     windowRef.WirisPlugin.Core.addGlobalListener(wirisBeforeInsertionListener);
     windowRef.WirisPlugin.Core.addGlobalListener(wirisAfterInsertionListener);
 
-    editor.on("comment-deleted", () => {
+    editor.on("comment-update", () => {
       const data = editor.getData();
       this.props.onChange(data);
       this.replaceHtml("ck-label", "Document colors", "Document colours");

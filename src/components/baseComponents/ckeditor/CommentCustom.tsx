@@ -109,7 +109,7 @@ class CommentCustom extends Plugin {
 
                 return modelWriter.createElement('comment', {
                     commentId: parseInt(viewElement.getAttribute('data-id')),
-                    text: "This is a comment!"
+                    text: text
                 });
             }
         });
@@ -128,8 +128,15 @@ class CommentCustom extends Plugin {
                     this.editor.model.change((writer: any) => {
                         writer.remove(modelItem);
                     });
-                    this.editor.fire("comment-deleted");
+                    this.editor.fire("comment-update");
                 };
+
+                const changeText = (commentId: number, text: string) => {
+                    this.editor.model.change((writer: any) => {
+                        writer.setAttribute('text', text, modelItem);
+                    });
+                    this.editor.fire("comment-update");
+                }
 
                 const reactWrapper = viewWriter.createUIElement('span', {
                     class: 'comment__react-wrapper'
@@ -140,7 +147,8 @@ class CommentCustom extends Plugin {
                     ReactDOM.render(
                         <Provider store={store}>
                             <ThemeProvider theme={theme}>
-                                <CommentButton deleteComment={deleteComment} commentId={commentId} text={text} />
+                                <CommentButton editable={true} commentId={commentId} text={text}
+                                    deleteComment={deleteComment} changeText={changeText}/>
                             </ThemeProvider>
                         </Provider>,
                         domElement
@@ -161,6 +169,10 @@ class CommentCustom extends Plugin {
                     class: 'comment',
                     'data-id': modelItem.getAttribute('commentId'),
                 });
+
+                const commentText = viewWriter.createText(modelItem.getAttribute('text'));
+                viewWriter.insert(viewWriter.createPositionAt(element, 0), commentText);
+
                 return element;
             }
         });
