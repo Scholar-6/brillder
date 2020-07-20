@@ -2,14 +2,19 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import VerticalShuffle, {VerticalShuffleComponent} from './VerticalShuffle';
 import { QuestionComponentTypeEnum, Question } from 'model/question';
+import { HintStatus } from 'model/question';
 
-
-describe("Horizontal Shuffle play", () => {
-  it("should create Horizontal Shuffle", () => {
+describe("Vertical Shuffle play", () => {
+  it("should create Vertical Shuffle", () => {
     let question: Question = {
       id: 66,
       order: 0,
-      type: 6
+      type: 6,
+      hint: {
+        value: "",
+        list: ["", ""],
+        status: HintStatus.Each
+      }
     };
     let component: VerticalShuffleComponent = {
       type: QuestionComponentTypeEnum.Component,
@@ -18,5 +23,16 @@ describe("Horizontal Shuffle play", () => {
         index: 1,
       }],
     }
+    render(
+      <VerticalShuffle
+        component={component}
+        answers={-1}
+        question={question}
+        isTimeover={false}
+        attempt={null}
+        isPreview={false}
+        onAttempted={() => { }}
+      />
+    );
   });
 })
