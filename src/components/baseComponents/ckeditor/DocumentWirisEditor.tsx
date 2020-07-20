@@ -126,7 +126,6 @@ class DocumentWirisEditorComponent extends React.Component<
 
     editor.on("comment-deleted", () => {
       const data = editor.getData();
-      console.log(data);
       this.props.onChange(data);
       this.replaceHtml("ck-label", "Document colors", "Document colours");
       this.setState({ ...this.state, data });
@@ -216,7 +215,6 @@ class DocumentWirisEditorComponent extends React.Component<
               return;
             }
             const data = editor.getData();
-            console.log(data);
             this.props.onChange(data);
             this.replaceHtml("ck-label", "Document colors", "Document colours");
             this.setState({ ...this.state, data });
