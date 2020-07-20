@@ -17,17 +17,11 @@ export interface TypeButtonProps {
 const TypeButton: React.FC<TypeButtonProps> = ({
   labels, activeType, questionType, setType, onMouseEnter, onMouseLeave
 }) => {
-  const renderLabel = (label: string, i:number) => {
+  const renderLabel = (label: string, i: number) => {
     return (
-      <Grid
-        container
-        justify="center"
-        direction="row"
-        className="link-description"
-        key={i}
-      >
-        {label}
-      </Grid>
+      <div className="link-description" key={i}>
+        <span>{label}</span>
+      </div>
     )
   };
 
@@ -36,18 +30,12 @@ const TypeButton: React.FC<TypeButtonProps> = ({
     className = "active";
   }
   return (
-    <Box className={`question-container ${className}`} onClick={() => setType(questionType) }>
-      <Grid
-        container justify="center" alignContent="center"
-        style={{height: '100%'}}
-        onMouseEnter={() => onMouseEnter(questionType)}
-        onMouseLeave={onMouseLeave}
-      >
-        {
-          labels.map((label:string, i:number) => renderLabel(label, i + 1))
-        }
-      </Grid>
-    </Box>
+    <div className={`question-container ${className}`}
+      onClick={() => setType(questionType)}
+      onMouseEnter={() => onMouseEnter(questionType)}
+      onMouseLeave={onMouseLeave}>
+      {labels.map((label: string, i: number) => renderLabel(label, i + 1))}
+    </div>
   );
 }
 

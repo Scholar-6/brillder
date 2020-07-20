@@ -24,18 +24,22 @@
   float: left;
   color: var(--theme-dark-blue);
   border-radius: 0.4vw;
+<<<<<<< HEAD
   @include tabletP {
     font-size: 0.8vw;
   }
+=======
+  padding: 0.3vw;
+  margin: 0.3vw;
+>>>>>>> e86e1c5e343f560d22ee9eb5ca00b5ebb8868fdc
   img {
     width: 100%;
   }
 }
 .question-hint {
   width: calc(100% - 0.6vw);
-  margin: 0.3vw !important;
+
   background: #ff9d00;
-  padding: 0.3vw 0;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   display: block;
@@ -71,8 +75,6 @@
 }
 .question-hint-global {
   background: #ff9d00;
-  margin-top: 0.5vw;
-  padding: 0.5vw;
   > div {
     margin-bottom: 0.4vw;
     &:last-child {
