@@ -3,6 +3,9 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .review-page {
+  @include phone_and_tabletP {
+    overflow-y: hidden;
+  }
   > .MuiGrid-container {
     @include phone_and_tabletP {
       display: flex;
@@ -38,11 +41,13 @@
     }
   }
   .introduction-page {
-    height: 40vh !important;
+    @include phone_and_tabletP {
+      height: calc(100vh - 59.8vw) !important;
+    }
     .review-content {
       @include phone_and_tabletP {
-        height: auto !important;
         margin: 0.5vh 0vw 0vw 8vw !important;
+        width: calc(100% - 8vw) !important;
         .question-title {
           font-size: inherit !important;
         }
