@@ -7,7 +7,9 @@ import CommentPopup from './CommentPopup';
 interface CommentButtonProps {
     commentId: number;
     text: string;
+    editable: boolean;
     deleteComment(commentId: number): void;
+    changeText(commentId: number, text: string): void;
 }
 
 const CommentButton: React.FC<CommentButtonProps> = (props) => {
@@ -49,7 +51,7 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
                 <CommentPopup deleteComment={(commentId: number) => {
                     handleClose();
                     props.deleteComment(commentId)
-                }} text={props.text} commentId={props.commentId} />
+                }} text={props.text} editable={props.editable} commentId={props.commentId} changeText={props.changeText} />
             </Popover>
         </span>
     );
