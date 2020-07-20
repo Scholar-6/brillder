@@ -37,7 +37,9 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           </div>
         </div>
         <div className="brick-description">
-          <div className="link-description">{brick.title}</div>
+          <div className="link-description">
+            <span>{brick.title}</span>
+          </div>
           <div className="link-info">
             <div>{brick.subTopic} | {brick.alternativeTopics}</div>
             <div>{getAuthorRow(brick)}</div>
