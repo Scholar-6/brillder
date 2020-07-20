@@ -20,10 +20,9 @@ enum DragAndDropStatus {
 
 interface HorizontalShuffleChoice {
   value: string;
-  checked: boolean;
 }
 
-interface HorizontalShuffleComponent {
+export interface HorizontalShuffleComponent {
   type: number;
   list: HorizontalShuffleChoice[];
 }
@@ -54,7 +53,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     this.state = { status: DragAndDropStatus.None, userAnswers };
   }
 
-  componentWillUpdate(props: VerticalShuffleProps) {
+  UNSAFE_componentWillUpdate(props: VerticalShuffleProps) {
     if (!this.props.isPreview) { return; }
     if (props.component && props.component.list) {
       if (this.state.userAnswers !== props.component.list) {
