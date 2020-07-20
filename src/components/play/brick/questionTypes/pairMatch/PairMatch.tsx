@@ -35,7 +35,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     this.state ={ status, userAnswers };
   }
 
-  componentWillUpdate(props: PairMatchProps) {
+  UNSAFE_componentWillUpdate(props: PairMatchProps) {
     if (props.isPreview === true && props.component) {
       if (this.state.userAnswers !== props.component.list) {
         this.setState({userAnswers: props.component.list});
