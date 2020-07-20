@@ -91,6 +91,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
   render() {
     let { searchVisible } = this.state
     let notificationCount = 0;
+    console.log(this.props.notifications)
     if (!this.props.notifications) {
       this.props.getNotifications();
     } else {
