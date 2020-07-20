@@ -17,7 +17,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   getSubjectRow(brick: Brick) {
     return `${brick.subject ? brick.subject.name : "SUBJECT Code"} | No. ${
       brick.attemptsCount
-    } of Plays`;
+      } of Plays`;
   }
 
   render() {
@@ -26,7 +26,9 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
     return (
       <div className="expanded-brick-info">
         <div className="hover-text">
-          <div className="link-description">{brick.title}</div>
+          <div className="link-description">
+            <span>{brick.title}</span>
+          </div>
           <div className="link-info">
             {brick.subTopic} | {brick.alternativeTopics}
           </div>
@@ -50,8 +52,8 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
                 src="/images/brick-list/bin.png"
               />
             ) : (
-              ""
-            )}
+                ""
+              )}
           </div>
           <div>
             <img
