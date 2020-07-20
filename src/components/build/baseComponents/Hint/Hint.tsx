@@ -164,8 +164,7 @@ const HintComponent: React.FC<HintProps> = ({
       <div className="hint-header">
         <div>
           <div className="hint-type-text">
-            <div>H I N T</div>
-            <div>T Y P E</div>
+            <span>HINT<br />TYPE</span>
           </div>
         </div>
         <div>
