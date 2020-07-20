@@ -128,6 +128,7 @@ class CommentCustom extends Plugin {
                     this.editor.model.change((writer: any) => {
                         writer.remove(modelItem);
                     });
+                    this.editor.fire("comment-deleted");
                 };
 
                 const reactWrapper = viewWriter.createUIElement('span', {

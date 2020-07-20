@@ -123,6 +123,14 @@ class DocumentWirisEditorComponent extends React.Component<
     );
     windowRef.WirisPlugin.Core.addGlobalListener(wirisBeforeInsertionListener);
     windowRef.WirisPlugin.Core.addGlobalListener(wirisAfterInsertionListener);
+
+    editor.on("comment-deleted", () => {
+      const data = editor.getData();
+      console.log(data);
+      this.props.onChange(data);
+      this.replaceHtml("ck-label", "Document colors", "Document colours");
+      this.setState({ ...this.state, data });
+    })
   };
 
   render() {
@@ -208,6 +216,7 @@ class DocumentWirisEditorComponent extends React.Component<
               return;
             }
             const data = editor.getData();
+            console.log(data);
             this.props.onChange(data);
             this.replaceHtml("ck-label", "Document colors", "Document colours");
             this.setState({ ...this.state, data });
