@@ -24,14 +24,11 @@
   float: left;
   color: var(--theme-dark-blue);
   border-radius: 0.4vw;
-<<<<<<< HEAD
+  padding: 0.3vw;
+  margin: 0.3vw;
   @include tabletP {
     font-size: 0.8vw;
   }
-=======
-  padding: 0.3vw;
-  margin: 0.3vw;
->>>>>>> e86e1c5e343f560d22ee9eb5ca00b5ebb8868fdc
   img {
     width: 100%;
   }
