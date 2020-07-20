@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 // @ts-ignore
 import { connect } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,8 +11,6 @@ const mapDispatch = (dispatch: any) => {
   return { logout: () => dispatch(authActions.logout()) }
 }
 
-const mapState = () => { };
-
 interface LogoutComponentProps {
   isOpen: boolean;
   history: any;
@@ -20,39 +18,37 @@ interface LogoutComponentProps {
   logout(): void;
 }
 
-class LogoutDialog extends Component<LogoutComponentProps> {
-  logout() {
-    this.props.logout();
-    this.props.history.push('/choose-login');
+const LogoutDialog: React.FC<LogoutComponentProps> = (props) => {
+  const logout = () => {
+    props.logout();
+    props.history.push('/choose-login');
   }
 
-  handleLogoutClose = () => this.props.close();
+  const handleLogoutClose = () => props.close();
 
-  render() {
-    return (
-      <Dialog
-        open={this.props.isOpen}
-        onClose={() => this.handleLogoutClose()}
-        className="dialog-box">
-        <div className="dialog-header">
-          <div>Are you sure</div>
-          <div>you want to log out?</div>
-        </div>
-        <div className="dialog-footer">
-          <button className="btn btn-md bg-theme-orange yes-button"
-            onClick={() => this.logout()}>
-            <span>Yes</span>
-          </button>
-          <button className="btn btn-md bg-gray no-button"
-            onClick={() => this.handleLogoutClose()}>
-            <span>No</span>
-          </button>
-        </div>
-      </Dialog>
-    );
-  }
+  return (
+    <Dialog
+      open={props.isOpen}
+      onClose={() => handleLogoutClose()}
+      className="dialog-box">
+      <div className="dialog-header">
+        <div>Are you sure</div>
+        <div>you want to log out?</div>
+      </div>
+      <div className="dialog-footer">
+        <button className="btn btn-md bg-theme-orange yes-button"
+          onClick={() => logout()}>
+          <span>Yes</span>
+        </button>
+        <button className="btn btn-md bg-gray no-button"
+          onClick={() => handleLogoutClose()}>
+          <span>No</span>
+        </button>
+      </div>
+    </Dialog>
+  );
 }
 
-const connector = connect(mapState, mapDispatch);
+const connector = connect(null, mapDispatch);
 
 export default connector(LogoutDialog);
