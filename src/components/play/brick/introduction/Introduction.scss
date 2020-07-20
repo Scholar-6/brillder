@@ -193,13 +193,16 @@
             font-family: $font-family-black;
             color: var(--theme-dark-blue);
             text-align: center;
-            line-height: 1.25;
             @include phone_and_tabletP {
               width: 6vw;
               height: 6vw;
               font-size: inherit;
+              display: flex;
+              align-items: center;
+              justify-content: center;
             }
             @include tabletP {
+              line-height: 1.25;
               font-size: 2vw;
               width: 2.3vw;
               height: 2.3vw;
@@ -207,16 +210,17 @@
           }
         }
         .question-live-play {
-          width: calc(100% - 7vw);
           overflow-y: auto;
           padding-bottom: 2vw;
           position: absolute;
           top: 0;
+          width: 100%;
           @include phone_and_tabletP {
             height: calc(100vh - 55.8vw);
             margin-top: 4vw;
           }
           @include tabletP {
+            width: calc(100% - 7vw);
             margin: 6vh 3vw 1vw 4vw;
             height: 75.4vh;
           }
@@ -247,11 +251,11 @@
       }
       .introduction-info {
         background-color: var(--light-gray);
+        position: relative;
         @include phone_and_tabletP {
           border-radius: 1vh;
         }
         @include tabletP {
-          position: relative;
           padding: 4vh 2vw;
           height: calc(100vh - 7.8vw);
         }
@@ -508,7 +512,7 @@
         .question-live-play {
           height: calc(100vh - 27.6vh);
           @include phone_and_tabletP {
-            width: 100vw;
+            width: 100%;
             margin: 4vh 0 0;
           }
           @include tabletP {
