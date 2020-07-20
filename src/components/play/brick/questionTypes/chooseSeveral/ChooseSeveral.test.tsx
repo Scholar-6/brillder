@@ -78,7 +78,7 @@ describe("Choose Several play and validation", () => {
     let component: any = {
       type: QuestionComponentTypeEnum.Component,
       list: [{
-        value: "",
+        value: "test",
         checked: true,
       }, {
         value: "test",
