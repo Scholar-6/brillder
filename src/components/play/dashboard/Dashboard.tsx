@@ -1,25 +1,17 @@
-
-/* TODO: KEEP THIS FILE for when clicking 'view all', so copy code from src/build/bricksListPage.tsx
-i.e. add back button on menu and row along top of 'my bricks'  6/7/2020 */
 import "./Dashboard.scss";
 import React, { Component } from "react";
-import {
-  Box,
-  Grid,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Hidden,
-} from "@material-ui/core";
+import { Box, Grid, Hidden } from "@material-ui/core";
 import { Category } from "./interface";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
+
 import sprite from "../../../assets/img/icons-sprite.svg";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
-import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
@@ -27,25 +19,19 @@ import ShortBrickDescription from "components/baseComponents/ShortBrickDescripti
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import { ReduxCombinedState } from "redux/reducers";
-import brickActions from "redux/actions/brickActions";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper.scss';
+import DashboardFilter, { SortBy } from './DashboardFilter';
+import DashboardPagination from './DashboardPagination';
 
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
 });
 
-const mapDispatch = (dispatch: any) => ({
-  forgetBrick: () => dispatch(brickActions.forgetBrick()),
-});
-
-const connector = connect(mapState, mapDispatch);
+const connector = connect(mapState);
 
 interface BricksListProps {
   user: User;
   history: any;
-  forgetBrick(): void;
 }
 
 interface BricksListState {
@@ -63,22 +49,12 @@ interface BricksListState {
   deleteDialogOpen: boolean;
   deleteBrickId: number;
 
-  filterExpanded: boolean;
-  filterHeight: string;
   isClearFilter: any;
   failedRequest: boolean;
   pageSize: number;
 }
 
-enum SortBy {
-  None,
-  Date,
-  Popularity,
-}
-
 class DashboardPage extends Component<BricksListProps, BricksListState> {
-  pageHeader: React.RefObject<any>;
-
   constructor(props: BricksListProps) {
     super(props);
     this.state = {
@@ -96,8 +72,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       isSearching: false,
       pageSize: 15,
 
-      filterExpanded: true,
-      filterHeight: "auto",
       isClearFilter: false,
       failedRequest: false,
     };
@@ -136,8 +110,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }).catch((error) => {
       this.setState({ ...this.state, failedRequest: true });
     });
-
-    this.pageHeader = React.createRef();
   }
 
   delete(brickId: number) {
@@ -214,16 +186,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   //region Hide / Expand / Clear Filter
-  hideFilter() {
-    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-  }
-  expandFilter() {
-    this.setState({
-      ...this.state,
-      filterExpanded: true,
-      filterHeight: "auto",
-    });
-  }
   filterClear() {
     this.setState({
       isClearFilter: this.state.subjects.some((r: any) => r.checked)
@@ -262,26 +224,18 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   hideBricks() {
-    const { finalBricks } = this.state;
-    finalBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
+    const { finalBricks, yourBricks } = this.state;
+    finalBricks.forEach(b => b.expanded = false);
+    yourBricks.forEach(b => b.expanded = false);
   }
 
   yourBricksMouseHover(index: number) {
     let { yourBricks, finalBricks } = this.state;
-    finalBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
-    yourBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
+    this.hideBricks();
     this.setState({ ...this.state });
     setTimeout(() => {
       let { yourBricks } = this.state;
-      yourBricks.forEach((brick) => {
-        brick.expanded = false;
-      });
+      this.hideBricks();
       if (!yourBricks[index].expandFinished) {
         yourBricks[index].expanded = true;
       }
@@ -291,9 +245,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
   yourBricksMouseLeave(key: number) {
     let { yourBricks } = this.state;
-    yourBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
+    this.hideBricks();
     yourBricks[key].expandFinished = true;
     this.setState({ ...this.state });
     setTimeout(() => {
@@ -307,9 +259,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     this.setState({ ...this.state });
     setTimeout(() => {
       let { finalBricks } = this.state;
-      finalBricks.forEach((brick) => {
-        brick.expanded = false;
-      });
+      this.hideBricks();
       if (!finalBricks[index].expandFinished) {
         finalBricks[index].expanded = true;
       }
@@ -329,11 +279,15 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     this.setState({ ...this.state });
   }
 
+  handleYourMobileClick(brick: Brick) {
+    this.hideBricks();
+    brick.expanded = true;
+    this.setState({ ...this.state });
+  }
+
   handleMouseLeave(key: number) {
     let { finalBricks } = this.state;
-    finalBricks.forEach((brick) => {
-      brick.expanded = false;
-    });
+    this.hideBricks();
     finalBricks[key].expandFinished = true;
     this.setState({ ...this.state });
     setTimeout(() => {
@@ -363,19 +317,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }
   }
 
-  showDropdown() {
-    this.setState({ ...this.state, dropdownShown: true });
-  }
-
-  hideDropdown() {
-    this.setState({ ...this.state, dropdownShown: false });
-  }
-
-  keySearch(e: any) {
-    if (e.keyCode === 13) {
-      this.search();
-    }
-  }
+  showDropdown() { this.setState({ ...this.state, dropdownShown: true }) }
+  hideDropdown() { this.setState({ ...this.state, dropdownShown: false }) }
 
   search() {
     const { searchString } = this.state;
@@ -398,11 +341,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       .catch((error) => {
         alert("Can`t get bricks");
       });
-  }
-
-  creatingBrick() {
-    this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
   }
 
   getBrickColor(brick: Brick) {
@@ -558,8 +496,14 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  renderMobileBricks() {
-    let expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
+  renderMobileUpperBricks() {
+    let expandedBrick = this.state.yourBricks.find(b => b.expanded === true);
+
+    if (expandedBrick) {
+      return this.renderMobileExpandedBrick(expandedBrick);
+    }
+
+    expandedBrick = this.state.finalBricks.find(b => b.expanded === true);
 
     if (expandedBrick) {
       return this.renderMobileExpandedBrick(expandedBrick);
@@ -567,7 +511,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
     let bricksList = [];
     for (const brick of this.state.yourBricks) {
-      bricksList.push(<ShortBrickDescription brick={brick} />);
+      bricksList.push(<ShortBrickDescription brick={brick} onClick={() => this.handleYourMobileClick(brick)} />);
     }
     return (
       <Swiper slidesPerView={2}>
@@ -576,67 +520,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
   }
   //region Mobile
-
-  renderSortAndFilterBox = () => {
-    return (
-      <div className="sort-box">
-        <div className="filter-container sort-by-box">
-          <div className="sort-header">Sort By</div>
-          <RadioGroup
-            className="sort-group"
-            aria-label="SortBy"
-            name="SortBy"
-            value={this.state.sortBy}
-            onChange={this.handleSortChange}
-          >
-            <Grid container direction="row">
-              <Grid item xs={6}>
-                <FormControlLabel
-                  value={SortBy.Popularity}
-                  style={{ marginRight: 0, width: "50%" }}
-                  control={<Radio className="sortBy" />}
-                  label="Popularity"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <FormControlLabel
-                  value={SortBy.Date}
-                  style={{ marginRight: 0 }}
-                  control={<Radio className="sortBy" />}
-                  label="Date Added"
-                />
-              </Grid>
-            </Grid>
-          </RadioGroup>
-        </div>
-        <div className="filter-header">
-          <span>Filter</span>
-          <button
-            className={
-              "btn-transparent filter-icon " +
-              (this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? "arrow-cancel"
-                  : "arrow-down"
-                : "arrow-up")
-            }
-            onClick={() => {
-              this.state.filterExpanded
-                ? this.state.isClearFilter
-                  ? this.clearSubjects()
-                  : this.hideFilter()
-                : this.expandFilter();
-            }}
-          ></button>
-        </div>
-        <SubjectsList
-          subjects={this.state.subjects}
-          filterHeight={this.state.filterHeight}
-          filterBySubject={this.filterBySubject}
-        />
-      </div>
-    );
-  };
 
   renderYourBrickRow = () => {
     let bricksList = [];
@@ -649,64 +532,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }
     return bricksList;
   };
-
-  renderPagination() {
-    if (this.state.bricks.length <= this.state.pageSize) {
-      return "";
-    }
-
-    const { pageSize, sortedIndex } = this.state;
-
-    const showPrev = sortedIndex >= pageSize;
-    const showNext = sortedIndex + pageSize <= this.state.bricks.length;
-
-    return (
-      <Grid container direction="row" className="bricks-pagination">
-        <Grid item sm={4} className="left-pagination">
-          <div className="first-row">
-            {this.state.sortedIndex + 1}-
-            {this.state.sortedIndex + pageSize > this.state.bricks.length
-              ? this.state.bricks.length
-              : this.state.sortedIndex + pageSize}
-            <span className="gray"> | {this.state.bricks.length}
-            </span>
-          </div>
-          <div>
-            {(this.state.sortedIndex + pageSize) / pageSize}
-            <span className="gray"> | {Math.ceil(this.state.bricks.length / pageSize)}
-            </span>
-          </div>
-        </Grid>
-        <Grid container item xs={4} justify="center">
-          <div className="bottom-next-button">
-            {showPrev ? (
-              <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
-                onClick={() => this.moveAllBack()}>
-                <svg className="svg w100 h100 active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#arrow-up"} />
-                </svg>
-              </button>
-            ) : (
-                ""
-              )}
-            {showNext ? (
-              <button
-                className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
-                onClick={() => this.moveAllNext()}>
-                <svg className="svg w100 h100 active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#arrow-down"} />
-                </svg>
-              </button>
-            ) : (
-                ""
-              )}
-          </div>
-        </Grid>
-      </Grid>
-    );
-  }
 
   renderEmptyCategory(name: string) {
     return (
@@ -722,19 +547,46 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  renderMobileGlassIcon() {
+    return (
+      <div className="page-navigation">
+        <div className="btn btn-transparent glasses svgOnHover">
+          <svg className="svg w100 h100 active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#glasses"} className="text-theme-dark-blue" />
+          </svg>
+        </div>
+        <div className="breadcrumbs">All</div>
+      </div>
+    );
+  }
+
+  renderPublicCoreToggle() {
+    return (
+      <div className="core-public-toggle">
+        <button className="btn btn btn-transparent ">
+          <span>Core</span>
+          <div className="svgOnHover">
+            <svg className="svg active selected">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#box"} className="text-light-blue2" />
+            </svg>
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#globe"} className="text-light-blue2" />
+            </svg>
+          </div>
+          <span>Public</span>
+        </button>
+      </div>
+    );
+  }
+
   render() {
     const { history } = this.props;
     return (
       <div className="dashboard-page">
-        <div className="page-navigation">
-          <div className="btn btn-transparent glasses svgOnHover">
-            <svg className="svg w100 h100 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#glasses"} className="text-theme-dark-blue" />
-            </svg>
-          </div>
-          <div className="breadcrumbs">All</div>
-        </div>
+        {this.renderMobileGlassIcon()}
         <div className="upper-part">
           <PageHeadWithMenu
             page={PageEnum.ViewAll}
@@ -742,39 +594,31 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             placeholder={"Search Ongoing Projects & Published Bricks…"}
             history={this.props.history}
             search={() => this.search()}
-            searching={(v: string) => this.searching(v)}
+            searching={v => this.searching(v)}
           />
         </div>
         <Hidden only={["sm", "md", "lg", "xl"]}>
           <div className="mobile-scroll-bricks">
-            {this.renderMobileBricks()}
+            {this.renderMobileUpperBricks()}
           </div>
         </Hidden>
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
-            {this.renderSortAndFilterBox()}
+            <DashboardFilter
+              sortBy={this.state.sortBy}
+              subjects={this.state.subjects}
+              isClearFilter={this.state.isClearFilter}
+              handleSortChange={e => this.handleSortChange(e)}
+              clearSubjects={() => this.clearSubjects()}
+              filterBySubject={index => this.filterBySubject(index)}
+            />
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             <Hidden only={['xs']}>
               <div className="brick-row-title">
                 ALL BRICKS
               </div>
-              <div className="core-public-toggle">
-                <button className="btn btn btn-transparent ">
-                  <span>Core</span>
-                  <div className="svgOnHover">
-                    <svg className="svg active selected">
-                      {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#box"} className="text-light-blue2" />
-                    </svg>
-                    <svg className="svg active">
-                      {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#globe"} className="text-light-blue2" />
-                    </svg>
-                  </div>
-                  <span>Public</span>
-                </button>
-              </div>
+              {this.renderPublicCoreToggle()}
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
@@ -807,7 +651,13 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               {this.renderEmptyCategory("Top in Humanities")}
               {this.renderEmptyCategory("Top in Stem")}
             </Hidden>
-            {this.renderPagination()}
+            <DashboardPagination
+              pageSize={this.state.pageSize}
+              sortedIndex={this.state.sortedIndex}
+              bricksLength={this.state.bricks.length}
+              moveAllNext={() => this.moveAllNext()}
+              moveAllBack={() => this.moveAllBack()}
+            />
           </Grid>
         </Grid>
         <DeleteBrickDialog
