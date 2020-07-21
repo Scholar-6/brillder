@@ -14,6 +14,7 @@ interface CommentButtonProps {
 
 const CommentButton: React.FC<CommentButtonProps> = (props) => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+    const [text, setText] = React.useState<string>(props.text);
 
     const handlePress = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -51,7 +52,10 @@ const CommentButton: React.FC<CommentButtonProps> = (props) => {
                 <CommentPopup deleteComment={(commentId: number) => {
                     handleClose();
                     props.deleteComment(commentId)
-                }} text={props.text} editable={props.editable} commentId={props.commentId} changeText={props.changeText} />
+                }} changeText={(commentId: number, text: string) => {
+                    setText(text);
+                    props.changeText(commentId, text);
+                }} text={text} editable={props.editable} commentId={props.commentId} />
             </Popover>
         </span>
     );
