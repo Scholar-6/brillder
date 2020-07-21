@@ -1,5 +1,4 @@
 import React from 'react'
-import { Grid, Box } from '@material-ui/core';
 import { QuestionTypeEnum } from 'model/question';
 
 import './type.scss';

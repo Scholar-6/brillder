@@ -230,7 +230,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   yourBricksMouseHover(index: number) {
-    let { yourBricks, finalBricks } = this.state;
     this.hideBricks();
     this.setState({ ...this.state });
     setTimeout(() => {

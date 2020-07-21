@@ -4,7 +4,6 @@ import { CircularProgressbar } from "react-circular-progressbar";
 
 import "./Ending.scss";
 import { Brick } from "model/brick";
-import { useHistory } from "react-router-dom";
 import { PlayStatus } from "../model/model";
 import { BrickAttempt } from "../PlayBrickRouting";
 import ReviewStepper from '../review/ReviewStepper';
