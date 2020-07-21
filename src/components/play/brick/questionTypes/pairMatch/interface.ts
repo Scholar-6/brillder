@@ -1,5 +1,5 @@
 import {CompQuestionProps} from '../types';
-
+import { QuestionComponentTypeEnum } from 'model/question';
 
 export interface PairMatchChoice {
   value: string;
@@ -9,7 +9,7 @@ export interface PairMatchChoice {
 }
   
 export interface PairMatchComponent {
-  type: number;
+  type: QuestionComponentTypeEnum;
   list: PairMatchChoice[];
   choices: any[];
   options: any[];

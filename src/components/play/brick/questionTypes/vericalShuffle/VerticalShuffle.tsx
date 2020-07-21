@@ -14,10 +14,9 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 interface VerticalShuffleChoice {
   value: string;
   index: number;
-  checked: boolean;
 }
 
-interface VerticalShuffleComponent {
+export interface VerticalShuffleComponent {
   type: number;
   list: VerticalShuffleChoice[];
 }
@@ -75,7 +74,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     return this.state.userAnswers;
   }
 
-  componentWillUpdate(props: VerticalShuffleProps) {
+  UNSAFE_componentWillUpdate(props: VerticalShuffleProps) {
     if (!this.props.isPreview) { return; }
     
     if (props.component && props.component.list) {
