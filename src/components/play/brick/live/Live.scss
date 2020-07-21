@@ -6,6 +6,10 @@
   opacity: 0;
 }
 .live-page {
+  @include phone_and_tabletP {
+    height: calc(100% - 14vh) !important;
+    overflow-y: hidden !important;
+  }
   .introduction-info {
     @include phone_and_tabletP {
       position: relative !important;
@@ -71,29 +75,11 @@
         }
       }
     }
-    .action-footer {
-      @include phone_and_tabletP {
-        width: 100%;
-        justify-content: center !important;
-        align-items: center !important;
-      }
-      .direction-info {
-        h2 {
-          @include phone_and_tabletP {
-            position: absolute;
-            bottom: 0;
-          }
-        }
-        span {
-          @include phone_and_tabletP {
-            bottom: -9vw !important;
-            line-height: 5vw !important;
-          }
-        }
-      }
-    }
   }
   .introduction-page {
+    @include phone_and_tabletP {
+      height: calc(100vh - 59.8vw) !important;
+    }
     .question-index-container,
     .question-title {
       @include phone_and_tabletP {
