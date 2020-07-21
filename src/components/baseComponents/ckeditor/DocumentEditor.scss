@@ -17,11 +17,13 @@
         height: 100%;
         margin: 0;
         padding: 6vh 1vw 1vh 2.2vw;
-        text-align: center;
-        font-size: $answer-input-text-size;
         box-shadow: none !important;
+        text-align: center;
         border: 0 !important;
         color: var(--theme-dark-blue);
+        @include tabletP {
+          font-size: $answer-input-text-size;
+        }
         p {
           color: var(--theme-dark-blue);
           margin: 0 !important;
