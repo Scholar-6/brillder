@@ -94,6 +94,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
     );
   }
 
+  /*
   const renderIntroductionPage = () => {
     return (
       <div className="introduction-page">
@@ -105,6 +106,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
       </div>
     );
   }
+  */
 
   const renderStepper = () => {
     return (

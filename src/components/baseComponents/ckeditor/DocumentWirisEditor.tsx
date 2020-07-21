@@ -93,7 +93,6 @@ class DocumentWirisEditorComponent extends React.Component<
   };
 
   handleOnInit = (editor: any) => {
-    console.log(666)
     editor.locale.contentLanguageDirection = "";
     editor.execute("alignment", { value: "justify" });
 
