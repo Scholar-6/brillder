@@ -42,7 +42,7 @@
   }
   .introduction-page {
     @include phone_and_tabletP {
-      height: calc(100vh - 59.8vw) !important;
+      height: calc(100vh - 49.8vw) !important;
     }
     .review-content {
       @include phone_and_tabletP {

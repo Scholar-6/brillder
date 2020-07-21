@@ -66,6 +66,9 @@
     .question-live-play {
       margin: 0 !important;
       width: 100% !important;
+      @include phone_and_tabletP {
+        overflow-y: hidden !important;
+      }
 
       .circle-progress {
         width: 90vw !important;

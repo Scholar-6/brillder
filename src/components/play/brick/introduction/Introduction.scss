@@ -17,7 +17,7 @@
     }
     .brick-container {
       @include phone_and_tabletP {
-        height: calc(100% - 18vh);
+        height: calc(100% - 26vh);
         overflow-y: auto;
       }
       .introduction-page {
