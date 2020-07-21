@@ -24,7 +24,6 @@
   color: var(--theme-dark-blue);
   border-radius: 0.4vw;
   padding: 0.3vw;
-  margin: 0.3vw;
   @include tabletP {
     font-size: 0.8vw;
   }
@@ -34,6 +33,7 @@
 }
 .question-hint {
   width: calc(100% - 0.6vw);
+  margin: 0.3vw;
   background: #ff9d00;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
