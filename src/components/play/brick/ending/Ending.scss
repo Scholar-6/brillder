@@ -1,6 +1,6 @@
-@import "../../../../assets/sass/partials/variables";
-@import "../../../../assets/sass/partials/mixins";
-@import "../../../../assets/sass/partials/extensions";
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 .ending-page {
   .begin-row {
@@ -8,11 +8,27 @@
     margin-bottom: 15px;
     text-align: right;
   }
-
+  .introduction-page {
+    .intro-text-row {
+      .stepper {
+        @include phone_and_tabletP{
+          flex-direction: row !important;
+        }
+        .step {
+          svg {
+            @include phone_and_tabletP {
+              height: 4vw !important;
+              width: 4vw !important;
+            }
+          }
+        }
+      }
+    }
+  }
   .start-brick-button {
     margin-right: 0px;
 
-    >span {
+    > span {
       font-family: $font-family-regular;
       font-size: 18px;
       margin-right: 10px;
@@ -43,44 +59,42 @@
   .blue {
     color: var(--theme-dark-blue);
   }
-}
+  &.mobile-ending-page {
+    height: calc(100vh - 6vh) !important;
+    position: relative;
+    overflow-y: inherit !important;
+    .question-live-play {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      width: 100% !important;
+    }
+    .circle-progress-third {
+      height: 80vw !important;
+      width: 80vw !important;
+    }
+    .circle-progress-second {
+      height: 85vw !important;
+      width: 85vw !important;
+    }
+    .circle-progress-first {
+      height: 90vw !important;
+      width: 90vw !important;
+    }
 
-.mobile-ending-page {
-  height: 90vh !important;
-  .introduction-page {
-    height: 80vh !important;
-  }
-  .question-live-play {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    width: 100% !important;
-  }
-  .circle-progress-third {
-    height: 80vw !important;
-    width: 80vw !important;
-  }
-  .circle-progress-second {
-    height: 85vw !important;
-    width: 85vw !important;
-  }
-  .circle-progress-first {
-    height: 90vw !important;
-    width: 90vw !important;
-  }
+    h1 {
+      position: absolute !important;
+      top: 0.2vw !important;
+    }
 
-  h1 {
-    position: absolute !important;
-    top: 0.2vw !important;
-  }
-  
-  .question-index-container {
-    width: 7vw !important;
-    height: 7vw !important;
-
-    .question-index {
+    .question-index-container {
       width: 7vw !important;
       height: 7vw !important;
-      font-size: 6vw !important;
+
+      .question-index {
+        width: 7vw !important;
+        height: 7vw !important;
+        font-size: 6vw !important;
+      }
     }
   }
 }
