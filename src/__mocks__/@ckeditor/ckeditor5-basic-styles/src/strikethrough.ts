@@ -1,1 +1,1 @@
-export default jest.genMockFromModule('@ckeditor/ckeditor5-react');
+export default () => "";
