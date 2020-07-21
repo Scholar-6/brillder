@@ -105,11 +105,10 @@ class CommentCustom extends Plugin {
                 classes: ['comment']
             },
             model: (viewElement: any, modelWriter: any) => {
-                const text = viewElement.getChild(0).data;
 
                 return modelWriter.createElement('comment', {
                     commentId: parseInt(viewElement.getAttribute('data-id')),
-                    text: text
+                    text: viewElement.getAttribute('data-text')
                 });
             }
         });
@@ -117,8 +116,8 @@ class CommentCustom extends Plugin {
         conversion.for('editingDowncast').elementToElement({
             model: 'comment',
             view: (modelItem: any, viewWriter: any) => {
-                const commentId: number = modelItem.getAttribute('commentId');
-                const text: string = modelItem.getAttribute('text');
+                let commentId: number = modelItem.getAttribute('commentId');
+                let commentText: string = modelItem.getAttribute('text');
 
                 const wrapperElement = viewWriter.createContainerElement('span', {
                     class: 'comment'
@@ -131,10 +130,11 @@ class CommentCustom extends Plugin {
                     this.editor.fire("comment-update");
                 };
 
-                const changeText = (commentId: number, text: string) => {
+                const changeText = (id: number, text: string) => {
                     this.editor.model.change((writer: any) => {
                         writer.setAttribute('text', text, modelItem);
                     });
+                    commentText = text;
                     this.editor.fire("comment-update");
                 }
 
@@ -147,7 +147,7 @@ class CommentCustom extends Plugin {
                     ReactDOM.render(
                         <Provider store={store}>
                             <ThemeProvider theme={theme}>
-                                <CommentButton editable={true} commentId={commentId} text={text}
+                                <CommentButton editable={true} commentId={commentId} text={commentText}
                                     deleteComment={deleteComment} changeText={changeText}/>
                             </ThemeProvider>
                         </Provider>,
@@ -168,10 +168,8 @@ class CommentCustom extends Plugin {
                 const element = viewWriter.createContainerElement('span', {
                     class: 'comment',
                     'data-id': modelItem.getAttribute('commentId'),
+                    'data-text': modelItem.getAttribute('text')
                 });
-
-                const commentText = viewWriter.createText(modelItem.getAttribute('text'));
-                viewWriter.insert(viewWriter.createPositionAt(element, 0), commentText);
 
                 return element;
             }
