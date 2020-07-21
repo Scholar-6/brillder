@@ -372,6 +372,7 @@ textarea {
   @include phone_and_tabletP {
     width: auto !important;
     padding: 0;
+    display: flex;
   }
   @include tabletP {
     position: fixed;

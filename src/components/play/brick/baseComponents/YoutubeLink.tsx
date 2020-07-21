@@ -49,12 +49,12 @@ class YoutubeLink extends Component<YoutubeLinkProps, YoutubeLinkState> {
   render() {
     const version = this.getVersion(this.props.value);
     if (this.state.isValid) {
-      return <YouTube
+      return <div className="youtube-video"> <YouTube
         videoId={version}
         onError={() => {
           this.setState({isValid: false});
         }}
-      />;
+      /></div>;
     } else {
       let link = this.getVideoLink(this.props.value);
       return (
