@@ -23,6 +23,7 @@ interface HeaderMenuProps {
   user: User;
   placeholder?: string;
   page: PageEnum;
+  isMobileHidden?: boolean;
   search(): void;
   searching(v: string): void;
 }
@@ -114,12 +115,16 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
   }
 
   render() {
+    let className = 'upper-part';
     let placeholder = "Search Subjects, Topics, Titles & more";
     if (this.props.placeholder) {
       placeholder = this.props.placeholder;
     }
+    if (this.props.isMobileHidden) {
+      className += " mobile-hidden";
+    }
     return (
-      <div className="upper-part">
+      <div className={className}>
         <PageHeader ref={this.pageHeader}
           searchPlaceholder={placeholder}
           search={() => this.props.search()}

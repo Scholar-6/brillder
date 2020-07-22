@@ -6,7 +6,7 @@ import axios from 'axios';
 import ReactRecord from 'react-record';
 import sprite from "../../../../../../assets/img/icons-sprite.svg";
 import './Sound.scss';
-import { Grid, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 interface SoundProps {
   locked: boolean;
