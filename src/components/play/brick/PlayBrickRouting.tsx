@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { Grid } from '@material-ui/core';
 // @ts-ignore
 import { connect } from "react-redux";
 
@@ -11,7 +14,6 @@ import ProvisionalScore from './provisionalScore/ProvisionalScore';
 import Synthesis from './synthesis/Synthesis';
 import Review from './review/ReviewPage';
 import Ending from './ending/Ending';
-import axios from 'axios';
 
 import { Brick } from 'model/brick';
 import { ComponentAttempt, PlayStatus } from './model/model';
@@ -21,7 +23,6 @@ import {
 import { setBrillderTitle } from 'components/services/titleService';
 import { prefillAttempts } from 'components/services/PlayService';
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
-import { Grid } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
@@ -65,6 +66,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
   const [startTime, setStartTime] = React.useState(undefined);
+  const location = useLocation();
 
   useEffect(() => {
     if (props.brick) {
@@ -144,9 +146,31 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       });
   }
 
+  const renderHead = () => {
+    let isMobileHidden = false;
+    const live = location.pathname.search("/live");
+    const score = location.pathname.search("/provisionalScore");
+    const synthesis = location.pathname.search("/synthesis");
+    const review = location.pathname.search("/review");
+    const ending = location.pathname.search("/ending");
+    if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0) {
+      isMobileHidden = true;
+    }
+    return (
+      <PageHeadWithMenu
+        isMobileHidden={isMobileHidden}
+        page={PageEnum.Play}
+        user={props.user}
+        history={props.history}
+        search={() => { }}
+        searching={() => { }}
+      />
+    );
+  }
+
   return (
     <div className="play-preview-pages">
-      <PageHeadWithMenu page={PageEnum.Play} user={props.user} history={props.history} search={() => {}} searching={()=> {}} />
+      {renderHead()}
       <Grid container direction="row" className="sorted-row">
         <Grid container item className="sort-and-filter-container">
         </Grid>
