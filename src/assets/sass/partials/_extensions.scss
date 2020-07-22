@@ -388,6 +388,13 @@
   @include transition(all 600ms cubic-bezier(0.5, 1, 0.89, 1));
 }
 
+%removePosition {
+  position: inherit;
+  top: inherit;
+  left: inherit;
+  transform: unset;
+}
+
 %floatToCenter {
   @extend %posAbsolute;
   left: 50%;
