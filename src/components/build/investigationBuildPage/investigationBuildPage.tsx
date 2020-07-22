@@ -29,6 +29,7 @@ import {
   QuestionTypeEnum,
 } from "model/question";
 import actions from "../../../redux/actions/brickActions";
+import { socketUpdateBrick, socketStartEditing } from "redux/actions/socket";
 import { validateQuestion } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
@@ -55,7 +56,9 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
   user: User;
   fetchBrick(brickId: number): void;
+  startEditing(brickId: number): void;
   saveBrick(brick: any): any;
+  updateBrick(brick: any): any;
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
@@ -106,6 +109,43 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   }, [props.brick, brickId]);
   /* Synthesis */
+
+  // start editing on socket on load.
+  useEffect(() => {
+    props.startEditing(brickId);
+  }, [brickId])
+
+  // update on socket when things change.
+  useEffect(() => {
+    if(props.brick && !locked) {
+      let { brick } = props;
+      prepareBrickToSave(brick, questions, synthesis);
+      props.updateBrick(brick);
+    }
+  }, [questions, synthesis]);
+
+  // parse questions on socket update
+  useEffect(() => {
+    if (props.brick && props.brick.questions && locked) {
+      const parsedQuestions: Question[] = [];
+      for (const question of props.brick.questions) {
+        try {
+          parseQuestion(question, parsedQuestions);
+        } catch (e) { }
+      }
+      if (parsedQuestions.length > 0) {
+        let buildQuestion = GetCashedBuildQuestion();
+        if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
+          parsedQuestions[buildQuestion.questionNumber].active = true;
+        } else {
+          parsedQuestions[0].active = true;
+        }
+        setQuestions(update(questions, { $set: parsedQuestions }));
+        setStatus(update(loaded, { $set: true }));
+      }
+      setSynthesis(props.brick.synthesis);
+    }
+  }, [props.brick])
 
   if (!props.brick) {
     return <PageLoader content="...Loading..." />;
@@ -655,7 +695,9 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
-  saveBrick: (brick: any) => dispatch(actions.saveBrick(brick))
+  startEditing: (brickId: number) => dispatch(socketStartEditing(brickId)),
+  saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
+  updateBrick: (brick: any) => dispatch(socketUpdateBrick(brick))
 });
 
 const connector = connect(mapState, mapDispatch);
