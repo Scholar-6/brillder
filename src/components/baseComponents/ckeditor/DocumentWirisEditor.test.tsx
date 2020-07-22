@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import DocumentWirisEditor from './DocumentWirisEditor';
 
-describe("notification panel", () => {
-  it("should display a list of notifications", () => {
+describe("Document CKEditor", () => {
+  it("should display the CKEditor interface.", () => {
     render(
         <DocumentWirisEditor
           disabled={false}
