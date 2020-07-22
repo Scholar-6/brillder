@@ -128,15 +128,13 @@ const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
           <div>
             <div {...getRootProps({ className: 'dropzone ' + ((locked) ? 'disabled' : '') })}>
               <input {...getInputProps()} />
-              <Grid container justify="center" alignContent="center" style={{ height: '100%' }}>
-                <p>Drag Sound File Here | Click to Select Sound File</p>
-              </Grid>
+              <p>Drag Sound File Here | Click to Select Sound File</p>
             </div>
             {files[0] ? files[0] : ""}
           </div>
           : <div></div>
       }
-      <Grid container item xs={12} justify="center" className="record-button-row">
+      <div className="record-button-row">
         <ReactRecord
           record={status === AudioStatus.Recording}
           onStop={onStop}
@@ -145,9 +143,14 @@ const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
         >
           {
             (status === AudioStatus.Start && !blobUrl) ?
-              <Button className="start-record" onClick={startRecording} type="button">
-                <FiberManualRecordIcon className="round-circle" /> Record
-            </Button>
+              <button className="btn bg-white start-record svgOnHover"
+                onClick={() => startRecording()}>
+                <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#circle-filled"} />
+                </svg>
+                <span>Record</span>
+              </button>
               : <div></div>
           }
           {
@@ -159,8 +162,8 @@ const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
           }
           {
             (status === AudioStatus.Recorded) ?
-              <button className="btn btn-transparent svgOnHover play-record" onClick={playRecord}>
-                <svg className="svg w100 h100 active">
+              <button className="btn btn-transparent bg-white svgOnHover play-record" onClick={playRecord}>
+                <svg className="svg active">
                   {/*eslint-disable-next-line*/}
                   <use href={sprite + "#play-filled"} />
                 </svg>
@@ -170,8 +173,8 @@ const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
           }
           {
             (status === AudioStatus.Play) ?
-              <button className="btn btn-transparent svgOnHover play-record" onClick={stopRecord}>
-                <svg className="svg w100 h100 active">
+              <button className="btn bg-white svgOnHover play-record" onClick={stopRecord}>
+                <svg className="svg active">
                   {/*eslint-disable-next-line*/}
                   <use href={sprite + "#pause-filled"} />
                 </svg>
@@ -179,15 +182,13 @@ const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
               </button>
               : <div></div>
           }
-          <Button
-            className={"delete-record " + (canDelete ? 'disabled' : "")}
+          <button className={"btn bg-white delete-record " + (canDelete ? 'disabled' : "")}
             onClick={() => deleteAudio()}
-            disabled={canDelete}
-          >
-            Delete
-        </Button>
+            disabled={canDelete}>
+            <span>Delete</span>
+          </button>
         </ReactRecord>
-      </Grid>
+      </div>
     </div>
   );
 }
