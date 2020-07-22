@@ -281,25 +281,25 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="introduction-page">
           {renderMobileHeader()}
-          <div className="introduction-info">
-
-            {!state.prepExpanded ? (
-              <div>
-                <Hidden only={["sm", "md", "lg", "xl"]}>
-                  {renderTimer()}
-                </Hidden>
-                <IntroductionDetails brickLength={brick.brickLength} />
-              </div>
-            ) : (
-                ""
-              )}
-            {renderPlayButton()}
-          </div>
-          {renderBriefTitle()}
-          {renderBriefExpandText()}
-          {renderPrepTitle()}
-          {renderPrepExpandText()}
         </div>
+        <div className="introduction-info">
+
+          {!state.prepExpanded ? (
+            <div>
+              <Hidden only={["sm", "md", "lg", "xl"]}>
+                {renderTimer()}
+              </Hidden>
+              <IntroductionDetails brickLength={brick.brickLength} />
+            </div>
+          ) : (
+              ""
+            )}
+          {renderPlayButton()}
+        </div>
+        {renderBriefTitle()}
+        {renderBriefExpandText()}
+        {renderPrepTitle()}
+        {renderPrepExpandText()}
       </Hidden>
     </div>
   );
