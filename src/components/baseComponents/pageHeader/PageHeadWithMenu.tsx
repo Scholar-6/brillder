@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Grid } from "@material-ui/core";
-
+import sprite from "../../../assets/img/icons-sprite.svg";
 import PageHeader from "./PageHeader";
 import { User, UserType } from "model/user";
 import LogoutDialog from "../logoutDialog/LogoutDialog";
@@ -84,21 +84,13 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
         <MenuItem
           className="first-item menu-item"
           onClick={() => this.props.history.push("/play/dashboard")}>
-          View All Bricks
-          <Grid
-            container
-            className="menu-icon-container"
-            justify="center"
-            alignContent="center"
-          >
-            <div>
-              <img
-                className="menu-icon"
-                alt=""
-                src="/images/main-page/glasses-white.png"
-              />
-            </div>
-          </Grid>
+          <span className="menu-text">View All Bricks</span>
+          <div className="btn btn-transparent svgOnHover">
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#glasses"} className="text-white" />
+            </svg>
+          </div>
         </MenuItem>
       )
     }
@@ -109,12 +101,13 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
     if (this.props.page !== PageEnum.BackToWork) {
       return (
         <MenuItem className="menu-item" onClick={() => this.props.history.push('/back-to-work')}>
-          Back To Work
-          <Grid container className="menu-icon-container" justify="center" alignContent="center">
-            <div>
-              <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
-            </div>
-          </Grid>
+          <span className="menu-text">Back To Work</span>
+          <div className="btn btn-transparent svgOnHover">
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#roller"} className="text-white" />
+            </svg>
+          </div>
         </MenuItem>
       );
     }
@@ -146,88 +139,47 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           onClose={() => this.hideDropdown()}>
           {this.renderViewAllItem()}
           <MenuItem className="menu-item" onClick={() => this.creatingBrick()}>
-            Start Building
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon"
-                  alt=""
-                  src="/images/main-page/create-white.png"
-                />
-              </div>
-            </Grid>
+            <span className="menu-text">Start Building</span>
+            <div className="btn btn-transparent svgOnHover">
+              <svg className="svg active">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#shovel"} className="text-white" />
+              </svg>
+            </div>
           </MenuItem>
           {this.renderBackToWorkItem()}
           {this.props.user.roles.some(
             (role) => role.roleId === UserType.Admin
           ) ? (
-              <MenuItem
-                className="menu-item"
-                onClick={() => this.props.history.push("/users")}
-              >
-                Manage Users
-                <Grid
-                  container
-                  className="menu-icon-container"
-                  justify="center"
-                  alignContent="center"
-                >
-                  <div>
-                    <img
-                      className="manage-users-icon svg-icon"
-                      alt=""
-                      src="/images/users.svg"
-                    />
-                  </div>
-                </Grid>
+              <MenuItem className="menu-item" onClick={() => this.props.history.push("/users")}>
+                <span className="menu-text">Manage Users</span>
+                <div className="btn btn-transparent svgOnHover">
+                  <svg className="svg active">
+                    {/*eslint-disable-next-line*/}
+                    <use href={sprite + "#users"} className="text-white" />
+                  </svg>
+                </div>
               </MenuItem>
             ) : (
               ""
             )}
-          <MenuItem
-            className="view-profile menu-item"
-            onClick={() => this.props.history.push("/user-profile")}
-          >
-            View Profile
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon svg-icon user-icon"
-                  alt=""
-                  src="/images/user.svg"
-                />
-              </div>
-            </Grid>
+          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push("/user-profile")}>
+            <span className="menu-text">View Profile</span>
+            <div className="btn btn-transparent svgOnHover">
+              <svg className="svg active">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#user"} className="text-white" />
+              </svg>
+            </div>
           </MenuItem>
-          <MenuItem
-            className="menu-item"
-            onClick={() => this.handleLogoutOpen()}
-          >
-            Logout
-            <Grid
-              container
-              className="menu-icon-container"
-              justify="center"
-              alignContent="center"
-            >
-              <div>
-                <img
-                  className="menu-icon svg-icon logout-icon"
-                  alt=""
-                  src="/images/log-out.svg"
-                />
-              </div>
-            </Grid>
+          <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
+            <span className="menu-text">Logout</span>
+            <div className="btn btn-transparent svgOnHover">
+              <svg className="svg active">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#logout"} className="text-white" />
+              </svg>
+            </div>
           </MenuItem>
         </Menu>
         <NotificationPanel

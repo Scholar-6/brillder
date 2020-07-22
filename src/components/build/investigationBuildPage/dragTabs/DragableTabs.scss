@@ -129,10 +129,7 @@ $tile-height: 100%;
       padding: 0.25vw;
       border: 0.1vw dashed var(--theme-orange);
       .svg {
-        position: inherit;
-        top: inherit;
-        left: inherit;
-        transform: inherit;
+        @extend %removePosition;
       }
     }
   }

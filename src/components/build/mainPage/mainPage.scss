@@ -80,40 +80,30 @@
     height: 10.1vh;
   }
 
-  .view-item-container {
-    width: 100%;
-    padding-top: 14.5vh;
-  }
-
-  .create-item-container {
-    width: 100%;
-    padding-top: 8.3vh;
-    .create-item {
-      .item-image {
-        height: 14.5vh;
-      }
-    }
-  }
-
+  .view-item-container,
+  .create-item-container,
   .back-item-container {
     width: 100%;
-    padding-top: 11.4vh;
-    .back-item {
+    padding: 2vh 0;
+    @extend %flexCenter;
+    .btn {
       text-align: center;
-      .item-image {
-        height: 14vh;
+      flex-direction: column;
+      .svg {
+        width: 10vw;
+        height: 6vw;
+        @extend %removePosition;
+      }
+      .item-description {
+        padding: 0;
+        text-align: center;
+        margin: 0;
+        font: 1.3vw $font-family-light;
+        letter-spacing: 0.27vw;
+        color: var(--tab-gray);
       }
     }
   }
-
-  .item-description {
-    padding-left: 0.2vw;
-    text-align: center;
-    font: 1.3vw $font-family-light;
-    letter-spacing: 0.27vw;
-    color: #bfc5d2;
-  }
-
   .logout-button {
     cursor: pointer;
     position: fixed;
@@ -123,7 +113,6 @@
     color: white;
     font: 1.24vw $font-family-regular;
     letter-spacing: 0.25vw;
-
     .logout-image {
       margin-top: 0.2vh;
       background-size: 100% 100%;
@@ -136,31 +125,61 @@
       width: 2.8vw;
       min-height: 100%;
     }
-  }
-
-  .logout-button:hover {
-    .logout-image {
-      margin-right: 1.2vw;
-      background-image: url(/images/main-page/logout-hover.png);
-    }
-    .logout-text {
-      font-family: $font-family-bold;
+    &:hover {
+      .logout-image {
+        margin-right: 1.2vw;
+        background-image: url(/images/main-page/logout-hover.png);
+      }
+      .logout-text {
+        font-family: $font-family-bold;
+      }
     }
   }
 
   .mobile-main-page {
-    position: fixed;
-    top: 0;
-    height: 100%;
     width: 100%;
-
+    height: 100vh;
+    @extend %flexCenter;
+    flex-direction: column;
+    .prev-image,
+    .next-image {
+      width: 15vw;
+      height: 15vw;
+      margin: 5vw 0;
+    }
+    .swiper-container {
+      width: 100%;
+      height: calc(100vh - 50vw) !important;
+      padding: 1vh 0;
+      .swiper-slide {
+        width: 100%;
+        @extend %flexCenter;
+        height: calc(33.33vh - 8vh);
+        .btn {
+          text-align: center;
+          flex-direction: column;
+          .svg {
+            width: 40vw;
+            height: 30vw;
+            @extend %removePosition;
+          }
+          .item-description {
+            padding: 0;
+            text-align: center;
+            margin: 0;
+            font: 5vw $font-family-light;
+            letter-spacing: 0.27vw;
+            color: var(--tab-gray);
+          }
+        }
+      }
+    }
     .mobile-logout-button {
       margin-top: 3.45vh;
       margin-right: 9vw;
       color: white;
       font: 4vw $font-family-regular;
       letter-spacing: 1vw;
-
       .logout-image {
         background-size: 100% 100%;
         background-repeat: no-repeat;
@@ -171,49 +190,6 @@
         min-height: 100%;
       }
     }
-
-    .item-description {
-      text-align: center;
-      padding-top: 0vh;
-      margin-left: 2vw;
-      font: 3vh $font-family-light;
-      letter-spacing: 1.3vw;
-      color: #bfc5d2;
-    }
-
-    .view-item {
-      text-align: center;
-      padding-top: 4vh;
-      .item-image {
-        height: 11.3vh;
-      }
-    }
-
-    .create-item {
-      text-align: center;
-      .item-image {
-        height: 16.9vh;
-      }
-      .item-description {
-        margin-top: 1vh;
-      }
-    }
-    .back-item {
-      padding-top: 2vh;
-      .item-image {
-        height: 19.6vh;
-      }
-    }
-  }
-  .prev-image {
-    margin-top: 6vh;
-  }
-  .next-image {
-    margin-top: 3vh;
-  }
-  .prev-image,.next-image {
-    height: 2vh;
-    text-align: center;
   }
   .swiper-slide-active,
   .swiper-slide-duplicate-prev {
