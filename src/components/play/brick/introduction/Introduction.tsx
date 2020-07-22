@@ -11,6 +11,8 @@ import { Moment } from "moment";
 import PrepareText from './PrepareText';
 import IntroductionDetails from "./IntroductionDetails";
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
+import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
+
 const moment = require("moment");
 
 interface IntroductionProps {
@@ -25,6 +27,7 @@ interface IntroductionState {
   prepExpanded: boolean;
   briefExpanded: boolean;
   otherExpanded: boolean;
+  isPrepDialogOpen: boolean;
   duration: any;
 }
 
@@ -35,6 +38,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     isStopped: false,
     briefExpanded: true,
     otherExpanded: false,
+    isPrepDialogOpen: false,
     duration: null,
   } as IntroductionState);
 
@@ -62,12 +66,17 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       setState({
         ...state,
         isStopped: false,
+        isPrepDialogOpen: false,
         prepExpanded: !state.prepExpanded,
       });
     }
   };
 
   const startBrick = () => {
+    if (!state.prepExpanded) {
+      setState({...state, isPrepDialogOpen: true});
+      return;
+    }
     if (!props.startTime) {
       props.setStartTime(moment());
     } else if (state.isStopped && state.duration) {
@@ -301,6 +310,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           {renderPrepExpandText()}
         </div>
       </Hidden>
+      <PrepExpandedDialog
+        isOpen={state.isPrepDialogOpen}
+        close={() => setState({...state, isPrepDialogOpen: false})}
+        onSubmit={() => togglePrep()}
+      />
     </div>
   );
 };
