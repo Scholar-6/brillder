@@ -130,9 +130,6 @@
     .svg {
       color: var(--tab-gray);
     }
-    &:hover {
-      animation-name: pulse-gray;
-    }
   }
   &.play-white {
     background-color: var(--tab-gray);
