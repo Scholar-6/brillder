@@ -76,57 +76,37 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   renderViewAllButton() {
     return (
-      <Grid container justify="center" style={{ width: "100%" }}>
-        <div
-          className="zoom-item view-item"
-          onClick={() => this.props.history.push("/play/dashboard")}
-        >
-          <img
-            alt="Logo"
-            src="/images/main-page/glasses.png"
-            className="item-image"
-          />
-          <div className="item-description">View All Bricks</div>
-        </div>
-      </Grid>
+      <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/play/dashboard")}>
+        <svg className="svg active">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#glasses"} className="text-theme-orange" />
+        </svg>
+        <span className="item-description">View All Bricks</span>
+      </button>
     );
   }
 
   renderCreateButton() {
     return (
-      <Grid container justify="center" style={{ width: "100%" }}>
-        <div
-          className="zoom-item create-item"
-          onClick={() =>
-            this.props.history.push("/build/new-brick/brick-title")
-          }
-        >
-          <img
-            alt="Logo"
-            src="/images/main-page/create.png"
-            className="item-image"
-          />
-          <div className="item-description">Start Building</div>
-        </div>
-      </Grid>
+      <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/build/new-brick/brick-title")}>
+        <svg className="svg active">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#shovel"} className="text-theme-orange" />
+        </svg>
+        <span className="item-description">Start Building</span>
+      </button>
     );
   }
 
   renderWorkButton() {
     return (
-      <Grid container justify="center" style={{ width: "100%" }}>
-        <div
-          className="zoom-item back-item"
-          onClick={() => this.props.history.push("/back-to-work")}
-        >
-          <img
-            alt="Logo"
-            src="/images/main-page/backToWork.png"
-            className="item-image"
-          />
-          <div className="item-description">Back To Work</div>
-        </div>
-      </Grid>
+      <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/back-to-work")}>
+        <svg className="svg active">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#roller"} className="text-theme-orange" />
+        </svg>
+        <span className="item-description">Back To Work</span>
+      </button>
     );
   }
 
