@@ -388,81 +388,6 @@
             }
           }
         }
-        .action-footer {
-          display: flex;
-          color: var(--theme-dark-blue);
-          @include phone_and_tabletP {
-            position: fixed;
-            align-items: flex-end;
-            justify-content: flex-end;
-            bottom: 6.5vh;
-            right: 0vw;
-            width: 100%;
-          }
-          @include tabletP {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            align-items: center;
-            justify-content: flex-end;
-            width: 22vw;
-            bottom: 5vw;
-          }
-
-          > div {
-            @extend %flexCenter;
-            flex-direction: column;
-            text-align: center;
-            @include phone_and_tabletP {
-              margin: 0 3vw;
-            }
-            @include tabletP {
-              min-width: 4vw;
-            }
-            &.direction-info {
-              width: 100%;
-              padding: 0 1vw;
-              position: relative;
-              > h2 {
-                margin-top: 0;
-                margin-bottom: 0;
-
-                font-family: $font-family-bold;
-                @include phone_and_tabletP {
-                  font-size: 8.4vw;
-                  width: max-content;
-                }
-                @include tabletP {
-                  font-size: 2.6vw;
-                }
-              }
-              > h3,
-              > span {
-                position: absolute;
-                color: var(--theme-dark-blue);
-              }
-              > h3 {
-                left: 1.8vw;
-                letter-spacing: inherit;
-                margin: 0;
-                @include phone_and_tabletP {
-                  font-size: 5.1vw;
-                  top: -4vw;
-                }
-                @include tabletP {
-                  top: -1vw;
-                }
-              }
-              > span {
-                width: 100%;
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: -2vw;
-                line-height: 1vw;
-              }
-            }
-          }
-        }
         .max-length {
           font-family: $font-family-regular;
           color: var(--theme-dark-blue);
@@ -562,25 +487,23 @@
           }
         }
       }
-
       .action-footer {
-        @extend %displayFlex;
+        display: flex;
         color: var(--theme-dark-blue);
+        align-items: center;
+        justify-content: flex-end;
         @include phone_and_tabletP {
-          align-items: flex-end;
-          justify-content: flex-end;
-          bottom: 0.5vh;
-          margin-top: 3vh;
-          position: relative;
+          width: 100%;
+          position: fixed;
+          bottom: 6.5vh;
+          right: 0vw;
         }
         @include tabletP {
           position: absolute;
-          align-items: center;
-          justify-content: flex-end;
-          width: 22vw;
-          bottom: 5vw;
           left: 50%;
           transform: translateX(-50%);
+          width: 22vw;
+          bottom: 5vw;
         }
         .play-preview {
           position: relative;
@@ -597,9 +520,9 @@
         > div {
           @extend %flexCenter;
           flex-direction: column;
-          text-align: center;
+          margin: 0 3vw;
           @include phone_and_tabletP {
-            margin-left: 5vw;
+            min-width: 18vw;
           }
           @include tabletP {
             min-width: 4vw;
@@ -613,7 +536,7 @@
               margin-bottom: 0;
               font-family: $font-family-bold;
               @include phone_and_tabletP {
-                font-size: 11.6vw;
+                font-size: 10.6vw;
                 width: max-content;
               }
               @include tabletP {
@@ -643,6 +566,7 @@
               transform: translateX(-50%);
               bottom: -2vw;
               line-height: 1vw;
+              text-align: center;
             }
           }
         }
