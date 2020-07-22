@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // @ts-ignore
 import { connect } from "react-redux";
 import { Grid, Hidden } from "@material-ui/core";
-
+import sprite from '../../../assets/img/icons-sprite.svg';
 import "./mainPage.scss";
 import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
@@ -156,9 +156,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             loop={true}
             loopedSlides={20}
             direction="vertical"
-            style={{height: '80%'}}
+            style={{ height: '80%' }}
             onSwiper={swiper => {
-              this.setState({...this.state, swiper});
+              this.setState({ ...this.state, swiper });
             }}
           >
             <SwiperSlide>{this.renderViewAllButton()}</SwiperSlide>
@@ -189,49 +189,33 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           </div>
           <div className="first-col">
             <div className="first-item">
-              <Grid container justify="center" className="view-item-container">
-                <div
-                  className="zoom-item view-item"
-                  onClick={() => history.push("/play/dashboard")}
-                >
-                  <img
-                    alt="Logo"
-                    src="/images/main-page/glasses.png"
-                    className="item-image"
-                  />
-                  <div className="item-description">View All Bricks</div>
-                </div>
-              </Grid>
-              <Grid
-                container
-                justify="center"
-                className="create-item-container"
-              >
-                <div
-                  className="zoom-item create-item"
-                  onClick={() => this.creatingBrick()}
-                >
-                  <img
-                    alt="Logo"
-                    src="/images/main-page/create.png"
-                    className="item-image"
-                  />
-                  <div className="item-description">Start Building</div>
-                </div>
-              </Grid>
-              <Grid container justify="center" className="back-item-container">
-                <div
-                  className="zoom-item back-item"
-                  onClick={() => history.push("/back-to-work")}
-                >
-                  <img
-                    alt="Logo"
-                    src="/images/main-page/backToWork.png"
-                    className="item-image"
-                  />
-                  <div className="item-description">Back To Work</div>
-                </div>
-              </Grid>
+              <div className="view-item-container">
+                <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => history.push("/play/dashboard")}>
+                  <svg className="svg active">
+                    {/*eslint-disable-next-line*/}
+                    <use href={sprite + "#glasses"} className="text-theme-orange" />
+                  </svg>
+                  <span className="item-description">View All Bricks</span>
+                </button>
+              </div>
+              <div className="create-item-container">
+                <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.creatingBrick()}>
+                  <svg className="svg active">
+                    {/*eslint-disable-next-line*/}
+                    <use href={sprite + "#shovel"} className="text-theme-orange" />
+                  </svg>
+                  <span className="item-description">Start Building</span>
+                </button>
+              </div>
+              <div className="back-item-container">
+                <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => history.push("/back-to-work")}>
+                  <svg className="svg active">
+                    {/*eslint-disable-next-line*/}
+                    <use href={sprite + "#roller"} className="text-theme-orange" />
+                  </svg>
+                  <span className="item-description">Back To Work</span>
+                </button>
+              </div>
             </div>
             <div className="second-item"></div>
           </div>
