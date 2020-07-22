@@ -87,7 +87,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 
   return (
     <MuiThemeProvider >
-      <div className="build-question-page" style={{ width: '100%', height: '94%' }}>
+      <div className={showHelpArrow ? "build-question-page" : "build-question-page active"} style={{ width: '100%', height: '94%' }}>
         {
           showHelpArrow ? <img alt="" className="help-arrow" src="/images/investigation-arrow.png" /> : ""
         }
@@ -118,6 +118,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     hoverMarginTop="0vw"
                     fontFamily="Brandon Grotesque Bold"
                     value={QuestionComponentTypeEnum.Text}
+                    className="text-box"
                   />
                   <DragBox
                     locked={locked}
