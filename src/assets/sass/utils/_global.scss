@@ -283,11 +283,9 @@ textarea {
     }
     .round-button {
       border-radius: 50%;
-      background: black;
+      background: var(--black);
     }
   }
-}
-@media only screen and (min-width: 1280px) {
 }
 
 @media only screen and (max-width: 1279px) and (min-width: 960px) {
