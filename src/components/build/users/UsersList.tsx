@@ -25,7 +25,6 @@ import { checkAdmin } from "components/services/brickService";
 import sprite from "../../../assets/img/icons-sprite.svg";
 import NotificationPanel from 'components/baseComponents/notificationPanel/NotificationPanel';
 import ReactDOM from 'react-dom';
-import TimerWithClock from 'components/play/brick/baseComponents/TimerWithClock';
 
 
 const mapState = (state: ReduxCombinedState) => ({

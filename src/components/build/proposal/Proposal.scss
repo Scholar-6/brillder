@@ -360,7 +360,6 @@
         .ck-button {
           padding-top: 0;
           padding-bottom: 0;
-          font-size: 1.4vw;
           color: var(--theme-dark-blue);
           margin-right: 0;
           padding-right: 0;
@@ -369,8 +368,10 @@
           min-height: 3.2vw;
           @include phone_and_tabletP {
             margin-left: 2vw;
+            font-size: 3.4vw;
           }
-          @include tabletL {
+          @include tabletP {
+            font-size: 1.4vw;
             margin-left: 0vw;
           }
         }
@@ -407,7 +408,7 @@
               margin-left: 59vw;
             }
             @include phone_and_tabletP {
-              margin-left: 25vw;
+              margin-left: 35vw;
             }
             @include tabletL {
               margin-left: 16vw;

@@ -313,7 +313,12 @@
     }
     .brick-row-container {
       @include phone_and_tabletP {
-        height: $back-to-work-height-mobile-view;
+        height: calc(100vh - 6vh);
+      }
+    }
+    .bricks-list-container {
+      @include phone_and_tabletP {
+        height: calc(100vh - 12vh);
       }
     }
   }

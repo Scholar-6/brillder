@@ -186,6 +186,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               <Ending
                 status={status}
                 brick={props.brick}
+                history={props.history}
                 attempts={attempts}
                 brickAttempt={brickAttempt}
                 saveBrick={saveBrickAttempt}

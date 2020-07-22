@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import sprite from "../../assets/img/icons-sprite.svg";
 import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './ExpandedBrickDescription.scss';
@@ -17,7 +17,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   getSubjectRow(brick: Brick) {
     return `${brick.subject ? brick.subject.name : "SUBJECT Code"} | No. ${
       brick.attemptsCount
-    } of Plays`;
+      } of Plays`;
   }
 
   render() {
@@ -26,7 +26,9 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
     return (
       <div className="expanded-brick-info">
         <div className="hover-text">
-          <div className="link-description">{brick.title}</div>
+          <div className="link-description">
+            <span>{brick.title}</span>
+          </div>
           <div className="link-info">
             {brick.subTopic} | {brick.alternativeTopics}
           </div>
@@ -41,25 +43,26 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           <div>
             <div className="round-button" style={{ background: `${color}` }}></div>
           </div>
-          <div>
-            {isAdmin ? (
-              <img
-                alt="bin"
-                onClick={() => this.props.onDelete(brick.id)}
-                className="bin-button"
-                src="/images/brick-list/bin.png"
-              />
-            ) : (
+          {isAdmin ? (
+            <div>
+              <button className="btn btn-transparent svgOnHover bin-button" onClick={() => this.props.onDelete(brick.id)}>
+                <svg className="svg w100 h100 active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#trash-outline"} />
+                </svg>
+              </button>
+
+            </div>
+          ) : (
               ""
             )}
-          </div>
           <div>
-            <img
-              alt="play"
-              className="play-button"
-              onClick={() => this.props.move(brick.id)}
-              src="/images/brick-list/play.png"
-            />
+            <button className="btn btn-transparent svgOnHover play-button" onClick={() => this.props.move(brick.id)}>
+              <svg className="svg w100 h100 active">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#play-filled"} />
+              </svg>
+            </button>
           </div>
         </div>
       </div>

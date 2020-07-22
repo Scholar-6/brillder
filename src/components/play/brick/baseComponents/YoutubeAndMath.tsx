@@ -4,6 +4,7 @@ import MathJax from 'react-mathjax-preview'
 
 import {parseDataToArray, isMathJax} from 'components/services/mathJaxService';
 import YoutubeLink from './YoutubeLink';
+import './YoutubeAndMath.scss'
 
 interface MathHtmlProps {
   value: string;
@@ -31,7 +32,7 @@ class YoutubeAndMathInHtml extends Component<MathHtmlProps> {
     }
 
     return (
-      <div>
+      <div className="youtube-video-session">
         {
           arr.map((el:any, i:number) => {
             let res = isMathJax(el);

@@ -8,11 +8,37 @@
   color: var(--theme-orange);
   font-family: 'SuperclarendonW00-Bold';
   font-size: 2vw;
-
   .drag-box-hover {
     font-family: $font-family-regular;
     font-size: 0.81vw;
     color: $global-light-text-gray;
     opacity: 0;
+  }
+}
+.build-question-page {
+  &:not(.active) {
+    .text-box {
+      .drag-box-name {
+        animation: pulse1 1.5s ease infinite;
+      }
+    }
+  }
+}
+
+@keyframes pulse1 {
+  0% {
+    -ms-text-shadow: 0 0 0 var(--theme-orange-alpha5);
+    -o-text-shadow: 0 0 0 var(--theme-orange-alpha5);
+    text-shadow: 0 0 0 var(--theme-orange-alpha5);
+  }
+  70% {
+    -ms-text-shadow: 0 0 150px transparent;
+    -o-text-shadow: 0 0 150px transparent;
+    text-shadow: 0 0 150px transparent;
+  }
+  100% {
+    -ms-text-shadow: 0 0 0 transparent;
+    -o-text-shadow: 0 0 0 transparent;
+    text-shadow: 0 0 0 transparent;
   }
 }

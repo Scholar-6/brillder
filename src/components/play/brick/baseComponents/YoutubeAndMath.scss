@@ -1,0 +1,13 @@
+@import "../../../../assets/sass/partials/variables";
+@import "../../../../assets/sass/partials/mixins";
+@import "../../../../assets/sass/partials/extensions";
+
+.youtube-video-session {
+  .youtube-video {
+    iframe {
+      @include phone_and_tabletP {
+        width: 100%;
+      }
+    }
+  }
+}
