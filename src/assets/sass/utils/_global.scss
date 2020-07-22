@@ -438,3 +438,9 @@ h3 {
     }
   }
 }
+
+.mobile-hidden {
+  @include phone_and_tabletP {
+    display: none !important;
+  }
+}
