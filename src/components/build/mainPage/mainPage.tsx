@@ -126,17 +126,17 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return (
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="mobile-main-page">
-          <Grid container justify="center">
-            <div onClick={() => this.swipePrev()}>
-              <img alt="" className="prev-image" src="/feathericons/chevron-up-grey.png" />
-            </div>
-          </Grid>
+          <button className="btn btn-transparent prev-image svgOnHover" onClick={() => this.swipePrev()}>
+            <svg className="svg w100 h100 active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#arrow-up"} className="text-white" />
+            </svg>
+          </button>
           <Swiper
             slidesPerView={3}
             loop={true}
             loopedSlides={20}
             direction="vertical"
-            style={{ height: '80%' }}
             onSwiper={swiper => {
               this.setState({ ...this.state, swiper });
             }}
@@ -145,11 +145,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             <SwiperSlide>{this.renderCreateButton()}</SwiperSlide>
             <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>
           </Swiper>
-          <Grid container justify="center">
-            <div onClick={() => this.swipeNext()}>
-              <img alt="" className="next-image" src="/feathericons/chevron-down-grey.png" />
-            </div>
-          </Grid>
+          <button className="btn btn-transparent next-image svgOnHover" onClick={() => this.swipeNext()}>
+            <svg className="svg w100 h100 active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#arrow-down"} className="text-white" />
+            </svg>
+          </button>
         </div>
       </Hidden>
     );
