@@ -1,10 +1,10 @@
 import React from 'react'
-import {useDropzone} from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import axios from 'axios';
 // @ts-ignore
 import ReactRecord from 'react-record';
-
+import sprite from "../../../../../../assets/img/icons-sprite.svg";
 import './Sound.scss';
 import { Grid, Button } from '@material-ui/core';
 
@@ -13,7 +13,7 @@ interface SoundProps {
   index: number;
   data: any;
   save(): void;
-  updateComponent(component:any, index:number): void;
+  updateComponent(component: any, index: number): void;
 }
 
 enum AudioStatus {
@@ -24,7 +24,7 @@ enum AudioStatus {
   Stop,
 }
 
-const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
+const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
   let initAudio = new Audio();
   let initStatus = AudioStatus.Start;
   if (props.data && props.data.value) {
@@ -34,7 +34,7 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
   const [status, setStatus] = React.useState(initStatus as AudioStatus);
   const [blobUrl, setBlobUrl] = React.useState("");
   const [audio, setAudio] = React.useState(initAudio);
-  const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: 'audio/*',
     disabled: locked,
     onDrop: (files: any[]) => {
@@ -43,8 +43,8 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
       }
     }
   });
-  
-  const files = acceptedFiles.map((file:any) => (
+
+  const files = acceptedFiles.map((file: any) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
     </li>
@@ -79,7 +79,7 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
   const playRecord = () => {
     audio.play();
     setStatus(AudioStatus.Play);
-    audio.onended = function() {
+    audio.onended = function () {
       setStatus(AudioStatus.Recorded);
     };
   }
@@ -106,9 +106,9 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
         props.updateComponent(comp, props.index);
         props.save();
       })
-      .catch(error => {
-        alert('Can`t save audio file');
-      });
+        .catch(error => {
+          alert('Can`t save audio file');
+        });
     }
   }
 
@@ -126,59 +126,67 @@ const SoundComponent: React.FC<SoundProps> = ({locked, ...props}) => {
       {
         (status === AudioStatus.Start) ?
           <div>
-            <div {...getRootProps({className: 'dropzone ' + ((locked) ? 'disabled' : '')})}>
+            <div {...getRootProps({ className: 'dropzone ' + ((locked) ? 'disabled' : '') })}>
               <input {...getInputProps()} />
-              <Grid container justify="center" alignContent="center" style={{height:'100%'}}>
+              <Grid container justify="center" alignContent="center" style={{ height: '100%' }}>
                 <p>Drag Sound File Here | Click to Select Sound File</p>
               </Grid>
             </div>
             {files[0] ? files[0] : ""}
           </div>
-        : <div></div>
+          : <div></div>
       }
       <Grid container item xs={12} justify="center" className="record-button-row">
-      <ReactRecord
-        record={status === AudioStatus.Recording}
-        onStop={onStop}
-        onSave={onSave}
-        onData={recordFile}
-      >
-        {
-          (status === AudioStatus.Start && !blobUrl) ?
-            <Button className="start-record" onClick={startRecording} type="button">
-              <FiberManualRecordIcon className="round-circle" /> Record
-            </Button>
-          : <div></div>
-        }
-        {
-          (status === AudioStatus.Recording) ?
-            <Button className="stop-record" onClick={stopRecording} type="button">
-             <FiberManualRecordIcon className="round-circle" />  <span>Recording</span>
-            </Button>
-          : <div></div>
-        }
-        {
-          (status === AudioStatus.Recorded) ?
-            <Button className="play-record" onClick={playRecord} type="button">
-              <img alt="play-sound" src="/images/play-orange.png" className="play-arrow" /> Play
-            </Button>
-         : <div></div>
-        }
-        {
-          (status === AudioStatus.Play) ?
-            <Button className="pause-record play-record" onClick={stopRecord} type="button">
-              <img alt="play-sound" src="/images/play-orange.png" className="play-arrow" /> Pause
-            </Button>
-         : <div></div>
-        }
-        <Button
-          className={"delete-record " + (canDelete ? 'disabled' : "")}
-          onClick={() => deleteAudio()}
-          disabled={canDelete}
+        <ReactRecord
+          record={status === AudioStatus.Recording}
+          onStop={onStop}
+          onSave={onSave}
+          onData={recordFile}
         >
-          Delete
+          {
+            (status === AudioStatus.Start && !blobUrl) ?
+              <Button className="start-record" onClick={startRecording} type="button">
+                <FiberManualRecordIcon className="round-circle" /> Record
+            </Button>
+              : <div></div>
+          }
+          {
+            (status === AudioStatus.Recording) ?
+              <Button className="stop-record" onClick={stopRecording} type="button">
+                <FiberManualRecordIcon className="round-circle" />  <span>Recording</span>
+              </Button>
+              : <div></div>
+          }
+          {
+            (status === AudioStatus.Recorded) ?
+              <button className="btn btn-transparent svgOnHover play-record" onClick={playRecord}>
+                <svg className="svg w100 h100 active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#play-filled"} />
+                </svg>
+                <span>Play</span>
+              </button>
+              : <div></div>
+          }
+          {
+            (status === AudioStatus.Play) ?
+              <button className="btn btn-transparent svgOnHover play-record" onClick={stopRecord}>
+                <svg className="svg w100 h100 active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#pause-filled"} />
+                </svg>
+                <span>Pause</span>
+              </button>
+              : <div></div>
+          }
+          <Button
+            className={"delete-record " + (canDelete ? 'disabled' : "")}
+            onClick={() => deleteAudio()}
+            disabled={canDelete}
+          >
+            Delete
         </Button>
-      </ReactRecord>
+        </ReactRecord>
       </Grid>
     </div>
   );
