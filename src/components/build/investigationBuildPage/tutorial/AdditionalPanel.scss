@@ -22,10 +22,7 @@
         border: 0.3vw dashed var(--theme-orange);
         box-sizing: content-box;
         .svg {
-          position: inherit;
-          top: inherit;
-          left: inherit;
-          transform: inherit;
+          @extend %removePosition;
         }
       }
       .center {

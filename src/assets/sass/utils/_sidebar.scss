@@ -327,6 +327,15 @@
       color: var(--theme-dark-blue);
       line-height: 1;
       letter-spacing: 0.4vw;
+      .btn {
+        @extend %flexCenter;
+        span {
+          margin: 0;
+        }
+        .svg {
+          @extend %removePosition;
+        }
+      }
       @include phone_and_tabletP {
         font-size: 5vw;
         font-family: $font-family-bold;
@@ -337,20 +346,6 @@
         z-index: 10;
         display: flex;
         align-items: center;
-        .btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          span {
-            margin: 0;
-          }
-          .svg {
-            position: inherit;
-            top: inherit;
-            left: inherit;
-            transform: inherit;
-          }
-        }
       }
       @include tabletP {
         font-family: $font-family-black;
@@ -384,10 +379,7 @@
           height: calc(1vw + 20px);
           background-color: var(--tab-gray);
           .svg {
-            position: inherit;
-            top: inherit;
-            left: inherit;
-            transform: inherit;
+            @extend %removePosition;
             padding: 0.5vw;
             background-color: var(--tab-gray);
             border-radius: 50%;

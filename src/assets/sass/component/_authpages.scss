@@ -176,10 +176,7 @@
         .svg {
           transition: all 0.2s ease-in-out;
           margin-right: 1vw;
-          position: inherit;
-          top: inherit;
-          left: inherit;
-          transform: inherit;
+          @extend %removePosition;
           @include phone {
             width: 9.5vw;
             height: 9.5vw;
