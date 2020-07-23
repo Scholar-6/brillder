@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Grid } from "@material-ui/core";
 import sprite from "../../../assets/img/icons-sprite.svg";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { User, UserType } from "model/user";

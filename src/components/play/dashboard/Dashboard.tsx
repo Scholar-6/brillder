@@ -21,6 +21,7 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 import { ReduxCombinedState } from "redux/reducers";
 import DashboardFilter, { SortBy } from './DashboardFilter';
 import DashboardPagination from './DashboardPagination';
+import PublicCoreToggle from 'components/baseComponents/PublicCoreToggle';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -560,27 +561,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
-  renderPublicCoreToggle() {
-    return (
-      <div className="core-public-toggle">
-        <button className="btn btn btn-transparent ">
-          <span>Core</span>
-          <div className="svgOnHover">
-            <svg className="svg active selected">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#box"} className="text-light-blue2" />
-            </svg>
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#globe"} className="text-light-blue2" />
-            </svg>
-          </div>
-          <span>Public</span>
-        </button>
-      </div>
-    );
-  }
-
   render() {
     const { history } = this.props;
     return (
@@ -617,7 +597,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               <div className="brick-row-title">
                 ALL BRICKS
               </div>
-              {this.renderPublicCoreToggle()}
+              <PublicCoreToggle />
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
