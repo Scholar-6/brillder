@@ -739,7 +739,7 @@ $introduction-expanded-height: calc(100vh - 2vw);
 
   // class for desktop only
   .sorted-row-expanded {
-    @include phone {
+    @include tabletP {
       .introduction-info {
         height: $introduction-expanded-height !important;
       }
