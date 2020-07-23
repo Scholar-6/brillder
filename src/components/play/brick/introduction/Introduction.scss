@@ -2,6 +2,9 @@
 @import '../../../../assets/sass/partials/mixins';
 @import '../../../../assets/sass/partials/extensions';
 
+$introduction-desktop-height: calc(100vh - 7.8vw);
+$introduction-expanded-height: calc(100vh - 2vw);
+
 .play-preview-pages {
   background: var(--theme-dark-blue);
   min-height: 100%;
@@ -258,7 +261,7 @@
         }
         @include tabletP {
           padding: 4vh 2vw;
-          height: calc(100vh - 7.8vw);
+          height: $introduction-desktop-height;
         }
         .intro-header {
           position: relative;
@@ -427,7 +430,7 @@
             height: calc(100vh - 55.8vw);
           }
           @include tabletP {
-            height: calc(100vh - 7.8vw);
+            height: $introduction-desktop-height;
           }
         }
         .fotter-text {
@@ -731,6 +734,13 @@
     }
     @include tabletP {
       font-size: 0.8vw;
+    }
+  }
+
+  // class for desktop only
+  .sorted-row-expanded {
+    .introduction-info {
+      height: $introduction-expanded-height !important;
     }
   }
 }
