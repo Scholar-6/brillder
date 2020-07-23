@@ -1,6 +1,7 @@
-@import '../../../assets/sass/partials/variables';
-@import '../../../assets/sass/partials/mixins';
-@import '../../../assets/sass/partials/extensions';
+@import "../../../assets/sass/partials/variables";
+@import "../../../assets/sass/partials/mixins";
+@import "../../../assets/sass/partials/extensions";
+@import "../../../assets/sass/utils/global";
 
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
@@ -47,7 +48,8 @@
       }
     }
     .play-sidebar.rolled-up {
-      width: 5vw;
+      margin-top: $home-button-size;
+      width: $home-button-size;
     }
     .sort-and-filter-container {
       @include phone_and_tabletP {
@@ -68,8 +70,14 @@
         }
       }
     }
-    .brick-row-container.brick-row-expanded {
-      width: 93vw;
+  }
+  $margin-top: 2vw;
+  .sorted-row.sorted-row-expanded {
+    padding-top: $margin-top;
+    margin-top: 0;
+    .brick-row-container {
+      width: calc(98vw - #{$home-button-size}) !important;
+      height: calc(100vh - #{$margin-top}) !important;
     }
   }
 }
