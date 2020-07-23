@@ -11,10 +11,12 @@ import CommentButton from '../comments/CommentButton';
 import React from 'react';
 // @ts-ignore
 import { Provider } from 'react-redux';
-import store from 'redux/store';
+//import store from 'redux/store';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import comments from 'redux/actions/comments';
 import { ReduxCombinedState } from 'redux/reducers';
+
+import './CommentCustom.scss';
 
 const theme = createMuiTheme({
     palette: {
@@ -30,6 +32,13 @@ const theme = createMuiTheme({
         },
     },
 })
+
+const CommentTypes = {
+    comment: "comment",
+    add: "add",
+    delete: "delete",
+    replace: "replace"
+}
 
 class CommentCustom extends Plugin {
 
@@ -48,22 +57,30 @@ class CommentCustom extends Plugin {
         const editor = this.editor;
         this.defineSchema();
         this.defineConverters();
-
-        editor.editing.mapper.on(
-            'viewToModelPosition',
-            viewToModelPositionOutsideModelElement( this.editor.model, (viewElement: any) => viewElement.hasClass( 'comment' ) )
-        );
-
+        
         editor.editing.view.document.on('delete', (evt: any, data: any) => {
-            const items = Array.from<any>(editor.model.document.selection.getFirstRange().getItems())
-            const filteredItems = items.filter(item => item.name === "comment");
-            if(filteredItems.length > 0) {
-                data.stopPropagation();
-                data.preventDefault();
-                evt.stop();
-            }
-        }, { priority: 'highest' });
+            editor.model.change((writer: any) => {
+                const selection = writer.createSelection(editor.model.document.selection);
 
+                if(selection.isCollapsed) {
+                    editor.model.modifySelection( selection, { direction: data.direction, unit: data.unit } );
+                }
+
+                for(const range of selection.getRanges()) {
+                    writer.setAttributes({
+                        commentId: 1,
+                        commentType: CommentTypes.delete
+                    }, range);
+                }
+
+                writer.setSelection(selection.getFirstPosition());
+            });
+
+            data.stopPropagation();
+            data.preventDefault();
+            evt.stop();
+        }, { priority: 'highest' });
+        
         editor.ui.componentFactory.add('addComment', (locale: any) => {
             const view = new ButtonView(locale);
 
@@ -75,21 +92,25 @@ class CommentCustom extends Plugin {
 
             view.on('execute', async () => {
                 await editor.model.change(async (writer: any) => {
-                    const currentBrick = (store.getState() as ReduxCombinedState).brick.brick;
+                    const currentSelection = editor.model.document.selection;
 
-                    await store.dispatch(comments.createComment({
-                        text: "",
-                        brickId: currentBrick?.id
-                    }));
+                    if(currentSelection.rangeCount === 0) {
+                        return;
+                    }
 
-                    const newComment = (store.getState() as ReduxCombinedState).comments.mostRecentComment;
+                    const currentRange = currentSelection.getFirstRange();
 
-                    const commentElement = writer.createElement('comment', {
-                        commentId: newComment?.id
-                    });
+                    if(!currentRange.isFlat || currentRange.isCollapsed) {
+                        return;
+                    }
 
-                    editor.model.insertContent(commentElement);
+                    writer.setAttributes({
+                        'commentId': 1,
+                        'commentType': CommentTypes.comment
+                    }, currentRange);
                 });
+
+                console.log(editor.model.document.toJSON());
             });
 
             return view;
@@ -100,87 +121,93 @@ class CommentCustom extends Plugin {
         const schema = this.editor.model.schema;
         schema.register('comment', {
             allowWhere: "$text",
+            allowContentOf: "$text",
             isInline: true,
-            isObject: true,
+            inheritAllFrom: '$text',
             allowAttributes: ['commentId']
         });
+
+        schema.extend('$text', {
+            allowAttributes: ['commentId', 'commentType']
+        })
     }
 
     defineConverters() {
+        this.defineConvertersForCommentId();
+        this.defineConvertersForCommentType();
+    }
+
+    defineConvertersForCommentId() {
         const conversion = this.editor.conversion;
 
-        conversion.for('upcast').elementToElement({
+        conversion.for('upcast').elementToAttribute({
             view: {
                 name: 'span',
-                classes: ['comment']
-            },
-            model: (viewElement: any, modelWriter: any) => {
-
-                return modelWriter.createElement('comment', {
-                    commentId: parseInt(viewElement.getAttribute('data-id'))
-                });
-            }
-        });
-
-        conversion.for('editingDowncast').elementToElement({
-            model: 'comment',
-            view: (modelItem: any, viewWriter: any) => {
-                let commentId: number = modelItem.getAttribute('commentId');
-
-                const wrapperElement = viewWriter.createContainerElement('span', {
-                    class: 'comment'
-                });
-
-                const deleteComment = (commentId: number) => {
-                    this.editor.model.change((writer: any) => {
-                        writer.remove(modelItem);
-                    });
-                    this.editor.fire("comment-update");
-                };
-
-                const changeText = async (id: number, text: string) => {
-                    await store.dispatch(comments.editComment(id, text));
-
-                    this.editor.model.change((writer: any) => {
-                        writer.setAttribute('text', text, modelItem);
-                    });
-
-                    this.editor.fire("comment-update");
-                }
-
-                const reactWrapper = viewWriter.createUIElement('span', {
-                    class: 'comment__react-wrapper'
-                }, function (domDocument: any) {
-                    // @ts-ignore
-                    const domElement = this.toDomElement(domDocument);
-
-                    ReactDOM.render(
-                        <Provider store={store}>
-                            <ThemeProvider theme={theme}>
-                                <CommentButton commentId={commentId}
-                                    deleteComment={deleteComment} changeText={changeText}/>
-                            </ThemeProvider>
-                        </Provider>,
-                        domElement
-                    );
-
-                    return domElement;
-                });
-                viewWriter.insert(viewWriter.createPositionAt(wrapperElement, 0), reactWrapper);
-
-                return toWidget(wrapperElement, viewWriter);
-            }
-        });
-
-        conversion.for( 'dataDowncast' ).elementToElement({
-            model: 'comment',
-            view: (modelItem: any, viewWriter: any) => {
-                const element = viewWriter.createContainerElement('span', {
+                attributes: {
                     class: 'comment',
-                    'data-id': modelItem.getAttribute('commentId')
-                });
+                    'data-id': /.+/
+                }
+            },
+            model: {
+                key: 'commentId',
+                value: (viewElement: any) => viewElement.getAttribute('data-id')
+            }
+        });
 
-                return element;
+        conversion.for('editingDowncast').attributeToElement({
+            model: 'commentId',
+            view: (commentId: any, viewWriter: any) => {
+                return viewWriter.createAttributeElement('span', {
+                    class: 'comment',
+                    'data-id': commentId
+                });
+            }
+        });
+
+        conversion.for( 'dataDowncast' ).attributeToElement({
+            model: 'commentId',
+            view: (commentId: any, viewWriter: any) => {
+                return viewWriter.createAttributeElement('span', {
+                    class: 'comment',
+                    'data-id': commentId
+                });
+            }
+        });
+    }
+
+    defineConvertersForCommentType() {
+        const conversion = this.editor.conversion;
+
+        conversion.for('upcast').elementToAttribute({
+            view: {
+                name: 'span',
+                attributes: {
+                    class: 'comment',
+                    'data-id': /.+/,
+                    'data-type': /.+/
+                }
+            },
+            model: {
+                key: 'commentType',
+                value: (viewElement: any) => viewElement.getAttribute('data-type')
+            }
+        });
+
+        conversion.for('editingDowncast').attributeToElement({
+            model: 'commentType',
+            view: (commentType: any, viewWriter: any) => {
+                return viewWriter.createAttributeElement('span', {
+                    class: `comment-${commentType}`,
+                });
+            }
+        });
+
+        conversion.for( 'dataDowncast' ).attributeToElement({
+            model: 'commentType',
+            view: (commentType: any, viewWriter: any) => {
+                return viewWriter.createAttributeElement('span', {
+                    class: `comment-${commentType}`,
+                });
             }
         });
     }
