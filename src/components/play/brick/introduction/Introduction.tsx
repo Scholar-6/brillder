@@ -12,10 +12,12 @@ import PrepareText from './PrepareText';
 import IntroductionDetails from "./IntroductionDetails";
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
+import { PlayMode } from "../PlayBrickRouting";
 
 const moment = require("moment");
 
 interface IntroductionProps {
+  mode?: PlayMode;
   isPlayPreview?: boolean;
   startTime?: Moment;
   brick: Brick;

@@ -46,6 +46,12 @@ export interface BrickAttempt {
   answers: ComponentAttempt<any>[];
 }
 
+export enum PlayMode {
+  Normal = 1,
+  Highlighting,
+  Anotating
+}
+
 function shuffle(a: any[]) {
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -61,12 +67,6 @@ interface BrickRoutingProps {
   history: any;
   location: any;
   fetchBrick(brickId: number): void;
-}
-
-enum PlayMode {
-  Normal = 1,
-  Highlight,
-  Anotating
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
@@ -220,7 +220,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const renderHightlightButton = () => {
     return (
-      <MenuItem className="sidebar-button">
+      <MenuItem className="sidebar-button" onClick={() => setMode(PlayMode.Highlighting)}>
         {!sidebarRolledUp ? <span>Highlight Text</span> : ""}
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
@@ -232,7 +232,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const renderAnotateButton = () => {
     return (
-      <MenuItem className="sidebar-button">
+      <MenuItem className="sidebar-button" onClick={() => setMode(PlayMode.Anotating)}>
         {!sidebarRolledUp ? <span>Annotate Text</span> : ""}
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
@@ -261,6 +261,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       <Switch>
         <Route exac path="/play/brick/:brickId/intro">
           <Introduction
+            mode={mode}
             brick={props.brick}
             startTime={startTime}
             setStartTime={setStartTime}
