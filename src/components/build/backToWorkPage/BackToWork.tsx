@@ -20,6 +20,7 @@ import BackPagePagination from './BackPagePagination';
 import BackPagePaginationV2 from './BackPagePaginationV2';
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import BrickBlock from './BrickBlock';
+import PublicCoreToggle from "components/baseComponents/PublicCoreToggle";
 
 enum ThreeColumnNames {
   Draft = "draft",
@@ -50,6 +51,10 @@ interface BackToWorkProps {
   user: User;
   history: any;
   forgetBrick(): void;
+
+  //test data
+  isMocked?: boolean;
+  bricks?: Brick[];
 }
 
 export enum SortBy {
@@ -95,9 +100,33 @@ interface BackToWorkState {
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   constructor(props: BackToWorkProps) {
     super(props);
+    let finalBricks:Brick[] = [];
+    let rawBricks:Brick[] = [];
+    let threeColumns = {
+      draft: {
+        rawBricks: [],
+        finalBricks: []
+      },
+      review: {
+        rawBricks: [],
+        finalBricks: []
+      },
+      publish: {
+        rawBricks: [],
+        finalBricks: []
+      },
+    } as ThreeColumns;
+
+    // set mocked bricks for tests
+    if (this.props.isMocked && this.props.bricks) {
+      threeColumns = this.prepareTreeRows(this.props.bricks);
+      rawBricks = this.props.bricks;
+      finalBricks = this.props.bricks;
+    }
+
     this.state = {
-      finalBricks: [],
-      rawBricks: [],
+      finalBricks: finalBricks,
+      rawBricks: rawBricks,
       sortBy: SortBy.None,
       sortedIndex: 0,
       sortedReversed: false,
@@ -125,23 +154,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       isClearFilter: false,
       pageSize: 18,
 
-      threeColumns: {
-        draft: {
-          rawBricks: [],
-          finalBricks: []
-        },
-        review: {
-          rawBricks: [],
-          finalBricks: []
-        },
-        publish: {
-          rawBricks: [],
-          finalBricks: []
-        },
-      }
+      threeColumns: threeColumns
     };
 
-    this.getBricks();
+    // load real bricks
+    if (!this.props.isMocked) {
+      this.getBricks();
+    }
   }
 
   //region loading and setting bricks
@@ -664,7 +683,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           />
           <Grid item xs={9} className="brick-row-container">
             <BackPageTitle filters={this.state.filters} />
-
+            <PublicCoreToggle />
             <div className="bricks-list-container">
               <div className="bricks-list">
                 {this.renderBricks()}

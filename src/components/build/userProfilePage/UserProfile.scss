@@ -157,10 +157,7 @@
           .svg {
             color: #30c474;
             font-size: 2.35vw;
-            position: inherit;
-            left: inherit;
-            top: inherit;
-            transform: inherit;
+            @extend %removePosition;
           }
           > span {
             margin-left: 0.45vw;

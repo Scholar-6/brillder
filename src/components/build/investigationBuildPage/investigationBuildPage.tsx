@@ -689,7 +689,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  bricks: state.bricks.bricks,
   brick: state.brick.brick
 });
 

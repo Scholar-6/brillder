@@ -11,6 +11,8 @@ import { Moment } from "moment";
 import PrepareText from './PrepareText';
 import IntroductionDetails from "./IntroductionDetails";
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
+import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
+
 const moment = require("moment");
 
 interface IntroductionProps {
@@ -18,6 +20,7 @@ interface IntroductionProps {
   startTime?: Moment;
   brick: Brick;
   setStartTime(startTime: any): void;
+  moveNext?(): void;
 }
 
 interface IntroductionState {
@@ -25,6 +28,7 @@ interface IntroductionState {
   prepExpanded: boolean;
   briefExpanded: boolean;
   otherExpanded: boolean;
+  isPrepDialogOpen: boolean;
   duration: any;
 }
 
@@ -35,6 +39,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     isStopped: false,
     briefExpanded: true,
     otherExpanded: false,
+    isPrepDialogOpen: false,
     duration: null,
   } as IntroductionState);
 
@@ -62,12 +67,17 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       setState({
         ...state,
         isStopped: false,
+        isPrepDialogOpen: false,
         prepExpanded: !state.prepExpanded,
       });
     }
   };
 
   const startBrick = () => {
+    if (!state.prepExpanded) {
+      setState({...state, isPrepDialogOpen: true});
+      return;
+    }
     if (!props.startTime) {
       props.setStartTime(moment());
     } else if (state.isStopped && state.duration) {
@@ -75,9 +85,13 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       props.setStartTime(time);
     }
     if (props.isPlayPreview) {
+      // for play preview just redirect
       history.push(`/play-preview/brick/${brick.id}/live`);
     } else {
-      history.push(`/play/brick/${brick.id}/live`);
+      // for play need update parent state
+      if (props.moveNext) {
+        props.moveNext();
+      }
     }
   };
 
@@ -281,26 +295,31 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="introduction-page">
           {renderMobileHeader()}
-          <div className="introduction-info">
-
-            {!state.prepExpanded ? (
-              <div>
-                <Hidden only={["sm", "md", "lg", "xl"]}>
-                  {renderTimer()}
-                </Hidden>
-                <IntroductionDetails brickLength={brick.brickLength} />
-              </div>
-            ) : (
-                ""
-              )}
-            {renderPlayButton()}
-          </div>
-          {renderBriefTitle()}
-          {renderBriefExpandText()}
-          {renderPrepTitle()}
-          {renderPrepExpandText()}
         </div>
+        <div className="introduction-info">
+
+          {!state.prepExpanded ? (
+            <div>
+              <Hidden only={["sm", "md", "lg", "xl"]}>
+                {renderTimer()}
+              </Hidden>
+              <IntroductionDetails brickLength={brick.brickLength} />
+            </div>
+          ) : (
+              ""
+            )}
+          {renderPlayButton()}
+        </div>
+        {renderBriefTitle()}
+        {renderBriefExpandText()}
+        {renderPrepTitle()}
+        {renderPrepExpandText()}
       </Hidden>
+      <PrepExpandedDialog
+        isOpen={state.isPrepDialogOpen}
+        close={() => setState({...state, isPrepDialogOpen: false})}
+        onSubmit={() => togglePrep()}
+      />
     </div>
   );
 };

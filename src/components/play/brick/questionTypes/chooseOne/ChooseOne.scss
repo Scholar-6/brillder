@@ -3,11 +3,10 @@
 @import '../../../../../assets/sass/partials/extensions';
 
 .choose-one-live {
-
   .image-choice {
     background: inherit;
-    border: 4px solid var(--light-gray) !important;
+    padding: 1vh 1vw !important;
+    background-color: var(--light-gray);
     width: 100%;
-    padding: 0;
   }
 }

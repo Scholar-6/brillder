@@ -12,7 +12,7 @@ import MobileCategory from '../play/dashboard/MobileCategory';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
 import PlayPreviewRouting from '../build/playPreview/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
-import MainPage from '../build/mainPage/mainPage';
+import MainPage from 'components/mainPage/mainPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
 import BackToWorkPage from '../build/backToWorkPage/BackToWork';
 import UsersListPage from '../build/users/UsersList';

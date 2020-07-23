@@ -9,56 +9,45 @@
   }
 }
 
-.play-pages {
-  height: 100%;
-
-  .MuiExpansionPanelDetails-root,
-  .MuiExpansionPanelSummary-content {
-    color: var(--theme-dark-blue) !important;
-  }
-
-  .MuiInputBase-input {
-    color: var(--theme-dark-blue);
-  }
-
-  .brick-container {
-    font-family: $font-family-regular;
-    max-width: 800px;
-    width: 100%;
-    text-align: left;
-    color: var(--theme-dark-blue);
-
-    h3 {
-      padding: 5px;
-      font-size: 16px;
-      line-height: 28px;
-    }
-
-    h2 {
-      font-size: 24px;
-    }
-
-    h1 {
-      padding: 5px;
-      line-height: 48px;
-      text-transform: capitalize;
-      font-size: 32px;
-    }
-
-    .MuiExpansionPanel-root {
-      background: var(--light-gray);
-    }
-
-    .MuiExpansionPanel-root.Mui-expanded {
-      margin: 0 !important;
-      margin-bottom: 16px !important;
-    }
-  }
-}
 .play-preview-pages {
   .sorted-row {
     @include phone_and_tabletP {
       height: $back-to-work-height-mobile-view;
+    }
+    .play-sidebar {
+      text-align: right;
+      justify-content: inherit;
+      $resize-icon-size: 2.6vw;
+      $icons-size: 2vw;
+      $right-padding: 1.5vw;
+
+      .minimize-icon {
+        cursor: pointer;
+        margin-top: 0.8vw;
+        margin-right: $right-padding;
+        width: $resize-icon-size;
+        height: $resize-icon-size;
+      }
+      .sidebar-button {
+        margin-top: 3.5vh;
+        padding-right: $right-padding;
+        width: 100%;
+        align-items: center;
+        font-size: 1.6vw;
+        text-align: right;
+        justify-content: flex-end;
+        span {
+          padding-right: 1.5vw;
+          color: white;
+        }
+        .svg {
+          width: $icons-size;
+          height: $icons-size;
+        }
+      }
+    }
+    .play-sidebar.rolled-up {
+      width: 5vw;
     }
     .sort-and-filter-container {
       @include phone_and_tabletP {
@@ -78,6 +67,9 @@
           }
         }
       }
+    }
+    .brick-row-container.brick-row-expanded {
+      width: 93vw;
     }
   }
 }

@@ -1,0 +1,200 @@
+@import '../../assets/sass/partials/variables';
+@import '../../assets/sass/partials/mixins';
+@import '../../assets/sass/partials/extensions';
+
+.mainPage {
+  background: var(--theme-dark-blue);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  font-family: $font-family-black;
+
+  .welcome-col {
+    width: 35.2vw;
+    text-align: center;
+    padding-top: 15vh;
+
+    .welcome-box {
+      color: white;
+      letter-spacing: 0.66vw;
+      font-size: 2.58vw;
+      font-family: $font-family-bold;
+      padding-right: 2.9vw;
+
+      .smaller {
+        font-size: 2.4vw;
+      }
+
+      .welcome-name {
+        font-size: 2.5vw;
+        letter-spacing: 0.73vw;
+        margin-top: 4.2vh;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-family: 'Brandon Grotesque Thin';
+        color: var(--theme-orange);
+      }
+    }
+  }
+
+  .first-col {
+    width: 29.6vw;
+    height: 100%;
+
+    .first-item {
+      background: var(--light-blue);
+      height: 89.2vh;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+      @extend %flexCenter;
+      flex-direction: column;
+    }
+    .second-item {
+      background: var(--light-blue);
+      margin-top: 4.6vh;
+      height: 6.2vh;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
+  }
+
+  .second-col {
+    margin-left: 2.65vw;
+    width: 29.7vw;
+    height: 100%;
+
+    .first-item {
+      background: var(--light-blue);
+      height: 34.8vh;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+    .second-item {
+      background: var(--light-blue);
+      margin-top: 4.6vh;
+      height: 60.6vh;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
+  }
+
+  .item-image {
+    height: 10.1vh;
+  }
+
+  .view-item-container,
+  .create-item-container,
+  .back-item-container {
+    width: 100%;
+    padding: 2vh 0;
+    @extend %flexCenter;
+    .btn {
+      text-align: center;
+      flex-direction: column;
+      .svg {
+        width: 10vw;
+        height: 10vw;
+        @extend %removePosition;
+      }
+      .item-description {
+        padding: 0;
+        text-align: center;
+        margin: 0;
+        font: 1.3vw $font-family-light;
+        letter-spacing: 0.27vw;
+        color: var(--tab-gray);
+      }
+    }
+  }
+  .logout-button {
+    cursor: pointer;
+    position: fixed;
+    top: 3.7vh;
+    right: 1.8vw;
+    font-size: 1.5vw;
+    color: white;
+    font: 1.24vw $font-family-regular;
+    letter-spacing: 0.25vw;
+    .logout-image {
+      margin-top: 0.2vh;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(/images/main-page/logout.png);
+      transition: all 0.3s ease-in-out;
+      margin-right: 1.1vw;
+      height: 2.6vw;
+      width: 2.8vw;
+      min-height: 100%;
+    }
+    &:hover {
+      .logout-image {
+        margin-right: 1.2vw;
+        background-image: url(/images/main-page/logout-hover.png);
+      }
+      .logout-text {
+        font-family: $font-family-bold;
+      }
+    }
+  }
+
+  .mobile-main-page {
+    width: 100%;
+    height: 100vh;
+    @extend %flexCenter;
+    flex-direction: column;
+    .prev-image,
+    .next-image {
+      width: 15vw;
+      height: 15vw;
+      margin: 5vw 0;
+    }
+    .swiper-container {
+      width: 100%;
+      height: calc(100vh - 50vw) !important;
+      padding: 1vh 0;
+      .swiper-slide {
+        width: 100%;
+        @extend %flexCenter;
+        height: calc(33.33vh - 8vh);
+        .btn {
+          text-align: center;
+          flex-direction: column;
+          .svg {
+            width: 40vw;
+            height: 30vw;
+            @extend %removePosition;
+          }
+          .item-description {
+            padding: 0;
+            text-align: center;
+            margin: 0;
+            font: 5vw $font-family-light;
+            letter-spacing: 0.27vw;
+            color: var(--tab-gray);
+          }
+        }
+      }
+    }
+    .mobile-logout-button {
+      margin-top: 3.45vh;
+      margin-right: 9vw;
+      color: white;
+      font: 4vw $font-family-regular;
+      letter-spacing: 1vw;
+      .logout-image {
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(/images/main-page/logout.png);
+        margin-right: 1.6vw;
+        height: 5.6vh;
+        min-height: 100%;
+      }
+    }
+  }
+  .swiper-slide-active,
+  .swiper-slide-duplicate-prev {
+    opacity: 0.5;
+  }
+}

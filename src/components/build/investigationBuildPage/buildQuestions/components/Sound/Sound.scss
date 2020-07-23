@@ -24,82 +24,51 @@
   }
 
   .record-button-row {
-    margin-top: 0.5vh;
-    margin-bottom: 0.4vh;
+    margin: 0.5vw 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  button {
+  .btn {
     width: 7.5vw;
-    font-family: $font-family-regular;
     font-size: 1vw;
     text-transform: none;
-    padding: 0.3vh 2vw !important;
+    padding: 0.4vw 1vw !important;
   }
 
-  .round-circle {
-    font-size: 3vh;
-    border-radius: 2vh;
-    color: var(--theme-orange);
-    margin-right: 1vw;
-  }
-
-  .start-record {
-    padding-left: 0.3vw !important;
-    background: white;
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-    border-top-left-radius: $button-radius !important;
-    border-bottom-left-radius: $button-radius !important;
-  }
-  .stop-record {
-    padding-left: 0.3vw !important;
-    background: var(--theme-orange);
-    color: white;
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-    border-top-left-radius: $button-radius !important;
-    border-bottom-left-radius: $button-radius !important;
-
-    span {
-      margin-left: 0.45vw;
-    }
-
-    .round-circle {
-      color: white;
-      margin-left: 0.1vw;
-      margin-right: 0vw;
-    }
-  }
+  .start-record,
+  .stop-record,
+  .delete-record,
   .play-record {
-    padding-left: 0.3vw !important;
-    background: white;
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-    border-top-left-radius: $button-radius !important;
-    border-bottom-left-radius: $button-radius !important;
-
-    .play-arrow {
-      height: 2vh;
-      width: 2vh;
-      margin-left: 0.3vw;
-      margin-right: 1.2vw;
+    border-radius: $button-radius;
+    border: 1px solid var(--tab-gray);
+    .svg {
+      color: var(--theme-dark-blue);
+      @extend %removePosition;
+    }
+  }
+  .start-record,
+  .stop-record,
+  .play-record {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .delete-record {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: -1px;
+  }
+  .start-record {
+    .svg {
       color: var(--theme-orange);
     }
   }
-
-  .pause-record {
-    .play-arrow {
-      margin-right: 0.5vw;
+  .stop-record {
+    background: var(--theme-orange);
+    .svg {
+      color: var(--white);
     }
-  }
-
-  .delete-record {
-    border-left: 1px solid var(--tab-gray);
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    border-top-right-radius: $button-radius !important;
-    border-bottom-right-radius: $button-radius !important;
-    background: white;
   }
 
   .disabled {

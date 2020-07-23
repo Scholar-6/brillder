@@ -1,6 +1,5 @@
 import './AddUserButton.scss';
 import React from 'react';
-import { Grid } from '@material-ui/core';
 
 interface AddUserButtonProps {
   history: any;
