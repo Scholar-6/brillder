@@ -33,6 +33,7 @@ import PageHeadWithMenu, {
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import { ReduxCombinedState } from "redux/reducers";
 import sprite from "../../../assets/img/icons-sprite.svg";
+import HomeButton from "components/baseComponents/homeButton/HomeButton";
 
 export interface BrickAttempt {
   brickId?: number;
@@ -62,6 +63,12 @@ interface BrickRoutingProps {
   fetchBrick(brickId: number): void;
 }
 
+enum PlayMode {
+  Normal = 1,
+  Highlight,
+  Anotating
+}
+
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   let initAttempts: any[] = [];
   if (props.brick) {
@@ -74,6 +81,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
   const [startTime, setStartTime] = React.useState(undefined);
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
+  const [mode, setMode] = React.useState(PlayMode.Normal);
   const location = useLocation();
 
   useEffect(() => {
@@ -178,6 +186,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0) {
       isMobileHidden = true;
     }
+    if (sidebarRolledUp) {
+      return <HomeButton link="/home" />;
+    }
     return (
       <PageHeadWithMenu
         isMobileHidden={isMobileHidden}
@@ -222,7 +233,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const renderAnotateButton = () => {
     return (
       <MenuItem className="sidebar-button">
-        {!sidebarRolledUp ? <span>Highlight Text</span> : ""}
+        {!sidebarRolledUp ? <span>Annotate Text</span> : ""}
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#pen-tool"} className="text-white" />
@@ -303,17 +314,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     );
   };
 
-  let className = "brick-row-container";
+  let className = "sorted-row";
   if (sidebarRolledUp) {
-    className += " brick-row-expanded";
+    className += " sorted-row-expanded";
   }
 
   return (
     <div className="play-preview-pages">
       {renderHead()}
-      <Grid container direction="row" className="sorted-row">
+      <Grid container direction="row" className={className}>
         {renderSidebar()}
-        <Grid item className={className}>
+        <Grid item className="brick-row-container">
           {renderRouter()}
         </Grid>
       </Grid>
