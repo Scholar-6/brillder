@@ -36,10 +36,10 @@
         justify-content: space-between;
         @include phone_and_tabletP {
           font-size: 3.45vw;
-          padding: 2vw;
+          padding: 2vw 2vw 2vw 2.5vw;
         }
         @include tabletP {
-          padding: 0.8vw;
+          padding: 0.8vw 0.8vw 0.8vw 1vw;
           font-size: 1.45vw;
         }
         .menu-text {

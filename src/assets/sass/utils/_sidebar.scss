@@ -57,7 +57,7 @@
         }
       }
       .sort-by-box {
-        padding: 1.4vw;
+        padding: $sidebar-gutter;
         flex-direction: column;
         .sort-header {
           text-transform: uppercase;
@@ -65,7 +65,7 @@
           letter-spacing: 0.45vh;
         }
         .sort-group {
-          padding: 1.4vw 0 0 0;
+          padding: $sidebar-gutter 0 0 0;
           display: flex;
           flex-wrap: wrap;
           flex-direction: row;
@@ -137,8 +137,8 @@
         }
       }
       .subject-indexes-box {
-        margin: 1.4vw;
-        width: calc(100% - 2.8vw);
+        margin: $sidebar-gutter;
+        width: calc(100% - #{$sidebar-gutter * 2});
         .index-box {
           margin: 0 0 0.4vw 0;
           .right-index {
@@ -238,9 +238,9 @@
         }
       }
       .subjects-filter {
-        margin: 0 1.4vw;
+        margin: 0 $sidebar-gutter;
         padding: 2vh 0 0 0;
-        width: calc(100% - 2.8vw);
+        width: calc(100% - #{$sidebar-gutter * 2});
         @include phone_and_tabletP {
           height: calc(100vh - 55vw);
         }
