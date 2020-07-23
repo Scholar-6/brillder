@@ -104,6 +104,11 @@
         letter-spacing: 0.27vw;
         color: var(--tab-gray);
       }
+      &:hover {
+        .item-description {
+          font-family: $font-family-bold;
+        }
+      }
     }
   }
   .logout-button {
@@ -148,6 +153,7 @@
       width: 15vw;
       height: 15vw;
       margin: 5vw 0;
+      opacity: 0.5;
     }
     .swiper-container {
       width: 100%;
@@ -192,9 +198,5 @@
         min-height: 100%;
       }
     }
-  }
-  .swiper-slide-active,
-  .swiper-slide-duplicate-prev {
-    opacity: 0.5;
   }
 }
