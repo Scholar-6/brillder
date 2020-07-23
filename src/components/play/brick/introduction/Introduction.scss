@@ -107,6 +107,7 @@
             left: 0.5vw;
             @include phone_and_tabletP {
               position: unset;
+              margin-bottom: 0.5vh;
             }
             > div {
               @extend %radCircle;
@@ -732,8 +733,4 @@
       font-size: 0.8vw;
     }
   }
-}
-
-.play-preview-pages ~ .beta-text {
-  color: var(--theme-orange) !important;
 }

@@ -84,7 +84,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
         </div>
         <div>
           <button type="button" className="play-preview svgOnHover play-green" onClick={startBrick}>
-            <svg className="svg active m-l-02">
+            <svg className="svg w80 h80 active m-l-02">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#arrow-right"} />
             </svg>

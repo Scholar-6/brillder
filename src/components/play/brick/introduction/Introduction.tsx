@@ -126,11 +126,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             className={state.prepExpanded ? "play-preview svgOnHover play-green" : "play-preview svgOnHover play-gray"}
             onClick={startBrick}
           >
-            <svg className="svg svg-default m-l-02">
+            <svg className="svg w80 h80 m-l-02">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#play-thin"} />
             </svg>
-            <svg className="svg colored m-l-02">
+            <svg className="svg w80 h80 colored m-l-02">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#play-thick"} />
             </svg>
@@ -295,20 +295,20 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="introduction-page">
           {renderMobileHeader()}
-        </div>
-        <div className="introduction-info">
+          <div className="introduction-info">
 
-          {!state.prepExpanded ? (
-            <div>
-              <Hidden only={["sm", "md", "lg", "xl"]}>
-                {renderTimer()}
-              </Hidden>
-              <IntroductionDetails brickLength={brick.brickLength} />
-            </div>
-          ) : (
-              ""
-            )}
-          {renderPlayButton()}
+            {!state.prepExpanded ? (
+              <div>
+                <Hidden only={["sm", "md", "lg", "xl"]}>
+                  {renderTimer()}
+                </Hidden>
+                <IntroductionDetails brickLength={brick.brickLength} />
+              </div>
+            ) : (
+                ""
+              )}
+            {renderPlayButton()}
+          </div>
         </div>
         {renderBriefTitle()}
         {renderBriefExpandText()}
