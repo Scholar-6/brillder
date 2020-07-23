@@ -20,6 +20,7 @@ import BackPagePagination from './BackPagePagination';
 import BackPagePaginationV2 from './BackPagePaginationV2';
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import BrickBlock from './BrickBlock';
+import PublicCoreToggle from "components/baseComponents/PublicCoreToggle";
 
 enum ThreeColumnNames {
   Draft = "draft",
@@ -682,7 +683,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           />
           <Grid item xs={9} className="brick-row-container">
             <BackPageTitle filters={this.state.filters} />
-
+            <PublicCoreToggle />
             <div className="bricks-list-container">
               <div className="bricks-list">
                 {this.renderBricks()}

@@ -172,7 +172,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     <div className="play-preview-pages">
       {renderHead()}
       <Grid container direction="row" className="sorted-row">
-        <Grid container item className="sort-and-filter-container">
+        <Grid container item className="sort-and-filter-container">s
         </Grid>
         <Grid item className="brick-row-container">
           <Switch>

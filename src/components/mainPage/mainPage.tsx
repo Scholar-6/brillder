@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // @ts-ignore
 import { connect } from "react-redux";
 import { Grid, Hidden } from "@material-ui/core";
-import sprite from '../../../assets/img/icons-sprite.svg';
+import sprite from '../../assets/img/icons-sprite.svg';
 import "./mainPage.scss";
 import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
