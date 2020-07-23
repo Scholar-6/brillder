@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Ref } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import sprite from "../../../../assets/img/icons-sprite.svg";
@@ -13,6 +13,7 @@ import IntroductionDetails from "./IntroductionDetails";
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
 import { PlayMode } from "../PlayBrickRouting";
+import SelectableText from './SelectableText';
 
 const moment = require("moment");
 
@@ -34,6 +35,10 @@ interface IntroductionState {
   duration: any;
 }
 
+interface IntroRefs {
+  brief: any;
+}
+
 const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const history = useHistory();
   const [state, setState] = React.useState({
@@ -44,6 +49,10 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     isPrepDialogOpen: false,
     duration: null,
   } as IntroductionState);
+
+  const [refs, setRefs] = React.useState({
+    brief: React.createRef()
+  } as IntroRefs);
 
   const toggleBrief = () => {
     setState({ ...state, briefExpanded: !state.briefExpanded });
@@ -195,8 +204,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderBriefExpandText = () => {
     if (state.briefExpanded) {
       return (
-        <div className="expanded-text">
-          <MathInHtml value={brick.brief} />
+        <div className="expanded-text" ref={refs.brief}>
+          <SelectableText value={brick.brief} />
         </div>
       );
     }
