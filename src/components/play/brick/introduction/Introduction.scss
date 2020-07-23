@@ -1,6 +1,6 @@
-@import '../../../../assets/sass/partials/variables';
-@import '../../../../assets/sass/partials/mixins';
-@import '../../../../assets/sass/partials/extensions';
+@import "../../../../assets/sass/partials/variables";
+@import "../../../../assets/sass/partials/mixins";
+@import "../../../../assets/sass/partials/extensions";
 
 $introduction-desktop-height: calc(100vh - 7.8vw);
 $introduction-expanded-height: calc(100vh - 2vw);
@@ -739,8 +739,10 @@ $introduction-expanded-height: calc(100vh - 2vw);
 
   // class for desktop only
   .sorted-row-expanded {
-    .introduction-info {
-      height: $introduction-expanded-height !important;
+    @include phone {
+      .introduction-info {
+        height: $introduction-expanded-height !important;
+      }
     }
   }
 }
