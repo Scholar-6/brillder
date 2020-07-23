@@ -56,7 +56,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
         </div>
         <div>
           <button type="button" className="play-preview svgOnHover play-green" onClick={reviewBrick}>
-            <svg className="svg active m-l-02">
+            <svg className="svg w80 h80 active m-l-02">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#arrow-right"} />
             </svg>
