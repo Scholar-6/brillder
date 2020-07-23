@@ -20,6 +20,7 @@ interface IntroductionProps {
   startTime?: Moment;
   brick: Brick;
   setStartTime(startTime: any): void;
+  moveNext?(): void;
 }
 
 interface IntroductionState {
@@ -84,9 +85,13 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       props.setStartTime(time);
     }
     if (props.isPlayPreview) {
+      // for play preview just redirect
       history.push(`/play-preview/brick/${brick.id}/live`);
     } else {
-      history.push(`/play/brick/${brick.id}/live`);
+      // for play need update parent state
+      if (props.moveNext) {
+        props.moveNext();
+      }
     }
   };
 
