@@ -163,6 +163,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   const toggleSidebar = () => toggleSideBar(!sidebarRolledUp);
 
+  const moveToLive = () => {
+    props.history.push(`/play/brick/${props.brick.id}/live`);
+    toggleSideBar(true);
+  }
+
   const renderHead = () => {
     let isMobileHidden = false;
     const live = location.pathname.search("/live");
@@ -248,6 +253,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brick={props.brick}
             startTime={startTime}
             setStartTime={setStartTime}
+            moveNext={moveToLive}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/live">
