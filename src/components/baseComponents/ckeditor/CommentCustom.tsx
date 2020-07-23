@@ -13,6 +13,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from 'redux/store';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import comments from 'redux/actions/comments';
+import { ReduxCombinedState } from 'redux/reducers';
 
 const theme = createMuiTheme({
     palette: {
@@ -71,11 +73,19 @@ class CommentCustom extends Plugin {
                 tooltip: true
             });
 
-            view.on('execute', () => {
-                editor.model.change((writer: any) => {
+            view.on('execute', async () => {
+                await editor.model.change(async (writer: any) => {
+                    const currentBrick = (store.getState() as ReduxCombinedState).brick.brick;
+
+                    await store.dispatch(comments.createComment({
+                        text: "",
+                        brickId: currentBrick?.id
+                    }));
+
+                    const newComment = (store.getState() as ReduxCombinedState).comments.mostRecentComment;
+
                     const commentElement = writer.createElement('comment', {
-                        commentId: 1,
-                        text: "This is a comment."
+                        commentId: newComment?.id
                     });
 
                     editor.model.insertContent(commentElement);
@@ -92,7 +102,7 @@ class CommentCustom extends Plugin {
             allowWhere: "$text",
             isInline: true,
             isObject: true,
-            allowAttributes: ['commentId', 'text']
+            allowAttributes: ['commentId']
         });
     }
 
@@ -107,8 +117,7 @@ class CommentCustom extends Plugin {
             model: (viewElement: any, modelWriter: any) => {
 
                 return modelWriter.createElement('comment', {
-                    commentId: parseInt(viewElement.getAttribute('data-id')),
-                    text: viewElement.getAttribute('data-text')
+                    commentId: parseInt(viewElement.getAttribute('data-id'))
                 });
             }
         });
@@ -117,7 +126,6 @@ class CommentCustom extends Plugin {
             model: 'comment',
             view: (modelItem: any, viewWriter: any) => {
                 let commentId: number = modelItem.getAttribute('commentId');
-                let commentText: string = modelItem.getAttribute('text');
 
                 const wrapperElement = viewWriter.createContainerElement('span', {
                     class: 'comment'
@@ -130,11 +138,13 @@ class CommentCustom extends Plugin {
                     this.editor.fire("comment-update");
                 };
 
-                const changeText = (id: number, text: string) => {
+                const changeText = async (id: number, text: string) => {
+                    await store.dispatch(comments.editComment(id, text));
+
                     this.editor.model.change((writer: any) => {
                         writer.setAttribute('text', text, modelItem);
                     });
-                    commentText = text;
+
                     this.editor.fire("comment-update");
                 }
 
@@ -147,7 +157,7 @@ class CommentCustom extends Plugin {
                     ReactDOM.render(
                         <Provider store={store}>
                             <ThemeProvider theme={theme}>
-                                <CommentButton editable={true} commentId={commentId} text={commentText}
+                                <CommentButton commentId={commentId}
                                     deleteComment={deleteComment} changeText={changeText}/>
                             </ThemeProvider>
                         </Provider>,
@@ -167,8 +177,7 @@ class CommentCustom extends Plugin {
             view: (modelItem: any, viewWriter: any) => {
                 const element = viewWriter.createContainerElement('span', {
                     class: 'comment',
-                    'data-id': modelItem.getAttribute('commentId'),
-                    'data-text': modelItem.getAttribute('text')
+                    'data-id': modelItem.getAttribute('commentId')
                 });
 
                 return element;
