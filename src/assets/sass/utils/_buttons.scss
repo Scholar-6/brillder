@@ -48,10 +48,7 @@
   color: var(--theme-dark-blue);
   .svg {
     color: var(--theme-dark-blue);
-    position: inherit;
-    left: inherit;
-    top: inherit;
-    transform: inherit;
+    @extend %removePosition;
   }
   .synthesis-text {
     font-family: $font-family-regular;
@@ -129,9 +126,6 @@
     }
     .svg {
       color: var(--tab-gray);
-    }
-    &:hover {
-      animation-name: pulse-gray;
     }
   }
   &.play-white {

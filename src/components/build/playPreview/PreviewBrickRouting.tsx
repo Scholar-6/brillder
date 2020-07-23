@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { Grid } from '@material-ui/core';
+
 // @ts-ignore
 import { connect } from "react-redux";
 
@@ -21,7 +24,6 @@ import { ComponentAttempt, PlayStatus } from '../../play/brick/model/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
-import { Grid } from '@material-ui/core';
 import { setBrillderTitle } from 'components/services/titleService';
 import PublishPage from '../investigationBuildPage/publish/PublishPage';
 import FinishPage from '../investigationBuildPage/finish/FinishPage';
@@ -73,6 +75,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
   const [startTime, setStartTime] = React.useState(undefined);
+  const location = useLocation();
 
   useEffect(() => {
     if (props.brick) {
@@ -163,9 +166,33 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     return 0;
   }
 
+  const renderHead = () => {
+    let isMobileHidden = false;
+    const live = location.pathname.search("/live");
+    const score = location.pathname.search("/provisionalScore");
+    const synthesis = location.pathname.search("/synthesis");
+    const review = location.pathname.search("/review");
+    const ending = location.pathname.search("/ending");
+    const publish = location.pathname.search("/publish");
+    const finish = location.pathname.search("/finish");
+    if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0 || publish > 0 || finish > 0) {
+      isMobileHidden = true;
+    }
+    return (
+      <PageHeadWithMenu
+        isMobileHidden={isMobileHidden}
+        page={PageEnum.Play}
+        user={props.user}
+        history={props.history}
+        search={() => { }}
+        searching={() => { }}
+      />
+    );
+  }
+
   return (
     <div className="play-preview-pages">
-      <PageHeadWithMenu page={PageEnum.Play} user={props.user} history={props.history} search={() => {}} searching={()=> {}} />
+      {renderHead()}
       <Grid container direction="row" className="sorted-row">
         <Grid container item className="sort-and-filter-container">
           <div className="back-hover-area" onClick={() => moveToBuild()}>
@@ -216,6 +243,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             <Route exac path="/play-preview/brick/:brickId/ending">
               <Ending
                 status={status}
+                history={props.history}
                 brick={props.brick}
                 attempts={attempts}
                 brickAttempt={brickAttempt}

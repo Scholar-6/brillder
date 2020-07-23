@@ -4,7 +4,6 @@ import { CircularProgressbar } from "react-circular-progressbar";
 
 import "./Ending.scss";
 import { Brick } from "model/brick";
-import { useHistory } from "react-router-dom";
 import { PlayStatus } from "../model/model";
 import { BrickAttempt } from "../PlayBrickRouting";
 import ReviewStepper from '../review/ReviewStepper';
@@ -14,6 +13,7 @@ import Clock from "../baseComponents/Clock";
 interface EndingProps {
   status: PlayStatus;
   brick: Brick;
+  history: any;
   brickAttempt: BrickAttempt;
   attempts: any[];
   saveBrick(): void;
@@ -24,9 +24,9 @@ const EndingPage: React.FC<EndingProps> = ({
   brick,
   brickAttempt,
   attempts,
+  history,
   saveBrick,
 }) => {
-  const history = useHistory();
   const [minCurrentScore, setMinScore] = React.useState(0);
   const [maxCurrentScore, setMaxScore] = React.useState(0);
   const [currentScore, setCurrentScore] = React.useState(0);

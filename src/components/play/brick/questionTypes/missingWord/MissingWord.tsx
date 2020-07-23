@@ -99,10 +99,12 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
 
   renderSelect(choice: any, index: number) {
     if (!this.state.userAnswers[index]) { return <PageLoader content="...Loading..." />;}
+    let {value} = this.state.userAnswers[index];
+    if (value === -1) value = '';
     return (
       <Select
         className="missing-select"
-        value={this.state.userAnswers[index].value}
+        value={value}
         onChange={e => this.setUserAnswer(e, index)}
       >
         {choice.answers.map((a: any, i: number) => (

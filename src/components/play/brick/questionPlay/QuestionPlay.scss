@@ -17,29 +17,32 @@
 .MuiInputLabel-animated {
   font-family: $font-family-regular !important;
 }
-
 .question-hint,
 .question-hint-global {
   width: 100%;
   float: left;
   color: var(--theme-dark-blue);
-  font-size: 0.8vw;
   border-radius: 0.4vw;
+  padding: 0.3vw;
+  @include tabletP {
+    font-size: 0.8vw;
+  }
   img {
     width: 100%;
   }
 }
 .question-hint {
   width: calc(100% - 0.6vw);
-  margin: 0.3vw !important;
+  margin: 0.3vw;
   background: #ff9d00;
-  padding: 0.3vw 0;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   display: block;
   p {
-    font-size: 1vw;
     display: inline;
+    @include tabletP {
+      font-size: 1vw;
+    }
   }
   table {
     width: 100%;
@@ -67,8 +70,6 @@
 }
 .question-hint-global {
   background: #ff9d00;
-  margin-top: 0.5vw;
-  padding: 0.5vw;
   > div {
     margin-bottom: 0.4vw;
     &:last-child {
@@ -79,8 +80,10 @@
     }
   }
   p {
-    font-size: 1vw;
     line-height: initial;
+    @include tabletP {
+      font-size: 1vw;
+    }
   }
   .table {
     margin-left: 0;

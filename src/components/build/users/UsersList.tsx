@@ -22,10 +22,9 @@ import { User, UserType, UserStatus } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import { checkAdmin } from "components/services/brickService";
 
-import sprite from "../../../assets/img/icons-sprite.svg";
+import sprite from '../../../assets/img/icons-sprite.svg';
 import NotificationPanel from 'components/baseComponents/notificationPanel/NotificationPanel';
 import ReactDOM from 'react-dom';
-import TimerWithClock from 'components/play/brick/baseComponents/TimerWithClock';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -644,44 +643,49 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             open={this.state.dropdownShown}
             onClose={() => this.hideDropdown()}>
             <MenuItem className="first-item menu-item" onClick={() => history.push('/play/dashboard')}>
-              View All Bricks
-            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
-                <div>
-                  <img className="menu-icon" alt="" src="/images/main-page/glasses-white.png" />
-                </div>
-              </Grid>
+              <span className="menu-text">View All Bricks</span>
+              <div className="btn btn-transparent svgOnHover">
+                <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#glasses"} className="text-white" />
+                </svg>
+              </div>
             </MenuItem>
             <MenuItem className="menu-item" onClick={() => { }}>
-              Start Building
-            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
-                <div>
-                  <img className="menu-icon" alt="" src="/images/main-page/create-white.png" />
-                </div>
-              </Grid>
+              <span className="menu-text">Start Building</span>
+              <div className="btn btn-transparent svgOnHover">
+                <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#shovel"} className="text-white" />
+                </svg>
+              </div>
             </MenuItem>
             <MenuItem className="menu-item" onClick={() => history.push('/back-to-work')}>
-              Back To Work
-            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
-                <div>
-                  <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
-                </div>
-              </Grid>
+              <span className="menu-text">Back To Work</span>
+              <div className="btn btn-transparent svgOnHover">
+                <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#roller"} className="text-white" />
+                </svg>
+              </div>
             </MenuItem>
             <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/user-profile')}>
-              View Profile
-            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
-                <div>
-                  <img className="menu-icon svg-icon user-icon" alt="" src="/images/user.svg" />
-                </div>
-              </Grid>
+              <span className="menu-text">View Profile</span>
+              <div className="btn btn-transparent svgOnHover">
+                <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#user"} className="text-white" />
+                </svg>
+              </div>
             </MenuItem>
             <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
-              Logout
-            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
-                <div>
-                  <img className="menu-icon svg-icon logout-icon" alt="" src="/images/log-out.svg" />
-                </div>
-              </Grid>
+              <span className="menu-text">Logout</span>
+              <div className="btn btn-transparent svgOnHover">
+                <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#logout"} className="text-white" />
+                </svg>
+              </div>
             </MenuItem>
           </Menu>
         </div>
