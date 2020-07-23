@@ -16,6 +16,7 @@ describe("comments reducer", () => {
     it("should return the initial state", () => {
         expect(reducer(undefined, {})).toStrictEqual({
             comments: null,
+            mostRecentComment: null,
             error: ""
         });
     });
@@ -39,4 +40,54 @@ describe("comments reducer", () => {
         const newState = reducer(undefined, action);
         expect(newState).toStrictEqual({ error: "Mock error." });
     });
+
+    it("should handle CREATE_COMMENT_SUCCESS", () => {
+        const initialState = {
+            comments: [mockComment]
+        };
+
+        const newComment = { ...mockComment, id: 2 }
+
+        const action = {
+            type: types.CREATE_COMMENT_SUCCESS,
+            newComment
+        };
+
+        const newState = reducer(initialState, action);
+        expect(newState.comments).toContainEqual(mockComment);
+        expect(newState.comments).toContainEqual(newComment);
+        expect(newState.mostRecentComment).toStrictEqual(newComment);
+    });
+
+    it("should handle CREATE_COMMENT_FAILURE", () => {
+        const initialState = {
+            comments: [mockComment],
+            error: ""
+        };
+
+        const action = {
+            type: types.CREATE_COMMENT_FAILURE,
+            error: "Mock Error."
+        };
+
+        const newState = reducer(initialState, action);
+        expect(newState.comments).toContainEqual(mockComment);
+        expect(newState.error).toStrictEqual("Mock Error.");
+    })
+
+    it("should handle EDIT_COMMENT", () => {
+        const initialState = {
+            comments: [mockComment, { ...mockComment, id: 2 }]
+        };
+
+        const action = {
+            type: types.EDIT_COMMENT,
+            commentId: 1,
+            newText: "New Comment Text"
+        };
+
+        const newState = reducer(initialState, action);
+        expect(newState.comments).toContainEqual({ ...mockComment, text: "New Comment Text" });
+        expect(newState.comments).toContainEqual({ ...mockComment, id: 2 });
+    })
 })
