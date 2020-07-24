@@ -7,6 +7,7 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 
 export interface TextComponentProps {
   locked: boolean;
+  editOnly: boolean;
   index: number;
   data: any;
   validationRequired: boolean;
@@ -14,7 +15,7 @@ export interface TextComponentProps {
   updateComponent(component: any, index: number): void;
 }
 
-const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, ...props}) => {
+const TextComponent: React.FC<TextComponentProps> = ({locked, editOnly, index, data, ...props}) => {
   const onChange = (htmlString: string) => {
     let comp = Object.assign({}, data);
     comp.value = htmlString;
@@ -25,6 +26,7 @@ const TextComponent: React.FC<TextComponentProps> = ({locked, index, data, ...pr
     <div className="question-build-text-editor">
       <DocumentWirisCKEditor
         disabled={locked}
+        editOnly={editOnly}
         data={data.value}
         placeholder=""
         toolbar={[

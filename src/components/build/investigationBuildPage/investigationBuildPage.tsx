@@ -152,7 +152,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   let canEdit = canEditBrick(props.brick, props.user);
-  locked = canEdit ? locked : true;
+  // locked = canEdit ? locked : true;
 
   setBrillderTitle(props.brick.title);
 
@@ -503,7 +503,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           {renderQuestionComponent}
         </Route>
         <Route path="/build/brick/:brickId/build/investigation/synthesis">
-          <SynthesisPage locked={locked} synthesis={synthesis} onSynthesisChange={saveSynthesis} />
+          <SynthesisPage locked={locked} editOnly={!canEdit} synthesis={synthesis} onSynthesisChange={saveSynthesis} />
         </Route>
       </Switch>
     );

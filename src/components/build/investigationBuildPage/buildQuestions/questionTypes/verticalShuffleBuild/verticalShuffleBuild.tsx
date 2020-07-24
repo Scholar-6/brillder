@@ -10,7 +10,7 @@ export interface VerticalShuffleBuildProps extends UniqueComponentProps {
 }
 
 const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
-  locked, data, validationRequired, save, updateComponent
+  locked, editOnly, data, validationRequired, save, updateComponent
 }) => {
   const [height, setHeight] = React.useState('0%');
 
@@ -80,6 +80,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
         }
         <DocumentWirisCKEditor
           disabled={locked}
+          editOnly={editOnly}
           data={answer.value}
           validationRequired={validationRequired}
           toolbar={['mathType', 'chemType']}

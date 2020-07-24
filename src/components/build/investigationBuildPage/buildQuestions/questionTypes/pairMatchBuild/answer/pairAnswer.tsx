@@ -9,6 +9,7 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 
 export interface PairAnswerProps {
   locked: boolean;
+  editOnly: boolean;
   index: number;
   length: number;
   answer: Answer;
@@ -19,7 +20,7 @@ export interface PairAnswerProps {
 }
 
 const PairAnswerComponent: React.FC<PairAnswerProps> = ({
-  locked, index, length, answer, validationRequired,
+  locked, editOnly, index, length, answer, validationRequired,
   removeFromList, update, save
 }) => {
   const answerChanged = (answer: Answer, value: string) => {
@@ -84,6 +85,7 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
         {renderDeleteButton()}
         <DocumentWirisCKEditor
           disabled={locked}
+          editOnly={editOnly}
           data={answer.value}
           validationRequired={validationRequired}
           toolbar={['mathType', 'chemType']}

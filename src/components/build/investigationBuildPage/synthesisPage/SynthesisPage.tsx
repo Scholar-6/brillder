@@ -6,6 +6,7 @@ import './SynthesisPage.scss';
 
 export interface SynthesisProps {
   locked: boolean;
+  editOnly: boolean;
   synthesis: string;
   onSynthesisChange(text: string): void
 }
@@ -31,6 +32,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
         <div className="inner-question-type">
           <DocumentWirisCKEditor
             disabled={this.props.locked}
+            editOnly={this.props.editOnly}
             data={this.state.synthesis}
             placeholder=""
             toolbar={[

@@ -10,7 +10,7 @@ import sprite from "../../../../../../assets/img/icons-sprite.svg";
 
 
 const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
-  locked, data, validationRequired, save, updateComponent
+  locked, editOnly, data, validationRequired, save, updateComponent
 }) => {
   const [height, setHeight] = React.useState('0%');
 
@@ -70,6 +70,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
           }
           <DocumentWirisCKEditor
             disabled={locked}
+            editOnly={editOnly}
             data={answer.value}
             validationRequired={validationRequired}
             toolbar={['mathType', 'chemType']}
