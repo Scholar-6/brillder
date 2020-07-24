@@ -195,8 +195,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         page={PageEnum.Play}
         user={props.user}
         history={props.history}
-        search={() => {}}
-        searching={() => {}}
+        search={() => { }}
+        searching={() => { }}
       />
     );
   };
@@ -322,12 +322,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   return (
     <div className="play-preview-pages">
       {renderHead()}
-      <Grid container direction="row" className={className}>
+      <div className={className}>
         {renderSidebar()}
-        <Grid item className="brick-row-container">
+        <div className="brick-row-container">
           {renderRouter()}
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </div>
   );
 };
@@ -351,7 +351,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
           } as Question;
           parsedQuestions.push(q);
         }
-      } catch (e) {}
+      } catch (e) { }
     } else {
       parsedQuestions.push(question);
     }
