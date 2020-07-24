@@ -223,7 +223,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   render() {
     return (
-      <div className="dashboard-page mobile-category">
+      <div className="main-listing dashboard-page mobile-category">
         <div className="page-navigation">
           <div className="btn btn-transparent glasses svgOnHover">
             <svg className="svg w100 h100 active">

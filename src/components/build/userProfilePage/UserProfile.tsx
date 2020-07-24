@@ -340,7 +340,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   render() {
     return (
-      <div className="user-profile-page">
+      <div className="main-listing user-profile-page">
         <UserProfileMenu
           user={this.props.user}
           forgetBrick={this.props.forgetBrick}

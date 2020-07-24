@@ -2,12 +2,8 @@
 @import '../../../assets/sass/partials/mixins';
 @import '../../../assets/sass/partials/extensions';
 
-.user-list-page,
-.user-profile-page,
-.play-preview-pages,
-.bricks-list-page,
-.dashboard-page,
-.back-to-work-page {
+.main-listing,
+.play-preview-pages {
   background: var(--theme-dark-blue);
   height: 100%;
   width: 100%;
@@ -276,23 +272,26 @@
       color: var(--gray);
     }
     .left-pagination {
-      padding: 0 1vw;
+      padding: 0 1.18vw;
       line-height: 1.4;
     }
     .bottom-next-button {
       bottom: 1vh;
       position: relative;
-      .btn {
-        height: 4.7vh;
-        width: 4.7vh;
-        margin: 0 0.5vh;
-        cursor: pointer;
-        .svg {
-          color: var(--gray);
-        }
-        &.active:hover {
+      > div {
+        display: flex;
+        justify-content: center;
+        .btn {
+          height: 4.7vh;
+          width: 4.7vh;
+          cursor: pointer;
           .svg {
-            color: var(--theme-dark-blue);
+            color: var(--gray);
+          }
+          &.active:hover {
+            .svg {
+              color: var(--theme-dark-blue);
+            }
           }
         }
       }
@@ -323,9 +322,77 @@
   }
 }
 
-.play-preview-pages ~ .beta-text,
-.bricks-list-page ~ .beta-text,
-.dashboard-page ~ .beta-text,
-.back-to-work-page ~ .beta-text {
+.main-listing ~ .beta-text {
   color: var(--theme-dark-blue) !important;
+}
+
+@media only screen and (max-width: 1279px) and (min-width: 960px) {
+  .bricks-list-page {
+    .bricks-sort {
+      .sort-and-search-row {
+        .sort-bricks-by {
+          font-size: 12px;
+          .sort-by {
+            padding-top: 5px;
+          }
+          .sort-element {
+            padding-top: 6px;
+            font-size: 12px;
+          }
+
+          .expanded-icon {
+            height: 24px !important;
+            width: 24px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 959px) and (min-width: 600px) {
+  .bricks-list-page {
+    .bricks-sort {
+      .sort-and-search-row {
+        .sort-bricks-by {
+          font-size: 9px;
+          .sort-by {
+            padding-top: 1px;
+          }
+          .sort-element {
+            padding-top: 2px;
+            font-size: 8px;
+          }
+
+          .expanded-icon {
+            height: 12px !important;
+            width: 12px !important;
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 599px) {
+  .bricks-list-page {
+    .bricks-sort {
+      .sort-and-search-row {
+        .sort-bricks-by {
+          font-size: 7px;
+          .sort-by {
+            padding-top: 1px;
+          }
+          .sort-element {
+            padding-top: 2px;
+            font-size: 7px;
+          }
+
+          .expanded-icon {
+            height: 10px !important;
+            width: 10px !important;
+          }
+        }
+      }
+    }
+  }
 }

@@ -813,3 +813,7 @@ $introduction-expanded-height: calc(100vh - 2vw);
     }
   }
 }
+
+.play-preview-pages ~ .beta-text {
+  color: var(--theme-dark-blue) !important;
+}
