@@ -27,7 +27,8 @@ import { prefillAttempts } from "components/services/PlayService";
 import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import PlayLeftSidebar, { PlayMode } from './PlayLeftSidebar';
+import PlayLeftSidebar from './PlayLeftSidebar';
+import { PlayMode} from './model';
 import { ReduxCombinedState } from "redux/reducers";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import { BrickFieldNames } from "components/build/proposal/model";
@@ -212,7 +213,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           />
         </Route>
         <Route exac path="/play/brick/:brickId/synthesis">
-          <Synthesis status={status} brick={brick} />
+          <Synthesis mode={mode} status={status} brick={brick} />
         </Route>
         <Route exac path="/play/brick/:brickId/review">
           <Review

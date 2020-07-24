@@ -10,7 +10,7 @@ import { Moment } from "moment";
 import PrepareText from './PrepareText';
 import IntroductionDetails from "./IntroductionDetails";
 import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
-import { PlayMode } from "../PlayLeftSidebar";
+import { PlayMode } from "../model";
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/build/proposal/model';
 

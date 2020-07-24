@@ -3,13 +3,7 @@ import { Grid } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import sprite from "../../../assets/img/icons-sprite.svg";
-
-export enum PlayMode {
-  Normal = 1,
-  Highlighting,
-  UnHighlighting,
-  Anotating
-}
+import {PlayMode} from './model';
 
 interface SidebarProps {
   sidebarRolledUp: boolean;

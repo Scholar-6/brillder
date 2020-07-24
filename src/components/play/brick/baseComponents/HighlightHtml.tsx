@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PlayMode } from "../PlayLeftSidebar";
+import { PlayMode } from "../model";
 
 import DocumentHighlight from "components/baseComponents/ckeditor/DocumentHighlighting";
 import YoutubeAndMathInHtml from "./MathInHtml";
@@ -8,7 +8,7 @@ import YoutubeAndMathInHtml from "./MathInHtml";
 interface SelectableProps {
   value: string;
   mode?: PlayMode;
-  onHighlight?(value: string): void;
+  onHighlight(value: string): void;
 }
 
 const HighlightHtml: React.FC<SelectableProps> = (props) => {
