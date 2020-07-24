@@ -37,6 +37,7 @@ export interface HintState {
 export interface HintProps {
   index: number;
   locked: boolean;
+  editOnly: boolean;
   list: string[];
   status?: HintStatus;
   value?: string;
@@ -47,7 +48,7 @@ export interface HintProps {
 }
 
 const HintComponent: React.FC<HintProps> = ({
-  index, locked, validationRequired, onChange, save, ...props
+  index, locked, editOnly, validationRequired, onChange, save, ...props
 }) => {
   let initState = {
     status: HintStatus.All,
@@ -109,6 +110,7 @@ const HintComponent: React.FC<HintProps> = ({
         <div className="hint-container">
           <DocumentWirisCKEditor
             disabled={locked}
+            editOnly={editOnly}
             data={state.value}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',
@@ -142,6 +144,7 @@ const HintComponent: React.FC<HintProps> = ({
         <div className="hint-container">
           <DocumentWirisCKEditor
             disabled={locked}
+            editOnly={editOnly}
             data={state.list[i]}
             toolbar={[
               'bold', 'italic', 'fontColor', 'superscript', 'subscript',

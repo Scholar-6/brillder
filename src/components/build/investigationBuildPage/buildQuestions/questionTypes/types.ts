@@ -6,6 +6,7 @@ export enum QuestionValueType {
 
 export interface UniqueComponentProps {
   locked: boolean;
+  editOnly: boolean;
   data: any;
   validationRequired: boolean;
   save(): void;

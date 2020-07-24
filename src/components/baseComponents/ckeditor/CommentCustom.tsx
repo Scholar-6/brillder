@@ -48,9 +48,13 @@ class CommentCustom extends Plugin {
 
     editor: any = null;
 
+    commentOnly: boolean;
+
     constructor(editor: any) {
         super(editor);
         this.editor = editor;
+
+        this.commentOnly = editor.config.get("comments.commentOnly");
     }
 
     init() {
@@ -58,7 +62,9 @@ class CommentCustom extends Plugin {
         this.defineSchema();
         this.defineConverters();
 
-        this.setupCommenting();
+        if(this.commentOnly) {
+            this.setupCommenting();
+        }
         
         editor.ui.componentFactory.add('addComment', (locale: any) => {
             const view = new ButtonView(locale);

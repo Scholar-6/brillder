@@ -24,6 +24,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 type QuestionComponentsProps = {
   questionIndex: number;
   locked: boolean;
+  editOnly: boolean;
   history: any;
   brickId: number;
   question: Question;
@@ -34,7 +35,7 @@ type QuestionComponentsProps = {
 }
 
 const QuestionComponents = ({
-  questionIndex, locked, history, brickId, question, validationRequired,
+  questionIndex, locked, editOnly, history, brickId, question, validationRequired,
   updateComponents, setQuestionHint, saveBrick
 }: QuestionComponentsProps) => {
   let componentsCopy = Object.assign([], question.components) as any[]
@@ -143,6 +144,7 @@ const QuestionComponents = ({
         questionIndex={questionIndex}
         index={index}
         locked={locked}
+        editOnly={editOnly}
         component={component}
         hint={question.hint}
         canRemove={canRemove}

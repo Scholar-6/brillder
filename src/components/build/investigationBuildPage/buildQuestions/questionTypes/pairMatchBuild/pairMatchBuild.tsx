@@ -13,7 +13,7 @@ export interface PairMatchBuildProps extends UniqueComponentProps {
 }
 
 const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
-  locked, data, validationRequired, save, updateComponent
+  locked, editOnly, data, validationRequired, save, updateComponent
 }) => {
   const [height, setHeight] = React.useState('0%');
 
@@ -69,12 +69,12 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
     return (
       <Grid key={key} container direction="row" className="answers-container">
         <PairOptionComponent
-          index={key} locked={locked} answer={answer}
+          index={key} locked={locked} editOnly={editOnly} answer={answer}
           validationRequired={validationRequired}
           update={update} save={save}
         />
         <PairAnswerComponent
-          index={key} length={data.list.length} locked={locked} answer={answer}
+          index={key} length={data.list.length} locked={locked} editOnly={editOnly} answer={answer}
           validationRequired={validationRequired}
           removeFromList={removeFromList} update={update} save={save}
         />

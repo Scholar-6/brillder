@@ -39,6 +39,7 @@ import CommentCustom from './CommentCustom';
 
 export interface DocumentWirisEditorProps {
   disabled: boolean;
+  editOnly?: boolean;
   data: string;
   toolbar?: any;
   placeholder?: string;
@@ -180,6 +181,7 @@ class DocumentWirisEditorComponent extends React.Component<
         "addComment",
       ],
       mediaEmbed: { previewsInData: true },
+      comments: { commentOnly: this.props.editOnly ?? false },
       placeholder: "",
     };
 

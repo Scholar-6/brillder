@@ -9,6 +9,7 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 
 export interface PairOptionProps {
   locked: boolean;
+  editOnly: boolean;
   index: number;
   answer: Answer;
   validationRequired: boolean;
@@ -17,7 +18,7 @@ export interface PairOptionProps {
 }
 
 const PairOptionComponent: React.FC<PairOptionProps> = ({
-  locked, index, answer, validationRequired, save, update
+  locked, editOnly, index, answer, validationRequired, save, update
 }) => {
   const removeImage = () => {
     if (locked) { return; }
@@ -68,6 +69,7 @@ const PairOptionComponent: React.FC<PairOptionProps> = ({
       <div className={`unique-component pair-match-option ${customClass}`}>
         <DocumentWirisCKEditor
           disabled={locked}
+          editOnly={editOnly}
           data={answer.option}
           validationRequired={validationRequired}
           toolbar={['mathType', 'chemType']}

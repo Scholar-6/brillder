@@ -17,7 +17,7 @@ export interface ChooseOneBuildProps extends UniqueComponentProps {
 }
 
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
-  locked, data, validationRequired, save, updateComponent
+  locked, editOnly, data, validationRequired, save, updateComponent
 }) => {
   const [height, setHeight] = React.useState('0%');
   useEffect(() => calculateHeight());
@@ -87,6 +87,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
           return <ChooseOneAnswerComponent
             key={i}
             locked={locked}
+            editOnly={editOnly}
             index={i}
             length={data.list.length}
             answer={answer}

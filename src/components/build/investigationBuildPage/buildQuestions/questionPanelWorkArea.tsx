@@ -160,6 +160,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               <QuestionComponents
                 questionIndex={index}
                 locked={locked}
+                editOnly={!props.canEdit}
                 brickId={brickId}
                 history={history}
                 question={question}
