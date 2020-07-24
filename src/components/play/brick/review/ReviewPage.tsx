@@ -16,6 +16,7 @@ import { Moment } from "moment";
 import CountDown from "../baseComponents/CountDown";
 import { BrickLengthEnum } from "model/brick";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import { PlayMode } from "../model";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -27,6 +28,9 @@ interface ReviewPageProps {
   isPlayPreview?: boolean;
   updateAttempts(attempt: any, index: number): any;
   finishBrick(): void;
+
+  // only for real play
+  mode?: PlayMode;
 }
 
 const ReviewPage: React.FC<ReviewPageProps> = ({
@@ -110,6 +114,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const renderQuestion = (question: Question, index: number) => {
     return (
       <QuestionLive
+        mode={props.mode}
         attempt={attempts[index]}
         question={question}
         answers={answers[index]}
