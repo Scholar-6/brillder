@@ -17,6 +17,7 @@ interface CounterState {
   isCounting: boolean;
   endTime: Moment;
   timerInterval: number;
+  isDeadlineSoon: boolean;
 }
 
 class CounterDown extends Component<CounterProps, CounterState> {
@@ -29,7 +30,8 @@ class CounterDown extends Component<CounterProps, CounterState> {
       milliseconds: "00",
       endTime: moment().add(props.duration),
       isCounting: false,
-      timerInterval: this.setTimer()
+      timerInterval: this.setTimer(),
+      isDeadlineSoon: false
     }
   }
 
@@ -44,6 +46,9 @@ class CounterDown extends Component<CounterProps, CounterState> {
       if (dif._milliseconds < 1000) {
         this.props.onEnd();
         clearInterval(this.state.timerInterval);
+      }
+      if (dif._milliseconds < 30000 && this.state.isDeadlineSoon === false) {
+        this.setState({...this.state, isDeadlineSoon: true})
       }
     }, 1000);
   }
@@ -67,8 +72,12 @@ class CounterDown extends Component<CounterProps, CounterState> {
   }
 
   render() {
+    let className = "brick-counter";
+    if (this.state.isDeadlineSoon) {
+      className += " text-red";
+    }
     return (
-      <div className="brick-counter">
+      <div className={className}>
         {this.renderArrow()}
         {this.state.minutes}:{this.state.seconds}
       </div>
