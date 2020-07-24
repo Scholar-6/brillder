@@ -13,17 +13,22 @@ import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/Pre
 import { PlayMode } from "../model";
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/build/proposal/model';
+import queryString from 'query-string';
 
 const moment = require("moment");
 
 
 interface IntroductionProps {
-  mode?: PlayMode;
   isPlayPreview?: boolean;
   startTime?: Moment;
   brick: Brick;
+  location: any;
+
   setStartTime(startTime: any): void;
   moveNext?(): void;
+
+  // only real play
+  mode?: PlayMode;
   onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
@@ -37,9 +42,14 @@ interface IntroductionState {
 }
 
 const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
+  const values = queryString.parse(props.location.search);
+  let initPrepExpanded = false;
+  if (values.prepExtanded === 'true') {
+    initPrepExpanded = true;
+  }
   const history = useHistory();
   const [state, setState] = React.useState({
-    prepExpanded: false,
+    prepExpanded: initPrepExpanded,
     isStopped: false,
     briefExpanded: true,
     otherExpanded: false,

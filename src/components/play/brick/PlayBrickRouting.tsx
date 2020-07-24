@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { Grid } from "@material-ui/core";
 // @ts-ignore
 import { connect } from "react-redux";
 
@@ -186,16 +185,18 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       <Switch>
         <Route exac path="/play/brick/:brickId/intro">
           <Introduction
-            onHighlight={onHighlight}
+            location={props.location}
             mode={mode}
             brick={brick}
             startTime={startTime}
             setStartTime={setStartTime}
             moveNext={moveToLive}
+            onHighlight={onHighlight}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/live">
           <Live
+            mode={mode}
             status={status}
             attempts={attempts}
             questions={brick.questions}
@@ -217,6 +218,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route exac path="/play/brick/:brickId/review">
           <Review
+            mode={mode}
             status={status}
             questions={brick.questions}
             brickId={brick.id}

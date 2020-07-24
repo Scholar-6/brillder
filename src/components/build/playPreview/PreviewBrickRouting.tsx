@@ -206,7 +206,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <div className="brick-row-container">
           <Switch>
             <Route exac path="/play-preview/brick/:brickId/intro">
-              <Introduction brick={props.brick} isPlayPreview={true} startTime={startTime} setStartTime={setStartTime} />
+              <Introduction
+                location={props.location}
+                brick={props.brick}
+                isPlayPreview={true}
+                startTime={startTime}
+                setStartTime={setStartTime}
+              />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/live">
               <Live

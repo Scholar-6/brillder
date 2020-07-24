@@ -679,7 +679,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           />
           <Grid item xs={9} className="brick-row-container">
             <BackPageTitle filters={this.state.filters} />
-            <PublicCoreToggle />
+            <PublicCoreToggle isCore={true} />
             <div className="bricks-list-container">
               <div className="bricks-list">
                 {this.renderBricks()}
