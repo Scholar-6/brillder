@@ -113,13 +113,7 @@ const LivePage: React.FC<LivePageProps> = ({
     handleStep(activeStep + 1)();
     questions[activeStep].edited = false;
     if (activeStep >= questions.length - 1) {
-      questions.forEach((question) => (question.edited = false));
-      props.finishBrick();
-      if (props.isPlayPreview) {
-        history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
-      } else {
-        history.push(`/play/brick/${brick.id}/provisionalScore`);
-      }
+      moveNext();
     }
   };
 
@@ -138,17 +132,24 @@ const LivePage: React.FC<LivePageProps> = ({
     }
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
-      questions.forEach((question) => (question.edited = false));
-      props.finishBrick();
-      if (props.isPlayPreview) {
-        history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
-      } else {
-        history.push(`/play/brick/${brick.id}/provisionalScore`);
-      }
+      moveNext();
     }
   };
 
-  const onEnd = () => setTimeover(true);
+  const onEnd = () => {
+    setTimeover(true);
+    moveNext();
+  }
+
+  const moveNext = () => {
+    questions.forEach((question) => (question.edited = false));
+    props.finishBrick();
+    if (props.isPlayPreview) {
+      history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
+    } else {
+      history.push(`/play/brick/${brick.id}/provisionalScore`);
+    }
+  }
 
   const onQuestionAttempted = (questionIndex: number) => {
     if (!questions[questionIndex].edited) {
