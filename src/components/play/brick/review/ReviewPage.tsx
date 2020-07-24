@@ -159,11 +159,11 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
     return (
       <button className="play-preview svgOnHover play-white scale-07" onClick={prev}>
-      <svg className="svg svg-default m-r-02">
+      <svg className="svg w80 h80 svg-default m-r-02">
         {/*eslint-disable-next-line*/}
         <use href={sprite + "#arrow-left"} className="text-gray" />
       </svg>
-      <svg className="svg colored m-r-02">
+      <svg className="svg w80 h80 colored m-r-02">
         {/*eslint-disable-next-line*/}
         <use href={sprite + "#arrow-left"} className="text-white" />
       </svg>
@@ -204,7 +204,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
               </div>
               <div>
                 <button type="button" className="play-preview svgOnHover play-green" onClick={next}>
-                  <svg className="svg active m-l-02">
+                  <svg className="svg w80 h80 active m-l-02">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-right"} />
                   </svg>

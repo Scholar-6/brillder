@@ -2,6 +2,9 @@
 @import '../../../../assets/sass/partials/mixins';
 @import '../../../../assets/sass/partials/extensions';
 
+$introduction-desktop-height: calc(100vh - 7.8vw);
+$introduction-expanded-height: calc(100vh - 2vw);
+
 .play-preview-pages {
   background: var(--theme-dark-blue);
   min-height: 100%;
@@ -11,7 +14,6 @@
     justify-content: center;
   }
   .brick-row-container {
-    background-color: var(--white);
     @include tabletP {
       width: calc(82.85vw - 1vw);
     }
@@ -107,6 +109,7 @@
             left: 0.5vw;
             @include phone_and_tabletP {
               position: unset;
+              margin-bottom: 0.5vh;
             }
             > div {
               @extend %radCircle;
@@ -257,7 +260,7 @@
         }
         @include tabletP {
           padding: 4vh 2vw;
-          height: calc(100vh - 7.8vw);
+          height: $introduction-desktop-height;
         }
         .intro-header {
           position: relative;
@@ -388,81 +391,6 @@
             }
           }
         }
-        .action-footer {
-          display: flex;
-          color: var(--theme-dark-blue);
-          @include phone_and_tabletP {
-            position: fixed;
-            align-items: flex-end;
-            justify-content: flex-end;
-            bottom: 6.5vh;
-            right: 0vw;
-            width: 100%;
-          }
-          @include tabletP {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            align-items: center;
-            justify-content: flex-end;
-            width: 22vw;
-            bottom: 5vw;
-          }
-
-          > div {
-            @extend %flexCenter;
-            flex-direction: column;
-            text-align: center;
-            @include phone_and_tabletP {
-              margin: 0 3vw;
-            }
-            @include tabletP {
-              min-width: 4vw;
-            }
-            &.direction-info {
-              width: 100%;
-              padding: 0 1vw;
-              position: relative;
-              > h2 {
-                margin-top: 0;
-                margin-bottom: 0;
-
-                font-family: $font-family-bold;
-                @include phone_and_tabletP {
-                  font-size: 8.4vw;
-                  width: max-content;
-                }
-                @include tabletP {
-                  font-size: 2.6vw;
-                }
-              }
-              > h3,
-              > span {
-                position: absolute;
-                color: var(--theme-dark-blue);
-              }
-              > h3 {
-                left: 1.8vw;
-                letter-spacing: inherit;
-                margin: 0;
-                @include phone_and_tabletP {
-                  font-size: 5.1vw;
-                  top: -4vw;
-                }
-                @include tabletP {
-                  top: -1vw;
-                }
-              }
-              > span {
-                width: 100%;
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: -2vw;
-                line-height: 1vw;
-              }
-            }
-          }
-        }
         .max-length {
           font-family: $font-family-regular;
           color: var(--theme-dark-blue);
@@ -501,7 +429,7 @@
             height: calc(100vh - 55.8vw);
           }
           @include tabletP {
-            height: calc(100vh - 7.8vw);
+            height: $introduction-desktop-height;
           }
         }
         .fotter-text {
@@ -562,58 +490,45 @@
           }
         }
       }
-
       .action-footer {
-        @extend %displayFlex;
+        display: flex;
         color: var(--theme-dark-blue);
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+        right: 0;
         @include phone_and_tabletP {
-          align-items: flex-end;
-          justify-content: flex-end;
-          bottom: 0.5vh;
-          margin-top: 3vh;
-          position: relative;
+          position: fixed;
+          bottom: 7vh;
         }
         @include tabletP {
           position: absolute;
-          align-items: center;
-          justify-content: flex-end;
-          width: 22vw;
           bottom: 5vw;
-          left: 50%;
-          transform: translateX(-50%);
         }
         .play-preview {
-          position: relative;
-          left: inherit;
-          right: inherit;
-          top: inherit;
-          .svg {
-            @include phone_and_tabletP {
-              width: 13vw;
-              height: 13vw;
-            }
-          }
+          @extend %removePosition;
         }
         > div {
           @extend %flexCenter;
           flex-direction: column;
-          text-align: center;
           @include phone_and_tabletP {
-            margin-left: 5vw;
+            margin: 0 3vw;
+            min-width: 18vw;
           }
           @include tabletP {
-            min-width: 4vw;
+            margin: 0 1vw;
+            min-width: 6vw;
           }
           &.direction-info {
             width: 100%;
-            padding: 0 1vw;
             position: relative;
+            margin: 0;
             > h2 {
               margin-top: 0;
               margin-bottom: 0;
               font-family: $font-family-bold;
               @include phone_and_tabletP {
-                font-size: 11.6vw;
+                font-size: 10.6vw;
                 width: max-content;
               }
               @include tabletP {
@@ -626,14 +541,15 @@
               color: var(--theme-dark-blue);
             }
             > h3 {
-              left: 1.8vw;
               letter-spacing: inherit;
               margin: 0;
               @include phone_and_tabletP {
+                left: 1.8vw;
                 font-size: 6vw;
                 top: -6vw;
               }
               @include tabletP {
+                left: 0.3vw;
                 top: -1vw;
               }
             }
@@ -643,6 +559,7 @@
               transform: translateX(-50%);
               bottom: -2vw;
               line-height: 1vw;
+              text-align: center;
             }
           }
         }
@@ -809,8 +726,13 @@
       font-size: 0.8vw;
     }
   }
-}
 
-.play-preview-pages ~ .beta-text {
-  color: var(--theme-orange) !important;
+  // class for desktop only
+  .sorted-row-expanded {
+    @include tabletP {
+      .introduction-info {
+        height: $introduction-expanded-height !important;
+      }
+    }
+  }
 }

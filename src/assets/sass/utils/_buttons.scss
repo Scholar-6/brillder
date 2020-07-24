@@ -48,16 +48,17 @@
   color: var(--theme-dark-blue);
   .svg {
     color: var(--theme-dark-blue);
-    position: inherit;
-    left: inherit;
-    top: inherit;
-    transform: inherit;
+    @extend %removePosition;
   }
   .synthesis-text {
     font-family: $font-family-regular;
     line-height: 2.05;
     font-size: 2.6vh;
     letter-spacing: 0.3vw;
+    .svg {
+      color: var(--white);
+      @extend %removePosition;
+    }
   }
   &:hover {
     background: var(--theme-orange);
@@ -71,7 +72,7 @@
 .play-preview {
   width: 4.5vw;
   height: 4.5vw;
-  position: fixed;
+  position: fixed !important;
   font-size: 1.15vw;
   top: 1.4vw;
   right: 1.4vw;
@@ -96,8 +97,10 @@
   .svg {
     z-index: 1;
     @include phone_and_tabletP {
-      width: 13vw;
-      height: 13vw;
+      margin-left: 1vw;
+    }
+    @include tabletP {
+      margin-left: 0.3vw;
     }
   }
   &.play-green,

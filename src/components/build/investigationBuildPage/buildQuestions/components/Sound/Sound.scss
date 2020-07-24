@@ -45,10 +45,7 @@
     border: 1px solid var(--tab-gray);
     .svg {
       color: var(--theme-dark-blue);
-      position: inherit;
-      left: inherit;
-      top: inherit;
-      transform: inherit;
+      @extend %removePosition;
     }
   }
   .start-record,
@@ -61,11 +58,6 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     margin-left: -1px;
-  }
-  .start-record {
-    .svg {
-      color: var(--theme-orange);
-    }
   }
   .stop-record {
     background: var(--theme-orange);

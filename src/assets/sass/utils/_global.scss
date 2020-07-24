@@ -263,6 +263,9 @@ textarea {
     z-index: 1;
   }
 }
+
+$home-button-size: 5.834vw;
+
 .home-button-container {
   @include phone_and_tabletP {
     width: auto !important;
@@ -278,7 +281,7 @@ textarea {
     background: var(--light-blue);
     margin-right: 1vw;
     padding: 0.35vw 0.782vw 0.782vw 0.35vw;
-    width: calc(6.834vw - 1vw) !important;
+    width: $home-button-size !important;
     height: 5.834vw;
   }
 
@@ -427,14 +430,15 @@ h3 {
   cursor: pointer;
   text-align: center;
   transition: all 0.2s ease-in-out;
-  transform-origin: 50% 75%;
   &:hover {
     @include tabletP {
-      transform: scale(1.4);
+      transform: scale(1.2);
     }
-    .item-description {
-      color: white;
-      font-family: $font-family-bold;
-    }
+  }
+}
+
+.mobile-hidden {
+  @include phone_and_tabletP {
+    display: none !important;
   }
 }

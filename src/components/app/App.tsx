@@ -12,7 +12,7 @@ import MobileCategory from '../play/dashboard/MobileCategory';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
 import PlayPreviewRouting from '../build/playPreview/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
-import MainPage from '../build/mainPage/mainPage';
+import MainPage from 'components/mainPage/mainPage';
 import BricksListPage from '../build/bricksListPage/bricksListPage';
 import BackToWorkPage from '../build/backToWorkPage/BackToWork';
 import UsersListPage from '../build/users/UsersList';
@@ -29,6 +29,8 @@ import BuildRoute from './BuildRoute';
 import StudentRoute from './StudentRoute';
 import AuthRedirectRoute from './AuthRedirectRoute';
 import AllUsersRoute from './AllUsersRoute';
+
+import BrickWrapper from './BrickWrapper';
 
 import {setBrillderTitle} from 'components/services/titleService';
 
@@ -96,7 +98,7 @@ const App: React.FC = (props: any) => {
   return (
     <ThemeProvider theme={theme}>
       <Switch>
-        <StudentRoute path="/play/brick/:brickId" component={PlayBrickRouting} />
+        <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <StudentRoute path="/play/dashboard" component={Dashboard} />
 

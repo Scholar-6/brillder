@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 // @ts-ignore
 import { connect } from "react-redux";
 
@@ -21,11 +23,10 @@ import { ComponentAttempt, PlayStatus } from '../../play/brick/model/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
-import { Grid } from '@material-ui/core';
 import { setBrillderTitle } from 'components/services/titleService';
 import PublishPage from '../investigationBuildPage/publish/PublishPage';
 import FinishPage from '../investigationBuildPage/finish/FinishPage';
-import {prefillAttempts} from 'components/services/PlayService';
+import { prefillAttempts } from 'components/services/PlayService';
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
 import { canEditBrick, checkEditor } from 'components/services/brickService';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -57,11 +58,11 @@ interface BrickRoutingProps {
   user: any;
   history: any;
   location: any;
-  fetchBrick(brickId: number):void;
+  fetchBrick(brickId: number): void;
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  let initAttempts:any[] = [];
+  let initAttempts: any[] = [];
   if (props.brick) {
     initAttempts = prefillAttempts(props.brick.questions);
   }
@@ -73,6 +74,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
   const [startTime, setStartTime] = React.useState(undefined);
+  const location = useLocation();
 
   useEffect(() => {
     if (props.brick) {
@@ -89,12 +91,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   setBrillderTitle(props.brick.title);
 
-  const updateAttempts = (attempt:any, index:number) => {
+  const updateAttempts = (attempt: any, index: number) => {
     attempts[index] = attempt;
     setAttempts(attempts);
   }
 
-  const updateReviewAttempts = (attempt:any, index:number) => {
+  const updateReviewAttempts = (attempt: any, index: number) => {
     reviewAttempts[index] = attempt;
     setReviewAttempts(reviewAttempts);
   }
@@ -106,7 +108,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
     is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
     let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
-    var ba : BrickAttempt = {
+    var ba: BrickAttempt = {
       brick: props.brick,
       score: score,
       maxScore: maxScore,
@@ -122,7 +124,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const finishReview = () => {
     let score = reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0) + brickAttempt.score;
     let maxScore = reviewAttempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
-    var ba : BrickAttempt = {
+    var ba: BrickAttempt = {
       score,
       maxScore,
       oldScore: brickAttempt.score,
@@ -163,21 +165,45 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     return 0;
   }
 
+  const renderHead = () => {
+    let isMobileHidden = false;
+    const live = location.pathname.search("/live");
+    const score = location.pathname.search("/provisionalScore");
+    const synthesis = location.pathname.search("/synthesis");
+    const review = location.pathname.search("/review");
+    const ending = location.pathname.search("/ending");
+    const publish = location.pathname.search("/publish");
+    const finish = location.pathname.search("/finish");
+    if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0 || publish > 0 || finish > 0) {
+      isMobileHidden = true;
+    }
+    return (
+      <PageHeadWithMenu
+        isMobileHidden={isMobileHidden}
+        page={PageEnum.Play}
+        user={props.user}
+        history={props.history}
+        search={() => { }}
+        searching={() => { }}
+      />
+    );
+  }
+
   return (
     <div className="play-preview-pages">
-      <PageHeadWithMenu page={PageEnum.Play} user={props.user} history={props.history} search={() => {}} searching={()=> {}} />
-      <Grid container direction="row" className="sorted-row">
-        <Grid container item className="sort-and-filter-container">
+      {renderHead()}
+      <div className="sorted-row">
+        <div className="sort-and-filter-container">
           <div className="back-hover-area" onClick={() => moveToBuild()}>
             <div className="create-icon svgOnHover">
               <svg className="svg w100 h100 active">
-                <use href={sprite + "#shovel"}/>
+                <use href={sprite + "#shovel"} />
               </svg>
             </div>
-            <h3>BACK<br/>TO<br/>BUILD</h3>
+            <h3>BACK<br />TO<br />BUILD</h3>
           </div>
-        </Grid>
-        <Grid item className="brick-row-container">
+        </div>
+        <div className="brick-row-container">
           <Switch>
             <Route exac path="/play-preview/brick/:brickId/intro">
               <Introduction brick={props.brick} isPlayPreview={true} startTime={startTime} setStartTime={setStartTime} />
@@ -230,13 +256,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               <FinishPage {...props} />
             </Route>
           </Switch>
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </div>
   );
 }
 
-const parseAndShuffleQuestions = (brick:Brick):Brick => {
+const parseAndShuffleQuestions = (brick: Brick): Brick => {
   /* Parsing each Question object from json <contentBlocks> */
   if (!brick) { return brick; }
   const parsedQuestions: Question[] = [];
@@ -253,7 +279,7 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
           } as Question;
           parsedQuestions.push(q);
         }
-      } catch (e) {}
+      } catch (e) { }
     } else {
       parsedQuestions.push(question);
     }
@@ -267,7 +293,7 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
     if (question.type === QuestionTypeEnum.ChooseOne || question.type === QuestionTypeEnum.ChooseSeveral) {
       question.components.forEach(c => {
         if (c.type === QuestionComponentTypeEnum.Component) {
-          const {hint} = question;
+          const { hint } = question;
           if (hint.status === HintStatus.Each) {
             for (let [index, item] of c.list.entries()) {
               item.hint = question.hint.list[index];
@@ -293,7 +319,7 @@ const parseAndShuffleQuestions = (brick:Brick):Brick => {
             item.index = index;
             item.hint = question.hint.list[index];
           }
-          const choices = c.list.map((a:any) => ({
+          const choices = c.list.map((a: any) => ({
             value: a.value,
             index: a.index,
             valueFile: a.valueFile,

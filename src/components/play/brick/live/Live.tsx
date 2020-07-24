@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid,Hidden} from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
 import { useHistory, Redirect } from "react-router-dom";
@@ -197,11 +197,11 @@ const LivePage: React.FC<LivePageProps> = ({
         className="play-preview svgOnHover play-white scale-07"
         onClick={prev}
       >
-        <svg className="svg svg-default m-r-02">
+        <svg className="svg w80 h80 svg-default m-r-02">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#arrow-left"} className="text-gray" />
         </svg>
-        <svg className="svg colored m-r-02">
+        <svg className="svg w80 h80 colored m-r-02">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#arrow-left"} className="text-white" />
         </svg>
@@ -257,7 +257,7 @@ const LivePage: React.FC<LivePageProps> = ({
                     className="play-preview svgOnHover play-green"
                     onClick={next}
                   >
-                    <svg className="svg active m-l-02">
+                    <svg className="svg w80 h80 active m-l-02">
                       {/*eslint-disable-next-line*/}
                       <use href={sprite + "#arrow-right"} />
                     </svg>
@@ -270,14 +270,14 @@ const LivePage: React.FC<LivePageProps> = ({
       </Hidden>
 
       <Hidden only={["sm", "md", "lg", "xl"]}>
-      <div className="introduction-info">
+        <div className="introduction-info">
           <CountDown
             isLive={true}
             onEnd={onEnd}
             brickLength={brick.brickLength}
           />
           <div className="intro-text-row">
-            <Hidden only={["sm","md","lg","xl"]}>
+            <Hidden only={["sm", "md", "lg", "xl"]}>
               <span className="heading">Investigation</span>
             </Hidden>
             <LiveStepper
