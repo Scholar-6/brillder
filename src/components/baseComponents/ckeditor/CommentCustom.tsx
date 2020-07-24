@@ -57,29 +57,8 @@ class CommentCustom extends Plugin {
         const editor = this.editor;
         this.defineSchema();
         this.defineConverters();
-        
-        editor.editing.view.document.on('delete', (evt: any, data: any) => {
-            editor.model.change((writer: any) => {
-                const selection = writer.createSelection(editor.model.document.selection);
 
-                if(selection.isCollapsed) {
-                    editor.model.modifySelection( selection, { direction: data.direction, unit: data.unit } );
-                }
-
-                for(const range of selection.getRanges()) {
-                    writer.setAttributes({
-                        commentId: 1,
-                        commentType: CommentTypes.delete
-                    }, range);
-                }
-
-                writer.setSelection(selection.getFirstPosition());
-            });
-
-            data.stopPropagation();
-            data.preventDefault();
-            evt.stop();
-        }, { priority: 'highest' });
+        this.setupCommenting();
         
         editor.ui.componentFactory.add('addComment', (locale: any) => {
             const view = new ButtonView(locale);
@@ -114,6 +93,58 @@ class CommentCustom extends Plugin {
             });
 
             return view;
+        });
+    }
+
+    setupCommenting() {
+        const editor = this.editor;
+
+        editor.editing.view.document.on('delete', (evt: any, data: any) => {
+            editor.model.change((writer: any) => {
+                const selection = writer.createSelection(editor.model.document.selection);
+
+                if(selection.isCollapsed) {
+                    editor.model.modifySelection( selection, { direction: data.direction, unit: data.unit } );
+                }
+
+                for(const range of selection.getRanges()) {
+                    writer.setAttributes({
+                        commentId: 1,
+                        commentType: CommentTypes.delete
+                    }, range);
+                }
+
+                writer.setSelection(data.direction === "forward" ? selection.getLastPosition() : selection.getFirstPosition());
+            });
+
+            data.stopPropagation();
+            data.preventDefault();
+            evt.stop();
+        }, { priority: 'highest' });
+
+        editor.model.document.on('change:data', (evt: any, batch: any) => {
+            const changes = editor.model.document.differ.getChanges();
+
+            for(let change of changes) {
+                if(change.type === "insert") {
+                    if(change.name === "$text") {
+                        editor.model.change((writer: any) => {
+                            const firstPosition = change.position;
+                            const secondPosition = firstPosition.getShiftedBy(change.length);
+                            const range = writer.createRange(firstPosition, secondPosition);
+
+                            writer.setAttributes({
+                                commentId: 1,
+                                commentType: CommentTypes.add
+                            }, range);
+                        });
+                    } else if(change.name !== "paragraph") {
+                        evt.stop();
+                    }
+                }
+            }
+
+            console.log(editor.model.document);
         });
     }
 
