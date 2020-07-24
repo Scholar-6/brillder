@@ -1,7 +1,7 @@
-@import "../../../assets/sass/partials/variables";
-@import "../../../assets/sass/partials/mixins";
-@import "../../../assets/sass/partials/extensions";
-@import "../../../assets/sass/utils/global";
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
+@import '../../../assets/sass/utils/global';
 
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
@@ -62,6 +62,11 @@
         height: $back-to-work-height-mobile-view;
       }
       .brick-container {
+        @include phone_and_tabletP {
+        }
+        @include tabletP {
+          background-color: var(--white);
+        }
         .MuiGrid-container {
           @include phone_and_tabletP {
             display: flex;
