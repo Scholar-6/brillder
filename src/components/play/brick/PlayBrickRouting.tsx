@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Grid } from "@material-ui/core";
 // @ts-ignore
 import { connect } from "react-redux";
-
-import MenuItem from "@material-ui/core/MenuItem";
 
 import "./brick.scss";
 import Introduction from "./introduction/Introduction";
@@ -29,8 +27,8 @@ import { prefillAttempts } from "components/services/PlayService";
 import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import PlayLeftSidebar, { PlayMode } from './PlayLeftSidebar';
 import { ReduxCombinedState } from "redux/reducers";
-import sprite from "../../../assets/img/icons-sprite.svg";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import { BrickFieldNames } from "components/build/proposal/model";
 
@@ -45,11 +43,6 @@ export interface BrickAttempt {
   answers: ComponentAttempt<any>[];
 }
 
-export enum PlayMode {
-  Normal = 1,
-  Highlighting,
-  Anotating
-}
 
 function shuffle(a: any[]) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -182,64 +175,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         page={PageEnum.Play}
         user={props.user}
         history={props.history}
-        search={() => {}}
-        searching={() => {}}
+        search={() => { }}
+        searching={() => { }}
       />
-    );
-  };
-
-  const renderToggleButton = () => {
-    if (sidebarRolledUp) {
-      return (
-        <svg className="svg minimize-icon" onClick={toggleSidebar}>
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#maximize-2"} />
-        </svg>
-      );
-    }
-    return (
-      <svg className="svg minimize-icon" onClick={toggleSidebar}>
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#minimize-2"} />
-      </svg>
-    );
-  };
-
-  const renderHightlightButton = () => {
-    return (
-      <MenuItem className="sidebar-button" onClick={() => setMode(PlayMode.Highlighting)}>
-        {!sidebarRolledUp ? <span>Highlight Text</span> : ""}
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#highlighter"} className="text-white" />
-        </svg>
-      </MenuItem>
-    );
-  };
-
-  const renderAnotateButton = () => {
-    return (
-      <MenuItem className="sidebar-button" onClick={() => setMode(PlayMode.Anotating)}>
-        {!sidebarRolledUp ? <span>Annotate Text</span> : ""}
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#pen-tool"} className="text-white" />
-        </svg>
-      </MenuItem>
-    );
-  };
-
-  const renderSidebar = () => {
-    let className = "sort-and-filter-container play-sidebar";
-    if (sidebarRolledUp) {
-      className += " rolled-up";
-    }
-    return (
-      <Grid container item className={className}>
-        <div style={{ width: "100%" }}>{renderToggleButton()}</div>
-        {renderHightlightButton()}
-        {renderAnotateButton()}
-      </Grid>
     );
   };
 
@@ -312,7 +250,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     <div className="play-preview-pages">
       {renderHead()}
       <Grid container direction="row" className={className}>
-        {renderSidebar()}
+        <PlayLeftSidebar mode={mode} sidebarRolledUp={sidebarRolledUp} setMode={setMode} toggleSidebar={toggleSidebar} />
         <Grid item className="brick-row-container">
           {renderRouter()}
         </Grid>
@@ -340,7 +278,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
           } as Question;
           parsedQuestions.push(q);
         }
-      } catch (e) {}
+      } catch (e) { }
     } else {
       parsedQuestions.push(question);
     }

@@ -39,9 +39,11 @@ import Image from "@ckeditor/ckeditor5-image/src/image";
 import "./DocumentEditor.scss";
 import UploadImageCustom from "./UploadImageCustom";
 import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
+import { PlayMode } from "components/play/brick/PlayLeftSidebar";
 
 export interface DocumentHighlightingEditorProps {
   data: string;
+  mode: PlayMode;
   mediaEmbed?: boolean;
   onChange(data: string): void;
 }
@@ -69,7 +71,12 @@ class DocumentHighlightComponent extends React.Component<
     this.setState({ ...this.state, editor });
 
     document.addEventListener('selectionchange', () => {
-      editor.execute( 'fontBackgroundColor', { value: '#F6B72D' } );
+      const {mode} = this.props;
+      if (mode === PlayMode.UnHighlighting) {
+        editor.execute( 'fontBackgroundColor' );
+      } else if (mode === PlayMode.Highlighting) {
+        editor.execute( 'fontBackgroundColor', { value: '#F6B72D' } );
+      }
     });
 
     // listen to wiris events

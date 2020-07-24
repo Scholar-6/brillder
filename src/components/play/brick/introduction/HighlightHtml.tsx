@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PlayMode } from "../PlayBrickRouting";
+import { PlayMode } from "../PlayLeftSidebar";
 
 import DocumentHighlight from "components/baseComponents/ckeditor/DocumentHighlighting";
 import YoutubeAndMathInHtml from "../baseComponents/MathInHtml";
@@ -12,9 +12,10 @@ interface SelectableProps {
 }
 
 const HighlightHtml: React.FC<SelectableProps> = (props) => {
-  if (props.mode === PlayMode.Highlighting && props.onHighlight) {
+  const {mode} = props;
+  if ((mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) && props.onHighlight) {
     return (
-      <DocumentHighlight onChange={props.onHighlight} data={props.value} />
+      <DocumentHighlight onChange={props.onHighlight} mode={mode} data={props.value} />
     );
   }
   return <YoutubeAndMathInHtml value={props.value} />;
