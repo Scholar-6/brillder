@@ -97,8 +97,10 @@
   .svg {
     z-index: 1;
     @include phone_and_tabletP {
-      width: 13vw;
-      height: 13vw;
+      margin-left: 1vw;
+    }
+    @include tabletP {
+      margin-left: 0.3vw;
     }
   }
   &.play-green,

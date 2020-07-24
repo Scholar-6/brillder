@@ -180,7 +180,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       />
     );
   };
-
   const renderRouter = () => {
     return (
       <Switch>
@@ -253,8 +252,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <PlayLeftSidebar mode={mode} sidebarRolledUp={sidebarRolledUp} setMode={setMode} toggleSidebar={toggleSidebar} />
         <Grid item className="brick-row-container">
           {renderRouter()}
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </div>
   );
 };
