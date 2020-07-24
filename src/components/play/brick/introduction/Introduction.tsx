@@ -329,11 +329,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               )}
             {renderPlayButton()}
           </div>
+          {renderBriefTitle()}
+          {renderBriefExpandText()}
+          {renderPrepTitle()}
+          {renderPrepExpandText()}
         </div>
-        {renderBriefTitle()}
-        {renderBriefExpandText()}
-        {renderPrepTitle()}
-        {renderPrepExpandText()}
       </Hidden>
       <PrepExpandedDialog
         isOpen={state.isPrepDialogOpen}
