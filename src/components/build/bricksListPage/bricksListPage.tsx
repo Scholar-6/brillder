@@ -627,19 +627,17 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
   render() {
     return (
       <div className="bricks-list-page">
-        <div className="upper-part">
-          <PageHeader
-            searchPlaceholder="Search Subjects, Topics, Titles & more"
-            search={() => this.search()}
-            searching={(v: string) => this.searching(v)}
-            showDropdown={() => this.showDropdown()}
-          />
-          <LogoutDialog
-            history={this.props.history}
-            isOpen={this.state.logoutDialogOpen}
-            close={() => this.handleLogoutClose()}
-          />
-        </div>
+        <PageHeader
+          searchPlaceholder="Search Subjects, Topics, Titles & more"
+          search={() => this.search()}
+          searching={(v: string) => this.searching(v)}
+          showDropdown={() => this.showDropdown()}
+        />
+        <LogoutDialog
+          history={this.props.history}
+          isOpen={this.state.logoutDialogOpen}
+          close={() => this.handleLogoutClose()}
+        />
         <Grid container direction="row" className="sorted-row">
           <Hidden only={['xs']}>
             <Grid container item sm={3} className="sort-and-filter-container">

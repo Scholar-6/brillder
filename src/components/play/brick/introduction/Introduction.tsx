@@ -296,10 +296,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Grid item sm={8} xs={12}>
             <div className="introduction-page">
               {renderHeader()}
-              {renderBriefTitle()}
-              {renderBriefExpandText()}
-              {renderPrepTitle()}
-              {renderPrepExpandText()}
+              <div className="intro-content">
+                {renderBriefTitle()}
+                {renderBriefExpandText()}
+                {renderPrepTitle()}
+                {renderPrepExpandText()}
+              </div>
             </div>
           </Grid>
           <Grid item sm={4} xs={12}>
@@ -329,10 +331,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               )}
             {renderPlayButton()}
           </div>
-          {renderBriefTitle()}
-          {renderBriefExpandText()}
-          {renderPrepTitle()}
-          {renderPrepExpandText()}
+          <div className="intro-content">
+            {renderBriefTitle()}
+            {renderBriefExpandText()}
+            {renderPrepTitle()}
+            {renderPrepExpandText()}
+          </div>
         </div>
       </Hidden>
       <PrepExpandedDialog

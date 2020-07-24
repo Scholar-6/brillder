@@ -40,14 +40,15 @@ $introduction-expanded-height: calc(100vh - 2vw);
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 3vh;
+            padding: 4vw;
             position: relative;
           }
           > .intro-header {
             @include phone_and_tabletP {
               position: absolute;
               padding: 0;
-              right: 0;
+              right: 4vw;
+              top: 3vw;
             }
           }
           @include tabletP {
@@ -56,7 +57,10 @@ $introduction-expanded-height: calc(100vh - 2vw);
           &.expanded-intro-header {
             @include phone_and_tabletP {
               align-items: flex-start;
-              padding-top: 2vh;
+              padding: 3vw;
+              background-color: var(--light-gray);
+            }
+            @include tabletP {
             }
             .brick-counter {
               @include phone_and_tabletP {
@@ -88,7 +92,7 @@ $introduction-expanded-height: calc(100vh - 2vw);
               @include phone_and_tabletP {
                 transition: all 300ms;
                 width: 100%;
-                text-align: center;
+                padding-left: 9.5vw;
               }
             }
           }
@@ -106,7 +110,7 @@ $introduction-expanded-height: calc(100vh - 2vw);
           .left-brick-circle {
             position: absolute;
             top: 2.4vh;
-            left: 0.5vw;
+            left: 1vw;
             @include phone_and_tabletP {
               position: unset;
               margin-bottom: 0.5vh;
@@ -167,6 +171,11 @@ $introduction-expanded-height: calc(100vh - 2vw);
             padding-left: 7vw;
           }
         }
+        .intro-content {
+          @include phone_and_tabletP {
+            padding: 0 4vw;
+          }
+        }
         .question-index-container {
           margin: 1vw 1.5vw 2vw 0;
           padding: 0.5vw;
@@ -225,11 +234,14 @@ $introduction-expanded-height: calc(100vh - 2vw);
           @include tabletP {
             width: calc(100% - 7vw);
             margin: 6vh 3vw 1vw 4vw;
-            height: 75.4vh;
+            height: calc(100vh - 7vh);
           }
           &.review-content {
+            @include phone_and_tabletP {
+              padding: 0 4vw;
+            }
             @include tabletP {
-              margin-top: 2vh;
+              margin-top: 1.5vh;
             }
           }
           .question-title {
@@ -335,7 +347,6 @@ $introduction-expanded-height: calc(100vh - 2vw);
           flex-direction: column;
           justify-content: center;
           @include phone_and_tabletP {
-            margin-top: 1vw !important;
             padding: 3vw;
             font-size: 4.4vw;
           }
@@ -430,6 +441,7 @@ $introduction-expanded-height: calc(100vh - 2vw);
           }
           @include tabletP {
             height: $introduction-desktop-height;
+            padding-left: 1vw;
           }
         }
         .fotter-text {
@@ -453,16 +465,6 @@ $introduction-expanded-height: calc(100vh - 2vw);
             top: 50%;
             transform: translateY(-10vh);
             margin: 0;
-          }
-        }
-      }
-      &.mobile-provisional-score,
-      &.mobile-synthesis-page,
-      &.mobile-ending-page {
-        .action-footer {
-          @include phone_and_tabletP {
-            position: absolute !important;
-            right: 0;
           }
         }
       }
@@ -490,6 +492,32 @@ $introduction-expanded-height: calc(100vh - 2vw);
           }
         }
       }
+      &.provisional-score-page,
+      &.review-page,
+      &.synthesis-page,
+      &.ending-page {
+        .introduction-page {
+          .question-index-container ~ h1 {
+            @include tabletP {
+              text-align: center;
+              padding: 0;
+              justify-content: center;
+              font-size: 3vw;
+              margin: 0;
+            }
+          }
+        }
+      }
+      &.mobile-provisional-score,
+      &.mobile-synthesis-page,
+      &.mobile-ending-page {
+        .action-footer {
+          @include phone_and_tabletP {
+            position: absolute !important;
+            right: 0;
+          }
+        }
+      }
       .action-footer {
         display: flex;
         color: var(--theme-dark-blue);
@@ -499,7 +527,8 @@ $introduction-expanded-height: calc(100vh - 2vw);
         right: 0;
         @include phone_and_tabletP {
           position: fixed;
-          bottom: 7vh;
+          bottom: 80px;
+          height: 110px;
         }
         @include tabletP {
           position: absolute;
