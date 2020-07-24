@@ -80,7 +80,7 @@ $tile-height: 100%;
       &.active {
         display: flex;
         @extend %posAbsolute;
-        right:0
+        right: 0;
       }
     }
   }
@@ -125,9 +125,10 @@ $tile-height: 100%;
   .last-tab {
     @extend %flexCenter;
     &.tutorial-border {
-      border-radius: 50%;
       padding: 0.25vw;
-      border: 0.1vw dashed var(--theme-orange);
+      &:before {
+        border: 0.1vw dashed var(--theme-orange);
+      }
       .svg {
         @extend %removePosition;
       }

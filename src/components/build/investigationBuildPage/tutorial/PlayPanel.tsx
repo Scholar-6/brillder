@@ -1,19 +1,19 @@
 import React from 'react'
 import { Grid, Button } from '@material-ui/core';
-
+import sprite from "../../../../assets/img/icons-sprite.svg";
 import './PlayPanel.scss';
-import {TutorialStep} from './TutorialPanelWorkArea';
+import { TutorialStep } from './TutorialPanelWorkArea';
 
 
 export interface TutorialProps {
-  next(step: TutorialStep): void; 
+  next(step: TutorialStep): void;
   skip(): void;
 }
 
 const PlayPanel: React.FC<TutorialProps> = (props) => {
   const renderDashedLine = () => {
     return (
-      <div style={{display: 'table-cell', verticalAlign: 'middle'}} className="icon-container">
+      <div style={{ display: 'table-cell', verticalAlign: 'middle' }} className="icon-container">
         <hr className="dashed-line"></hr>
       </div>
     );
@@ -21,7 +21,7 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
 
   const renderArrow = () => {
     return (
-      <div style={{display: 'table-cell', verticalAlign: 'middle'}} className="icon-container">
+      <div style={{ display: 'table-cell', verticalAlign: 'middle' }} className="icon-container">
         <img alt="icon" src="/feathericons/big-chevron-right-blue.png" className="arrow-icon" />
       </div>
     );
@@ -30,9 +30,12 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
   return (
     <div className="tutorial-play-panel">
       <div className="tutorial-step-1">
-        <Grid container  justify="center" alignContent="center" className="icons-row">
-          <div className="icon-container" style={{display: 'table-cell', verticalAlign: 'middle'}}>
-            <img alt="icon" src="/images/edit.png" className="edit-icon" />
+        <Grid container justify="center" alignContent="center" className="icons-row">
+          <div className="icon-container svgOnHover">
+            <svg className="svg w60 h60 active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#edit-outline"} className="text-theme-dark-blue" />
+            </svg>
           </div>
           {renderDashedLine()}
           {renderArrow()}
