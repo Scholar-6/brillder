@@ -363,6 +363,7 @@
       font-family: $font-family-bold;
       .btn {
         display: flex;
+        cursor: default !important;
         align-items: center;
         span {
           color: var(--light-blue2) !important;
