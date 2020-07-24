@@ -564,7 +564,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   render() {
     const { history } = this.props;
     return (
-      <div className="dashboard-page">
+      <div className="main-listing dashboard-page">
         {this.renderMobileGlassIcon()}
         <PageHeadWithMenu
           page={PageEnum.ViewAll}
