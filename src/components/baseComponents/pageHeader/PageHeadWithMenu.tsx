@@ -14,6 +14,7 @@ export enum PageEnum {
   None,
   BackToWork,
   ViewAll,
+  ManageUsers,
   Play
 }
 
@@ -113,6 +114,25 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
     return "";
   }
 
+  renderManageUsersItem() {
+    let isAdmin = this.props.user.roles.some(role => role.roleId === UserType.Admin);
+
+    if (isAdmin && this.props.page !== PageEnum.ManageUsers) {
+      return (
+        <MenuItem className="menu-item" onClick={() => this.props.history.push("/users")}>
+          <span className="menu-text">Manage Users</span>
+          <div className="btn btn-transparent svgOnHover">
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#users"} className="text-white" />
+            </svg>
+          </div>
+        </MenuItem>
+      );
+    }
+    return "";
+  }
+
   render() {
     let className = 'upper-part';
     let placeholder = "Search Subjects, Topics, Titles & more";
@@ -147,21 +167,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
             </div>
           </MenuItem>
           {this.renderBackToWorkItem()}
-          {this.props.user.roles.some(
-            (role) => role.roleId === UserType.Admin
-          ) ? (
-              <MenuItem className="menu-item" onClick={() => this.props.history.push("/users")}>
-                <span className="menu-text">Manage Users</span>
-                <div className="btn btn-transparent svgOnHover">
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#users"} className="text-white" />
-                  </svg>
-                </div>
-              </MenuItem>
-            ) : (
-              ""
-            )}
+          {this.renderManageUsersItem()}
           <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push("/user-profile")}>
             <span className="menu-text">View Profile</span>
             <div className="btn btn-transparent svgOnHover">

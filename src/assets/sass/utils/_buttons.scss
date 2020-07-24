@@ -55,6 +55,10 @@
     line-height: 2.05;
     font-size: 2.6vh;
     letter-spacing: 0.3vw;
+    .svg {
+      color: var(--white);
+      @extend %removePosition;
+    }
   }
   &:hover {
     background: var(--theme-orange);
@@ -68,7 +72,7 @@
 .play-preview {
   width: 4.5vw;
   height: 4.5vw;
-  position: fixed;
+  position: fixed !important;
   font-size: 1.15vw;
   top: 1.4vw;
   right: 1.4vw;
