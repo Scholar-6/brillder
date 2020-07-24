@@ -151,6 +151,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     toggleSideBar(true);
   }
 
+  const moveToPrep = () => {
+    props.history.push(`/play/brick/${brick.id}/intro`);
+  }
+
   const onHighlight = (name: BrickFieldNames, value: string) => {
     brick[name] = value;
     setBrick(brick);
@@ -202,6 +206,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brick={brick}
             updateAttempts={updateAttempts}
             finishBrick={finishBrick}
+            moveToPrep={moveToPrep}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/provisionalScore">
