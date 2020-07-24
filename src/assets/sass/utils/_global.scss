@@ -430,14 +430,9 @@ h3 {
   cursor: pointer;
   text-align: center;
   transition: all 0.2s ease-in-out;
-  transform-origin: 50% 75%;
   &:hover {
     @include tabletP {
-      transform: scale(1.4);
-    }
-    .item-description {
-      color: white;
-      font-family: $font-family-bold;
+      transform: scale(1.2);
     }
   }
 }

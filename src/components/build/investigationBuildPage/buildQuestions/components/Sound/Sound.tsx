@@ -143,11 +143,11 @@ const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
         >
           {
             (status === AudioStatus.Start && !blobUrl) ?
-              <button className="btn bg-white start-record svgOnHover"
+              <button className="btn bg-theme-orange start-record svgOnHover"
                 onClick={() => startRecording()}>
                 <svg className="svg active">
                   {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#circle-filled"} />
+                  <use href={sprite + "#circle-filled"} className="text-white" />
                 </svg>
                 <span>Record</span>
               </button>

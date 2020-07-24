@@ -84,7 +84,6 @@ interface BackToWorkState {
   sortBy: SortBy;
   sortedIndex: number;
   sortedReversed: boolean;
-  logoutDialogOpen: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
   filters: Filters;
@@ -130,7 +129,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       sortBy: SortBy.None,
       sortedIndex: 0,
       sortedReversed: false,
-      logoutDialogOpen: false,
       deleteDialogOpen: false,
       deleteBrickId: -1,
 
@@ -660,7 +658,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           <PageHeadWithMenu
             page={PageEnum.BackToWork}
             user={this.props.user}
-            placeholder={"Search Ongoing Projects & Published Bricks…"}
+            placeholder="Search Ongoing Projects & Published Bricks…"
             history={this.props.history}
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}

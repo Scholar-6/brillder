@@ -1,6 +1,9 @@
-@import '../../../../assets/sass/partials/variables';
-@import '../../../../assets/sass/partials/mixins';
-@import '../../../../assets/sass/partials/extensions';
+@import "../../../../assets/sass/partials/variables";
+@import "../../../../assets/sass/partials/mixins";
+@import "../../../../assets/sass/partials/extensions";
+
+$introduction-desktop-height: calc(100vh - 7.8vw);
+$introduction-expanded-height: calc(100vh - 2vw);
 
 .play-preview-pages {
   background: var(--theme-dark-blue);
@@ -107,6 +110,7 @@
             left: 0.5vw;
             @include phone_and_tabletP {
               position: unset;
+              margin-bottom: 0.5vh;
             }
             > div {
               @extend %radCircle;
@@ -257,7 +261,7 @@
         }
         @include tabletP {
           padding: 4vh 2vw;
-          height: calc(100vh - 7.8vw);
+          height: $introduction-desktop-height;
         }
         .intro-header {
           position: relative;
@@ -426,7 +430,7 @@
             height: calc(100vh - 55.8vw);
           }
           @include tabletP {
-            height: calc(100vh - 7.8vw);
+            height: $introduction-desktop-height;
           }
         }
         .fotter-text {
@@ -732,8 +736,13 @@
       font-size: 0.8vw;
     }
   }
-}
 
-.play-preview-pages ~ .beta-text {
-  color: var(--theme-orange) !important;
+  // class for desktop only
+  .sorted-row-expanded {
+    @include tabletP {
+      .introduction-info {
+        height: $introduction-expanded-height !important;
+      }
+    }
+  }
 }
