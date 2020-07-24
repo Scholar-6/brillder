@@ -248,11 +248,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       className += " rolled-up";
     }
     return (
-      <Grid container item className={className}>
-        <div style={{ width: "100%" }}>{renderToggleButton()}</div>
+      <div className={className}>
+        {renderToggleButton()}
         {renderHightlightButton()}
         {renderAnotateButton()}
-      </Grid>
+      </div>
     );
   };
 
