@@ -329,7 +329,7 @@ h3 {
 .pair-match-image-choice,
 .choose-choice {
   &.active {
-    background: $white-blue !important;
+    background: var(--white-blue) !important;
   }
   &.correct {
     background: var(--theme-green) !important;

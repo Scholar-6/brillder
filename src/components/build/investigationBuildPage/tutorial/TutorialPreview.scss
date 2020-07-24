@@ -4,7 +4,7 @@
 
 .tutorial-preview {
   font-family: $font-family-black;
-  color: var(--light-blue2);
+  color: var(--light-blue);
 
   .tutorial-number {
     font-size: 8vw;
@@ -18,7 +18,7 @@
     width: 8vw;
     height: 8vw;
     &:before {
-      border: 0.3vw dashed var(--light-blue2);
+      border: 0.3vw dashed var(--light-blue);
     }
     img {
       height: 5.8vw;
@@ -35,7 +35,7 @@
   }
   .tutorial-icon-container {
     &:before {
-      border: 0.3vw dashed var(--light-blue2);
+      border: 0.3vw dashed var(--light-blue);
     }
   }
 }

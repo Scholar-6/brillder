@@ -13,16 +13,19 @@ export interface TutorialProps {
 const PlayPanel: React.FC<TutorialProps> = (props) => {
   const renderDashedLine = () => {
     return (
-      <div style={{ display: 'table-cell', verticalAlign: 'middle' }} className="icon-container">
-        <hr className="dashed-line"></hr>
+      <div className="icon-container dashed-line">
+        <div></div>
       </div>
     );
   }
 
   const renderArrow = () => {
     return (
-      <div style={{ display: 'table-cell', verticalAlign: 'middle' }} className="icon-container">
-        <img alt="icon" src="/feathericons/big-chevron-right-blue.png" className="arrow-icon" />
+      <div className="icon-container arrow-icon svgOnHover">
+        <svg className="svg w100 h100 active">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#arrow-right"} className="text-gray" />
+        </svg>
       </div>
     );
   }
@@ -30,29 +33,42 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
   return (
     <div className="tutorial-play-panel">
       <div className="tutorial-step-1">
-        <Grid container justify="center" alignContent="center" className="icons-row">
+        <div className="icons-row">
           <div className="icon-container svgOnHover">
-            <svg className="svg w60 h60 active">
+            <svg className="svg w80 h80 active">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#edit-outline"} className="text-theme-dark-blue" />
             </svg>
           </div>
           {renderDashedLine()}
           {renderArrow()}
-          <Grid container className="icon-container" alignContent="center">
-            <img alt="icon" src="/feathericons/plus-blue.png" className="add-icon" />
-          </Grid>
+          <div className="icon-container svgOnHover">
+            <svg className="svg w80 h80 active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#plus"} className="text-theme-dark-blue" />
+            </svg>
+          </div>
           {renderDashedLine()}
           {renderArrow()}
-          <Grid container className="icon-container" alignContent="center">
-            <img alt="icon" src="/images/synthesis-icon.png" className="synthesis-icon" />
-          </Grid>
+          <div className="icon-container svgOnHover">
+            <svg className="svg w80 h80 active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#list"} className="text-theme-dark-blue" />
+            </svg>
+          </div>
           {renderDashedLine()}
           {renderArrow()}
-          <Grid container className="icon-container" alignContent="center">
-            <img alt="icon" src="/feathericons/play-white.png" className="play-icon" />
-          </Grid>
-        </Grid>
+          <div className="icon-container play-icon svgOnHover">
+            <svg className="svg w80 h80 svg-default">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#play-thin"} className="text-white" />
+            </svg>
+            <svg className="svg w80 h80 colored">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#play-thick"} className="text-white" />
+            </svg>
+          </div>
+        </div>
         <p className="center">The Play Preview button will turn green once every required field has been filled.</p>
         <p className="center-second">Clicking it before this point will show incomplete fields in red.</p>
         <div className="proposal-box">

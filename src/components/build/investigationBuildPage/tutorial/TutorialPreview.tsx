@@ -45,7 +45,10 @@ const SynthesisPreview: React.FC = () => {
       <div className="tutorial-number">3.</div>
       <Grid container justify="center">
         <div className="tutorial-icon-container svgOnHover border-animation">
-          <img alt="" className="tutorial-icon" src="/images/synthesis-icon.png" />
+          <svg className="svg w60 h60 active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#list"} className="text-theme-dark-blue" />
+          </svg>
         </div>
       </Grid>
     </div>

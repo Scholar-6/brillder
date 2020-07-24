@@ -2,7 +2,8 @@ import React from 'react'
 import { Grid, Button } from '@material-ui/core';
 
 import './SynthesisPanel.scss';
-import {TutorialStep} from './TutorialPanelWorkArea';
+import sprite from "../../../../assets/img/icons-sprite.svg";
+import { TutorialStep } from './TutorialPanelWorkArea';
 
 
 export interface TutorialProps {
@@ -15,8 +16,11 @@ const SynthesisPanel: React.FC<TutorialProps> = (props) => {
     <div className="tutorial-synthesis-panel">
       <div className="tutorial-step-1">
         <Grid container justify="center">
-          <div className="synthesis-border">
-            <img alt="edit-synthesis" src="/images/synthesis-icon.png" className="synthesis-icon" />
+          <div className="synthesis-border svgOnHover border-animation">
+            <svg className="svg w60 h60 active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#list"} className="text-theme-dark-blue" />
+            </svg>
           </div>
         </Grid>
         <p className="center">
