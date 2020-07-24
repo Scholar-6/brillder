@@ -51,7 +51,6 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
                   <use href={sprite + "#trash-outline"} />
                 </svg>
               </button>
-
             </div>
           ) : (
               ""

@@ -142,3 +142,9 @@
     font-family: $font-family-bold !important;
   }
 }
+
+.document-editor.highlight-editor {
+  .ck-content {
+  padding: 0 !important;
+  }
+}
