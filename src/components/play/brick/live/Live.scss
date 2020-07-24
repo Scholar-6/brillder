@@ -11,9 +11,6 @@
     overflow-y: hidden !important;
   }
   .introduction-info {
-    @include phone_and_tabletP {
-      position: relative !important;
-    }
     .brick-counter {
       @include phone_and_tabletP {
         position: absolute !important;

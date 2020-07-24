@@ -182,6 +182,9 @@ $introduction-expanded-height: calc(100vh - 2vw);
           width: 3.3vw;
           height: 3.3vw;
           @extend %radCircle;
+          @include phone_and_tabletP {
+            display: none;
+          }
           &.correct {
             .question-index {
               background: var(--theme-green);
@@ -232,16 +235,17 @@ $introduction-expanded-height: calc(100vh - 2vw);
             margin-top: 4vw;
           }
           @include tabletP {
-            width: calc(100% - 7vw);
-            margin: 6vh 3vw 1vw 4vw;
             height: calc(100vh - 7vh);
           }
           &.review-content {
             @include phone_and_tabletP {
-              padding: 0 4vw;
+              width: 100% !important;
+              padding: 4vw !important;
+              margin: 0 !important;
             }
             @include tabletP {
-              margin-top: 1.5vh;
+              width: calc(100% - 7vw) !important;
+              margin: 1.5vh 3vw 1vw 4vw;
             }
           }
           .question-title {
@@ -269,6 +273,7 @@ $introduction-expanded-height: calc(100vh - 2vw);
         position: relative;
         @include phone_and_tabletP {
           border-radius: 1vh;
+          margin: 0 4vw;
         }
         @include tabletP {
           padding: 4vh 2vw;
@@ -369,9 +374,6 @@ $introduction-expanded-height: calc(100vh - 2vw);
               font-size: 2vw;
               font-family: $font-family-black;
               color: #d3d4d5;
-              img {
-                height: 2vw;
-              }
               &.completed,
               &.current {
                 color: var(--theme-dark-blue);
@@ -443,9 +445,34 @@ $introduction-expanded-height: calc(100vh - 2vw);
             height: $introduction-desktop-height;
             padding-left: 1vw;
           }
+          .question-index-container ~ h1 {
+            @include tabletP {
+              text-align: center;
+              padding: 0;
+              justify-content: center;
+              font-size: 3vw;
+              margin: 0;
+            }
+          }
         }
         .fotter-text {
           margin-top: 3vw;
+        }
+        .introduction-info {
+          @include phone_and_tabletP {
+            position: relative !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+          }
+        }
+      }
+      &.synthesis-page,
+      &.provisional-score-page,
+      &.ending-page {
+        .introduction-page {
+          h1 {
+            text-transform: capitalize;
+          }
         }
       }
       &.synthesis-page {
@@ -492,29 +519,48 @@ $introduction-expanded-height: calc(100vh - 2vw);
           }
         }
       }
-      &.provisional-score-page,
-      &.review-page,
-      &.synthesis-page,
       &.ending-page {
         .introduction-page {
-          .question-index-container ~ h1 {
-            @include tabletP {
-              text-align: center;
-              padding: 0;
-              justify-content: center;
-              font-size: 3vw;
-              margin: 0;
+          .intro-text-row {
+            .stepper {
+              .step {
+                color: var(--theme-dark-blue) !important;
+                .svg {
+                  @extend %removePosition;
+                }
+              }
             }
           }
         }
       }
-      &.mobile-provisional-score,
       &.mobile-synthesis-page,
+      &.mobile-provisional-score,
       &.mobile-ending-page {
-        .action-footer {
-          @include phone_and_tabletP {
-            position: absolute !important;
-            right: 0;
+        .introduction-page {
+          h1 {
+            @include phone_and_tabletP {
+              background-color: var(--light-gray) !important;
+            }
+          }
+          .intro-text-row {
+            .stepper {
+              @include phone_and_tabletP {
+                flex-direction: row !important;
+                background-color: var(--light-gray) !important;
+                padding: 2vw;
+              }
+              .step {
+                @include phone_and_tabletP {
+                  font-size: 4vw !important;
+                }
+                .svg {
+                  @include phone_and_tabletP {
+                    height: 4vw !important;
+                    width: 4vw !important;
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -527,19 +573,20 @@ $introduction-expanded-height: calc(100vh - 2vw);
         right: 0;
         @include phone_and_tabletP {
           position: fixed;
-          bottom: 80px;
-          height: 110px;
+          bottom: 60px;
+          height: 80px;
         }
         @include tabletP {
           position: absolute;
           bottom: 5vw;
         }
         .play-preview {
-          @extend %removePosition;
+          @extend %floatToCenter;
         }
         > div {
           @extend %flexCenter;
           flex-direction: column;
+          position: relative;
           @include phone_and_tabletP {
             margin: 0 3vw;
             min-width: 18vw;
@@ -547,6 +594,7 @@ $introduction-expanded-height: calc(100vh - 2vw);
           @include tabletP {
             margin: 0 1vw;
             min-width: 6vw;
+            min-height: 7vh;
           }
           &.direction-info {
             width: 100%;

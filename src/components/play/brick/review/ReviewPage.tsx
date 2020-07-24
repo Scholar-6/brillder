@@ -158,7 +158,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       return "";
     }
     return (
-      <button className="play-preview svgOnHover play-white scale-07" onClick={prev}>
+      <button className="play-preview svgOnHover play-white" onClick={prev}>
         <svg className="svg w80 h80 svg-default m-r-02">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#arrow-left"} className="text-gray" />
