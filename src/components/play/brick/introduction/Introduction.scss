@@ -198,7 +198,7 @@ $introduction-expanded-height: calc(100vh - 2vw);
           &.attempted {
             background: #82c0ed;
             .question-index {
-              background: $blue;
+              background: var(--blue);
             }
           }
           .question-index {

@@ -30,11 +30,11 @@
     }
   }
   .edited-step-icon {
-    color: $black-blue;
+    color: var(--black-blue);
     border-radius: 100%;
     font-size: 16px !important;
     padding: 5px;
-    border: 2px solid $black-blue;
+    border: 2px solid var(--black-blue);
   }
   .back-button {
     height: 3.5vw;

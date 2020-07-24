@@ -21,14 +21,14 @@
         font-family: $font-family-bold;
       }
 
-      .synthesis-icon {
-        height: 5.5vw;
-      }
       .synthesis-border {
+        width: 8vw;
+        height: 8vw;
         margin-top: 8.7vh;
-        padding: 1.5vw 3vw 1.3vw 3vw;
-        border-radius: 0.8vw;
-        border: 0.3vw dashed var(--theme-orange);
+        padding: 1.5vw;
+        &:before {
+          border: 0.3vw dashed var(--theme-orange);
+        }
       }
       .center {
         margin: 2.3vh 0;

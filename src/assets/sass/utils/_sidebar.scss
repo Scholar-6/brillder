@@ -98,7 +98,7 @@
             transform: translateY(-50%);
           }
           &.active {
-            background: $lighter-blue;
+            background: var(--theme-light-blue);
           }
           &.color1 {
             .round-button,
@@ -167,7 +167,7 @@
       .filter-header {
         position: relative;
         text-transform: uppercase;
-        background: $lighter-blue 0% 0% no-repeat padding-box;
+        background: var(--theme-light-blue) 0% 0% no-repeat padding-box;
         padding: 0.3vw 1.4vw;
         font-size: 1.2vw;
         letter-spacing: 0.22vw;
@@ -363,7 +363,7 @@
         display: flex;
         align-items: center;
         span {
-          color: var(--light-blue2) !important;
+          color: var(--light-blue) !important;
           &:first-child {
             margin-right: 1vw;
           }
@@ -470,7 +470,7 @@
               }
             }
             .link-info {
-              color: $lighter-blue;
+              color: var(--theme-light-blue);
               line-height: 1.3;
               font-family: $font-family-regular;
               overflow-y: hidden;
