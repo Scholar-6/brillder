@@ -222,8 +222,10 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 isPlayPreview={true}
                 brick={props.brick}
                 questions={props.brick.questions}
+                endTime={null}
                 updateAttempts={updateAttempts}
                 finishBrick={finishBrick}
+                setEndTime={()=>{}}
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/provisionalScore">

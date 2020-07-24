@@ -18,6 +18,7 @@ import LiveStepper from "./LiveStepper";
 import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";
 import PulsingCircleNumber from "./PulsingCircleNumber";
 import { PlayMode } from "../model";
+import { Moment } from 'moment';
 
 interface LivePageProps {
   status: PlayStatus;
@@ -28,6 +29,10 @@ interface LivePageProps {
   previewQuestionIndex?: number;
   updateAttempts(attempt: any, index: number): any;
   finishBrick(): void;
+
+  // things related to count down
+  endTime: any;
+  setEndTime(time: Moment): void;
 
   // only for real play
   mode?: PlayMode;
@@ -265,6 +270,18 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   }
 
+  const renderCountDown = () => {
+    return (
+      <CountDown
+        isLive={true}
+        onEnd={onEnd}
+        endTime={props.endTime}
+        brickLength={brick.brickLength}
+        setEndTime={props.setEndTime}
+      />
+    );
+  }
+
   return (
     <div className="brick-container live-page">
       <Hidden only={["xs"]}>
@@ -282,11 +299,7 @@ const LivePage: React.FC<LivePageProps> = ({
           </Grid>
           <Grid item xs={4}>
             <div className="introduction-info">
-              <CountDown
-                isLive={true}
-                onEnd={onEnd}
-                brickLength={brick.brickLength}
-              />
+              {renderCountDown()}
               <div className="intro-text-row">
                 {renderStepper()}
               </div>
@@ -298,11 +311,7 @@ const LivePage: React.FC<LivePageProps> = ({
 
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="introduction-info">
-          <CountDown
-            isLive={true}
-            onEnd={onEnd}
-            brickLength={brick.brickLength}
-          />
+          {renderCountDown()}
           <div className="intro-text-row">
             <span className="heading">Investigation</span>
             {renderStepper()}
@@ -320,7 +329,6 @@ const LivePage: React.FC<LivePageProps> = ({
             {questions.map(renderQuestionContainer)}
           </SwipeableViews>
         </div>
-
       </Hidden>
       <ShuffleAnswerDialog
         isOpen={isShuffleOpen}

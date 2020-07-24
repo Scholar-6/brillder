@@ -13,11 +13,6 @@ interface StepperProps {
 }
 
 const LiveStepper: React.FC<StepperProps> = ({ questions, ...props }) => {
-  let colWidth = 4;
-  if (questions.length > 27) {
-    colWidth = 3;
-  }
-
   let questionIndex = 0;
 
   const isAttempted = (question: Question) => {

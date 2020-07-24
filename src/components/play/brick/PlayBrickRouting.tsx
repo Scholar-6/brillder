@@ -70,6 +70,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [startTime, setStartTime] = React.useState(undefined);
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [mode, setMode] = React.useState(PlayMode.Normal);
+  const [liveEndTime, setLiveEndTime] = React.useState(null);
   const location = useLocation();
 
   // Commented this in order to allow students to also be builders and vice versa, we may need to add this back in (11/5/2020)
@@ -203,6 +204,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brick={brick}
             updateAttempts={updateAttempts}
             finishBrick={finishBrick}
+            endTime={liveEndTime}
+            setEndTime={time => {
+              if (liveEndTime) {
+                setLiveEndTime(liveEndTime);
+              }
+            }}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/provisionalScore">

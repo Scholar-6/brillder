@@ -195,7 +195,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         </Grid>
         <Grid item sm={4} xs={12}>
           <div className="introduction-info">
-            <CountDown brickLength={props.brickLength} onEnd={onEnd} />
+            <CountDown brickLength={props.brickLength} endTime={null} setEndTime={()=>{}} onEnd={onEnd} />
             <div className="intro-text-row">
               <ReviewStepper
                 questions={questions}
