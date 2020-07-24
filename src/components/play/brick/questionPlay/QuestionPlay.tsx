@@ -20,6 +20,7 @@ import Sort from '../questionTypes/sort/Sort';
 import MissingWord from '../questionTypes/missingWord/MissingWord';
 import LineHighlighting from '../questionTypes/lineHighlighting/LineHighlighting';
 import WordHighlightingComponent from '../questionTypes/wordHighlighting/WordHighlighting';
+import { PlayMode } from '../model';
 
 
 interface QuestionProps {
@@ -29,6 +30,9 @@ interface QuestionProps {
   isPhonePreview?: boolean;
   answers: any;
   onAttempted?(): void;
+
+  // only for real play
+  mode?: PlayMode;
 }
 
 interface QuestionState {
@@ -105,11 +109,11 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     const renderComponent = (component: any, index: number) => {
       const {type} = component;
       if (type === QuestionComponentTypeEnum.Text) {
-        return <TextLive key={index} component={component} />
+        return <TextLive mode={this.props.mode} key={index} component={component} />
       } else if (type === QuestionComponentTypeEnum.Image) {
         return <ImageLive key={index} component={component} />
       } else if (type === QuestionComponentTypeEnum.Quote) {
-        return <QuoteLive key={index} component={component} />
+        return <QuoteLive mode={this.props.mode} key={index} component={component} />
       } else if (type === QuestionComponentTypeEnum.Sound) {
         return <SoundLive key={index} component={component} />
       } else if (type === QuestionComponentTypeEnum.Component) {
