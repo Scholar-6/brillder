@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { Grid } from '@material-ui/core';
 
 // @ts-ignore
 import { connect } from "react-redux";
