@@ -1,11 +1,10 @@
-import React, { Ref } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
-import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import { Moment } from "moment";
 import PrepareText from './PrepareText';
@@ -13,9 +12,11 @@ import IntroductionDetails from "./IntroductionDetails";
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
 import { PlayMode } from "../PlayBrickRouting";
-import SelectableText from './SelectableText';
+import HighlightHtml from './HighlightHtml';
+import { BrickFieldNames } from 'components/build/proposal/model';
 
 const moment = require("moment");
+
 
 interface IntroductionProps {
   mode?: PlayMode;
@@ -24,6 +25,7 @@ interface IntroductionProps {
   brick: Brick;
   setStartTime(startTime: any): void;
   moveNext?(): void;
+  onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
 interface IntroductionState {
@@ -33,10 +35,6 @@ interface IntroductionState {
   otherExpanded: boolean;
   isPrepDialogOpen: boolean;
   duration: any;
-}
-
-interface IntroRefs {
-  brief: any;
 }
 
 const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
@@ -49,10 +47,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     isPrepDialogOpen: false,
     duration: null,
   } as IntroductionState);
-
-  const [refs, setRefs] = React.useState({
-    brief: React.createRef()
-  } as IntroRefs);
 
   const toggleBrief = () => {
     setState({ ...state, briefExpanded: !state.briefExpanded });
@@ -204,8 +198,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderBriefExpandText = () => {
     if (state.briefExpanded) {
       return (
-        <div className="expanded-text" ref={refs.brief}>
-          <SelectableText value={brick.brief} />
+        <div className="expanded-text">
+          <HighlightHtml
+            value={brick.brief}
+            mode={props.mode}
+            onHighlight={value => props.onHighlight?(BrickFieldNames.brief, value) : {}}
+          />
         </div>
       );
     }
