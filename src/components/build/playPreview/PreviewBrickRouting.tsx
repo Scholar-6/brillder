@@ -154,10 +154,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     props.history.push(`/build/brick/${brickId}/build/investigation/question`);
   }
 
-  const moveToPrep = () => {
-    props.history.push(`/play/brick/${brickId}/intro`);
-  }
-
   const getBuildQuestionNumber = () => {
     if (
       cashedBuildQuestion &&
@@ -210,7 +206,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <div className="brick-row-container">
           <Switch>
             <Route exac path="/play-preview/brick/:brickId/intro">
-              <Introduction brick={props.brick} isPlayPreview={true} startTime={startTime} setStartTime={setStartTime} />
+              <Introduction
+                location={props.location}
+                brick={props.brick}
+                isPlayPreview={true}
+                startTime={startTime}
+                setStartTime={setStartTime}
+              />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/live">
               <Live
@@ -222,7 +224,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 questions={props.brick.questions}
                 updateAttempts={updateAttempts}
                 finishBrick={finishBrick}
-                moveToPrep={moveToPrep}
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/provisionalScore">

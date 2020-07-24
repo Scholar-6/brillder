@@ -28,7 +28,6 @@ interface LivePageProps {
   previewQuestionIndex?: number;
   updateAttempts(attempt: any, index: number): any;
   finishBrick(): void;
-  moveToPrep(): void;
 
   // only for real play
   mode?: PlayMode;
@@ -216,6 +215,56 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   };
 
+  const moveToPrep = () => {
+    if (props.isPlayPreview) {
+      history.push(`/play-preview/brick/${brick.id}/intro?prepExtanded=true`);
+    } else {
+      history.push(`/play/brick/${brick.id}/intro?prepExtanded=true`);
+    }
+  }
+
+  const renderStepper = () => {
+    return (
+      <LiveStepper
+        activeStep={activeStep}
+        questions={questions}
+        previousStep={prevStep}
+        handleStep={handleStep}
+        moveToPrep={moveToPrep}
+      />
+    );
+  }
+
+  const renderNextButton = () => {
+    return (
+      <button
+        type="button"
+        className="play-preview svgOnHover play-green"
+        onClick={next}
+      >
+        <svg className="svg w80 h80 active m-l-02">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#arrow-right"} />
+        </svg>
+      </button>
+    );
+  }
+
+  const renderFooter = () => {
+    return (
+      <div className="action-footer">
+        <div>{renderPrevButton()}</div>
+        <div className="direction-info">
+          <h2>Next</h2>
+          <span>Don’t panic, you can <br /> always come back</span>
+        </div>
+        <div>
+          {renderNextButton()}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="brick-container live-page">
       <Hidden only={["xs"]}>
@@ -239,37 +288,9 @@ const LivePage: React.FC<LivePageProps> = ({
                 brickLength={brick.brickLength}
               />
               <div className="intro-text-row">
-                <LiveStepper
-                  activeStep={activeStep}
-                  questions={questions}
-                  previousStep={prevStep}
-                  handleStep={handleStep}
-                  moveToPrep={props.moveToPrep}
-                />
+                {renderStepper()}
               </div>
-              <div className="action-footer">
-                <div>{renderPrevButton()}</div>
-                <div className="direction-info">
-                  <h2>Next</h2>
-                  <span>
-                    Don’t panic, you can
-                    <br />
-                    always come back
-                  </span>
-                </div>
-                <div>
-                  <button
-                    type="button"
-                    className="play-preview svgOnHover play-green"
-                    onClick={next}
-                  >
-                    <svg className="svg w80 h80 active m-l-02">
-                      {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#arrow-right"} />
-                    </svg>
-                  </button>
-                </div>
-              </div>
+              {renderFooter()}
             </div>
           </Grid>
         </Grid>
@@ -283,40 +304,10 @@ const LivePage: React.FC<LivePageProps> = ({
             brickLength={brick.brickLength}
           />
           <div className="intro-text-row">
-            <Hidden only={["sm", "md", "lg", "xl"]}>
-              <span className="heading">Investigation</span>
-            </Hidden>
-            <LiveStepper
-              activeStep={activeStep}
-              questions={questions}
-              previousStep={prevStep}
-              handleStep={handleStep}
-              moveToPrep={props.moveToPrep}
-            />
+            <span className="heading">Investigation</span>
+            {renderStepper()}
           </div>
-          <div className="action-footer">
-            <div>{renderPrevButton()}</div>
-            <div className="direction-info">
-              <h2>Next</h2>
-              <span>
-                Don’t panic, you can
-                <br />
-                always come back
-              </span>
-            </div>
-            <div>
-              <button
-                type="button"
-                className="play-preview svgOnHover play-green"
-                onClick={next}
-              >
-                <svg className="svg w80 h80 active m-l-02">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#arrow-right"} />
-                </svg>
-              </button>
-            </div>
-          </div>
+          {renderFooter()}
         </div>
         <div className="introduction-page">
           <SwipeableViews
