@@ -6,7 +6,6 @@ import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
 import { PlayStatus } from '../model/model';
 import { BrickLengthEnum } from 'model/brick';
-import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import sprite from "../../../../assets/img/icons-sprite.svg";
 import { PlayMode } from '../model';

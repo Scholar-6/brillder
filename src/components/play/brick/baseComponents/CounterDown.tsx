@@ -6,7 +6,7 @@ let moment = require('moment');
 
 
 interface CounterProps {
-  duration: any;
+  endTime: Moment;
   onEnd(): void;
 }
 
@@ -15,7 +15,6 @@ interface CounterState {
   seconds: string;
   milliseconds: string;
   isCounting: boolean;
-  endTime: Moment;
   timerInterval: number;
   isDeadlineSoon: boolean;
 }
@@ -28,7 +27,6 @@ class CounterDown extends Component<CounterProps, CounterState> {
       seconds: "00",
       minutes: "00",
       milliseconds: "00",
-      endTime: moment().add(props.duration),
       isCounting: false,
       timerInterval: this.setTimer(),
       isDeadlineSoon: false
@@ -38,7 +36,7 @@ class CounterDown extends Component<CounterProps, CounterState> {
   setTimer() {
     return setInterval(() => {
       let now = moment();
-      let dif = moment.duration(this.state.endTime.diff(now));
+      let dif = moment.duration(this.props.endTime.diff(now));
       let minutes = this.formatTwoLastDigits(dif.hours() * 60 + dif.minutes());
       let seconds = this.formatTwoLastDigits(dif.seconds());
       let milliseconds = this.formatTwoLastDigits(Math.round(dif.milliseconds() / 10));
