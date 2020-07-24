@@ -151,10 +151,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     toggleSideBar(true);
   }
 
-  const moveToPrep = () => {
-    props.history.push(`/play/brick/${brick.id}/intro`);
-  }
-
   const onHighlight = (name: BrickFieldNames, value: string) => {
     brick[name] = value;
     setBrick(brick);
@@ -189,12 +185,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       <Switch>
         <Route exac path="/play/brick/:brickId/intro">
           <Introduction
-            onHighlight={onHighlight}
+            location={props.location}
             mode={mode}
             brick={brick}
             startTime={startTime}
             setStartTime={setStartTime}
             moveNext={moveToLive}
+            onHighlight={onHighlight}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/live">
@@ -206,7 +203,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             brick={brick}
             updateAttempts={updateAttempts}
             finishBrick={finishBrick}
-            moveToPrep={moveToPrep}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/provisionalScore">
