@@ -30,6 +30,8 @@ import StudentRoute from './StudentRoute';
 import AuthRedirectRoute from './AuthRedirectRoute';
 import AllUsersRoute from './AllUsersRoute';
 
+import BrickWrapper from './BrickWrapper';
+
 import {setBrillderTitle} from 'components/services/titleService';
 
 
@@ -96,7 +98,7 @@ const App: React.FC = (props: any) => {
   return (
     <ThemeProvider theme={theme}>
       <Switch>
-        <StudentRoute path="/play/brick/:brickId" component={PlayBrickRouting} />
+        <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <StudentRoute path="/play/dashboard" component={Dashboard} />
 
