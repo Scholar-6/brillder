@@ -108,6 +108,7 @@ class DocumentHighlightComponent extends React.Component<
         Table,
         TableToolbar,
         FontBackgroundColor,
+        MediaEmbed,
         Image,
       ],
       toolbar: [],
