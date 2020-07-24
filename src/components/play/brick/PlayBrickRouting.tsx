@@ -248,9 +248,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   return (
     <div className="play-preview-pages">
       {renderHead()}
-      <Grid container direction="row" className={className}>
+      <div className={className}>
         <PlayLeftSidebar mode={mode} sidebarRolledUp={sidebarRolledUp} setMode={setMode} toggleSidebar={toggleSidebar} />
-        <Grid item className="brick-row-container">
+        <div className="brick-row-container">
           {renderRouter()}
         </div>
       </div>
