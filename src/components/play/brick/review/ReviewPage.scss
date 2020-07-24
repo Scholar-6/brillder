@@ -15,31 +15,6 @@
       }
     }
   }
-
-  .introduction-info {
-    .intro-text-row {
-      @include phone_and_tabletP {
-        padding-right: 13vw !important;
-      }
-    }
-    .intro-text-row {
-      .stepper {
-        @include phone_and_tabletP {
-          flex-direction: row !important;
-        }
-        .step {
-          @include phone_and_tabletP {
-            font-size: 4vw !important;
-            svg {
-              height: 4vw !important;
-              width: 4vw !important;
-            }
-          }
-          color: var(--theme-dark-blue) !important;
-        }
-      }
-    }
-  }
   .introduction-page {
     @include phone_and_tabletP {
       height: calc(100vh - 49.8vw) !important;

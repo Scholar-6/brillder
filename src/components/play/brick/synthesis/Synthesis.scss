@@ -25,7 +25,7 @@
   .start-brick-button {
     margin-right: 0px;
 
-    >span {
+    > span {
       font: 16px/24px $font-family-regular;
       margin-right: 5px;
     }
@@ -67,11 +67,15 @@
     .question-index-container {
       width: 7vw !important;
       height: 7vw !important;
-
       .question-index {
         width: 7vw !important;
         height: 7vw !important;
         font-size: 6vw !important;
+      }
+    }
+    .question-live-play {
+      @include phone_and_tabletP {
+        padding: 4vw;
       }
     }
   }
