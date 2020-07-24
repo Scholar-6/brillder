@@ -75,6 +75,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     initAttempts = prefillAttempts(props.brick.questions);
   }
 
+
+  console.log(props.brick);
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
@@ -174,6 +176,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const moveToLive = () => {
     props.history.push(`/play/brick/${props.brick.id}/live`);
     toggleSideBar(true);
+  }
+
+  const onHighlight = () => {
   }
 
   const renderHead = () => {
