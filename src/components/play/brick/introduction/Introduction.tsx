@@ -9,7 +9,6 @@ import TimerWithClock from "../baseComponents/TimerWithClock";
 import { Moment } from "moment";
 import PrepareText from './PrepareText';
 import IntroductionDetails from "./IntroductionDetails";
-import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
 import { PlayMode } from "../PlayBrickRouting";
 import HighlightHtml from './HighlightHtml';
@@ -218,7 +217,15 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (state.prepExpanded) {
       return (
         <div className="expanded-text">
-          <YoutubeAndMathInHtml value={brick.prep} />
+          <HighlightHtml
+            value={brick.prep}
+            mode={props.mode}
+            onHighlight={value => {
+              if (props.onHighlight) {
+                props.onHighlight(BrickFieldNames.prep, value)
+              }
+            }}
+          />
         </div>
       );
     }
