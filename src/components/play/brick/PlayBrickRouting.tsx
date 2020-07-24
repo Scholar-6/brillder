@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -6,17 +6,13 @@ import { Grid } from "@material-ui/core";
 // @ts-ignore
 import { connect } from "react-redux";
 
-import MenuItem from "@material-ui/core/MenuItem";
-
 import "./brick.scss";
-import actions from "redux/actions/brickActions";
 import Introduction from "./introduction/Introduction";
 import Live from "./live/Live";
 import ProvisionalScore from "./provisionalScore/ProvisionalScore";
 import Synthesis from "./synthesis/Synthesis";
 import Review from "./review/ReviewPage";
 import Ending from "./ending/Ending";
-import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 import { Brick } from "model/brick";
 import { ComponentAttempt, PlayStatus } from "./model/model";
@@ -31,9 +27,10 @@ import { prefillAttempts } from "components/services/PlayService";
 import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import PlayLeftSidebar, { PlayMode } from './PlayLeftSidebar';
 import { ReduxCombinedState } from "redux/reducers";
-import sprite from "../../../assets/img/icons-sprite.svg";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
+import { BrickFieldNames } from "components/build/proposal/model";
 
 export interface BrickAttempt {
   brickId?: number;
@@ -45,6 +42,7 @@ export interface BrickAttempt {
   student?: any;
   answers: ComponentAttempt<any>[];
 }
+
 
 function shuffle(a: any[]) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -60,21 +58,11 @@ interface BrickRoutingProps {
   user: any;
   history: any;
   location: any;
-  fetchBrick(brickId: number): void;
-}
-
-enum PlayMode {
-  Normal = 1,
-  Highlight,
-  Anotating
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  let initAttempts: any[] = [];
-  if (props.brick) {
-    initAttempts = prefillAttempts(props.brick.questions);
-  }
-
+  const [brick, setBrick] = React.useState(props.brick);
+  const initAttempts = prefillAttempts(brick.questions);
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
@@ -84,26 +72,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [mode, setMode] = React.useState(PlayMode.Normal);
   const location = useLocation();
 
-  useEffect(() => {
-    if (props.brick) {
-      let initAttempts = prefillAttempts(props.brick.questions);
-      setAttempts(initAttempts);
-    }
-  }, [props.brick]);
-
   // Commented this in order to allow students to also be builders and vice versa, we may need to add this back in (11/5/2020)
   // let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor);
   // if (cantPlay) {
   //   return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
   // }
 
-  const brickId = parseInt(props.match.params.brickId);
-  if (!props.brick || props.brick.id !== brickId || !props.brick.author) {
-    props.fetchBrick(brickId);
-    return <PageLoader content="...Loading brick..." />;
-  }
-
-  setBrillderTitle(props.brick.title);
+  setBrillderTitle(brick.title);
 
   const updateAttempts = (attempt: any, index: number) => {
     attempts[index] = attempt;
@@ -122,7 +97,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
     let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba: BrickAttempt = {
-      brick: props.brick,
+      brick: brick,
       score: score,
       maxScore: maxScore,
       student: null,
@@ -153,7 +128,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const saveBrickAttempt = () => {
-    brickAttempt.brickId = props.brick.id;
+    brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
     return axios
       .post(
@@ -172,8 +147,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const toggleSidebar = () => toggleSideBar(!sidebarRolledUp);
 
   const moveToLive = () => {
-    props.history.push(`/play/brick/${props.brick.id}/live`);
+    props.history.push(`/play/brick/${brick.id}/live`);
     toggleSideBar(true);
+  }
+
+  const onHighlight = (name: BrickFieldNames, value: string) => {
+    brick[name] = value;
+    setBrick(brick);
   }
 
   const renderHead = () => {
@@ -200,68 +180,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       />
     );
   };
-
-  const renderToggleButton = () => {
-    if (sidebarRolledUp) {
-      return (
-        <svg className="svg minimize-icon" onClick={toggleSidebar}>
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#maximize-2"} />
-        </svg>
-      );
-    }
-    return (
-      <svg className="svg minimize-icon" onClick={toggleSidebar}>
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#minimize-2"} />
-      </svg>
-    );
-  };
-
-  const renderHightlightButton = () => {
-    return (
-      <MenuItem className="sidebar-button">
-        {!sidebarRolledUp ? <span>Highlight Text</span> : ""}
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#highlighter"} className="text-white" />
-        </svg>
-      </MenuItem>
-    );
-  };
-
-  const renderAnotateButton = () => {
-    return (
-      <MenuItem className="sidebar-button">
-        {!sidebarRolledUp ? <span>Annotate Text</span> : ""}
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#pen-tool"} className="text-white" />
-        </svg>
-      </MenuItem>
-    );
-  };
-
-  const renderSidebar = () => {
-    let className = "sort-and-filter-container play-sidebar";
-    if (sidebarRolledUp) {
-      className += " rolled-up";
-    }
-    return (
-      <div className={className}>
-        {renderToggleButton()}
-        {renderHightlightButton()}
-        {renderAnotateButton()}
-      </div>
-    );
-  };
-
   const renderRouter = () => {
     return (
       <Switch>
         <Route exac path="/play/brick/:brickId/intro">
           <Introduction
-            brick={props.brick}
+            onHighlight={onHighlight}
+            mode={mode}
+            brick={brick}
             startTime={startTime}
             setStartTime={setStartTime}
             moveNext={moveToLive}
@@ -271,8 +197,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Live
             status={status}
             attempts={attempts}
-            questions={props.brick.questions}
-            brick={props.brick}
+            questions={brick.questions}
+            brick={brick}
             updateAttempts={updateAttempts}
             finishBrick={finishBrick}
           />
@@ -281,20 +207,20 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <ProvisionalScore
             status={status}
             startTime={startTime}
-            brick={props.brick}
+            brick={brick}
             attempts={attempts}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/synthesis">
-          <Synthesis status={status} brick={props.brick} />
+          <Synthesis status={status} brick={brick} />
         </Route>
         <Route exac path="/play/brick/:brickId/review">
           <Review
             status={status}
-            questions={props.brick.questions}
-            brickId={props.brick.id}
+            questions={brick.questions}
+            brickId={brick.id}
             startTime={startTime}
-            brickLength={props.brick.brickLength}
+            brickLength={brick.brickLength}
             updateAttempts={updateReviewAttempts}
             attempts={attempts}
             finishBrick={finishReview}
@@ -303,7 +229,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <Route exac path="/play/brick/:brickId/ending">
           <Ending
             status={status}
-            brick={props.brick}
+            brick={brick}
             history={props.history}
             attempts={attempts}
             brickAttempt={brickAttempt}
@@ -322,9 +248,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   return (
     <div className="play-preview-pages">
       {renderHead()}
-      <div className={className}>
-        {renderSidebar()}
-        <div className="brick-row-container">
+      <Grid container direction="row" className={className}>
+        <PlayLeftSidebar mode={mode} sidebarRolledUp={sidebarRolledUp} setMode={setMode} toggleSidebar={toggleSidebar} />
+        <Grid item className="brick-row-container">
           {renderRouter()}
         </div>
       </div>
@@ -416,10 +342,6 @@ const mapState = (state: ReduxCombinedState) => ({
   brick: parseAndShuffleQuestions(state.brick.brick) as Brick,
 });
 
-const mapDispatch = (dispatch: any) => ({
-  fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
-});
-
-const connector = connect(mapState, mapDispatch);
+const connector = connect(mapState);
 
 export default connector(BrickRouting);
