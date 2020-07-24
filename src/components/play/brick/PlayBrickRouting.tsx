@@ -9,14 +9,12 @@ import { connect } from "react-redux";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import "./brick.scss";
-import actions from "redux/actions/brickActions";
 import Introduction from "./introduction/Introduction";
 import Live from "./live/Live";
 import ProvisionalScore from "./provisionalScore/ProvisionalScore";
 import Synthesis from "./synthesis/Synthesis";
 import Review from "./review/ReviewPage";
 import Ending from "./ending/Ending";
-import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 import { Brick } from "model/brick";
 import { ComponentAttempt, PlayStatus } from "./model/model";
@@ -66,17 +64,12 @@ interface BrickRoutingProps {
   user: any;
   history: any;
   location: any;
-  fetchBrick(brickId: number): void;
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   let initAttempts: any[] = [];
-  if (props.brick) {
-    initAttempts = prefillAttempts(props.brick.questions);
-  }
+  initAttempts = prefillAttempts(props.brick.questions);
 
-
-  console.log(props.brick);
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
@@ -86,24 +79,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [mode, setMode] = React.useState(PlayMode.Normal);
   const location = useLocation();
 
-  useEffect(() => {
-    if (props.brick) {
-      let initAttempts = prefillAttempts(props.brick.questions);
-      setAttempts(initAttempts);
-    }
-  }, [props.brick]);
-
   // Commented this in order to allow students to also be builders and vice versa, we may need to add this back in (11/5/2020)
   // let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor);
   // if (cantPlay) {
   //   return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
   // }
-
-  const brickId = parseInt(props.match.params.brickId);
-  if (!props.brick || props.brick.id !== brickId || !props.brick.author) {
-    props.fetchBrick(brickId);
-    return <PageLoader content="...Loading brick..." />;
-  }
 
   setBrillderTitle(props.brick.title);
 
@@ -422,10 +402,6 @@ const mapState = (state: ReduxCombinedState) => ({
   brick: parseAndShuffleQuestions(state.brick.brick) as Brick,
 });
 
-const mapDispatch = (dispatch: any) => ({
-  fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
-});
-
-const connector = connect(mapState, mapDispatch);
+const connector = connect(mapState);
 
 export default connector(BrickRouting);
