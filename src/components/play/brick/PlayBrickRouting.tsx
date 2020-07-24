@@ -32,6 +32,7 @@ import PageHeadWithMenu, {
 import { ReduxCombinedState } from "redux/reducers";
 import sprite from "../../../assets/img/icons-sprite.svg";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
+import { BrickFieldNames } from "components/build/proposal/model";
 
 export interface BrickAttempt {
   brickId?: number;
@@ -67,9 +68,8 @@ interface BrickRoutingProps {
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  let initAttempts: any[] = [];
-  initAttempts = prefillAttempts(props.brick.questions);
-
+  const [brick, setBrick] = React.useState(props.brick);
+  const initAttempts = prefillAttempts(brick.questions);
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
@@ -85,7 +85,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   //   return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
   // }
 
-  setBrillderTitle(props.brick.title);
+  setBrillderTitle(brick.title);
 
   const updateAttempts = (attempt: any, index: number) => {
     attempts[index] = attempt;
@@ -104,7 +104,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
     let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba: BrickAttempt = {
-      brick: props.brick,
+      brick: brick,
       score: score,
       maxScore: maxScore,
       student: null,
@@ -135,7 +135,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const saveBrickAttempt = () => {
-    brickAttempt.brickId = props.brick.id;
+    brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
     return axios
       .post(
@@ -154,11 +154,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const toggleSidebar = () => toggleSideBar(!sidebarRolledUp);
 
   const moveToLive = () => {
-    props.history.push(`/play/brick/${props.brick.id}/live`);
+    props.history.push(`/play/brick/${brick.id}/live`);
     toggleSideBar(true);
   }
 
-  const onHighlight = () => {
+  const onHighlight = (name: BrickFieldNames, value: string) => {
+    brick[name] = value;
+    setBrick(brick);
   }
 
   const renderHead = () => {
@@ -246,8 +248,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       <Switch>
         <Route exac path="/play/brick/:brickId/intro">
           <Introduction
+            onHighlight={onHighlight}
             mode={mode}
-            brick={props.brick}
+            brick={brick}
             startTime={startTime}
             setStartTime={setStartTime}
             moveNext={moveToLive}
@@ -257,8 +260,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Live
             status={status}
             attempts={attempts}
-            questions={props.brick.questions}
-            brick={props.brick}
+            questions={brick.questions}
+            brick={brick}
             updateAttempts={updateAttempts}
             finishBrick={finishBrick}
           />
@@ -267,20 +270,20 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <ProvisionalScore
             status={status}
             startTime={startTime}
-            brick={props.brick}
+            brick={brick}
             attempts={attempts}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/synthesis">
-          <Synthesis status={status} brick={props.brick} />
+          <Synthesis status={status} brick={brick} />
         </Route>
         <Route exac path="/play/brick/:brickId/review">
           <Review
             status={status}
-            questions={props.brick.questions}
-            brickId={props.brick.id}
+            questions={brick.questions}
+            brickId={brick.id}
             startTime={startTime}
-            brickLength={props.brick.brickLength}
+            brickLength={brick.brickLength}
             updateAttempts={updateReviewAttempts}
             attempts={attempts}
             finishBrick={finishReview}
@@ -289,7 +292,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         <Route exac path="/play/brick/:brickId/ending">
           <Ending
             status={status}
-            brick={props.brick}
+            brick={brick}
             history={props.history}
             attempts={attempts}
             brickAttempt={brickAttempt}
