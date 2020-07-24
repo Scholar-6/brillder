@@ -75,7 +75,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
   const startBrick = () => {
     if (!state.prepExpanded) {
-      setState({...state, isPrepDialogOpen: true});
+      setState({ ...state, isPrepDialogOpen: true });
       return;
     }
     if (!props.startTime) {
@@ -126,11 +126,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             className={state.prepExpanded ? "play-preview svgOnHover play-green" : "play-preview svgOnHover play-gray"}
             onClick={startBrick}
           >
-            <svg className="svg w80 h80 m-l-02">
+            <svg className="svg w80 h80 m-l-03">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#play-thin"} />
             </svg>
-            <svg className="svg w80 h80 colored m-l-02">
+            <svg className="svg w80 h80 colored m-l-03">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#play-thick"} />
             </svg>
@@ -317,7 +317,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       </Hidden>
       <PrepExpandedDialog
         isOpen={state.isPrepDialogOpen}
-        close={() => setState({...state, isPrepDialogOpen: false})}
+        close={() => setState({ ...state, isPrepDialogOpen: false })}
         onSubmit={() => togglePrep()}
       />
     </div>
