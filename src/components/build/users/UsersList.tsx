@@ -218,7 +218,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     );
   }
 
-  handleSortChange = (e: any) => {};
+  handleSortChange = (e: any) => { };
 
   getCheckedRoles() {
     const result = [];
@@ -474,8 +474,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                   </svg>
                 </button>
               ) : (
-                ""
-              )}
+                  ""
+                )}
               {showNext ? (
                 <button
                   className={
@@ -490,8 +490,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                   </svg>
                 </button>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </div>
           </Grid>
         </Grid>
@@ -644,16 +644,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     const { history } = this.props;
     return (
       <div className="user-list-page">
-        <div className="upper-part">
-          <PageHeadWithMenu
-            page={PageEnum.ManageUsers}
-            placeholder="Search by Name, Email or Subject"
-            user={this.props.user}
-            history={history}
-            search={() => this.search()}
-            searching={(v: string) => this.searching(v)}
-          />
-        </div>
+        <PageHeadWithMenu
+          page={PageEnum.ManageUsers}
+          placeholder="Search by Name, Email or Subject"
+          user={this.props.user}
+          history={history}
+          search={() => this.search()}
+          searching={(v: string) => this.searching(v)}
+        />
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
             {this.renderSortAndFilterBox()}

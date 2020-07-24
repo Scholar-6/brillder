@@ -184,16 +184,14 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     <div className="brick-container review-page">
       <Grid container direction="row">
         <Grid item sm={8} xs={12}>
-          <div className="introduction-page">
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={activeStep}
-              className="swipe-view"
-              onChangeIndex={handleStep}
-            >
-              {questions.map(renderQuestionContainer)}
-            </SwipeableViews>
-          </div>
+          <SwipeableViews
+            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={activeStep}
+            className="swipe-view"
+            onChangeIndex={handleStep}
+          >
+            {questions.map(renderQuestionContainer)}
+          </SwipeableViews>
         </Grid>
         <Grid item sm={4} xs={12}>
           <div className="introduction-info">

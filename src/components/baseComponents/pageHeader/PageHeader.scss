@@ -1,6 +1,6 @@
-@import "../../../assets/sass/partials/variables";
-@import "../../../assets/sass/partials/mixins";
-@import "../../../assets/sass/partials/extensions";
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
 .user-list-page,
 .user-profile-page,
@@ -67,7 +67,7 @@
         position: relative;
         align-items: center;
         justify-content: center;
-        height:6vh;
+        height: 6vh;
         &.active {
           z-index: 999999;
         }
@@ -276,8 +276,7 @@
       color: var(--gray);
     }
     .left-pagination {
-      padding-top: 0.35vh;
-      padding-left: 0.15vw;
+      padding: 0 1vw;
       line-height: 1.4;
     }
     .bottom-next-button {

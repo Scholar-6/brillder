@@ -51,7 +51,8 @@
         }
       }
       .sidebar-button.active {
-        span, use {
+        span,
+        use {
           color: var(--yellow) !important;
           fill: var(--yellow) !important;
         }
@@ -67,16 +68,12 @@
       }
     }
     .brick-row-container {
+      background-color: var(--white);
       @include phone_and_tabletP {
         border-radius: 0;
         height: $back-to-work-height-mobile-view;
       }
       .brick-container {
-        @include phone_and_tabletP {
-        }
-        @include tabletP {
-          background-color: var(--white);
-        }
         .MuiGrid-container {
           @include phone_and_tabletP {
             display: flex;
