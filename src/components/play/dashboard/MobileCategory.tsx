@@ -233,16 +233,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
           </div>
           <div className="breadcrumbs">New</div>
         </div>
-        <div className="upper-part">
-          <PageHeadWithMenu
-            page={PageEnum.ViewAll}
-            user={this.props.user}
-            placeholder={"Search Ongoing Projects & Published Bricks…"}
-            history={this.props.history}
-            search={() => this.search()}
-            searching={(v: string) => this.searching(v)}
-          />
-        </div>
+        <PageHeadWithMenu
+          page={PageEnum.ViewAll}
+          user={this.props.user}
+          placeholder={"Search Ongoing Projects & Published Bricks…"}
+          history={this.props.history}
+          search={() => this.search()}
+          searching={(v: string) => this.searching(v)}
+        />
         <div className="mobile-scroll-bricks">
           {this.renderMobileBricks()}
         </div>
