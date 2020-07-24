@@ -202,7 +202,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <HighlightHtml
             value={brick.brief}
             mode={props.mode}
-            onHighlight={value => props.onHighlight?(BrickFieldNames.brief, value) : {}}
+            onHighlight={value => {
+              if (props.onHighlight) {
+                props.onHighlight(BrickFieldNames.brief, value)
+              }
+            }}
           />
         </div>
       );

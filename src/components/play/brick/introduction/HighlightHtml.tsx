@@ -12,13 +12,10 @@ interface SelectableProps {
 }
 
 const HighlightHtml: React.FC<SelectableProps> = (props) => {
-  if (props.mode === PlayMode.Highlighting) {
-      return (
-        <DocumentHighlight
-          onChange={(data) => props.onHighlight?(data) : {}}
-          data={props.value}
-        />
-      );
+  if (props.mode === PlayMode.Highlighting && props.onHighlight) {
+    return (
+      <DocumentHighlight onChange={props.onHighlight} data={props.value} />
+    );
   }
   return <YoutubeAndMathInHtml value={props.value} />;
 };
