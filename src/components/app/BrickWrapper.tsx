@@ -3,7 +3,7 @@ import { Brick } from "model/brick";
 // @ts-ignore
 import { connect } from 'react-redux';
 
-import actions from '../../redux/actions/auth';
+import actions from "redux/actions/brickActions";
 import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
@@ -13,8 +13,7 @@ interface StudentRouteProps {
   brick: Brick;
   isRedirectedToProfile: boolean;
   match: any;
-  getUser():void;
-  isAuthorized():void;
+  fetchBrick(brickId: number): void;
 }
 
 const BrickWrapper: React.FC<StudentRouteProps> = ({ component: Component, ...props }) => {
@@ -23,6 +22,7 @@ const BrickWrapper: React.FC<StudentRouteProps> = ({ component: Component, ...pr
   if (brick && brick.id && brick.id === brickId && brick.author) {
     return <Component {...props} />
   } else {
+    props.fetchBrick(brickId);
     return <PageLoader content="...Forbidden..." />;
   }
 }
