@@ -17,6 +17,7 @@ import { Brick } from "model/brick";
 import LiveStepper from "./LiveStepper";
 import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";
 import PulsingCircleNumber from "./PulsingCircleNumber";
+import { PlayMode } from "../model";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -27,6 +28,9 @@ interface LivePageProps {
   previewQuestionIndex?: number;
   updateAttempts(attempt: any, index: number): any;
   finishBrick(): void;
+
+  // only for real play
+  mode?: PlayMode;
 }
 
 const LivePage: React.FC<LivePageProps> = ({
@@ -156,6 +160,7 @@ const LivePage: React.FC<LivePageProps> = ({
   const renderQuestion = (question: Question, index: number) => {
     return (
       <QuestionLive
+        mode={props.mode}
         isTimeover={isTimeover}
         question={question}
         answers={answers[index]}
