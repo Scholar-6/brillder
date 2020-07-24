@@ -28,6 +28,7 @@ interface LivePageProps {
   previewQuestionIndex?: number;
   updateAttempts(attempt: any, index: number): any;
   finishBrick(): void;
+  moveToPrep(): void;
 
   // only for real play
   mode?: PlayMode;
@@ -243,6 +244,7 @@ const LivePage: React.FC<LivePageProps> = ({
                   questions={questions}
                   previousStep={prevStep}
                   handleStep={handleStep}
+                  moveToPrep={props.moveToPrep}
                 />
               </div>
               <div className="action-footer">
@@ -289,6 +291,7 @@ const LivePage: React.FC<LivePageProps> = ({
               questions={questions}
               previousStep={prevStep}
               handleStep={handleStep}
+              moveToPrep={props.moveToPrep}
             />
           </div>
           <div className="action-footer">
