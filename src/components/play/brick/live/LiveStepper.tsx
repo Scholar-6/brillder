@@ -9,21 +9,10 @@ interface StepperProps {
   previousStep: number;
   questions: Question[];
   handleStep(questionIndex: number): any;
+  moveToPrep(): void;
 }
 
-const LiveStepper: React.FC<StepperProps> = ({
-  activeStep,
-  previousStep,
-  questions,
-  handleStep,
-}) => {
-  function isAttempted(question: Question) {
-    if (question.edited) {
-      return true;
-    }
-    return false;
-  }
-
+const LiveStepper: React.FC<StepperProps> = ({ questions, ...props }) => {
   let colWidth = 4;
   if (questions.length > 27) {
     colWidth = 3;
@@ -31,33 +20,41 @@ const LiveStepper: React.FC<StepperProps> = ({
 
   let questionIndex = 0;
 
-  const renderQuestionStep = (question: Question, key: number, colWidth: number) => {
+  const isAttempted = (question: Question) => {
+    if (question.edited) {
+      return true;
+    }
+    return false;
+  }
+
+  const renderQuestionStep = (question: Question, key: number) => {
     let edited = isAttempted(question);
 
     let className = "step";
     if (edited) {
       className += " completed";
     }
-    if (activeStep === questionIndex) {
+    if (props.activeStep === questionIndex) {
       className += " current";
     }
     questionIndex++;
     let index = questionIndex;
     return (
-      <div  key={key} className={className} onClick={handleStep(index - 1)}>
+      <div key={key} className={className} onClick={props.handleStep(index - 1)}>
         <span>{questionIndex}</span>
-        {question.edited ? (
-          <PulsingCircle isPulsing={previousStep === questionIndex - 1} />
-        ) : (
-          ""
-        )}
+        {
+          question.edited
+            ? <PulsingCircle isPulsing={props.previousStep === questionIndex - 1} />
+            : ""
+        }
       </div>
     );
   };
 
   return (
-    <div  className="stepper">
-        {questions.map((question, index) => renderQuestionStep(question, index, colWidth))}
+    <div className="stepper">
+      <div className="step current" onClick={props.moveToPrep}>Prep</div>
+      {questions.map(renderQuestionStep)}
     </div>
   );
 };
