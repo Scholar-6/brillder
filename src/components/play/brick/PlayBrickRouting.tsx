@@ -1,30 +1,37 @@
-import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { Grid } from "@material-ui/core";
 // @ts-ignore
 import { connect } from "react-redux";
 
-import './brick.scss';
-import actions from 'redux/actions/brickActions';
-import Introduction from './introduction/Introduction';
-import Live from './live/Live';
-import ProvisionalScore from './provisionalScore/ProvisionalScore';
-import Synthesis from './synthesis/Synthesis';
-import Review from './review/ReviewPage';
-import Ending from './ending/Ending';
-import axios from 'axios';
+import "./brick.scss";
+import Introduction from "./introduction/Introduction";
+import Live from "./live/Live";
+import ProvisionalScore from "./provisionalScore/ProvisionalScore";
+import Synthesis from "./synthesis/Synthesis";
+import Review from "./review/ReviewPage";
+import Ending from "./ending/Ending";
 
-import { Brick } from 'model/brick';
-import { ComponentAttempt, PlayStatus } from './model/model';
+import { Brick } from "model/brick";
+import { ComponentAttempt, PlayStatus } from "./model/model";
 import {
-  Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
-} from 'model/question';
-import { setBrillderTitle } from 'components/services/titleService';
-import { prefillAttempts } from 'components/services/PlayService';
-import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
-import { Grid } from '@material-ui/core';
-import { ReduxCombinedState } from 'redux/reducers';
-import PageLoader from 'components/baseComponents/loaders/pageLoader';
-
+  Question,
+  QuestionTypeEnum,
+  QuestionComponentTypeEnum,
+  HintStatus,
+} from "model/question";
+import { setBrillderTitle } from "components/services/titleService";
+import { prefillAttempts } from "components/services/PlayService";
+import PageHeadWithMenu, {
+  PageEnum,
+} from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import PlayLeftSidebar from './PlayLeftSidebar';
+import { PlayMode} from './model';
+import { ReduxCombinedState } from "redux/reducers";
+import HomeButton from "components/baseComponents/homeButton/HomeButton";
+import { BrickFieldNames } from "components/build/proposal/model";
 
 export interface BrickAttempt {
   brickId?: number;
@@ -36,6 +43,7 @@ export interface BrickAttempt {
   student?: any;
   answers: ComponentAttempt<any>[];
 }
+
 
 function shuffle(a: any[]) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -51,27 +59,19 @@ interface BrickRoutingProps {
   user: any;
   history: any;
   location: any;
-  fetchBrick(brickId: number): void;
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  let initAttempts: any[] = [];
-  if (props.brick) {
-    initAttempts = prefillAttempts(props.brick.questions);
-  }
-
+  const [brick, setBrick] = React.useState(props.brick);
+  const initAttempts = prefillAttempts(brick.questions);
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
   const [startTime, setStartTime] = React.useState(undefined);
-
-  useEffect(() => {
-    if (props.brick) {
-      let initAttempts = prefillAttempts(props.brick.questions);
-      setAttempts(initAttempts);
-    }
-  }, [props.brick]);
+  const [sidebarRolledUp, toggleSideBar] = React.useState(false);
+  const [mode, setMode] = React.useState(PlayMode.Normal);
+  const location = useLocation();
 
   // Commented this in order to allow students to also be builders and vice versa, we may need to add this back in (11/5/2020)
   // let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor);
@@ -79,23 +79,17 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   //   return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
   // }
 
-  const brickId = parseInt(props.match.params.brickId);
-  if (!props.brick || props.brick.id !== brickId || !props.brick.author) {
-    props.fetchBrick(brickId);
-    return <PageLoader content="...Loading brick..." />;
-  }
-
-  setBrillderTitle(props.brick.title);
+  setBrillderTitle(brick.title);
 
   const updateAttempts = (attempt: any, index: number) => {
     attempts[index] = attempt;
     setAttempts(attempts);
-  }
+  };
 
   const updateReviewAttempts = (attempt: any, index: number) => {
     reviewAttempts[index] = attempt;
     setReviewAttempts(reviewAttempts);
-  }
+  };
 
   /* TODO: extract all of this scoring code into a scoring service 13/6/2020*/
   const finishBrick = () => {
@@ -104,104 +98,172 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
     let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba: BrickAttempt = {
-      brick: props.brick,
+      brick: brick,
       score: score,
       maxScore: maxScore,
       student: null,
-      answers: attempts
+      answers: attempts,
     };
     setStatus(PlayStatus.Review);
     setBrickAttempt(ba);
     setReviewAttempts(Object.assign([], attempts));
     setStatus(PlayStatus.Review);
-  }
+  };
 
   const finishReview = () => {
-    let score = reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0) + brickAttempt.score;
-    let maxScore = reviewAttempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
+    let score =
+      reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0) +
+      brickAttempt.score;
+    let maxScore = reviewAttempts.reduce(
+      (acc, answer) => acc + answer.maxMarks,
+      0
+    );
     var ba: BrickAttempt = {
       score,
       maxScore,
       oldScore: brickAttempt.score,
-      answers: reviewAttempts
+      answers: reviewAttempts,
     };
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
-  }
+  };
 
   const saveBrickAttempt = () => {
-    brickAttempt.brickId = props.brick.id;
+    brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
-    return axios.post(
-      process.env.REACT_APP_BACKEND_HOST + '/play/attempt',
-      brickAttempt,
-      { withCredentials: true }
-    ).then(res => {
-      props.history.push(`/play/dashboard`);
-    })
-      .catch(error => {
-        alert('Can`t save your attempt');
+    return axios
+      .post(
+        process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
+        brickAttempt,
+        { withCredentials: true }
+      )
+      .then((res) => {
+        props.history.push(`/play/dashboard`);
+      })
+      .catch((error) => {
+        alert("Can`t save your attempt");
       });
+  };
+
+  const toggleSidebar = () => toggleSideBar(!sidebarRolledUp);
+
+  const moveToLive = () => {
+    props.history.push(`/play/brick/${brick.id}/live`);
+    toggleSideBar(true);
+  }
+
+  const onHighlight = (name: BrickFieldNames, value: string) => {
+    brick[name] = value;
+    setBrick(brick);
+  }
+
+  const renderHead = () => {
+    let isMobileHidden = false;
+    const live = location.pathname.search("/live");
+    const score = location.pathname.search("/provisionalScore");
+    const synthesis = location.pathname.search("/synthesis");
+    const review = location.pathname.search("/review");
+    const ending = location.pathname.search("/ending");
+    if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0) {
+      isMobileHidden = true;
+    }
+    if (sidebarRolledUp) {
+      return <HomeButton link="/home" />;
+    }
+    return (
+      <PageHeadWithMenu
+        isMobileHidden={isMobileHidden}
+        page={PageEnum.Play}
+        user={props.user}
+        history={props.history}
+        search={() => { }}
+        searching={() => { }}
+      />
+    );
+  };
+  const renderRouter = () => {
+    return (
+      <Switch>
+        <Route exac path="/play/brick/:brickId/intro">
+          <Introduction
+            onHighlight={onHighlight}
+            mode={mode}
+            brick={brick}
+            startTime={startTime}
+            setStartTime={setStartTime}
+            moveNext={moveToLive}
+          />
+        </Route>
+        <Route exac path="/play/brick/:brickId/live">
+          <Live
+            status={status}
+            attempts={attempts}
+            questions={brick.questions}
+            brick={brick}
+            updateAttempts={updateAttempts}
+            finishBrick={finishBrick}
+          />
+        </Route>
+        <Route exac path="/play/brick/:brickId/provisionalScore">
+          <ProvisionalScore
+            status={status}
+            startTime={startTime}
+            brick={brick}
+            attempts={attempts}
+          />
+        </Route>
+        <Route exac path="/play/brick/:brickId/synthesis">
+          <Synthesis mode={mode} status={status} brick={brick} />
+        </Route>
+        <Route exac path="/play/brick/:brickId/review">
+          <Review
+            status={status}
+            questions={brick.questions}
+            brickId={brick.id}
+            startTime={startTime}
+            brickLength={brick.brickLength}
+            updateAttempts={updateReviewAttempts}
+            attempts={attempts}
+            finishBrick={finishReview}
+          />
+        </Route>
+        <Route exac path="/play/brick/:brickId/ending">
+          <Ending
+            status={status}
+            brick={brick}
+            history={props.history}
+            attempts={attempts}
+            brickAttempt={brickAttempt}
+            saveBrick={saveBrickAttempt}
+          />
+        </Route>
+      </Switch>
+    );
+  };
+
+  let className = "sorted-row";
+  if (sidebarRolledUp) {
+    className += " sorted-row-expanded";
   }
 
   return (
     <div className="play-preview-pages">
-      <PageHeadWithMenu page={PageEnum.Play} user={props.user} history={props.history} search={() => {}} searching={()=> {}} />
-      <Grid container direction="row" className="sorted-row">
-        <Grid container item className="sort-and-filter-container">
-        </Grid>
-        <Grid item className="brick-row-container">
-          <Switch>
-            <Route exac path="/play/brick/:brickId/intro">
-              <Introduction brick={props.brick} startTime={startTime} setStartTime={setStartTime} />
-            </Route>
-            <Route exac path="/play/brick/:brickId/live">
-              <Live
-                status={status}
-                attempts={attempts}
-                questions={props.brick.questions}
-                brick={props.brick}
-                updateAttempts={updateAttempts}
-                finishBrick={finishBrick}
-              />
-            </Route>
-            <Route exac path="/play/brick/:brickId/provisionalScore">
-              <ProvisionalScore status={status} startTime={startTime} brick={props.brick} attempts={attempts} />
-            </Route>
-            <Route exac path="/play/brick/:brickId/synthesis">
-              <Synthesis status={status} brick={props.brick} />
-            </Route>
-            <Route exac path="/play/brick/:brickId/review">
-              <Review
-                status={status}
-                questions={props.brick.questions}
-                brickId={props.brick.id}
-                startTime={startTime}
-                brickLength={props.brick.brickLength}
-                updateAttempts={updateReviewAttempts}
-                attempts={attempts}
-                finishBrick={finishReview} />
-            </Route>
-            <Route exac path="/play/brick/:brickId/ending">
-              <Ending
-                status={status}
-                brick={props.brick}
-                history={props.history}
-                attempts={attempts}
-                brickAttempt={brickAttempt}
-                saveBrick={saveBrickAttempt}
-              />
-            </Route>
-          </Switch>
-        </Grid>
-      </Grid>
+      {renderHead()}
+      <div className={className}>
+        <PlayLeftSidebar mode={mode} sidebarRolledUp={sidebarRolledUp} setMode={setMode} toggleSidebar={toggleSidebar} />
+        <div className="brick-row-container">
+          {renderRouter()}
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 const parseAndShuffleQuestions = (brick: Brick): Brick => {
   /* Parsing each Question object from json <contentBlocks> */
-  if (!brick) { return brick; }
+  if (!brick) {
+    return brick;
+  }
   const parsedQuestions: Question[] = [];
   for (const question of brick.questions) {
     if (!question.components) {
@@ -212,7 +274,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             id: question.id,
             type: question.type,
             hint: parsedQuestion.hint,
-            components: parsedQuestion.components
+            components: parsedQuestion.components,
           } as Question;
           parsedQuestions.push(q);
         }
@@ -226,9 +288,12 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
 
   shuffleBrick.questions = parsedQuestions;
 
-  shuffleBrick.questions.forEach(question => {
-    if (question.type === QuestionTypeEnum.ChooseOne || question.type === QuestionTypeEnum.ChooseSeveral) {
-      question.components.forEach(c => {
+  shuffleBrick.questions.forEach((question) => {
+    if (
+      question.type === QuestionTypeEnum.ChooseOne ||
+      question.type === QuestionTypeEnum.ChooseSeveral
+    ) {
+      question.components.forEach((c) => {
         if (c.type === QuestionComponentTypeEnum.Component) {
           const { hint } = question;
           if (hint.status === HintStatus.Each) {
@@ -239,8 +304,11 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
           c.list = shuffle(c.list);
         }
       });
-    } else if (question.type === QuestionTypeEnum.VerticalShuffle || question.type === QuestionTypeEnum.HorizontalShuffle) {
-      question.components.forEach(c => {
+    } else if (
+      question.type === QuestionTypeEnum.VerticalShuffle ||
+      question.type === QuestionTypeEnum.HorizontalShuffle
+    ) {
+      question.components.forEach((c) => {
         if (c.type === QuestionComponentTypeEnum.Component) {
           for (let [index, item] of c.list.entries()) {
             item.index = index;
@@ -250,7 +318,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
         }
       });
     } else if (question.type === QuestionTypeEnum.PairMatch) {
-      question.components.forEach(c => {
+      question.components.forEach((c) => {
         if (c.type === QuestionComponentTypeEnum.Component) {
           for (let [index, item] of c.list.entries()) {
             item.index = index;
@@ -260,7 +328,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             value: a.value,
             index: a.index,
             valueFile: a.valueFile,
-            answerType: a.answerType
+            answerType: a.answerType,
           }));
           c.choices = shuffle(choices);
         }
@@ -268,17 +336,13 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
     }
   });
   return shuffleBrick;
-}
+};
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
   brick: parseAndShuffleQuestions(state.brick.brick) as Brick,
 });
 
-const mapDispatch = (dispatch: any) => ({
-  fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
-})
-
-const connector = connect(mapState, mapDispatch);
+const connector = connect(mapState);
 
 export default connector(BrickRouting);

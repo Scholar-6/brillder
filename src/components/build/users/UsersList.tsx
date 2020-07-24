@@ -1,55 +1,42 @@
-import './UsersList.scss';
-import React, { Component } from 'react';
-import { Grid, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import Switch from '@material-ui/core/Switch';
-import axios from 'axios';
+import "./UsersList.scss";
+import React, { Component } from "react";
+import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import Switch from "@material-ui/core/Switch";
+import axios from "axios";
 // @ts-ignore
-import { connect } from 'react-redux';
-import Dialog from '@material-ui/core/Dialog';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import grey from '@material-ui/core/colors/grey';
+import { connect } from "react-redux";
+import grey from "@material-ui/core/colors/grey";
 
-import authActions from 'redux/actions/auth';
-import brickActions from 'redux/actions/brickActions';
-import PageHeader from 'components/baseComponents/pageHeader/PageHeader';
-import SubjectsList from 'components/baseComponents/subjectsList/SubjectsList';
-import AddUserButton from './AddUserButton';
-import UserActionsCell from './UserActionsCell';
+import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
+import AddUserButton from "./AddUserButton";
+import UserActionsCell from "./UserActionsCell";
 
-import { User, UserType, UserStatus } from 'model/user';
-import { ReduxCombinedState } from 'redux/reducers';
+import { User, UserType, UserStatus } from "model/user";
+import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
 import sprite from "../../../assets/img/icons-sprite.svg";
-import NotificationPanel from 'components/baseComponents/notificationPanel/NotificationPanel';
-import ReactDOM from 'react-dom';
-
+import PageHeadWithMenu, {
+  PageEnum,
+} from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-})
+});
 
-const mapDispatch = (dispatch: any) => ({
-  forgetBrick: () => dispatch(brickActions.forgetBrick()),
-  logout: () => dispatch(authActions.logout()),
-})
-
-const connector = connect(mapState, mapDispatch);
+const connector = connect(mapState);
 
 interface UsersListProps {
-  user: User,
+  user: User;
   history: any;
-  logout(): void;
-  forgetBrick(): void;
 }
 
 enum UserSortBy {
   None,
   Name,
   Role,
-  Status
+  Status,
 }
 
 interface UsersListState {
@@ -65,120 +52,110 @@ interface UsersListState {
   roles: any[];
 
   filterExpanded: boolean;
-  logoutDialogOpen: boolean;
-  dropdownShown: boolean;
-  notificationsShown: boolean;
   filterHeight: string;
   isAdmin: boolean;
 
   sortBy: UserSortBy;
   isAscending: boolean;
-  isClearFilter: boolean
+  isClearFilter: boolean;
 }
 
 let anyStyles = withStyles as any;
 
 const IOSSwitch = anyStyles((theme: any) => ({
   root: {
-    width: '4.5vh',
-    height: '2.8vh',
+    width: "4.5vh",
+    height: "2.8vh",
     padding: 0,
     margin: 0,
   },
   switchBase: {
     padding: 1,
-    '&$checked': {
-      transform: 'translateX(16px)',
-      color: '#30C474',
-      '& + $track': {
-        borderRadius: '2vh',
-        border: '0.25vh solid #001C58',
-        height: '2.3vh',
-        backgroundColor: '#30C474',
+    "&$checked": {
+      transform: "translateX(16px)",
+      color: "#30C474",
+      "& + $track": {
+        borderRadius: "2vh",
+        border: "0.25vh solid #001C58",
+        height: "2.3vh",
+        backgroundColor: "#30C474",
         opacity: 1,
       },
     },
-    '&$focusVisible $thumb': {
-      color: '#52d869',
-      border: '6px solid #fff',
+    "&$focusVisible $thumb": {
+      color: "#52d869",
+      border: "6px solid #fff",
     },
   },
   thumb: {
-    marginTop: '0.6vh',
-    marginLeft: '0.4vh',
-    marginRight: '0.4vh',
-    border: '0.2vh solid #001C58',
-    width: '0.9vh',
-    height: '0.9vh',
+    marginTop: "0.6vh",
+    marginLeft: "0.4vh",
+    marginRight: "0.4vh",
+    border: "0.2vh solid #001C58",
+    width: "0.9vh",
+    height: "0.9vh",
   },
   track: {
-    borderRadius: '2vh',
-    border: '0.25vh solid #001C58',
-    height: '2.3vh',
+    borderRadius: "2vh",
+    border: "0.25vh solid #001C58",
+    height: "2.3vh",
     backgroundColor: grey[50],
     opacity: 1,
   },
   checked: {},
 }))((props: any) => {
-  return (
-    <Switch
-      disableRipple
-      {...props}
-    />
-  );
+  return <Switch disableRipple {...props} />;
 });
 
-
 class UsersListPage extends Component<UsersListProps, UsersListState> {
-  pageHeader: React.RefObject<any>;
-
   constructor(props: UsersListProps) {
-    super(props)
+    super(props);
     this.state = {
       users: [],
       page: 0,
       pageSize: 12,
       subjects: [],
       filterExpanded: true,
-      logoutDialogOpen: false,
 
       roles: [
-        { name: 'Student', type: UserType.Student, checked: false },
-        { name: 'Teacher', type: UserType.Teacher, checked: false },
-        { name: 'Builder', type: UserType.Builder, checked: false },
-        { name: 'Editor', type: UserType.Editor, checked: false },
-        { name: 'Admin', type: UserType.Admin, checked: false },
+        { name: "Student", type: UserType.Student, checked: false },
+        { name: "Teacher", type: UserType.Teacher, checked: false },
+        { name: "Builder", type: UserType.Builder, checked: false },
+        { name: "Editor", type: UserType.Editor, checked: false },
+        { name: "Admin", type: UserType.Admin, checked: false },
       ],
 
       totalCount: 0,
-      searchString: '',
+      searchString: "",
       isSearching: false,
-      dropdownShown: false,
-      notificationsShown: false,
-      filterHeight: 'auto',
+      filterHeight: "auto",
 
       sortBy: UserSortBy.None,
       isAscending: false,
       isAdmin: checkAdmin(props.user.roles),
-      isClearFilter: false
+      isClearFilter: false,
     };
 
     this.getUsers(this.state.page);
 
-    axios.get(
-      process.env.REACT_APP_BACKEND_HOST + '/subjects', { withCredentials: true }
-    ).then(res => {
-      this.setState({ ...this.state, subjects: res.data });
-    }).catch(error => {
-      alert('Can`t get subjects');
-    });
-
-    this.pageHeader = React.createRef();
+    axios
+      .get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        this.setState({ ...this.state, subjects: res.data });
+      })
+      .catch((error) => {
+        alert("Can`t get subjects");
+      });
   }
 
   getUsers(
-    page: number, subjects: number[] = [], sortBy: UserSortBy = UserSortBy.None,
-    isAscending: any = null, search: string = ""
+    page: number,
+    subjects: number[] = [],
+    sortBy: UserSortBy = UserSortBy.None,
+    isAscending: any = null,
+    search: string = ""
   ) {
     let searchString = "";
     let orderBy = null;
@@ -209,36 +186,39 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       }
     }
 
-    axios.post(
-      process.env.REACT_APP_BACKEND_HOST + '/users',
-      {
-        pageSize: this.state.pageSize,
-        page: page.toString(),
-        searchString,
-        subjectFilters: subjects,
-        roleFilters: [],
-        orderBy,
-        isAscending,
-      },
-      { withCredentials: true }
-    ).then(res => {
-      this.setState({ ...this.state, users: res.data.pageData, totalCount: res.data.totalCount })
-    }).catch(error => {
-      alert('Can`t get users');
-    });
-  }
-
-  logout() {
-    this.props.logout();
-    this.props.history.push('/choose-login');
+    axios
+      .post(
+        process.env.REACT_APP_BACKEND_HOST + "/users",
+        {
+          pageSize: this.state.pageSize,
+          page: page.toString(),
+          searchString,
+          subjectFilters: subjects,
+          roleFilters: [],
+          orderBy,
+          isAscending,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        this.setState({
+          ...this.state,
+          users: res.data.pageData,
+          totalCount: res.data.totalCount,
+        });
+      })
+      .catch((error) => {
+        alert("Can`t get users");
+      });
   }
 
   move(brickId: number) {
-    this.props.history.push(`/build/brick/${brickId}/build/investigation/question`)
+    this.props.history.push(
+      `/build/brick/${brickId}/build/investigation/question`
+    );
   }
 
-  handleSortChange = (e: any) => {
-  }
+  handleSortChange = (e: any) => {};
 
   getCheckedRoles() {
     const result = [];
@@ -252,14 +232,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     return result;
   }
 
-  handleLogoutOpen() {
-    this.setState({ ...this.state, logoutDialogOpen: true })
-  }
-
-  handleLogoutClose() {
-    this.setState({ ...this.state, logoutDialogOpen: false })
-  }
-
   searching(searchString: string) {
     if (searchString.length === 0) {
       this.setState({ ...this.state, searchString, isSearching: false });
@@ -269,35 +241,45 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   activateUser(userId: number) {
-    axios.put(
-      `${process.env.REACT_APP_BACKEND_HOST}/user/activate/${userId}`, {}, { withCredentials: true } as any
-    ).then(res => {
-      if (res.data === 'OK') {
-        const user = this.state.users.find(user => user.id === userId);
-        if (user) {
-          user.status = UserStatus.Active;
+    axios
+      .put(
+        `${process.env.REACT_APP_BACKEND_HOST}/user/activate/${userId}`,
+        {},
+        { withCredentials: true } as any
+      )
+      .then((res) => {
+        if (res.data === "OK") {
+          const user = this.state.users.find((user) => user.id === userId);
+          if (user) {
+            user.status = UserStatus.Active;
+          }
+          this.setState({ ...this.state });
         }
-        this.setState({ ...this.state });
-      }
-    }).catch(error => {
-      alert('Can`t activate user');
-    });
+      })
+      .catch((error) => {
+        alert("Can`t activate user");
+      });
   }
 
   deactivateUser(userId: number) {
-    axios.put(
-      `${process.env.REACT_APP_BACKEND_HOST}/user/deactivate/${userId}`, {}, { withCredentials: true } as any
-    ).then(res => {
-      if (res.data === 'OK') {
-        const user = this.state.users.find(user => user.id === userId);
-        if (user) {
-          user.status = UserStatus.Disabled;
+    axios
+      .put(
+        `${process.env.REACT_APP_BACKEND_HOST}/user/deactivate/${userId}`,
+        {},
+        { withCredentials: true } as any
+      )
+      .then((res) => {
+        if (res.data === "OK") {
+          const user = this.state.users.find((user) => user.id === userId);
+          if (user) {
+            user.status = UserStatus.Disabled;
+          }
+          this.setState({ ...this.state });
         }
-        this.setState({ ...this.state });
-      }
-    }).catch(error => {
-      alert('Can`t deactivate user');
-    });
+      })
+      .catch((error) => {
+        alert("Can`t deactivate user");
+      });
   }
 
   toggleUser(user: User) {
@@ -311,32 +293,22 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   search() {
     const { searchString } = this.state;
     let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(0, filterSubjects, this.state.sortBy, this.state.isAscending, searchString);
-  }
-
-  showDropdown() {
-    this.setState({ ...this.state, dropdownShown: true });
-  }
-
-  hideDropdown() {
-    this.setState({ ...this.state, dropdownShown: false });
-  }
-
-  showNotifications() {
-    this.setState({ ...this.state, notificationsShown: true });
-  }
-
-  hideNotifications() {
-    this.setState({ ...this.state, notificationsShown: false });
+    this.getUsers(
+      0,
+      filterSubjects,
+      this.state.sortBy,
+      this.state.isAscending,
+      searchString
+    );
   }
 
   filterBySubject = (i: number) => {
     const { subjects } = this.state;
-    subjects[i].checked = !subjects[i].checked
+    subjects[i].checked = !subjects[i].checked;
     this.filter();
     this.setState({ ...this.state });
-    this.filterClear()
-  }
+    this.filterClear();
+  };
 
   getCheckedSubjectIds() {
     const filterSubjects = [];
@@ -355,14 +327,13 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     this.getUsers(0, filterSubjects);
   }
 
-
   //region Hide / Expand / Clear Filter
   clearStatus() {
     let { state } = this;
     let { subjects } = state;
     subjects.forEach((r: any) => (r.checked = false));
     this.filter();
-    this.filterClear()
+    this.filterClear();
   }
   hideFilter() {
     this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
@@ -377,13 +348,17 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   filterClear() {
-    this.setState({ isClearFilter: this.state.subjects.some((r: any) => r.checked) ? true : false })
+    this.setState({
+      isClearFilter: this.state.subjects.some((r: any) => r.checked)
+        ? true
+        : false,
+    });
   }
   //endregion
 
   onUserDeleted(userId: number) {
     let { users } = this.state;
-    let removeIndex = users.findIndex(user => user.id === userId);
+    let removeIndex = users.findIndex((user) => user.id === userId);
     users.splice(removeIndex, 1);
     this.setState({ ...this.state, users });
   }
@@ -398,38 +373,55 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             aria-label="SortBy"
             name="SortBy"
             value={this.state.sortBy}
-            onChange={this.handleSortChange}>
+            onChange={this.handleSortChange}
+          >
             <Grid container direction="row">
-              {this.state.roles.map((role, i) =>
+              {this.state.roles.map((role, i) => (
                 <Grid item xs={4} key={i}>
                   <FormControlLabel
                     checked={role.checked}
                     control={<Radio className={"filter-radio"} />}
-                    label={role.name} />
+                    label={role.name}
+                  />
                 </Grid>
-              )}
+              ))}
             </Grid>
           </RadioGroup>
         </div>
         <div className="filter-header">
           <span>Filter by: Subject</span>
-          <button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.state.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up"))}
-            onClick={() => { this.state.filterExpanded ? this.state.isClearFilter ? this.clearStatus() : (this.hideFilter()) : (this.expandFilter()) }}>
-          </button>
+          <button
+            className={
+              "btn-transparent filter-icon " +
+              (this.state.filterExpanded
+                ? this.state.isClearFilter
+                  ? "arrow-cancel"
+                  : "arrow-down"
+                : "arrow-up")
+            }
+            onClick={() => {
+              this.state.filterExpanded
+                ? this.state.isClearFilter
+                  ? this.clearStatus()
+                  : this.hideFilter()
+                : this.expandFilter();
+            }}
+          ></button>
         </div>
         <SubjectsList
           subjects={this.state.subjects}
           filterHeight={this.state.filterHeight}
-          filterBySubject={this.filterBySubject} />
+          filterBySubject={this.filterBySubject}
+        />
       </div>
     );
-  }
+  };
 
   renderPagination() {
     const { totalCount, users, page, pageSize } = this.state;
     const showPrev = page > 0;
     const currentPage = page;
-    const showNext = ((totalCount / pageSize) - currentPage) > 1;
+    const showNext = totalCount / pageSize - currentPage > 1;
     const prevCount = currentPage * pageSize;
     const minUser = prevCount + 1;
     const maxUser = prevCount + users.length;
@@ -437,12 +429,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     const nextPage = () => {
       this.setState({ ...this.state, page: page + 1 });
       this.getUsers(page + 1);
-    }
+    };
 
     const previousPage = () => {
       this.setState({ ...this.state, page: page - 1 });
       this.getUsers(page - 1);
-    }
+    };
 
     return (
       <div className="users-pagination">
@@ -454,29 +446,52 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             </div>
             <div>
               {page + 1}
-              <span className="gray"> &nbsp;|&nbsp; {Math.ceil(totalCount / pageSize)}</span>
+              <span className="gray">
+                {" "}
+                &nbsp;|&nbsp; {Math.ceil(totalCount / pageSize)}
+              </span>
             </div>
           </Grid>
-          <Grid container item xs={4} justify="center" className="bottom-next-button">
+          <Grid
+            container
+            item
+            xs={4}
+            justify="center"
+            className="bottom-next-button"
+          >
             <div>
-              {showPrev
-                ? <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
-                  onClick={previousPage}>
+              {showPrev ? (
+                <button
+                  className={
+                    "btn btn-transparent prev-button svgOnHover " +
+                    (showPrev ? "active" : "")
+                  }
+                  onClick={previousPage}
+                >
                   <svg className="svg w100 h100 active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-up"} />
                   </svg>
                 </button>
-                : ""}
-              {showNext
-                ? <button className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
-                  onClick={nextPage}>
+              ) : (
+                ""
+              )}
+              {showNext ? (
+                <button
+                  className={
+                    "btn btn-transparent next-button svgOnHover " +
+                    (showNext ? "active" : "")
+                  }
+                  onClick={nextPage}
+                >
                   <svg className="svg w100 h100 active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#arrow-down"} />
                   </svg>
                 </button>
-                : ""}
+              ) : (
+                ""
+              )}
             </div>
           </Grid>
         </Grid>
@@ -522,10 +537,12 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
 
     return (
       <img
-        className="sort-button" alt=""
+        className="sort-button"
+        alt=""
         src={
           sortBy === currentSortBy
-            ? !isAscending ? "/feathericons/chevron-down.svg"
+            ? !isAscending
+              ? "/feathericons/chevron-down.svg"
               : "/feathericons/chevron-up.svg"
             : "/feathericons/chevron-right.svg"
         }
@@ -563,41 +580,39 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   renderUsers() {
-    if (!this.state.users) { return "" }
+    if (!this.state.users) {
+      return "";
+    }
     return (
       <div className="users-table">
         <table cellSpacing="0" cellPadding="0">
-          <thead>
-            {this.renderUserTableHead()}
-          </thead>
+          <thead>{this.renderUserTableHead()}</thead>
           <tbody>
-            {
-              this.state.users.map((user: any, i: number) => {
-                return (
-                  <tr className="user-row" key={i}>
-                    <td></td>
-                    <td>
-                      <span className="user-first-name">{user.firstName} </span>
-                      <span className="user-last-name">{user.lastName}</span>
-                    </td>
-                    <td>{user.email}</td>
-                    <td>{this.renderUserType(user)}</td>
-                    <td className="activate-button-container">
-                      <IOSSwitch
-                        checked={user.status === UserStatus.Active}
-                        onChange={() => this.toggleUser(user)}
-                      />
-                    </td>
-                    <UserActionsCell
-                      userId={user.id}
-                      history={this.props.history}
-                      isAdmin={this.state.isAdmin}
-                      onDelete={userId => this.onUserDeleted(userId)}
+            {this.state.users.map((user: any, i: number) => {
+              return (
+                <tr className="user-row" key={i}>
+                  <td></td>
+                  <td>
+                    <span className="user-first-name">{user.firstName} </span>
+                    <span className="user-last-name">{user.lastName}</span>
+                  </td>
+                  <td>{user.email}</td>
+                  <td>{this.renderUserType(user)}</td>
+                  <td className="activate-button-container">
+                    <IOSSwitch
+                      checked={user.status === UserStatus.Active}
+                      onChange={() => this.toggleUser(user)}
                     />
-                  </tr>
-                );
-              })
-            }
+                  </td>
+                  <UserActionsCell
+                    userId={user.id}
+                    history={this.props.history}
+                    isAdmin={this.state.isAdmin}
+                    onDelete={(userId) => this.onUserDeleted(userId)}
+                  />
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -630,59 +645,14 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     return (
       <div className="user-list-page">
         <div className="upper-part">
-          <PageHeader ref={this.pageHeader}
-            searchPlaceholder="Search by Name,  Email or Subject"
+          <PageHeadWithMenu
+            page={PageEnum.ManageUsers}
+            placeholder="Search by Name, Email or Subject"
+            user={this.props.user}
+            history={history}
             search={() => this.search()}
             searching={(v: string) => this.searching(v)}
-            showDropdown={() => this.showDropdown()}
-            showNotifications={() => this.showNotifications()}
           />
-          <Menu
-            className="menu-dropdown"
-            keepMounted
-            open={this.state.dropdownShown}
-            onClose={() => this.hideDropdown()}>
-            <MenuItem className="first-item menu-item" onClick={() => history.push('/play/dashboard')}>
-              View All Bricks
-            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
-                <div>
-                  <img className="menu-icon" alt="" src="/images/main-page/glasses-white.png" />
-                </div>
-              </Grid>
-            </MenuItem>
-            <MenuItem className="menu-item" onClick={() => { }}>
-              Start Building
-            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
-                <div>
-                  <img className="menu-icon" alt="" src="/images/main-page/create-white.png" />
-                </div>
-              </Grid>
-            </MenuItem>
-            <MenuItem className="menu-item" onClick={() => history.push('/back-to-work')}>
-              Back To Work
-            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
-                <div>
-                  <img className="back-to-work-icon" alt="" src="/images/main-page/backToWork-white.png" />
-                </div>
-              </Grid>
-            </MenuItem>
-            <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push('/user-profile')}>
-              View Profile
-            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
-                <div>
-                  <img className="menu-icon svg-icon user-icon" alt="" src="/images/user.svg" />
-                </div>
-              </Grid>
-            </MenuItem>
-            <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
-              Logout
-            	<Grid container className="menu-icon-container" justify="center" alignContent="center">
-                <div>
-                  <img className="menu-icon svg-icon logout-icon" alt="" src="/images/log-out.svg" />
-                </div>
-              </Grid>
-            </MenuItem>
-          </Menu>
         </div>
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
@@ -695,33 +665,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             {this.renderPagination()}
           </Grid>
         </Grid>
-        <NotificationPanel
-          shown={this.state.notificationsShown}
-          handleClose={() => this.hideNotifications()}
-          anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
-        />
-        <Dialog
-          open={this.state.logoutDialogOpen}
-          onClose={() => this.handleLogoutClose()}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className="dialog-box">
-          <div className="dialog-header">
-            <div>Are you sure<br />you want to log out?</div>
-          </div>
-          <div className="dialog-footer">
-            <button className="btn btn-md bg-theme-orange yes-button"
-              onClick={() => this.logout()}>
-              <span>Yes</span>
-            </button>
-            <button className="btn btn-md bg-gray no-button"
-              onClick={() => this.handleLogoutClose()}>
-              <span>No</span>
-            </button>
-          </div>
-        </Dialog>
       </div>
-    )
+    );
   }
 }
 

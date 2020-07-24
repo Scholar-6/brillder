@@ -31,38 +31,27 @@
         font-size: 1.45vw;
         color: var(--white) !important;
         margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         @include phone_and_tabletP {
           font-size: 3.45vw;
-          min-height: 4vh;
-          padding: 2vw;
+          padding: 2vw 2vw 2vw 2.5vw;
         }
         @include tabletP {
-          padding: 0.8vw 1.6vw;
+          padding: 0.8vw 0.8vw 0.8vw 1vw;
           font-size: 1.45vw;
-          display: flex;
-          align-items: center;
         }
-        .menu-icon-container {
-          width: 4.5vw;
-          height: 3vh;
-          @include phone_and_tabletP {
-            position: absolute;
-            right: 2vw;
+        .menu-text {
+          width: 10vw;
+         }
+        .btn {
+          .svg {
+            width: 2.5vw;
+            height: 2.5vw;
+            @extend %removePosition;
+            background: transparent;
           }
-          @include tabletP {
-            right: 0vw;
-            position: fixed;
-          }
-          > div {
-            > img {
-              @include phone_and_tabletP {
-                width: 4.2vw;
-              }
-            }
-          }
-        }
-        .menu-icon {
-          width: 2.2vw;
         }
         .svg-icon {
           filter: invert(1);
@@ -72,9 +61,6 @@
         }
         .logout-icon {
           width: 1.88vw;
-        }
-        .back-to-work-icon {
-          width: 1.5vw;
         }
         .manage-users-icon {
           margin-top: 0.13vh;

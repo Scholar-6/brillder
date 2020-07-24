@@ -5,21 +5,26 @@ import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
-import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import { Moment } from "moment";
 import PrepareText from './PrepareText';
 import IntroductionDetails from "./IntroductionDetails";
-import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
+import { PlayMode } from "../model";
+import HighlightHtml from '../baseComponents/HighlightHtml';
+import { BrickFieldNames } from 'components/build/proposal/model';
 
 const moment = require("moment");
 
+
 interface IntroductionProps {
+  mode?: PlayMode;
   isPlayPreview?: boolean;
   startTime?: Moment;
   brick: Brick;
   setStartTime(startTime: any): void;
+  moveNext?(): void;
+  onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
 interface IntroductionState {
@@ -74,7 +79,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
   const startBrick = () => {
     if (!state.prepExpanded) {
-      setState({...state, isPrepDialogOpen: true});
+      setState({ ...state, isPrepDialogOpen: true });
       return;
     }
     if (!props.startTime) {
@@ -84,9 +89,13 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       props.setStartTime(time);
     }
     if (props.isPlayPreview) {
+      // for play preview just redirect
       history.push(`/play-preview/brick/${brick.id}/live`);
     } else {
-      history.push(`/play/brick/${brick.id}/live`);
+      // for play need update parent state
+      if (props.moveNext) {
+        props.moveNext();
+      }
     }
   };
 
@@ -121,11 +130,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             className={state.prepExpanded ? "play-preview svgOnHover play-green" : "play-preview svgOnHover play-gray"}
             onClick={startBrick}
           >
-            <svg className="svg svg-default m-l-02">
+            <svg className="svg w80 h80">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#play-thin"} />
             </svg>
-            <svg className="svg colored m-l-02">
+            <svg className="svg w80 h80 colored">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#play-thick"} />
             </svg>
@@ -189,7 +198,15 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (state.briefExpanded) {
       return (
         <div className="expanded-text">
-          <MathInHtml value={brick.brief} />
+          <HighlightHtml
+            value={brick.brief}
+            mode={props.mode}
+            onHighlight={value => {
+              if (props.onHighlight) {
+                props.onHighlight(BrickFieldNames.brief, value)
+              }
+            }}
+          />
         </div>
       );
     }
@@ -200,7 +217,15 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (state.prepExpanded) {
       return (
         <div className="expanded-text">
-          <YoutubeAndMathInHtml value={brick.prep} />
+          <HighlightHtml
+            value={brick.prep}
+            mode={props.mode}
+            onHighlight={value => {
+              if (props.onHighlight) {
+                props.onHighlight(BrickFieldNames.prep, value)
+              }
+            }}
+          />
         </div>
       );
     }
@@ -312,7 +337,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       </Hidden>
       <PrepExpandedDialog
         isOpen={state.isPrepDialogOpen}
-        close={() => setState({...state, isPrepDialogOpen: false})}
+        close={() => setState({ ...state, isPrepDialogOpen: false })}
         onSubmit={() => togglePrep()}
       />
     </div>

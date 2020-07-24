@@ -254,10 +254,7 @@
           align-items: center;
           justify-content: center;
           .svg {
-            position: inherit;
-            left: inherit;
-            top: inherit;
-            transform: inherit;
+            @extend %removePosition;
             color: var(--theme-dark-blue);
           }
           &:hover {
