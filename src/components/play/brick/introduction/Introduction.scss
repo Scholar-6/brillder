@@ -1,6 +1,6 @@
-@import "../../../../assets/sass/partials/variables";
-@import "../../../../assets/sass/partials/mixins";
-@import "../../../../assets/sass/partials/extensions";
+@import '../../../../assets/sass/partials/variables';
+@import '../../../../assets/sass/partials/mixins';
+@import '../../../../assets/sass/partials/extensions';
 
 $introduction-desktop-height: calc(100vh - 7.8vw);
 $introduction-expanded-height: calc(100vh - 2vw);
@@ -507,16 +507,7 @@ $introduction-expanded-height: calc(100vh - 2vw);
           bottom: 5vw;
         }
         .play-preview {
-          position: relative;
-          left: inherit;
-          right: inherit;
-          top: inherit;
-          .svg {
-            @include phone_and_tabletP {
-              width: 13vw;
-              height: 13vw;
-            }
-          }
+          @extend %removePosition;
         }
         > div {
           @extend %flexCenter;
