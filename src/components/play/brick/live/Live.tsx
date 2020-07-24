@@ -214,17 +214,15 @@ const LivePage: React.FC<LivePageProps> = ({
       <Hidden only={["xs"]}>
         <Grid container direction="row">
           <Grid item xs={8}>
-            <div className="introduction-page">
-              <SwipeableViews
-                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-                index={activeStep}
-                className="swipe-view"
-                style={{ width: "100%" }}
-                onChangeIndex={handleStep}
-              >
-                {questions.map(renderQuestionContainer)}
-              </SwipeableViews>
-            </div>
+            <SwipeableViews
+              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+              index={activeStep}
+              className="swipe-view"
+              style={{ width: "100%" }}
+              onChangeIndex={handleStep}
+            >
+              {questions.map(renderQuestionContainer)}
+            </SwipeableViews>
           </Grid>
           <Grid item xs={4}>
             <div className="introduction-info">
@@ -303,7 +301,7 @@ const LivePage: React.FC<LivePageProps> = ({
                 className="play-preview svgOnHover play-green"
                 onClick={next}
               >
-                <svg className="svg active m-l-02">
+                <svg className="svg w80 h80 active m-l-02">
                   {/*eslint-disable-next-line*/}
                   <use href={sprite + "#arrow-right"} />
                 </svg>

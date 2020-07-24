@@ -66,7 +66,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
 
   render() {
     return (
-      <div className="upper-part">
+      <div>
         <PageHeader ref={this.pageHeader}
           searchPlaceholder="Search by Name, Email or Subject"
           search={() => { }}

@@ -566,16 +566,14 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     return (
       <div className="dashboard-page">
         {this.renderMobileGlassIcon()}
-        <div className="upper-part">
-          <PageHeadWithMenu
-            page={PageEnum.ViewAll}
-            user={this.props.user}
-            placeholder={"Search Ongoing Projects & Published Bricks…"}
-            history={this.props.history}
-            search={() => this.search()}
-            searching={v => this.searching(v)}
-          />
-        </div>
+        <PageHeadWithMenu
+          page={PageEnum.ViewAll}
+          user={this.props.user}
+          placeholder={"Search Ongoing Projects & Published Bricks…"}
+          history={this.props.history}
+          search={() => this.search()}
+          searching={v => this.searching(v)}
+        />
         <Hidden only={["sm", "md", "lg", "xl"]}>
           <div className="mobile-scroll-bricks">
             {this.renderMobileUpperBricks()}

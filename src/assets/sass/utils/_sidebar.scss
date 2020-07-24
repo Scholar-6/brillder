@@ -5,6 +5,7 @@
   padding-right: 0;
   @include phone_and_tabletP {
     height: $height-mobile-view;
+    background: var(--white);
   }
   @include tabletP {
     margin-top: 2vw;
@@ -305,27 +306,41 @@
   .brick-row-container {
     position: relative;
     border-top-left-radius: $main-panel-radius;
-    padding-left: 1.18vw;
     margin-left: 1vw;
     flex-basis: inherit;
     max-width: inherit;
     width: 100%;
-    background: var(--light-gray);
     @include phone_and_tabletP {
       height: $height-mobile-view;
       margin: 0;
       border-top-left-radius: 10vw;
     }
     @include tabletP {
+      background: var(--light-gray);
       overflow-y: auto;
       width: calc(75% - 1vw);
       height: $height-desktop-view;
     }
     .brick-row-title {
-      padding-left: 1.15vw;
       color: var(--theme-dark-blue);
       line-height: 1;
       letter-spacing: 0.4vw;
+      @include phone_and_tabletP {
+        font-size: 5vw;
+        font-family: $font-family-bold;
+        padding: 3vw;
+        margin-bottom: 0.5vh;
+        border-bottom: 0.2vh solid var(--light-gray);
+        z-index: 10;
+        display: flex;
+        align-items: center;
+      }
+      @include tabletP {
+        font-family: $font-family-black;
+        padding-bottom: 0;
+        font-size: 5.2vw;
+        padding: 1.15vw;
+      }
       .btn {
         @extend %flexCenter;
         span {
@@ -334,23 +349,6 @@
         .svg {
           @extend %removePosition;
         }
-      }
-      @include phone_and_tabletP {
-        font-size: 5vw;
-        font-family: $font-family-bold;
-        padding-top: 1.3vh;
-        border-bottom: 0.2vh solid var(--light-gray);
-        padding-bottom: 0.9vh;
-        margin-bottom: 0.5vh;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-      }
-      @include tabletP {
-        font-family: $font-family-black;
-        padding-top: 2.3vh;
-        padding-bottom: 0;
-        font-size: 5.2vw;
       }
     }
 
@@ -436,6 +434,7 @@
           @include phone_and_tabletP {
             text-align: center;
             margin-bottom: 2vw;
+            padding: 0 4vw;
           }
           @include tabletP {
             height: $min-brick-height;
@@ -548,7 +547,6 @@
           .MuiExpansionPanel-root {
             background: var(--light-gray);
           }
-
           .MuiExpansionPanel-root.Mui-expanded {
             margin: 0 !important;
             margin-bottom: 16px !important;

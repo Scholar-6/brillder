@@ -19,7 +19,7 @@
     }
   }
   .stepper {
-    @include phone_and_tabletP{
+    @include phone_and_tabletP {
       flex-direction: row !important;
     }
     .step {

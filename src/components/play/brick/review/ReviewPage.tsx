@@ -140,15 +140,15 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-				<div className="introduction-page">
-					<div className={indexClassName}>
-						<div className="question-index">{index + 1}</div>
-					</div>
-					<div className="question-live-play review-content">
-						<div className="question-title">{renderReviewTitle(attempt)}</div>
-						{renderQuestion(question, index)}
-					</div>
-				</div>
+        <div className="introduction-page">
+          <div className={indexClassName}>
+            <div className="question-index">{index + 1}</div>
+          </div>
+          <div className="question-live-play review-content">
+            <div className="question-title">{renderReviewTitle(attempt)}</div>
+            {renderQuestion(question, index)}
+          </div>
+        </div>
       </TabPanel>
     );
   };
@@ -159,15 +159,15 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
     return (
       <button className="play-preview svgOnHover play-white scale-07" onClick={prev}>
-      <svg className="svg w80 h80 svg-default m-r-02">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#arrow-left"} className="text-gray" />
-      </svg>
-      <svg className="svg w80 h80 colored m-r-02">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#arrow-left"} className="text-white" />
-      </svg>
-    </button>
+        <svg className="svg w80 h80 svg-default m-r-02">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#arrow-left"} className="text-gray" />
+        </svg>
+        <svg className="svg w80 h80 colored m-r-02">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#arrow-left"} className="text-white" />
+        </svg>
+      </button>
     );
   };
 
@@ -175,20 +175,18 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     <div className="brick-container review-page">
       <Grid container direction="row">
         <Grid item sm={8} xs={12}>
-          <div className="introduction-page">
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={activeStep}
-              className="swipe-view"
-              onChangeIndex={handleStep}
-            >
-              {questions.map(renderQuestionContainer)}
-            </SwipeableViews>
-          </div>
+          <SwipeableViews
+            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={activeStep}
+            className="swipe-view"
+            onChangeIndex={handleStep}
+          >
+            {questions.map(renderQuestionContainer)}
+          </SwipeableViews>
         </Grid>
         <Grid item sm={4} xs={12}>
           <div className="introduction-info">
-            <CountDown brickLength={props.brickLength} onEnd={onEnd}/>
+            <CountDown brickLength={props.brickLength} onEnd={onEnd} />
             <div className="intro-text-row">
               <ReviewStepper
                 questions={questions}

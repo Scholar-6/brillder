@@ -99,8 +99,8 @@ interface BackToWorkState {
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   constructor(props: BackToWorkProps) {
     super(props);
-    let finalBricks:Brick[] = [];
-    let rawBricks:Brick[] = [];
+    let finalBricks: Brick[] = [];
+    let rawBricks: Brick[] = [];
     let threeColumns = {
       draft: {
         rawBricks: [],
@@ -654,16 +654,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   render() {
     return (
       <div className="back-to-work-page">
-        <div className="upper-part">
-          <PageHeadWithMenu
-            page={PageEnum.BackToWork}
-            user={this.props.user}
-            placeholder="Search Ongoing Projects & Published Bricks…"
-            history={this.props.history}
-            search={() => this.search()}
-            searching={(v: string) => this.searching(v)}
-          />
-        </div>
+        <PageHeadWithMenu
+          page={PageEnum.BackToWork}
+          user={this.props.user}
+          placeholder="Search Ongoing Projects & Published Bricks…"
+          history={this.props.history}
+          search={() => this.search()}
+          searching={(v: string) => this.searching(v)}
+        />
         <Grid container direction="row" className="sorted-row">
           <FilterSidebar
             rawBricks={this.state.rawBricks}
