@@ -5,22 +5,26 @@ import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
-import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import { Moment } from "moment";
 import PrepareText from './PrepareText';
 import IntroductionDetails from "./IntroductionDetails";
-import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
+import { PlayMode } from "../PlayLeftSidebar";
+import HighlightHtml from './HighlightHtml';
+import { BrickFieldNames } from 'components/build/proposal/model';
 
 const moment = require("moment");
 
+
 interface IntroductionProps {
+  mode?: PlayMode;
   isPlayPreview?: boolean;
   startTime?: Moment;
   brick: Brick;
   setStartTime(startTime: any): void;
   moveNext?(): void;
+  onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
 interface IntroductionState {
@@ -194,7 +198,15 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (state.briefExpanded) {
       return (
         <div className="expanded-text">
-          <MathInHtml value={brick.brief} />
+          <HighlightHtml
+            value={brick.brief}
+            mode={props.mode}
+            onHighlight={value => {
+              if (props.onHighlight) {
+                props.onHighlight(BrickFieldNames.brief, value)
+              }
+            }}
+          />
         </div>
       );
     }
@@ -205,7 +217,15 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (state.prepExpanded) {
       return (
         <div className="expanded-text">
-          <YoutubeAndMathInHtml value={brick.prep} />
+          <HighlightHtml
+            value={brick.prep}
+            mode={props.mode}
+            onHighlight={value => {
+              if (props.onHighlight) {
+                props.onHighlight(BrickFieldNames.prep, value)
+              }
+            }}
+          />
         </div>
       );
     }

@@ -44,6 +44,16 @@
         .svg {
           width: $icons-size;
           height: $icons-size;
+
+          use {
+            color: var(--white) !important;
+          }
+        }
+      }
+      .sidebar-button.active {
+        span, use {
+          color: var(--yellow) !important;
+          fill: var(--yellow) !important;
         }
       }
     }
