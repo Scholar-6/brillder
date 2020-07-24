@@ -20,6 +20,9 @@ $space-between-boxes: 0.1vw;
       height: 2vw;
     }
   }
+  .play-preview {
+    position: fixed !important;
+  }
 
   .phone-question-preview {
     .custom-component {

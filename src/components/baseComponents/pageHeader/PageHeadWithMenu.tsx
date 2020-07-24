@@ -134,16 +134,12 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
   }
 
   render() {
-    let className = 'upper-part';
     let placeholder = "Search Subjects, Topics, Titles & more";
     if (this.props.placeholder) {
       placeholder = this.props.placeholder;
     }
-    if (this.props.isMobileHidden) {
-      className += " mobile-hidden";
-    }
     return (
-      <div className={className}>
+      <div>
         <PageHeader ref={this.pageHeader}
           searchPlaceholder={placeholder}
           search={() => this.props.search()}
