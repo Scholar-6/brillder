@@ -17,12 +17,10 @@
     }
     @include tabletP {
       width: 16vw;
-      top: 10.5vh !important;
+      top: 11.8vh !important;
     }
-    .MuiList-root {
-      @include phone_and_tabletP {
-        padding: 0 !important;
-      }
+    > ul {
+      padding: 0 !important;
       .menu-item {
         cursor: pointer;
         position: relative;
