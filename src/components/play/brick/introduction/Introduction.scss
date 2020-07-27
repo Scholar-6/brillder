@@ -245,7 +245,8 @@ $introduction-expanded-height: calc(100vh - 2vw);
             }
             @include tabletP {
               width: calc(100% - 7vw) !important;
-              margin: 1.5vh 3vw 1vw 4vw;
+              margin: 0 3vw 1vw 4vw;
+              padding-top: 1.5vh;
             }
           }
           .question-title {
