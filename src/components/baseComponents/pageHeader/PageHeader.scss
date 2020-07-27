@@ -278,22 +278,22 @@
     .bottom-next-button {
       bottom: 1vh;
       position: relative;
+      .btn {
+        height: 4.7vh;
+        width: 4.7vh;
+        cursor: pointer;
+        .svg {
+          color: var(--gray);
+        }
+        &.active:hover {
+          .svg {
+            color: var(--theme-dark-blue);
+          }
+        }
+      }
       > div {
         display: flex;
         justify-content: center;
-        .btn {
-          height: 4.7vh;
-          width: 4.7vh;
-          cursor: pointer;
-          .svg {
-            color: var(--gray);
-          }
-          &.active:hover {
-            .svg {
-              color: var(--theme-dark-blue);
-            }
-          }
-        }
       }
     }
   }
