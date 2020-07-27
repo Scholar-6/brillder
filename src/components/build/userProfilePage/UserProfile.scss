@@ -167,7 +167,7 @@
         }
       }
       .profile-inputs-container {
-        padding-top: 5vh;
+        padding-top: 5.1vh;
         width: 32.4vw;
         margin: 0 3vw;
         @include phone_and_tabletP {
@@ -201,9 +201,7 @@
           width: 100%;
           border-radius: 0.3vw;
           box-shadow: $base-shadow;
-          padding-top: 1.9vh;
-          padding-left: 1.15vw;
-          padding-bottom: 1.4vh;
+          padding: 1.15vw;
           @include phone_and_tabletP {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(33.33%, 1fr));
