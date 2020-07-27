@@ -807,6 +807,12 @@ $introduction-expanded-height: calc(100vh - 2vw);
   // class for desktop only
   .sorted-row-expanded {
     @include tabletP {
+      .introduction-page {
+        height: $introduction-expanded-height !important;
+        .question-live-play {
+          height: $introduction-expanded-height !important;
+        }
+      }
       .introduction-info {
         height: $introduction-expanded-height !important;
       }
