@@ -20,6 +20,9 @@ $space-between-boxes: 0.1vw;
       height: 2vw;
     }
   }
+  .play-preview {
+    position: fixed !important;
+  }
 
   .phone-question-preview {
     .custom-component {
@@ -149,17 +152,31 @@ $space-between-boxes: 0.1vw;
     letter-spacing: 0.3vw;
     font-family: $font-family-black;
     color: var(--light-blue);
-
+    .svg {
+      color: var(--light-blue);
+    }
+    &:hover {
+      color: var(--white);
+      .svg {
+        color: var(--white);
+      }
+    }
     .proposal-edit-icon {
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url(/images/edit.png);
       height: 4.5vw;
       width: 4.5vw;
-      margin-bottom: 0.5vh;
+    }
+    &.white {
+      color: var(--white);
+      .svg {
+        color: var(--white);
+      }
+      .proposal-edit-icon {
+        height: 3.5vw;
+        width: 3.5vw;
+      }
     }
     .proposal-text {
+      @extend %transitionAll300;
       margin-top: 0vh;
       margin-left: 0.3vw;
     }
@@ -171,16 +188,6 @@ $space-between-boxes: 0.1vw;
     }
     .tooltip-text {
       opacity: 0;
-    }
-  }
-
-  .white {
-    color: white !important;
-    .proposal-edit-icon {
-      height: 3.5vw;
-      width: 3.5vw;
-      background-image: url(/images/edit-white.png);
-      margin-bottom: 1vh;
     }
   }
 
@@ -196,14 +203,6 @@ $space-between-boxes: 0.1vw;
   .white.proposal:focus {
     outline: none;
     border: none;
-  }
-
-  .proposal-container:hover {
-    color: white;
-
-    .proposal-edit-icon {
-      background-image: url(/images/edit-white.png);
-    }
   }
 
   .saved-info {
@@ -235,6 +234,8 @@ $space-between-boxes: 0.1vw;
     border-radius: 0.6vw;
     padding: 0.1vh 0;
     padding-left: 0.5vw;
-    border: 0.1vw dashed var(--theme-orange);
+    &:before {
+      border: 0.1vw dashed var(--theme-orange);
+    }
   }
 }

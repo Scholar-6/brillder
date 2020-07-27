@@ -200,14 +200,14 @@ const LivePage: React.FC<LivePageProps> = ({
     }
     return (
       <button
-        className="play-preview svgOnHover play-white scale-07"
+        className="play-preview svgOnHover play-white"
         onClick={prev}
       >
-        <svg className="svg w80 h80 svg-default m-r-02">
+        <svg className="svg w80 h80 svg-default m-0">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#arrow-left"} className="text-gray" />
         </svg>
-        <svg className="svg w80 h80 colored m-r-02">
+        <svg className="svg w80 h80 colored m-0">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#arrow-left"} className="text-white" />
         </svg>

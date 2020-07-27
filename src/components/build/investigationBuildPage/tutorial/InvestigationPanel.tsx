@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Button } from '@material-ui/core';
 
 import './InvestigationPanel.scss';
-import {TutorialStep} from './TutorialPanelWorkArea';
+import { TutorialStep } from './TutorialPanelWorkArea';
 
 
 export interface TutorialProps {
@@ -15,8 +15,8 @@ const InvestigationPanel: React.FC<TutorialProps> = (props) => {
     <div className="tutorial-investigation-panel">
       <div className="tutorial-step-1">
         <Grid container justify="center">
-          <div className="add-border">
-            <div className="add-icon"/>
+          <div className="add-border border-animation">
+            <div className="add-icon" />
           </div>
         </Grid>
         <p className="center">

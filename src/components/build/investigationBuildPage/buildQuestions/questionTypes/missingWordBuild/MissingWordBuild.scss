@@ -38,7 +38,7 @@
       min-height: $answer-height;
       text-align: center;
       border: none;
-      background: $input-gray;
+      background: var(--input-gray);
       border-radius: 0.4vw;
       font-size: $answer-input-text-size;
     }

@@ -9,7 +9,7 @@ export interface LastTabProps {
 const LastTab: React.FC<LastTabProps> = ({ tutorialStep }) => {
   let className = "add-tab last-tab";
   if (tutorialStep === TutorialStep.Investigation) {
-    className += " tutorial-border";
+    className += " tutorial-border border-animation";
   }
   return (
     <div className={`svgOnHover ${className}`}>

@@ -98,7 +98,7 @@
             transform: translateY(-50%);
           }
           &.active {
-            background: $lighter-blue;
+            background: var(--theme-light-blue);
           }
           &.color1 {
             .round-button,
@@ -167,7 +167,7 @@
       .filter-header {
         position: relative;
         text-transform: uppercase;
-        background: $lighter-blue 0% 0% no-repeat padding-box;
+        background: var(--theme-light-blue) 0% 0% no-repeat padding-box;
         padding: 0.3vw 1.4vw;
         font-size: 1.2vw;
         letter-spacing: 0.22vw;
@@ -364,7 +364,7 @@
         cursor: default !important;
         align-items: center;
         span {
-          color: var(--light-blue2) !important;
+          color: var(--light-blue) !important;
           &:first-child {
             margin-right: 1vw;
           }
@@ -471,7 +471,7 @@
               }
             }
             .link-info {
-              color: $lighter-blue;
+              color: var(--theme-light-blue);
               line-height: 1.3;
               font-family: $font-family-regular;
               overflow-y: hidden;
@@ -647,89 +647,13 @@
         }
       }
     }
-    .users-table {
-      width: calc(100% + 1.18vw);
-      margin-left: -1.18vw;
-      height: 60.5vh;
-      overflow-y: auto;
-      > table {
-        width: 100%;
-        border: none;
-        thead {
-          background: var(--tab-gray);
-          color: var(--theme-dark-blue);
-          font-family: $font-family-black;
-          font-size: 1.3vw;
-          letter-spacing: 0.25vw;
-          tr {
-            th {
-              padding-top: 0.6vh;
-              padding-bottom: 0.6vh;
-              text-align: left;
-              padding-left: 0.5vw;
-
-              .sort-button {
-                cursor: pointer;
-                margin-top: 0.3vh;
-                margin-left: 0.4vw;
-                height: 1.5vw;
-                width: 1.5vw;
-              }
-            }
-
-            .subject-title {
-              width: 5%;
-            }
-            .user-full-name {
-              width: 30%;
-            }
-            .email-column {
-              width: 31.3%;
-            }
-            .edit-button-column {
-              width: 2.5vw;
-            }
-          }
-        }
-        tr.user-row {
-          height: 4.5vh;
-          td {
-            padding-left: 0.5vw;
-            color: var(--theme-dark-blue);
-            font-size: 1vw;
-            padding-top: 0;
-          }
-          .user-actions-cell {
-            min-width: 5.5vw;
-            .delete-button,
-            .edit-button {
-              display: inline-block;
-              cursor: pointer;
-              height: 1.85vw;
-              width: 1.85vw;
-            }
-            .edit-button {
-              margin-left: 1vw;
-            }
-          }
-          .activate-button-container {
-            padding-left: 2vw;
-          }
-        }
-        tr.user-row:nth-child(even) {
-          background: var(--tab-gray);
-        }
-        .user-last-name {
-          font-family: $font-family-bold;
-        }
-      }
-    }
     .role-description {
       width: 100%;
       height: 2.5vh;
       text-align: right;
       font-size: 0.8vw;
-      margin: 0.5vh;
+      margin: 0.5vh 0;
+      padding: 0 1.18vh;
       color: var(--theme-dark-blue);
       letter-spacing: 0.015vw;
 

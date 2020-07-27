@@ -91,7 +91,12 @@
     <path d="M22,20.2v-1.8c0-1.7-1.1-3.1-2.7-3.5"/>
     <path d="M15.6,3.9c1.9,0.5,3.1,2.5,2.6,4.4c-0.3,1.3-1.3,2.3-2.6,2.6"/>
   </svg>
-  <svg id="logout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <svg id="logout-thin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9.3,20H5.8c-1,0-1.8-0.8-1.8-1.8V5.8C4,4.8,4.8,4,5.8,4h3.6"/>
+    <polyline points="15.6,16.4 20,12 15.6,7.6 	"/>
+    <line x1="20" y1="12" x2="9.3" y2="12"/>
+  </svg>
+  <svg id="logout-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M9.3,20H5.8c-1,0-1.8-0.8-1.8-1.8V5.8C4,4.8,4.8,4,5.8,4h3.6"/>
     <polyline points="15.6,16.4 20,12 15.6,7.6 	"/>
     <line x1="20" y1="12" x2="9.3" y2="12"/>

@@ -25,6 +25,7 @@
     .step {
       color: var(--theme-dark-blue) !important;
       svg {
+        @extend %removePosition;
         @include phone_and_tabletP {
           height: 4vw !important;
           width: 4vw !important;
@@ -42,12 +43,11 @@
       height: 90vh;
       overflow: hidden !important;
     }
-
-    h1 {
-      position: absolute !important;
-      top: 0.2vw !important;
-      left: 2.5vw;
-    }
+    // h1 {
+    //   position: absolute !important;
+    //   top: 0.2vw !important;
+    //   left: 2.5vw;
+    // }
     .question-index-container {
       width: 7vw !important;
       height: 7vw !important;
@@ -55,12 +55,6 @@
         width: 7vw !important;
         height: 7vw !important;
         font-size: 6vw !important;
-      }
-    }
-    .action-footer {
-      @include phone_and_tabletP {
-        position: absolute !important;
-        right: 0;
       }
     }
     .question-live-play {
