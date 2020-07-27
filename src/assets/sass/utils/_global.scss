@@ -364,10 +364,10 @@ h3 {
 .zoom-item {
   cursor: pointer;
   text-align: center;
-  transition: all 0.2s ease-in-out;
+  @extend %transitionAll300;
   &:hover {
     @include tabletP {
-      transform: scale(1.2);
+      transform: scale(1.4);
     }
   }
 }

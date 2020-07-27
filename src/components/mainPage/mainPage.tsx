@@ -79,7 +79,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/play/dashboard")}>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#glasses"} className="text-theme-orange" />
+          <use href={sprite + "#glasses-home"} className="text-theme-orange" />
         </svg>
         <span className="item-description">View All Bricks</span>
       </button>
@@ -91,7 +91,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/build/new-brick/brick-title")}>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#shovel"} className="text-theme-orange" />
+          <use href={sprite + "#shovel-home"} className="text-theme-orange" />
         </svg>
         <span className="item-description">Start Building</span>
       </button>
@@ -103,7 +103,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/back-to-work")}>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#roller"} className="text-theme-orange" />
+          <use href={sprite + "#roller-home"} className="text-theme-orange" />
         </svg>
         <span className="item-description">Back To Work</span>
       </button>
@@ -174,7 +174,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
                 <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => history.push("/play/dashboard")}>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#glasses"} className="text-theme-orange" />
+                    <use href={sprite + "#glasses-home"} className="text-theme-orange" />
                   </svg>
                   <span className="item-description">View All Bricks</span>
                 </button>
@@ -183,7 +183,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
                 <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.creatingBrick()}>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#shovel"} className="text-theme-orange" />
+                    <use href={sprite + "#shovel-home"} className="text-theme-orange" />
                   </svg>
                   <span className="item-description">Start Building</span>
                 </button>
@@ -192,7 +192,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
                 <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => history.push("/back-to-work")}>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#roller"} className="text-theme-orange" />
+                    <use href={sprite + "#roller-home"} className="text-theme-orange" />
                   </svg>
                   <span className="item-description">Back To Work</span>
                 </button>
