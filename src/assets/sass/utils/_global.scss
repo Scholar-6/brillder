@@ -32,6 +32,16 @@ textarea {
   font-family: $font-family-regular !important;
 }
 
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
 .hide {
   display: none !important;
 }
@@ -354,10 +364,10 @@ h3 {
 .zoom-item {
   cursor: pointer;
   text-align: center;
-  transition: all 0.2s ease-in-out;
+  @extend %transitionAll300;
   &:hover {
     @include tabletP {
-      transform: scale(1.2);
+      transform: scale(1.4);
     }
   }
 }

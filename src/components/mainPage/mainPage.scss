@@ -86,14 +86,17 @@
   .create-item-container,
   .back-item-container {
     width: 100%;
-    padding: 2vh 0;
+    padding: 3vh 0;
     @extend %flexCenter;
     .btn {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
       text-align: center;
       flex-direction: column;
       .svg {
-        width: 10vw;
-        height: 10vw;
+        width: 15vw;
+        height: max-content;
         @extend %removePosition;
       }
       .item-description {
