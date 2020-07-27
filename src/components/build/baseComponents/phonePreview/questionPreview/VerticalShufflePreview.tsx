@@ -13,17 +13,14 @@ class VerticalShufflePreview extends Component<any, any> {
     this.state = {
       buttons: [
         {
-          number: 1,
           correctIndex: 1,
           text: 'Alexander’s last lesson with Aristotle'
         },
         {
-          number: 2,
           correctIndex: 2,
           text: 'Philip II of Macedon assassinated'
         },
         {
-          number: 3,
           correctIndex: 0,
           text: 'Trial of Socrates'
         }
@@ -40,7 +37,7 @@ class VerticalShufflePreview extends Component<any, any> {
       <button className={className}>
         <div>
           <Grid container justify="center" alignContent="center" className="circle-number">
-            <Avatar>{btnContent.number}</Avatar>
+            <Avatar>{btnContent.correctIndex + 1}</Avatar>
           </Grid>
         </div>
         {btnContent.text}
