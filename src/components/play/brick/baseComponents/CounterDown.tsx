@@ -45,7 +45,7 @@ class CounterDown extends Component<CounterProps, CounterState> {
         this.props.onEnd();
         clearInterval(this.state.timerInterval);
       }
-      if (dif._milliseconds < 30000 && this.state.isDeadlineSoon === false) {
+      if (dif._milliseconds < 31000 && this.state.isDeadlineSoon === false) {
         this.setState({ ...this.state, isDeadlineSoon: true })
       }
     }, 1000);
