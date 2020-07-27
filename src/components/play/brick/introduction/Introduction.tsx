@@ -131,7 +131,9 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       <div className="action-footer">
         <div>&nbsp;</div>
         <div className="direction-info">
-          <h3>Ready?</h3>
+          <Hidden only={["xs"]}>
+            <h3>Ready?</h3>
+          </Hidden>
           <h2>Play Brick</h2>
         </div>
         <div>
@@ -328,7 +330,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <div className="introduction-page">
           {renderMobileHeader()}
           <div className="introduction-info">
-
             {!state.prepExpanded ? (
               <div>
                 <Hidden only={["sm", "md", "lg", "xl"]}>
