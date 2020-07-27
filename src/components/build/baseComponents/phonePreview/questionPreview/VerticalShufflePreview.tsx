@@ -14,12 +14,12 @@ class VerticalShufflePreview extends Component<any, any> {
       buttons: [
         {
           number: 1,
-          correctIndex: 2,
+          correctIndex: 1,
           text: 'Alexander’s last lesson with Aristotle'
         },
         {
           number: 2,
-          correctIndex: 1,
+          correctIndex: 2,
           text: 'Philip II of Macedon assassinated'
         },
         {
