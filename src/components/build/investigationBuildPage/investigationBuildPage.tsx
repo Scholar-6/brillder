@@ -92,7 +92,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   let initSynthesis = props.brick ? props.brick.synthesis as string : "";
-  const [synthesis, setSynthesis] = React.useState(initSynthesis);
+  let [synthesis, setSynthesis] = React.useState(initSynthesis);
   useEffect(() => {
     if (props.brick) {
       if (props.brick.id === brickId) {
@@ -153,6 +153,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const saveSynthesis = (text: string) => {
+    synthesis = text;
     setSynthesis(text);
     autoSaveBrick();
   }
