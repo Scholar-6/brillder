@@ -176,11 +176,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
             <span className="menu-text">Logout</span>
             <div className="btn btn-transparent svgOnHover">
-              <svg className="svg w100 h100 svg-default">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#logout-thin"} className="text-white" />
-              </svg>
-              <svg className="svg w100 h100 colored">
+              <svg className="svg active">
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#logout-thick"} className="text-white" />
               </svg>

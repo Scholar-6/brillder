@@ -1,23 +1,22 @@
 .menu-dropdown {
   .MuiPaper-root {
     position: fixed;
-    min-width: 14.9vw !important;
-    min-height: 31.3vh;
     border-radius: 0;
     border-bottom-left-radius: 2vw;
     color: var(--white);
     background: var(--light-blue);
     box-shadow: none;
     right: 0 !important;
+    height: fit-content;
     left: auto !important;
     @include phone_and_tabletP {
       bottom: 5.9vh !important;
       top: unset !important;
-      min-width: 40vw !important;
-      min-height: fit-content;
+      width: 40vw;
       border-radius: 4vw 0 0;
     }
     @include tabletP {
+      width: 16vw;
       top: 10.5vh !important;
     }
     .MuiList-root {
@@ -44,7 +43,7 @@
         }
         .menu-text {
           width: 10vw;
-         }
+        }
         .btn {
           .svg {
             width: 2.5vw;
