@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
-import { Grid, Button, Hidden } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import Dialog from '@material-ui/core/Dialog';
 import update from "immutability-helper";
 // @ts-ignore
@@ -23,6 +23,7 @@ import DeleteQuestionDialog from "components/build/baseComponents/deleteQuestion
 import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
 import TutorialPhonePreview from "./tutorial/TutorialPreview";
 import YourProposalLink from './components/YourProposalLink';
+import DesktopVersionDialog from '../baseComponents/DesktopVersionDialog';
 
 import {
   Question,
@@ -155,6 +156,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const saveSynthesis = (text: string) => {
     synthesis = text;
     setSynthesis(text);
+    console.log("auto save synthesis. log bellow is related to this one");
     autoSaveBrick();
   }
 
@@ -328,6 +330,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setSavingStatus(true);
       prepareBrickToSave(brick, updatedQuestions, synthesis);
 
+      console.log('save brick questions');
       props.saveBrick(brick).then((res: any) => {
         if (callback) {
           callback(res);
@@ -336,26 +339,17 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
   }
 
-  const saveSwitchedBrickQuestions = (updatedQuestions: Question[]) => {
-    if (canEdit === true) {
-      setSavingStatus(true);
-      prepareBrickToSave(brick, updatedQuestions, synthesis);
-      for (let [index, question] of brick.questions.entries()) {
-        question.order = index;
-      }
-      props.saveBrick(brick);
-    }
-  }
-
   const saveBrick = () => {
     setSavingStatus(true);
     prepareBrickToSave(brick, questions, synthesis);
     if (canEdit === true) {
+      console.log('save brick')
       props.saveBrick(brick);
     }
   };
 
   const autoSaveBrick = () => {
+    console.log('auto save brick')
     setSavingStatus(true);
     prepareBrickToSave(brick, questions, synthesis);
     if (canEdit === true) {
@@ -526,7 +520,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const switchQuestions = (questions: Question[]) => {
     setQuestions(questions);
-    saveSwitchedBrickQuestions(questions);
+    if (canEdit === true) {
+      setSavingStatus(true);
+      prepareBrickToSave(brick, questions, synthesis);
+      for (let [index, question] of brick.questions.entries()) {
+        question.order = index;
+      }
+      console.log('question switched. save brick');
+      props.saveBrick(brick);
+    }
   }
 
   if (!synthesis) {
@@ -629,20 +631,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         />
       </Hidden>
       <Hidden only={['md', 'lg', 'xl']}>
-        <Dialog
-          open={true}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className="dialog-box">
-          <div className="dialog-header">
-            <div>You need desktop browser to use this page</div>
-          </div>
-          <Grid container direction="row" className="dialog-footer" justify="center">
-            <Button className="yes-button" onClick={() => history.push('/home')}>
-              Move
-            </Button>
-          </Grid>
-        </Dialog>
+        <DesktopVersionDialog history={history} />
       </Hidden>
     </div>
   );

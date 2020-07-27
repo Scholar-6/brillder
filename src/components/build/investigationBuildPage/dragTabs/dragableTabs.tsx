@@ -57,6 +57,7 @@ interface DragTabsProps {
 const DragableTabs: React.FC<DragTabsProps> = ({
   questions, isSynthesisPage, synthesis, ...props
 }) => {
+  let isInit = true;
   let isSynthesisPresent = true;
 
   const renderQuestionTab = (questions: Question[], question: Question, index: number, comlumns: number) => {
@@ -110,6 +111,14 @@ const DragableTabs: React.FC<DragTabsProps> = ({
     columns = (questions.length * 2) + 2;
   }
 
+  const setQuestions = (questions: Question[]) => {
+    if (isInit === false) {
+      props.setQuestions(questions);
+    } else {
+      isInit = false;
+    }
+  }
+
   return (
     <div className={classes.root + " drag-tabs"}>
       <GridList cellHeight={40} className={classes.gridList} cols={columns}>
@@ -117,7 +126,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
           list={questions}
           className="drag-container"
           group="tabs-group"
-          setList={props.setQuestions}>
+          setList={setQuestions}>
           {
             questions.map((question, i) => renderQuestionTab(questions, question, i, columns))
           }
