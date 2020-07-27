@@ -206,7 +206,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             finishBrick={finishBrick}
             endTime={liveEndTime}
             setEndTime={time => {
-              if (liveEndTime) {
+              if (!liveEndTime) {
                 setLiveEndTime(liveEndTime);
               }
             }}
