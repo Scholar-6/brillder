@@ -84,7 +84,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const [step, setStep] = React.useState(TutorialStep.Proposal);
   const [tooltipsOn, setTooltips] = React.useState(true);
   // time of last autosave
-  const [lastAutoSave, setLastAutoSave] = React.useState(Date.now());
+  let [lastAutoSave, setLastAutoSave] = React.useState(Date.now());
 
   /* Synthesis */
   let isSynthesisPage = false;
@@ -325,8 +325,15 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setSubmitDialog(false);
   }
 
+  const setAutoSaveTime = () => {
+    let time = Date.now();
+    lastAutoSave = time;
+    setLastAutoSave(time);
+  }
+
   const saveBrickQuestions = (updatedQuestions: Question[], callback?: Function) => {
     if (canEdit === true) {
+      setAutoSaveTime();
       setSavingStatus(true);
       prepareBrickToSave(brick, updatedQuestions, synthesis);
 
@@ -349,7 +356,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   };
 
   const autoSaveBrick = () => {
-    console.log('auto save brick')
     setSavingStatus(true);
     prepareBrickToSave(brick, questions, synthesis);
     if (canEdit === true) {
@@ -363,6 +369,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       } catch { }
 
       if (time - lastAutoSave >= delay) {
+        console.log('auto save brick')
         setLastAutoSave(time);
         props.saveBrick(brick);
       }
@@ -521,6 +528,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const switchQuestions = (questions: Question[]) => {
     setQuestions(questions);
     if (canEdit === true) {
+      setAutoSaveTime();
       setSavingStatus(true);
       prepareBrickToSave(brick, questions, synthesis);
       for (let [index, question] of brick.questions.entries()) {
