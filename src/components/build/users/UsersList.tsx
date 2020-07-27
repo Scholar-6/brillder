@@ -452,13 +452,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
               </span>
             </div>
           </Grid>
-          <Grid
-            container
-            item
-            xs={4}
-            justify="center"
-            className="bottom-next-button"
-          >
+          <Grid item xs={4} className="bottom-next-button">
             <div>
               {showPrev ? (
                 <button
@@ -643,7 +637,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   render() {
     const { history } = this.props;
     return (
-      <div className="user-list-page">
+      <div className="main-listing user-list-page">
         <PageHeadWithMenu
           page={PageEnum.ManageUsers}
           placeholder="Search by Name, Email or Subject"

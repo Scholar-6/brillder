@@ -340,7 +340,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   render() {
     return (
-      <div className="user-profile-page">
+      <div className="main-listing user-profile-page">
         <UserProfileMenu
           user={this.props.user}
           forgetBrick={this.props.forgetBrick}
@@ -400,6 +400,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 </div>
                 <FormControlLabel
                   value="start"
+                  className="secret-input"
                   control={<Checkbox color="primary" />}
                   label="Keep me secret: I don't want to be searchable"
                   labelPlacement="end"

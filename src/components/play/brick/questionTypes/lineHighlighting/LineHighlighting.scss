@@ -14,7 +14,7 @@
       cursor: pointer;
     }
     .line.active {
-      background: $white-blue;
+      background: var(--white-blue);
     }
 
     .line.correct {

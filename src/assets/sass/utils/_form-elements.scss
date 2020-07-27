@@ -44,7 +44,7 @@ input {
 .input-block {
   @extend %displayFlex;
   @extend %posRelative;
-  margin-bottom: 3vh;
+  margin-bottom: 1.5vh;
   width: 100%;
   input {
     @extend %width100;
@@ -52,7 +52,7 @@ input {
     border: none;
     letter-spacing: 0.3vw;
     border-radius: 1.7vh;
-    padding: 2.5vh 1vw !important;
+    padding: 1.8vh 1vw !important;
     @include phone_and_tabletP {
       font-size: 5.5vw;
     }
@@ -79,7 +79,9 @@ input {
   }
 }
 
-
+.secret-input {
+  margin-bottom: 1vh;
+}
 /* Material UI Overwrite */
 
 .MuiAutocomplete-root {
@@ -123,17 +125,17 @@ input {
 }
 
 .MuiSwitch-switchBase {
-	padding: 0 !important;
-	border-radius: 50% !important;
-	transform: translateX(0.2vw) !important;
-	&.Mui-checked {
-		transform: translateX(1.3vw) !important;
-	}
-	.MuiSwitch-thumb {
-		width: 0.7vw !important;
-		height: 0.7vw !important;
-		margin: 0.2vw 0 !important;
-	}
+  padding: 0 !important;
+  border-radius: 50% !important;
+  transform: translateX(0.2vw) !important;
+  &.Mui-checked {
+    transform: translateX(1.3vw) !important;
+  }
+  .MuiSwitch-thumb {
+    width: 0.7vw !important;
+    height: 0.7vw !important;
+    margin: 0.2vw 0 !important;
+  }
 }
 
 .left-ckeckbox {

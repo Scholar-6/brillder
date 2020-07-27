@@ -11,9 +11,6 @@
     overflow-y: hidden !important;
   }
   .introduction-info {
-    @include phone_and_tabletP {
-      position: relative !important;
-    }
     .brick-counter {
       @include phone_and_tabletP {
         position: absolute !important;
@@ -93,11 +90,11 @@
     }
   }
   .edited-step-icon {
-    color: $black-blue;
+    color: var(--black-blue);
     border-radius: 100%;
     font-size: 16px !important;
     padding: 5px;
-    border: 2px solid $black-blue;
+    border: 2px solid var(--black-blue);
   }
   .ck-editor__main {
     .ck-content {

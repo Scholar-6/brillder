@@ -389,9 +389,9 @@
 }
 
 %removePosition {
-  position: inherit !important;
-  top: inherit !important;
-  left: inherit !important;
+  position: unset !important;
+  top: unset !important;
+  left: unset !important;
   transform: unset !important;
 }
 
