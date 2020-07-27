@@ -54,7 +54,6 @@ const CountDown: React.FC<CounterProps> = (props) => {
   if (!props.endTime) {
     endTime = getEndTime();
   }
-  console.log(endTime)
 
   return (
     <div className="intro-header">
