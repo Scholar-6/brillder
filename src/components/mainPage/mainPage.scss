@@ -85,7 +85,7 @@
   .view-item-container,
   .create-item-container,
   .back-item-container {
-    width: 100%;
+    width: auto;
     padding: 3vh 0;
     @extend %flexCenter;
     .btn {
@@ -96,7 +96,7 @@
       flex-direction: column;
       .svg {
         width: 15vw;
-        height: max-content;
+        height: auto;
         @extend %removePosition;
       }
       .item-description {
@@ -111,6 +111,46 @@
         .item-description {
           font-family: $font-family-bold;
         }
+      }
+    }
+  }
+  .view-item-container {
+    .btn {
+      .svg {
+        height: 11vh;
+      }
+    }
+    .glass-eyes-left,
+    .glass-eyes-right {
+      width: 5vw;
+      height: 5vw;
+      @extend %floatToYCenter;
+      opacity: 0;
+      transition-delay: 200ms;
+      @extend %transitionAll300;
+      top: calc(50% - 0.9vw);
+      .svg {
+        width: 60%;
+        height: 60%;
+      }
+    }
+    .glass-eyes-left {
+      left: 1.8vw;
+    }
+    .glass-eyes-right {
+      right: 1.8vw;
+    }
+    &:hover {
+      .glass-eyes-left,
+      .glass-eyes-right {
+        opacity: 1;
+      }
+    }
+  }
+  .create-item-container {
+    .btn {
+      .svg {
+        width: 10.5vw;
       }
     }
   }
