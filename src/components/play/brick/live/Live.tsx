@@ -100,6 +100,7 @@ const LivePage: React.FC<LivePageProps> = ({
 
   const nextFromShuffle = () => {
     setShuffleDialog(false);
+    onQuestionAttempted(activeStep);
 
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
