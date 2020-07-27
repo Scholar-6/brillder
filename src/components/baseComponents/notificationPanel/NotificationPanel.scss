@@ -59,82 +59,84 @@
           .content-box {
             display: flex;
             width: calc(100% - 56px);
-            .notification-time {
-              color: var(--white);
-              text-align: center;
-              white-space: nowrap;
-              margin-top: 0.4vh;
+            .notification-detail,
+            .notification-detail-single {
+              .MuiListItemText-primary,
+              .MuiTypography-colorTextSecondary {
+                @include phone_and_tabletP {
+                  font-size: 3.5vw;
+                }
+                @include tabletP {
+                  font-size: 1.1vw;
+                }
+                @include tabletL {
+                  font-size: 0.9vw;
+                }
+                @include desktop {
+                  font-size: 0.8vw;
+                }
+              }
+              .MuiListItemText-primary {
+                color: var(--white);
+                text-transform: uppercase;
+              }
+            }
+            .notification-detail {
+              border-bottom: 0.02vh solid var(--theme-dark-blue);
               @include phone_and_tabletP {
-                font-size: 2.5vw;
+                padding-bottom: 1vh;
               }
               @include tabletP {
-                font-size: 0.9vw;
+                padding-bottom: 0.5vh;
               }
-              @include tabletL {
-                font-size: 0.8vw;
-              }
-              @include desktop {
-                font-size: 0.7vw;
+              .MuiTypography-colorTextSecondary {
+                color: var(--white-alpha6);
               }
             }
-            .delete-notification {
-              color: var(--white);
-              padding: 0;
-              @extend %width100;
+            .notification-detail-single {
+              @extend %textCenter;
             }
-          }
-          .notification-detail-single {
-            @extend %textCenter;
-          }
-          .notification-detail,
-          .notification-detail-single {
-            margin: 0;
-            .MuiListItemText-primary,
-            .MuiTypography-colorTextSecondary {
-              @include phone_and_tabletP {
-                font-size: 3.5vw;
+            .actions {
+              @extend %flexCenter;
+              flex-direction: column;
+              color: var(--tab-gray);
+              .notification-time {
+                text-align: center;
+                white-space: nowrap;
+                margin-top: 0.4vh;
+                @include phone_and_tabletP {
+                  font-size: 2.5vw;
+                }
+                @include tabletP {
+                  font-size: 0.9vw;
+                }
+                @include tabletL {
+                  font-size: 0.8vw;
+                }
+                @include desktop {
+                  font-size: 0.7vw;
+                }
               }
-              @include tabletP {
-                font-size: 1.1vw;
+              .delete-notification {
+                padding: 0;
+                @extend %width100;
+                @include phone {
+                  width: 7vw;
+                  height: 7vw;
+                }
+                @include tabletP {
+                  width: 2vw;
+                  height: 2vw;
+                }
+                svg {
+                  @extend %removePosition;
+                  &:hover {
+                    color: var(--theme-orange);
+                  }
+                }
               }
-              @include tabletL {
-                font-size: 0.9vw;
-              }
-              @include desktop {
-                font-size: 0.8vw;
-              }
-            }
-            .MuiListItemText-primary {
-              color: var(--white);
-              text-transform: uppercase;
-            }
-          }
-          .notification-detail {
-            margin: 0;
-            border-bottom: 0.02vh solid var(--theme-dark-blue);
-            @include phone_and_tabletP {
-              padding-bottom: 1vh;
-            }
-            @include tabletP {
-              padding-bottom: 0.5vw;
-            }
-            .MuiTypography-colorTextSecondary {
-              color: var(--white-alpha6);
             }
           }
-        }
-      }
-    }
-    .clear-notification,
-    .notification-content .delete-notification {
-      svg {
-        @include phone {
-          width: 7vw;
-          height: 7vw;
-        }
-        @include tabletP {
-          width: 2vw;
-          height: 2vw;
         }
       }
     }
@@ -155,6 +157,24 @@
         button {
           padding-top: 0vw;
           padding-bottom: 0vw;
+        }
+      }
+      .delete-notification {
+        padding: 0;
+        @extend %width100;
+        @include phone {
+          width: 7vw;
+          height: 7vw;
+        }
+        @include tabletP {
+          width: 2vw;
+          height: 2vw;
+        }
+        svg {
+          @extend %removePosition;
+          &:hover {
+            color: var(--theme-orange);
+          }
         }
       }
       .MuiCardActions-spacing {

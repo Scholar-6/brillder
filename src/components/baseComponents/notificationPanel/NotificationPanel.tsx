@@ -74,15 +74,15 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                     </ListItemIcon>
                     <div className="content-box">
                       <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
-                      <Grid>
-                        <Grid className="notification-time">{moment(notification.timestamp).fromNow()}</Grid>
-                      <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>
-                            <svg className="svg">
-                              {/*eslint-disable-next-line*/}
-                              <use href={sprite + "#cancel"} />
-                            </svg>
+                      <div className="actions">
+                        <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>
+                        <button className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>
+                          <svg className="svg w80 h80 active">
+                            {/*eslint-disable-next-line*/}
+                            <use href={sprite + "#cancel"} />
+                          </svg>
                         </button>
-                      </Grid>
+                      </div>
                     </div>
                   </ListItem>
                 )) :
