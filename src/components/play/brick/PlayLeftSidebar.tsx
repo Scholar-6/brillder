@@ -61,7 +61,7 @@ const PlayLeftSidebarComponent: React.FC<SidebarProps> = (props) => {
       className += " active";
     }
     if (mode === PlayMode.UnHighlighting) {
-      icon = "#delete";
+      icon = "#delete-2";
     }
     return (
       <MenuItem className={className} onClick={setHighlightMode}>
