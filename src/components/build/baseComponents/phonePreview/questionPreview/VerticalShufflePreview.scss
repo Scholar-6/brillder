@@ -26,7 +26,7 @@
     letter-spacing: 0.01vw;
     border-radius: 1vw;
     border: none;
-    height: 12.5%;
+    height: 8.5vh;
     background: var(--tab-gray);
     color: var(--theme-dark-blue);
 
@@ -35,8 +35,8 @@
       height: 100%;
 
       .MuiAvatar-root {
-        height: 2.1vw;
-        width: 2.1vw;
+        height: 1.9vw;
+        width: 1.9vw;
         color: white;
         font-size: 1.6vw;
         font-family: $font-family-black;
@@ -51,5 +51,9 @@
       top: 0;
       left: 0;
     }
+  }
+
+  button.correct {
+    background: var(--theme-green);
   }
 }
