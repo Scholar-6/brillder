@@ -56,6 +56,9 @@
     .ck-toolbar__items {
       background: var(--white) !important;
       display: block !important;
+      button {
+        border: none !important;
+      }
       .ck-dropdown {
         padding: 0 0.2vw !important;
         margin: 0 !important;
