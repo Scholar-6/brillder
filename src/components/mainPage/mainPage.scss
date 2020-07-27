@@ -86,8 +86,10 @@
   .create-item-container,
   .back-item-container {
     width: auto;
-    padding: 3vh 0;
     @extend %flexCenter;
+    @include tabletP {
+      padding: 3vh 0;
+    }
     .btn {
       display: flex;
       align-items: center;

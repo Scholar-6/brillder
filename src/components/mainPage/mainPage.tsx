@@ -102,25 +102,29 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   renderCreateButton() {
     return (
-      <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/build/new-brick/brick-title")}>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#shovel-home"} className="text-theme-orange" />
-        </svg>
-        <span className="item-description">Start Building</span>
-      </button>
+      <div className="create-item-container">
+        <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/build/new-brick/brick-title")}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#shovel-home"} className="text-theme-orange" />
+          </svg>
+          <span className="item-description">Start Building</span>
+        </button>
+      </div>
     );
   }
 
   renderWorkButton() {
     return (
-      <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/back-to-work")}>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#roller-home"} className="text-theme-orange" />
-        </svg>
-        <span className="item-description">Back To Work</span>
-      </button>
+      <div className="back-item-container">
+        <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/back-to-work")}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#roller-home"} className="text-theme-orange" />
+          </svg>
+          <span className="item-description">Back To Work</span>
+        </button>
+      </div>
     );
   }
 
