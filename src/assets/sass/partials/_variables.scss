@@ -1,38 +1,33 @@
 $colors: (
   'global-light-text-gray': #757576,
-  'black-blue': #0b3b7f,
   'white': #ffffff,
   'white-gray': #e1e1e1,
   'input-gray': #fafafb,
   'gray': #b0b0ad,
-  'lighter-blue': #304775,
-  'light-blue2': #193366,
   'blue': #0681db,
+  'light-blue': #193266,
+  'black-blue': #0b3b7f,
+  'theme-light-blue': #304775,
+  'theme-dark-blue': #001c58,
   'white-blue': #8ad6e8,
   'tab-dark-gray': #e6e6ed,
   'tab-gray': #e5e8ed,
   'light-gray': #f3f4f7,
-	'light-blue': #193266,
-  'theme-dark-blue': #001c58,
   'theme-green': #30c474,
   'theme-orange': #c43c30,
   'theme-dark-orange': #9e281d,
   'pelorous': #17a2b8,
   'yellow': #ff9d00,
   'off-white': #f5f6f7,
-  'muted': #777777,
+  'muted': #444444,
 );
 
 $global-light-text-gray: #757576;
-$black-blue: #0b3b7f;
-$input-gray: #fafafb;
-$lighter-blue: #304775;
-$blue: #0681db;
-$white-blue: #8ad6e8;
 $button-box: #e1e5eb;
 
 $base-shadow: -10px -10px 15px rgba(255, 255, 255, 0.5), 10px 10px 15px rgba(70, 70, 70, 0.12);
 
+$home-button-size: 5.834vw;
 $sidebar-gutter: 1.2vw;
 $border-radius: 2vw;
 $question-radius: 0.6vw;

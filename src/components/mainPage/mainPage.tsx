@@ -205,20 +205,17 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             <div className="second-item"></div>
           </div>
           <div className="logout-button" onClick={this.props.logout}>
-            <Grid container alignContent="center">
-              <div style={{ position: "relative" }}>
-                <div className="logout-image" />
-              </div>
-              <div>
-                <Grid
-                  container
-                  alignContent="center"
-                  style={{ height: "100%" }}
-                >
-                  <span className="logout-text">LOGOUT</span>
-                </Grid>
-              </div>
-            </Grid>
+            <div className="logout-image svgOnHover">
+              <svg className="svg w100 h100 svg-default">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#logout-thin"} className="text-theme-orange" />
+              </svg>
+              <svg className="svg w100 h100 colored">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#logout-thick"} className="text-theme-orange" />
+              </svg>
+            </div>
+            <span>LOGOUT</span>
           </div>
         </Hidden>
         {this.renderMobilePage()}

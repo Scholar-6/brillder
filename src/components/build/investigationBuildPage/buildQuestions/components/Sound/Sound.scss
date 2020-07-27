@@ -2,7 +2,6 @@
 @import '../../../../../../assets/sass/partials/mixins';
 @import '../../../../../../assets/sass/partials/extensions';
 
-
 .react-recording {
   $button-radius: 0.3vw;
   margin: 0.2vw 0;
@@ -12,15 +11,15 @@
     margin-right: 0.2vw;
     height: 10vh;
     border: 2px dashed #eee;
-    background: #FAFAFA;
+    background: #fafafa;
   }
 
   .dropzone:hover {
-      border: 2px dashed #6BB6F1;
+    border: 2px dashed #6bb6f1;
   }
 
   .dropzone.disabled {
-      background: #EBEBE4;
+    background: #ebebe4;
   }
 
   .record-button-row {
@@ -67,8 +66,8 @@
   }
 
   .disabled {
-    background: #F2F2F2;
-    color: #444 !important;
+    background: #f2f2f2;
+    color: var(--muted) !important;
   }
 
   .stop-record:hover {

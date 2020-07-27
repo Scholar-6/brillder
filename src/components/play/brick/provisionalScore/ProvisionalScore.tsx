@@ -96,11 +96,13 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
 
   const renderStepper = () => {
     return (
-      <ReviewStepper
-        questions={brick.questions}
-        attempts={attempts}
-        handleStep={() => { }}
-      />
+      <div className="intro-text-row">
+        <ReviewStepper
+          questions={brick.questions}
+          attempts={attempts}
+          handleStep={() => { }}
+        />
+      </div>
     );
   }
 

@@ -626,7 +626,7 @@ class BricksListPage extends Component<BricksListProps, BricksListState> {
 
   render() {
     return (
-      <div className="bricks-list-page">
+      <div className="main-listing bricks-list-page">
         <PageHeader
           searchPlaceholder="Search Subjects, Topics, Titles & more"
           search={() => this.search()}
