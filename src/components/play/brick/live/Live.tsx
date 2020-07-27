@@ -96,7 +96,13 @@ const LivePage: React.FC<LivePageProps> = ({
     setAnswers(copyAnswers);
   };
 
-  const prev = () => handleStep(activeStep - 1)();
+  const prev = () => {
+    if (activeStep === 0) {
+      moveToPrep();
+    } else {
+      handleStep(activeStep - 1)();
+    }
+  }
 
   const nextFromShuffle = () => {
     setShuffleDialog(false);
@@ -201,9 +207,6 @@ const LivePage: React.FC<LivePageProps> = ({
   };
 
   const renderPrevButton = () => {
-    if (activeStep === 0) {
-      return "";
-    }
     return (
       <button
         className="play-preview svgOnHover play-white"
