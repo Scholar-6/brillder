@@ -82,6 +82,18 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <use href={sprite + "#glasses-home"} className="text-theme-orange" />
         </svg>
         <span className="item-description">View All Bricks</span>
+        <div className="glass-eyes-left svgOnHover">
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#glasses-eye-colored"} />
+          </svg>
+        </div>
+        <div className="glass-eyes-right svgOnHover">
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#glasses-eye-colored"} />
+          </svg>
+        </div>
       </button>
     );
   }
@@ -177,6 +189,18 @@ class MainPage extends Component<MainPageProps, MainPageState> {
                     <use href={sprite + "#glasses-home"} className="text-theme-orange" />
                   </svg>
                   <span className="item-description">View All Bricks</span>
+                  <div className="glass-eyes-left svgOnHover">
+                    <svg className="svg active">
+                      {/*eslint-disable-next-line*/}
+                      <use href={sprite + "#glasses-eye-colored"} />
+                    </svg>
+                  </div>
+                  <div className="glass-eyes-right svgOnHover">
+                    <svg className="svg active">
+                      {/*eslint-disable-next-line*/}
+                      <use href={sprite + "#glasses-eye-colored"} />
+                    </svg>
+                  </div>
                 </button>
               </div>
               <div className="create-item-container">
