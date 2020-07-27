@@ -21,19 +21,16 @@
         font-family: $font-family-bold;
       }
 
-      .edit-icon {
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/images/edit.png);
-        height: 4.5vw;
-        width: 4.5vw;
-        margin-bottom: 0.5vh;
-      }
       .edit-border {
-        padding: 1.5vw 1.64vw;
-        border-radius: 100vw;
-        border: 0.3vw dashed var(--theme-orange);
+        padding: 1.5vw;
+        margin-bottom: 0.5vh;
+        &:before {
+          border: 0.3vw dashed var(--theme-orange);
+        }
+        .edit-icon {
+          height: 4.5vw;
+          width: 4.5vw;
+        }
       }
       .center {
         margin: 2.3vh 0;
