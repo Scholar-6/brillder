@@ -220,8 +220,8 @@
     <path d="M1,3.9V3l0.2-0.2h1.5v1.4H1.2L1,3.9z"/>
   </svg>
   <svg id="glasses-eye-colored" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-    <path fill="#F5F6F7" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z"/>
-    <path fill="#001C55" d="M13.1,12c0,2.1-1.7,3.8-3.8,3.8S5.5,14.1,5.5,12s1.7-3.8,3.8-3.8S13.1,9.9,13.1,12L13.1,12z"/>
+    <path fill="#F5F6F7" class="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z"/>
+    <path fill="#001C55" class="pupil" d="M13.1,12c0,2.1-1.7,3.8-3.8,3.8S5.5,14.1,5.5,12s1.7-3.8,3.8-3.8S13.1,9.9,13.1,12L13.1,12z"/>
   </svg>
   <svg id="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="10"></circle>
