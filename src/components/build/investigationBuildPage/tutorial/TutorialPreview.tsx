@@ -15,7 +15,7 @@ const ProposalPreview: React.FC = () => {
     <div className="tutorial-preview tutorial-proposal-preview">
       <div className="tutorial-number">1.</div>
       <Grid container justify="center">
-        <div className="tutorial-icon-container svgOnHover border-animation">
+        <div className="tutorial-icon-container svgOnHover">
           <svg className="svg w60 h60 active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#edit-outline"} className="text-theme-dark-blue" />
@@ -31,8 +31,11 @@ const InvestigationPreview: React.FC = () => {
     <div className="tutorial-preview tutorial-investigation-preview">
       <div className="tutorial-number">2.</div>
       <Grid container justify="center">
-        <div className="tutorial-icon-container border-animation">
-          <img alt="" className="tutorial-icon" src="/feathericons/plus-blue.png" />
+        <div className="tutorial-icon-container svgOnHover">
+          <svg className="svg w80 h80 active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#plus"} className="text-theme-dark-blue" />
+          </svg>
         </div>
       </Grid>
     </div>
@@ -44,7 +47,7 @@ const SynthesisPreview: React.FC = () => {
     <div className="tutorial-preview tutorial-synthesis-preview">
       <div className="tutorial-number">3.</div>
       <Grid container justify="center">
-        <div className="tutorial-icon-container svgOnHover border-animation">
+        <div className="tutorial-icon-container svgOnHover">
           <svg className="svg w60 h60 active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#list"} className="text-theme-dark-blue" />
@@ -60,8 +63,11 @@ const PlayPreview: React.FC = () => {
     <div className="tutorial-preview tutorial-play-preview">
       <div className="tutorial-number">4.</div>
       <Grid container justify="center">
-        <div className="tutorial-icon-container border-animation">
-          <img alt="" className="tutorial-icon" src="/feathericons/play-blue.png" />
+        <div className="tutorial-icon-container svgOnHover">
+          <svg className="svg w80 h80 active m-l-1">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#play-thick"} className="text-theme-dark-blue" />
+          </svg>
         </div>
       </Grid>
     </div>
@@ -73,8 +79,11 @@ const AdditionalPreview: React.FC = () => {
     <div className="tutorial-preview tutorial-additional-preview">
       <div className="tutorial-number">5.</div>
       <Grid container justify="center">
-        <div className="tutorial-icon-container border-animation">
-          <img alt="" className="tutorial-icon" src="/feathericons/zap-blue.png" />
+        <div className="tutorial-icon-container svgOnHover">
+          <svg className="svg w80 h80 active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#zap"} className="text-theme-dark-blue" />
+          </svg>
         </div>
       </Grid>
     </div>

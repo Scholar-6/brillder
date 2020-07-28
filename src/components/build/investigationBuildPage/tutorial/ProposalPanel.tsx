@@ -16,13 +16,11 @@ const ProposalPanel: React.FC<TutorialProps> = (props) => {
       <div className="tutorial-step-1">
         <h1>There are 4 steps to the build process.</h1>
         <Grid container justify="center">
-          <div className="edit-border border-animation">
-            <div className="edit-icon svgOnHover">
-              <svg className="svg w80 h80 active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#edit-outline"} className="text-theme-dark-blue" />
-              </svg>
-            </div>
+          <div className="edit-border border-animation svgOnHover">
+            <svg className="svg w80 h80 active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#edit-outline"} className="text-theme-dark-blue" />
+            </svg>
           </div>
         </Grid>
         <p className="center">
