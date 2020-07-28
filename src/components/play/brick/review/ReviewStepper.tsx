@@ -30,7 +30,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
       return (
         <div className="step" key={key} onClick={handleStep(index - 1)}>
           <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
-          <svg className="svg w-2 h-2 active m-l-02">
+          <svg className="svg active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#cancel"} className="text-theme-orange" />
           </svg>
@@ -42,7 +42,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
     return (
       <div className="step" key={key} onClick={handleStep(index - 1)}>
         <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
-        <svg className="svg w-2 h-2 active m-l-02">
+        <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use
             href={attempt.correct ? sprite + "#ok" : sprite + "#cancel"}
