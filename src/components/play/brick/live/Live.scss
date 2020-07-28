@@ -11,23 +11,9 @@
     overflow-y: hidden !important;
   }
   .introduction-info {
-    .brick-counter {
-      @include phone_and_tabletP {
-        position: absolute !important;
-        right: -2vw !important;
-        top: -1vw !important;
-        display: block !important;
-      }
-    }
     .intro-text-row {
       @include phone_and_tabletP {
         padding-top: 0 !important;
-      }
-      .heading {
-        @include phone_and_tabletP {
-          text-align: center;
-          font-size: 6vw;
-        }
       }
     }
   }
@@ -40,11 +26,6 @@
       @include phone_and_tabletP {
         display: none;
       }
-    }
-  }
-  .play-clock {
-    @include phone_and_tabletP {
-      display: none !important;
     }
   }
   .edited-step-icon {
