@@ -345,7 +345,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
 
           .question-index {
             padding: 0;
-            background: #e5e8ed;
+            background: var(--tab-gray);
             border-radius: 100vw;
             font-family: $font-family-black;
             color: var(--theme-dark-blue);

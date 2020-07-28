@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import sprite from "../../../assets/img/icons-sprite.svg";
+import sprite from "../../../../assets/img/icons-sprite.svg";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { User, UserType } from "model/user";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
