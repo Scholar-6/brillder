@@ -520,12 +520,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       { searchString },
       { withCredentials: true }
     ).then((res) => {
-      const searchBricks = res.data.map((brick: any) => brick.body);
-      const threeColumns = this.prepareTreeRows(searchBricks);
+      const threeColumns = this.prepareTreeRows(res.data);
       setTimeout(() => {
         this.setState({
           ...this.state,
-          finalBricks: searchBricks,
+          finalBricks: res.data,
           isSearching: true,
           shown: true,
           threeColumns
