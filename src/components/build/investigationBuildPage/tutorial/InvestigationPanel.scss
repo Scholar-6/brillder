@@ -22,20 +22,26 @@
       }
 
       .add-icon {
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/feathericons/plus-blue.png);
-        height: 6vw;
-        width: 6vw;
-        margin-bottom: 0.5vh;
-      }
-
-      .add-border {
+        width: 8vw;
+        height: 8vw;
+        line-height: 1;
         margin-top: 5.5vh;
         padding: 0.76vw 0.9vw;
+        position: relative;
+        border: 0;
+        border-radius: 50%;
+        @extend %flexCenter;
         &:before {
-          border: 0.3vw dashed var(--theme-orange);
+          content: ' ';
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          border-width: 0.3vw;
+          border-style: dashed;
+          border-color: var(--theme-orange);
+          border-radius: 50%;
         }
       }
       .center {
