@@ -77,10 +77,12 @@ $tile-height: 100%;
       width: 1.5vw;
       height: 3vh;
       display: none;
+      padding: 0.3vw;
       &.active {
         display: flex;
-        @extend %posAbsolute;
+        position: absolute;
         right: 0;
+        top: 0;
       }
     }
   }
@@ -101,37 +103,36 @@ $tile-height: 100%;
     }
   }
 
-  .synthesis-tab-icon {
-    height: 3.5vh;
-  }
-
   .invalid {
     background: var(--theme-orange) !important;
   }
 
-  .add-tab {
+  .tutorial-border {
     line-height: 1;
-
-    img {
-      height: 2vw;
+    padding: 0.25vw;
+    position: relative;
+    border: 0;
+    border-radius: 50%;
+    @extend %flexCenter;
+    &:before {
+      content: ' ';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      border-width: 0.1vw;
+      border-style: dashed;
+      border-color: var(--theme-orange);
+      border-radius: 50%;
+    }
+    .svg {
+      @extend %removePosition;
     }
   }
 
   .last-tab {
-    @extend %flexCenter;
-    &.tutorial-border {
-      padding: 0.25vw;
-      &:before {
-        border: 0.1vw dashed var(--theme-orange);
-      }
-      .svg {
-        @extend %removePosition;
-      }
-    }
-  }
-
-  @media only screen and (max-width: 599px) {
-    .last-tab {
+    @include phone_and_tabletP {
       font-size: 2.5vw !important;
     }
   }
