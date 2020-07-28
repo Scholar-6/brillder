@@ -20,6 +20,7 @@ import UserProfileMenu from "./components/UserProfileMenu";
 import SubjectDialog from "./components/SubjectDialog";
 import { ReduxCombinedState } from "redux/reducers";
 import SaveProfileButton from './components/SaveProfileButton';
+import ProfileSavedDialog from './components/ProfileSavedDialog';
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -46,6 +47,7 @@ interface UserProfileProps {
 
 interface UserProfileState {
   noSubjectDialogOpen: boolean;
+  savedDialogOpen: boolean;
   user: UserProfile;
   subjects: Subject[];
   autoCompleteOpen: boolean;
@@ -87,6 +89,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             { roleId: UserType.Admin, name: "Admin", disabled: false },
           ],
           noSubjectDialogOpen: false,
+          savedDialogOpen: false,
         };
       } else {
         props.history.push("/home");
@@ -138,6 +141,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
         ],
         noSubjectDialogOpen: false,
+        savedDialogOpen: false,
       };
       if (userId) {
         axios
@@ -240,7 +244,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         { withCredentials: true }
       ).then((res) => {
         if (res.data === "OK") {
-          alert("Profile saved");
+          this.setState({ savedDialogOpen: true });
           this.props.getUser();
         }
       }).catch((error) => {
@@ -249,8 +253,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
   }
 
-  handleSubjectDialogClose() {
+  onSubjectDialogClose() {
     this.setState({ ...this.state, noSubjectDialogOpen: false });
+  }
+
+  onProfileSavedDialogClose() {
+    this.setState({ ...this.state, savedDialogOpen: false });
   }
 
   onFirstNameChanged(e: any) {
@@ -436,16 +444,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               alignContent="center"
               style={{ height: "100%" }}
             >
-              <div>
-                <PhonePreview />
-              </div>
+              <PhonePreview />
             </Grid>
           </div>
         </Grid>
-        <SubjectDialog
-          isOpen={this.state.noSubjectDialogOpen}
-          close={() => this.handleSubjectDialogClose()}
-        />
+        <SubjectDialog isOpen={this.state.noSubjectDialogOpen} close={() => this.onSubjectDialogClose()} />
+        <ProfileSavedDialog isOpen={this.state.savedDialogOpen} close={() => this.onProfileSavedDialogClose()} />
       </div>
     );
   }
