@@ -6,6 +6,7 @@ import { BrickLengthEnum } from "model/brick";
 import Clock from "./Clock";
 import { Moment } from 'moment';
 const moment = require("moment");
+// TODO: try combining this into import { Moment }, * as moment from 'moment';
 
 interface CounterProps {
   isLive?: boolean;
