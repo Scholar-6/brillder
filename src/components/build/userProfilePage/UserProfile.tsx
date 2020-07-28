@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 import Checkbox from '@material-ui/core/Checkbox';
-import Avatar from "@material-ui/core/Avatar";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
@@ -15,15 +14,14 @@ import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
 import PhonePreview from "../baseComponents/phonePreview/PhonePreview";
 import { Subject } from "model/brick";
-import SubjectAutocomplete from "./SubjectAutoCompete";
+import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import { checkAdmin } from "components/services/brickService";
-import UserProfileMenu from "./UserProfileMenu";
-import SubjectDialog from "./SubjectDialog";
+import UserProfileMenu from "./components/UserProfileMenu";
+import SubjectDialog from "./components/SubjectDialog";
 import { ReduxCombinedState } from "redux/reducers";
+import SaveProfileButton from './components/SaveProfileButton';
 
-const mapState = (state: ReduxCombinedState) => ({
-  user: state.user.user,
-});
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
@@ -236,21 +234,18 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (this.state.isNewUser) {
       // requet to add new user
     } else {
-      axios
-        .put(
-          `${process.env.REACT_APP_BACKEND_HOST}/user`,
-          { ...userToSave },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          if (res.data === "OK") {
-            alert("Profile saved");
-            this.props.getUser();
-          }
-        })
-        .catch((error) => {
-          alert("Can`t save user profile");
-        });
+      axios.put(
+        `${process.env.REACT_APP_BACKEND_HOST}/user`,
+        { ...userToSave },
+        { withCredentials: true }
+      ).then((res) => {
+        if (res.data === "OK") {
+          alert("Profile saved");
+          this.props.getUser();
+        }
+      }).catch((error) => {
+        alert("Can`t save user profile");
+      });
     }
   }
 
@@ -350,12 +345,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <div className="profile-block">
             <div className="profile-header">{this.state.user.firstName ? this.state.user.firstName : 'NAME'}</div>
             <div className="save-button-container">
-              <Avatar
-                alt=""
-                src="/feathericons/save-blue.png"
-                className="save-image"
-                onClick={() => this.saveUserProfile()}
-              />
+              <SaveProfileButton user={this.state.user} onClick={() => this.saveUserProfile()} />
             </div>
             <div className="profile-fields">
               <div className="profile-image-container">
