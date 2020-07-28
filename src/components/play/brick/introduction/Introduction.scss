@@ -1101,9 +1101,20 @@ $play-mobile-height: calc(100vh - 55.8vw);
   color: var(--theme-dark-blue) !important;
 }
 
-// stepper Play and review
+// only stepper in play
 .brick-container {
   .introduction-info {
+    .heading {
+      @include phone_and_tabletP {
+        text-align: center;
+        font-size: 6vw;
+      }
+    }
+
+    .intro-text-row {
+      padding-top: 0 !important;
+    }
+
     .stepper {
       width: 100%;
       display: flex;
@@ -1159,6 +1170,27 @@ $play-mobile-height: calc(100vh - 55.8vw);
             }
           }
         }
+      }
+    }
+  }
+}
+
+// counter in live and review pages for mobile
+.live-page,
+.review-page {
+  .introduction-info .intro-header {
+    .brick-counter {
+      @include phone_and_tabletP {
+        position: absolute !important;
+        right: -2vw !important;
+        top: -1vw !important;
+        display: block !important;
+      }
+    }
+
+    .play-clock {
+      @include phone_and_tabletP {
+        display: none !important;
       }
     }
   }

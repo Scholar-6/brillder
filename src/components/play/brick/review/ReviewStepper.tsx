@@ -1,5 +1,4 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
 
 import { Question } from "model/question";
 import { ComponentAttempt } from "../model/model";
@@ -19,23 +18,15 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
   handleStep,
   attempts,
 }) => {
-  let colWidth = 4;
-  if (questions.length > 27) {
-    colWidth = 3;
-  }
-
   let questionIndex = 0;
 
-  const renderQuestionStep = (
-    key: number,
-    colWidth: any
-  ) => {
+  const renderQuestionStep = (key: number) => {
     const attempt = attempts[questionIndex];
 
     questionIndex++;
     let index = questionIndex;
     return (
-      <div className="step" onClick={handleStep(index - 1)}>
+      <div className="step" key={key} onClick={handleStep(index - 1)}>
         <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
         <svg className="svg w-2 h-2 active m-l-02">
           {/*eslint-disable-next-line*/}
@@ -52,7 +43,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
 
   return (
     <div className="stepper">
-      {questions.map((question, index) => renderQuestionStep(index, colWidth))}
+      {questions.map((question, index) => renderQuestionStep(index))}
     </div>
   );
 };

@@ -46,12 +46,6 @@
       height: 90vh;
       overflow: hidden !important;
     }
-    .heading {
-      @include phone_and_tabletP {
-        text-align: center;
-        font-size: 6vw;
-      }
-    }
     .intro-text-row {
       position: relative;
     }
