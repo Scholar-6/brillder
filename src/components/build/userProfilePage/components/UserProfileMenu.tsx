@@ -95,7 +95,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
             <div className="btn btn-transparent svgOnHover">
               <svg className="svg active">
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#shovel"} className="text-white" />
+                <use href={sprite + "#trowel"} className="text-white" />
               </svg>
             </div>
           </MenuItem>
