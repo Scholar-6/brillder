@@ -61,31 +61,30 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         <Card className="notification-content">
           <CardContent>
             <List className="notification-list">
-              {(this.props.notifications &&
-                this.props.notifications.length != 0) ?
-                this.props.notifications.map((notification) => (
-                  <ListItem key={notification.id}>
-                    <ListItemIcon className="left-brick-circle">
-                      <SvgIcon fontSize="large">
-                        <svg>
-                          <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
+              {/* eslint-disable-next-line */}
+              {(this.props.notifications && this.props.notifications.length != 0) ? this.props.notifications.map((notification) => (
+                <ListItem key={notification.id}>
+                  <ListItemIcon className="left-brick-circle">
+                    <SvgIcon fontSize="large">
+                      <svg>
+                        <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
+                      </svg>
+                    </SvgIcon>
+                  </ListItemIcon>
+                  <div className="content-box">
+                    <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
+                    <div className="actions">
+                      <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>
+                      <button className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>
+                        <svg className="svg w80 h80 active">
+                          {/*eslint-disable-next-line*/}
+                          <use href={sprite + "#cancel"} />
                         </svg>
-                      </SvgIcon>
-                    </ListItemIcon>
-                    <div className="content-box">
-                      <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
-                      <div className="actions">
-                        <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>
-                        <button className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>
-                          <svg className="svg w80 h80 active">
-                            {/*eslint-disable-next-line*/}
-                            <use href={sprite + "#cancel"} />
-                          </svg>
-                        </button>
-                      </div>
+                      </button>
                     </div>
-                  </ListItem>
-                )) :
+                  </div>
+                </ListItem>
+              )) :
                 (
                   <ListItem className="content-box">
                     <ListItemText className="notification-detail-single" primary="Looks like you don't have any notifications..." />
@@ -94,8 +93,8 @@ class NotificationPanel extends Component<NotificationPanelProps> {
               }
             </List>
           </CardContent>
-          {(this.props.notifications &&
-            this.props.notifications.length != 0) &&
+          {/* eslint-disable-next-line */}
+          {(this.props.notifications && this.props.notifications.length != 0) &&
             <CardActions className="clear-notification">
               <div>Clear All</div>
               <IconButton aria-label="clear-all" onClick={() => this.markAllAsRead()}>
