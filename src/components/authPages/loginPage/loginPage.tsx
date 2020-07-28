@@ -86,7 +86,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           } else if (response.status === 401) {
             const { msg } = response.data;
             if (msg === "USER_IS_NOT_ACTIVE") {
-              props.history.push("/sign-up-success");
+              //props.history.push("/sign-up-success");
             } else if (msg === "INVALID_EMAIL_OR_PASSWORD") {
               toggleAlertMessage(true);
               setAlertMessage("Password is not correct");
@@ -121,7 +121,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
         }
 
         if (data === "OK") {
-          props.history.push("/sign-up-success");
+          //props.history.push("/sign-up-success");
         }
       })
       .catch((e) => {
