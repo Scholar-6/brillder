@@ -342,6 +342,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   render() {
+    const {user} = this.state;
     return (
       <div className="main-listing user-profile-page">
         <UserProfileMenu
@@ -351,9 +352,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         />
         <Grid container direction="row">
           <div className="profile-block">
-            <div className="profile-header">{this.state.user.firstName ? this.state.user.firstName : 'NAME'}</div>
+            <div className="profile-header">{user.firstName ? user.firstName : 'NAME'}</div>
             <div className="save-button-container">
-              <SaveProfileButton user={this.state.user} onClick={() => this.saveUserProfile()} />
+              <SaveProfileButton user={user} onClick={() => this.saveUserProfile()} />
             </div>
             <div className="profile-fields">
               <div className="profile-image-container">
@@ -382,7 +383,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   <div className="input-block">
                     <input
                       className="first-name style2"
-                      value={this.state.user.firstName}
+                      value={user.firstName}
                       onChange={(e: any) => this.onFirstNameChanged(e)}
                       placeholder="Name"
                     />
@@ -390,7 +391,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   <div className="input-block">
                     <input
                       className="last-name style2"
-                      value={this.state.user.lastName}
+                      value={user.lastName}
                       onChange={(e: any) => this.onLastNameChanged(e)}
                       placeholder="Surname"
                     />
@@ -407,7 +408,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   <input
                     type="email"
                     className="style2"
-                    value={this.state.user.email}
+                    value={user.email}
                     onChange={(e: any) => this.onEmailChanged(e)}
                     placeholder="username@domain.com"
                   />
@@ -416,7 +417,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   <input
                     type="password"
                     className="style2"
-                    value={this.state.user.password}
+                    value={user.password}
                     onChange={(e: any) => this.onPasswordChanged(e)}
                     placeholder="●●●●●●●●●●●"
                   />
@@ -430,7 +431,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               </div>
             </div>
             <SubjectAutocomplete
-              selected={this.state.user.subjects}
+              selected={user.subjects}
               onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
             />
             <Grid container direction="row" className="big-input-container">
@@ -449,7 +450,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           </div>
         </Grid>
         <SubjectDialog isOpen={this.state.noSubjectDialogOpen} close={() => this.onSubjectDialogClose()} />
-        <ProfileSavedDialog isOpen={this.state.savedDialogOpen} close={() => this.onProfileSavedDialogClose()} />
+        <ProfileSavedDialog history={this.props.history} isOpen={this.state.savedDialogOpen} close={() => this.onProfileSavedDialogClose()} />
       </div>
     );
   }
