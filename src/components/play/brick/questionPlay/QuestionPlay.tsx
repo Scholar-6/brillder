@@ -1,4 +1,4 @@
-  import React from 'react';
+import React from 'react';
 
 import './QuestionPlay.scss';
 import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from "model/question";
@@ -40,7 +40,7 @@ interface QuestionState {
 }
 
 class QuestionLive extends React.Component<QuestionProps, QuestionState> {
-  constructor(props:QuestionProps) {
+  constructor(props: QuestionProps) {
     super(props);
 
     this.state = {
@@ -52,7 +52,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     return this.state.answerRef.current?.getAnswer();
   }
 
-  getAttempt() : any {
+  getAttempt(): any {
     if (this.props.attempt?.correct === true) {
       return {
         answer: this.props.attempt.answer, correct: true, marks: 0, maxMarks: this.props.attempt.maxMarks
@@ -107,7 +107,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
     }
 
     const renderComponent = (component: any, index: number) => {
-      const {type} = component;
+      const { type } = component;
       if (type === QuestionComponentTypeEnum.Text) {
         return <TextLive mode={this.props.mode} key={index} component={component} />
       } else if (type === QuestionComponentTypeEnum.Image) {
@@ -122,13 +122,18 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
       return <div key={index}></div>
     }
 
-    return (
+    try {
+      return (
       <div>
         {
           question.components.map((component, index) => renderComponent(component, index))
         }
       </div>
-    )
+      );
+    }
+    catch {
+      return <div>Oops something is not working on this question.</div>
+    }
   }
 }
 
