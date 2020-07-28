@@ -24,6 +24,9 @@
     }
     .step {
       color: var(--theme-dark-blue) !important;
+      @include phone_and_tabletP {
+        font-size: 5vw !important;
+      }
       svg {
         @extend %removePosition;
         @include phone_and_tabletP {
@@ -43,14 +46,20 @@
       height: 90vh;
       overflow: hidden !important;
     }
-    // h1 {
-    //   position: absolute !important;
-    //   top: 0.2vw !important;
-    //   left: 2.5vw;
-    // }
+    .heading {
+      @include phone_and_tabletP {
+        text-align: center;
+        font-size: 6vw;
+      }
+    }
+    .intro-text-row {
+      position: relative;
+    }
     .question-index-container {
+      position: absolute;
       width: 7vw !important;
       height: 7vw !important;
+      top: 3vw;
       .question-index {
         width: 7vw !important;
         height: 7vw !important;

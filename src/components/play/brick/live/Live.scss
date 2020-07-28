@@ -46,6 +46,7 @@
             flex: 1;
             justify-content: center !important;
             min-width: 12vw;
+            font-size: 5vw !important;
           }
           @include tabletP {
             flex-grow: 0;
@@ -54,7 +55,6 @@
           }
           span {
             @include phone_and_tabletP {
-              font-size: 5vw;
               margin-right: 3vw;
             }
           }
