@@ -277,4 +277,7 @@
     <polyline points="17 21 17 13 7 13 7 21"></polyline>
     <polyline points="7 3 7 8 15 8"></polyline>
   </svg>
+  <svg id="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="20 6 9 17 4 12"></polyline>
+  </svg>
 </svg>
