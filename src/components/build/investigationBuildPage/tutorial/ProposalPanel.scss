@@ -22,14 +22,28 @@
       }
 
       .edit-border {
+        margin: 0.5vh 0;
         padding: 1.5vw;
-        margin-bottom: 0.5vh;
+        width: 8vw;
+        height: 8vw;
+        position: relative;
+        border: 0;
+        border-radius: 50%;
+        @extend %flexCenter;
         &:before {
-          border: 0.3vw dashed var(--theme-orange);
+          content: ' ';
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          border-width: 0.3vw;
+          border-style: dashed;
+          border-color: var(--theme-orange);
+          border-radius: 50%;
         }
-        .edit-icon {
-          height: 4.5vw;
-          width: 4.5vw;
+        .svg {
+          @extend %removePosition;
         }
       }
       .center {

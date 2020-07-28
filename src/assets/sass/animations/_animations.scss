@@ -246,18 +246,7 @@
 // }
 
 .border-animation {
-  position: relative;
-  border: 0;
-  border-radius: 50%;
-  @extend %flexCenter;
   &:before {
-    content: ' ';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border-radius: 100%;
     animation: border-dance 20s linear infinite;
   }
 }
