@@ -111,16 +111,19 @@
       border-radius: 8px;
       height: 12vh;
     }
-    &:hover,
-    &.active {
-      background: var(--theme-orange);
-      font-family: $font-family-black;
-      color: white;
-    }
     .link-description {
       text-align: center;
       margin: 0;
       line-height: 1.4;
+      font-family: $font-family-light;
+    }
+    &:hover,
+    &.active {
+      background: var(--theme-orange);
+      color: var(--white);
+      .link-description {
+        font-family: $font-family-black;
+      }
     }
   }
   .round-button-center-container {
