@@ -380,8 +380,10 @@
             @extend %removePosition;
             padding: 0.5vw;
             background-color: var(--tab-gray);
+            color: var(--theme-light-blue);
             border-radius: 50%;
             &.selected {
+              color: var(--theme-dark-blue);
               background-color: var(--theme-green);
             }
           }
