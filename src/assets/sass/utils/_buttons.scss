@@ -88,11 +88,17 @@
   }
   &:after {
     content: '';
-    width: calc(100% + 1vw);
-    height: calc(100% + 1vw);
     @extend %floatToCenter;
     @extend %radCircle;
     z-index: -1;
+    @include phone_and_tabletP {
+      width: calc(100% + 3vw);
+      height: calc(100% + 3vw);
+    }
+    @include tabletP {
+      width: calc(100% + 1vw);
+      height: calc(100% + 1vw);
+    }
   }
   .svg {
     z-index: 1;
