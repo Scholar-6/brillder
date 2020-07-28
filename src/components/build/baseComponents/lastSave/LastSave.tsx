@@ -29,6 +29,7 @@ const LastSave:React.FC<LastSaveProps> = (props) => {
 
   const formatTwoDigits = (number: Number) => {
     let str = number.toString();
+    // eslint-disable-next-line
     if (str.length < 2) {
       return '0' + str;
     }
