@@ -93,15 +93,25 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   /* TODO: extract all of this scoring code into a scoring service 13/6/2020*/
   const finishBrick = () => {
-    let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
+    let score = attempts.reduce((acc, answer) => {
+      if (answer && answer.marks >= 0) {
+        return acc + answer.marks;
+      }
+      return acc;
+    }, 0);
     /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
     is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
-    let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
+    let maxScore = attempts.reduce((acc, answer) => {
+      if (answer && answer.maxMarks) {
+        return acc + answer.maxMarks;
+      }
+      return acc;
+    }, 0);
     var ba: BrickAttempt = {
       brick: brick,
       score: score,
       maxScore: maxScore,
-      student: null,
+      student: null,  
       answers: attempts,
     };
     setStatus(PlayStatus.Review);
@@ -111,11 +121,20 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const finishReview = () => {
-    let score =
-      reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0) +
-      brickAttempt.score;
+    let reviewScore = reviewAttempts.reduce((acc, answer) => {
+      if (answer && answer.marks >= 0) {
+        return acc + answer.marks;
+      }
+      return acc;
+    }, 0);
+    let score = reviewScore + brickAttempt.score;
     let maxScore = reviewAttempts.reduce(
-      (acc, answer) => acc + answer.maxMarks,
+      (acc, answer) => {
+        if (answer && answer.maxMarks >= 0) {
+          return acc + answer.maxMarks
+        }
+        return acc;
+      },
       0
     );
     var ba: BrickAttempt = {

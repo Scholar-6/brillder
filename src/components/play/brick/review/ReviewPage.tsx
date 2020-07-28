@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
 import update from "immutability-helper";
@@ -197,6 +197,9 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
           <div className="introduction-info">
             <CountDown brickLength={props.brickLength} endTime={null} setEndTime={()=>{}} onEnd={onEnd} />
             <div className="intro-text-row">
+              <Hidden only={['sm', 'md', 'lg', 'xl']}>
+                <span className="heading">Review</span>
+              </Hidden>
               <ReviewStepper
                 questions={questions}
                 attempts={attempts}
