@@ -29,48 +29,6 @@
           font-size: 6vw;
         }
       }
-      .stepper {
-        width: 100%;
-        display: flex;
-        box-sizing: border-box;
-        @include phone_and_tabletP {
-          overflow-y: hidden;
-        }
-        @include tabletP {
-          flex-wrap: wrap;
-        }
-        > .step {
-          color: #d3d4d5;
-          @include phone_and_tabletP {
-            display: inline-flex !important;
-            flex: 1;
-            justify-content: center !important;
-            min-width: 12vw;
-          }
-          @include tabletP {
-            flex-grow: 0;
-            max-width: 33.333333%;
-            flex-basis: 33.333333%;
-          }
-          span {
-            @include phone_and_tabletP {
-              font-size: 5vw;
-              margin-right: 3vw;
-            }
-          }
-          .blue-circle-container {
-            @include phone_and_tabletP {
-              left: 70% !important;
-            }
-            .blue-circle {
-              @include phone_and_tabletP {
-                height: 2.8vw !important;
-                width: 2.8vw !important;
-              }
-            }
-          }
-        }
-      }
     }
   }
   .introduction-page {

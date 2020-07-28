@@ -35,13 +35,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
     questionIndex++;
     let index = questionIndex;
     return (
-      <Grid
-        item
-        xs={colWidth}
-        key={key}
-        className="step svgOnHover"
-        onClick={handleStep(index - 1)}
-      >
+      <div className="step" onClick={handleStep(index - 1)}>
         <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
         <svg className="svg w-2 h-2 active m-l-02">
           {/*eslint-disable-next-line*/}
@@ -52,16 +46,14 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
             }
           />
         </svg>
-      </Grid>
+      </div>
     );
   };
 
   return (
-    <Grid container direction="row" className="stepper">
-      {questions.map((question, index) =>
-        renderQuestionStep(index, colWidth)
-      )}
-    </Grid>
+    <div className="stepper">
+      {questions.map((question, index) => renderQuestionStep(index, colWidth))}
+    </div>
   );
 };
 

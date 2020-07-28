@@ -81,7 +81,7 @@
           justify-content: space-between;
         }
         @include tabletP {
-          height: 5.834vw;
+          height: $page-head-height;
           width: calc(93.16vw - 1vw) !important;
           margin-left: 1vw;
           border-bottom-left-radius: 2vw;
