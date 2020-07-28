@@ -89,7 +89,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         finalBricks: res.data as Brick[],
       });
     }).catch((error) => {
-      alert("Can`t get bricks");
+      this.setState({ ...this.state, failedRequest: true });
     });
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
@@ -97,7 +97,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }).then((res) => {
       this.setState({ ...this.state, subjects: res.data });
     }).catch((error) => {
-      alert("Can`t get bricks");
+      this.setState({ ...this.state, failedRequest: true });
     });
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
@@ -330,16 +330,15 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       )
       .then((res) => {
         this.hideBricks();
-        const searchBricks = res.data.map((brick: any) => brick.body);
         this.setState({
           ...this.state,
-          searchBricks,
-          finalBricks: searchBricks,
+          searchBricks: res.data,
+          finalBricks: res.data,
           isSearching: true,
         });
       })
       .catch((error) => {
-        alert("Can`t get bricks");
+        this.setState({ ...this.state, failedRequest: true });
       });
   }
 
