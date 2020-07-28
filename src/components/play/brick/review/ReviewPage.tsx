@@ -137,7 +137,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const renderQuestionContainer = (question: Question, index: number) => {
     let indexClassName = "question-index-container";
     const attempt = attempts[index];
-    if (attempt.correct) {
+    if (attempt && attempt.correct) {
       indexClassName += " correct";
     } else {
       indexClassName += " wrong";
