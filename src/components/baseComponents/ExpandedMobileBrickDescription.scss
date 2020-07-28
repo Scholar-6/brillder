@@ -24,7 +24,7 @@
       .link-description {
         text-transform: uppercase;
         font-size: 1.7vh;
-        font-family: 'Brandon Grotesque Bold';
+        font-family: $font-family-bold;
       }
       .link-info {
         color: var(--theme-light-blue);
