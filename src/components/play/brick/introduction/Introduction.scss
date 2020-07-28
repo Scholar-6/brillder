@@ -920,7 +920,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
           left: 0;
           top: 0;
           width: 100%;
-          height: $introduction-desktop-height;
+          height: inherit;
           position: absolute;
         }
 

@@ -55,7 +55,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   const renderFooter = () => {
     return (
       <div className="action-footer">
-        <div>&nbsp;</div>
+        <div></div>
         <div className="direction-info">
           <h2>Review</h2>
         </div>

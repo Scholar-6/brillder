@@ -110,7 +110,7 @@ const EndingPage: React.FC<EndingProps> = ({
   const renderFooter = () => {
     return (
       <div className="action-footer">
-        <div>&nbsp;</div>
+        <div></div>
         <div className="direction-info">
           <h2>Summary</h2>
         </div>
@@ -166,15 +166,9 @@ const EndingPage: React.FC<EndingProps> = ({
       </Hidden>
       <Hidden only={['sm', 'md', 'lg', 'xl']}>
         <div className="brick-container mobile-ending-page ending-page">
-          <div className="introduction-page">
-            <div className="question-index-container">
-              <div className="question-index">FS</div>
-            </div>
-            <h1>Final Score : Agg.</h1>
-            <div className="intro-header">
-              <Clock brickLength={brick.brickLength} />
-            </div>
+          <div className="introduction-info">
             <div className="intro-text-row">
+            <span className="heading">Final Score : Agg.</span>
               <ReviewStepper
                 isEnd={true}
                 questions={brick.questions}
@@ -182,9 +176,11 @@ const EndingPage: React.FC<EndingProps> = ({
                 handleStep={() => { }}
               />
             </div>
+          </div>
+          <div className="introduction-page">
             {renderProgressBars()}
           </div>
-            {renderFooter()}
+          {renderFooter()}
         </div>
       </Hidden>
     </div>
