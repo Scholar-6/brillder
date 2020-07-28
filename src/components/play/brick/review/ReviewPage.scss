@@ -15,6 +15,11 @@
       }
     }
   }
+  .introduction-info {
+    .step {
+      color: var(--theme-dark-blue) !important;
+    }
+  }
   .introduction-page {
     @include phone_and_tabletP {
       height: calc(100vh - 49.8vw) !important;
