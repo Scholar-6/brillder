@@ -10,13 +10,6 @@
     height: calc(100% - 14vh) !important;
     overflow-y: hidden !important;
   }
-  .introduction-info {
-    .intro-text-row {
-      @include phone_and_tabletP {
-        padding-top: 0 !important;
-      }
-    }
-  }
   .introduction-page {
     @include phone_and_tabletP {
       height: calc(100vh - 59.8vw) !important;

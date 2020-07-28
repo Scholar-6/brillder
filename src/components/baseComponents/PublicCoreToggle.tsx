@@ -15,7 +15,7 @@ const PublicCoreToggle: React.FC<ToggleProps> = ({ isCore }) => {
     return (
       <svg className={className}>
         {/*eslint-disable-next-line*/}
-        <use href={sprite + "#box"} className="text-theme-light-blue" />
+        <use href={sprite + "#box"} />
       </svg>
     );
   }
@@ -28,7 +28,7 @@ const PublicCoreToggle: React.FC<ToggleProps> = ({ isCore }) => {
     return (
       <svg className={className}>
         {/*eslint-disable-next-line*/}
-        <use href={sprite + "#globe"} className="text-theme-light-blue" />
+        <use href={sprite + "#globe"} />
       </svg>
     );
   }
