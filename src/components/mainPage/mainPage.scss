@@ -86,15 +86,17 @@
   .create-item-container,
   .back-item-container {
     width: auto;
-    padding: 3vh 0;
     @extend %flexCenter;
+    @include tabletP {
+      padding: 3vh 0;
+    }
     .btn {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       text-align: center;
       flex-direction: column;
-      .svg {
+      > .svg {
         width: 15vw;
         height: auto;
         @extend %removePosition;
@@ -144,6 +146,27 @@
       .glass-eyes-left,
       .glass-eyes-right {
         opacity: 1;
+        .pupil {
+          animation-name: eye-movement;
+          animation-iteration-count: infinite;
+          animation-duration: 1300ms;
+          animation-delay: 0;
+          animation-direction: alternate;
+        }
+      }
+    }
+    @keyframes eye-movement {
+      0% {
+        transform: translateX(0vw);
+      }
+      50% {
+        transform: translateX(0vw);
+      }
+      70% {
+        transform: translateX(0.3vw);
+      }
+      100% {
+        transform: translateX(0.3vw);
       }
     }
   }
