@@ -330,11 +330,10 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       )
       .then((res) => {
         this.hideBricks();
-        const searchBricks = res.data.map((brick: any) => brick.body);
         this.setState({
           ...this.state,
-          searchBricks,
-          finalBricks: searchBricks,
+          searchBricks: res.data,
+          finalBricks: res.data,
           isSearching: true,
         });
       })
