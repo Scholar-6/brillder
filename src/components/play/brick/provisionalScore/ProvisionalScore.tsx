@@ -48,6 +48,9 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
     return acc + answer.marks;
   }, 0);
   let maxScore = attempts.reduce((acc, answer) => {
+    if (!answer) {
+      return acc;
+    }
     if (!answer.maxMarks) {
       return acc + 5;
     }
