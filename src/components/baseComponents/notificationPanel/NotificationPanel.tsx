@@ -75,7 +75,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                     <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
                     <div className="actions">
                       <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>
-                      <button className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>
+                      <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>
                         <svg className="svg w80 h80 active">
                           {/*eslint-disable-next-line*/}
                           <use href={sprite + "#cancel"} />
