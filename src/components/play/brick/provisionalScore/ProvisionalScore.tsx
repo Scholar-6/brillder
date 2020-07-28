@@ -78,7 +78,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
   const renderFooter = () => {
     return (
       <div className="action-footer">
-        <div>&nbsp;</div>
+        <div></div>
         <div className="direction-info">
           <h2>Synthesis</h2>
         </div>

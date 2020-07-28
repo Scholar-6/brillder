@@ -129,7 +129,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderPlayButton = () => {
     return (
       <div className="action-footer">
-        <div>&nbsp;</div>
+        <div></div>
         <div className="direction-info">
           <Hidden only={["xs"]}>
             <h3>Ready?</h3>

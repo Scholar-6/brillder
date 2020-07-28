@@ -21,6 +21,7 @@ export default (state = NotificationsInitialState, action: any) => {
             return { notifications: [ ...(state.notifications ?? []), action.notification ] } as NotificationsState;
         case types.NOTIFICATION_CLEAR:
             return {
+            // eslint-disable-next-line
                 notifications: state.notifications?.filter(notification => notification.id != action.notificationId)
             };
         case types.NOTIFICATION_CLEAR_ALL:
