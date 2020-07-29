@@ -63,10 +63,6 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
     showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
-  const onBlur = () => {
-    console.log(state.list)
-  }
-
   const renderAnswer = (answer: Answer, i: number) => {
     return (
       <Grid key={i} container direction="row" className="answers-container">
