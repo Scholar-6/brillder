@@ -62,7 +62,7 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
     return false;
   }
 
-  renderButton() {
+  render() {
     let className = "save-image";
     if (this.state.isValid) {
       className += " valid";
@@ -74,6 +74,7 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
       <button
         type="button"
         className={className}
+        onClick={this.props.onClick}
       >
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
@@ -81,10 +82,6 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
         </svg>
       </button>
     );
-  }
-
-  render() {
-    return this.renderButton()
   }
 }
 
