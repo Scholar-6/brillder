@@ -34,7 +34,7 @@ class VerticalShufflePreview extends Component<any, any> {
       className = "correct";
     }
     return (
-      <button className={className}>
+      <button className={className} key={i}>
         <div>
           <Grid container justify="center" alignContent="center" className="circle-number">
             <Avatar>{btnContent.correctIndex + 1}</Avatar>
