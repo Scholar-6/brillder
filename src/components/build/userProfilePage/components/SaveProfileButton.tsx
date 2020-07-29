@@ -13,6 +13,7 @@ interface SaveProfileProps {
 }
 
 interface SaveProfileState {
+  isValid: boolean;
   shouldPulse: boolean;
 }
 
@@ -21,11 +22,12 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
     super(props);
 
     this.state = {
-      shouldPulse: this.shouldPulse(props.user)
+      isValid: this.isValid(props.user),
+      shouldPulse: this.isValid(props.user)
     }
   }
 
-  shouldPulse(user: UserProfile) {
+  isValid(user: UserProfile) {
     if (user.firstName && user.lastName) {
       return true;
     }
@@ -34,30 +36,48 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
 
   shouldComponentUpdate(props: SaveProfileProps) {
     const { user } = props;
-    if (this.shouldPulse(user)) {
+
+    // check pulsing
+    if (this.isValid(user)) {
       if (this.state.shouldPulse === false) {
         this.setState({ shouldPulse: true });
         return true;
       }
-      return false;
     } else {
       if (this.state.shouldPulse === true) {
         this.setState({ shouldPulse: false })
       }
-      return false;
     }
+
+    // check validation
+    if (this.isValid(user)) {
+      if (!this.state.isValid) {
+        this.setState({ isValid: true });
+        return true;
+      }
+    } else {
+      if (this.state.isValid) {
+        this.setState({ isValid: false });
+        return true;
+      }
+    }
+    return false;
   }
 
-  renderButton(className: string) {
+  renderButton() {
+    let className = "save-image";
+    if (this.state.isValid) {
+      className += " valid";
+    }
     return (
       <Avatar
         alt=""
-        className="save-image"
+        className={className}
         onClick={() => this.props.onClick()}
       >
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#save-icon"} className={className} />
+          <use href={sprite + "#save-icon"} />
         </svg>
       </Avatar>
     );
@@ -70,11 +90,11 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
     if (this.state.shouldPulse) {
       return (
         <PulsingDiv>
-          {this.renderButton("text-theme-green")}
+          {this.renderButton()}
         </PulsingDiv>
       );
     }
-    return this.renderButton("text-theme-dark-blue")
+    return this.renderButton()
   }
 }
 
