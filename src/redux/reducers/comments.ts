@@ -35,6 +35,11 @@ export default (state = CommentsInitialState, action: any): CommentsState => {
                     }
                 })
             } as CommentsState;
+        case types.NEW_COMMENT:
+            return {
+                ...state, 
+                comments: [ ...(state.comments ?? []), action.comment ]
+            } as CommentsState
         default:
             return state;
     }

@@ -90,4 +90,20 @@ describe("comments reducer", () => {
         expect(newState.comments).toContainEqual({ ...mockComment, text: "New Comment Text" });
         expect(newState.comments).toContainEqual({ ...mockComment, id: 2 });
     })
+
+    it("should handle NEW_COMMENT", () => {
+        const initialState = {
+            comments: [ mockComment ]
+        };
+
+        const action = {
+            type: types.NEW_COMMENT,
+            comment: { ...mockComment, id: 2 }
+        };
+
+        const newState = reducer(initialState, action);
+
+        expect(newState.comments).toContainEqual(mockComment);
+        expect(newState.comments).toContainEqual({ ...mockComment, id: 2 });
+    })
 })
