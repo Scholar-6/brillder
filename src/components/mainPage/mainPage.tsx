@@ -106,7 +106,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/build/new-brick/brick-title")}>
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#shovel-home"} className="text-theme-orange" />
+            <use href={sprite + "#trowel-home"} className="text-theme-orange" />
           </svg>
           <span className="item-description">Start Building</span>
         </button>
@@ -213,7 +213,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
                 <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.creatingBrick()}>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#shovel-home"} className="text-theme-orange" />
+                    <use href={sprite + "#trowel-home"} className="text-theme-orange" />
                   </svg>
                   <span className="item-description">Start Building</span>
                 </button>

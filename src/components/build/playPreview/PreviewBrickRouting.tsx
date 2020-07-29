@@ -197,7 +197,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <div className="back-hover-area" onClick={() => moveToBuild()}>
             <div className="create-icon svgOnHover">
               <svg className="svg w100 h100 active">
-                <use href={sprite + "#shovel"} />
+                <use href={sprite + "#trowel"} />
               </svg>
             </div>
             <h3>BACK<br />TO<br />BUILD</h3>
@@ -225,7 +225,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 endTime={null}
                 updateAttempts={updateAttempts}
                 finishBrick={finishBrick}
-                setEndTime={()=>{}}
+                setEndTime={() => { }}
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/provisionalScore">
