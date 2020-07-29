@@ -13,7 +13,7 @@
       cursor: pointer;
     }
     .word.active {
-      background: $white-blue;
+      background: var(--white-blue);
     }
     .word.correct {
       background: var(--theme-green);

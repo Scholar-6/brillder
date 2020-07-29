@@ -48,6 +48,9 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
     return acc + answer.marks;
   }, 0);
   let maxScore = attempts.reduce((acc, answer) => {
+    if (!answer) {
+      return acc;
+    }
     if (!answer.maxMarks) {
       return acc + 5;
     }
@@ -78,7 +81,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
   const renderFooter = () => {
     return (
       <div className="action-footer">
-        <div>&nbsp;</div>
+        <div></div>
         <div className="direction-info">
           <h2>Synthesis</h2>
         </div>
@@ -138,12 +141,13 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
       </Hidden>
       <Hidden only={['sm', 'md', 'lg', 'xl',]}>
         <div className="brick-container provisional-score-page mobile-provisional-score">
-          <div className="introduction-page">
-            <div className="question-index-container">
-              <div className="question-index">P</div>
+          <div className="introduction-info">
+            <div className="intro-text-row">
+              <span className="heading">Provisional Score</span>
+              {renderStepper()}
             </div>
-            <h1>Provisional Score</h1>
-            {renderStepper()}
+          </div>
+          <div className="introduction-page">
             {renderProgressBar()}
           </div>
           {renderFooter()}

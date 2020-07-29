@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // @ts-ignore
 import { connect } from 'react-redux';
-import { List, ListItem, ListItemText, Popover, IconButton, SvgIcon, Card, CardContent, ListItemIcon, Grid, CardActions } from '@material-ui/core';
+import { List, ListItem, ListItemText, Popover, IconButton, SvgIcon, Card, CardContent, ListItemIcon, CardActions } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
 import sprite from "../../../assets/img/icons-sprite.svg";
 import { Notification, notificationTypeColors } from 'model/notifications';
@@ -61,31 +61,30 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         <Card className="notification-content">
           <CardContent>
             <List className="notification-list">
-              {(this.props.notifications &&
-                this.props.notifications.length != 0) ?
-                this.props.notifications.map((notification) => (
-                  <ListItem key={notification.id}>
-                    <ListItemIcon className="left-brick-circle">
-                      <SvgIcon fontSize="large">
-                        <svg>
-                          <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
-                        </svg>
-                      </SvgIcon>
-                    </ListItemIcon>
-                    <div className="content-box">
-                      <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
-                      <Grid>
-                        <Grid className="notification-time">{moment(notification.timestamp).fromNow()}</Grid>
+              {/* eslint-disable-next-line */}
+              {(this.props.notifications && this.props.notifications.length != 0) ? this.props.notifications.map((notification) => (
+                <ListItem key={notification.id}>
+                  <ListItemIcon className="left-brick-circle">
+                    <SvgIcon fontSize="large">
+                      <svg>
+                        <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
+                      </svg>
+                    </SvgIcon>
+                  </ListItemIcon>
+                  <div className="content-box">
+                    <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
+                    <div className="actions">
+                      <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>
                       <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>
-                            <svg className="svg">
-                              {/*eslint-disable-next-line*/}
-                              <use href={sprite + "#cancel"} />
-                            </svg>
-                        </button>
-                      </Grid>
+                        <svg className="svg w80 h80 active">
+                          {/*eslint-disable-next-line*/}
+                          <use href={sprite + "#cancel"} />
+                        </svg>
+                      </button>
                     </div>
-                  </ListItem>
-                )) :
+                  </div>
+                </ListItem>
+              )) :
                 (
                   <ListItem className="content-box">
                     <ListItemText className="notification-detail-single" primary="Looks like you don't have any notifications..." />
@@ -94,8 +93,8 @@ class NotificationPanel extends Component<NotificationPanelProps> {
               }
             </List>
           </CardContent>
-          {(this.props.notifications &&
-            this.props.notifications.length != 0) &&
+          {/* eslint-disable-next-line */}
+          {(this.props.notifications && this.props.notifications.length != 0) &&
             <CardActions className="clear-notification">
               <div>Clear All</div>
               <IconButton aria-label="clear-all" onClick={() => this.markAllAsRead()}>

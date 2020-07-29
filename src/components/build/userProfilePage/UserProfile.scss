@@ -10,8 +10,8 @@
   font-family: $font-family-regular;
 
   .phone-question-preview-box {
-    top: 10.5vh;
-    height: 90.05vh;
+    top: $page-head-height;
+    height: calc(100vh - #{$page-head-height}) !important;
     width: 27.5vw;
     @include phone_and_tabletP {
       display: none;
@@ -63,14 +63,14 @@
         text-align: center;
         height: 3.5vw;
         width: 3.5vw;
-        background: #e5e8ed 0% 0% no-repeat padding-box;
+        background: var(--tab-gray) 0% 0% no-repeat padding-box;
         border: 0.25vw solid var(--light-gray);
         box-shadow: $base-shadow;
         @include phone_and_tabletP {
           height: 15vw;
           width: 15vw;
         }
-        img {
+        svg {
           height: 1.9vw;
           width: 1.9vw;
           @include phone_and_tabletP {
@@ -104,7 +104,7 @@
           text-align: center;
           height: 11vw;
           width: 11vw;
-          background: #e5e8ed 0% 0% no-repeat padding-box;
+          background: var(--tab-gray) 0% 0% no-repeat padding-box;
           border: 0.25vw solid var(--light-gray);
           box-shadow: $base-shadow;
           border-radius: 50%;
@@ -167,7 +167,7 @@
         }
       }
       .profile-inputs-container {
-        padding-top: 4.8vh;
+        padding-top: 5.1vh;
         width: 32.4vw;
         margin: 0 3vw;
         @include phone_and_tabletP {
@@ -201,9 +201,7 @@
           width: 100%;
           border-radius: 0.3vw;
           box-shadow: $base-shadow;
-          padding-top: 1.9vh;
-          padding-left: 1.15vw;
-          padding-bottom: 1.4vh;
+          padding: 1.15vw;
           @include phone_and_tabletP {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(33.33%, 1fr));

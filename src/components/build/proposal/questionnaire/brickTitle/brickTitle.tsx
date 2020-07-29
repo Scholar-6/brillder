@@ -96,7 +96,7 @@ const BrickTitle: React.FC<BrickTitleProps> = ({ parentState, canEdit, saveTitle
           <div className="mobile-view-image">
             <img alt="titles" src="/images/new-brick/titles.png" />
           </div>
-          <h1>What is your<br/>brick about?</h1>
+          <h1>What is your brick about?</h1>
           <Grid item className="input-container">
             <Input
               disabled={!canEdit}
@@ -132,7 +132,7 @@ const BrickTitle: React.FC<BrickTitleProps> = ({ parentState, canEdit, saveTitle
           <h2 className="pagination-text">1 of 4</h2>
         </Grid>
         <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
-        <Hidden only={['xs','sm']}>
+        <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>
       </Grid>

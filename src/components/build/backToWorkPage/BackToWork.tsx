@@ -99,8 +99,8 @@ interface BackToWorkState {
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   constructor(props: BackToWorkProps) {
     super(props);
-    let finalBricks:Brick[] = [];
-    let rawBricks:Brick[] = [];
+    let finalBricks: Brick[] = [];
+    let rawBricks: Brick[] = [];
     let threeColumns = {
       draft: {
         rawBricks: [],
@@ -520,12 +520,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       { searchString },
       { withCredentials: true }
     ).then((res) => {
-      const searchBricks = res.data.map((brick: any) => brick.body);
-      const threeColumns = this.prepareTreeRows(searchBricks);
+      const threeColumns = this.prepareTreeRows(res.data);
       setTimeout(() => {
         this.setState({
           ...this.state,
-          finalBricks: searchBricks,
+          finalBricks: res.data,
           isSearching: true,
           shown: true,
           threeColumns
@@ -653,17 +652,15 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   render() {
     return (
-      <div className="back-to-work-page">
-        <div className="upper-part">
-          <PageHeadWithMenu
-            page={PageEnum.BackToWork}
-            user={this.props.user}
-            placeholder="Search Ongoing Projects & Published Bricks…"
-            history={this.props.history}
-            search={() => this.search()}
-            searching={(v: string) => this.searching(v)}
-          />
-        </div>
+      <div className="main-listing back-to-work-page">
+        <PageHeadWithMenu
+          page={PageEnum.BackToWork}
+          user={this.props.user}
+          placeholder="Search Ongoing Projects & Published Bricks…"
+          history={this.props.history}
+          search={() => this.search()}
+          searching={(v: string) => this.searching(v)}
+        />
         <Grid container direction="row" className="sorted-row">
           <FilterSidebar
             rawBricks={this.state.rawBricks}
@@ -681,7 +678,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           />
           <Grid item xs={9} className="brick-row-container">
             <BackPageTitle filters={this.state.filters} />
-            <PublicCoreToggle />
+            <PublicCoreToggle isCore={true} />
             <div className="bricks-list-container">
               <div className="bricks-list">
                 {this.renderBricks()}

@@ -389,10 +389,10 @@
 }
 
 %removePosition {
-  position: inherit;
-  top: inherit;
-  left: inherit;
-  transform: unset;
+  position: unset !important;
+  top: unset !important;
+  left: unset !important;
+  transform: unset !important;
 }
 
 %floatToCenter {

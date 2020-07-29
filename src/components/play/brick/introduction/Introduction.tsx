@@ -5,22 +5,31 @@ import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
-import MathInHtml from "components/play/brick/baseComponents/MathInHtml";
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import { Moment } from "moment";
 import PrepareText from './PrepareText';
 import IntroductionDetails from "./IntroductionDetails";
-import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
+import { PlayMode } from "../model";
+import HighlightHtml from '../baseComponents/HighlightHtml';
+import { BrickFieldNames } from 'components/build/proposal/model';
+import queryString from 'query-string';
 
 const moment = require("moment");
+
 
 interface IntroductionProps {
   isPlayPreview?: boolean;
   startTime?: Moment;
   brick: Brick;
+  location: any;
+
   setStartTime(startTime: any): void;
   moveNext?(): void;
+
+  // only real play
+  mode?: PlayMode;
+  onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
 interface IntroductionState {
@@ -33,9 +42,14 @@ interface IntroductionState {
 }
 
 const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
+  const values = queryString.parse(props.location.search);
+  let initPrepExpanded = false;
+  if (values.prepExtanded === 'true') {
+    initPrepExpanded = true;
+  }
   const history = useHistory();
   const [state, setState] = React.useState({
-    prepExpanded: false,
+    prepExpanded: initPrepExpanded,
     isStopped: false,
     briefExpanded: true,
     otherExpanded: false,
@@ -75,7 +89,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
 
   const startBrick = () => {
     if (!state.prepExpanded) {
-      setState({...state, isPrepDialogOpen: true});
+      setState({ ...state, isPrepDialogOpen: true });
       return;
     }
     if (!props.startTime) {
@@ -115,9 +129,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderPlayButton = () => {
     return (
       <div className="action-footer">
-        <div>&nbsp;</div>
+        <div></div>
         <div className="direction-info">
-          <h3>Ready?</h3>
+          <Hidden only={["xs"]}>
+            <h3>Ready?</h3>
+          </Hidden>
           <h2>Play Brick</h2>
         </div>
         <div>
@@ -126,11 +142,11 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             className={state.prepExpanded ? "play-preview svgOnHover play-green" : "play-preview svgOnHover play-gray"}
             onClick={startBrick}
           >
-            <svg className="svg w80 h80 m-l-02">
+            <svg className="svg w80 h80 svg-default">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#play-thin"} />
             </svg>
-            <svg className="svg w80 h80 colored m-l-02">
+            <svg className="svg w80 h80 colored">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#play-thick"} />
             </svg>
@@ -194,7 +210,15 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (state.briefExpanded) {
       return (
         <div className="expanded-text">
-          <MathInHtml value={brick.brief} />
+          <HighlightHtml
+            value={brick.brief}
+            mode={props.mode}
+            onHighlight={value => {
+              if (props.onHighlight) {
+                props.onHighlight(BrickFieldNames.brief, value)
+              }
+            }}
+          />
         </div>
       );
     }
@@ -205,7 +229,15 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     if (state.prepExpanded) {
       return (
         <div className="expanded-text">
-          <YoutubeAndMathInHtml value={brick.prep} />
+          <HighlightHtml
+            value={brick.prep}
+            mode={props.mode}
+            onHighlight={value => {
+              if (props.onHighlight) {
+                props.onHighlight(BrickFieldNames.prep, value)
+              }
+            }}
+          />
         </div>
       );
     }
@@ -276,10 +308,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           <Grid item sm={8} xs={12}>
             <div className="introduction-page">
               {renderHeader()}
-              {renderBriefTitle()}
-              {renderBriefExpandText()}
-              {renderPrepTitle()}
-              {renderPrepExpandText()}
+              <div className="intro-content">
+                {renderBriefTitle()}
+                {renderBriefExpandText()}
+                {renderPrepTitle()}
+                {renderPrepExpandText()}
+              </div>
             </div>
           </Grid>
           <Grid item sm={4} xs={12}>
@@ -296,7 +330,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
         <div className="introduction-page">
           {renderMobileHeader()}
           <div className="introduction-info">
-
             {!state.prepExpanded ? (
               <div>
                 <Hidden only={["sm", "md", "lg", "xl"]}>
@@ -309,15 +342,17 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
               )}
             {renderPlayButton()}
           </div>
+          <div className="intro-content">
+            {renderBriefTitle()}
+            {renderBriefExpandText()}
+            {renderPrepTitle()}
+            {renderPrepExpandText()}
+          </div>
         </div>
-        {renderBriefTitle()}
-        {renderBriefExpandText()}
-        {renderPrepTitle()}
-        {renderPrepExpandText()}
       </Hidden>
       <PrepExpandedDialog
         isOpen={state.isPrepDialogOpen}
-        close={() => setState({...state, isPrepDialogOpen: false})}
+        close={() => setState({ ...state, isPrepDialogOpen: false })}
         onSubmit={() => togglePrep()}
       />
     </div>

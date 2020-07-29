@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 // @ts-ignore
 import CKEditor from "@ckeditor/ckeditor5-react";
 // @ts-ignore
@@ -22,6 +22,8 @@ import FontColor from "@ckeditor/ckeditor5-font/src/fontcolor";
 // @ts-ignore
 import List from "@ckeditor/ckeditor5-list/src/list";
 // @ts-ignore
+import Link from '@ckeditor/ckeditor5-link/src/link';
+// @ts-ignore
 import MathType from "@wiris/mathtype-ckeditor5/src/plugin";
 // @ts-ignore
 import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed";
@@ -37,7 +39,7 @@ import "./DocumentEditor.scss";
 import UploadImageCustom from './UploadImageCustom';
 import CommentCustom from './CommentCustom';
 
-export interface DocumentWirisEditorProps {
+export interface DocumentWEditorProps {
   disabled: boolean;
   editOnly?: boolean;
   data: string;
@@ -50,7 +52,7 @@ export interface DocumentWirisEditorProps {
   onChange(data: string): void;
 }
 
-interface DocumentWirisEditorState {
+interface DocumentWEditorState {
   data: string;
   focused: boolean;
   editor: any;
@@ -58,11 +60,8 @@ interface DocumentWirisEditorState {
   isWirisInserting: boolean;
 }
 
-class DocumentWirisEditorComponent extends React.Component<
-  DocumentWirisEditorProps,
-  DocumentWirisEditorState
-> {
-  constructor(props: any) {
+class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, DocumentWEditorState> {
+  constructor(props: DocumentWEditorProps) {
     super(props);
     this.state = {
       data: props.data,
@@ -73,7 +72,7 @@ class DocumentWirisEditorComponent extends React.Component<
     };
   }
 
-  UNSAFE_componentWillReceiveProps(props: DocumentWirisEditorProps) {
+  UNSAFE_componentWillReceiveProps(props: DocumentWEditorProps) {
     if (this.state.editor) {
       let data = this.state.editor.getData();
       if (props.data !== data) {
@@ -182,13 +181,18 @@ class DocumentWirisEditorComponent extends React.Component<
       ],
       mediaEmbed: { previewsInData: true },
       comments: { commentOnly: this.props.editOnly ?? false },
+      link: {},
       placeholder: "",
     };
 
     /* MediaEmbed plugin enables media links in editor */
     if (this.props.mediaEmbed) {
       config.plugins.push(MediaEmbed);
+      config.plugins.push(Link);
       config.toolbar.push("mediaEmbed");
+      config.link = {
+        addTargetToExternalLinks: true,
+      };
     }
 
     if (this.props.toolbar) {

@@ -21,19 +21,30 @@
         font-family: $font-family-bold;
       }
 
-      .edit-icon {
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/images/edit.png);
-        height: 4.5vw;
-        width: 4.5vw;
-        margin-bottom: 0.5vh;
-      }
       .edit-border {
-        padding: 1.5vw 1.64vw;
-        border-radius: 100vw;
-        border: 0.3vw dashed var(--theme-orange);
+        margin: 0.5vh 0;
+        padding: 1.5vw;
+        width: 8vw;
+        height: 8vw;
+        position: relative;
+        border: 0;
+        border-radius: 50%;
+        @extend %flexCenter;
+        &:before {
+          content: ' ';
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          border-width: 0.3vw;
+          border-style: dashed;
+          border-color: var(--theme-orange);
+          border-radius: 50%;
+        }
+        .svg {
+          @extend %removePosition;
+        }
       }
       .center {
         margin: 2.3vh 0;

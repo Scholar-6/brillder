@@ -5,9 +5,11 @@
   padding-right: 0;
   @include phone_and_tabletP {
     height: $height-mobile-view;
+    background: var(--white);
   }
   @include tabletP {
     margin-top: 2vw;
+    display: flex;
     height: $height-desktop-view;
   }
   .sort-and-filter-container {
@@ -96,7 +98,7 @@
             transform: translateY(-50%);
           }
           &.active {
-            background: $lighter-blue;
+            background: var(--theme-light-blue);
           }
           &.color1 {
             .round-button,
@@ -165,7 +167,7 @@
       .filter-header {
         position: relative;
         text-transform: uppercase;
-        background: $lighter-blue 0% 0% no-repeat padding-box;
+        background: var(--theme-light-blue) 0% 0% no-repeat padding-box;
         padding: 0.3vw 1.4vw;
         font-size: 1.2vw;
         letter-spacing: 0.22vw;
@@ -239,16 +241,13 @@
       }
       .subjects-filter {
         margin: 0 $sidebar-gutter;
-        padding: 2vh 0 0 0;
+        padding: 2vh 0 6vh 0;
         width: calc(100% - #{$sidebar-gutter * 2});
         @include phone_and_tabletP {
           height: calc(100vh - 55vw);
         }
         @include tabletP {
-          height: calc(100vh - 24vw);
-        }
-        @include tabletL {
-          height: calc(100vh - 23vw);
+          height: calc(100vh - 32vh);
         }
         overflow-y: auto;
         .published-count {
@@ -304,29 +303,41 @@
   .brick-row-container {
     position: relative;
     border-top-left-radius: $main-panel-radius;
-    padding-left: 1.18vw;
     margin-left: 1vw;
     flex-basis: inherit;
     max-width: inherit;
+    width: 100%;
     @include phone_and_tabletP {
-      width: 100%;
       height: $height-mobile-view;
-      padding: 0 4vw;
       margin: 0;
-      background-color: var(--white);
       border-top-left-radius: 10vw;
     }
     @include tabletP {
+      background: var(--light-gray);
       overflow-y: auto;
       width: calc(75% - 1vw);
       height: $height-desktop-view;
-      background: var(--light-gray);
     }
     .brick-row-title {
-      padding-left: 1.15vw;
       color: var(--theme-dark-blue);
       line-height: 1;
       letter-spacing: 0.4vw;
+      @include phone_and_tabletP {
+        font-size: 5vw;
+        font-family: $font-family-bold;
+        padding: 3vw;
+        margin-bottom: 0.5vh;
+        border-bottom: 0.2vh solid var(--light-gray);
+        z-index: 10;
+        display: flex;
+        align-items: center;
+      }
+      @include tabletP {
+        font-family: $font-family-black;
+        padding-bottom: 0;
+        font-size: 5.2vw;
+        padding: 0.5vw 1.15vw;
+      }
       .btn {
         @extend %flexCenter;
         span {
@@ -335,23 +346,6 @@
         .svg {
           @extend %removePosition;
         }
-      }
-      @include phone_and_tabletP {
-        font-size: 5vw;
-        font-family: $font-family-bold;
-        padding-top: 1.3vh;
-        border-bottom: 0.2vh solid var(--light-gray);
-        padding-bottom: 0.9vh;
-        margin-bottom: 0.5vh;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-      }
-      @include tabletP {
-        font-family: $font-family-black;
-        padding-top: 2.3vh;
-        padding-bottom: 0;
-        font-size: 5.2vw;
       }
     }
 
@@ -364,9 +358,10 @@
       font-family: $font-family-bold;
       .btn {
         display: flex;
+        cursor: default !important;
         align-items: center;
         span {
-          color: var(--light-blue2) !important;
+          color: var(--light-blue) !important;
           &:first-child {
             margin-right: 1vw;
           }
@@ -382,8 +377,10 @@
             @extend %removePosition;
             padding: 0.5vw;
             background-color: var(--tab-gray);
+            color: var(--theme-light-blue);
             border-radius: 50%;
             &.selected {
+              color: var(--theme-dark-blue);
               background-color: var(--theme-green);
             }
           }
@@ -437,6 +434,7 @@
           @include phone_and_tabletP {
             text-align: center;
             margin-bottom: 2vw;
+            padding: 0 4vw;
           }
           @include tabletP {
             height: $min-brick-height;
@@ -472,7 +470,7 @@
               }
             }
             .link-info {
-              color: $lighter-blue;
+              color: var(--theme-light-blue);
               line-height: 1.3;
               font-family: $font-family-regular;
               overflow-y: hidden;
@@ -549,7 +547,6 @@
           .MuiExpansionPanel-root {
             background: var(--light-gray);
           }
-
           .MuiExpansionPanel-root.Mui-expanded {
             margin: 0 !important;
             margin-bottom: 16px !important;
@@ -649,89 +646,13 @@
         }
       }
     }
-    .users-table {
-      width: calc(100% + 1.18vw);
-      margin-left: -1.18vw;
-      height: 60.5vh;
-      overflow-y: auto;
-      > table {
-        width: 100%;
-        border: none;
-        thead {
-          background: var(--tab-gray);
-          color: var(--theme-dark-blue);
-          font-family: $font-family-black;
-          font-size: 1.3vw;
-          letter-spacing: 0.25vw;
-          tr {
-            th {
-              padding-top: 0.6vh;
-              padding-bottom: 0.6vh;
-              text-align: left;
-              padding-left: 0.5vw;
-
-              .sort-button {
-                cursor: pointer;
-                margin-top: 0.3vh;
-                margin-left: 0.4vw;
-                height: 1.5vw;
-                width: 1.5vw;
-              }
-            }
-
-            .subject-title {
-              width: 5%;
-            }
-            .user-full-name {
-              width: 30%;
-            }
-            .email-column {
-              width: 31.3%;
-            }
-            .edit-button-column {
-              width: 2.5vw;
-            }
-          }
-        }
-        tr.user-row {
-          height: 4.5vh;
-          td {
-            padding-left: 0.5vw;
-            color: var(--theme-dark-blue);
-            font-size: 1vw;
-            padding-top: 0;
-          }
-          .user-actions-cell {
-            min-width: 5.5vw;
-            .delete-button,
-            .edit-button {
-              display: inline-block;
-              cursor: pointer;
-              height: 1.85vw;
-              width: 1.85vw;
-            }
-            .edit-button {
-              margin-left: 1vw;
-            }
-          }
-          .activate-button-container {
-            padding-left: 2vw;
-          }
-        }
-        tr.user-row:nth-child(even) {
-          background: var(--tab-gray);
-        }
-        .user-last-name {
-          font-family: $font-family-bold;
-        }
-      }
-    }
     .role-description {
       width: 100%;
       height: 2.5vh;
       text-align: right;
       font-size: 0.8vw;
-      margin: 0.5vh;
+      margin: 0.5vh 0;
+      padding: 0 1.18vh;
       color: var(--theme-dark-blue);
       letter-spacing: 0.015vw;
 

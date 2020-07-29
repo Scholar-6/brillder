@@ -58,32 +58,21 @@ class PageHeader extends Component<UsersListProps, MyState> {
   }
   renderBellButton(notificationCount: any) {
     return (
-      <div className="bell-button svgOnHover" onClick={(evt) => this.props.showNotifications(evt)}>
-        <svg className="svg svg-default">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#bell-empty"} />
-          {(notificationCount !== 0) &&
-            <text className="bell-text-default" x="50%" y="50%" textAnchor="middle">{notificationCount}</text>}
+      <div className="header-btn bell-button svgOnHover" onClick={(evt) => this.props.showNotifications(evt)}>
+        <svg id="bell" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path className="bell-cup" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
         </svg>
-        <svg className="svg colored">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#bell-filled"} />
-          {(notificationCount !== 0) &&
-            <text className="bell-text-filled" x="50%" y="50%" textAnchor="middle">{notificationCount}</text>}
-        </svg>
+        {(notificationCount !== 0) && <span className="bell-text">{notificationCount}</span>}
       </div>
     )
   }
   renderMoreButton() {
     return (
-      <div className="more-button svgOnHover" onClick={() => this.props.showDropdown()}>
-        <svg className="svg svg-default">
+      <div className="header-btn more-button svgOnHover" onClick={() => this.props.showDropdown()}>
+        <svg className="svg active">
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#more-thin"} />
-        </svg>
-        <svg className="svg colored">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#more-thick"} />
+          <use href={sprite + "#more"} />
         </svg>
       </div>
     )
@@ -98,88 +87,87 @@ class PageHeader extends Component<UsersListProps, MyState> {
     }
 
     return (
-      <div className={!searchVisible ? "page-header" : "page-header active"}>
-        <Hidden only={['sm', 'md', 'lg', 'xl',]}>
-          <div className="logout-container">
+      <div className="upper-part">
+        <div className={!searchVisible ? "page-header" : "page-header active"}>
+          <Hidden only={['sm', 'md', 'lg', 'xl',]}>
+            <div className="logout-container">
 
-            {!searchVisible &&
-              <div className="help-button svgOnHover">
-                <svg className="svg svg-default">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#help-thin"} />
-                </svg>
-              </div>
-            }
-            {
-              !searchVisible &&
-              <HomeButton link="/home" />
-            }
-            <div className={searchVisible ? "search-container active animated slideInLeft" : "search-container"}>
-              <div className={searchVisible ? 'search-area active' : 'search-area'}>
-                <input
-                  className="search-input"
-                  onKeyUp={(e) => this.keySearch(e)}
-                  onChange={(e) => this.props.searching(e.target.value)}
-                  placeholder={this.props.searchPlaceholder}
-                />
-              </div>
-              {searchVisible ?
-                <div className="btn btn-transparent close-search svgOnHover" onClick={() => this.toggleSearch()}>
-                  <svg className="svg w100 h100">
+              {!searchVisible &&
+                <div className="header-btn help-button svgOnHover">
+                  <svg className="svg svg-default">
                     {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#arrow-right"} className="text-tab-gray" />
-                  </svg>
-                </div>
-                :
-                <div className="btn btn-transparent open-search svgOnHover" onClick={() => this.renderSearch()}>
-                  <svg className="svg w100 h100 svg-default">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#search-thin"} className="text-theme-orange" />
-                  </svg>
-                  <svg className="svg w100 h100 colored">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#search-thick"} className="text-theme-orange" />
+                    <use href={sprite + "#help-thin"} />
                   </svg>
                 </div>
               }
-            </div>
-            {
-              !searchVisible &&
-              this.renderBellButton(notificationCount)
-            }
-            {
-              !searchVisible &&
-              this.renderMoreButton()
-            }
-          </div>
-        </Hidden>
-        <Hidden only={['xs']} >
-          <HomeButton link="/home" />
-          <div className="logout-container">
-            <div className="search-container">
-              <div className="search-button svgOnHover" onClick={() => this.props.search()}>
-                <svg className="svg svg-default">
-                  <use href={sprite + "#search-thin"} />
-                </svg>
-                <svg className="svg colored">
-                  <use href={sprite + "#search-thick"} />
-                </svg>
+              {
+                !searchVisible &&
+                <HomeButton link="/home" />
+              }
+              <div className={searchVisible ? "search-container active animated slideInLeft" : "search-container"}>
+                <div className={searchVisible ? 'search-area active' : 'search-area'}>
+                  <input
+                    className="search-input"
+                    onKeyUp={(e) => this.keySearch(e)}
+                    onChange={(e) => this.props.searching(e.target.value)}
+                    placeholder={this.props.searchPlaceholder}
+                  />
+                </div>
+                {searchVisible ?
+                  <div className="btn btn-transparent close-search svgOnHover" onClick={() => this.toggleSearch()}>
+                    <svg className="svg w100 h100">
+                      {/*eslint-disable-next-line*/}
+                      <use href={sprite + "#arrow-right"} className="text-tab-gray" />
+                    </svg>
+                  </div>
+                  :
+                  <div className="btn btn-transparent open-search svgOnHover" onClick={() => this.renderSearch()}>
+                    <svg className="svg w100 h100 svg-default">
+                      {/*eslint-disable-next-line*/}
+                      <use href={sprite + "#search-thin"} className="text-theme-orange" />
+                    </svg>
+                    <svg className="svg w100 h100 colored">
+                      {/*eslint-disable-next-line*/}
+                      <use href={sprite + "#search-thick"} className="text-theme-orange" />
+                    </svg>
+                  </div>
+                }
               </div>
-              <div className="search-area">
-                <input
-                  className="search-input"
-                  onKeyUp={(e) => this.keySearch(e)}
-                  onChange={(e) => this.props.searching(e.target.value)}
-                  placeholder={this.props.searchPlaceholder}
-                />
-              </div>
+              {
+                !searchVisible &&
+                this.renderBellButton(notificationCount)
+              }
+              {
+                !searchVisible &&
+                this.renderMoreButton()
+              }
             </div>
-            <Grid container direction="row" className="action-container">
-              {this.renderBellButton(notificationCount)}
-              {this.renderMoreButton()}
-            </Grid>
-          </div >
-        </Hidden>
+          </Hidden>
+          <Hidden only={['xs']} >
+            <HomeButton link="/home" />
+            <div className="logout-container">
+              <div className="search-container">
+                <div className="header-btn search-button svgOnHover" onClick={() => this.props.search()}>
+                  <svg className="svg active">
+                    <use href={sprite + "#search"} />
+                  </svg>
+                </div>
+                <div className="search-area">
+                  <input
+                    className="search-input"
+                    onKeyUp={(e) => this.keySearch(e)}
+                    onChange={(e) => this.props.searching(e.target.value)}
+                    placeholder={this.props.searchPlaceholder}
+                  />
+                </div>
+              </div>
+              <Grid container direction="row" className="action-container">
+                {this.renderBellButton(notificationCount)}
+                {this.renderMoreButton()}
+              </Grid>
+            </div >
+          </Hidden>
+        </div>
       </div>
     );
   }
