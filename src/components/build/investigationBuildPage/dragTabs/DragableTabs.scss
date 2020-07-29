@@ -74,8 +74,8 @@ $tile-height: 100%;
       user-select: none;
     }
     .remove-icon {
-      width: 1.5vw;
-      height: 3vh;
+      width: 1.2vw;
+      height: 1.2vw;
       display: none;
       padding: 0.3vw;
       &.active {
@@ -83,6 +83,9 @@ $tile-height: 100%;
         position: absolute;
         right: 0;
         top: 0;
+      }
+      .svg {
+        stroke-width: 2;
       }
     }
   }
