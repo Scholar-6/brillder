@@ -8,6 +8,9 @@
       font-family: $font-family-regular;
       font-size: 2vw;
       margin-right: 1vw;
+      @include phone_and_tabletP {
+        font-size: 7.8vw;
+      }
     }
     .circle-check {
       cursor: pointer;
