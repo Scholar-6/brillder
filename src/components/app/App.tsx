@@ -31,7 +31,7 @@ import AllUsersRoute from './AllUsersRoute';
 
 import BrickWrapper from './BrickWrapper';
 
-import {setBrillderTitle} from 'components/services/titleService';
+import { setBrillderTitle } from 'components/services/titleService';
 
 
 
@@ -42,7 +42,7 @@ const App: React.FC = (props: any) => {
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    let {url} = error.response.config;
+    let { url } = error.response.config;
     if (url.search('/auth/login/') === -1) {
       history.push("/choose-login");
     }
@@ -77,13 +77,38 @@ const App: React.FC = (props: any) => {
       script.setAttribute(
         'src',
         `https://static.zdassets.com/ekr/snippet.js?key=${
-          process.env.REACT_APP_ZENDESK_ID
-            ? process.env.REACT_APP_ZENDESK_ID
-            : '1415bb80-138f-4547-9798-3082b781844a'
+        process.env.REACT_APP_ZENDESK_ID
+          ? process.env.REACT_APP_ZENDESK_ID
+          : '1415bb80-138f-4547-9798-3082b781844a'
         }`
       );
       head.appendChild(script);
     }
+
+    const minimizeZendeskButton = (iframe: any) => {
+      var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+      let button = innerDoc.getElementsByTagName("button")[0];
+      button.style.padding = "1rem";
+      let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
+      console.log(btnContent)
+      btnContent.style.padding = 0;
+      let helpText = innerDoc.getElementsByClassName("label-3kk12");
+      helpText[0].style.opacity = 0;
+      helpText[0].style.width = 0;
+    }
+
+    // check untill zendesk is mounted
+    let interval = setInterval(() => {
+      var iframe = document.getElementById("launcher") as any;
+      if (iframe) {
+        try {
+          minimizeZendeskButton(iframe);
+          clearInterval(interval);
+        } catch {
+          console.log('can`t get zendesk element');
+        }
+      }
+    }, 100)
   }
 
   addZendesk();
