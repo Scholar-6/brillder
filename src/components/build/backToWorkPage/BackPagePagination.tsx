@@ -73,7 +73,7 @@ const BackPagePagination: React.FC<BackPageTitleProps> = ({
           <span className="gray">{" "} &nbsp;|&nbsp; {Math.ceil(bricksLength / pageSize)}</span>
         </div>
       </Grid>
-      <Grid container item xs={4} justify="center" className="bottom-next-button">
+      <Grid item xs={4} className="bottom-next-button">
         <div>
           {renderBackButton()}
           {renderNextButton()}

@@ -21,7 +21,6 @@ import LoginPage from '../authPages/loginPage/loginPage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
 import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
 import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
-import SignUpFinished from '../authPages/signUpFinished/SignUpFinished';
 import UserProfilePage from '../build/userProfilePage/UserProfile';
 
 import AuthRoute from './AuthRoute';
@@ -118,7 +117,6 @@ const App: React.FC = (props: any) => {
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
         <AuthRoute path="/login" exact component={LoginPage} />
-        <AuthRoute path="/sign-up-success" exact component={SignUpFinished} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>

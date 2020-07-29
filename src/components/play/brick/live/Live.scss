@@ -10,72 +10,6 @@
     height: calc(100% - 14vh) !important;
     overflow-y: hidden !important;
   }
-  .introduction-info {
-    @include phone_and_tabletP {
-      position: relative !important;
-    }
-    .brick-counter {
-      @include phone_and_tabletP {
-        position: absolute !important;
-        right: -7vw !important;
-        top: -1vw !important;
-        display: block !important;
-      }
-    }
-    .intro-text-row {
-      @include phone_and_tabletP {
-        padding-top: 0 !important;
-      }
-      .heading {
-        @include phone_and_tabletP {
-          text-align: center;
-          font-size: 6vw;
-        }
-      }
-      .stepper {
-        width: 100%;
-        display: flex;
-        box-sizing: border-box;
-        @include phone_and_tabletP {
-          overflow-y: hidden;
-        }
-        @include tabletP {
-          flex-wrap: wrap;
-        }
-        > .step {
-          color: #d3d4d5;
-          @include phone_and_tabletP {
-            display: inline-flex !important;
-            flex: 1;
-            justify-content: center !important;
-            min-width: 12vw;
-          }
-          @include tabletP {
-            flex-grow: 0;
-            max-width: 33.333333%;
-            flex-basis: 33.333333%;
-          }
-          span {
-            @include phone_and_tabletP {
-              font-size: 5vw;
-              margin-right: 3vw;
-            }
-          }
-          .blue-circle-container {
-            @include phone_and_tabletP {
-              left: 70% !important;
-            }
-            .blue-circle {
-              @include phone_and_tabletP {
-                height: 2.8vw !important;
-                width: 2.8vw !important;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
   .introduction-page {
     @include phone_and_tabletP {
       height: calc(100vh - 59.8vw) !important;
@@ -87,17 +21,12 @@
       }
     }
   }
-  .play-clock {
-    @include phone_and_tabletP {
-      display: none !important;
-    }
-  }
   .edited-step-icon {
-    color: $black-blue;
+    color: var(--black-blue);
     border-radius: 100%;
     font-size: 16px !important;
     padding: 5px;
-    border: 2px solid $black-blue;
+    border: 2px solid var(--black-blue);
   }
   .ck-editor__main {
     .ck-content {

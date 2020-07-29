@@ -56,15 +56,19 @@ const PlayLeftSidebarComponent: React.FC<SidebarProps> = (props) => {
 
   const renderHightlightButton = () => {
     let className = "sidebar-button";
+    let icon = "#highlighter"
     if (mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) {
       className += " active";
+    }
+    if (mode === PlayMode.UnHighlighting) {
+      icon = "#delete-2";
     }
     return (
       <MenuItem className={className} onClick={setHighlightMode}>
         {renderHightlightText()}
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#highlighter"} className="text-white" />
+          <use href={sprite + icon} className="text-white" />
         </svg>
       </MenuItem>
     );

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import sprite from "../../../assets/img/icons-sprite.svg";
+import sprite from "../../../../assets/img/icons-sprite.svg";
 import PageHeader from "components/baseComponents/pageHeader/PageHeader";
 import { User, UserType } from "model/user";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
@@ -66,7 +66,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
 
   render() {
     return (
-      <div className="upper-part">
+      <div>
         <PageHeader ref={this.pageHeader}
           searchPlaceholder="Search by Name, Email or Subject"
           search={() => { }}
@@ -95,7 +95,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
             <div className="btn btn-transparent svgOnHover">
               <svg className="svg active">
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#shovel"} className="text-white" />
+                <use href={sprite + "#trowel"} className="text-white" />
               </svg>
             </div>
           </MenuItem>
@@ -128,7 +128,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
             <div className="btn btn-transparent svgOnHover">
               <svg className="svg active">
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#logout"} className="text-white" />
+                <use href={sprite + "#logout-thick"} className="text-white" />
               </svg>
             </div>
           </MenuItem>

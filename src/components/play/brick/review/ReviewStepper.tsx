@@ -1,5 +1,4 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
 
 import { Question } from "model/question";
 import { ComponentAttempt } from "../model/model";
@@ -19,31 +18,31 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
   handleStep,
   attempts,
 }) => {
-  let colWidth = 4;
-  if (questions.length > 27) {
-    colWidth = 3;
-  }
-
   let questionIndex = 0;
 
-  const renderQuestionStep = (
-    key: number,
-    colWidth: any
-  ) => {
+  const renderQuestionStep = (key: number) => {
     const attempt = attempts[questionIndex];
-
     questionIndex++;
     let index = questionIndex;
+
+    // render step for invalid question
+    if (!attempt) {
+      return (
+        <div className="step" key={key} onClick={handleStep(index - 1)}>
+          <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#cancel"} className="text-theme-orange" />
+          </svg>
+        </div>
+      );
+    }
+
+    // render step normal questions
     return (
-      <Grid
-        item
-        xs={colWidth}
-        key={key}
-        className="step svgOnHover"
-        onClick={handleStep(index - 1)}
-      >
+      <div className="step" key={key} onClick={handleStep(index - 1)}>
         <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
-        <svg className="svg w-2 h-2 active m-l-02">
+        <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use
             href={attempt.correct ? sprite + "#ok" : sprite + "#cancel"}
@@ -52,16 +51,14 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
             }
           />
         </svg>
-      </Grid>
+      </div>
     );
   };
 
   return (
-    <Grid container direction="row" className="stepper">
-      {questions.map((question, index) =>
-        renderQuestionStep(index, colWidth)
-      )}
-    </Grid>
+    <div className="stepper">
+      {questions.map((question, index) => renderQuestionStep(index))}
+    </div>
   );
 };
 
