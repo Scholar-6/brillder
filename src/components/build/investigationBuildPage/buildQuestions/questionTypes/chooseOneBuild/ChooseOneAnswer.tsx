@@ -20,11 +20,12 @@ export interface ChooseOneAnswerProps {
   removeFromList(index: number): void;
   onChecked(event: any, checked: boolean): void;
   update(): void;
+  onBlur(): void;
 }
 
 const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
   locked, index, length, answer, validationRequired, checkBoxValid,
-  removeFromList, update, save, onChecked
+  removeFromList, update, save, onChecked, onBlur
 }) => {
   const renderDeleteButton = () => {
     if (length > 3) {
@@ -97,7 +98,10 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
         toolbar={['mathType', 'chemType']}
         placeholder="Enter Answer..."
         validationRequired={answer.answerType !== QuestionValueType.Image ? validationRequired : false}
-        onBlur={() => save()}
+        onBlur={() => {
+          onBlur();
+          save();
+        }}
         onChange={value => onTextChanged(answer, value)}
       />
     </div>
