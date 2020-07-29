@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import Avatar from "@material-ui/core/Avatar";
-// @ts-ignore
-import { pulse } from "react-animations";
-import styled, { keyframes } from "styled-components";
+
+import './SaveProfileButton.scss';
 import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import { UserProfile } from "model/user";
@@ -23,7 +21,7 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
 
     this.state = {
       isValid: this.isValid(props.user),
-      shouldPulse: this.isValid(props.user)
+      shouldPulse: false
     }
   }
 
@@ -39,7 +37,7 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
 
     // check pulsing
     if (this.isValid(user)) {
-      if (this.state.shouldPulse === false) {
+      if (this.state.isValid == false && this.state.shouldPulse === false) {
         this.setState({ shouldPulse: true });
         return true;
       }
@@ -69,31 +67,23 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
     if (this.state.isValid) {
       className += " valid";
     }
+    if (this.state.shouldPulse) {
+      className += " save-pulse";
+    }
     return (
-      <Avatar
-        alt=""
+      <button
+        type="button"
         className={className}
-        onClick={() => this.props.onClick()}
       >
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#save-icon"} />
         </svg>
-      </Avatar>
+      </button>
     );
   }
 
   render() {
-    const pulseAnimation = keyframes`${pulse}`;
-    const PulsingDiv = styled.div`animation: 0.5s ${pulseAnimation};`;
-
-    if (this.state.shouldPulse) {
-      return (
-        <PulsingDiv>
-          {this.renderButton()}
-        </PulsingDiv>
-      );
-    }
     return this.renderButton()
   }
 }
