@@ -397,6 +397,18 @@ $play-mobile-height: calc(100vh - 55.8vw);
               margin: 0 3vw 1vw 4vw;
               padding-top: 1.5vh;
             }
+            .short-answer-live {
+              .document-editor {
+                .ck-editor {
+                  .ck-content {
+                    background: transparent;
+                    padding: 0 !important;
+                    padding-bottom: 0.3vw !important;
+                    border-bottom: 1px solid var(--gray) !important;
+                  }
+                }
+              }
+            }
           }
 
           .question-title {
