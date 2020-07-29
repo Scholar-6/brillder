@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import './verticalShuffleBuild.scss'
 import sprite from "../../../../../../assets/img/icons-sprite.svg";
 import { UniqueComponentProps } from '../types';
-import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
+import { showSameAnswerPopup } from '../service/questionBuild';
 
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
@@ -65,19 +65,6 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
     showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
-  const onBlur = (i: number) => {
-    let answerText = stripHtml(state.list[i].value);
-    let list = state.list as any;
-    for (let [index, item] of list.entries()) {
-      if (index !== i && item.value) {
-        let text = stripHtml(item.value)
-        if (answerText === text) {
-          openSameAnswerDialog();
-        }
-      }
-    }
-  }
-
   const renderAnswer = (answer: any, i: number) => {
     return (
       <div className="vertical-answer-box" key={i}>
@@ -98,7 +85,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
           toolbar={['mathType', 'chemType']}
           placeholder={"Enter Answer " + (i + 1) + "..."}
           onBlur={() => {
-            onBlur(i);
+            showSameAnswerPopup(i, state.list, openSameAnswerDialog);
             save();
           }}
           onChange={value => changed(answer, value)}

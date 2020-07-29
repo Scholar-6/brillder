@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react'
-import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import { Grid } from '@material-ui/core';
 
 import './horizontalShuffleBuild.scss'
-import { Grid } from '@material-ui/core';
-import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
-import { UniqueComponentProps } from '../types';
-
 import sprite from "../../../../../../assets/img/icons-sprite.svg";
+import { UniqueComponentProps } from '../types';
+import { showSameAnswerPopup } from '../service/questionBuild';
+
+import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
+import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+
 
 
 const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
-  locked, data, validationRequired, save, updateComponent
+  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [height, setHeight] = React.useState('0%');
-
   useEffect(() => calculateHeight());
-
   const newAnswer = () => ({ value: "" });
 
   if (!data.list) {
@@ -53,14 +53,14 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
     save();
   }
 
-  const renderAnswer = (answer: any, key: number) => {
-    let column = (key % 3) + 1;
+  const renderAnswer = (answer: any, i: number) => {
+    let column = (i % 3) + 1;
     return (
-      <Grid container item xs={4} key={key}>
+      <Grid container item xs={4} key={i}>
         <div className={`horizontal-shuffle-box unique-component horizontal-column-${column}`}>
           {
             (state.list.length > 3)
-              ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(key)}>
+              ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(i)}>
                 <svg className="svg active back-button">
                   {/*eslint-disable-next-line*/}
                   <use href={sprite + "#trash-outline"} className="theme-orange" />
@@ -73,8 +73,11 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
             data={answer.value}
             validationRequired={validationRequired}
             toolbar={['mathType', 'chemType']}
-            placeholder={"Enter A" + (key + 1) + "..."}
-            onBlur={() => save()}
+            placeholder={"Enter A" + (i + 1) + "..."}
+            onBlur={() => {
+              showSameAnswerPopup(i, state.list, openSameAnswerDialog);
+              save();
+            }}
             onChange={value => changed(answer, value)}
           />
         </div>

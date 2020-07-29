@@ -7,6 +7,7 @@ import { ChooseOneAnswer } from './types';
 import { QuestionValueType, UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
 import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
+import { showSameAnswerPopup } from '../service/questionBuild';
 
 export interface ChooseOneData {
   list: ChooseOneAnswer[];
@@ -77,19 +78,6 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
 
   let checkBoxValid = !!validator.getChecked(state.list);
 
-  const onBlur = (i: number) => {
-    let answerText = stripHtml(state.list[i].value);
-    let list = state.list as any;
-    for (let [index, item] of list.entries()) {
-      if (index !== i && item.value) {
-        let text = stripHtml(item.value)
-        if (answerText === text) {
-          openSameAnswerDialog();
-        }
-      }
-    }
-  }
-
   return (
     <div className="choose-one-build unique-component">
       <div className="component-title">Tick Correct Answer</div>
@@ -107,7 +95,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
             removeFromList={removeFromList}
             onChecked={onChecked}
             update={update}
-            onBlur={() => onBlur(i)}
+            onBlur={() => showSameAnswerPopup(i, state.list, openSameAnswerDialog)}
           />
         })
       }
