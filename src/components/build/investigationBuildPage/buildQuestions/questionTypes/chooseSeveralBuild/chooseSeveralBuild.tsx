@@ -6,7 +6,7 @@ import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 import {ChooseOneAnswer} from '../chooseOneBuild/types';
 import { QuestionValueType } from '../types';
 import validator from '../../../questionService/UniqueValidator'
-
+import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
 
 export interface ChooseSeveralData {
   list: ChooseOneAnswer[];
@@ -18,10 +18,11 @@ export interface ChooseSeveralBuildProps {
   validationRequired: boolean;
   save(): void;
   updateComponent(component:any):void;
+  openSameAnswerDialog(): void;
 }
 
 const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
-  locked, data, validationRequired, save, updateComponent
+  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [height, setHeight] = React.useState('0%');
 
@@ -82,8 +83,17 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
 
   let isChecked = !!validator.validateChooseSeveralChecked(state.list);
 
-  const onBlur = () => {
-
+  const onBlur = (i: number) => {
+    let answerText = stripHtml(state.list[i].value);
+    let list = state.list as any;
+    for (let [index, item] of list.entries()) {
+      if (index !== i && item.value) {
+        let text = stripHtml(item.value)
+        if (answerText === text) {
+          openSameAnswerDialog();
+        }
+      }
+    }
   }
 
   return (
@@ -103,7 +113,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
             removeFromList={removeFromList}
             onChecked={onChecked}
             update={update}
-            onBlur={onBlur}
+            onBlur={() => onBlur(i)}
           />
         })
       }

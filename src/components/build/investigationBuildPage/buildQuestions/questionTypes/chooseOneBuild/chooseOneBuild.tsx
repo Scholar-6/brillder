@@ -81,9 +81,9 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
     let answerText = stripHtml(state.list[i].value);
     let list = state.list as any;
     for (let [index, item] of list.entries()) {
-      if (index !== i) {
+      if (index !== i && item.value) {
         let text = stripHtml(item.value)
-        if (answerText == text) {
+        if (answerText === text) {
           openSameAnswerDialog();
         }
       }
