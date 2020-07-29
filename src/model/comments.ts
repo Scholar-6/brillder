@@ -11,6 +11,7 @@ export interface Comment {
     id: number;
     text: string;
     brick: Brick;
+    children: Comment[];
     author: Author;
     timestamp: Date;
 }
