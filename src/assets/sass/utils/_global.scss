@@ -223,7 +223,7 @@ h3 {
 .choose-choice {
   display: block;
   margin: 0 0 0.5vw 0 !important;
-  padding: 0.3vw 0 0 0 !important;
+  padding: 0.3vw 0 !important;
   color: var(--theme-dark-blue) !important;
   text-align: center;
   text-transform: none !important;
@@ -240,9 +240,14 @@ h3 {
   }
   .MuiButton-label {
     flex-direction: column;
+    padding: 0 !important;
+
     img {
       width: calc(100% - 0.6vw);
     }
+  }
+  .question-hint {
+    margin-bottom: 0;
   }
   p {
     text-align: center !important;
