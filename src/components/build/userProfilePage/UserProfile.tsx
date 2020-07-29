@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 import Checkbox from '@material-ui/core/Checkbox';
-import Avatar from "@material-ui/core/Avatar";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
@@ -15,15 +14,15 @@ import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
 import PhonePreview from "../baseComponents/phonePreview/PhonePreview";
 import { Subject } from "model/brick";
-import SubjectAutocomplete from "./SubjectAutoCompete";
+import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import { checkAdmin } from "components/services/brickService";
-import UserProfileMenu from "./UserProfileMenu";
-import SubjectDialog from "./SubjectDialog";
+import UserProfileMenu from "./components/UserProfileMenu";
+import SubjectDialog from "./components/SubjectDialog";
 import { ReduxCombinedState } from "redux/reducers";
+import SaveProfileButton from './components/SaveProfileButton';
+import ProfileSavedDialog from './components/ProfileSavedDialog';
 
-const mapState = (state: ReduxCombinedState) => ({
-  user: state.user.user,
-});
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
@@ -48,6 +47,7 @@ interface UserProfileProps {
 
 interface UserProfileState {
   noSubjectDialogOpen: boolean;
+  savedDialogOpen: boolean;
   user: UserProfile;
   subjects: Subject[];
   autoCompleteOpen: boolean;
@@ -89,6 +89,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             { roleId: UserType.Admin, name: "Admin", disabled: false },
           ],
           noSubjectDialogOpen: false,
+          savedDialogOpen: false,
         };
       } else {
         props.history.push("/home");
@@ -140,6 +141,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
         ],
         noSubjectDialogOpen: false,
+        savedDialogOpen: false,
       };
       if (userId) {
         axios
@@ -236,26 +238,27 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (this.state.isNewUser) {
       // requet to add new user
     } else {
-      axios
-        .put(
-          `${process.env.REACT_APP_BACKEND_HOST}/user`,
-          { ...userToSave },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          if (res.data === "OK") {
-            alert("Profile saved");
-            this.props.getUser();
-          }
-        })
-        .catch((error) => {
-          alert("Can`t save user profile");
-        });
+      axios.put(
+        `${process.env.REACT_APP_BACKEND_HOST}/user`,
+        { ...userToSave },
+        { withCredentials: true }
+      ).then((res) => {
+        if (res.data === "OK") {
+          this.setState({ savedDialogOpen: true });
+          this.props.getUser();
+        }
+      }).catch((error) => {
+        alert("Can`t save user profile");
+      });
     }
   }
 
-  handleSubjectDialogClose() {
+  onSubjectDialogClose() {
     this.setState({ ...this.state, noSubjectDialogOpen: false });
+  }
+
+  onProfileSavedDialogClose() {
+    this.setState({ ...this.state, savedDialogOpen: false });
   }
 
   onFirstNameChanged(e: any) {
@@ -339,8 +342,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   render() {
+    const {user} = this.state;
     return (
-      <div className="user-profile-page">
+      <div className="main-listing user-profile-page">
         <UserProfileMenu
           user={this.props.user}
           forgetBrick={this.props.forgetBrick}
@@ -348,14 +352,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         />
         <Grid container direction="row">
           <div className="profile-block">
-            <div className="profile-header">{this.state.user.firstName ? this.state.user.firstName : 'NAME'}</div>
+            <div className="profile-header">{user.firstName ? user.firstName : 'NAME'}</div>
             <div className="save-button-container">
-              <Avatar
-                alt=""
-                src="/feathericons/save-blue.png"
-                className="save-image"
-                onClick={() => this.saveUserProfile()}
-              />
+              <SaveProfileButton user={user} onClick={() => this.saveUserProfile()} />
             </div>
             <div className="profile-fields">
               <div className="profile-image-container">
@@ -384,7 +383,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   <div className="input-block">
                     <input
                       className="first-name style2"
-                      value={this.state.user.firstName}
+                      value={user.firstName}
                       onChange={(e: any) => this.onFirstNameChanged(e)}
                       placeholder="Name"
                     />
@@ -392,7 +391,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   <div className="input-block">
                     <input
                       className="last-name style2"
-                      value={this.state.user.lastName}
+                      value={user.lastName}
                       onChange={(e: any) => this.onLastNameChanged(e)}
                       placeholder="Surname"
                     />
@@ -400,6 +399,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 </div>
                 <FormControlLabel
                   value="start"
+                  className="secret-input"
                   control={<Checkbox color="primary" />}
                   label="Keep me secret: I don't want to be searchable"
                   labelPlacement="end"
@@ -408,7 +408,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   <input
                     type="email"
                     className="style2"
-                    value={this.state.user.email}
+                    value={user.email}
                     onChange={(e: any) => this.onEmailChanged(e)}
                     placeholder="username@domain.com"
                   />
@@ -417,7 +417,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   <input
                     type="password"
                     className="style2"
-                    value={this.state.user.password}
+                    value={user.password}
                     onChange={(e: any) => this.onPasswordChanged(e)}
                     placeholder="●●●●●●●●●●●"
                   />
@@ -431,7 +431,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               </div>
             </div>
             <SubjectAutocomplete
-              selected={this.state.user.subjects}
+              selected={user.subjects}
               onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
             />
             <Grid container direction="row" className="big-input-container">
@@ -445,16 +445,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               alignContent="center"
               style={{ height: "100%" }}
             >
-              <div>
-                <PhonePreview />
-              </div>
+              <PhonePreview />
             </Grid>
           </div>
         </Grid>
-        <SubjectDialog
-          isOpen={this.state.noSubjectDialogOpen}
-          close={() => this.handleSubjectDialogClose()}
-        />
+        <SubjectDialog isOpen={this.state.noSubjectDialogOpen} close={() => this.onSubjectDialogClose()} />
+        <ProfileSavedDialog history={this.props.history} isOpen={this.state.savedDialogOpen} close={() => this.onProfileSavedDialogClose()} />
       </div>
     );
   }

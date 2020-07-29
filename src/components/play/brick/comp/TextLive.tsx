@@ -4,13 +4,24 @@ import React from 'react';
 import MathJax from 'react-mathjax-preview'
 import {parseDataToArray, isMathJax} from 'components/services/mathJaxService';
 import './TextLive.scss';
+import { PlayMode } from '../model';
+import HighlightHtml from '../baseComponents/HighlightHtml';
 
 
 interface TextProps {
   component: any;
+
+  // only for real play
+  mode?: PlayMode;
 }
 
-const TextLive: React.FC<TextProps> = ({ component }) => {
+const TextLive: React.FC<TextProps> = ({ mode, component }) => {
+  if (mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) {
+    return (
+      <HighlightHtml value={component.value} mode={mode} onHighlight={value => component.value = value} />
+    );
+  }
+
   var arr = parseDataToArray(component.value);
 
   const renderMath = (data: string, i: number) => {

@@ -134,16 +134,12 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
   }
 
   render() {
-    let className = 'upper-part';
     let placeholder = "Search Subjects, Topics, Titles & more";
     if (this.props.placeholder) {
       placeholder = this.props.placeholder;
     }
-    if (this.props.isMobileHidden) {
-      className += " mobile-hidden";
-    }
     return (
-      <div className={className}>
+      <div>
         <PageHeader ref={this.pageHeader}
           searchPlaceholder={placeholder}
           search={() => this.props.search()}
@@ -162,7 +158,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
             <div className="btn btn-transparent svgOnHover">
               <svg className="svg active">
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#shovel"} className="text-white" />
+                <use href={sprite + "#trowel"} className="text-white" />
               </svg>
             </div>
           </MenuItem>
@@ -182,7 +178,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
             <div className="btn btn-transparent svgOnHover">
               <svg className="svg active">
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#logout"} className="text-white" />
+                <use href={sprite + "#logout-thick"} className="text-white" />
               </svg>
             </div>
           </MenuItem>

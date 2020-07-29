@@ -56,6 +56,9 @@
     .ck-toolbar__items {
       background: var(--white) !important;
       display: block !important;
+      button {
+        border: none !important;
+      }
       .ck-dropdown {
         padding: 0 0.2vw !important;
         margin: 0 !important;
@@ -141,4 +144,18 @@
   .upload-button-custom span {
     font-family: $font-family-bold !important;
   }
+}
+
+.document-editor.highlight-editor {
+  .ck-editor {
+    .ck-editor__main {
+      .ck-content {
+        padding: 0 !important;
+        text-align: left;
+      }
+    }
+  }
+}
+.document-editor.highlight-editor:hover {
+  cursor: url('/feathericons/svg/cursor-highlighter.svg') 0 15, auto;
 }

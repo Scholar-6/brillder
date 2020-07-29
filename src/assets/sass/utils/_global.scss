@@ -32,6 +32,16 @@ textarea {
   font-family: $font-family-regular !important;
 }
 
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
 .hide {
   display: none !important;
 }
@@ -40,10 +50,8 @@ textarea {
   text-align: center !important;
 }
 
-
-
 .scale-07 {
-  transform: scale(0.7);
+  transform: scale(0.7) !important;
 }
 
 .btn-transparent {
@@ -79,7 +87,7 @@ textarea {
     &.svg-green,
     &.svg-red,
     &.svg-orange {
-      color: var(--theme-pro-gray);
+      color: var(--tab-gray);
     }
     &.hover,
     &.colored {
@@ -103,7 +111,7 @@ textarea {
         opacity: 1;
       }
       &.svg-default {
-        color: var(--black-light);
+        color: var(--light-gray);
       }
       &.svg-blue {
         color: var(--blue);
@@ -185,165 +193,11 @@ textarea {
   }
 }
 
-@media only screen and (max-width: 1279px) and (min-width: 960px) {
-  .bricks-list-page {
-    .bricks-sort {
-      .sort-and-search-row {
-        .sort-bricks-by {
-          font-size: 12px;
-          .sort-by {
-            padding-top: 5px;
-          }
-          .sort-element {
-            padding-top: 6px;
-            font-size: 12px;
-          }
-
-          .expanded-icon {
-            height: 24px !important;
-            width: 24px !important;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 959px) and (min-width: 600px) {
-  .bricks-list-page {
-    .bricks-sort {
-      .sort-and-search-row {
-        .sort-bricks-by {
-          font-size: 9px;
-          .sort-by {
-            padding-top: 1px;
-          }
-          .sort-element {
-            padding-top: 2px;
-            font-size: 8px;
-          }
-
-          .expanded-icon {
-            height: 12px !important;
-            width: 12px !important;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 599px) {
-  .bricks-list-page {
-    .bricks-sort {
-      .sort-and-search-row {
-        .sort-bricks-by {
-          font-size: 7px;
-          .sort-by {
-            padding-top: 1px;
-          }
-          .sort-element {
-            padding-top: 2px;
-            font-size: 7px;
-          }
-
-          .expanded-icon {
-            height: 10px !important;
-            width: 10px !important;
-          }
-        }
-      }
-    }
-  }
-}
 .help-icon {
   display: none;
   @include phone_and_tabletP {
     display: block;
     z-index: 1;
-  }
-}
-
-$home-button-size: 5.834vw;
-
-.home-button-container {
-  @include phone_and_tabletP {
-    width: auto !important;
-    padding: 0;
-    display: flex;
-  }
-  @include tabletP {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 9999;
-    border-bottom-right-radius: 2vw;
-    background: var(--light-blue);
-    margin-right: 1vw;
-    padding: 0.35vw 0.782vw 0.782vw 0.35vw;
-    width: $home-button-size !important;
-    height: 5.834vw;
-  }
-
-  .home-button {
-    cursor: pointer;
-    height: 100%;
-    width: 100%;
-    display: block;
-    &:hover {
-      > .svg {
-        @include transition(all 350ms cubic-bezier(0.5, 1, 0.89, 1));
-        @include tabletP {
-          transform: scale(0.7) translate(calc(-50% - 1vw), calc(-50% + 0.3vw)) !important;
-        }
-      }
-      .smoke-container {
-        display: flex;
-      }
-      .roof {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
-  }
-  .roof {
-    width: 100%;
-    height: inherit;
-    @extend %floatToXCenter;
-    top: -1vw;
-    visibility: hidden;
-    opacity: 0;
-    @include transition(all 350ms cubic-bezier(0.5, 1, 0.89, 1));
-    @include phone_and_tabletP {
-      display: none;
-    }
-  }
-  .smoke-container {
-    display: none;
-    position: absolute;
-    width: 1.1vw;
-    height: 2vw;
-    margin: 0;
-    left: 0.7vw;
-    top: -1.2vw;
-    z-index: 999;
-    @include phone_and_tabletP {
-      display: none;
-    }
-    .smoke-1,
-    .smoke-2,
-    .smoke-3 {
-      opacity: 0;
-    }
-    .smoke-1 {
-      @include animation(smoke-1 2s linear 0s infinite);
-    }
-    .smoke-2 {
-      @include animation(smoke-2 3s linear 0.5s infinite);
-    }
-    .smoke-3 {
-      @include animation(smoke-3 4s linear 1s infinite);
-    }
   }
 }
 
@@ -368,7 +222,7 @@ h3 {
 .vertical-shuffle-choice,
 .choose-choice {
   display: block;
-  margin: 0 0 0.3vw 0 !important;
+  margin: 0 0 0.5vw 0 !important;
   padding: 0.3vw 0 0 0 !important;
   color: var(--theme-dark-blue) !important;
   text-align: center;
@@ -404,7 +258,7 @@ h3 {
 .pair-match-image-choice,
 .choose-choice {
   &.active {
-    background: $white-blue !important;
+    background: var(--white-blue) !important;
   }
   &.correct {
     background: var(--theme-green) !important;
@@ -429,10 +283,10 @@ h3 {
 .zoom-item {
   cursor: pointer;
   text-align: center;
-  transition: all 0.2s ease-in-out;
+  @extend %transitionAll300;
   &:hover {
     @include tabletP {
-      transform: scale(1.2);
+      transform: scale(1.4);
     }
   }
 }
@@ -441,4 +295,8 @@ h3 {
   @include phone_and_tabletP {
     display: none !important;
   }
+}
+
+.regular {
+  font-family: $font-family-regular;
 }

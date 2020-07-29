@@ -1,24 +1,47 @@
 import React from "react";
 import sprite from "../../assets/img/icons-sprite.svg";
 
-interface ToggleProps {}
+interface ToggleProps {
+  isCore: boolean;
+}
 
-const PublicCoreToggle: React.FC<ToggleProps> = (props) => {
+const PublicCoreToggle: React.FC<ToggleProps> = ({ isCore }) => {
+
+  const renderCoreIcon = () => {
+    let className = "svg active";
+    if (isCore) {
+      className += " selected";
+    }
+    return (
+      <svg className={className}>
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#box"} />
+      </svg>
+    );
+  }
+
+  const renderPublicIcon = () => {
+    let className = "svg active";
+    if (!isCore) {
+      className += " selected";
+    }
+    return (
+      <svg className={className}>
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#globe"} />
+      </svg>
+    );
+  }
+
   return (
     <div className="core-public-toggle">
       <button className="btn btn btn-transparent ">
-        <span>Core</span>
+        <span className={isCore ? 'bold' : 'regular'}>Core</span>
         <div className="svgOnHover">
-          <svg className="svg active selected">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#box"} className="text-light-blue2" />
-          </svg>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#globe"} className="text-light-blue2" />
-          </svg>
+          {renderCoreIcon()}
+          {renderPublicIcon()}
         </div>
-        <span>Public</span>
+        <span className={!isCore ? 'bold' : 'regular'}>Public</span>
       </button>
     </div>
   );

@@ -27,7 +27,7 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
   setBrillderTitle();
 
   if (values.msg === 'USER_IS_NOT_ACTIVE') {
-    return <Redirect to="/sign-up-success" />
+    //return <Redirect to="/sign-up-success" />
   }
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!rest.user) {

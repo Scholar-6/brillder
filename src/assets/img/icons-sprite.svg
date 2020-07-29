@@ -28,10 +28,10 @@
     <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
     <line x1="12" y1="17" x2="12.01" y2="17"/>
   </svg>
-  <svg id="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <svg id="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="20 6 9 17 4 12"></polyline>
   </svg>
-  <svg id="cancel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <svg id="cancel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
     <line x1="18" y1="6" x2="6" y2="18"></line>
     <line x1="6" y1="6" x2="18" y2="18"></line>
   </svg>
@@ -40,21 +40,12 @@
     <line x1="15" y1="9" x2="9" y2="15"></line>
     <line x1="9" y1="9" x2="15" y2="15"></line>
   </svg>
-  <svg id="more-thin" viewBox="0 0 24 24" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+  <svg id="more" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="1"/>
     <circle cx="19" cy="12" r="1"/>
     <circle cx="5" cy="12" r="1"/>
   </svg>
-  <svg id="more-thick" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="1"/>
-    <circle cx="19" cy="12" r="1"/>
-    <circle cx="5" cy="12" r="1"/>
-  </svg>
-  <svg id="search-thin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="13.1" cy="10.9" r="8.9"/>
-    <line x1="6.8" y1="17.2" x2="2" y2="22"/>
-  </svg>
-  <svg id="search-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <svg id="search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="13.1" cy="10.9" r="8.9"/>
     <line x1="6.8" y1="17.2" x2="2" y2="22"/>
   </svg>
@@ -91,7 +82,12 @@
     <path d="M22,20.2v-1.8c0-1.7-1.1-3.1-2.7-3.5"/>
     <path d="M15.6,3.9c1.9,0.5,3.1,2.5,2.6,4.4c-0.3,1.3-1.3,2.3-2.6,2.6"/>
   </svg>
-  <svg id="logout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <svg id="logout-thin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9.3,20H5.8c-1,0-1.8-0.8-1.8-1.8V5.8C4,4.8,4.8,4,5.8,4h3.6"/>
+    <polyline points="15.6,16.4 20,12 15.6,7.6 	"/>
+    <line x1="20" y1="12" x2="9.3" y2="12"/>
+  </svg>
+  <svg id="logout-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M9.3,20H5.8c-1,0-1.8-0.8-1.8-1.8V5.8C4,4.8,4.8,4,5.8,4h3.6"/>
     <polyline points="15.6,16.4 20,12 15.6,7.6 	"/>
     <line x1="20" y1="12" x2="9.3" y2="12"/>
@@ -130,12 +126,19 @@
     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
     <circle cx="12" cy="12" r="3"></circle>
   </svg>
-  <svg id="shovel" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-    <path d="M2,19.5l0.1-0.4l6.4-7.8L8.9,11l0.4,0l0.3,0l0.3,0.1l0.3,0.1l1.4,1.5l1.2-0.7
-    c0.1,0,0.1-0.1,0.1-0.1c0-0.1,0-0.1,0.1-0.2v-0.4l0-1.7l0.1-0.3l0.3-0.4L14.6,8l0-0.2V7.5l0.2-0.2L15,7.1l5.2-2.8l0.3-0.1l0.3,0
-    l0.3,0l0.2,0.1l0.1,0.2l0.2,0.2l0.2,0.2L22,5.1l0,0.2v0.3l-0.1,0.2L21.8,6l-0.2,0.2l-5.2,2.9l-0.3,0.2l-0.3,0.1l-0.3,0l-0.3-0.1
-    L15,8.9l-0.9,0.7l-0.1,0.2v2.6l0,0c0,0.1,0,0.1,0,0.2c0,0,0,0.1-0.1,0.1l-0.3,0.2l-0.3,0.2l-4,2.3l0.1,0.2l0.2,0.1h0.3l0.2,0
-    l2.8-1.3l2,1.9l0.2,0.3l0,0.3l0,0.2L15,17l-0.3,0.2L2.6,19.9H2.4l-0.2-0.1l-0.1-0.1L2,19.5"/>
+  <svg id="trowel" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <path d="M1,20.2l0.1-0.4l7-8.6l0.5-0.3l0.4,0l0.3,0l0.3,0.1l0.3,0.2l1.6,1.6l1.3-0.8
+	c0.1,0,0.1-0.1,0.1-0.2c0-0.1,0.1-0.1,0.1-0.2v-0.5l0-1.9L13.2,9l0.4-0.4l1.3-1l0-0.3V7L15,6.8l0.3-0.2L21,3.5l0.3-0.2l0.3,0l0.4,0
+	l0.3,0.2l0.2,0.2l0.2,0.2l0.2,0.2L23,4.4l0,0.3v0.3l-0.1,0.2l-0.1,0.2l-0.2,0.2l-5.7,3.2L16.5,9L16.2,9l-0.3,0l-0.3-0.1l-0.3-0.3
+	l-1,0.7l-0.2,0.2v2.8l0,0c0,0.1,0,0.1,0,0.2c0,0,0,0.1-0.1,0.1l-0.3,0.2L13.4,13L9,15.6l0.1,0.2l0.2,0.1h0.3l0.3-0.1l3.1-1.5
+	l2.3,2.1l0.2,0.3l0,0.3l0,0.2l-0.2,0.2L15,17.7l-13.3,3H1.4l-0.2-0.1l-0.1-0.2L1,20.2"/>
+  </svg>
+  <svg id="trowel-home" viewBox="0 0 24 17" fill="currentColor" stroke="none">
+    <path d="M2,16.5l0.1-0.4l6.4-7.8L8.9,8l0.4,0l0.3,0l0.3,0.1l0.3,0.1l1.4,1.5L12.7,9
+	c0.1,0,0.1-0.1,0.1-0.1c0-0.1,0-0.1,0.1-0.2V8.3l0-1.7l0.1-0.3l0.3-0.4L14.6,5l0-0.2V4.5l0.2-0.2L15,4.1l5.2-2.8l0.3-0.1l0.3,0
+	l0.3,0l0.2,0.1l0.1,0.2l0.2,0.2l0.2,0.2L22,2.1l0,0.2v0.3l-0.1,0.2L21.8,3l-0.2,0.2l-5.2,2.9l-0.3,0.2l-0.3,0.1l-0.3,0l-0.3-0.1
+	L15,5.9l-0.9,0.7l-0.1,0.2v2.6l0,0c0,0.1,0,0.1,0,0.2c0,0,0,0.1-0.1,0.1l-0.3,0.2l-0.3,0.2l-4,2.3l0.1,0.2l0.2,0.1h0.3l0.2,0
+	l2.8-1.3l2,1.9l0.2,0.3l0,0.3l0,0.2L15,14l-0.3,0.2L2.6,16.9H2.4l-0.2-0.1l-0.1-0.1L2,16.5"/>
   </svg>
   <svg id="logo" viewBox="0 0 38 38" fill="currentColor" stroke="none">
     <path d="M32.175,34.742h-9.238c-1.008,0-1.824-0.814-1.826-1.822c0-0.002,0-0.002,0-0.004V5.083
@@ -153,14 +156,6 @@
       c-0.017,0.286,0.093,0.565,0.295,0.771c0.188,0.189,0.446,0.295,0.714,0.295c0.229,0,0.455-0.08,0.634-0.223l13.259-10.67
       c0.025-0.022,0.061-0.032,0.095-0.029c0.032,0,0.064,0.01,0.094,0.029l13.257,10.625c0.182,0.145,0.402,0.225,0.634,0.225
       c0.564-0.004,1.021-0.465,1.02-1.029c0-0.012,0-0.021-0.001-0.037C33.983,12.156,33.842,11.889,33.612,11.711z"/>
-  </svg>
-  <svg id="bell-empty" viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-  </svg>
-  <svg id="bell-filled" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
   </svg>
   <svg id="zap-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="12.41 6.75 13 2 10.57 4.92"></polyline>
@@ -198,6 +193,15 @@
     <path d="M57.75,6.822v2.426l-0.607,0.607h-4.081V6.213h4.081L57.75,6.822z"/>
     <path d="M0.25,9.248V6.822l0.604-0.607h4.021v3.641H0.854L0.25,9.248z"/>
   </svg>
+  <svg id="glasses-home" viewBox="0 0 24 10" fill="currentColor" stroke="none">
+    <path d="M13.5,5c0-2.5,2-4.4,4.5-4.4s4.5,2,4.5,4.4c0,2.5-2,4.4-4.5,4.4S13.5,7.4,13.5,5z M14.8,5c0,1.7,1.4,3.1,3.2,3.1
+		s3.2-1.4,3.2-3.1S19.8,1.9,18,1.9C16.2,1.8,14.8,3.2,14.8,5z"/>
+    <path d="M1.7,5c0-2.5,2-4.4,4.5-4.4s4.5,2,4.5,4.4c0,2.5-2,4.4-4.5,4.4S1.7,7.4,1.7,5z M3,5c0,1.7,1.4,3.1,3.2,3.1S9.4,6.7,9.4,5
+		S8,1.9,6.2,1.9S3,3.2,3,5z"/>
+    <path d="M9.5,4.6c0-1.3,1.1-2.3,2.6-2.3c1.4,0,2.6,1,2.6,2.3h-1.2c0-0.6-0.6-1.2-1.4-1.2c-0.8,0-1.4,0.5-1.4,1.2H9.5z"/>
+    <path d="M23,3v0.9l-0.2,0.2h-1.6V2.7h1.6L23,3z"/>
+    <path d="M1,3.9V3l0.2-0.2h1.5v1.4H1.2L1,3.9z"/>
+  </svg>
   <svg id="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="10"></circle>
     <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -215,6 +219,14 @@
 			c0-0.3-0.1-0.4-0.4-0.4l-0.4,0c-0.1,0-0.3-0.1-0.3-0.3S19,4,19.1,4h0.5c0.3,0,0.8,0.2,0.9,0.9l0,2.3c0,0.1-0.1,0.9-0.8,1.2
 			l-7.7,3.2c-0.1,0-0.6,0.2-0.6,0.9v1.3C11.3,14,11.2,14.1,11.1,14.1z"/>
     <path d="M12.1,22h-2c-0.3,0-0.5-0.2-0.5-0.5V14c0-0.3,0.2-0.5,0.5-0.5h2c0.3,0,0.5,0.2,0.5,0.5v7.5C12.6,21.8,12.4,22,12.1,22z"/>
+  </svg>
+  <svg id="roller-home" viewBox="0 0 24 22" fill="currentColor" stroke="none">
+    <path d="M16.3,5.5H5.8c-1.2,0-2.3-1-2.3-2.3S4.6,1,5.8,1h10.5c1.2,0,2.3,1,2.3,2.3S17.6,5.5,16.3,5.5z"/>
+    <path d="M18.8,3.9c-0.3,0-0.5-0.2-0.5-0.5V3.1c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v0.3C19.3,3.7,19.1,3.9,18.8,3.9z"/>
+    <path d="M11.1,13.1c-0.1,0-0.3-0.1-0.3-0.3v-1.3c0-0.9,0.6-1.3,0.9-1.4l7.6-3.2c0.5-0.2,0.6-0.8,0.6-0.8V3.9c0-0.3-0.1-0.4-0.4-0.4
+		h-0.4c-0.1,0-0.3-0.1-0.3-0.3S19,3,19.1,3h0.5c0.3,0,0.8,0.2,0.9,0.9v2.3c0,0.1-0.1,0.9-0.8,1.2L12,10.6c-0.1,0-0.6,0.2-0.6,0.9
+		v1.3C11.3,13,11.2,13.1,11.1,13.1z"/>
+    <path d="M12.1,21h-2c-0.3,0-0.5-0.2-0.5-0.5V13c0-0.3,0.2-0.5,0.5-0.5h2c0.3,0,0.5,0.2,0.5,0.5v7.5C12.6,20.8,12.4,21,12.1,21z"/>
   </svg>
   <svg id="maximize-2" viewBox="0 0 24 24" fill="none" stroke="#c43c30" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="15 3 21 3 21 9"></polyline>
@@ -234,7 +246,17 @@
     <path d="M2 2l7.586 7.586"></path>
     <circle cx="11" cy="11" r="2"></circle>
   </svg>
-  <svg id="comment" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+  <svg id="delete-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+    <line x1="18" y1="9" x2="12" y2="15"></line>
+    <line x1="12" y1="9" x2="18" y2="15"></line>
+  </svg>
+  <svg id="save-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+    <polyline points="7 3 7 8 15 8"></polyline>
+  </svg>
+  <svg id="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="20 6 9 17 4 12"></polyline>
   </svg>
 </svg>

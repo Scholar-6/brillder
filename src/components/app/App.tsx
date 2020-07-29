@@ -21,7 +21,6 @@ import LoginPage from '../authPages/loginPage/loginPage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
 import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
 import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
-import SignUpFinished from '../authPages/signUpFinished/SignUpFinished';
 import UserProfilePage from '../build/userProfilePage/UserProfile';
 
 import AuthRoute from './AuthRoute';
@@ -29,6 +28,8 @@ import BuildRoute from './BuildRoute';
 import StudentRoute from './StudentRoute';
 import AuthRedirectRoute from './AuthRedirectRoute';
 import AllUsersRoute from './AllUsersRoute';
+
+import BrickWrapper from './BrickWrapper';
 
 import {setBrillderTitle} from 'components/services/titleService';
 
@@ -96,7 +97,7 @@ const App: React.FC = (props: any) => {
   return (
     <ThemeProvider theme={theme}>
       <Switch>
-        <StudentRoute path="/play/brick/:brickId" component={PlayBrickRouting} />
+        <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <StudentRoute path="/play/dashboard" component={Dashboard} />
 
@@ -116,7 +117,6 @@ const App: React.FC = (props: any) => {
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
         <AuthRoute path="/login" exact component={LoginPage} />
-        <AuthRoute path="/sign-up-success" exact component={SignUpFinished} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>

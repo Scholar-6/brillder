@@ -13,6 +13,7 @@ import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 interface StudentRouteProps {
   component: any;
+  innerComponent?: any;
   isAuthenticated: isAuthenticated;
   isRedirectedToProfile: boolean;
   user: User;
@@ -20,7 +21,7 @@ interface StudentRouteProps {
   isAuthorized():void;
 }
 
-const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user, ...rest }) => {
+const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, innerComponent, user, ...rest }) => {
   if (rest.isAuthenticated === isAuthenticated.True) {
     if (!user) {
       rest.getUser();
@@ -38,7 +39,7 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, user,
       return roleId === UserType.Student || roleId === UserType.Admin || roleId === UserType.Builder || roleId === UserType.Editor;
     });
     if (can) {
-      return <Route {...rest} render={(props) => <Component {...props} />} />;
+      return <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />;
     } else {
       return <PageLoader content="...Forbidden..." />;
     }

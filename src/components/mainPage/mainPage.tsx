@@ -76,37 +76,55 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   renderViewAllButton() {
     return (
-      <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/play/dashboard")}>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#glasses"} className="text-theme-orange" />
-        </svg>
-        <span className="item-description">View All Bricks</span>
-      </button>
+      <div className="view-item-container">
+        <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/play/dashboard")}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#glasses-home"} className="text-theme-orange" />
+          </svg>
+          <span className="item-description">View All Bricks</span>
+          <div className="glass-eyes-left svgOnHover">
+            <svg className="svg active" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+              <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
+              <path fill="#001C55" className="pupil" d="M13.1,12c0,2.1-1.7,3.8-3.8,3.8S5.5,14.1,5.5,12s1.7-3.8,3.8-3.8S13.1,9.9,13.1,12L13.1,12z" />
+            </svg>
+          </div>
+          <div className="glass-eyes-right svgOnHover">
+            <svg className="svg active" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+              <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
+              <path fill="#001C55" className="pupil" d="M13.1,12c0,2.1-1.7,3.8-3.8,3.8S5.5,14.1,5.5,12s1.7-3.8,3.8-3.8S13.1,9.9,13.1,12L13.1,12z" />
+            </svg>
+          </div>
+        </button>
+      </div>
     );
   }
 
   renderCreateButton() {
     return (
-      <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/build/new-brick/brick-title")}>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#shovel"} className="text-theme-orange" />
-        </svg>
-        <span className="item-description">Start Building</span>
-      </button>
+      <div className="create-item-container">
+        <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/build/new-brick/brick-title")}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#trowel-home"} className="text-theme-orange" />
+          </svg>
+          <span className="item-description">Start Building</span>
+        </button>
+      </div>
     );
   }
 
   renderWorkButton() {
     return (
-      <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/back-to-work")}>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#roller"} className="text-theme-orange" />
-        </svg>
-        <span className="item-description">Back To Work</span>
-      </button>
+      <div className="back-item-container">
+        <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/back-to-work")}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#roller-home"} className="text-theme-orange" />
+          </svg>
+          <span className="item-description">Back To Work</span>
+        </button>
+      </div>
     );
   }
 
@@ -174,16 +192,28 @@ class MainPage extends Component<MainPageProps, MainPageState> {
                 <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => history.push("/play/dashboard")}>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#glasses"} className="text-theme-orange" />
+                    <use href={sprite + "#glasses-home"} className="text-theme-orange" />
                   </svg>
                   <span className="item-description">View All Bricks</span>
+                  <div className="glass-eyes-left svgOnHover">
+                    <svg className="svg active" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                      <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
+                      <path fill="#001C55" className="pupil" d="M13.1,12c0,2.1-1.7,3.8-3.8,3.8S5.5,14.1,5.5,12s1.7-3.8,3.8-3.8S13.1,9.9,13.1,12L13.1,12z" />
+                    </svg>
+                  </div>
+                  <div className="glass-eyes-right svgOnHover">
+                    <svg className="svg active" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                      <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
+                      <path fill="#001C55" className="pupil" d="M13.1,12c0,2.1-1.7,3.8-3.8,3.8S5.5,14.1,5.5,12s1.7-3.8,3.8-3.8S13.1,9.9,13.1,12L13.1,12z" />
+                    </svg>
+                  </div>
                 </button>
               </div>
               <div className="create-item-container">
                 <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.creatingBrick()}>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#shovel"} className="text-theme-orange" />
+                    <use href={sprite + "#trowel-home"} className="text-theme-orange" />
                   </svg>
                   <span className="item-description">Start Building</span>
                 </button>
@@ -192,7 +222,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
                 <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => history.push("/back-to-work")}>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#roller"} className="text-theme-orange" />
+                    <use href={sprite + "#roller-home"} className="text-theme-orange" />
                   </svg>
                   <span className="item-description">Back To Work</span>
                 </button>
@@ -205,20 +235,17 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             <div className="second-item"></div>
           </div>
           <div className="logout-button" onClick={this.props.logout}>
-            <Grid container alignContent="center">
-              <div style={{ position: "relative" }}>
-                <div className="logout-image" />
-              </div>
-              <div>
-                <Grid
-                  container
-                  alignContent="center"
-                  style={{ height: "100%" }}
-                >
-                  <span className="logout-text">LOGOUT</span>
-                </Grid>
-              </div>
-            </Grid>
+            <div className="logout-image svgOnHover">
+              <svg className="svg w100 h100 svg-default">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#logout-thin"} className="text-theme-orange" />
+              </svg>
+              <svg className="svg w100 h100 colored">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#logout-thick"} className="text-theme-orange" />
+              </svg>
+            </div>
+            <span>LOGOUT</span>
           </div>
         </Hidden>
         {this.renderMobilePage()}

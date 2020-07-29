@@ -20,7 +20,6 @@ interface AllUsersRouteProps {
 }
 
 const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, user, ...rest }) => {
-
   var location = useLocation();
 
   if (rest.isAuthenticated === isAuthenticated.True) {
@@ -29,7 +28,7 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
       return <PageLoader content="...Getting User..." />;
     }
     if(user.firstName === "" || user.lastName === "") {
-      if(location.pathname != "/user-profile") { // Only redirect to the user profile if we're not already there.
+      if(location.pathname !== "/user-profile") { // Only redirect to the user profile if we're not already there.
         return <Redirect to="/user-profile" />
       }
     }

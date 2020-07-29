@@ -57,77 +57,71 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   }
 
   const login = (email: string, password: string) => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_HOST}/auth/login/3`,
-        { email, password, userType: 3 },
-        { withCredentials: true }
-      )
-      .then((response) => {
-        const { data } = response;
-        if (data === "OK") {
-          props.loginSuccess();
-          return;
-        }
-        let { msg } = data;
-        if (!msg) {
-          const { errors } = data;
-          msg = errors[0].msg;
-        }
-        toggleAlertMessage(true);
-        setAlertMessage(msg);
-      })
-      .catch((error) => {
-        const { response } = error;
-        if (response) {
-          if (response.status === 500) {
-            toggleAlertMessage(true);
-            setAlertMessage("Server error");
-          } else if (response.status === 401) {
-            const { msg } = response.data;
-            if (msg === "USER_IS_NOT_ACTIVE") {
-              props.history.push("/sign-up-success");
-            } else if (msg === "INVALID_EMAIL_OR_PASSWORD") {
-              toggleAlertMessage(true);
-              setAlertMessage("Password is not correct");
-            }
-          }
-        } else {
+    axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/auth/login/3`,
+      { email, password, userType: 3 },
+      { withCredentials: true }
+    ).then((response) => {
+      const { data } = response;
+      if (data === "OK") {
+        props.loginSuccess();
+        return;
+      }
+      let { msg } = data;
+      if (!msg) {
+        const { errors } = data;
+        msg = errors[0].msg;
+      }
+      toggleAlertMessage(true);
+      setAlertMessage(msg);
+    }).catch((error) => {
+      const { response } = error;
+      if (response) {
+        if (response.status === 500) {
           toggleAlertMessage(true);
-          setAlertMessage("Connection problem");
+          setAlertMessage("Server error");
+        } else if (response.status === 401) {
+          const { msg } = response.data;
+          if (msg === "USER_IS_NOT_ACTIVE") {
+            //props.history.push("/sign-up-success");
+          } else if (msg === "INVALID_EMAIL_OR_PASSWORD") {
+            toggleAlertMessage(true);
+            setAlertMessage("Password is not correct");
+          }
         }
-      });
+      } else {
+        toggleAlertMessage(true);
+        setAlertMessage("Connection problem");
+      }
+    });
   };
 
   const register = (email: string, password: string) => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp/3`,
-        { email, password, confirmPassword: password },
-        { withCredentials: true }
-      )
-      .then((resp) => {
-        const { data } = resp;
+    axios.post(
+      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp/3`,
+      { email, password, confirmPassword: password },
+      { withCredentials: true }
+    ).then((resp) => {
+      const { data } = resp;
 
-        if (data.errors) {
-          toggleAlertMessage(true);
-          setAlertMessage(data.errors[0].msg);
-          return;
-        }
-
-        if (data.msg) {
-          toggleAlertMessage(true);
-          setAlertMessage(data.msg);
-        }
-
-        if (data === "OK") {
-          props.history.push("/sign-up-success");
-        }
-      })
-      .catch((e) => {
+      if (data.errors) {
         toggleAlertMessage(true);
-        setAlertMessage("Connection problem");
-      });
+        setAlertMessage(data.errors[0].msg);
+        return;
+      }
+
+      if (data.msg) {
+        toggleAlertMessage(true);
+        setAlertMessage(data.msg);
+      }
+
+      if (data === "OK") {
+        login(email, password);
+      }
+    }).catch((e) => {
+      toggleAlertMessage(true);
+      setAlertMessage("Connection problem");
+    });
   };
 
   const renderLogo = () => {
@@ -210,12 +204,12 @@ const LoginPage: React.FC<LoginProps> = (props) => {
 
   return (
     <Grid
-        className="auth-page login-page"
-        container
-        item
-        justify="center"
-        alignItems="center"
-      >
+      className="auth-page login-page"
+      container
+      item
+      justify="center"
+      alignItems="center"
+    >
       <Hidden only={["xs"]}>
         <div className="choose-login-desktop">
           <Grid container direction="row" className="first-row">

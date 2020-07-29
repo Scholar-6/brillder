@@ -56,14 +56,17 @@
     min-width: 0;
     padding: 0;
   }
+
   &.mobile-synthesis-page {
     height: calc(100vh - 6vh) !important;
     position: relative;
     overflow-y: inherit !important;
+
     h1 {
       position: absolute !important;
       top: 0.2vw !important;
     }
+
     .question-index-container {
       width: 7vw !important;
       height: 7vw !important;
@@ -74,5 +77,18 @@
         font-size: 6vw !important;
       }
     }
+
+    .question-live-play {
+
+      @include phone_and_tabletP {
+        padding: 4vw;
+      }
+    }
+  }
+}
+
+.synthesis-content {
+  @include desktop {
+    width: 53vw !important;
   }
 }

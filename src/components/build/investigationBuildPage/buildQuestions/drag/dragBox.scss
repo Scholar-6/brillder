@@ -6,7 +6,7 @@
   cursor: pointer;
   width: 100%;
   color: var(--theme-orange);
-  font-family: 'SuperclarendonW00-Bold';
+  font-family: $font-family-bold;
   font-size: 2vw;
   .drag-box-hover {
     font-family: $font-family-regular;

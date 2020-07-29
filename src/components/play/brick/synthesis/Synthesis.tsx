@@ -6,16 +6,21 @@ import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
 import { PlayStatus } from '../model/model';
 import { BrickLengthEnum } from 'model/brick';
-import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import sprite from "../../../../assets/img/icons-sprite.svg";
+import { PlayMode } from '../model';
+import HighlightHtml from '../baseComponents/HighlightHtml';
+import { BrickFieldNames } from 'components/build/proposal/model';
 const moment = require('moment');
-
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
   status: PlayStatus;
   brick: Brick;
+
+  // only for real play
+  mode?: PlayMode;
+  onHighlight?(name: BrickFieldNames, value: string): void;
 }
 
 const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }) => {
@@ -50,7 +55,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   const renderFooter = () => {
     return (
       <div className="action-footer">
-        <div>&nbsp;</div>
+        <div></div>
         <div className="direction-info">
           <h2>Review</h2>
         </div>
@@ -66,21 +71,33 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     );
   }
 
+  const renderSynthesis = () => {
+    return (
+      <div className="introduction-page">
+        <div className="question-index-container">
+          <div className="question-index">S</div>
+        </div>
+        <h1>Synthesis</h1>
+        <div className="question-live-play synthesis-content">
+          <HighlightHtml mode={props.mode} value={brick.synthesis} onHighlight={
+            value => {
+              if (props.onHighlight) {
+                props.onHighlight(BrickFieldNames.synthesis, value);
+              }
+            }
+          } />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Hidden only={['xs']}>
         <div className="brick-container synthesis-page">
           <Grid container direction="row">
             <Grid item xs={8}>
-              <div className="introduction-page">
-                <div className="question-index-container">
-                  <div className="question-index">S</div>
-                </div>
-                <h1>Synthesis</h1>
-                <div className="question-live-play synthesis-content">
-                  <MathInHtml value={brick.synthesis} />
-                </div>
-              </div>
+              {renderSynthesis()}
             </Grid>
             <Grid item xs={4}>
               <div className="introduction-info">
@@ -99,15 +116,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
       </Hidden>
       <Hidden only={['sm', 'md', 'lg', 'xl']}>
         <div className="brick-container synthesis-page mobile-synthesis-page">
-          <div className="introduction-page">
-            <div className="question-index-container">
-              <div className="question-index">S</div>
-            </div>
-            <h1>Synthesis</h1>
-            <div className="question-live-play synthesis-content">
-              <MathInHtml value={brick.synthesis} />
-            </div>
-          </div>
+          {renderSynthesis()}
           {renderFooter()}
         </div>
       </Hidden>

@@ -287,7 +287,7 @@
           margin: 0 0 2vh 0;
           flex: 1;
           @include phone_and_tabletP {
-            color: $black-blue;
+            color: var(--black-blue);
             border-radius: 7vw;
             font: 5.2vw $font-family-regular;
             padding: 0.5vh 1.2vw;

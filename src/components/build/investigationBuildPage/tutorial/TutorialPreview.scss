@@ -4,7 +4,7 @@
 
 .tutorial-preview {
   font-family: $font-family-black;
-  color: var(--light-blue2);
+  color: var(--light-blue);
 
   .tutorial-number {
     font-size: 8vw;
@@ -13,78 +13,27 @@
   }
 
   .tutorial-icon-container {
-    margin-top: 2.4vw;
-    padding: 2.2vw 2.453vw;
-    border-radius: 100vw;
-    border: 0.3vw dashed var(--light-blue2);
-    img {
-      height: 5.8vw;
+    width: 8vw;
+    height: 8vw;
+    position: relative;
+    border: 0;
+    border-radius: 50%;
+    @extend %flexCenter;
+    margin: 3.5vw 0 0 0;
+    &:before {
+      content: ' ';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      border-width: 0.3vw;
+      border-style: dashed;
+      border-color: var(--light-blue);
+      border-radius: 50%;
     }
-  }
-}
-
-.tutorial-investigation-preview {
-  .tutorial-number {
-    margin-left: 0.7vw;
-  }
-
-  .tutorial-icon-container {
-    margin-top: 2.7vw;
-    padding: 1.1vw 1.35vw;
-    border-radius: 100vw;
-    border: 0.3vw dashed var(--light-blue2);
-    img {
-      height: 8vw;
-    }
-  }
-}
-
-.tutorial-synthesis-preview {
-  .tutorial-number {
-    margin-left: 0.7vw;
-  }
-
-  .tutorial-icon-container {
-    margin-top: 3.5vw;
-    padding: 1.4vw 2.7vw 1vw 2.7vw;
-    border-radius: 0.8vw;
-    border: 0.3vw dashed var(--light-blue2);
-    img {
-      height: 5vw;
-    }
-  }
-}
-
-.tutorial-play-preview {
-  .tutorial-number {
-    margin-left: 0.7vw;
-  }
-
-  .tutorial-icon-container {
-    margin-top: 2.8vw;
-    padding: 1.2vw 0.5vw 1vw 2.2vw;
-    border-radius: 0.8vw;
-    border-radius: 100vw;
-    border: 0.3vw dashed var(--light-blue2);
-    img {
-      height: 8vw;
-    }
-  }
-}
-
-.tutorial-additional-preview {
-  .tutorial-number {
-    margin-left: 0.7vw;
-  }
-
-  .tutorial-icon-container {
-    margin-top: 2.8vw;
-    padding: 0.8vw 0.903vw 0.5vw 0.903vw;
-    border-radius: 0.8vw;
-    border-radius: 100vw;
-    border: 0.3vw dashed var(--light-blue2);
-    img {
-      height: 8.8vw;
+    .svg {
+      @extend %removePosition;
     }
   }
 }

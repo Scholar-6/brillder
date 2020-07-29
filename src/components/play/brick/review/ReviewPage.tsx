@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
 import update from "immutability-helper";
@@ -16,6 +16,7 @@ import { Moment } from "moment";
 import CountDown from "../baseComponents/CountDown";
 import { BrickLengthEnum } from "model/brick";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import { PlayMode } from "../model";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -27,6 +28,9 @@ interface ReviewPageProps {
   isPlayPreview?: boolean;
   updateAttempts(attempt: any, index: number): any;
   finishBrick(): void;
+
+  // only for real play
+  mode?: PlayMode;
 }
 
 const ReviewPage: React.FC<ReviewPageProps> = ({
@@ -94,22 +98,27 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     setActiveStep(update(activeStep, { $set: activeStep + 1 }));
 
     if (activeStep >= questions.length - 1) {
-      finishBrick();
-      if (props.isPlayPreview) {
-        history.push(`/play-preview/brick/${brickId}/ending`);
-      } else {
-        history.push(`/play/brick/${brickId}/ending`);
-      }
+      moveNext();
     }
   };
 
   const onEnd = () => {
+    moveNext();
+  }
 
+  const moveNext = () => {
+    finishBrick();
+    if (props.isPlayPreview) {
+      history.push(`/play-preview/brick/${brickId}/ending`);
+    } else {
+      history.push(`/play/brick/${brickId}/ending`);
+    }
   }
 
   const renderQuestion = (question: Question, index: number) => {
     return (
       <QuestionLive
+        mode={props.mode}
         attempt={attempts[index]}
         question={question}
         answers={answers[index]}
@@ -128,7 +137,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const renderQuestionContainer = (question: Question, index: number) => {
     let indexClassName = "question-index-container";
     const attempt = attempts[index];
-    if (attempt.correct) {
+    if (attempt && attempt.correct) {
       indexClassName += " correct";
     } else {
       indexClassName += " wrong";
@@ -140,15 +149,15 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         value={activeStep}
         dir={theme.direction}
       >
-				<div className="introduction-page">
-					<div className={indexClassName}>
-						<div className="question-index">{index + 1}</div>
-					</div>
-					<div className="question-live-play review-content">
-						<div className="question-title">{renderReviewTitle(attempt)}</div>
-						{renderQuestion(question, index)}
-					</div>
-				</div>
+        <div className="introduction-page">
+          <div className={indexClassName}>
+            <div className="question-index">{index + 1}</div>
+          </div>
+          <div className="question-live-play review-content">
+            <div className="question-title">{renderReviewTitle(attempt)}</div>
+            {renderQuestion(question, index)}
+          </div>
+        </div>
       </TabPanel>
     );
   };
@@ -158,16 +167,16 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       return "";
     }
     return (
-      <button className="play-preview svgOnHover play-white scale-07" onClick={prev}>
-      <svg className="svg w80 h80 svg-default m-r-02">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#arrow-left"} className="text-gray" />
-      </svg>
-      <svg className="svg w80 h80 colored m-r-02">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#arrow-left"} className="text-white" />
-      </svg>
-    </button>
+      <button className="play-preview svgOnHover play-white" onClick={prev}>
+        <svg className="svg w80 h80 svg-default m-r-02">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#arrow-left"} className="text-gray" />
+        </svg>
+        <svg className="svg w80 h80 colored m-r-02">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#arrow-left"} className="text-white" />
+        </svg>
+      </button>
     );
   };
 
@@ -175,21 +184,22 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     <div className="brick-container review-page">
       <Grid container direction="row">
         <Grid item sm={8} xs={12}>
-          <div className="introduction-page">
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={activeStep}
-              className="swipe-view"
-              onChangeIndex={handleStep}
-            >
-              {questions.map(renderQuestionContainer)}
-            </SwipeableViews>
-          </div>
+          <SwipeableViews
+            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={activeStep}
+            className="swipe-view"
+            onChangeIndex={handleStep}
+          >
+            {questions.map(renderQuestionContainer)}
+          </SwipeableViews>
         </Grid>
         <Grid item sm={4} xs={12}>
           <div className="introduction-info">
-            <CountDown brickLength={props.brickLength} onEnd={onEnd}/>
+            <CountDown brickLength={props.brickLength} endTime={null} setEndTime={()=>{}} onEnd={onEnd} />
             <div className="intro-text-row">
+              <Hidden only={['sm', 'md', 'lg', 'xl']}>
+                <span className="heading">Review</span>
+              </Hidden>
               <ReviewStepper
                 questions={questions}
                 attempts={attempts}
