@@ -1,12 +1,12 @@
-import React, {useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import './chooseOneBuild.scss';
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 import ChooseOneAnswerComponent from './ChooseOneAnswer';
-import {ChooseOneAnswer} from './types';
+import { ChooseOneAnswer } from './types';
 import { QuestionValueType, UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
-
+import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
 
 export interface ChooseOneData {
   list: ChooseOneAnswer[];
@@ -21,7 +21,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
 }) => {
   const [height, setHeight] = React.useState('0%');
   useEffect(() => calculateHeight());
-  const newAnswer = () => ({value: "", checked: false, valueFile: "" });
+  const newAnswer = () => ({ value: "", checked: false, valueFile: "" });
 
   if (!data.list) {
     data.list = [newAnswer(), newAnswer(), newAnswer()];
@@ -45,7 +45,7 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
     save();
   }
 
-  const onChecked = (event:any) => {
+  const onChecked = (event: any) => {
     if (locked) { return; }
     const index = event.target.value;
     for (let answer of state.list) {
@@ -77,25 +77,37 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
 
   let checkBoxValid = !!validator.getChecked(state.list);
 
+  const onBlur = (i: number) => {
+    let answerText = stripHtml(state.list[i].value);
+    let list = state.list as any;
+    for (let [index, item] of list.entries()) {
+      if (index !== i) {
+        let text = stripHtml(item.value)
+        if (answerText == text) {
+          console.log(55)
+        }
+      }
+    }
+  }
+
   return (
     <div className="choose-one-build unique-component">
-      <div className="component-title">
-        Tick Correct Answer
-      </div>
+      <div className="component-title">Tick Correct Answer</div>
       {
-        state.list.map((answer:any, i:number) => {
+        state.list.map((answer: any, i: number) => {
           return <ChooseOneAnswerComponent
             key={i}
             locked={locked}
             index={i}
             length={data.list.length}
             answer={answer}
-            save={save}
             checkBoxValid={checkBoxValid}
             validationRequired={validationRequired}
+            save={save}
             removeFromList={removeFromList}
             onChecked={onChecked}
             update={update}
+            onBlur={() => onBlur(i)}
           />
         })
       }
