@@ -10,4 +10,5 @@ export interface UniqueComponentProps {
   validationRequired: boolean;
   save(): void;
   updateComponent(component: any): void;
+  openSameAnswerDialog(): void;
 }

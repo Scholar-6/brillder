@@ -205,15 +205,33 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
   //region loading and setting bricks
 
-  delete(brickId: number) {
-    let { finalBricks } = this.state;
-    let brick = finalBricks.find((brick) => brick.id === brickId);
+  getBrickById(bricks: Brick[], brickId: number) {
+    return bricks.find(b => b.id === brickId);
+  }
+
+  removeBrickFromList(bricks: Brick[], brickId: number) {
+    let brick = this.getBrickById(bricks, brickId);
     if (brick) {
-      let index = finalBricks.indexOf(brick);
+      let index = bricks.indexOf(brick);
       if (index >= 0) {
-        finalBricks.splice(index, 1);
+        bricks.splice(index, 1);
       }
     }
+  }
+
+  delete(brickId: number) {
+    let { rawBricks, finalBricks } = this.state;
+    this.removeBrickFromList(finalBricks, brickId);
+    this.removeBrickFromList(rawBricks, brickId);
+
+    const {publish, draft, review} = this.state.threeColumns;
+    this.removeBrickFromList(publish.finalBricks, brickId);
+    this.removeBrickFromList(publish.rawBricks, brickId);
+    this.removeBrickFromList(draft.finalBricks, brickId);
+    this.removeBrickFromList(draft.rawBricks, brickId);
+    this.removeBrickFromList(review.finalBricks, brickId);
+    this.removeBrickFromList(review.rawBricks, brickId);
+
     this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
@@ -452,13 +470,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     if (filters.publish) {
       filteredBricks.push(...this.filterByStatus(bricks, BrickStatus.Publish));
     }
-
-    if (
-      !filters.draft &&
-      !filters.build &&
-      !filters.review &&
-      !filters.publish
-    ) {
+    if (!filters.draft && !filters.build && !filters.review && !filters.publish) {
       return bricks;
     }
     return filteredBricks;
@@ -530,7 +542,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           threeColumns
         });
       }, 1400);
-    }).catch((error) => {
+    }).catch(error => {
       this.setState({ ...this.state, failedRequest: true })
     });
   }

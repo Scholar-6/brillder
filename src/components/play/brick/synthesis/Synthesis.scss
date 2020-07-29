@@ -79,7 +79,6 @@
     }
 
     .question-live-play {
-
       @include phone_and_tabletP {
         padding: 4vw;
       }
@@ -88,7 +87,18 @@
 }
 
 .synthesis-content {
+  table {
+    color: var(--theme-dark-blue);
+  }
   @include desktop {
-    width: 53vw !important;
+    width: 46.5vw !important;
+  }
+}
+
+.sorted-row-expanded {
+  .synthesis-content {
+    @include desktop {
+      width: 53vw !important;
+    }
   }
 }

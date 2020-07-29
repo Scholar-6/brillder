@@ -1,4 +1,5 @@
 import React from 'react'
+
 import sprite from "../../../../../assets/img/icons-sprite.svg";
 import { QuestionComponentTypeEnum, Hint } from 'model/question';
 import TextComponent from './Text/Text'
@@ -27,6 +28,7 @@ export interface SwitchQuestionProps {
   updateComponent(component: any, index: number): void;
   setQuestionHint(hintState: HintState): void;
   removeComponent(componentIndex: number): void;
+  openSameAnswerDialog(): void;
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
@@ -34,6 +36,8 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   allDropBoxesEmpty, validationRequired,
   updateComponent, ...props
 }) => {
+  let InnerComponent = DropBox as any;
+
   const getNumberOfAnswers = (data: any) => {
     let count = 1;
     if (data.list && data.list.length) {
@@ -47,8 +51,6 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     updateComponent(component, index);
     props.saveBrick();
   }
-
-  let InnerComponent = DropBox as any;
 
   if (type === QuestionComponentTypeEnum.None) {
     return (
@@ -96,6 +98,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           save={props.saveBrick}
           validationRequired={validationRequired}
           updateComponent={updateComponent}
+          openSameAnswerDialog={props.openSameAnswerDialog}
         />
         <HintComponent
           index={props.questionIndex}
