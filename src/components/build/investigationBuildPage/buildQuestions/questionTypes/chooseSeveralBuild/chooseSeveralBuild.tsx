@@ -6,7 +6,7 @@ import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 import {ChooseOneAnswer} from '../chooseOneBuild/types';
 import { QuestionValueType } from '../types';
 import validator from '../../../questionService/UniqueValidator'
-import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
+import { showSameAnswerPopup } from '../service/questionBuild';
 
 export interface ChooseSeveralData {
   list: ChooseOneAnswer[];
@@ -83,19 +83,6 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
 
   let isChecked = !!validator.validateChooseSeveralChecked(state.list);
 
-  const onBlur = (i: number) => {
-    let answerText = stripHtml(state.list[i].value);
-    let list = state.list as any;
-    for (let [index, item] of list.entries()) {
-      if (index !== i && item.value) {
-        let text = stripHtml(item.value)
-        if (answerText === text) {
-          openSameAnswerDialog();
-        }
-      }
-    }
-  }
-
   return (
     <div className="choose-several-build unique-component">
       <div className="component-title">Tick Correct Answers</div>
@@ -113,7 +100,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
             removeFromList={removeFromList}
             onChecked={onChecked}
             update={update}
-            onBlur={() => onBlur(i)}
+            onBlur={() => showSameAnswerPopup(i, state.list, openSameAnswerDialog)}
           />
         })
       }
