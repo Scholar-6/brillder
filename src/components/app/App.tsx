@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -31,18 +31,20 @@ import AllUsersRoute from './AllUsersRoute';
 
 import BrickWrapper from './BrickWrapper';
 
-import {setBrillderTitle} from 'components/services/titleService';
-
+import { setBrillderTitle } from 'components/services/titleService';
+import { setupZendesk } from 'components/services/zendesk';
 
 
 const App: React.FC = (props: any) => {
   setBrillderTitle();
-  let history = useHistory();
+  const history = useHistory();
+  const location = useLocation();
+  const [zendeskCreated, setZendesk] = React.useState(false);
 
   axios.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    let {url} = error.response.config;
+    let { url } = error.response.config;
     if (url.search('/auth/login/') === -1) {
       history.push("/choose-login");
     }
@@ -67,26 +69,7 @@ const App: React.FC = (props: any) => {
     [],
   );
 
-  const addZendesk = () => {
-    var head = document.getElementsByTagName('head').item(0);
-    if (head) {
-
-      var script = document.createElement('script');
-      script.setAttribute('id', 'ze-snippet');
-      script.setAttribute('type', 'text/javascript');
-      script.setAttribute(
-        'src',
-        `https://static.zdassets.com/ekr/snippet.js?key=${
-          process.env.REACT_APP_ZENDESK_ID
-            ? process.env.REACT_APP_ZENDESK_ID
-            : '1415bb80-138f-4547-9798-3082b781844a'
-        }`
-      );
-      head.appendChild(script);
-    }
-  }
-
-  addZendesk();
+  setupZendesk(location, zendeskCreated, setZendesk);
 
   axios.interceptors.response.use(function (response) {
     return response;
