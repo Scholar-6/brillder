@@ -55,6 +55,9 @@ const QuestionComponents = ({
     setComponents(compsCopy);
   }
 
+  const hideSameAnswerDialog = () => setSameAnswerDialog(false);
+  const openSameAnswerDialog = () => setSameAnswerDialog(true);
+
   const removeInnerComponent = (componentIndex: number) => {
     if (locked) { return; }
     const comps = Object.assign([], components) as any[];
@@ -155,6 +158,7 @@ const QuestionComponents = ({
         setQuestionHint={setQuestionHint}
         updateComponent={updatingComponent}
         saveBrick={saveBrick}
+        openSameAnswerDialog={openSameAnswerDialog}
       />
     );
   }
@@ -169,10 +173,6 @@ const QuestionComponents = ({
   const hideDialog = () => {
     setDialog(false);
     setRemovedIndex(-1);
-  }
-
-  const hideSameAnswerDialog = () => {
-    setSameAnswerDialog(false);
   }
 
   let allDropBoxesEmpty = false;
@@ -233,17 +233,17 @@ const QuestionComponents = ({
       </Dialog>
       <Dialog
         open={sameAnswerDialogOpen}
-        onClose={hideSameAnswerDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         className="dialog-box"
+        onClose={hideSameAnswerDialog}
       >
         <div className="dialog-header">
           <div>Looks like these two answers are the same</div>
         </div>
         <div className="dialog-footer">
-          <button className="btn btn-md bg-gray yes-button" onClick={removeComponentType}>
-            <span>Ok</span>
+          <button className="btn btn-md bg-gray yes-button">
+            <span onClick={hideSameAnswerDialog}>Ok</span>
           </button>
         </div>
       </Dialog>

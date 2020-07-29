@@ -17,7 +17,7 @@ export interface ChooseOneBuildProps extends UniqueComponentProps {
 }
 
 const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
-  locked, data, validationRequired, save, updateComponent
+  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [height, setHeight] = React.useState('0%');
   useEffect(() => calculateHeight());
@@ -84,7 +84,8 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
       if (index !== i) {
         let text = stripHtml(item.value)
         if (answerText == text) {
-          console.log(55)
+          console.log('open dialog')
+          openSameAnswerDialog();
         }
       }
     }
