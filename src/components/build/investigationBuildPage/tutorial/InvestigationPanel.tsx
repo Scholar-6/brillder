@@ -1,8 +1,8 @@
 import React from 'react'
 import { Grid, Button } from '@material-ui/core';
-
 import './InvestigationPanel.scss';
-import {TutorialStep} from './TutorialPanelWorkArea';
+import sprite from "../../../../assets/img/icons-sprite.svg";
+import { TutorialStep } from './TutorialPanelWorkArea';
 
 
 export interface TutorialProps {
@@ -15,8 +15,11 @@ const InvestigationPanel: React.FC<TutorialProps> = (props) => {
     <div className="tutorial-investigation-panel">
       <div className="tutorial-step-1">
         <Grid container justify="center">
-          <div className="add-border">
-            <div className="add-icon"/>
+          <div className="add-icon border-animation">
+            <svg className="svg w100 h100 active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#plus"} className="text-theme-dark-blue" />
+            </svg>
           </div>
         </Grid>
         <p className="center">

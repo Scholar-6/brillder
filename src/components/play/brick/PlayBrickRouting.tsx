@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { Grid } from "@material-ui/core";
 // @ts-ignore
 import { connect } from "react-redux";
 
@@ -71,6 +70,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [startTime, setStartTime] = React.useState(undefined);
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const [mode, setMode] = React.useState(PlayMode.Normal);
+  const [liveEndTime, setLiveEndTime] = React.useState(null as any);
   const location = useLocation();
 
   // Commented this in order to allow students to also be builders and vice versa, we may need to add this back in (11/5/2020)
@@ -93,15 +93,25 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   /* TODO: extract all of this scoring code into a scoring service 13/6/2020*/
   const finishBrick = () => {
-    let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
+    let score = attempts.reduce((acc, answer) => {
+      if (answer && answer.marks >= 0) {
+        return acc + answer.marks;
+      }
+      return acc;
+    }, 0);
     /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
     is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
-    let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
+    let maxScore = attempts.reduce((acc, answer) => {
+      if (answer && answer.maxMarks) {
+        return acc + answer.maxMarks;
+      }
+      return acc;
+    }, 0);
     var ba: BrickAttempt = {
       brick: brick,
       score: score,
       maxScore: maxScore,
-      student: null,
+      student: null,  
       answers: attempts,
     };
     setStatus(PlayStatus.Review);
@@ -111,11 +121,20 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const finishReview = () => {
-    let score =
-      reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0) +
-      brickAttempt.score;
+    let reviewScore = reviewAttempts.reduce((acc, answer) => {
+      if (answer && answer.marks >= 0) {
+        return acc + answer.marks;
+      }
+      return acc;
+    }, 0);
+    let score = reviewScore + brickAttempt.score;
     let maxScore = reviewAttempts.reduce(
-      (acc, answer) => acc + answer.maxMarks,
+      (acc, answer) => {
+        if (answer && answer.maxMarks >= 0) {
+          return acc + answer.maxMarks
+        }
+        return acc;
+      },
       0
     );
     var ba: BrickAttempt = {
@@ -186,22 +205,30 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       <Switch>
         <Route exac path="/play/brick/:brickId/intro">
           <Introduction
-            onHighlight={onHighlight}
+            location={props.location}
             mode={mode}
             brick={brick}
             startTime={startTime}
             setStartTime={setStartTime}
             moveNext={moveToLive}
+            onHighlight={onHighlight}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/live">
           <Live
+            mode={mode}
             status={status}
             attempts={attempts}
             questions={brick.questions}
             brick={brick}
             updateAttempts={updateAttempts}
             finishBrick={finishBrick}
+            endTime={liveEndTime}
+            setEndTime={time => {
+              if (liveEndTime === null) {
+                setLiveEndTime(time);
+              }
+            }}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/provisionalScore">
@@ -217,6 +244,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route exac path="/play/brick/:brickId/review">
           <Review
+            mode={mode}
             status={status}
             questions={brick.questions}
             brickId={brick.id}

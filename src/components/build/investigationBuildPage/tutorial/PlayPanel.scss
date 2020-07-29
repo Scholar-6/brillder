@@ -16,37 +16,31 @@
       .icons-row {
         margin-top: 2vw;
         height: 10vw;
+        @extend %flexCenter;
         .icon-container {
-          height: 100%;
-          width: auto;
-
-          .edit-icon {
-            height: 5vw;
-          }
-          .add-icon {
-            height: 6.5vw;
-          }
-          .synthesis-icon {
-            height: 4vw;
-            margin: 0 0.5vw;
-          }
-          .play-icon {
-            margin-left: 0.5vw;
-            height: 6.5vw;
+          @extend %flexCenter;
+          width: 5vw;
+          height: 5vw;
+          margin: 0 0.7vw 0 0;
+          &.play-icon {
             border-radius: 100vw;
-            padding-left: 2.2vw;
-            padding-right: 0.8vw;
-            padding-top: 1.5vw;
-            padding-bottom: 1.5vw;
             background: var(--theme-green);
+            .svg {
+              margin-left: 0.3vw;
+            }
           }
-          .dashed-line {
-            width: 5vw;
-            border-style: none none dashed;
-            border-width: 0.1vw;
+          &.dashed-line {
+            margin: 0;
+            div {
+              width: 5vw;
+              height: 1px;
+              border-bottom: 0.2vw dashed var(--gray);
+            }
           }
-          .arrow-icon {
-            height: 0.8vw;
+          &.arrow-icon {
+            width: 2vw;
+            height: 2vw;
+            margin: 0;
           }
         }
       }

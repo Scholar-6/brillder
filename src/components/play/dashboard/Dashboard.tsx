@@ -89,7 +89,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         finalBricks: res.data as Brick[],
       });
     }).catch((error) => {
-      alert("Can`t get bricks");
+      this.setState({ ...this.state, failedRequest: true });
     });
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
@@ -97,7 +97,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     }).then((res) => {
       this.setState({ ...this.state, subjects: res.data });
     }).catch((error) => {
-      alert("Can`t get bricks");
+      this.setState({ ...this.state, failedRequest: true });
     });
 
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
@@ -330,16 +330,15 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       )
       .then((res) => {
         this.hideBricks();
-        const searchBricks = res.data.map((brick: any) => brick.body);
         this.setState({
           ...this.state,
-          searchBricks,
-          finalBricks: searchBricks,
+          searchBricks: res.data,
+          finalBricks: res.data,
           isSearching: true,
         });
       })
       .catch((error) => {
-        alert("Can`t get bricks");
+        this.setState({ ...this.state, failedRequest: true });
       });
   }
 
@@ -564,18 +563,16 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   render() {
     const { history } = this.props;
     return (
-      <div className="dashboard-page">
+      <div className="main-listing dashboard-page">
         {this.renderMobileGlassIcon()}
-        <div className="upper-part">
-          <PageHeadWithMenu
-            page={PageEnum.ViewAll}
-            user={this.props.user}
-            placeholder={"Search Ongoing Projects & Published Bricks…"}
-            history={this.props.history}
-            search={() => this.search()}
-            searching={v => this.searching(v)}
-          />
-        </div>
+        <PageHeadWithMenu
+          page={PageEnum.ViewAll}
+          user={this.props.user}
+          placeholder={"Search Ongoing Projects & Published Bricks…"}
+          history={this.props.history}
+          search={() => this.search()}
+          searching={v => this.searching(v)}
+        />
         <Hidden only={["sm", "md", "lg", "xl"]}>
           <div className="mobile-scroll-bricks">
             {this.renderMobileUpperBricks()}
@@ -597,7 +594,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               <div className="brick-row-title">
                 ALL BRICKS
               </div>
-              <PublicCoreToggle />
+              <PublicCoreToggle isCore={true} />
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>

@@ -17,6 +17,8 @@ import { Brick } from "model/brick";
 import LiveStepper from "./LiveStepper";
 import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";
 import PulsingCircleNumber from "./PulsingCircleNumber";
+import { PlayMode } from "../model";
+import { Moment } from 'moment';
 
 interface LivePageProps {
   status: PlayStatus;
@@ -27,6 +29,13 @@ interface LivePageProps {
   previewQuestionIndex?: number;
   updateAttempts(attempt: any, index: number): any;
   finishBrick(): void;
+
+  // things related to count down
+  endTime: any;
+  setEndTime(time: Moment): void;
+
+  // only for real play
+  mode?: PlayMode;
 }
 
 const LivePage: React.FC<LivePageProps> = ({
@@ -87,10 +96,17 @@ const LivePage: React.FC<LivePageProps> = ({
     setAnswers(copyAnswers);
   };
 
-  const prev = () => handleStep(activeStep - 1)();
+  const prev = () => {
+    if (activeStep === 0) {
+      moveToPrep();
+    } else {
+      handleStep(activeStep - 1)();
+    }
+  }
 
   const nextFromShuffle = () => {
     setShuffleDialog(false);
+    onQuestionAttempted(activeStep);
 
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
@@ -109,13 +125,7 @@ const LivePage: React.FC<LivePageProps> = ({
     handleStep(activeStep + 1)();
     questions[activeStep].edited = false;
     if (activeStep >= questions.length - 1) {
-      questions.forEach((question) => (question.edited = false));
-      props.finishBrick();
-      if (props.isPlayPreview) {
-        history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
-      } else {
-        history.push(`/play/brick/${brick.id}/provisionalScore`);
-      }
+      moveNext();
     }
   };
 
@@ -134,17 +144,24 @@ const LivePage: React.FC<LivePageProps> = ({
     }
     handleStep(activeStep + 1)();
     if (activeStep >= questions.length - 1) {
-      questions.forEach((question) => (question.edited = false));
-      props.finishBrick();
-      if (props.isPlayPreview) {
-        history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
-      } else {
-        history.push(`/play/brick/${brick.id}/provisionalScore`);
-      }
+      moveNext();
     }
   };
 
-  const onEnd = () => setTimeover(true);
+  const onEnd = () => {
+    setTimeover(true);
+    moveNext();
+  }
+
+  const moveNext = () => {
+    questions.forEach((question) => (question.edited = false));
+    props.finishBrick();
+    if (props.isPlayPreview) {
+      history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
+    } else {
+      history.push(`/play/brick/${brick.id}/provisionalScore`);
+    }
+  }
 
   const onQuestionAttempted = (questionIndex: number) => {
     if (!questions[questionIndex].edited) {
@@ -156,6 +173,7 @@ const LivePage: React.FC<LivePageProps> = ({
   const renderQuestion = (question: Question, index: number) => {
     return (
       <QuestionLive
+        mode={props.mode}
         isTimeover={isTimeover}
         question={question}
         answers={answers[index]}
@@ -189,19 +207,16 @@ const LivePage: React.FC<LivePageProps> = ({
   };
 
   const renderPrevButton = () => {
-    if (activeStep === 0) {
-      return "";
-    }
     return (
       <button
-        className="play-preview svgOnHover play-white scale-07"
+        className="play-preview svgOnHover play-white"
         onClick={prev}
       >
-        <svg className="svg w80 h80 svg-default m-r-02">
+        <svg className="svg w80 h80 svg-default m-0">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#arrow-left"} className="text-gray" />
         </svg>
-        <svg className="svg w80 h80 colored m-r-02">
+        <svg className="svg w80 h80 colored m-0">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#arrow-left"} className="text-white" />
         </svg>
@@ -209,61 +224,90 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   };
 
+  const moveToPrep = () => {
+    if (props.isPlayPreview) {
+      history.push(`/play-preview/brick/${brick.id}/intro?prepExtanded=true`);
+    } else {
+      history.push(`/play/brick/${brick.id}/intro?prepExtanded=true`);
+    }
+  }
+
+  const renderStepper = () => {
+    return (
+      <LiveStepper
+        activeStep={activeStep}
+        questions={questions}
+        previousStep={prevStep}
+        handleStep={handleStep}
+        moveToPrep={moveToPrep}
+      />
+    );
+  }
+
+  const renderNextButton = () => {
+    return (
+      <button
+        type="button"
+        className="play-preview svgOnHover play-green"
+        onClick={next}
+      >
+        <svg className="svg w80 h80 active m-l-02">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#arrow-right"} />
+        </svg>
+      </button>
+    );
+  }
+
+  const renderFooter = () => {
+    return (
+      <div className="action-footer">
+        <div>{renderPrevButton()}</div>
+        <div className="direction-info">
+          <h2>Next</h2>
+          <span>Don’t panic, you can <br /> always come back</span>
+        </div>
+        <div>
+          {renderNextButton()}
+        </div>
+      </div>
+    );
+  }
+
+  const renderCountDown = () => {
+    return (
+      <CountDown
+        isLive={true}
+        onEnd={onEnd}
+        endTime={props.endTime}
+        brickLength={brick.brickLength}
+        setEndTime={props.setEndTime}
+      />
+    );
+  }
+
   return (
     <div className="brick-container live-page">
       <Hidden only={["xs"]}>
         <Grid container direction="row">
           <Grid item xs={8}>
-            <div className="introduction-page">
-              <SwipeableViews
-                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-                index={activeStep}
-                className="swipe-view"
-                style={{ width: "100%" }}
-                onChangeIndex={handleStep}
-              >
-                {questions.map(renderQuestionContainer)}
-              </SwipeableViews>
-            </div>
+            <SwipeableViews
+              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+              index={activeStep}
+              className="swipe-view"
+              style={{ width: "100%" }}
+              onChangeIndex={handleStep}
+            >
+              {questions.map(renderQuestionContainer)}
+            </SwipeableViews>
           </Grid>
           <Grid item xs={4}>
             <div className="introduction-info">
-              <CountDown
-                isLive={true}
-                onEnd={onEnd}
-                brickLength={brick.brickLength}
-              />
+              {renderCountDown()}
               <div className="intro-text-row">
-                <LiveStepper
-                  activeStep={activeStep}
-                  questions={questions}
-                  previousStep={prevStep}
-                  handleStep={handleStep}
-                />
+                {renderStepper()}
               </div>
-              <div className="action-footer">
-                <div>{renderPrevButton()}</div>
-                <div className="direction-info">
-                  <h2>Next</h2>
-                  <span>
-                    Don’t panic, you can
-                    <br />
-                    always come back
-                  </span>
-                </div>
-                <div>
-                  <button
-                    type="button"
-                    className="play-preview svgOnHover play-green"
-                    onClick={next}
-                  >
-                    <svg className="svg w80 h80 active m-l-02">
-                      {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#arrow-right"} />
-                    </svg>
-                  </button>
-                </div>
-              </div>
+              {renderFooter()}
             </div>
           </Grid>
         </Grid>
@@ -271,45 +315,12 @@ const LivePage: React.FC<LivePageProps> = ({
 
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="introduction-info">
-          <CountDown
-            isLive={true}
-            onEnd={onEnd}
-            brickLength={brick.brickLength}
-          />
+          {renderCountDown()}
           <div className="intro-text-row">
-            <Hidden only={["sm", "md", "lg", "xl"]}>
-              <span className="heading">Investigation</span>
-            </Hidden>
-            <LiveStepper
-              activeStep={activeStep}
-              questions={questions}
-              previousStep={prevStep}
-              handleStep={handleStep}
-            />
+            <span className="heading">Investigation</span>
+            {renderStepper()}
           </div>
-          <div className="action-footer">
-            <div>{renderPrevButton()}</div>
-            <div className="direction-info">
-              <h2>Next</h2>
-              <span>
-                Don’t panic, you can
-                <br />
-                always come back
-              </span>
-            </div>
-            <div>
-              <button
-                type="button"
-                className="play-preview svgOnHover play-green"
-                onClick={next}
-              >
-                <svg className="svg active m-l-02">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#arrow-right"} />
-                </svg>
-              </button>
-            </div>
-          </div>
+          {renderFooter()}
         </div>
         <div className="introduction-page">
           <SwipeableViews
@@ -322,7 +333,6 @@ const LivePage: React.FC<LivePageProps> = ({
             {questions.map(renderQuestionContainer)}
           </SwipeableViews>
         </div>
-
       </Hidden>
       <ShuffleAnswerDialog
         isOpen={isShuffleOpen}

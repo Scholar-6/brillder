@@ -19,12 +19,16 @@
     }
   }
   .stepper {
-    @include phone_and_tabletP{
+    @include phone_and_tabletP {
       flex-direction: row !important;
     }
     .step {
       color: var(--theme-dark-blue) !important;
+      @include phone_and_tabletP {
+        font-size: 5vw !important;
+      }
       svg {
+        @extend %removePosition;
         @include phone_and_tabletP {
           height: 4vw !important;
           width: 4vw !important;
@@ -42,25 +46,18 @@
       height: 90vh;
       overflow: hidden !important;
     }
-
-    h1 {
-      position: absolute !important;
-      top: 0.2vw !important;
-      left: 2.5vw;
+    .intro-text-row {
+      position: relative;
     }
     .question-index-container {
+      position: absolute;
       width: 7vw !important;
       height: 7vw !important;
+      top: 3vw;
       .question-index {
         width: 7vw !important;
         height: 7vw !important;
         font-size: 6vw !important;
-      }
-    }
-    .action-footer {
-      @include phone_and_tabletP {
-        position: absolute !important;
-        right: 0;
       }
     }
     .question-live-play {

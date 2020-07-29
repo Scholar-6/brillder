@@ -218,7 +218,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     );
   }
 
-  handleSortChange = (e: any) => {};
+  handleSortChange = (e: any) => { };
 
   getCheckedRoles() {
     const result = [];
@@ -452,13 +452,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
               </span>
             </div>
           </Grid>
-          <Grid
-            container
-            item
-            xs={4}
-            justify="center"
-            className="bottom-next-button"
-          >
+          <Grid item xs={4} className="bottom-next-button">
             <div>
               {showPrev ? (
                 <button
@@ -474,8 +468,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                   </svg>
                 </button>
               ) : (
-                ""
-              )}
+                  ""
+                )}
               {showNext ? (
                 <button
                   className={
@@ -490,8 +484,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                   </svg>
                 </button>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </div>
           </Grid>
         </Grid>
@@ -643,17 +637,15 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   render() {
     const { history } = this.props;
     return (
-      <div className="user-list-page">
-        <div className="upper-part">
-          <PageHeadWithMenu
-            page={PageEnum.ManageUsers}
-            placeholder="Search by Name, Email or Subject"
-            user={this.props.user}
-            history={history}
-            search={() => this.search()}
-            searching={(v: string) => this.searching(v)}
-          />
-        </div>
+      <div className="main-listing user-list-page">
+        <PageHeadWithMenu
+          page={PageEnum.ManageUsers}
+          placeholder="Search by Name, Email or Subject"
+          user={this.props.user}
+          history={history}
+          search={() => this.search()}
+          searching={(v: string) => this.searching(v)}
+        />
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
             {this.renderSortAndFilterBox()}

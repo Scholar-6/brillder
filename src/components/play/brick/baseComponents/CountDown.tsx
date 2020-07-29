@@ -4,12 +4,16 @@ import "./BrickCounter.scss";
 import CounterDown from "./CounterDown";
 import { BrickLengthEnum } from "model/brick";
 import Clock from "./Clock";
+import { Moment } from 'moment';
 const moment = require("moment");
+// TODO: try combining this into import { Moment }, * as moment from 'moment';
 
 interface CounterProps {
   isLive?: boolean;
   brickLength: BrickLengthEnum;
+  endTime: any;
   onEnd(): void;
+  setEndTime(time: Moment): void;
 }
 
 const CountDown: React.FC<CounterProps> = (props) => {
@@ -33,16 +37,28 @@ const CountDown: React.FC<CounterProps> = (props) => {
     return moment.duration(durationMins, "minutes");
   }
 
-  let duration = {};
-  if (props.isLive) {
-    duration = getLiveDuration();
-  } else {
-    duration = getReviewDuration();
+  const getEndTime = () => {
+    let duration = {};
+    if (props.isLive) {
+      duration = getLiveDuration();
+    } else {
+      duration = getReviewDuration();
+    }
+
+    const endTime = moment().add(duration);
+    props.setEndTime(endTime);
+    return endTime;
+  }
+
+  let {endTime} = props;
+
+  if (!props.endTime) {
+    endTime = getEndTime();
   }
 
   return (
     <div className="intro-header">
-      <CounterDown onEnd={props.onEnd} duration={duration} />
+      <CounterDown onEnd={props.onEnd} endTime={endTime} />
       <Clock brickLength={props.brickLength} />
     </div>
   );

@@ -6,7 +6,6 @@ import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
 import { PlayStatus } from '../model/model';
 import { BrickLengthEnum } from 'model/brick';
-import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import sprite from "../../../../assets/img/icons-sprite.svg";
 import { PlayMode } from '../model';
@@ -56,7 +55,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   const renderFooter = () => {
     return (
       <div className="action-footer">
-        <div>&nbsp;</div>
+        <div></div>
         <div className="direction-info">
           <h2>Review</h2>
         </div>
