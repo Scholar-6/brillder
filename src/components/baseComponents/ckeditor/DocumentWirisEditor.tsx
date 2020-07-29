@@ -134,7 +134,7 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
 
   render() {
     let config = {
-      extraPlugins: [UploadImageCustom, CommentCustom],
+      extraPlugins: [UploadImageCustom],
       plugins: [
         Essentials,
         Paragraph,
@@ -177,7 +177,6 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
         "chemType",
         "bulletedList",
         "numberedList",
-        "addComment",
       ],
       mediaEmbed: { previewsInData: true },
       comments: { commentOnly: this.props.editOnly ?? false },
