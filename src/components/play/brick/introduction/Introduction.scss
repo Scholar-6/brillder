@@ -563,7 +563,10 @@ $play-mobile-height: calc(100vh - 55.8vw);
               &.current {
                 color: var(--theme-dark-blue);
               }
-              .svg {
+              > span {
+                width: 3vw;
+              }
+              > .svg {
                 stroke-width: 2.5;
                 width: 1.5vw;
                 height: 1.5vw;
@@ -757,7 +760,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
             .stepper {
               .step {
                 color: var(--theme-dark-blue) !important;
-
                 .svg {
                   @extend %removePosition;
                 }
