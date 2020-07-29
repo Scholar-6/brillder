@@ -9,6 +9,12 @@ import Box from '@material-ui/core/Box';
 
 import { green } from '@material-ui/core/colors';
 import CommentItem from './CommentItem';
+import { ReduxCombinedState } from 'redux/reducers';
+// @ts-ignore
+import { connect } from 'react-redux';
+import comments from 'redux/actions/comments';
+import { Comment } from 'model/comments';
+import { Brick } from 'model/brick';
 
 const PreviewButton = withStyles((theme: Theme) => ({
     root: {
@@ -29,7 +35,18 @@ const ScrollGrid = withStyles({
     }
 })(Grid);
 
-const CommentPanel: React.FC = () => {
+interface CommentPanelProps {
+    comments: Comment[];
+    currentBrick: Brick;
+    getComments(brickId: number): void;
+}
+
+const CommentPanel: React.FC<CommentPanelProps> = props => {
+    if(!props.comments) {
+        props.getComments(props.currentBrick.id);
+        return <div>Loading comments...</div>;
+    }
+
     return (
     <Box marginLeft={3} bgcolor="#e4e7f0" height="100%" clone>
         <Grid container direction="column" alignItems="stretch">
@@ -40,13 +57,24 @@ const CommentPanel: React.FC = () => {
                 <PreviewButton disableElevation>PREVIEW</PreviewButton>
             </Grid>
             <ScrollGrid item container direction="column">
-                <CommentItem text="This is a comment!" />
-                <CommentItem text="This is another comment!" />
-                <CommentItem text="I think you should probably change this..." />
+                {props.comments.map(comment => (
+                <CommentItem text={comment.text} timestamp={comment.timestamp} />
+                ))}
             </ScrollGrid>
         </Grid>
     </Box>
     );
 };
 
-export default CommentPanel;
+const mapState = (state: ReduxCombinedState) => ({
+    comments: state.comments.comments,
+    currentBrick: state.brick.brick
+});
+
+const mapDispatch = (dispatch: any) => ({
+    getComments: (brickId: number) => dispatch(comments.getComments(brickId))
+});
+
+const connector = connect(mapState, mapDispatch);
+
+export default connector(CommentPanel);
