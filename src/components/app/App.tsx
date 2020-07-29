@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -32,12 +32,14 @@ import AllUsersRoute from './AllUsersRoute';
 import BrickWrapper from './BrickWrapper';
 
 import { setBrillderTitle } from 'components/services/titleService';
-
+import { setupZendesk } from 'components/services/zendesk';
 
 
 const App: React.FC = (props: any) => {
   setBrillderTitle();
-  let history = useHistory();
+  const history = useHistory();
+  const location = useLocation();
+  const [zendeskCreated, setZendesk] = React.useState(false);
 
   axios.interceptors.response.use(function (response) {
     return response;
@@ -67,51 +69,7 @@ const App: React.FC = (props: any) => {
     [],
   );
 
-  const addZendesk = () => {
-    var head = document.getElementsByTagName('head').item(0);
-    if (head) {
-
-      var script = document.createElement('script');
-      script.setAttribute('id', 'ze-snippet');
-      script.setAttribute('type', 'text/javascript');
-      script.setAttribute(
-        'src',
-        `https://static.zdassets.com/ekr/snippet.js?key=${
-        process.env.REACT_APP_ZENDESK_ID
-          ? process.env.REACT_APP_ZENDESK_ID
-          : '1415bb80-138f-4547-9798-3082b781844a'
-        }`
-      );
-      head.appendChild(script);
-    }
-
-    const minimizeZendeskButton = (iframe: any) => {
-      var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-      let button = innerDoc.getElementsByTagName("button")[0];
-      button.style.padding = "1rem";
-      let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
-      console.log(btnContent)
-      btnContent.style.padding = 0;
-      let helpText = innerDoc.getElementsByClassName("label-3kk12");
-      helpText[0].style.opacity = 0;
-      helpText[0].style.width = 0;
-    }
-
-    // check untill zendesk is mounted
-    let interval = setInterval(() => {
-      var iframe = document.getElementById("launcher") as any;
-      if (iframe) {
-        try {
-          minimizeZendeskButton(iframe);
-          clearInterval(interval);
-        } catch {
-          console.log('can`t get zendesk element');
-        }
-      }
-    }, 100)
-  }
-
-  addZendesk();
+  setupZendesk(location, zendeskCreated, setZendesk);
 
   axios.interceptors.response.use(function (response) {
     return response;
