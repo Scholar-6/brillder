@@ -57,6 +57,7 @@
     "react-animate-height": "^2.0.20",
     "react-animations": "^1.0.0",
     "react-circular-progressbar": "^2.0.3",
+    "react-device-detect": "^1.13.1",
     "react-dom": "^16.12.0",
     "react-dropzone": "^10.2.2",
     "react-image-crop": "^8.5.0",
