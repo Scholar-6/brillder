@@ -84,7 +84,6 @@ const ChooseOneBuildComponent: React.FC<ChooseOneBuildProps> = ({
       if (index !== i) {
         let text = stripHtml(item.value)
         if (answerText == text) {
-          console.log('open dialog')
           openSameAnswerDialog();
         }
       }
