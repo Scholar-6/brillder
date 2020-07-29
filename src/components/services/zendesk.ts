@@ -49,9 +49,8 @@ const isManageUsersPage = (pathName: string) => pathName === "/users";
  * @param location Location - button size changing based on route
  */
 function setZendeskMode(iframe: any, location: any) {
-  if (isMobile) {
-    return;
-  } 
+  if (isMobile) { return; }
+  iframe.style.width = '108px';
   // #1332 small mode only in viewAll and manageUsers pages
   let isBigMode = true;
   const {pathname} = location;
