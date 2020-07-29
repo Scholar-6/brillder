@@ -82,11 +82,13 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
 
   let isChecked = !!validator.validateChooseSeveralChecked(state.list);
 
+  const onBlur = () => {
+
+  }
+
   return (
     <div className="choose-several-build unique-component">
-      <div className="component-title">
-        Tick Correct Answers
-      </div>
+      <div className="component-title">Tick Correct Answers</div>
       {
         state.list.map((answer:any, i:number) => {
           return <ChooseOneAnswerComponent
@@ -101,6 +103,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
             removeFromList={removeFromList}
             onChecked={onChecked}
             update={update}
+            onBlur={onBlur}
           />
         })
       }
