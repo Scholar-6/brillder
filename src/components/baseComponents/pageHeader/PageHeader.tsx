@@ -59,7 +59,7 @@ class PageHeader extends Component<UsersListProps, MyState> {
   renderBellButton(notificationCount: any) {
     return (
       <div className="header-btn bell-button svgOnHover" onClick={(evt) => this.props.showNotifications(evt)}>
-        <svg id="bell" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <svg id="bell" viewBox="0 0 24 24">
           <path className="bell-cup" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
           <path d="M13.73 21a2 2 0 0 1-3.46 0" />
         </svg>
