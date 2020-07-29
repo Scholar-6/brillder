@@ -159,39 +159,41 @@ const Proposal: React.FC<ProposalProps> = ({ brick, history, ...props }) => {
 
   return (
     <MuiThemeProvider>
-      <HomeButton onClick={openDialog} />
-      <div style={{ width: '100%', height: '100%' }} className="proposal-router">
-        <Route path='/build/new-brick/subject'>
-          <SubjectPage subjects={props.user.subjects} subjectId={''} saveSubject={setSubject} />
-        </Route>
-        <Route path='/build/new-brick/brick-title'>
-          <BrickTitle parentState={state} canEdit={canEdit} saveTitles={setTitles} />
-        </Route>
-        <Route path='/build/new-brick/open-question'>
-          <OpenQuestion selectedQuestion={state.openQuestion} canEdit={canEdit} saveOpenQuestion={setOpenQuestion} />
-        </Route>
-        <Route path='/build/new-brick/brief'>
-          <Brief parentBrief={state.brief} canEdit={canEdit} saveBrief={setBrief} />
-        </Route>
-        <Route path='/build/new-brick/prep'>
-          <Prep parentPrep={state.prep} canEdit={canEdit} savePrep={setPrep} />
-        </Route>
-        <Route path='/build/new-brick/length'>
-          <BrickLength length={state.brickLength} canEdit={canEdit} saveLength={setLength} saveBrick={setLengthAndSave} />
-        </Route>
-        <Route path="/build/new-brick/proposal">
-          <ProposalReview
-            brick={state}
-            history={history}
-            canEdit={canEdit}
-            user={props.user}
-            setBrickField={setBrickField}
-            saveBrick={saveAndMove}
-          />
-        </Route>
-        <VersionLabel />
+      <div>
+        <HomeButton onClick={openDialog} />
+        <div style={{ width: '100%', height: '100%' }} className="proposal-router">
+          <Route path='/build/new-brick/subject'>
+            <SubjectPage subjects={props.user.subjects} subjectId={''} saveSubject={setSubject} />
+          </Route>
+          <Route path='/build/new-brick/brick-title'>
+            <BrickTitle parentState={state} canEdit={canEdit} saveTitles={setTitles} />
+          </Route>
+          <Route path='/build/new-brick/open-question'>
+            <OpenQuestion selectedQuestion={state.openQuestion} canEdit={canEdit} saveOpenQuestion={setOpenQuestion} />
+          </Route>
+          <Route path='/build/new-brick/brief'>
+            <Brief parentBrief={state.brief} canEdit={canEdit} saveBrief={setBrief} />
+          </Route>
+          <Route path='/build/new-brick/prep'>
+            <Prep parentPrep={state.prep} canEdit={canEdit} savePrep={setPrep} />
+          </Route>
+          <Route path='/build/new-brick/length'>
+            <BrickLength length={state.brickLength} canEdit={canEdit} saveLength={setLength} saveBrick={setLengthAndSave} />
+          </Route>
+          <Route path="/build/new-brick/proposal">
+            <ProposalReview
+              brick={state}
+              history={history}
+              canEdit={canEdit}
+              user={props.user}
+              setBrickField={setBrickField}
+              saveBrick={saveAndMove}
+            />
+          </Route>
+          <VersionLabel />
+        </div>
+        <CloseProposalDialog isOpen={isDialogOpen} close={closeDialog} move={goHome} />
       </div>
-      <CloseProposalDialog isOpen={isDialogOpen} close={closeDialog} move={goHome} />
     </MuiThemeProvider>
   );
 }
