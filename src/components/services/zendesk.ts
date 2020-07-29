@@ -1,3 +1,4 @@
+import { isMobile } from "react-device-detect";
 
 function minimizeZendeskButton(iframe: any) {
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -48,6 +49,9 @@ const isManageUsersPage = (pathName: string) => pathName === "/users";
  * @param location Location - button size changing based on route
  */
 function setZendeskMode(iframe: any, location: any) {
+  if (isMobile) {
+    return;
+  } 
   // #1332 small mode only in viewAll and manageUsers pages
   let isBigMode = true;
   const {pathname} = location;
