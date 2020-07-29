@@ -37,7 +37,7 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
 
     // check pulsing
     if (this.isValid(user)) {
-      if (this.state.isValid == false && this.state.shouldPulse === false) {
+      if (this.state.isValid === false && this.state.shouldPulse === false) {
         this.setState({ shouldPulse: true });
         return true;
       }

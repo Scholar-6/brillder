@@ -19,7 +19,7 @@
     padding-left: 24%;
     font-family: $font-family-regular;
     margin-left: 7.5%;
-    margin-bottom: 7.5%;
+    margin-bottom: 2vh;
     width: 85%;
     font-size: 1vw;
     line-height: 1.1;
@@ -54,6 +54,7 @@
   }
 
   button.correct {
+    color: var(--white);
     background: var(--theme-green);
     .MuiAvatar-root {
       color: var(--theme-green);
