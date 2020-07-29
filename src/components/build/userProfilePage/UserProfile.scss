@@ -73,10 +73,17 @@
         svg {
           height: 1.9vw;
           width: 1.9vw;
+          color: var(--theme-dark-blue);
           @include phone_and_tabletP {
             height: 5vw;
             width: 5vw;
           }
+        }
+      }
+      .save-image.valid {
+        background: var(--theme-green);
+        svg {
+          color: var(--white);
         }
       }
     }
