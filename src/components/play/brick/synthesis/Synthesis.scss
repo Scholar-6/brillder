@@ -87,6 +87,9 @@
 }
 
 .synthesis-content {
+  table {
+    color: var(--theme-dark-blue);
+  }
   @include desktop {
     width: 46.5vw !important;
   }
