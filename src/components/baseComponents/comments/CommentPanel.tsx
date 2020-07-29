@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import comments from 'redux/actions/comments';
 import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
+import CommentChild from './CommentChild';
 
 const PreviewButton = withStyles((theme: Theme) => ({
     root: {
@@ -58,7 +59,11 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
             </Grid>
             <ScrollGrid item container direction="column">
                 {props.comments.map(comment => (
-                <CommentItem text={comment.text} timestamp={comment.timestamp} />
+                <CommentItem text={comment.text} timestamp={comment.timestamp}>
+                    {comment.children.map(child => (
+                        <CommentChild text={comment.text} timestamp={comment.timestamp} />
+                    ))}
+                </CommentItem>
                 ))}
             </ScrollGrid>
         </Grid>

@@ -1,8 +1,10 @@
 import React from 'react';
-import { Grid, Card, CardContent, Box, Typography, SvgIcon } from '@material-ui/core';
+import { Grid, Box, SvgIcon } from '@material-ui/core';
 
 import sprite from "assets/img/icons-sprite.svg";
 import { withStyles } from '@material-ui/styles';
+
+import { CommentChildProps } from './CommentChild';
 
 import moment from 'moment';
 
@@ -17,7 +19,7 @@ const Stretch = withStyles({
     }
 })(Grid);
 
-const CommentItem: React.FC<CommentItemProps> = ({ text, timestamp }) => {
+const CommentItem: React.FC<CommentItemProps> = props => {
     return (
     <Grid item>
         <Box marginX={2} marginY={2} padding={2} borderRadius={15} bgcolor="#ffffff">
@@ -40,11 +42,17 @@ const CommentItem: React.FC<CommentItemProps> = ({ text, timestamp }) => {
                     </SvgIcon>
                 </Grid>
                 <Grid item>
-                    <h5 style={{ marginBottom: "10px" }}>{moment(timestamp).format("H:mm D MMM")}</h5>
+                    <h5 style={{ marginBottom: "10px" }}>{moment(props.timestamp).format("H:mm D MMM")}</h5>
                 </Grid>
                 <Grid item>
-                    <b>Comment: </b><i>{text}</i>
+                    <b>Comment: </b><i>{props.text}</i>
                 </Grid>
+                {props.children && props.children instanceof Array && props.children.length != 0 &&
+                <Box borderTop="1px solid lightgrey" paddingTop={1} marginTop={1} clone>
+                    <Grid item container>
+                        {props.children}
+                    </Grid>
+                </Box>}
             </Grid>
         </Box>
     </Grid>
