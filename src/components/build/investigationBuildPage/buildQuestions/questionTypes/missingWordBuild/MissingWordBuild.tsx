@@ -5,10 +5,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import './MissingWordBuild.scss'
-import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import sprite from "../../../../../../assets/img/icons-sprite.svg";
 import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
-import sprite from "../../../../../../assets/img/icons-sprite.svg";
+import { showSameAnswerPopup } from '../service/questionBuild';
+
+import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+
 
 interface Answer {
   value: string;
@@ -29,7 +32,7 @@ export interface MissingWordComponentProps extends UniqueComponentProps {
 }
 
 const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
-  locked, data, validationRequired, save, updateComponent
+  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [height, setHeight] = React.useState('0%');
   useEffect(() => calculateHeight());
@@ -146,24 +149,29 @@ const MissingWordComponent: React.FC<MissingWordComponentProps> = ({
             : ""
         }
         {
-          choice.answers.map((answer, key) => {
+          choice.answers.map((answer, i) => {
             return (
-              <div style={{ position: 'relative' }} key={key}>
+              <div style={{ position: 'relative' }} key={i}>
                 {
-                  (choice.answers.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, key)} /> : ""
+                  (choice.answers.length > 3) ? <DeleteIcon className="right-top-icon" onClick={() => removeAnswer(choice, i)} /> : ""
                 }
                 <Checkbox
                   className={`left-ckeckbox ${(validationRequired && !checkBoxValid) ? "checkbox-invalid" : ""}`}
                   disabled={locked}
                   checked={answer.checked}
-                  onChange={(e) => onChecked(choice, e)} value={key}
+                  onChange={(e) => onChecked(choice, e)} value={i}
                 />
                 <input
                   placeholder="Enter Answer..."
                   className={getInputClass(answer)}
                   disabled={locked}
                   value={answer.value}
-                  onChange={(event: any) => { answerChanged(answer, event) }}
+                  onChange={(event: any) => {
+                    answerChanged(answer, event);
+                  }}
+                  onBlur={() => {
+                    showSameAnswerPopup(i, choice.answers, openSameAnswerDialog);
+                  }}
                 />
               </div>
             );
