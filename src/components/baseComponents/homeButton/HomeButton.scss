@@ -12,13 +12,13 @@
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 9999;
     border-bottom-right-radius: 2vw;
     background: var(--light-blue);
     margin-right: 1vw;
     padding: 0.35vw 0.782vw 0.782vw 0.35vw;
     width: $home-button-size !important;
     height: $page-head-height;
+    z-index: 100;
   }
 
   .home-button {
