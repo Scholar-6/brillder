@@ -547,12 +547,15 @@ $play-mobile-height: calc(100vh - 55.8vw);
               font-size: 2vw;
               font-family: $font-family-black;
               color: #d3d4d5;
-
               &.completed,
               &.current {
                 color: var(--theme-dark-blue);
               }
-
+              .svg {
+                stroke-width: 2.5;
+                width: 1.5vw;
+                height: 1.5vw;
+              }
               .blue-circle-main-container {
                 @extend %floatToXCenter;
 
@@ -567,12 +570,10 @@ $play-mobile-height: calc(100vh - 55.8vw);
                   height: 1.2vw;
                 }
               }
-
               .blue-circle-container {
                 padding: 0.2vw;
                 border-radius: 100vw;
                 background: var(--blue-alpha5);
-
                 .blue-circle {
                   height: 0.8vw;
                   width: 0.8vw;

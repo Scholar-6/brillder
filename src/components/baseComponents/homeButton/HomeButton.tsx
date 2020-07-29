@@ -22,7 +22,7 @@ const HomeButtonComponent: React.FC<HomeButtonProps> = (props) => {
       }
       return (
         <div className="home-button-container">
-          <button type="button" className="btn btn-transparent svgOnHover home-button" onClick={() => onClick()}>
+          <button type="button" className="btn btn-transparent svgOnHover neader-btn home-button" onClick={() => onClick()}>
             <svg className="svg w100 h100 active">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#logo"} className="text-theme-orange" />
