@@ -242,8 +242,8 @@ const QuestionComponents = ({
           <div>Looks like these two answers are the same</div>
         </div>
         <div className="dialog-footer">
-          <button className="btn btn-md bg-gray yes-button">
-            <span onClick={hideSameAnswerDialog}>Ok</span>
+          <button className="btn btn-md bg-gray yes-button" onClick={hideSameAnswerDialog}>
+            <span>Ok</span>
           </button>
         </div>
       </Dialog>
