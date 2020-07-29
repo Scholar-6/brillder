@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import Dialog from '@material-ui/core/Dialog';
+import React from 'react'
 
 import sprite from "../../../../../assets/img/icons-sprite.svg";
 import { QuestionComponentTypeEnum, Hint } from 'model/question';
@@ -38,7 +37,6 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   updateComponent, ...props
 }) => {
   let InnerComponent = DropBox as any;
-  const [sameAnswerDialogOpen, setSameAnswerDialog] = useState(false);
 
   const getNumberOfAnswers = (data: any) => {
     let count = 1;

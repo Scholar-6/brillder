@@ -6,7 +6,6 @@ import ChooseOneAnswerComponent from './ChooseOneAnswer';
 import { ChooseOneAnswer } from './types';
 import { QuestionValueType, UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
-import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
 import { showSameAnswerPopup } from '../service/questionBuild';
 
 export interface ChooseOneData {
