@@ -39,11 +39,11 @@ const ProfileSavedDialog: React.FC<ProfileSavedProps> = ({ isOpen, history, clos
         </ListItem>
       </div>
       <div className="dialog-footer">
-        <button className="btn btn-md bg-gray yes-button"
+        <button className="btn btn-md bg-theme-orange  yes-button"
           onClick={() => history.push('/home')}>
-          <span>Take me to my homepage</span>
+          <span>Go to my homepage</span>
         </button>
-        <button className="btn btn-md bg-theme-orange yes-button"
+        <button className="btn btn-md bg-gray yes-button"
           onClick={() => close()}>
           <span>Continue editing</span>
         </button>
