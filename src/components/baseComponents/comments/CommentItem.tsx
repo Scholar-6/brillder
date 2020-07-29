@@ -4,8 +4,11 @@ import { Grid, Card, CardContent, Box, Typography, SvgIcon } from '@material-ui/
 import sprite from "assets/img/icons-sprite.svg";
 import { withStyles } from '@material-ui/styles';
 
+import moment from 'moment';
+
 interface CommentItemProps {
     text: string;
+    timestamp: Date;
 }
 
 const Stretch = withStyles({
@@ -14,7 +17,7 @@ const Stretch = withStyles({
     }
 })(Grid);
 
-const CommentItem: React.FC<CommentItemProps> = ({ text }) => {
+const CommentItem: React.FC<CommentItemProps> = ({ text, timestamp }) => {
     return (
     <Grid item>
         <Box marginX={2} marginY={2} padding={2} borderRadius={15} bgcolor="#ffffff">
@@ -37,7 +40,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ text }) => {
                     </SvgIcon>
                 </Grid>
                 <Grid item>
-                    <h5 style={{ marginBottom: "10px" }}>16:10 28 Apr</h5>
+                    <h5 style={{ marginBottom: "10px" }}>{moment(timestamp).format("H:mm D MMM")}</h5>
                 </Grid>
                 <Grid item>
                     <b>Comment: </b><i>{text}</i>
