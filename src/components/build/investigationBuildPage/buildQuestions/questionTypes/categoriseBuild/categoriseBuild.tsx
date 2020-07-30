@@ -7,6 +7,7 @@ import QuestionImageDropZone from '../../baseComponents/QuestionImageDropzone';
 import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfaces/sort';
 import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import sprite from "../../../../../../assets/img/icons-sprite.svg";
+import { showSameAnswerPopup } from '../service/questionBuild';
 
 export interface CategoriseData {
   categories: SortCategory[];
@@ -17,7 +18,7 @@ export interface CategoriseBuildProps extends UniqueComponentProps {
 }
 
 const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [categoryHeight, setCategoryHeight] = React.useState('0%');
 
@@ -96,7 +97,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
   }
 
 
-  const renderAnswer = (category: SortCategory, answer: SortAnswer, key: number) => {
+  const renderAnswer = (category: SortCategory, answer: SortAnswer, i: number) => {
     let customClass = 'categorise-answer ';
     if (answer.answerType === QuestionValueType.Image) {
       customClass = 'sort-image';
@@ -112,10 +113,10 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     }
 
     return (
-      <div key={key} className={customClass}>
+      <div key={i} className={customClass}>
         {
           (category.answers.length > 1)
-            ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeAnswer(category, key)}>
+            ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeAnswer(category, i)}>
               <svg className="svg active back-button">
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#trash-outline"} className="theme-orange" />
@@ -130,7 +131,10 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           placeholder="Enter Answer..."
           toolbar={['mathType', 'chemType']}
           validationRequired={validationRequired}
-          onBlur={() => save()}
+          onBlur={() => {
+            showSameAnswerPopup(i, category.answers, openSameAnswerDialog);
+            save();
+          }}
           onChange={value => { answerChanged(answer, value) }}
         />
         <QuestionImageDropZone

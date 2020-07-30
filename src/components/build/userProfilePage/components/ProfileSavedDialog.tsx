@@ -32,7 +32,7 @@ const ProfileSavedDialog: React.FC<ProfileSavedProps> = ({ isOpen, history, clos
           <Avatar className="circle-check">
             <svg className="svg active">
               {/*eslint-disable-next-line*/}
-              <use href={sprite + "#check"} className="text-white" />
+              <use href={sprite + "#check-icon"} className="text-white" />
             </svg>
           </Avatar>
           </ListItemAvatar>

@@ -3,22 +3,21 @@ import { Grid } from '@material-ui/core';
 
 import './pairMatchBuild.scss'
 import {Answer} from './types';
+import { UniqueComponentProps } from '../types';
+
 import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
 import PairAnswerComponent from './answer/pairAnswer';
 import PairOptionComponent from './option/pairOption';
-import { UniqueComponentProps } from '../types';
+import { showSameAnswerPopup } from '../service/questionBuild';
 
 
-export interface PairMatchBuildProps extends UniqueComponentProps {
-}
+export interface PairMatchBuildProps extends UniqueComponentProps { }
 
 const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [height, setHeight] = React.useState('0%');
-
   useEffect(() => calculateHeight());
-
   const newAnswer = () => ({ option: "", value: "" });
 
   if (!data.list) {
@@ -29,7 +28,6 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
   }
 
   const [state, setState] = React.useState(data);
-
   useEffect(() => { setState(data) }, [data]);
 
   const update = () => {
@@ -65,18 +63,19 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
     showButton === true ? setHeight('auto') : setHeight('0%');
   }
 
-  const renderAnswer = (answer: Answer, key: number) => {
+  const renderAnswer = (answer: Answer, i: number) => {
     return (
-      <Grid key={key} container direction="row" className="answers-container">
+      <Grid key={i} container direction="row" className="answers-container">
         <PairOptionComponent
-          index={key} locked={locked} editOnly={editOnly} answer={answer}
+          index={i} locked={locked} editOnly={editOnly} answer={answer}
           validationRequired={validationRequired}
           update={update} save={save}
         />
         <PairAnswerComponent
-          index={key} length={data.list.length} locked={locked} editOnly={editOnly} answer={answer}
+          index={i} length={data.list.length} locked={locked} editOnly={editOnly} answer={answer}
           validationRequired={validationRequired}
           removeFromList={removeFromList} update={update} save={save}
+          onBlur={() => showSameAnswerPopup(i, state.list, openSameAnswerDialog)}
         />
       </Grid>
     );

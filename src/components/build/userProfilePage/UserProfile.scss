@@ -13,6 +13,7 @@
     top: $page-head-height;
     height: calc(100vh - #{$page-head-height}) !important;
     width: 27.5vw;
+
     @include phone_and_tabletP {
       display: none;
     }
@@ -27,12 +28,14 @@
     border-top-right-radius: 2vw;
     overflow-y: auto;
     padding-bottom: 10vh;
+
     @include phone_and_tabletP {
       width: 100%;
       margin: 0;
       border-radius: 0;
       height: calc(100vh - 6vh);
     }
+
     .profile-header {
       padding-top: 3.1vh;
       margin-left: 1.08vw;
@@ -43,14 +46,17 @@
       color: var(--theme-dark-blue);
       line-height: 1;
       text-transform: uppercase;
+
       @include phone_and_tabletP {
         font-size: 15.4vw;
       }
     }
+
     .save-button-container {
       position: absolute;
       top: 1.9vh;
       right: 1vw;
+
       @include phone_and_tabletP {
         position: fixed;
         bottom: 10vh;
@@ -58,38 +64,20 @@
         top: inherit;
         z-index: 999;
       }
-      .save-image {
-        cursor: pointer;
-        text-align: center;
-        height: 3.5vw;
-        width: 3.5vw;
-        background: var(--tab-gray) 0% 0% no-repeat padding-box;
-        border: 0.25vw solid var(--light-gray);
-        box-shadow: $base-shadow;
-        @include phone_and_tabletP {
-          height: 15vw;
-          width: 15vw;
-        }
-        svg {
-          height: 1.9vw;
-          width: 1.9vw;
-          @include phone_and_tabletP {
-            height: 5vw;
-            width: 5vw;
-          }
-        }
-      }
     }
+
     .profile-fields {
       display: flex;
       justify-content: space-between;
       padding-left: 4.5vw;
       padding-right: 4.2vw;
+
       @include phone_and_tabletP {
         flex-direction: column;
         justify-content: center;
         align-items: center;
       }
+
       .profile-image-container {
         position: relative;
         padding-top: 5vh;
@@ -97,9 +85,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+
         @include phone_and_tabletP {
           width: max-content;
         }
+
         .profile-image {
           text-align: center;
           height: 11vw;
@@ -108,19 +98,23 @@
           border: 0.25vw solid var(--light-gray);
           box-shadow: $base-shadow;
           border-radius: 50%;
+
           @include phone_and_tabletP {
             height: 30vw;
             width: 30vw;
           }
+
           .svg {
             height: 7.8vw;
             width: 7.8vw;
+
             @include phone_and_tabletP {
               height: 20vw;
               width: 20vw;
             }
           }
         }
+
         .add-image-button {
           width: 4vw;
           height: 4vw;
@@ -131,48 +125,58 @@
           right: 1vw;
           border-radius: 50%;
           cursor: pointer;
+
           @include phone_and_tabletP {
             height: 12vw;
             width: 12vw;
             top: 15vh;
             right: 0vw;
           }
+
           .MuiIconButton-label {
             margin: 0;
           }
+
           .svg {
             width: 2vw;
             height: 2vw;
+
             @include phone_and_tabletP {
               height: 7vw;
               width: 7vw;
             }
           }
         }
+
         .status-container {
           margin-top: 2.6vh;
           display: flex;
           align-items: center;
           justify-content: center;
+
           .svg {
             color: #30c474;
             font-size: 2.35vw;
             @extend %removePosition;
           }
-          > span {
+
+          >span {
             margin-left: 0.45vw;
             color: var(--theme-dark-blue);
             font-size: 1.5vw;
           }
         }
       }
+
       .profile-inputs-container {
         padding-top: 5.1vh;
         width: 32.4vw;
         margin: 0 3vw;
+
         @include phone_and_tabletP {
           width: 100%;
         }
+
         .MuiSvgIcon-root,
         .MuiCheckbox-root,
         .MuiFormControlLabel-root,
@@ -180,11 +184,14 @@
           color: var(--theme-dark-blue) !important;
         }
       }
+
       .profile-roles-container {
         width: 13.5vw;
+
         @include phone_and_tabletP {
           width: 100%;
         }
+
         .roles-title {
           width: 100%;
           text-align: center;
@@ -193,46 +200,58 @@
           color: var(--theme-dark-blue);
           font-family: $font-family-black;
           line-height: 1.41;
+
           @include phone_and_tabletP {
             font-size: 6vw;
           }
         }
+
         .roles-box {
           width: 100%;
           border-radius: 0.3vw;
           box-shadow: $base-shadow;
           padding: 1.15vw;
+
           @include phone_and_tabletP {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(33.33%, 1fr));
           }
+
           .MuiGrid-item {
             width: 100%;
+
             .MuiSvgIcon-root {
               color: var(--theme-dark-blue);
               font-size: 1.55vw;
+
               @include phone_and_tabletP {
                 font-size: 5vw;
               }
             }
+
             .MuiIconButton-root {
               padding: 0.5vw !important;
             }
+
             .MuiFormControlLabel-label {
               margin-left: 1.15vw;
               font-size: 1.45vw;
               color: var(--theme-dark-blue);
+
               @include phone_and_tabletP {
                 font-size: 4vw;
               }
             }
+
             .MuiFormControlLabel-root {
               margin: 0;
             }
+
             .disabled {
               .MuiSvgIcon-root {
                 color: #a6acaf;
               }
+
               .MuiTypography-root {
                 color: #a6acaf;
               }
@@ -241,10 +260,12 @@
         }
       }
     }
+
     .big-input-container {
       margin-top: 2.3vh;
       padding-left: 4.5vw;
       padding-right: 4.2vw;
+
       textarea {
         width: 100%;
         height: 15vh;
@@ -257,22 +278,26 @@
         padding-left: 0.65vw;
         font-size: 1.8vw;
         max-height: 18vh;
+
         @include phone_and_tabletP {
           font-size: 4vw;
         }
       }
     }
   }
+
   .profile-phone-preview {
-    > div {
-      > div {
+    >div {
+      >div {
         height: 39.5vw;
       }
     }
+
     .phone-question-preview {
       top: auto !important;
       right: 1.8% !important;
     }
+
     .custom-component {
       background-color: white;
     }
