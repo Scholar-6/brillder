@@ -1,6 +1,6 @@
 import React from 'react'
 import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 export interface LastTabProps {
   tutorialStep: TutorialStep;

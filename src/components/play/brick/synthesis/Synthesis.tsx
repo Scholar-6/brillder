@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { PlayStatus } from '../model/model';
 import { BrickLengthEnum } from 'model/brick';
 import TimerWithClock from "../baseComponents/TimerWithClock";
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/build/proposal/model';

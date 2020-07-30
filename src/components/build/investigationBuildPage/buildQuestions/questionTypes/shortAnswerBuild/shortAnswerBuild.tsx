@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
-import sprite from "../../../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import "./shortAnswerBuild.scss";
 import AddAnswerButton from "../../baseComponents/addAnswerButton/AddAnswerButton";
 import { UniqueComponentProps } from "../types";

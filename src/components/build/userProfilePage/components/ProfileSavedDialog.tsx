@@ -7,7 +7,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import './ProfileSavedDialog.scss';
 
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 interface ProfileSavedProps {
   isOpen: boolean;

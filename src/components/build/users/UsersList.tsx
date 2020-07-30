@@ -16,7 +16,7 @@ import { User, UserType, UserStatus } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
-import sprite from "../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";

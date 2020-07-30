@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 export interface SynthesisTabProps {
   columns: number;

@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./Clock.scss";
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import { BrickLengthEnum } from "model/brick";
 
 interface CounterProps {

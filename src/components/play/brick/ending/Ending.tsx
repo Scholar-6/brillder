@@ -7,7 +7,7 @@ import { Brick } from "model/brick";
 import { PlayStatus } from "../model/model";
 import { BrickAttempt } from "../PlayBrickRouting";
 import ReviewStepper from '../review/ReviewStepper';
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import Clock from "../baseComponents/Clock";
 
 interface EndingProps {

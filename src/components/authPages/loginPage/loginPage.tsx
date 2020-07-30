@@ -11,7 +11,7 @@ import actions from "redux/actions/auth";
 import "./loginPage.scss";
 import { ReduxCombinedState } from "redux/reducers";
 
-import sprite from "../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 const mapState = (state: ReduxCombinedState) => ({
   error: state.auth.error,

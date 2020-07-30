@@ -8,7 +8,7 @@ import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
 import { PlayStatus } from '../model/model';
 import { Moment } from 'moment';
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import ReviewStepper from '../review/ReviewStepper';
 import Clock from '../baseComponents/Clock';
 

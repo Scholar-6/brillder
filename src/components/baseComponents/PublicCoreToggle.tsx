@@ -1,5 +1,5 @@
 import React from "react";
-import sprite from "../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 interface ToggleProps {
   isCore: boolean;

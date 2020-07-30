@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import sprite from "../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './ExpandedBrickDescription.scss';
