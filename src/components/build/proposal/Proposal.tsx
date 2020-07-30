@@ -70,11 +70,13 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       initBrick.author = (user as any) as Author;
     }
 
+    // getting brick from local storage
     let localBrick = getLocalBrick();
     if (localBrick) {
       initBrick = localBrick;
     }
 
+    // if brick is fetched then set this brick and save in local storage
     if (brick) {
       initBrick = brick;
       setLocalBrick(brick);
@@ -85,17 +87,17 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       saved: false,
       isDialogOpen: false
     }
+  }
 
-    /* 7/30/2020 setting author
-    useEffect(() => {
-      if (brick) {
-        if (!brick.author && state.author) {
-          brick.author = state.author;
-        }
-        setBrick(brick);
+  shouldComponentUpdate() {
+    const {brick} = this.props;
+    if (brick) {
+      if (!brick.author && this.state.brick.author) {
+        brick.author = this.state.brick.author;
       }
-    }, [brick, state.author]);
-    */
+      this.setState({brick});
+    }
+    return true;
   }
 
   saveBrick(tempBrick: Brick) {
