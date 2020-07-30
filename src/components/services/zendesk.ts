@@ -2,7 +2,7 @@ import { isMobile } from "react-device-detect";
 
 function minimizeZendeskButton(iframe: any) {
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-  let button = innerDoc.getElementsByTagName("button")[0];
+  var button = innerDoc.getElementsByTagName("button")[0];
   button.style.padding = "1rem";
   let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
   btnContent.style.padding = 0;
@@ -53,7 +53,7 @@ function setZendeskMode(iframe: any, location: any) {
   iframe.style.width = '108px';
   // #1332 small mode only in viewAll and manageUsers pages
   let isBigMode = true;
-  const {pathname} = location;
+  const { pathname } = location;
   if (isViewAllPage(pathname)) {
     isBigMode = false;
   }
@@ -61,11 +61,13 @@ function setZendeskMode(iframe: any, location: any) {
     isBigMode = false;
   }
 
-  if (isBigMode) {
-    maximizeZendeskButton(iframe);
-  } else {
-    minimizeZendeskButton(iframe);
-  }
+  try {
+    if (isBigMode) {
+      maximizeZendeskButton(iframe);
+    } else {
+      minimizeZendeskButton(iframe);
+    }
+  } catch { }
 }
 
 /**
