@@ -80,6 +80,9 @@
                 color: var(--white);
                 text-transform: uppercase;
               }
+              .MuiTypography-colorTextSecondary {
+                color: var(--tab-gray);
+              }
             }
             .notification-detail {
               border-bottom: 0.02vh solid var(--theme-dark-blue);
@@ -88,9 +91,6 @@
               }
               @include tabletP {
                 padding-bottom: 0.5vh;
-              }
-              .MuiTypography-colorTextSecondary {
-                color: var(--white-alpha6);
               }
             }
             .notification-detail-single {
