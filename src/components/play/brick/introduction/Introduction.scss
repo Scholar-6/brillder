@@ -1078,7 +1078,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
     //   font: 6vw $font-family-regular;
     // }
     @include tabletP {
-      font: 1.15vw $font-family-regular;
+      font-size: 1.15vw;
     }
   }
 
