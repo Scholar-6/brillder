@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Avatar from '@material-ui/core/Avatar';
-import { ReactSortable } from 'react-sortablejs';
 
 import './VerticalShufflePreview.scss';
 import { Grid } from "@material-ui/core";
