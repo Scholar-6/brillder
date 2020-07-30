@@ -139,7 +139,7 @@ const HintComponent: React.FC<HintProps> = ({
 
     for (let i = 0; i < props.count; i++) {
       answerHints.push(
-        <div className="hint-container">
+        <div className="hint-container" key={i}>
           <DocumentWirisCKEditor
             disabled={locked}
             data={state.list[i]}

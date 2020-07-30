@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Avatar from '@material-ui/core/Avatar';
-import { ReactSortable } from 'react-sortablejs';
 
 import './VerticalShufflePreview.scss';
 import { Grid } from "@material-ui/core";
@@ -36,7 +35,6 @@ class VerticalShufflePreview extends Component<any, any> {
 
   renderButton(btnContent: any, i: number) {
     let className = "";
-    console.log(i)
     if (i === btnContent.correctIndex) {
       className = "correct";
     }
@@ -59,14 +57,6 @@ class VerticalShufflePreview extends Component<any, any> {
       let thirdDone = false;
 
       let { buttons } = this.state;
-      /*
-      let temp = buttons[0];
-      let temp2 = buttons[1];
-      let temp3 = buttons[2];
-      buttons[0] = temp3;
-      buttons[1] = temp;
-      buttons[2] = temp2;
-      */
       this.setState({ buttons });
       this.render();
       let step = 0.8;
@@ -105,7 +95,7 @@ class VerticalShufflePreview extends Component<any, any> {
 
         this.setState({ buttons });
       }, 50);
-    }, 200);
+    }, 700);
   }
 
   render() {

@@ -160,7 +160,7 @@
             @extend %removePosition;
           }
 
-          >span {
+          > span {
             margin-left: 0.45vw;
             color: var(--theme-dark-blue);
             font-size: 1.5vw;
@@ -265,7 +265,17 @@
       margin-top: 2.3vh;
       padding-left: 4.5vw;
       padding-right: 4.2vw;
-
+      .MuiAutocomplete-tag {
+        font-family: $font-family-regular;
+        color: var(--theme-dark-blue);
+        background-color: var(--tab-gray);
+      }
+      .MuiChip-deleteIcon {
+        color: var(--theme-orange);
+      }
+      .MuiInput-underline:after {
+        display: none !important;
+      }
       textarea {
         width: 100%;
         height: 15vh;
@@ -287,8 +297,8 @@
   }
 
   .profile-phone-preview {
-    >div {
-      >div {
+    > div {
+      > div {
         height: 39.5vw;
       }
     }
