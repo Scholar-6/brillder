@@ -2,6 +2,7 @@ import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
 import { Brick } from 'model/brick';
+import comments from './comments';
 
 const fetchBrickSuccess = (data:any) => {
   return {
@@ -18,7 +19,7 @@ const fetchBrickFailure = (errorMessage:string) => {
 }
 
 const fetchBrick = (id: number) => {
-  return function (dispatch: Dispatch) {
+  return function (dispatch: any) {
     return axios.get(process.env.REACT_APP_BACKEND_HOST + '/brick/' + id, {withCredentials: true})
       .then((res) => {
         let brick = res.data as Brick;
@@ -26,6 +27,7 @@ const fetchBrick = (id: number) => {
           return q1.order - q2.order;
         });
         dispatch(fetchBrickSuccess(res.data));
+        dispatch(comments.getComments(brick.id));
       })
       .catch(error => {
         dispatch(fetchBrickFailure(error.message));
