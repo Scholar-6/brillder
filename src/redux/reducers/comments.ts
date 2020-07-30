@@ -22,7 +22,7 @@ export default (state = CommentsInitialState, action: any): CommentsState => {
         case types.GET_COMMENTS_FAILURE:
             return { error: action.error } as CommentsState;
         case types.CREATE_COMMENT_SUCCESS:
-            return { comments: [ ...state.comments ?? [], action.newComment ], mostRecentComment: action.newComment } as CommentsState;
+            return state as CommentsState;
         case types.CREATE_COMMENT_FAILURE:
             return { ...state, error: action.error } as CommentsState;
         case types.EDIT_COMMENT:
@@ -39,7 +39,8 @@ export default (state = CommentsInitialState, action: any): CommentsState => {
             if(!action.comment.parent) {
                 return {
                     ...state, 
-                    comments: [ ...(state.comments ?? []), action.comment ]
+                    comments: [ ...(state.comments ?? []), action.comment ],
+                    mostRecentComment: action.comment
                 } as CommentsState;
             } else {
                 return {
@@ -48,7 +49,8 @@ export default (state = CommentsInitialState, action: any): CommentsState => {
                         if(comment.id === action.comment.parent.id) {
                             return { ...comment, children: [ ...(comment.children ?? []), { ...action.comment, parent: undefined } ] }
                         } else return comment;
-                    })
+                    }),
+                    mostRecentComment: action.comment
                 }
             }
         default:
