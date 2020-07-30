@@ -36,10 +36,21 @@ export default (state = CommentsInitialState, action: any): CommentsState => {
                 })
             } as CommentsState;
         case types.NEW_COMMENT:
-            return {
-                ...state, 
-                comments: [ ...(state.comments ?? []), action.comment ]
-            } as CommentsState
+            if(!action.comment.parent) {
+                return {
+                    ...state, 
+                    comments: [ ...(state.comments ?? []), action.comment ]
+                } as CommentsState;
+            } else {
+                return {
+                    ...state,
+                    comments: (state.comments ?? []).map((comment: Comment) => {
+                        if(comment.id === action.comment.parent.id) {
+                            return { ...comment, children: [ ...(comment.children ?? []), { ...action.comment, parent: undefined } ] }
+                        } else return comment;
+                    })
+                }
+            }
         default:
             return state;
     }

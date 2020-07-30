@@ -105,5 +105,24 @@ describe("comments reducer", () => {
 
         expect(newState.comments).toContainEqual(mockComment);
         expect(newState.comments).toContainEqual({ ...mockComment, id: 2 });
+    });
+
+    it("should handle NEW_COMMENT with a child comment", () => {
+        const initialState = {
+            comments: [ mockComment ]
+        };
+
+        const action = {
+            type: types.NEW_COMMENT,
+            comment: { ...mockComment, id: 2, parent: mockComment }
+        };
+
+        const newState = reducer(initialState, action);
+
+        const originalComment = newState.comments.find(
+            comment => comment.id === mockComment.id
+        );
+        expect(originalComment).toBeDefined();
+        expect(originalComment.children).toContainEqual({ ...action.comment, parent: undefined });
     })
 })
