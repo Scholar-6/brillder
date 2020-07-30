@@ -49,7 +49,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
                 </Grid>
                 {props.children && props.children instanceof Array && props.children.length != 0 &&
                 <Box borderTop="1px solid lightgrey" paddingTop={1} marginTop={1} clone>
-                    <Grid item container>
+                    <Grid item container direction="column">
                         {props.children}
                     </Grid>
                 </Box>}
