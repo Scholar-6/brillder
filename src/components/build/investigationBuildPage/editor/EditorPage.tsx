@@ -9,10 +9,11 @@ import { Brick, Editor } from "model/brick";
 interface EditorPageProps {
   brick: Brick;
   canEdit: boolean;
+  history: any;
   saveEditor(editor?: Editor): void;
 }
 
-const EditorPage: React.FC<EditorPageProps> = ({ brick, canEdit, saveEditor }) => {
+const EditorPage: React.FC<EditorPageProps> = ({ brick, canEdit, saveEditor, history }) => {
   const [editorIdString, setEditorIdString] = React.useState(brick.editor?.id ?? "");
   
   const editorIdValid = !isNaN(parseInt(editorIdString.toString()));
@@ -21,6 +22,7 @@ const EditorPage: React.FC<EditorPageProps> = ({ brick, canEdit, saveEditor }) =
     if(editorIdValid) {
       let editorId = parseInt(editorIdString.toString());
       saveEditor({ id: editorId });
+      history.push(`/play-preview/brick/${brick.id}/finish`);
     }
   };
 
