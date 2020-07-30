@@ -7,17 +7,25 @@ import { PlayMode } from './model';
 
 interface SidebarProps {
   sidebarRolledUp: boolean;
-  mode: PlayMode;
-  setMode(mode: PlayMode): void;
   toggleSidebar(): void;
+
+  // play
+  mode?: PlayMode;
+  setMode?(mode: PlayMode): void;
+
+  //play-preview
+  isPreview?: boolean;
+  moveToBuild?(): void;
 }
 
 class PlayLeftSidebarComponent extends Component<SidebarProps> {
   setHighlightMode() {
-    if (this.props.mode === PlayMode.Highlighting) {
-      this.props.setMode(PlayMode.UnHighlighting);
-    } else {
-      this.props.setMode(PlayMode.Highlighting);
+    if (this.props.setMode) {
+      if (this.props.mode === PlayMode.Highlighting) {
+        this.props.setMode(PlayMode.UnHighlighting);
+      } else {
+        this.props.setMode(PlayMode.Highlighting);
+      }
     }
   }
 
@@ -70,9 +78,21 @@ class PlayLeftSidebarComponent extends Component<SidebarProps> {
     );
   };
 
+  setAnotateMode() {
+    if (this.props.setMode) {
+      this.props.setMode(PlayMode.Anotating);
+    }
+  }
+
+  moveToBuild() {
+    if (this.props.moveToBuild) {
+      this.props.moveToBuild();
+    }
+  }
+
   renderAnotateButton() {
     return (
-      <MenuItem className="sidebar-button" onClick={() => this.props.setMode(PlayMode.Anotating)}>
+      <MenuItem className="sidebar-button" onClick={() => this.setAnotateMode()}>
         {!this.props.sidebarRolledUp ? <span>Annotate Text</span> : ""}
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
@@ -81,6 +101,39 @@ class PlayLeftSidebarComponent extends Component<SidebarProps> {
       </MenuItem>
     );
   };
+
+  renderButtons() {
+    if (this.props.isPreview) {
+      if (this.props.sidebarRolledUp) {
+        return (
+          <div className="back-hover-area" onClick={() => this.moveToBuild()}>
+            <div className="create-icon create-icon-small svgOnHover">
+              <svg className="svg w100 h100 active">
+                <use href={sprite + "#trowel"} />
+              </svg>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div className="back-hover-area" onClick={() => this.moveToBuild()}>
+            <div className="create-icon svgOnHover">
+              <svg className="svg w100 h100 active">
+                <use href={sprite + "#trowel"} />
+              </svg>
+            </div>
+            <h3>BACK<br />TO<br />BUILD</h3>
+          </div>
+        );
+      }
+    }
+    return (
+      <div>
+        {this.renderHightlightButton()}
+        {this.renderAnotateButton()}
+      </div>
+    );
+  }
 
   render() {
     let className = "sort-and-filter-container play-sidebar";
@@ -91,8 +144,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps> {
     return (
       <Grid container item className={className}>
         <div style={{ width: "100%" }}>{this.renderToggleButton()}</div>
-        {this.renderHightlightButton()}
-        {this.renderAnotateButton()}
+        {this.renderButtons()}
       </Grid>
     );
   }
