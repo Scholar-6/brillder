@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import sprite from "../../../assets/img/icons-sprite.svg";
-import {PlayMode} from './model';
+import { PlayMode } from './model';
 
 interface SidebarProps {
   sidebarRolledUp: boolean;
@@ -12,41 +12,36 @@ interface SidebarProps {
   toggleSidebar(): void;
 }
 
-const PlayLeftSidebarComponent: React.FC<SidebarProps> = (props) => {
-  const {mode, sidebarRolledUp} = props;
-  let className = "sort-and-filter-container play-sidebar";
-  if (sidebarRolledUp) {
-    className += " rolled-up";
+class PlayLeftSidebarComponent extends Component<SidebarProps> {
+  setHighlightMode() {
+    if (this.props.mode === PlayMode.Highlighting) {
+      this.props.setMode(PlayMode.UnHighlighting);
+    } else {
+      this.props.setMode(PlayMode.Highlighting);
+    }
   }
 
-  const renderToggleButton = () => {
-    if (sidebarRolledUp) {
+  renderToggleButton() {
+    if (this.props.sidebarRolledUp) {
       return (
-        <svg className="svg minimize-icon" onClick={props.toggleSidebar}>
+        <svg className="svg minimize-icon" onClick={() => this.props.toggleSidebar()}>
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#maximize-2"} />
         </svg>
       );
     }
     return (
-      <svg className="svg minimize-icon" onClick={props.toggleSidebar}>
+      <svg className="svg minimize-icon" onClick={() => this.props.toggleSidebar()}>
         {/*eslint-disable-next-line*/}
         <use href={sprite + "#minimize-2"} />
       </svg>
     );
-  };
-
-  const setHighlightMode = () => {
-    if (mode === PlayMode.Highlighting) {
-      props.setMode(PlayMode.UnHighlighting);
-    } else {
-      props.setMode(PlayMode.Highlighting);
-    }
   }
 
-  const renderHightlightText = () => {
-    if (!sidebarRolledUp) {
-      if (mode === PlayMode.UnHighlighting) {
+
+  renderHightlightText() {
+    if (!this.props.sidebarRolledUp) {
+      if (this.props.mode === PlayMode.UnHighlighting) {
         return <span>Unhighlight Text</span>;
       }
       return <span>Highlight Text</span>;
@@ -54,9 +49,10 @@ const PlayLeftSidebarComponent: React.FC<SidebarProps> = (props) => {
     return "";
   }
 
-  const renderHightlightButton = () => {
+  renderHightlightButton() {
     let className = "sidebar-button";
     let icon = "#highlighter"
+    const { mode } = this.props;
     if (mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) {
       className += " active";
     }
@@ -64,8 +60,8 @@ const PlayLeftSidebarComponent: React.FC<SidebarProps> = (props) => {
       icon = "#delete-2";
     }
     return (
-      <MenuItem className={className} onClick={setHighlightMode}>
-        {renderHightlightText()}
+      <MenuItem className={className} onClick={() => this.setHighlightMode()}>
+        {this.renderHightlightText()}
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + icon} className="text-white" />
@@ -74,10 +70,10 @@ const PlayLeftSidebarComponent: React.FC<SidebarProps> = (props) => {
     );
   };
 
-  const renderAnotateButton = () => {
+  renderAnotateButton() {
     return (
-      <MenuItem className="sidebar-button" onClick={() => props.setMode(PlayMode.Anotating)}>
-        {!sidebarRolledUp ? <span>Annotate Text</span> : ""}
+      <MenuItem className="sidebar-button" onClick={() => this.props.setMode(PlayMode.Anotating)}>
+        {!this.props.sidebarRolledUp ? <span>Annotate Text</span> : ""}
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#pen-tool"} />
@@ -86,13 +82,20 @@ const PlayLeftSidebarComponent: React.FC<SidebarProps> = (props) => {
     );
   };
 
-  return (
-    <Grid container item className={className}>
-      <div style={{ width: "100%" }}>{renderToggleButton()}</div>
-      {renderHightlightButton()}
-      {renderAnotateButton()}
-    </Grid>
-  );
+  render() {
+    let className = "sort-and-filter-container play-sidebar";
+    if (this.props.sidebarRolledUp) {
+      className += " rolled-up";
+    }
+
+    return (
+      <Grid container item className={className}>
+        <div style={{ width: "100%" }}>{this.renderToggleButton()}</div>
+        {this.renderHightlightButton()}
+        {this.renderAnotateButton()}
+      </Grid>
+    );
+  }
 };
 
 export default PlayLeftSidebarComponent;

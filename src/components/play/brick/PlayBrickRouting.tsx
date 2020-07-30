@@ -31,6 +31,7 @@ import { PlayMode} from './model';
 import { ReduxCombinedState } from "redux/reducers";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import { BrickFieldNames } from "components/build/proposal/model";
+import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
 
 export interface BrickAttempt {
   brickId?: number;
@@ -164,11 +165,27 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       });
   };
 
-  const toggleSidebar = () => toggleSideBar(!sidebarRolledUp);
+  const setSidebar = (state?: boolean) => {
+    if (typeof state === "boolean") {
+      toggleSideBar(state);
+      if (!state) {
+        maximizeZendeskButton();
+      } else {
+        minimizeZendeskButton();
+      }
+    } else {
+      toggleSideBar(!sidebarRolledUp);
+      if (sidebarRolledUp) {
+        maximizeZendeskButton();
+      } else {
+        minimizeZendeskButton();
+      }
+    }
+  }
 
   const moveToLive = () => {
     props.history.push(`/play/brick/${brick.id}/live`);
-    toggleSideBar(true);
+    setSidebar(true);
   }
 
   const onHighlight = (name: BrickFieldNames, value: string) => {
@@ -278,7 +295,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     <div className="play-preview-pages">
       {renderHead()}
       <div className={className}>
-        <PlayLeftSidebar mode={mode} sidebarRolledUp={sidebarRolledUp} setMode={setMode} toggleSidebar={toggleSidebar} />
+        <PlayLeftSidebar mode={mode} sidebarRolledUp={sidebarRolledUp} setMode={setMode} toggleSidebar={setSidebar} />
         <div className="brick-row-container">
           {renderRouter()}
         </div>
