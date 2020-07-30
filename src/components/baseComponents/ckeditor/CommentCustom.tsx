@@ -6,15 +6,8 @@ import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
 import { toWidget, viewToModelPositionOutsideModelElement } from '@ckeditor/ckeditor5-widget/src/utils';
 // @ts-ignore
 import Widget from '@ckeditor/ckeditor5-widget/src/widget';
-import ReactDOM from 'react-dom';
-import CommentButton from '../comments/CommentButton';
-import React from 'react';
-// @ts-ignore
-import { Provider } from 'react-redux';
 //import store from 'redux/store';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-import comments from 'redux/actions/comments';
-import { ReduxCombinedState } from 'redux/reducers';
 
 import './CommentCustom.scss';
 
