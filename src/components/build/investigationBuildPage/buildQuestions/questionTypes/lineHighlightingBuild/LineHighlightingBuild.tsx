@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import './LineHighlightingBuild.scss'
 import { UniqueComponentProps } from '../types';
 
-import sprite from "../../../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 enum LineMode {

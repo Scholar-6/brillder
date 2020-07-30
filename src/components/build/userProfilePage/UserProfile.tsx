@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
-import sprite from "../../../assets/img/icons-sprite.svg";
 
 import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
@@ -21,6 +20,7 @@ import SubjectDialog from "./components/SubjectDialog";
 import { ReduxCombinedState } from "redux/reducers";
 import SaveProfileButton from './components/SaveProfileButton';
 import ProfileSavedDialog from './components/ProfileSavedDialog';
+import ProfileImage from './components/ProfileImage';
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -357,27 +357,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               <SaveProfileButton user={user} onClick={() => this.saveUserProfile()} />
             </div>
             <div className="profile-fields">
-              <div className="profile-image-container">
-                <div className="profile-image svgOnHover">
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#user"} className="text-theme-dark-blue" />
-                  </svg>
-                </div>
-                <div className="add-image-button svgOnHover">
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#plus"} className="text-white" />
-                  </svg>
-                </div>
-                <div className="status-container svgOnHover">
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#circle-filled"} className="text-theme-green" />
-                  </svg>
-                  <span>Active</span>
-                </div>
-              </div>
+              <ProfileImage />
               <div className="profile-inputs-container">
                 <div className="input-group">
                   <div className="input-block">

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core';
 
 import './horizontalShuffleBuild.scss'
-import sprite from "../../../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import { UniqueComponentProps } from '../types';
 import { showSameAnswerPopup } from '../service/questionBuild';
 
