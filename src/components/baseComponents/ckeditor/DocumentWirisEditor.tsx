@@ -134,7 +134,7 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
 
   render() {
     let config = {
-      extraPlugins: [UploadImageCustom],
+      extraPlugins: [UploadImageCustom/*, CommentCustom 30/07/2020 */],
       plugins: [
         Essentials,
         Paragraph,
