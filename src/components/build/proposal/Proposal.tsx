@@ -89,6 +89,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
+  /* 7/30/2020
   shouldComponentUpdate() {
     const {brick} = this.props;
     if (brick) {
@@ -99,6 +100,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     }
     return false;
   }
+  */
 
   saveBrick(tempBrick: Brick) {
     const {brick} = this.props;
