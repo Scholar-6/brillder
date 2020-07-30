@@ -58,13 +58,6 @@ const NextButton: React.FC<NextButtonProps> = ({ step, onMove }) => {
               className={`navigation-button navigation-length ${step >= ProposalStep.BrickLength ? 'active' : ''}`}
             />
           </div>
-          <div className={`step-container ${step === ProposalStep.BrickEditor ? 'active' : ''}`}>
-            <div className="step-label">Editor</div>
-            <div
-              onClick={() => move('/build/new-brick/editor')}
-              className={`navigation-button navigation-editor ${step >= ProposalStep.BrickEditor ? 'active' : ''}`}
-            />
-          </div>
         </Grid>
       </div>
     </Hidden>
