@@ -3,16 +3,16 @@
 @import '../../assets/sass/partials/extensions';
 
 .beta-text {
-	width: fit-content;
+  width: fit-content;
   position: fixed;
   bottom: 2.4vh;
   right: 2.4vh;
   color: var(--theme-orange);
-	font-size: 2vw;
-	line-height: 2vw;
+  font-size: 2vw;
+  line-height: 2vw;
   letter-spacing: 0.4vw;
-	font-family: $font-family-black;
-	@extend %flexCenter;
+  font-family: $font-family-black;
+  @extend %flexCenter;
   @include phone {
     font-size: 6vw;
   }
@@ -24,23 +24,18 @@
   }
 
   .version-number {
-		width: 0.5vw;
+    width: 0.5vw;
     font-size: 0.5vw;
     writing-mode: vertical-lr;
     text-orientation: mixed;
     letter-spacing: 0.08vw;
-		@extend %flexCenter;
+    @extend %flexCenter;
     transform: scale(-1, -1);
     @include phone_and_tabletP {
       width: 2vw;
       font-size: 1.5vw;
     }
   }
-}
-
-strong {
-  font-family: $font-family-black;
-  font-weight: normal;
 }
 
 .MuiGrid-align-content-xs-center {
@@ -65,7 +60,6 @@ strong {
     width: 357px !important;
   }
 }
-
 
 #launcher {
   position: fixed;
