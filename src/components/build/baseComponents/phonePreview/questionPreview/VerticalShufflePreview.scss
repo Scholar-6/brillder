@@ -56,6 +56,7 @@
   button.correct {
     color: var(--white);
     background: var(--theme-green);
+    font-family: $font-family-bold;
     .MuiAvatar-root {
       color: var(--theme-green);
     }
