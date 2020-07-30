@@ -92,7 +92,7 @@ $space-between-boxes: 0.1vw;
     height: 5%;
     color: white;
     font-family: $font-family-regular;
-
+    z-index: 101;
     .tutorial-exit-label {
       width: 38%;
     }
