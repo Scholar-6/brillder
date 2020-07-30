@@ -10,7 +10,7 @@ import './Proposal.scss';
 import SubjectPage from './questionnaire/subject/Subject';
 import BrickTitle from './questionnaire/brickTitle/brickTitle';
 import OpenQuestion from './questionnaire/openQuestion/openQuestion';
-import { BrickLengthEnum, Editor } from 'model/brick';
+import { BrickLengthEnum } from 'model/brick';
 import BrickLength from './questionnaire/brickLength/brickLength';
 import Brief from './questionnaire/brief/brief';
 import Prep from './questionnaire/prep/prep';
@@ -23,7 +23,6 @@ import VersionLabel from "components/baseComponents/VersionLabel";
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
-import BrickEditor from "./questionnaire/brickEditor/brickEditor";
 import { BrickFieldNames } from './model';
 
 import { setLocalBrick, getLocalBrick } from 'components/localStorage/proposal';
