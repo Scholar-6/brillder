@@ -122,7 +122,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       let choice = this.props.component.choices[index];
       let attemptedAnswer = this.props.attempt.answer[index].value;
       let answer = choice.answers[attemptedAnswer];
-      if (answer.checked) {
+      if (answer && answer.checked) {
         isCorrect = true;
       }
       return (
@@ -130,6 +130,17 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
           isPhonePreview={this.props.isPreview}
           attempt={this.props.attempt}
           isCorrect={isCorrect}
+          index={index}
+          hint={this.props.question.hint}
+        />
+      );
+    }
+    if (this.props.isPreview) {
+      return (
+        <ReviewEachHint
+          isPhonePreview={this.props.isPreview}
+          attempt={this.props.attempt}
+          isCorrect={false}
           index={index}
           hint={this.props.question.hint}
         />

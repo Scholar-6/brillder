@@ -6,7 +6,7 @@ import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 import {ChooseOneAnswer} from '../chooseOneBuild/types';
 import { QuestionValueType } from '../types';
 import validator from '../../../questionService/UniqueValidator'
-
+import { showSameAnswerPopup } from '../service/questionBuild';
 
 export interface ChooseSeveralData {
   list: ChooseOneAnswer[];
@@ -19,10 +19,11 @@ export interface ChooseSeveralBuildProps {
   validationRequired: boolean;
   save(): void;
   updateComponent(component:any):void;
+  openSameAnswerDialog(): void;
 }
 
 const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
-  locked, editOnly, data, validationRequired, save, updateComponent
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [height, setHeight] = React.useState('0%');
 
@@ -85,9 +86,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
 
   return (
     <div className="choose-several-build unique-component">
-      <div className="component-title">
-        Tick Correct Answers
-      </div>
+      <div className="component-title">Tick Correct Answers</div>
       {
         state.list.map((answer:any, i:number) => {
           return <ChooseOneAnswerComponent
@@ -103,6 +102,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
             removeFromList={removeFromList}
             onChecked={onChecked}
             update={update}
+            onBlur={() => showSameAnswerPopup(i, state.list, openSameAnswerDialog)}
           />
         })
       }

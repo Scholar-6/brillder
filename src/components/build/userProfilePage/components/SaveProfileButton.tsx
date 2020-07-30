@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import Avatar from "@material-ui/core/Avatar";
-// @ts-ignore
-import { pulse } from "react-animations";
-import styled, { keyframes } from "styled-components";
+
+import './SaveProfileButton.scss';
 import sprite from "../../../../assets/img/icons-sprite.svg";
 
 import { UserProfile } from "model/user";
@@ -13,6 +11,7 @@ interface SaveProfileProps {
 }
 
 interface SaveProfileState {
+  isValid: boolean;
   shouldPulse: boolean;
 }
 
@@ -21,11 +20,12 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
     super(props);
 
     this.state = {
-      shouldPulse: this.shouldPulse(props.user)
+      isValid: this.isValid(props.user),
+      shouldPulse: false
     }
   }
 
-  shouldPulse(user: UserProfile) {
+  isValid(user: UserProfile) {
     if (user.firstName && user.lastName) {
       return true;
     }
@@ -34,47 +34,54 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
 
   shouldComponentUpdate(props: SaveProfileProps) {
     const { user } = props;
-    if (this.shouldPulse(user)) {
-      if (this.state.shouldPulse === false) {
+
+    // check pulsing
+    if (this.isValid(user)) {
+      if (this.state.isValid === false && this.state.shouldPulse === false) {
         this.setState({ shouldPulse: true });
         return true;
       }
-      return false;
     } else {
       if (this.state.shouldPulse === true) {
         this.setState({ shouldPulse: false })
       }
-      return false;
     }
-  }
 
-  renderButton(className: string) {
-    return (
-      <Avatar
-        alt=""
-        className="save-image"
-        onClick={() => this.props.onClick()}
-      >
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#save-icon"} className={className} />
-        </svg>
-      </Avatar>
-    );
+    // check validation
+    if (this.isValid(user)) {
+      if (!this.state.isValid) {
+        this.setState({ isValid: true });
+        return true;
+      }
+    } else {
+      if (this.state.isValid) {
+        this.setState({ isValid: false });
+        return true;
+      }
+    }
+    return false;
   }
 
   render() {
-    const pulseAnimation = keyframes`${pulse}`;
-    const PulsingDiv = styled.div`animation: 0.5s ${pulseAnimation};`;
-
-    if (this.state.shouldPulse) {
-      return (
-        <PulsingDiv>
-          {this.renderButton("text-theme-green")}
-        </PulsingDiv>
-      );
+    let className = "save-image";
+    if (this.state.isValid) {
+      className += " valid";
     }
-    return this.renderButton("text-theme-dark-blue")
+    if (this.state.shouldPulse) {
+      className += " save-pulse";
+    }
+    return (
+      <button
+        type="button"
+        className={className}
+        onClick={this.props.onClick}
+      >
+        <svg className="svg active">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#save-icon"} />
+        </svg>
+      </button>
+    );
   }
 }
 

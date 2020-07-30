@@ -17,11 +17,12 @@ export interface PairAnswerProps {
   removeFromList(index: number): void;
   save(): void;
   update(): void;
+  onBlur(): void;
 }
 
 const PairAnswerComponent: React.FC<PairAnswerProps> = ({
   locked, editOnly, index, length, answer, validationRequired,
-  removeFromList, update, save
+  removeFromList, update, save, onBlur
 }) => {
   const answerChanged = (answer: Answer, value: string) => {
     if (locked) { return; }
@@ -90,7 +91,10 @@ const PairAnswerComponent: React.FC<PairAnswerProps> = ({
           validationRequired={validationRequired}
           toolbar={['mathType', 'chemType']}
           placeholder={"Enter Answer " + (index + 1) + "..."}
-          onBlur={() => save()}
+          onBlur={() => {
+            onBlur();
+            save();
+          }}
           onChange={value => answerChanged(answer, value)}
         />
         <QuestionImageDropZone

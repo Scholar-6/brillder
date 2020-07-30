@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 // @ts-ignore
@@ -26,6 +26,8 @@ import { ReduxCombinedState } from "redux/reducers";
 import BrickEditor from "./questionnaire/brickEditor/brickEditor";
 import { BrickFieldNames } from './model';
 
+import { setLocalBrick, getLocalBrick } from 'components/localStorage/proposal';
+
 
 interface ProposalProps {
   brick: Brick;
@@ -36,182 +38,195 @@ interface ProposalProps {
   history: History;
 }
 
-const Proposal: React.FC<ProposalProps> = ({ brick, history, ...props }) => {
-  let subjectId = 0;
-  if (props.user.subjects.length === 1) {
-    subjectId = props.user.subjects[0].id;
-  }
-  let initState = {
-    subjectId,
-    brickLength: BrickLengthEnum.None,
-    topic: '',
-    subTopic: '',
-    alternativeTopics: '',
-    title: '',
-    openQuestion: '',
-    brief: '',
-    prep: '',
-    synthesis: '',
-    alternativeSubject: '',
-  } as Brick;
+interface ProposalState {
+  brick: Brick;
+  saved: boolean;
+  isDialogOpen: boolean;
+}
 
-  if (props.user) {
-    initState.author = (props.user as any) as Author;
-  }
-
-  if (brick) {
-    initState = brick;
-  }
-
-  const [state, setBrick] = React.useState(initState);
-  const [saved, setSaved] = React.useState(false);
-  const [isDialogOpen, setDialog] = React.useState(false);
-
-  const canEdit = canEditBrick(state, props.user);
-
-  useEffect(() => {
-    if (brick) {
-      if (!brick.author && state.author) {
-        brick.author = state.author;
-      }
-      setBrick(brick);
+class Proposal extends React.Component<ProposalProps, ProposalState> {
+  constructor(props: ProposalProps) {
+    super(props);
+    let subjectId = 0;
+    const { user, brick } = props;
+    const { subjects } = user;
+    if (subjects.length === 1) {
+      subjectId = subjects[0].id;
     }
-  }, [brick, state.author]);
+    let initBrick = {
+      subjectId,
+      brickLength: BrickLengthEnum.None,
+      topic: '',
+      subTopic: '',
+      alternativeTopics: '',
+      title: '',
+      openQuestion: '',
+      brief: '',
+      prep: '',
+      synthesis: '',
+      alternativeSubject: '',
+    } as Brick;
 
-  const setLocalProposal = (data: any) => {
-    localStorage.setItem('proposal', JSON.stringify(data));
+
+    if (user) {
+      initBrick.author = (user as any) as Author;
+    }
+
+    // getting brick from local storage
+    let localBrick = getLocalBrick();
+    if (localBrick) {
+      initBrick = localBrick;
+    }
+
+    // if brick is fetched then set this brick and save in local storage
+    if (brick) {
+      initBrick = brick;
+      setLocalBrick(brick);
+    }
+
+    this.state = {
+      brick: initBrick,
+      saved: false,
+      isDialogOpen: false
+    }
   }
 
-  const saveLocalState = (data: any) => {
-    setBrick(data);
-    setLocalProposal(data);
+  shouldComponentUpdate() {
+    const {brick} = this.props;
+    if (brick) {
+      if (!brick.author && this.state.brick.author) {
+        brick.author = this.state.brick.author;
+      }
+      this.setState({brick});
+    }
+    return true;
   }
 
-  const setSubject = (subjectId: number) => {
-    saveLocalState({ ...state, subjectId });
+  saveBrick(tempBrick: Brick) {
+    const {brick} = this.props;
+    if (tempBrick.id) {
+      this.props.saveBrick(tempBrick);
+    } else if (brick && brick.id) {
+      tempBrick.id = brick.id;
+      this.props.saveBrick(tempBrick);
+    } else {
+      this.props.createBrick(tempBrick);
+    }
   }
 
-  const setTitles = (titles: any) => {
-    saveLocalState({ ...state, ...titles });
+  openDialog = () => this.setState({ isDialogOpen: true });
+  closeDialog = () => this.setState({ isDialogOpen: false });
+
+  goHome() {
+    this.setState({ isDialogOpen: false });
+    this.props.history.push('/home');
   }
 
-  const setOpenQuestion = (openQuestion: string) => {
-    saveLocalState({ ...state, openQuestion } as Brick);
+  saveLocalBrick(brick: Brick) {
+    this.setState({ brick })
+    setLocalBrick(brick);
   }
 
-  const setBrief = (brief: string) => {
-    saveLocalState({ ...state, brief } as Brick)
+  setSubject = (subjectId: number) => this.saveLocalBrick({ ...this.state.brick, subjectId });
+  setTitles = (titles: any) => this.saveLocalBrick({ ...this.state.brick, ...titles });
+  setOpenQuestion = (openQuestion: string) => this.saveLocalBrick({ ...this.state.brick, openQuestion } as Brick);
+  setBrief = (brief: string) => this.saveLocalBrick({ ...this.state.brick, brief } as Brick);
+  setPrep = (prep: string) => this.saveLocalBrick({ ...this.state.brick, prep } as Brick);
+ 
+  setBrickField = (name: BrickFieldNames, value: string) => {
+    this.state.brick[name] = value;
+    this.saveLocalBrick({ ...this.state.brick });
   }
 
-  const setPrep = (prep: string) => {
-    saveLocalState({ ...state, prep } as Brick)
-  }
-
-  const setBrickField = (name: BrickFieldNames, value: string) => {
-    state[name] = value;
-    saveLocalState({ ...state });
-  }
-
-  const setLength = (brickLength: BrickLengthEnum) => {
-    let brick = { ...state, brickLength } as Brick;
-    saveLocalState(brick);
+  setLength = (brickLength: BrickLengthEnum) => {
+    let brick = { ...this.state.brick, brickLength } as Brick;
+    this.saveLocalBrick(brick);
     return brick;
   }
   
-  const setEditor = (editor?: Editor) => {
-    let brick = { ...state, editor } as Brick;
-    saveLocalState(brick);
+  setEditor = (editor?: Editor) => {
+    let brick = { ...this.state.brick, editor } as Brick;
+    this.saveLocalBrick(brick);
     return brick;
   }
 
-  const setLengthAndSave = (brickLength: BrickLengthEnum) => {
+  setLengthAndSave = (brickLength: BrickLengthEnum) => {
+    const canEdit = canEditBrick(this.state.brick, this.props.user);
     if (!canEdit) { return; }
-    let brick = setLength(brickLength);
-    saveBrick(brick);
+    let brick = this.setLength(brickLength);
+    this.saveBrick(brick);
   }
 
-  const saveBrick = async (tempBrick: Brick) => {
-    if (tempBrick.id) {
-      await props.saveBrick(tempBrick);
-    } else if (brick && brick.id) {
-      tempBrick.id = brick.id;
-      await props.saveBrick(tempBrick);
-    } else {
-      await props.createBrick(tempBrick);
+  assignEditor = async () => {
+    if(this.state.brick.editor) {
+      await this.props.assignEditor(this.state.brick);
     }
   }
+  
+  saveAndMove = () => {
+    this.saveBrick(this.state.brick);
+    this.setState({ saved: true });
+  }
 
-  const assignEditor = async () => {
-    if(state.editor) {
-      await props.assignEditor(state);
+  render() {
+    const canEdit = canEditBrick(this.state.brick, this.props.user);
+
+    setBrillderTitle();
+
+    if (this.state.saved) {
+      this.props.history.push(`/build/brick/${this.props.brick.id}/build/investigation/question`);
     }
-  }
 
-  setBrillderTitle();
+    const localBrick = this.state.brick;
+    const {user} = this.props;
 
-  const saveAndMove = async () => {
-    await saveBrick(state);
-    await assignEditor();
-    setSaved(true);
-  }
-
-  if (saved) {
-    history.push(`/build/brick/${brick.id}/build/investigation/question`);
-  }
-
-  const openDialog = () => {
-    setDialog(true);
-  }
-
-  const closeDialog = () => {
-    setDialog(false);
-  }
-
-  const goHome = () => {
-    setDialog(false);
-    history.push('/home');
-  }
-
-  return (
-    <MuiThemeProvider>
-      <HomeButton onClick={openDialog} />
-      <div style={{ width: '100%', height: '100%' }} className="proposal-router">
-        <Route path='/build/new-brick/subject'>
-          <SubjectPage subjects={props.user.subjects} subjectId={''} saveSubject={setSubject} />
-        </Route>
-        <Route path='/build/new-brick/brick-title'>
-          <BrickTitle parentState={state} canEdit={canEdit} saveTitles={setTitles} />
-        </Route>
-        <Route path='/build/new-brick/open-question'>
-          <OpenQuestion selectedQuestion={state.openQuestion} canEdit={canEdit} saveOpenQuestion={setOpenQuestion} />
-        </Route>
-        <Route path='/build/new-brick/brief'>
-          <Brief parentBrief={state.brief} canEdit={canEdit} saveBrief={setBrief} />
-        </Route>
-        <Route path='/build/new-brick/prep'>
-          <Prep parentPrep={state.prep} canEdit={canEdit} savePrep={setPrep} />
-        </Route>
-        <Route path='/build/new-brick/length'>
-          <BrickLength length={state.brickLength} canEdit={canEdit} saveLength={setLength} saveBrick={setLength} />
-        </Route>
-        <Route path='/build/new-brick/editor'>
-          <BrickEditor parentState={state} canEdit={canEdit} setEditor={setEditor} />
-        </Route>
-        <Route path="/build/new-brick/proposal">
-          <ProposalReview
-            brick={state}
-            history={history}
-            canEdit={canEdit}
-            user={props.user}
-            setBrickField={setBrickField}
-            saveBrick={saveAndMove}
+    return (
+      <MuiThemeProvider>
+        <div>
+          <HomeButton onClick={() => this.openDialog()} />
+          <div style={{ width: '100%', height: '100%' }} className="proposal-router">
+            <Route path='/build/new-brick/subject'>
+              <SubjectPage subjects={user.subjects} subjectId={''} saveSubject={this.setSubject} />
+            </Route>
+            <Route path='/build/new-brick/brick-title'>
+              <BrickTitle parentState={localBrick} canEdit={canEdit} saveTitles={this.setTitles} />
+            </Route>
+            <Route path='/build/new-brick/open-question'>
+              <OpenQuestion selectedQuestion={localBrick.openQuestion} canEdit={canEdit} saveOpenQuestion={this.setOpenQuestion} />
+            </Route>
+            <Route path='/build/new-brick/brief'>
+              <Brief parentBrief={localBrick.brief} canEdit={canEdit} saveBrief={this.setBrief} />
+            </Route>
+            <Route path='/build/new-brick/prep'>
+              <Prep parentPrep={localBrick.prep} canEdit={canEdit} savePrep={this.setPrep} />
+            </Route>
+            <Route path='/build/new-brick/length'>
+              <BrickLength length={localBrick.brickLength} canEdit={canEdit} saveLength={this.setLength} saveBrick={this.setLengthAndSave} />
+            </Route>
+            <Route path='/build/new-brick/editor'>
+              <BrickEditor parentState={this.state.brick} canEdit={canEdit} setEditor={this.setEditor} />
+            </Route>
+            <Route path="/build/new-brick/proposal">
+              <ProposalReview
+                brick={localBrick}
+                history={this.props.history}
+                canEdit={canEdit}
+                user={user}
+                setBrickField={this.setBrickField}
+                saveBrick={this.saveAndMove}
+              />
+            </Route>
+            <VersionLabel />
+          </div>
+          <CloseProposalDialog
+            isOpen={this.state.isDialogOpen}
+            close={() => this.closeDialog()}
+            move={() => this.goHome()}
           />
-        </Route>
-        <VersionLabel />
-      </div>
-      <CloseProposalDialog isOpen={isDialogOpen} close={closeDialog} move={goHome} />
-    </MuiThemeProvider>
-  );
+        </div>
+      </MuiThemeProvider>
+    );
+  }
 }
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -220,7 +235,6 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
   assignEditor: (brick: any) => dispatch(actions.assignEditor(brick)),

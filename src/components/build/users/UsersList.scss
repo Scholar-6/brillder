@@ -4,6 +4,11 @@
 
 .user-list-page {
   .sorted-row {
+    .sort-box {
+      .subjects-filter {
+        height: calc(100vh - 38vh);
+      }
+    }
     .brick-row-container {
       @include tabletP {
         padding-left: 0;

@@ -43,6 +43,7 @@ const QuestionComponents = ({
   const [components, setComponents] = useState(componentsCopy);
   const [removeIndex, setRemovedIndex] = useState(-1);
   const [dialogOpen, setDialog] = useState(false);
+  const [sameAnswerDialogOpen, setSameAnswerDialog] = useState(false);
 
   useEffect(() => {
     let componentsCopy = Object.assign([], question.components) as any[];
@@ -54,6 +55,9 @@ const QuestionComponents = ({
     let compsCopy = Object.assign([], question.components);
     setComponents(compsCopy);
   }
+
+  const hideSameAnswerDialog = () => setSameAnswerDialog(false);
+  const openSameAnswerDialog = () => setSameAnswerDialog(true);
 
   const removeInnerComponent = (componentIndex: number) => {
     if (locked) { return; }
@@ -156,6 +160,7 @@ const QuestionComponents = ({
         setQuestionHint={setQuestionHint}
         updateComponent={updatingComponent}
         saveBrick={saveBrick}
+        openSameAnswerDialog={openSameAnswerDialog}
       />
     );
   }
@@ -212,7 +217,8 @@ const QuestionComponents = ({
         onClose={hideDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className="dialog-box">
+        className="dialog-box"
+      >
         <div className="dialog-header">
           <div>Permanently delete<br />this component?</div>
         </div>
@@ -224,6 +230,22 @@ const QuestionComponents = ({
           <button className="btn btn-md bg-gray no-button"
             onClick={hideDialog}>
             <span>No, keep</span>
+          </button>
+        </div>
+      </Dialog>
+      <Dialog
+        open={sameAnswerDialogOpen}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        className="dialog-box"
+        onClose={hideSameAnswerDialog}
+      >
+        <div className="dialog-header">
+          <div>Looks like these two answers are the same</div>
+        </div>
+        <div className="dialog-footer">
+          <button className="btn btn-md bg-gray yes-button" onClick={hideSameAnswerDialog}>
+            <span>Ok</span>
           </button>
         </div>
       </Dialog>

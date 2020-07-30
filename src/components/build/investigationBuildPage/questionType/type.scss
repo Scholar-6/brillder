@@ -83,8 +83,6 @@
     cursor: pointer;
     background: var(--tab-gray);
     color: var(--theme-dark-blue);
-    margin: 0.6vw 0.6vw 0.6vw 0.6vw;
-    border-radius: 1.1vw;
     height: 15.35vh;
     font-size: 1.5vw;
     padding: 0;
@@ -94,23 +92,26 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    letter-spacing: 0.1vw;
     @extend %transitionAll300;
-    @media only screen and (max-width: 1279px) and (min-width: 960px) {
-      font-size: 1.4vw !important;
-      margin: 0.8vw 0.8vw 0.8vw 0.8vw !important;
-    }
-    @media only screen and (max-width: 959px) and (min-width: 600px) {
-      font-size: 2vw !important;
-      margin: 1.1vw 1.1vw 1.1vw 1.1vw !important;
-      border-radius: 2vw;
-    }
-    @media only screen and (max-width: 599px) {
+    // @media only screen and (max-width: 959px) and (min-width: 600px) {
+    //   font-size: 2vw !important;
+    //   margin: 1.1vw 1.1vw 1.1vw 1.1vw !important;
+    //   border-radius: 2vw;
+    // }
+    @include phone_and_tabletP {
       font-size: 2.3vw !important;
-      margin: 7px 7px 7px 12px !important;
+      margin: 7px 7px 7px 12px;
       border-radius: 8px;
+      letter-spacing: 5px;
       height: 12vh;
     }
+    @include tabletP {
+      font-size: 1.4vw !important;
+      margin: 0.6vw 0.6vw 0.6vw 0.6vw;
+      border-radius: 1.1vw;
+      letter-spacing: 0.4vw;
+    }
+
     .link-description {
       text-align: center;
       margin: 0;

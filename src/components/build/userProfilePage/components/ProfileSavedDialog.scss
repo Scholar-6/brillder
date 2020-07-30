@@ -8,12 +8,16 @@
       font-family: $font-family-regular;
       font-size: 2vw;
       margin-right: 1vw;
+      @include phone_and_tabletP {
+        font-size: 7.8vw;
+      }
     }
     .circle-check {
+      $circle-size: 3.5vw;
       cursor: pointer;
       text-align: center;
-      height: 3.5vw;
-      width: 3.5vw;
+      height: $circle-size;
+      width: $circle-size;
       background: var(--theme-green);
 
       @include phone_and_tabletP {
@@ -22,8 +26,9 @@
       }
 
       svg {
-        height: 1.9vw;
-        width: 1.9vw;
+        $icon-size: 2.3vw;
+        height: $icon-size;
+        width: $icon-size;
 
         @include phone_and_tabletP {
           height: 5vw;
