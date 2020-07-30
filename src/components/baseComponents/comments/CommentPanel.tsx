@@ -1,12 +1,9 @@
 import React from 'react';
 import { Grid, Button, Collapse } from '@material-ui/core';
-import {
-    withStyles,
-    Theme
-} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
-import { green, blue } from '@material-ui/core/colors';
+import { green } from '@material-ui/core/colors';
 import CommentItem from './CommentItem';
 import { ReduxCombinedState } from 'redux/reducers';
 // @ts-ignore
@@ -17,19 +14,19 @@ import { Brick } from 'model/brick';
 import CommentChild from './CommentChild';
 import NewCommentPanel from './NewCommentPanel';
 
-const NewCommentButton = withStyles((theme: Theme) => ({
+const NewCommentButton = withStyles({
     root: {
         color: "#ffffff",
-        backgroundColor: blue[500],
+        backgroundColor: green[500],
         '&:hover': {
-            backgroundColor: blue[700],
+            backgroundColor: green[700],
         },
         width: "100%",
         fontSize: 25,
         letterSpacing: 7,
         borderRadius: 0
     }
-}))(Button);
+})(Button);
 
 const ScrollGrid = withStyles({
     root: {
@@ -58,9 +55,11 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
                 <Box textAlign="center" fontSize={20} letterSpacing={4} fontFamily="Brandon Grotesque Black" py={1}>COMMENTS</Box>
             </Grid>
             <Grid item>
-                <NewCommentButton disableElevation onClick={() => setPanelShown(!panelShown)}>NEW COMMENT</NewCommentButton>
+                <Collapse in={!panelShown}>
+                    <NewCommentButton disableElevation onClick={() => setPanelShown(!panelShown)}>NEW COMMENT</NewCommentButton>
+                </Collapse>
                 <Collapse in={panelShown}>
-                    <NewCommentPanel />
+                    <NewCommentPanel collapsePanel={() => setPanelShown(false)} />
                 </Collapse>
             </Grid>
             <ScrollGrid item container direction="column">

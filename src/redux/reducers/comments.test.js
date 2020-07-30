@@ -55,8 +55,6 @@ describe("comments reducer", () => {
 
         const newState = reducer(initialState, action);
         expect(newState.comments).toContainEqual(mockComment);
-        expect(newState.comments).toContainEqual(newComment);
-        expect(newState.mostRecentComment).toStrictEqual(newComment);
     });
 
     it("should handle CREATE_COMMENT_FAILURE", () => {
@@ -104,7 +102,8 @@ describe("comments reducer", () => {
         const newState = reducer(initialState, action);
 
         expect(newState.comments).toContainEqual(mockComment);
-        expect(newState.comments).toContainEqual({ ...mockComment, id: 2 });
+        expect(newState.comments).toContainEqual(action.comment);
+        expect(newState.mostRecentComment).toStrictEqual(action.comment);
     });
 
     it("should handle NEW_COMMENT with a child comment", () => {
@@ -124,5 +123,6 @@ describe("comments reducer", () => {
         );
         expect(originalComment).toBeDefined();
         expect(originalComment.children).toContainEqual({ ...action.comment, parent: undefined });
+        expect(newState.mostRecentComment).toStrictEqual(action.comment);
     })
 })
