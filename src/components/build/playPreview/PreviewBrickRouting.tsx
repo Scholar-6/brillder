@@ -142,7 +142,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (canEdit) {
       let editor = checkEditor(props.user.roles);
       if (editor && props.user.id === props.brick.author.id) {
-        props.history.push(`/play-preview/brick/${brickId}/finish`);
+        props.history.push(`/play-preview/brick/${brickId}/editor`);
       } else {
         props.history.push(`/play-preview/brick/${brickId}/publish`);
       }
@@ -262,7 +262,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               <PublishPage {...props} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/editor">
-              <EditorPage brick={props.brick} canEdit={true} saveEditor={console.log} />
+              <EditorPage
+                brick={props.brick}
+                canEdit={true}
+                saveEditor={console.log}
+                history={props.history}
+              />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/finish">
               <FinishPage {...props} />
