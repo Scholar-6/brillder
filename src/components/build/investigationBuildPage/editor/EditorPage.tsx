@@ -1,5 +1,6 @@
 import React from "react";
-import { Grid, Input, Hidden } from "@material-ui/core";
+import { Grid, TextField, Hidden, Fab, SvgIcon } from "@material-ui/core";
+import sprite from "assets/img/icons-sprite.svg";
 
 import './EditorPage.scss';
 import { Brick, Editor } from "model/brick";
@@ -12,29 +13,50 @@ interface EditorPageProps {
 }
 
 const EditorPage: React.FC<EditorPageProps> = ({ brick, canEdit, saveEditor }) => {
-  const onEditorChange = (event: React.ChangeEvent<{ value: string }>) => {
-    let editorId = parseInt(event.target.value);
-    saveEditor({ id: isNaN(editorId) ? 0 : editorId });
+  const [editorIdString, setEditorIdString] = React.useState(brick.editor?.id ?? "");
+  
+  const editorIdValid = !isNaN(parseInt(editorIdString.toString()));
+
+  const onNext = () => {
+    if(editorIdValid) {
+      let editorId = parseInt(editorIdString.toString());
+      saveEditor({ id: editorId });
+    }
   };
 
   return (
     <Grid container
-      direction="column" 
+      direction="row" 
       alignContent="center"
       justify="center"
-      className="editor-page">
+      className="editor-page"
+      spacing={4}>
       <Grid item className="left-block">
         <h1>Who will edit your brick?</h1>
         <Grid item className="input-container">
-          <Input
+          <TextField
             disabled={!canEdit}
             className="audience-inputs"
-            value={brick.editor?.id || ""}
-            onChange={onEditorChange}
+            value={editorIdString}
+            onChange={(evt) => setEditorIdString(evt.target.value)}
             placeholder="Enter editor's User ID here..."
+            error={!editorIdValid}
+            helperText={editorIdValid ? "" : "Invalid ID"}
             fullWidth
           />
         </Grid>
+      </Grid>
+      <Grid item>
+        <div>
+          <Fab onClick={onNext} color="primary">
+            <SvgIcon>
+              <svg className="svg w80 h80 active m-l-02">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#arrow-right"} />
+              </svg>
+            </SvgIcon>
+          </Fab>
+        </div>
       </Grid>
       <Hidden only={['xs','sm']}>
         <div className="red-right-block"></div>
