@@ -34,7 +34,6 @@ interface ProposalProps {
   user: User;
   saveBrick(brick: Brick): void;
   createBrick(brick: Brick): void;
-  assignEditor(brick: Brick): void;
   history: History;
 }
 
@@ -143,24 +142,12 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.saveLocalBrick(brick);
     return brick;
   }
-  
-  setEditor = (editor?: Editor) => {
-    let brick = { ...this.state.brick, editor } as Brick;
-    this.saveLocalBrick(brick);
-    return brick;
-  }
 
   setLengthAndSave = (brickLength: BrickLengthEnum) => {
     const canEdit = canEditBrick(this.state.brick, this.props.user);
     if (!canEdit) { return; }
     let brick = this.setLength(brickLength);
     this.saveBrick(brick);
-  }
-
-  assignEditor = async () => {
-    if(this.state.brick.editor) {
-      await this.props.assignEditor(this.state.brick);
-    }
   }
   
   saveAndMove = () => {
@@ -202,9 +189,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             </Route>
             <Route path='/build/new-brick/length'>
               <BrickLength length={localBrick.brickLength} canEdit={canEdit} saveLength={this.setLength} saveBrick={this.setLengthAndSave} />
-            </Route>
-            <Route path='/build/new-brick/editor'>
-              <BrickEditor parentState={this.state.brick} canEdit={canEdit} setEditor={this.setEditor} />
             </Route>
             <Route path="/build/new-brick/proposal">
               <ProposalReview
