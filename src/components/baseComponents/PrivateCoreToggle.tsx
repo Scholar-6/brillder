@@ -6,7 +6,7 @@ interface ToggleProps {
   onSwitch(): void;
 }
 
-const PublicCoreToggle: React.FC<ToggleProps> = ({ isCore, onSwitch }) => {
+const PrivateCoreToggle: React.FC<ToggleProps> = ({ isCore, onSwitch }) => {
   const renderCoreIcon = () => {
     let className = "svg active";
     if (isCore) {
@@ -20,7 +20,7 @@ const PublicCoreToggle: React.FC<ToggleProps> = ({ isCore, onSwitch }) => {
     );
   }
 
-  const renderPublicIcon = () => {
+  const renderPrivateIcon = () => {
     let className = "svg active";
     if (!isCore) {
       className += " selected";
@@ -39,12 +39,12 @@ const PublicCoreToggle: React.FC<ToggleProps> = ({ isCore, onSwitch }) => {
         <span className={isCore ? 'bold' : 'regular'}>Core</span>
         <div className="svgOnHover" onClick={onSwitch}>
           {renderCoreIcon()}
-          {renderPublicIcon()}
+          {renderPrivateIcon()}
         </div>
-        <span className={!isCore ? 'bold' : 'regular'}>Public</span>
+        <span className={!isCore ? 'bold' : 'regular'}>Private</span>
       </button>
     </div>
   );
 };
 
-export default PublicCoreToggle;
+export default PrivateCoreToggle;
