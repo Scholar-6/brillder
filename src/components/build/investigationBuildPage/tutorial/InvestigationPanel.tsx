@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Button } from '@material-ui/core';
 import './InvestigationPanel.scss';
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import { TutorialStep } from './TutorialPanelWorkArea';
 
 
