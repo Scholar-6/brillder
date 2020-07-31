@@ -37,7 +37,7 @@ import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar";
 import Image from "@ckeditor/ckeditor5-image/src/image";
 import "./DocumentEditor.scss";
 import UploadImageCustom from './UploadImageCustom';
-import CommentCustom from './CommentCustom';
+//import CommentCustom from './CommentCustom';
 
 export interface DocumentWEditorProps {
   disabled: boolean;

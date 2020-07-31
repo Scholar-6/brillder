@@ -1,7 +1,7 @@
 import types from '../types';
 import { Comment } from 'model/comments';
-import comments from 'redux/actions/comments';
-import { stat } from 'fs';
+//import comments from 'redux/actions/comments';
+//import { stat } from 'fs';
 
 export interface CommentsState {
     comments: Comment[] | null;
@@ -28,6 +28,7 @@ export default (state = CommentsInitialState, action: any): CommentsState => {
         case types.EDIT_COMMENT:
             return {
                 comments: (state.comments ?? []).map((comment: Comment) => {
+                    /*eslint-disable-next-line*/
                     if(comment.id == action.commentId) {
                         return { ...comment, text: action.newText }
                     } else {

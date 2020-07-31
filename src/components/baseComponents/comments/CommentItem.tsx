@@ -1,11 +1,11 @@
 import React from 'react';
 import { Grid, Box, SvgIcon, IconButton, Collapse } from '@material-ui/core';
-import { green, red } from '@material-ui/core/colors';
-import { withStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+//import { green, red } from '@material-ui/core/colors';
+import { withStyles/*, createMuiTheme, ThemeProvider*/ } from '@material-ui/core/styles';
 
 import sprite from "assets/img/icons-sprite.svg";
 
-import { CommentChildProps } from './CommentChild';
+//import { CommentChildProps } from './CommentChild';
 
 import moment from 'moment';
 import ReplyCommentPanel from './ReplyCommentPanel';
@@ -21,12 +21,14 @@ const Stretch = withStyles({
 	}
 })(Grid);
 
+/*
 const GreenRedTheme = createMuiTheme({
 	palette: {
 		primary: green,
 		secondary: red
 	}
 });
+*/
 
 const CommentItem: React.FC<CommentItemProps> = props => {
   const [replyPanelShown, setReplyPanelShown] = React.useState(false);
@@ -76,6 +78,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
 				<Grid item>
 					<b>Comment: </b><i>{props.comment.text}</i>
 				</Grid>
+				{/*eslint-disable-next-line*/}
 				{props.children && props.children instanceof Array && props.children.length != 0 &&
 				<Box borderTop="1px solid lightgrey" paddingTop={1} marginTop={1} clone>
 					<Grid item container direction="column">
