@@ -1,6 +1,12 @@
 import { isMobile } from "react-device-detect";
 
-function minimizeZendeskButton(iframe: any) {
+const getZendeskIframe = () => document.getElementById("launcher") as any;
+
+export function minimizeZendeskButton(iframe?: any) {
+  if (!iframe) {
+    iframe = getZendeskIframe();
+    if (!iframe) { return; }
+  }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
   var button = innerDoc.getElementsByTagName("button")[0];
   button.style.padding = "1rem";
@@ -11,7 +17,11 @@ function minimizeZendeskButton(iframe: any) {
   helpText[0].style.width = 0;
 }
 
-function maximizeZendeskButton(iframe: any) {
+export function maximizeZendeskButton(iframe?: any) {
+  if (!iframe) {
+    iframe = getZendeskIframe();
+    if (!iframe) { return; }
+  }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
   let button = innerDoc.getElementsByTagName("button")[0];
   button.style.padding = "0.92857rem 1.57143rem";
@@ -42,6 +52,9 @@ function addZendesk() {
 
 const isViewAllPage = (pathName: string) => pathName === "/play/dashboard";
 const isManageUsersPage = (pathName: string) => pathName === "/users";
+const isPlayPage = (pathName: string) => {
+  return pathName.search('/play/brick') >= 0;
+}
 
 /**
  * change zendesk button size
@@ -50,21 +63,23 @@ const isManageUsersPage = (pathName: string) => pathName === "/users";
  */
 function setZendeskMode(iframe: any, location: any) {
   if (isMobile) { return; }
-  iframe.style.width = '108px';
+  iframe.style.width = '135px';
   // #1332 small mode only in viewAll and manageUsers pages
   let isBigMode = true;
+  let isIgnorePage = false;
   const { pathname } = location;
-  if (isViewAllPage(pathname)) {
+  if (isViewAllPage(pathname) || isManageUsersPage(pathname)) {
     isBigMode = false;
   }
-  if (isManageUsersPage(pathname)) {
-    isBigMode = false;
+  
+  if (isPlayPage(pathname)) {
+    isIgnorePage = true;
   }
 
   try {
-    if (isBigMode) {
+    if (isBigMode && !isIgnorePage) {
       maximizeZendeskButton(iframe);
-    } else {
+    } else if (!isIgnorePage) {
       minimizeZendeskButton(iframe);
     }
   } catch { }
@@ -82,7 +97,7 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
 
     // check untill zendesk is mounted
     const interval = setInterval(() => {
-      const iframe = document.getElementById("launcher") as any;
+      const iframe = getZendeskIframe();
       if (iframe) {
         setZendesk(true);
         try {
@@ -97,7 +112,7 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
       }
     }, 100);
   } else {
-    const iframe = document.getElementById("launcher") as any;
+    const iframe = getZendeskIframe();
     setZendeskMode(iframe, location);
   }
 }

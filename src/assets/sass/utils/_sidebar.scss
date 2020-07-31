@@ -273,6 +273,9 @@
       }
     }
     .back-hover-area {
+      h3 {
+        text-align: left;
+      }
       @extend %floatToXCenter;
       top: 26%;
       @extend %flexCenter;
@@ -290,6 +293,10 @@
           color: var(--theme-orange);
           transform: rotate(10deg);
         }
+      }
+      .create-icon-small {
+        width: 3vw;
+        height: 3vw;
       }
       h3 {
         font-size: 1.6vw;

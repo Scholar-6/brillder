@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { List, ListItem, ListItemText, Popover, IconButton, SvgIcon, Card, CardContent, ListItemIcon, CardActions } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
-import sprite from "../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import { Notification, notificationTypeColors } from 'model/notifications';
 //import notificationActions from 'redux/actions/notifications';
 //import { Dispatch } from 'redux';
@@ -86,9 +86,9 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                 </ListItem>
               )) :
                 (
-                  <ListItem className="content-box">
+                  <div className="content-box">
                     <ListItemText className="notification-detail-single" primary="Looks like you don't have any notifications..." />
-                  </ListItem>
+                  </div>
                 )
               }
             </List>

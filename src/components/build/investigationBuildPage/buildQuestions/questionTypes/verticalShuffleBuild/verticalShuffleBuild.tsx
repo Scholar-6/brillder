@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import './verticalShuffleBuild.scss'
-import sprite from "../../../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import { UniqueComponentProps } from '../types';
 import { showSameAnswerPopup } from '../service/questionBuild';
 
