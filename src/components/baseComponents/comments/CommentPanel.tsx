@@ -55,9 +55,9 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
     return (
       <Grid container direction="column" className={className}>
         {props.comments.map(comment => (
-          <CommentItem text={comment.text} timestamp={comment.timestamp}>
+          <CommentItem comment={comment}>
             {comment.children && comment.children.map(child => (
-              <CommentChild text={child.text} timestamp={child.timestamp} />
+              <CommentChild comment={child} />
             ))}
           </CommentItem>
         ))}
@@ -72,9 +72,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
           <Box textAlign="center" fontSize={20} letterSpacing={4} fontFamily="Brandon Grotesque Black" py={1}>COMMENTS</Box>
         </Grid>
         <Grid item>
-          <Collapse in={!panelShown}>
-            <NewCommentButton disableElevation onClick={() => setPanelShown(!panelShown)}>NEW COMMENT</NewCommentButton>
-          </Collapse>
+          <NewCommentButton disableElevation onClick={() => setPanelShown(!panelShown)}>NEW COMMENT</NewCommentButton>
           <Collapse in={panelShown}>
             <NewCommentPanel collapsePanel={() => setPanelShown(false)} />
           </Collapse>
