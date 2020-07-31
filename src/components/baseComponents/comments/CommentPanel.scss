@@ -1,0 +1,13 @@
+.comments-column {
+  transition: height 1s ease;
+  overflow: scroll;
+  display: block !important;
+}
+
+.bigger-comments {
+  height: 60vh;
+}
+
+.smaller-comments {
+  height: 40vh;
+}
