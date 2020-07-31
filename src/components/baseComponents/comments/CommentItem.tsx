@@ -39,28 +39,28 @@ const CommentItem: React.FC<CommentItemProps> = props => {
 					<Stretch item>
 						<h4><b>{props.comment.author.firstName} {props.comment.author.lastName}</b></h4>
 					</Stretch>
-          {/* Approve and Reject buttons 31/07/20
+		      {/* Approve and Reject buttons 31/07/20
 					<ThemeProvider theme={GreenRedTheme}>
 						<IconButton aria-label="reply" size="small" color="primary">
 							<SvgIcon fontSize="inherit">
-                <svg className="svg active">*/}
+				        <svg className="svg active">*/}
 									{/*eslint-disable-next-line*/}
-                  {/*
+				          {/*
 									<use href={sprite + "#ok"} />
 								</svg>
 							</SvgIcon>
 						</IconButton>
 						<IconButton aria-label="reply" size="small" color="secondary">
 							<SvgIcon fontSize="inherit">
-                <svg className="svg active">*/}
+				<svg className="svg active">*/}
 									{/*eslint-disable-next-line*/}
-                {/*
+				          {/*
 									<use href={sprite + "#cancel"} />
 								</svg>
 							</SvgIcon>
 						</IconButton>
 					</ThemeProvider>
-          */}
+		      */}
 					<IconButton aria-label="reply" size="small" color="primary" onClick={() => setReplyPanelShown(!replyPanelShown)}>
 						<SvgIcon fontSize="inherit">
 							<svg className="svg active">
