@@ -21,7 +21,7 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 import { ReduxCombinedState } from "redux/reducers";
 import DashboardFilter, { SortBy } from './DashboardFilter';
 import DashboardPagination from './DashboardPagination';
-import PublicCoreToggle from 'components/baseComponents/PublicCoreToggle';
+import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
 
 
 interface BricksListProps {
@@ -606,7 +606,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               <div className="brick-row-title">
                 ALL BRICKS
               </div>
-              <PublicCoreToggle isCore={this.state.isCore} onSwitch={() => this.toggleCore()} />
+              <PrivateCoreToggle isCore={this.state.isCore} onSwitch={() => this.toggleCore()} />
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>

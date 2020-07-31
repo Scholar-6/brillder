@@ -11,7 +11,7 @@ import { checkAdmin } from "components/services/brickService";
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
-import PublicCoreToggle from "components/baseComponents/PublicCoreToggle";
+import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 import { ReduxCombinedState } from "redux/reducers";
@@ -651,7 +651,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           />
           <Grid item xs={9} className="brick-row-container">
             <BackPageTitle filters={this.state.filters} />
-            <PublicCoreToggle isCore={this.state.filters.isCore} onSwitch={() => this.toggleCore()} />
+            <PrivateCoreToggle isCore={this.state.filters.isCore} onSwitch={() => this.toggleCore()} />
             <div className="bricks-list-container">
               <div className="bricks-list">
                 {this.renderBricks()}
