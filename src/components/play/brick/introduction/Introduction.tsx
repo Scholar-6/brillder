@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";

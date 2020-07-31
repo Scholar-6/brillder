@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 import './AdditionalPanel.scss';
 import { TutorialStep } from './TutorialPanelWorkArea';
 
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 export interface TutorialProps {
   next(step: TutorialStep): void;

@@ -8,7 +8,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
-import sprite from "../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import sprite from "../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import { PlayMode } from './model';
 
 interface SidebarProps {

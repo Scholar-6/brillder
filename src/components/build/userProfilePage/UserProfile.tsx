@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from "@material-ui/core/Checkbox";
 import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
-import sprite from "../../../assets/img/icons-sprite.svg";
 
 import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
@@ -19,8 +18,9 @@ import { checkAdmin } from "components/services/brickService";
 import UserProfileMenu from "./components/UserProfileMenu";
 import SubjectDialog from "./components/SubjectDialog";
 import { ReduxCombinedState } from "redux/reducers";
-import SaveProfileButton from './components/SaveProfileButton';
-import ProfileSavedDialog from './components/ProfileSavedDialog';
+import SaveProfileButton from "./components/SaveProfileButton";
+import ProfileSavedDialog from "./components/ProfileSavedDialog";
+import ProfileImage from "./components/ProfileImage";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -76,6 +76,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             roles: [],
             subjects: [],
             status: UserStatus.Pending,
+            profileImage: ""
           },
           subjects: [],
           isNewUser: true,
@@ -128,6 +129,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           roles: roles,
           subjects: user.subjects,
           status: UserStatus.Pending,
+          profileImage: ""
         },
         subjects: [],
         autoCompleteOpen: false,
@@ -144,49 +146,40 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         savedDialogOpen: false,
       };
       if (userId) {
-        axios
-          .get(`${process.env.REACT_APP_BACKEND_HOST}/user/${userId}`, {
-            withCredentials: true,
-          })
-          .then((res) => {
-            const user = res.data as UserProfile;
-
-            user.roles = res.data.roles.map(
-              (role: UserRoleItem) => role.roleId
-            );
-            if (!user.email) {
-              user.email = "";
-            }
-            if (!user.firstName) {
-              user.firstName = "";
-            }
-            if (!user.lastName) {
-              user.lastName = "";
-            }
-            if (!user.roles) {
-              user.roles = [];
-            }
-            if (!user.subjects) {
-              user.subjects = [];
-            }
-            this.setState({ ...this.state, user: res.data });
-          })
-          .catch((error) => {
-            alert("Can`t get user profile");
-          });
+        axios.get(`${process.env.REACT_APP_BACKEND_HOST}/user/${userId}`, {
+          withCredentials: true,
+        }).then((res) => {
+          const user = res.data as UserProfile;
+          user.roles = res.data.roles.map((role: UserRoleItem) => role.roleId);
+          if (!user.email) {
+            user.email = "";
+          }
+          if (!user.firstName) {
+            user.firstName = "";
+          }
+          if (!user.lastName) {
+            user.lastName = "";
+          }
+          if (!user.roles) {
+            user.roles = [];
+          }
+          if (!user.subjects) {
+            user.subjects = [];
+          }
+          this.setState({ user: res.data });
+        }).catch((error) => {
+          alert("Can`t get user profile");
+        });
       }
     }
 
-    axios
-      .get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        this.setState({ ...this.state, subjects: res.data });
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
-      });
+    axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
+      withCredentials: true,
+    }).then((res) => {
+      this.setState({ subjects: res.data });
+    }).catch((error) => {
+      alert("Can`t get bricks");
+    });
   }
 
   saveStudentProfile(user: UserProfile) {
@@ -195,7 +188,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     userToSave.roles = user.roles;
 
     if (!user.subjects || user.subjects.length === 0) {
-      this.setState({ ...this.state, noSubjectDialogOpen: true });
+      this.setState({ noSubjectDialogOpen: true });
       return;
     }
     this.save(userToSave);
@@ -227,7 +220,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.prepareUserToSave(userToSave, user);
 
     if (!user.subjects || user.subjects.length === 0) {
-      this.setState({ ...this.state, noSubjectDialogOpen: true });
+      this.setState({ noSubjectDialogOpen: true });
       return;
     }
 
@@ -254,35 +247,41 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   onSubjectDialogClose() {
-    this.setState({ ...this.state, noSubjectDialogOpen: false });
+    this.setState({ noSubjectDialogOpen: false });
   }
 
   onProfileSavedDialogClose() {
-    this.setState({ ...this.state, savedDialogOpen: false });
+    this.setState({ savedDialogOpen: false });
   }
 
   onFirstNameChanged(e: any) {
     const { user } = this.state;
     user.firstName = e.target.value;
-    this.setState({ ...this.state });
+    this.setState({ user });
   }
 
   onLastNameChanged(e: any) {
     const { user } = this.state;
     user.lastName = e.target.value;
-    this.setState({ ...this.state });
+    this.setState({ user });
   }
 
   onEmailChanged(e: any) {
     const { user } = this.state;
     user.email = e.target.value;
-    this.setState({ ...this.state });
+    this.setState({ user });
   }
 
   onPasswordChanged(e: any) {
     const { user } = this.state;
     user.password = e.target.value;
-    this.setState({ ...this.state });
+    this.setState({ user });
+  }
+
+  onProfileImageChanged(name: string) {
+    const { user } = this.state;
+    user.profileImage = name;
+    this.setState({user});
   }
 
   checkUserRole(roleId: number) {
@@ -338,11 +337,11 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   onSubjectChange(newValue: any[]) {
     const { user } = this.state;
     user.subjects = newValue;
-    this.setState({ ...this.state, user });
+    this.setState({ user });
   }
 
   render() {
-    const {user} = this.state;
+    const { user } = this.state;
     return (
       <div className="main-listing user-profile-page">
         <UserProfileMenu
@@ -352,32 +351,17 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         />
         <Grid container direction="row">
           <div className="profile-block">
-            <div className="profile-header">{user.firstName ? user.firstName : 'NAME'}</div>
+            <div className="profile-header">
+              {user.firstName ? user.firstName : "NAME"}
+            </div>
             <div className="save-button-container">
-              <SaveProfileButton user={user} onClick={() => this.saveUserProfile()} />
+              <SaveProfileButton
+                user={user}
+                onClick={() => this.saveUserProfile()}
+              />
             </div>
             <div className="profile-fields">
-              <div className="profile-image-container">
-                <div className="profile-image svgOnHover">
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#user"} className="text-theme-dark-blue" />
-                  </svg>
-                </div>
-                <div className="add-image-button svgOnHover">
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#plus"} className="text-white" />
-                  </svg>
-                </div>
-                <div className="status-container svgOnHover">
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#circle-filled"} className="text-theme-green" />
-                  </svg>
-                  <span>Active</span>
-                </div>
-              </div>
+              <ProfileImage profileImage={user.profileImage} setImage={v => this.onProfileImageChanged(v)} />
               <div className="profile-inputs-container">
                 <div className="input-group">
                   <div className="input-block">
@@ -435,7 +419,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
             />
             <Grid container direction="row" className="big-input-container">
-              <textarea className="style2" placeholder="Write a short bio here..." />
+              <textarea
+                className="style2"
+                placeholder="Write a short bio here..."
+              />
             </Grid>
           </div>
           <div className="profile-phone-preview">
@@ -449,8 +436,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             </Grid>
           </div>
         </Grid>
-        <SubjectDialog isOpen={this.state.noSubjectDialogOpen} close={() => this.onSubjectDialogClose()} />
-        <ProfileSavedDialog history={this.props.history} isOpen={this.state.savedDialogOpen} close={() => this.onProfileSavedDialogClose()} />
+        <SubjectDialog
+          isOpen={this.state.noSubjectDialogOpen}
+          close={() => this.onSubjectDialogClose()}
+        />
+        <ProfileSavedDialog
+          history={this.props.history}
+          isOpen={this.state.savedDialogOpen}
+          close={() => this.onProfileSavedDialogClose()}
+        />
       </div>
     );
   }

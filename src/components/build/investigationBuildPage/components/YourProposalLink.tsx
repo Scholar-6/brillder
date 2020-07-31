@@ -1,7 +1,7 @@
 import React from 'react'
 
 import './YourProposalLink.scss';
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
 import { useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
