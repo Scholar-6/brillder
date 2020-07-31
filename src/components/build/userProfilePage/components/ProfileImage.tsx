@@ -35,7 +35,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
       return (
         <img
           src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.profileImage}`}
-          className="real-profile-image"
+          className="real-profile-image" alt=""
         />
       );
     }
