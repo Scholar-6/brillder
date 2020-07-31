@@ -79,10 +79,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       BrickStatus.Publish,
       { withCredentials: true }
     ).then((res) => {
+      const finalBricks = this.filter(res.data as Brick[]);
       this.setState({
         ...this.state,
         bricks: res.data,
-        finalBricks: res.data as Brick[],
+        finalBricks,
       });
     }).catch((error) => {
       this.setState({ ...this.state, failedRequest: true });
@@ -99,11 +100,9 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
       withCredentials: true,
     }).then((res) => {
-      let bricks = res.data as Brick[];
-      bricks = bricks.filter((brick) => {
-        return brick.status === BrickStatus.Publish;
-      });
-      this.setState({ ...this.state, yourBricks: bricks });
+      const bricks = res.data as Brick[];
+      const yourBricks = bricks.filter(brick => brick.status === BrickStatus.Publish);
+      this.setState({ ...this.state, yourBricks });
     }).catch((error) => {
       this.setState({ ...this.state, failedRequest: true });
     });
@@ -142,14 +141,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     this.setState({ ...state, finalBricks, sortBy });
   };
 
-  getBricksForFilter() {
-    if (this.state.isSearching) {
-      return this.state.searchBricks;
-    } else {
-      return this.state.bricks;
-    }
-  }
-
   getCheckedSubjectIds() {
     const filterSubjects = [];
     const { state } = this;
@@ -162,15 +153,23 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     return filterSubjects;
   }
 
-  isCore() { return !this.state.isCore; }
+  isCore(isCore: any) {
+    let tempIsCore = this.state.isCore;
+    if (typeof isCore === 'boolean') {
+      tempIsCore = isCore;
+    }
+    return !tempIsCore;
+  }
 
   filterByCurretUser(bricks: Brick[]) {
     const userId = this.props.user.id;
     return bricks.filter(b => b.author.id === userId);
   }
 
-  filter() {
-    let bricks = this.getBricksForFilter();
+  filter(bricks: Brick[], isCore?: boolean) {
+    if (this.state.isSearching) {
+      bricks = this.state.searchBricks;
+    }
     let filtered: Brick[] = [];
 
     let filterSubjects = this.getCheckedSubjectIds();
@@ -181,13 +180,13 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         if (res !== -1) {
           filtered.push(brick);
         }
-        if (this.isCore()) {
+        if (this.isCore(isCore)) {
           filtered = this.filterByCurretUser(filtered);
         }
       }
       return filtered;
     } else {
-      if (this.isCore()) {
+      if (this.isCore(isCore)) {
         bricks = this.filterByCurretUser(bricks);
       }
       return bricks;
@@ -207,7 +206,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   filterBySubject = (i: number) => {
     const { subjects } = this.state;
     subjects[i].checked = !subjects[i].checked;
-    const finalBricks = this.filter();
+    const finalBricks = this.filter(this.state.bricks);
     this.setState({ ...this.state, finalBricks });
   };
 
@@ -331,24 +330,22 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
   search() {
     const { searchString } = this.state;
-    axios
-      .post(
-        process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
-        { searchString },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        this.hideBricks();
-        this.setState({
-          ...this.state,
-          searchBricks: res.data,
-          finalBricks: res.data,
-          isSearching: true,
-        });
-      })
-      .catch((error) => {
-        this.setState({ ...this.state, failedRequest: true });
+    axios.post(
+      process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
+      { searchString },
+      { withCredentials: true }
+    ).then(res => {
+      this.hideBricks();
+      const finalBricks = this.filter(res.data);
+      this.setState({
+        ...this.state,
+        searchBricks: res.data,
+        finalBricks,
+        isSearching: true,
       });
+    }).catch((error) => {
+      this.setState({ ...this.state, failedRequest: true });
+    });
   }
 
   getBrickColor(brick: Brick) {
@@ -570,8 +567,9 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   toggleCore() {
-    const finalBricks = this.filter();
-    this.setState({ isCore: !this.state.isCore, finalBricks });
+    const isCore = !this.state.isCore;
+    const finalBricks = this.filter(this.state.bricks, isCore);
+    this.setState({ isCore, finalBricks });
   }
 
   render() {
