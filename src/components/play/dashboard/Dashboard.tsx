@@ -642,7 +642,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             <DashboardPagination
               pageSize={this.state.pageSize}
               sortedIndex={this.state.sortedIndex}
-              bricksLength={this.state.bricks.length}
+              bricksLength={this.state.finalBricks.length}
               moveAllNext={() => this.moveAllNext()}
               moveAllBack={() => this.moveAllBack()}
             />
