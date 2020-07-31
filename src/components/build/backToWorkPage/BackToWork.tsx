@@ -5,9 +5,8 @@ import axios from "axios";
 import { connect } from "react-redux";
 
 import "./BackToWork.scss";
-import brickActions from "redux/actions/brickActions";
-import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
+import { Brick, BrickStatus } from "model/brick";
 import { checkAdmin } from "components/services/brickService";
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
@@ -21,61 +20,8 @@ import BackPageTitle from './components/BackPageTitle';
 import BackPagePagination from './components/BackPagePagination';
 import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import BrickBlock from './components/BrickBlock';
+import {ThreeColumns, SortBy, Filters, ThreeColumnNames } from './model';
 
-enum ThreeColumnNames {
-  Draft = "draft",
-  Review = "review",
-  Publish = "publish",
-};
-
-interface BricksContent {
-  rawBricks: Brick[];
-  finalBricks: Brick[];
-}
-
-export interface ThreeColumns {
-  draft: BricksContent;
-  review: BricksContent;
-  publish: BricksContent;
-}
-
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
-
-const mapDispatch = (dispatch: any) => ({
-  forgetBrick: () => dispatch(brickActions.forgetBrick())
-});
-
-const connector = connect(mapState, mapDispatch);
-
-interface BackToWorkProps {
-  user: User;
-  history: any;
-  forgetBrick(): void;
-
-  //test data
-  isMocked?: boolean;
-  bricks?: Brick[];
-}
-
-export enum SortBy {
-  None,
-  Date,
-  Popularity,
-  Status,
-}
-
-export interface Filters {
-  viewAll: boolean;
-  buildAll: boolean;
-  editAll: boolean;
-
-  draft: boolean;
-  review: boolean;
-  build: boolean;
-  publish: boolean;
-
-  isCore: boolean;
-}
 
 interface BackToWorkState {
   finalBricks: Brick[]; // bricks to display
@@ -97,6 +43,17 @@ interface BackToWorkState {
   pageSize: number;
   threeColumns: ThreeColumns;
 }
+
+export interface BackToWorkProps {
+  user: User;
+  history: any;
+  forgetBrick(): void;
+
+  //test data
+  isMocked?: boolean;
+  bricks?: Brick[];
+}
+
 
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   constructor(props: BackToWorkProps) {
@@ -167,6 +124,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   //region loading and setting bricks
   setColumnBricksByStatus(res: ThreeColumns, name: ThreeColumnNames, bricks: Brick[], status: BrickStatus) {
     let bs = this.filterByStatus(bricks, status);
+    if (!this.state.filters.isCore) {
+      bs = this.filterByCurretUser(bs);
+    }
     res[name] = { rawBricks: bs, finalBricks: bs };
   }
 
@@ -446,14 +406,18 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return bricks.filter(b => b.status === status);
   }
 
+  filterByCurretUser(bricks: Brick[]) {
+    const userId = this.props.user.id;
+    return bricks.filter(b => b.author.id === userId);
+  }
+
   filterBricks(): Brick[] {
     const { filters } = this.state;
     let filteredBricks: Brick[] = [];
     let bricks = Object.assign([], this.state.rawBricks) as Brick[];
 
-    const userId = this.props.user.id;
-    if (filters.isCore) {
-      bricks = bricks.filter(b => b.author.id === userId);
+    if (!filters.isCore) {
+      bricks = this.filterByCurretUser(bricks);
     }
 
     if (filters.draft) {
@@ -576,7 +540,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     const { filters } = this.state;
     filters.isCore = !filters.isCore;
     const finalBricks = this.filterBricks();
-    this.setState({ ...this.state, filters, finalBricks });
+    const threeColumns = this.prepareTreeRows(this.state.rawBricks);
+    this.setState({ ...this.state, threeColumns, filters, finalBricks });
   }
 
   renderGroupedBricks = () => {
@@ -710,4 +675,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 }
 
-export default connector(BackToWorkPage);
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+
+export default connect(mapState)(BackToWorkPage);
