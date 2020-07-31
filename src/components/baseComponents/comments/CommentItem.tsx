@@ -37,26 +37,30 @@ const CommentItem: React.FC<CommentItemProps> = props => {
 			<Grid container direction="column">
 				<Grid item container direction="row">
 					<Stretch item>
-            <h4><b>{props.comment.author.firstName} {props.comment.author.lastName}</b></h4>
+						<h4><b>{props.comment.author.firstName} {props.comment.author.lastName}</b></h4>
 					</Stretch>
+          {/* Approve and Reject buttons 31/07/20
 					<ThemeProvider theme={GreenRedTheme}>
 						<IconButton aria-label="reply" size="small" color="primary">
 							<SvgIcon fontSize="inherit">
-								<svg className="svg active">
+                <svg className="svg active">*/}
 									{/*eslint-disable-next-line*/}
+                  {/*
 									<use href={sprite + "#ok"} />
 								</svg>
 							</SvgIcon>
 						</IconButton>
 						<IconButton aria-label="reply" size="small" color="secondary">
 							<SvgIcon fontSize="inherit">
-								<svg className="svg active">
+                <svg className="svg active">*/}
 									{/*eslint-disable-next-line*/}
+                {/*
 									<use href={sprite + "#cancel"} />
 								</svg>
 							</SvgIcon>
 						</IconButton>
 					</ThemeProvider>
+          */}
 					<IconButton aria-label="reply" size="small" color="primary" onClick={() => setReplyPanelShown(!replyPanelShown)}>
 						<SvgIcon fontSize="inherit">
 							<svg className="svg active">
@@ -78,9 +82,9 @@ const CommentItem: React.FC<CommentItemProps> = props => {
 						{props.children}
 					</Grid>
 				</Box>}
-        <Collapse in={replyPanelShown}>
-          <ReplyCommentPanel parentComment={props.comment} collapsePanel={() => setReplyPanelShown(false)} />
-        </Collapse>
+		<Collapse in={replyPanelShown}>
+		  <ReplyCommentPanel parentComment={props.comment} collapsePanel={() => setReplyPanelShown(false)} />
+		</Collapse>
 			</Grid>
 		</Box>
 	</Grid>
