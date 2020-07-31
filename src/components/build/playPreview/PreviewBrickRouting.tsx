@@ -25,6 +25,7 @@ import {
 } from 'model/question';
 import { setBrillderTitle } from 'components/services/titleService';
 import PublishPage from '../investigationBuildPage/publish/PublishPage';
+import EditorPage from '../investigationBuildPage/editor/EditorPage';
 import FinishPage from '../investigationBuildPage/finish/FinishPage';
 import { prefillAttempts } from 'components/services/PlayService';
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
@@ -144,7 +145,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (canEdit) {
       let editor = checkEditor(props.user.roles);
       if (editor && props.user.id === props.brick.author.id) {
-        props.history.push(`/play-preview/brick/${brickId}/finish`);
+        props.history.push(`/play-preview/brick/${brickId}/editor`);
       } else {
         props.history.push(`/play-preview/brick/${brickId}/publish`);
       }
@@ -284,6 +285,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             </Route>
             <Route exac path="/play-preview/brick/:brickId/publish">
               <PublishPage {...props} />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/editor">
+              <EditorPage
+                brick={props.brick}
+                canEdit={true}
+                saveEditor={console.log}
+                history={props.history}
+              />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/finish">
               <FinishPage {...props} />

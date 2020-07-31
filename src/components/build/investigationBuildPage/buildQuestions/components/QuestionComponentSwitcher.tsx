@@ -18,6 +18,7 @@ export interface SwitchQuestionProps {
   component: any;
   hint: Hint;
   locked: boolean;
+  editOnly: boolean;
   canRemove: boolean;
 
   allDropBoxesEmpty: boolean;
@@ -32,7 +33,7 @@ export interface SwitchQuestionProps {
 }
 
 const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
-  type, index, component, hint, locked, uniqueComponent,
+  type, index, component, hint, locked, editOnly, uniqueComponent,
   allDropBoxesEmpty, validationRequired,
   updateComponent, ...props
 }) => {
@@ -94,6 +95,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
       <div className="unique-component-wrapper">
         <InnerComponent
           locked={locked}
+          editOnly={editOnly}
           data={component}
           save={props.saveBrick}
           validationRequired={validationRequired}
@@ -104,6 +106,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           index={props.questionIndex}
           status={hint.status}
           locked={locked}
+          editOnly={editOnly}
           value={hint.value}
           list={hint.list}
           count={numberOfAnswers}
@@ -129,6 +132,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
       }
       <InnerComponent
         locked={locked}
+        editOnly={editOnly}
         data={component}
         save={props.saveBrick}
         validationRequired={validationRequired}
