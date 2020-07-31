@@ -124,7 +124,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   //region loading and setting bricks
   setColumnBricksByStatus(res: ThreeColumns, name: ThreeColumnNames, bricks: Brick[], status: BrickStatus) {
     let bs = this.filterByStatus(bricks, status);
-    if (!this.state.filters.isCore) {
+    if (this.state && !this.state.filters.isCore) {
       bs = this.filterByCurretUser(bs);
     }
     res[name] = { rawBricks: bs, finalBricks: bs };
