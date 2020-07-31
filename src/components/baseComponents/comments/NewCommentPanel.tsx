@@ -6,7 +6,7 @@ import { Grid, TextField, Box, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import { blue, red } from '@material-ui/core/colors';
-import { Comment } from 'model/comments';
+//import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
 import { ReduxCombinedState } from 'redux/reducers';
 import comments from 'redux/actions/comments';
