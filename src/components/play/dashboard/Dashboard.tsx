@@ -53,6 +53,7 @@ interface BricksListState {
   isClearFilter: any;
   failedRequest: boolean;
   pageSize: number;
+  isCore: boolean;
 }
 
 class DashboardPage extends Component<BricksListProps, BricksListState> {
@@ -75,6 +76,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
       isClearFilter: false,
       failedRequest: false,
+      isCore: true
     };
 
     axios.get(
@@ -560,6 +562,10 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  toggleCore() {
+    this.setState({isCore: !this.state.isCore});
+  }
+
   render() {
     const { history } = this.props;
     return (
@@ -594,7 +600,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               <div className="brick-row-title">
                 ALL BRICKS
               </div>
-              <PublicCoreToggle isCore={true} />
+              <PublicCoreToggle isCore={this.state.isCore} onSwitch={() => this.toggleCore()} />
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
