@@ -24,12 +24,6 @@ import DashboardPagination from './DashboardPagination';
 import PublicCoreToggle from 'components/baseComponents/PublicCoreToggle';
 
 
-const mapState = (state: ReduxCombinedState) => ({
-  user: state.user.user,
-});
-
-const connector = connect(mapState);
-
 interface BricksListProps {
   user: User;
   history: any;
@@ -657,4 +651,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 }
 
-export default connector(DashboardPage);
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+
+export default connect(mapState)(DashboardPage);
