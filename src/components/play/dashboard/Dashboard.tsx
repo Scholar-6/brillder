@@ -162,10 +162,16 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     return filterSubjects;
   }
 
+  isCore() { return !this.state.isCore; }
+
+  filterByCurretUser(bricks: Brick[]) {
+    const userId = this.props.user.id;
+    return bricks.filter(b => b.author.id === userId);
+  }
+
   filter() {
-    const { state } = this;
     let bricks = this.getBricksForFilter();
-    let filtered = [];
+    let filtered: Brick[] = [];
 
     let filterSubjects = this.getCheckedSubjectIds();
 
@@ -175,10 +181,16 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         if (res !== -1) {
           filtered.push(brick);
         }
+        if (this.isCore()) {
+          filtered = this.filterByCurretUser(filtered);
+        }
       }
-      this.setState({ ...state, finalBricks: filtered });
+      return filtered;
     } else {
-      this.setState({ ...state, finalBricks: bricks });
+      if (this.isCore()) {
+        bricks = this.filterByCurretUser(bricks);
+      }
+      return bricks;
     }
   }
 
@@ -195,7 +207,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   filterBySubject = (i: number) => {
     const { subjects } = this.state;
     subjects[i].checked = !subjects[i].checked;
-    this.filter();
+    const finalBricks = this.filter();
+    this.setState({ ...this.state, finalBricks });
   };
 
   clearSubjects = () => {
@@ -557,7 +570,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   toggleCore() {
-    this.setState({isCore: !this.state.isCore});
+    const finalBricks = this.filter();
+    this.setState({ isCore: !this.state.isCore, finalBricks });
   }
 
   render() {
