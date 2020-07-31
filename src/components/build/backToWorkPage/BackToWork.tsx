@@ -94,6 +94,7 @@ interface BackToWorkState {
   isClearFilter: boolean;
   pageSize: number;
   threeColumns: ThreeColumns;
+  isCore: boolean;
 }
 
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
@@ -152,7 +153,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       isClearFilter: false,
       pageSize: 18,
 
-      threeColumns: threeColumns
+      threeColumns: threeColumns,
+      isCore: true
     };
 
     // load real bricks
@@ -583,6 +585,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     data.push({ brick: brick, key, index, row });
   }
 
+  toggleCore() {
+    this.setState({isCore: !this.state.isCore});
+  }
+
   renderGroupedBricks = () => {
     let { sortedIndex } = this.state;
     let data: any[] = [];
@@ -690,7 +696,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           />
           <Grid item xs={9} className="brick-row-container">
             <BackPageTitle filters={this.state.filters} />
-            <PublicCoreToggle isCore={true} />
+            <PublicCoreToggle isCore={this.state.isCore} onSwitch={() => this.toggleCore()} />
             <div className="bricks-list-container">
               <div className="bricks-list">
                 {this.renderBricks()}
