@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
 import { Brick, BrickStatus } from "model/brick";
-import { SortBy, Filters } from '../BackToWork';
+import { SortBy, Filters } from '../model';
 
 
 interface FilterSidebarProps {
