@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import "./BackToWork.scss";
 import { User } from "model/user";
 import { Brick, BrickStatus } from "model/brick";
-import { checkAdmin } from "components/services/brickService";
+import { checkAdmin, checkEditor } from "components/services/brickService";
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
@@ -82,6 +82,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       finalBricks = this.props.bricks;
     }
 
+    let isCore = false;
+    const isAdmin = checkAdmin(this.props.user.roles);
+    const isEditor = checkEditor(this.props.user.roles)
+    if (isAdmin || isEditor) {
+      isCore = true;
+    }
+
     this.state = {
       finalBricks,
       rawBricks,
@@ -100,7 +107,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         review: false,
         build: false,
         publish: false,
-        isCore: true
+        isCore
       },
 
       searchString: "",
@@ -145,7 +152,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   getBricks() {
     const isAdmin = checkAdmin(this.props.user.roles);
-    if (isAdmin) {
+    const isEditor = checkEditor(this.props.user.roles);
+    if (isAdmin || isEditor) {
       axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks", {
         withCredentials: true,
       }).then(res => {
