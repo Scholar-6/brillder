@@ -3,7 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import Dialog from "@material-ui/core/Dialog";
 
-import sprite from "../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 interface UserActionsCellProps {
   isAdmin: boolean;

@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 import './type.scss';
 import { QuestionTypeEnum } from 'model/question';
 import TypeButton from './TypeButton'
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 
 export interface QuestionTypeProps {

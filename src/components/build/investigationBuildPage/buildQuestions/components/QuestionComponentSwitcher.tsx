@@ -1,6 +1,6 @@
 import React from 'react'
 
-import sprite from "../../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import { QuestionComponentTypeEnum, Hint } from 'model/question';
 import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'

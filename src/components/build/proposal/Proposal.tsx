@@ -89,6 +89,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
+  /* 7/30/2020
   shouldComponentUpdate() {
     const {brick} = this.props;
     if (brick) {
@@ -97,8 +98,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       }
       this.setState({brick});
     }
-    return true;
+    return false;
   }
+  */
 
   saveBrick(tempBrick: Brick) {
     const {brick} = this.props;
@@ -132,8 +134,10 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   setPrep = (prep: string) => this.saveLocalBrick({ ...this.state.brick, prep } as Brick);
  
   setBrickField = (name: BrickFieldNames, value: string) => {
-    this.state.brick[name] = value;
+    let {brick} = this.state;
+    brick[name] = value;
     this.saveLocalBrick({ ...this.state.brick });
+    this.setState({brick});
   }
 
   setLength = (brickLength: BrickLengthEnum) => {

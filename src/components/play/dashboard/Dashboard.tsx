@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 
-import sprite from "../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
@@ -23,12 +23,6 @@ import DashboardFilter, { SortBy } from './DashboardFilter';
 import DashboardPagination from './DashboardPagination';
 import PublicCoreToggle from 'components/baseComponents/PublicCoreToggle';
 
-
-const mapState = (state: ReduxCombinedState) => ({
-  user: state.user.user,
-});
-
-const connector = connect(mapState);
 
 interface BricksListProps {
   user: User;
@@ -53,6 +47,7 @@ interface BricksListState {
   isClearFilter: any;
   failedRequest: boolean;
   pageSize: number;
+  isCore: boolean;
 }
 
 class DashboardPage extends Component<BricksListProps, BricksListState> {
@@ -75,6 +70,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
       isClearFilter: false,
       failedRequest: false,
+      isCore: true
     };
 
     axios.get(
@@ -560,6 +556,10 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     );
   }
 
+  toggleCore() {
+    this.setState({isCore: !this.state.isCore});
+  }
+
   render() {
     const { history } = this.props;
     return (
@@ -594,7 +594,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               <div className="brick-row-title">
                 ALL BRICKS
               </div>
-              <PublicCoreToggle isCore={true} />
+              <PublicCoreToggle isCore={this.state.isCore} onSwitch={() => this.toggleCore()} />
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
@@ -651,4 +651,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 }
 
-export default connector(DashboardPage);
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+
+export default connect(mapState)(DashboardPage);

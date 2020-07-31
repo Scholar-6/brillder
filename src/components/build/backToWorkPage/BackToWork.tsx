@@ -5,75 +5,23 @@ import axios from "axios";
 import { connect } from "react-redux";
 
 import "./BackToWork.scss";
-import brickActions from "redux/actions/brickActions";
-import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
+import { Brick, BrickStatus } from "model/brick";
 import { checkAdmin } from "components/services/brickService";
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
+import PublicCoreToggle from "components/baseComponents/PublicCoreToggle";
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 import { ReduxCombinedState } from "redux/reducers";
-import FilterSidebar from './FilterSidebar';
-import BackPageTitle from './BackPageTitle';
-import BackPagePagination from './BackPagePagination';
-import BackPagePaginationV2 from './BackPagePaginationV2';
-import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import BrickBlock from './BrickBlock';
-import PublicCoreToggle from "components/baseComponents/PublicCoreToggle";
+import FilterSidebar from './components/FilterSidebar';
+import BackPageTitle from './components/BackPageTitle';
+import BackPagePagination from './components/BackPagePagination';
+import BackPagePaginationV2 from './components/BackPagePaginationV2';
+import BrickBlock from './components/BrickBlock';
+import {ThreeColumns, SortBy, Filters, ThreeColumnNames } from './model';
 
-enum ThreeColumnNames {
-  Draft = "draft",
-  Review = "review",
-  Publish = "publish",
-};
-
-interface BricksContent {
-  rawBricks: Brick[];
-  finalBricks: Brick[];
-}
-
-export interface ThreeColumns {
-  draft: BricksContent;
-  review: BricksContent;
-  publish: BricksContent;
-}
-
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
-
-const mapDispatch = (dispatch: any) => ({
-  forgetBrick: () => dispatch(brickActions.forgetBrick())
-});
-
-const connector = connect(mapState, mapDispatch);
-
-interface BackToWorkProps {
-  user: User;
-  history: any;
-  forgetBrick(): void;
-
-  //test data
-  isMocked?: boolean;
-  bricks?: Brick[];
-}
-
-export enum SortBy {
-  None,
-  Date,
-  Popularity,
-  Status,
-}
-
-export interface Filters {
-  viewAll: boolean;
-  buildAll: boolean;
-  editAll: boolean;
-
-  draft: boolean;
-  review: boolean;
-  build: boolean;
-  publish: boolean;
-}
 
 interface BackToWorkState {
   finalBricks: Brick[]; // bricks to display
@@ -95,6 +43,17 @@ interface BackToWorkState {
   pageSize: number;
   threeColumns: ThreeColumns;
 }
+
+export interface BackToWorkProps {
+  user: User;
+  history: any;
+  forgetBrick(): void;
+
+  //test data
+  isMocked?: boolean;
+  bricks?: Brick[];
+}
+
 
 class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   constructor(props: BackToWorkProps) {
@@ -124,8 +83,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     }
 
     this.state = {
-      finalBricks: finalBricks,
-      rawBricks: rawBricks,
+      finalBricks,
+      rawBricks,
       sortBy: SortBy.None,
       sortedIndex: 0,
       sortedReversed: false,
@@ -141,6 +100,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         review: false,
         build: false,
         publish: false,
+        isCore: true
       },
 
       searchString: "",
@@ -152,7 +112,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       isClearFilter: false,
       pageSize: 18,
 
-      threeColumns: threeColumns
+      threeColumns,
     };
 
     // load real bricks
@@ -164,6 +124,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   //region loading and setting bricks
   setColumnBricksByStatus(res: ThreeColumns, name: ThreeColumnNames, bricks: Brick[], status: BrickStatus) {
     let bs = this.filterByStatus(bricks, status);
+    if (this.state && !this.state.filters.isCore) {
+      bs = this.filterByCurretUser(bs);
+    }
     res[name] = { rawBricks: bs, finalBricks: bs };
   }
 
@@ -177,12 +140,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   setBricks(bricks: Brick[]) {
     const threeColumns = this.prepareTreeRows(bricks);
-    this.setState({
-      ...this.state,
-      finalBricks: bricks,
-      rawBricks: bricks,
-      threeColumns
-    });
+    this.setState({ ...this.state, finalBricks: bricks, rawBricks: bricks, threeColumns });
   }
 
   getBricks() {
@@ -224,7 +182,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeBrickFromList(finalBricks, brickId);
     this.removeBrickFromList(rawBricks, brickId);
 
-    const {publish, draft, review} = this.state.threeColumns;
+    const { publish, draft, review } = this.state.threeColumns;
     this.removeBrickFromList(publish.finalBricks, brickId);
     this.removeBrickFromList(publish.rawBricks, brickId);
     this.removeBrickFromList(draft.finalBricks, brickId);
@@ -424,12 +382,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     const { filters } = this.state;
     this.removeAllFilters(filters);
     filters.viewAll = true;
-    this.setState({
-      ...this.state,
-      filters,
-      sortedIndex: 0,
-      finalBricks: this.state.rawBricks,
-    });
+    this.setState({ ...this.state, filters, sortedIndex: 0, finalBricks: this.state.rawBricks });
   }
 
   showEditAll() {
@@ -437,9 +390,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.removeAllFilters(filters);
     filters.editAll = true;
     let bricks = this.filterByStatus(this.state.rawBricks, BrickStatus.Review);
-    bricks.push(
-      ...this.filterByStatus(this.state.rawBricks, BrickStatus.Publish)
-    );
+    bricks.push(...this.filterByStatus(this.state.rawBricks, BrickStatus.Publish));
     this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks: bricks });
   }
 
@@ -452,12 +403,23 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   filterByStatus(bricks: Brick[], status: BrickStatus) {
-    return bricks.filter((b) => b.status === status);
+    return bricks.filter(b => b.status === status);
   }
 
-  filterBricks(filters: Filters): Brick[] {
+  filterByCurretUser(bricks: Brick[]) {
+    const userId = this.props.user.id;
+    return bricks.filter(b => b.author.id === userId);
+  }
+
+  filterBricks(): Brick[] {
+    const { filters } = this.state;
     let filteredBricks: Brick[] = [];
     let bricks = Object.assign([], this.state.rawBricks) as Brick[];
+
+    if (!filters.isCore) {
+      bricks = this.filterByCurretUser(bricks);
+    }
+
     if (filters.draft) {
       filteredBricks.push(...this.filterByStatus(bricks, BrickStatus.Draft));
     }
@@ -470,6 +432,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     if (filters.publish) {
       filteredBricks.push(...this.filterByStatus(bricks, BrickStatus.Publish));
     }
+
     if (!filters.draft && !filters.build && !filters.review && !filters.publish) {
       return bricks;
     }
@@ -486,8 +449,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     const { filters } = this.state;
     this.removeInboxFilters(filters);
     filters.draft = !filters.draft;
-    const bricks = this.filterBricks(filters);
-    this.setState({ ...this.state, filters, finalBricks: bricks });
+    const finalBricks = this.filterBricks();
+    this.setState({ ...this.state, filters, finalBricks });
     this.filterClear()
   }
 
@@ -495,8 +458,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     const { filters } = this.state;
     this.removeInboxFilters(filters);
     filters.review = !filters.review;
-    const bricks = this.filterBricks(filters);
-    this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
+    const finalBricks = this.filterBricks();
+    this.setState({ ...this.state, filters, finalBricks, sortedIndex: 0 });
     this.filterClear()
   }
 
@@ -505,7 +468,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     const { filters } = this.state;
     this.removeInboxFilters(filters);
     filters.publish = !filters.publish;
-    const bricks = this.filterBricks(filters);
+    const bricks = this.filterBricks();
     this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
     this.filterClear()
   }
@@ -534,13 +497,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     ).then((res) => {
       const threeColumns = this.prepareTreeRows(res.data);
       setTimeout(() => {
-        this.setState({
-          ...this.state,
-          finalBricks: res.data,
-          isSearching: true,
-          shown: true,
-          threeColumns
-        });
+        this.setState({ ...this.state, finalBricks: res.data, isSearching: true, shown: true, threeColumns });
       }, 1400);
     }).catch(error => {
       this.setState({ ...this.state, failedRequest: true })
@@ -552,14 +509,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     let data: any[] = [];
     let count = 0;
     for (let i = 0 + sortedIndex; i < this.state.pageSize + sortedIndex; i++) {
-      if (this.state.finalBricks[i]) {
+      const brick = this.state.finalBricks[i];
+      if (brick) {
         let row = Math.floor(count / 3);
-        data.push({
-          brick: this.state.finalBricks[i],
-          key: i,
-          index: count,
-          row
-        });
+        data.push({ brick, key: i, index: count, row });
         count++;
       }
     }
@@ -581,6 +534,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   prepareBrickData(data: any[], brick: Brick, index: number, key: number, row: number) {
     data.push({ brick: brick, key, index, row });
+  }
+
+  toggleCore() {
+    const { filters } = this.state;
+    filters.isCore = !filters.isCore;
+    const finalBricks = this.filterBricks();
+    const threeColumns = this.prepareTreeRows(this.state.rawBricks);
+    this.setState({ ...this.state, threeColumns, filters, finalBricks });
   }
 
   renderGroupedBricks = () => {
@@ -690,7 +651,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           />
           <Grid item xs={9} className="brick-row-container">
             <BackPageTitle filters={this.state.filters} />
-            <PublicCoreToggle isCore={true} />
+            <PublicCoreToggle isCore={this.state.filters.isCore} onSwitch={() => this.toggleCore()} />
             <div className="bricks-list-container">
               <div className="bricks-list">
                 {this.renderBricks()}
@@ -714,4 +675,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 }
 
-export default connector(BackToWorkPage);
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+
+export default connect(mapState)(BackToWorkPage);

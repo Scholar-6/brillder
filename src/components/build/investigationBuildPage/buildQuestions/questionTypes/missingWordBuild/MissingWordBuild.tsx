@@ -5,7 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import './MissingWordBuild.scss'
-import sprite from "../../../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
 import { showSameAnswerPopup } from '../service/questionBuild';
