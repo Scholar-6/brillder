@@ -1,12 +1,12 @@
 import React from "react";
-import sprite from "../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 interface ToggleProps {
   isCore: boolean;
+  onSwitch(): void;
 }
 
-const PublicCoreToggle: React.FC<ToggleProps> = ({ isCore }) => {
-
+const PublicCoreToggle: React.FC<ToggleProps> = ({ isCore, onSwitch }) => {
   const renderCoreIcon = () => {
     let className = "svg active";
     if (isCore) {
@@ -37,7 +37,7 @@ const PublicCoreToggle: React.FC<ToggleProps> = ({ isCore }) => {
     <div className="core-public-toggle">
       <button className="btn btn btn-transparent ">
         <span className={isCore ? 'bold' : 'regular'}>Core</span>
-        <div className="svgOnHover">
+        <div className="svgOnHover" onClick={onSwitch}>
           {renderCoreIcon()}
           {renderPublicIcon()}
         </div>

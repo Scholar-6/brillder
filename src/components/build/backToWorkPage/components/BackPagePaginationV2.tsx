@@ -1,34 +1,32 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
-import sprite from "../../../assets/img/icons-sprite.svg";
+import { ThreeColumns } from "../model";
+
+import sprite from "assets/img/icons-sprite.svg";
 
 interface BackPageTitleProps {
   sortedIndex: number;
-  bricksLength: number;
+  threeColumns: ThreeColumns;
   pageSize: number;
   moveBack(): void;
   moveNext(): void;
 }
 
-const BackPagePagination: React.FC<BackPageTitleProps> = ({
-  sortedIndex, bricksLength, pageSize, moveNext, moveBack
+const BackPagePaginationV2: React.FC<BackPageTitleProps> = ({
+  sortedIndex, threeColumns, pageSize, moveNext, moveBack
 }) => {
-  if (bricksLength <= pageSize) {
-    return <span></span>;
+  const getLongestColumn = () => {
+    let draftLength = threeColumns.draft.finalBricks.length;
+    let reviewLength = threeColumns.review.finalBricks.length;
+    let publishLenght = threeColumns.publish.finalBricks.length;
+    return Math.max(draftLength, reviewLength, publishLenght);
   }
 
+  pageSize = pageSize / 3;
+  const longest = getLongestColumn();
   const showPrev = sortedIndex >= pageSize;
-  const showNext = sortedIndex + pageSize <= bricksLength;
-
-  const getBricksRange = () => {
-    let maxRange = sortedIndex + pageSize;
-    if (sortedIndex + pageSize > bricksLength) {
-      maxRange = bricksLength;
-    }
-    let range = `${sortedIndex + 1}-${maxRange}`;
-    return range
-  }
+  const showNext = sortedIndex + pageSize <= longest;
 
   const renderNextButton = () => {
     if (showNext) {
@@ -64,13 +62,11 @@ const BackPagePagination: React.FC<BackPageTitleProps> = ({
   return (
     <Grid container direction="row" className="bricks-pagination">
       <Grid item xs={4} className="left-pagination">
-        <div className="first-row">
-          {getBricksRange()}
-          <span className="gray">{" "} &nbsp;|&nbsp; {bricksLength}</span>
-        </div>
         <div>
           {(sortedIndex + pageSize) / pageSize}
-          <span className="gray">{" "} &nbsp;|&nbsp; {Math.ceil(bricksLength / pageSize)}</span>
+          <span className="gray">
+            {" "} &nbsp;|&nbsp; {Math.ceil(longest / pageSize)}
+          </span>
         </div>
       </Grid>
       <Grid item xs={4} className="bottom-next-button">
@@ -83,4 +79,4 @@ const BackPagePagination: React.FC<BackPageTitleProps> = ({
   );
 }
 
-export default BackPagePagination;
+export default BackPagePaginationV2;

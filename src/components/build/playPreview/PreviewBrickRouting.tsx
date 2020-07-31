@@ -14,7 +14,7 @@ import ProvisionalScore from 'components/play/brick/provisionalScore/Provisional
 import Synthesis from 'components/play/brick/synthesis/Synthesis';
 import Review from 'components/play/brick/review/ReviewPage';
 import Ending from 'components/play/brick/ending/Ending'
-import sprite from "../../../assets/img/icons-sprite.svg";
+import HomeButton from "components/baseComponents/homeButton/HomeButton";
 
 import { GetCashedBuildQuestion } from '../../localStorage/buildLocalStorage';
 
@@ -31,6 +31,8 @@ import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader
 import { canEditBrick, checkEditor } from 'components/services/brickService';
 import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
+import PlayLeftSidebar from 'components/play/brick/PlayLeftSidebar';
+import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
 
 
 export interface BrickAttempt {
@@ -74,6 +76,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
   const [startTime, setStartTime] = React.useState(undefined);
+  const [sidebarRolledUp, toggleSideBar] = React.useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -154,6 +157,24 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     props.history.push(`/build/brick/${brickId}/build/investigation/question`);
   }
 
+  const setSidebar = (state?: boolean) => {
+    if (typeof state === "boolean") {
+      toggleSideBar(state);
+      if (!state) {
+        maximizeZendeskButton();
+      } else {
+        minimizeZendeskButton();
+      }
+    } else {
+      toggleSideBar(!sidebarRolledUp);
+      if (sidebarRolledUp) {
+        maximizeZendeskButton();
+      } else {
+        minimizeZendeskButton();
+      }
+    }
+  }
+
   const getBuildQuestionNumber = () => {
     if (
       cashedBuildQuestion &&
@@ -177,6 +198,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0 || publish > 0 || finish > 0) {
       isMobileHidden = true;
     }
+    if (sidebarRolledUp) {
+      return <HomeButton link="/home" />;
+    }
     return (
       <PageHeadWithMenu
         isMobileHidden={isMobileHidden}
@@ -189,20 +213,21 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     );
   }
 
+  let className = "sorted-row";
+  if (sidebarRolledUp) {
+    className += " sorted-row-expanded";
+  }
+
   return (
     <div className="play-preview-pages">
       {renderHead()}
-      <div className="sorted-row">
-        <div className="sort-and-filter-container">
-          <div className="back-hover-area" onClick={() => moveToBuild()}>
-            <div className="create-icon svgOnHover">
-              <svg className="svg w100 h100 active">
-                <use href={sprite + "#trowel"} />
-              </svg>
-            </div>
-            <h3>BACK<br />TO<br />BUILD</h3>
-          </div>
-        </div>
+      <div className={className}>
+        <PlayLeftSidebar
+          sidebarRolledUp={sidebarRolledUp}
+          toggleSidebar={setSidebar}
+          isPreview={true}
+          moveToBuild={moveToBuild}
+        />
         <div className="brick-row-container">
           <Switch>
             <Route exac path="/play-preview/brick/:brickId/intro">

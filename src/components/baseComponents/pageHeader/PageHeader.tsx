@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Hidden } from '@material-ui/core';
-import sprite from "../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import './PageHeader.scss';
 import { ReduxCombinedState } from 'redux/reducers';

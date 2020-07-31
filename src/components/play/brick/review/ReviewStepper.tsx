@@ -3,7 +3,7 @@ import React from "react";
 import { Question } from "model/question";
 import { ComponentAttempt } from "../model/model";
 
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 interface ReviewStepperProps {
   attempts: ComponentAttempt<any>[];
