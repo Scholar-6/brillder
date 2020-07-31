@@ -7,5 +7,5 @@ const data = {
 }
 
 storiesOf("QuestionComponent", module)
-  .add("Text", () => <Text locked={false} index={1} data={data} save={()=>{}} validationRequired={false} updateComponent={() => {}} />)
-  .add("TextLocked", () => <Text locked={true} index={1} data={data} save={()=>{}} validationRequired={false} updateComponent={() => {}} />);
+  .add("Text", () => <Text locked={false} editOnly={false} index={1} data={data} save={()=>{}} validationRequired={false} updateComponent={() => {}} />)
+  .add("TextLocked", () => <Text locked={true} editOnly={false} index={1} data={data} save={()=>{}} validationRequired={false} updateComponent={() => {}} />);

@@ -145,14 +145,14 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.saveLocalBrick(brick);
     return brick;
   }
-  
+
   setLengthAndSave = (brickLength: BrickLengthEnum) => {
     const canEdit = canEditBrick(this.state.brick, this.props.user);
     if (!canEdit) { return; }
     let brick = this.setLength(brickLength);
     this.saveBrick(brick);
   }
-
+  
   saveAndMove = () => {
     this.saveBrick(this.state.brick);
     this.setState({ saved: true });
@@ -224,6 +224,7 @@ const mapState = (state: ReduxCombinedState) => ({
 const mapDispatch = (dispatch: any) => ({
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
+  assignEditor: (brick: any) => dispatch(actions.assignEditor(brick)),
 });
 
 const connector = connect(mapState, mapDispatch);
