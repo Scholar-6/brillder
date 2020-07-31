@@ -1,5 +1,5 @@
 import React from "react";
-import { Filters } from "./BackToWork";
+import { Filters } from "../BackToWork";
 
 
 interface BackPageTitleProps {
