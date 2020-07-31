@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './ShortBrickDescription.scss';
-import sprite from "../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 interface ShortDescriptionProps {
   brick: Brick;

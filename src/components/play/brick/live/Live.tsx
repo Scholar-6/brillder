@@ -10,7 +10,7 @@ import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
 import { PlayStatus, ComponentAttempt } from "../model/model";
 import CountDown from "../baseComponents/CountDown";
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 import { CashQuestionFromPlay } from "../../../localStorage/buildLocalStorage";
 import { Brick } from "model/brick";

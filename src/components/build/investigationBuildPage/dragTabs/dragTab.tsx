@@ -1,6 +1,6 @@
 import React from 'react'
 
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 export interface DragTabProps {
   id: any

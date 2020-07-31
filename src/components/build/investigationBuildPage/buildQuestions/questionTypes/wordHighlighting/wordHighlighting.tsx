@@ -4,7 +4,7 @@ import './wordHighlighting.scss'
 import { UniqueComponentProps } from '../types';
 import { BuildWord, SpecialSymbols } from 'components/interfaces/word';
 
-import sprite from "../../../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 export enum WordMode {
   Input,

@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 
 import { ThreeColumns } from "./BackToWork";
 
-import sprite from "../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 interface BackPageTitleProps {
   sortedIndex: number;

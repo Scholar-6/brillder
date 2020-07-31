@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import './SaveProfileButton.scss';
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 import { UserProfile } from "model/user";
 

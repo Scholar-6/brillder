@@ -2,7 +2,7 @@ import React from "react";
 
 import "./PlayButton.scss";
 import { TutorialStep } from "../tutorial/TutorialPanelWorkArea";
-import sprite from "../../../../assets/img/icons-sprite.svg";
+import sprite from "assets/img/icons-sprite.svg";
 
 
 export interface PlayButtonProps {

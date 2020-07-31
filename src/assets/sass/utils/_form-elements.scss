@@ -84,6 +84,12 @@ input {
 }
 /* Material UI Overwrite */
 
+.MuiAutocomplete-popper {
+  .MuiAutocomplete-option {
+    font-family: $font-family-regular;
+    color: var(--theme-dark-blue);
+  }
+}
 .MuiAutocomplete-root {
   width: 100%;
   margin: 0 !important;
