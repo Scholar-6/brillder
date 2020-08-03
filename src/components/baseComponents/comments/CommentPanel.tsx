@@ -35,6 +35,7 @@ interface CommentPanelProps {
   comments: Comment[];
   currentBrick: Brick;
   getComments(brickId: number): void;
+  createComment(comment: any): void;
 }
 
 const CommentPanel: React.FC<CommentPanelProps> = props => {
@@ -55,7 +56,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
     return (
       <Grid container direction="column" className={className}>
         {props.comments.map(comment => (
-          <CommentItem comment={comment}>
+          <CommentItem comment={comment} createComment={props.createComment}>
             {comment.children && comment.children.map(child => (
               <CommentChild comment={child} />
             ))}
@@ -87,7 +88,8 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  getComments: (brickId: number) => dispatch(comments.getComments(brickId))
+  getComments: (brickId: number) => dispatch(comments.getComments(brickId)),
+  createComment: (comment: any) => dispatch(comments.createComment(comment))
 });
 
 const connector = connect(mapState, mapDispatch);
