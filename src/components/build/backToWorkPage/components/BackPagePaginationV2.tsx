@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
-import { ThreeColumns } from "./BackToWork";
+import { ThreeColumns } from "../model";
 
 import sprite from "assets/img/icons-sprite.svg";
 

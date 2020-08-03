@@ -1,4 +1,3 @@
-import "./bricksListPage.scss";
 import React, { Component } from "react";
 import {
   Box, Grid, FormControlLabel, Radio, RadioGroup, Hidden,
@@ -7,7 +6,7 @@ import axios from "axios";
 // @ts-ignore
 import { connect } from "react-redux";
 import Grow from "@material-ui/core/Grow";
-import sprite from "assets/img/icons-sprite.svg";
+import sprite from "../../../assets/img/icons-sprite.svg";
 
 import brickActions from "redux/actions/brickActions";
 import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
