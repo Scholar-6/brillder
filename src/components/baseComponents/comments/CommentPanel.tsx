@@ -24,7 +24,7 @@ const NewCommentButton = withStyles({
       backgroundColor: green[700],
     },
     width: "100%",
-    fontSize: 25,
+    fontSize: "25px",
     letterSpacing: 7,
     borderRadius: 0
   }
@@ -66,20 +66,18 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
   }
 
   return (
-    <Box marginLeft={3} bgcolor="#e4e7f0" height="100%" borderRadius={10} clone>
-      <Grid container direction="column" alignItems="stretch">
-        <Grid item>
-          <Box textAlign="center" fontSize={20} letterSpacing={4} fontFamily="Brandon Grotesque Black" py={1}>COMMENTS</Box>
-        </Grid>
-        <Grid item>
-          <NewCommentButton disableElevation onClick={() => setPanelShown(!panelShown)}>NEW COMMENT</NewCommentButton>
-          <Collapse in={panelShown}>
-            <NewCommentPanel collapsePanel={() => setPanelShown(false)} />
-          </Collapse>
-        </Grid>
-        {renderComments()}
+    <Grid container className="comments-panel" direction="column" alignItems="stretch">
+      <Grid item>
+        <div className="comments-title">COMMENTS</div>
       </Grid>
-    </Box>
+      <Grid item>
+        <Button className="new-comment" disableElevation onClick={() => setPanelShown(!panelShown)}>NEW COMMENT</Button>
+        <Collapse in={panelShown}>
+          <NewCommentPanel collapsePanel={() => setPanelShown(false)} />
+        </Collapse>
+      </Grid>
+      {renderComments()}
+    </Grid>
   );
 };
 

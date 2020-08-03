@@ -1,13 +1,73 @@
-.comments-column {
-  transition: height 1s ease;
-  overflow: scroll;
-  display: block !important;
-}
+@import '../../../assets/sass/partials/variables';
 
-.bigger-comments {
-  height: 60vh;
-}
+.comments-panel {
+  margin-left: 2vh;
+  background-color: #e4e7f0;
+  height: 100%;
+  border-radius: 10px;
 
-.smaller-comments {
-  height: 40vh;
+  .comments-title {
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 4px;
+    font-family: "Brandon Grotesque Black";
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+  }
+
+  .comment-item-container {
+    margin: 2vh;
+    padding: 2vh;
+    border-radius: 15px;
+    background-color: #ffffff;
+
+    .stretch {
+      flex-grow: 1;
+    }
+
+    .comment-reply-container {
+      border-top: 1px solid lightgrey;
+      padding-top: 1vh;
+      margin-top: 1vh;
+      
+      .comment-child-container {
+        margin-left: 1rem;
+
+        .comment-head-bar {
+          display: flex;
+          flex-direction: row;
+
+          .comment-author {
+            flex-grow: 1;
+          }
+        }
+      }
+    }
+  }
+
+  button.new-comment {
+    color: #ffffff;
+    background-color: var(--theme-green);
+    &:hover {
+      background-color: var(--theme-green);
+    }
+    width: 100%;
+    font-size: 1.25vw;
+    letter-spacing: 7px;
+    border-radius: 0;
+  }
+
+  .comments-column {
+    transition: height 1s ease;
+    overflow: scroll;
+    display: block !important;
+  }
+
+  .bigger-comments {
+    height: 60vh;
+  }
+
+  .smaller-comments {
+    height: 40vh;
+  }
 }

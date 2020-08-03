@@ -1,0 +1,26 @@
+@import "../../../assets/sass/partials/variables";
+
+.comment-reply-panel {
+    background-color: var(--white);
+}
+
+button.comment-action-button {
+    color: #ffffff;
+    flex-basis: 50%;
+    flex-shrink: 1;
+    font-size: 1.25vw;
+    letter-spacing: 7px;
+    border-radius: 0;
+
+    &.post {
+        background-color: var(--blue);
+    }
+
+    &.cancel {
+        background-color: var(--theme-orange)
+    }
+
+    &.reply {
+        font-size: 0.75vw;
+    }
+}
