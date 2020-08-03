@@ -13,6 +13,7 @@ import { Comment } from 'model/comments';
 
 interface CommentItemProps {
   comment: Comment;
+  createComment(comment: any): void;
 }
 
 // Green and Red theme (should be in SCSS anyway) 30/07/20
@@ -77,7 +78,10 @@ const CommentItem: React.FC<CommentItemProps> = props => {
 					{props.children}
 				</Grid>}
 				<Collapse in={replyPanelShown}>
-					<ReplyCommentPanel parentComment={props.comment} collapsePanel={() => setReplyPanelShown(false)} />
+					<ReplyCommentPanel
+						parentComment={props.comment}
+						collapsePanel={() => setReplyPanelShown(false)}
+						createComment={props.createComment} />
 				</Collapse>
 			</Grid>
 		</div>
