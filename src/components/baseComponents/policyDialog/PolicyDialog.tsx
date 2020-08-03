@@ -25,7 +25,7 @@ const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
           <use href={sprite + "#cancel"} className="text-theme-orange" />
         </svg>
         </div>
-        <h1 className="private-policy-title">Privacy policy</h1>
+        <h1 className="private-policy-title">Privacy Policy</h1>
         <p>
           Your privacy is important to us. It is Scholar 6’s policy to respect your privacy
           regarding any information we may collect from you when using the Brillder application.
