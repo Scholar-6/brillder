@@ -12,5 +12,18 @@
     height: 84vh;
     font-size: 1.2vw;
     overflow-y: auto;
+
+    .private-policy-title {
+      text-transform: uppercase;
+      font-family: bold;
+      text-align: center;
+      margin-bottom: 4vh;
+    }
+    p {
+      margin-bottom: 2vh;
+    }
+    h4 {
+      margin-bottom: 2vh;
+    }
   }
 }
