@@ -1,10 +1,10 @@
 import React from "react";
 import { History } from 'history';
 import { Grid, Hidden } from "@material-ui/core";
-import sprite from "assets/img/icons-sprite.svg";
+import { Link } from "react-router-dom";
 
 import './ChooseLoginPage.scss';
-
+import sprite from "assets/img/icons-sprite.svg";
 
 interface ChooseLoginProps {
   history: History;
@@ -66,7 +66,9 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
           </Grid>
           <Grid container direction="row" className="third-row">
             <div className="first-col"></div>
-            <div className="second-col"></div>
+            <div className="second-col policy-text">
+              <a onClick={() => props.history.push('/privacy-policy')}>Private policy</a>
+            </div>
             <div className="third-col"></div>
           </Grid>
         </div>

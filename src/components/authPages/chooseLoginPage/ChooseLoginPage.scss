@@ -130,4 +130,19 @@
       line-height: 1 !important;
     }
   }
+
+  .policy-text {
+    vertical-align: middle;
+    text-align: center;
+    padding-top: 3vh;
+    color: white;
+    font-size: 3vh;
+    height:10%;
+    a {
+      color: white !important;
+    }
+    a:hover {
+      opacity: 0.5;
+    }
+  }
 }
