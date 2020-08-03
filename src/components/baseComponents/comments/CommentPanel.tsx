@@ -56,9 +56,9 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
     return (
       <Grid container direction="column" className={className}>
         {props.comments.map(comment => (
-          <CommentItem comment={comment} createComment={props.createComment}>
+          <CommentItem key={comment.id} comment={comment} createComment={props.createComment}>
             {comment.children && comment.children.map(child => (
-              <CommentChild comment={child} />
+              <CommentChild key={child.id} comment={child} />
             ))}
           </CommentItem>
         ))}
