@@ -1,16 +1,18 @@
 import React from "react";
 import { History } from 'history';
 import { Grid, Hidden } from "@material-ui/core";
-import { Link } from "react-router-dom";
 
 import './ChooseLoginPage.scss';
 import sprite from "assets/img/icons-sprite.svg";
+import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 
 interface ChooseLoginProps {
   history: History;
 }
 
 const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
+  const [isPolicyOpen, setPolicyDialog] = React.useState(false);
+
   const moveToLogin = () => props.history.push('/login');
 
   const renderLogo = () => {
@@ -67,7 +69,7 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
           <Grid container direction="row" className="third-row">
             <div className="first-col"></div>
             <div className="second-col policy-text">
-              <a onClick={() => props.history.push('/privacy-policy')}>Private policy</a>
+              <a onClick={() => setPolicyDialog(true)}>Privacy policy</a>
             </div>
             <div className="third-col"></div>
           </Grid>
@@ -118,6 +120,7 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
           <div className="second-item"></div>
         </div>
       </Hidden>
+      <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
     </Grid>
   );
 }
