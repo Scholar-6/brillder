@@ -147,3 +147,13 @@
     }
   }
 }
+
+.mobile-policy-text {
+  position: absolute;
+  bottom: 2.4vh;
+  width: 88vw;
+  text-align: center;
+  color: var(--theme-dark-blue);
+  font-size: 6vw;
+  line-height: 1;
+}

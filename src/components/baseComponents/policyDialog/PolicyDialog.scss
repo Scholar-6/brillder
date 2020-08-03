@@ -1,4 +1,6 @@
 @import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
 
 .privacy-policy-dialog {
   height: 100vh !important;
@@ -6,7 +8,7 @@
   width: 100vw;
   overflow: hidden;
 
-
+  // for desktop
   .MuiDialog-paper {
     position: relative;
     height: 88vh;
@@ -30,6 +32,12 @@
           $size: 2.5vw;
           height: $size !important;
           width: $size !important;
+
+          @include phone_and_tabletP {
+            $size: 8vw;
+            height: $size !important;
+            width: $size !important;
+          }
         }
       }
 
@@ -50,6 +58,19 @@
         color: var(--theme-orange); 
         margin-bottom: 0.5vh;
       }
+    }
+  }
+
+  // for mobile
+  @include phone_and_tabletP {
+    .MuiDialog-paper {
+      position: relative;
+      height: 88vh;
+      width: 90vw;
+      max-width: 90vw;
+    }
+    .private-policy-content {
+      font-size: 4vw !important;
     }
   }
 }

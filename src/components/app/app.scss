@@ -3,6 +3,7 @@
 @import '../../assets/sass/partials/extensions';
 
 .beta-text {
+  min-height: 5.3vw;
   width: fit-content;
   position: fixed;
   bottom: 2.4vh;
@@ -67,7 +68,7 @@
   left: 0;
 
   @include phone_and_tabletP {
-    margin: 0 !important;
+    margin: 1vw !important;
   }
 }
 
