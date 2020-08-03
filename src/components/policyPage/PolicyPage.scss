@@ -1,0 +1,16 @@
+@import '../../assets/sass/partials/variables';
+
+.private-policy-page {
+  background: var(--theme-dark-blue);
+  height: 100vh;
+  padding: 6vh 5vw;
+  width: 100vw;
+  overflow: hidden;
+
+  .private-policy-box {
+    padding: 2.5vh 1.5vw;
+    height: 84vh;
+    font-size: 1.2vw;
+    overflow-y: auto;
+  }
+}
