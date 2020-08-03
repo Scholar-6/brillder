@@ -2,44 +2,11 @@ import React from 'react';
 // @ts-ignore
 import { connect } from 'react-redux';
 import { Grid, TextField, Box, Button } from '@material-ui/core';
+import './NewCommentPanel.scss';
 
-import { withStyles } from '@material-ui/core/styles';
-
-import { blue, red } from '@material-ui/core/colors';
-import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
 import { ReduxCombinedState } from 'redux/reducers';
 import comments from 'redux/actions/comments';
-
-const PostButton = withStyles({
-	root: {
-		color: "#ffffff",
-		backgroundColor: blue[500],
-		'&:hover': {
-			backgroundColor: blue[700],
-		},
-		flexBasis: "50%",
-		flexShrink: 1,
-		fontSize: 25,
-		letterSpacing: 7,
-		borderRadius: 0
-	}
-})(Button);
-
-const CancelButton = withStyles({
-	root: {
-		color: "#ffffff",
-		backgroundColor: red[500],
-		'&:hover': {
-			backgroundColor: red[700],
-		},
-		fontSize: 25,
-		flexBasis: "50%",
-		flexShrink: 1,
-		letterSpacing: 7,
-		borderRadius: 0
-	}
-})(Button);
 
 interface NewCommentPanelProps {
 	currentBrick: Brick;
@@ -69,8 +36,8 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
 				</form>
 			</Grid>
 			<Grid item container direction="row">
-				<PostButton onClick={() => handlePostComment()} disableElevation>POST</PostButton>
-				<CancelButton onClick={() => props.collapsePanel()} disableElevation>CANCEL</CancelButton>
+				<Button className="comment-action-button post"onClick={() => handlePostComment()} disableElevation>POST</Button>
+				<Button className="comment-action-button cancel" onClick={() => props.collapsePanel()} disableElevation>CANCEL</Button>
 			</Grid>
 		</Grid>
 	</Box>
