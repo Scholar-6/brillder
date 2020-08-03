@@ -11,7 +11,6 @@ import { ReduxCombinedState } from 'redux/reducers';
 import comments from 'redux/actions/comments';
 
 interface ReplyCommentPanelProps {
-	currentBrick: Brick;
 	parentComment: Comment;
 	collapsePanel(): void;
 	createComment(comment: any): void;
@@ -23,7 +22,7 @@ const ReplyCommentPanel: React.FC<ReplyCommentPanelProps> = props => {
 	const handlePostComment = () => {
 		props.createComment({
 			text,
-			brickId: props.currentBrick.id,
+			brickId: props.parentComment.brick.id,
 			parentId: props.parentComment.id
 		});
 		setText("");
@@ -46,14 +45,4 @@ const ReplyCommentPanel: React.FC<ReplyCommentPanelProps> = props => {
 	);
 };
 
-const mapState = (state: ReduxCombinedState) => ({
-	currentBrick: state.brick.brick
-});
-
-const mapDispatch = (dispatch: any) => ({
-	createComment: (comment: any) => dispatch(comments.createComment(comment))
-});
-
-const connector = connect(mapState, mapDispatch)
-
-export default connector(ReplyCommentPanel);
+export default ReplyCommentPanel;
