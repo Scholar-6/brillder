@@ -85,8 +85,6 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
           </div>
         </div>
         <div className="first-col">
-          <div className="first-item">
-          </div>
           <div className="second-item">
             <div className="logo-box">
               <svg
@@ -112,12 +110,11 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
                 </svg>
                 <span>Register &nbsp;|&nbsp; Sign in with Google</span>
               </a>
+              <div className="mobile-policy-text">
+                <a onClick={() => setPolicyDialog(true)}>Privacy Policy</a>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="second-col">
-          <div className="first-item"></div>
-          <div className="second-item"></div>
         </div>
       </Hidden>
       <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
