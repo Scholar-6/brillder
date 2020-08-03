@@ -9,20 +9,14 @@ import axios from "axios";
 
 import actions from "redux/actions/auth";
 import "./loginPage.scss";
-import { ReduxCombinedState } from "redux/reducers";
-
 import sprite from "assets/img/icons-sprite.svg";
-
-const mapState = (state: ReduxCombinedState) => ({
-  error: state.auth.error,
-  isAuthenticated: state.auth.isAuthenticated,
-});
+import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
 });
 
-const connector = connect(mapState, mapDispatch);
+const connector = connect(null, mapDispatch);
 
 interface LoginProps {
   loginSuccess(): void;
@@ -35,6 +29,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isPolicyOpen, setPolicyDialog] = React.useState(false);
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -223,7 +218,9 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           </Grid>
           <Grid container direction="row" className="third-row">
             <div className="first-col"></div>
-            <div className="second-col"></div>
+            <div className="second-col policy-text">
+              <a onClick={() => setPolicyDialog(true)}>Privacy Policy</a>
+            </div>
             <div className="third-col"></div>
           </Grid>
         </div>
@@ -316,6 +313,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
+      <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
     </Grid>
   );
 };
