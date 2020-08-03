@@ -8,9 +8,9 @@ export interface CommentChildProps {
 
 const CommentChild: React.FC<CommentChildProps> = props => {
 	return (
-	<div style={{ marginLeft: "1rem" }}>
-		<div style={{ display: "flex", flexDirection: "row" }}>
-			<b style={{ flexGrow: 1 }}>{props.comment.author.firstName} {props.comment.author.lastName}</b>
+	<div className="comment-child-container">
+		<div className="comment-head-bar">
+			<b className="comment-author">{props.comment.author.firstName} {props.comment.author.lastName}</b>
 			<small>{moment(props.comment.timestamp).format("H:mm D MMM")}</small>
 		</div>
 		<div><i>{props.comment.text === "" ?  "No text inserted" : props.comment.text}</i></div>
