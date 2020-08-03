@@ -22,7 +22,6 @@ import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
 import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
 import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
 import UserProfilePage from '../build/userProfilePage/UserProfile';
-import PolicyPage from '../policyPage/PolicyPage';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
@@ -82,8 +81,6 @@ const App: React.FC = (props: any) => {
     <ThemeProvider theme={theme}>
       {/* all page routes are here order of routes is important */}
       <Switch>
-        <Route path="/privacy-policy" exact component={PolicyPage} />
-
         <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <StudentRoute path="/play/dashboard" component={Dashboard} />

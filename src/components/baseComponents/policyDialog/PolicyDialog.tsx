@@ -1,12 +1,30 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
+import Dialog from "@material-ui/core/Dialog";
+import sprite from "assets/img/icons-sprite.svg";
 
-import './PolicyPage.scss';
+import './PolicyDialog.scss';
 
-const PolicyPage: React.FC<any> = (props) => {
+interface PolicyDialogProps {
+  isOpen: boolean;
+  close(): void;
+}
+
+const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
   return (
-    <div className="private-policy-page">
-      <Card className="private-policy-box">
+    <Dialog
+      open={props.isOpen}
+      onClose={() => props.close()}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+      className="dialog-box privacy-policy-dialog"
+    >
+      <div className="private-policy-content">
+        <div className="close-button" onClick={props.close}>
+        <svg className="svg w100 h100 colored">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#cancel"} className="text-theme-orange" />
+        </svg>
+        </div>
         <h1 className="private-policy-title">Privacy policy</h1>
         <p>
           Your privacy is important to us. It is Scholar 6’s policy to respect your privacy
@@ -82,9 +100,9 @@ const PolicyPage: React.FC<any> = (props) => {
           which you have elected to publish publicly on your bricks are no longer private and may stay associated with the bricks you created.
         </p>
         <h4>**This policy is effective as of 29 July 2020.**</h4>
-      </Card>
-    </div>
+      </div>
+    </Dialog>
   );
 }
 
-export default PolicyPage;
+export default PolicyDialog;

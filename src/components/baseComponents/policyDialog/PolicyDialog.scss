@@ -1,0 +1,54 @@
+@import '../../../assets/sass/partials/variables';
+
+.privacy-policy-dialog {
+  height: 100vh !important;
+  padding: 6vh 5vw;
+  width: 100vw;
+  overflow: hidden;
+
+
+  .MuiDialog-paper {
+    position: relative;
+    height: 88vh;
+    width: 90vw;
+    max-width: 90vw;
+
+    .private-policy-content {
+      padding: 2.5vh 1.5vw;
+      height: 84vh;
+      font-size: 1.2vw;
+      overflow-y: auto;
+      color: var(--theme-dark-blue);
+
+      .close-button {
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        svg {
+          $size: 2.5vw;
+          height: $size !important;
+          width: $size !important;
+        }
+      }
+
+      .private-policy-title {
+        text-transform: capitalize;
+        font-family: $font-family-bold;
+        text-align: center;
+        margin-bottom: 4vh;
+        color: var(--theme-orange);
+      }
+
+      p, ol {
+        margin-bottom: 2vh;
+      }
+
+      h4 {
+        color: var(--theme-orange); 
+        margin-bottom: 0.5vh;
+      }
+    }
+  }
+}
