@@ -377,6 +377,7 @@
           }
         }
         .svgOnHover {
+          cursor: pointer;
           border-radius: 40%;
           height: calc(1vw + 20px);
           background-color: var(--tab-gray);
