@@ -24,10 +24,18 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
       synthesis: props.synthesis
     }
   }
+
+  UNSAFE_componentWillReceiveProps(props: SynthesisProps) {
+    if(props.locked) {
+      this.setState({ ...this.state, synthesis: props.synthesis });
+    }
+  }
+
   onSynthesisChange(text: string) {
     this.setState({synthesis: text});
     this.props.onSynthesisChange(text);
   }
+
   render() {
     return (
       <div className="question-type synthesis-page">

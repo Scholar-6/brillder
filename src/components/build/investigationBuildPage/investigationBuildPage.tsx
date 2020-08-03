@@ -153,7 +153,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   }
 
   let canEdit = canEditBrick(props.brick, props.user);
-  // locked = canEdit ? locked : true;
+  locked = canEdit ? locked : true;
 
   setBrillderTitle(props.brick.title);
 
