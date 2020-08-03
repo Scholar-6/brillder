@@ -80,13 +80,15 @@ const App: React.FC = (props: any) => {
 
   return (
     <ThemeProvider theme={theme}>
+      {/* all page routes are here order of routes is important */}
       <Switch>
+        <Route path="/privacy-policy" exact component={PolicyPage} />
+
         <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <StudentRoute path="/play/dashboard" component={Dashboard} />
 
         <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} />
-
         <BuildRoute path="/build/new-brick" component={Proposal} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} />
@@ -101,8 +103,6 @@ const App: React.FC = (props: any) => {
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
         <AuthRoute path="/login" exact component={LoginPage} />
-
-        <Route path="/privacy-policy" component={PolicyPage} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>
