@@ -15,30 +15,25 @@ interface CommentItemProps {
   comment: Comment;
 }
 
-const Stretch = withStyles({
-	root: {
-		flexGrow: 1
-	}
-})(Grid);
-
-const GreenRedTheme = createMuiTheme({
-	palette: {
-		primary: green,
-		secondary: red
-	}
-});
+// Green and Red theme (should be in SCSS anyway) 30/07/20
+// const GreenRedTheme = createMuiTheme({
+// 	palette: {
+// 		primary: green,
+// 		secondary: red
+// 	}
+// });
 
 const CommentItem: React.FC<CommentItemProps> = props => {
   const [replyPanelShown, setReplyPanelShown] = React.useState(false);
 
 	return (
 	<Grid item>
-		<Box marginX={2} marginY={2} padding={2} borderRadius={15} bgcolor="#ffffff">
+		<div className="comment-item-container">
 			<Grid container direction="column">
 				<Grid item container direction="row">
-					<Stretch item>
+					<Grid className="stretch" item>
 						<h4><b>{props.comment.author.firstName} {props.comment.author.lastName}</b></h4>
-					</Stretch>
+					</Grid>
 		      {/* Approve and Reject buttons 31/07/20
 					<ThemeProvider theme={GreenRedTheme}>
 						<IconButton aria-label="reply" size="small" color="primary">
@@ -77,16 +72,14 @@ const CommentItem: React.FC<CommentItemProps> = props => {
 					<b>Comment: </b><i>{props.comment.text}</i>
 				</Grid>
 				{props.children && props.children instanceof Array && props.children.length != 0 &&
-				<Box borderTop="1px solid lightgrey" paddingTop={1} marginTop={1} clone>
-					<Grid item container direction="column">
-						{props.children}
-					</Grid>
-				</Box>}
-		<Collapse in={replyPanelShown}>
-		  <ReplyCommentPanel parentComment={props.comment} collapsePanel={() => setReplyPanelShown(false)} />
-		</Collapse>
+				<Grid className="comment-reply-container" item container direction="column">
+					{props.children}
+				</Grid>}
+				<Collapse in={replyPanelShown}>
+					<ReplyCommentPanel parentComment={props.comment} collapsePanel={() => setReplyPanelShown(false)} />
+				</Collapse>
 			</Grid>
-		</Box>
+		</div>
 	</Grid>
 	)
 };

@@ -15,6 +15,36 @@
     padding-bottom: 1vh;
   }
 
+  .comment-item-container {
+    margin: 2vh;
+    padding: 2vh;
+    border-radius: 15px;
+    background-color: #ffffff;
+
+    .stretch {
+      flex-grow: 1;
+    }
+
+    .comment-reply-container {
+      border-top: 1px solid lightgrey;
+      padding-top: 1vh;
+      margin-top: 1vh;
+      
+      .comment-child-container {
+        margin-left: 1rem;
+
+        .comment-head-bar {
+          display: flex;
+          flex-direction: row;
+
+          .comment-author {
+            flex-grow: 1;
+          }
+        }
+      }
+    }
+  }
+
   button.new-comment {
     color: #ffffff;
     background-color: var(--theme-green);
