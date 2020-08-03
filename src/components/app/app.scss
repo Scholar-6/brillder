@@ -65,6 +65,10 @@
   position: fixed;
   margin-left: 0.9vw !important;
   left: 0;
+
+  @include phone_and_tabletP {
+    margin: 0 !important;
+  }
 }
 
 .youtube-link {
