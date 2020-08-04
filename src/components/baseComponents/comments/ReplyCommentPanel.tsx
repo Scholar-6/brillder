@@ -2,7 +2,7 @@ import React from 'react';
 import "./NewCommentPanel.scss";
 // @ts-ignore
 import { connect } from 'react-redux';
-import { Grid, TextField, Box, Button } from '@material-ui/core';
+import { Grid, TextField, Box, Button, Input } from '@material-ui/core';
 
 
 import { Comment } from 'model/comments';
@@ -33,14 +33,14 @@ const ReplyCommentPanel: React.FC<ReplyCommentPanelProps> = props => {
 	return (
 	<Grid className="comment-reply-panel" container direction="column" alignItems="stretch">
 		<Grid item>
-			<form style={{ padding: "5px" }}>
-				<TextField label="Comment Text" value={text}
-					onChange={(evt) => setText(evt.target.value)} multiline fullWidth variant="outlined" />
+			<form className="comment-reply-text-form">
+				<Input placeholder="Add Reply..." value={text} multiline fullWidth disableUnderline
+					onChange={(evt) => setText(evt.target.value)} />
 			</form>
 		</Grid>
-		<Grid item container direction="row">
-			<Button className="comment-action-button reply post" onClick={() => handlePostComment()} disableElevation>POST</Button>
-			<Button className="comment-action-button reply cancel" onClick={() => props.collapsePanel()} disableElevation>CANCEL</Button>
+		<Grid item container direction="row" justify="center">
+			<Button className="comment-action-button reply post" onClick={() => handlePostComment()} disabled={text === ""}>POST</Button>
+			<Button className="comment-action-button reply cancel" onClick={() => props.collapsePanel()} disabled={text === ""}>CANCEL</Button>
 		</Grid>
 	</Grid>
 	);
