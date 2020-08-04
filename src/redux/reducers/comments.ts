@@ -54,6 +54,27 @@ export default (state = CommentsInitialState, action: any): CommentsState => {
                     mostRecentComment: action.comment
                 }
             }
+        case types.DELETE_COMMENT:
+            if(!action.comment.parent) {
+                return {
+                    ...state,
+                    comments: (state.comments ?? [])
+                        .filter((comment: Comment) => comment.id !== action.comment.id)
+                        .concat(action.comment.children
+                            .map((child: Comment) => ({ ...child, parent: undefined })))
+                };
+            } else {
+                return {
+                    ...state,
+                    comments: (state.comments ?? [])
+                        .map((comment: Comment) =>
+                            comment.id === action.comment.parent.id ?
+                            { ...comment,
+                                children: comment.children
+                                    .filter((child: Comment) => child.id !== action.comment.id) } :
+                            comment)
+                };
+            }
         default:
             return state;
     }

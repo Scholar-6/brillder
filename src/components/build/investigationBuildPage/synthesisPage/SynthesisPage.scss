@@ -66,5 +66,9 @@
       font-size: 1.4vw;
       font-family: $font-family-black;
     }
+
+    .comment-panel-container {
+      flex-basis: 250px;
+    }
   }
 }

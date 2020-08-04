@@ -52,6 +52,9 @@ describe("comments panel", () => {
             },
             brick: {
                 brick: mockBrick
+            },
+            user: {
+                user: { id: 1 }
             }
         });
 

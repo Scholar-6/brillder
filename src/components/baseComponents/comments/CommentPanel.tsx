@@ -15,6 +15,7 @@ import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
 import CommentChild from './CommentChild';
 import NewCommentPanel from './NewCommentPanel';
+import { User } from 'model/user';
 
 const NewCommentButton = withStyles({
   root: {
@@ -34,31 +35,33 @@ const NewCommentButton = withStyles({
 interface CommentPanelProps {
   comments: Comment[];
   currentBrick: Brick;
+  currentUser: User;
   getComments(brickId: number): void;
   createComment(comment: any): void;
 }
 
 const CommentPanel: React.FC<CommentPanelProps> = props => {
-  const [panelShown, setPanelShown] = React.useState(false);
-
   if (!props.comments) {
     props.getComments(props.currentBrick.id);
     return <div>Loading comments...</div>;
   }
 
   const renderComments = () => {
-    let className = "comments-column ";
-    if (panelShown) {
-      className += "smaller-comments";
-    } else {
-      className += "bigger-comments";
-    }
     return (
-      <Grid container direction="column" className={className}>
+      <Grid container direction="column" className="comments-column">
         {props.comments.map(comment => (
-          <CommentItem comment={comment} createComment={props.createComment}>
+          <CommentItem
+            key={comment.id}
+            comment={comment}
+            currentBrick={props.currentBrick}
+            createComment={props.createComment}
+            isAuthor={comment.author.id === props.currentUser.id}>
             {comment.children && comment.children.map(child => (
-              <CommentChild comment={child} />
+              <CommentChild
+                key={child.id}
+                comment={child}
+                currentBrick={props.currentBrick}
+                isAuthor={child.author.id === props.currentUser.id} />
             ))}
           </CommentItem>
         ))}
@@ -69,13 +72,10 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
   return (
     <Grid container className="comments-panel" direction="column" alignItems="stretch">
       <Grid item>
-        <div className="comments-title">COMMENTS</div>
+        <div className="comments-title">Suggestions</div>
       </Grid>
       <Grid item>
-        <Button className="new-comment" disableElevation onClick={() => setPanelShown(!panelShown)}>NEW COMMENT</Button>
-        <Collapse in={panelShown}>
-          <NewCommentPanel collapsePanel={() => setPanelShown(false)} />
-        </Collapse>
+        <NewCommentPanel />
       </Grid>
       {renderComments()}
     </Grid>
@@ -84,7 +84,8 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
 
 const mapState = (state: ReduxCombinedState) => ({
   comments: state.comments.comments,
-  currentBrick: state.brick.brick
+  currentBrick: state.brick.brick,
+  currentUser: state.user.user
 });
 
 const mapDispatch = (dispatch: any) => ({
