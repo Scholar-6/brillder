@@ -42,7 +42,7 @@ describe('comment item', () => {
         const createComment = jest.fn();
 
         render(
-            <CommentItem comment={mockComment} createComment={createComment} />
+            <CommentItem comment={mockComment} createComment={createComment} isAuthor={false} />
         );
 
         const commentText = screen.queryByText(mockComment.text);
@@ -58,7 +58,7 @@ describe('comment item', () => {
         const createComment = jest.fn();
 
         render(
-            <CommentItem comment={mockComment} createComment={createComment}>
+            <CommentItem comment={mockComment} createComment={createComment} isAuthor={false}>
                 {[<CommentChild comment={mockChild} />]}
             </CommentItem>
         );

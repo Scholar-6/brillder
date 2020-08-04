@@ -12,6 +12,7 @@ import comments from 'redux/actions/comments';
 
 interface ReplyCommentPanelProps {
 	parentComment: Comment;
+	currentBrick: Brick;
 	collapsePanel(): void;
 	createComment(comment: any): void;
 }
@@ -22,7 +23,7 @@ const ReplyCommentPanel: React.FC<ReplyCommentPanelProps> = props => {
 	const handlePostComment = () => {
 		props.createComment({
 			text,
-			brickId: props.parentComment.brick.id,
+			brickId: props.currentBrick.id,
 			parentId: props.parentComment.id
 		});
 		setText("");

@@ -15,6 +15,7 @@ import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
 import CommentChild from './CommentChild';
 import NewCommentPanel from './NewCommentPanel';
+import { User } from 'model/user';
 
 const NewCommentButton = withStyles({
   root: {
@@ -34,6 +35,7 @@ const NewCommentButton = withStyles({
 interface CommentPanelProps {
   comments: Comment[];
   currentBrick: Brick;
+  currentUser: User;
   getComments(brickId: number): void;
   createComment(comment: any): void;
 }
@@ -56,9 +58,14 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
     return (
       <Grid container direction="column" className={className}>
         {props.comments.map(comment => (
-          <CommentItem key={comment.id} comment={comment} createComment={props.createComment}>
+          <CommentItem
+            key={comment.id}
+            comment={comment}
+            currentBrick={props.currentBrick}
+            createComment={props.createComment}
+            isAuthor={comment.author.id === props.currentUser.id}>
             {comment.children && comment.children.map(child => (
-              <CommentChild key={child.id} comment={child} />
+              <CommentChild key={child.id} comment={child} isAuthor={child.author.id === props.currentUser.id} />
             ))}
           </CommentItem>
         ))}
@@ -84,7 +91,8 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
 
 const mapState = (state: ReduxCombinedState) => ({
   comments: state.comments.comments,
-  currentBrick: state.brick.brick
+  currentBrick: state.brick.brick,
+  currentUser: state.user.user
 });
 
 const mapDispatch = (dispatch: any) => ({
