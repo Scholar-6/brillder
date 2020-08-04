@@ -28,7 +28,7 @@ const PrivateCoreToggle: React.FC<ToggleProps> = ({ isCore, onSwitch }) => {
     return (
       <svg className={className}>
         {/*eslint-disable-next-line*/}
-        <use href={sprite + "#globe"} />
+        <use href={sprite + "#user"} />
       </svg>
     );
   }
