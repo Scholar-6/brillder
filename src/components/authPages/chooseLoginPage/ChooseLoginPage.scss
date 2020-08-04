@@ -130,21 +130,19 @@
       line-height: 1 !important;
     }
   }
+}
 
-  .policy-text {
-    vertical-align: middle;
-    text-align: right;
-    padding-right: 2.5vw;
-    padding-top: 2.8vh;
-    color: white;
-    font-size: 3vh;
-    height:10%;
-    a {
-      color: white !important;
-    }
-    a:hover {
-      opacity: 0.5;
-    }
+.policy-text {
+  cursor: pointer;
+  vertical-align: middle;
+  text-align: right;
+  padding-right: 2.5vw;
+  padding-top: 2.8vh;
+  color: white;
+  font-size: 3vh;
+  height:10%;
+  span:hover {
+    color: var(--theme-orange) !important;
   }
 }
 

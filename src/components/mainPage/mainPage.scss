@@ -227,4 +227,14 @@
       }
     }
   }
+  .policy-text-container {
+    position: relative;
+
+    .policy-text {
+      font-family: $font-family-regular;
+      position: absolute;
+      bottom: 3.5vh;
+      left: 8vw;
+    }
+  }
 }

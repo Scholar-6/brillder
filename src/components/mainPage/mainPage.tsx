@@ -11,6 +11,8 @@ import { ReduxCombinedState } from "redux/reducers";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
+import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
+
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -34,6 +36,7 @@ interface MainPageState {
   backHober: boolean;
   animatedName: string;
   swiper: any;
+  isPolicyOpen: boolean;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
@@ -45,7 +48,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       createHober: false,
       backHober: false,
       animatedName: "",
-      swiper: null
+      swiper: null,
+      isPolicyOpen: false,
     } as any;
 
     let count = 0;
@@ -64,6 +68,10 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       }
       count++;
     }, 150);
+  }
+
+  setPolicyDialog(isPolicyOpen: boolean) {
+    this.setState({ isPolicyOpen });
   }
 
   viewHoverToggle(viewHover: boolean) {
@@ -233,11 +241,16 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           </div>
           <div className="second-col">
             <div className="first-item"></div>
-            <div className="second-item"></div>
+            <div className="second-item policy-text-container">
+              <div className="policy-text">
+                <span onClick={() => this.setPolicyDialog(true)}>Privacy Policy</span>
+              </div>
+            </div>
           </div>
           <MainPageMenu user={this.props.user} history={this.props.history} />
         </Hidden>
         {this.renderMobilePage()}
+        <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />
       </Grid>
     );
   }
