@@ -17,13 +17,14 @@ interface MenuDropdownProps {
 }
 
 const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
+  const { page } = props;
   const creatingBrick = () => {
     props.forgetBrick();
     props.history.push("/build/new-brick/subject");
-  }
+  };
 
   const renderViewAllItem = () => {
-    if (props.page !== PageEnum.ViewAll) {
+    if (page !== PageEnum.ViewAll && page !== PageEnum.MainPage) {
       return (
         <MenuItem
           className="first-item menu-item"
@@ -42,8 +43,25 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     return "";
   };
 
+  const renderStartBuildItem = () => {
+    if (page !== PageEnum.MainPage) {
+      return (
+        <MenuItem className="menu-item" onClick={creatingBrick}>
+          <span className="menu-text">Start Building</span>
+          <div className="btn btn-transparent svgOnHover">
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#trowel"} className="text-white" />
+            </svg>
+          </div>
+        </MenuItem>
+      );
+    }
+    return "";
+  };
+
   const renderBackToWorkItem = () => {
-    if (props.page !== PageEnum.BackToWork) {
+    if (page !== PageEnum.BackToWork && page !== PageEnum.MainPage) {
       return (
         <MenuItem
           className="menu-item"
@@ -94,15 +112,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       onClose={props.hideDropdown}
     >
       {renderViewAllItem()}
-      <MenuItem className="menu-item" onClick={creatingBrick}>
-        <span className="menu-text">Start Building</span>
-        <div className="btn btn-transparent svgOnHover">
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#trowel"} className="text-white" />
-          </svg>
-        </div>
-      </MenuItem>
+      {renderStartBuildItem()}
       {renderBackToWorkItem()}
       {renderManageUsersItem()}
       <MenuItem
