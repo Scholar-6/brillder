@@ -1,30 +1,28 @@
 import React, { Component } from "react";
-import PageHeader from "./PageHeader";
 import { User } from "model/user";
-import LogoutDialog from "../logoutDialog/LogoutDialog";
-
 import ReactDOM from 'react-dom';
+// @ts-ignore
+import { connect } from 'react-redux'
+
+
+import { ReduxCombinedState } from 'redux/reducers';
+import notificationActions from 'redux/actions/notifications';
+import { Notification } from 'model/notifications';
+
+import LogoutDialog from "../logoutDialog/LogoutDialog";
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
-
 import MenuDropdown from './MenuDropdown';
+import BellButton from './BellButton';
+import MoreButton from './MoreButton';
 
-export enum PageEnum {
-  None,
-  BackToWork,
-  ViewAll,
-  ManageUsers,
-  MainPage,
-  Play
-}
+import { PageEnum } from './PageHeadWithMenu';
 
-interface HeaderMenuProps {
+interface MainPageMenuProps {
   history: any;
   user: User;
-  placeholder?: string;
-  page: PageEnum;
-  isMobileHidden?: boolean;
-  search(): void;
-  searching(v: string): void;
+
+  notifications: Notification[];
+  getNotifications(): void;
 }
 
 interface HeaderMenuState {
@@ -33,10 +31,10 @@ interface HeaderMenuState {
   logoutOpen: boolean;
 }
 
-class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
+class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
   pageHeader: React.RefObject<any>;
 
-  constructor(props: HeaderMenuProps) {
+  constructor(props: MainPageMenuProps) {
     super(props);
 
     this.state = {
@@ -49,6 +47,7 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
   }
 
   showDropdown() {
+      console.log(66)
     this.setState({ ...this.state, dropdownShown: true });
   }
 
@@ -73,24 +72,22 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
   }
 
   render() {
-    let placeholder = "Search Subjects, Topics, Titles & more";
-    if (this.props.placeholder) {
-      placeholder = this.props.placeholder;
+    let notificationCount = 0;
+    if (!this.props.notifications) {
+      this.props.getNotifications();
+    } else {
+      notificationCount = this.props.notifications.length;
     }
+
     return (
-      <div>
-        <PageHeader ref={this.pageHeader}
-          searchPlaceholder={placeholder}
-          search={() => this.props.search()}
-          searching={(v: string) => this.props.searching(v)}
-          showDropdown={() => this.showDropdown()}
-          showNotifications={() => this.showNotifications()}
-        />
+      <div className="main-page-menu" ref={this.pageHeader}>
+        <BellButton notificationCount={notificationCount} onClick={() => this.showNotifications()} />
+        <MoreButton onClick={() => this.showDropdown()} />
         <MenuDropdown
           dropdownShown={this.state.dropdownShown}
           hideDropdown={() => this.hideDropdown()}
           user={this.props.user}
-          page={this.props.page}
+          page={PageEnum.MainPage}
           history={this.props.history}
           onLogout={() => this.handleLogoutOpen()}
           forgetBrick={() => {}}
@@ -110,4 +107,14 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
   }
 }
 
-export default PageHeadWithMenu;
+const mapState = (state: ReduxCombinedState) => ({
+    notifications: state.notifications.notifications
+  });
+  
+  const mapDispatch = (dispatch: any) => ({
+    getNotifications: () => dispatch(notificationActions.getNotifications())
+  });
+
+  
+const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
+export default connector(PageHeadWithMenu);
