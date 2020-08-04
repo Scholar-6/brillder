@@ -9,6 +9,7 @@ const MoreButton: React.FC<MoreButtonProps> = (props) => {
   return (
     <div className="header-btn more-button svgOnHover" onClick={props.onClick}>
       <svg className="svg active">
+        {/*eslint-disable-next-line*/}
         <use href={sprite + "#more"} />
       </svg>
     </div>

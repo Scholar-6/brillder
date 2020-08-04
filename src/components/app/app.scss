@@ -3,7 +3,6 @@
 @import '../../assets/sass/partials/extensions';
 
 .beta-text {
-  min-height: 5.3vw;
   width: fit-content;
   position: fixed;
   bottom: 2.4vh;
@@ -14,6 +13,9 @@
   letter-spacing: 0.4vw;
   font-family: $font-family-black;
   @extend %flexCenter;
+  @include phone_and_tabletP {
+    min-height: 5.3vw;
+  }
   @include phone {
     font-size: 6vw;
   }
