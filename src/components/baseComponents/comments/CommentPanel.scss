@@ -59,10 +59,8 @@
   }
 
   .comments-column {
-    transition: height 1s ease;
     overflow: scroll;
     display: block !important;
     height: 54vh;
-    margin-bottom: 0;
   }
 }
