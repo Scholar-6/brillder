@@ -2,6 +2,17 @@
   $filter-sidebar-size: 23.2vw;
   $filter-sidebar-margin: 1.2vw;
 
+  $sorted-row-margin-top: 2vw;
+
+  $bricks-title-padding-top: 2.1vh;
+  $bricks-title-padding-bottom: 0.5vh;
+  $bricks-title-font-size: 5.2vw;
+  $bricks-title-desktop-height: calc(#{$bricks-title-font-size} + #{$bricks-title-padding-top} + #{$bricks-title-padding-bottom});
+
+  $pagination-size: 6vh;
+
+  $bricks-height: calc(100vh -  #{$page-head-height} - #{$sorted-row-margin-top} - #{$bricks-title-desktop-height} - #{$pagination-size});
+
   padding-left: 0;
   padding-right: 0;
   @include phone_and_tabletP {
@@ -9,7 +20,7 @@
     background: var(--white);
   }
   @include tabletP {
-    margin-top: 2vw;
+    margin-top: $sorted-row-margin-top;
     display: flex;
     height: $height-desktop-view;
   }
@@ -343,9 +354,10 @@
       @include tabletP {
         font-family: $font-family-black;
         padding-bottom: 0;
-        font-size: 5.2vw;
+        font-size: $bricks-title-font-size;
+        line-height: 1;
         letter-spacing: 1.2vw;
-        padding: 2.1vh 0vw 0.5vh 2.4vw;
+        padding: $bricks-title-padding-top 0vw $bricks-title-padding-bottom 2.4vw;
       }
       .btn {
         @extend %flexCenter;
@@ -365,7 +377,7 @@
       @include tabletP {
         padding-left: 1vw;
         padding-right: 1vw;
-        height: 64vh !important;
+        height: $bricks-height !important;
         overflow: auto;
       }
       &.bricks-container-mobile {
@@ -396,7 +408,7 @@
         }
         @include tabletP {
           padding: 0.8vw 0 0 0.8vw;
-          min-height: 9.4vh;
+          height: calc(#{$bricks-height / 6}) !important; 
         }
         .brick-container {
           width: 100%;
