@@ -82,7 +82,6 @@ export function canEditBrick(brick: any, user: User) {
   return false;
 }
 
-
 export function canBuild(user: User) {
   return user.roles.some(role => {
     const { roleId } = role;

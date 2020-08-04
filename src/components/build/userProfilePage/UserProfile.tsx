@@ -230,21 +230,18 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (this.state.isNewUser) {
       // requet to add new user
     } else {
-      axios
-        .put(
-          `${process.env.REACT_APP_BACKEND_HOST}/user`,
-          { ...userToSave },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          if (res.data === "OK") {
-            this.setState({ savedDialogOpen: true });
-            this.props.getUser();
-          }
-        })
-        .catch((error) => {
-          alert("Can`t save user profile");
-        });
+      axios.put(
+        `${process.env.REACT_APP_BACKEND_HOST}/user`,
+        { ...userToSave },
+        { withCredentials: true }
+      ).then((res) => {
+        if (res.data === "OK") {
+          this.setState({ savedDialogOpen: true });
+          this.props.getUser();
+        }
+      }).catch((error) => {
+        alert("Can`t save user profile");
+      });
     }
   }
 
