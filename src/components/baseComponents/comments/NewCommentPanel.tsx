@@ -32,7 +32,7 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
 					onChange={(evt) => setText(evt.target.value)} multiline fullWidth disableUnderline />
 			</form>
 		</Grid>
-		<Grid item container direction="row" justify="center">
+		<Grid item container direction="row" justify="space-evenly">
 			<Button className="comment-action-button post"onClick={() => handlePostComment()} disabled={text === ""}>POST</Button>
 			<Button className="comment-action-button cancel" onClick={() => setText("")} disabled={text === ""}>CANCEL</Button>
 		</Grid>
