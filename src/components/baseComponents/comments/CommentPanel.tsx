@@ -1,8 +1,8 @@
 import React from 'react';
-import { Grid, Button, Collapse } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import { green } from '@material-ui/core/colors';
+import { Grid/*, Button, Collapse*/ } from '@material-ui/core';
+//import { withStyles } from '@material-ui/core/styles';
+//import Box from '@material-ui/core/Box';
+//import { green } from '@material-ui/core/colors';
 // @ts-ignore
 import { connect } from 'react-redux';
 
@@ -17,6 +17,7 @@ import CommentChild from './CommentChild';
 import NewCommentPanel from './NewCommentPanel';
 import { User } from 'model/user';
 
+/*
 const NewCommentButton = withStyles({
   root: {
     color: "#ffffff",
@@ -30,7 +31,7 @@ const NewCommentButton = withStyles({
     borderRadius: 0
   }
 })(Button);
-
+*/
 
 interface CommentPanelProps {
   comments: Comment[];

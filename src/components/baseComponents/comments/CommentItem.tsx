@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, Box, SvgIcon, IconButton, Collapse } from '@material-ui/core';
+import { Grid,/* Box,*/ SvgIcon, IconButton, Collapse } from '@material-ui/core';
 //import { green, red } from '@material-ui/core/colors';
-import { withStyles/*, createMuiTheme, ThemeProvider*/ } from '@material-ui/core/styles';
+//import { withStyles/*, createMuiTheme, ThemeProvider*/ } from '@material-ui/core/styles';
 
 import sprite from "assets/img/icons-sprite.svg";
 
@@ -10,7 +10,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import moment from 'moment';
 import ReplyCommentPanel from './ReplyCommentPanel';
 import { Comment } from 'model/comments';
-import { User } from 'model/user';
+//import { User } from 'model/user';
 import { Brick } from 'model/brick';
 import axios from 'axios';
 
