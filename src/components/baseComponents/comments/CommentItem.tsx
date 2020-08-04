@@ -12,6 +12,7 @@ import ReplyCommentPanel from './ReplyCommentPanel';
 import { Comment } from 'model/comments';
 import { User } from 'model/user';
 import { Brick } from 'model/brick';
+import axios from 'axios';
 
 interface CommentItemProps {
   comment: Comment;
@@ -23,6 +24,13 @@ interface CommentItemProps {
 const CommentItem: React.FC<CommentItemProps> = props => {
   const [replyPanelShown, setReplyPanelShown] = React.useState(false);
 
+	const handleDeleteComment = () => {
+		return axios.delete(
+      `${process.env.REACT_APP_BACKEND_HOST}/brick/${props.currentBrick.id}/comment/${props.comment.id}`,
+      { withCredentials: true }
+		);
+	}
+
 	return (
 	<Grid item>
 		<div className="comment-item-container">
@@ -32,7 +40,8 @@ const CommentItem: React.FC<CommentItemProps> = props => {
 						<h4><b>{props.comment.author.firstName} {props.comment.author.lastName}</b></h4>
 					</Grid>
 					{props.isAuthor &&
-					<IconButton aria-label="reply" size="small" color="secondary">
+					<IconButton aria-label="reply" size="small" color="secondary"
+            onClick={() => handleDeleteComment()}>
 						<SvgIcon fontSize="inherit">
 							<svg className="svg active">
 								{/*eslint-disable-next-line*/}
@@ -40,7 +49,8 @@ const CommentItem: React.FC<CommentItemProps> = props => {
 							</svg>
 						</SvgIcon>
 					</IconButton>}
-					<IconButton aria-label="reply" size="small" color="primary" onClick={() => setReplyPanelShown(!replyPanelShown)}>
+          <IconButton aria-label="reply" size="small" color="primary"
+            onClick={() => setReplyPanelShown(!replyPanelShown)}>
 						<SvgIcon fontSize="inherit">
 							<svg className="svg active">
 								{/*eslint-disable-next-line*/}

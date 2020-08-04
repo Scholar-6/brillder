@@ -1,5 +1,6 @@
 import reducer from './comments';
 import types from '../types';
+import { type } from 'os';
 
 const mockComment = {
     id: 1,
@@ -9,8 +10,20 @@ const mockComment = {
         lastName: "User"
     },
     text: "Comment Text",
-    timestamp: new Date(0)
+    timestamp: new Date(0),
+    children: []
 };
+
+const mockChild = {
+    id: 2,
+    author: {
+        email: "notadmin@test.com",
+        firstName: "Not",
+        lastName: "Admin"
+    },
+    text: "Reply Text",
+    timestamp: new Date(0)
+}
 
 describe("comments reducer", () => {
     it("should return the initial state", () => {
@@ -124,5 +137,35 @@ describe("comments reducer", () => {
         expect(originalComment).toBeDefined();
         expect(originalComment.children).toContainEqual({ ...action.comment, parent: undefined });
         expect(newState.mostRecentComment).toStrictEqual(action.comment);
+    });
+
+    it("should handle DELETE_COMMENT on a parent comment", () => {
+        const initialState = {
+            comments: [ { ...mockComment, children: [ mockChild ] } ]
+        };
+
+        const action = {
+            type: types.DELETE_COMMENT,
+            comment: initialState.comments[0]
+        };
+
+        const newState = reducer(initialState, action);
+
+        expect(newState.comments).toContainEqual(mockChild)
+    });
+
+    it("should handle DELETE_COMMENT on a child comment", () => {
+        const initialState = {
+            comments: [ { ...mockComment, children: [ mockChild ] } ]
+        };
+
+        const action = {
+            type: types.DELETE_COMMENT,
+            comment: { ...mockChild, parent: mockComment }
+        };
+
+        const newState = reducer(initialState, action);
+
+        expect(newState.comments).toContainEqual(mockComment);
     })
 })
