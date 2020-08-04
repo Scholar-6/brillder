@@ -111,7 +111,7 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
                 <span>Register &nbsp;|&nbsp; Sign in with Google</span>
               </a>
               <div className="mobile-policy-text">
-                <a onClick={() => setPolicyDialog(true)}>Privacy Policy</a>
+                <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
               </div>
             </div>
           </div>
