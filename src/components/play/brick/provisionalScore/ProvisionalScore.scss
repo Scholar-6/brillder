@@ -9,6 +9,10 @@
     text-align: right;
   }
 
+  .question-index {
+    background: none !important;
+  }
+
   .start-brick-button {
     margin-right: 0px;
 
@@ -48,17 +52,6 @@
     }
     .intro-text-row {
       position: relative;
-    }
-    .question-index-container {
-      position: absolute;
-      width: 7vw !important;
-      height: 7vw !important;
-      top: 3vw;
-      .question-index {
-        width: 7vw !important;
-        height: 7vw !important;
-        font-size: 6vw !important;
-      }
     }
     .question-live-play {
       margin: 0 !important;
