@@ -58,4 +58,9 @@ const editComment = (commentId: number, newText: string) => ({
     commentId, newText
 });
 
+const deleteComment = (comment: Comment) => ({
+    type: types.DELETE_COMMENT,
+    comment
+})
+
 export default { getComments, editComment, createComment };
