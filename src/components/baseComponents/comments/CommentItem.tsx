@@ -10,22 +10,26 @@ import sprite from "assets/img/icons-sprite.svg";
 import moment from 'moment';
 import ReplyCommentPanel from './ReplyCommentPanel';
 import { Comment } from 'model/comments';
+import { User } from 'model/user';
+import { Brick } from 'model/brick';
+import axios from 'axios';
 
 interface CommentItemProps {
   comment: Comment;
+  isAuthor: boolean;
+  currentBrick: Brick;
   createComment(comment: any): void;
 }
 
-// Green and Red theme (should be in SCSS anyway) 30/07/20
-// const GreenRedTheme = createMuiTheme({
-// 	palette: {
-// 		primary: green,
-// 		secondary: red
-// 	}
-// });
-
 const CommentItem: React.FC<CommentItemProps> = props => {
   const [replyPanelShown, setReplyPanelShown] = React.useState(false);
+
+	const handleDeleteComment = () => {
+		return axios.delete(
+      `${process.env.REACT_APP_BACKEND_HOST}/brick/${props.currentBrick.id}/comment/${props.comment.id}`,
+      { withCredentials: true }
+		);
+	}
 
 	return (
 	<Grid item>
@@ -35,29 +39,18 @@ const CommentItem: React.FC<CommentItemProps> = props => {
 					<Grid className="stretch" item>
 						<h4><b>{props.comment.author.firstName} {props.comment.author.lastName}</b></h4>
 					</Grid>
-		      {/* Approve and Reject buttons 31/07/20
-					<ThemeProvider theme={GreenRedTheme}>
-						<IconButton aria-label="reply" size="small" color="primary">
-							<SvgIcon fontSize="inherit">
-				        <svg className="svg active">*/}
-									{/*eslint-disable-next-line*/}
-				          {/*
-									<use href={sprite + "#ok"} />
-								</svg>
-							</SvgIcon>
-						</IconButton>
-						<IconButton aria-label="reply" size="small" color="secondary">
-							<SvgIcon fontSize="inherit">
-				<svg className="svg active">*/}
-									{/*eslint-disable-next-line*/}
-				          {/*
-									<use href={sprite + "#cancel"} />
-								</svg>
-							</SvgIcon>
-						</IconButton>
-					</ThemeProvider>
-		      */}
-					<IconButton aria-label="reply" size="small" color="primary" onClick={() => setReplyPanelShown(!replyPanelShown)}>
+					{props.isAuthor &&
+					<IconButton aria-label="reply" size="small" color="secondary"
+            onClick={() => handleDeleteComment()}>
+						<SvgIcon fontSize="inherit">
+							<svg className="svg active">
+								{/*eslint-disable-next-line*/}
+								<use href={sprite + "#cancel"} />
+							</svg>
+						</SvgIcon>
+					</IconButton>}
+          <IconButton aria-label="reply" size="small" color="primary"
+            onClick={() => setReplyPanelShown(!replyPanelShown)}>
 						<SvgIcon fontSize="inherit">
 							<svg className="svg active">
 								{/*eslint-disable-next-line*/}
@@ -80,6 +73,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
 				<Collapse in={replyPanelShown}>
 					<ReplyCommentPanel
 						parentComment={props.comment}
+						currentBrick={props.currentBrick}
 						collapsePanel={() => setReplyPanelShown(false)}
 						createComment={props.createComment} />
 				</Collapse>
