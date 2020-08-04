@@ -41,7 +41,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
       <div className="question-type synthesis-page">
         <div className="inner-question-type">
           <Grid container direction="row" alignItems="stretch">
-            <Grid item xs={9}>
+            <Grid item xs>
               <DocumentWirisCKEditor
                 disabled={this.props.locked}
                 editOnly={this.props.editOnly}
@@ -58,7 +58,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 onChange={(text) => this.onSynthesisChange(text)}
               />
             </Grid>
-            <Grid item xs>
+            <Grid className="comment-panel-container" item>
               <CommentPanel />
             </Grid>
           </Grid>
