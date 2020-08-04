@@ -219,7 +219,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           <Grid container direction="row" className="third-row">
             <div className="first-col"></div>
             <div className="second-col policy-text">
-              <a onClick={() => setPolicyDialog(true)}>Privacy Policy</a>
+              <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
             </div>
             <div className="third-col"></div>
           </Grid>
@@ -295,7 +295,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                 </Button>
               </div>
               <div className="mobile-policy-text">
-                <a onClick={() => setPolicyDialog(true)}>Privacy Policy</a>
+                <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
               </div>
             </form>
           </div>
