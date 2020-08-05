@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
-import Dialog from '@material-ui/core/Dialog';
 import update from "immutability-helper";
 import { connect } from "react-redux";
 
@@ -23,6 +22,8 @@ import QuestionTypePreview from "components/build/baseComponents/QuestionTypePre
 import TutorialPhonePreview from "./tutorial/TutorialPreview";
 import YourProposalLink from './components/YourProposalLink';
 import DesktopVersionDialog from '../baseComponents/DesktopVersionDialog';
+import QuestionInvalidDialog from './components/QuestionInvalidDialog';
+import TutorialLabels from './components/TutorialLabels';
 
 import {
   Question,
@@ -522,40 +523,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return <TutorialPhonePreview step={step} />;
   }
 
-  const renderTutorialLabels = () => {
-    if (!isTutorialPassed() && tooltipsOn) {
-      return (
-        <div className="tutorial-top-labels">
-          <div className="exit-arrow">
-            <img alt="" src="/images/exit-arrow.png" />
-          </div>
-          <Grid container direction="row" style={{ height: '100%' }}>
-            <Grid container item xs={9} justify="center" style={{ height: '100%' }}>
-              <Grid container item xs={9} style={{ height: '100%' }}>
-                <div className="tutorial-exit-label" style={{ height: '100%' }}>
-                  <Grid container alignContent="center" style={{ height: '100%' }}>
-                    Click the red icon to Exit & Save
-                  </Grid>
-                </div>
-                <div className="tutorial-add-label" style={{ height: '100%' }}>
-                  <Grid container alignContent="center" justify="center" style={{ height: '100%' }}>
-                    Add Question Panel
-                  </Grid>
-                </div>
-                <div className="tutorial-synthesis-label" style={{ height: '100%' }}>
-                  <Grid container alignContent="center" justify="center" style={{ height: '100%' }}>
-                    Synthesis
-                  </Grid>
-                </div>
-              </Grid>
-            </Grid>
-          </Grid>
-        </div>
-      );
-    }
-    return "";
-  }
-
   let isValid = true;
   questions.forEach(q => {
     let isQuestionValid = validateQuestion(q as any);
@@ -592,7 +559,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         onClick={moveToReview}
       />
       <Hidden only={['xs', 'sm']}>
-        {renderTutorialLabels()}
+        <TutorialLabels isTutorialPassed={isTutorialPassed()} tooltipsOn={tooltipsOn} />
         <YourProposalLink
           tutorialStep={step}
           tooltipsOn={tooltipsOn}
@@ -649,27 +616,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
           </Route>
         </Grid>
-        <Dialog
-          open={submitDialogOpen}
-          onClose={() => setSubmitDialog(false)}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className="dialog-box">
-          <div className="dialog-header">
-            <div>Some questions are incomplete.</div>
-            <div>These are marked in red. Keep working?</div>
-          </div>
-          <div className="dialog-footer">
-            <button className="btn btn-md bg-theme-orange yes-button"
-              onClick={() => hideInvalidBrick()}>
-              <span>Yes</span>
-            </button>
-            <button className="btn btn-md bg-gray no-button"
-              onClick={() => submitInvalidBrick()}>
-              <span>No, Save & Exit</span>
-            </button>
-          </div>
-        </Dialog>
+        <QuestionInvalidDialog
+          isOpen={submitDialogOpen}
+          close={() => setSubmitDialog(false)}
+          submit={() => submitInvalidBrick()}
+          hide={() => hideInvalidBrick()}
+        />
         <DeleteQuestionDialog
           open={deleteDialogOpen}
           index={deleteQuestionIndex}
