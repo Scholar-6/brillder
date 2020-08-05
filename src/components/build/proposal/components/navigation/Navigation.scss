@@ -8,6 +8,35 @@
   right: 0;
   width: 44.9vw;
 
+  .navigation-left {
+    position: fixed;
+    top: 0;
+    left: 10vw;
+
+    .step-container {
+      $step-width: 8vw;
+      $button-width: 1.6vw;
+      width: $step-width;
+
+      .step-label {
+        width: inherit;
+        font-size: 1.2vw;
+      }
+      .navigation-button {
+        margin: calc((#{$step-width} - #{$button-width}) / 2);
+        margin-top: 4vh;
+        margin-bottom: 0;
+        width: $button-width;
+        height: $button-width;
+
+        &.navigation-question {
+          margin-top: calc(4vh - 0.1vw);
+          height: 1.8vw;
+        }
+      }
+    }
+  }
+
   .step-container {
     width: 8.98vw;
     position: relative;

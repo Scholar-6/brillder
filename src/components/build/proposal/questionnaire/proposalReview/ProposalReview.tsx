@@ -12,8 +12,9 @@ import { setBrillderTitle } from "components/services/titleService";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
-import { BrickFieldNames } from '../../model';
+import { BrickFieldNames, PlayButtonStatus } from '../../model';
 import map from 'components/map';
+import PlayButton from "components/build/investigationBuildPage/components/PlayButton";
 
 
 interface ProposalProps {
@@ -21,6 +22,7 @@ interface ProposalProps {
   user: User;
   canEdit: boolean;
   history: History;
+  playStatus: PlayButtonStatus;
   saveBrick(): void;
   setBrickField(name: BrickFieldNames, value: string): void;
 }
@@ -130,6 +132,14 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
 
     return (
       <div className="proposal-page">
+        <div className="play-preview-button-container">
+          <PlayButton
+            isValid={this.props.playStatus === PlayButtonStatus.Valid}
+            tutorialStep={-1}
+            isTutorialSkipped={true}
+            onClick={() => { }}
+          />
+        </div>
         <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
           <Grid className="back-button-container" container alignContent="center">
             <div className="back-button" onClick={() => this.props.history.push(map.ProposalLength)} />
