@@ -111,7 +111,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   renderCreateButton() {
     return (
       <div className="create-item-container">
-        <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/build/new-brick/brick-title")}>
+        <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.creatingBrick()}>
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#trowel-home"} className="text-theme-orange" />
@@ -196,45 +196,9 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           </div>
           <div className="first-col">
             <div className="first-item">
-              <div className="view-item-container">
-                <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => history.push("/play/dashboard")}>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#glasses-home"} className="text-theme-orange" />
-                  </svg>
-                  <span className="item-description">View All Bricks</span>
-                  <div className="glass-eyes-left svgOnHover">
-                    <svg className="svg active" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                      <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
-                      <path fill="#001C55" className="pupil" d="M13.1,12c0,2.1-1.7,3.8-3.8,3.8S5.5,14.1,5.5,12s1.7-3.8,3.8-3.8S13.1,9.9,13.1,12L13.1,12z" />
-                    </svg>
-                  </div>
-                  <div className="glass-eyes-right svgOnHover">
-                    <svg className="svg active" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                      <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
-                      <path fill="#001C55" className="pupil" d="M13.1,12c0,2.1-1.7,3.8-3.8,3.8S5.5,14.1,5.5,12s1.7-3.8,3.8-3.8S13.1,9.9,13.1,12L13.1,12z" />
-                    </svg>
-                  </div>
-                </button>
-              </div>
-              <div className="create-item-container">
-                <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.creatingBrick()}>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#trowel-home"} className="text-theme-orange" />
-                  </svg>
-                  <span className="item-description">Start Building</span>
-                </button>
-              </div>
-              <div className="back-item-container">
-                <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => history.push("/back-to-work")}>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#roller-home"} className="text-theme-orange" />
-                  </svg>
-                  <span className="item-description">Back To Work</span>
-                </button>
-              </div>
+              {this.renderViewAllButton()}
+              {this.renderCreateButton()}
+              {this.renderWorkButton()}
             </div>
             <div className="second-item"></div>
           </div>
