@@ -20,19 +20,19 @@ const HoverBox = ({ marginTop, label }: any) => {
 }
 
 export interface BoxProps {
-  locked: boolean,
-  name?: string,
-  value: QuestionComponentTypeEnum,
-  isImage?: boolean,
-  label?: string,
-  src?: string,
-  fontSize?: string,
-  letterSpacing?: string,
-  marginTop?: any,
-  marginLeft?: any,
-  hoverMarginTop?: any,
-  fontFamily?: string,
-  className?: string,
+  locked: boolean;
+  name?: string;
+  value: QuestionComponentTypeEnum;
+  isImage?: boolean;
+  label?: string;
+  src?: string;
+  fontSize?: string;
+  letterSpacing?: string;
+  marginTop?: any;
+  marginLeft?: any;
+  hoverMarginTop?: any;
+  fontFamily?: string;
+  className?: string;
 }
 
 const DragBox: React.FC<BoxProps> = ({
