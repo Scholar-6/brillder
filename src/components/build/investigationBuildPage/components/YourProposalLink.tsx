@@ -10,6 +10,7 @@ import map from 'components/map';
 
 
 export interface YourProposalButtonProps {
+  invalid: boolean;
   tutorialStep: TutorialStep;
   tooltipsOn: boolean;
   setTooltips(value: boolean): void;
@@ -18,7 +19,7 @@ export interface YourProposalButtonProps {
 }
 
 const YourProposalLink: React.FC<YourProposalButtonProps> = ({
-  tooltipsOn, tutorialStep, setTooltips, saveBrick, isTutorialPassed
+  invalid, tooltipsOn, tutorialStep, setTooltips, saveBrick, isTutorialPassed
 }) => {
   const history = useHistory();
 
@@ -63,6 +64,10 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
     if (tutorialStep === TutorialStep.Proposal) {
       className += " white proposal";
     }
+  }
+  
+  if (invalid) {
+    className += " invalid";
   }
 
   return (

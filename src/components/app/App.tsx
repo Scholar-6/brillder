@@ -24,6 +24,7 @@ import UserProfilePage from '../build/userProfilePage/UserProfile';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
+import BuildBrickRoute from './BuildBrickRoute';
 import StudentRoute from './StudentRoute';
 import AuthRedirectRoute from './AuthRedirectRoute';
 import AllUsersRoute from './AllUsersRoute';
@@ -89,7 +90,7 @@ const App: React.FC = (props: any) => {
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} location={location} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} location={location} />
-        <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
+        <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path="/back-to-work" component={BackToWorkPage} location={location} />
         <BuildRoute path="/users" component={UsersListPage} location={location} />
         <BuildRoute path="/user-profile/:userId" component={UserProfilePage} location={location} />
