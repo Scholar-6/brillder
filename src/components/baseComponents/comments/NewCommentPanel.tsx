@@ -9,6 +9,7 @@ import comments from 'redux/actions/comments';
 
 interface NewCommentPanelProps {
 	currentBrick: Brick;
+	currentQuestionId?: number;
 	createComment(comment: any): void;
 }
 
@@ -18,7 +19,8 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
 	const handlePostComment = () => {
 		props.createComment({
 			text,
-			brickId: props.currentBrick.id
+			brickId: props.currentBrick.id,
+			questionId: props.currentQuestionId
 		});
 		setText("");
 	}
