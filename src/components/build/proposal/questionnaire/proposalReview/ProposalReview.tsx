@@ -131,8 +131,8 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     }
 
     const moveToPlay = () => {
-      const {brick} = this.props;
-      if (brick.id) {
+      const {brick, playStatus} = this.props;
+      if (brick.id && playStatus === PlayButtonStatus.Valid) {
         this.props.history.push(map.playPreviewIntro(brick.id));
       }
     }

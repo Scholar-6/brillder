@@ -25,7 +25,7 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
   }
 
   const moveToPlay = () => {
-    if (brickId) {
+    if (brickId && playStatus === PlayButtonStatus.Valid) {
       history.push(map.playPreviewIntro(brickId));
     }
   }
