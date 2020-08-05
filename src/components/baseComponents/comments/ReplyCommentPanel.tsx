@@ -12,6 +12,7 @@ import { Brick } from 'model/brick';
 interface ReplyCommentPanelProps {
 	parentComment: Comment;
 	currentBrick: Brick;
+	currentQuestionId?: number;
 	collapsePanel(): void;
 	createComment(comment: any): void;
 }
@@ -23,7 +24,8 @@ const ReplyCommentPanel: React.FC<ReplyCommentPanelProps> = props => {
 		props.createComment({
 			text,
 			brickId: props.currentBrick.id,
-			parentId: props.parentComment.id
+			parentId: props.parentComment.id,
+			questionId: props.currentQuestionId
 		});
 		setText("");
 		props.collapsePanel();

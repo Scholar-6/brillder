@@ -35,6 +35,7 @@ const NewCommentButton = withStyles({
 interface CommentPanelProps {
   comments: Comment[] | null;
   currentBrick: Brick;
+  currentQuestionId?: number;
   currentUser: User;
   getComments(brickId: number): void;
   createComment(comment: any): void;
@@ -50,6 +51,8 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
     return (
       <Grid container direction="column" className="comments-column">
         {props.comments ? props.comments.map(comment => (
+          (comment.question?.id ?? -1) === (props.currentQuestionId ?? -1)
+          &&
           <CommentItem
             key={comment.id}
             comment={comment}
@@ -75,7 +78,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
         <div className="comments-title">Suggestions</div>
       </Grid>
       <Grid item>
-        <NewCommentPanel />
+        <NewCommentPanel currentQuestionId={props.currentQuestionId} />
       </Grid>
       {renderComments()}
     </Grid>
