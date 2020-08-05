@@ -133,17 +133,17 @@ const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
         </p>
 
         <h3>Cookie Policy</h3>
-        <p>
+        <p style={{marginBottom: 0}}>
           When accessing {renderBrillderLabel()} without logging in, there is a Zendesk widget (for
           reporting issues or sending us a message) that uses a cookie called __zlcmid, this
           can track your machine ID to any other website that uses Zendesk for up to 1
           year. Please read the Zendesk documentation on their separate website for
           more information.
         </p>
-        <a href="https://support.zendesk.com/hc/en-us/articles/360022367393-Zendesk-in-product-cookie-policy">
+        <a rel="noopener noreferrer" target="_blank" style={{marginBottom: '1vh'}} href="https://support.zendesk.com/hc/en-us/articles/360022367393-Zendesk-in-product-cookie-policy">
           https://support.zendesk.com/hc/en-us/articles/360022367393-Zendesk-in-product-cookie-policy
         </a>
-        <p>
+        <p style={{marginTop: '2vh'}}>
           By signing up with a user account and accepting the terms of use, you are
           agreeing to the use of various cookies that are associated with your user profile
           and personal details when logged in to {renderBrillderLabel()}.
