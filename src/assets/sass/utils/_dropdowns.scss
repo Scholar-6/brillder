@@ -17,7 +17,7 @@
     }
     @include tabletP {
       width: 16vw;
-      top: 8.8vh !important;
+      top: $page-head-height !important;
     }
     > ul {
       padding: 0 !important;

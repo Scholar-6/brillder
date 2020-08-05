@@ -1,5 +1,7 @@
 import React from "react";
+
 import sprite from "assets/img/icons-sprite.svg";
+import './PrivateCoreToggle.scss';
 
 interface ToggleProps {
   isCore: boolean;
@@ -28,13 +30,13 @@ const PrivateCoreToggle: React.FC<ToggleProps> = ({ isCore, onSwitch }) => {
     return (
       <svg className={className}>
         {/*eslint-disable-next-line*/}
-        <use href={sprite + "#globe"} />
+        <use href={sprite + "#user"} />
       </svg>
     );
   }
 
   return (
-    <div className="core-public-toggle">
+    <div className="private-core-toggle">
       <button className="btn btn btn-transparent ">
         <span className={isCore ? 'bold' : 'regular'}>Core</span>
         <div className="svgOnHover" onClick={onSwitch}>

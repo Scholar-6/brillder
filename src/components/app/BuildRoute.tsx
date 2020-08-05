@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from "react-router-dom";
 import queryString from 'query-string';
-// @ts-ignore
 import { connect } from 'react-redux';
 import actions from '../../redux/actions/auth';
 import userActions from '../../redux/actions/user';
@@ -13,6 +12,8 @@ import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 interface BuildRouteProps {
+  exact?: any;
+  path: string;
   component: any;
   isAuthenticated: isAuthenticated;
   isRedirectedToProfile: boolean;

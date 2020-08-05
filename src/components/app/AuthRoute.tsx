@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Redirect } from "react-router-dom";
-// @ts-ignore
 import { connect } from 'react-redux';
 import { isAuthenticated } from 'model/brick';
 import { UserLoginType } from 'model/auth';
@@ -8,9 +7,11 @@ import { ReduxCombinedState } from 'redux/reducers';
 
 
 interface AuthRouteProps {
-  component: any,
-  isAuthenticated: isAuthenticated,
-  userType: UserLoginType
+  exact?: any;
+  path: string;
+  component: any;
+  isAuthenticated: isAuthenticated;
+  userType: UserLoginType;
 }
 
 const AuthRoute: React.FC<AuthRouteProps> = ({ component: Component, ...rest }) => {

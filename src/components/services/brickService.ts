@@ -81,3 +81,17 @@ export function canEditBrick(brick: any, user: User) {
   }
   return false;
 }
+
+export function canBuild(user: User) {
+  return user.roles.some(role => {
+    const { roleId } = role;
+    return (roleId === UserType.Builder || roleId === UserType.Editor || roleId === UserType.Admin);
+  });
+}
+
+export function canEdit(user: User) {
+  return user.roles.some(role => {
+    const { roleId } = role;
+    return roleId === UserType.Editor || roleId === UserType.Admin;
+  });
+}

@@ -8,6 +8,11 @@
     margin-bottom: 15px;
     text-align: right;
   }
+
+  .question-index {
+    background: none !important;
+  }
+
   .start-brick-button {
     margin-right: 0px;
 
@@ -68,17 +73,6 @@
     .introduction-page {
       .intro-header {
         display: none !important;
-      }
-    }
-
-    .question-index-container {
-      width: 7vw !important;
-      height: 7vw !important;
-
-      .question-index {
-        width: 7vw !important;
-        height: 7vw !important;
-        font-size: 6vw !important;
       }
     }
   }

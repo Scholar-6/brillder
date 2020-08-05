@@ -1,14 +1,13 @@
 import React from 'react';
 import "./NewCommentPanel.scss";
-// @ts-ignore
-import { connect } from 'react-redux';
-import { Grid, TextField, Box, Button, Input } from '@material-ui/core';
+//import { connect } from 'react-redux';
+import { Grid, /*TextField, Box,*/ Button, Input } from '@material-ui/core';
 
 
 import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
-import { ReduxCombinedState } from 'redux/reducers';
-import comments from 'redux/actions/comments';
+//import { ReduxCombinedState } from 'redux/reducers';
+//import comments from 'redux/actions/comments';
 
 interface ReplyCommentPanelProps {
 	parentComment: Comment;

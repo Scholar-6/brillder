@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore
 import { connect } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 

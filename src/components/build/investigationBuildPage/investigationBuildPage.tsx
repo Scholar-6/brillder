@@ -4,7 +4,6 @@ import { Route } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import Dialog from '@material-ui/core/Dialog';
 import update from "immutability-helper";
-// @ts-ignore
 import { connect } from "react-redux";
 
 import "./investigationBuildPage.scss";
@@ -114,7 +113,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   // start editing on socket on load.
   useEffect(() => {
     props.startEditing(brickId);
-  }, [brickId])
+  }, [brickId]);
 
   // update on socket when things change.
   useEffect(() => {
