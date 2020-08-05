@@ -63,6 +63,17 @@ $play-mobile-height: calc(100vh - 55.8vw);
           fill: var(--yellow) !important;
         }
       }
+      .annotate-button {
+        span,
+        use {
+          color: var(--dark-gray) !important;
+        }
+        .svg {
+          use {
+            color: var(--dark-gray) !important;
+          }
+        }
+      }
     }
 
     .play-sidebar.rolled-up {
