@@ -73,10 +73,6 @@ export function canEditBrick(brick: any, user: User) {
   if (isAdmin) {
     return true;
   }
-  let isEditor = checkEditor(user.roles);
-  if (isEditor) {
-    return true;
-  }
   let isBuilder = checkBuilder(user.roles);
   if (isBuilder) {
     if (brick.author?.id === user.id) {
@@ -84,4 +80,18 @@ export function canEditBrick(brick: any, user: User) {
     }
   }
   return false;
+}
+
+export function canBuild(user: User) {
+  return user.roles.some(role => {
+    const { roleId } = role;
+    return (roleId === UserType.Builder || roleId === UserType.Editor || roleId === UserType.Admin);
+  });
+}
+
+export function canEdit(user: User) {
+  return user.roles.some(role => {
+    const { roleId } = role;
+    return roleId === UserType.Editor || roleId === UserType.Admin;
+  });
 }

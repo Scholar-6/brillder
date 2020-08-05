@@ -177,40 +177,15 @@
       }
     }
   }
-  .logout-button {
-    cursor: pointer;
+  .main-page-menu {
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+    box-sizing: border-box;
+    width: 14vw;
+    height: $page-head-height;
+    right: 0;
     position: fixed;
-    top: 3.7vh;
-    right: 1.8vw;
-    @extend %flexCenter;
-    .logout-image {
-      @include phone_and_tabletP {
-        width: 5vw;
-        height: 5vw;
-        min-height: 100%;
-      }
-      @include tabletP {
-        width: 2vw;
-        height: 2vw;
-      }
-    }
-    span {
-      font-family: $font-family-regular;
-      @include phone_and_tabletP {
-        font-size: 4vw;
-        letter-spacing: 1vw;
-      }
-      @include tabletP {
-        letter-spacing: 0.25vw;
-        color: var(--white);
-        font-size: 1.24vw;
-      }
-    }
-    &:hover {
-      span {
-        font-family: $font-family-bold;
-      }
-    }
   }
   .mobile-main-page {
     width: 100%;
@@ -250,6 +225,16 @@
           }
         }
       }
+    }
+  }
+  .policy-text-container {
+    position: relative;
+
+    .policy-text {
+      font-family: $font-family-regular;
+      position: absolute;
+      bottom: 3.5vh;
+      left: 8vw;
     }
   }
 }

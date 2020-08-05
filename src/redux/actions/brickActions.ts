@@ -2,6 +2,7 @@ import types from '../types';
 import axios from 'axios';
 import { Action, Dispatch } from 'redux';
 import { Brick } from 'model/brick';
+import comments from './comments';
 
 const fetchBrickSuccess = (data:any) => {
   return {
@@ -18,7 +19,7 @@ const fetchBrickFailure = (errorMessage:string) => {
 }
 
 const fetchBrick = (id: number) => {
-  return function (dispatch: Dispatch) {
+  return function (dispatch: any) {
     return axios.get(process.env.REACT_APP_BACKEND_HOST + '/brick/' + id, {withCredentials: true})
       .then((res) => {
         let brick = res.data as Brick;
@@ -26,6 +27,7 @@ const fetchBrick = (id: number) => {
           return q1.order - q2.order;
         });
         dispatch(fetchBrickSuccess(res.data));
+        dispatch(comments.getComments(brick.id));
       })
       .catch(error => {
         dispatch(fetchBrickFailure(error.message));
@@ -53,9 +55,11 @@ const saveBrick = (brick:any) => {
     return axios.put(
       process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true}
     ).then(response => {
-      const brick = response.data as Brick;
-      dispatch(saveBrickSuccess(brick));
-      return brick;
+      const savedBrick = response.data as Brick;
+      // response brick don`t have author object
+      savedBrick.author = brick.author;
+      dispatch(saveBrickSuccess(savedBrick));
+      return savedBrick;
     }).catch(error => {
       dispatch(saveBrickFailure(error.message))
     });
@@ -95,4 +99,33 @@ const createBrick = (brick:any) => {
   }
 }
 
-export default { fetchBrick, createBrick, saveBrick, forgetBrick }
+const assignEditorSuccess = (brick: Brick) => {
+  return {
+    type: types.ASSIGN_EDITOR_SUCCESS,
+    payload: brick,
+  } as Action
+}
+
+const assignEditorFailure = (errorMessage:string) => {
+  return {
+    type: types.ASSIGN_EDITOR_FAILURE,
+    error: errorMessage
+  } as Action
+}
+
+const assignEditor = (brick: any) => {
+  return function (dispatch: Dispatch) {
+    brick.type = 1;
+    return axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/brick/assignEditor`,
+      { brickId: brick.id, editorId: brick.editor.id }, {withCredentials: true}
+    ).then(response => {
+      const brick = response.data as Brick;
+      dispatch(assignEditorSuccess(brick));
+    }).catch(error => {
+      dispatch(assignEditorFailure(error.message))
+    });
+  }
+}
+
+export default { fetchBrick, createBrick, saveBrick, forgetBrick, assignEditor }

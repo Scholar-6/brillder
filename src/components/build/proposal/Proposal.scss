@@ -74,7 +74,7 @@
       bottom: 1vh;
       @extend %width100;
       @extend %textCenter;
-      color: #acacac;
+      color: var(--dark-gray);
       font-size: 1.2vw;
       font-family: $font-family-regular;
     }
@@ -747,4 +747,13 @@
 
 .proposal-router ~ .beta-text {
   color: var(--theme-dark-blue) !important;
+}
+
+.proposal-router {
+  .play-preview-button-container {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    right: 0;
+  }
 }

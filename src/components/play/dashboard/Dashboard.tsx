@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { Box, Grid, Hidden } from "@material-ui/core";
 import { Category } from "./interface";
 import axios from "axios";
-// @ts-ignore
 import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
@@ -21,7 +20,7 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 import { ReduxCombinedState } from "redux/reducers";
 import DashboardFilter, { SortBy } from './DashboardFilter';
 import DashboardPagination from './DashboardPagination';
-import PublicCoreToggle from 'components/baseComponents/PublicCoreToggle';
+import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
 
 
 interface BricksListProps {
@@ -79,10 +78,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       BrickStatus.Publish,
       { withCredentials: true }
     ).then((res) => {
+      const finalBricks = this.filter(res.data as Brick[]);
       this.setState({
         ...this.state,
         bricks: res.data,
-        finalBricks: res.data as Brick[],
+        finalBricks,
       });
     }).catch((error) => {
       this.setState({ ...this.state, failedRequest: true });
@@ -99,11 +99,9 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
       withCredentials: true,
     }).then((res) => {
-      let bricks = res.data as Brick[];
-      bricks = bricks.filter((brick) => {
-        return brick.status === BrickStatus.Publish;
-      });
-      this.setState({ ...this.state, yourBricks: bricks });
+      const bricks = res.data as Brick[];
+      const yourBricks = bricks.filter(brick => brick.status === BrickStatus.Publish);
+      this.setState({ ...this.state, yourBricks });
     }).catch((error) => {
       this.setState({ ...this.state, failedRequest: true });
     });
@@ -142,14 +140,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     this.setState({ ...state, finalBricks, sortBy });
   };
 
-  getBricksForFilter() {
-    if (this.state.isSearching) {
-      return this.state.searchBricks;
-    } else {
-      return this.state.bricks;
-    }
-  }
-
   getCheckedSubjectIds() {
     const filterSubjects = [];
     const { state } = this;
@@ -162,10 +152,24 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     return filterSubjects;
   }
 
-  filter() {
-    const { state } = this;
-    let bricks = this.getBricksForFilter();
-    let filtered = [];
+  isCore(isCore: any) {
+    let tempIsCore = this.state.isCore;
+    if (typeof isCore === 'boolean') {
+      tempIsCore = isCore;
+    }
+    return !tempIsCore;
+  }
+
+  filterByCurretUser(bricks: Brick[]) {
+    const userId = this.props.user.id;
+    return bricks.filter(b => b.author.id === userId);
+  }
+
+  filter(bricks: Brick[], isCore?: boolean) {
+    if (this.state.isSearching) {
+      bricks = this.state.searchBricks;
+    }
+    let filtered: Brick[] = [];
 
     let filterSubjects = this.getCheckedSubjectIds();
 
@@ -175,10 +179,16 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         if (res !== -1) {
           filtered.push(brick);
         }
+        if (this.isCore(isCore)) {
+          filtered = this.filterByCurretUser(filtered);
+        }
       }
-      this.setState({ ...state, finalBricks: filtered });
+      return filtered;
     } else {
-      this.setState({ ...state, finalBricks: bricks });
+      if (this.isCore(isCore)) {
+        bricks = this.filterByCurretUser(bricks);
+      }
+      return bricks;
     }
   }
 
@@ -195,7 +205,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   filterBySubject = (i: number) => {
     const { subjects } = this.state;
     subjects[i].checked = !subjects[i].checked;
-    this.filter();
+    const finalBricks = this.filter(this.state.bricks);
+    this.setState({ ...this.state, finalBricks });
   };
 
   clearSubjects = () => {
@@ -318,24 +329,22 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
   search() {
     const { searchString } = this.state;
-    axios
-      .post(
-        process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
-        { searchString },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        this.hideBricks();
-        this.setState({
-          ...this.state,
-          searchBricks: res.data,
-          finalBricks: res.data,
-          isSearching: true,
-        });
-      })
-      .catch((error) => {
-        this.setState({ ...this.state, failedRequest: true });
+    axios.post(
+      process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
+      { searchString },
+      { withCredentials: true }
+    ).then(res => {
+      this.hideBricks();
+      const finalBricks = this.filter(res.data);
+      this.setState({
+        ...this.state,
+        searchBricks: res.data,
+        finalBricks,
+        isSearching: true,
       });
+    }).catch((error) => {
+      this.setState({ ...this.state, failedRequest: true });
+    });
   }
 
   getBrickColor(brick: Brick) {
@@ -557,7 +566,9 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   toggleCore() {
-    this.setState({isCore: !this.state.isCore});
+    const isCore = !this.state.isCore;
+    const finalBricks = this.filter(this.state.bricks, isCore);
+    this.setState({ isCore, finalBricks });
   }
 
   render() {
@@ -594,7 +605,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               <div className="brick-row-title">
                 ALL BRICKS
               </div>
-              <PublicCoreToggle isCore={this.state.isCore} onSwitch={() => this.toggleCore()} />
+              <PrivateCoreToggle isCore={this.state.isCore} onSwitch={() => this.toggleCore()} />
             </Hidden>
             <Hidden only={["sm", "md", "lg", "xl"]}>
               <div className="brick-row-title" onClick={() => history.push(`/play/dashboard/${Category.New}`)}>
@@ -630,7 +641,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             <DashboardPagination
               pageSize={this.state.pageSize}
               sortedIndex={this.state.sortedIndex}
-              bricksLength={this.state.bricks.length}
+              bricksLength={this.state.finalBricks.length}
               moveAllNext={() => this.moveAllNext()}
               moveAllBack={() => this.moveAllBack()}
             />

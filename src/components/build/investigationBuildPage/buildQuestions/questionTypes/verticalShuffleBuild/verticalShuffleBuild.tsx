@@ -12,7 +12,7 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 export interface VerticalShuffleBuildProps extends UniqueComponentProps { }
 
 const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
-  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [height, setHeight] = React.useState('0%');
   useEffect(() => calculateHeight());
@@ -80,6 +80,7 @@ const VerticalShuffleBuildComponent: React.FC<VerticalShuffleBuildProps> = ({
         }
         <DocumentWirisCKEditor
           disabled={locked}
+          editOnly={editOnly}
           data={answer.value}
           validationRequired={validationRequired}
           toolbar={['mathType', 'chemType']}

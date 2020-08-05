@@ -18,7 +18,7 @@ export interface CategoriseBuildProps extends UniqueComponentProps {
 }
 
 const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
-  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [categoryHeight, setCategoryHeight] = React.useState('0%');
 
@@ -126,6 +126,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
         }
         <DocumentWirisEditorComponent
           disabled={locked}
+          editOnly={editOnly}
           data={answer.value}
           placeholder="Enter Answer..."
           toolbar={['mathType', 'chemType']}
@@ -163,6 +164,7 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
           }
           <DocumentWirisEditorComponent
             disabled={locked}
+            editOnly={editOnly}
             data={category.name}
             placeholder="Enter Category Heading..."
             toolbar={['mathType', 'chemType']}

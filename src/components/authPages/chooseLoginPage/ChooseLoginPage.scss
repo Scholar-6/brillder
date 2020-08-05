@@ -131,3 +131,27 @@
     }
   }
 }
+
+.policy-text {
+  cursor: pointer;
+  vertical-align: middle;
+  text-align: right;
+  padding-right: 2.5vw;
+  padding-top: 2.8vh;
+  color: white;
+  font-size: 3vh;
+  height:10%;
+  span:hover {
+    color: var(--theme-orange) !important;
+  }
+}
+
+.mobile-policy-text {
+  position: absolute;
+  bottom: 2.4vh;
+  width: 88vw;
+  text-align: center;
+  color: var(--theme-dark-blue);
+  font-size: 6vw;
+  line-height: 1;
+}

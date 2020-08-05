@@ -133,7 +133,7 @@
               border-radius: 12px;
               letter-spacing: 0.045vw;
               width: 100%;
-              color: #acacac;
+              color: var(--dark-gray);
               @include phone_and_tabletP {
                 font-size: 3.7vw;
                 padding: 0.7vh 0.6vw 0.7vh 9vw;
@@ -155,30 +155,7 @@
             width: 30%;
           }
         }
-        .header-btn {
-          cursor: pointer;
-          display: inline-block;
-          @include phone_and_tabletP {
-            width: 8vw;
-            height: 8vw;
-            padding: 10px;
-            border-radius: 50%;
-            &:hover {
-              box-shadow: 0px 0px 0 10px var(--theme-orange-alpha2);
-            }
-          }
-          @include tabletP {
-            margin: 0 2vw 0 0;
-            width: 3.698vw;
-            height: 3.698vw;
-          }
-          .svg {
-            width: 100%;
-            height: 100%;
-            color: var(--theme-orange);
-            stroke-width: 1;
-          }
-        }
+
         .help-button {
           opacity: 0;
         }
@@ -186,38 +163,6 @@
           @include tabletP {
             margin: 0 0 0 1.4vw;
           }
-          &:hover {
-            .svg {
-              stroke-width: 2;
-            }
-          }
-        }
-        .bell-button {
-          #bell {
-            stroke: var(--theme-orange);
-            fill: none;
-          }
-          .bell-text {
-            width: 100%;
-            height: 100%;
-            @extend %flexCenter;
-            @extend %floatToXCenter;
-            top: -0.5vh;
-            margin: 0;
-            color: var(--theme-orange);
-            font-family: $font-family-bold;
-          }
-          &:hover {
-            .bell-cup {
-              @extend %transitionAll300;
-              fill: var(--theme-orange);
-            }
-            .bell-text {
-              color: var(--theme-dark-blue);
-            }
-          }
-        }
-        .more-button {
           &:hover {
             .svg {
               stroke-width: 2;
@@ -419,6 +364,68 @@
             width: 10px !important;
           }
         }
+      }
+    }
+  }
+}
+
+
+.header-btn {
+  cursor: pointer;
+  display: inline-block;
+  @include phone_and_tabletP {
+    width: 8vw;
+    height: 8vw;
+    padding: 10px;
+    border-radius: 50%;
+    &:hover {
+      box-shadow: 0px 0px 0 10px var(--theme-orange-alpha2);
+    }
+  }
+  @include tabletP {
+    margin: 0 2vw 0 0;
+    width: 3.698vw;
+    height: 3.698vw;
+  }
+  .svg {
+    width: 100% !important;
+    height: 100% !important;
+    color: var(--theme-orange);
+    stroke-width: 1;
+  }
+
+  &.more-button {
+    &:hover {
+      .svg {
+        stroke-width: 2;
+      }
+    }
+  }
+  &.bell-button {
+    color: var(--theme-orange);
+    #bell {
+      stroke: var(--theme-orange);
+      width: 100%;
+      height: 100%;
+      fill: none;
+    }
+    .bell-text {
+      width: 100%;
+      height: 100%;
+      @extend %flexCenter;
+      @extend %floatToXCenter;
+      top: -0.5vh;
+      margin: 0;
+      color: var(--theme-orange);
+      font-family: $font-family-bold;
+    }
+    &:hover {
+      .bell-cup {
+        @extend %transitionAll300;
+        fill: var(--theme-orange);
+      }
+      .bell-text {
+        color: var(--theme-dark-blue);
       }
     }
   }

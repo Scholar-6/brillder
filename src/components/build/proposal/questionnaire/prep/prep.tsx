@@ -6,13 +6,15 @@ import NavigationButtons from '../../components/navigationButtons/NavigationButt
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
-import { ProposalStep } from "../../model";
+import { ProposalStep, PlayButtonStatus } from "../../model";
 import YoutubeAndMath from 'components/play/brick/baseComponents/YoutubeAndMath';
+import map from 'components/map';
 
 
 interface PrepProps {
   parentPrep: string;
   canEdit: boolean;
+  playStatus: PlayButtonStatus;
   savePrep(prep: string): void;
 }
 
@@ -41,10 +43,10 @@ const PrepPreviewComponent: React.FC<any> = ({ data }) => {
   )
 }
 
-const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, savePrep }) => {
+const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, playStatus, savePrep }) => {
   return (
     <div className="tutorial-page prep-page">
-      <Navigation step={ProposalStep.Prep} onMove={() => savePrep(parentPrep)} />
+      <Navigation step={ProposalStep.Prep} playStatus={playStatus} onMove={() => savePrep(parentPrep)} />
       <Grid container direction="row" alignItems="flex-start">
         <Grid className="left-block">
           <div className="mobile-view-image">
@@ -67,7 +69,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, savePrep }) =
             canSubmit={true}
             data={parentPrep}
             onSubmit={savePrep}
-            backLink="/build/new-brick/brief"
+            backLink={map.ProposalBrief}
           />
           <h2 className="pagination-text">4 of 4</h2>
         </Grid>

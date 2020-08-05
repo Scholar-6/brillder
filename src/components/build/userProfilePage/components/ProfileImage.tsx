@@ -42,7 +42,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     return (
       <svg className="svg active">
         {/*eslint-disable-next-line*/}
-        <use href={sprite + "#user"} className="text-theme-dark-blue" />
+        <use href={sprite + "#user"} className="text-dark-gray" />
       </svg>
     );
   };

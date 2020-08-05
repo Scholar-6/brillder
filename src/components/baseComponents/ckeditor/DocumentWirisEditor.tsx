@@ -37,9 +37,11 @@ import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar";
 import Image from "@ckeditor/ckeditor5-image/src/image";
 import "./DocumentEditor.scss";
 import UploadImageCustom from './UploadImageCustom';
+//import CommentCustom from './CommentCustom';
 
 export interface DocumentWEditorProps {
   disabled: boolean;
+  editOnly?: boolean;
   data: string;
   toolbar?: any;
   placeholder?: string;
@@ -121,11 +123,18 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
     );
     windowRef.WirisPlugin.Core.addGlobalListener(wirisBeforeInsertionListener);
     windowRef.WirisPlugin.Core.addGlobalListener(wirisAfterInsertionListener);
+
+    editor.on("comment-update", () => {
+      const data = editor.getData();
+      this.props.onChange(data);
+      this.replaceHtml("ck-label", "Document colors", "Document colours");
+      this.setState({ ...this.state, data });
+    })
   };
 
   render() {
     let config = {
-      extraPlugins: [UploadImageCustom],
+      extraPlugins: [UploadImageCustom/*, CommentCustom 30/07/2020 */],
       plugins: [
         Essentials,
         Paragraph,
@@ -170,6 +179,7 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
         "numberedList",
       ],
       mediaEmbed: { previewsInData: true },
+      comments: { commentOnly: this.props.editOnly ?? false },
       link: {},
       placeholder: "",
     };

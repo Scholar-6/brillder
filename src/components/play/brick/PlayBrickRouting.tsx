@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-// @ts-ignore
 import { connect } from "react-redux";
 
 import "./brick.scss";

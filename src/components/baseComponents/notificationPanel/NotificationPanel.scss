@@ -62,7 +62,7 @@
             .notification-detail,
             .notification-detail-single {
               .MuiListItemText-primary,
-              .MuiTypography-colorTextSecondary {
+              .MuiListItemText-secondary {
                 @include phone_and_tabletP {
                   font-size: 3.5vw;
                 }
@@ -80,8 +80,8 @@
                 color: var(--white);
                 text-transform: uppercase;
               }
-              .MuiTypography-colorTextSecondary {
-                color: var(--tab-gray);
+              .MuiListItemText-secondary {
+                color: var(--dark-gray);
               }
             }
             .notification-detail {

@@ -1,7 +1,6 @@
 import React from "react";
 import { Route } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-// @ts-ignore
 import { connect } from 'react-redux';
 import { History } from 'history';
 
@@ -23,10 +22,13 @@ import VersionLabel from "components/baseComponents/VersionLabel";
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
-import { BrickFieldNames } from './model';
+import { BrickFieldNames, PlayButtonStatus } from './model';
+import { validateQuestion } from "../investigationBuildPage/questionService/ValidateQuestionService";
+import { parseQuestion, ApiQuestion } from "../investigationBuildPage/questionService/QuestionService";
+import map from 'components/map';
 
 import { setLocalBrick, getLocalBrick } from 'components/localStorage/proposal';
-
+import { Question } from "model/question";
 
 interface ProposalProps {
   brick: Brick;
@@ -65,7 +67,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       alternativeSubject: '',
     } as Brick;
 
-
     if (user) {
       initBrick.author = (user as any) as Author;
     }
@@ -88,19 +89,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       isDialogOpen: false
     }
   }
-
-  /* 7/30/2020
-  shouldComponentUpdate() {
-    const {brick} = this.props;
-    if (brick) {
-      if (!brick.author && this.state.brick.author) {
-        brick.author = this.state.brick.author;
-      }
-      this.setState({brick});
-    }
-    return false;
-  }
-  */
 
   saveBrick(tempBrick: Brick) {
     const {brick} = this.props;
@@ -145,14 +133,14 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     this.saveLocalBrick(brick);
     return brick;
   }
-  
+
   setLengthAndSave = (brickLength: BrickLengthEnum) => {
     const canEdit = canEditBrick(this.state.brick, this.props.user);
     if (!canEdit) { return; }
     let brick = this.setLength(brickLength);
     this.saveBrick(brick);
   }
-
+  
   saveAndMove = () => {
     this.saveBrick(this.state.brick);
     this.setState({ saved: true });
@@ -170,31 +158,50 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const localBrick = this.state.brick;
     const {user} = this.props;
 
+    let playStatus = PlayButtonStatus.Hidden;
+    const {brick} = this.props;
+    if (brick && brick.questions && brick.questions.length > 0) {
+      playStatus = PlayButtonStatus.Valid;
+      const parsedQuestions: Question[] = [];
+      for (const question of brick.questions) {
+        try {
+          parseQuestion(question as ApiQuestion, parsedQuestions);
+        } catch (e) { }
+      }
+      parsedQuestions.forEach(q => {
+        let isQuestionValid = validateQuestion(q as any);
+        if (!isQuestionValid) {
+          playStatus = PlayButtonStatus.Invalid;
+        }
+      });
+    }
+
     return (
       <MuiThemeProvider>
         <div>
           <HomeButton onClick={() => this.openDialog()} />
           <div style={{ width: '100%', height: '100%' }} className="proposal-router">
-            <Route path='/build/new-brick/subject'>
+            <Route path={map.ProposalSubject}>
               <SubjectPage subjects={user.subjects} subjectId={''} saveSubject={this.setSubject} />
             </Route>
-            <Route path='/build/new-brick/brick-title'>
-              <BrickTitle parentState={localBrick} canEdit={canEdit} saveTitles={this.setTitles} />
+            <Route path={map.ProposalTitle}>
+              <BrickTitle playStatus={playStatus} parentState={localBrick} canEdit={canEdit} saveTitles={this.setTitles} />
             </Route>
-            <Route path='/build/new-brick/open-question'>
-              <OpenQuestion selectedQuestion={localBrick.openQuestion} canEdit={canEdit} saveOpenQuestion={this.setOpenQuestion} />
+            <Route path={map.ProposalOpenQuestion}>
+              <OpenQuestion playStatus={playStatus} selectedQuestion={localBrick.openQuestion} canEdit={canEdit} saveOpenQuestion={this.setOpenQuestion} />
             </Route>
-            <Route path='/build/new-brick/brief'>
-              <Brief parentBrief={localBrick.brief} canEdit={canEdit} saveBrief={this.setBrief} />
+            <Route path={map.ProposalBrief}>
+              <Brief playStatus={playStatus} parentBrief={localBrick.brief} canEdit={canEdit} saveBrief={this.setBrief} />
             </Route>
-            <Route path='/build/new-brick/prep'>
-              <Prep parentPrep={localBrick.prep} canEdit={canEdit} savePrep={this.setPrep} />
+            <Route path={map.ProposalPrep}>
+              <Prep playStatus={playStatus} parentPrep={localBrick.prep} canEdit={canEdit} savePrep={this.setPrep} />
             </Route>
-            <Route path='/build/new-brick/length'>
-              <BrickLength length={localBrick.brickLength} canEdit={canEdit} saveLength={this.setLength} saveBrick={this.setLengthAndSave} />
+            <Route path={map.ProposalLength}>
+              <BrickLength playStatus={playStatus} length={localBrick.brickLength} canEdit={canEdit} saveLength={this.setLength} saveBrick={this.setLengthAndSave} />
             </Route>
-            <Route path="/build/new-brick/proposal">
+            <Route path={map.ProposalReview}>
               <ProposalReview
+                playStatus={playStatus}
                 brick={localBrick}
                 history={this.props.history}
                 canEdit={canEdit}
@@ -224,6 +231,7 @@ const mapState = (state: ReduxCombinedState) => ({
 const mapDispatch = (dispatch: any) => ({
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
+  assignEditor: (brick: any) => dispatch(actions.assignEditor(brick)),
 });
 
 const connector = connect(mapState, mapDispatch);
