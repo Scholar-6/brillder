@@ -4,7 +4,6 @@ import "./Dashboard.scss";
 import React, { Component } from "react";
 import { Box, Grid } from "@material-ui/core";
 import axios from "axios";
-// @ts-ignore
 import { connect } from "react-redux";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// @ts-ignore
 import { connect } from 'react-redux';
 import { List, ListItem, ListItemText, Popover, IconButton, SvgIcon, Card, CardContent, ListItemIcon, CardActions } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';

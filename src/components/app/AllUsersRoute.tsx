@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Redirect, useLocation } from "react-router-dom";
-// @ts-ignore
 import { connect } from 'react-redux';
 
 import actions from '../../redux/actions/auth';

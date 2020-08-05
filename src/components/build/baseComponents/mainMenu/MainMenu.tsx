@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Button, IconButton, Grid } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
-// @ts-ignore
 import { connect } from 'react-redux';
 
 import './mainMenu.scss'

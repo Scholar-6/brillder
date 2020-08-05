@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Redirect } from "react-router-dom";
-// @ts-ignore
 import { connect } from 'react-redux';
 import { isAuthenticated } from 'model/brick';
 import { UserLoginType } from 'model/auth';

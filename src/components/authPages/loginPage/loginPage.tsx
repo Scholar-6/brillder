@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Grid, Snackbar, Hidden } from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Button from "@material-ui/core/Button";
-// @ts-ignore
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
