@@ -6,6 +6,7 @@ import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
 import { useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { clearProposal } from 'components/localStorage/proposal';
+import map from 'components/map';
 
 
 export interface YourProposalButtonProps {
@@ -26,7 +27,7 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
     } else {
       clearProposal();
       saveBrick();
-      history.push(`/build/new-brick/proposal`);
+      history.push(map.ProposalReview);
     }
   }
 

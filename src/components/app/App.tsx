@@ -32,6 +32,7 @@ import BrickWrapper from './BrickWrapper';
 
 import { setBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'components/services/zendesk';
+import map from 'components/map';
 
 
 const App: React.FC = (props: any) => {
@@ -85,7 +86,7 @@ const App: React.FC = (props: any) => {
         <StudentRoute path="/play/dashboard" component={Dashboard} />
 
         <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
-        <BuildRoute path="/build/new-brick" component={Proposal} location={location} />
+        <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} location={location} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} location={location} />
         <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />

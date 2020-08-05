@@ -16,6 +16,7 @@ import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDe
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import map from 'components/map';
 import 'swiper/swiper.scss';
 
 
@@ -173,7 +174,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   creatingBrick() {
     this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
+    this.props.history.push(map.ProposalSubject);
   }
 
   renderExpandedBrick(brick: Brick) {

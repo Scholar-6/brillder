@@ -7,6 +7,8 @@ import { User, UserType } from "model/user";
 import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'components/localStorage/proposal';
 
+import { ProposalSubject } from "components/map"
+
 interface MenuDropdownProps {
   dropdownShown: boolean;
   hideDropdown(): void;
@@ -22,7 +24,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const creatingBrick = () => {
     clearProposal();
     props.forgetBrick();
-    props.history.push("/build/new-brick/subject");
+    props.history.push(ProposalSubject);
   };
 
   const renderViewAllItem = () => {
