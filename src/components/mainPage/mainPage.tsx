@@ -186,7 +186,6 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   }
 
   render() {
-    const { history } = this.props;
     return (
       <Grid container direction="row" className="mainPage">
         <Hidden only={["xs"]}>
