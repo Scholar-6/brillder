@@ -133,7 +133,7 @@
               border-radius: 12px;
               letter-spacing: 0.045vw;
               width: 100%;
-              color: #acacac;
+              color: var(--dark-gray);
               @include phone_and_tabletP {
                 font-size: 3.7vw;
                 padding: 0.7vh 0.6vw 0.7vh 9vw;

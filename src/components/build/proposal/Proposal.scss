@@ -74,7 +74,7 @@
       bottom: 1vh;
       @extend %width100;
       @extend %textCenter;
-      color: #acacac;
+      color: var(--dark-gray);
       font-size: 1.2vw;
       font-family: $font-family-regular;
     }

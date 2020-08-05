@@ -81,7 +81,7 @@
                 text-transform: uppercase;
               }
               .MuiListItemText-secondary {
-                color: #ACACAC;
+                color: var(--dark-gray);
               }
             }
             .notification-detail {
