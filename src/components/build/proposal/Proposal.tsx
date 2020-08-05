@@ -23,10 +23,12 @@ import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames, PlayButtonStatus } from './model';
-
+import { validateQuestion } from "../investigationBuildPage/questionService/ValidateQuestionService";
+import { parseQuestion, ApiQuestion } from "../investigationBuildPage/questionService/QuestionService";
 import map from 'components/map';
 
 import { setLocalBrick, getLocalBrick } from 'components/localStorage/proposal';
+import { Question } from "model/question";
 
 interface ProposalProps {
   brick: Brick;
@@ -87,19 +89,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       isDialogOpen: false
     }
   }
-
-  /* 7/30/2020
-  shouldComponentUpdate() {
-    const {brick} = this.props;
-    if (brick) {
-      if (!brick.author && this.state.brick.author) {
-        brick.author = this.state.brick.author;
-      }
-      this.setState({brick});
-    }
-    return false;
-  }
-  */
 
   saveBrick(tempBrick: Brick) {
     const {brick} = this.props;
@@ -172,7 +161,19 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     let playStatus = PlayButtonStatus.Hidden;
     const {brick} = this.props;
     if (brick && brick.questions && brick.questions.length > 0) {
-      playStatus = PlayButtonStatus.Invalid;
+      playStatus = PlayButtonStatus.Valid;
+      const parsedQuestions: Question[] = [];
+      for (const question of brick.questions) {
+        try {
+          parseQuestion(question as ApiQuestion, parsedQuestions);
+        } catch (e) { }
+      }
+      parsedQuestions.forEach(q => {
+        let isQuestionValid = validateQuestion(q as any);
+        if (!isQuestionValid) {
+          playStatus = PlayButtonStatus.Invalid;
+        }
+      });
     }
 
     return (

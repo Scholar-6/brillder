@@ -1,25 +1,33 @@
 import React from "react";
 import { useHistory } from 'react-router-dom';
-
-import { ProposalStep, PlayButtonStatus } from "../../model";
-import './Navigation.scss';
 import { Grid, Hidden } from "@material-ui/core";
+import { connect } from 'react-redux';
 
+import './Navigation.scss';
+import { ReduxCombinedState } from 'redux/reducers';
+import { ProposalStep, PlayButtonStatus } from "../../model";
 import map from 'components/map';
 import PlayButton from "components/build/investigationBuildPage/components/PlayButton";
 
 interface NextButtonProps {
   step: ProposalStep;
   playStatus: PlayButtonStatus;
+  brickId?: number;
   onMove(): void;
 }
 
-const NextButton: React.FC<NextButtonProps> = ({ step, playStatus, onMove }) => {
+const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatus, onMove }) => {
   const history = useHistory()
 
   const move = (route: string) => {
     onMove();
     history.push(route);
+  }
+
+  const moveToPlay = () => {
+    if (brickId) {
+      history.push(map.playPreviewIntro(brickId));
+    }
   }
 
   const renderButtons = () => {
@@ -69,7 +77,12 @@ const NextButton: React.FC<NextButtonProps> = ({ step, playStatus, onMove }) => 
       return (
         <div className="navigation-container">
           <div className="play-preview-button-container">
-            <PlayButton isValid={playStatus === PlayButtonStatus.Valid} tutorialStep={-1} isTutorialSkipped={true} onClick={() => { }} />
+            <PlayButton
+              isValid={playStatus === PlayButtonStatus.Valid}
+              tutorialStep={-1}
+              isTutorialSkipped={true}
+              onClick={moveToPlay}
+            />
           </div>
           <div className="navigation-left">
             {renderButtons()}
@@ -91,4 +104,8 @@ const NextButton: React.FC<NextButtonProps> = ({ step, playStatus, onMove }) => 
   );
 }
 
-export default NextButton
+const mapState = (state: ReduxCombinedState) => ({ brickId: state.brick.brick.id });
+
+const connector = connect(mapState)
+
+export default connector(NavigationButtons);

@@ -130,6 +130,13 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       );
     }
 
+    const moveToPlay = () => {
+      const {brick} = this.props;
+      if (brick.id) {
+        this.props.history.push(map.playPreviewIntro(brick.id));
+      }
+    }
+
     const renderPlayButton = () => {
       const { playStatus } = this.props;
       if (playStatus === PlayButtonStatus.Hidden) {
@@ -141,7 +148,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             isValid={playStatus === PlayButtonStatus.Valid}
             tutorialStep={-1}
             isTutorialSkipped={true}
-            onClick={() => { }}
+            onClick={moveToPlay}
           />
         </div>
       );
