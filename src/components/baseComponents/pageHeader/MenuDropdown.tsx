@@ -5,6 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import sprite from "assets/img/icons-sprite.svg";
 import { User, UserType } from "model/user";
 import { PageEnum } from "./PageHeadWithMenu";
+import { clearProposal } from 'components/localStorage/proposal';
 
 interface MenuDropdownProps {
   dropdownShown: boolean;
@@ -19,6 +20,7 @@ interface MenuDropdownProps {
 const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const { page } = props;
   const creatingBrick = () => {
+    clearProposal();
     props.forgetBrick();
     props.history.push("/build/new-brick/subject");
   };
