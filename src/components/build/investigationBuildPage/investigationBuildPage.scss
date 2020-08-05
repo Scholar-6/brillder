@@ -180,6 +180,16 @@ $space-between-boxes: 0.1vw;
       margin-top: 0vh;
       margin-left: 0.3vw;
     }
+    &.invalid {
+      @extend %transitionAll300;
+      color: var(--theme-orange);
+      svg {
+        color: inherit !important;
+      }
+    }
+    &.invalid:hover {
+      opacity: 0.8;
+    }
   }
 
   .additional-tooltip.tooltip-off {
