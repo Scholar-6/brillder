@@ -3,14 +3,19 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .ending-page {
+  h1 {
+    @include tabletP {
+      margin: 4vh 0;
+      padding-left: 0 !important;
+      display: block !important;
+      text-align: center !important;
+    }
+  }
+
   .begin-row {
     margin-top: 15px;
     margin-bottom: 15px;
     text-align: right;
-  }
-
-  .question-index {
-    background: none !important;
   }
 
   .start-brick-button {
