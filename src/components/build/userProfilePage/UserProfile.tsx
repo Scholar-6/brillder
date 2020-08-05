@@ -207,6 +207,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (user.subjects) {
       userToSave.subjects = user.subjects.map((s) => s.id);
     }
+    if (user.profileImage) {
+      userToSave.profileImage = user.profileImage;
+    }
   }
 
   saveUserProfile() {
