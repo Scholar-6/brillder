@@ -54,7 +54,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({ component: Component, ...r
     if (isBuilder) {
       return <Route {...rest} render={props => {
         const brickId = parseInt(props.match.params.brickId);
-        if (!rest.brick || rest.brick.id !== brickId) {
+        if (!rest.brick || !rest.brick.author || rest.brick.id !== brickId) {
           rest.fetchBrick(brickId);
           return <PageLoader content="...Getting Brick..." />;
         }
