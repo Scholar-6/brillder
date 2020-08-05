@@ -69,7 +69,7 @@ const NextButton: React.FC<NextButtonProps> = ({ step, playStatus, onMove }) => 
       return (
         <div className="navigation-container">
           <div className="play-preview-button-container">
-            <PlayButton isValid={true} tutorialStep={-1} isTutorialSkipped={true} onClick={() => { }} />
+            <PlayButton isValid={playStatus === PlayButtonStatus.Valid} tutorialStep={-1} isTutorialSkipped={true} onClick={() => { }} />
           </div>
           <div className="navigation-left">
             {renderButtons()}

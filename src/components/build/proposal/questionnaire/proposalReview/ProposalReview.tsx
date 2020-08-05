@@ -130,16 +130,26 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       );
     }
 
-    return (
-      <div className="proposal-page">
+    const renderPlayButton = () => {
+      const { playStatus } = this.props;
+      if (playStatus === PlayButtonStatus.Hidden) {
+        return "";
+      }
+      return (
         <div className="play-preview-button-container">
           <PlayButton
-            isValid={this.props.playStatus === PlayButtonStatus.Valid}
+            isValid={playStatus === PlayButtonStatus.Valid}
             tutorialStep={-1}
             isTutorialSkipped={true}
             onClick={() => { }}
           />
         </div>
+      );
+    }
+
+    return (
+      <div className="proposal-page">
+        {renderPlayButton()}
         <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
           <Grid className="back-button-container" container alignContent="center">
             <div className="back-button" onClick={() => this.props.history.push(map.ProposalLength)} />
