@@ -5,6 +5,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
 import { useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
+import { clearProposal } from 'components/localStorage/proposal';
 
 
 export interface YourProposalButtonProps {
@@ -22,8 +23,8 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
 
   const editProposal = () => {
     if (!isTutorialPassed()) {
-
     } else {
+      clearProposal();
       saveBrick();
       history.push(`/build/new-brick/proposal`);
     }
