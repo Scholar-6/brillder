@@ -11,7 +11,7 @@ interface PolicyDialogProps {
 
 const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
   const renderBrillderLabel = () => {
-    return <span>Brillder<sup style={{fontSize: '0.6vw'}}>TM</sup></span>;
+    return <span>Brillder<sup style={{fontSize: '0.75vw'}}>TM</sup></span>;
   }
 
   return (
