@@ -154,6 +154,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   fontFamily="Brandon Grotesque Bold Italic"
                   hoverMarginTop="0.9vw"
                   marginTop="-1vw"
+                  className="disabled"
                   value={QuestionComponentTypeEnum.Graph}
                 />
               </Grid>

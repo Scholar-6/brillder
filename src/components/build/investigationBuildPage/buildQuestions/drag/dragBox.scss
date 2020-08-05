@@ -14,6 +14,9 @@
     color: $global-light-text-gray;
     opacity: 0;
   }
+  .disabled {
+    color: var(--dark-gray);
+  }
 }
 .build-question-page {
   &:not(.active) {
