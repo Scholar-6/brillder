@@ -86,7 +86,6 @@
     "build": "react-app-rewired build --scripts-version react-scripts",
     "test": "react-app-rewired test --scripts-version react-scripts",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -c .storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"

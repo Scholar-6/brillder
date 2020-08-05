@@ -24,10 +24,6 @@ Run the project locally (Windows and Linux) and connect to the dev-api:
 * Go to http://local-brillder.scholar6.org:3000
 * If you do not have an account registered on https://dev-brillder.scholar6.org then click signup option
 
-## Run StoryBook
-
-### `npm run storybook`
-
 ## Available Scripts
 
 The page will reload if you make edits.<br />
