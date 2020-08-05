@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { ProposalStep } from "../model";
 import './nextButton.scss';
 import sprite from "assets/img/icons-sprite.svg";
+import map from 'components/map';
+
 interface NextButtonProps {
   isActive: boolean
   step: ProposalStep
@@ -11,13 +13,11 @@ interface NextButtonProps {
   onSubmit(data?:any): void
   data?: any
 }
-import map from 'components/map';
 
 const NextButton:React.FC<NextButtonProps> = (
   { step, canSubmit, onSubmit, data, isActive }
 ) => {
   const history = useHistory()
-  const url = map.ProposalBase;
 
   const next = () => {
     if (canSubmit === true) {
