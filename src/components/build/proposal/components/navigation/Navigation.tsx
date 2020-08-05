@@ -5,6 +5,7 @@ import { ProposalStep } from "../../model";
 import './Navigation.scss';
 import { Grid, Hidden } from "@material-ui/core";
 
+import map from 'components/map';
 
 interface NextButtonProps {
   step: ProposalStep
@@ -27,34 +28,34 @@ const NextButton: React.FC<NextButtonProps> = ({ step, onMove }) => {
             <div className="step-label">Title</div>
             <div
               className="navigation-button navigation-titles"
-              onClick={() => move('/build/new-brick/brick-title')}
+              onClick={() => move(map.ProposalTitle)}
             />
           </div>
           <div className={`step-container ${step === ProposalStep.OpenQuestion ? 'active' : ''}`}>
             <div className="step-label">Open Question</div>
             <div
               className={`navigation-button navigation-question ${step >= ProposalStep.OpenQuestion ? 'active' : ''}`}
-              onClick={() => move('/build/new-brick/open-question')}
+              onClick={() => move(map.ProposalOpenQuestion)}
             />
           </div>
           <div className={`step-container ${step === ProposalStep.Brief ? 'active' : ''}`}>
             <div className="step-label">Brief</div>
             <div
               className={`navigation-button navigation-brief ${step >= ProposalStep.Brief ? 'active' : ''}`}
-              onClick={() => move('/build/new-brick/brief')}
+              onClick={() => move(map.ProposalBrief)}
             />
           </div>
           <div className={`step-container ${step === ProposalStep.Prep ? 'active' : ''}`}>
             <div className="step-label">Prep</div>
             <div
-              onClick={() => move('/build/new-brick/prep')}
+              onClick={() => move(map.ProposalPrep)}
               className={`navigation-button navigation-prep ${step >= ProposalStep.Prep ? 'active' : ''}`}
             />
           </div>
           <div className={`step-container ${step === ProposalStep.BrickLength ? 'active' : ''}`}>
             <div className="step-label">Length</div>
             <div
-              onClick={() => move('/build/new-brick/length')}
+              onClick={() => move(map.ProposalLength)}
               className={`navigation-button navigation-length ${step >= ProposalStep.BrickLength ? 'active' : ''}`}
             />
           </div>

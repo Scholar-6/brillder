@@ -12,6 +12,7 @@ import 'swiper/swiper.scss';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import { clearProposal } from "components/localStorage/proposal";
+import map from 'components/map';
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -81,7 +82,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   creatingBrick() {
     clearProposal();
     this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
+    this.props.history.push(map.ProposalSubject);
   }
 
   renderViewAllButton() {

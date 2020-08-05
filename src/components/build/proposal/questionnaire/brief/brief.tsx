@@ -9,6 +9,7 @@ import Navigation from 'components/build/proposal/components/navigation/Navigati
 import { ProposalStep } from "../../model";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
+import map from 'components/map';
 
 
 interface BriefProps {
@@ -76,7 +77,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief 
             canSubmit={true}
             data={parentBrief}
             onSubmit={saveBrief}
-            backLink="/build/new-brick/open-question"
+            backLink={map.ProposalOpenQuestion}
           />
           <h2 className="pagination-text m-0">3 of 4</h2>
         </Grid>

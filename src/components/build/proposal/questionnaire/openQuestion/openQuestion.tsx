@@ -6,6 +6,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
 import './openQuestion.scss';
+import map from 'components/map';
 
 
 const HeadComponent: React.FC<any> = ({ data }) => {
@@ -55,7 +56,7 @@ function OpenQuestion({ selectedQuestion, canEdit, saveOpenQuestion }: any) {
             canSubmit={true}
             onSubmit={saveOpenQuestion}
             data={selectedQuestion}
-            backLink="/build/new-brick/brick-title"
+            backLink={map.ProposalTitle}
           />
           <h2 className="pagination-text">2 of 4</h2>
         </Grid>

@@ -24,6 +24,8 @@ import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames } from './model';
 
+import map from 'components/map';
+
 import { setLocalBrick, getLocalBrick } from 'components/localStorage/proposal';
 
 
@@ -174,25 +176,25 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
         <div>
           <HomeButton onClick={() => this.openDialog()} />
           <div style={{ width: '100%', height: '100%' }} className="proposal-router">
-            <Route path='/build/new-brick/subject'>
+            <Route path={map.ProposalSubject}>
               <SubjectPage subjects={user.subjects} subjectId={''} saveSubject={this.setSubject} />
             </Route>
-            <Route path='/build/new-brick/brick-title'>
+            <Route path={map.ProposalTitle}>
               <BrickTitle parentState={localBrick} canEdit={canEdit} saveTitles={this.setTitles} />
             </Route>
-            <Route path='/build/new-brick/open-question'>
+            <Route path={map.ProposalOpenQuestion}>
               <OpenQuestion selectedQuestion={localBrick.openQuestion} canEdit={canEdit} saveOpenQuestion={this.setOpenQuestion} />
             </Route>
-            <Route path='/build/new-brick/brief'>
+            <Route path={map.ProposalBrief}>
               <Brief parentBrief={localBrick.brief} canEdit={canEdit} saveBrief={this.setBrief} />
             </Route>
-            <Route path='/build/new-brick/prep'>
+            <Route path={map.ProposalPrep}>
               <Prep parentPrep={localBrick.prep} canEdit={canEdit} savePrep={this.setPrep} />
             </Route>
-            <Route path='/build/new-brick/length'>
+            <Route path={map.ProposalLength}>
               <BrickLength length={localBrick.brickLength} canEdit={canEdit} saveLength={this.setLength} saveBrick={this.setLengthAndSave} />
             </Route>
-            <Route path="/build/new-brick/proposal">
+            <Route path={map.ProposalReview}>
               <ProposalReview
                 brick={localBrick}
                 history={this.props.history}

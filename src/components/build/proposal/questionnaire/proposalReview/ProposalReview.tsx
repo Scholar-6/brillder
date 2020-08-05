@@ -13,6 +13,7 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
 import { BrickFieldNames } from '../../model';
+import map from 'components/map';
 
 
 interface ProposalProps {
@@ -131,7 +132,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       <div className="proposal-page">
         <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
           <Grid className="back-button-container" container alignContent="center">
-            <div className="back-button" onClick={() => this.props.history.push('/build/new-brick/length')} />
+            <div className="back-button" onClick={() => this.props.history.push(map.ProposalLength)} />
           </Grid>
           <Grid className="main-text-container">
             <h1>Your proposal has been saved!</h1>

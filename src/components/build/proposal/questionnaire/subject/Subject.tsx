@@ -6,6 +6,7 @@ import { ProposalStep } from "../../model";
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import NextButton from '../../components/nextButton'
 import { Redirect } from "react-router-dom";
+import map from 'components/map';
 
 
 interface SubjectProps {
@@ -211,7 +212,7 @@ const SubjectPage:React.FC<SubjectProps> = ({ subjectId, subjects, saveSubject }
 
   if (subjects.length === 1) {
     saveSubject(subjects[0].id);
-    return <Redirect to="/build/new-brick/brick-title" />
+    return <Redirect to={map.ProposalTitle} />
   }
 
   const onSubjectChange = (event: any) => {

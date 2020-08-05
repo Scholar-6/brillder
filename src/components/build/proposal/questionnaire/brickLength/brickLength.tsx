@@ -8,6 +8,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
 import { BrickLengthEnum } from 'model/brick';
+import map from 'components/map';
 
 
 const BrickLengthPreviewComponent: React.FC<any> = ({ data }) => {
@@ -75,7 +76,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
             canSubmit={length !== BrickLengthEnum.None}
             onSubmit={saveBrick}
             data={length}
-            backLink="/build/new-brick/prep"
+            backLink={map.ProposalPrep}
           />
         </Grid>
         <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} />

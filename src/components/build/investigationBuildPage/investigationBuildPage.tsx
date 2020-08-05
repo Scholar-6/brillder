@@ -26,6 +26,7 @@ import QuestionInvalidDialog from './components/QuestionInvalidDialog';
 import ProposalInvalidDialog from './components/ProposalInvalidDialog';
 import TutorialLabels from './components/TutorialLabels';
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import map from 'components/map';
 
 import {
   Question,
@@ -191,7 +192,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setQuestions(update(questions, { $set: updatedQuestions }));
     } else {
       saveBrick();
-      history.push('/build/new-brick/proposal');
+      history.push(map.ProposalReview);
     }
   };
 

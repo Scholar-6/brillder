@@ -8,6 +8,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep } from "../../model";
 import YoutubeAndMath from 'components/play/brick/baseComponents/YoutubeAndMath';
+import map from 'components/map';
 
 
 interface PrepProps {
@@ -67,7 +68,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, savePrep }) =
             canSubmit={true}
             data={parentPrep}
             onSubmit={savePrep}
-            backLink="/build/new-brick/brief"
+            backLink={map.ProposalBrief}
           />
           <h2 className="pagination-text">4 of 4</h2>
         </Grid>
