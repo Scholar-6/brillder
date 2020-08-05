@@ -65,7 +65,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
       alternativeSubject: '',
     } as Brick;
 
-
     if (user) {
       initBrick.author = (user as any) as Author;
     }
@@ -170,7 +169,11 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     const localBrick = this.state.brick;
     const {user} = this.props;
 
-    let playStatus = PlayButtonStatus.Valid;
+    let playStatus = PlayButtonStatus.Hidden;
+    const {brick} = this.props;
+    if (brick && brick.questions && brick.questions.length > 0) {
+      playStatus = PlayButtonStatus.Invalid;
+    }
 
     return (
       <MuiThemeProvider>
