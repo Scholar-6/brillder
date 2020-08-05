@@ -104,7 +104,7 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
   );
 }
 
-const mapState = (state: ReduxCombinedState) => ({ brickId: state.brick.brick.id });
+const mapState = (state: ReduxCombinedState) => ({ brickId: state.brick?.brick?.id });
 
 const connector = connect(mapState)
 
