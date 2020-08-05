@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Select, FormControl } from '@material-ui/core';
+import { Grid, Select, FormControl, Fab, SvgIcon, Collapse } from '@material-ui/core';
 import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
@@ -12,6 +12,7 @@ import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionTypeObj 
 import DragBox from './drag/dragBox';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import LockComponent from './lock/Lock';
+import CommentPanel from 'components/baseComponents/comments/CommentPanel';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -48,6 +49,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     { id: 4, type: QuestionComponentTypeEnum.Graph }
   ]);
   const [scrollShown, setScroll] = React.useState(false);
+  const [commentsShown, setCommentsShown] = React.useState(false);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const { type } = question;
 
@@ -170,54 +172,70 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 setQuestionHint={setQuestionHint}
               />
             </Grid>
-            <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
-              <Grid container direction="row" justify="center">
-                <Grid container item xs={11} className="question-button-container" justify="center">
-                  {
-                    (index >= 1) ?
-                      <Grid container justify="center" alignContent="flex-start">
-                        <div className="right-side-text">Last Question?</div>
-                        <button
-                          className="synthesis-button svgOnHover"
-                          onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
-                        >
-                          <svg className="svg w-2 h-2 active">
-                            {/*eslint-disable-next-line*/}
-                            <use href={sprite + "#list"}/>
-                          </svg>
-                          <span>{props.synthesis ? 'Edit Synthesis' : 'Add Synthesis'}</span>
-                        </button>
-                      </Grid>
-                      : ""
-                  }
-                </Grid>
+            <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="center">
+              <Grid item>
+                <Fab color="primary" onClick={() => setCommentsShown(!commentsShown)}>
+                  <SvgIcon>
+                    <svg className="svg">
+                      {/*eslint-disable-next-line*/}
+                      <use href={sprite + (commentsShown ? "#cancel" : "#message-square")} />
+                    </svg>
+                  </SvgIcon>
+                </Fab>
               </Grid>
-              <Grid container direction="row" alignItems="center">
-                <Grid container justify="center" item sm={12}>
-                  <FormControl variant="outlined">
-                    <Select
-                      className="select-question-type"
-                      disabled={locked}
-                      value={type}
-                      inputProps={{
-                        name: 'age',
-                        id: 'age-native-simple',
-                      }}
-                      onChange={(e) => {
-                        props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
-                      }}
-                    >
-                      {
-                        typeArray.map((typeName, i) => {
-                          const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
-                          return <MenuItem style={{ fontFamily: 'Brandon Grotesque Regular' }} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
-                        })
-                      }
-                    </Select>
-                  </FormControl>
+              {commentsShown ?
+              <Grid className="question-comments-panel" item container direction="row" justify="flex-start" xs>
+                <CommentPanel currentQuestionId={question.id} />
+              </Grid> :
+              <Grid container direction="column">
+                <Grid container direction="row" justify="center">
+                  <Grid container item xs={11} className="question-button-container" justify="center">
+                    {
+                      (index >= 1) ?
+                        <Grid container justify="center" alignContent="flex-start">
+                          <div className="right-side-text">Last Question?</div>
+                          <button
+                            className="synthesis-button svgOnHover"
+                            onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
+                          >
+                            <svg className="svg w-2 h-2 active">
+                              {/*eslint-disable-next-line*/}
+                              <use href={sprite + "#list"}/>
+                            </svg>
+                            <span>{props.synthesis ? 'Edit Synthesis' : 'Add Synthesis'}</span>
+                          </button>
+                        </Grid>
+                        : ""
+                    }
+                  </Grid>
                 </Grid>
-              </Grid>
-              <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+                <Grid container direction="row" alignItems="center">
+                  <Grid container justify="center" item sm={12}>
+                    <FormControl variant="outlined">
+                      <Select
+                        className="select-question-type"
+                        disabled={locked}
+                        value={type}
+                        inputProps={{
+                          name: 'age',
+                          id: 'age-native-simple',
+                        }}
+                        onChange={(e) => {
+                          props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
+                        }}
+                      >
+                        {
+                          typeArray.map((typeName, i) => {
+                            const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
+                            return <MenuItem style={{ fontFamily: 'Brandon Grotesque Regular' }} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
+                          })
+                        }
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </Grid>
+                <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+              </Grid>}
             </Grid>
           </Grid>
         </Grid>
