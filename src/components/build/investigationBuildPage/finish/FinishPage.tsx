@@ -12,8 +12,6 @@ interface FinishBrickProps {
   history: any;
   match: any;
   user: User;
-  forgetBrick(): void;
-  logout(): void;
 }
 
 enum ButtonStatus {

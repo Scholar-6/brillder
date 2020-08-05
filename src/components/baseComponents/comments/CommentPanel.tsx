@@ -34,7 +34,7 @@ const NewCommentButton = withStyles({
 */
 
 interface CommentPanelProps {
-  comments: Comment[];
+  comments: Comment[] | null;
   currentBrick: Brick;
   currentUser: User;
   getComments(brickId: number): void;
@@ -50,7 +50,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
   const renderComments = () => {
     return (
       <Grid container direction="column" className="comments-column">
-        {props.comments.map(comment => (
+        {props.comments ? props.comments.map(comment => (
           <CommentItem
             key={comment.id}
             comment={comment}
@@ -65,7 +65,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
                 isAuthor={child.author.id === props.currentUser.id} />
             ))}
           </CommentItem>
-        ))}
+        )) : ""}
       </Grid>
     );
   }

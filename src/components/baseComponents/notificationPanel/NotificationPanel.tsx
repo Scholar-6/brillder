@@ -19,9 +19,9 @@ const connector = connect(mapState);
 
 interface NotificationPanelProps {
   shown: boolean;
-  notifications: Notification[];
+  notifications: Notification[] | null;
   handleClose(): void;
-  anchorElement: Element | ((el: Element) => Element);
+  anchorElement: any;
 }
 
 class NotificationPanel extends Component<NotificationPanelProps> {

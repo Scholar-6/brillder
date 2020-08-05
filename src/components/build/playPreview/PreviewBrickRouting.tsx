@@ -34,6 +34,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import PlayLeftSidebar from 'components/play/brick/PlayLeftSidebar';
 import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
+import { User } from 'model/user';
 
 
 export interface BrickAttempt {
@@ -58,7 +59,7 @@ function shuffle(a: any[]) {
 interface BrickRoutingProps {
   brick: Brick;
   match: any;
-  user: any;
+  user: User;
   history: any;
   location: any;
   fetchBrick(brickId: number): void;
@@ -284,7 +285,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/publish">
-              <PublishPage {...props} />
+              <PublishPage history={props.history} match={props.match} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/editor">
               <EditorPage
@@ -295,7 +296,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/finish">
-              <FinishPage {...props} />
+              <FinishPage history={props.history} match={props.match} />
             </Route>
           </Switch>
         </div>

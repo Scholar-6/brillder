@@ -21,7 +21,7 @@ interface MainPageMenuProps {
   history: any;
   user: User;
 
-  notifications: Notification[];
+  notifications: Notification[] | null;
   getNotifications(): void;
 }
 
@@ -47,7 +47,6 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
   }
 
   showDropdown() {
-      console.log(66)
     this.setState({ ...this.state, dropdownShown: true });
   }
 

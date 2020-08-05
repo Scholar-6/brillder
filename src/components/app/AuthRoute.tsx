@@ -8,9 +8,11 @@ import { ReduxCombinedState } from 'redux/reducers';
 
 
 interface AuthRouteProps {
-  component: any,
-  isAuthenticated: isAuthenticated,
-  userType: UserLoginType
+  exact?: any;
+  path: string;
+  component: any;
+  isAuthenticated: isAuthenticated;
+  userType: UserLoginType;
 }
 
 const AuthRoute: React.FC<AuthRouteProps> = ({ component: Component, ...rest }) => {
