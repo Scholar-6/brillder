@@ -13,6 +13,7 @@ import DragBox from './drag/dragBox';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import LockComponent from './lock/Lock';
 import CommentPanel from 'components/baseComponents/comments/CommentPanel';
+import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -48,6 +49,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     { id: 4, type: QuestionComponentTypeEnum.Sound },
     { id: 4, type: QuestionComponentTypeEnum.Graph }
   ]);
+  const [isCommingSoonOpen, setCommingSoon] = React.useState(false);
   const [scrollShown, setScroll] = React.useState(false);
   const [commentsShown, setCommentsShown] = React.useState(false);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
@@ -155,6 +157,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   hoverMarginTop="0.9vw"
                   marginTop="-1vw"
                   className="disabled"
+                  onClick={()=> setCommingSoon(true)}
                   value={QuestionComponentTypeEnum.Graph}
                 />
               </Grid>
@@ -271,6 +274,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               </div>
           }
         </div>
+        <CommingSoonDialog isOpen={isCommingSoonOpen} close={() => setCommingSoon(false)} />
       </div>
     </MuiThemeProvider>
   );
