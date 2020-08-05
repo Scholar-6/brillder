@@ -13,7 +13,6 @@ import PlayBrickRouting from '../play/brick/PlayBrickRouting';
 import PlayPreviewRouting from '../build/playPreview/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
 import MainPage from 'components/mainPage/mainPage';
-import BricksListPage from '../build/bricksListPage/BricksListPage';
 import BackToWorkPage from '../build/backToWorkPage/BackToWork';
 import UsersListPage from '../build/users/UsersList';
 import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
@@ -79,24 +78,22 @@ const App: React.FC = (props: any) => {
 
   return (
     <ThemeProvider theme={theme}>
+      {/* all page routes are here order of routes is important */}
       <Switch>
         <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <StudentRoute path="/play/dashboard" component={Dashboard} />
 
-        <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} />
-
-        <BuildRoute path="/build/new-brick" component={Proposal} />
-        <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} />
-        <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} />
-        <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} />
-        {/*Leaving /build/bricks-list as a route that is useful for admins but not currently used in interface 2/7/2020*/}
-        <BuildRoute path="/build/bricks-list" component={BricksListPage} />
-        <BuildRoute path="/back-to-work" component={BackToWorkPage} />
-        <BuildRoute path="/users" component={UsersListPage} />
-        <BuildRoute path="/user-profile/:userId" component={UserProfilePage} />
+        <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
+        <BuildRoute path="/build/new-brick" component={Proposal} location={location} />
+        <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} location={location} />
+        <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} location={location} />
+        <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
+        <BuildRoute path="/back-to-work" component={BackToWorkPage} location={location} />
+        <BuildRoute path="/users" component={UsersListPage} location={location} />
+        <BuildRoute path="/user-profile/:userId" component={UserProfilePage} location={location} />
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />
-        <BuildRoute path="/home" component={MainPage} />
+        <BuildRoute path="/home" component={MainPage} location={location} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
         <AuthRoute path="/login" exact component={LoginPage} />

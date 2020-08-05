@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Redirect, useLocation } from "react-router-dom";
-// @ts-ignore
 import { connect } from 'react-redux';
 
 import actions from '../../redux/actions/auth';
@@ -12,11 +11,12 @@ import { ReduxCombinedState } from 'redux/reducers';
 
 
 interface AllUsersRouteProps {
-  component: any,
-  isAuthenticated: isAuthenticated,
-  user: User,
-  getUser():void,
-  isAuthorized():void,
+  path: string;
+  component: any;
+  isAuthenticated: isAuthenticated;
+  user: User;
+  getUser():void;
+  isAuthorized():void;
 }
 
 const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, user, ...rest }) => {

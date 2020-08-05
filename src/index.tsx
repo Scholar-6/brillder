@@ -5,7 +5,6 @@ import './index.scss';
 import * as serviceWorker from './serviceWorker';
 import App from './components/app/App';
 import { BrowserRouter as Router } from 'react-router-dom';
-// @ts-ignore
 import { Provider } from 'react-redux';
 
 import store from 'redux/store';

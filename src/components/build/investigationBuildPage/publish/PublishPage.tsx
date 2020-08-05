@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { User, UserType } from 'model/user';
 import { Grid, CircularProgress } from "@material-ui/core";
-// @ts-ignore
 import { connect } from 'react-redux';
 
 import "./PublishPage.scss";
@@ -14,8 +13,6 @@ interface PublishBrickProps {
   history: any;
   match: any;
   user: User;
-  forgetBrick(): void;
-  logout(): void;
 }
 
 enum ButtonStatus {

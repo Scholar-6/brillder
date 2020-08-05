@@ -4,7 +4,6 @@ import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import axios from "axios";
-// @ts-ignore
 import { connect } from "react-redux";
 import grey from "@material-ui/core/colors/grey";
 

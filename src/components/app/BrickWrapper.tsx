@@ -1,6 +1,5 @@
 import React from 'react';
 import { Brick } from "model/brick";
-// @ts-ignore
 import { connect } from 'react-redux';
 
 import actions from "redux/actions/brickActions";

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// @ts-ignore
 import { connect } from "react-redux";
 import { Grid, Hidden } from "@material-ui/core";
 import sprite from 'assets/img/icons-sprite.svg';
@@ -10,6 +9,9 @@ import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
+import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
+import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
+
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -33,6 +35,7 @@ interface MainPageState {
   backHober: boolean;
   animatedName: string;
   swiper: any;
+  isPolicyOpen: boolean;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
@@ -44,7 +47,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       createHober: false,
       backHober: false,
       animatedName: "",
-      swiper: null
+      swiper: null,
+      isPolicyOpen: false,
     } as any;
 
     let count = 0;
@@ -63,6 +67,10 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       }
       count++;
     }, 150);
+  }
+
+  setPolicyDialog(isPolicyOpen: boolean) {
+    this.setState({ isPolicyOpen });
   }
 
   viewHoverToggle(viewHover: boolean) {
@@ -232,23 +240,16 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           </div>
           <div className="second-col">
             <div className="first-item"></div>
-            <div className="second-item"></div>
-          </div>
-          <div className="logout-button" onClick={this.props.logout}>
-            <div className="logout-image svgOnHover">
-              <svg className="svg w100 h100 svg-default">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#logout-thin"} className="text-theme-orange" />
-              </svg>
-              <svg className="svg w100 h100 colored">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#logout-thick"} className="text-theme-orange" />
-              </svg>
+            <div className="second-item policy-text-container">
+              <div className="policy-text">
+                <span onClick={() => this.setPolicyDialog(true)}>Privacy Policy</span>
+              </div>
             </div>
-            <span>LOGOUT</span>
           </div>
+          <MainPageMenu user={this.props.user} history={this.props.history} />
         </Hidden>
         {this.renderMobilePage()}
+        <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />
       </Grid>
     );
   }

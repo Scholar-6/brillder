@@ -1,9 +1,8 @@
 import React from 'react';
-import { Grid, Button, Collapse } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import { green } from '@material-ui/core/colors';
-// @ts-ignore
+import { Grid/*, Button, Collapse*/ } from '@material-ui/core';
+//import { withStyles } from '@material-ui/core/styles';
+//import Box from '@material-ui/core/Box';
+//import { green } from '@material-ui/core/colors';
 import { connect } from 'react-redux';
 
 import './CommentPanel.scss';
@@ -17,6 +16,7 @@ import CommentChild from './CommentChild';
 import NewCommentPanel from './NewCommentPanel';
 import { User } from 'model/user';
 
+/*
 const NewCommentButton = withStyles({
   root: {
     color: "#ffffff",
@@ -30,10 +30,10 @@ const NewCommentButton = withStyles({
     borderRadius: 0
   }
 })(Button);
-
+*/
 
 interface CommentPanelProps {
-  comments: Comment[];
+  comments: Comment[] | null;
   currentBrick: Brick;
   currentUser: User;
   getComments(brickId: number): void;
@@ -49,7 +49,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
   const renderComments = () => {
     return (
       <Grid container direction="column" className="comments-column">
-        {props.comments.map(comment => (
+        {props.comments ? props.comments.map(comment => (
           <CommentItem
             key={comment.id}
             comment={comment}
@@ -64,7 +64,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
                 isAuthor={child.author.id === props.currentUser.id} />
             ))}
           </CommentItem>
-        ))}
+        )) : ""}
       </Grid>
     );
   }

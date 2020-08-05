@@ -1,7 +1,6 @@
 import React from "react";
 import { Route } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-// @ts-ignore
 import { connect } from 'react-redux';
 import { History } from 'history';
 
