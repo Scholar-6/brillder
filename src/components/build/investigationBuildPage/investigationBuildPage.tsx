@@ -23,6 +23,7 @@ import TutorialPhonePreview from "./tutorial/TutorialPreview";
 import YourProposalLink from './components/YourProposalLink';
 import DesktopVersionDialog from '../baseComponents/DesktopVersionDialog';
 import QuestionInvalidDialog from './components/QuestionInvalidDialog';
+import ProposalInvalidDialog from './components/ProposalInvalidDialog';
 import TutorialLabels from './components/TutorialLabels';
 
 import {
@@ -78,6 +79,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
+  const [proposalInvalid, setInvalidProposal] = React.useState(false);
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
   const [activeQuestionType, setActiveType] = React.useState(QuestionTypeEnum.None);
@@ -622,6 +624,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           submit={() => submitInvalidBrick()}
           hide={() => hideInvalidBrick()}
         />
+        <ProposalInvalidDialog isOpen={true} close={()=>{}} submit={()=>{}} hide={()=>{}} />
         <DeleteQuestionDialog
           open={deleteDialogOpen}
           index={deleteQuestionIndex}
