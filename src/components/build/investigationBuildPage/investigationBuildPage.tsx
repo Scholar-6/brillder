@@ -58,7 +58,6 @@ import { validateProposal } from '../proposal/service/validation';
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
   user: User;
-  fetchBrick(brickId: number): void;
   startEditing(brickId: number): void;
   saveBrick(brick: any): any;
   updateBrick(brick: any): any;
@@ -67,11 +66,9 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const brickId = parseInt(props.match.params.brickId);
 
-  if (!props.brick || props.brick.id !== brickId) {
-    props.fetchBrick(brickId);
-  }
-
   const { history } = props;
+
+  let proposalRes = validateProposal(props.brick);
 
   const [questions, setQuestions] = React.useState([
     getNewQuestion(QuestionTypeEnum.None, true)
@@ -80,7 +77,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
-  const [proposalResult, setProposalResult] = React.useState({ isOpen: false, url: ''});
+  const [proposalResult, setProposalResult] = React.useState({ isOpen: false, isValid: proposalRes.isValid, url: proposalRes.url});
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
   const [activeQuestionType, setActiveType] = React.useState(QuestionTypeEnum.None);
@@ -341,8 +338,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (invalidQuestion) {
       setSubmitDialog(true);
     } else {
-      let result = validateProposal(props.brick);
-      if (result.isValid) {
+      if (proposalRes.isValid) {
         saveBrick();
         let buildQuestion = GetCashedBuildQuestion();
 
@@ -358,7 +354,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           history.push(`/play-preview/brick/${brickId}/intro`);
         }
       } else {
-        setProposalResult({ isOpen: true, url: result.url });
+        setProposalResult({ ...proposalRes, isOpen: true });
       }
     }
   }
@@ -575,6 +571,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         <YourProposalLink
           tutorialStep={step}
           tooltipsOn={tooltipsOn}
+          invalid={validationRequired && !proposalResult.isValid}
           saveBrick={saveBrick}
           isTutorialPassed={isTutorialPassed}
           setTooltips={setTooltips}
@@ -636,7 +633,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         />
         <ProposalInvalidDialog
           isOpen={proposalResult.isOpen}
-          close={() => setProposalResult({ isOpen: false, url: ''})}
+          close={() => setProposalResult({...proposalResult, isOpen: false })}
           submit={() => submitInvalidBrick()}
           hide={() => moveToInvalidProposal()}
         />
@@ -660,7 +657,6 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  fetchBrick: (brickId: number) => dispatch(actions.fetchBrick(brickId)),
   startEditing: (brickId: number) => dispatch(socketStartEditing(brickId)),
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   updateBrick: (brick: any) => dispatch(socketUpdateBrick(brick))
