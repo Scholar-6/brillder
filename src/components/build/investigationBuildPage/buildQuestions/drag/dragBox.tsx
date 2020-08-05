@@ -20,23 +20,24 @@ const HoverBox = ({ marginTop, label }: any) => {
 }
 
 export interface BoxProps {
-  locked: boolean,
-  name?: string,
-  value: QuestionComponentTypeEnum,
-  isImage?: boolean,
-  label?: string,
-  src?: string,
-  fontSize?: string,
-  letterSpacing?: string,
-  marginTop?: any,
-  marginLeft?: any,
-  hoverMarginTop?: any,
-  fontFamily?: string,
-  className?: string,
+  locked: boolean;
+  name?: string;
+  value: QuestionComponentTypeEnum;
+  isImage?: boolean;
+  label?: string;
+  src?: string;
+  fontSize?: string;
+  letterSpacing?: string;
+  marginTop?: any;
+  marginLeft?: any;
+  hoverMarginTop?: any;
+  fontFamily?: string;
+  className?: string;
+  onClick?(): void;
 }
 
 const DragBox: React.FC<BoxProps> = ({
-  name, fontSize, isImage, src, label, marginTop, marginLeft, hoverMarginTop, fontFamily, locked, letterSpacing,className
+  name, fontSize, isImage, src, label, marginTop, marginLeft, hoverMarginTop, fontFamily, letterSpacing, className, onClick
 }) => {
   const renderContent = () => {
     if (isImage) {
@@ -47,14 +48,17 @@ const DragBox: React.FC<BoxProps> = ({
     }
     return (
       <div className={className}>
-        <div className="drag-box-name" style={{fontFamily, letterSpacing, marginLeft }}>{name}</div>
+        <div className="drag-box-name" style={{ fontFamily, letterSpacing, marginLeft }}>{name}</div>
         <HoverBox label={label} marginTop={hoverMarginTop} />
       </div>
     );
   }
 
   return (
-    <Grid container item xs={12} className="drag-box-item" style={{ fontSize: fontSize, marginTop }}>
+    <Grid
+      container item xs={12} onClick={onClick}
+      className="drag-box-item" style={{ fontSize: fontSize, marginTop }}
+    >
       {renderContent()}
     </Grid>
   )

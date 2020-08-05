@@ -3,6 +3,15 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .synthesis-page {
+  h1 {
+    @include tabletP {
+      margin: 4vh 0;
+      padding-left: 0 !important;
+      display: block !important;
+      text-align: center !important;
+    }
+  }
+
   .synthesis-expansion-panel {
     background: white !important;
 
@@ -67,17 +76,6 @@
       top: 0.2vw !important;
     }
 
-    .question-index-container {
-      width: 7vw !important;
-      height: 7vw !important;
-
-      .question-index {
-        width: 7vw !important;
-        height: 7vw !important;
-        font-size: 6vw !important;
-      }
-    }
-
     .question-live-play {
       @include phone_and_tabletP {
         padding: 4vw;
@@ -86,7 +84,24 @@
   }
 }
 
+.cuting-line {
+  top: 0;
+  margin-bottom: 0;
+  width: 46.5vw;
+  margin-top: 11.7vh;
+  position: absolute;
+  margin-left: 4vw;
+  margin-right: 3vw; 
+  border: 0.1vh solid var(--tab-gray);
+  height: 0.1vh;
+  border-left: 0;
+  border-right: 0;
+  background: var(--tab-gray);
+  border-radius: 2vh;
+}
+
 .synthesis-content {
+  padding-top: 2vh;
   table {
     color: var(--theme-dark-blue);
   }
@@ -96,6 +111,11 @@
 }
 
 .sorted-row-expanded {
+  .cuting-line {
+    @include desktop {
+      width: 53vw !important;
+    }
+  }
   .synthesis-content {
     @include desktop {
       width: 53vw !important;

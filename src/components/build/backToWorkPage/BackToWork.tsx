@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import axios from "axios";
-// @ts-ignore
 import { connect } from "react-redux";
 
 import "./BackToWork.scss";
 import { User } from "model/user";
 import { Brick, BrickStatus } from "model/brick";
-import { checkAdmin } from "components/services/brickService";
+import { checkAdmin, checkEditor } from "components/services/brickService";
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
-import PublicCoreToggle from "components/baseComponents/PublicCoreToggle";
+import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 import { ReduxCombinedState } from "redux/reducers";
@@ -82,6 +81,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       finalBricks = this.props.bricks;
     }
 
+    let isCore = false;
+    const isAdmin = checkAdmin(this.props.user.roles);
+    const isEditor = checkEditor(this.props.user.roles)
+    if (isAdmin || isEditor) {
+      isCore = true;
+    }
+
     this.state = {
       finalBricks,
       rawBricks,
@@ -100,7 +106,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         review: false,
         build: false,
         publish: false,
-        isCore: true
+        isCore
       },
 
       searchString: "",
@@ -145,7 +151,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   getBricks() {
     const isAdmin = checkAdmin(this.props.user.roles);
-    if (isAdmin) {
+    const isEditor = checkEditor(this.props.user.roles);
+    if (isAdmin || isEditor) {
       axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks", {
         withCredentials: true,
       }).then(res => {
@@ -651,7 +658,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           />
           <Grid item xs={9} className="brick-row-container">
             <BackPageTitle filters={this.state.filters} />
-            <PublicCoreToggle isCore={this.state.filters.isCore} onSwitch={() => this.toggleCore()} />
+            <PrivateCoreToggle isCore={this.state.filters.isCore} onSwitch={() => this.toggleCore()} />
             <div className="bricks-list-container">
               <div className="bricks-list">
                 {this.renderBricks()}

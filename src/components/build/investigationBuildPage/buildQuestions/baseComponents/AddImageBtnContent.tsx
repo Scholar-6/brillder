@@ -17,7 +17,7 @@ const AddImageBtnContent: React.FC = () => {
           <img alt="" className="plus-image" src="/feathericons/plus-white.png" />
         </Grid>
         <Grid item xs={6}>
-          <span>jpg.</span>
+          <span>.jpg</span>
         </Grid>
       </Grid>
     </Grid>

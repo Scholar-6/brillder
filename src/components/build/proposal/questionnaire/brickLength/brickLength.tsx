@@ -6,8 +6,9 @@ import NavigationButtons from '../../components/navigationButtons/NavigationButt
 import './brickLength.scss';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
-import { ProposalStep } from "../../model";
+import { ProposalStep, PlayButtonStatus } from "../../model";
 import { BrickLengthEnum } from 'model/brick';
+import map from 'components/map';
 
 
 const BrickLengthPreviewComponent: React.FC<any> = ({ data }) => {
@@ -22,12 +23,13 @@ const BrickLengthPreviewComponent: React.FC<any> = ({ data }) => {
 interface BrickLengthProps {
   length: any;
   canEdit: boolean;
+  playStatus: PlayButtonStatus;
   saveLength(value: BrickLengthEnum): any;
   saveBrick(data: any): void;
 }
 
 const BrickLength: React.FC<BrickLengthProps> = (
-  { length, canEdit, saveLength, saveBrick }
+  { length, playStatus, canEdit, saveLength, saveBrick }
 ) => {
   const setBrickLength = (brickLength: BrickLengthEnum) => {
     if (!canEdit) { return; }
@@ -36,7 +38,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
 
   return (
     <div className="tutorial-page brick-length-page">
-      <Navigation step={ProposalStep.BrickLength} onMove={() => { }} />
+      <Navigation step={ProposalStep.BrickLength} playStatus={playStatus} onMove={() => { }} />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
           <h1>20 minutes are a taster,<br />60 minutes are a feast.</h1>
@@ -75,7 +77,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
             canSubmit={length !== BrickLengthEnum.None}
             onSubmit={saveBrick}
             data={length}
-            backLink="/build/new-brick/prep"
+            backLink={map.ProposalPrep}
           />
         </Grid>
         <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} />

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Redirect } from "react-router-dom";
-// @ts-ignore
 import { connect } from 'react-redux';
 
 import actions from '../../redux/actions/auth';
@@ -12,6 +11,7 @@ import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 interface StudentRouteProps {
+  path: string;
   component: any;
   innerComponent?: any;
   isAuthenticated: isAuthenticated;

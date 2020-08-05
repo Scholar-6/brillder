@@ -50,6 +50,7 @@ function addZendesk() {
   }
 }
 
+const isProfilePage = (pathName: string) => pathName.search('/user-profile') >= 0;
 const isViewAllPage = (pathName: string) => pathName === "/play/dashboard";
 const isManageUsersPage = (pathName: string) => pathName === "/users";
 const isPlayPage = (pathName: string) => {
@@ -68,7 +69,7 @@ function setZendeskMode(iframe: any, location: any) {
   let isBigMode = true;
   let isIgnorePage = false;
   const { pathname } = location;
-  if (isViewAllPage(pathname) || isManageUsersPage(pathname)) {
+  if (isViewAllPage(pathname) || isManageUsersPage(pathname) || isProfilePage(pathname)) {
     isBigMode = false;
   }
   

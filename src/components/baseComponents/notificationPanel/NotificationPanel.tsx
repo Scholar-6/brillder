@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// @ts-ignore
 import { connect } from 'react-redux';
 import { List, ListItem, ListItemText, Popover, IconButton, SvgIcon, Card, CardContent, ListItemIcon, CardActions } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -19,9 +18,9 @@ const connector = connect(mapState);
 
 interface NotificationPanelProps {
   shown: boolean;
-  notifications: Notification[];
+  notifications: Notification[] | null;
   handleClose(): void;
-  anchorElement: Element | ((el: Element) => Element);
+  anchorElement: any;
 }
 
 class NotificationPanel extends Component<NotificationPanelProps> {
@@ -86,9 +85,11 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                 </ListItem>
               )) :
                 (
-                  <div className="content-box">
-                    <ListItemText className="notification-detail-single" primary="Looks like you don't have any notifications..." />
-                  </div>
+                  <ListItem>
+                    <div className="content-box">
+                      <ListItemText className="notification-detail-single" primary="Looks like you don't have any notifications..." />
+                    </div>
+                  </ListItem>
                 )
               }
             </List>

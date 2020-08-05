@@ -6,13 +6,15 @@ import './brief.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
-import { ProposalStep } from "../../model";
+import { ProposalStep, PlayButtonStatus } from "../../model";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
+import map from 'components/map';
 
 
 interface BriefProps {
   parentBrief: string;
+  playStatus: PlayButtonStatus;
   canEdit: boolean;
   saveBrief(brief: string): void;
 }
@@ -45,14 +47,14 @@ const BriefPreviewComponent: React.FC<any> = ({ data }) => {
   )
 }
 
-const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief }) => {
+const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, playStatus, saveBrief }) => {
   const setBriefText = (value: string) => {
     saveBrief(value)
   }
 
   return (
     <div className="tutorial-page brief-page">
-      <Navigation step={ProposalStep.Brief} onMove={() => saveBrief(parentBrief)} />
+      <Navigation step={ProposalStep.Brief} playStatus={playStatus} onMove={() => saveBrief(parentBrief)} />
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
           <div className="mobile-view-image">
@@ -76,7 +78,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, saveBrief 
             canSubmit={true}
             data={parentBrief}
             onSubmit={saveBrief}
-            backLink="/build/new-brick/open-question"
+            backLink={map.ProposalOpenQuestion}
           />
           <h2 className="pagination-text m-0">3 of 4</h2>
         </Grid>

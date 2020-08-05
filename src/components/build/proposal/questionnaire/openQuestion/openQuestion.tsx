@@ -4,9 +4,16 @@ import { Grid, Input, Hidden } from "@material-ui/core";
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
-import { ProposalStep } from "../../model";
+import { ProposalStep, PlayButtonStatus } from "../../model";
 import './openQuestion.scss';
+import map from 'components/map';
 
+interface OpenQuestionProps {
+  selectedQuestion: any;
+  canEdit: boolean;
+  playStatus: PlayButtonStatus;
+  saveOpenQuestion(v: string): void;
+}
 
 const HeadComponent: React.FC<any> = ({ data }) => {
   if (data) {
@@ -26,14 +33,14 @@ const HeadComponent: React.FC<any> = ({ data }) => {
   )
 }
 
-function OpenQuestion({ selectedQuestion, canEdit, saveOpenQuestion }: any) {
+const OpenQuestion:React.FC<OpenQuestionProps> = ({ selectedQuestion, canEdit, playStatus, saveOpenQuestion }) => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    saveOpenQuestion(event.target.value as number);
+    saveOpenQuestion(event.target.value as string);
   };
 
   return (
     <div className="tutorial-page open-question-page">
-      <Navigation step={ProposalStep.OpenQuestion} onMove={() => saveOpenQuestion(selectedQuestion)} />
+      <Navigation step={ProposalStep.OpenQuestion} playStatus={playStatus} onMove={() => saveOpenQuestion(selectedQuestion)} />
       <Grid container direction="row">
         <Grid item className="left-block">
           <div className="mobile-view-image">
@@ -55,7 +62,7 @@ function OpenQuestion({ selectedQuestion, canEdit, saveOpenQuestion }: any) {
             canSubmit={true}
             onSubmit={saveOpenQuestion}
             data={selectedQuestion}
-            backLink="/build/new-brick/brick-title"
+            backLink={map.ProposalTitle}
           />
           <h2 className="pagination-text">2 of 4</h2>
         </Grid>
