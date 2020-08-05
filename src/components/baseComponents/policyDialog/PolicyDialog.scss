@@ -20,7 +20,7 @@
     .private-policy-content {
       padding: 2.5vh 1.5vw;
       height: 84vh;
-      font-size: 1.2vw;
+      font-size: 1.43vw;
       overflow-y: auto;
       color: var(--theme-dark-blue);
 
@@ -61,6 +61,13 @@
         font-family: $font-family-bold;
         color: var(--theme-orange); 
         margin-bottom: 0.5vh;
+      }
+      h3 {
+        color: var(--theme-orange);
+        font-size: 2vw;
+        text-align: center;
+        font-family: $font-family-bold;
+        letter-spacing: 0;
       }
     }
   }
