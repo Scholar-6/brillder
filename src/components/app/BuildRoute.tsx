@@ -13,6 +13,8 @@ import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 interface BuildRouteProps {
+  exact?: any;
+  path: string;
   component: any;
   isAuthenticated: isAuthenticated;
   isRedirectedToProfile: boolean;

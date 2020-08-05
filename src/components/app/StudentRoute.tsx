@@ -12,6 +12,7 @@ import PageLoader from 'components/baseComponents/loaders/pageLoader';
 
 
 interface StudentRouteProps {
+  path: string;
   component: any;
   innerComponent?: any;
   isAuthenticated: isAuthenticated;
