@@ -25,6 +25,7 @@ import DesktopVersionDialog from '../baseComponents/DesktopVersionDialog';
 import QuestionInvalidDialog from './components/QuestionInvalidDialog';
 import ProposalInvalidDialog from './components/ProposalInvalidDialog';
 import TutorialLabels from './components/TutorialLabels';
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 import {
   Question,
@@ -51,8 +52,7 @@ import { GetCashedBuildQuestion } from '../../localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
-import PageLoader from "components/baseComponents/loaders/pageLoader";
-
+import { validateProposal } from '../proposal/service/validation';
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
@@ -79,7 +79,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
-  const [proposalInvalid, setInvalidProposal] = React.useState(false);
+  const [proposalResult, setProposalResult] = React.useState({ isOpen: false, url: ''});
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
   const [activeQuestionType, setActiveType] = React.useState(QuestionTypeEnum.None);
@@ -120,7 +120,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   // update on socket when things change.
   useEffect(() => {
-    if(props.brick && !locked) {
+    if (props.brick && !locked) {
       let { brick } = props;
       prepareBrickToSave(brick, questions, synthesis);
       props.updateBrick(brick);
@@ -340,21 +340,30 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (invalidQuestion) {
       setSubmitDialog(true);
     } else {
-      saveBrick();
-      let buildQuestion = GetCashedBuildQuestion();
+      let result = validateProposal(props.brick);
+      if (result.isValid) {
+        saveBrick();
+        let buildQuestion = GetCashedBuildQuestion();
 
-      if (isSynthesisPage) {
-        history.push(`/play-preview/brick/${brickId}/intro`);
-      } else if (
-        buildQuestion && buildQuestion.questionNumber &&
-        buildQuestion.brickId === brickId &&
-        buildQuestion.isTwoOrMoreRedirect
-      ) {
-        history.push(`/play-preview/brick/${brickId}/live`);
+        if (isSynthesisPage) {
+          history.push(`/play-preview/brick/${brickId}/intro`);
+        } else if (
+          buildQuestion && buildQuestion.questionNumber &&
+          buildQuestion.brickId === brickId &&
+          buildQuestion.isTwoOrMoreRedirect
+        ) {
+          history.push(`/play-preview/brick/${brickId}/live`);
+        } else {
+          history.push(`/play-preview/brick/${brickId}/intro`);
+        }
       } else {
-        history.push(`/play-preview/brick/${brickId}/intro`);
+        setProposalResult({ isOpen: true, url: result.url });
       }
     }
+  }
+
+  const moveToInvalidProposal = () => {
+    history.push(proposalResult.url);
   }
 
   const submitInvalidBrick = () => {
@@ -624,7 +633,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           submit={() => submitInvalidBrick()}
           hide={() => hideInvalidBrick()}
         />
-        <ProposalInvalidDialog isOpen={true} close={()=>{}} submit={()=>{}} hide={()=>{}} />
+        <ProposalInvalidDialog
+          isOpen={proposalResult.isOpen}
+          close={() => setProposalResult({ isOpen: false, url: ''})}
+          submit={() => submitInvalidBrick()}
+          hide={() => moveToInvalidProposal()}
+        />
         <DeleteQuestionDialog
           open={deleteDialogOpen}
           index={deleteQuestionIndex}
