@@ -3,7 +3,6 @@ import { Grid/*, Button, Collapse*/ } from '@material-ui/core';
 //import { withStyles } from '@material-ui/core/styles';
 //import Box from '@material-ui/core/Box';
 //import { green } from '@material-ui/core/colors';
-// @ts-ignore
 import { connect } from 'react-redux';
 
 import './CommentPanel.scss';

@@ -5,7 +5,6 @@ import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import './PageHeader.scss';
 import { ReduxCombinedState } from 'redux/reducers';
 import notificationActions from 'redux/actions/notifications';
-// @ts-ignore
 import { connect } from 'react-redux'
 import { Notification } from 'model/notifications';
 import BellButton from './BellButton';

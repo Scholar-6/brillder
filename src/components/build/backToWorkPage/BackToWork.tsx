@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import axios from "axios";
-// @ts-ignore
 import { connect } from "react-redux";
 
 import "./BackToWork.scss";

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { User } from 'model/user';
 import { Grid, CircularProgress } from "@material-ui/core";
-// @ts-ignore
 import { connect } from 'react-redux';
 
 import "./FinishPage.scss";

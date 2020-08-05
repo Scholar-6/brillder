@@ -4,7 +4,6 @@ import { Route } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import Dialog from '@material-ui/core/Dialog';
 import update from "immutability-helper";
-// @ts-ignore
 import { connect } from "react-redux";
 
 import "./investigationBuildPage.scss";

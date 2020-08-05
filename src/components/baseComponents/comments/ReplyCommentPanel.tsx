@@ -1,6 +1,5 @@
 import React from 'react';
 import "./NewCommentPanel.scss";
-// @ts-ignore
 //import { connect } from 'react-redux';
 import { Grid, /*TextField, Box,*/ Button, Input } from '@material-ui/core';
 

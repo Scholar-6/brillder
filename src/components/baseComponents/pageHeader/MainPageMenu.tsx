@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { User } from "model/user";
 import ReactDOM from 'react-dom';
-// @ts-ignore
 import { connect } from 'react-redux'
 
 

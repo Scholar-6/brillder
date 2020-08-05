@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { Box, Grid, Hidden } from "@material-ui/core";
 import { Category } from "./interface";
 import axios from "axios";
-// @ts-ignore
 import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';

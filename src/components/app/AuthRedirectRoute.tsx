@@ -1,7 +1,6 @@
 import React from 'react';
 import { Redirect } from "react-router-dom";
 import queryString from 'query-string';
-// @ts-ignore
 import { connect } from 'react-redux';
 
 import actions from '../../redux/actions/auth';

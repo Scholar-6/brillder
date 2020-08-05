@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import axios from "axios";
-// @ts-ignore
 import { connect } from "react-redux";
 
 import brickActions from "redux/actions/brickActions";

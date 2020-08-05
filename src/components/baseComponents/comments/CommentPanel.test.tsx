@@ -3,7 +3,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 
 import CommentPanel from './CommentPanel';
 
-// @ts-ignore
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk';
