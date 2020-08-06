@@ -9,6 +9,10 @@ import thunkMiddleware from 'redux-thunk';
 import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
 
+import CommentItem from './CommentItem';
+jest.mock('./CommentItem');
+const MockCommentItem = CommentItem as jest.MockedFunction<typeof CommentItem>;
+
 const middlewares = [ thunkMiddleware ];
 const mockStore = configureMockStore(middlewares);
 
@@ -57,16 +61,16 @@ describe("comments panel", () => {
             }
         });
 
+        MockCommentItem.mockImplementation(props => {
+            expect(props.comment).toStrictEqual(mockComment);
+            expect(props.currentBrick).toStrictEqual(mockBrick);
+            return <></>;
+        });
+
         render(
             <Provider store={store}>
                 <CommentPanel />
             </Provider>
         );
-
-        const commentAuthor = screen.queryByText(new RegExp(mockComment.author.firstName));
-        const commentText = screen.queryByText(mockComment.text);
-
-        expect(commentAuthor).toBeVisible();
-        expect(commentText).toBeVisible();
     });
 });
