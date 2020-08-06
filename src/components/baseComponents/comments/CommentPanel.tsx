@@ -78,7 +78,10 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
         <div className="comments-title">Suggestions</div>
       </Grid>
       <Grid item>
-        <NewCommentPanel currentQuestionId={props.currentQuestionId} />
+        <NewCommentPanel
+          currentQuestionId={props.currentQuestionId}
+          currentBrick={props.currentBrick}
+          createComment={props.createComment} />
       </Grid>
       {renderComments()}
     </Grid>
