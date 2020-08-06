@@ -42,16 +42,22 @@ export const filterByCurretUser = (bricks: Brick[], userId: number) => {
   return bricks.filter(b => b.author.id === userId);
 }
 
-export const filterByCore = (bricks: Brick[], userId: number) => {
-  return bricks.filter(b => b.author.id === userId);
+export const filterByPrivate = (bricks: Brick[], userId: number, generalSubjectId: number) => {
+  return bricks.filter(b => b.author.id === userId || b.subjectId === generalSubjectId);
 }
 
-export const filterBricks = (filters: Filters, rawBricks: Brick[], userId: number): Brick[] => {
+export const filterByCore = (bricks: Brick[], generalSubjectId: number) => {
+  return bricks.filter(b => b.subjectId !== generalSubjectId);
+}
+
+export const filterBricks = (filters: Filters, rawBricks: Brick[], userId: number, generalSubjectId: number): Brick[] => {
   let filteredBricks: Brick[] = [];
   let bricks = Object.assign([], rawBricks) as Brick[];
 
   if (!filters.isCore) {
-    bricks = filterByCore(bricks, userId);
+    bricks = filterByPrivate(bricks, userId, generalSubjectId);
+  } else {
+    bricks = filterByCore(bricks, generalSubjectId);
   }
 
   if (filters.draft) {
