@@ -15,7 +15,7 @@ describe("new comment panel", () => {
             <NewCommentPanel currentQuestionId={1} currentBrick={mockBrick} createComment={createComment} />
         );
 
-        const textField = screen.getByPlaceholderText("Add Suggestion...");
+        const textField = screen.getByPlaceholderText(/add suggestion/i);
         expect(textField).toBeVisible();
         fireEvent.change(textField, { target: { value: "Test Comment" } });
 
