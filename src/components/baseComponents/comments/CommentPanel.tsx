@@ -57,7 +57,9 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
   return (
     <Grid container className="comments-panel" direction="column" alignItems="stretch">
       <Grid item>
-        <div className="comments-title">Suggestions</div>
+        <div className="comments-title">
+           Suggestions
+        </div>
       </Grid>
       <Grid item>
         <NewCommentPanel

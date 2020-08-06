@@ -2,9 +2,25 @@
 
 .comment-text-form {
     background-color: var(--white);
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
+    margin: 0;
+    padding: 0;
+    padding-top: 0.8vh;
+    padding-bottom: 0.8vh;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-left: 8%;
+    padding-right: 8%;
+    border-radius: 0.25vw;
+
+    > div {
+        padding: 0;
+        margin: 0;
+    }
+    textarea {
+        font-size: 2vh;
+        letter-spacing: 0.1vh;
+        line-height: 1.3;
+    }
 }
 
 .comment-reply-text-form {
