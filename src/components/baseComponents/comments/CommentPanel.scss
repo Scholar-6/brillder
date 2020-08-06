@@ -1,9 +1,10 @@
 @import '../../../assets/sass/partials/variables';
 
 .comments-panel {
-  margin-left: 2vw;
   background-color: var(--tab-gray);
   height: 100%;
+  margin-left: 8%;
+  width: 92% !important;
   border-radius: 10px 0 0 10px;
 
   .comments-title {
@@ -68,7 +69,7 @@
 .question-comments-panel {
   .comments-panel {
     .comments-column {
-      height: 46vh;
+      height: 70%;
     }
   }
 }
