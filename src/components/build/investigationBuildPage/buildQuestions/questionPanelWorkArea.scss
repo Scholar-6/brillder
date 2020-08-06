@@ -230,16 +230,19 @@
     }
 
     .right-sidebar {
+      $right-sidebar-height: 76vh;
+      $comment-button-size: 6vh;
       $width: calc(100% - #{$left-sidebar-width} - #{$question-build-width});
       min-width: $width;
       max-width: $width;
-      height: 76vh;
+      height: $right-sidebar-height;
+      overflow: hidden;
 
       .comment-button {
         background: var(--black-blue);
         min-height: 0;
-        width: 6vh;
-        height: 6vh;
+        width: $comment-button-size;
+        height: $comment-button-size;
         .MuiSvgIcon-root, .MuiFab-label {
           height: 2.5vh;
           width: 2.5vh;
