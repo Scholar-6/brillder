@@ -192,7 +192,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               }
               {commentsShown ?
               <Grid className="question-comments-panel" item container direction="row" justify="flex-start" xs>
-                <CommentPanel currentQuestionId={question.id} />
+                <CommentPanel setCommentsShown={setCommentsShown} currentQuestionId={question.id} />
               </Grid> :
               <Grid container direction="column">
                 <Grid container direction="row" alignItems="center">

@@ -8,6 +8,7 @@
   border-radius: 10px 0 0 10px;
 
   .comments-title {
+    position: relative;
     text-align: center;
     color: var(--theme-dark-blue);
     font-size: $suggestions-title-font-size;
@@ -15,6 +16,15 @@
     font-family: "Brandon Grotesque Black";
     padding-top: $suggestions-title-padding;
     padding-bottom: $suggestions-title-padding;
+
+    svg {
+      cursor: pointer;
+      position: absolute;
+      top: 1.36vh;
+      left: 0.8vh;
+      height: 3vh;
+      width: 3vh;
+    }
   }
 
   .comment-item-container {

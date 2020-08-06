@@ -3,6 +3,7 @@ import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 import './CommentPanel.scss';
+import sprite from "assets/img/icons-sprite.svg";
 import CommentItem from './CommentItem';
 import { ReduxCombinedState } from 'redux/reducers';
 
@@ -21,6 +22,7 @@ interface CommentPanelProps {
   currentUser: User;
   getComments(brickId: number): void;
   createComment(comment: any): void;
+  setCommentsShown?(value: boolean): void;
 }
 
 const CommentPanel: React.FC<CommentPanelProps> = props => {
@@ -32,34 +34,44 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
   const renderComments = () => {
     return (
       <div className="comments-column-wrapper">
-      <Grid container direction="column" className="comments-column">
-        {props.comments ? props.comments.map(comment => (
-          (comment.question?.id ?? -1) === (props.currentQuestionId ?? -1)
-          &&
-          <CommentItem
-            key={comment.id}
-            comment={comment}
-            currentBrick={props.currentBrick}
-            createComment={props.createComment}
-            isAuthor={comment.author.id === props.currentUser.id}>
-            {comment.children && comment.children.map(child => (
-              <CommentChild
-                key={child.id}
-                comment={child}
-                currentBrick={props.currentBrick}
-                isAuthor={child.author.id === props.currentUser.id} />
-            ))}
-          </CommentItem>
-        )) : ""}
-      </Grid>
+        <Grid container direction="column" className="comments-column">
+          {props.comments ? props.comments.map(comment => (
+            (comment.question?.id ?? -1) === (props.currentQuestionId ?? -1)
+            &&
+            <CommentItem
+              key={comment.id}
+              comment={comment}
+              currentBrick={props.currentBrick}
+              createComment={props.createComment}
+              isAuthor={comment.author.id === props.currentUser.id}>
+              {comment.children && comment.children.map(child => (
+                <CommentChild
+                  key={child.id}
+                  comment={child}
+                  currentBrick={props.currentBrick}
+                  isAuthor={child.author.id === props.currentUser.id} />
+              ))}
+            </CommentItem>
+          )) : ""}
+        </Grid>
       </div>
     );
   }
 
+  const hideComments = () => {
+    if (props.setCommentsShown) {
+      props.setCommentsShown(false);
+    }
+  }
+
   return (
     <Grid container className="comments-panel" direction="column" alignItems="stretch">
-      <Grid item>
+      <Grid item >
         <div className="comments-title">
+          <svg className="svg active" onClick={hideComments}>
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#arrow-left"} />
+          </svg>
            Suggestions
         </div>
       </Grid>
