@@ -71,5 +71,16 @@
     .comment-panel-container {
       flex-basis: 250px;
     }
+    .comment-panel-container {
+      position: relative;
+      .comments-column-wrapper {
+        position: absolute;
+        bottom: 0;
+
+        .comments-column {
+          height: 60vh;
+        }
+      }
+    }
   }
 }
