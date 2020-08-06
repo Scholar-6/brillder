@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import "./BackToWork.scss";
 import { User } from "model/user";
-import { Brick, BrickStatus } from "model/brick";
+import { Brick, BrickStatus, Subject } from "model/brick";
 import { checkAdmin, checkEditor } from "components/services/brickService";
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
@@ -27,6 +27,7 @@ import {
   clearStatusFilters, filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
   removeBrickFromLists, sortBricks, hideAllBricks, prepareVisibleBricks, expandBrick
 } from './service';
+import { loadSubjects } from 'components/services/subject';
 
 interface BackToWorkState {
   finalBricks: Brick[]; // bricks to display
@@ -47,6 +48,7 @@ interface BackToWorkState {
   isClearFilter: boolean;
   pageSize: number;
   threeColumns: ThreeColumns;
+  generalSubjectId: number;
 }
 
 export interface BackToWorkProps {
@@ -125,19 +127,30 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       pageSize: 18,
 
       threeColumns,
+      generalSubjectId: -1,
     };
 
     // load real bricks
     if (!this.props.isMocked) {
       this.getBricks();
     }
+    loadSubjects((subjects: Subject[]) => {
+      let generalSubjectId = - 1;
+      const generalSubject = subjects.find(s => s.name === "General");
+      if (generalSubject) {
+        generalSubjectId = generalSubject.id;
+      }
+      this.setState({ generalSubjectId });
+      if (!this.props.isMocked) {
+        this.getBricks();
+      }
+    });
   }
 
   //region loading and setting bricks
-
-  setBricks(bricks: Brick[]) {
-    const threeColumns = prepareTreeRows(bricks, this.state.filters, this.props.user.id);
-    this.setState({ ...this.state, finalBricks: bricks, rawBricks: bricks, threeColumns });
+  setBricks(rawBricks: Brick[]) {
+    const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id);
+    this.setState({ ...this.state, finalBricks: rawBricks, rawBricks, threeColumns });
   }
 
   getBricks() {
