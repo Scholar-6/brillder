@@ -1,15 +1,19 @@
 import { Brick, BrickStatus } from '../../../model/brick';
 import { ThreeColumns, Filters, ThreeColumnNames } from './model';
-import {filterByStatus, filterByCurretUser } from './service';
+import {filterByStatus, filterByPrivate, filterByCore } from './service';
 
 const prepareBrickData = (data: any[], brick: Brick, index: number, key: number, row: number) => {
   data.push({ brick: brick, key, index, row });
 }
 
-const setColumnBricksByStatus = (res: ThreeColumns, filters: Filters, userId: number, name: ThreeColumnNames, bricks: Brick[], status: BrickStatus) => {
+const setColumnBricksByStatus = (
+  res: ThreeColumns, filters: Filters, userId: number, generalSubjectId: number, name: ThreeColumnNames, bricks: Brick[], status: BrickStatus
+) => {
   let bs = filterByStatus(bricks, status);
   if (!filters.isCore) {
-    bs = filterByCurretUser(bs, userId);
+    bs = filterByPrivate(bs, userId, generalSubjectId);
+  } else {
+    bs = filterByCore(bs, generalSubjectId);
   }
   res[name] = { rawBricks: bs, finalBricks: bs };
 }
@@ -42,12 +46,12 @@ export const expandThreeColumnBrick = (threeColumns: ThreeColumns, name: ThreeCo
   }
 }
 
-export const prepareTreeRows = (bricks: Brick[], filters: Filters, userId: number) => {
+export const prepareTreeRows = (bricks: Brick[], filters: Filters, userId: number, generalSubjectId: number) => {
   let threeColumns = {} as ThreeColumns;
   if (filters) {
-    setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Draft, bricks, BrickStatus.Draft);
-    setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Review, bricks, BrickStatus.Review);
-    setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Publish, bricks, BrickStatus.Publish);
+    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Draft, bricks, BrickStatus.Draft);
+    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Review, bricks, BrickStatus.Review);
+    setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Publish, bricks, BrickStatus.Publish);
   }
   return threeColumns;
 }

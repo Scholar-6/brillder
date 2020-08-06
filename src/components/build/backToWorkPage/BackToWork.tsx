@@ -84,7 +84,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
     // set mocked bricks for tests
     if (this.props.isMocked && this.props.bricks) {
-      threeColumns = prepareTreeRows(this.props.bricks, this.state.filters, this.props.user.id);
+      threeColumns = prepareTreeRows(this.props.bricks, this.state.filters, this.props.user.id, this.state.generalSubjectId);
       rawBricks = this.props.bricks;
       finalBricks = this.props.bricks;
     }
@@ -149,7 +149,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   //region loading and setting bricks
   setBricks(rawBricks: Brick[]) {
-    const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id);
+    const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id, this.state.generalSubjectId);
     this.setState({ ...this.state, finalBricks: rawBricks, rawBricks, threeColumns });
   }
 
@@ -330,7 +330,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     const { filters } = this.state;
     removeInboxFilters(filters);
     filters.draft = !filters.draft;
-    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
+    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id, this.state.generalSubjectId);
     this.setState({ ...this.state, filters, finalBricks });
     this.filterClear()
   }
@@ -339,7 +339,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     const { filters } = this.state;
     removeInboxFilters(filters);
     filters.review = !filters.review;
-    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
+    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id, this.state.generalSubjectId);
     this.setState({ ...this.state, filters, finalBricks, sortedIndex: 0 });
     this.filterClear()
   }
@@ -349,7 +349,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     const { filters } = this.state;
     removeInboxFilters(filters);
     filters.publish = !filters.publish;
-    const bricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
+    const bricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id, this.state.generalSubjectId);
     this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
     this.filterClear()
   }
@@ -376,7 +376,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       { searchString },
       { withCredentials: true }
     ).then((res) => {
-      const threeColumns = prepareTreeRows(res.data, this.state.filters, this.props.user.id);
+      const threeColumns = prepareTreeRows(res.data, this.state.filters, this.props.user.id, this.state.generalSubjectId);
       setTimeout(() => {
         this.setState({ ...this.state, finalBricks: res.data, isSearching: true, shown: true, threeColumns });
       }, 1400);
@@ -407,8 +407,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   toggleCore() {
     const { filters } = this.state;
     filters.isCore = !filters.isCore;
-    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id);
-    const threeColumns = prepareTreeRows(this.state.rawBricks, this.state.filters, this.props.user.id);
+    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id, this.state.generalSubjectId);
+    const threeColumns = prepareTreeRows(this.state.rawBricks, this.state.filters, this.props.user.id, this.state.generalSubjectId);
     this.setState({ ...this.state, threeColumns, filters, finalBricks });
   }
 
