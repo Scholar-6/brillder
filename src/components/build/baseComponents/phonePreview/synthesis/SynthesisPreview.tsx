@@ -24,7 +24,7 @@ const SynthesisPreviewComponent: React.FC<SynthesisPreviewProps> = ({
   return (
     <div className="phone-preview-component synthesis-preview">
       <div className="synthesis-title" style={{ textAlign: "center" }}>
-        SYNTHESIS
+        Synthesis
       </div>
       <div className="synthesis-text">
         {arr.map((el: any, i: number) => {
