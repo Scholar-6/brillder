@@ -98,7 +98,8 @@ const App: React.FC = (props: any) => {
         <BuildRoute path="/home" component={MainPage} location={location} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
-        <AuthRoute path="/login" exact component={LoginPage} />
+        <AuthRoute path="/login/:privacy" component={LoginPage} />
+        <AuthRoute path="/login" component={LoginPage} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>
