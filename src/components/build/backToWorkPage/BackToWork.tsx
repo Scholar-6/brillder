@@ -21,8 +21,9 @@ import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import BrickBlock from './components/BrickBlock';
 import {ThreeColumns, SortBy, Filters } from './model';
 import {
-  getThreeColumnName, prepareTreeRows, getThreeColumnBrick, expandThreeColumnBrick,
-  filterByStatus, filterBricks, removeInboxFilters, prepareBrickData, removeBrickFromList, sortBricks, hideAllBricks
+  getThreeColumnName, prepareTreeRows, getThreeColumnBrick, expandThreeColumnBrick, prepareVisibleThreeColumnBricks,
+  clearStatusFilters, filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
+  removeBrickFromList, sortBricks, hideAllBricks, prepareVisibleBricks
 } from './service';
 
 interface BackToWorkState {
@@ -293,7 +294,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   //region Hide / Expand / Clear Filter
   clearStatus() {
     const { filters } = this.state;
-    this.clearStatusFilters(filters);
+    clearStatusFilters(filters);
     this.setState({ ...this.state, sortedIndex: 0, filters });
     this.filterClear();
   }
@@ -308,30 +309,16 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
   //endregion
 
-  clearStatusFilters(filters: Filters) {
-    filters.draft = false;
-    filters.build = false;
-    filters.review = false;
-    filters.publish = false;
-  }
-
-  removeAllFilters(filters: Filters) {
-    filters.viewAll = false;
-    filters.buildAll = false;
-    filters.editAll = false;
-    this.clearStatusFilters(filters);
-  }
-
   showAll() {
     const { filters } = this.state;
-    this.removeAllFilters(filters);
+    removeAllFilters(filters);
     filters.viewAll = true;
     this.setState({ ...this.state, filters, sortedIndex: 0, finalBricks: this.state.rawBricks });
   }
 
   showEditAll() {
     const { filters } = this.state;
-    this.removeAllFilters(filters);
+    removeAllFilters(filters);
     filters.editAll = true;
     let bricks = filterByStatus(this.state.rawBricks, BrickStatus.Review);
     bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Publish));
@@ -340,7 +327,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   showBuildAll() {
     const { filters } = this.state;
-    this.removeAllFilters(filters);
+    removeAllFilters(filters);
     filters.buildAll = true;
     let bricks = filterByStatus(this.state.rawBricks, BrickStatus.Draft);
     this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks: bricks });
@@ -406,17 +393,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   renderSortedBricks = () => {
-    let { sortedIndex } = this.state;
-    let data: any[] = [];
-    let count = 0;
-    for (let i = 0 + sortedIndex; i < this.state.pageSize + sortedIndex; i++) {
-      const brick = this.state.finalBricks[i];
-      if (brick) {
-        let row = Math.floor(count / 3);
-        data.push({ brick, key: i, index: count, row });
-        count++;
-      }
-    }
+    const data = prepareVisibleBricks(this.state.sortedIndex, this.state.pageSize, this.state.finalBricks)
+
     return data.map(item => {
       return <BrickBlock
         brick={item.brick}
@@ -442,37 +420,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   renderGroupedBricks = () => {
-    let { sortedIndex } = this.state;
-    let data: any[] = [];
-    let count = 0;
-
-    for (let i = 0 + sortedIndex; i < (this.state.pageSize / 3) + sortedIndex; i++) {
-      let brick = this.state.threeColumns.draft.finalBricks[i];
-      let row = i - this.state.sortedIndex;
-      if (brick) {
-        prepareBrickData(data, brick, i, count, row);
-        count++;
-      } else {
-        prepareBrickData(data, {} as Brick, i, count, row);
-        count++;
-      }
-      brick = this.state.threeColumns.review.finalBricks[i];
-      if (brick) {
-        prepareBrickData(data, brick, i, count, row);
-        count++;
-      } else {
-        prepareBrickData(data, {} as Brick, i, count, row);
-        count++;
-      }
-      brick = this.state.threeColumns.publish.finalBricks[i];
-      if (brick) {
-        prepareBrickData(data, brick, i, count, row);
-        count++;
-      } else {
-        prepareBrickData(data, {} as Brick, i, count, row);
-        count++;
-      }
-    }
+    const data = prepareVisibleThreeColumnBricks(this.state.pageSize, this.state.sortedIndex, this.state.threeColumns);
+    
     return data.map(item => {
       return <BrickBlock
         brick={item.brick}
