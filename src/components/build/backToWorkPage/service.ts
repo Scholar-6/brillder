@@ -97,8 +97,8 @@ export const sortBricks = (bricks: Brick[], sortBy: SortBy) => {
 
 export const hideAllBricks = (bricks: Brick[]) => bricks.forEach(b => b.expanded = false);
 
-export const expandBrick = (bricks: Brick[], index: number) => {
-  hideAllBricks(bricks);
+export const expandBrick = (bricks: Brick[], allBricks: Brick[], index: number) => {
+  hideAllBricks(allBricks);
   if (!bricks[index].expandFinished) {
     bricks[index].expanded = true;
   }
