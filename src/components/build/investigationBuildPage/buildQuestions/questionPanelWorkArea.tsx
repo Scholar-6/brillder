@@ -178,11 +178,11 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             </Grid>
             <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="center">
               <Grid item>
-                <Fab color="primary" onClick={() => setCommentsShown(!commentsShown)}>
+                <Fab className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
                   <SvgIcon>
                     <svg className="svg">
                       {/*eslint-disable-next-line*/}
-                      <use href={sprite + (commentsShown ? "#cancel" : "#message-square")} />
+                      <use href={sprite + (commentsShown ? "#arrow-left" : "#message-square")} />
                     </svg>
                   </SvgIcon>
                 </Fab>
