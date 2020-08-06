@@ -122,3 +122,65 @@ export const sortBricks = (bricks: Brick[], sortBy: SortBy) => {
 }
 
 export const hideAllBricks = (bricks: Brick[]) => bricks.forEach(b => b.expanded = false);
+
+export const clearStatusFilters = (filters: Filters) => {
+  filters.draft = false;
+  filters.build = false;
+  filters.review = false;
+  filters.publish = false;
+}
+
+export const removeAllFilters = (filters: Filters) => {
+  filters.viewAll = false;
+  filters.buildAll = false;
+  filters.editAll = false;
+  clearStatusFilters(filters);
+}
+
+export const prepareVisibleBricks = (sortedIndex: number, pageSize: number, bricks: Brick[]) => {
+  let data: any[] = [];
+  let count = 0;
+  for (let i = 0 + sortedIndex; i < pageSize + sortedIndex; i++) {
+    const brick = bricks[i];
+    if (brick) {
+      let row = Math.floor(count / 3);
+      data.push({ brick, key: i, index: count, row });
+      count++;
+    }
+  }
+  return data;
+}
+
+export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: number, threeColumns: ThreeColumns,) => {
+  let data: any[] = [];
+  let count = 0;
+
+  for (let i = 0 + sortedIndex; i < (pageSize / 3) + sortedIndex; i++) {
+    let brick = threeColumns.draft.finalBricks[i];
+    let row = i - sortedIndex;
+    if (brick) {
+      prepareBrickData(data, brick, i, count, row);
+      count++;
+    } else {
+      prepareBrickData(data, {} as Brick, i, count, row);
+      count++;
+    }
+    brick = threeColumns.review.finalBricks[i];
+    if (brick) {
+      prepareBrickData(data, brick, i, count, row);
+      count++;
+    } else {
+      prepareBrickData(data, {} as Brick, i, count, row);
+      count++;
+    }
+    brick = threeColumns.publish.finalBricks[i];
+    if (brick) {
+      prepareBrickData(data, brick, i, count, row);
+      count++;
+    } else {
+      prepareBrickData(data, {} as Brick, i, count, row);
+      count++;
+    }
+  }
+  return data;
+}
