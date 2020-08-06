@@ -19,7 +19,7 @@ import BackPageTitle from './components/BackPageTitle';
 import BackPagePagination from './components/BackPagePagination';
 import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import BrickBlock from './components/BrickBlock';
-import {ThreeColumns, SortBy, Filters } from './model';
+import { ThreeColumns, SortBy, Filters } from './model';
 import {
   getThreeColumnName, prepareTreeRows, getThreeColumnBrick, expandThreeColumnBrick, prepareVisibleThreeColumnBricks, getLongestColumn
 } from './threeColumnService';
@@ -82,18 +82,29 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       },
     } as ThreeColumns;
 
-    // set mocked bricks for tests
-    if (this.props.isMocked && this.props.bricks) {
-      threeColumns = prepareTreeRows(this.props.bricks, this.state.filters, this.props.user.id, this.state.generalSubjectId);
-      rawBricks = this.props.bricks;
-      finalBricks = this.props.bricks;
-    }
-
     let isCore = false;
     const isAdmin = checkAdmin(this.props.user.roles);
     const isEditor = checkEditor(this.props.user.roles)
     if (isAdmin || isEditor) {
       isCore = true;
+    }
+
+    // set mocked bricks for tests
+    if (this.props.isMocked && this.props.bricks) {
+      let testFilters = {
+        viewAll: true,
+        buildAll: false,
+        editAll: false,
+
+        draft: false,
+        review: false,
+        build: false,
+        publish: false,
+        isCore
+      }
+      threeColumns = prepareTreeRows(this.props.bricks, testFilters, this.props.user.id, -1);
+      rawBricks = this.props.bricks;
+      finalBricks = this.props.bricks;
     }
 
     this.state = {
@@ -131,18 +142,20 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     };
 
     // load real bricks
-    loadSubjects().then((subjects:Subject[] | null) => {
-      if (!subjects) { return; }
-      let generalSubjectId = - 1;
-      const generalSubject = subjects.find(s => s.name === "General");
-      if (generalSubject) {
-        generalSubjectId = generalSubject.id;
-      }
-      this.setState({ generalSubjectId });
-      if (!this.props.isMocked) {
-        this.getBricks();
-      }
-    });
+    if (!this.props.isMocked) {
+      loadSubjects().then((subjects: Subject[] | null) => {
+        if (!subjects) { return; }
+        let generalSubjectId = - 1;
+        const generalSubject = subjects.find(s => s.name === "General");
+        if (generalSubject) {
+          generalSubjectId = generalSubject.id;
+        }
+        this.setState({ generalSubjectId });
+        if (!this.props.isMocked) {
+          this.getBricks();
+        }
+      });
+    }
   }
 
   //region loading and setting bricks
@@ -412,7 +425,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   renderGroupedBricks = () => {
     const data = prepareVisibleThreeColumnBricks(this.state.pageSize, this.state.sortedIndex, this.state.threeColumns);
-    
+
     return data.map(item => {
       return <BrickBlock
         brick={item.brick}
