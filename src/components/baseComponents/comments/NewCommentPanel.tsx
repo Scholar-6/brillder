@@ -41,14 +41,4 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
 	);
 };
 
-const mapState = (state: ReduxCombinedState) => ({
-	currentBrick: state.brick.brick
-});
-
-const mapDispatch = (dispatch: any) => ({
-	createComment: (comment: any) => dispatch(comments.createComment(comment))
-});
-
-const connector = connect(mapState, mapDispatch)
-
-export default connector(NewCommentPanel);
+export default NewCommentPanel;
