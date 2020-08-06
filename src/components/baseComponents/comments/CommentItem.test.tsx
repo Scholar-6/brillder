@@ -42,7 +42,7 @@ describe('comment item', () => {
         const createComment = jest.fn();
 
         render(
-            <CommentItem comment={mockComment} createComment={createComment} isAuthor={false} />
+            <CommentItem comment={mockComment} createComment={createComment} isAuthor={false} currentBrick={mockBrick} />
         );
 
         const commentText = screen.queryByText(mockComment.text);
@@ -58,8 +58,8 @@ describe('comment item', () => {
         const createComment = jest.fn();
 
         render(
-            <CommentItem comment={mockComment} createComment={createComment} isAuthor={false}>
-                {[<CommentChild comment={mockChild} />]}
+            <CommentItem comment={mockComment} createComment={createComment} isAuthor={false} currentBrick={mockBrick}>
+                {[<CommentChild key={mockChild.id} comment={mockChild} currentBrick={mockBrick} isAuthor={false} />]}
             </CommentItem>
         );
 
@@ -71,5 +71,5 @@ describe('comment item', () => {
         expect(replyText).toBeVisible();
         expect(replyAuthor).toBeVisible();
         expect(replyDate).toBeVisible();
-    })
+    });
 });
