@@ -22,8 +22,10 @@ import BrickBlock from './components/BrickBlock';
 import {ThreeColumns, SortBy, Filters } from './model';
 import {
   getThreeColumnName, prepareTreeRows, getThreeColumnBrick, expandThreeColumnBrick, prepareVisibleThreeColumnBricks,
+} from './threeColumnService';
+import {
   clearStatusFilters, filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
-  removeBrickFromList, sortBricks, hideAllBricks, prepareVisibleBricks
+  removeBrickFromList, sortBricks, hideAllBricks, prepareVisibleBricks, expandBrick
 } from './service';
 
 interface BackToWorkState {
@@ -223,14 +225,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   //region hover for normal bricks
   handleMouseHover(index: number) {
-    this.state.finalBricks.forEach((brick) => (brick.expanded = false));
+    this.state.finalBricks.forEach(brick => brick.expanded = false);
     this.setState({ ...this.state });
     setTimeout(() => {
-      let { finalBricks } = this.state;
-      finalBricks.forEach((brick) => (brick.expanded = false));
-      if (!finalBricks[index].expandFinished) {
-        finalBricks[index].expanded = true;
-      }
+      expandBrick(this.state.finalBricks, index);
       this.setState({ ...this.state });
     }, 400);
   }

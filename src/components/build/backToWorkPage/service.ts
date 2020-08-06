@@ -1,13 +1,5 @@
-import { Brick, BrickStatus } from '../../../model/brick';
-import { ThreeColumns, SortBy, Filters, ThreeColumnNames } from './model';
-
-const setColumnBricksByStatus = (res: ThreeColumns, filters: Filters, userId: number, name: ThreeColumnNames, bricks: Brick[], status: BrickStatus) => {
-  let bs = filterByStatus(bricks, status);
-  if (!filters.isCore) {
-    bs = filterByCurretUser(bs, userId);
-  }
-  res[name] = { rawBricks: bs, finalBricks: bs };
-}
+import { Brick, BrickStatus } from 'model/brick';
+import { SortBy, Filters } from './model';
 
 const getBrickById = (bricks: Brick[], brickId: number) => {
   return bricks.find(b => b.id === brickId);
@@ -23,10 +15,6 @@ export const removeBrickFromList = (bricks: Brick[], brickId: number) => {
   }
 }
 
-export const prepareBrickData = (data: any[], brick: Brick, index: number, key: number, row: number) => {
-  data.push({ brick: brick, key, index, row });
-}
-
 export const removeInboxFilters = (filters: Filters) => {
   filters.viewAll = false;
   filters.buildAll = false;
@@ -39,37 +27,6 @@ export const filterByStatus = (bricks: Brick[], status: BrickStatus) => {
 
 export const filterByCurretUser = (bricks: Brick[], userId: number) => {
   return bricks.filter(b => b.author.id === userId);
-}
-
-export const prepareTreeRows = (bricks: Brick[], filters: Filters, userId: number) => {
-  let threeColumns = {} as ThreeColumns;
-  if (filters) {
-    setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Draft, bricks, BrickStatus.Draft);
-    setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Review, bricks, BrickStatus.Review);
-    setColumnBricksByStatus(threeColumns, filters, userId, ThreeColumnNames.Publish, bricks, BrickStatus.Publish);
-  }
-  return threeColumns;
-}
-
-export const getThreeColumnName = (status: BrickStatus) => {
-  let name = ThreeColumnNames.Draft;
-  if (status === BrickStatus.Publish) {
-    name = ThreeColumnNames.Publish;
-  } else if (status === BrickStatus.Review) {
-    name = ThreeColumnNames.Review;
-  }
-  return name;
-}
-
-export const getThreeColumnBrick = (threeColumns: ThreeColumns, name: ThreeColumnNames, key: number) => {
-  return threeColumns[name].finalBricks[key];
-}
-
-export const expandThreeColumnBrick = (threeColumns: ThreeColumns, name: ThreeColumnNames, key: number) => {
-  let brick = getThreeColumnBrick(threeColumns, name, key);
-  if (brick && !brick.expandFinished) {
-    brick.expanded = true;
-  }
 }
 
 export const filterBricks = (filters: Filters, rawBricks: Brick[], userId: number): Brick[] => {
@@ -123,6 +80,13 @@ export const sortBricks = (bricks: Brick[], sortBy: SortBy) => {
 
 export const hideAllBricks = (bricks: Brick[]) => bricks.forEach(b => b.expanded = false);
 
+export const expandBrick = (bricks: Brick[], index: number) => {
+  hideAllBricks(bricks);
+  if (!bricks[index].expandFinished) {
+    bricks[index].expanded = true;
+  }
+}
+
 export const clearStatusFilters = (filters: Filters) => {
   filters.draft = false;
   filters.build = false;
@@ -145,40 +109,6 @@ export const prepareVisibleBricks = (sortedIndex: number, pageSize: number, bric
     if (brick) {
       let row = Math.floor(count / 3);
       data.push({ brick, key: i, index: count, row });
-      count++;
-    }
-  }
-  return data;
-}
-
-export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: number, threeColumns: ThreeColumns,) => {
-  let data: any[] = [];
-  let count = 0;
-
-  for (let i = 0 + sortedIndex; i < (pageSize / 3) + sortedIndex; i++) {
-    let brick = threeColumns.draft.finalBricks[i];
-    let row = i - sortedIndex;
-    if (brick) {
-      prepareBrickData(data, brick, i, count, row);
-      count++;
-    } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
-      count++;
-    }
-    brick = threeColumns.review.finalBricks[i];
-    if (brick) {
-      prepareBrickData(data, brick, i, count, row);
-      count++;
-    } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
-      count++;
-    }
-    brick = threeColumns.publish.finalBricks[i];
-    if (brick) {
-      prepareBrickData(data, brick, i, count, row);
-      count++;
-    } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
       count++;
     }
   }
