@@ -11,7 +11,7 @@ import { Notification } from 'model/notifications';
 import LogoutDialog from "../logoutDialog/LogoutDialog";
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 import MenuDropdown from './MenuDropdown';
-import BellButton from './BellButton';
+import BellButton from './bellButton/BellButton';
 import MoreButton from './MoreButton';
 
 import { PageEnum } from './PageHeadWithMenu';
