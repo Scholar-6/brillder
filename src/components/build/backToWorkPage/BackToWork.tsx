@@ -221,17 +221,17 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   //region hover for normal bricks
   handleMouseHover(index: number) {
-    this.state.finalBricks.forEach(brick => brick.expanded = false);
+    hideAllBricks(this.state.rawBricks);
     this.setState({ ...this.state });
     setTimeout(() => {
-      expandBrick(this.state.finalBricks, index);
+      expandBrick(this.state.finalBricks, this.state.rawBricks, index);
       this.setState({ ...this.state });
     }, 400);
   }
 
   handleMouseLeave(key: number) {
     let { finalBricks } = this.state;
-    finalBricks.forEach((brick) => (brick.expanded = false));
+    hideAllBricks(this.state.rawBricks);
     finalBricks[key].expandFinished = true;
     this.setState({ ...this.state });
     setTimeout(() => {
@@ -243,13 +243,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   //region hover for three column bricks
   onThreeColumnsMouseHover(index: number, status: BrickStatus) {
-    hideAllBricks(this.state.finalBricks);
+    hideAllBricks(this.state.rawBricks);
 
     let key = Math.floor(index / 3);
     this.setState({ ...this.state });
 
     setTimeout(() => {
-      hideAllBricks(this.state.finalBricks);
+      hideAllBricks(this.state.rawBricks);
       let name = getThreeColumnName(status);
       expandThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
       this.setState({ ...this.state });
@@ -257,7 +257,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   onThreeColumnsMouseLeave(index: number, status: BrickStatus) {
-    hideAllBricks(this.state.finalBricks);
+    hideAllBricks(this.state.rawBricks);
 
     let key = Math.ceil(index / 3);
     let name = getThreeColumnName(status);
