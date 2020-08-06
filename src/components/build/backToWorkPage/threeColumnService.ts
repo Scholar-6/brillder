@@ -1,6 +1,6 @@
 import { Brick, BrickStatus } from '../../../model/brick';
 import { ThreeColumns, Filters, ThreeColumnNames } from './model';
-import {filterByStatus, filterByCurretUser, removeBrickFromList } from './service';
+import {filterByStatus, filterByCurretUser } from './service';
 
 const prepareBrickData = (data: any[], brick: Brick, index: number, key: number, row: number) => {
   data.push({ brick: brick, key, index, row });
