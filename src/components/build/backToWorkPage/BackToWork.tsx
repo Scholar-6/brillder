@@ -131,10 +131,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     };
 
     // load real bricks
-    if (!this.props.isMocked) {
-      this.getBricks();
-    }
-    loadSubjects((subjects: Subject[]) => {
+    loadSubjects().then((subjects:Subject[] | null) => {
+      if (!subjects) { return; }
       let generalSubjectId = - 1;
       const generalSubject = subjects.find(s => s.name === "General");
       if (generalSubject) {
