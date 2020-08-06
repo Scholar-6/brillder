@@ -1,5 +1,5 @@
 import { Brick, BrickStatus } from 'model/brick';
-import { SortBy, Filters } from './model';
+import { SortBy, Filters, ThreeColumns } from './model';
 
 const getBrickById = (bricks: Brick[], brickId: number) => {
   return bricks.find(b => b.id === brickId);
@@ -13,6 +13,19 @@ export const removeBrickFromList = (bricks: Brick[], brickId: number) => {
       bricks.splice(index, 1);
     }
   }
+}
+
+export const removeBrickFromLists = (rawBricks: Brick[], finalBricks: Brick[], threeColumns: ThreeColumns, brickId: number) => {
+  removeBrickFromList(finalBricks, brickId);
+  removeBrickFromList(rawBricks, brickId);
+
+  const { publish, draft, review } = threeColumns;
+  removeBrickFromList(publish.finalBricks, brickId);
+  removeBrickFromList(publish.rawBricks, brickId);
+  removeBrickFromList(draft.finalBricks, brickId);
+  removeBrickFromList(draft.rawBricks, brickId);
+  removeBrickFromList(review.finalBricks, brickId);
+  removeBrickFromList(review.rawBricks, brickId);
 }
 
 export const removeInboxFilters = (filters: Filters) => {

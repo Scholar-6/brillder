@@ -1,6 +1,6 @@
 import { Brick, BrickStatus } from '../../../model/brick';
 import { ThreeColumns, Filters, ThreeColumnNames } from './model';
-import {filterByStatus, filterByCurretUser} from './service';
+import {filterByStatus, filterByCurretUser, removeBrickFromList } from './service';
 
 const prepareBrickData = (data: any[], brick: Brick, index: number, key: number, row: number) => {
   data.push({ brick: brick, key, index, row });
@@ -12,6 +12,13 @@ const setColumnBricksByStatus = (res: ThreeColumns, filters: Filters, userId: nu
     bs = filterByCurretUser(bs, userId);
   }
   res[name] = { rawBricks: bs, finalBricks: bs };
+}
+
+export const getLongestColumn = (threeColumns: ThreeColumns) => {
+  let draftLength = threeColumns.draft.finalBricks.length;
+  let reviewLength = threeColumns.review.finalBricks.length;
+  let publishLenght = threeColumns.publish.finalBricks.length;
+  return Math.max(draftLength, reviewLength, publishLenght);
 }
 
 export const getThreeColumnName = (status: BrickStatus) => {

@@ -21,11 +21,11 @@ import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import BrickBlock from './components/BrickBlock';
 import {ThreeColumns, SortBy, Filters } from './model';
 import {
-  getThreeColumnName, prepareTreeRows, getThreeColumnBrick, expandThreeColumnBrick, prepareVisibleThreeColumnBricks,
+  getThreeColumnName, prepareTreeRows, getThreeColumnBrick, expandThreeColumnBrick, prepareVisibleThreeColumnBricks, getLongestColumn
 } from './threeColumnService';
 import {
   clearStatusFilters, filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
-  removeBrickFromList, sortBricks, hideAllBricks, prepareVisibleBricks, expandBrick
+  removeBrickFromLists, sortBricks, hideAllBricks, prepareVisibleBricks, expandBrick
 } from './service';
 
 interface BackToWorkState {
@@ -162,18 +162,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   //region loading and setting bricks
 
   delete(brickId: number) {
-    let { rawBricks, finalBricks } = this.state;
-    removeBrickFromList(finalBricks, brickId);
-    removeBrickFromList(rawBricks, brickId);
-
-    const { publish, draft, review } = this.state.threeColumns;
-    removeBrickFromList(publish.finalBricks, brickId);
-    removeBrickFromList(publish.rawBricks, brickId);
-    removeBrickFromList(draft.finalBricks, brickId);
-    removeBrickFromList(draft.rawBricks, brickId);
-    removeBrickFromList(review.finalBricks, brickId);
-    removeBrickFromList(review.rawBricks, brickId);
-
+    let { rawBricks, finalBricks, threeColumns } = this.state;
+    removeBrickFromLists(rawBricks, finalBricks, threeColumns, brickId);
     this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
@@ -207,14 +197,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   moveThreeColumnsNext() {
     const { threeColumns } = this.state;
-    const getLongestColumn = () => {
-      let draftLength = threeColumns.draft.finalBricks.length;
-      let reviewLength = threeColumns.review.finalBricks.length;
-      let publishLenght = threeColumns.publish.finalBricks.length;
-      return Math.max(draftLength, reviewLength, publishLenght);
-    }
-
-    const longest = getLongestColumn();
+    const longest = getLongestColumn(threeColumns);
     const { pageSize } = this.state;
 
     let index = this.state.sortedIndex;
@@ -246,7 +229,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   //region hover for normal bricks
 
   //region hover for three column bricks
-
   onThreeColumnsMouseHover(index: number, status: BrickStatus) {
     hideAllBricks(this.state.finalBricks);
 
