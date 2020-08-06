@@ -73,7 +73,6 @@
 }
 
 .question-comments-panel {
-  margin-top: $comments-panel-margin-top;
   height: $comments-panel-height;
   overflow: hidden;
   position: relative;
@@ -82,7 +81,7 @@
     .comments-column-wrapper {
       bottom: 0;
       position: absolute;
-      height: 52vh;
+      height: 61.7vh;
       overflow: hidden;
     }
     .comments-column {
