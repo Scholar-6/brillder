@@ -1,16 +1,17 @@
 import React from 'react';
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import BellButton from './BellButton';
 
-describe('comment item', () => {
-  afterEach(cleanup);
+describe('bell button', () => {
+  it("should display bell button with number with orange text", () => {
+    let number = 14534;
+    render(
+      <BellButton notificationCount={number} onClick={() => {}} />
+    );
 
-  it("should display the reply and delete buttons if author", () => {
-    const createComment = jest.fn();
-
-    render(<BellButton notificationCount={1} onClick={() => {}} />);
-
-    let dd = document.getElementById("bell-container");
+    const commentText = screen.queryByText(number.toString());
+    console.log(commentText.style);
+    expect(commentText).toBeVisible();
   });
 });
