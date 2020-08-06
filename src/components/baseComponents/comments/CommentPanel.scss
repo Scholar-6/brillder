@@ -10,17 +10,17 @@
   .comments-title {
     text-align: center;
     color: var(--theme-dark-blue);
-    font-size: 2.5vh;
+    font-size: $suggestions-title-font-size;
     letter-spacing: 1px;
     font-family: "Brandon Grotesque Black";
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    padding-top: $suggestions-title-padding;
+    padding-bottom: $suggestions-title-padding;
   }
 
   .comment-item-container {
-    margin: 2vh;
-    padding: 2vh;
-    border-radius: 15px;
+    margin: 1.5vh;
+    padding: 0.7vh;
+    border-radius: 1.2vh;
     background-color: #ffffff;
 
     .stretch {
@@ -47,6 +47,12 @@
     }
   }
 
+  .comment-container:first-child {
+    .comment-item-container {
+      margin-top: 0;
+    }
+  }
+
   button.new-comment {
     color: #ffffff;
     background-color: var(--theme-green);
@@ -67,9 +73,20 @@
 }
 
 .question-comments-panel {
+  margin-top: $comments-panel-margin-top;
+  height: $comments-panel-height;
+  overflow: hidden;
+  position: relative;
+
   .comments-panel {
+    .comments-column-wrapper {
+      bottom: 0;
+      position: absolute;
+      height: 52vh;
+      overflow: hidden;
+    }
     .comments-column {
-      height: 48.4vh;
+      height: inherit;
     }
   }
 }

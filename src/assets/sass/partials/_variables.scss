@@ -89,3 +89,13 @@ $bricks-title-font-size: 5.2vw;
 $pagination-size: 6vh;
 
 $bricks-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$bricks-title-font-size} - #{$bricks-title-padding-top} - #{$bricks-title-padding-bottom} - #{$pagination-size});
+
+// build suggestions sidebar
+$suggestion-sidebar-height: 76vh;
+$comment-button-size: 6vh;
+$comments-panel-margin-top: 3vh; 
+$comments-panel-height: calc(#{$suggestion-sidebar-height} - #{$comment-button-size} - #{$comments-panel-margin-top});
+
+$suggestions-title-font-size: 2.5vh;
+$suggestions-title-padding: 1vh;
+

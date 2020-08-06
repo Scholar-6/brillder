@@ -230,12 +230,10 @@
     }
 
     .right-sidebar {
-      $right-sidebar-height: 76vh;
-      $comment-button-size: 6vh;
       $width: calc(100% - #{$left-sidebar-width} - #{$question-build-width});
       min-width: $width;
       max-width: $width;
-      height: $right-sidebar-height;
+      height: $suggestion-sidebar-height;
       overflow: hidden;
 
       .comment-button {
@@ -250,7 +248,8 @@
         }
       }
       .question-comments-panel {
-        margin-top: 3vh;
+        margin-top: $comments-panel-margin-top;
+        height: $comments-panel-height;
       }
 
       .question-button-container {

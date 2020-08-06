@@ -31,6 +31,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
 
   const renderComments = () => {
     return (
+      <div className="comments-column-wrapper">
       <Grid container direction="column" className="comments-column">
         {props.comments ? props.comments.map(comment => (
           (comment.question?.id ?? -1) === (props.currentQuestionId ?? -1)
@@ -51,6 +52,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
           </CommentItem>
         )) : ""}
       </Grid>
+      </div>
     );
   }
 
