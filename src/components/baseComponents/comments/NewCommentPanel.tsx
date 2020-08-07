@@ -30,12 +30,12 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
 		<Grid item>
 			<form className="comment-text-form">
 				<Input className="comment-text-entry" placeholder="Add Suggestion..." value={text}
-					onChange={(evt) => setText(evt.target.value)} multiline fullWidth disableUnderline />
+					onChange={(evt) => setText(evt.target.value)}  disableUnderline />
 			</form>
 		</Grid>
 		<Grid item container direction="row" justify="space-evenly">
 			<Button className="comment-action-button post"onClick={() => handlePostComment()} disabled={text === ""}>POST</Button>
-			<Button className="comment-action-button cancel" onClick={() => setText("")} disabled={text === ""}>CANCEL</Button>
+			<Button className="comment-action-button cancel" onClick={() => setText("")} disabled={text === ""}>CLEAR</Button>
 		</Grid>
 	</Grid>
 	);
