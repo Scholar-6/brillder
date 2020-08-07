@@ -13,9 +13,13 @@ import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import { clearProposal } from "components/localStorage/proposal";
 import map from 'components/map';
+import WelcomeComponent from './WelcomeComponent';
+import { Notification } from 'model/notifications';
 
-
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  notifications: state.notifications.notifications
+});
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
@@ -27,6 +31,7 @@ const connector = connect(mapState, mapDispatch);
 interface MainPageProps {
   history: any;
   user: User;
+  notifications: Notification[] | null;
   forgetBrick(): void;
   logout(): void;
 }
@@ -35,8 +40,6 @@ interface MainPageState {
   viewHover: boolean;
   createHober: boolean;
   backHober: boolean;
-  animatedName: string;
-  animatedNotificationText: string;
   swiper: any;
   isPolicyOpen: boolean;
 }
@@ -45,44 +48,13 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   constructor(props: any) {
     super(props);
 
-    let notificationText = 'You have no new notifications';
-
     this.state = {
       viewHover: false,
       createHober: false,
       backHober: false,
-      animatedName: "",
       swiper: null,
       isPolicyOpen: false,
-      animatedNotificationText: ''
     } as any;
-
-    let count = 0;
-    let nameToFill = props.user.firstName
-      ? (props.user.firstName as string)
-      : "NAME";
-    let maxCount = nameToFill.length - 1;
-
-    let setNameInterval = setInterval(() => {
-      this.setState({
-        ...this.state,
-        animatedName: this.state.animatedName + nameToFill[count],
-      });
-      if (count >= maxCount) {
-        clearInterval(setNameInterval);
-
-        let count = 0;
-        maxCount = notificationText.length - 1;
-        let notificationsInterval = setInterval(() => {
-          if (count >= maxCount) {
-            clearInterval(notificationsInterval);
-          }
-          this.setState({ animatedNotificationText: this.state.animatedNotificationText + notificationText[count] });
-          count++;
-        }, 40);
-      }
-      count++;
-    }, 150);
   }
 
   setPolicyDialog(isPolicyOpen: boolean) {
@@ -204,12 +176,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       <Grid container direction="row" className="mainPage">
         <Hidden only={["xs"]}>
           <div className="welcome-col">
-            <div className="welcome-box">
-              <div>WELCOME TO</div>
-              <div className="smaller">BRILLDER,</div>
-              <div className="welcome-name">{this.state.animatedName}</div>
-              <div className="notifications-text">{this.state.animatedNotificationText}</div>
-            </div>
+            <WelcomeComponent user={this.props.user} notifications={this.props.notifications} />
           </div>
           <div className="first-col">
             <div className="first-item">
