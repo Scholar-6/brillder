@@ -161,7 +161,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   hoverMarginTop="0.9vw"
                   marginTop="-1vw"
                   className="disabled"
-                  onClick={()=> setCommingSoon(true)}
+                  onClick={() => setCommingSoon(true)}
                   value={QuestionComponentTypeEnum.Graph}
                 />
               </Grid>
@@ -181,54 +181,52 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               />
             </Grid>
             <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="center">
-              { !commentsShown ? 
-              <Grid item>
-                <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
-                  <SvgIcon>
-                    <svg className="svg">
-                      {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#message-square"} />
-                    </svg>
-                  </SvgIcon>
-                  <div className="comments-count">
-                    {props.comments?.filter(comment => (comment.question?.id ?? -1) === question.id).length ?? 0}
-                  </div>
-                </div>
-              </Grid>
-              : ""
-              }
               {commentsShown ?
-              <Grid className="question-comments-panel" item container direction="row" justify="flex-start" xs>
-                <CommentPanel setCommentsShown={setCommentsShown} haveBackButton={true} currentQuestionId={question.id} />
-              </Grid> :
-              <Grid container direction="column">
-                <Grid container direction="row" alignItems="center">
-                  <Grid container justify="center" item sm={12}>
-                    <FormControl variant="outlined">
-                      <Select
-                        className="select-question-type"
-                        disabled={locked}
-                        value={type}
-                        inputProps={{
-                          name: 'age',
-                          id: 'age-native-simple',
-                        }}
-                        onChange={(e) => {
-                          props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
-                        }}
-                      >
-                        {
-                          typeArray.map((typeName, i) => {
-                            const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
-                            return <MenuItem style={{ fontFamily: 'Brandon Grotesque Regular' }} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
-                          })
-                        }
-                      </Select>
-                    </FormControl>
+                <Grid className="question-comments-panel" item container direction="row" justify="flex-start" xs>
+                  <CommentPanel setCommentsShown={setCommentsShown} haveBackButton={true} currentQuestionId={question.id} />
+                </Grid> :
+                <Grid container item alignItems="center" style={{height: '100%'}}>
+                  <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
+                    <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
+                      <SvgIcon>
+                        <svg className="svg">
+                          {/*eslint-disable-next-line*/}
+                          <use href={sprite + "#message-square"} />
+                        </svg>
+                      </SvgIcon>
+                      <div className="comments-count">
+                        {props.comments?.filter(comment => (comment.question?.id ?? -1) === question.id).length ?? 0}
+                      </div>
+                    </div>
+                    <Grid container direction="row" alignItems="center">
+                      <Grid container justify="center" item sm={12}>
+                        <FormControl variant="outlined">
+                          <Select
+                            className="select-question-type"
+                            disabled={locked}
+                            value={type}
+                            inputProps={{
+                              name: 'age',
+                              id: 'age-native-simple',
+                            }}
+                            onChange={(e) => {
+                              props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
+                            }}
+                          >
+                            {
+                              typeArray.map((typeName, i) => {
+                                const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
+                                return <MenuItem style={{ fontFamily: 'Brandon Grotesque Regular' }} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
+                              })
+                            }
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                    <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
                   </Grid>
                 </Grid>
-                <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
-              </Grid>}
+              }
             </Grid>
           </Grid>
         </Grid>
