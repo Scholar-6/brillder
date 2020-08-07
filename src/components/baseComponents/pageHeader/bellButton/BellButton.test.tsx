@@ -11,7 +11,6 @@ describe('bell button', () => {
     );
 
     const commentText = screen.queryByText(number.toString());
-    console.log(commentText.style);
     expect(commentText).toBeVisible();
   });
 });

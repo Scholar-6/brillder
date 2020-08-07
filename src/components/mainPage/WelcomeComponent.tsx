@@ -10,6 +10,7 @@ interface WelcomeProps {
 interface WelcomeState {
   animatedName: string;
   animatedNotificationText: string;
+  animationStarted: boolean;
 }
 
 class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
@@ -18,17 +19,19 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
 
     this.state = {
       animatedName: "",
-      animatedNotificationText: ''
+      animatedNotificationText: '',
+      animationStarted: false
     } as any;
   }
 
   shouldComponentUpdate(props: WelcomeProps) {
-    if (props.notifications && props.notifications != this.props.notifications) {
+    if (props.notifications && props.notifications != this.props.notifications && !this.state.animationStarted) {
       let count = 0;
       let nameToFill = props.user.firstName
         ? (props.user.firstName as string)
         : "NAME";
       let maxCount = nameToFill.length - 1;
+      this.setState({animationStarted: true})
 
       let setNameInterval = setInterval(() => {
         this.setState({
@@ -38,9 +41,17 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
         if (count >= maxCount) {
           clearInterval(setNameInterval);
 
-          let notificationText = 'You have no new notifications';
+          let notificationText = 'You have no new notifications'.split("");
           if (props.notifications) {
-            notificationText = `You have ${props.notifications.length} new notifications`;
+            const firstPart = 'You have '.split("");
+            const middlePart = `<b>${props.notifications.length}</b>`;
+            let lastPart = [];
+            if (props.notifications.length === 1) {
+              lastPart = ' new notification'.split("");
+            } else {
+              lastPart = ' new notifications'.split("");
+            }
+            notificationText = [...firstPart, middlePart, ...lastPart];
           }
 
           let count = 0;
@@ -66,7 +77,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
         <div>WELCOME TO</div>
         <div className="smaller">BRILLDER,</div>
         <div className="welcome-name">{this.state.animatedName}</div>
-        <div className="notifications-text">{this.state.animatedNotificationText}</div>
+        <div className="notifications-text" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText}} />
       </div>
     );
   }

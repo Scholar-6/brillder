@@ -40,6 +40,11 @@
         font-family: $font-family-light;
         font-size: 1.8vw;
       }
+
+      b {
+        font-weight: normal !important;
+        font-family: $font-family-bold;
+      }
     }
   }
 
