@@ -202,13 +202,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               {this.renderCreateButton()}
               {this.renderWorkButton()}
             </div>
-            <div className="second-item">
-              <div className="policy-text">
-                <span onClick={() => this.setPolicyDialog(true)}>Privacy Policy</span>
-              </div>
-            </div>
+            <div className="second-item"></div>
           </div>
           <MainPageMenu user={this.props.user} history={this.props.history} />
+          <div className="policy-text">
+            <span onClick={() => this.setPolicyDialog(true)}>Privacy Policy</span>
+          </div>
         </Hidden>
         {this.renderMobilePage()}
         <PolicyDialog isOpen={this.state.isPolicyOpen} close={() => this.setPolicyDialog(false)} />

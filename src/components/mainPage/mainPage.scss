@@ -57,14 +57,6 @@
       text-align: center;
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
-
-      .policy-text {
-        font-family: $font-family-regular;
-        margin: 0;
-        padding: 0;
-        padding-top: 0.6vh;
-        text-align: center;
-      }
     }
   }
 
@@ -216,5 +208,12 @@
         }
       }
     }
+  }
+
+  .policy-text {
+    position: fixed;
+    font-family: $font-family-regular;
+    bottom: 0vh;
+    right: 10vw;
   }
 }
