@@ -191,8 +191,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         <Hidden only={["xs"]}>
           <div className="welcome-col">
             <div className="welcome-box">
-              <div>WELCOME</div>
-              <div className="smaller">TO BRILLDER,</div>
+              <div>WELCOME TO</div>
+              <div className="smaller">BRILLDER,</div>
               <div className="welcome-name">{this.state.animatedName}</div>
             </div>
           </div>
