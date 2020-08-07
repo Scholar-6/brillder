@@ -22,7 +22,6 @@ const EditorPage: React.FC<EditorPageProps> = ({ brick, canEdit, saveEditor, his
   const onNext = () => {
     if(editor) {
       saveEditor(editor.id);
-      history.push(`/play-preview/brick/${brick.id}/finish`);
     }
   };
 
