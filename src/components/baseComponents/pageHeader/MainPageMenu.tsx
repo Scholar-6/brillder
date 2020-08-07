@@ -28,6 +28,7 @@ interface HeaderMenuState {
   dropdownShown: boolean;
   notificationsShown: boolean;
   logoutOpen: boolean;
+  width: string;
 }
 
 class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
@@ -40,6 +41,7 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
       dropdownShown: false,
       notificationsShown: false,
       logoutOpen: false,
+      width: '16vw'
     };
 
     this.pageHeader = React.createRef();
@@ -77,8 +79,15 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
       notificationCount = this.props.notifications.length;
     }
 
+    let className = "main-page-menu";
+    if (this.state.notificationsShown) {
+      className += " notification-expanded"
+    } else if (this.state.dropdownShown) {
+      className += " menu-expanded";
+    }
+
     return (
-      <div className="main-page-menu" ref={this.pageHeader}>
+      <div className={className} ref={this.pageHeader}>
         <BellButton notificationCount={notificationCount} onClick={() => this.showNotifications()} />
         <MoreButton onClick={() => this.showDropdown()} />
         <MenuDropdown
