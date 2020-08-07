@@ -20,6 +20,7 @@ interface CommentPanelProps {
   currentBrick: Brick;
   currentQuestionId?: number;
   currentUser: User;
+  haveBackButton?: boolean;
   getComments(brickId: number): void;
   createComment(comment: any): void;
   setCommentsShown?(value: boolean): void;
@@ -64,14 +65,21 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
     }
   }
 
+  const renderBackButton = () => {
+    if (!props.haveBackButton) { return; }
+    return (
+      <svg className="svg active" onClick={hideComments}>
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#arrow-left"} />
+      </svg>
+    );
+  }
+
   return (
     <Grid container className="comments-panel" direction="column" alignItems="stretch">
       <Grid item >
         <div className="comments-title">
-          <svg className="svg active" onClick={hideComments}>
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#arrow-left"} />
-          </svg>
+          {renderBackButton()}
            Suggestions
         </div>
       </Grid>
