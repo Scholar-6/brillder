@@ -94,7 +94,7 @@ $bricks-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - 
 $suggestion-sidebar-height: 76vh;
 $comment-button-size: 6vh;
 $comments-panel-margin-top: 3vh; 
-$comments-panel-height: calc(#{$suggestion-sidebar-height} - #{$comment-button-size} - #{$comments-panel-margin-top});
+$comments-panel-height: calc(#{$suggestion-sidebar-height} - #{$comments-panel-margin-top});
 
 $suggestions-title-font-size: 2.5vh;
 $suggestions-title-padding: 1vh;

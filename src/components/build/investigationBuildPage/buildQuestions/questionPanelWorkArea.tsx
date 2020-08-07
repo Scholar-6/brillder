@@ -179,14 +179,15 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="center">
               { !commentsShown ? 
               <Grid item>
-                <Fab className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
+                <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
                   <SvgIcon>
                     <svg className="svg">
                       {/*eslint-disable-next-line*/}
                       <use href={sprite + "#message-square"} />
                     </svg>
                   </SvgIcon>
-                </Fab>
+                  <div className="comments-count">12</div>
+                </div>
               </Grid>
               : ""
               }
