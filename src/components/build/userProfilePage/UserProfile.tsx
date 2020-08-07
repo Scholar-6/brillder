@@ -102,6 +102,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
     return {
       id: user.id,
+      username: user.username,
       roles: roles ? roles: [],
       email: user.email ? user.email : "",
       firstName: user.firstName ? user.firstName : "",
@@ -124,6 +125,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     return {
       user: {
         id: -1,
+        username: "",
         firstName: "",
         lastName: "",
         tutorialPassed: false,
@@ -154,6 +156,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     return {
       user: {
         id: 0,
+        username: "",
         firstName: "",
         lastName: "",
         tutorialPassed: false,
