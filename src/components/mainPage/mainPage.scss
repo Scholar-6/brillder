@@ -165,9 +165,21 @@
     height: $page-head-height;
     right: 0;
     position: fixed;
-    
     background: var(--light-blue);
+    transition: all 150ms;
+    border-bottom-left-radius: 2vw;
+
+    &.menu-expanded {
+      width: 16vw;
+      border-bottom-left-radius: 0;
+    }
+
+    &.notification-expanded {
+      width: 25vw;
+      border-bottom-left-radius: 0;
+    }
   }
+  
   .mobile-main-page {
     width: 100%;
     height: 100vh;

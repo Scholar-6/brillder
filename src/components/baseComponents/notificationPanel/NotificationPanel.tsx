@@ -5,8 +5,6 @@ import { List, ListItem, ListItemText, Popover, IconButton, SvgIcon, Card, CardC
 import { ReduxCombinedState } from 'redux/reducers';
 import sprite from "assets/img/icons-sprite.svg";
 import { Notification, notificationTypeColors } from 'model/notifications';
-//import notificationActions from 'redux/actions/notifications';
-//import { Dispatch } from 'redux';
 import moment from 'moment';
 import './NotificationPanel.scss';
 
