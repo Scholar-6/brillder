@@ -14,6 +14,9 @@ import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import LockComponent from './lock/Lock';
 import CommentPanel from 'components/baseComponents/comments/CommentPanel';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
+import { Comment } from 'model/comments';
+import { ReduxCombinedState } from 'redux/reducers';
+import { connect } from 'react-redux';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -28,6 +31,7 @@ export interface QuestionProps {
   questionsCount: number;
   synthesis: string;
   validationRequired: boolean;
+  comments: Comment[] | null;
   saveBrick(): void;
   setQuestion(index: number, question: Question): void;
   updateComponents(components: any[]): void;
@@ -186,7 +190,9 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                       <use href={sprite + "#message-square"} />
                     </svg>
                   </SvgIcon>
-                  <div className="comments-count">12</div>
+                  <div className="comments-count">
+                    {props.comments?.filter(comment => (comment.question?.id ?? -1) === question.id).length ?? 0}
+                  </div>
                 </div>
               </Grid>
               : ""
@@ -263,4 +269,10 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   );
 }
 
-export default QuestionPanelWorkArea
+const mapState = (state: ReduxCombinedState) => ({
+  comments: state.comments.comments
+});
+
+const connector = connect(mapState);
+
+export default connector(QuestionPanelWorkArea);
