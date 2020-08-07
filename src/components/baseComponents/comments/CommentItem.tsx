@@ -62,7 +62,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
         <Grid item>
           <h5 style={{ marginBottom: "10px" }}>{moment(props.comment.timestamp).format("H:mm D MMM")}</h5>
         </Grid>
-        <Grid item>
+        <Grid item className="break-word">
           <b>Comment: </b><i>{props.comment.text}</i>
         </Grid>
         {/*eslint-disable-next-line*/}
