@@ -28,11 +28,17 @@
       .welcome-name {
         font-size: 2.5vw;
         letter-spacing: 0.73vw;
-        margin-top: 4.2vh;
+        margin-top: 3.2vh;
         font-weight: 600;
         text-transform: uppercase;
-        font-family: 'Brandon Grotesque Thin';
+        font-family: $font-family-light;
         color: var(--theme-orange);
+      }
+      .notifications-text {
+        margin-top: 10vh;
+        letter-spacing: 0.1vw;
+        font-family: $font-family-light;
+        font-size: 1.8vw;
       }
     }
   }
