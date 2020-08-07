@@ -31,7 +31,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
         ? (props.user.firstName as string)
         : "NAME";
       let maxCount = nameToFill.length - 1;
-      this.setState({animationStarted: true})
+      this.setState({ animationStarted: true })
 
       let setNameInterval = setInterval(() => {
         this.setState({
@@ -41,28 +41,30 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
         if (count >= maxCount) {
           clearInterval(setNameInterval);
 
-          let notificationText = 'You have no new notifications'.split("");
-          if (props.notifications) {
-            const firstPart = 'You have '.split("");
-            const middlePart = `<b>${props.notifications.length}</b>`;
-            let lastPart = [];
-            if (props.notifications.length === 1) {
-              lastPart = ' new notification'.split("");
-            } else {
-              lastPart = ' new notifications'.split("");
+          setTimeout(() => {
+            let notificationText = 'You have no new notifications'.split("");
+            if (props.notifications) {
+              const firstPart = 'You have '.split("");
+              const middlePart = `<b>${props.notifications.length}</b>`;
+              let lastPart = [];
+              if (props.notifications.length === 1) {
+                lastPart = ' new notification'.split("");
+              } else {
+                lastPart = ' new notifications'.split("");
+              }
+              notificationText = [...firstPart, middlePart, ...lastPart];
             }
-            notificationText = [...firstPart, middlePart, ...lastPart];
-          }
 
-          let count = 0;
-          maxCount = notificationText.length - 1;
-          let notificationsInterval = setInterval(() => {
-            if (count >= maxCount) {
-              clearInterval(notificationsInterval);
-            }
-            this.setState({ animatedNotificationText: this.state.animatedNotificationText + notificationText[count] });
-            count++;
-          }, 40);
+            let count = 0;
+            maxCount = notificationText.length - 1;
+            let notificationsInterval = setInterval(() => {
+              if (count >= maxCount) {
+                clearInterval(notificationsInterval);
+              }
+              this.setState({ animatedNotificationText: this.state.animatedNotificationText + notificationText[count] });
+              count++;
+            }, 40);
+          }, 500);
         }
         count++;
       }, 150);
@@ -77,7 +79,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
         <div>WELCOME TO</div>
         <div className="smaller">BRILLDER,</div>
         <div className="welcome-name">{this.state.animatedName}</div>
-        <div className="notifications-text" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText}} />
+        <div className="notifications-text" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText }} />
       </div>
     );
   }
