@@ -177,42 +177,24 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               />
             </Grid>
             <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="center">
+              { !commentsShown ? 
               <Grid item>
-                <Fab color="primary" onClick={() => setCommentsShown(!commentsShown)}>
+                <Fab className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
                   <SvgIcon>
                     <svg className="svg">
                       {/*eslint-disable-next-line*/}
-                      <use href={sprite + (commentsShown ? "#cancel" : "#message-square")} />
+                      <use href={sprite + "#message-square"} />
                     </svg>
                   </SvgIcon>
                 </Fab>
               </Grid>
+              : ""
+              }
               {commentsShown ?
               <Grid className="question-comments-panel" item container direction="row" justify="flex-start" xs>
-                <CommentPanel currentQuestionId={question.id} />
+                <CommentPanel setCommentsShown={setCommentsShown} haveBackButton={true} currentQuestionId={question.id} />
               </Grid> :
               <Grid container direction="column">
-                <Grid container direction="row" justify="center">
-                  <Grid container item xs={11} className="question-button-container" justify="center">
-                    {
-                      (index >= 1) ?
-                        <Grid container justify="center" alignContent="flex-start">
-                          <div className="right-side-text">Last Question?</div>
-                          <button
-                            className="synthesis-button svgOnHover"
-                            onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
-                          >
-                            <svg className="svg w-2 h-2 active">
-                              {/*eslint-disable-next-line*/}
-                              <use href={sprite + "#list"}/>
-                            </svg>
-                            <span>{props.synthesis ? 'Edit Synthesis' : 'Add Synthesis'}</span>
-                          </button>
-                        </Grid>
-                        : ""
-                    }
-                  </Grid>
-                </Grid>
                 <Grid container direction="row" alignItems="center">
                   <Grid container justify="center" item sm={12}>
                     <FormControl variant="outlined">

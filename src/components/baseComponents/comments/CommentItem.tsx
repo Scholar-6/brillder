@@ -32,7 +32,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
   }
 
   return (
-  <Grid item>
+  <Grid item className="comment-container">
     <div className="comment-item-container">
       <Grid container direction="column">
         <Grid item container direction="row">

@@ -111,6 +111,7 @@ describe("Back to Work Page", () => {
         </Provider>
       </Router>
     );
+
     let brickContainers = container.getElementsByClassName("brick-container");
     expect(brickContainers).toHaveLength(2);
 

@@ -7,6 +7,7 @@
   background: var(--tab-gray);
   border-radius: 0.5vw;
   padding: 1.3vh;
+  min-height: calc(#{$bricks-height / 3}) !important;
   position: absolute;
   z-index: 2;
   .hover-text {
