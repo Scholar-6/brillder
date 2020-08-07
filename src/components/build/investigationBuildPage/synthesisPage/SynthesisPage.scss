@@ -4,8 +4,16 @@
 
 .synthesis-page {
   .inner-question-type {
+    $synthesis-box-width: 72.5%;
     padding: 2vw;
+    padding-left: 0;
     padding-right: 0;
+
+    .synthesis-input-container {
+      max-width: $synthesis-box-width;
+      min-width: $synthesis-box-width;
+      padding-left: 2vw;
+    }
 
     .ckeditor-synthesis {
       padding: 1.6vh 1vw;
@@ -69,7 +77,10 @@
     }
 
     .comment-panel-container {
+      $comment-width: calc(100% - #{$synthesis-box-width});
       flex-basis: 250px;
+      min-width: $comment-width;
+      max-width: $comment-width;
     }
     .comment-panel-container {
       position: relative;
