@@ -18,12 +18,13 @@
     padding-bottom: $suggestions-title-padding;
 
     svg {
+      $icon-size: 3.6vh;
       cursor: pointer;
       position: absolute;
-      top: 1.36vh;
-      left: 0.8vh;
-      height: 3vh;
-      width: 3vh;
+      top: 1.45vh;
+      left: 1.6vh;
+      height: $icon-size;
+      width: $icon-size;
     }
   }
 
@@ -96,7 +97,7 @@
       bottom: 0;
       width: 92%;
       position: absolute;
-      height: 61.7vh;
+      height: 60.5vh;
       overflow: hidden;
     }
     .comments-column {
