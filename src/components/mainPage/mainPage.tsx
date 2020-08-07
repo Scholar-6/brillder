@@ -36,6 +36,7 @@ interface MainPageState {
   createHober: boolean;
   backHober: boolean;
   animatedName: string;
+  animatedNotificationText: string;
   swiper: any;
   isPolicyOpen: boolean;
 }
@@ -44,6 +45,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
   constructor(props: any) {
     super(props);
 
+    let notificationText = 'You have no new notifications';
+
     this.state = {
       viewHover: false,
       createHober: false,
@@ -51,6 +54,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       animatedName: "",
       swiper: null,
       isPolicyOpen: false,
+      animatedNotificationText: ''
     } as any;
 
     let count = 0;
@@ -66,6 +70,17 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       });
       if (count >= maxCount) {
         clearInterval(setNameInterval);
+
+        let count = 0;
+        maxCount = notificationText.length - 1;
+        let notificationsInterval = setInterval(() => {
+          console.log(count)
+          if (count >= maxCount) {
+            clearInterval(notificationsInterval);
+          }
+          this.setState({ animatedNotificationText: this.state.animatedNotificationText + notificationText[count] });
+          count++;
+        }, 40);
       }
       count++;
     }, 150);
@@ -194,6 +209,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               <div>WELCOME TO</div>
               <div className="smaller">BRILLDER,</div>
               <div className="welcome-name">{this.state.animatedName}</div>
+              <div className="notifications-text">{this.state.animatedNotificationText}</div>
             </div>
           </div>
           <div className="first-col">
