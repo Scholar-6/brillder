@@ -113,7 +113,7 @@ describe("Back to Work Page", () => {
     );
 
     let brickContainers = container.getElementsByClassName("brick-container");
-    /*
+    /* 8/7/2020
     expect(brickContainers).toHaveLength(2);
 
     // check title and other texts in short brick description
