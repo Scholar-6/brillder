@@ -4,7 +4,7 @@
 
 .build-question-page {
   $left-sidebar-width: 25%;
-  $question-build-width: 55%;
+  $question-build-width: 51.7%;
 
   position: relative;
   font-family: $font-family-regular;
@@ -237,7 +237,7 @@
       overflow: hidden;
 
       .comment-button {
-        margin-top: 5vh;
+        margin-top: 7.9vh;
         position: relative;
         cursor: pointer;
         @extend %flexCenter;
