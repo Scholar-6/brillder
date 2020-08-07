@@ -28,6 +28,7 @@ export interface Author {
 
 export interface Editor {
   id: number;
+  username: string;
 }
 
 export interface Subject {
