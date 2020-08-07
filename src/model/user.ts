@@ -25,6 +25,7 @@ export interface UserBase {
   email: string;
   subjects: any[];
   status: UserStatus;
+  profileImage: string;
 }
 
 export interface User extends UserBase {
