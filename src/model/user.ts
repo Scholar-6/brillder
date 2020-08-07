@@ -19,6 +19,7 @@ export interface UserRole {
 
 export interface UserBase {
   id: number;
+  username: string;
   firstName: string;
   lastName: string;
   tutorialPassed: boolean;

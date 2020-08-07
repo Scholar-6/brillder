@@ -46,7 +46,7 @@ const App: React.FC = (props: any) => {
     return response;
   }, function (error) {
     let { url } = error.response.config;
-    if (url.search('/auth/login/') === -1) {
+    if (url.search('/auth/login/') === -1 && error.response.status === 401) {
       history.push("/choose-login");
     }
     return Promise.reject(error);
