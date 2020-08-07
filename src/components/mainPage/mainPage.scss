@@ -60,10 +60,6 @@
     }
   }
 
-  .item-image {
-    height: 10.1vh;
-  }
-
   .view-item-container,
   .create-item-container,
   .back-item-container {
@@ -163,11 +159,14 @@
     display:flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: flex-end;
     box-sizing: border-box;
-    width: 14vw;
+    width: 16vw;
     height: $page-head-height;
     right: 0;
     position: fixed;
+    
+    background: var(--light-blue);
   }
   .mobile-main-page {
     width: 100%;
