@@ -22,6 +22,7 @@
       left: calc(100% - 30vw) !important;
     }
     @include desktop {
+      box-shadow: none;
       left: calc(100% - 25vw) !important;
     }
     .notification-content {

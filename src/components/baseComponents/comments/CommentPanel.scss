@@ -18,12 +18,13 @@
     padding-bottom: $suggestions-title-padding;
 
     svg {
+      $icon-size: 3.6vh;
       cursor: pointer;
       position: absolute;
-      top: 1.36vh;
-      left: 0.8vh;
-      height: 3vh;
-      width: 3vh;
+      top: 1.45vh;
+      left: 1.6vh;
+      height: $icon-size;
+      width: $icon-size;
     }
   }
 
@@ -35,11 +36,11 @@
     width: 90%;
     border-radius: 1.2vh;
     background-color: #ffffff;
-    font-size: 0.7vw;
+    font-size: 1vw;
 
     .stretch {
       flex-grow: 1;
-      font-size: 0.75vw;
+      font-family: $font-family-bold;
     }
 
     .comment-reply-container {
@@ -81,6 +82,7 @@
   }
 
   .comments-column {
+    color: var(--theme-dark-blue);
     overflow: scroll;
     display: block !important;
     height: 54vh;
@@ -97,7 +99,7 @@
       bottom: 0;
       width: 92%;
       position: absolute;
-      height: 61.7vh;
+      height: 60.5vh;
       overflow: hidden;
     }
     .comments-column {

@@ -28,11 +28,22 @@
       .welcome-name {
         font-size: 2.5vw;
         letter-spacing: 0.73vw;
-        margin-top: 4.2vh;
+        margin-top: 3.2vh;
         font-weight: 600;
         text-transform: uppercase;
-        font-family: 'Brandon Grotesque Thin';
+        font-family: $font-family-light;
         color: var(--theme-orange);
+      }
+      .notifications-text {
+        margin-top: 10vh;
+        letter-spacing: 0.1vw;
+        font-family: $font-family-light;
+        font-size: 1.8vw;
+      }
+
+      b {
+        font-weight: normal !important;
+        font-family: $font-family-bold;
       }
     }
   }
@@ -58,10 +69,6 @@
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
     }
-  }
-
-  .item-image {
-    height: 10.1vh;
   }
 
   .view-item-container,
@@ -163,12 +170,27 @@
     display:flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: flex-end;
     box-sizing: border-box;
-    width: 14vw;
+    width: 16vw;
     height: $page-head-height;
     right: 0;
     position: fixed;
+    background: var(--light-blue);
+    transition: all 150ms;
+    border-bottom-left-radius: 2vw;
+
+    &.menu-expanded {
+      width: 16vw;
+      border-bottom-left-radius: 0;
+    }
+
+    &.notification-expanded {
+      width: 25vw;
+      border-bottom-left-radius: 0;
+    }
   }
+  
   .mobile-main-page {
     width: 100%;
     height: 100vh;

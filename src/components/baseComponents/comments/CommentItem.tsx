@@ -37,7 +37,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
       <Grid container direction="column">
         <Grid item container direction="row">
           <Grid className="stretch" item>
-            <h4><b>{props.comment.author.firstName} {props.comment.author.lastName}</b></h4>
+            <h4>{props.comment.author.firstName} {props.comment.author.lastName}</h4>
           </Grid>
           {props.isAuthor &&
           <IconButton aria-label="delete" size="small" color="secondary"
@@ -63,7 +63,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
           <h5 style={{ marginBottom: "10px" }}>{moment(props.comment.timestamp).format("H:mm D MMM")}</h5>
         </Grid>
         <Grid item className="break-word">
-          <b>Comment: </b><i>{props.comment.text}</i>
+          <span className="bold">Comment: </span><i>{props.comment.text}</i>
         </Grid>
         {/*eslint-disable-next-line*/}
         {props.children && props.children instanceof Array && props.children.length != 0 &&
