@@ -29,12 +29,17 @@
 
   .comment-item-container {
     margin: 1.5vh;
+    margin-left: 5%;
+    margin-right: 5%;
     padding: 0.7vh;
+    width: 90%;
     border-radius: 1.2vh;
     background-color: #ffffff;
+    font-size: 0.7vw;
 
     .stretch {
       flex-grow: 1;
+      font-size: 0.75vw;
     }
 
     .comment-reply-container {
