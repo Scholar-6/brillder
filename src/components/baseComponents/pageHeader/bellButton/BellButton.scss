@@ -1,0 +1,48 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.bell-button {
+  color: var(--theme-orange);
+  #bell {
+    stroke: var(--theme-orange);
+    width: 100%;
+    height: 100%;
+    fill: none;
+  }
+  .bell-text {
+    width: 100%;
+    height: 100%;
+    @extend %flexCenter;
+    @extend %floatToXCenter;
+    top: -0.5vh;
+    margin: 0 !important;
+    color: var(--theme-orange);
+    font-family: $font-family-bold;
+  }
+  &:hover {
+    .bell-cup {
+      @extend %transitionAll300;
+      fill: var(--theme-orange);
+    }
+    .bell-text {
+      color: var(--theme-dark-blue);
+    }
+  }
+}
+.bell-button.bell-full {
+  .bell-cup {
+    fill: var(--theme-orange);
+  }
+  .bell-text {
+    color: var(--theme-dark-blue);
+  }
+}
+.bell-button.bell-full:hover {
+  .bell-cup {
+    fill: inherit;
+  }
+  .bell-text {
+    color: var(--white);
+  }
+}

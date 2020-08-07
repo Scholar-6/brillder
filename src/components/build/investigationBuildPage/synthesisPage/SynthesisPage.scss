@@ -5,6 +5,7 @@
 .synthesis-page {
   .inner-question-type {
     padding: 2vw;
+    padding-right: 0;
 
     .ckeditor-synthesis {
       padding: 1.6vh 1vw;
@@ -69,6 +70,18 @@
 
     .comment-panel-container {
       flex-basis: 250px;
+    }
+    .comment-panel-container {
+      position: relative;
+      .comments-column-wrapper {
+        width: 92%;
+        position: absolute;
+        bottom: 0;
+
+        .comments-column {
+          height: 60vh;
+        }
+      }
     }
   }
 }

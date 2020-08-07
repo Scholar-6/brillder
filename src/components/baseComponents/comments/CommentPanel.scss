@@ -1,29 +1,45 @@
 @import '../../../assets/sass/partials/variables';
 
 .comments-panel {
-  margin-left: 2vw;
   background-color: var(--tab-gray);
   height: 100%;
+  margin-left: 8%;
+  width: 92% !important;
   border-radius: 10px 0 0 10px;
 
   .comments-title {
+    position: relative;
     text-align: center;
     color: var(--theme-dark-blue);
-    font-size: 25px;
+    font-size: $suggestions-title-font-size;
     letter-spacing: 1px;
     font-family: "Brandon Grotesque Black";
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    padding-top: $suggestions-title-padding;
+    padding-bottom: $suggestions-title-padding;
+
+    svg {
+      cursor: pointer;
+      position: absolute;
+      top: 1.36vh;
+      left: 0.8vh;
+      height: 3vh;
+      width: 3vh;
+    }
   }
 
   .comment-item-container {
-    margin: 2vh;
-    padding: 2vh;
-    border-radius: 15px;
+    margin: 1.5vh;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 0.7vh;
+    width: 90%;
+    border-radius: 1.2vh;
     background-color: #ffffff;
+    font-size: 0.7vw;
 
     .stretch {
       flex-grow: 1;
+      font-size: 0.75vw;
     }
 
     .comment-reply-container {
@@ -43,6 +59,12 @@
           }
         }
       }
+    }
+  }
+
+  .comment-container:first-child {
+    .comment-item-container {
+      margin-top: 0;
     }
   }
 
@@ -66,9 +88,24 @@
 }
 
 .question-comments-panel {
+  height: $comments-panel-height;
+  overflow: hidden;
+  position: relative;
+
   .comments-panel {
+    .comments-column-wrapper {
+      bottom: 0;
+      width: 92%;
+      position: absolute;
+      height: 61.7vh;
+      overflow: hidden;
+    }
     .comments-column {
-      height: 46vh;
+      height: inherit;
     }
   }
+}
+
+.break-word {
+  word-break: break-word;
 }

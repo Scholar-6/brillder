@@ -15,7 +15,9 @@ const CommingSoonDialog: React.FC<CommingSoonProps> = (props) => {
       className="dialog-box"
     >
       <div className="dialog-header">
-        <div>Coming soon! This feature is not yet available. If you have any suggestions, let us know via the 'Help' button.</div>
+        <div>Coming soon! If you have any suggestions for this feature,</div>
+        <div>send us a message via the 'Help' ('?') button in the bottom</div>
+        <div>left of this screen</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button"

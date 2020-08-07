@@ -1,11 +1,9 @@
 import React from 'react';
-import { Grid/*, Button, Collapse*/ } from '@material-ui/core';
-//import { withStyles } from '@material-ui/core/styles';
-//import Box from '@material-ui/core/Box';
-//import { green } from '@material-ui/core/colors';
+import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 import './CommentPanel.scss';
+import sprite from "assets/img/icons-sprite.svg";
 import CommentItem from './CommentItem';
 import { ReduxCombinedState } from 'redux/reducers';
 
@@ -16,29 +14,16 @@ import CommentChild from './CommentChild';
 import NewCommentPanel from './NewCommentPanel';
 import { User } from 'model/user';
 
-/*
-const NewCommentButton = withStyles({
-  root: {
-    color: "#ffffff",
-    backgroundColor: green[500],
-    '&:hover': {
-      backgroundColor: green[700],
-    },
-    width: "100%",
-    fontSize: "25px",
-    letterSpacing: 7,
-    borderRadius: 0
-  }
-})(Button);
-*/
 
 interface CommentPanelProps {
   comments: Comment[] | null;
   currentBrick: Brick;
   currentQuestionId?: number;
   currentUser: User;
+  haveBackButton?: boolean;
   getComments(brickId: number): void;
   createComment(comment: any): void;
+  setCommentsShown?(value: boolean): void;
 }
 
 const CommentPanel: React.FC<CommentPanelProps> = props => {
@@ -49,36 +34,60 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
 
   const renderComments = () => {
     return (
-      <Grid container direction="column" className="comments-column">
-        {props.comments ? props.comments.map(comment => (
-          (comment.question?.id ?? -1) === (props.currentQuestionId ?? -1)
-          &&
-          <CommentItem
-            key={comment.id}
-            comment={comment}
-            currentBrick={props.currentBrick}
-            createComment={props.createComment}
-            isAuthor={comment.author.id === props.currentUser.id}>
-            {comment.children && comment.children.map(child => (
-              <CommentChild
-                key={child.id}
-                comment={child}
-                currentBrick={props.currentBrick}
-                isAuthor={child.author.id === props.currentUser.id} />
-            ))}
-          </CommentItem>
-        )) : ""}
-      </Grid>
+      <div className="comments-column-wrapper">
+        <Grid container direction="column" className="comments-column">
+          {props.comments ? props.comments.map(comment => (
+            (comment.question?.id ?? -1) === (props.currentQuestionId ?? -1)
+            &&
+            <CommentItem
+              key={comment.id}
+              comment={comment}
+              currentBrick={props.currentBrick}
+              createComment={props.createComment}
+              isAuthor={comment.author.id === props.currentUser.id}>
+              {comment.children && comment.children.map(child => (
+                <CommentChild
+                  key={child.id}
+                  comment={child}
+                  currentBrick={props.currentBrick}
+                  isAuthor={child.author.id === props.currentUser.id} />
+              ))}
+            </CommentItem>
+          )) : ""}
+        </Grid>
+      </div>
+    );
+  }
+
+  const hideComments = () => {
+    if (props.setCommentsShown) {
+      props.setCommentsShown(false);
+    }
+  }
+
+  const renderBackButton = () => {
+    if (!props.haveBackButton) { return; }
+    return (
+      <svg className="svg active" onClick={hideComments}>
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#arrow-left"} />
+      </svg>
     );
   }
 
   return (
     <Grid container className="comments-panel" direction="column" alignItems="stretch">
-      <Grid item>
-        <div className="comments-title">Suggestions</div>
+      <Grid item >
+        <div className="comments-title">
+          {renderBackButton()}
+           Suggestions
+        </div>
       </Grid>
       <Grid item>
-        <NewCommentPanel currentQuestionId={props.currentQuestionId} />
+        <NewCommentPanel
+          currentQuestionId={props.currentQuestionId}
+          currentBrick={props.currentBrick}
+          createComment={props.createComment} />
       </Grid>
       {renderComments()}
     </Grid>

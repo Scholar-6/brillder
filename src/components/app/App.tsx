@@ -46,7 +46,7 @@ const App: React.FC = (props: any) => {
     return response;
   }, function (error) {
     let { url } = error.response.config;
-    if (url.search('/auth/login/') === -1) {
+    if (url.search('/auth/login/') === -1 && error.response.status === 401) {
       history.push("/choose-login");
     }
     return Promise.reject(error);
@@ -98,7 +98,8 @@ const App: React.FC = (props: any) => {
         <BuildRoute path="/home" component={MainPage} location={location} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
-        <AuthRoute path="/login" exact component={LoginPage} />
+        <AuthRoute path="/login/:privacy" component={LoginPage} />
+        <AuthRoute path="/login" component={LoginPage} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>
