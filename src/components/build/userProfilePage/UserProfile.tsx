@@ -378,6 +378,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <div className="profile-block">
             <div className="profile-header">
               {user.firstName ? user.firstName : "NAME"}
+              <span className="profile-username">{user.username ? user.username : "USERNAME"}</span>
             </div>
             <div className="save-button-container">
               <SaveProfileButton
