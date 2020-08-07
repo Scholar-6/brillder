@@ -74,7 +74,6 @@ class MainPage extends Component<MainPageProps, MainPageState> {
         let count = 0;
         maxCount = notificationText.length - 1;
         let notificationsInterval = setInterval(() => {
-          console.log(count)
           if (count >= maxCount) {
             clearInterval(notificationsInterval);
           }
