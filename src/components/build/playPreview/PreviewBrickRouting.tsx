@@ -62,6 +62,7 @@ interface BrickRoutingProps {
   history: any;
   location: any;
   fetchBrick(brickId: number): void;
+  assignEditor(brick: any): void;
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
@@ -152,6 +153,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     } else {
       props.history.push(`/play-preview/brick/${brickId}/finish`);
     }
+  }
+
+  const saveEditor = (editorId: number) => {
+    props.assignEditor({ ...props.brick, editor: { id: editorId } });
+    props.history.push(`/play-preview/brick/${props.brick.id}/finish`);
   }
 
   const moveToBuild = () => {
@@ -290,7 +296,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               <EditorPage
                 brick={props.brick}
                 canEdit={true}
-                saveEditor={console.log}
+                saveEditor={saveEditor}
                 history={props.history}
               />
             </Route>
@@ -382,6 +388,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
+  assignEditor: (brick: any) => dispatch(actions.assignEditor(brick))
 })
 
 const connector = connect(mapState, mapDispatch);

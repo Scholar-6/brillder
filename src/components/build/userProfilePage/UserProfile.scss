@@ -50,6 +50,12 @@
       @include phone_and_tabletP {
         font-size: 15.4vw;
       }
+
+      .profile-username {
+        font-size: 2.0vw;
+        letter-spacing: 0.25vw;
+        margin-left: 1.08vw;
+      }
     }
 
     .save-button-container {

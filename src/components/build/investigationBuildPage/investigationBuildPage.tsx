@@ -474,7 +474,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     }
     return (
       <QuestionTypePage
-        synthesis={brick.synthesis}
         history={history}
         brickId={brickId}
         setHoverQuestion={setHoverQuestion}

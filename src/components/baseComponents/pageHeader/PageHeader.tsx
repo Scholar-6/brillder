@@ -7,7 +7,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import notificationActions from 'redux/actions/notifications';
 import { connect } from 'react-redux'
 import { Notification } from 'model/notifications';
-import BellButton from './BellButton';
+import BellButton from './bellButton/BellButton';
 import MoreButton from './MoreButton';
 
 
