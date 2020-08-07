@@ -237,14 +237,29 @@
       overflow: hidden;
 
       .comment-button {
-        background: var(--black-blue);
+        margin-top: 5vh;
+        position: relative;
+        cursor: pointer;
+        @extend %flexCenter;
+        border-radius: 50%;
+        background: var(--tab-gray);
         min-height: 0;
         width: $comment-button-size;
         height: $comment-button-size;
         .MuiSvgIcon-root, .MuiFab-label {
-          height: 2.5vh;
-          width: 2.5vh;
-          color: var(--white);
+          $icon-size: $comment-button-size / 1.6;
+          height: $icon-size;
+          width: $icon-size;
+          stroke-width: 1.5;
+          color: var(--theme-dark-blue);
+        }
+        .comments-count {
+          position: absolute;
+          @extend %displayFlex;
+          @extend %flexJustifyCenter;
+          height: $comment-button-size / 1.8;
+          width: $comment-button-size;
+          font-size: 1.8vh;
         }
       }
 
