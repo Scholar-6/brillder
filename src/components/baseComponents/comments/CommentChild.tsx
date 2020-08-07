@@ -24,7 +24,7 @@ const CommentChild: React.FC<CommentChildProps> = props => {
 	return (
 	<div className="comment-child-container">
 		<div className="comment-head-bar">
-			<b className="comment-author">{props.comment.author.firstName} {props.comment.author.lastName}</b>
+			<span className="comment-author bold">{props.comment.author.firstName} {props.comment.author.lastName}</span>
 			<small>{moment(props.comment.timestamp).format("H:mm D MMM")}</small>
 			{props.isAuthor &&
 			<IconButton aria-label="reply" size="small" color="secondary"
