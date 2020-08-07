@@ -41,7 +41,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
       <div className="question-type synthesis-page">
         <div className="inner-question-type inner-synthesis-build">
           <Grid container direction="row" alignItems="stretch">
-            <Grid item xs>
+            <Grid item xs className="synthesis-input-container">
               <DocumentWirisCKEditor
                 disabled={this.props.locked}
                 editOnly={this.props.editOnly}
