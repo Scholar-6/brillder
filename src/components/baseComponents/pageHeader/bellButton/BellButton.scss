@@ -40,9 +40,9 @@
 }
 .bell-button.bell-full:hover {
   .bell-cup {
-    fill: var(--theme-dark-blue);
+    fill: inherit;
   }
   .bell-text {
-    color: var(--theme-orange);
+    color: var(--white);
   }
 }
