@@ -100,6 +100,7 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
           forgetBrick={() => {}}
         />
         <NotificationPanel
+          history={this.props.history}
           shown={this.state.notificationsShown}
           handleClose={() => this.hideNotifications()}
           anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}

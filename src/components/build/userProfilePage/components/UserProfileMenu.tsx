@@ -135,6 +135,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
           </MenuItem>
         </Menu>
         <NotificationPanel
+          history={this.props.history}
           shown={this.state.notificationsShown}
           handleClose={() => this.hideNotifications()}
           anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
