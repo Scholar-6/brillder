@@ -4,6 +4,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import sprite from "assets/img/icons-sprite.svg";
 import { PlayMode } from './model';
+import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 
 interface SidebarProps {
   sidebarRolledUp: boolean;
@@ -18,7 +19,18 @@ interface SidebarProps {
   moveToBuild?(): void;
 }
 
-class PlayLeftSidebarComponent extends Component<SidebarProps> {
+interface SidebarState {
+  isCoomingSoonOpen: boolean;
+}
+
+class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
+  constructor(props: SidebarProps) {
+    super(props);
+    this.state = {
+      isCoomingSoonOpen: false
+    }
+  }
+
   setHighlightMode() {
     if (this.props.setMode) {
       if (this.props.mode === PlayMode.Highlighting) {
@@ -27,6 +39,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps> {
         this.props.setMode(PlayMode.Highlighting);
       }
     }
+  }
+
+  toggleCommingSoon() {
+    this.setState({ isCoomingSoonOpen: !this.state.isCoomingSoonOpen });
   }
 
   renderToggleButton() {
@@ -82,6 +98,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps> {
     if (this.props.setMode) {
       this.props.setMode(PlayMode.Anotating);
     }
+    this.toggleCommingSoon();
   }
 
   moveToBuild() {
@@ -92,7 +109,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps> {
 
   renderAnotateButton() {
     return (
-      <MenuItem className="sidebar-button" onClick={() => this.setAnotateMode()}>
+      <MenuItem className="sidebar-button annotate-button" onClick={() => this.setAnotateMode()}>
         {!this.props.sidebarRolledUp ? <span>Annotate Text</span> : ""}
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
@@ -145,6 +162,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps> {
       <Grid container item className={className}>
         <div style={{ width: "100%" }}>{this.renderToggleButton()}</div>
         {this.renderButtons()}
+        <CommingSoonDialog isOpen={this.state.isCoomingSoonOpen} close={() => this.toggleCommingSoon()} />
       </Grid>
     );
   }

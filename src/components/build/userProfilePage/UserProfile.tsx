@@ -10,6 +10,7 @@ import authActions from "redux/actions/auth";
 
 import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
+import { saveProfileImageName } from "components/services/profile";
 import PhonePreview from "../baseComponents/phonePreview/PhonePreview";
 import { Subject } from "model/brick";
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
@@ -102,12 +103,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
     return {
       id: user.id,
+      username: user.username,
       roles: roles ? roles: [],
       email: user.email ? user.email : "",
       firstName: user.firstName ? user.firstName : "",
       lastName: user.lastName ? user.lastName : "",
       subjects: user.subjects ? user.subjects : [],
-      profileImage: "",
+      profileImage: user.profileImage ? user.profileImage : "",
       status: UserStatus.Pending,
       tutorialPassed: false,
       password: ""
@@ -124,6 +126,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     return {
       user: {
         id: -1,
+        username: "",
         firstName: "",
         lastName: "",
         tutorialPassed: false,
@@ -154,6 +157,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     return {
       user: {
         id: 0,
+        username: "",
         firstName: "",
         lastName: "",
         tutorialPassed: false,
@@ -224,7 +228,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       this.setState({ noSubjectDialogOpen: true });
       return;
     }
-
     this.save(userToSave);
   }
 
@@ -282,6 +285,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   onProfileImageChanged(name: string) {
     const { user } = this.state;
     user.profileImage = name;
+
+    saveProfileImageName(name).then((res: boolean) => {
+      if (res) {
+        // saving image success
+      } else {
+        // saving image name failed
+      }
+    });
+
     this.setState({ user });
   }
 
@@ -366,6 +378,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           <div className="profile-block">
             <div className="profile-header">
               {user.firstName ? user.firstName : "NAME"}
+              <span className="profile-username">{user.username ? user.username : "USERNAME"}</span>
             </div>
             <div className="save-button-container">
               <SaveProfileButton

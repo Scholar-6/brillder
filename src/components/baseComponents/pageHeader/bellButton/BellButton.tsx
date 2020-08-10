@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./BellButton.scss";
+
 interface BellButtonProps {
   notificationCount: number;
   onClick(evt: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
@@ -7,9 +9,14 @@ interface BellButtonProps {
 
 const BellButton: React.FC<BellButtonProps> = (props) => {
   const {notificationCount} = props;
+  let className = "header-btn bell-button svgOnHover";
+  if (notificationCount !== 0) {
+    className += " bell-full";
+  }
   return (
     <div
-      className="header-btn bell-button svgOnHover"
+      id="bell-container"
+      className={className}
       onClick={props.onClick}
     >
       <svg id="bell" viewBox="0 0 24 24">

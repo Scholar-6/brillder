@@ -1,4 +1,4 @@
-const BuildQuestionCache = "BuildQuestionCache";
+import {BuildQuestionCache} from './types';
 
 export enum BuildPlayPage {
   None,

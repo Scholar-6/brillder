@@ -102,9 +102,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     }
   };
 
-  const onEnd = () => {
-    moveNext();
-  }
+  const onEnd = () => moveNext();
 
   const moveNext = () => {
     finishBrick();
@@ -112,6 +110,20 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       history.push(`/play-preview/brick/${brickId}/ending`);
     } else {
       history.push(`/play/brick/${brickId}/ending`);
+    }
+  }
+
+  /**
+   * Handle mobile swipe
+   * @param index number - could be from 0 to 1. in the end should be interger value
+   * @param status string - almost all time is "move" and in the end "end"
+   */
+  const handleSwipe = (step: number, status: string) => {
+    if (status === "end") {
+      setActiveStep(Math.round(step));
+      if (step === questions.length) {
+        moveNext();
+      }
     }
   }
 
@@ -184,18 +196,32 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     <div className="brick-container review-page">
       <Grid container direction="row">
         <Grid item sm={8} xs={12}>
-          <SwipeableViews
-            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={activeStep}
-            className="swipe-view"
-            onChangeIndex={handleStep}
-          >
-            {questions.map(renderQuestionContainer)}
-          </SwipeableViews>
+          <Hidden only={['xs']}>
+            <SwipeableViews
+              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+              index={activeStep}
+              className="swipe-view"
+              onChangeIndex={handleStep}
+            >
+              {questions.map(renderQuestionContainer)}
+            </SwipeableViews>
+          </Hidden>
+          <Hidden only={["sm", "md", "lg", "xl"]}>
+            <SwipeableViews
+              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+              index={activeStep}
+              className="swipe-view"
+              onSwitching={handleSwipe}
+              onChangeIndex={handleStep}
+            >
+              {questions.map(renderQuestionContainer)}
+              <TabPanel index={questions.length} value={activeStep} />
+            </SwipeableViews>
+          </Hidden>
         </Grid>
         <Grid item sm={4} xs={12}>
           <div className="introduction-info">
-            <CountDown brickLength={props.brickLength} endTime={null} setEndTime={()=>{}} onEnd={onEnd} />
+            <CountDown brickLength={props.brickLength} endTime={null} setEndTime={() => { }} onEnd={onEnd} />
             <div className="intro-text-row">
               <Hidden only={['sm', 'md', 'lg', 'xl']}>
                 <span className="heading">Review</span>
@@ -206,21 +232,23 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                 handleStep={handleStep}
               />
             </div>
-            <div className="action-footer">
-              <div>{renderPrevButton()}</div>
-              <div className="direction-info">
-                <h2>Next</h2>
-                <span>Don’t panic, you can<br />always come back</span>
+            <Hidden only={['xs']}>
+              <div className="action-footer">
+                <div>{renderPrevButton()}</div>
+                <div className="direction-info">
+                  <h2>Next</h2>
+                  <span>Don’t panic, you can<br />always come back</span>
+                </div>
+                <div>
+                  <button type="button" className="play-preview svgOnHover play-green" onClick={next}>
+                    <svg className="svg w80 h80 active m-l-02">
+                      {/*eslint-disable-next-line*/}
+                      <use href={sprite + "#arrow-right"} />
+                    </svg>
+                  </button>
+                </div>
               </div>
-              <div>
-                <button type="button" className="play-preview svgOnHover play-green" onClick={next}>
-                  <svg className="svg w80 h80 active m-l-02">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#arrow-right"} />
-                  </svg>
-                </button>
-              </div>
-            </div>
+            </Hidden>
           </div>
         </Grid>
       </Grid>

@@ -1,12 +1,17 @@
+import { ProposalCashe } from './types'
+
+export function clearProposal() {
+  localStorage.removeItem(ProposalCashe);
+}
 
 export function setLocalBrick(data: any) {
-  localStorage.setItem('proposal', JSON.stringify(data));
+  localStorage.setItem(ProposalCashe, JSON.stringify(data));
 }
 
 export function getLocalBrick() {
   try {
-    const brickString = localStorage.getItem('proposal') as string;
+    const brickString = localStorage.getItem(ProposalCashe) as string;
     return JSON.parse(brickString);
-  } catch {}
+  } catch { }
   return null;
 }

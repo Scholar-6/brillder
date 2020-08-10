@@ -55,9 +55,11 @@ const saveBrick = (brick:any) => {
     return axios.put(
       process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true}
     ).then(response => {
-      const brick = response.data as Brick;
-      dispatch(saveBrickSuccess(brick));
-      return brick;
+      const savedBrick = response.data as Brick;
+      // response brick don`t have author object
+      savedBrick.author = brick.author;
+      dispatch(saveBrickSuccess(savedBrick));
+      return savedBrick;
     }).catch(error => {
       dispatch(saveBrickFailure(error.message))
     });
@@ -85,11 +87,12 @@ const createBrickFailure = (errorMessage:string) => {
 }
 
 const createBrick = (brick:any) => {
-  return function (dispatch: Dispatch) {
+  return function (dispatch: any) {
     brick.type = 1;
     return axios.post(process.env.REACT_APP_BACKEND_HOST + '/brick', brick, {withCredentials: true}).then(response => {
       const brick = response.data as Brick;
       dispatch(createBrickSuccess(brick));
+      dispatch(comments.getComments(brick.id));
     })
     .catch(error => {
       dispatch(createBrickFailure(error.message))

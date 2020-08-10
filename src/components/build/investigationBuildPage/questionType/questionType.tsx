@@ -4,13 +4,11 @@ import { Grid } from '@material-ui/core';
 import './type.scss';
 import { QuestionTypeEnum } from 'model/question';
 import TypeButton from './TypeButton'
-import sprite from "assets/img/icons-sprite.svg";
 
 
 export interface QuestionTypeProps {
   questionType: QuestionTypeEnum,
   activeQuestionType: QuestionTypeEnum,
-  synthesis: string,
   history: any,
   brickId: number,
   questionId: number,
@@ -20,7 +18,7 @@ export interface QuestionTypeProps {
 }
 
 const QuestionTypePage: React.FC<QuestionTypeProps> = ({
-  questionType, history, brickId, questionId, synthesis, activeQuestionType,
+  questionType, history, brickId, questionId, activeQuestionType,
   setQuestionType, setHoverQuestion, setActiveQuestionType
 }: QuestionTypeProps) => {
   if (questionType !== QuestionTypeEnum.None) {
@@ -39,28 +37,6 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
 
   const removeHover = () => {
     setHoverQuestion(QuestionTypeEnum.None);
-  }
-
-  const renderSynthesisButton = () => {
-    return (
-      <Grid className="round-button-center-container" container direction="row" justify="center">
-        <button className="round-button-center svgOnHover"
-          onClick={() => {
-            history.push(`/build/brick/${brickId}/build/investigation/synthesis`)
-          }}
-        >
-          <svg className="svg w-2 h-2 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#list"} />
-          </svg>
-          <span className="synthesis-text">
-            {
-              synthesis ? 'EDIT SYNTHESIS' : 'ADD SYNTHESIS'
-            }
-          </span>
-        </button>
-      </Grid>
-    );
   }
 
   return (
@@ -186,7 +162,6 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
           </Grid>
         </Grid>
       </div>
-      {renderSynthesisButton()}
       <Grid className="submit-button-container" container alignContent="center">
         {
           activeQuestionType ? (

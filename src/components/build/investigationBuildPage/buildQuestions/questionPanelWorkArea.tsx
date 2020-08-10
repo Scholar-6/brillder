@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Select, FormControl } from '@material-ui/core';
+import { Grid, Select, FormControl, SvgIcon } from '@material-ui/core';
 import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
@@ -12,6 +12,11 @@ import { QuestionTypeEnum, QuestionComponentTypeEnum, Question, QuestionTypeObj 
 import DragBox from './drag/dragBox';
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import LockComponent from './lock/Lock';
+import CommentPanel from 'components/baseComponents/comments/CommentPanel';
+import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
+import { Comment } from 'model/comments';
+import { ReduxCombinedState } from 'redux/reducers';
+import { connect } from 'react-redux';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -26,6 +31,7 @@ export interface QuestionProps {
   questionsCount: number;
   synthesis: string;
   validationRequired: boolean;
+  comments: Comment[] | null;
   saveBrick(): void;
   setQuestion(index: number, question: Question): void;
   updateComponents(components: any[]): void;
@@ -47,7 +53,9 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     { id: 4, type: QuestionComponentTypeEnum.Sound },
     { id: 4, type: QuestionComponentTypeEnum.Graph }
   ]);
+  const [isCommingSoonOpen, setCommingSoon] = React.useState(false);
   const [scrollShown, setScroll] = React.useState(false);
+  const [commentsShown, setCommentsShown] = React.useState(false);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const { type } = question;
 
@@ -152,6 +160,8 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   fontFamily="Brandon Grotesque Bold Italic"
                   hoverMarginTop="0.9vw"
                   marginTop="-1vw"
+                  className="disabled"
+                  onClick={() => setCommingSoon(true)}
                   value={QuestionComponentTypeEnum.Graph}
                 />
               </Grid>
@@ -170,54 +180,53 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 setQuestionHint={setQuestionHint}
               />
             </Grid>
-            <Grid container item xs={3} sm={3} md={3} className="right-sidebar">
-              <Grid container direction="row" justify="center">
-                <Grid container item xs={11} className="question-button-container" justify="center">
-                  {
-                    (index >= 1) ?
-                      <Grid container justify="center" alignContent="flex-start">
-                        <div className="right-side-text">Last Question?</div>
-                        <button
-                          className="synthesis-button svgOnHover"
-                          onClick={() => history.push(`/build/brick/${brickId}/build/investigation/synthesis`)}
-                        >
-                          <svg className="svg w-2 h-2 active">
-                            {/*eslint-disable-next-line*/}
-                            <use href={sprite + "#list"}/>
-                          </svg>
-                          <span>{props.synthesis ? 'Edit Synthesis' : 'Add Synthesis'}</span>
-                        </button>
+            <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="center">
+              {commentsShown ?
+                <Grid className="question-comments-panel" item container direction="row" justify="flex-start" xs>
+                  <CommentPanel setCommentsShown={setCommentsShown} haveBackButton={true} currentQuestionId={question.id} />
+                </Grid> :
+                <Grid container item alignItems="center" style={{height: '100%'}}>
+                  <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
+                    <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
+                      <SvgIcon>
+                        <svg className="svg">
+                          {/*eslint-disable-next-line*/}
+                          <use href={sprite + "#message-square"} />
+                        </svg>
+                      </SvgIcon>
+                      <div className="comments-count">
+                        {props.comments?.filter(comment => (comment.question?.id ?? -1) === question.id).length ?? 0}
+                      </div>
+                    </div>
+                    <Grid container direction="row" alignItems="center">
+                      <Grid container justify="center" item sm={12}>
+                        <FormControl variant="outlined">
+                          <Select
+                            className="select-question-type"
+                            disabled={locked}
+                            value={type}
+                            inputProps={{
+                              name: 'age',
+                              id: 'age-native-simple',
+                            }}
+                            onChange={(e) => {
+                              props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
+                            }}
+                          >
+                            {
+                              typeArray.map((typeName, i) => {
+                                const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
+                                return <MenuItem style={{ fontFamily: 'Brandon Grotesque Regular' }} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
+                              })
+                            }
+                          </Select>
+                        </FormControl>
                       </Grid>
-                      : ""
-                  }
+                    </Grid>
+                    <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid container direction="row" alignItems="center">
-                <Grid container justify="center" item sm={12}>
-                  <FormControl variant="outlined">
-                    <Select
-                      className="select-question-type"
-                      disabled={locked}
-                      value={type}
-                      inputProps={{
-                        name: 'age',
-                        id: 'age-native-simple',
-                      }}
-                      onChange={(e) => {
-                        props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
-                      }}
-                    >
-                      {
-                        typeArray.map((typeName, i) => {
-                          const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
-                          return <MenuItem style={{ fontFamily: 'Brandon Grotesque Regular' }} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
-                        })
-                      }
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </Grid>
-              <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
+              }
             </Grid>
           </Grid>
         </Grid>
@@ -252,9 +261,16 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
               </div>
           }
         </div>
+        <CommingSoonDialog isOpen={isCommingSoonOpen} close={() => setCommingSoon(false)} />
       </div>
     </MuiThemeProvider>
   );
 }
 
-export default QuestionPanelWorkArea
+const mapState = (state: ReduxCombinedState) => ({
+  comments: state.comments.comments
+});
+
+const connector = connect(mapState);
+
+export default connector(QuestionPanelWorkArea);

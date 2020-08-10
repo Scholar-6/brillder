@@ -11,7 +11,7 @@ import {
 import { Brick } from "model/brick";
 
 
-interface ApiQuestion {
+export interface ApiQuestion {
   id?: number;
   contentBlocks: string;
   type: number;

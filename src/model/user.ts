@@ -19,12 +19,14 @@ export interface UserRole {
 
 export interface UserBase {
   id: number;
+  username: string;
   firstName: string;
   lastName: string;
   tutorialPassed: boolean;
   email: string;
   subjects: any[];
   status: UserStatus;
+  profileImage: string;
 }
 
 export interface User extends UserBase {

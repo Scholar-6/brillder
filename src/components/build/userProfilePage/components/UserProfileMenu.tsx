@@ -7,6 +7,7 @@ import { User, UserType } from "model/user";
 import LogoutDialog from "components/baseComponents/logoutDialog/LogoutDialog";
 import ReactDOM from "react-dom";
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
+import map from 'components/map';
 
 interface UserMenuProps {
   history: any;
@@ -53,7 +54,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
 
   creatingBrick() {
     this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
+    this.props.history.push(map.ProposalSubject);
   }
 
   handleLogoutOpen() {
@@ -134,6 +135,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
           </MenuItem>
         </Menu>
         <NotificationPanel
+          history={this.props.history}
           shown={this.state.notificationsShown}
           handleClose={() => this.hideNotifications()}
           anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
