@@ -5,6 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import sprite from "assets/img/icons-sprite.svg";
 import { PlayMode } from './model';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
+import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
 
 interface SidebarProps {
   sidebarRolledUp: boolean;
@@ -21,13 +22,15 @@ interface SidebarProps {
 
 interface SidebarState {
   isCoomingSoonOpen: boolean;
+  isAssigningOpen: boolean;
 }
 
 class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   constructor(props: SidebarProps) {
     super(props);
     this.state = {
-      isCoomingSoonOpen: false
+      isCoomingSoonOpen: false,
+      isAssigningOpen: false,
     }
   }
 
@@ -119,6 +122,30 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     );
   };
 
+  renderAssignButton() {
+    const openAssignDialog = () => {
+      this.setState({ isAssigningOpen: true });
+    }
+
+    if (!this.props.sidebarRolledUp) {
+      return (
+        <div className="assign-button-container">
+          <button onClick={openAssignDialog} className="assign-class-button">Assign Brick</button>
+        </div>
+      );
+    }
+    return (
+      <div className="assign-button-container">
+        <button onClick={openAssignDialog} className="assign-class-button sidebar-button btn-small">
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#file-plus"} />
+          </svg>
+        </button>
+      </div>
+    );
+  }
+
   renderButtons() {
     if (this.props.isPreview) {
       if (this.props.sidebarRolledUp) {
@@ -148,6 +175,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       <div>
         {this.renderHightlightButton()}
         {this.renderAnotateButton()}
+        {this.renderAssignButton()}
       </div>
     );
   }
@@ -163,6 +191,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         <div style={{ width: "100%" }}>{this.renderToggleButton()}</div>
         {this.renderButtons()}
         <CommingSoonDialog isOpen={this.state.isCoomingSoonOpen} close={() => this.toggleCommingSoon()} />
+        <AssignPersonOrClassDialog isOpen={this.state.isAssigningOpen} close={() => { this.setState({ isAssigningOpen: false }) }} />
       </Grid>
     );
   }
