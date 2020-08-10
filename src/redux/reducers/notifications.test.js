@@ -83,5 +83,19 @@ describe("notifications reducer", () => {
 
         const newState = reducer(initialState, action);
         expect(newState).toStrictEqual({ notifications: [] });
+    });
+
+    it("should handle NOTIFICATION_CHANGED", () => {
+        const initialState = {
+            notifications: [ mockNotification ]
+        };
+
+        const action = {
+            type: types.NOTIFICATION_CHANGED,
+            notification: { ...mockNotification, title: "Changed Title" }
+        };
+
+        const newState = reducer(initialState, action);
+        expect(newState.notifications).toStrictEqual([ action.notification ]);
     })
 })
