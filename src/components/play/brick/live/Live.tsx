@@ -93,9 +93,12 @@ const LivePage: React.FC<LivePageProps> = ({
    * @param index number - could be from 0 to 1. in the end should be interger value
    * @param status string - almost all time is "move" and in the end "end"
    */
-  const handleSwipe = (index:number, status:string) => {
+  const handleSwipe = (step: number, status: string) => {
     if (status === "end") {
-      setActiveStep(Math.round(index));
+      setActiveStep(Math.round(step));
+      if (step === questions.length) {
+        moveNext();
+      }
     }
   }
 
@@ -331,7 +334,6 @@ const LivePage: React.FC<LivePageProps> = ({
             <span className="heading">Investigation</span>
             {renderStepper()}
           </div>
-          {renderFooter()}
         </div>
         <div className="introduction-page">
           <SwipeableViews
@@ -343,6 +345,7 @@ const LivePage: React.FC<LivePageProps> = ({
             onChangeIndex={handleStep}
           >
             {questions.map(renderQuestionContainer)}
+            <TabPanel index={questions.length} value={activeStep} />
           </SwipeableViews>
         </div>
       </Hidden>
