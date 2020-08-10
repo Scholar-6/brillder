@@ -374,8 +374,8 @@
   cursor: pointer;
   display: inline-block;
   @include phone_and_tabletP {
-    width: 8vw;
-    height: 8vw;
+    width: 15vw;
+    height: 15vw;
     padding: 10px;
     border-radius: 50%;
     &:hover {
