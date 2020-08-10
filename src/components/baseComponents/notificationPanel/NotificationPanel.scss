@@ -8,6 +8,7 @@
   }
   .MuiCardContent-root {
     padding: 1vw !important;
+    padding-bottom: 0 !important;
   }
   .MuiPopover-paper {
     @include phone_and_tabletP {
