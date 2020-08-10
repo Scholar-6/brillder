@@ -3,8 +3,12 @@
 @import '../../../assets/sass/partials/extensions';
 
 .notification-box {
+  .MuiPaper-root {
+    background: inherit;
+  }
   .MuiCardContent-root {
     padding: 1vw !important;
+    padding-bottom: 0 !important;
   }
   .MuiPopover-paper {
     @include phone_and_tabletP {
@@ -22,6 +26,7 @@
       left: calc(100% - 30vw) !important;
     }
     @include desktop {
+      box-shadow: none;
       left: calc(100% - 25vw) !important;
     }
     .notification-content {
@@ -57,10 +62,10 @@
             }
           }
           .content-box {
+            cursor: pointer;
             display: flex;
             width: calc(100% - 56px);
-            .notification-detail,
-            .notification-detail-single {
+            .notification-detail {
               .MuiListItemText-primary,
               .MuiListItemText-secondary {
                 @include phone_and_tabletP {
@@ -73,15 +78,16 @@
                   font-size: 0.9vw;
                 }
                 @include desktop {
-                  font-size: 0.8vw;
+                  text-align: center;
+                  font-size: 1vw;
                 }
               }
               .MuiListItemText-primary {
                 color: var(--white);
-                text-transform: uppercase;
+                text-transform: capitalize;
               }
               .MuiListItemText-secondary {
-                color: #ACACAC;
+                color: var(--dark-gray);
               }
             }
             .notification-detail {
@@ -92,9 +98,6 @@
               @include tabletP {
                 padding-bottom: 0.5vh;
               }
-            }
-            .notification-detail-single {
-              @extend %textCenter;
             }
             .actions {
               @extend %flexCenter;
@@ -137,6 +140,22 @@
               }
             }
           }
+        }
+        .notification-detail-single {
+          @include phone_and_tabletP {
+            font-size: 4vw;
+          }
+          @include tabletP {
+            font-size: 1.2vw;
+          }
+          @include tabletL {
+            font-size: 1.1vw;
+          }
+          color: white;
+          font-family: $font-family-light;
+          text-transform: capitalize;
+          text-align: center;
+          font-size: 1vw;
         }
       }
     }

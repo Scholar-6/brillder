@@ -12,6 +12,7 @@ import { Brick } from 'model/brick';
 interface ReplyCommentPanelProps {
 	parentComment: Comment;
 	currentBrick: Brick;
+	currentQuestionId?: number;
 	collapsePanel(): void;
 	createComment(comment: any): void;
 }
@@ -23,7 +24,8 @@ const ReplyCommentPanel: React.FC<ReplyCommentPanelProps> = props => {
 		props.createComment({
 			text,
 			brickId: props.currentBrick.id,
-			parentId: props.parentComment.id
+			parentId: props.parentComment.id,
+			questionId: props.currentQuestionId
 		});
 		setText("");
 		props.collapsePanel();
@@ -38,8 +40,8 @@ const ReplyCommentPanel: React.FC<ReplyCommentPanelProps> = props => {
 			</form>
 		</Grid>
 		<Grid item container direction="row" justify="center">
-			<Button className="comment-action-button reply post" onClick={() => handlePostComment()} disabled={text === ""}>POST</Button>
-			<Button className="comment-action-button reply cancel" onClick={() => props.collapsePanel()} disabled={text === ""}>CANCEL</Button>
+			<Button className="comment-action-button in-child post" onClick={() => handlePostComment()} disabled={text === ""}>POST</Button>
+			<Button className="comment-action-button in-child cancel" onClick={() => props.collapsePanel()} disabled={text === ""}>CANCEL</Button>
 		</Grid>
 	</Grid>
 	);

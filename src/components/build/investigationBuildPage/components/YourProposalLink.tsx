@@ -5,9 +5,12 @@ import sprite from "assets/img/icons-sprite.svg";
 import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
 import { useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
+import { clearProposal } from 'components/localStorage/proposal';
+import map from 'components/map';
 
 
 export interface YourProposalButtonProps {
+  invalid: boolean;
   tutorialStep: TutorialStep;
   tooltipsOn: boolean;
   setTooltips(value: boolean): void;
@@ -16,16 +19,16 @@ export interface YourProposalButtonProps {
 }
 
 const YourProposalLink: React.FC<YourProposalButtonProps> = ({
-  tooltipsOn, tutorialStep, setTooltips, saveBrick, isTutorialPassed
+  invalid, tooltipsOn, tutorialStep, setTooltips, saveBrick, isTutorialPassed
 }) => {
   const history = useHistory();
 
   const editProposal = () => {
     if (!isTutorialPassed()) {
-
     } else {
+      clearProposal();
       saveBrick();
-      history.push(`/build/new-brick/proposal`);
+      history.push(map.ProposalReview);
     }
   }
 
@@ -61,6 +64,10 @@ const YourProposalLink: React.FC<YourProposalButtonProps> = ({
     if (tutorialStep === TutorialStep.Proposal) {
       className += " white proposal";
     }
+  }
+  
+  if (invalid) {
+    className += " invalid";
   }
 
   return (

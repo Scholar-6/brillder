@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
-import { ProposalStep } from "../../model";
+import { ProposalStep, PlayButtonStatus } from "../../model";
 import NextButton from '../../components/nextButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
@@ -10,10 +10,10 @@ import { Brick } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
 
-
 interface BrickTitleProps {
   parentState: Brick;
   canEdit: boolean;
+  playStatus: PlayButtonStatus;
   saveTitles(data: any): void;
 }
 
@@ -68,7 +68,7 @@ const BrickTitlePreviewComponent: React.FC<any> = (props) => {
 }
 
 
-const BrickTitle: React.FC<BrickTitleProps> = ({ parentState, canEdit, saveTitles }) => {
+const BrickTitle: React.FC<BrickTitleProps> = ({ parentState, canEdit, playStatus, saveTitles }) => {
   const onTitleChange = (event: React.ChangeEvent<{ value: string }>) => {
     const title = event.target.value.substr(0, 40);
     saveTitles({ ...parentState, title });
@@ -90,7 +90,7 @@ const BrickTitle: React.FC<BrickTitleProps> = ({ parentState, canEdit, saveTitle
 
   return (
     <div className="tutorial-page brick-title-page">
-      <Navigation step={ProposalStep.BrickTitle} onMove={() => saveTitles(parentState)} />
+      <Navigation step={ProposalStep.BrickTitle} playStatus={playStatus} onMove={() => saveTitles(parentState)} />
       <Grid container direction="row">
         <Grid item className="left-block">
           <div className="mobile-view-image">

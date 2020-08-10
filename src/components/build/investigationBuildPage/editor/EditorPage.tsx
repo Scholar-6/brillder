@@ -1,30 +1,49 @@
 import React from "react";
+import axios from "axios";
 import { Grid, TextField, Hidden, Fab, SvgIcon } from "@material-ui/core";
 import sprite from "assets/img/icons-sprite.svg";
 
 import './EditorPage.scss';
-import { Brick, Editor } from "model/brick";
+import { Brick/*, Editor*/ } from "model/brick";
 
 
 interface EditorPageProps {
   brick: Brick;
   canEdit: boolean;
   history: any;
-  saveEditor(editor?: Editor): void;
+  saveEditor(editorId: number): void;
 }
 
 const EditorPage: React.FC<EditorPageProps> = ({ brick, canEdit, saveEditor, history }) => {
-  const [editorIdString, setEditorIdString] = React.useState(brick.editor?.id ?? "");
-  
-  const editorIdValid = !isNaN(parseInt(editorIdString.toString()));
+  const [editorUsername, setEditorUsername] = React.useState(brick.editor?.username ?? "");
+  const [editor, setEditor] = React.useState(brick.editor);
+  const [editorError, setEditorError] = React.useState("");
 
   const onNext = () => {
-    if(editorIdValid) {
-      let editorId = parseInt(editorIdString.toString());
-      saveEditor({ id: editorId });
-      history.push(`/play-preview/brick/${brick.id}/finish`);
+    if(editor) {
+      saveEditor(editor.id);
     }
   };
+
+  const onBlur = () => {
+    if(editorUsername !== "") {
+      try {
+        axios.get(
+          `${process.env.REACT_APP_BACKEND_HOST}/user/byUsername/${editorUsername}`,
+          { withCredentials: true }
+        ).then(response => {
+          setEditor(response.data);
+          setEditorError("");
+        }).catch(error => {
+          setEditorError(error.response.data);
+        });
+      } catch(e) {
+        console.log(e);
+      }
+    } else {
+      setEditorError("No username input.");
+    }
+  }
 
   return (
     <Grid container
@@ -39,18 +58,19 @@ const EditorPage: React.FC<EditorPageProps> = ({ brick, canEdit, saveEditor, his
           <TextField
             disabled={!canEdit}
             className="audience-inputs"
-            value={editorIdString}
-            onChange={(evt) => setEditorIdString(evt.target.value)}
-            placeholder="Enter editor's User ID here..."
-            error={!editorIdValid}
-            helperText={editorIdValid ? "" : "Invalid ID"}
+            value={editorUsername}
+            onChange={(evt) => setEditorUsername(evt.target.value)}
+            onBlur={(evt) => onBlur()}
+            placeholder="Enter editor's username here..."
+            error={editorError !== ""}
+            helperText={editorError}
             fullWidth
           />
         </Grid>
       </Grid>
       <Grid item>
         <div>
-          <Fab onClick={onNext} color="primary">
+          <Fab onClick={onNext} color="primary" disabled={editorError !== ""}>
             <SvgIcon>
               <svg className="svg w80 h80 active m-l-02">
                 {/*eslint-disable-next-line*/}

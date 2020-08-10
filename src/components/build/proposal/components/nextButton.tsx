@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { ProposalStep } from "../model";
 import './nextButton.scss';
 import sprite from "assets/img/icons-sprite.svg";
+import map from 'components/map';
+
 interface NextButtonProps {
   isActive: boolean
   step: ProposalStep
@@ -16,7 +18,6 @@ const NextButton:React.FC<NextButtonProps> = (
   { step, canSubmit, onSubmit, data, isActive }
 ) => {
   const history = useHistory()
-  const url = "/build/new-brick"
 
   const next = () => {
     if (canSubmit === true) {
@@ -25,17 +26,17 @@ const NextButton:React.FC<NextButtonProps> = (
       }
       switch (step) {
         case ProposalStep.Subject:
-          return history.push(`${url}/brick-title`);
+          return history.push(map.ProposalTitle);
         case ProposalStep.BrickTitle:
-          return history.push(`${url}/open-question`);
+          return history.push(map.ProposalOpenQuestion);
         case ProposalStep.OpenQuestion:
-          return history.push(`${url}/brief`);
+          return history.push(map.ProposalBrief);
         case ProposalStep.Brief:
-          return history.push(`${url}/prep`);
+          return history.push(map.ProposalPrep);
         case ProposalStep.Prep:
-          return history.push(`${url}/length`);
+          return history.push(map.ProposalLength);
         case ProposalStep.BrickLength:
-          return history.push(`${url}/proposal`);
+          return history.push(map.ProposalReview);
       }
     }
   }

@@ -24,6 +24,7 @@ import UserProfilePage from '../build/userProfilePage/UserProfile';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
+import BuildBrickRoute from './BuildBrickRoute';
 import StudentRoute from './StudentRoute';
 import AuthRedirectRoute from './AuthRedirectRoute';
 import AllUsersRoute from './AllUsersRoute';
@@ -32,6 +33,7 @@ import BrickWrapper from './BrickWrapper';
 
 import { setBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'components/services/zendesk';
+import map from 'components/map';
 
 
 const App: React.FC = (props: any) => {
@@ -44,7 +46,7 @@ const App: React.FC = (props: any) => {
     return response;
   }, function (error) {
     let { url } = error.response.config;
-    if (url.search('/auth/login/') === -1) {
+    if (url.search('/auth/login/') === -1 && error.response.status === 401) {
       history.push("/choose-login");
     }
     return Promise.reject(error);
@@ -85,10 +87,10 @@ const App: React.FC = (props: any) => {
         <StudentRoute path="/play/dashboard" component={Dashboard} />
 
         <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
-        <BuildRoute path="/build/new-brick" component={Proposal} location={location} />
+        <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} location={location} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} location={location} />
-        <BuildRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
+        <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path="/back-to-work" component={BackToWorkPage} location={location} />
         <BuildRoute path="/users" component={UsersListPage} location={location} />
         <BuildRoute path="/user-profile/:userId" component={UserProfilePage} location={location} />
@@ -96,7 +98,8 @@ const App: React.FC = (props: any) => {
         <BuildRoute path="/home" component={MainPage} location={location} />
 
         <AuthRoute path="/choose-login" component={ChooseLoginPage} />
-        <AuthRoute path="/login" exact component={LoginPage} />
+        <AuthRoute path="/login/:privacy" component={LoginPage} />
+        <AuthRoute path="/login" component={LoginPage} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>
