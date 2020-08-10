@@ -499,7 +499,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             showBuildAll={() => this.showBuildAll()}
             showEditAll={() => this.showEditAll()}
           />
+          
           <Grid item xs={9} className="brick-row-container">
+            <div className="tab-container">
+              <div>Play</div>
+              <div>Build</div>
+            </div>
             <BackPageTitle filters={this.state.filters} />
             <PrivateCoreToggle isCore={this.state.filters.isCore} onSwitch={() => this.toggleCore()} />
             <div className="bricks-list-container">
