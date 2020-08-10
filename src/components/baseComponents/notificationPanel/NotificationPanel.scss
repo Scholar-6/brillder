@@ -3,6 +3,9 @@
 @import '../../../assets/sass/partials/extensions';
 
 .notification-box {
+  .MuiPaper-root {
+    background: inherit;
+  }
   .MuiCardContent-root {
     padding: 1vw !important;
   }
@@ -74,12 +77,13 @@
                   font-size: 0.9vw;
                 }
                 @include desktop {
-                  font-size: 0.8vw;
+                  text-align: center;
+                  font-size: 1vw;
                 }
               }
               .MuiListItemText-primary {
                 color: var(--white);
-                text-transform: uppercase;
+                text-transform: capitalize;
               }
               .MuiListItemText-secondary {
                 color: var(--dark-gray);
@@ -138,6 +142,13 @@
               }
             }
           }
+        }
+        .notification-detail-single {
+          color: white;
+          font-family: $font-family-light;
+          text-transform: capitalize;
+          text-align: center;
+          font-size: 1vw;
         }
       }
     }
