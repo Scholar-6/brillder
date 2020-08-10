@@ -39,10 +39,10 @@
     background: white;
   }
   .bricks-list-container {
-    padding-top: 5.5vh;
+    padding-top: $backwork-bricks-padding-top;
     height: $backwork-bricks-height !important;
     .main-brick-container {
-      height: calc(#{$backwork-bricks-height - #{padding-top}} / 6) !important;
+      height: calc(#{$backwork-bricks-height-2} / 6) !important;
     }
   }
 }
