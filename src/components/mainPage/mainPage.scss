@@ -38,7 +38,14 @@
         margin-top: 10vh;
         letter-spacing: 0.1vw;
         font-family: $font-family-light;
-        font-size: 1.8vw;
+        font-size: 1.5vw;
+      }
+
+      .notifications-text-2, .notifications-text-3 {
+        margin-top: 0.6vh;
+        font-family: $font-family-light;
+        letter-spacing: 0.05vw;
+        font-size: 1.2vw;
       }
 
       b {

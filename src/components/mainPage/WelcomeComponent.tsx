@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
+import { checkTeacherEditorOrAdmin } from "components/services/brickService";
+
+enum FieldName {
+  animatedNotificationText = "animatedNotificationText",
+  animatedNotificationText2 = "animatedNotificationText2",
+  animatedNotificationText3 = "animatedNotificationText3"
+}
 
 interface WelcomeProps {
   user: User;
@@ -10,6 +17,8 @@ interface WelcomeProps {
 interface WelcomeState {
   animatedName: string;
   animatedNotificationText: string;
+  animatedNotificationText2: string;
+  animatedNotificationText3: string;
   animationStarted: boolean;
 }
 
@@ -20,6 +29,8 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
     this.state = {
       animatedName: "",
       animatedNotificationText: '',
+      animatedNotificationText2: '',
+      animatedNotificationText3: '',
       animationStarted: false
     } as any;
 
@@ -33,6 +44,35 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
       this.runAnimation(props);
     }
     return true;
+  }
+
+  animateText(text: string[], fieldName: FieldName, callback?: Function) {
+    let count = 0;
+    const maxCount = text.length - 1;
+
+    let notificationsInterval = setInterval(() => {
+      if (count >= maxCount) {
+        clearInterval(notificationsInterval);
+        if (callback) {
+          callback();
+        }
+      }
+      this.setState({ ...this.state, [fieldName]: this.state[fieldName] + text[count] });
+      count++;
+    }, 40);
+    return;
+  }
+
+  getNotificationsText(notifications: Notification[]) {
+    const firstPart = 'You have '.split("");
+    const middlePart = `<b>${notifications.length}</b>`;
+    let lastPart = [];
+    if (notifications.length >= 1) {
+      lastPart = ' new notification'.split("");
+    } else {
+      lastPart = ' new notifications'.split("");
+    }
+    return [...firstPart, middlePart, ...lastPart];
   }
 
   runAnimation(props: WelcomeProps) {
@@ -55,26 +95,26 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
         setTimeout(() => {
           let notificationText = 'You have no new notifications'.split("");
           if (props.notifications && props.notifications.length >= 1) {
-            const firstPart = 'You have '.split("");
-            const middlePart = `<b>${props.notifications.length}</b>`;
-            let lastPart = [];
-            if (props.notifications.length >= 1) {
-              lastPart = ' new notification'.split("");
-            } else {
-              lastPart = ' new notifications'.split("");
-            }
-            notificationText = [...firstPart, middlePart, ...lastPart];
+            notificationText = this.getNotificationsText(props.notifications);
+            this.animateText(notificationText, FieldName.animatedNotificationText);
+          } else {
+            this.animateText(notificationText, FieldName.animatedNotificationText, ()=> {
+              const haveAccess = checkTeacherEditorOrAdmin(this.props.user);
+              if (haveAccess) {
+                const text = '"Nothing strengthens authority so much as silence"'.split("");
+                this.animateText(text, FieldName.animatedNotificationText2, () => {
+                  const text = '- Leonardo'.split("");
+                  this.animateText(text, FieldName.animatedNotificationText3);
+                });
+              } else {
+                const text = "Why then the world's mine oyster...".split("");
+                this.animateText(text, FieldName.animatedNotificationText2, () => { 
+                  const text = '- Shakespeare'.split("");
+                  this.animateText(text, FieldName.animatedNotificationText3);
+                });
+              }
+            });
           }
-
-          let count = 0;
-          maxCount = notificationText.length - 1;
-          let notificationsInterval = setInterval(() => {
-            if (count >= maxCount) {
-              clearInterval(notificationsInterval);
-            }
-            this.setState({ animatedNotificationText: this.state.animatedNotificationText + notificationText[count] });
-            count++;
-          }, 40);
         }, 500);
       }
       count++;
@@ -88,6 +128,8 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
         <div className="smaller">BRILLDER,</div>
         <div className="welcome-name">{this.state.animatedName}</div>
         <div className="notifications-text" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText }} />
+        <div className="notifications-text-2" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText2 }} />
+        <div className="notifications-text-3" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText3 }} />
       </div>
     );
   }

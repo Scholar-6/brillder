@@ -95,3 +95,10 @@ export function canEdit(user: User) {
     return roleId === UserType.Editor || roleId === UserType.Admin;
   });
 }
+
+export function checkTeacherEditorOrAdmin(user: User) {
+  return user.roles.some(role => {
+    const { roleId } = role;
+    return roleId === UserType.Teacher || roleId === UserType.Editor || roleId === UserType.Admin;
+  });
+}
