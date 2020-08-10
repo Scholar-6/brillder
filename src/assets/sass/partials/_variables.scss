@@ -91,7 +91,7 @@ $backwork-tab-height: 6.6vh;
 
 $bricks-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$bricks-title-font-size} - #{$bricks-title-padding-top} - #{$bricks-title-padding-bottom} - #{$pagination-size});
 
-$backwork-bricks-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$bricks-title-font-size} - #{$bricks-title-padding-top} - #{$bricks-title-padding-bottom} - #{$pagination-size} - #{$backwork-tab-height} + 1.4vh);
+$backwork-bricks-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$pagination-size} - #{$backwork-tab-height} + 1.4vh);
 
 $filter-sidebar-size: 23vw;
 $filter-sidebar-margin: 1.2vw;

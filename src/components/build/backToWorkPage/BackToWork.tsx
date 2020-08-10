@@ -10,12 +10,10 @@ import { checkAdmin, checkEditor } from "components/services/brickService";
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
-import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 import { ReduxCombinedState } from "redux/reducers";
 import FilterSidebar from './components/FilterSidebar';
-import BackPageTitle from './components/BackPageTitle';
 import BackPagePagination from './components/BackPagePagination';
 import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import BrickBlock from './components/BrickBlock';
@@ -49,6 +47,7 @@ interface BackToWorkState {
   pageSize: number;
   threeColumns: ThreeColumns;
   generalSubjectId: number;
+  isPlayTab: boolean;
 }
 
 export interface BackToWorkProps {
@@ -115,6 +114,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       sortedReversed: false,
       deleteDialogOpen: false,
       deleteBrickId: -1,
+      isPlayTab: true,
 
       filters: {
         viewAll: true,
@@ -502,11 +502,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           
           <Grid item xs={9} className="brick-row-container">
             <div className="tab-container">
-              <div>Play</div>
-              <div>Build</div>
+              <div className={this.state.isPlayTab === true ? 'active' : ''} onClick={() => this.setState({isPlayTab: true})}>Play</div>
+              <div className={!this.state.isPlayTab === true ? 'active' : ''} onClick={() => this.setState({isPlayTab: false})}>Build</div>
             </div>
-            <BackPageTitle filters={this.state.filters} />
-            <PrivateCoreToggle isCore={this.state.filters.isCore} onSwitch={() => this.toggleCore()} />
             <div className="bricks-list-container">
               <div className="bricks-list">
                 {this.renderBricks()}
