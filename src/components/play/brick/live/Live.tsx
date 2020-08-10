@@ -88,6 +88,17 @@ const LivePage: React.FC<LivePageProps> = ({
     }, 100);
   };
 
+  /**
+   * Handle mobile swipe
+   * @param index number - could be from 0 to 1. in the end should be interger value
+   * @param status string - almost all time is "move" and in the end "end"
+   */
+  const handleSwipe = (index:number, status:string) => {
+    if (status === "end") {
+      setActiveStep(Math.round(index));
+    }
+  }
+
   const setActiveAnswer = () => {
     const copyAnswers = Object.assign([], answers) as any[];
     copyAnswers[activeStep] = questionRefs[activeStep].current?.getAnswer();
@@ -328,6 +339,7 @@ const LivePage: React.FC<LivePageProps> = ({
             index={activeStep}
             className="swipe-view"
             style={{ width: "100%" }}
+            onSwitching={handleSwipe}
             onChangeIndex={handleStep}
           >
             {questions.map(renderQuestionContainer)}
