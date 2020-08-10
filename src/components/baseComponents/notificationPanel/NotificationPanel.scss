@@ -63,8 +63,7 @@
           .content-box {
             display: flex;
             width: calc(100% - 56px);
-            .notification-detail,
-            .notification-detail-single {
+            .notification-detail {
               .MuiListItemText-primary,
               .MuiListItemText-secondary {
                 @include phone_and_tabletP {
@@ -97,9 +96,6 @@
               @include tabletP {
                 padding-bottom: 0.5vh;
               }
-            }
-            .notification-detail-single {
-              @extend %textCenter;
             }
             .actions {
               @extend %flexCenter;
@@ -144,6 +140,15 @@
           }
         }
         .notification-detail-single {
+          @include phone_and_tabletP {
+            font-size: 4vw;
+          }
+          @include tabletP {
+            font-size: 1.2vw;
+          }
+          @include tabletL {
+            font-size: 1.1vw;
+          }
           color: white;
           font-family: $font-family-light;
           text-transform: capitalize;
