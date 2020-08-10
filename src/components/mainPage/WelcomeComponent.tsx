@@ -25,7 +25,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
   }
 
   shouldComponentUpdate(props: WelcomeProps) {
-    if (props.notifications && props.notifications != this.props.notifications && !this.state.animationStarted) {
+    if (props.notifications && props.notifications !== this.props.notifications && !this.state.animationStarted) {
       let count = 0;
       let nameToFill = props.user.firstName
         ? (props.user.firstName as string)

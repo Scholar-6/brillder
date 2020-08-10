@@ -4,7 +4,7 @@ import { Grid, TextField, Hidden, Fab, SvgIcon } from "@material-ui/core";
 import sprite from "assets/img/icons-sprite.svg";
 
 import './EditorPage.scss';
-import { Brick, Editor } from "model/brick";
+import { Brick/*, Editor*/ } from "model/brick";
 
 
 interface EditorPageProps {
