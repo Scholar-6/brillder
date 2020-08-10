@@ -1,7 +1,4 @@
 .sorted-row {
-  $filter-sidebar-size: 23.2vw;
-  $filter-sidebar-margin: 1.2vw;
-
   padding-left: 0;
   padding-right: 0;
 
@@ -21,7 +18,7 @@
     flex-basis: inherit;
     max-width: inherit;
     width: $filter-sidebar-size;
-    margin-right: 1vw;
+    margin-right: $filter-sidebar-margin;
     border-top-right-radius: $main-panel-radius;
     background: var(--light-blue);
     flex-wrap: initial;
@@ -444,7 +441,7 @@
       @include tabletP {
         padding-left: 1vw;
         padding-right: 1vw;
-        height: $bricks-height !important;
+        height: $bricks-height;
         overflow: auto;
       }
 
@@ -483,7 +480,7 @@
 
         @include tabletP {
           padding: 0.8vw 0 0 0.8vw;
-          height: calc(#{$bricks-height / 6}) !important;
+          height: calc(#{$bricks-height / 6});
         }
 
         .brick-container {
