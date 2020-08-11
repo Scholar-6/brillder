@@ -14,6 +14,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 
 import { ReduxCombinedState } from "redux/reducers";
 import FilterSidebar from './components/FilterSidebar';
+import PlayFilterSidebar from './components/PlayFilterSidebar';
 import BackPagePagination from './components/BackPagePagination';
 import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import BrickBlock from './components/BrickBlock';
@@ -476,6 +477,39 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     );
   }
 
+  renderFilterSidebar() {
+    if (this.state.isPlayTab) {
+      return <PlayFilterSidebar
+        rawBricks={this.state.rawBricks}
+        filters={this.state.filters}
+        sortBy={this.state.sortBy}
+        isClearFilter={this.state.isClearFilter}
+        handleSortChange={e => this.handleSortChange(e)}
+        clearStatus={() => this.clearStatus()}
+        toggleDraftFilter={() => this.toggleDraftFilter()}
+        toggleReviewFilter={() => this.toggleReviewFilter()}
+        togglePublishFilter={e => this.togglePublishFilter(e)}
+        showAll={() => this.showAll()}
+        showBuildAll={() => this.showBuildAll()}
+        showEditAll={() => this.showEditAll()}
+      />
+    }
+    return <FilterSidebar
+      rawBricks={this.state.rawBricks}
+      filters={this.state.filters}
+      sortBy={this.state.sortBy}
+      isClearFilter={this.state.isClearFilter}
+      handleSortChange={e => this.handleSortChange(e)}
+      clearStatus={() => this.clearStatus()}
+      toggleDraftFilter={() => this.toggleDraftFilter()}
+      toggleReviewFilter={() => this.toggleReviewFilter()}
+      togglePublishFilter={e => this.togglePublishFilter(e)}
+      showAll={() => this.showAll()}
+      showBuildAll={() => this.showBuildAll()}
+      showEditAll={() => this.showEditAll()}
+    />
+  }
+
   render() {
     return (
       <div className="main-listing back-to-work-page">
@@ -488,25 +522,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           searching={(v: string) => this.searching(v)}
         />
         <Grid container direction="row" className="sorted-row">
-          <FilterSidebar
-            rawBricks={this.state.rawBricks}
-            filters={this.state.filters}
-            sortBy={this.state.sortBy}
-            isClearFilter={this.state.isClearFilter}
-            handleSortChange={e => this.handleSortChange(e)}
-            clearStatus={() => this.clearStatus()}
-            toggleDraftFilter={() => this.toggleDraftFilter()}
-            toggleReviewFilter={() => this.toggleReviewFilter()}
-            togglePublishFilter={e => this.togglePublishFilter(e)}
-            showAll={() => this.showAll()}
-            showBuildAll={() => this.showBuildAll()}
-            showEditAll={() => this.showEditAll()}
-          />
-          
+          {this.renderFilterSidebar()}
           <Grid item xs={9} className="brick-row-container">
             <div className="tab-container">
-              <div className={this.state.isPlayTab === true ? 'active' : ''} onClick={() => this.setState({isPlayTab: true})}>Play</div>
-              <div className={!this.state.isPlayTab === true ? 'active' : ''} onClick={() => this.setState({isPlayTab: false})}>Build</div>
+              <div className={this.state.isPlayTab === true ? 'active' : ''} onClick={() => this.setState({ isPlayTab: true })}>Play</div>
+              <div className={!this.state.isPlayTab === true ? 'active' : ''} onClick={() => this.setState({ isPlayTab: false })}>Build</div>
             </div>
             <div className="bricks-list-container">
               <div className="bricks-list">
