@@ -70,7 +70,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
     const firstPart = 'You have '.split("");
     const middlePart = `<b>${notifications.length}</b>`;
     let lastPart = [];
-    if (notifications.length >= 1) {
+    if (notifications.length === 1) {
       lastPart = ' new notification'.split("");
     } else {
       lastPart = ' new notifications'.split("");
@@ -81,6 +81,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
   runAnimation(props: WelcomeProps) {
     this.setState({
       animationStarted: true,
+      animatedName: '',
       animatedNotificationText: '',
       animatedNotificationText2: '',
       animatedNotificationText3: '',
@@ -100,36 +101,41 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
       });
       if (count >= maxCount) {
         clearInterval(setNameInterval);
-
-        setTimeout(() => {
-          let notificationText = 'You have no new notifications'.split("");
-          if (props.notifications && props.notifications.length >= 1) {
-            notificationText = this.getNotificationsText(props.notifications);
-            this.animateText(notificationText, FieldName.animatedNotificationText, () => {
-              this.setState({isTextClickable: true});
-            });
-          } else {
-            this.animateText(notificationText, FieldName.animatedNotificationText, ()=> {
-              const haveAccess = checkTeacherEditorOrAdmin(this.props.user);
-              if (haveAccess) {
-                const text = '"Nothing strengthens authority so much as silence"'.split("");
-                this.animateText(text, FieldName.animatedNotificationText2, () => {
-                  const text = '- Leonardo'.split("");
-                  this.animateText(text, FieldName.animatedNotificationText3);
-                });
-              } else {
-                const text = "Why then the world's mine oyster...".split("");
-                this.animateText(text, FieldName.animatedNotificationText2, () => { 
-                  const text = '- Shakespeare'.split("");
-                  this.animateText(text, FieldName.animatedNotificationText3);
-                });
-              }
-            });
-          }
-        }, 500);
+        setTimeout(() => this.runNotificationAnimation(props), 500);
       }
       count++;
     }, 150);
+  }
+
+  runNotificationAnimation(props: WelcomeProps) {
+    let notificationText = 'You have no new notifications'.split("");
+    if (props.notifications && props.notifications.length >= 1) {
+      notificationText = this.getNotificationsText(props.notifications);
+      this.animateText(notificationText, FieldName.animatedNotificationText, () => {
+        this.setState({isTextClickable: true, animationStarted: false});
+      });
+    } else {
+      this.animateText(notificationText, FieldName.animatedNotificationText, ()=> {
+        const haveAccess = checkTeacherEditorOrAdmin(this.props.user);
+        if (haveAccess) {
+          const text = '"Nothing strengthens authority so much as silence"'.split("");
+          this.animateText(text, FieldName.animatedNotificationText2, () => {
+            const text = '- Leonardo'.split("");
+            this.animateText(text, FieldName.animatedNotificationText3, () => {
+              this.setState({ animationStarted: false });
+            });
+          });
+        } else {
+          const text = "Why then the world's mine oyster...".split("");
+          this.animateText(text, FieldName.animatedNotificationText2, () => { 
+            const text = '- Shakespeare'.split("");
+            this.animateText(text, FieldName.animatedNotificationText3, () => {
+              this.setState({ animationStarted: false });
+            });
+          });
+        }
+      });
+    }
   }
 
   render() {
