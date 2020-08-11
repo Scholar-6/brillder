@@ -84,14 +84,14 @@ const App: React.FC = (props: any) => {
       <Switch>
         <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
-        <StudentRoute path="/play/dashboard" component={Dashboard} />
+        <StudentRoute path={map.ViewAllPage} component={Dashboard} />
 
         <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} location={location} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
-        <BuildRoute path="/back-to-work" component={BackToWorkPage} location={location} />
+        <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
         <BuildRoute path="/users" component={UsersListPage} location={location} />
         <BuildRoute path="/user-profile/:userId" component={UserProfilePage} location={location} />
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />

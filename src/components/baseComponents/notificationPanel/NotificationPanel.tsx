@@ -8,6 +8,8 @@ import { Notification, notificationTypeColors, NotificationType } from 'model/no
 import moment from 'moment';
 import './NotificationPanel.scss';
 
+import map from 'components/map';
+
 const mapState = (state: ReduxCombinedState) => ({
   notifications: state.notifications.notifications
 });
@@ -27,9 +29,13 @@ class NotificationPanel extends Component<NotificationPanelProps> {
     const {history} = this.props;
     if (history) {
       if (notification.type === NotificationType.BrickPublished) {
-        history.push('/play/dashboard');
+        history.push(map.ViewAllPage);
       } else if (notification.type === NotificationType.AssignedToEdit || notification.type === NotificationType.BrickSubmittedForReview) {
-        history.push('/back-to-work');
+        history.push(map.BackToWorkPage);
+      } else if (notification.type === NotificationType.NewCommentOnBrick) {
+        if (notification.brick && notification.brick.id >= 1) {
+          history.push(map.InvestigationBuild(notification.brick.id));
+        }
       }
     }
   }

@@ -79,7 +79,13 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
   }
 
   runAnimation(props: WelcomeProps) {
-    this.setState({ animationStarted: true, isTextClickable: false })
+    this.setState({
+      animationStarted: true,
+      animatedNotificationText: '',
+      animatedNotificationText2: '',
+      animatedNotificationText3: '',
+      isTextClickable: false
+    });
 
     let count = 0;
     let nameToFill = props.user.firstName
