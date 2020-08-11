@@ -31,7 +31,7 @@ const mockComment: Comment = {
     lastName: "Lastname"
   },
   brick: mockBrick,
-  text: "Test Comment",
+  text: "23453",
   timestamp: new Date(2020, 3, 28, 16, 10),
   children: [ mockChild ]
 } as Comment;
@@ -46,14 +46,13 @@ describe('comment item', () => {
       <CommentItem comment={mockComment} createComment={createComment} isAuthor={false} currentBrick={mockBrick} />
     );
 
-    // 8.11.2020
-    //const commentText = screen.queryByText(mockComment.text);
-    //const commentAuthor = screen.queryByText(`${mockComment.author.firstName} ${mockComment.author.lastName}`);
-    //const commentDate = screen.queryByText("16:10 28 Apr"); // test based on designs given.
+    const commentText = screen.queryByText(mockComment.text);
+    const commentAuthor = screen.queryByText(`${mockComment.author.firstName} ${mockComment.author.lastName}`);
+    const commentDate = screen.queryByText("16:10 28 Apr"); // test based on designs given.
 
-    //expect(commentText).toBeVisible();
-    //expect(commentAuthor).toBeVisible();
-    //expect(commentDate).toBeVisible();
+    expect(commentText).toBeVisible();
+    expect(commentAuthor).toBeVisible();
+    expect(commentDate).toBeVisible();
   });
 
   it("should display a comment's children", async () => {

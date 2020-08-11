@@ -178,7 +178,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       <Grid container direction="row" className="mainPage">
         <Hidden only={["xs"]}>
           <div className="welcome-col">
-            <WelcomeComponent user={this.props.user} notifications={this.props.notifications} notificationClicked={() => {}} />
+            <WelcomeComponent user={this.props.user} notifications={this.props.notifications} notificationClicked={() => this.setState({notificationClicked: true})} />
           </div>
           <div className="first-col">
             <div className="first-item">
