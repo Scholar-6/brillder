@@ -53,14 +53,14 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       return (
         <svg className="svg minimize-icon" onClick={() => this.props.toggleSidebar()}>
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#maximize-2"} />
+          <use href={sprite + "#minimize-2"} />
         </svg>
       );
     }
     return (
       <svg className="svg minimize-icon" onClick={() => this.props.toggleSidebar()}>
         {/*eslint-disable-next-line*/}
-        <use href={sprite + "#minimize-2"} />
+        <use href={sprite + "#maximize-2"} />
       </svg>
     );
   }
@@ -77,7 +77,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   renderHightlightButton() {
-    let className = "sidebar-button";
+    let className = "highlight-button sidebar-button";
     let icon = "#highlighter"
     const { mode } = this.props;
     if (mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) {
@@ -172,7 +172,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       }
     }
     return (
-      <div>
+      <div style={{width: '100%'}}>
         {this.renderHightlightButton()}
         {this.renderAnotateButton()}
         {this.renderAssignButton()}
