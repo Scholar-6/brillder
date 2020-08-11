@@ -39,6 +39,10 @@
         letter-spacing: 0.1vw;
         font-family: $font-family-light;
         font-size: 1.5vw;
+
+        &.clickable {
+          cursor: pointer;
+        }
       }
 
       .notifications-text-2, .notifications-text-3 {
