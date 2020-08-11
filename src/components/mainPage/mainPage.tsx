@@ -42,7 +42,7 @@ interface MainPageState {
   backHober: boolean;
   swiper: any;
   isPolicyOpen: boolean;
-  notificationClicked: boolean;
+  notificationExpanded: boolean;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
@@ -55,7 +55,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       backHober: false,
       swiper: null,
       isPolicyOpen: false,
-      notificationClicked: false,
+      notificationExpanded: false,
     } as any;
   }
 
@@ -178,7 +178,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       <Grid container direction="row" className="mainPage">
         <Hidden only={["xs"]}>
           <div className="welcome-col">
-            <WelcomeComponent user={this.props.user} notifications={this.props.notifications} notificationClicked={() => this.setState({notificationClicked: true})} />
+            <WelcomeComponent
+              user={this.props.user}
+              notifications={this.props.notifications}
+              notificationClicked={() => this.setState({notificationExpanded: true})}
+            />
           </div>
           <div className="first-col">
             <div className="first-item">
@@ -188,7 +192,12 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             </div>
             <div className="second-item"></div>
           </div>
-          <MainPageMenu user={this.props.user} history={this.props.history} />
+          <MainPageMenu
+            user={this.props.user}
+            history={this.props.history}
+            notificationExpanded={this.state.notificationExpanded}
+            toggleNotification={() => this.setState({notificationExpanded: !this.state.notificationExpanded})}
+          />
           <div className="policy-text">
             <span onClick={() => this.setPolicyDialog(true)}>Privacy Policy</span>
           </div>
