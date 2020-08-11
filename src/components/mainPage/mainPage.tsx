@@ -42,6 +42,7 @@ interface MainPageState {
   backHober: boolean;
   swiper: any;
   isPolicyOpen: boolean;
+  notificationClicked: boolean;
 }
 
 class MainPage extends Component<MainPageProps, MainPageState> {
@@ -54,6 +55,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       backHober: false,
       swiper: null,
       isPolicyOpen: false,
+      notificationClicked: false,
     } as any;
   }
 
@@ -176,7 +178,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       <Grid container direction="row" className="mainPage">
         <Hidden only={["xs"]}>
           <div className="welcome-col">
-            <WelcomeComponent user={this.props.user} notifications={this.props.notifications} />
+            <WelcomeComponent user={this.props.user} notifications={this.props.notifications} notificationClicked={() => {}} />
           </div>
           <div className="first-col">
             <div className="first-item">

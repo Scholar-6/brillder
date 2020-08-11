@@ -12,6 +12,7 @@ enum FieldName {
 interface WelcomeProps {
   user: User;
   notifications: Notification[] | null;
+  notificationClicked(): void;
 }
 
 interface WelcomeState {
@@ -19,6 +20,7 @@ interface WelcomeState {
   animatedNotificationText: string;
   animatedNotificationText2: string;
   animatedNotificationText3: string;
+  isTextClickable: boolean;
   animationStarted: boolean;
 }
 
@@ -31,6 +33,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
       animatedNotificationText: '',
       animatedNotificationText2: '',
       animatedNotificationText3: '',
+      isTextClickable: false,
       animationStarted: false
     } as any;
 
@@ -76,7 +79,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
   }
 
   runAnimation(props: WelcomeProps) {
-    this.setState({ animationStarted: true })
+    this.setState({ animationStarted: true, isTextClickable: false })
 
     let count = 0;
     let nameToFill = props.user.firstName
@@ -96,7 +99,9 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
           let notificationText = 'You have no new notifications'.split("");
           if (props.notifications && props.notifications.length >= 1) {
             notificationText = this.getNotificationsText(props.notifications);
-            this.animateText(notificationText, FieldName.animatedNotificationText);
+            this.animateText(notificationText, FieldName.animatedNotificationText, () => {
+              this.setState({isTextClickable: true});
+            });
           } else {
             this.animateText(notificationText, FieldName.animatedNotificationText, ()=> {
               const haveAccess = checkTeacherEditorOrAdmin(this.props.user);
@@ -122,12 +127,20 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
   }
 
   render() {
+    let className="notifications-text";
+    if (this.state.isTextClickable) {
+      className += " clickable"
+    }
     return (
       <div className="welcome-box">
         <div>WELCOME TO</div>
         <div className="smaller">BRILLDER,</div>
         <div className="welcome-name">{this.state.animatedName}</div>
-        <div className="notifications-text" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText }} />
+        <div
+          className={className}
+          onClick={this.props.notificationClicked}
+          dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText }}
+        />
         <div className="notifications-text-2" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText2 }} />
         <div className="notifications-text-3" dangerouslySetInnerHTML={{ __html: this.state.animatedNotificationText3 }} />
       </div>
