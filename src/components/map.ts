@@ -1,5 +1,12 @@
 export const Build = '/build';
 export const ProposalBase = `${Build}/new-brick`;
+export const BackToWorkPage = '/back-to-work';
+export const ViewAllPage = '/play/dashboard';
+
+export const InvestigationBuild = (brickId: number) => {
+  return `/build/brick/${brickId}/build/investigation/question-component`;
+}
+
 
 // proposal pages
 export const ProposalSubject = `${ProposalBase}/subject`;
@@ -9,6 +16,7 @@ export const ProposalBrief = `${ProposalBase}/brief`;
 export const ProposalPrep = `${ProposalBase}/prep`;
 export const ProposalLength = `${ProposalBase}/length`;
 export const ProposalReview = `${ProposalBase}/proposal`;
+
 
 // play preview
 export const PlayPreviewBase = '/play-preview/brick';
@@ -32,5 +40,9 @@ export default {
   ProposalLength,
   ProposalReview,
 
+  BackToWorkPage,
+  ViewAllPage,
+
+  InvestigationBuild,
   playPreviewIntro
 }
