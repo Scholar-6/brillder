@@ -1,5 +1,6 @@
 import { Brick } from "./brick";
 import { Question } from "./question";
+import { User } from "./user";
 
 export interface Author {
     id: number;
@@ -16,4 +17,5 @@ export interface Comment {
     children: Comment[];
     author: Author;
     timestamp: Date;
+    readBy: User[];
 }
