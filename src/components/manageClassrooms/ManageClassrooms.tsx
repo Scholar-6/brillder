@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Radio } from "@material-ui/core";
 import axios from "axios";
 import { connect } from "react-redux";
 
@@ -20,7 +20,12 @@ const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
 });
 
+
 const connector = connect(mapState);
+
+interface MUser extends User {
+  selected: boolean;
+}
 
 interface UsersListProps {
   user: User;
@@ -35,7 +40,7 @@ enum UserSortBy {
 }
 
 interface UsersListState {
-  users: User[];
+  users: MUser[];
   page: number;
   pageSize: number;
   totalCount: number;
@@ -53,6 +58,8 @@ interface UsersListState {
   sortBy: UserSortBy;
   isAscending: boolean;
   isClearFilter: boolean;
+
+  selectedUsers: MUser[];
 }
 
 class ManageClassrooms extends Component<UsersListProps, UsersListState> {
@@ -82,20 +89,19 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       isAscending: false,
       isAdmin: checkAdmin(props.user.roles),
       isClearFilter: false,
+
+      selectedUsers: []
     };
 
     this.getUsers(this.state.page);
 
-    axios
-      .get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        this.setState({ ...this.state, subjects: res.data });
-      })
-      .catch((error) => {
-        alert("Can`t get subjects");
-      });
+    axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
+      withCredentials: true,
+    }).then((res) => {
+      this.setState({ ...this.state, subjects: res.data });
+    }).catch((error) => {
+      alert("Can`t get subjects");
+    });
   }
 
   getUsers(
@@ -134,30 +140,28 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       }
     }
 
-    axios
-      .post(
-        process.env.REACT_APP_BACKEND_HOST + "/users",
-        {
-          pageSize: this.state.pageSize,
-          page: page.toString(),
-          searchString,
-          subjectFilters: subjects,
-          roleFilters: [],
-          orderBy,
-          isAscending,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        this.setState({
-          ...this.state,
-          users: res.data.pageData,
-          totalCount: res.data.totalCount,
-        });
-      })
-      .catch((error) => {
-        alert("Can`t get users");
+    axios.post(
+      process.env.REACT_APP_BACKEND_HOST + "/users",
+      {
+        pageSize: this.state.pageSize,
+        page: page.toString(),
+        searchString,
+        subjectFilters: subjects,
+        roleFilters: [],
+        orderBy,
+        isAscending,
+      },
+      { withCredentials: true }
+    ).then((res) => {
+      res.data.pageData.map((u:any) => u.selected = false);
+      this.setState({
+        ...this.state,
+        users: res.data.pageData,
+        totalCount: res.data.totalCount,
       });
+    }).catch((error) => {
+      alert("Can`t get users");
+    });
   }
 
   move(brickId: number) {
@@ -189,53 +193,39 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   activateUser(userId: number) {
-    axios
-      .put(
-        `${process.env.REACT_APP_BACKEND_HOST}/user/activate/${userId}`,
-        {},
-        { withCredentials: true } as any
-      )
-      .then((res) => {
-        if (res.data === "OK") {
-          const user = this.state.users.find((user) => user.id === userId);
-          if (user) {
-            user.status = UserStatus.Active;
-          }
-          this.setState({ ...this.state });
+    axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/user/activate/${userId}`,
+      {},
+      { withCredentials: true } as any
+    ).then((res) => {
+      if (res.data === "OK") {
+        const user = this.state.users.find((user) => user.id === userId);
+        if (user) {
+          user.status = UserStatus.Active;
         }
-      })
-      .catch((error) => {
-        alert("Can`t activate user");
-      });
+        this.setState({ ...this.state });
+      }
+    }).catch((error) => {
+      alert("Can`t activate user");
+    });
   }
 
   deactivateUser(userId: number) {
-    axios
-      .put(
-        `${process.env.REACT_APP_BACKEND_HOST}/user/deactivate/${userId}`,
-        {},
-        { withCredentials: true } as any
-      )
-      .then((res) => {
-        if (res.data === "OK") {
-          const user = this.state.users.find((user) => user.id === userId);
-          if (user) {
-            user.status = UserStatus.Disabled;
-          }
-          this.setState({ ...this.state });
+    axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/user/deactivate/${userId}`,
+      {},
+      { withCredentials: true } as any
+    ).then((res) => {
+      if (res.data === "OK") {
+        const user = this.state.users.find((user) => user.id === userId);
+        if (user) {
+          user.status = UserStatus.Disabled;
         }
-      })
-      .catch((error) => {
-        alert("Can`t deactivate user");
-      });
-  }
-
-  toggleUser(user: User) {
-    if (user.status === UserStatus.Active) {
-      this.deactivateUser(user.id);
-    } else {
-      this.activateUser(user.id);
-    }
+        this.setState({ ...this.state });
+      }
+    }).catch((error) => {
+      alert("Can`t deactivate user");
+    });
   }
 
   search() {
@@ -249,14 +239,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       searchString
     );
   }
-
-  filterBySubject = (i: number) => {
-    const { subjects } = this.state;
-    subjects[i].checked = !subjects[i].checked;
-    this.filter();
-    this.setState({ ...this.state });
-    this.filterClear();
-  };
 
   getCheckedSubjectIds() {
     const filterSubjects = [];
@@ -283,6 +265,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.filter();
     this.filterClear();
   }
+
   hideFilter() {
     this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
   }
@@ -304,11 +287,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
   //endregion
 
-  onUserDeleted(userId: number) {
-    let { users } = this.state;
-    let removeIndex = users.findIndex((user) => user.id === userId);
-    users.splice(removeIndex, 1);
-    this.setState({ ...this.state, users });
+  toggleUser(i: number) {
+    const { users } = this.state;
+    users[i].selected = !users[i].selected;
+    let selectedUsers = this.state.users.filter(u => u.selected);
+    this.setState({ ...this.state, users, selectedUsers });
   }
 
   renderSortAndFilterBox = () => {
@@ -338,12 +321,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     const maxUser = prevCount + users.length;
 
     const nextPage = () => {
-      this.setState({ ...this.state, page: page + 1 });
+      this.setState({ ...this.state, page: page + 1, selectedUsers: [] });
       this.getUsers(page + 1);
     };
 
     const previousPage = () => {
-      this.setState({ ...this.state, page: page - 1 });
+      this.setState({ ...this.state, page: page - 1, selectedUsers: [] });
       this.getUsers(page - 1);
     };
 
@@ -460,21 +443,27 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     return (
       <tr>
         <th className="subject-title">SC</th>
-        <th className="user-full-name" style={{width: '20%'}}>
+        <th className="user-full-name" style={{ width: '20%' }}>
           <Grid container>
             NAME
             {this.renderSortArrow(UserSortBy.Name)}
           </Grid>
         </th>
-        <th className="email-column" style={{width: '27%'}}>EMAIL</th>
-        <th>
+        <th className="email-column" style={{ width: '27%' }}>EMAIL</th>
+        <th style={{ width: '29%' }}>
           <Grid container>
             CLASSES
             {this.renderSortArrow(UserSortBy.Role)}
           </Grid>
         </th>
-        <th>
-          <Grid container>
+        <th style={{ padding: 0 }}>
+          <Grid container className="selected-column">
+            <Radio disabled={true} />
+            <span className="selected-count">{this.state.selectedUsers.length}</span>
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#users"} />
+            </svg>
             Selected
           </Grid>
         </th>
@@ -502,8 +491,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                   </td>
                   <td>{user.email}</td>
                   <td></td>
-                  <td className="activate-button-container">
+                  <td className="user-radio-column">
+                      <Radio checked={this.state.users[i].selected} onClick={() => this.toggleUser(i)} />
                   </td>
+                  <td className="activate-button-container"></td>
                 </tr>
               );
             })}
