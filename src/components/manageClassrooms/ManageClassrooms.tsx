@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
-import Switch from "@material-ui/core/Switch";
 import axios from "axios";
 import { connect } from "react-redux";
-import grey from "@material-ui/core/colors/grey";
 
 import './ManageClassrooms.scss';
 
@@ -57,53 +54,6 @@ interface UsersListState {
   isAscending: boolean;
   isClearFilter: boolean;
 }
-
-let anyStyles = withStyles as any;
-
-const IOSSwitch = anyStyles((theme: any) => ({
-  root: {
-    width: "4.5vh",
-    height: "2.8vh",
-    padding: 0,
-    margin: 0,
-  },
-  switchBase: {
-    padding: 1,
-    "&$checked": {
-      transform: "translateX(16px)",
-      color: "#30C474",
-      "& + $track": {
-        borderRadius: "2vh",
-        border: "0.25vh solid #001C58",
-        height: "2.3vh",
-        backgroundColor: "#30C474",
-        opacity: 1,
-      },
-    },
-    "&$focusVisible $thumb": {
-      color: "#52d869",
-      border: "6px solid #fff",
-    },
-  },
-  thumb: {
-    marginTop: "0.6vh",
-    marginLeft: "0.4vh",
-    marginRight: "0.4vh",
-    border: "0.2vh solid #001C58",
-    width: "0.9vh",
-    height: "0.9vh",
-  },
-  track: {
-    borderRadius: "2vh",
-    border: "0.25vh solid #001C58",
-    height: "2.3vh",
-    backgroundColor: grey[50],
-    opacity: 1,
-  },
-  checked: {},
-}))((props: any) => {
-  return <Switch disableRipple {...props} />;
-});
 
 class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   constructor(props: UsersListProps) {

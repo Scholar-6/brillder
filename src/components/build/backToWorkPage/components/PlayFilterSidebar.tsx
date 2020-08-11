@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
-import { Brick, BrickStatus } from "model/brick";
+import { Brick } from "model/brick";
 import { SortBy, Filters } from '../model';
 
 
@@ -36,19 +36,6 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
   }
 
   renderIndexesBox = () => {
-    let build = 0;
-    let edit = 0;
-    for (let b of this.props.rawBricks) {
-      if (b.status === BrickStatus.Draft) {
-        build += 1;
-      }
-    }
-
-    for (let b of this.props.rawBricks) {
-      if (b.status !== BrickStatus.Draft) {
-        edit += 1;
-      }
-    }
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box" style={{paddingTop: '4vh', paddingBottom: '0.5vh'}}>
@@ -67,28 +54,6 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
   };
 
   renderSortAndFilterBox = () => {
-    let draft = 0;
-    let review = 0;
-    let publish = 0;
-
-    for (let b of this.props.rawBricks) {
-      if (b.status === BrickStatus.Draft) {
-        draft += 1;
-      }
-    }
-
-    for (let b of this.props.rawBricks) {
-      if (b.status === BrickStatus.Review) {
-        review += 1;
-      }
-    }
-
-    for (let b of this.props.rawBricks) {
-      if (b.status === BrickStatus.Publish) {
-        publish += 1;
-      }
-    }
-
     return (
       <div className="sort-box">
         <div className="filter-header">Filter</div>
