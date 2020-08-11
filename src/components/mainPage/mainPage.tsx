@@ -192,6 +192,11 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             </div>
             <div className="second-item"></div>
           </div>
+          <div className="second-col">
+            <div onClick={() => this.props.history.push('/manage-classrooms')}>
+              Manage Classrooms
+            </div>
+          </div>
           <MainPageMenu
             user={this.props.user}
             history={this.props.history}
