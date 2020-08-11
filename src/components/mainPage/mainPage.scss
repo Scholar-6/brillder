@@ -3,6 +3,8 @@
 @import '../../assets/sass/partials/extensions';
 
 .mainPage {
+  $welcome-col-width: 35.2vw;
+  $first-col-width: 29.6vw;
   background: var(--theme-dark-blue);
   position: fixed;
   width: 100%;
@@ -10,7 +12,7 @@
   font-family: $font-family-black;
 
   .welcome-col {
-    width: 35.2vw;
+    width: $welcome-col-width;
     text-align: center;
     padding-top: 15vh;
 
@@ -60,7 +62,7 @@
   }
 
   .first-col {
-    width: 29.6vw;
+    width: $first-col-width;
     height: 100%;
 
     .first-item {
@@ -79,6 +81,19 @@
       text-align: center;
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
+    }
+  }
+
+  .second-col {
+    color: var(--white);
+    letter-spacing: 0.3vw;
+    font-size: 1.4vw;
+    font-family: $font-family-light;
+    width: calc(100vw - #{$welcome-col-width} - #{$first-col-width});
+    @extend %flexCenter;
+
+    div {
+      cursor: pointer;
     }
   }
 
