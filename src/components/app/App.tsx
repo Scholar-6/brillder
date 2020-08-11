@@ -21,6 +21,7 @@ import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
 import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
 import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
 import UserProfilePage from '../build/userProfilePage/UserProfile';
+import ManageClassrooms from 'components/manageClassrooms/ManageClassrooms';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
@@ -85,6 +86,8 @@ const App: React.FC = (props: any) => {
         <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <StudentRoute path={map.ViewAllPage} component={Dashboard} />
+
+        <BuildRoute path="/manage-classrooms" component={ManageClassrooms} location={location} /> 
 
         <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
