@@ -443,6 +443,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   renderBricks = () => {
+    if (this.state.isPlayTab) {
+      return "";
+    }
     if (this.state.filters.viewAll) {
       return this.renderGroupedBricks();
     }
