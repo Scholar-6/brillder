@@ -30,40 +30,6 @@
       margin-bottom: 1vw;
       font-size: 1.5vw;
     }
-
-    .select {
-      background: white;
-      border-radius: 0.5vw;
-      padding: 1.5vh 1.8vw;
-      text-transform: capitalize;
-      width: 100%;
-      font-size: 1.6vw;
-      color: var(--theme-dark-blue);
-
-      option {
-        text-transform: inherit;
-      }
-      option:before{
-        content: ">";
-        font-size:20px;
-        display:none;
-        padding-right:10px;
-        padding-left:5px;
-        color:#fff;
-        background: black;
-      }
-    }
-    .select:after {
-      content:"";
-      border-radius: 10vw;
-      width:0;
-      height:0;
-      border:5px solid transparent;
-      border-color:black transparent transparent transparent;
-      position:absolute;
-      top:9px;
-      right:6px;
-    }
   }
 
   .dialog-footer {
@@ -85,11 +51,29 @@
       background: var(--light-blue);
       color: white;
       .dialog-header {
+        margin-bottom: 0;
         color: inherit;
         div {
           margin-bottom: 4.5vh;
           text-align: center;
           width: 30vw;
+        }
+        input, .records-box {
+          background: white;
+          border-radius: 0.5vw;
+        }
+        input {
+          padding: 1.5vh 1.8vw;
+          text-transform: capitalize;
+          font-size: 1.6vw;
+          width: calc(100% - 1.8vw - 1.8vw);
+          color: var(--theme-dark-blue);
+        }
+        .records-box {
+          margin-top: 0.5vh;
+          height: 15vh;
+          background: var(--off-white);
+          margin-bottom: 0;
         }
       }
     }

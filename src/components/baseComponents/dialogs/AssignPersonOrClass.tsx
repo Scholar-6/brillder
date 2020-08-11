@@ -19,20 +19,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     >
       <div className="dialog-header">
         <div>Who would you like to assign this brick to?</div>
-        <select
-          value={value}
-          className="select"
-          onChange={(e) => setValue(e.target.value)}
-        >
-          <option value="" hidden disabled selected></option>
-          {classes.map((c)=> <option value={c}>{c}</option>)}
-        </select>
-      </div>
-      <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange yes-button"
-          onClick={props.close}>
-          <span>Ok</span>
-        </button>
+        <input value={value} onChange={e => setValue(e.target.value)} />
+        <div className="records-box">
+        </div>
       </div>
     </Dialog>
   );
