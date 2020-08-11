@@ -1,7 +1,5 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { Select } from '@material-ui/core';
-import MenuItem from "@material-ui/core/MenuItem";
 
 interface AssignPersonOrClassProps {
   isOpen: boolean;
@@ -9,7 +7,6 @@ interface AssignPersonOrClassProps {
 }
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
-  let classes:string[] = ["class1", "class2"];
   const [value, setValue] = React.useState("");
   return (
     <Dialog
