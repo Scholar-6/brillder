@@ -2,7 +2,6 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 
 import { User } from "model/user";
-import sprite from "assets/img/icons-sprite.svg";
 import NextButton from "components/baseComponents/pagination/NextButton";
 import PrevButton from "components/baseComponents/pagination/PrevButton";
 
