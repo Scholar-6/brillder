@@ -133,7 +133,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   /* Synthesis */
 
   // start editing on socket on load.
-  useEffect(() => props.startEditing(brickId), [brickId]);
+  useEffect(() => {props.startEditing(brickId)}, [brickId]);
 
   // update on socket when things change.
   useEffect(() => {
