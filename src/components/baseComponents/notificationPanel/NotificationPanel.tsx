@@ -33,8 +33,8 @@ class NotificationPanel extends Component<NotificationPanelProps> {
       } else if (notification.type === NotificationType.AssignedToEdit || notification.type === NotificationType.BrickSubmittedForReview) {
         history.push(map.BackToWorkPage);
       } else if (notification.type === NotificationType.NewCommentOnBrick) {
-        if (notification.brick && notification.brick.id >= 1) {
-          history.push(map.InvestigationBuild(notification.brick.id));
+        if (notification.brick && notification.brick.id >= 1 && notification.question && notification.question.id >= 1) {
+          history.push(map.investigationQuestionSuggestions(notification.brick.id, notification.question.id));
         }
       }
     }

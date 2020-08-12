@@ -11,6 +11,10 @@ export const investigationBuildQuestion = (brickId: number, questionId: number) 
   return InvestigationBuild(brickId) + `/${questionId}`;
 }
 
+export const investigationQuestionSuggestions = (brickId: number, questionId: number) => {
+  return investigationBuildQuestion(brickId, questionId) + '?suggestionsExpanded=true'
+}
+
 // proposal pages
 export const ProposalSubject = `${ProposalBase}/subject`;
 export const ProposalTitle = `${ProposalBase}/brick-title`;
@@ -48,5 +52,6 @@ export default {
 
   InvestigationBuild,
   investigationBuildQuestion,
+  investigationQuestionSuggestions,
   playPreviewIntro
 }
