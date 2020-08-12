@@ -7,18 +7,22 @@ import axios from "axios";
 import { connect } from "react-redux";
 import grey from "@material-ui/core/colors/grey";
 
-import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
-import AddUserButton from "./AddUserButton";
-import UserActionsCell from "./UserActionsCell";
+
 
 import { User, UserType, UserStatus } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
-import sprite from "assets/img/icons-sprite.svg";
 import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+
+import SubjectsList from "components/baseComponents/subjectsList/SubjectsList";
+import AddUserButton from "./AddUserButton";
+import UserActionsCell from "./UserActionsCell";
+import RoleDescription from "components/baseComponents/RoleDescription";
+import NextButton from "components/baseComponents/pagination/NextButton";
+import PrevButton from "components/baseComponents/pagination/PrevButton";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -453,38 +457,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           </Grid>
           <Grid item xs={4} className="bottom-next-button">
             <div>
-              {showPrev ? (
-                <button
-                  className={
-                    "btn btn-transparent prev-button svgOnHover " +
-                    (showPrev ? "active" : "")
-                  }
-                  onClick={previousPage}
-                >
-                  <svg className="svg w100 h100 active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#arrow-up"} />
-                  </svg>
-                </button>
-              ) : (
-                  ""
-                )}
-              {showNext ? (
-                <button
-                  className={
-                    "btn btn-transparent next-button svgOnHover " +
-                    (showNext ? "active" : "")
-                  }
-                  onClick={nextPage}
-                >
-                  <svg className="svg w100 h100 active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#arrow-down"} />
-                  </svg>
-                </button>
-              ) : (
-                  ""
-                )}
+              <PrevButton isShown={showPrev} onClick={previousPage} />
+              <NextButton isShown={showNext} onClick={nextPage} />
             </div>
           </Grid>
         </Grid>
@@ -612,18 +586,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     );
   }
 
-  renderRoleDescription() {
-    return (
-      <div className="role-description">
-        <span className="bold">S</span>: Student,&nbsp;
-        <span className="bold">T</span>: Teacher,&nbsp;
-        <span className="bold">B</span>: Builder,&nbsp;
-        <span className="bold">E</span>: Editor,&nbsp;
-        <span className="bold">A</span>: Admin
-      </div>
-    );
-  }
-
   renderTableHeader() {
     return (
       <div className="user-header">
@@ -652,7 +614,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           <Grid item xs={9} className="brick-row-container">
             {this.renderTableHeader()}
             {this.renderUsers()}
-            {this.renderRoleDescription()}
+            <RoleDescription />
             {this.renderPagination()}
           </Grid>
         </Grid>

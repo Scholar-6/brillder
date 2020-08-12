@@ -19,14 +19,15 @@ import { PageEnum } from './PageHeadWithMenu';
 interface MainPageMenuProps {
   history: any;
   user: User;
+  notificationExpanded: boolean;
 
   notifications: Notification[] | null;
+  toggleNotification(): void;
   getNotifications(): void;
 }
 
 interface HeaderMenuState {
   dropdownShown: boolean;
-  notificationsShown: boolean;
   logoutOpen: boolean;
   width: string;
 }
@@ -39,7 +40,6 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
 
     this.state = {
       dropdownShown: false,
-      notificationsShown: false,
       logoutOpen: false,
       width: '16vw'
     };
@@ -53,14 +53,6 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
 
   hideDropdown() {
     this.setState({ ...this.state, dropdownShown: false });
-  }
-
-  showNotifications() {
-    this.setState({ ...this.state, notificationsShown: true });
-  }
-
-  hideNotifications() {
-    this.setState({ ...this.state, notificationsShown: false });
   }
 
   handleLogoutOpen() {
@@ -80,7 +72,7 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
     }
 
     let className = "main-page-menu";
-    if (this.state.notificationsShown) {
+    if (this.props.notificationExpanded) {
       className += " notification-expanded"
     } else if (this.state.dropdownShown) {
       className += " menu-expanded";
@@ -88,7 +80,7 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
 
     return (
       <div className={className} ref={this.pageHeader}>
-        <BellButton notificationCount={notificationCount} onClick={() => this.showNotifications()} />
+        <BellButton notificationCount={notificationCount} onClick={this.props.toggleNotification} />
         <MoreButton onClick={() => this.showDropdown()} />
         <MenuDropdown
           dropdownShown={this.state.dropdownShown}
@@ -100,8 +92,9 @@ class PageHeadWithMenu extends Component<MainPageMenuProps, HeaderMenuState> {
           forgetBrick={() => {}}
         />
         <NotificationPanel
-          shown={this.state.notificationsShown}
-          handleClose={() => this.hideNotifications()}
+          history={this.props.history}
+          shown={this.props.notificationExpanded}
+          handleClose={this.props.toggleNotification}
           anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}
         />
         <LogoutDialog

@@ -11,6 +11,10 @@ import DragTab from './dragTab';
 import LastTab from './lastTab';
 import SynthesisTab from './SynthesisTab';
 import { TutorialStep } from '../tutorial/TutorialPanelWorkArea';
+import { Comment } from 'model/comments';
+import { ReduxCombinedState } from 'redux/reducers';
+import { connect } from 'react-redux';
+import { User } from 'model/user';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,6 +47,8 @@ interface Question {
 
 interface DragTabsProps {
   questions: Question[];
+  user: User;
+  comments: Comment[] | null;
   synthesis: string;
   isSynthesisPage: boolean;
   validationRequired: boolean;
@@ -59,6 +65,13 @@ const DragableTabs: React.FC<DragTabsProps> = ({
 }) => {
   let isInit = true;
   let isSynthesisPresent = true;
+
+
+  const getUnreadComments = (questionId: number) =>
+    props.comments?.filter(comment => // count comments...
+      (comment.question?.id ?? -1) === questionId && // on the current question...
+      comment.readBy.filter(user => user.id === props.user.id).length === 0 // which have not been read.
+    ).length ?? 0
 
   const renderQuestionTab = (questions: Question[], question: Question, index: number, comlumns: number) => {
     let titleClassNames = "drag-tile-container";
@@ -95,6 +108,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
             id={question.id}
             active={question.active}
             isValid={isValid}
+            getUnreadComments={getUnreadComments}
             selectQuestion={props.selectQuestion}
             removeQuestion={props.removeQuestion}
           />
@@ -161,4 +175,11 @@ const DragableTabs: React.FC<DragTabsProps> = ({
   )
 }
 
-export default DragableTabs
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  comments: state.comments.comments
+});
+
+const connector = connect(mapState);
+
+export default connector(DragableTabs);

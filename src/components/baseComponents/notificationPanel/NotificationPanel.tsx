@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { List, ListItem, ListItemText, Popover, IconButton, SvgIcon, Card, CardContent, ListItemIcon, CardActions } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
 import sprite from "assets/img/icons-sprite.svg";
-import { Notification, notificationTypeColors } from 'model/notifications';
+import { Notification, notificationTypeColors, NotificationType } from 'model/notifications';
 import moment from 'moment';
 import './NotificationPanel.scss';
+
+import map from 'components/map';
 
 const mapState = (state: ReduxCombinedState) => ({
   notifications: state.notifications.notifications
@@ -19,9 +21,25 @@ interface NotificationPanelProps {
   notifications: Notification[] | null;
   handleClose(): void;
   anchorElement: any;
+  history?: any;
 }
 
 class NotificationPanel extends Component<NotificationPanelProps> {
+  move(notification: Notification) {
+    const {history} = this.props;
+    if (history) {
+      if (notification.type === NotificationType.BrickPublished) {
+        history.push(map.ViewAllPage);
+      } else if (notification.type === NotificationType.AssignedToEdit || notification.type === NotificationType.BrickSubmittedForReview) {
+        history.push(map.BackToWorkPage);
+      } else if (notification.type === NotificationType.NewCommentOnBrick) {
+        if (notification.brick && notification.brick.id >= 1 && notification.question && notification.question.id >= 1) {
+          history.push(map.investigationQuestionSuggestions(notification.brick.id, notification.question.id));
+        }
+      }
+    }
+  }
+
   markAsRead(id: number) {
     axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/notifications/markAsRead/${id}`,
@@ -68,7 +86,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       </svg>
                     </SvgIcon>
                   </ListItemIcon>
-                  <div className="content-box">
+                  <div className="content-box" onClick={() => this.move(notification)}>
                     <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
                     <div className="actions">
                       <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>
@@ -83,11 +101,9 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                 </ListItem>
               )) :
                 (
-                  <ListItem>
-                    <div className="content-box">
-                      <ListItemText className="notification-detail-single" primary="Looks like you don't have any notifications..." />
-                    </div>
-                  </ListItem>
+                  <div className="notification-detail-single">
+                    Looks like you don't have any notifications...
+                  </div>
                 )
               }
             </List>

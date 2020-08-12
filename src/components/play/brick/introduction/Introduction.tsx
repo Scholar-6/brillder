@@ -130,12 +130,12 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     return (
       <div className="action-footer">
         <div></div>
-        <div className="direction-info">
-          <Hidden only={["xs"]}>
+        <Hidden only={["xs"]}>
+          <div className="direction-info">
             <h3>Ready?</h3>
-          </Hidden>
-          <h2>Play Brick</h2>
-        </div>
+            <h2>Play Brick</h2>
+          </div>
+        </Hidden>
         <div>
           <button
             type="button"

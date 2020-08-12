@@ -31,7 +31,7 @@ const mockComment: Comment = {
     lastName: "Lastname"
   },
   brick: mockBrick,
-  text: "Test Comment",
+  text: "23453",
   timestamp: new Date(2020, 3, 28, 16, 10),
   children: [ mockChild ]
 } as Comment;

@@ -1,0 +1,48 @@
+@import '../../../assets/sass/partials/variables';
+@import '../../../assets/sass/partials/mixins';
+@import '../../../assets/sass/partials/extensions';
+
+.back-to-work-page {
+  .brick-row-container {
+    overflow: hidden;
+    background: inherit !important;
+    $tabs-margin-between: 0.2vw;
+    $width: calc(100.2vw - #{$filter-sidebar-size} - (#{$filter-sidebar-margin * 2}) - #{$tabs-margin-between});
+
+    .tab-container {
+      display: flex;
+      > div {
+        cursor: pointer;
+        width: calc(#{$width} / 2);
+        min-height: $backwork-tab-height;
+        font-size: 4.5vh;
+        border-top-left-radius: 0.5vw;
+        font-family: $font-family-black;
+        text-transform: uppercase;
+        letter-spacing: 0.5vw;
+        color: var(--theme-dark-blue);
+        background: var(--tab-gray);
+        padding-left: 1.5vw;
+      }
+
+      >div.active {
+        background: var(--white);
+      }
+
+      > div:first-child {
+        border-top-right-radius: 0.5vw;
+        margin-right: $tabs-margin-between;
+      }
+    }
+  }
+  .bricks-list-container, .bricks-pagination {
+    background: white;
+  }
+  .bricks-list-container {
+    padding-top: $backwork-bricks-padding-top;
+    height: $backwork-bricks-height !important;
+    .main-brick-container {
+      height: calc(#{$backwork-bricks-height-2} / 6) !important;
+    }
+  }
+}

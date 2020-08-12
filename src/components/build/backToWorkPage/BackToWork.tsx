@@ -10,12 +10,11 @@ import { checkAdmin, checkEditor } from "components/services/brickService";
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
-import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 import { ReduxCombinedState } from "redux/reducers";
 import FilterSidebar from './components/FilterSidebar';
-import BackPageTitle from './components/BackPageTitle';
+import PlayFilterSidebar from './components/PlayFilterSidebar';
 import BackPagePagination from './components/BackPagePagination';
 import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import BrickBlock from './components/BrickBlock';
@@ -49,6 +48,7 @@ interface BackToWorkState {
   pageSize: number;
   threeColumns: ThreeColumns;
   generalSubjectId: number;
+  isPlayTab: boolean;
 }
 
 export interface BackToWorkProps {
@@ -115,6 +115,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       sortedReversed: false,
       deleteDialogOpen: false,
       deleteBrickId: -1,
+      isPlayTab: true,
 
       filters: {
         viewAll: true,
@@ -443,6 +444,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   renderBricks = () => {
+    if (this.state.isPlayTab) {
+      return "";
+    }
     if (this.state.filters.viewAll) {
       return this.renderGroupedBricks();
     }
@@ -473,6 +477,39 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     );
   }
 
+  renderFilterSidebar() {
+    if (this.state.isPlayTab) {
+      return <PlayFilterSidebar
+        rawBricks={this.state.rawBricks}
+        filters={this.state.filters}
+        sortBy={this.state.sortBy}
+        isClearFilter={this.state.isClearFilter}
+        handleSortChange={e => this.handleSortChange(e)}
+        clearStatus={() => this.clearStatus()}
+        toggleDraftFilter={() => this.toggleDraftFilter()}
+        toggleReviewFilter={() => this.toggleReviewFilter()}
+        togglePublishFilter={e => this.togglePublishFilter(e)}
+        showAll={() => this.showAll()}
+        showBuildAll={() => this.showBuildAll()}
+        showEditAll={() => this.showEditAll()}
+      />
+    }
+    return <FilterSidebar
+      rawBricks={this.state.rawBricks}
+      filters={this.state.filters}
+      sortBy={this.state.sortBy}
+      isClearFilter={this.state.isClearFilter}
+      handleSortChange={e => this.handleSortChange(e)}
+      clearStatus={() => this.clearStatus()}
+      toggleDraftFilter={() => this.toggleDraftFilter()}
+      toggleReviewFilter={() => this.toggleReviewFilter()}
+      togglePublishFilter={e => this.togglePublishFilter(e)}
+      showAll={() => this.showAll()}
+      showBuildAll={() => this.showBuildAll()}
+      showEditAll={() => this.showEditAll()}
+    />
+  }
+
   render() {
     return (
       <div className="main-listing back-to-work-page">
@@ -485,23 +522,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           searching={(v: string) => this.searching(v)}
         />
         <Grid container direction="row" className="sorted-row">
-          <FilterSidebar
-            rawBricks={this.state.rawBricks}
-            filters={this.state.filters}
-            sortBy={this.state.sortBy}
-            isClearFilter={this.state.isClearFilter}
-            handleSortChange={e => this.handleSortChange(e)}
-            clearStatus={() => this.clearStatus()}
-            toggleDraftFilter={() => this.toggleDraftFilter()}
-            toggleReviewFilter={() => this.toggleReviewFilter()}
-            togglePublishFilter={e => this.togglePublishFilter(e)}
-            showAll={() => this.showAll()}
-            showBuildAll={() => this.showBuildAll()}
-            showEditAll={() => this.showEditAll()}
-          />
+          {this.renderFilterSidebar()}
           <Grid item xs={9} className="brick-row-container">
-            <BackPageTitle filters={this.state.filters} />
-            <PrivateCoreToggle isCore={this.state.filters.isCore} onSwitch={() => this.toggleCore()} />
+            <div className="tab-container">
+              <div className={this.state.isPlayTab === true ? 'active' : ''} onClick={() => this.setState({ isPlayTab: true })}>Play</div>
+              <div className={!this.state.isPlayTab === true ? 'active' : ''} onClick={() => this.setState({ isPlayTab: false })}>Build</div>
+            </div>
             <div className="bricks-list-container">
               <div className="bricks-list">
                 {this.renderBricks()}

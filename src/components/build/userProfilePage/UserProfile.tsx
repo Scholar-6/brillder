@@ -286,7 +286,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const { user } = this.state;
     user.profileImage = name;
 
-    saveProfileImageName(name).then((res: boolean) => {
+    saveProfileImageName(user.id, name).then((res: boolean) => {
       if (res) {
         // saving image success
       } else {

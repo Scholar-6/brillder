@@ -1,16 +1,15 @@
 import React from 'react';
 import { Grid,/* Box,*/ SvgIcon, IconButton, Collapse } from '@material-ui/core';
-//import { green, red } from '@material-ui/core/colors';
-//import { withStyles/*, createMuiTheme, ThemeProvider*/ } from '@material-ui/core/styles';
+//@ts-ignore
+import Hyphenated from 'react-hyphen';
+//@ts-ignore
+import gb from 'hyphenated-en-gb';
 
 import sprite from "assets/img/icons-sprite.svg";
-
-//import { CommentChildProps } from './CommentChild';
 
 import moment from 'moment';
 import ReplyCommentPanel from './ReplyCommentPanel';
 import { Comment } from 'model/comments';
-//import { User } from 'model/user';
 import { Brick } from 'model/brick';
 import axios from 'axios';
 
@@ -63,7 +62,10 @@ const CommentItem: React.FC<CommentItemProps> = props => {
           <h5 style={{ marginBottom: "10px" }}>{moment(props.comment.timestamp).format("H:mm D MMM")}</h5>
         </Grid>
         <Grid item className="break-word">
-          <span className="bold">Comment: </span><i>{props.comment.text}</i>
+          <span className="bold">Comment: </span>
+          <Hyphenated language={gb}>
+            <i>{props.comment.text}</i>
+          </Hyphenated>
         </Grid>
         {/*eslint-disable-next-line*/}
         {props.children && props.children instanceof Array && props.children.length != 0 &&

@@ -3,7 +3,7 @@ import React from "react";
 import { PlayMode } from "../model";
 
 import DocumentHighlight from "components/baseComponents/ckeditor/DocumentHighlighting";
-import YoutubeAndMathInHtml from "./MathInHtml";
+import YoutubeAndMathInHtml from "./YoutubeAndMath";
 
 interface SelectableProps {
   value: string;
