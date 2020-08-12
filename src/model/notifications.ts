@@ -1,4 +1,5 @@
 import { Brick } from "./brick";
+import { Question } from "./question";
 
 export interface Sender {
     email: string;
@@ -23,6 +24,7 @@ export interface Notification {
     read: boolean;
     timestamp: Date;
     brick?: Brick;
+    question?: Question;
 }
 
 export const notificationTypeColors = {
