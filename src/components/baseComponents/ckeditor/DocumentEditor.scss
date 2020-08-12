@@ -158,4 +158,8 @@
 }
 .document-editor.highlight-editor:hover {
   cursor: url('/feathericons/svg/cursor-highlighter.svg') 0 15, auto;
+  cursor: -webkit-image-set(
+    url('/feathericons/svg/cursor-highlighter.svg') 1x,
+    url('/feathericons/svg/cursor-highlighter.svg') 2x
+  ), auto;
 }

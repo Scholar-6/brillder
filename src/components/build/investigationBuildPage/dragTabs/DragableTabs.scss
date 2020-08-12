@@ -73,6 +73,20 @@ $tile-height: 100%;
       font-size: 3.4vh;
       user-select: none;
     }
+    .unread-indicator {
+      width: 1.5vw;
+      height: 1.5vw;
+      position: absolute;
+      right: 1.5vw;
+      svg {
+        .outer-circle {
+          fill: var(--blue-alpha5);
+        }
+        .inner-circle {
+          fill: var(--blue);
+        }
+      }
+    }
     .remove-icon {
       width: 1.2vw;
       height: 1.2vw;

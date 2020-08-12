@@ -50,6 +50,12 @@
       @include phone_and_tabletP {
         font-size: 15.4vw;
       }
+
+      .profile-username {
+        font-size: 2.0vw;
+        letter-spacing: 0.25vw;
+        margin-left: 1.08vw;
+      }
     }
 
     .save-button-container {
@@ -115,12 +121,18 @@
           }
         }
 
+        .real-profile-image {
+          height: 97%;
+          width: 97%;
+          border-radius: 50%;
+        }
+
         .add-image-button {
           width: 4vw;
           height: 4vw;
           z-index: 100;
           position: absolute;
-          background-color: var(--theme-orange);
+          background-color: var(--theme-dark-blue);
           top: 20vh;
           right: 1vw;
           border-radius: 50%;

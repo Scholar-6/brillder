@@ -1,40 +1,81 @@
 .dialog-box {
   z-index: 999999 !important;
+
   .MuiDialog-paperScrollPaper {
     @extend %m0;
+
     @include phone_and_tabletP {
       padding: 2.5vw;
       border-radius: 2vw;
       width: 90%;
     }
+
     @include tabletP {
       width: max-content;
       padding: 1.5vw;
       border-radius: 0.8vw;
     }
   }
+
   .dialog-header {
     letter-spacing: 0;
     color: var(--theme-dark-blue);
+
     @include phone_and_tabletP {
       margin-bottom: 2vw;
-      font-size:4.35vw !important;
+      font-size: 4.35vw !important;
     }
+
     @include tabletP {
       margin-bottom: 1vw;
       font-size: 1.5vw;
     }
   }
+
   .dialog-footer {
     display: flex;
     justify-content: space-between;
     margin: 0 -0.5vw;
+
     .btn {
       width: 100%;
       margin: 0 0.5vw;
       font-family: $font-family-regular !important;
       white-space: nowrap;
       box-sizing: content-box;
+    }
+  }
+
+  &.light-blue {
+    .MuiDialog-paper {
+      background: var(--light-blue);
+      color: white;
+      .dialog-header {
+        margin-bottom: 0;
+        color: inherit;
+        div {
+          margin-bottom: 4.5vh;
+          text-align: center;
+          width: 30vw;
+        }
+        input, .records-box {
+          background: white;
+          border-radius: 0.5vw;
+        }
+        input {
+          padding: 1.5vh 1.8vw;
+          text-transform: capitalize;
+          font-size: 1.6vw;
+          width: calc(100% - 1.8vw - 1.8vw);
+          color: var(--theme-dark-blue);
+        }
+        .records-box {
+          margin-top: 0.5vh;
+          height: 15vh;
+          background: var(--off-white);
+          margin-bottom: 0;
+        }
+      }
     }
   }
 }

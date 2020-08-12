@@ -1,0 +1,60 @@
+@import "../../../assets/sass/partials/variables";
+
+.comment-text-form {
+  background-color: var(--white);
+  margin: 0;
+  padding: 0;
+  padding-top: 0.8vh;
+  padding-bottom: 0.8vh;
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-left: 8%;
+  padding-right: 8%;
+  border-radius: 0.25vw;
+
+  >div {
+    padding: 0;
+    margin: 0;
+  }
+
+  input {
+    font-size: 2vh;
+    letter-spacing: 0.1vh;
+    height: 2.7vh;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.comment-reply-text-form {
+  background-color: var(--tab-gray);
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+button.comment-action-button {
+  color: var(--white);
+  font-size: 2vh;
+  letter-spacing: 1px;
+
+  .MuiButton-label {
+    font-family: $font-family-black !important;
+  }
+
+  &:disabled {
+    color: var(--global-light-text-gray) !important;
+  }
+
+  &.post {
+    color: var(--theme-dark-blue);
+  }
+
+  &.cancel {
+    color: var(--theme-orange)
+  }
+
+  &.in-child {
+    font-size: 0.75vw;
+  }
+}

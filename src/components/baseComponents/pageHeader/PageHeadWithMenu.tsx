@@ -1,20 +1,19 @@
 import React, { Component } from "react";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import sprite from "assets/img/icons-sprite.svg";
 import PageHeader from "./PageHeader";
-import { User, UserType } from "model/user";
+import { User } from "model/user";
 import LogoutDialog from "../logoutDialog/LogoutDialog";
 
 import ReactDOM from 'react-dom';
 import NotificationPanel from "components/baseComponents/notificationPanel/NotificationPanel";
 
+import MenuDropdown from './MenuDropdown';
 
 export enum PageEnum {
   None,
   BackToWork,
   ViewAll,
   ManageUsers,
+  MainPage,
   Play
 }
 
@@ -65,72 +64,12 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
     this.setState({ ...this.state, notificationsShown: false });
   }
 
-  creatingBrick() {
-    //this.props.forgetBrick();
-    this.props.history.push("/build/new-brick/subject");
-  }
-
   handleLogoutOpen() {
     this.setState({ ...this.state, logoutOpen: true });
   }
 
   handleLogoutClose() {
     this.setState({ ...this.state, logoutOpen: false });
-  }
-
-  renderViewAllItem() {
-    if (this.props.page !== PageEnum.ViewAll) {
-      return (
-        <MenuItem
-          className="first-item menu-item"
-          onClick={() => this.props.history.push("/play/dashboard")}>
-          <span className="menu-text">View All Bricks</span>
-          <div className="btn btn-transparent svgOnHover">
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#glasses"} className="text-white" />
-            </svg>
-          </div>
-        </MenuItem>
-      )
-    }
-    return "";
-  }
-
-  renderBackToWorkItem() {
-    if (this.props.page !== PageEnum.BackToWork) {
-      return (
-        <MenuItem className="menu-item" onClick={() => this.props.history.push('/back-to-work')}>
-          <span className="menu-text">Back To Work</span>
-          <div className="btn btn-transparent svgOnHover">
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#roller"} className="text-white" />
-            </svg>
-          </div>
-        </MenuItem>
-      );
-    }
-    return "";
-  }
-
-  renderManageUsersItem() {
-    let isAdmin = this.props.user.roles.some(role => role.roleId === UserType.Admin);
-
-    if (isAdmin && this.props.page !== PageEnum.ManageUsers) {
-      return (
-        <MenuItem className="menu-item" onClick={() => this.props.history.push("/users")}>
-          <span className="menu-text">Manage Users</span>
-          <div className="btn btn-transparent svgOnHover">
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#users"} className="text-white" />
-            </svg>
-          </div>
-        </MenuItem>
-      );
-    }
-    return "";
   }
 
   render() {
@@ -147,43 +86,17 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           showDropdown={() => this.showDropdown()}
           showNotifications={() => this.showNotifications()}
         />
-        <Menu
-          className="menu-dropdown"
-          keepMounted
-          open={this.state.dropdownShown}
-          onClose={() => this.hideDropdown()}>
-          {this.renderViewAllItem()}
-          <MenuItem className="menu-item" onClick={() => this.creatingBrick()}>
-            <span className="menu-text">Start Building</span>
-            <div className="btn btn-transparent svgOnHover">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#trowel"} className="text-white" />
-              </svg>
-            </div>
-          </MenuItem>
-          {this.renderBackToWorkItem()}
-          {this.renderManageUsersItem()}
-          <MenuItem className="view-profile menu-item" onClick={() => this.props.history.push("/user-profile")}>
-            <span className="menu-text">View Profile</span>
-            <div className="btn btn-transparent svgOnHover">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#user"} className="text-white" />
-              </svg>
-            </div>
-          </MenuItem>
-          <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
-            <span className="menu-text">Logout</span>
-            <div className="btn btn-transparent svgOnHover">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#logout-thick"} className="text-white" />
-              </svg>
-            </div>
-          </MenuItem>
-        </Menu>
+        <MenuDropdown
+          dropdownShown={this.state.dropdownShown}
+          hideDropdown={() => this.hideDropdown()}
+          user={this.props.user}
+          page={this.props.page}
+          history={this.props.history}
+          onLogout={() => this.handleLogoutOpen()}
+          forgetBrick={() => {}}
+        />
         <NotificationPanel
+          history={this.props.history}
           shown={this.state.notificationsShown}
           handleClose={() => this.hideNotifications()}
           anchorElement={() => ReactDOM.findDOMNode(this.pageHeader.current)}

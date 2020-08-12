@@ -1,0 +1,87 @@
+@import '../../assets/sass/partials/variables';
+@import '../../assets/sass/partials/mixins';
+@import '../../assets/sass/partials/extensions';
+
+.manage-classrooms-page {
+  $base-filter-padding-left: 2vw;
+
+  .brick-row-container {
+    background: var(--white);
+
+    .brick-row-title {
+      padding-top: 0.5vh !important;
+    }
+  }
+
+  .sort-by-box {
+    padding-top: 4vh !important;
+    padding-left: $base-filter-padding-left !important;
+    padding-bottom: 1vw !important;
+
+    .class-header,
+    .record-header {
+      letter-spacing: 0.25vw;
+      font-size: 1.3vw;
+    }
+
+    .record-header {
+      color: var(--dark-gray);
+      font-family: $font-family-regular;
+    }
+
+    .class-header {
+      font-family: $font-family-bold;
+    }
+  }
+
+  .create-class-button {
+    cursor: pointer;
+    padding-left: $base-filter-padding-left !important;
+    padding-bottom: 1vh !important;
+    margin-bottom: 1vh;
+    letter-spacing: 0.02vw;
+    font-size: 1.1vw;
+    font-family: $font-family-bold;
+  }
+
+  .filter-header {
+    text-transform: capitalize !important;
+    padding-left: $base-filter-padding-left !important;
+    font-size: 1vw !important;
+    letter-spacing: 0.05vw !important;
+  }
+
+  .users-table {
+    height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - 5.2vw - 15vh) !important;
+  }
+
+  .selected-column {
+    font-family: $font-family-regular;
+    letter-spacing: 0;
+
+    .selected-count {
+      margin-left: 1.4vw;
+      margin-right: 0.2vw;
+    }
+
+    svg {
+      padding-top: 0.4vh;
+      width: 1.7vw;
+      height: 1.4vw;
+    }
+  }
+
+  .MuiRadio-root.MuiIconButton-root {
+    padding: 0 !important;
+
+    .MuiSvgIcon-root {
+      fill: var(--theme-dark-blue) !important;
+      padding: 0;
+      height: 2vw;
+      width: 2vw;
+    }
+  }
+  .user-radio-column {
+    padding-left: 0 !important;
+  }
+}

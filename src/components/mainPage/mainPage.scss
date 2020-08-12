@@ -3,6 +3,8 @@
 @import '../../assets/sass/partials/extensions';
 
 .mainPage {
+  $welcome-col-width: 35.2vw;
+  $first-col-width: 29.6vw;
   background: var(--theme-dark-blue);
   position: fixed;
   width: 100%;
@@ -10,7 +12,7 @@
   font-family: $font-family-black;
 
   .welcome-col {
-    width: 35.2vw;
+    width: $welcome-col-width;
     text-align: center;
     padding-top: 15vh;
 
@@ -28,17 +30,40 @@
       .welcome-name {
         font-size: 2.5vw;
         letter-spacing: 0.73vw;
-        margin-top: 4.2vh;
+        margin-top: 3.2vh;
         font-weight: 600;
         text-transform: uppercase;
-        font-family: 'Brandon Grotesque Thin';
+        font-family: $font-family-light;
         color: var(--theme-orange);
+      }
+      .notifications-text {
+        margin-top: 10vh;
+        letter-spacing: 0.1vw;
+        font-family: $font-family-light;
+        font-size: 1.5vw;
+
+        &.clickable {
+          cursor: pointer;
+        }
+      }
+
+      .notifications-text-2, .notifications-text-3 {
+        margin-top: 0.6vh;
+        color: var(--tab-gray);
+        font-family: 'Brandon Grotesque Light Italic';
+        letter-spacing: 0.05vw;
+        font-size: 1.2vw;
+      }
+
+      b {
+        font-weight: normal !important;
+        font-family: $font-family-bold;
       }
     }
   }
 
   .first-col {
-    width: 29.6vw;
+    width: $first-col-width;
     height: 100%;
 
     .first-item {
@@ -50,36 +75,27 @@
       flex-direction: column;
     }
     .second-item {
+      position: relative;
       background: var(--light-blue);
       margin-top: 4.6vh;
       height: 6.2vh;
+      text-align: center;
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
     }
   }
 
   .second-col {
-    margin-left: 2.65vw;
-    width: 29.7vw;
-    height: 100%;
+    color: var(--white);
+    letter-spacing: 0.3vw;
+    font-size: 1.4vw;
+    font-family: $font-family-light;
+    width: calc(100vw - #{$welcome-col-width} - #{$first-col-width});
+    @extend %flexCenter;
 
-    .first-item {
-      background: var(--light-blue);
-      height: 34.8vh;
-      border-bottom-left-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
+    div {
+      cursor: pointer;
     }
-    .second-item {
-      background: var(--light-blue);
-      margin-top: 4.6vh;
-      height: 60.6vh;
-      border-top-left-radius: $border-radius;
-      border-top-right-radius: $border-radius;
-    }
-  }
-
-  .item-image {
-    height: 10.1vh;
   }
 
   .view-item-container,
@@ -177,41 +193,31 @@
       }
     }
   }
-  .logout-button {
-    cursor: pointer;
+  .main-page-menu {
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    width: 16vw;
+    height: $page-head-height;
+    right: 0;
     position: fixed;
-    top: 3.7vh;
-    right: 1.8vw;
-    @extend %flexCenter;
-    .logout-image {
-      @include phone_and_tabletP {
-        width: 5vw;
-        height: 5vw;
-        min-height: 100%;
-      }
-      @include tabletP {
-        width: 2vw;
-        height: 2vw;
-      }
+    background: var(--light-blue);
+    transition: all 150ms;
+    border-bottom-left-radius: 2vw;
+
+    &.menu-expanded {
+      width: 16vw;
+      border-bottom-left-radius: 0;
     }
-    span {
-      font-family: $font-family-regular;
-      @include phone_and_tabletP {
-        font-size: 4vw;
-        letter-spacing: 1vw;
-      }
-      @include tabletP {
-        letter-spacing: 0.25vw;
-        color: var(--white);
-        font-size: 1.24vw;
-      }
-    }
-    &:hover {
-      span {
-        font-family: $font-family-bold;
-      }
+
+    &.notification-expanded {
+      width: 25vw;
+      border-bottom-left-radius: 0;
     }
   }
+  
   .mobile-main-page {
     width: 100%;
     height: 100vh;
@@ -251,5 +257,12 @@
         }
       }
     }
+  }
+
+  .policy-text {
+    position: fixed;
+    font-family: $font-family-regular;
+    bottom: 0vh;
+    right: 10vw;
   }
 }

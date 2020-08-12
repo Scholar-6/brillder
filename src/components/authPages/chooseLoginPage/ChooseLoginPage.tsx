@@ -1,16 +1,18 @@
 import React from "react";
 import { History } from 'history';
 import { Grid, Hidden } from "@material-ui/core";
-import sprite from "assets/img/icons-sprite.svg";
 
 import './ChooseLoginPage.scss';
-
+import sprite from "assets/img/icons-sprite.svg";
+import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 
 interface ChooseLoginProps {
   history: History;
 }
 
 const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
+  const [isPolicyOpen, setPolicyDialog] = React.useState(false);
+
   const moveToLogin = () => props.history.push('/login');
 
   const renderLogo = () => {
@@ -66,7 +68,9 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
           </Grid>
           <Grid container direction="row" className="third-row">
             <div className="first-col"></div>
-            <div className="second-col"></div>
+            <div className="second-col policy-text">
+              <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
+            </div>
             <div className="third-col"></div>
           </Grid>
         </div>
@@ -81,8 +85,6 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
           </div>
         </div>
         <div className="first-col">
-          <div className="first-item">
-          </div>
           <div className="second-item">
             <div className="logo-box">
               <svg
@@ -108,14 +110,14 @@ const ChooseLoginPage: React.FC<ChooseLoginProps> = (props) => {
                 </svg>
                 <span>Register &nbsp;|&nbsp; Sign in with Google</span>
               </a>
+              <div className="mobile-policy-text">
+                <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
+              </div>
             </div>
           </div>
         </div>
-        <div className="second-col">
-          <div className="first-item"></div>
-          <div className="second-item"></div>
-        </div>
       </Hidden>
+      <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
     </Grid>
   );
 }

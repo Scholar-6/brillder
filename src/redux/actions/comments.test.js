@@ -52,4 +52,48 @@ describe("comment actions", () => {
         expect(store.getActions()).toContainEqual(expectedAction);
         expect(mockAxios.get).toHaveBeenCalledTimes(1);
     });
+
+    it("returns the correct action on a successful new comment", async () => {
+        const store = mockStore({ comments: [], error: "" });
+
+        const expectedAction = {
+            type: types.CREATE_COMMENT_SUCCESS,
+            newComment: mockComment
+        };
+
+        mockAxios.post.mockResolvedValue({ data: mockComment });
+        await store.dispatch(comments.createComment({ ...mockComment, id: undefined }));
+
+        expect(store.getActions()).toContainEqual(expectedAction);
+        expect(mockAxios.post).toHaveBeenCalledTimes(1);
+    });
+
+    it("returns the correct action on a failed new comment", async () => {
+        const store = mockStore({ comments: [], error: "" });
+
+        const expectedAction = {
+            type: types.CREATE_COMMENT_FAILURE,
+            error: "Mock Error."
+        };
+
+        mockAxios.post.mockRejectedValue({ message: expectedAction.error });
+        await store.dispatch(comments.createComment({ ...mockComment, id: undefined }));
+
+        expect(store.getActions()).toContainEqual(expectedAction);
+        expect(mockAxios.post).toHaveBeenCalledTimes(1);
+    })
+
+    it("returns the correct action on an edit request", () => {
+        const store = mockStore({ comments: [mockComment], error: "" });
+
+        const expectedAction = {
+            type: types.EDIT_COMMENT,
+            commentId: 1,
+            newText: "New Comment Text"
+        };
+
+        store.dispatch(comments.editComment(1, "New Comment Text"));
+
+        expect(store.getActions()).toContainEqual(expectedAction);
+    });
 })

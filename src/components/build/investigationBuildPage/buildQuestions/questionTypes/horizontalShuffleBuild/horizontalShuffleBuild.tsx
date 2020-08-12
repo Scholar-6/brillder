@@ -12,7 +12,7 @@ import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButto
 
 
 const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
-  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [height, setHeight] = React.useState('0%');
   useEffect(() => calculateHeight());
@@ -70,6 +70,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
           }
           <DocumentWirisCKEditor
             disabled={locked}
+            editOnly={editOnly}
             data={answer.value}
             validationRequired={validationRequired}
             toolbar={['mathType', 'chemType']}

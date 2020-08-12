@@ -5,7 +5,36 @@
 
 .MuiExpansionPanelDetails-root {
   padding-top: 0 !important;
+
   .MuiTypography-root {
     font-size: 0.8vw;
+  }
+}
+
+.play-sidebar {
+  .assign-button-container {
+    @extend %flexCenter;
+  }
+  .assign-class-button {
+    background: var(--theme-orange);
+    outline: none;
+    border: none;
+    margin-top: 4.6vh;
+    padding: 1.3vh 0;
+    border-radius: 0.6vw;
+    width: 79%;
+    padding-right: 0.5vw;
+    font-size: 1.6vw;
+    font-family: $font-family-bold;
+
+    &.btn-small {
+      margin-top: 6vh !important;
+      width: 3.5vw !important;
+      height: 3.5vw;
+      font-size: 1vw;
+      @extend %flexCenter;
+      padding: 0 !important;
+      justify-content: center !important;
+    }
   }
 }

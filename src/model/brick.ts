@@ -26,6 +26,11 @@ export interface Author {
   type: UserType;
 }
 
+export interface Editor {
+  id: number;
+  username: string;
+}
+
 export interface Subject {
   id: number;
   name: string;
@@ -51,6 +56,7 @@ export interface Brick {
   type: number;
   questions: Question[];
   author: Author;
+  editor?: Editor;
   expanded?: boolean;
   expandFinished?: boolean;
   status: BrickStatus;

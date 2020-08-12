@@ -14,7 +14,7 @@ import { showSameAnswerPopup } from '../service/questionBuild';
 export interface PairMatchBuildProps extends UniqueComponentProps { }
 
 const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
-  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [height, setHeight] = React.useState('0%');
   useEffect(() => calculateHeight());
@@ -67,12 +67,12 @@ const PairMatchBuildComponent: React.FC<PairMatchBuildProps> = ({
     return (
       <Grid key={i} container direction="row" className="answers-container">
         <PairOptionComponent
-          index={i} locked={locked} answer={answer}
+          index={i} locked={locked} editOnly={editOnly} answer={answer}
           validationRequired={validationRequired}
           update={update} save={save}
         />
         <PairAnswerComponent
-          index={i} length={data.list.length} locked={locked} answer={answer}
+          index={i} length={data.list.length} locked={locked} editOnly={editOnly} answer={answer}
           validationRequired={validationRequired}
           removeFromList={removeFromList} update={update} save={save}
           onBlur={() => showSameAnswerPopup(i, state.list, openSameAnswerDialog)}
