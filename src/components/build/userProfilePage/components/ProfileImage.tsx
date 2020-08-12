@@ -10,6 +10,15 @@ interface ProfileImageProps {
 }
 
 const ProfileImage: React.FC<ProfileImageProps> = (props) => {
+  const {profileImage} = props;
+  const handleClick = () => {
+    if (profileImage) {
+      props.setImage('');
+    } else {
+      openUploadDialog();
+    }
+  }
+
   const openUploadDialog = () => {
     const el = document.createElement("input");
     el.setAttribute("type", "file");
@@ -36,10 +45,10 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     if (props.imageUploadSuccess) {
       className += " upload-success";
     }
-    if (props.profileImage) {
+    if (profileImage) {
       return (
         <img
-          src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.profileImage}`}
+          src={`${process.env.REACT_APP_BACKEND_HOST}/files/${profileImage}`}
           className={className} alt=""
         />
       );
@@ -55,7 +64,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
   return (
     <div className="profile-image-container">
       <div className="profile-image svgOnHover">{renderImage()}</div>
-      <div className="add-image-button svgOnHover" onClick={openUploadDialog}>
+      <div className="add-image-button svgOnHover" onClick={handleClick}>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#plus"} className="text-white" />
