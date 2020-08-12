@@ -118,15 +118,15 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
       this.animateText(notificationText, FieldName.animatedNotificationText, ()=> {
         const haveAccess = checkTeacherEditorOrAdmin(this.props.user);
         if (haveAccess) {
-          const text = '"Nothing strengthens authority so much as silence"'.split("");
+          const text = '“Nothing strengthens authority so much as silence”'.split("");
           this.animateText(text, FieldName.animatedNotificationText2, () => {
-            const text = '- Leonardo'.split("");
+            const text = '- Leonardo da Vinci'.split("");
             this.animateText(text, FieldName.animatedNotificationText3, () => {
               this.setState({ animationStarted: false });
             });
           });
         } else {
-          const text = "Why then the world's mine oyster...".split("");
+          const text = "“Why then the world's mine oyster...”".split("");
           this.animateText(text, FieldName.animatedNotificationText2, () => { 
             const text = '- Shakespeare'.split("");
             this.animateText(text, FieldName.animatedNotificationText3, () => {
