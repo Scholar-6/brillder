@@ -9,10 +9,10 @@ import { User, UserType } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
-import sprite from "assets/img/icons-sprite.svg";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 import AddButton from './AddButton';
+import StudentTable from './StudentTable';
 import UsersPagination from './UsersPagination';
 import RoleDescription from 'components/baseComponents/RoleDescription';
 
@@ -28,11 +28,9 @@ interface UsersListProps {
   history: any;
 }
 
-enum UserSortBy {
+export enum UserSortBy {
   None,
   Name,
-  Role,
-  Status,
 }
 
 interface UsersListState {
@@ -43,9 +41,6 @@ interface UsersListState {
 
   searchString: string;
   isSearching: boolean;
-
-  subjects: any[];
-  roles: any[];
 
   filterExpanded: boolean;
   filterHeight: string;
@@ -65,16 +60,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       users: [],
       page: 0,
       pageSize: 12,
-      subjects: [],
       filterExpanded: true,
-
-      roles: [
-        { name: "Student", type: UserType.Student, checked: false },
-        { name: "Teacher", type: UserType.Teacher, checked: false },
-        { name: "Builder", type: UserType.Builder, checked: false },
-        { name: "Editor", type: UserType.Editor, checked: false },
-        { name: "Admin", type: UserType.Admin, checked: false },
-      ],
 
       totalCount: 0,
       searchString: "",
@@ -90,19 +76,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     };
 
     this.getUsers(this.state.page);
-
-    axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
-      withCredentials: true,
-    }).then((res) => {
-      this.setState({ ...this.state, subjects: res.data });
-    }).catch((error) => {
-      alert("Can`t get subjects");
-    });
   }
 
   getUsers(
     page: number,
-    subjects: number[] = [],
     sortBy: UserSortBy = UserSortBy.None,
     isAscending: any = null,
     search: string = ""
@@ -121,10 +98,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (sortBy) {
       if (sortBy === UserSortBy.Name) {
         orderBy = "user.lastName";
-      } else if (sortBy === UserSortBy.Status) {
-        orderBy = "user.status";
-      } else if (sortBy === UserSortBy.Role) {
-        orderBy = "user.roles";
       }
     }
 
@@ -142,7 +115,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         pageSize: this.state.pageSize,
         page: page.toString(),
         searchString,
-        subjectFilters: subjects,
+        subjectFilters: [],
         roleFilters: [],
         orderBy,
         isAscending,
@@ -166,7 +139,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   search() {
     const { searchString } = this.state;
-    this.getUsers(0, [], this.state.sortBy, this.state.isAscending, searchString);
+    this.getUsers(0, this.state.sortBy, this.state.isAscending, searchString);
   }
 
   toggleUser(i: number) {
@@ -193,26 +166,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   };
 
-  renderUserType(user: User) {
-    let type = "";
-
-    for (let role of user.roles) {
-      if (role.roleId === UserType.Admin) {
-        type += "A";
-      } else if (role.roleId === UserType.Builder) {
-        type += "B";
-      } else if (role.roleId === UserType.Editor) {
-        type += "E";
-      } else if (role.roleId === UserType.Student) {
-        type += "S";
-      } else if (role.roleId === UserType.Teacher) {
-        type += "T";
-      }
-    }
-    return type;
-  }
-
-  sortBy(sortBy: UserSortBy) {
+  sort(sortBy: UserSortBy) {
     let isAscending = this.state.isAscending;
 
     if (sortBy === this.state.sortBy) {
@@ -222,97 +176,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       isAscending = false;
       this.setState({ ...this.state, isAscending, sortBy });
     }
-    this.getUsers(this.state.page, [], sortBy, isAscending);
+    this.getUsers(this.state.page, sortBy, isAscending);
   }
 
   moveToPage(page: number) {
     this.setState({ ...this.state, page, selectedUsers: [] });
     this.getUsers(page);
   };
-
-  renderSortArrow(currentSortBy: UserSortBy) {
-    const { sortBy, isAscending } = this.state;
-
-    return (
-      <img
-        className="sort-button"
-        alt=""
-        src={
-          sortBy === currentSortBy
-            ? !isAscending
-              ? "/feathericons/chevron-down.svg"
-              : "/feathericons/chevron-up.svg"
-            : "/feathericons/chevron-right.svg"
-        }
-        onClick={() => this.sortBy(currentSortBy)}
-      />
-    );
-  }
-
-  renderUserTableHead() {
-    return (
-      <tr>
-        <th className="subject-title">SC</th>
-        <th className="user-full-name" style={{ width: '20%' }}>
-          <Grid container>
-            NAME
-            {this.renderSortArrow(UserSortBy.Name)}
-          </Grid>
-        </th>
-        <th className="email-column" style={{ width: '27%' }}>EMAIL</th>
-        <th style={{ width: '29%' }}>
-          <Grid container>
-            CLASSES
-            {this.renderSortArrow(UserSortBy.Role)}
-          </Grid>
-        </th>
-        <th style={{ padding: 0 }}>
-          <Grid container className="selected-column">
-            <Radio disabled={true} />
-            <span className="selected-count">{this.state.selectedUsers.length}</span>
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#users"} />
-            </svg>
-            Selected
-          </Grid>
-        </th>
-        <th className="edit-button-column"></th>
-      </tr>
-    );
-  }
-
-  renderUsers() {
-    if (!this.state.users) {
-      return "";
-    }
-    return (
-      <div className="users-table">
-        <table cellSpacing="0" cellPadding="0">
-          <thead>{this.renderUserTableHead()}</thead>
-          <tbody>
-            {this.state.users.map((user: any, i: number) => {
-              return (
-                <tr className="user-row" key={i}>
-                  <td></td>
-                  <td>
-                    <span className="user-first-name">{user.firstName} </span>
-                    <span className="user-last-name">{user.lastName}</span>
-                  </td>
-                  <td>{user.email}</td>
-                  <td></td>
-                  <td className="user-radio-column">
-                    <Radio checked={this.state.users[i].selected} onClick={() => this.toggleUser(i)} />
-                  </td>
-                  <td className="activate-button-container"></td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
 
   renderTableHeader() {
     return (
@@ -341,7 +211,14 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           </Grid>
           <Grid item xs={9} className="brick-row-container">
             {this.renderTableHeader()}
-            {this.renderUsers()}
+            <StudentTable
+              users={this.state.users}
+              selectedUsers={this.state.selectedUsers}
+              sortBy={this.state.sortBy}
+              isAscending={this.state.isAscending}
+              sort={sortBy => this.sort(sortBy)}
+              toggleUser={i => this.toggleUser(i)}
+            />
             <RoleDescription />
             <UsersPagination
               users={this.state.users}
