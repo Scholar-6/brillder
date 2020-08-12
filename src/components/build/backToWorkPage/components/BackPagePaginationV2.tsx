@@ -3,7 +3,8 @@ import { Grid } from "@material-ui/core";
 
 import { ThreeColumns } from "../model";
 
-import sprite from "assets/img/icons-sprite.svg";
+import NextButton from "components/baseComponents/pagination/NextButton";
+import PrevButton from "components/baseComponents/pagination/PrevButton";
 
 interface BackPageTitleProps {
   sortedIndex: number;
@@ -28,37 +29,6 @@ const BackPagePaginationV2: React.FC<BackPageTitleProps> = ({
   const showPrev = sortedIndex >= pageSize;
   const showNext = sortedIndex + pageSize <= longest;
 
-  const renderNextButton = () => {
-    if (showNext) {
-      return (
-        <button
-          className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
-          onClick={() => moveNext()}>
-          <svg className="svg w100 h100 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#arrow-down"} />
-          </svg>
-        </button>
-      );
-    }
-    return "";
-  }
-
-  const renderBackButton = () => {
-    if (showPrev) {
-      return (
-        <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
-          onClick={() => moveBack()}>
-          <svg className="svg w100 h100 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#arrow-up"} />
-          </svg>
-        </button>
-      );
-    }
-    return "";
-  }
-
   return (
     <Grid container direction="row" className="bricks-pagination">
       <Grid item xs={4} className="left-pagination">
@@ -71,8 +41,8 @@ const BackPagePaginationV2: React.FC<BackPageTitleProps> = ({
       </Grid>
       <Grid item xs={4} className="bottom-next-button">
         <div>
-          {renderBackButton()}
-          {renderNextButton()}
+          <PrevButton isShown={showPrev} onClick={moveBack} />
+          <NextButton isShown={showNext} onClick={moveNext} />
         </div>
       </Grid>
     </Grid>

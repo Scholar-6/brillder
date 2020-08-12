@@ -52,6 +52,10 @@ export function checkBuilder(roles: UserRole[]) {
   return false;
 }
 
+export function checkTeacherOrAdmin(roles: UserRole[]) {
+  return !!roles.some(r => r.roleId === UserType.Teacher || r.roleId === UserType.Admin);
+}
+
 export function checkEditor(roles: UserRole[]) {
   let isEditor = roles.some((role:any) => role.roleId === UserType.Editor);
   if (isEditor) {
@@ -93,5 +97,12 @@ export function canEdit(user: User) {
   return user.roles.some(role => {
     const { roleId } = role;
     return roleId === UserType.Editor || roleId === UserType.Admin;
+  });
+}
+
+export function checkTeacherEditorOrAdmin(user: User) {
+  return user.roles.some(role => {
+    const { roleId } = role;
+    return roleId === UserType.Teacher || roleId === UserType.Editor || roleId === UserType.Admin;
   });
 }

@@ -20,24 +20,25 @@ $play-mobile-height: calc(100vh - 55.8vw);
     .play-sidebar {
       text-align: right;
       justify-content: inherit;
-      $resize-icon-size: 2.6vw;
+      $resize-icon-size: 2.7vw;
       $icons-size: 2vw;
-      $right-padding: 1.5vw;
+      $right-padding: 1.6vw;
 
       .minimize-icon {
         cursor: pointer;
-        margin-top: 0.8vw;
-        margin-right: $right-padding;
+        margin-top: 1vw;
+        margin-right: 1.3vw;
         width: $resize-icon-size;
         height: $resize-icon-size;
       }
 
       .sidebar-button {
         margin-top: 3.5vh;
+        font-family: $font-family-bold !important;
         padding-right: $right-padding;
         width: 100%;
         align-items: center;
-        font-size: 1.6vw;
+        font-size: 1.55vw;
         text-align: right;
         justify-content: flex-end;
 
@@ -47,8 +48,9 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
 
         .svg {
-          width: $icons-size;
-          height: $icons-size;
+          $size: calc(#{$icons-size} * 1.11);
+          width: $size;
+          height: $size;
 
           use {
             color: var(--white) !important;
@@ -63,12 +65,33 @@ $play-mobile-height: calc(100vh - 55.8vw);
           fill: var(--yellow) !important;
         }
       }
+      .highlight-button {
+        margin-top: 2.5vh;
+        span {
+          margin-top: 0.4vw;
+          padding-right: 1.1vw;
+          letter-spacing: 0.03vw;
+          font-size: 1.6vw;
+        }
+      }
       .annotate-button {
+        padding-right: 1.76vw;
+        margin-top: 2.8vh;
+        font-size: 1.58vw;
+        span {
+          font-size: 1.6vw;
+          letter-spacing: 0.04vw;
+          padding-right: 1.3vw;
+        }
         span,
         use {
           color: var(--dark-gray) !important;
         }
         .svg {
+          margin-top: 0.2vw;
+          $size: calc(#{$icons-size} / 1.1);
+          width: $size;
+          height: $size;
           use {
             color: var(--dark-gray) !important;
           }
@@ -747,21 +770,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
             justify-content: center !important;
             align-items: center !important;
           }
-
-          .direction-info {
-            h2 {
-              @include phone_and_tabletP {
-                position: absolute;
-                bottom: 0;
-              }
-            }
-            span {
-              @include phone_and_tabletP {
-                bottom: -27px !important;
-                line-height: 20px !important;
-              }
-            }
-          }
         }
       }
 
@@ -855,18 +863,11 @@ $play-mobile-height: calc(100vh - 55.8vw);
             position: relative;
             margin: 0;
             > h2 {
+              width: 100%;
               margin-top: 0;
               margin-bottom: 0;
               font-family: $font-family-bold;
-
-              @include phone_and_tabletP {
-                font-size: 10.6vw;
-                width: max-content;
-              }
-
-              @include tabletP {
-                font-size: 2.6vw;
-              }
+              font-size: 2.6vw;
             }
 
             > h3,

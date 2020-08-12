@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Select, FormControl, Fab, SvgIcon/*, Collapse*/ } from '@material-ui/core';
+import { Grid, Select, FormControl, SvgIcon } from '@material-ui/core';
 import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
@@ -17,6 +17,7 @@ import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 import { Comment } from 'model/comments';
 import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
+import { User } from 'model/user';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -32,6 +33,8 @@ export interface QuestionProps {
   synthesis: string;
   validationRequired: boolean;
   comments: Comment[] | null;
+  currentUser: User;
+  initSuggestionExpanded: boolean;
   saveBrick(): void;
   setQuestion(index: number, question: Question): void;
   updateComponents(components: any[]): void;
@@ -55,7 +58,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   ]);
   const [isCommingSoonOpen, setCommingSoon] = React.useState(false);
   const [scrollShown, setScroll] = React.useState(false);
-  const [commentsShown, setCommentsShown] = React.useState(false);
+  const [commentsShown, setCommentsShown] = React.useState(props.initSuggestionExpanded);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const { type } = question;
 
@@ -91,6 +94,13 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
       let el = workarea.current;
       el.scrollBy(0, 100);
     }
+  }
+
+  const getCommentCount = () => {
+    return props.comments?.filter(comment => // count comments...
+      (comment.question?.id ?? -1) === question.id && // on the correct question...
+      comment.readBy.filter(user => user.id === props.currentUser.id).length === 0 // and where it has not been read.
+    ).length ?? 0
   }
 
   return (
@@ -195,7 +205,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                         </svg>
                       </SvgIcon>
                       <div className="comments-count">
-                        {props.comments?.filter(comment => (comment.question?.id ?? -1) === question.id).length ?? 0}
+                        {getCommentCount()}
                       </div>
                     </div>
                     <Grid container direction="row" alignItems="center">
@@ -268,6 +278,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
 }
 
 const mapState = (state: ReduxCombinedState) => ({
+  currentUser: state.user.user,
   comments: state.comments.comments
 });
 

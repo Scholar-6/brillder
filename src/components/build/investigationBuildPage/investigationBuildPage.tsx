@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import update from "immutability-helper";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 
 import "./investigationBuildPage.scss";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
@@ -33,7 +34,7 @@ import {
   QuestionTypeEnum,
 } from "model/question";
 import actions from "../../../redux/actions/brickActions";
-import { socketUpdateBrick, socketStartEditing } from "redux/actions/socket";
+import { socketUpdateBrick, socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
 import { validateQuestion } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
@@ -59,12 +60,32 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
   user: User;
   startEditing(brickId: number): void;
+  changeQuestion(questionId?: number): void;
   saveBrick(brick: any): any;
   updateBrick(brick: any): any;
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
-  const brickId = parseInt(props.match.params.brickId);
+  const { params } = props.match;
+  const brickId = parseInt(params.brickId);
+  
+  const values = queryString.parse(props.location.search);
+  let initSuggestionExpanded = false;
+  if (values.suggestionsExpanded) {
+    initSuggestionExpanded = true;
+  }
+
+  let initQuestionId = -1;
+  if (params.questionId) {
+    try {
+      let questionId = parseInt(params.questionId);
+      if (questionId >= 1) {
+        initQuestionId = questionId;
+      }
+    } catch {
+      console.log('can`t parse question id');
+    }
+  }
 
   const { history } = props;
 
@@ -77,7 +98,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
-  const [proposalResult, setProposalResult] = React.useState({ isOpen: false, isValid: proposalRes.isValid, url: proposalRes.url});
+  const [proposalResult, setProposalResult] = React.useState({ isOpen: false, isValid: proposalRes.isValid, url: proposalRes.url });
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
   const [activeQuestionType, setActiveType] = React.useState(QuestionTypeEnum.None);
@@ -112,9 +133,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   /* Synthesis */
 
   // start editing on socket on load.
-  useEffect(() => {
-    props.startEditing(brickId);
-  }, [brickId]);
+  useEffect(() => {props.startEditing(brickId)}, [brickId]);
 
   // update on socket when things change.
   useEffect(() => {
@@ -170,11 +189,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if (isSynthesisPage === true) {
     if (activeQuestion) {
       unselectQuestions();
+      props.changeQuestion(undefined); // change to synthesis page on socket.
       return <PageLoader content="...Loading..." />;
     }
   } else if (!activeQuestion) {
     console.log("Can`t find active question");
     activeQuestion = {} as Question;
+  } else {
+    props.changeQuestion(activeQuestion.id);
   }
 
   /* Changing question number by tabs in build */
@@ -312,11 +334,22 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         } catch (e) { }
       }
       if (parsedQuestions.length > 0) {
-        let buildQuestion = GetCashedBuildQuestion();
-        if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
-          parsedQuestions[buildQuestion.questionNumber].active = true;
-        } else {
-          parsedQuestions[0].active = true;
+        let initQuestionSet = false;
+        if (initQuestionId) {
+          for (const question of parsedQuestions) {
+            if (question.id === initQuestionId) {
+              question.active = true;
+              initQuestionSet = true;
+            }
+          }
+        }
+        if (initQuestionSet === false) {
+          let buildQuestion = GetCashedBuildQuestion();
+          if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
+            parsedQuestions[buildQuestion.questionNumber].active = true;
+          } else {
+            parsedQuestions[0].active = true;
+          }
         }
         setQuestions(update(questions, { $set: parsedQuestions }));
         setStatus(update(loaded, { $set: true }));
@@ -448,6 +481,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         canEdit={canEdit}
         locked={locked}
         validationRequired={validationRequired}
+        initSuggestionExpanded={initSuggestionExpanded}
         getQuestionIndex={getQuestionIndex}
         setQuestion={setQuestion}
         toggleLock={toggleLock}
@@ -632,7 +666,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         />
         <ProposalInvalidDialog
           isOpen={proposalResult.isOpen}
-          close={() => setProposalResult({...proposalResult, isOpen: false })}
+          close={() => setProposalResult({ ...proposalResult, isOpen: false })}
           submit={() => submitInvalidBrick()}
           hide={() => moveToInvalidProposal()}
         />
@@ -657,6 +691,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   startEditing: (brickId: number) => dispatch(socketStartEditing(brickId)),
+  changeQuestion: (questionId?: number) => dispatch(socketNavigateToQuestion(questionId)),
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   updateBrick: (brick: any) => dispatch(socketUpdateBrick(brick))
 });

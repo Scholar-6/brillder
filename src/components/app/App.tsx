@@ -21,6 +21,7 @@ import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
 import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
 import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
 import UserProfilePage from '../build/userProfilePage/UserProfile';
+import ManageClassrooms from 'components/manageClassrooms/ManageClassrooms';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
@@ -84,14 +85,17 @@ const App: React.FC = (props: any) => {
       <Switch>
         <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
-        <StudentRoute path="/play/dashboard" component={Dashboard} />
+        <StudentRoute path={map.ViewAllPage} component={Dashboard} />
+
+        <BuildRoute path="/manage-classrooms" component={ManageClassrooms} location={location} /> 
 
         <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} location={location} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} location={location} />
+        <BuildBrickRoute path="/build/brick/:brickId/build/investigation/question-component/:questionId" component={InvestigationBuildPage} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
-        <BuildRoute path="/back-to-work" component={BackToWorkPage} location={location} />
+        <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
         <BuildRoute path="/users" component={UsersListPage} location={location} />
         <BuildRoute path="/user-profile/:userId" component={UserProfilePage} location={location} />
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />
