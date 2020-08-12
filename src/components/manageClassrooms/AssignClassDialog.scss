@@ -3,6 +3,10 @@
 @import '../../assets/sass/partials/extensions';
 
 .assign-class-dialog {
+  .MuiDialog-container {
+    padding-left: 20vw;
+    padding-top: $page-head-height;
+  }
   .dialog-header {
     svg {
       margin-left: 0.3vw;
