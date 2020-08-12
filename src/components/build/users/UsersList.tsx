@@ -19,6 +19,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import RoleDescription from "components/baseComponents/RoleDescription";
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -612,18 +613,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     );
   }
 
-  renderRoleDescription() {
-    return (
-      <div className="role-description">
-        <span className="bold">S</span>: Student,&nbsp;
-        <span className="bold">T</span>: Teacher,&nbsp;
-        <span className="bold">B</span>: Builder,&nbsp;
-        <span className="bold">E</span>: Editor,&nbsp;
-        <span className="bold">A</span>: Admin
-      </div>
-    );
-  }
-
   renderTableHeader() {
     return (
       <div className="user-header">
@@ -652,7 +641,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           <Grid item xs={9} className="brick-row-container">
             {this.renderTableHeader()}
             {this.renderUsers()}
-            {this.renderRoleDescription()}
+            <RoleDescription />
             {this.renderPagination()}
           </Grid>
         </Grid>
