@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Grid, Radio } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import axios from "axios";
 import { connect } from "react-redux";
 
 import './ManageClassrooms.scss';
 
-import { User, UserType } from "model/user";
+import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
@@ -15,6 +15,7 @@ import AddButton from './AddButton';
 import StudentTable from './StudentTable';
 import UsersPagination from './UsersPagination';
 import RoleDescription from 'components/baseComponents/RoleDescription';
+import AssignClassDialog from './AssignClassDialog';
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
@@ -50,6 +51,7 @@ interface UsersListState {
   isAscending: boolean;
   isClearFilter: boolean;
 
+  assignClassOpen: boolean;
   selectedUsers: MUser[];
 }
 
@@ -72,6 +74,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       isAdmin: checkAdmin(props.user.roles),
       isClearFilter: false,
 
+      assignClassOpen: false,
       selectedUsers: []
     };
 
@@ -135,6 +138,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     } else {
       this.setState({ ...this.state, searchString });
     }
+  }
+
+  openAssignDialog() {
+    this.setState({ assignClassOpen: true });
   }
 
   search() {
@@ -218,6 +225,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
               isAscending={this.state.isAscending}
               sort={sortBy => this.sort(sortBy)}
               toggleUser={i => this.toggleUser(i)}
+              assignToClass={() => this.openAssignDialog()}
             />
             <RoleDescription />
             <UsersPagination
@@ -229,6 +237,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             />
           </Grid>
         </Grid>
+        <AssignClassDialog users={this.state.selectedUsers} isOpen={this.state.assignClassOpen} submit={()=>{}} close={()=>{}} />
       </div>
     );
   }

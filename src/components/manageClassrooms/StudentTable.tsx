@@ -15,6 +15,7 @@ interface StudentTableProps {
 
   toggleUser(i: number): void;
   sort(sortBy: UserSortBy): void;
+  assignToClass(): void;
 }
 
 const StudentTable: React.FC<StudentTableProps> = props => {
@@ -72,7 +73,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
 
   const renderAssignButton = () => {
     return (
-      <div className="class-assign-button">
+      <div className="class-assign-button" onClick={props.assignToClass}>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#plus"} />
