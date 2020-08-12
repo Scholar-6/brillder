@@ -49,7 +49,8 @@
 
       .notifications-text-2, .notifications-text-3 {
         margin-top: 0.6vh;
-        font-family: $font-family-light;
+        color: var(--tab-gray);
+        font-family: 'Brandon Grotesque Light Italic';
         letter-spacing: 0.05vw;
         font-size: 1.2vw;
       }
