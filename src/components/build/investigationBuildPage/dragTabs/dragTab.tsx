@@ -6,13 +6,12 @@ export interface DragTabProps {
   id: any
   index: number,
   active: boolean,
-  isValid: boolean,
   selectQuestion: Function,
   removeQuestion: Function,
   getUnreadComments(questionId: number): number
 }
 
-const DragTab: React.FC<DragTabProps> = ({ id, index, active, isValid, selectQuestion, removeQuestion, getUnreadComments }) => {
+const DragTab: React.FC<DragTabProps> = ({ id, index, active, selectQuestion, removeQuestion, getUnreadComments }) => {
   const removeTab = (event: React.ChangeEvent<any>) => {
     event.stopPropagation();
     removeQuestion(index);
