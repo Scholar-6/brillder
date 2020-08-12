@@ -1,16 +1,8 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
-import sprite from "assets/img/icons-sprite.svg";
-
-
-interface BricksListProps {
-  pageSize: number;
-  sortedIndex: number;
-  bricksLength: number;
-  moveAllBack(): void;
-  moveAllNext(): void;
-}
+import NextButton from "components/baseComponents/pagination/NextButton";
+import PrevButton from "components/baseComponents/pagination/PrevButton";
 
 const DashboardPagination: React.FC<any> = ({ ...props }) => {
   const { pageSize, sortedIndex, bricksLength } = props;
@@ -24,31 +16,6 @@ const DashboardPagination: React.FC<any> = ({ ...props }) => {
   let lastBrickIndex = sortedIndex + pageSize;
   if (sortedIndex + pageSize > bricksLength) {
     lastBrickIndex = bricksLength;
-  }
-
-  const renderPrevButton = () => {
-    return (
-      <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
-        onClick={() => props.moveAllBack()}>
-        <svg className="svg w100 h100 active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#arrow-up"} />
-        </svg>
-      </button>
-    );
-  }
-
-  const renderNextButton = () => {
-    return (
-      <button
-        className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
-        onClick={() => props.moveAllNext()}>
-        <svg className="svg w100 h100 active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#arrow-down"} />
-        </svg>
-      </button>
-    );
   }
 
   return (
@@ -65,8 +32,8 @@ const DashboardPagination: React.FC<any> = ({ ...props }) => {
       </Grid>
       <Grid container item xs={4} justify="center">
         <div className="bottom-next-button">
-          {showPrev ? renderPrevButton() : ""}
-          {showNext ? renderNextButton() : ""}
+          <PrevButton isShown={showPrev} onClick={props.moveAllBack} />
+          <NextButton isShown={showNext} onClick={props.moveAllNext} />
         </div>
       </Grid>
     </Grid>
