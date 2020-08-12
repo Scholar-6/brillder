@@ -4,6 +4,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import { uploadFile } from "components/services/uploadFile";
 
 interface ProfileImageProps {
+  imageUploadSuccess: boolean;
   profileImage: string;
   setImage(profileImage: string): void;
 }
@@ -31,11 +32,15 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
   };
 
   const renderImage = () => {
+    let className = "real-profile-image"
+    if (props.imageUploadSuccess) {
+      className += " upload-success";
+    }
     if (props.profileImage) {
       return (
         <img
           src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.profileImage}`}
-          className="real-profile-image" alt=""
+          className={className} alt=""
         />
       );
     }
