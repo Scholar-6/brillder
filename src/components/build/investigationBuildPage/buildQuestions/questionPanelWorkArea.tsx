@@ -34,6 +34,7 @@ export interface QuestionProps {
   validationRequired: boolean;
   comments: Comment[] | null;
   currentUser: User;
+  initSuggestionExpanded: boolean;
   saveBrick(): void;
   setQuestion(index: number, question: Question): void;
   updateComponents(components: any[]): void;
@@ -57,7 +58,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   ]);
   const [isCommingSoonOpen, setCommingSoon] = React.useState(false);
   const [scrollShown, setScroll] = React.useState(false);
-  const [commentsShown, setCommentsShown] = React.useState(false);
+  const [commentsShown, setCommentsShown] = React.useState(props.initSuggestionExpanded);
   const [workarea] = React.useState(React.createRef() as React.RefObject<HTMLDivElement>);
   const { type } = question;
 

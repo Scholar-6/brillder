@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import update from "immutability-helper";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 
 import "./investigationBuildPage.scss";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
@@ -67,6 +68,13 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const { params } = props.match;
   const brickId = parseInt(params.brickId);
+  
+  const values = queryString.parse(props.location.search);
+  let initSuggestionExpanded = false;
+  if (values.suggestionsExpanded) {
+    initSuggestionExpanded = true;
+  }
+
   let initQuestionId = -1;
   if (params.questionId) {
     try {
@@ -125,9 +133,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   /* Synthesis */
 
   // start editing on socket on load.
-  useEffect(() => {
-    props.startEditing(brickId);
-  }, [brickId]);
+  useEffect(() => props.startEditing(brickId), [brickId]);
 
   // update on socket when things change.
   useEffect(() => {
@@ -475,6 +481,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         canEdit={canEdit}
         locked={locked}
         validationRequired={validationRequired}
+        initSuggestionExpanded={initSuggestionExpanded}
         getQuestionIndex={getQuestionIndex}
         setQuestion={setQuestion}
         toggleLock={toggleLock}
