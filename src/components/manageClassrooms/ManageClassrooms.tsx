@@ -5,22 +5,18 @@ import { connect } from "react-redux";
 
 import './ManageClassrooms.scss';
 
-import { User, UserType, UserStatus } from "model/user";
+import { User, UserType } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
 import sprite from "assets/img/icons-sprite.svg";
-import PageHeadWithMenu, {
-  PageEnum,
-} from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 import AddButton from './AddButton';
+import UsersPagination from './UsersPagination';
+import RoleDescription from 'components/baseComponents/RoleDescription';
 
-const mapState = (state: ReduxCombinedState) => ({
-  user: state.user.user,
-});
-
-
+const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
 
 interface MUser extends User {
@@ -153,35 +149,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       },
       { withCredentials: true }
     ).then((res) => {
-      res.data.pageData.map((u:any) => u.selected = false);
-      this.setState({
-        ...this.state,
-        users: res.data.pageData,
-        totalCount: res.data.totalCount,
-      });
+      res.data.pageData.map((u: any) => u.selected = false);
+      this.setState({ ...this.state, users: res.data.pageData, totalCount: res.data.totalCount });
     }).catch((error) => {
       alert("Can`t get users");
     });
-  }
-
-  move(brickId: number) {
-    this.props.history.push(
-      `/build/brick/${brickId}/build/investigation/question`
-    );
-  }
-
-  handleSortChange = (e: any) => { };
-
-  getCheckedRoles() {
-    const result = [];
-    const { state } = this;
-    const { roles } = state;
-    for (let role of roles) {
-      if (role.checked) {
-        result.push(role.type);
-      }
-    }
-    return result;
   }
 
   searching(searchString: string) {
@@ -192,100 +164,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
   }
 
-  activateUser(userId: number) {
-    axios.put(
-      `${process.env.REACT_APP_BACKEND_HOST}/user/activate/${userId}`,
-      {},
-      { withCredentials: true } as any
-    ).then((res) => {
-      if (res.data === "OK") {
-        const user = this.state.users.find((user) => user.id === userId);
-        if (user) {
-          user.status = UserStatus.Active;
-        }
-        this.setState({ ...this.state });
-      }
-    }).catch((error) => {
-      alert("Can`t activate user");
-    });
-  }
-
-  deactivateUser(userId: number) {
-    axios.put(
-      `${process.env.REACT_APP_BACKEND_HOST}/user/deactivate/${userId}`,
-      {},
-      { withCredentials: true } as any
-    ).then((res) => {
-      if (res.data === "OK") {
-        const user = this.state.users.find((user) => user.id === userId);
-        if (user) {
-          user.status = UserStatus.Disabled;
-        }
-        this.setState({ ...this.state });
-      }
-    }).catch((error) => {
-      alert("Can`t deactivate user");
-    });
-  }
-
   search() {
     const { searchString } = this.state;
-    let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(
-      0,
-      filterSubjects,
-      this.state.sortBy,
-      this.state.isAscending,
-      searchString
-    );
+    this.getUsers(0, [], this.state.sortBy, this.state.isAscending, searchString);
   }
-
-  getCheckedSubjectIds() {
-    const filterSubjects = [];
-    const { state } = this;
-    const { subjects } = state;
-    for (let subject of subjects) {
-      if (subject.checked) {
-        filterSubjects.push(subject.id);
-      }
-    }
-    return filterSubjects;
-  }
-
-  filter() {
-    let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(0, filterSubjects);
-  }
-
-  //region Hide / Expand / Clear Filter
-  clearStatus() {
-    let { state } = this;
-    let { subjects } = state;
-    subjects.forEach((r: any) => (r.checked = false));
-    this.filter();
-    this.filterClear();
-  }
-
-  hideFilter() {
-    this.setState({ ...this.state, filterExpanded: false, filterHeight: "0" });
-  }
-
-  expandFilter() {
-    this.setState({
-      ...this.state,
-      filterExpanded: true,
-      filterHeight: "auto",
-    });
-  }
-
-  filterClear() {
-    this.setState({
-      isClearFilter: this.state.subjects.some((r: any) => r.checked)
-        ? true
-        : false,
-    });
-  }
-  //endregion
 
   toggleUser(i: number) {
     const { users } = this.state;
@@ -303,89 +185,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             <div className="record-header" style={{ width: '50%', textAlign: 'right' }}>RECORDS</div>
           </div>
         </div>
-        <div className="create-class-button">+ Create Class</div>
+        <div className="create-class-button" onClick={() => { }}>+ Create Class</div>
         <div className="filter-header">
           View All
         </div>
       </div>
     );
   };
-
-  renderPagination() {
-    const { totalCount, users, page, pageSize } = this.state;
-    const showPrev = page > 0;
-    const currentPage = page;
-    const showNext = totalCount / pageSize - currentPage > 1;
-    const prevCount = currentPage * pageSize;
-    const minUser = prevCount + 1;
-    const maxUser = prevCount + users.length;
-
-    const nextPage = () => {
-      this.setState({ ...this.state, page: page + 1, selectedUsers: [] });
-      this.getUsers(page + 1);
-    };
-
-    const previousPage = () => {
-      this.setState({ ...this.state, page: page - 1, selectedUsers: [] });
-      this.getUsers(page - 1);
-    };
-
-    return (
-      <div className="users-pagination">
-        <Grid container direction="row">
-          <Grid item xs={4} className="left-pagination">
-            <div className="first-row">
-              {minUser}-{maxUser}
-              <span className="gray"> &nbsp;|&nbsp; {totalCount}</span>
-            </div>
-            <div>
-              {page + 1}
-              <span className="gray">
-                {" "}
-                &nbsp;|&nbsp; {Math.ceil(totalCount / pageSize)}
-              </span>
-            </div>
-          </Grid>
-          <Grid item xs={4} className="bottom-next-button">
-            <div>
-              {showPrev ? (
-                <button
-                  className={
-                    "btn btn-transparent prev-button svgOnHover " +
-                    (showPrev ? "active" : "")
-                  }
-                  onClick={previousPage}
-                >
-                  <svg className="svg w100 h100 active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#arrow-up"} />
-                  </svg>
-                </button>
-              ) : (
-                  ""
-                )}
-              {showNext ? (
-                <button
-                  className={
-                    "btn btn-transparent next-button svgOnHover " +
-                    (showNext ? "active" : "")
-                  }
-                  onClick={nextPage}
-                >
-                  <svg className="svg w100 h100 active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#arrow-down"} />
-                  </svg>
-                </button>
-              ) : (
-                  ""
-                )}
-            </div>
-          </Grid>
-        </Grid>
-      </div>
-    );
-  }
 
   renderUserType(user: User) {
     let type = "";
@@ -416,9 +222,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       isAscending = false;
       this.setState({ ...this.state, isAscending, sortBy });
     }
-    let filterSubjects = this.getCheckedSubjectIds();
-    this.getUsers(this.state.page, filterSubjects, sortBy, isAscending);
+    this.getUsers(this.state.page, [], sortBy, isAscending);
   }
+
+  moveToPage(page: number) {
+    this.setState({ ...this.state, page, selectedUsers: [] });
+    this.getUsers(page);
+  };
 
   renderSortArrow(currentSortBy: UserSortBy) {
     const { sortBy, isAscending } = this.state;
@@ -492,7 +302,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                   <td>{user.email}</td>
                   <td></td>
                   <td className="user-radio-column">
-                      <Radio checked={this.state.users[i].selected} onClick={() => this.toggleUser(i)} />
+                    <Radio checked={this.state.users[i].selected} onClick={() => this.toggleUser(i)} />
                   </td>
                   <td className="activate-button-container"></td>
                 </tr>
@@ -500,18 +310,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             })}
           </tbody>
         </table>
-      </div>
-    );
-  }
-
-  renderRoleDescription() {
-    return (
-      <div className="role-description">
-        <span className="bold">S</span>: Student,&nbsp;
-        <span className="bold">T</span>: Teacher,&nbsp;
-        <span className="bold">B</span>: Builder,&nbsp;
-        <span className="bold">E</span>: Editor,&nbsp;
-        <span className="bold">A</span>: Admin
       </div>
     );
   }
@@ -544,8 +342,14 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           <Grid item xs={9} className="brick-row-container">
             {this.renderTableHeader()}
             {this.renderUsers()}
-            {this.renderRoleDescription()}
-            {this.renderPagination()}
+            <RoleDescription />
+            <UsersPagination
+              users={this.state.users}
+              page={this.state.page}
+              totalCount={this.state.totalCount}
+              pageSize={this.state.pageSize}
+              moveToPage={page => this.moveToPage(page)}
+            />
           </Grid>
         </Grid>
       </div>

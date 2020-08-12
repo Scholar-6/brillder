@@ -1,7 +1,6 @@
 import React from 'react'
 
 import sprite from "assets/img/icons-sprite.svg";
-import { ProposalStep } from 'components/build/proposal/model';
 
 export interface DragTabProps {
   id: any
