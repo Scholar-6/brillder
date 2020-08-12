@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from "@material-ui/core/Checkbox";
 import axios from "axios";
-// @ts-ignore
 import { connect } from "react-redux";
 
 import brickActions from "redux/actions/brickActions";
@@ -11,16 +10,17 @@ import authActions from "redux/actions/auth";
 
 import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
+import { saveProfileImageName } from "components/services/profile";
 import PhonePreview from "../baseComponents/phonePreview/PhonePreview";
 import { Subject } from "model/brick";
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
-import { checkAdmin } from "components/services/brickService";
+import { checkAdmin, canBuild, canEdit } from "components/services/brickService";
 import UserProfileMenu from "./components/UserProfileMenu";
 import SubjectDialog from "./components/SubjectDialog";
 import { ReduxCombinedState } from "redux/reducers";
-import SaveProfileButton from './components/SaveProfileButton';
-import ProfileSavedDialog from './components/ProfileSavedDialog';
-import ProfileImage from './components/ProfileImage';
+import SaveProfileButton from "./components/SaveProfileButton";
+import ProfileSavedDialog from "./components/ProfileSavedDialog";
+import ProfileImage from "./components/ProfileImage";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -65,128 +65,123 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (userId === "new") {
       const isAdmin = checkAdmin(props.user.roles);
       if (isAdmin) {
-        this.state = {
-          user: {
-            id: 0,
-            firstName: "",
-            lastName: "",
-            tutorialPassed: false,
-            email: "",
-            password: "",
-            roles: [],
-            subjects: [],
-            status: UserStatus.Pending,
-          },
-          subjects: [],
-          isNewUser: true,
-          autoCompleteOpen: false,
-          isStudent: false,
-          roles: [
-            { roleId: UserType.Student, name: "Student", disabled: false },
-            { roleId: UserType.Teacher, name: "Teacher", disabled: false },
-            { roleId: UserType.Builder, name: "Builder", disabled: false },
-            { roleId: UserType.Editor, name: "Editor", disabled: false },
-            { roleId: UserType.Admin, name: "Admin", disabled: false },
-          ],
-          noSubjectDialogOpen: false,
-          savedDialogOpen: false,
-        };
+        this.state = this.getNewUserState();
       } else {
         props.history.push("/home");
       }
     } else {
       const { user } = props;
 
-      const isBuilder = user.roles.some((role) => {
-        const { roleId } = role;
-        return (
-          roleId === UserType.Builder ||
-          roleId === UserType.Editor ||
-          roleId === UserType.Admin
-        );
-      });
-
-      const isEditor = user.roles.some((role) => {
-        const { roleId } = role;
-        return roleId === UserType.Editor || roleId === UserType.Admin;
-      });
-
-      const isAdmin = checkAdmin(user.roles);
-      const isOnlyStudent =
-        user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
-
-      const roles = props.user.roles.map((role) => role.roleId);
-
-      this.state = {
-        user: {
-          id: user.id,
-          firstName: user.firstName ? user.firstName : "",
-          lastName: user.lastName ? user.lastName : "",
-          tutorialPassed: false,
-          email: user.email ? user.email : "",
-          password: "",
-          roles: roles,
-          subjects: user.subjects,
-          status: UserStatus.Pending,
-        },
-        subjects: [],
-        autoCompleteOpen: false,
-        isNewUser: false,
-        isStudent: isOnlyStudent,
-        roles: [
-          { roleId: UserType.Student, name: "Student", disabled: !isBuilder },
-          { roleId: UserType.Teacher, name: "Teacher", disabled: !isBuilder },
-          { roleId: UserType.Builder, name: "Builder", disabled: !isBuilder },
-          { roleId: UserType.Editor, name: "Editor", disabled: !isEditor },
-          { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
-        ],
-        noSubjectDialogOpen: false,
-        savedDialogOpen: false,
-      };
+      let tempState: UserProfileState = this.getExistedUserState(user);
       if (userId) {
-        axios
-          .get(`${process.env.REACT_APP_BACKEND_HOST}/user/${userId}`, {
-            withCredentials: true,
-          })
-          .then((res) => {
-            const user = res.data as UserProfile;
-
-            user.roles = res.data.roles.map(
-              (role: UserRoleItem) => role.roleId
-            );
-            if (!user.email) {
-              user.email = "";
-            }
-            if (!user.firstName) {
-              user.firstName = "";
-            }
-            if (!user.lastName) {
-              user.lastName = "";
-            }
-            if (!user.roles) {
-              user.roles = [];
-            }
-            if (!user.subjects) {
-              user.subjects = [];
-            }
-            this.setState({ ...this.state, user: res.data });
-          })
-          .catch((error) => {
-            alert("Can`t get user profile");
-          });
+        this.state = tempState;
+        axios.get(`${process.env.REACT_APP_BACKEND_HOST}/user/${userId}`, {
+          withCredentials: true,
+        }).then((res) => {
+          const user = res.data as User;
+          this.setState({ user: this.getUserProfile(user) });
+        }).catch((error) => {
+          alert("Can`t get user profile");
+        });
+      } else {
+        tempState.user = this.getUserProfile(user);
+        this.state = tempState;
       }
     }
 
-    axios
-      .get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        this.setState({ ...this.state, subjects: res.data });
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
-      });
+    axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
+      withCredentials: true,
+    }).then((res) => {
+      this.setState({ subjects: res.data });
+    }).catch((error) => {
+      alert("Can`t get bricks");
+    });
+  }
+
+  getUserProfile(user: User): UserProfile {
+    let roles = user.roles.map(role => role.roleId);
+
+    return {
+      id: user.id,
+      username: user.username,
+      roles: roles ? roles: [],
+      email: user.email ? user.email : "",
+      firstName: user.firstName ? user.firstName : "",
+      lastName: user.lastName ? user.lastName : "",
+      subjects: user.subjects ? user.subjects : [],
+      profileImage: user.profileImage ? user.profileImage : "",
+      status: UserStatus.Pending,
+      tutorialPassed: false,
+      password: ""
+    }
+  }
+
+  getExistedUserState(user: User) {
+    const isBuilder = canBuild(user);
+    const isEditor = canEdit(user);
+    const isAdmin = checkAdmin(user.roles);
+
+    const isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
+
+    return {
+      user: {
+        id: -1,
+        username: "",
+        firstName: "",
+        lastName: "",
+        tutorialPassed: false,
+        email: "",
+        password: "",
+        roles: [],
+        subjects: [],
+        status: UserStatus.Pending,
+        profileImage: "",
+      },
+      subjects: [],
+      autoCompleteOpen: false,
+      isNewUser: false,
+      isStudent: isOnlyStudent,
+      roles: [
+        { roleId: UserType.Student, name: "Student", disabled: !isBuilder },
+        { roleId: UserType.Teacher, name: "Teacher", disabled: !isBuilder },
+        { roleId: UserType.Builder, name: "Builder", disabled: !isBuilder },
+        { roleId: UserType.Editor, name: "Editor", disabled: !isEditor },
+        { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
+      ],
+      noSubjectDialogOpen: false,
+      savedDialogOpen: false,
+    };
+  }
+
+  getNewUserState() {
+    return {
+      user: {
+        id: 0,
+        username: "",
+        firstName: "",
+        lastName: "",
+        tutorialPassed: false,
+        email: "",
+        password: "",
+        roles: [],
+        subjects: [],
+        status: UserStatus.Pending,
+        profileImage: "",
+      },
+      subjects: [],
+      isNewUser: true,
+      autoCompleteOpen: false,
+      isStudent: false,
+      roles: [
+        { roleId: UserType.Student, name: "Student", disabled: false },
+        { roleId: UserType.Teacher, name: "Teacher", disabled: false },
+        { roleId: UserType.Builder, name: "Builder", disabled: false },
+        { roleId: UserType.Editor, name: "Editor", disabled: false },
+        { roleId: UserType.Admin, name: "Admin", disabled: false },
+      ],
+      noSubjectDialogOpen: false,
+      savedDialogOpen: false,
+    };
   }
 
   saveStudentProfile(user: UserProfile) {
@@ -195,7 +190,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     userToSave.roles = user.roles;
 
     if (!user.subjects || user.subjects.length === 0) {
-      this.setState({ ...this.state, noSubjectDialogOpen: true });
+      this.setState({ noSubjectDialogOpen: true });
       return;
     }
     this.save(userToSave);
@@ -215,6 +210,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     if (user.subjects) {
       userToSave.subjects = user.subjects.map((s) => s.id);
     }
+    if (user.profileImage) {
+      userToSave.profileImage = user.profileImage;
+    }
   }
 
   saveUserProfile() {
@@ -227,10 +225,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.prepareUserToSave(userToSave, user);
 
     if (!user.subjects || user.subjects.length === 0) {
-      this.setState({ ...this.state, noSubjectDialogOpen: true });
+      this.setState({ noSubjectDialogOpen: true });
       return;
     }
-
     this.save(userToSave);
   }
 
@@ -254,35 +251,50 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   onSubjectDialogClose() {
-    this.setState({ ...this.state, noSubjectDialogOpen: false });
+    this.setState({ noSubjectDialogOpen: false });
   }
 
   onProfileSavedDialogClose() {
-    this.setState({ ...this.state, savedDialogOpen: false });
+    this.setState({ savedDialogOpen: false });
   }
 
   onFirstNameChanged(e: any) {
     const { user } = this.state;
     user.firstName = e.target.value;
-    this.setState({ ...this.state });
+    this.setState({ user });
   }
 
   onLastNameChanged(e: any) {
     const { user } = this.state;
     user.lastName = e.target.value;
-    this.setState({ ...this.state });
+    this.setState({ user });
   }
 
   onEmailChanged(e: any) {
     const { user } = this.state;
     user.email = e.target.value;
-    this.setState({ ...this.state });
+    this.setState({ user });
   }
 
   onPasswordChanged(e: any) {
     const { user } = this.state;
     user.password = e.target.value;
-    this.setState({ ...this.state });
+    this.setState({ user });
+  }
+
+  onProfileImageChanged(name: string) {
+    const { user } = this.state;
+    user.profileImage = name;
+
+    saveProfileImageName(user.id, name).then((res: boolean) => {
+      if (res) {
+        // saving image success
+      } else {
+        // saving image name failed
+      }
+    });
+
+    this.setState({ user });
   }
 
   checkUserRole(roleId: number) {
@@ -338,11 +350,23 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   onSubjectChange(newValue: any[]) {
     const { user } = this.state;
     user.subjects = newValue;
-    this.setState({ ...this.state, user });
+    this.setState({ user });
+  }
+
+  renderSubjects(user: UserProfile) {
+    if (user.id === -1) {
+      return;
+    }
+    return (
+      <SubjectAutocomplete
+        selected={user.subjects}
+        onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
+      />
+    );
   }
 
   render() {
-    const {user} = this.state;
+    const { user } = this.state;
     return (
       <div className="main-listing user-profile-page">
         <UserProfileMenu
@@ -352,12 +376,21 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         />
         <Grid container direction="row">
           <div className="profile-block">
-            <div className="profile-header">{user.firstName ? user.firstName : 'NAME'}</div>
+            <div className="profile-header">
+              {user.firstName ? user.firstName : "NAME"}
+              <span className="profile-username">{user.username ? user.username : "USERNAME"}</span>
+            </div>
             <div className="save-button-container">
-              <SaveProfileButton user={user} onClick={() => this.saveUserProfile()} />
+              <SaveProfileButton
+                user={user}
+                onClick={() => this.saveUserProfile()}
+              />
             </div>
             <div className="profile-fields">
-              <ProfileImage />
+              <ProfileImage
+                profileImage={user.profileImage}
+                setImage={(v) => this.onProfileImageChanged(v)}
+              />
               <div className="profile-inputs-container">
                 <div className="input-group">
                   <div className="input-block">
@@ -410,12 +443,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 </Grid>
               </div>
             </div>
-            <SubjectAutocomplete
-              selected={user.subjects}
-              onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
-            />
+            {this.renderSubjects(user)}
             <Grid container direction="row" className="big-input-container">
-              <textarea className="style2" placeholder="Write a short bio here..." />
+              <textarea
+                className="style2"
+                placeholder="Write a short bio here..."
+              />
             </Grid>
           </div>
           <div className="profile-phone-preview">
@@ -429,8 +462,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             </Grid>
           </div>
         </Grid>
-        <SubjectDialog isOpen={this.state.noSubjectDialogOpen} close={() => this.onSubjectDialogClose()} />
-        <ProfileSavedDialog history={this.props.history} isOpen={this.state.savedDialogOpen} close={() => this.onProfileSavedDialogClose()} />
+        <SubjectDialog
+          isOpen={this.state.noSubjectDialogOpen}
+          close={() => this.onSubjectDialogClose()}
+        />
+        <ProfileSavedDialog
+          history={this.props.history}
+          isOpen={this.state.savedDialogOpen}
+          close={() => this.onProfileSavedDialogClose()}
+        />
       </div>
     );
   }

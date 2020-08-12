@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-// @ts-ignore
 import { connect } from "react-redux";
 
 import 'components/play/brick/brick.scss';
@@ -25,6 +24,7 @@ import {
 } from 'model/question';
 import { setBrillderTitle } from 'components/services/titleService';
 import PublishPage from '../investigationBuildPage/publish/PublishPage';
+import EditorPage from '../investigationBuildPage/editor/EditorPage';
 import FinishPage from '../investigationBuildPage/finish/FinishPage';
 import { prefillAttempts } from 'components/services/PlayService';
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
@@ -33,6 +33,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import PlayLeftSidebar from 'components/play/brick/PlayLeftSidebar';
 import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
+import { User } from 'model/user';
 
 
 export interface BrickAttempt {
@@ -57,10 +58,11 @@ function shuffle(a: any[]) {
 interface BrickRoutingProps {
   brick: Brick;
   match: any;
-  user: any;
+  user: User;
   history: any;
   location: any;
   fetchBrick(brickId: number): void;
+  assignEditor(brick: any): void;
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
@@ -144,13 +146,18 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (canEdit) {
       let editor = checkEditor(props.user.roles);
       if (editor && props.user.id === props.brick.author.id) {
-        props.history.push(`/play-preview/brick/${brickId}/finish`);
+        props.history.push(`/play-preview/brick/${brickId}/editor`);
       } else {
         props.history.push(`/play-preview/brick/${brickId}/publish`);
       }
     } else {
       props.history.push(`/play-preview/brick/${brickId}/finish`);
     }
+  }
+
+  const saveEditor = (editorId: number) => {
+    props.assignEditor({ ...props.brick, editor: { id: editorId } });
+    props.history.push(`/play-preview/brick/${props.brick.id}/finish`);
   }
 
   const moveToBuild = () => {
@@ -283,10 +290,18 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/publish">
-              <PublishPage {...props} />
+              <PublishPage history={props.history} match={props.match} />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/editor">
+              <EditorPage
+                brick={props.brick}
+                canEdit={true}
+                saveEditor={saveEditor}
+                history={props.history}
+              />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/finish">
-              <FinishPage {...props} />
+              <FinishPage history={props.history} match={props.match} />
             </Route>
           </Switch>
         </div>
@@ -373,6 +388,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
+  assignEditor: (brick: any) => dispatch(actions.assignEditor(brick))
 })
 
 const connector = connect(mapState, mapDispatch);

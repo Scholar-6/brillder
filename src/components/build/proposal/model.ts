@@ -18,3 +18,9 @@ export enum BrickFieldNames {
   alternativeTopics = "alternativeTopics",
   synthesis = "synthesis"
 };
+
+export enum PlayButtonStatus {
+  Hidden,
+  Invalid,
+  Valid
+};

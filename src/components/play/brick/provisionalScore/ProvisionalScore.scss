@@ -3,6 +3,14 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .provisional-score-page {
+  h1 {
+    @include tabletP {
+      margin: 4vh 0;
+      padding-left: 0 !important;
+      display: block !important;
+      text-align: center !important;
+    }
+  }
   .begin-row {
     margin-top: 15px;
     margin-bottom: 15px;
@@ -48,17 +56,6 @@
     }
     .intro-text-row {
       position: relative;
-    }
-    .question-index-container {
-      position: absolute;
-      width: 7vw !important;
-      height: 7vw !important;
-      top: 3vw;
-      .question-index {
-        width: 7vw !important;
-        height: 7vw !important;
-        font-size: 6vw !important;
-      }
     }
     .question-live-play {
       margin: 0 !important;

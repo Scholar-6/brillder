@@ -12,7 +12,9 @@ import { setBrillderTitle } from "components/services/titleService";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
-import { BrickFieldNames } from '../../model';
+import { BrickFieldNames, PlayButtonStatus } from '../../model';
+import map from 'components/map';
+import PlayButton from "components/build/investigationBuildPage/components/PlayButton";
 
 
 interface ProposalProps {
@@ -20,6 +22,7 @@ interface ProposalProps {
   user: User;
   canEdit: boolean;
   history: History;
+  playStatus: PlayButtonStatus;
   saveBrick(): void;
   setBrickField(name: BrickFieldNames, value: string): void;
 }
@@ -127,11 +130,36 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       );
     }
 
+    const moveToPlay = () => {
+      const {brick, playStatus} = this.props;
+      if (brick.id && playStatus === PlayButtonStatus.Valid) {
+        this.props.history.push(map.playPreviewIntro(brick.id));
+      }
+    }
+
+    const renderPlayButton = () => {
+      const { playStatus } = this.props;
+      if (playStatus === PlayButtonStatus.Hidden) {
+        return "";
+      }
+      return (
+        <div className="play-preview-button-container">
+          <PlayButton
+            isValid={playStatus === PlayButtonStatus.Valid}
+            tutorialStep={-1}
+            isTutorialSkipped={true}
+            onClick={moveToPlay}
+          />
+        </div>
+      );
+    }
+
     return (
       <div className="proposal-page">
+        {renderPlayButton()}
         <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
           <Grid className="back-button-container" container alignContent="center">
-            <div className="back-button" onClick={() => this.props.history.push('/build/new-brick/length')} />
+            <div className="back-button" onClick={() => this.props.history.push(map.ProposalLength)} />
           </Grid>
           <Grid className="main-text-container">
             <h1>Your proposal has been saved!</h1>

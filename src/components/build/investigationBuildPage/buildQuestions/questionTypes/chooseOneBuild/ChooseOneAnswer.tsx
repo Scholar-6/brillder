@@ -11,6 +11,7 @@ import sprite from "assets/img/icons-sprite.svg";
 
 export interface ChooseOneAnswerProps {
   locked: boolean;
+  editOnly: boolean;
   index: number;
   length: number;
   answer: ChooseOneAnswer;
@@ -24,7 +25,7 @@ export interface ChooseOneAnswerProps {
 }
 
 const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
-  locked, index, length, answer, validationRequired, checkBoxValid,
+  locked, editOnly, index, length, answer, validationRequired, checkBoxValid,
   removeFromList, update, save, onChecked, onBlur
 }) => {
   const renderDeleteButton = () => {
@@ -94,6 +95,7 @@ const ChooseOneAnswerComponent: React.FC<ChooseOneAnswerProps> = ({
       />
       <DocumentWirisCKEditor
         disabled={locked}
+        editOnly={editOnly}
         data={answer.value}
         toolbar={['mathType', 'chemType']}
         placeholder="Enter Answer..."

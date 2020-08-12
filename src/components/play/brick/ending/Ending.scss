@@ -3,11 +3,21 @@
 @import '../../../../assets/sass/partials/extensions';
 
 .ending-page {
+  h1 {
+    @include tabletP {
+      margin: 4vh 0;
+      padding-left: 0 !important;
+      display: block !important;
+      text-align: center !important;
+    }
+  }
+
   .begin-row {
     margin-top: 15px;
     margin-bottom: 15px;
     text-align: right;
   }
+
   .start-brick-button {
     margin-right: 0px;
 
@@ -68,17 +78,6 @@
     .introduction-page {
       .intro-header {
         display: none !important;
-      }
-    }
-
-    .question-index-container {
-      width: 7vw !important;
-      height: 7vw !important;
-
-      .question-index {
-        width: 7vw !important;
-        height: 7vw !important;
-        font-size: 6vw !important;
       }
     }
   }

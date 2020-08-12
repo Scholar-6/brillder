@@ -2,39 +2,40 @@ import React, { useState } from "react";
 import { Grid, Snackbar, Hidden } from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Button from "@material-ui/core/Button";
-// @ts-ignore
 import { connect } from "react-redux";
 import { History } from "history";
 import axios from "axios";
 
 import actions from "redux/actions/auth";
 import "./loginPage.scss";
-import { ReduxCombinedState } from "redux/reducers";
-
 import sprite from "assets/img/icons-sprite.svg";
-
-const mapState = (state: ReduxCombinedState) => ({
-  error: state.auth.error,
-  isAuthenticated: state.auth.isAuthenticated,
-});
+import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
+import LoginLogo from './LoginLogo';
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
 });
 
-const connector = connect(mapState, mapDispatch);
+const connector = connect(null, mapDispatch);
 
 interface LoginProps {
   loginSuccess(): void;
   history: History;
+  match: any;
 }
 
 const LoginPage: React.FC<LoginProps> = (props) => {
+  let initPolicyOpen = false;
+  if (props.match.params.privacy && props.match.params.privacy === "privacy-policy") {
+    initPolicyOpen = true;
+  }
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
+
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -124,32 +125,6 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     });
   };
 
-  const renderLogo = () => {
-    return (
-      <Grid
-        container
-        style={{ height: "100%" }}
-        justify="center"
-        alignItems="center"
-      >
-        <div>
-          <img
-            alt="Logo"
-            src="/images/choose-login/logo.png"
-            className="logo-image"
-          />
-          <Grid container justify="center">
-            <img
-              alt="Logo"
-              src="/images/choose-user/brillder-white-text.svg"
-              className="logo-text-image"
-            />
-          </Grid>
-        </div>
-      </Grid>
-    );
-  };
-
   const renderForm = () => {
     return (
       <form onSubmit={handleSubmit} className="content-box">
@@ -218,12 +193,14 @@ const LoginPage: React.FC<LoginProps> = (props) => {
             <div className="third-col"></div>
           </Grid>
           <Grid container direction="row" className="second-row">
-            <div className="first-col">{renderLogo()}</div>
+            <div className="first-col"><LoginLogo /></div>
             <div className="second-col">{renderForm()}</div>
           </Grid>
           <Grid container direction="row" className="third-row">
             <div className="first-col"></div>
-            <div className="second-col"></div>
+            <div className="second-col policy-text">
+              <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
+            </div>
             <div className="third-col"></div>
           </Grid>
         </div>
@@ -241,71 +218,67 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           </div>
         </div>
         <div className="first-col">
-          <div className="first-item"></div>
           <div className="second-item">
-            <div>
-              <div className="logo-box">
-                <svg
-                  className="svg active logo-image mobile"
-                  onClick={() => props.history.push("/choose-login")}
-                >
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#login"} className="text-theme-orange" />
-                </svg>
-              </div>
-              <form onSubmit={handleSubmit} className="content-box">
-                <div className="input-block">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="login-field"
-                    required
-                    placeholder="Email"
-                  />
-                </div>
-                <div className="input-block">
-                  <input
-                    type={passwordHidden ? "password" : "text"}
-                    value={password}
-                    className="login-field password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    placeholder="Password"
-                  />
-                  <div className="hide-password-icon-container">
-                    <VisibilityIcon
-                      className="hide-password-icon"
-                      onClick={() => setHidden(!passwordHidden)}
-                    />
-                  </div>
-                </div>
-                <div className="input-block button-box">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className="sign-up-button"
-                    type="button"
-                    onClick={() => register(email, password)}
-                  >
-                    Sign up
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className="sign-in-button"
-                    type="submit"
-                  >
-                    Sign in
-                  </Button>
-                </div>
-              </form>
+            <div className="logo-box">
+              <svg
+                className="svg active logo-image mobile"
+                onClick={() => props.history.push("/choose-login")}
+              >
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#login"} className="text-theme-orange" />
+              </svg>
             </div>
+            <form onSubmit={handleSubmit} className="content-box">
+              <div className="input-block">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="login-field"
+                  required
+                  placeholder="Email"
+                />
+              </div>
+              <div className="input-block">
+                <input
+                  type={passwordHidden ? "password" : "text"}
+                  value={password}
+                  className="login-field password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="Password"
+                />
+                <div className="hide-password-icon-container">
+                  <VisibilityIcon
+                    className="hide-password-icon"
+                    onClick={() => setHidden(!passwordHidden)}
+                  />
+                </div>
+              </div>
+              <div className="input-block button-box">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="sign-up-button"
+                  type="button"
+                  onClick={() => register(email, password)}
+                >
+                  Sign up
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="sign-in-button"
+                  type="submit"
+                >
+                  Sign in
+                </Button>
+              </div>
+              <div className="mobile-policy-text">
+                <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
+              </div>
+            </form>
           </div>
-        </div>
-        <div className="second-col">
-          <div className="first-item"></div>
-          <div className="second-item"></div>
         </div>
       </Hidden>
       <Snackbar
@@ -316,6 +289,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
         message={alertMessage}
         action={<React.Fragment></React.Fragment>}
       />
+      <PolicyDialog isOpen={isPolicyOpen} close={() => setPolicyDialog(false)} />
     </Grid>
   );
 };

@@ -14,6 +14,7 @@ export interface ChooseSeveralData {
 
 export interface ChooseSeveralBuildProps {
   locked: boolean;
+  editOnly: boolean;
   data: ChooseSeveralData;
   validationRequired: boolean;
   save(): void;
@@ -22,7 +23,7 @@ export interface ChooseSeveralBuildProps {
 }
 
 const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
-  locked, data, validationRequired, save, updateComponent, openSameAnswerDialog
+  locked, editOnly, data, validationRequired, save, updateComponent, openSameAnswerDialog
 }) => {
   const [height, setHeight] = React.useState('0%');
 
@@ -90,6 +91,7 @@ const ChooseSeveralBuildComponent: React.FC<ChooseSeveralBuildProps> = ({
         state.list.map((answer:any, i:number) => {
           return <ChooseOneAnswerComponent
             locked={locked}
+            editOnly={editOnly}
             key={i}
             index={i}
             length={data.list.length}

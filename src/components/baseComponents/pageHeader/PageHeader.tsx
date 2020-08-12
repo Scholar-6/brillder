@@ -5,9 +5,10 @@ import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import './PageHeader.scss';
 import { ReduxCombinedState } from 'redux/reducers';
 import notificationActions from 'redux/actions/notifications';
-// @ts-ignore
 import { connect } from 'react-redux'
 import { Notification } from 'model/notifications';
+import BellButton from './bellButton/BellButton';
+import MoreButton from './MoreButton';
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -52,31 +53,12 @@ class PageHeader extends Component<UsersListProps, MyState> {
       searchVisible: !prevState.searchVisible
     }));
   }
+
   renderSearch() {
     this.props.search()
     this.toggleSearch()
   }
-  renderBellButton(notificationCount: any) {
-    return (
-      <div className="header-btn bell-button svgOnHover" onClick={(evt) => this.props.showNotifications(evt)}>
-        <svg id="bell" viewBox="0 0 24 24">
-          <path className="bell-cup" d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-        </svg>
-        {(notificationCount !== 0) && <span className="bell-text">{notificationCount}</span>}
-      </div>
-    )
-  }
-  renderMoreButton() {
-    return (
-      <div className="header-btn more-button svgOnHover" onClick={() => this.props.showDropdown()}>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#more"} />
-        </svg>
-      </div>
-    )
-  }
+
   render() {
     let { searchVisible } = this.state
     let notificationCount = 0;
@@ -135,11 +117,14 @@ class PageHeader extends Component<UsersListProps, MyState> {
               </div>
               {
                 !searchVisible &&
-                this.renderBellButton(notificationCount)
+                <BellButton
+                  notificationCount={notificationCount}
+                  onClick={evt => this.props.showNotifications(evt)}
+                />
               }
               {
                 !searchVisible &&
-                this.renderMoreButton()
+                <MoreButton onClick={() => this.props.showDropdown()} />
               }
             </div>
           </Hidden>
@@ -162,8 +147,11 @@ class PageHeader extends Component<UsersListProps, MyState> {
                 </div>
               </div>
               <Grid container direction="row" className="action-container">
-                {this.renderBellButton(notificationCount)}
-                {this.renderMoreButton()}
+                <BellButton
+                  notificationCount={notificationCount}
+                  onClick={evt => this.props.showNotifications(evt)}
+                />
+                <MoreButton onClick={() => this.props.showDropdown()} />
               </Grid>
             </div >
           </Hidden>
