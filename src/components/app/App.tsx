@@ -93,6 +93,7 @@ const App: React.FC = (props: any) => {
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} location={location} />
         <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} location={location} />
+        <BuildBrickRoute path="/build/brick/:brickId/build/investigation/question-component/:questionId" component={InvestigationBuildPage} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
         <BuildRoute path="/users" component={UsersListPage} location={location} />

@@ -7,6 +7,9 @@ export const InvestigationBuild = (brickId: number) => {
   return `/build/brick/${brickId}/build/investigation/question-component`;
 }
 
+export const investigationBuildQuestion = (brickId: number, questionId: number) => {
+  return InvestigationBuild(brickId) + `/${questionId}`;
+}
 
 // proposal pages
 export const ProposalSubject = `${ProposalBase}/subject`;
@@ -44,5 +47,6 @@ export default {
   ViewAllPage,
 
   InvestigationBuild,
+  investigationBuildQuestion,
   playPreviewIntro
 }

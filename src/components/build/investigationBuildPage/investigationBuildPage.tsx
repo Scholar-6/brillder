@@ -64,7 +64,19 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
 }
 
 const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
-  const brickId = parseInt(props.match.params.brickId);
+  const { params } = props.match;
+  const brickId = parseInt(params.brickId);
+  let initQuestionId = -1;
+  if (params.questionId) {
+    try {
+      let questionId = parseInt(params.questionId);
+      if (questionId >= 1) {
+        initQuestionId = questionId;
+      }
+    } catch {
+      console.log('can`t parse question id');
+    }
+  }
 
   const { history } = props;
 
@@ -77,7 +89,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
   const [deleteDialogOpen, setDeleteDialog] = React.useState(false);
   const [submitDialogOpen, setSubmitDialog] = React.useState(false);
-  const [proposalResult, setProposalResult] = React.useState({ isOpen: false, isValid: proposalRes.isValid, url: proposalRes.url});
+  const [proposalResult, setProposalResult] = React.useState({ isOpen: false, isValid: proposalRes.isValid, url: proposalRes.url });
   const [validationRequired, setValidation] = React.useState(false);
   const [deleteQuestionIndex, setDeleteIndex] = React.useState(-1);
   const [activeQuestionType, setActiveType] = React.useState(QuestionTypeEnum.None);
@@ -312,11 +324,22 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         } catch (e) { }
       }
       if (parsedQuestions.length > 0) {
-        let buildQuestion = GetCashedBuildQuestion();
-        if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
-          parsedQuestions[buildQuestion.questionNumber].active = true;
-        } else {
-          parsedQuestions[0].active = true;
+        let initQuestionSet = false;
+        if (initQuestionId) {
+          for (const question of parsedQuestions) {
+            if (question.id === initQuestionId) {
+              question.active = true;
+              initQuestionSet = true;
+            }
+          }
+        }
+        if (initQuestionSet === false) {
+          let buildQuestion = GetCashedBuildQuestion();
+          if (buildQuestion && buildQuestion.questionNumber && parsedQuestions[buildQuestion.questionNumber]) {
+            parsedQuestions[buildQuestion.questionNumber].active = true;
+          } else {
+            parsedQuestions[0].active = true;
+          }
         }
         setQuestions(update(questions, { $set: parsedQuestions }));
         setStatus(update(loaded, { $set: true }));
@@ -632,7 +655,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         />
         <ProposalInvalidDialog
           isOpen={proposalResult.isOpen}
-          close={() => setProposalResult({...proposalResult, isOpen: false })}
+          close={() => setProposalResult({ ...proposalResult, isOpen: false })}
           submit={() => submitInvalidBrick()}
           hide={() => moveToInvalidProposal()}
         />
