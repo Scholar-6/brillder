@@ -237,7 +237,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             />
           </Grid>
         </Grid>
-        <AssignClassDialog users={this.state.selectedUsers} isOpen={this.state.assignClassOpen} submit={()=>{}} close={()=>{}} />
+        <AssignClassDialog
+          users={this.state.selectedUsers}
+          isOpen={this.state.assignClassOpen}
+          submit={() => { }}
+          close={() => { this.setState({ assignClassOpen: false }) }}
+        />
       </div>
     );
   }
