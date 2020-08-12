@@ -16,10 +16,11 @@ export const socketLogout = () => {
     } as Action;
 };
 
-export const socketStartEditing = (brickId: number) => {
+export const socketStartEditing = (brickId: number, questionId?: number) => {
     return {
         type: "socket/START_EDITING",
-        brickId
+        brickId,
+        questionId
     } as Action;
 };
 
@@ -28,6 +29,13 @@ export const socketStopEditing = () => {
         type: "socket/STOP_EDITING"
     } as Action;
 };
+
+export const socketNavigateToQuestion = (questionId?: number) => {
+    return {
+        type: "socket/NAVIGATE_TO_QUESTION",
+        questionId
+    } as Action;
+}
 
 export const socketUpdateBrick = (brick: Brick) => {
     return {

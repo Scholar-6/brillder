@@ -33,7 +33,7 @@ import {
   QuestionTypeEnum,
 } from "model/question";
 import actions from "../../../redux/actions/brickActions";
-import { socketUpdateBrick, socketStartEditing } from "redux/actions/socket";
+import { socketUpdateBrick, socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
 import { validateQuestion } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
@@ -59,6 +59,7 @@ interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
   user: User;
   startEditing(brickId: number): void;
+  changeQuestion(questionId?: number): void;
   saveBrick(brick: any): any;
   updateBrick(brick: any): any;
 }
@@ -170,11 +171,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if (isSynthesisPage === true) {
     if (activeQuestion) {
       unselectQuestions();
+      props.changeQuestion(undefined); // change to synthesis page on socket.
       return <PageLoader content="...Loading..." />;
     }
   } else if (!activeQuestion) {
     console.log("Can`t find active question");
     activeQuestion = {} as Question;
+  } else {
+    props.changeQuestion(activeQuestion.id);
   }
 
   /* Changing question number by tabs in build */
@@ -657,6 +661,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   startEditing: (brickId: number) => dispatch(socketStartEditing(brickId)),
+  changeQuestion: (questionId?: number) => dispatch(socketNavigateToQuestion(questionId)),
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   updateBrick: (brick: any) => dispatch(socketUpdateBrick(brick))
 });
