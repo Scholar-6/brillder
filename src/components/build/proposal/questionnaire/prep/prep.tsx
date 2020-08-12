@@ -74,7 +74,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, playStatus, s
           <h2 className="pagination-text">4 of 4</h2>
         </Grid>
         <ProposalPhonePreview Component={PrepPreviewComponent} data={parentPrep} />
-        <Hidden only={['xs','sm']}>
+        <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>
       </Grid>
