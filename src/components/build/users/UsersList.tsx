@@ -6,7 +6,7 @@ import Switch from "@material-ui/core/Switch";
 import axios from "axios";
 import { connect } from "react-redux";
 import grey from "@material-ui/core/colors/grey";
-
+import Dialog from "@material-ui/core/Dialog";
 
 
 import { User, UserType, UserStatus } from "model/user";
@@ -61,6 +61,9 @@ interface UsersListState {
   sortBy: UserSortBy;
   isAscending: boolean;
   isClearFilter: boolean;
+
+  isDeleteDialogOpen: boolean;
+  deleteUserId: number;
 }
 
 let anyStyles = withStyles as any;
@@ -137,20 +140,19 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       isAscending: false,
       isAdmin: checkAdmin(props.user.roles),
       isClearFilter: false,
+      isDeleteDialogOpen: false,
+      deleteUserId: -1
     };
 
     this.getUsers(this.state.page);
 
-    axios
-      .get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        this.setState({ ...this.state, subjects: res.data });
-      })
-      .catch((error) => {
-        alert("Can`t get subjects");
-      });
+    axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
+      withCredentials: true,
+    }).then((res) => {
+      this.setState({ ...this.state, subjects: res.data });
+    }).catch((error) => {
+      alert("Can`t get subjects");
+    });
   }
 
   getUsers(
@@ -189,39 +191,55 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       }
     }
 
-    axios
-      .post(
-        process.env.REACT_APP_BACKEND_HOST + "/users",
-        {
-          pageSize: this.state.pageSize,
-          page: page.toString(),
-          searchString,
-          subjectFilters: subjects,
-          roleFilters: [],
-          orderBy,
-          isAscending,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        this.setState({
-          ...this.state,
-          users: res.data.pageData,
-          totalCount: res.data.totalCount,
-        });
-      })
-      .catch((error) => {
-        alert("Can`t get users");
+    axios.post(
+      process.env.REACT_APP_BACKEND_HOST + "/users",
+      {
+        pageSize: this.state.pageSize,
+        page: page.toString(),
+        searchString,
+        subjectFilters: subjects,
+        roleFilters: [],
+        orderBy,
+        isAscending,
+      },
+      { withCredentials: true }
+    ).then((res) => {
+      this.setState({
+        ...this.state,
+        users: res.data.pageData,
+        totalCount: res.data.totalCount,
       });
+    }).catch((error) => {
+      alert("Can`t get users");
+    });
   }
 
-  move(brickId: number) {
-    this.props.history.push(
-      `/build/brick/${brickId}/build/investigation/question`
-    );
+  openDeleteDialog(deleteUserId: number) {
+    this.setState({ isDeleteDialogOpen: true, deleteUserId });
   }
 
-  handleSortChange = (e: any) => { };
+  closeDeleteDialog() {
+    this.setState({ isDeleteDialogOpen: false, deleteUserId: -1});
+  }
+
+  deleteUser() {
+    const {deleteUserId} = this.state;
+    if (deleteUserId === -1) { return }
+    axios.delete(
+      process.env.REACT_APP_BACKEND_HOST + '/user/delete/' + deleteUserId, { withCredentials: true }
+    ).then(res => {
+      if (res.data === "OK") {
+        this.closeDeleteDialog();
+        this.onUserDeleted(deleteUserId);
+        return;
+      }
+      this.closeDeleteDialog();
+      alert('Can`t delete user');
+    }).catch(error => {
+      this.closeDeleteDialog();
+      alert('Can`t delete user');
+    });
+  }
 
   getCheckedRoles() {
     const result = [];
@@ -376,7 +394,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
             aria-label="SortBy"
             name="SortBy"
             value={this.state.sortBy}
-            onChange={this.handleSortChange}
           >
             <Grid container direction="row">
               {this.state.roles.map((role, i) => (
@@ -575,13 +592,33 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                     userId={user.id}
                     history={this.props.history}
                     isAdmin={this.state.isAdmin}
-                    onDelete={(userId) => this.onUserDeleted(userId)}
+                    onDelete={(userId) => this.openDeleteDialog(userId)}
                   />
                 </tr>
               );
             })}
           </tbody>
         </table>
+        <Dialog
+          open={this.state.isDeleteDialogOpen}
+          onClose={() => this.closeDeleteDialog()}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className="dialog-box">
+          <div className="dialog-header">
+            <div>Permanently delete<br />this user?</div>
+          </div>
+          <div className="dialog-footer">
+            <button className="btn btn-md bg-theme-orange yes-button"
+              onClick={()=> this.deleteUser()}>
+              <span>Yes, delete</span>
+            </button>
+            <button className="btn btn-md bg-gray no-button"
+              onClick={() => this.closeDeleteDialog()}>
+              <span>No, keep</span>
+            </button>
+          </div>
+        </Dialog>
       </div>
     );
   }

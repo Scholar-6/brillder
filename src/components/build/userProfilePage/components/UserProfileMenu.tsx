@@ -75,11 +75,7 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
           showDropdown={() => this.showDropdown()}
           showNotifications={() => this.showNotifications()}
         />
-        <Menu
-          className="menu-dropdown"
-          keepMounted
-          open={this.state.dropdownShown}
-          onClose={() => this.hideDropdown()}>
+        <Menu className="menu-dropdown" open={this.state.dropdownShown} onClose={() => this.hideDropdown()}>
           <MenuItem
             className="first-item menu-item"
             onClick={() => this.props.history.push("/play/dashboard")}>

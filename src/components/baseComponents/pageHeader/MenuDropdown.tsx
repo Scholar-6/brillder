@@ -111,7 +111,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   return (
     <Menu
       className="menu-dropdown"
-      keepMounted
       open={props.dropdownShown}
       onClose={props.hideDropdown}
     >

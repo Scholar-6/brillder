@@ -81,12 +81,30 @@
       width: 2vw;
     }
   }
+
   .user-radio-column {
     padding-left: 0 !important;
   }
+
   .users-pagination {
     position: absolute;
     width: 100%;
     bottom: 0;
+  }
+
+  .class-assign-button {
+    cursor: pointer;
+    margin-left: 0.8vw;
+    font-size: 1.3vw;
+    @extend %flexCenter;
+
+    svg {
+      background: var(--theme-dark-blue);
+      border-radius: 50%;
+      color: var(--white);
+      height: 1.6vw;
+      width: 1.6vw;
+      margin-right: 0.45vw;
+    }
   }
 }
