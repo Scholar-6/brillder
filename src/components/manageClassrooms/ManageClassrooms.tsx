@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import './ManageClassrooms.scss';
 
-import { User, UserType, UserStatus } from "model/user";
+import { User, UserType } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
