@@ -770,21 +770,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
             justify-content: center !important;
             align-items: center !important;
           }
-
-          .direction-info {
-            h2 {
-              @include phone_and_tabletP {
-                position: absolute;
-                bottom: 0;
-              }
-            }
-            span {
-              @include phone_and_tabletP {
-                bottom: -27px !important;
-                line-height: 20px !important;
-              }
-            }
-          }
         }
       }
 
@@ -878,18 +863,11 @@ $play-mobile-height: calc(100vh - 55.8vw);
             position: relative;
             margin: 0;
             > h2 {
+              width: 100%;
               margin-top: 0;
               margin-bottom: 0;
               font-family: $font-family-bold;
-
-              @include phone_and_tabletP {
-                font-size: 10.6vw;
-                width: max-content;
-              }
-
-              @include tabletP {
-                font-size: 2.6vw;
-              }
+              font-size: 2.6vw;
             }
 
             > h3,
