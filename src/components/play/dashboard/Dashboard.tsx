@@ -377,6 +377,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           >
             {brick.expanded ? (
               <ExpandedBrickDescription
+                userId={this.props.user.id}
                 isAdmin={isAdmin}
                 color={color}
                 brick={brick}
@@ -417,6 +418,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           >
             {brick.expanded ? (
               <ExpandedBrickDescription
+                userId={this.props.user.id}
                 isAdmin={isAdmin}
                 color={color}
                 brick={brick}
