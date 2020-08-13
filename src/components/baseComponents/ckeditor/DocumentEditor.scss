@@ -11,6 +11,7 @@
   .ck-editor {
     height: 100%;
     width: calc(100% - 2vw);
+    word-break: break-word;
     .ck-editor__main {
       height: 100%;
       .ck-content {
@@ -159,7 +160,8 @@
 .document-editor.highlight-editor:hover {
   cursor: url('/feathericons/svg/cursor-highlighter.svg') 0 15, auto;
   cursor: -webkit-image-set(
-    url('/feathericons/svg/cursor-highlighter.svg') 1x,
-    url('/feathericons/svg/cursor-highlighter.svg') 2x
-  ), auto;
+      url('/feathericons/svg/cursor-highlighter.svg') 1x,
+      url('/feathericons/svg/cursor-highlighter.svg') 2x
+    ),
+    auto;
 }
