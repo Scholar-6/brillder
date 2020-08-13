@@ -125,9 +125,15 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
         <SvgIcon>
           <svg className="svg">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#plus"} />
+            <use href={sprite + "#message-square"} />
           </svg>
         </SvgIcon>
+        <div className="comments-plus">
+          <svg className="svg">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#plus"} />
+          </svg>
+        </div>
       </div>
     );
   }
