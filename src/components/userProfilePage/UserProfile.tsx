@@ -52,6 +52,7 @@ interface UserProfileState {
   subjects: Subject[];
   autoCompleteOpen: boolean;
   isNewUser: boolean;
+  isAdmin: boolean;
   isStudent: boolean;
   roles: UserRoleItem[];
 
@@ -65,18 +66,18 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     super(props);
     this.props.redirectedToProfile();
     const { userId } = props.match.params;
+    const isAdmin = checkAdmin(props.user.roles);
     // check if admin wanna create new user
     if (userId === "new") {
-      const isAdmin = checkAdmin(props.user.roles);
       if (isAdmin) {
-        this.state = this.getNewUserState();
+        this.state = this.getNewUserState(isAdmin);
       } else {
         props.history.push("/home");
       }
     } else {
       const { user } = props;
 
-      let tempState: UserProfileState = this.getExistedUserState(user);
+      let tempState: UserProfileState = this.getExistedUserState(user, isAdmin);
       if (userId) {
         this.state = tempState;
         axios.get(`${process.env.REACT_APP_BACKEND_HOST}/user/${userId}`, {
@@ -120,10 +121,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
   }
 
-  getExistedUserState(user: User) {
+  getExistedUserState(user: User, isAdmin: boolean) {
     const isBuilder = canBuild(user);
     const isEditor = canEdit(user);
-    const isAdmin = checkAdmin(user.roles);
 
     const isOnlyStudent = user.roles.length === 1 && user.roles[0].roleId === UserType.Student;
 
@@ -145,6 +145,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       autoCompleteOpen: false,
       isNewUser: false,
       isStudent: isOnlyStudent,
+      isAdmin,
       roles: [
         { roleId: UserType.Student, name: "Student", disabled: !isBuilder },
         { roleId: UserType.Teacher, name: "Teacher", disabled: !isBuilder },
@@ -158,7 +159,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     };
   }
 
-  getNewUserState() {
+  getNewUserState(isAdmin: boolean) {
     return {
       user: {
         id: 0,
@@ -175,8 +176,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       },
       subjects: [],
       isNewUser: true,
-      autoCompleteOpen: false,
       isStudent: false,
+      isAdmin,
+      autoCompleteOpen: false,
       roles: [
         { roleId: UserType.Student, name: "Student", disabled: false },
         { roleId: UserType.Teacher, name: "Teacher", disabled: false },
@@ -477,6 +479,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           close={() => this.onSubjectDialogClose()}
         />
         <ProfileSavedDialog
+          isAdmin={this.state.isAdmin}
           history={this.props.history}
           isOpen={this.state.savedDialogOpen}
           close={() => this.onProfileSavedDialogClose()}
