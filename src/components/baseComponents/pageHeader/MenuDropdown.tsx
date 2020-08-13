@@ -1,13 +1,23 @@
 import React from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import { connect } from 'react-redux';
+
+import actions from "redux/actions/brickActions";
 
 import sprite from "assets/img/icons-sprite.svg";
 import { User, UserType } from "model/user";
 import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'components/localStorage/proposal';
 
-import { ProposalSubject } from "components/map"
+
+import { ProposalSubject } from "components/map";
+
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(actions.forgetBrick())
+});
+
+const connector = connect(null, mapDispatch);
 
 interface MenuDropdownProps {
   dropdownShown: boolean;
@@ -143,4 +153,4 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   );
 };
 
-export default MenuDropdown;
+export default connector(MenuDropdown);

@@ -261,6 +261,17 @@
           width: $comment-button-size;
           font-size: 1.8vh;
         }
+        .comments-plus {
+          position: absolute;
+          @extend %displayFlex;
+          @extend %flexJustifyCenter;
+          height: $comment-button-size / 2;
+          width: $comment-button-size / 2;
+          font-size: 1.8vh;
+          svg {
+            margin-bottom: 0.6vh;
+          }
+        }
       }
 
       .question-button-container {

@@ -93,7 +93,6 @@ class PageHeadWithMenu extends Component<HeaderMenuProps, HeaderMenuState> {
           page={this.props.page}
           history={this.props.history}
           onLogout={() => this.handleLogoutOpen()}
-          forgetBrick={() => {}}
         />
         <NotificationPanel
           history={this.props.history}

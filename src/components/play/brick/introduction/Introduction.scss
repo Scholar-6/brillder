@@ -869,17 +869,14 @@ $play-mobile-height: calc(100vh - 55.8vw);
               font-family: $font-family-bold;
               font-size: 2.6vw;
             }
-
             > h3,
             > span {
               position: absolute;
               color: var(--theme-dark-blue);
             }
-
             > h3 {
               letter-spacing: inherit;
               margin: 0;
-
               @include phone_and_tabletP {
                 font-size: 6vw;
                 top: -6vw;
