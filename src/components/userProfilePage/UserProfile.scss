@@ -137,23 +137,55 @@
           right: 0vw;
           border-radius: 50%;
           cursor: pointer;
-
+          @extend %transitionAll300;
           @include phone_and_tabletP {
             height: 12vw;
             width: 12vw;
           }
-
           .MuiIconButton-label {
             margin: 0;
           }
-
           .svg {
             width: 2vw;
             height: 2vw;
-
             @include phone_and_tabletP {
               height: 7vw;
               width: 7vw;
+            }
+          }
+          .svg-upload,
+          .svg-ok,
+          .svg-trash {
+            display: none;
+          }
+          &.remove-image {
+            background-color: var(--theme-orange);
+            .svg-plus {
+              display: none;
+            }
+            .svg-trash {
+              display: block;
+            }
+          }
+          &.removing-image {
+            background-color: var(--theme-orange);
+            transform: rotate(45deg);
+          }
+          &.uploading-image {
+            .svg-plus {
+              display: none;
+            }
+            .svg-upload {
+              display: block;
+            }
+          }
+          &.upload-success {
+            background-color: var(--theme-green);
+            .svg-plus {
+              display: none;
+            }
+            .svg-ok {
+              display: block;
             }
           }
         }

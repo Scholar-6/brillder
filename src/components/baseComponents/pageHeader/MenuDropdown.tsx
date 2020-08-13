@@ -145,7 +145,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         <div className="btn btn-transparent svgOnHover">
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#logout-thick"} className="text-white" />
+            <use href={sprite + "#logout"} className="text-white" />
           </svg>
         </div>
       </MenuItem>
