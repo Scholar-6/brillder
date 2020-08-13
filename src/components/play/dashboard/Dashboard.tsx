@@ -197,12 +197,8 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
   }
 
   //region Hide / Expand / Clear Filter
-  filterClear() {
-    this.setState({
-      isClearFilter: this.state.subjects.some((r: any) => r.checked)
-        ? true
-        : false,
-    });
+  isFilterClear() {
+    return this.state.subjects.some(r => r.checked);
   }
   //endregion
 
@@ -210,14 +206,14 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     const { subjects } = this.state;
     subjects[i].checked = !subjects[i].checked;
     const finalBricks = this.filter(this.state.bricks);
-    this.setState({ ...this.state, finalBricks });
+    this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks });
   };
 
   clearSubjects = () => {
     const { state } = this;
     const { subjects } = state;
     subjects.forEach((r: any) => (r.checked = false));
-    this.setState({ ...state });
+    this.setState({ ...state, isClearFilter: false });
   };
 
   moveAllBack() {
