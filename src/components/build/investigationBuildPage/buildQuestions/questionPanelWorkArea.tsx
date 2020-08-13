@@ -103,6 +103,35 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     ).length ?? 0
   }
 
+  const renderCommentButton = () => {
+    let count = getCommentCount();
+    if (count >= 1) {
+      return (
+        <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
+          <SvgIcon>
+            <svg className="svg">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#message-square"} />
+            </svg>
+          </SvgIcon>
+          <div className="comments-count">
+            {getCommentCount()}
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
+        <SvgIcon>
+          <svg className="svg">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#plus"} />
+          </svg>
+        </SvgIcon>
+      </div>
+    );
+  }
+
   return (
     <MuiThemeProvider >
       <div className={showHelpArrow ? "build-question-page" : "build-question-page active"} style={{ width: '100%', height: '94%' }}>
@@ -195,19 +224,9 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 <Grid className="question-comments-panel" item container direction="row" justify="flex-start" xs>
                   <CommentPanel setCommentsShown={setCommentsShown} haveBackButton={true} currentQuestionId={question.id} />
                 </Grid> :
-                <Grid container item alignItems="center" style={{height: '100%'}}>
+                <Grid container item alignItems="center" style={{ height: '100%' }}>
                   <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
-                    <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
-                      <SvgIcon>
-                        <svg className="svg">
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#message-square"} />
-                        </svg>
-                      </SvgIcon>
-                      <div className="comments-count">
-                        {getCommentCount()}
-                      </div>
-                    </div>
+                    {renderCommentButton()}
                     <Grid container direction="row" alignItems="center">
                       <Grid container justify="center" item sm={12}>
                         <FormControl variant="outlined">
