@@ -14,6 +14,7 @@ interface ProfileImageProps {
 }
 
 const ProfileImage: React.FC<ProfileImageProps> = (props) => {
+  const [imageRemoveSuccess, setRemoveImage] = React.useState(false);
   const [state, setState] = React.useState({
     result: null,
     filename: null,
@@ -27,6 +28,10 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
   const handleClick = () => {
     if (profileImage) {
       props.setImage('');
+      setRemoveImage(true);
+      setTimeout(()=> {
+        setRemoveImage(false);
+      }, 2500);
     } else {
       openUploadDialog();
     }
@@ -67,15 +72,11 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
   }
 
   const renderImage = () => {
-    let className = "real-profile-image"
-    if (props.imageUploadSuccess) {
-      className += " upload-success";
-    }
     if (profileImage) {
       return (
         <img
           src={`${process.env.REACT_APP_BACKEND_HOST}/files/${profileImage}`}
-          className={className} alt=""
+          className="real-profile-image" alt=""
         />
       );
     }
@@ -87,10 +88,22 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     );
   };
 
+  let className = "add-image-button svgOnHover"
+  if (props.imageUploadSuccess) {
+    className += " upload-success";
+  }
+  if (props.profileImage && !props.imageUploadSuccess && !imageRemoveSuccess) {
+    className += " remove-image-button"
+  }
+
+  if (imageRemoveSuccess) {
+    className += " removing-image";
+  }
+
   return (
     <div className="profile-image-container">
       <div className="profile-image svgOnHover">{renderImage()}</div>
-      <div className="add-image-button svgOnHover" onClick={handleClick}>
+      <div className={className} onClick={handleClick}>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#plus"} className="text-white" />
