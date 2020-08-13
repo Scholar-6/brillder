@@ -1194,6 +1194,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
 
         svg {
+          stroke-width: 2;
           @include phone_and_tabletP {
             height: 4vw !important;
             width: 4vw !important;
