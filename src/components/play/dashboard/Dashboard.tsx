@@ -21,6 +21,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import DashboardFilter, { SortBy } from './DashboardFilter';
 import DashboardPagination from './DashboardPagination';
 import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
+import { checkAdmin } from "components/services/brickService";
 
 
 interface BricksListProps {
@@ -46,12 +47,14 @@ interface BricksListState {
   isClearFilter: any;
   failedRequest: boolean;
   pageSize: number;
+  isAdmin: boolean;
   isCore: boolean;
 }
 
 class DashboardPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props);
+
     this.state = {
       yourBricks: [],
       bricks: [],
@@ -69,6 +72,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
       isClearFilter: false,
       failedRequest: false,
+      isAdmin: checkAdmin(this.props.user.roles),
       isCore: true
     };
 
@@ -358,12 +362,19 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     return color;
   }
 
+  renderExpandedBrick(color: string, brick: Brick) {
+    return <ExpandedBrickDescription
+      userId={this.props.user.id}
+      isAdmin={this.state.isAdmin}
+      color={color}
+      brick={brick}
+      move={(brickId) => this.move(brickId)}
+      onDelete={(brickId) => this.handleDeleteOpen(brickId)}
+    />
+  }
+
   renderBrickContainer = (brick: Brick, key: number) => {
     let color = this.getBrickColor(brick);
-
-    const isAdmin = this.props.user.roles.some(
-      (role: any) => role.roleId === UserType.Admin
-    );
 
     return (
       <div key={key} className="main-brick-container">
@@ -375,18 +386,10 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             onMouseEnter={() => this.yourBricksMouseHover(key)}
             onMouseLeave={() => this.yourBricksMouseLeave(key)}
           >
-            {brick.expanded ? (
-              <ExpandedBrickDescription
-                userId={this.props.user.id}
-                isAdmin={isAdmin}
-                color={color}
-                brick={brick}
-                move={(brickId) => this.move(brickId)}
-                onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-              />
-            ) : (
-                <ShortBrickDescription brick={brick} />
-              )}
+            {brick.expanded
+              ? this.renderExpandedBrick(color, brick)
+              : <ShortBrickDescription brick={brick} />
+            }
           </div>
         </Box>
       </div>
@@ -416,18 +419,10 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
             onMouseEnter={() => this.handleMouseHover(key)}
             onMouseLeave={() => this.handleMouseLeave(key)}
           >
-            {brick.expanded ? (
-              <ExpandedBrickDescription
-                userId={this.props.user.id}
-                isAdmin={isAdmin}
-                color={color}
-                brick={brick}
-                move={(brickId) => this.move(brickId)}
-                onDelete={(brickId) => this.handleDeleteOpen(brickId)}
-              />
-            ) : (
-                <ShortBrickDescription brick={brick} color={color} />
-              )}
+            {brick.expanded
+              ? this.renderExpandedBrick(color, brick)
+              : <ShortBrickDescription brick={brick} color={color} />
+            }
           </div>
         </Box>
       </div>
