@@ -9,9 +9,9 @@
   position: relative;
   overflow: hidden;
   .ck-editor {
-    height: 100%;
-    width: calc(100% - 2vw);
-    word-break: break-word;
+    height: 100% !important;
+    width: calc(100% - 2vw) !important;
+    word-break: break-word !important;
     .ck-editor__main {
       height: 100%;
       .ck-content {
