@@ -97,14 +97,13 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     );
   };
 
-  let className = "add-image-button svgOnHover"
+  let className = "add-image-button"
   if (props.imageUploadSuccess) {
-    className += " upload-success";
+    className += " uploading-image";
   }
   if (props.profileImage && !props.imageUploadSuccess && !imageRemoveSuccess) {
-    className += " remove-image-button"
+    className += " remove-image"
   }
-
   if (imageRemoveSuccess) {
     className += " removing-image";
   }
@@ -113,10 +112,22 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     <div className="profile-image-container">
       <div className="profile-image svgOnHover">
         {renderImage()}
-        <div className={className} onClick={handleClick}>
-          <svg className="svg active">
+        <div className={"svgOnHover " + className} onClick={handleClick}>
+          <svg className="svg svg-plus active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#plus"} className="text-white" />
+          </svg>
+          <svg className="svg svg-ok active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#ok"} className="text-white" />
+          </svg>
+          <svg className="svg svg-upload active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#upload"} className="text-white" />
+          </svg>
+          <svg className="svg svg-trash active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#trash-outline"} className="text-white" />
           </svg>
         </div>
       </div>
