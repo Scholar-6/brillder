@@ -141,6 +141,9 @@
     }
     .glass-eyes-left,
     .glass-eyes-right {
+      @include phone_and_tabletP {
+        display: none;
+      }
       width: 5vw;
       height: 5vw;
       @extend %floatToYCenter;
@@ -239,6 +242,16 @@
         width: 100%;
         @extend %flexCenter;
         height: calc(33.33vh - 8vh);
+        opacity: 0.5;
+        &.swiper-slide-next {
+          transform: scale(1.2);
+          @extend %transitionAll300;
+          opacity: 1;
+        }
+        &:not(.swiper-slide-next) {
+          transform: scale(0.7);
+          pointer-events: none;
+        }
         .btn {
           text-align: center;
           flex-direction: column;
