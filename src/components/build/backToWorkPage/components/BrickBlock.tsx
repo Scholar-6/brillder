@@ -59,6 +59,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
           >
             {brick.expanded ? (
               <ExpandedBrickDecsiption
+                userId={props.user.id}
                 isAdmin={isAdmin}
                 color={color}
                 brick={brick}
