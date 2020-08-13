@@ -4,7 +4,7 @@ import { Grid, Radio } from "@material-ui/core";
 import sprite from "assets/img/icons-sprite.svg";
 
 import { User } from "model/user";
-import { UserSortBy } from './ManageClassrooms';
+import { UserSortBy } from '../ManageClassrooms';
 
 interface StudentTableProps {
   users: User[];

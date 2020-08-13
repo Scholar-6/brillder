@@ -11,11 +11,11 @@ import { checkAdmin } from "components/services/brickService";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
-import AddButton from './AddButton';
-import StudentTable from './StudentTable';
-import UsersPagination from './UsersPagination';
+import AddButton from './components/AddButton';
+import StudentTable from './components/StudentTable';
+import UsersPagination from './components/UsersPagination';
+import AssignClassDialog from './components/AssignClassDialog';
 import RoleDescription from 'components/baseComponents/RoleDescription';
-import AssignClassDialog from './AssignClassDialog';
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
@@ -79,6 +79,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     };
 
     this.getUsers(this.state.page);
+
+    axios.get(process.env.REACT_APP_BACKEND_HOST + "/classrooms", {
+      withCredentials: true,
+    }).then(res => {
+      console.log(res)
+    }).catch(() => {});
   }
 
   getUsers(
