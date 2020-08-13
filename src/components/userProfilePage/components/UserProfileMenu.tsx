@@ -120,12 +120,12 @@ class UserProfileMenu extends Component<UserMenuProps, UserMenuState> {
             ) : (
               ""
             )}
-          <MenuItem className="menu-item" onClick={() => this.handleLogoutOpen()}>
+          <MenuItem className="menu-item logout-icon" onClick={() => this.handleLogoutOpen()}>
             <span className="menu-text">Logout</span>
             <div className="btn btn-transparent svgOnHover">
               <svg className="svg active">
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#logout-thick"} className="text-white" />
+                <use href={sprite + "#logout"} className="text-white" />
               </svg>
             </div>
           </MenuItem>
