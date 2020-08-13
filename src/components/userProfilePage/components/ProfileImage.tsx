@@ -23,21 +23,21 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     error: null,
   })
   const [isUploadOpen, setUploadDialog] = React.useState(false);
+  const [isDeleteOpen, setDeleteDialog] = React.useState(false);
   const { profileImage } = props;
 
   const handleClick = () => {
     if (profileImage) {
-      props.setImage('');
-      setRemoveImage(true);
-      setTimeout(() => {
-        setRemoveImage(false);
-      }, 2500);
+      setDeleteDialog(true);
     } else {
       openUploadDialog();
     }
   }
 
-  const openUploadDialog = () => setUploadDialog(true);
+  const openUploadDialog = () => {
+    setDeleteDialog(false);
+    setUploadDialog(true);
+  }
 
   const dataURLtoFile = (dataurl: string, filename: string) => {
     try {
@@ -56,6 +56,15 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     } catch {
       return null;
     }
+  }
+
+  const removeImage = () => {
+    setDeleteDialog(false);
+    props.setImage('');
+    setRemoveImage(true);
+    setTimeout(() => {
+      setRemoveImage(false);
+    }, 2500);
   }
 
   const uploadCropedFile = () => {
@@ -131,6 +140,25 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
         <div className="dialog-footer">
           <button className="btn btn-md bg-theme-orange yes-button" onClick={uploadCropedFile}>
             <span>Save</span>
+          </button>
+        </div>
+      </Dialog>
+      <Dialog
+        open={isDeleteOpen}
+        onClose={() => setDeleteDialog(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        className="dialog-box"
+      >
+        <div className="dialog-header">
+          Doesn't quite capture you?
+        </div>
+        <div className="dialog-footer">
+          <button className="btn btn-md bg-theme-orange yes-button" onClick={openUploadDialog}>
+            <span>Add another</span>
+          </button>
+          <button className="btn btn-md bg-gray no-button" onClick={removeImage}>
+            <span>No, remove</span>
           </button>
         </div>
       </Dialog>
