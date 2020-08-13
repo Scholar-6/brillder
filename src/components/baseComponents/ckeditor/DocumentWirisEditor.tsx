@@ -38,6 +38,7 @@ import Image from "@ckeditor/ckeditor5-image/src/image";
 import "./DocumentEditor.scss";
 import UploadImageCustom from './UploadImageCustom';
 //import CommentCustom from './CommentCustom';
+import { parseDataToArray } from 'components/services/mathJaxService';
 
 export interface DocumentWEditorProps {
   disabled: boolean;
@@ -189,10 +190,29 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
       config.plugins.push(MediaEmbed);
       config.plugins.push(Link);
       config.toolbar.push("mediaEmbed");
-      config.link = {
-        addTargetToExternalLinks: true,
-      };
+      config.link = { addTargetToExternalLinks: true };
     }
+
+    const mediaContentFix = (data: string, editorContent: any) => {
+      let children = editorContent.children as any;
+      let index = 0;
+      for (let child of children) {
+        if (child.tagName === 'FIGURE' && child.className === 'media') {
+          // fix for media if video inserted
+          // add paragraph before and after to enable entering text in editor
+          if (index === 0) {
+            editorContent.insertBefore(document.createElement('p'), child);
+            if (children.length === 2) {
+              editorContent.appendChild(document.createElement('p'));
+            }
+            data = editorContent.innerHTML;
+          }
+        }
+        index++;
+      }
+      return data;
+    }
+    /* MediaEmbed plugin enables media links in editor */
 
     if (this.props.toolbar) {
       config.toolbar = this.props.toolbar;
@@ -219,7 +239,10 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
             if (!this.state.focused && !this.state.isWirisInserting) {
               return;
             }
-            const data = editor.getData();
+            let data = editor.getData();
+            let editorContent = document.createElement('div');
+            editorContent.innerHTML = data;
+            data = mediaContentFix(data, editorContent);
             this.props.onChange(data);
             this.replaceHtml("ck-label", "Document colors", "Document colours");
             this.setState({ ...this.state, data });
