@@ -11,7 +11,7 @@ import authActions from "redux/actions/auth";
 import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
 import { saveProfileImageName } from "components/services/profile";
-import PhonePreview from "../baseComponents/phonePreview/PhonePreview";
+import PhonePreview from "../build/baseComponents/phonePreview/PhonePreview";
 import { Subject } from "model/brick";
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import { checkAdmin, canBuild, canEdit } from "components/services/brickService";

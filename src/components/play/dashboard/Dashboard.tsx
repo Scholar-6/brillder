@@ -13,7 +13,7 @@ import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import { Brick, BrickStatus } from "model/brick";
-import { User, UserType } from "model/user";
+import { User } from "model/user";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
@@ -404,10 +404,6 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     } else {
       color = brick.subject.color;
     }
-
-    const isAdmin = this.props.user.roles.some(
-      (role: any) => role.roleId === UserType.Admin
-    );
 
     return (
       <div key={key} className="main-brick-container">

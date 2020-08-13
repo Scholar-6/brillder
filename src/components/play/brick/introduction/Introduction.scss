@@ -1,6 +1,6 @@
-@import '../../../../assets/sass/partials/variables';
-@import '../../../../assets/sass/partials/mixins';
-@import '../../../../assets/sass/partials/extensions';
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 $expanded-intro-padding: 2vw;
 $introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
