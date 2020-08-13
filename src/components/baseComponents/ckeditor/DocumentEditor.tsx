@@ -154,6 +154,7 @@ class DocumentEditorComponent extends React.Component<DocumentEditorProps, Docum
         'bulletedList', 'numberedList',
       ],
       mediaEmbed: { previewsInData: true },
+      toolbarCanCollapse: false,
       placeholder: ''
     };
 
