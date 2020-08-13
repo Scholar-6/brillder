@@ -52,7 +52,7 @@
       }
 
       .profile-username {
-        font-size: 2.0vw;
+        font-size: 2vw;
         letter-spacing: 0.25vw;
         margin-left: 1.08vw;
       }
@@ -133,16 +133,14 @@
           z-index: 100;
           position: absolute;
           background-color: var(--theme-dark-blue);
-          top: 20vh;
-          right: 1vw;
+          bottom: -2vh;
+          right: 0vw;
           border-radius: 50%;
           cursor: pointer;
 
           @include phone_and_tabletP {
             height: 12vw;
             width: 12vw;
-            top: 15vh;
-            right: 0vw;
           }
 
           .MuiIconButton-label {

@@ -23,9 +23,15 @@
 
   .home-button {
     cursor: pointer;
-    height: 100%;
-    width: 100%;
     display: block;
+    @include phone_and_tabletP {
+      height: 45px;
+      width: 45px;
+    }
+    @include tabletP {
+      height: 100%;
+      width: 100%;
+    }
     &:hover {
       > .svg {
         @include transition(all 350ms cubic-bezier(0.5, 1, 0.89, 1));

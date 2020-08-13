@@ -108,8 +108,8 @@
           .close-search {
             @include phone_and_tabletP {
               display: flex;
-              width: 7vw;
-              height: 7vw;
+              width: 45px;
+              height: 45px;
             }
             @include tabletP {
               display: none;
@@ -369,15 +369,12 @@
   }
 }
 
-
 .header-btn {
   cursor: pointer;
   display: inline-block;
   @include phone_and_tabletP {
-    width: 15vw;
-    height: 15vw;
-    padding: 10px;
-    border-radius: 50%;
+    width: 45px;
+    height: 45px;
     &:hover {
       box-shadow: 0px 0px 0 10px var(--theme-orange-alpha2);
     }

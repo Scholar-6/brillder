@@ -104,13 +104,9 @@ class PageHeader extends Component<UsersListProps, MyState> {
                   </div>
                   :
                   <div className="btn btn-transparent open-search svgOnHover" onClick={() => this.renderSearch()}>
-                    <svg className="svg w100 h100 svg-default">
+                    <svg className="svg w100 h100 active">
                       {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#search-thin"} className="text-theme-orange" />
-                    </svg>
-                    <svg className="svg w100 h100 colored">
-                      {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#search-thick"} className="text-theme-orange" />
+                      <use href={sprite + "#search"} className="text-theme-orange" />
                     </svg>
                   </div>
                 }

@@ -29,7 +29,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     if (profileImage) {
       props.setImage('');
       setRemoveImage(true);
-      setTimeout(()=> {
+      setTimeout(() => {
         setRemoveImage(false);
       }, 2500);
     } else {
@@ -102,12 +102,14 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
 
   return (
     <div className="profile-image-container">
-      <div className="profile-image svgOnHover">{renderImage()}</div>
-      <div className={className} onClick={handleClick}>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#plus"} className="text-white" />
-        </svg>
+      <div className="profile-image svgOnHover">
+        {renderImage()}
+        <div className={className} onClick={handleClick}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#plus"} className="text-white" />
+          </svg>
+        </div>
       </div>
       <div className="status-container svgOnHover">
         <svg className="svg active">
