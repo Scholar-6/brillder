@@ -10,17 +10,39 @@ import './ProfileSavedDialog.scss';
 import sprite from "assets/img/icons-sprite.svg";
 
 interface ProfileSavedProps {
+  isAdmin: boolean;
   isOpen: boolean;
   history: any;
   close(): void;
 }
 
-const ProfileSavedDialog: React.FC<ProfileSavedProps> = ({ isOpen, history, close }) => {
+const ProfileSavedDialog: React.FC<ProfileSavedProps> = props => {
+  const {close, history} = props;
+  const renderLinkButton = () => {
+    if (props.isAdmin) {
+      return (
+        <button
+          className="btn btn-md bg-theme-orange yes-button"
+          onClick={() => history.push('/users')}
+        >
+          <span>Manage other users</span>
+        </button>
+      );
+    }
+    return (
+      <button
+        className="btn btn-md bg-theme-orange yes-button"
+        onClick={() => history.push('/home')}
+      >
+        <span>Go to my homepage</span>
+      </button>
+    );
+  }
   return (
     <Dialog
-      open={isOpen}
-      onClick={() => close()}
-      onClose={() => close()}
+      open={props.isOpen}
+      onClick={close}
+      onClose={close}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       className="dialog-box profile-saved-dialog"
@@ -29,22 +51,19 @@ const ProfileSavedDialog: React.FC<ProfileSavedProps> = ({ isOpen, history, clos
         <ListItem>
           <ListItemText primary="Profile saved" />
           <ListItemAvatar>
-          <Avatar className="circle-check">
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#check-icon"} className="text-white" />
-            </svg>
-          </Avatar>
+            <Avatar className="circle-check">
+              <svg className="svg active">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#check-icon"} className="text-white" />
+              </svg>
+            </Avatar>
           </ListItemAvatar>
         </ListItem>
       </div>
       <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange  yes-button"
-          onClick={() => history.push('/home')}>
-          <span>Go to my homepage</span>
-        </button>
+        {renderLinkButton()}
         <button className="btn btn-md bg-gray yes-button"
-          onClick={() => close()}>
+          onClick={close}>
           <span>Continue editing</span>
         </button>
       </div>
