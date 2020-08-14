@@ -5,8 +5,11 @@
 .question-build-text-editor {
   position: relative;
   width: 100%;
+  .ck-toolbar {
+    width: calc(100% - 2vw) !important;
+  }
   .ck-editor {
-    width: 100%;
+    width: 100% !important;
     .ck-editor__main {
       .ck-content {
         background-color: var(--tab-gray) !important;
