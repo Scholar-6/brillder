@@ -5,10 +5,12 @@ import './AssignClassDialog.scss';
 import sprite from 'assets/img/icons-sprite.svg';
 
 import { User } from "model/user";
+import { ClassroomApi } from 'components/teach/service';
 
 interface AssignClassProps {
   users: User[];
   isOpen: boolean;
+  classrooms: ClassroomApi[];
   submit(): void;
   close(): void;
 }
@@ -50,6 +52,9 @@ const AssignClassDialog: React.FC<AssignClassProps> = (props) => {
         </div>
         <input value={value} onChange={e => setValue(e.target.value)} />
         <div className="records-box">
+          {props.classrooms.map(classroom => {
+            return <div>{classroom.name}</div>
+          })}
         </div>
       </div>
     </Dialog>

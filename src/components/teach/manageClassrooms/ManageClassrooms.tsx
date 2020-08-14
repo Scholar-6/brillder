@@ -15,7 +15,10 @@ import AddButton from './components/AddButton';
 import StudentTable from './components/StudentTable';
 import UsersPagination from './components/UsersPagination';
 import AssignClassDialog from './components/AssignClassDialog';
+import CreateClassDialog from './components/CreateClassDialog';
 import RoleDescription from 'components/baseComponents/RoleDescription';
+
+import { createClass, getAllClassrooms, ClassroomApi } from '../service';
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
@@ -46,11 +49,12 @@ interface UsersListState {
   filterExpanded: boolean;
   filterHeight: string;
   isAdmin: boolean;
+  classrooms: ClassroomApi[];
 
   sortBy: UserSortBy;
   isAscending: boolean;
   isClearFilter: boolean;
-
+  createClassOpen: boolean;
   assignClassOpen: boolean;
   selectedUsers: MUser[];
 }
@@ -60,6 +64,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     super(props);
     this.state = {
       users: [],
+      classrooms: [],
       page: 0,
       pageSize: 12,
       filterExpanded: true,
@@ -74,17 +79,21 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       isAdmin: checkAdmin(props.user.roles),
       isClearFilter: false,
 
+      createClassOpen: false,
       assignClassOpen: false,
       selectedUsers: []
     };
 
     this.getUsers(this.state.page);
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + "/classrooms", {
-      withCredentials: true,
-    }).then(res => {
-      console.log(res)
-    }).catch(() => {});
+    getAllClassrooms().then(classrooms => {
+      if (classrooms) {
+        this.setState({ classrooms });
+      } else {
+        // geting classrooms failed
+        console.log('geting classrooms failed');
+      }
+    });
   }
 
   getUsers(
@@ -138,6 +147,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     });
   }
 
+  createClass(name: string) {
+    createClass(name).then(newClassroom => {
+      if (newClassroom) {
+        this.state.classrooms.push(newClassroom);
+        this.setState({...this.state});
+      } else {
+        // creation failed
+      }
+    });
+  }
+
   searching(searchString: string) {
     if (searchString.length === 0) {
       this.setState({ ...this.state, searchString, isSearching: false });
@@ -171,9 +191,19 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             <div className="record-header" style={{ width: '50%', textAlign: 'right' }}>RECORDS</div>
           </div>
         </div>
-        <div className="create-class-button" onClick={() => { }}>+ Create Class</div>
+        <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
+          + Create Class
+        </div>
         <div className="filter-header">
           View All
+        </div>
+        <div className="indexes-box">
+          {this.state.classrooms.map(c =>
+            <div className="index-box" onClick={() => { }}>
+              {c.name}
+              <div className="right-index">{0}</div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -245,9 +275,18 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         </Grid>
         <AssignClassDialog
           users={this.state.selectedUsers}
+          classrooms={this.state.classrooms}
           isOpen={this.state.assignClassOpen}
           submit={() => { }}
           close={() => { this.setState({ assignClassOpen: false }) }}
+        />
+        <CreateClassDialog
+          isOpen={this.state.createClassOpen}
+          submit={name => {
+            this.createClass(name);
+            this.setState({ createClassOpen: false })
+          }}
+          close={() => { this.setState({ createClassOpen: false }) }}
         />
       </div>
     );
