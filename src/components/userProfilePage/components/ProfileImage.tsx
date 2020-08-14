@@ -8,13 +8,12 @@ import sprite from "assets/img/icons-sprite.svg";
 import { uploadFile } from "components/services/uploadFile";
 
 interface ProfileImageProps {
-  imageUploadSuccess: boolean;
   profileImage: string;
   setImage(profileImage: string): void;
+  deleteImage(): void;
 }
 
 const ProfileImage: React.FC<ProfileImageProps> = (props) => {
-  const [imageRemoveSuccess, setRemoveImage] = React.useState(false);
   const [state, setState] = React.useState({
     result: null,
     filename: null,
@@ -60,11 +59,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
 
   const removeImage = () => {
     setDeleteDialog(false);
-    props.setImage('');
-    setRemoveImage(true);
-    setTimeout(() => {
-      setRemoveImage(false);
-    }, 2500);
+    props.deleteImage();
   }
 
   const uploadCropedFile = () => {
@@ -133,7 +128,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
         </div>
         <div className="dialog-footer">
           <button className="btn btn-md bg-theme-orange yes-button" onClick={uploadCropedFile}>
-            <span>Save</span>
+            <span>Upload</span>
           </button>
         </div>
       </Dialog>
