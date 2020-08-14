@@ -3,6 +3,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Development Version
 All changes to development branch are automatically deployed to http://dev-brillder.scholar6.org
 
+
 ## Run Project  
 
 Run the project locally (Windows and Linux) and connect to the dev-api:

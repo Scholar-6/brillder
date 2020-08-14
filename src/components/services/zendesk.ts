@@ -3,12 +3,16 @@ import { isMobile } from "react-device-detect";
 const getZendeskIframe = () => document.getElementById("launcher") as any;
 
 const initZendeskStyling = (iframe: any) => {
+  if (isMobile) { return; }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+  let div = innerDoc.querySelectorAll('#Embed > div')[0]
+  div.style.position = "absolute";
+  div.style.width = '100%';
+  div.style.height = '100%';
   let button = innerDoc.getElementsByTagName("button")[0];
   button.style.padding = 0;
   button.style.width = '100%';
   button.style.height = '100%';
-  button.style.paddingLeft = '19.5vw';
   let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
   btnContent.style.paddingRight = "0";
   let helpText = innerDoc.getElementsByClassName("label-3kk12");
@@ -28,8 +32,11 @@ export function minimizeZendeskButton(iframe?: any) {
     if (!iframe) { return; }
   }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+  let div = innerDoc.querySelectorAll('#Embed > div')[0]
+  div.style.width = '42%';
+  div.style.height = '100%';
   var button = innerDoc.getElementsByTagName("button")[0];
-  button.style.padding = "1rem";
+  button.style.paddingLeft = "11.6vw";
   let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
   btnContent.style.padding = 0;
   let helpText = innerDoc.getElementsByClassName("label-3kk12");
@@ -43,7 +50,11 @@ export function maximizeZendeskButton(iframe?: any) {
     if (!iframe) { return; }
   }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+  let div = innerDoc.querySelectorAll('#Embed > div')[0]
+  div.style.width = '100%';
+  div.style.height = '100%';
   let button = innerDoc.getElementsByTagName("button")[0];
+  button.style.paddingLeft = '19.5vw';
   let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
   btnContent.style.paddingRight = "7vw";
   let helpText = innerDoc.getElementsByClassName("label-3kk12");
@@ -52,6 +63,10 @@ export function maximizeZendeskButton(iframe?: any) {
 }
 
 function addZendesk() {
+  // #1473 need to double check if zendesk exists.
+  let zendeskIframe = getZendeskIframe();
+  if (zendeskIframe) { return; }
+
   var head = document.getElementsByTagName('head').item(0);
   if (head) {
     var script = document.createElement('script');
@@ -120,11 +135,6 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
       if (iframe) {
         setZendesk(true);
         try {
-          var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-          let div = innerDoc.querySelectorAll('#Embed > div')[0]
-          div.style.position = "absolute";
-          div.style.width = '100%';
-          div.style.height = '100%';
           initZendeskStyling(iframe);
           setZendeskMode(iframe, location);
           clearInterval(interval);

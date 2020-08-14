@@ -8,13 +8,12 @@ import sprite from "assets/img/icons-sprite.svg";
 import { uploadFile } from "components/services/uploadFile";
 
 interface ProfileImageProps {
-  imageUploadSuccess: boolean;
   profileImage: string;
   setImage(profileImage: string): void;
+  deleteImage(): void;
 }
 
 const ProfileImage: React.FC<ProfileImageProps> = (props) => {
-  const [imageRemoveSuccess, setRemoveImage] = React.useState(false);
   const [state, setState] = React.useState({
     result: null,
     filename: null,
@@ -30,6 +29,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     if (profileImage) {
       setDeleteDialog(true);
     } else {
+      props.deleteImage();
       openUploadDialog();
     }
   }
@@ -60,15 +60,12 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
 
   const removeImage = () => {
     setDeleteDialog(false);
-    props.setImage('');
-    setRemoveImage(true);
-    setTimeout(() => {
-      setRemoveImage(false);
-    }, 2500);
+    props.deleteImage();
   }
 
   const uploadCropedFile = () => {
     let file = dataURLtoFile(state.result as any, state.filename as any);
+    if (!file) { return; } 
     uploadFile(
       file as File,
       (res: any) => {
@@ -98,14 +95,8 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
   };
 
   let className = "add-image-button"
-  if (props.imageUploadSuccess) {
-    className += " uploading-image";
-  }
-  if (props.profileImage && !props.imageUploadSuccess && !imageRemoveSuccess) {
+  if (props.profileImage) {
     className += " remove-image"
-  }
-  if (imageRemoveSuccess) {
-    className += " removing-image";
   }
 
   return (
@@ -116,18 +107,6 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
           <svg className="svg svg-plus active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#plus"} className="text-white" />
-          </svg>
-          <svg className="svg svg-ok active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#ok"} className="text-white" />
-          </svg>
-          <svg className="svg svg-upload active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#upload"} className="text-white" />
-          </svg>
-          <svg className="svg svg-trash active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#trash-outline"} className="text-white" />
           </svg>
         </div>
       </div>
@@ -150,7 +129,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
         </div>
         <div className="dialog-footer">
           <button className="btn btn-md bg-theme-orange yes-button" onClick={uploadCropedFile}>
-            <span>Save</span>
+            <span>Upload</span>
           </button>
         </div>
       </Dialog>
