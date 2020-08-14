@@ -18,7 +18,7 @@ import AssignClassDialog from './components/AssignClassDialog';
 import CreateClassDialog from './components/CreateClassDialog';
 import RoleDescription from 'components/baseComponents/RoleDescription';
 
-import { createClass, getAllClassrooms, ClassroomApi } from '../service';
+import { createClass, getAllClassrooms, assignStudentsToClassroom, ClassroomApi } from '../service';
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
@@ -227,6 +227,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.getUsers(page);
   };
 
+  assignSelectedStudents(classroomId: number) {
+    assignStudentsToClassroom(classroomId, this.state.selectedUsers).then(res => {
+
+    });
+  }
+
   renderTableHeader() {
     return (
       <div className="user-header">
@@ -277,7 +283,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           users={this.state.selectedUsers}
           classrooms={this.state.classrooms}
           isOpen={this.state.assignClassOpen}
-          submit={() => { }}
+          submit={classroomId => this.assignSelectedStudents(classroomId)}
           close={() => { this.setState({ assignClassOpen: false }) }}
         />
         <CreateClassDialog

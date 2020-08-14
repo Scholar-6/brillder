@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 
 import './AssignClassDialog.scss';
@@ -11,13 +11,15 @@ interface AssignClassProps {
   users: User[];
   isOpen: boolean;
   classrooms: ClassroomApi[];
-  submit(): void;
+  submit(classroomId: number): void;
   close(): void;
 }
 
-const AssignClassDialog: React.FC<AssignClassProps> = (props) => {
-  const {users} = props;
+const AssignClassDialog: React.FC<AssignClassProps> = props => {
+  const {users, classrooms} = props;
   const [value, setValue] = React.useState("");
+  const [filteredClasses, setFilteredClasses] = React.useState(classrooms);
+  console.log(filteredClasses, classrooms)
 
   const renderUserFullNames = () => {
     let tempUsers = users as any;
@@ -30,6 +32,19 @@ const AssignClassDialog: React.FC<AssignClassProps> = (props) => {
       }
     }
     return names;
+  }
+
+  useEffect(() => {setFilteredClasses(classrooms)}, [props]);
+
+  const filterClassrooms = (value: string) => {
+    let filtered = classrooms.filter(classroom => {
+      const found = classroom.name.search(value);
+      if (found) {
+        return false;
+      }
+      return true;
+    });
+    setFilteredClasses(filtered);
   }
 
   return (
@@ -50,10 +65,10 @@ const AssignClassDialog: React.FC<AssignClassProps> = (props) => {
           </div>
           <div className="student-names">Selected: {renderUserFullNames()}</div>
         </div>
-        <input value={value} onChange={e => setValue(e.target.value)} />
+        <input onChange={e => filterClassrooms(e.target.value)} />
         <div className="records-box">
-          {props.classrooms.map(classroom => {
-            return <div>{classroom.name}</div>
+          {filteredClasses.map(classroom => {
+            return <div onClick={() => props.submit(classroom.id)}>{classroom.name}</div>
           })}
         </div>
       </div>
