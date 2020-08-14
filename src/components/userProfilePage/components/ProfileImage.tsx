@@ -99,14 +99,8 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
   };
 
   let className = "add-image-button"
-  if (props.imageUploadSuccess) {
-    className += " uploading-image";
-  }
   if (props.profileImage && !props.imageUploadSuccess && !imageRemoveSuccess) {
     className += " remove-image"
-  }
-  if (imageRemoveSuccess) {
-    className += " removing-image";
   }
 
   return (
@@ -117,10 +111,6 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
           <svg className="svg svg-plus active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#plus"} className="text-white" />
-          </svg>
-          <svg className="svg svg-ok active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#ok"} className="text-white" />
           </svg>
         </div>
       </div>
