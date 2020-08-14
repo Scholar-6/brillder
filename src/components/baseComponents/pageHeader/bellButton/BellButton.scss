@@ -4,7 +4,11 @@
 
 .bell-button {
   color: var(--theme-orange);
-
+  @include phone_and_tabletP {
+    width: 45px;
+    height: 45px;
+    padding: 0;
+  }
   #bell {
     stroke: var(--theme-orange);
     width: 100%;
@@ -30,20 +34,20 @@
       color: var(--theme-dark-blue);
     }
   }
-}
-.bell-button.bell-full {
-  .bell-cup {
-    fill: var(--theme-orange);
-  }
-  .bell-text {
-    color: var(--white);
-  }
-}
-.bell-button.bell-full:hover {
-  .bell-cup {
-    fill: inherit;
-  }
-  .bell-text {
-    color: var(--white);
+  &.bell-full {
+    .bell-cup {
+      fill: var(--theme-orange);
+    }
+    .bell-text {
+      color: var(--white);
+    }
+    &:hover {
+      .bell-cup {
+        fill: inherit;
+      }
+      .bell-text {
+        color: var(--white);
+      }
+    }
   }
 }

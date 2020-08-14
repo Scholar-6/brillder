@@ -1,6 +1,6 @@
-@import '../../../../assets/sass/partials/variables';
-@import '../../../../assets/sass/partials/mixins';
-@import '../../../../assets/sass/partials/extensions';
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .build-question-page {
   $left-sidebar-width: 27.5%;
@@ -129,12 +129,18 @@
     .scroll-text {
       @extend %flexCenter;
       span {
+        font-size: 1.1vw;
         color: var(--theme-dark-blue);
       }
       button {
         width: 1.1vw;
         height: 1.1vw;
         margin: 0 0.4vw;
+
+        > svg {
+          width: inherit;
+          height: inherit;
+        }
       }
     }
   }
@@ -260,6 +266,17 @@
           height: $comment-button-size / 1.8;
           width: $comment-button-size;
           font-size: 1.8vh;
+        }
+        .comments-plus {
+          position: absolute;
+          @extend %displayFlex;
+          @extend %flexJustifyCenter;
+          height: $comment-button-size / 2;
+          width: $comment-button-size / 2;
+          font-size: 1.8vh;
+          svg {
+            margin-bottom: 0.6vh;
+          }
         }
       }
 

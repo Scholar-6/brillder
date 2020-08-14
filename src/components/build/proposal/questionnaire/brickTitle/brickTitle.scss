@@ -1,1 +1,8 @@
-
+@import '../../../../../assets/sass/partials/variables';
+@import '../../../../../assets/sass/partials/mixins';
+@import '../../../../../assets/sass/partials/extensions';
+.proposal-phone-preview {
+  @include phone_and_tabletL {
+    display: none;
+  }
+}

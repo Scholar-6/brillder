@@ -1,6 +1,6 @@
-@import '../../../assets/sass/partials/variables';
-@import '../../../assets/sass/partials/mixins';
-@import '../../../assets/sass/partials/extensions';
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .home-button-container {
   @include phone_and_tabletP {
@@ -23,9 +23,15 @@
 
   .home-button {
     cursor: pointer;
-    height: 100%;
-    width: 100%;
     display: block;
+    @include phone_and_tabletP {
+      height: 45px;
+      width: 45px;
+    }
+    @include tabletP {
+      height: 100%;
+      width: 100%;
+    }
     &:hover {
       > .svg {
         @include transition(all 350ms cubic-bezier(0.5, 1, 0.89, 1));

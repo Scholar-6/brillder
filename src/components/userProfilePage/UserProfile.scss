@@ -1,6 +1,6 @@
-@import '../../../assets/sass/partials/variables';
-@import '../../../assets/sass/partials/mixins';
-@import '../../../assets/sass/partials/extensions';
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .user-profile-page {
   background: var(--theme-dark-blue);
@@ -52,7 +52,7 @@
       }
 
       .profile-username {
-        font-size: 2.0vw;
+        font-size: 2vw;
         letter-spacing: 0.25vw;
         margin-left: 1.08vw;
       }
@@ -133,29 +133,59 @@
           z-index: 100;
           position: absolute;
           background-color: var(--theme-dark-blue);
-          top: 20vh;
-          right: 1vw;
+          bottom: -2vh;
+          right: 0vw;
           border-radius: 50%;
           cursor: pointer;
-
+          @extend %transitionAll300;
           @include phone_and_tabletP {
             height: 12vw;
             width: 12vw;
-            top: 15vh;
-            right: 0vw;
           }
-
           .MuiIconButton-label {
             margin: 0;
           }
-
           .svg {
             width: 2vw;
             height: 2vw;
-
             @include phone_and_tabletP {
               height: 7vw;
               width: 7vw;
+            }
+          }
+          .svg-upload,
+          .svg-ok,
+          .svg-trash {
+            display: none;
+          }
+          &.remove-image {
+            background-color: var(--theme-orange);
+            .svg-plus {
+              display: none;
+            }
+            .svg-trash {
+              display: block;
+            }
+          }
+          &.removing-image {
+            background-color: var(--theme-orange);
+            transform: rotate(45deg);
+          }
+          &.uploading-image {
+            .svg-plus {
+              display: none;
+            }
+            .svg-upload {
+              display: block;
+            }
+          }
+          &.upload-success {
+            background-color: var(--theme-green);
+            .svg-plus {
+              display: none;
+            }
+            .svg-ok {
+              display: block;
             }
           }
         }

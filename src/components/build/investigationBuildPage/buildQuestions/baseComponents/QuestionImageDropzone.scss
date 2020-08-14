@@ -1,6 +1,6 @@
-@import '../../../../../assets/sass/partials/variables';
-@import '../../../../../assets/sass/partials/mixins';
-@import '../../../../../assets/sass/partials/extensions';
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .question-image-drop {
   position: absolute;
@@ -12,6 +12,7 @@
     background: inherit !important;
     cursor: pointer;
     margin-left: 0vw;
+    border: none !important;
     margin-right: 0vw;
     height: 10%;
     background: #fafafa;

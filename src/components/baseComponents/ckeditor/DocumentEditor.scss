@@ -1,6 +1,6 @@
-@import '../../../assets/sass/partials/variables';
-@import '../../../assets/sass/partials/mixins';
-@import '../../../assets/sass/partials/extensions';
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .document-editor {
   border-radius: $global-drop-border-radius !important;
@@ -9,8 +9,9 @@
   position: relative;
   overflow: hidden;
   .ck-editor {
-    height: 100%;
-    width: calc(100% - 2vw);
+    height: 100% !important;
+    width: calc(100% - 2vw) !important;
+    word-break: break-word !important;
     .ck-editor__main {
       height: 100%;
       .ck-content {
@@ -159,7 +160,8 @@
 .document-editor.highlight-editor:hover {
   cursor: url('/feathericons/svg/cursor-highlighter.svg') 0 15, auto;
   cursor: -webkit-image-set(
-    url('/feathericons/svg/cursor-highlighter.svg') 1x,
-    url('/feathericons/svg/cursor-highlighter.svg') 2x
-  ), auto;
+      url('/feathericons/svg/cursor-highlighter.svg') 1x,
+      url('/feathericons/svg/cursor-highlighter.svg') 2x
+    ),
+    auto;
 }

@@ -1,6 +1,6 @@
-@import '../../../../assets/sass/partials/variables';
-@import '../../../../assets/sass/partials/mixins';
-@import '../../../../assets/sass/partials/extensions';
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 $expanded-intro-padding: 2vw;
 $introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
@@ -843,7 +843,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
           @extend %floatToCenter;
         }
         > div {
-          @extend %flexCenter;
+          display: flex;
           flex-direction: column;
           position: relative;
           min-height: 5vh;
@@ -869,25 +869,20 @@ $play-mobile-height: calc(100vh - 55.8vw);
               font-family: $font-family-bold;
               font-size: 2.6vw;
             }
-
             > h3,
             > span {
               position: absolute;
               color: var(--theme-dark-blue);
             }
-
             > h3 {
               letter-spacing: inherit;
               margin: 0;
-
               @include phone_and_tabletP {
-                left: 1.8vw;
                 font-size: 6vw;
                 top: -6vw;
               }
 
               @include tabletP {
-                left: 0.3vw;
                 top: -1vw;
               }
             }
@@ -1194,6 +1189,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
 
         svg {
+          stroke-width: 2;
           @include phone_and_tabletP {
             height: 4vw !important;
             width: 4vw !important;

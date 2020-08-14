@@ -131,7 +131,15 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
         </div>
         <div className="filter-header">
           <span>Filter</span>
-          <button className={"btn-transparent filter-icon " + (this.state.filterExpanded ? this.props.isClearFilter ? ("arrow-cancel") : ("arrow-down") : ("arrow-up"))}
+          <button
+            className={
+              "btn-transparent filter-icon " +
+              (this.state.filterExpanded
+                ? this.props.isClearFilter
+                  ? "arrow-cancel"
+                  : "arrow-down"
+                : "arrow-up")
+            }
             onClick={() => {
               this.state.filterExpanded
                 ? this.props.isClearFilter
