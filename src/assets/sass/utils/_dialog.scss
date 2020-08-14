@@ -70,10 +70,17 @@
           color: var(--theme-dark-blue);
         }
         .records-box {
+          padding-top: 0.8vh;
+          padding-bottom: 0.8vh;
+          padding-left: 1.8vw;
+          padding-right: 1.8vw;
+          color: var(--theme-dark-blue);
+          text-align: left;
           margin-top: 0.5vh;
           height: 15vh;
           background: var(--off-white);
           margin-bottom: 0;
+          overflow-y: auto;
         }
       }
     }
