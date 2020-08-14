@@ -55,13 +55,9 @@ interface UserProfileState {
   isAdmin: boolean;
   isStudent: boolean;
   roles: UserRoleItem[];
-
-  imageUploadSuccess: boolean;
 }
 
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
-  get maxAnimationTime() { return 2500; }
-
   constructor(props: UserProfileProps) {
     super(props);
     this.props.redirectedToProfile();
@@ -154,8 +150,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
       ],
       noSubjectDialogOpen: false,
-      savedDialogOpen: false,
-      imageUploadSuccess: false
+      savedDialogOpen: false
     };
   }
 
@@ -188,7 +183,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       ],
       noSubjectDialogOpen: false,
       savedDialogOpen: false,
-      imageUploadSuccess: false
     };
   }
 
@@ -296,10 +290,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
     saveProfileImageName(user.id, name).then((res: boolean) => {
       if (res) {
-        this.setState({ imageUploadSuccess: true });
-        setTimeout(() => {
-          this.setState({ imageUploadSuccess: false });
-        }, this.maxAnimationTime);
+        // upload success
       } else {
         // saving image name failed
       }
@@ -399,9 +390,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             </div>
             <div className="profile-fields">
               <ProfileImage
-                imageUploadSuccess={this.state.imageUploadSuccess}
                 profileImage={user.profileImage}
                 setImage={(v) => this.onProfileImageChanged(v)}
+                deleteImage={() => this.onProfileImageChanged('')}
               />
               <div className="profile-inputs-container">
                 <div className="input-group">
