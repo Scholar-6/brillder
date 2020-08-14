@@ -136,6 +136,11 @@
         width: 1.1vw;
         height: 1.1vw;
         margin: 0 0.4vw;
+
+        > svg {
+          width: inherit;
+          height: inherit;
+        }
       }
     }
   }
