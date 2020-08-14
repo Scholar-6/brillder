@@ -18,7 +18,7 @@ import AssignClassDialog from './components/AssignClassDialog';
 import CreateClassDialog from './components/CreateClassDialog';
 import RoleDescription from 'components/baseComponents/RoleDescription';
 
-import { createClass, getAllClassrooms, assignStudentsToClassroom, ClassroomApi } from '../service';
+import { getAllClassrooms, getAllStudents, createClass, assignStudentsToClassroom, ClassroomApi } from '../service';
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
@@ -85,6 +85,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     };
 
     this.getUsers(this.state.page);
+
+    getAllStudents().then(res => {
+      console.log(res);
+    });
 
     getAllClassrooms().then(classrooms => {
       if (classrooms) {
@@ -229,7 +233,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   assignSelectedStudents(classroomId: number) {
     assignStudentsToClassroom(classroomId, this.state.selectedUsers).then(res => {
-
+      if (res) {
+        // assign success
+      } else {
+        // failed
+      }
     });
   }
 

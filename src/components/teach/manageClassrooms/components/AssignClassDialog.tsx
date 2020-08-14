@@ -67,8 +67,8 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
         </div>
         <input onChange={e => filterClassrooms(e.target.value)} />
         <div className="records-box">
-          {filteredClasses.map(classroom => {
-            return <div onClick={() => props.submit(classroom.id)}>{classroom.name}</div>
+          {filteredClasses.map((classroom, i) => {
+            return <div key={i} onClick={() => props.submit(classroom.id)}>{classroom.name}</div>
           })}
         </div>
       </div>
