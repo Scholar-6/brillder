@@ -39,10 +39,7 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
   const filterClassrooms = (value: string) => {
     let filtered = classrooms.filter(classroom => {
       const found = classroom.name.search(value);
-      if (found) {
-        return false;
-      }
-      return true;
+      return !found;
     });
     setFilteredClasses(filtered);
   }
