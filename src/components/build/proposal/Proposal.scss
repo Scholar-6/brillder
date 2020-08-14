@@ -595,6 +595,11 @@
     word-break: break-word;
   }
 
+  // ck-editor for brief and prep styles
+  .ck-toolbar, .ck-toolbar__items {
+    border-top-left-radius: 2.1vw !important;
+    border-top-right-radius: 2.1vw !important;
+  }
   .ck-editor {
     width: 100% !important;
   }
