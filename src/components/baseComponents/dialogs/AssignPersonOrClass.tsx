@@ -49,11 +49,21 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }
 
   const renderStudent = (student: UserBase) => (
-    <div onClick={() => assignToStudent(student)}>{student.firstName} {student.lastName}</div>
+    <div
+      onClick={() => assignToStudent(student)}
+      className="assign-list-item"
+    >
+      {student.firstName} {student.lastName}
+    </div>
   )
 
   const renderClassroom = (classroom: Classroom) => (
-    <div onClick={() => assignToClass(classroom)}>{classroom.name}</div>
+    <div
+      onClick={() => assignToClass(classroom)}
+      className="assign-list-item"
+    >
+      {classroom.name}
+    </div>
   )
 
   const assignToStudent = async (student: UserBase) => {
