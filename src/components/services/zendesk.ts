@@ -63,6 +63,10 @@ export function maximizeZendeskButton(iframe?: any) {
 }
 
 function addZendesk() {
+  // #1473 need to double check if zendesk exists.
+  let zendeskIframe = getZendeskIframe();
+  if (zendeskIframe) { return; }
+
   var head = document.getElementsByTagName('head').item(0);
   if (head) {
     var script = document.createElement('script');
