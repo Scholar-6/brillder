@@ -42,3 +42,12 @@ export const getAllClassrooms = () => {
     return null;
   }).catch(() => null);
 }
+
+export const assignStudentsToClassroom = (classroomId: number, student: any) => {
+  return axios.post(process.env.REACT_APP_BACKEND_HOST + "/classrooms", {
+    withCredentials: true,
+  }).then(res => {
+    console.log(res);
+    return res;
+  }).catch(() => null);
+}

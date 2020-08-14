@@ -81,6 +81,9 @@
           background: var(--off-white);
           margin-bottom: 0;
           overflow-y: auto;
+          > div {
+            cursor: pointer;
+          }
         }
       }
     }
