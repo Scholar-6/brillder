@@ -37,7 +37,39 @@
     }
     .cropper-view-box {
       border-radius: 50%;
+      outline: 0.2vw solid var(--light-blue);
     }
+    $line-width: 0.5vw;
+    .cropper-line {
+      &.line-w, &.line-e {
+        width: $line-width;
+      }
+      &.line-n, &.line-s {
+        height: $line-width;
+      }
+    }
+
+    .cropper-point {
+      width: $line-width;
+      height: $line-width;
+      background: var(--light-blue);
+
+      $half-width: calc(#{$line-width} / -1.55);
+
+      &.point-n, &.point-ne, &.point-nw {
+        top: $half-width;
+      }
+      &.point-e, &.point-ne, &.point-se {
+        right: $half-width;
+      }
+      &.point-s, &.point-sw, &.point-se {
+        bottom: $half-width;
+      }
+      &.point-w, &.point-sw, &.point-nw {
+        left: $half-width;
+      }
+    }
+    
     .dropzone-instructions {
       >div {
         color: var(--theme-dark-blue);
