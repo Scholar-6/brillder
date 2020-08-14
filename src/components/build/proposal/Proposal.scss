@@ -1,6 +1,6 @@
-@import '../../../assets/sass/partials/variables';
-@import '../../../assets/sass/partials/mixins';
-@import '../../../assets/sass/partials/extensions';
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .tutorial-page {
   font-family: $font-family-regular;
@@ -43,6 +43,9 @@
     width: 43.8vw;
     border-top-left-radius: 2vw;
     z-index: -1;
+    @include phone_and_tabletL {
+      display: none;
+    }
   }
 
   .only-tutorial-header {
@@ -212,6 +215,11 @@
         font: 3.8vw $font-family-black;
         letter-spacing: 0.04vw;
       }
+    }
+  }
+  .proposal-phone-preview {
+    @include phone_and_tabletL {
+      display: none;
     }
   }
   .prep-phone-preview {

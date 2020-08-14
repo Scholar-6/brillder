@@ -1,0 +1,39 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.assign-class-dialog {
+  .MuiDialog-container {
+    padding-left: 20vw;
+    padding-top: $page-head-height;
+  }
+  .dialog-header {
+    svg {
+      margin-left: 0.3vw;
+      margin-right: 0.3vw;
+      width: 1.3vw;
+      height: 1.3vw;
+    }
+    .students-box {
+      display: flex;
+      font-size: 1.2vw;
+      font-family: $font-family-light;
+      .student-names {
+        font-family: 'Brandon Grotesque Light Italic';
+        text-align: left;
+      }
+      .students-count-box {
+        height: 1.7vw;
+        display: flex;
+        @extend %flexToYCenter;
+      }
+    }
+    .title {
+      width: auto !important;
+      margin-bottom: 3vh !important;
+    }
+    .records-box {
+      width: auto !important;
+    }
+  }
+}

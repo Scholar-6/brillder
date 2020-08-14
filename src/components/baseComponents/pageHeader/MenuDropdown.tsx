@@ -1,13 +1,23 @@
 import React from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import { connect } from 'react-redux';
+
+import actions from "redux/actions/brickActions";
 
 import sprite from "assets/img/icons-sprite.svg";
 import { User, UserType } from "model/user";
 import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'components/localStorage/proposal';
 
-import { ProposalSubject } from "components/map"
+
+import { ProposalSubject } from "components/map";
+
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(actions.forgetBrick())
+});
+
+const connector = connect(null, mapDispatch);
 
 interface MenuDropdownProps {
   dropdownShown: boolean;
@@ -111,7 +121,6 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   return (
     <Menu
       className="menu-dropdown"
-      keepMounted
       open={props.dropdownShown}
       onClose={props.hideDropdown}
     >
@@ -136,7 +145,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
         <div className="btn btn-transparent svgOnHover">
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#logout-thick"} className="text-white" />
+            <use href={sprite + "#logout"} className="text-white" />
           </svg>
         </div>
       </MenuItem>
@@ -144,4 +153,4 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   );
 };
 
-export default MenuDropdown;
+export default connector(MenuDropdown);

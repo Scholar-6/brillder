@@ -6,6 +6,7 @@ import './ExpandedBrickDescription.scss';
 
 
 interface ExpandedDescriptionProps {
+  userId: number;
   isAdmin: boolean;
   brick: Brick;
   color: string;
@@ -20,8 +21,23 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
       } of Plays`;
   }
 
+  renderDeleteButton(brick: Brick) {
+    if (!this.props.isAdmin) { return; }
+    if (brick.author.id === this.props.userId) { return; }
+    return (
+      <div>
+        <button className="btn btn-transparent svgOnHover bin-button" onClick={() => this.props.onDelete(brick.id)}>
+          <svg className="svg w100 h100 active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#trash-outline"} />
+          </svg>
+        </button>
+      </div>
+    );
+  }
+
   render() {
-    const { color, isAdmin, brick } = this.props;
+    const { color, brick } = this.props;
 
     return (
       <div className="expanded-brick-info">
@@ -43,18 +59,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           <div>
             <div className="round-button" style={{ background: `${color}` }}></div>
           </div>
-          {isAdmin ? (
-            <div>
-              <button className="btn btn-transparent svgOnHover bin-button" onClick={() => this.props.onDelete(brick.id)}>
-                <svg className="svg w100 h100 active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#trash-outline"} />
-                </svg>
-              </button>
-            </div>
-          ) : (
-              ""
-            )}
+          {this.renderDeleteButton(brick)}
           <div>
             <button className="btn btn-transparent svgOnHover play-button" onClick={() => this.props.move(brick.id)}>
               <svg className="svg w100 h100 active">

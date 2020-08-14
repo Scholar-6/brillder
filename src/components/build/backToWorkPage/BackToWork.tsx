@@ -7,17 +7,7 @@ import "./BackToWork.scss";
 import { User } from "model/user";
 import { Brick, BrickStatus, Subject } from "model/brick";
 import { checkAdmin, checkEditor } from "components/services/brickService";
-
-import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
-import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
-import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-
 import { ReduxCombinedState } from "redux/reducers";
-import FilterSidebar from './components/FilterSidebar';
-import PlayFilterSidebar from './components/PlayFilterSidebar';
-import BackPagePagination from './components/BackPagePagination';
-import BackPagePaginationV2 from './components/BackPagePaginationV2';
-import BrickBlock from './components/BrickBlock';
 import { ThreeColumns, SortBy, Filters } from './model';
 import {
   getThreeColumnName, prepareTreeRows, getThreeColumnBrick, expandThreeColumnBrick, prepareVisibleThreeColumnBricks, getLongestColumn
@@ -27,6 +17,16 @@ import {
   removeBrickFromLists, sortBricks, hideAllBricks, prepareVisibleBricks, expandBrick
 } from './service';
 import { loadSubjects } from 'components/services/subject';
+
+import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
+import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import FilterSidebar from './components/FilterSidebar';
+import PlayFilterSidebar from './components/PlayFilterSidebar';
+import BackPagePagination from './components/BackPagePagination';
+import BackPagePaginationV2 from './components/BackPagePaginationV2';
+import BrickBlock from './components/BrickBlock';
+import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
 
 interface BackToWorkState {
   finalBricks: Brick[]; // bricks to display
@@ -529,6 +529,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
               <div className={!this.state.isPlayTab === true ? 'active' : ''} onClick={() => this.setState({ isPlayTab: false })}>Build</div>
             </div>
             <div className="bricks-list-container">
+              {this.state.isPlayTab
+                ? ""
+                : <PrivateCoreToggle isCore={this.state.filters.isCore} onSwitch={() => this.toggleCore()} />
+              }
               <div className="bricks-list">
                 {this.renderBricks()}
               </div>

@@ -39,7 +39,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
   render() {
     return (
       <div className="question-type synthesis-page">
-        <div className="inner-question-type inner-synthesis-build">
+        <div className="inner-question-type">
           <Grid container direction="row" alignItems="stretch">
             <Grid item xs className="synthesis-input-container">
               <DocumentWirisCKEditor

@@ -20,8 +20,8 @@ import LoginPage from '../authPages/loginPage/loginPage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
 import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
 import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
-import UserProfilePage from '../build/userProfilePage/UserProfile';
-import ManageClassrooms from 'components/manageClassrooms/ManageClassrooms';
+import UserProfilePage from '../userProfilePage/UserProfile';
+import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';

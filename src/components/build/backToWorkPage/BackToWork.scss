@@ -1,6 +1,6 @@
-@import '../../../assets/sass/partials/variables';
-@import '../../../assets/sass/partials/mixins';
-@import '../../../assets/sass/partials/extensions';
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .back-to-work-page {
   .brick-row-container {
@@ -44,5 +44,8 @@
     .main-brick-container {
       height: calc(#{$backwork-bricks-height-2} / 6) !important;
     }
+  }
+  .private-core-toggle {
+    top: 6.6vh;
   }
 }
