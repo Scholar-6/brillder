@@ -72,6 +72,24 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     );
   }
 
+  const handleKeyPress = async (e: any) => {
+    if(e.key === "Enter") {
+      tryAssign();
+    }
+  }
+
+  const tryAssign = async () => {
+    const totalCount = students.length + classes.length;
+    if(totalCount === 1) {
+      if(students.length === 1) {
+        assignToStudent(students[0]);
+      } else {
+        assignToClass(classes[0])
+      }
+      props.close();
+    }
+  }
+
   return (
     <Dialog
       open={props.isOpen}
@@ -80,7 +98,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     >
       <div className="dialog-header">
         <div>Who would you like to assign this brick to?</div>
-        <input value={value} onChange={e => setValue(e.target.value)} />
+        <input value={value} onChange={e => setValue(e.target.value)} onKeyPress={handleKeyPress} />
         <div className="records-box">
           {students.map(renderStudent)}
           {classes.map(renderClassroom)}
