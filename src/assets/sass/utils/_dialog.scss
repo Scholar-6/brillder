@@ -30,6 +30,33 @@
       margin-bottom: 1vw;
       font-size: 1.5vw;
     }
+
+    //!! only for profile page drag and drop and crop zone
+    .dropzone-instructions {
+      >div {
+        color: var(--theme-dark-blue);
+        font-style: normal;
+      }
+    }
+
+    .dropzone-instructions--main {
+      position: relative;
+      color: transparent !important;
+      font-size: 1.4vw;
+      margin-bottom: 1vh;
+    }
+
+    .dropzone-instructions--main::after {
+      position: absolute;
+      top: 0;
+      font-size: 1.4vw;
+      width: 100%;
+      color: var(--theme-dark-blue);
+      text-align: center;
+      display: block;
+      content: "Drag Image Here | Click to Select Image";
+      font-family: $font-family-regular;
+    }
   }
 
   .dialog-footer {
@@ -50,18 +77,23 @@
     .MuiDialog-paper {
       background: var(--light-blue);
       color: white;
+
       .dialog-header {
         margin-bottom: 0;
         color: inherit;
-        > div {
+
+        >div {
           margin-bottom: 4.5vh;
           text-align: center;
           width: 30vw;
         }
-        input, .records-box {
+
+        input,
+        .records-box {
           background: white;
           border-radius: 0.5vw;
         }
+
         input {
           padding: 1.5vh 1.8vw;
           text-transform: capitalize;
@@ -69,6 +101,7 @@
           width: calc(100% - 1.8vw - 1.8vw);
           color: var(--theme-dark-blue);
         }
+
         .records-box {
           padding-top: 0.8vh;
           padding-bottom: 0.8vh;
@@ -81,7 +114,8 @@
           background: var(--off-white);
           margin-bottom: 0;
           overflow-y: auto;
-          > div {
+
+          >div {
             cursor: pointer;
           }
         }
