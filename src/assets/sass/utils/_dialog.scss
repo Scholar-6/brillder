@@ -32,6 +32,12 @@
     }
 
     //!! only for profile page drag and drop and crop zone
+    .cropper-container {
+      background: #E5E8ED;
+    }
+    .cropper-view-box {
+      border-radius: 50%;
+    }
     .dropzone-instructions {
       >div {
         color: var(--theme-dark-blue);
