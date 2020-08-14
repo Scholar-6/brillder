@@ -69,6 +69,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
 
   const uploadCropedFile = () => {
     let file = dataURLtoFile(state.result as any, state.filename as any);
+    if (!file) { return; } 
     uploadFile(
       file as File,
       (res: any) => {
@@ -120,14 +121,6 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
           <svg className="svg svg-ok active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#ok"} className="text-white" />
-          </svg>
-          <svg className="svg svg-upload active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#upload"} className="text-white" />
-          </svg>
-          <svg className="svg svg-trash active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#trash-outline"} className="text-white" />
           </svg>
         </div>
       </div>
