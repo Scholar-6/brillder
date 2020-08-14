@@ -99,7 +99,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
   };
 
   let className = "add-image-button"
-  if (props.profileImage && !props.imageUploadSuccess && !imageRemoveSuccess) {
+  if (props.profileImage) {
     className += " remove-image"
   }
 
