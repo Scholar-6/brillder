@@ -2,6 +2,26 @@ import { isMobile } from "react-device-detect";
 
 const getZendeskIframe = () => document.getElementById("launcher") as any;
 
+const initZendeskStyling = (iframe: any) => {
+  var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+  let button = innerDoc.getElementsByTagName("button")[0];
+  button.style.padding = 0;
+  button.style.width = '100%';
+  button.style.height = '100%';
+  button.style.paddingLeft = '19.5vw';
+  let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
+  btnContent.style.paddingRight = "0";
+  let helpText = innerDoc.getElementsByClassName("label-3kk12");
+  helpText[0].style.opacity = 1;
+  helpText[0].style.fontSize = '15vw';
+  let svg = innerDoc.getElementsByTagName("svg")[0];
+  let svgSize = '48vh';
+  svg.style.minWidth = svgSize;
+  svg.style.minHeight = svgSize;
+  svg.style.width = svgSize;
+  svg.style.height = svgSize;
+}
+
 export function minimizeZendeskButton(iframe?: any) {
   if (!iframe) {
     iframe = getZendeskIframe();
@@ -24,9 +44,8 @@ export function maximizeZendeskButton(iframe?: any) {
   }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
   let button = innerDoc.getElementsByTagName("button")[0];
-  button.style.padding = "0.92857rem 1.57143rem";
   let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
-  btnContent.style.paddingRight = "0.57143rem";
+  btnContent.style.paddingRight = "7vw";
   let helpText = innerDoc.getElementsByClassName("label-3kk12");
   helpText[0].style.opacity = 1;
   helpText[0].style.width = "100%";
@@ -64,7 +83,6 @@ const isPlayPage = (pathName: string) => {
  */
 function setZendeskMode(iframe: any, location: any) {
   if (isMobile) { return; }
-  iframe.style.width = '135px';
   // #1332 small mode only in viewAll and manageUsers pages
   let isBigMode = true;
   let isIgnorePage = false;
@@ -105,6 +123,9 @@ export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk:
           var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
           let div = innerDoc.querySelectorAll('#Embed > div')[0]
           div.style.position = "absolute";
+          div.style.width = '100%';
+          div.style.height = '100%';
+          initZendeskStyling(iframe);
           setZendeskMode(iframe, location);
           clearInterval(interval);
         } catch {
