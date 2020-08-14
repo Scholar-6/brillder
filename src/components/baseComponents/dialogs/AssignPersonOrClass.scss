@@ -4,6 +4,12 @@
     .dialog-header {
         .records-box {
             color: var(--theme-dark-blue);
+
+            .assign-list-item {
+                &:hover {
+                    background-color: var(--white-gray);
+                }
+            }
         }
     }
 }
