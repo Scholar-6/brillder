@@ -58,8 +58,6 @@ interface UserProfileState {
 }
 
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
-  get maxAnimationTime() { return 2500; }
-
   constructor(props: UserProfileProps) {
     super(props);
     this.props.redirectedToProfile();

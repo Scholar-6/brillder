@@ -29,6 +29,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     if (profileImage) {
       setDeleteDialog(true);
     } else {
+      props.deleteImage();
       openUploadDialog();
     }
   }
