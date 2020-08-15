@@ -149,11 +149,9 @@
 
 .document-editor.highlight-editor {
   .ck-editor {
-    .ck-editor__main {
-      .ck-content {
-        padding: 0 !important;
-        text-align: left;
-      }
+    .ck-content {
+      padding: 0 !important;
+      text-align: left;
     }
   }
 }
