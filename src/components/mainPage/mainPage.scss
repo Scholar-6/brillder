@@ -146,7 +146,7 @@
       }
       width: 5vw;
       height: 5vw;
-      @extend %floatToYCenter;
+      @extend %floatToCenter;
       opacity: 0;
       transition-delay: 200ms;
       @extend %transitionAll300;
@@ -157,10 +157,10 @@
       }
     }
     .glass-eyes-left {
-      left: 1.8vw;
+      left: calc(50% - 3.6vw);
     }
     .glass-eyes-right {
-      right: 1.8vw;
+      left: calc(100% - 3.8vw);
     }
     &:hover {
       .glass-eyes-left,
