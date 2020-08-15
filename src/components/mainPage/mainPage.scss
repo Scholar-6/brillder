@@ -158,9 +158,15 @@
     }
     .glass-eyes-left {
       left: calc(50% - 3.6vw);
+      @include retina {
+        left: calc(50% - 5.4vw);
+      }
     }
     .glass-eyes-right {
       left: calc(100% - 3.8vw);
+      @include retina {
+        left: calc(50% - 7vw);
+      }
     }
     &:hover {
       .glass-eyes-left,
