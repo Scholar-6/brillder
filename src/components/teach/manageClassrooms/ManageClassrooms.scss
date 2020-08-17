@@ -107,4 +107,17 @@
       margin-right: 0.45vw;
     }
   }
+  .right-index {
+    right: 0.7vw !important;
+    color: white !important;
+    background: inherit !important;
+    @extend %flexCenter;
+
+    svg {
+      margin-left: 0.2vw;
+      $icon-size: 1vw;
+      height: $icon-size;
+      width: $icon-size;
+    }
+  }
 }
