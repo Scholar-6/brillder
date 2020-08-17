@@ -15,7 +15,7 @@
   .document-editor {
     width: 100%;
     .ck-editor {
-      width: 100%;
+      width: 100% !important;
       .ck-content {
         background-color: var(--tab-gray);
         padding: 0.3vw 0.3vw 0 0.3vw !important;

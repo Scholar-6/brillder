@@ -17,10 +17,6 @@
     background: var(--theme-orange) !important;
   }
 
-  .answers-container {
-    width: 100%;
-  }
-
   p {
     margin: 0;
   }
@@ -252,7 +248,8 @@
         min-height: 0;
         width: $comment-button-size;
         height: $comment-button-size;
-        .MuiSvgIcon-root, .MuiFab-label {
+        .MuiSvgIcon-root,
+        .MuiFab-label {
           $icon-size: $comment-button-size / 1.6;
           height: $icon-size;
           width: $icon-size;
