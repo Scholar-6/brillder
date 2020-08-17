@@ -58,6 +58,7 @@ interface UsersListState {
   createClassOpen: boolean;
   assignClassOpen: boolean;
   selectedUsers: MUser[];
+  activeClassroom: ClassroomApi | null;
 }
 
 class ManageClassrooms extends Component<UsersListProps, UsersListState> {
@@ -82,6 +83,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
       createClassOpen: false,
       assignClassOpen: false,
+      activeClassroom: null,
       selectedUsers: []
     };
 
@@ -191,6 +193,43 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.setState({ ...this.state, users, selectedUsers });
   }
 
+  setActiveClassroom(activeClassroom: ClassroomApi) {
+    for (let classroom of this.state.classrooms) {
+      classroom.isActive = false;
+    }
+    activeClassroom.isActive = true;
+    this.setState({ activeClassroom });
+  }
+
+  unselectClasses() {
+    for (let classroom of this.state.classrooms) {
+      classroom.isActive = false;
+    }
+    this.setState({ activeClassroom: null });
+  }
+
+  renderViewAllFilter() {
+    let className = "index-box";
+    if (!this.state.activeClassroom) {
+      className += " active";
+    }
+    return (
+      <div className={className} onClick={() => this.unselectClasses()}>
+        View All
+        <div className="right-index">
+          {this.state.users.length}
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#users"} />
+          </svg>
+          <div className="white-box">
+            {this.state.classrooms.length}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   renderSortAndFilterBox = () => {
     return (
       <div className="sort-box">
@@ -203,32 +242,27 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
           + Create Class
         </div>
-        <div className="filter-header">
-          View All
-          <div className="right-index">
-            {this.state.users.length}
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#users"} />
-            </svg>
-            <div className="white-box">
-              {this.state.classrooms.length}
-            </div>
-          </div>
-        </div>
+
         <div className="indexes-box">
-          {this.state.classrooms.map((c, i) =>
-            <div key={i} className="index-box" onClick={() => { }}>
-              {c.name}
-              <div className="right-index">
-                {c.students.length}
-                <svg className="svg active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#users"} />
-                </svg>
+          {this.renderViewAllFilter()}
+          {this.state.classrooms.map((c, i) => {
+            let className = "index-box";
+            if (c.isActive) {
+              className += " active";
+            }
+            return (
+              <div key={i} className={className} onClick={() => this.setActiveClassroom(c)}>
+                {c.name}
+                <div className="right-index">
+                  {c.students.length}
+                  <svg className="svg active">
+                    {/*eslint-disable-next-line*/}
+                    <use href={sprite + "#users"} />
+                  </svg>
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })}
         </div>
       </div>
     );
@@ -291,7 +325,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           <Grid item xs={9} className="brick-row-container">
             {this.renderTableHeader()}
             <StudentTable
-              users={this.state.users}
+              users={this.state.activeClassroom ? this.state.activeClassroom.students : this.state.users}
               selectedUsers={this.state.selectedUsers}
               sortBy={this.state.sortBy}
               isAscending={this.state.isAscending}
