@@ -263,12 +263,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.setState({ assignClassOpen: false });
     assignStudentsToClassroom(classroomId, this.state.selectedUsers).then(res => {
       if (res) {
-        this.getClassrooms();
         // assign success
+        this.getClassrooms();
       } else {
         // failed
       }
     });
+  }
+
+  getUsersByPage(users: MUser[]) {
+    const pageStart = this.state.page * this.state.pageSize;
+    return users.slice(pageStart, pageStart + this.state.pageSize);
   }
 
   renderTableHeader() {
@@ -288,11 +293,15 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (this.state.isSearching) {
       users = this.state.searchUsers;
     }
+
+    let totalCount = users.length;
+    users = this.getUsersByPage(users);
+
     return (
       <UsersPagination
         users={users}
         page={this.state.page}
-        totalCount={users.length}
+        totalCount={totalCount}
         pageSize={this.state.pageSize}
         moveToPage={page => this.moveToPage(page)}
       />
@@ -308,6 +317,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     if (this.state.isSearching) {
       users = this.state.searchUsers;
     }
+
+    users = this.getUsersByPage(users);
+    
     return (
       <div className="main-listing user-list-page manage-classrooms-page">
         <PageHeadWithMenu
