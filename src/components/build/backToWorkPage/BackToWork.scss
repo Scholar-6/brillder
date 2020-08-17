@@ -13,7 +13,7 @@
       display: flex;
       > div {
         cursor: pointer;
-        width: calc(#{$width} / 2);
+        width: calc(#{$width} / 3);
         min-height: $backwork-tab-height;
         font-size: 4.5vh;
         border-top-left-radius: 0.5vw;
@@ -23,15 +23,17 @@
         color: var(--theme-dark-blue);
         background: var(--tab-gray);
         padding-left: 1.5vw;
+        border-top-right-radius: 0.5vw;
+        margin-right: $tabs-margin-between;
       }
 
       >div.active {
         background: var(--white);
       }
 
-      > div:first-child {
-        border-top-right-radius: 0.5vw;
-        margin-right: $tabs-margin-between;
+      > div:last-child {
+        border-top-right-radius: 0vw;
+        margin-right: 0;
       }
     }
   }

@@ -28,6 +28,12 @@ import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import BrickBlock from './components/BrickBlock';
 import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
 
+enum ActiveTab {
+  Play,
+  Build,
+  Teach
+}
+
 interface BackToWorkState {
   finalBricks: Brick[]; // bricks to display
   rawBricks: Brick[]; // loaded bricks
@@ -48,7 +54,7 @@ interface BackToWorkState {
   pageSize: number;
   threeColumns: ThreeColumns;
   generalSubjectId: number;
-  isPlayTab: boolean;
+  activeTab: ActiveTab;
 }
 
 export interface BackToWorkProps {
@@ -115,7 +121,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       sortedReversed: false,
       deleteDialogOpen: false,
       deleteBrickId: -1,
-      isPlayTab: true,
+      activeTab: ActiveTab.Play,
 
       filters: {
         viewAll: true,
@@ -444,8 +450,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   renderBricks = () => {
-    if (this.state.isPlayTab) {
-      return "";
+    if (this.state.activeTab === ActiveTab.Play) {
+      return <div>Play tab content not implemented yep</div>;
+    } else if (this.state.activeTab === ActiveTab.Teach) {
+      return <div>Teach tab content not implemented yep</div>;
     }
     if (this.state.filters.viewAll) {
       return this.renderGroupedBricks();
@@ -478,7 +486,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   renderFilterSidebar() {
-    if (this.state.isPlayTab) {
+    if (this.state.activeTab === ActiveTab.Play) {
       return <PlayFilterSidebar
         rawBricks={this.state.rawBricks}
         filters={this.state.filters}
@@ -511,6 +519,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   render() {
+    const {activeTab} = this.state;
     return (
       <div className="main-listing back-to-work-page">
         <PageHeadWithMenu
@@ -525,14 +534,16 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           {this.renderFilterSidebar()}
           <Grid item xs={9} className="brick-row-container">
             <div className="tab-container">
-              <div className={this.state.isPlayTab === true ? 'active' : ''} onClick={() => this.setState({ isPlayTab: true })}>Play</div>
-              <div className={!this.state.isPlayTab === true ? 'active' : ''} onClick={() => this.setState({ isPlayTab: false })}>Build</div>
+              <div className={ activeTab === ActiveTab.Teach ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Teach })}>Teach</div>
+              <div className={ activeTab === ActiveTab.Build ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Build })}>Build</div>
+              <div className={ activeTab === ActiveTab.Play ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Play })}>Play</div>
             </div>
             <div className="bricks-list-container">
-              {this.state.isPlayTab
-                ? ""
-                : <PrivateCoreToggle isCore={this.state.filters.isCore} onSwitch={() => this.toggleCore()} />
-              }
+              <PrivateCoreToggle
+                notVisible={activeTab !== ActiveTab.Build}
+                isCore={this.state.filters.isCore}
+                onSwitch={() => this.toggleCore()}
+              />
               <div className="bricks-list">
                 {this.renderBricks()}
               </div>
