@@ -205,6 +205,16 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         </div>
         <div className="filter-header">
           View All
+          <div className="right-index">
+            {this.state.users.length}
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#users"} />
+            </svg>
+            <div className="white-box">
+              {this.state.classrooms.length}
+            </div>
+          </div>
         </div>
         <div className="indexes-box">
           {this.state.classrooms.map((c, i) =>
