@@ -10,14 +10,12 @@
   }
   .ck-editor {
     width: 100% !important;
-    .ck-editor__main {
-      .ck-content {
-        background-color: var(--tab-gray) !important;
-        padding: 0.5vw !important;
-        text-align: left !important;
-        border-top-left-radius: 0 !important;
-        border-top-right-radius: 0 !important;
-      }
+    .ck-content {
+      background-color: var(--tab-gray) !important;
+      padding: 0.5vw !important;
+      text-align: left !important;
+      border-top-left-radius: 0 !important;
+      border-top-right-radius: 0 !important;
     }
   }
   .text-label-container {
