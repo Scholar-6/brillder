@@ -23,10 +23,13 @@ import FailedRequestDialog from "components/baseComponents/failedRequestDialog/F
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FilterSidebar from './components/FilterSidebar';
 import PlayFilterSidebar from './components/PlayFilterSidebar';
+import TeachFilterSidebar from './components/TeachFilterSidebar';
 import BackPagePagination from './components/BackPagePagination';
 import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import BrickBlock from './components/BrickBlock';
 import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
+import { Classroom } from "model/classroom";
+import { getAllClassrooms } from "components/teach/service";
 
 enum ActiveTab {
   Play,
@@ -37,6 +40,7 @@ enum ActiveTab {
 interface BackToWorkState {
   finalBricks: Brick[]; // bricks to display
   rawBricks: Brick[]; // loaded bricks
+  classrooms: Classroom[];
 
   searchString: string;
   isSearching: boolean;
@@ -122,6 +126,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       deleteDialogOpen: false,
       deleteBrickId: -1,
       activeTab: ActiveTab.Play,
+      classrooms: [],
 
       filters: {
         viewAll: true,
@@ -163,6 +168,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         }
       });
     }
+
+    getAllClassrooms().then((classrooms: any) => {
+      if (classrooms) {
+        this.setState({classrooms: classrooms as Classroom[]});
+      } else {
+        // get failed
+      }
+    });
   }
 
   //region loading and setting bricks
@@ -489,6 +502,22 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     if (this.state.activeTab === ActiveTab.Play) {
       return <PlayFilterSidebar
         rawBricks={this.state.rawBricks}
+        filters={this.state.filters}
+        sortBy={this.state.sortBy}
+        isClearFilter={this.state.isClearFilter}
+        handleSortChange={e => this.handleSortChange(e)}
+        clearStatus={() => this.clearStatus()}
+        toggleDraftFilter={() => this.toggleDraftFilter()}
+        toggleReviewFilter={() => this.toggleReviewFilter()}
+        togglePublishFilter={e => this.togglePublishFilter(e)}
+        showAll={() => this.showAll()}
+        showBuildAll={() => this.showBuildAll()}
+        showEditAll={() => this.showEditAll()}
+      />
+    } else if (this.state.activeTab === ActiveTab.Teach) {
+      return <TeachFilterSidebar
+        rawBricks={this.state.rawBricks}
+        classrooms={this.state.classrooms}
         filters={this.state.filters}
         sortBy={this.state.sortBy}
         isClearFilter={this.state.isClearFilter}
