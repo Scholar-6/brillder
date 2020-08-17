@@ -7,6 +7,24 @@
     padding-left: 20vw;
     padding-top: $page-head-height;
   }
+  .MuiInputBase-root {
+    background: white !important;
+    box-shadow: none !important;
+
+    .MuiAutocomplete-endAdornment {
+      height: 100%;
+      position: absolute;
+      top: 0;
+      .MuiAutocomplete-clearIndicator {
+        display: none !important;
+      }
+      .MuiAutocomplete-popupIndicator {
+        height: 100%;
+        border-radius: 0;
+      }
+    }
+  }
+
   .dialog-header {
     svg {
       margin-left: 0.3vw;
@@ -32,8 +50,9 @@
       width: auto !important;
       margin-bottom: 3vh !important;
     }
-    .records-box {
-      width: auto !important;
-    }
   }
+}
+
+.MuiAutocomplete-popper {
+  z-index: 999999 !important;
 }
