@@ -49,6 +49,7 @@
     padding-left: $base-filter-padding-left !important;
     font-size: 1vw !important;
     letter-spacing: 0.05vw !important;
+    padding-right: 0 !important;
   }
 
   .users-table {
@@ -108,6 +109,8 @@
     }
   }
   .right-index {
+    padding: 0 !important;
+    position: absolute;
     right: 0.7vw !important;
     color: white !important;
     background: inherit !important;
@@ -119,5 +122,17 @@
       height: $icon-size;
       width: $icon-size;
     }
+  }
+  .white-box {
+    margin-left: 0.3vw;
+    background: white;
+    color: var(--theme-dark-blue);
+    border-radius: 0.65vw;
+    padding: 0.25vw 0.6vw;
+    font-size: 1vw;
+    line-height: 1;
+  }
+  .index-box {
+    padding-left: $base-filter-padding-left !important;
   }
 }

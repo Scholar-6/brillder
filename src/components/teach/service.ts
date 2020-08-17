@@ -23,6 +23,8 @@ export const createClass = (name: string) => {
     { withCredentials: true }
   ).then((res) => {
     if (res.data) {
+      let classroom = res.data as ClassroomApi;
+      classroom.students = [];
       return res.data as ClassroomApi;
     }
     return null;
