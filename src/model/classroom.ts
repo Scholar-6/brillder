@@ -18,3 +18,7 @@ export interface Classroom {
     creator: UserBase;
     bricks: Brick[];
 }
+
+export interface TeachClassroom extends Classroom {
+    active: boolean;
+}
