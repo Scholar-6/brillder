@@ -278,7 +278,7 @@ const LivePage: React.FC<LivePageProps> = ({
       <div className="action-footer">
         <div>{renderPrevButton()}</div>
         <div className="direction-info">
-          <h2>Next</h2>
+          <h2 className="text-center">Next</h2>
           <span>Don’t panic, you can <br /> always come back</span>
         </div>
         <div>
