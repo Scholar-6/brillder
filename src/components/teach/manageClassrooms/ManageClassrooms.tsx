@@ -6,6 +6,7 @@ import './ManageClassrooms.scss';
 import sprite from "assets/img/icons-sprite.svg";
 
 import { User } from "model/user";
+import { MUser } from "../interface";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
@@ -22,10 +23,6 @@ import { getAllClassrooms, getAllStudents, createClass, assignStudentsToClassroo
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
-
-interface MUser extends User {
-  selected: boolean;
-}
 
 interface UsersListProps {
   user: User;
@@ -45,15 +42,13 @@ interface UsersListState {
 
   searchString: string;
   isSearching: boolean;
+  searchUsers: MUser[];
 
-  filterExpanded: boolean;
-  filterHeight: string;
   isAdmin: boolean;
   classrooms: ClassroomApi[];
 
   sortBy: UserSortBy;
   isAscending: boolean;
-  isClearFilter: boolean;
   createClassOpen: boolean;
   assignClassOpen: boolean;
   selectedUsers: MUser[];
@@ -68,17 +63,15 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       classrooms: [],
       page: 0,
       pageSize: 12,
-      filterExpanded: true,
-
       totalCount: 0,
+
       searchString: "",
       isSearching: false,
-      filterHeight: "auto",
+      searchUsers: [],
 
       sortBy: UserSortBy.None,
       isAscending: false,
       isAdmin: checkAdmin(props.user.roles),
-      isClearFilter: false,
 
       createClassOpen: false,
       assignClassOpen: false,
@@ -132,30 +125,63 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.setState({ assignClassOpen: true });
   }
 
-  search() { }
+  search() {
+    let students = this.state.users;
+    if (this.state.activeClassroom) {
+      students = this.state.activeClassroom.students as MUser[];
+    }
+    let searchUsers = [];
+    const {searchString} = this.state;
+    for (let student of students) {
+      let res = student.firstName.toLowerCase().search(searchString.toLowerCase());
+      if (res >= 0) {
+        searchUsers.push(student)
+        continue;
+      }
+      res = student.lastName.toLocaleLowerCase().search(searchString.toLowerCase());
+      if (res >= 0) {
+        searchUsers.push(student);
+        continue;
+      }
+    }
+    this.setState({
+      isSearching: true,
+      selectedUsers: [],
+      searchUsers
+    });
+  }
 
   toggleUser(i: number) {
-    const { users } = this.state;
+    let { users } = this.state;
+    if (this.state.activeClassroom) {
+      users = this.state.activeClassroom.students;
+    }
     users[i].selected = !users[i].selected;
-    let selectedUsers = this.state.users.filter(u => u.selected);
-    this.setState({ ...this.state, users, selectedUsers });
+    let selectedUsers = users.filter(u => u.selected);
+    this.setState({ ...this.state, selectedUsers });
   }
 
   setActiveClassroom(activeClassroom: ClassroomApi) {
     this.unselectionClasses();
     activeClassroom.isActive = true;
-    this.setState({ activeClassroom });
+    for (let user of this.state.users) {
+      user.selected = false;
+    }
+    this.setState({ activeClassroom, selectedUsers: [], isSearching: false });
   }
 
   unselectionClasses() {
     for (let classroom of this.state.classrooms) {
       classroom.isActive = false;
+      for (let student of classroom.students) {
+        student.selected = false;
+      }
     }
   }
 
   unselectClasses() {
     this.unselectionClasses();
-    this.setState({ activeClassroom: null });
+    this.setState({ activeClassroom: null, isSearching: false });
   }
 
   renderViewAllFilter() {
@@ -256,6 +282,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   render() {
     const { history } = this.props;
+    let {users} = this.state;
+    if (this.state.activeClassroom) {
+      users = this.state.activeClassroom.students as MUser[];
+    }
+    if (this.state.isSearching) {
+      users = this.state.searchUsers;
+    }
     return (
       <div className="main-listing user-list-page manage-classrooms-page">
         <PageHeadWithMenu
@@ -264,7 +297,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           user={this.props.user}
           history={history}
           search={() => this.search()}
-          searching={(v: string) => this.searching(v)}
+          searching={v => this.searching(v)}
         />
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
@@ -273,7 +306,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           <Grid item xs={9} className="brick-row-container">
             {this.renderTableHeader()}
             <StudentTable
-              users={this.state.activeClassroom ? this.state.activeClassroom.students : this.state.users}
+              users={users}
               selectedUsers={this.state.selectedUsers}
               sortBy={this.state.sortBy}
               isAscending={this.state.isAscending}

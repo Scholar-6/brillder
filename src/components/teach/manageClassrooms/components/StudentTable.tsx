@@ -91,6 +91,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
     );
   }
 
+  console.log(users)
   return (
     <div className="users-table">
       <table cellSpacing="0" cellPadding="0">

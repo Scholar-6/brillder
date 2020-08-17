@@ -1,13 +1,13 @@
 import axios from "axios";
 
-import { User } from "model/user";
+import { MUser } from "./interface";
 
 export interface ClassroomApi {
   created: string;
   id: number;
   name: string;
   status: number;
-  students: User[];
+  students: MUser[];
   updated: string;
   isActive: boolean;
 }
@@ -41,6 +41,12 @@ export const getAllClassrooms = () => {
     withCredentials: true,
   }).then(res => {
     if (res.data) {
+      let classrooms = res.data as ClassroomApi[];
+      for (let classroom of classrooms) {
+        for (let student of classroom.students as MUser[]) {
+          student.selected = false;
+        }
+      }
       return res.data as ClassroomApi[];
     }
     return null;
