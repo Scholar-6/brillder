@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 import './AssignClassDialog.scss';
 import sprite from 'assets/img/icons-sprite.svg';
@@ -17,9 +19,8 @@ interface AssignClassProps {
 
 const AssignClassDialog: React.FC<AssignClassProps> = props => {
   const {users, classrooms} = props;
-  const [value, setValue] = React.useState("");
-  const [filteredClasses, setFilteredClasses] = React.useState(classrooms);
-  console.log(filteredClasses, classrooms)
+  const [value, setValue] = React.useState([]);
+  const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
 
   const renderUserFullNames = () => {
     let tempUsers = users as any;
@@ -34,14 +35,20 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
     return names;
   }
 
-  useEffect(() => {setFilteredClasses(classrooms)}, [props]);
+  const hide = () => {
+    setAutoCompleteDropdown(false);
+  }
 
-  const filterClassrooms = (value: string) => {
-    let filtered = classrooms.filter(classroom => {
-      const found = classroom.name.search(value);
-      return !found;
-    });
-    setFilteredClasses(filtered);
+  const classroomSelected = (v: string, i: string) => { }
+
+  const onClassroomInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const {value} = event.target;
+    console.log(value)
+    if (value && value.length >= 2) {
+      setAutoCompleteDropdown(true);
+    } else {
+      setAutoCompleteDropdown(false);
+    }
   }
 
   return (
@@ -62,12 +69,24 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
           </div>
           <div className="student-names">Selected: {renderUserFullNames()}</div>
         </div>
-        <input onChange={e => filterClassrooms(e.target.value)} />
-        <div className="records-box">
-          {filteredClasses.map((classroom, i) => {
-            return <div key={i} onClick={() => props.submit(classroom.id)}>{classroom.name}</div>
-          })}
-        </div>
+        <Autocomplete
+          multiple
+          open={autoCompleteOpen}
+          value={value}
+          options={classrooms}
+          onChange={(e:any, v: any) => classroomSelected(e, v)}
+          getOptionLabel={(option:any) => option.name}
+          renderInput={(params:any) => (
+            <TextField
+              onBlur={() => hide()}
+              {...params}
+              onChange={e => onClassroomInput(e)}
+              variant="standard"
+              label="Subjects: "
+              placeholder="Subjects"
+            />
+          )}
+        />
       </div>
     </Dialog>
   );

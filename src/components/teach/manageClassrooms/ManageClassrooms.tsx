@@ -202,8 +202,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           View All
         </div>
         <div className="indexes-box">
-          {this.state.classrooms.map(c =>
-            <div className="index-box" onClick={() => { }}>
+          {this.state.classrooms.map((c, i) =>
+            <div key={i} className="index-box" onClick={() => { }}>
               {c.name}
               <div className="right-index">{0}</div>
             </div>
