@@ -4,6 +4,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 
 import './ManageClassrooms.scss';
+import sprite from "assets/img/icons-sprite.svg";
 
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
@@ -159,7 +160,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     createClass(name).then(newClassroom => {
       if (newClassroom) {
         this.state.classrooms.push(newClassroom);
-        this.setState({...this.state});
+        this.setState({ ...this.state });
       } else {
         // creation failed
       }
@@ -209,7 +210,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           {this.state.classrooms.map((c, i) =>
             <div key={i} className="index-box" onClick={() => { }}>
               {c.name}
-              <div className="right-index">{0}</div>
+              <div className="right-index">
+                {c.students.length}
+                <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#users"} />
+                </svg>
+              </div>
             </div>
           )}
         </div>

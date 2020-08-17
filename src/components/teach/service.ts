@@ -1,10 +1,13 @@
 import axios from "axios";
 
+import { User } from "model/user";
+
 export interface ClassroomApi {
   created: string;
   id: number;
   name: string;
   status: number;
+  students: User[];
   updated: string;
 }
 
