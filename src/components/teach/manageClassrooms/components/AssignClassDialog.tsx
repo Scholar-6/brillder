@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
@@ -19,7 +19,6 @@ interface AssignClassProps {
 
 const AssignClassDialog: React.FC<AssignClassProps> = props => {
   const {users, classrooms} = props;
-  const [value, setValue] = React.useState([]);
   const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
 
   const renderUserFullNames = () => {
@@ -35,15 +34,11 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
     return names;
   }
 
-  const hide = () => {
-    setAutoCompleteDropdown(false);
-  }
-
-  const classroomSelected = (v: string, i: string) => { }
+  const hide = () => setAutoCompleteDropdown(false);
+  const classroomSelected = (selected: ClassroomApi) => props.submit(selected.id);
 
   const onClassroomInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {value} = event.target;
-    console.log(value)
     if (value && value.length >= 2) {
       setAutoCompleteDropdown(true);
     } else {
@@ -70,11 +65,9 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
           <div className="student-names">Selected: {renderUserFullNames()}</div>
         </div>
         <Autocomplete
-          multiple
           open={autoCompleteOpen}
-          value={value}
           options={classrooms}
-          onChange={(e:any, v: any) => classroomSelected(e, v)}
+          onChange={(e:any, c: any) => classroomSelected(c)}
           getOptionLabel={(option:any) => option.name}
           renderInput={(params:any) => (
             <TextField

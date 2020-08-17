@@ -46,11 +46,10 @@ export const getAllClassrooms = () => {
  * return list of classrooms if success or null if failed
  */
 export const getAllStudents = () => {
-  return axios.get(process.env.REACT_APP_BACKEND_HOST + "/classroooms/students", {
+  return axios.get(process.env.REACT_APP_BACKEND_HOST + "/classrooms/students", {
     withCredentials: true,
   }).then(res => {
     if (res.data) {
-      console.log(res.data)
       return res.data as ClassroomApi[];
     }
     return null;
@@ -65,7 +64,7 @@ export const getAllStudents = () => {
 export const assignStudentsToClassroom = (classroomId: number, students: any[]) => {
   let studentsIds = students.map(s => s.id);
   return axios.post(
-    process.env.REACT_APP_BACKEND_HOST + "/classroooms/students/" + classroomId,
+    process.env.REACT_APP_BACKEND_HOST + "/classrooms/students/" + classroomId,
     { studentsIds },
     { withCredentials: true}
   ).then(res => {
