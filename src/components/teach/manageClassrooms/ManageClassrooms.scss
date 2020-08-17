@@ -59,9 +59,18 @@
   .selected-column {
     font-family: $font-family-regular;
     letter-spacing: 0;
+    position: relative;
+
+    .selected-label {
+      position: absolute;
+      right: 1.5vw;
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+    }
 
     .selected-count {
-      margin-left: 1.4vw;
+      margin-left: 0vw;
       margin-right: 0.2vw;
     }
 
@@ -85,6 +94,18 @@
 
   .user-radio-column {
     padding-left: 0 !important;
+
+    .edit-button {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      svg {
+        margin-right: 0.5vw;
+        $icon-size: 2vw;
+        width: $icon-size;
+        height: $icon-size;
+      }
+    }
   }
 
   .users-pagination {
@@ -94,13 +115,15 @@
   }
 
   .class-assign-button {
+    z-index: 1000;
     cursor: pointer;
-    margin-left: 0.8vw;
+    margin-left: 0.7vw;
     font-size: 1.3vw;
     @extend %flexCenter;
 
     svg {
-      background: var(--theme-dark-blue);
+      padding-top: 0;
+      background: var(--theme-green);
       border-radius: 50%;
       color: var(--white);
       height: 1.6vw;

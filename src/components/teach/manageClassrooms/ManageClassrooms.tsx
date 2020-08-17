@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
-import axios from "axios";
 import { connect } from "react-redux";
 
 import './ManageClassrooms.scss';
@@ -143,17 +142,19 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   setActiveClassroom(activeClassroom: ClassroomApi) {
-    for (let classroom of this.state.classrooms) {
-      classroom.isActive = false;
-    }
+    this.unselectionClasses();
     activeClassroom.isActive = true;
     this.setState({ activeClassroom });
   }
 
-  unselectClasses() {
+  unselectionClasses() {
     for (let classroom of this.state.classrooms) {
       classroom.isActive = false;
     }
+  }
+
+  unselectClasses() {
+    this.unselectionClasses();
     this.setState({ activeClassroom: null });
   }
 
@@ -191,7 +192,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
           + Create Class
         </div>
-
         <div className="indexes-box">
           {this.renderViewAllFilter()}
           {this.state.classrooms.map((c, i) => {
