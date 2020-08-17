@@ -11,6 +11,11 @@ import { Router } from 'react-router-dom';
 const middlewares = [thunkMiddleware];
 const mockStore = configureMockStore(middlewares);
 
+describe("Back to Work Page", () => {
+  it("should display a Back to Work Page", () => {
+  });
+});
+
 /* 8/17/2020 working on teach in back to work
 describe("Back to Work Page", () => {
   it("should display a Back to Work Page", () => {
