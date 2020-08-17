@@ -131,7 +131,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       students = this.state.activeClassroom.students as MUser[];
     }
     let searchUsers = [];
-    const {searchString} = this.state;
+    const { searchString } = this.state;
     for (let student of students) {
       let res = student.firstName.toLowerCase().search(searchString.toLowerCase());
       if (res >= 0) {
@@ -280,9 +280,28 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   }
 
+  renderPagination() {
+    let {users} = this.state;
+    if (this.state.activeClassroom) {
+      users = this.state.activeClassroom.students;
+    }
+    if (this.state.isSearching) {
+      users = this.state.searchUsers;
+    }
+    return (
+      <UsersPagination
+        users={users}
+        page={this.state.page}
+        totalCount={users.length}
+        pageSize={this.state.pageSize}
+        moveToPage={page => this.moveToPage(page)}
+      />
+    );
+  }
+
   render() {
     const { history } = this.props;
-    let {users} = this.state;
+    let { users } = this.state;
     if (this.state.activeClassroom) {
       users = this.state.activeClassroom.students as MUser[];
     }
@@ -315,13 +334,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
               assignToClass={() => this.openAssignDialog()}
             />
             <RoleDescription />
-            <UsersPagination
-              users={this.state.users}
-              page={this.state.page}
-              totalCount={this.state.totalCount}
-              pageSize={this.state.pageSize}
-              moveToPage={page => this.moveToPage(page)}
-            />
+            {this.renderPagination()}
           </Grid>
         </Grid>
         <AssignClassDialog
