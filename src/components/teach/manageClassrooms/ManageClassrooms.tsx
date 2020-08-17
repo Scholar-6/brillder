@@ -87,16 +87,19 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       selectedUsers: []
     };
 
-    //this.getUsers(this.state.page);
-
     getAllStudents().then(students => {
       if (students) {
+        students.map((u: any) => u.selected = false);
         this.setState({ ...this.state, users: students as any[], totalCount: students.length });
       } else {
         // getting students failed
       }
     });
 
+    this.getClassrooms();
+  }
+
+  getClassrooms() {
     getAllClassrooms().then(classrooms => {
       if (classrooms) {
         this.setState({ classrooms });
@@ -104,57 +107,6 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         // geting classrooms failed
         console.log('geting classrooms failed');
       }
-    });
-  }
-
-  getUsers(
-    page: number,
-    sortBy: UserSortBy = UserSortBy.None,
-    isAscending: any = null,
-    search: string = ""
-  ) {
-    let searchString = "";
-    let orderBy = null;
-
-    if (sortBy === UserSortBy.None) {
-      sortBy = this.state.sortBy;
-    }
-
-    if (isAscending === null) {
-      isAscending = this.state.isAscending;
-    }
-
-    if (sortBy) {
-      if (sortBy === UserSortBy.Name) {
-        orderBy = "user.lastName";
-      }
-    }
-
-    if (search) {
-      searchString = search;
-    } else {
-      if (this.state.isSearching) {
-        searchString = this.state.searchString;
-      }
-    }
-
-    axios.post(
-      process.env.REACT_APP_BACKEND_HOST + "/users",
-      {
-        pageSize: this.state.pageSize,
-        page: page.toString(),
-        searchString,
-        subjectFilters: [],
-        roleFilters: [],
-        orderBy,
-        isAscending,
-      },
-      { withCredentials: true }
-    ).then((res) => {
-      res.data.pageData.map((u: any) => u.selected = false);
-      this.setState({ ...this.state, users: res.data.pageData, totalCount: res.data.totalCount });
-    }).catch((error) => {
-      alert("Can`t get users");
     });
   }
 
@@ -181,10 +133,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.setState({ assignClassOpen: true });
   }
 
-  search() {
-    const { searchString } = this.state;
-    this.getUsers(0, this.state.sortBy, this.state.isAscending, searchString);
-  }
+  search() { }
 
   toggleUser(i: number) {
     const { users } = this.state;
@@ -278,18 +227,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       isAscending = false;
       this.setState({ ...this.state, isAscending, sortBy });
     }
-    this.getUsers(this.state.page, sortBy, isAscending);
   }
 
   moveToPage(page: number) {
     this.setState({ ...this.state, page, selectedUsers: [] });
-    this.getUsers(page);
   };
 
   assignSelectedStudents(classroomId: number) {
     this.setState({ assignClassOpen: false });
     assignStudentsToClassroom(classroomId, this.state.selectedUsers).then(res => {
       if (res) {
+        this.getClassrooms();
         // assign success
       } else {
         // failed
