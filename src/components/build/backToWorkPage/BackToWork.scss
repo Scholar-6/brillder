@@ -53,6 +53,9 @@
 
   // Teach
   .classrooms-filter {
+    height: 50vh;
+    overflow-y: scroll;
+
     .right-index {
       right: 0.3vw !important;
       display: flex;

@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
-import { Classroom } from "model/classroom";
+import { TeachClassroom, } from "model/classroom";
 import { Brick } from "model/brick";
 import { SortBy, Filters } from '../model';
 import sprite from "assets/img/icons-sprite.svg";
 
+
 interface FilterSidebarProps {
-  classrooms: Classroom[];
+  classrooms: TeachClassroom[];
   rawBricks: Brick[];
   filters: Filters;
   sortBy: SortBy;
   isClearFilter: boolean;
+  setActiveClassroom(id: number): void;
   handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
   clearStatus(): void;
   toggleDraftFilter(): void;
@@ -22,7 +24,7 @@ interface FilterSidebarProps {
   showEditAll(): void;
 }
 interface FilterSidebarState {
-  activeClassroom: Classroom | null;
+  activeClassroom: TeachClassroom | null;
   filterExpanded: boolean;
 }
 
@@ -38,6 +40,23 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   hideFilter() { this.setState({ ...this.state, filterExpanded: false }); }
   expandFilter() { this.setState({ ...this.state, filterExpanded: true }); }
 
+  removeClassrooms() {
+    const {classrooms} = this.props;
+    for (let classroom of classrooms) {
+      classroom.active = false;
+    }
+    this.setState({activeClassroom: null});
+  }
+
+  activateClassroom(activeClassroom: TeachClassroom) {
+    const {classrooms} = this.props;
+    for (let classroom of classrooms) {
+      classroom.active = false;
+    }
+    activeClassroom.active = true;
+    this.setState({activeClassroom});
+  }
+
   renderIndexesBox = () => {
     return (
       <div className="sort-box">
@@ -45,8 +64,8 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
           <div className="sort-header">CLASSES</div>
         </div>
         <div className="filter-container indexes-box classrooms-filter">
-          <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")}
-            onClick={() => this.props.showAll()}>
+          <div className={"index-box " + (!this.state.activeClassroom ? "active" : "")}
+            onClick={() => this.removeClassrooms()}>
             View All Classes
             <div className="right-index">
               {2}
@@ -62,8 +81,9 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
           {this.props.classrooms.map((c, i) => {
             return (
               <div
-                className={"index-box " + (this.props.filters.viewAll ? "active" : "")}
-                onClick={() => this.props.showAll()}
+                key={i}
+                className={"index-box " + (c.active ? "active" : "")}
+                onClick={() => this.activateClassroom(c)}
               >
                 {c.name}
                 <div className="right-index">
@@ -89,7 +109,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
       <div className="sort-box" style={{ marginTop: '1vh' }}>
         <div className="filter-header">Filter</div>
         {this.state.filterExpanded === true ? (
-          <div className="filter-container subject-indexes-box" style={{ marginTop: '5vh' }}>
+          <div className="filter-container subject-indexes-box" style={{ marginTop: '1vh' }}>
             <div className="index-box color1">
               <FormControlLabel
                 checked={this.props.filters.draft}

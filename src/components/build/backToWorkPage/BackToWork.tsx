@@ -28,7 +28,7 @@ import BackPagePagination from './components/BackPagePagination';
 import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import BrickBlock from './components/BrickBlock';
 import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
-import { Classroom } from "model/classroom";
+import { TeachClassroom } from "model/classroom";
 import { getAllClassrooms } from "components/teach/service";
 
 enum ActiveTab {
@@ -40,7 +40,7 @@ enum ActiveTab {
 interface BackToWorkState {
   finalBricks: Brick[]; // bricks to display
   rawBricks: Brick[]; // loaded bricks
-  classrooms: Classroom[];
+  classrooms: TeachClassroom[];
 
   searchString: string;
   isSearching: boolean;
@@ -171,7 +171,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
     getAllClassrooms().then((classrooms: any) => {
       if (classrooms) {
-        this.setState({classrooms: classrooms as Classroom[]});
+        this.setState({ classrooms: classrooms as TeachClassroom[] });
       } else {
         // get failed
       }
@@ -349,6 +349,20 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks: bricks });
   }
 
+  /* Teach */
+  setActiveClassroom(id: number) {
+    const { classrooms } = this.state;
+    for (let classroom of classrooms) {
+      classroom.active = false;
+    }
+    let classroom = classrooms.find(c => c.id === id);
+    if (classroom) {
+      classroom.active = true;
+      this.setState({ classrooms });
+    }
+  }
+  /* Teach */
+
   showBuildAll() {
     const { filters } = this.state;
     removeAllFilters(filters);
@@ -521,6 +535,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         filters={this.state.filters}
         sortBy={this.state.sortBy}
         isClearFilter={this.state.isClearFilter}
+        setActiveClassroom={id => this.setActiveClassroom(id)}
         handleSortChange={e => this.handleSortChange(e)}
         clearStatus={() => this.clearStatus()}
         toggleDraftFilter={() => this.toggleDraftFilter()}
@@ -548,7 +563,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   render() {
-    const {activeTab} = this.state;
+    const { activeTab } = this.state;
     return (
       <div className="main-listing back-to-work-page">
         <PageHeadWithMenu
@@ -563,9 +578,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           {this.renderFilterSidebar()}
           <Grid item xs={9} className="brick-row-container">
             <div className="tab-container">
-              <div className={ activeTab === ActiveTab.Teach ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Teach })}>Teach</div>
-              <div className={ activeTab === ActiveTab.Build ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Build })}>Build</div>
-              <div className={ activeTab === ActiveTab.Play ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Play })}>Play</div>
+              <div className={activeTab === ActiveTab.Teach ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Teach })}>Teach</div>
+              <div className={activeTab === ActiveTab.Build ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Build })}>Build</div>
+              <div className={activeTab === ActiveTab.Play ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Play })}>Play</div>
             </div>
             <div className="bricks-list-container">
               <PrivateCoreToggle
