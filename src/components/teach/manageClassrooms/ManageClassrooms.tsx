@@ -84,10 +84,14 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       selectedUsers: []
     };
 
-    this.getUsers(this.state.page);
+    //this.getUsers(this.state.page);
 
-    getAllStudents().then(res => {
-      console.log(res);
+    getAllStudents().then(students => {
+      if (students) {
+        this.setState({ ...this.state, users: students as any[], totalCount: students.length });
+      } else {
+        // getting students failed
+      }
     });
 
     getAllClassrooms().then(classrooms => {
@@ -232,6 +236,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   };
 
   assignSelectedStudents(classroomId: number) {
+    this.setState({ assignClassOpen: false });
     assignStudentsToClassroom(classroomId, this.state.selectedUsers).then(res => {
       if (res) {
         // assign success
