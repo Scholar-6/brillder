@@ -73,7 +73,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
             {renderSortArrow(UserSortBy.Name)}
           </Grid>
         </th>
-        <th style={{ padding: 0 }}>
+        <th style={{ padding: 0, width: '20%' }}>
           <Grid container className="selected-column">
             <Radio disabled={true} />
             {renderAssignButton()}
