@@ -108,7 +108,9 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                 <td>{user.email}</td>
                 <td>
                   <div className="classroom-names">
-                    {user.studyClassrooms ? user.studyClassrooms.map(classroom => <div className="classroom-name">{classroom.name}</div>) : ""}
+                    {user.studyClassrooms ? user.studyClassrooms.map((classroom, i) =>
+                      <div key={i} className="classroom-name">{classroom.name}</div>) : ""
+                    }
                   </div>
                 </td>
                 <td className="user-radio-column">
