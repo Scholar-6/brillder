@@ -4,11 +4,14 @@ import sprite from "assets/img/icons-sprite.svg";
 import './PrivateCoreToggle.scss';
 
 interface ToggleProps {
+  notVisible?: boolean;
   isCore: boolean;
   onSwitch(): void;
 }
 
-const PrivateCoreToggle: React.FC<ToggleProps> = ({ isCore, onSwitch }) => {
+const PrivateCoreToggle: React.FC<ToggleProps> = props => {
+  const {isCore} = props;
+
   const renderCoreIcon = () => {
     let className = "svg active";
     if (isCore) {
@@ -35,11 +38,15 @@ const PrivateCoreToggle: React.FC<ToggleProps> = ({ isCore, onSwitch }) => {
     );
   }
 
+  if (props.notVisible) {
+    return <div></div>;
+  }
+
   return (
     <div className="private-core-toggle">
       <button className="btn btn btn-transparent ">
         <span className={isCore ? 'bold' : 'regular'}>Core</span>
-        <div className="svgOnHover" onClick={onSwitch}>
+        <div className="svgOnHover" onClick={props.onSwitch}>
           {renderCoreIcon()}
           {renderPrivateIcon()}
         </div>
