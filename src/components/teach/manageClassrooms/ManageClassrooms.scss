@@ -99,6 +99,7 @@
       display: flex;
       justify-content: flex-end;
       width: 100%;
+
       svg {
         margin-right: 0.5vw;
         $icon-size: 2vw;
@@ -131,6 +132,7 @@
       margin-right: 0.45vw;
     }
   }
+
   .right-index {
     padding: 0 !important;
     position: absolute;
@@ -146,6 +148,7 @@
       width: $icon-size;
     }
   }
+
   .white-box {
     margin-left: 0.3vw;
     background: white;
@@ -155,7 +158,26 @@
     font-size: 1vw;
     line-height: 1;
   }
+
   .index-box {
     padding-left: $base-filter-padding-left !important;
+  }
+
+  .classroom-names {
+    overflow-x: scroll;
+    display: flex;
+
+    .classroom-name {
+      max-width: 3vw;
+      margin-right: 0.1vw;
+      background: var(--tab-gray);
+      border-radius: 0.3vw;
+      display: flex;
+      text-overflow: ellipsis;
+      height: 100%;
+
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 }

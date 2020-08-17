@@ -3,12 +3,12 @@ import { Grid, Radio } from "@material-ui/core";
 
 import sprite from "assets/img/icons-sprite.svg";
 
-import { User } from "model/user";
+import { MUser } from "../../interface";
 import { UserSortBy } from '../ManageClassrooms';
 
 interface StudentTableProps {
-  users: User[];
-  selectedUsers: User[];
+  users: MUser[];
+  selectedUsers: MUser[];
 
   sortBy: UserSortBy;
   isAscending: boolean;
@@ -97,7 +97,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
       <table cellSpacing="0" cellPadding="0">
         <thead>{renderUserTableHead()}</thead>
         <tbody>
-          {users.map((user: any, i: number) => {
+          {users.map((user, i) => {
             return (
               <tr className="user-row" key={i}>
                 <td></td>
@@ -106,7 +106,11 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                   <span className="user-last-name">{user.lastName}</span>
                 </td>
                 <td>{user.email}</td>
-                <td></td>
+                <td>
+                  <div className="classroom-names">
+                    {user.studyClassrooms.map(classroom => <div className="classroom-name">{classroom.name}</div>)}
+                  </div>
+                </td>
                 <td className="user-radio-column">
                   <div style={{ display: 'flex' }}>
                     <Radio checked={user.selected} onClick={() => props.toggleUser(i)} />
