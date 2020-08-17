@@ -9,6 +9,7 @@ export interface ClassroomApi {
   status: number;
   students: User[];
   updated: string;
+  isActive: boolean;
 }
 
 /**
