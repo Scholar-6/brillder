@@ -309,3 +309,25 @@ h3 {
 .bold {
   font-family: $font-family-bold;
 }
+
+.dropzone {
+  margin: 0;
+  border: 2px dashed var(--gray-alpha5) !important;
+  min-height: 10vh;
+  font: 1.2vw $font-family-bold;
+  color: var(--gray);
+  background: var(--tab-gray) !important;
+  border-radius: 0.4vw;
+  &.disabled {
+    background: #ebebe4;
+  }
+}
+.image-drag-n-drop {
+  .dropzone {
+    background: #fafafa !important;
+    border-color: var(--gray) !important;
+  }
+}
+.dropzone:hover {
+  border-color: var(--theme-dark-blue) !important;
+}
