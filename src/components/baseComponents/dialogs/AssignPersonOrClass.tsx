@@ -3,10 +3,11 @@ import Dialog from '@material-ui/core/Dialog';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import './AssignPersonOrClass.scss';
 import { ReduxCombinedState } from 'redux/reducers';
-import { connect } from 'react-redux';
+import actions from 'redux/actions/requestFailed';
 import { UserBase, UserType } from 'model/user';
 import { Classroom } from 'model/classroom';
 import { Brick } from 'model/brick';
@@ -15,10 +16,11 @@ interface AssignPersonOrClassProps {
   brick: Brick;
   isOpen: boolean;
   close(): void;
+  requestFailed(e: string): void;
 }
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
-  const [value, setValue] = React.useState("");
+  const [value] = React.useState("");
   const [students, setStudents] = React.useState<UserBase[]>([]);
   const [classes, setClasses] = React.useState<Classroom[]>([]);
   const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
@@ -29,34 +31,43 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }, [ value ]);
 
   const getStudents = async () => {
-    const { data } = await axios.post(
+    const students = await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/users`,
       {
         searchString: value,
         roleFilters: [UserType.Student]
       },
       { withCredentials: true }
-    );
-    for (let student of data.pageData) {
+    ).then((data: any) => {
+      return data.data.pageData;
+    })
+    .catch(() => {
+      props.requestFailed('Can`t get students');
+      return [];
+    });
+    for (let student of students) {
       student.isStudent = true;
     }
-    setStudents(data.pageData);
+    setStudents(students);
   }
 
   const getClasses = async () => {
-    const { data } = await axios.post(
+    const classrooms = await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/classrooms`,
-      {
-        searchString: value
-      },
+      { searchString: value },
       { withCredentials: true }
-    );
+    ).then((data: any) => {
+      return data.data;
+    }).catch(() => {
+      props.requestFailed('Can`t get classrooms');
+      return [];
+    });
 
-    for (let classroom of data) {
+    for (let classroom of classrooms) {
       classroom.isClass = true;
     }
 
-    setClasses(data);
+    setClasses(classrooms);
   }
 
   const assignToStudent = async (student: UserBase) => {
@@ -64,7 +75,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignStudents/${props.brick.id}`,
       [student.id],
       { withCredentials: true }
-    );
+    ).catch(() => {
+      props.requestFailed('Can`t assign student to brick');
+    });
   }
 
   const assignToClass = async (classroom: Classroom) => {
@@ -72,7 +85,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${props.brick.id}`,
       [classroom.id],
       { withCredentials: true }
-    );
+    ).catch(() => {
+      props.requestFailed('Can`t assign class to brick');
+    });
   }
 
   const hide = () => setAutoCompleteDropdown(false);
@@ -128,6 +143,10 @@ const mapState = (state: ReduxCombinedState) => ({
   brick: state.brick.brick
 });
 
-const connector = connect(mapState);
+const mapDispatch = (dispatch: any) => ({
+  requestFailed: () => dispatch(actions.requestFailed()),
+})
+
+const connector = connect(mapState, mapDispatch);
 
 export default connector(AssignPersonOrClassDialog);
