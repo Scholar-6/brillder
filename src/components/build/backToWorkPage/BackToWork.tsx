@@ -53,7 +53,6 @@ interface BackToWorkState {
   dropdownShown: boolean;
   notificationsShown: boolean;
   shown: boolean;
-  isClearFilter: boolean;
   pageSize: number;
   threeColumns: ThreeColumns;
   generalSubjectId: number;
@@ -112,7 +111,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
         draft: false,
         review: false,
-        build: false,
         publish: false,
         isCore
       }
@@ -139,7 +137,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
         draft: false,
         review: false,
-        build: false,
         publish: false,
         isCore
       },
@@ -161,7 +158,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       dropdownShown: false,
       notificationsShown: false,
       shown: true,
-      isClearFilter: false,
       pageSize: 18,
 
       threeColumns,
@@ -339,24 +335,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, deleteDialogOpen: false });
   }
 
-  //region Hide / Expand / Clear Filter
-  clearStatus() {
-    const { filters } = this.state;
-    clearStatusFilters(filters);
-    this.setState({ ...this.state, sortedIndex: 0, filters });
-    this.filterClear();
-  }
-
-  filterClear() {
-    let { draft, review, build, publish } = this.state.filters
-    if (draft || review || build || publish) {
-      this.setState({ isClearFilter: true, sortedIndex: 0 })
-    } else {
-      this.setState({ isClearFilter: false, sortedIndex: 0 })
-    }
-  }
-  //endregion
-
   showAll() {
     const { filters } = this.state;
     removeAllFilters(filters);
@@ -381,32 +359,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks: bricks });
   }
 
-  toggleDraftFilter() {
+  filterUpdated(newFilters: Filters) {
     const { filters } = this.state;
+    filters.publish = newFilters.publish;
+    filters.review = newFilters.review;
+    filters.draft = newFilters.draft;
     removeInboxFilters(filters);
-    filters.draft = !filters.draft;
-    const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id, this.state.generalSubjectId);
-    this.setState({ ...this.state, filters, finalBricks });
-    this.filterClear()
-  }
-
-  toggleReviewFilter() {
-    const { filters } = this.state;
-    removeInboxFilters(filters);
-    filters.review = !filters.review;
     const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id, this.state.generalSubjectId);
     this.setState({ ...this.state, filters, finalBricks, sortedIndex: 0 });
-    this.filterClear()
-  }
-
-  togglePublishFilter(e: React.ChangeEvent<any>) {
-    e.stopPropagation();
-    const { filters } = this.state;
-    removeInboxFilters(filters);
-    filters.publish = !filters.publish;
-    const bricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id, this.state.generalSubjectId);
-    this.setState({ ...this.state, filters, finalBricks: bricks, sortedIndex: 0 });
-    this.filterClear()
   }
 
   // region Teach
@@ -564,15 +524,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       rawBricks={this.state.rawBricks}
       filters={this.state.filters}
       sortBy={this.state.sortBy}
-      isClearFilter={this.state.isClearFilter}
       handleSortChange={e => this.handleSortChange(e)}
-      clearStatus={() => this.clearStatus()}
-      toggleDraftFilter={() => this.toggleDraftFilter()}
-      toggleReviewFilter={() => this.toggleReviewFilter()}
-      togglePublishFilter={e => this.togglePublishFilter(e)}
       showAll={() => this.showAll()}
       showBuildAll={() => this.showBuildAll()}
       showEditAll={() => this.showEditAll()}
+      filterChanged={this.filterUpdated.bind(this)}
     />
   }
 

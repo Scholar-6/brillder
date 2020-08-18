@@ -16,28 +16,24 @@ const BackPageTitle: React.FC<BackPageTitleProps> = ({ filters }) => {
     title = "EDIT";
   } else if (
     filters.draft &&
-    !filters.build &&
     !filters.review &&
     !filters.publish
   ) {
     title = "DRAFT";
   } else if (
     !filters.draft &&
-    filters.build &&
     !filters.review &&
     !filters.publish
   ) {
     title = "BUILD IN PROGRESS";
   } else if (
     !filters.draft &&
-    !filters.build &&
     filters.review &&
     !filters.publish
   ) {
     title = "REVIEW";
   } else if (
     !filters.draft &&
-    !filters.build &&
     !filters.review &&
     filters.publish
   ) {

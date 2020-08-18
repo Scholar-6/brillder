@@ -32,7 +32,6 @@ export interface Filters {
 
   draft: boolean;
   review: boolean;
-  build: boolean;
   publish: boolean;
 
   isCore: boolean;

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
-import sprite from "assets/img/icons-sprite.svg";
 import { Brick } from "model/brick";
 import { PlayFilters } from '../model';
 import { TeachClassroom } from "model/classroom";
