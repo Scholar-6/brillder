@@ -114,16 +114,17 @@
       text-align: center;
       flex-direction: column;
       > .svg {
-        height: auto;
         @extend %removePosition;
-        width: 15vw;
+        height: 150px;
+        width: 300px;
       }
       .item-description {
         padding: 0;
         text-align: center;
         margin: 0;
-        font: 1.3vw $font-family-light;
-        letter-spacing: 0.27vw;
+        font: 25px $font-family-light;
+        // font: 1.3vw $font-family-light;
+        letter-spacing: 7px;
         color: var(--tab-gray);
       }
       &:hover {
@@ -134,39 +135,28 @@
     }
   }
   .view-item-container {
-    .btn {
-      .svg {
-        height: 11vh;
-      }
-    }
     .glass-eyes-left,
     .glass-eyes-right {
       @include phone_and_tabletP {
         display: none;
       }
-      width: 5vw;
-      height: 5vw;
-      @extend %floatToCenter;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 25px;
       opacity: 0;
       transition-delay: 200ms;
       @extend %transitionAll300;
-      top: calc(50% - 0.9vw);
       .svg {
         width: 60%;
         height: 60%;
       }
     }
     .glass-eyes-left {
-      left: calc(50% - 3.6vw);
-      @include retina {
-        left: calc(50% - 5.4vw);
-      }
+      left: 26px;
     }
     .glass-eyes-right {
-      left: calc(100% - 3.8vw);
-      @include retina {
-        left: calc(50% - 7vw);
-      }
+      right: 26px;
     }
     &:hover {
       .glass-eyes-left,
@@ -183,16 +173,16 @@
     }
     @keyframes eye-movement {
       0% {
-        transform: translateX(0vw);
+        transform: translateX(0);
       }
       50% {
-        transform: translateX(0vw);
+        transform: translateX(0);
       }
       70% {
-        transform: translateX(0.3vw);
+        transform: translateX(6px);
       }
       100% {
-        transform: translateX(0.3vw);
+        transform: translateX(6px);
       }
     }
   }
@@ -235,10 +225,16 @@
     flex-direction: column;
     .prev-image,
     .next-image {
-      width: 60px;
-      height: 60px;
-      margin: 30px 0;
+      width: 40px;
+      height: 40px;
+      margin: 0;
       opacity: 0.5;
+    }
+    .prev-image {
+      margin-top: 10px;
+    }
+    .next-image {
+      margin-bottom: 10px;
     }
     .swiper-container {
       width: 100%;
