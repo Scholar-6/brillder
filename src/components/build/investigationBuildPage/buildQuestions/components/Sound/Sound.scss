@@ -4,7 +4,10 @@
 
 .react-recording {
   $button-radius: 0.3vw;
-  margin: 0.2vw 0;
+  border-radius: 0.4vw;
+  background-color: var(--tab-gray);
+  display: flex;
+  flex-direction: column;
   .record-button-row {
     margin: 0.5vw 0;
     display: flex;
@@ -26,7 +29,6 @@
     border-radius: $button-radius;
     border: 1px solid var(--tab-gray);
     .svg {
-      color: var(--theme-dark-blue);
       @extend %removePosition;
     }
   }
@@ -36,26 +38,24 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
+  .play-record,
+  .start-record {
+    background: var(--white);
+    color: var(--theme-dark-blue);
+  }
+  .stop-record,
+  .delete-record {
+    background: var(--theme-orange);
+    color: var(--white);
+  }
   .delete-record {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     margin-left: -1px;
   }
-  .stop-record {
-    background: var(--theme-orange);
-    .svg {
-      color: var(--white);
-    }
-  }
 
   .disabled {
     background: #f2f2f2;
     color: var(--muted) !important;
-  }
-
-  .stop-record:hover {
-    color: white;
-    background: var(--theme-orange);
-    opacity: 0.9;
   }
 }
