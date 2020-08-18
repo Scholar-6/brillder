@@ -70,12 +70,22 @@
     .index-box {
       display: flex;
       align-items: center;
+      .classroom-name {
+        text-transform: capitalize;
+      }
       .arrow-right {
         stroke-width: 1 !important;
         margin-left: 0.5vw;
         $icon-size: 1.8vw;
         width: $icon-size;
         height: $icon-size;
+      }
+    }
+    .student-row {
+      display: flex;
+      padding: 0.53vw 1.4vw;
+      .student-name {
+        text-transform: capitalize;
       }
     }
     .right-index {
