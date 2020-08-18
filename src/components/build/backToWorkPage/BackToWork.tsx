@@ -8,6 +8,7 @@ import { User } from "model/user";
 import { Brick, BrickStatus, Subject } from "model/brick";
 import { checkAdmin, checkEditor } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
+import actions from 'redux/actions/requestFailed';
 import { ThreeColumns, SortBy, Filters } from './model';
 import {
   getThreeColumnName, prepareTreeRows, getThreeColumnBrick, expandThreeColumnBrick, prepareVisibleThreeColumnBricks, getLongestColumn
@@ -19,7 +20,6 @@ import {
 import { loadSubjects } from 'components/services/subject';
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
-import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FilterSidebar from './components/FilterSidebar';
 import PlayFilterSidebar from './components/PlayFilterSidebar';
@@ -53,7 +53,6 @@ interface BackToWorkState {
   filters: Filters;
   dropdownShown: boolean;
   notificationsShown: boolean;
-  failedRequest: boolean;
   shown: boolean;
   isClearFilter: boolean;
   pageSize: number;
@@ -66,6 +65,7 @@ export interface BackToWorkProps {
   user: User;
   history: any;
   forgetBrick(): void;
+  requestFailed(e: string): void;
 
   //test data
   isMocked?: boolean;
@@ -145,7 +145,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       isSearching: false,
       dropdownShown: false,
       notificationsShown: false,
-      failedRequest: false,
       shown: true,
       isClearFilter: false,
       pageSize: 18,
@@ -193,14 +192,16 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         withCredentials: true,
       }).then(res => {
         this.setBricks(res.data);
-      }).catch(() => this.setState({ ...this.state, failedRequest: true }));
+      }).catch(() => {
+        this.props.requestFailed('Can`t get bricks');
+      });
     } else {
       axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
         withCredentials: true,
       }).then((res) => {
         this.setBricks(res.data);
       }).catch(() => {
-        this.setState({ ...this.state, failedRequest: true })
+        this.props.requestFailed('Can`t get bricks for current user');
       });
     }
   }
@@ -426,8 +427,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       setTimeout(() => {
         this.setState({ ...this.state, finalBricks: res.data, isSearching: true, shown: true, threeColumns });
       }, 1400);
-    }).catch(error => {
-      this.setState({ ...this.state, failedRequest: true })
+    }).catch(() => {
+      this.props.requestFailed('Can`t get bricks by search');
     });
   }
 
@@ -478,19 +479,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   renderBricks = () => {
-    if (this.state.activeTab === ActiveTab.Play) {
-      return <div>Play tab content not implemented yep</div>;
-    } else if (this.state.activeTab === ActiveTab.Teach) {
-      return <div>Teach tab content not implemented yep</div>;
-    }
     if (this.state.filters.viewAll) {
       return this.renderGroupedBricks();
     }
     return this.renderSortedBricks();
-  }
-
-  renderClassrooms = () => {
-
   }
 
   renderPagination = () => {
@@ -535,20 +527,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       />
     } else if (this.state.activeTab === ActiveTab.Teach) {
       return <TeachFilterSidebar
-        rawBricks={this.state.rawBricks}
         classrooms={this.state.classrooms}
         filters={this.state.filters}
         sortBy={this.state.sortBy}
         isClearFilter={this.state.isClearFilter}
         setActiveClassroom={id => this.setActiveClassroom(id)}
-        handleSortChange={e => this.handleSortChange(e)}
-        clearStatus={() => this.clearStatus()}
-        toggleDraftFilter={() => this.toggleDraftFilter()}
-        toggleReviewFilter={() => this.toggleReviewFilter()}
-        togglePublishFilter={e => this.togglePublishFilter(e)}
-        showAll={() => this.showAll()}
-        showBuildAll={() => this.showBuildAll()}
-        showEditAll={() => this.showEditAll()}
       />
     }
     return <FilterSidebar
@@ -618,10 +601,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           onDelete={(brickId: number) => this.delete(brickId)}
           close={() => this.handleDeleteClose()}
         />
-        <FailedRequestDialog
-          isOpen={this.state.failedRequest}
-          close={() => this.setState({ ...this.state, failedRequest: false })}
-        />
       </div>
     );
   }
@@ -629,4 +608,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
-export default connect(mapState)(BackToWorkPage);
+const mapDispatch = (dispatch: any) => ({
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+});
+
+export default connect(mapState, mapDispatch)(BackToWorkPage);
