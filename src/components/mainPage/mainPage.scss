@@ -105,7 +105,7 @@
     width: auto;
     @extend %flexCenter;
     @include tabletP {
-      padding: 3vh 0;
+      padding: 25px 0;
     }
     .btn {
       display: flex;
@@ -116,7 +116,7 @@
       > .svg {
         @extend %removePosition;
         height: 150px;
-        width: 300px;
+        width: 250px;
       }
       .item-description {
         padding: 0;
@@ -135,28 +135,34 @@
     }
   }
   .view-item-container {
+    .btn {
+      .svg {
+        height: 110px;
+      }
+    }
     .glass-eyes-left,
     .glass-eyes-right {
-      @include phone_and_tabletP {
-        display: none;
-      }
       width: 100px;
       height: 100px;
       position: absolute;
-      top: 25px;
+      top: 4px;
       opacity: 0;
       transition-delay: 200ms;
       @extend %transitionAll300;
+      transform: scale(0.9);
+      @include phone_and_tabletP {
+        display: none;
+      }
       .svg {
         width: 60%;
         height: 60%;
       }
     }
     .glass-eyes-left {
-      left: 26px;
+      left: 16px;
     }
     .glass-eyes-right {
-      right: 26px;
+      right: 15px;
     }
     &:hover {
       .glass-eyes-left,
