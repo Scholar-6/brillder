@@ -288,7 +288,7 @@
       padding-left: 4.5vw;
       padding-right: 4.2vw;
       .MuiAutocomplete-tag {
-        font-family: $font-family-regular;
+        font: 1vw $font-family-regular;
         color: var(--theme-dark-blue);
         background-color: var(--tab-gray);
       }
