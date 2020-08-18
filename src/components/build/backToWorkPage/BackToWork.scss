@@ -11,7 +11,8 @@
 
     .tab-container {
       display: flex;
-      > div {
+
+      >div {
         cursor: pointer;
         width: calc(#{$width} / 3);
         min-height: $backwork-tab-height;
@@ -31,31 +32,52 @@
         background: var(--white);
       }
 
-      > div:last-child {
+      >div:last-child {
         border-top-right-radius: 0vw;
         margin-right: 0;
       }
     }
   }
-  .bricks-list-container, .bricks-pagination {
+
+  .bricks-list-container,
+  .bricks-pagination {
     background: white;
   }
+
   .bricks-list-container {
     padding-top: $backwork-bricks-padding-top;
     height: $backwork-bricks-height !important;
+
     .main-brick-container {
       height: calc(#{$backwork-bricks-height-2} / 6) !important;
     }
   }
+  .tab-content {
+    height: $backwork-bricks-height !important;
+    background: white;
+  }
+
   .private-core-toggle {
     top: 6.6vh;
   }
 
   // Teach
+  // Teach filter sidebar
   .classrooms-filter {
     height: 50vh;
     overflow-y: scroll;
 
+    .index-box {
+      display: flex;
+      align-items: center;
+      .arrow-right {
+        stroke-width: 1 !important;
+        margin-left: 0.5vw;
+        $icon-size: 1.8vw;
+        width: $icon-size;
+        height: $icon-size;
+      }
+    }
     .right-index {
       right: 0.3vw !important;
       display: flex;
@@ -72,12 +94,24 @@
         font-size: 1vw;
         line-height: 1;
       }
+
       svg {
         margin-left: 0.4vw;
         $icon-size: 1.3vw;
         width: $icon-size;
         height: $icon-size;
       }
+    }
+  }
+  // Teach classroom list
+  .classroom-list {
+    color: var(--theme-dark-blue);
+    padding-top: 3vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    .classroom-title {
+      font-size: 1.5vw;
+      text-transform: capitalize;
     }
   }
 }

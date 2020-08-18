@@ -41,20 +41,20 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   expandFilter() { this.setState({ ...this.state, filterExpanded: true }); }
 
   removeClassrooms() {
-    const {classrooms} = this.props;
+    const { classrooms } = this.props;
     for (let classroom of classrooms) {
       classroom.active = false;
     }
-    this.setState({activeClassroom: null});
+    this.setState({ activeClassroom: null });
   }
 
   activateClassroom(activeClassroom: TeachClassroom) {
-    const {classrooms} = this.props;
+    const { classrooms } = this.props;
     for (let classroom of classrooms) {
       classroom.active = false;
     }
     activeClassroom.active = true;
-    this.setState({activeClassroom});
+    this.setState({ activeClassroom });
   }
 
   renderIndexesBox = () => {
@@ -86,6 +86,10 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
                 onClick={() => this.activateClassroom(c)}
               >
                 {c.name}
+                <svg className="svg active arrow-right">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#arrow-right"} />
+                </svg>
                 <div className="right-index">
                   {c.students.length}
                   <svg className="svg active">
