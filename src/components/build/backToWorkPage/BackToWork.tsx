@@ -28,6 +28,7 @@ import BackPagePagination from './components/BackPagePagination';
 import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import BrickBlock from './components/BrickBlock';
 import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
+import ClassroomList from './components/ClassroomList';
 import { TeachClassroom } from "model/classroom";
 import { getAllClassrooms } from "components/teach/service";
 
@@ -488,6 +489,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return this.renderSortedBricks();
   }
 
+  renderClassrooms = () => {
+
+  }
+
   renderPagination = () => {
     let { sortedIndex, pageSize, finalBricks } = this.state;
     if (this.state.filters.viewAll) {
@@ -562,6 +567,20 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     />
   }
 
+  renderBricksList() {
+    return (
+      <div className="bricks-list-container">
+        <PrivateCoreToggle
+          isCore={this.state.filters.isCore}
+          onSwitch={() => this.toggleCore()}
+        />
+        <div className="bricks-list">
+          {this.renderBricks()}
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { activeTab } = this.state;
     return (
@@ -582,15 +601,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
               <div className={activeTab === ActiveTab.Build ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Build })}>Build</div>
               <div className={activeTab === ActiveTab.Play ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Play })}>Play</div>
             </div>
-            <div className="bricks-list-container">
-              <PrivateCoreToggle
-                notVisible={activeTab !== ActiveTab.Build}
-                isCore={this.state.filters.isCore}
-                onSwitch={() => this.toggleCore()}
-              />
-              <div className="bricks-list">
-                {this.renderBricks()}
-              </div>
+            <div className="tab-content">
+              {
+                activeTab === ActiveTab.Build ? this.renderBricksList() : ""
+              }
+              {
+                activeTab === ActiveTab.Teach ? <ClassroomList classrooms={this.state.classrooms} /> : ""
+              }
             </div>
             {this.renderPagination()}
           </Grid>
