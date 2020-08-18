@@ -7,8 +7,9 @@ import axios from "axios";
 import { connect } from "react-redux";
 import grey from "@material-ui/core/colors/grey";
 import Dialog from "@material-ui/core/Dialog";
+import { connect } from 'react-redux';
 
-
+import actions from 'redux/actions/requestFailed';
 import { User, UserType, UserStatus } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
@@ -28,11 +29,16 @@ const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
 });
 
-const connector = connect(mapState);
+const mapDispatch = (dispatch: any) => ({
+  requestFailed: () => dispatch(actions.requestFailed()),
+})
+
+const connector = connect(mapState, mapDispatch);
 
 interface UsersListProps {
   user: User;
   history: any;
+  requestFailed(e: string): void;
 }
 
 enum UserSortBy {
@@ -151,7 +157,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
     }).then((res) => {
       this.setState({ ...this.state, subjects: res.data });
     }).catch((error) => {
-      alert("Can`t get subjects");
+      this.props.requestFailed("Can`t get subjects");
     });
   }
 
@@ -210,7 +216,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         totalCount: res.data.totalCount,
       });
     }).catch((error) => {
-      alert("Can`t get users");
+      this.props.requestFailed("Can`t get users");
     });
   }
 
@@ -234,10 +240,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         return;
       }
       this.closeDeleteDialog();
-      alert('Can`t delete user');
+      this.props.requestFailed("Can`t delete user");
     }).catch(error => {
       this.closeDeleteDialog();
-      alert('Can`t delete user');
+      this.props.requestFailed("Can`t delete user");
     });
   }
 
@@ -277,8 +283,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           this.setState({ ...this.state });
         }
       })
-      .catch((error) => {
-        alert("Can`t activate user");
+      .catch(() => {
+        this.props.requestFailed("Can`t activate user");
       });
   }
 
@@ -298,8 +304,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           this.setState({ ...this.state });
         }
       })
-      .catch((error) => {
-        alert("Can`t deactivate user");
+      .catch(() => {
+        this.props.requestFailed("Can`t deactivate user");
       });
   }
 
