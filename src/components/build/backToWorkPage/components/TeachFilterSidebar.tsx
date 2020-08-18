@@ -2,21 +2,26 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { TeachClassroom, } from "model/classroom";
-import { Brick } from "model/brick";
-import { SortBy, Filters } from '../model';
+import { SortBy, Filters, TeachFilters } from '../model';
 import sprite from "assets/img/icons-sprite.svg";
 
+enum TeachFilterFields {
+  Assigned = 'assigned',
+  Submitted = 'submitted',
+  Completed = 'completed'
+}
 
 interface FilterSidebarProps {
   classrooms: TeachClassroom[];
-  filters: Filters;
-  sortBy: SortBy;
-  isClearFilter: boolean;
   setActiveClassroom(id: number): void;
+  filterChanged(filters: TeachFilters): void;
 }
+
 interface FilterSidebarState {
   activeClassroom: TeachClassroom | null;
   filterExpanded: boolean;
+  filters: TeachFilters;
+  isClearFilter: boolean;
 }
 
 class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
@@ -24,12 +29,42 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     super(props);
     this.state = {
       activeClassroom: null,
-      filterExpanded: true
+      filterExpanded: true,
+      isClearFilter: false,
+      filters: {
+        assigned: false,
+        submitted: false,
+        completed: false
+      }
     };
   }
 
   hideFilter() { this.setState({ ...this.state, filterExpanded: false }); }
   expandFilter() { this.setState({ ...this.state, filterExpanded: true }); }
+
+  clearStatus() {
+    const { filters } = this.state;
+    filters.assigned = false;
+    filters.completed = false;
+    filters.submitted = false;
+    this.filterClear(filters);
+    this.props.filterChanged(filters);
+  }
+
+  filterClear(filters: TeachFilters) {
+    if (filters.assigned || filters.completed || filters.submitted) {
+      this.setState({ isClearFilter: true, filters });
+    } else {
+      this.setState({ isClearFilter: false, filters });
+    }
+  }
+
+  toggleFilter(filter: TeachFilterFields) {
+    const { filters } = this.state;
+    filters[filter] = !filters[filter];
+    this.filterClear(filters);
+    this.props.filterChanged(filters);
+  }
 
   removeClassrooms() {
     const { classrooms } = this.props;
@@ -68,7 +103,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             </div>
           </div>
         </div>
-        {c.active ? c.students.map((s, i2) => 
+        {c.active ? c.students.map((s, i2) =>
           <div className="student-row" key={i2}><span className="student-name">{s.firstName} {s.lastName}</span></div>
         ) : ""}
       </div>
@@ -111,27 +146,50 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   renderFilterBox = () => {
     return (
       <div className="sort-box" style={{ marginTop: '1vh' }}>
-        <div className="filter-header">Filter</div>
+        <div className="filter-header">
+          Filter
+          <button
+            className={
+              "btn-transparent filter-icon " +
+              (this.state.filterExpanded
+                ? this.state.isClearFilter
+                  ? "arrow-cancel"
+                  : "arrow-down"
+                : "arrow-up")
+            }
+            onClick={() => {
+              this.state.filterExpanded
+                ? this.state.isClearFilter
+                  ? this.clearStatus()
+                  : (this.hideFilter())
+                : (this.expandFilter())
+            }}>
+          </button>
+        </div>
         {this.state.filterExpanded === true ? (
           <div className="filter-container subject-indexes-box" style={{ marginTop: '1vh' }}>
             <div className="index-box color1">
               <FormControlLabel
-                checked={this.props.filters.draft}
-                control={<Radio onClick={() =>{}} className={"filter-radio custom-color"} />}
+                checked={this.state.filters.assigned}
+                control={<Radio onClick={() => this.toggleFilter(TeachFilterFields.Assigned)} className={"filter-radio custom-color"} />}
                 label="Assigned to class or Student" />
               <div className="right-index">{0}</div>
             </div>
             <div className="index-box color2">
               <FormControlLabel
-                checked={this.props.filters.review}
-                control={<Radio onClick={() => {}} className={"filter-radio custom-color"} />}
+                checked={this.state.filters.submitted}
+                control={
+                  <Radio onClick={() => this.toggleFilter(TeachFilterFields.Submitted)} className={"filter-radio custom-color"} />
+                }
                 label="Submitted" />
               <div className="right-index">{0}</div>
             </div>
             <div className="index-box color4">
               <FormControlLabel
-                checked={this.props.filters.publish}
-                control={<Radio onClick={e => {}} className={"filter-radio custom-color"} />}
+                checked={this.state.filters.completed}
+                control={
+                  <Radio onClick={e => this.toggleFilter(TeachFilterFields.Completed)} className={"filter-radio custom-color"} />
+                }
                 label="Completed" />
               <div className="right-index">{0}</div>
             </div>

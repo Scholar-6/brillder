@@ -38,7 +38,7 @@ import Image from "@ckeditor/ckeditor5-image/src/image";
 import "./DocumentEditor.scss";
 import UploadImageCustom from './UploadImageCustom';
 //import CommentCustom from './CommentCustom';
-import { parseDataToArray } from 'components/services/mathJaxService';
+//import { parseDataToArray } from 'components/services/mathJaxService';
 
 export interface DocumentWEditorProps {
   disabled: boolean;
