@@ -52,9 +52,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }
 
   const getClasses = async () => {
-    const classrooms = await axios.post(
+    const classrooms = await axios.get(
       `${process.env.REACT_APP_BACKEND_HOST}/classrooms`,
-      { searchString: value },
       { withCredentials: true }
     ).then((data: any) => {
       return data.data;
