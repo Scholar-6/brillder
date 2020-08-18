@@ -2,8 +2,8 @@ import React from 'react';
 import { Route, Redirect, useLocation } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import actions from '../../redux/actions/auth';
-import userActions from '../../redux/actions/user';
+import actions from 'redux/actions/auth';
+import userActions from 'redux/actions/user';
 import { isAuthenticated } from 'model/brick';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import { User } from 'model/user';

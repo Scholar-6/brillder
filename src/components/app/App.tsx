@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 import './app.scss';
+import GlobalFailedRequestDialog from "components/baseComponents/failedRequestDialog/GlobalFailedRequestDialog";
 
 import VersionLabel from 'components/baseComponents/VersionLabel';
 import Dashboard from '../play/dashboard/Dashboard';
@@ -108,8 +109,9 @@ const App: React.FC = (props: any) => {
         <Route component={AuthRedirectRoute} />
       </Switch>
       <VersionLabel />
+      <GlobalFailedRequestDialog />
     </ThemeProvider>
   );
 }
 
-export default App
+export default App;
