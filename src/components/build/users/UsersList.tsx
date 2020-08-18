@@ -7,7 +7,6 @@ import axios from "axios";
 import { connect } from "react-redux";
 import grey from "@material-ui/core/colors/grey";
 import Dialog from "@material-ui/core/Dialog";
-import { connect } from 'react-redux';
 
 import actions from 'redux/actions/requestFailed';
 import { User, UserType, UserStatus } from "model/user";
@@ -31,7 +30,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   requestFailed: () => dispatch(actions.requestFailed()),
-})
+});
 
 const connector = connect(mapState, mapDispatch);
 
@@ -156,7 +155,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       withCredentials: true,
     }).then((res) => {
       this.setState({ ...this.state, subjects: res.data });
-    }).catch((error) => {
+    }).catch(() => {
       this.props.requestFailed("Can`t get subjects");
     });
   }
@@ -215,7 +214,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         users: res.data.pageData,
         totalCount: res.data.totalCount,
       });
-    }).catch((error) => {
+    }).catch(() => {
       this.props.requestFailed("Can`t get users");
     });
   }
@@ -225,11 +224,11 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   closeDeleteDialog() {
-    this.setState({ isDeleteDialogOpen: false, deleteUserId: -1});
+    this.setState({ isDeleteDialogOpen: false, deleteUserId: -1 });
   }
 
   deleteUser() {
-    const {deleteUserId} = this.state;
+    const { deleteUserId } = this.state;
     if (deleteUserId === -1) { return }
     axios.delete(
       process.env.REACT_APP_BACKEND_HOST + '/user/delete/' + deleteUserId, { withCredentials: true }
@@ -241,7 +240,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
       }
       this.closeDeleteDialog();
       this.props.requestFailed("Can`t delete user");
-    }).catch(error => {
+    }).catch(() => {
       this.closeDeleteDialog();
       this.props.requestFailed("Can`t delete user");
     });
@@ -268,45 +267,39 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
   }
 
   activateUser(userId: number) {
-    axios
-      .put(
-        `${process.env.REACT_APP_BACKEND_HOST}/user/activate/${userId}`,
-        {},
-        { withCredentials: true } as any
-      )
-      .then((res) => {
-        if (res.data === "OK") {
-          const user = this.state.users.find((user) => user.id === userId);
-          if (user) {
-            user.status = UserStatus.Active;
-          }
-          this.setState({ ...this.state });
+    axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/user/activate/${userId}`,
+      {},
+      { withCredentials: true } as any
+    ).then((res) => {
+      if (res.data === "OK") {
+        const user = this.state.users.find((user) => user.id === userId);
+        if (user) {
+          user.status = UserStatus.Active;
         }
-      })
-      .catch(() => {
-        this.props.requestFailed("Can`t activate user");
-      });
+        this.setState({ ...this.state });
+      }
+    }).catch(() => {
+      this.props.requestFailed("Can`t activate user");
+    });
   }
 
   deactivateUser(userId: number) {
-    axios
-      .put(
-        `${process.env.REACT_APP_BACKEND_HOST}/user/deactivate/${userId}`,
-        {},
-        { withCredentials: true } as any
-      )
-      .then((res) => {
-        if (res.data === "OK") {
-          const user = this.state.users.find((user) => user.id === userId);
-          if (user) {
-            user.status = UserStatus.Disabled;
-          }
-          this.setState({ ...this.state });
+    axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/user/deactivate/${userId}`,
+      {},
+      { withCredentials: true } as any
+    ).then((res) => {
+      if (res.data === "OK") {
+        const user = this.state.users.find((user) => user.id === userId);
+        if (user) {
+          user.status = UserStatus.Disabled;
         }
-      })
-      .catch(() => {
-        this.props.requestFailed("Can`t deactivate user");
-      });
+        this.setState({ ...this.state });
+      }
+    }).catch(() => {
+      this.props.requestFailed("Can`t deactivate user");
+    });
   }
 
   toggleUser(user: User) {
@@ -616,7 +609,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
           </div>
           <div className="dialog-footer">
             <button className="btn btn-md bg-theme-orange yes-button"
-              onClick={()=> this.deleteUser()}>
+              onClick={() => this.deleteUser()}>
               <span>Yes, delete</span>
             </button>
             <button className="btn btn-md bg-gray no-button"
