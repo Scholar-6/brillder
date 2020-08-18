@@ -422,6 +422,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
   // endregion 
 
+  // region Play
+  playFilterUpdated(playFilters: PlayFilters) {
+    this.setState({ playFilters });
+  }
+  // endregion
+
   searching(searchString: string) {
     if (searchString.length === 0) {
       this.setState({
@@ -533,18 +539,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   renderFilterSidebar() {
     if (this.state.activeTab === ActiveTab.Play) {
       return <PlayFilterSidebar
+        classrooms={this.state.classrooms}
         rawBricks={this.state.rawBricks}
-        filters={this.state.filters}
-        sortBy={this.state.sortBy}
-        isClearFilter={this.state.isClearFilter}
-        handleSortChange={e => this.handleSortChange(e)}
-        clearStatus={() => this.clearStatus()}
-        toggleDraftFilter={() => this.toggleDraftFilter()}
-        toggleReviewFilter={() => this.toggleReviewFilter()}
-        togglePublishFilter={e => this.togglePublishFilter(e)}
-        showAll={() => this.showAll()}
-        showBuildAll={() => this.showBuildAll()}
-        showEditAll={() => this.showEditAll()}
+        filterChanged={this.playFilterUpdated.bind(this)}
       />
     } else if (this.state.activeTab === ActiveTab.Teach) {
       return <TeachFilterSidebar

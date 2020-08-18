@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { TeachClassroom, } from "model/classroom";
-import { SortBy, Filters, TeachFilters } from '../model';
+import { TeachFilters } from '../model';
 import sprite from "assets/img/icons-sprite.svg";
 
 enum TeachFilterFields {
@@ -39,8 +39,8 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     };
   }
 
-  hideFilter() { this.setState({ ...this.state, filterExpanded: false }); }
-  expandFilter() { this.setState({ ...this.state, filterExpanded: true }); }
+  hideFilter() { this.setState({ filterExpanded: false }) }
+  expandFilter() { this.setState({ filterExpanded: true }) }
 
   clearStatus() {
     const { filters } = this.state;
@@ -123,7 +123,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
         <div className="filter-container indexes-box classrooms-filter">
           <div
             className={"index-box " + (!this.state.activeClassroom ? "active" : "")}
-            onClick={() => this.removeClassrooms()}
+            onClick={this.removeClassrooms.bind(this)}
           >
             View All Classes
             <div className="right-index">
