@@ -4,6 +4,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import axios from "axios";
 import { connect } from "react-redux";
 
+import actions from 'redux/actions/requestFailed';
 import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
@@ -28,6 +29,7 @@ const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
   getUser: () => dispatch(userActions.getUser()),
   redirectedToProfile: () => dispatch(authActions.redirectedToProfile()),
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
 });
 
 const connector = connect(mapState, mapDispatch);
@@ -43,6 +45,7 @@ interface UserProfileProps {
   forgetBrick(): void;
   redirectedToProfile(): void;
   getUser(): void;
+  requestFailed(e: string): void;
 }
 
 interface UserProfileState {
@@ -81,8 +84,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         }).then((res) => {
           const user = res.data as User;
           this.setState({ user: this.getUserProfile(user) });
-        }).catch((error) => {
-          alert("Can`t get user profile");
+        }).catch(() => {
+          this.props.requestFailed("Can`t get user profile");
         });
       } else {
         tempState.user = this.getUserProfile(user);
@@ -94,8 +97,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       withCredentials: true,
     }).then((res) => {
       this.setState({ subjects: res.data });
-    }).catch((error) => {
-      alert("Can`t get bricks");
+    }).catch(() => {
+      this.props.requestFailed("Can`t get bricks");
     });
   }
 
@@ -246,8 +249,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           this.setState({ savedDialogOpen: true });
           this.props.getUser();
         }
-      }).catch((error) => {
-        alert("Can`t save user profile");
+      }).catch(() => {
+        this.props.requestFailed("Can`t save user profile");
       });
     }
   }
