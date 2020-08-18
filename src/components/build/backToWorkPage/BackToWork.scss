@@ -42,6 +42,11 @@
   .bricks-list-container,
   .bricks-pagination {
     background: white;
+
+    .bottom-next-button {
+      position: inherit;
+      @extend %flexCenter;
+    }
   }
 
   .bricks-list-container {
@@ -53,7 +58,7 @@
     }
   }
   .tab-content {
-    height: $backwork-bricks-height !important;
+    height: $backwork-tab-content-height !important;
     background: white;
   }
 
