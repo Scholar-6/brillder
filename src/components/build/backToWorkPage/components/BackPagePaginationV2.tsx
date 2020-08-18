@@ -30,22 +30,24 @@ const BackPagePaginationV2: React.FC<BackPageTitleProps> = ({
   const showNext = sortedIndex + pageSize <= longest;
 
   return (
-    <Grid container direction="row" className="bricks-pagination">
-      <Grid item xs={4} className="left-pagination">
-        <div>
-          {(sortedIndex + pageSize) / pageSize}
-          <span className="gray">
-            {" "} &nbsp;|&nbsp; {Math.ceil(longest / pageSize)}
-          </span>
-        </div>
+    <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+      <Grid container direction="row" className="bricks-pagination">
+        <Grid item xs={4} className="left-pagination">
+          <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
+            {(sortedIndex + pageSize) / pageSize}
+            <span className="gray">
+              {" "} &nbsp;|&nbsp; {Math.ceil(longest / pageSize)}
+            </span>
+          </div>
+        </Grid>
+        <Grid item xs={4} className="bottom-next-button">
+          <div>
+            <PrevButton isShown={showPrev} onClick={moveBack} />
+            <NextButton isShown={showNext} onClick={moveNext} />
+          </div>
+        </Grid>
       </Grid>
-      <Grid item xs={4} className="bottom-next-button">
-        <div>
-          <PrevButton isShown={showPrev} onClick={moveBack} />
-          <NextButton isShown={showNext} onClick={moveNext} />
-        </div>
-      </Grid>
-    </Grid>
+    </div>
   );
 }
 

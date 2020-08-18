@@ -14,7 +14,7 @@ import {
   getThreeColumnName, prepareTreeRows, getThreeColumnBrick, expandThreeColumnBrick, prepareVisibleThreeColumnBricks, getLongestColumn
 } from './threeColumnService';
 import {
-  clearStatusFilters, filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
+  filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
   removeBrickFromLists, sortBricks, hideAllBricks, prepareVisibleBricks, expandBrick
 } from './service';
 import { loadSubjects } from 'components/services/subject';
