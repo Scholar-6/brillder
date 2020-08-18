@@ -289,6 +289,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
   //region hover for normal bricks
 
+  // region tabs
+  setTab(activeTab: ActiveTab) {
+    this.deactivateClassrooms();
+    this.setState({activeTab});
+  }
+  // endregion
+
   //region hover for three column bricks
   onThreeColumnsMouseHover(index: number, status: BrickStatus) {
     hideAllBricks(this.state.rawBricks);
@@ -366,20 +373,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks: bricks });
   }
 
-  /* Teach */
-  setActiveClassroom(id: number) {
-    const { classrooms } = this.state;
-    for (let classroom of classrooms) {
-      classroom.active = false;
-    }
-    let classroom = classrooms.find(c => c.id === id);
-    if (classroom) {
-      classroom.active = true;
-      this.setState({ classrooms });
-    }
-  }
-  /* Teach */
-
   showBuildAll() {
     const { filters } = this.state;
     removeAllFilters(filters);
@@ -419,6 +412,22 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   // region Teach
   teachFilterUpdated(teachFilters: TeachFilters) {
     this.setState({ teachFilters });
+  }
+
+  deactivateClassrooms() {
+    for (let classroom of this.state.classrooms) {
+      classroom.active = false;
+    }
+  }
+
+  setActiveClassroom(id: number | null) {
+    this.deactivateClassrooms();
+    const { classrooms } = this.state;
+    let classroom = classrooms.find(c => c.id === id);
+    if (classroom) {
+      classroom.active = true;
+      this.setState({ classrooms });
+    }
   }
   // endregion 
 
@@ -541,12 +550,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       return <PlayFilterSidebar
         classrooms={this.state.classrooms}
         rawBricks={this.state.rawBricks}
+        setActiveClassroom={this.setActiveClassroom.bind(this)}
         filterChanged={this.playFilterUpdated.bind(this)}
       />
     } else if (this.state.activeTab === ActiveTab.Teach) {
       return <TeachFilterSidebar
         classrooms={this.state.classrooms}
-        setActiveClassroom={id => this.setActiveClassroom(id)}
+        setActiveClassroom={this.setActiveClassroom.bind(this)}
         filterChanged={this.teachFilterUpdated.bind(this)}
       />
     }
@@ -596,9 +606,24 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           {this.renderFilterSidebar()}
           <Grid item xs={9} className="brick-row-container">
             <div className="tab-container">
-              <div className={activeTab === ActiveTab.Teach ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Teach })}>Teach</div>
-              <div className={activeTab === ActiveTab.Build ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Build })}>Build</div>
-              <div className={activeTab === ActiveTab.Play ? 'active' : ''} onClick={() => this.setState({ activeTab: ActiveTab.Play })}>Play</div>
+              <div
+                className={activeTab === ActiveTab.Teach ? 'active' : ''}
+                onClick={() => this.setTab(ActiveTab.Teach)}
+              >
+                Teach
+              </div>
+              <div
+                className={activeTab === ActiveTab.Build ? 'active' : ''}
+                onClick={() => this.setTab(ActiveTab.Build)}
+              >
+                Build
+              </div>
+              <div
+                className={activeTab === ActiveTab.Play ? 'active' : ''}
+                onClick={() => this.setTab(ActiveTab.Play)}
+              >
+                Play
+              </div>
             </div>
             <div className="tab-content">
               {

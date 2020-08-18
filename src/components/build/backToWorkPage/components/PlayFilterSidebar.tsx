@@ -16,7 +16,9 @@ interface FilterSidebarProps {
   classrooms: TeachClassroom[];
   rawBricks: Brick[];
   filterChanged(filters: PlayFilters): void;
+  setActiveClassroom(id: number | null): void;
 }
+
 interface FilterSidebarState {
   activeClassroom: TeachClassroom | null;
   filterExpanded: boolean;
@@ -53,6 +55,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
     }
     activeClassroom.active = true;
     this.setState({ activeClassroom });
+    this.props.setActiveClassroom(activeClassroom.id);
   }
 
   removeClassrooms() {
@@ -61,6 +64,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
       classroom.active = false;
     }
     this.setState({ activeClassroom: null });
+    this.props.setActiveClassroom(null);
   }
 
   renderClassroom(c: TeachClassroom, i: number) {

@@ -13,7 +13,7 @@ enum TeachFilterFields {
 
 interface FilterSidebarProps {
   classrooms: TeachClassroom[];
-  setActiveClassroom(id: number): void;
+  setActiveClassroom(id: number | null): void;
   filterChanged(filters: TeachFilters): void;
 }
 
@@ -72,6 +72,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
       classroom.active = false;
     }
     this.setState({ activeClassroom: null });
+    this.props.setActiveClassroom(null);
   }
 
   activateClassroom(activeClassroom: TeachClassroom) {
@@ -81,6 +82,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     }
     activeClassroom.active = true;
     this.setState({ activeClassroom });
+    this.props.setActiveClassroom(activeClassroom.id);
   }
 
   renderClassroom(c: TeachClassroom, i: number) {
