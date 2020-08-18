@@ -64,6 +64,10 @@ export function checkEditor(roles: UserRole[]) {
   return false;
 }
 
+export function checkTeacher(roles: UserRole[]) {
+  return roles.some((role:any) => role.roleId === UserType.Teacher);
+}
+
 export function checkAdmin(roles: UserRole[]) {
   let isAdmin = roles.some((role:any) => role.roleId === UserType.Admin);
   if (isAdmin) {

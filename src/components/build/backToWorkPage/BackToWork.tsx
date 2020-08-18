@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import "./BackToWork.scss";
 import { User } from "model/user";
 import { Brick, BrickStatus, Subject } from "model/brick";
-import { checkAdmin, checkEditor } from "components/services/brickService";
+import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 import { ThreeColumns, SortBy, Filters, TeachFilters, PlayFilters } from './model';
@@ -58,6 +58,9 @@ interface BackToWorkState {
   generalSubjectId: number;
   activeTab: ActiveTab;
 
+  isTeach: boolean;
+  isAdmin: boolean;
+
   filters: Filters;
   playFilters: PlayFilters;
   teachFilters: TeachFilters;
@@ -96,6 +99,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     } as ThreeColumns;
 
     let isCore = false;
+    const isTeach = checkTeacher(this.props.user.roles);
     const isAdmin = checkAdmin(this.props.user.roles);
     const isEditor = checkEditor(this.props.user.roles)
     if (isAdmin || isEditor) {
@@ -152,6 +156,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         submitted: false,
         checked: false
       },
+
+      isTeach,
+      isAdmin,
 
       searchString: "",
       isSearching: false,
@@ -288,7 +295,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   // region tabs
   setTab(activeTab: ActiveTab) {
     this.deactivateClassrooms();
-    this.setState({activeTab});
+    this.setState({ activeTab });
   }
   // endregion
 
@@ -562,12 +569,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           {this.renderFilterSidebar()}
           <Grid item xs={9} className="brick-row-container">
             <div className="tab-container">
-              <div
-                className={activeTab === ActiveTab.Teach ? 'active' : ''}
-                onClick={() => this.setTab(ActiveTab.Teach)}
-              >
-                Teach
-              </div>
+              {(this.state.isTeach || this.state.isAdmin) ?
+                <div
+                  className={activeTab === ActiveTab.Teach ? 'active' : ''}
+                  onClick={() => this.setTab(ActiveTab.Teach)}
+                >
+                  Teach
+              </div> : ""
+              }
               <div
                 className={activeTab === ActiveTab.Build ? 'active' : ''}
                 onClick={() => this.setTab(ActiveTab.Build)}
