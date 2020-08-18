@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { UserBase, UserType } from 'model/user';
-import { Classroom } from 'model/classroom';
-import { Brick } from 'model/brick';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 
 import './AssignPersonOrClass.scss';
 import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
+import { UserBase, UserType } from 'model/user';
+import { Classroom } from 'model/classroom';
+import { Brick } from 'model/brick';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
@@ -19,6 +21,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [value, setValue] = React.useState("");
   const [students, setStudents] = React.useState<UserBase[]>([]);
   const [classes, setClasses] = React.useState<Classroom[]>([]);
+  const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
 
   useEffect(() => {
     getStudents();
@@ -34,6 +37,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       },
       { withCredentials: true }
     );
+    for (let student of data.pageData) {
+      student.isStudent = true;
+    }
     setStudents(data.pageData);
   }
 
@@ -45,26 +51,13 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       },
       { withCredentials: true }
     );
+
+    for (let classroom of data) {
+      classroom.isClass = true;
+    }
+
     setClasses(data);
   }
-
-  const renderStudent = (student: UserBase) => (
-    <div
-      onClick={() => assignToStudent(student)}
-      className="assign-list-item"
-    >
-      {student.firstName} {student.lastName}
-    </div>
-  )
-
-  const renderClassroom = (classroom: Classroom) => (
-    <div
-      onClick={() => assignToClass(classroom)}
-      className="assign-list-item"
-    >
-      {classroom.name}
-    </div>
-  )
 
   const assignToStudent = async (student: UserBase) => {
     await axios.post(
@@ -82,22 +75,24 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     );
   }
 
-  const handleKeyPress = async (e: any) => {
-    if(e.key === "Enter") {
-      tryAssign();
+  const hide = () => setAutoCompleteDropdown(false);
+
+  const onClassroomInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const {value} = event.target;
+    if (value && value.length >= 2) {
+      setAutoCompleteDropdown(true);
+    } else {
+      setAutoCompleteDropdown(false);
     }
   }
 
-  const tryAssign = async () => {
-    const totalCount = students.length + classes.length;
-    if(totalCount === 1) {
-      if(students.length === 1) {
-        assignToStudent(students[0]);
-      } else {
-        assignToClass(classes[0])
-      }
-      props.close();
+  const classroomSelected = (obj: any) => {
+    if (obj.isStudent) {
+      assignToStudent(obj);
+    } else {
+      assignToClass(obj);
     }
+    props.close();
   }
 
   return (
@@ -108,11 +103,22 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     >
       <div className="dialog-header">
         <div>Who would you like to assign this brick to?</div>
-        <input value={value} onChange={e => setValue(e.target.value)} onKeyPress={handleKeyPress} />
-        <div className="records-box">
-          {students.map(renderStudent)}
-          {classes.map(renderClassroom)}
-        </div>
+        <Autocomplete
+          open={autoCompleteOpen}
+          options={[...classes, ...students]}
+          onChange={(e:any, c: any) => classroomSelected(c)}
+          getOptionLabel={(option:any) => option.isStudent ? `Student ${option.firstName} ${option.lastName}` : 'Class ' + option.name}
+          renderInput={(params:any) => (
+            <TextField
+              onBlur={() => hide()}
+              {...params}
+              onChange={e => onClassroomInput(e)}
+              variant="standard"
+              label="Subjects: "
+              placeholder="Subjects"
+            />
+          )}
+        />
       </div>
     </Dialog>
   );
