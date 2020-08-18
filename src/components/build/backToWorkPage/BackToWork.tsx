@@ -632,8 +632,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
               {
                 activeTab === ActiveTab.Teach ? <ClassroomList classrooms={this.state.classrooms} /> : ""
               }
+              {this.renderPagination()}
             </div>
-            {this.renderPagination()}
           </Grid>
         </Grid>
         <DeleteBrickDialog

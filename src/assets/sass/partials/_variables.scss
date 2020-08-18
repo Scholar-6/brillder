@@ -96,6 +96,7 @@ $backwork-bricks-padding-top: 5.5vh;
 $backwork-bricks-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$pagination-size} - #{$backwork-tab-height} - 1vh);
 $backwork-bricks-height-2: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$pagination-size} - #{$backwork-tab-height} + 1.4vh - #{$backwork-bricks-padding-top});
 
+$backwork-tab-content-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$backwork-tab-height});
 
 $filter-sidebar-size: 23vw;
 $filter-sidebar-margin: 1.2vw;
