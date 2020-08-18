@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import Dialog from "@material-ui/core/Dialog";
+import actions from 'redux/actions/requestFailed';
+import { connect } from 'react-redux';
 
 import "./DeleteBrickDialog.scss";
 
@@ -10,6 +12,7 @@ interface DeleteDialogProps {
   brickId: number;
   close(): void;
   onDelete(brickId: number): void;
+  requestFailed(e: string): void;
 }
 
 class DeleteBrickDialog extends Component<DeleteDialogProps> {
@@ -21,8 +24,8 @@ class DeleteBrickDialog extends Component<DeleteDialogProps> {
       process.env.REACT_APP_BACKEND_HOST + '/brick/' + brickId, {withCredentials: true}
     ).then(res => {
       this.props.onDelete(brickId);
-    }).catch(error => {
-      alert('Can`t delete bricks');
+    }).catch(() => {
+      this.props.requestFailed('Can`t delete bricks');
     });
   }
 
@@ -52,4 +55,10 @@ class DeleteBrickDialog extends Component<DeleteDialogProps> {
   }
 }
 
-export default DeleteBrickDialog;
+const mapDispatch = (dispatch: any) => ({
+  requestFailed: () => dispatch(actions.requestFailed()),
+})
+
+const connector = connect(null, mapDispatch);
+
+export default connector(DeleteBrickDialog);
