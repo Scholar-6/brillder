@@ -11,10 +11,11 @@
 
     .tab-container {
       display: flex;
+      flex-wrap: nowrap;
 
       >div {
         cursor: pointer;
-        width: calc(#{$width} / 3);
+        width: 100%;
         min-height: $backwork-tab-height;
         font-size: 4.5vh;
         border-top-left-radius: 0.5vw;
