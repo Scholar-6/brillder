@@ -242,6 +242,17 @@
 
             .MuiIconButton-root {
               padding: 0.5vw !important;
+              &.MuiRadio-colorSecondary {
+                &:hover {
+                  background-color: var(--theme-dark-blue-alpha1);
+                }
+                &.Mui-checked {
+                  color: var(--theme-dark-blue);
+                  &:hover {
+                    background-color: var(--theme-dark-blue-alpha1);
+                  }
+                }
+              }
             }
 
             .MuiFormControlLabel-label {
