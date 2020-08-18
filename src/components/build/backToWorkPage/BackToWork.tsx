@@ -9,7 +9,7 @@ import { Brick, BrickStatus, Subject } from "model/brick";
 import { checkAdmin, checkEditor } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
-import { ThreeColumns, SortBy, Filters } from './model';
+import { ThreeColumns, SortBy, Filters, TeachFilters, PlayFilters } from './model';
 import {
   getThreeColumnName, prepareTreeRows, getThreeColumnBrick, expandThreeColumnBrick, prepareVisibleThreeColumnBricks, getLongestColumn
 } from './threeColumnService';
@@ -50,7 +50,6 @@ interface BackToWorkState {
   sortedReversed: boolean;
   deleteDialogOpen: boolean;
   deleteBrickId: number;
-  filters: Filters;
   dropdownShown: boolean;
   notificationsShown: boolean;
   shown: boolean;
@@ -59,6 +58,10 @@ interface BackToWorkState {
   threeColumns: ThreeColumns;
   generalSubjectId: number;
   activeTab: ActiveTab;
+
+  filters: Filters;
+  playFilters: PlayFilters;
+  teachFilters: TeachFilters;
 }
 
 export interface BackToWorkProps {
@@ -139,6 +142,18 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         build: false,
         publish: false,
         isCore
+      },
+
+      teachFilters: {
+        assigned: false,
+        submitted: false,
+        completed: false
+      },
+
+      playFilters: {
+        completed: false,
+        submitted: false,
+        checked: false
       },
 
       searchString: "",
@@ -401,6 +416,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.filterClear()
   }
 
+  // region Teach
+  teachFilterUpdated(teachFilters: TeachFilters) {
+    this.setState({ teachFilters });
+  }
+  // endregion 
+
   searching(searchString: string) {
     if (searchString.length === 0) {
       this.setState({
@@ -528,10 +549,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     } else if (this.state.activeTab === ActiveTab.Teach) {
       return <TeachFilterSidebar
         classrooms={this.state.classrooms}
-        filters={this.state.filters}
-        sortBy={this.state.sortBy}
-        isClearFilter={this.state.isClearFilter}
         setActiveClassroom={id => this.setActiveClassroom(id)}
+        filterChanged={this.teachFilterUpdated.bind(this)}
       />
     }
     return <FilterSidebar
