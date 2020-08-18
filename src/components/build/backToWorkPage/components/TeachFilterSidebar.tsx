@@ -57,15 +57,44 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     this.setState({ activeClassroom });
   }
 
-  renderIndexesBox = () => {
+  renderClassroom(c: TeachClassroom, i: number) {
+    return (
+      <div key={i} className="classes-box">
+        <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.activateClassroom(c)}>
+          <span className="classroom-name">{c.name}</span>
+          <svg className="svg active arrow-right">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + (c.active ? "#arrow-down" : "#arrow-right")} />
+          </svg>
+          <div className="right-index">
+            {c.students.length}
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#users"} />
+            </svg>
+            <div className="white-box">
+              {2}
+            </div>
+          </div>
+        </div>
+        {c.active ? c.students.map((s, i2) => 
+          <div className="student-row" key={i2}><span className="student-name">{s.firstName} {s.lastName}</span></div>
+        ) : ""}
+      </div>
+    );
+  }
+
+  renderClassesBox() {
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box" style={{ paddingTop: '4vh', paddingBottom: '0.5vh' }}>
           <div className="sort-header">CLASSES</div>
         </div>
         <div className="filter-container indexes-box classrooms-filter">
-          <div className={"index-box " + (!this.state.activeClassroom ? "active" : "")}
-            onClick={() => this.removeClassrooms()}>
+          <div
+            className={"index-box " + (!this.state.activeClassroom ? "active" : "")}
+            onClick={() => this.removeClassrooms()}
+          >
             View All Classes
             <div className="right-index">
               {2}
@@ -78,37 +107,13 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
               </div>
             </div>
           </div>
-          {this.props.classrooms.map((c, i) => {
-            return (
-              <div
-                key={i}
-                className={"index-box " + (c.active ? "active" : "")}
-                onClick={() => this.activateClassroom(c)}
-              >
-                {c.name}
-                <svg className="svg active arrow-right">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#arrow-right"} />
-                </svg>
-                <div className="right-index">
-                  {c.students.length}
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#users"} />
-                  </svg>
-                  <div className="white-box">
-                    {2}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {this.props.classrooms.map(this.renderClassroom.bind(this))}
         </div>
       </div>
     );
   };
 
-  renderSortAndFilterBox = () => {
+  renderFilterBox = () => {
     return (
       <div className="sort-box" style={{ marginTop: '1vh' }}>
         <div className="filter-header">Filter</div>
@@ -146,8 +151,8 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   render() {
     return (
       <Grid container item xs={3} className="sort-and-filter-container">
-        {this.renderIndexesBox()}
-        {this.renderSortAndFilterBox()}
+        {this.renderClassesBox()}
+        {this.renderFilterBox()}
       </Grid>
     );
   }
