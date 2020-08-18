@@ -9,19 +9,10 @@ import sprite from "assets/img/icons-sprite.svg";
 
 interface FilterSidebarProps {
   classrooms: TeachClassroom[];
-  rawBricks: Brick[];
   filters: Filters;
   sortBy: SortBy;
   isClearFilter: boolean;
   setActiveClassroom(id: number): void;
-  handleSortChange(e: React.ChangeEvent<HTMLInputElement>): void;
-  clearStatus(): void;
-  toggleDraftFilter(): void;
-  toggleReviewFilter(): void;
-  togglePublishFilter(e: React.ChangeEvent<any>): void;
-  showAll(): void;
-  showBuildAll(): void;
-  showEditAll(): void;
 }
 interface FilterSidebarState {
   activeClassroom: TeachClassroom | null;
@@ -73,7 +64,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
               <use href={sprite + "#users"} />
             </svg>
             <div className="white-box">
-              {2}
+              {0}
             </div>
           </div>
         </div>
@@ -85,6 +76,10 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   }
 
   renderClassesBox() {
+    let totalCount = 0;
+    for (let classroom of this.props.classrooms) {
+      totalCount += classroom.students.length;
+    }
     return (
       <div className="sort-box">
         <div className="filter-container sort-by-box" style={{ paddingTop: '4vh', paddingBottom: '0.5vh' }}>
@@ -97,13 +92,13 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
           >
             View All Classes
             <div className="right-index">
-              {2}
+              {totalCount}
               <svg className="svg active">
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#users"} />
               </svg>
               <div className="white-box">
-                {2}
+                {0}
               </div>
             </div>
           </div>
@@ -122,21 +117,21 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             <div className="index-box color1">
               <FormControlLabel
                 checked={this.props.filters.draft}
-                control={<Radio onClick={() => this.props.toggleDraftFilter()} className={"filter-radio custom-color"} />}
+                control={<Radio onClick={() =>{}} className={"filter-radio custom-color"} />}
                 label="Assigned to class or Student" />
               <div className="right-index">{0}</div>
             </div>
             <div className="index-box color2">
               <FormControlLabel
                 checked={this.props.filters.review}
-                control={<Radio onClick={() => this.props.toggleReviewFilter()} className={"filter-radio custom-color"} />}
+                control={<Radio onClick={() => {}} className={"filter-radio custom-color"} />}
                 label="Submitted" />
               <div className="right-index">{0}</div>
             </div>
             <div className="index-box color4">
               <FormControlLabel
                 checked={this.props.filters.publish}
-                control={<Radio onClick={e => this.props.togglePublishFilter(e)} className={"filter-radio custom-color"} />}
+                control={<Radio onClick={e => {}} className={"filter-radio custom-color"} />}
                 label="Completed" />
               <div className="right-index">{0}</div>
             </div>

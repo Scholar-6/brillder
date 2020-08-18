@@ -29,7 +29,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  requestFailed: () => dispatch(actions.requestFailed()),
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
 });
 
 const connector = connect(mapState, mapDispatch);

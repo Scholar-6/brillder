@@ -90,7 +90,7 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
 }
 
 const mapDispatch = (dispatch: any) => ({
-  requestFailed: () => dispatch(actions.requestFailed()),
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
 })
 
 const connector = connect(null, mapDispatch);
