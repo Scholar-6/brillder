@@ -128,6 +128,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   togglePageStudents() {
     if (this.state.pageStudentsSelected) {
       this.unselectAllStudents();
+      const {activeClassroom} = this.state;
+      if (activeClassroom) {
+        activeClassroom.isActive= true;
+      }
       this.setState({pageStudentsSelected: false, selectedUsers: []});
     } else {
       // select whole page
@@ -145,7 +149,17 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   selectPageClassStudents() {
-
+    const {page, pageSize, activeClassroom} = this.state;
+    if (activeClassroom) {
+      let index = 0;
+      for (let student of activeClassroom.students) {
+        if (index >= page * pageSize && index < (page + 1) * pageSize) {
+          student.selected = true;
+          this.state.selectedUsers.push(student);
+        }
+        index += 1;
+      }
+    }
   }
 
   selectGlobalPageStudents() {
@@ -215,7 +229,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   setActiveClassroom(activeClassroom: ClassroomApi) {
     this.unselectAllStudents();
     activeClassroom.isActive = true;
-    this.setState({ activeClassroom, selectedUsers: [], isSearching: false });
+    this.setState({ activeClassroom, page: 0, selectedUsers: [], isSearching: false });
   }
 
   unselectAllStudents() {
@@ -236,7 +250,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
   unselectClasses() {
     this.unselectionClasses();
-    this.setState({ activeClassroom: null, isSearching: false });
+    this.setState({ activeClassroom: null, page: 0, isSearching: false });
   }
 
   renderViewAllFilter() {
