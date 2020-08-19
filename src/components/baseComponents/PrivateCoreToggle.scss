@@ -34,7 +34,7 @@
       .svg {
         @extend %removePosition;
         padding: $icon-padding;
-        height:$icon-size;
+        height: $icon-size;
         width: $icon-size;
         background-color: var(--tab-gray);
         color: var(--theme-light-blue);

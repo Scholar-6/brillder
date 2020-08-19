@@ -3,7 +3,6 @@
 @import 'src/assets/sass/partials/extensions';
 
 .manage-classrooms-page {
-
   .indexes-box {
     height: calc(100vh - #{$page-head-height} - 5.9vh - 6.5vw) !important;
     overflow: auto;
@@ -112,14 +111,13 @@
         height: $icon-size;
       }
 
-      .edit-button { }
+      .edit-button {
+      }
 
       .trash-button {
         cursor: pointer;
       }
     }
-
-    
   }
 
   .users-pagination {
