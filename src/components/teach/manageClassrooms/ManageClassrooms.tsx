@@ -272,11 +272,16 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   unassignStudent(studentId: number) {
-    if (this.state.activeClassroom) {
-      const { id } = this.state.activeClassroom;
+    const {activeClassroom} = this.state;
+    if (activeClassroom) {
+      const { id } = activeClassroom;
       unassignStudent(id, studentId).then(res => {
         if (res) {
-          // success
+          const classroom = this.state.classrooms.find(c => c.id === id);
+          if (classroom) {
+            let index = classroom.students.findIndex(s => s.id === studentId);
+            classroom.students.splice(index, 1);
+          }
         } else {
           // failture
         }
