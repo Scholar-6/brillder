@@ -17,6 +17,7 @@ import StudentTable from './components/StudentTable';
 import UsersPagination from './components/UsersPagination';
 import AssignClassDialog from './components/AssignClassDialog';
 import CreateClassDialog from './components/CreateClassDialog';
+import UnassignStudentDialog from './components/UnassignStudentDialog';
 import RoleDescription from 'components/baseComponents/RoleDescription';
 
 import { getAllClassrooms, unassignStudent, getAllStudents, createClass, assignStudentsToClassroom, ClassroomApi } from '../service';
@@ -53,6 +54,9 @@ interface UsersListState {
   assignClassOpen: boolean;
   selectedUsers: MUser[];
   activeClassroom: ClassroomApi | null;
+
+  unassignStudent: MUser | null;
+  unassignOpen: boolean;
 }
 
 class ManageClassrooms extends Component<UsersListProps, UsersListState> {
@@ -76,7 +80,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       createClassOpen: false,
       assignClassOpen: false,
       activeClassroom: null,
-      selectedUsers: []
+      selectedUsers: [],
+
+      unassignStudent: null,
+      unassignOpen: false
     };
 
     getAllStudents().then(students => {
@@ -271,22 +278,30 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     });
   }
 
-  unassignStudent(studentId: number) {
+  unassignStudent(student: MUser | null) {
     const {activeClassroom} = this.state;
-    if (activeClassroom) {
+    if (activeClassroom && student) {
       const { id } = activeClassroom;
-      unassignStudent(id, studentId).then(res => {
+      unassignStudent(id, student.id).then(res => {
         if (res) {
           const classroom = this.state.classrooms.find(c => c.id === id);
           if (classroom) {
-            let index = classroom.students.findIndex(s => s.id === studentId);
+            let index = classroom.students.findIndex(s => s.id === student.id);
             classroom.students.splice(index, 1);
-            this.setState({classrooms:this.state.classrooms});
+            this.setState({classrooms:this.state.classrooms, unassignOpen: false});
           }
         } else {
           // failture
+          this.setState({unassignOpen: false});
         }
       });
+    }
+  }
+
+  unassigningStudent(student: MUser) {
+    const {activeClassroom} = this.state;
+    if (activeClassroom) {
+      this.setState({unassignStudent: student, unassignOpen: true });
     }
   }
 
@@ -364,7 +379,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
               sort={sortBy => this.sort(sortBy)}
               toggleUser={i => this.toggleUser(i)}
               assignToClass={() => this.openAssignDialog()}
-              unassign={id => this.unassignStudent(id)}
+              unassign={s => this.unassigningStudent(s)}
             />
             <RoleDescription />
             {this.renderPagination()}
@@ -384,6 +399,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             this.setState({ createClassOpen: false })
           }}
           close={() => { this.setState({ createClassOpen: false }) }}
+        />
+        <UnassignStudentDialog
+          isOpen={this.state.unassignOpen}
+          student={this.state.unassignStudent}
+          close={()=> this.setState({unassignOpen: false})}
+          submit={()=> this.unassignStudent(this.state.unassignStudent)}
         />
       </div>
     );
