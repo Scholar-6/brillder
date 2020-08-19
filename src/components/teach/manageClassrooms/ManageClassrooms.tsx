@@ -209,7 +209,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       student.selected = !student.selected;
     }
     let selectedUsers = users.filter(u => u.selected);
-    this.setState({ ...this.state, selectedUsers });
+    this.setState({ ...this.state, pageStudentsSelected: false, selectedUsers });
   }
 
   setActiveClassroom(activeClassroom: ClassroomApi) {
