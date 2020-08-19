@@ -27,21 +27,16 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
 
   useEffect(() => {
     getStudents();
-    getClasses(); 
-  }, [ value ]);
+    getClasses();
+  }, [value]);
 
   const getStudents = async () => {
-    const students = await axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/users`,
-      {
-        searchString: value,
-        roleFilters: [UserType.Student]
-      },
+    const students = await axios.get(
+      `${process.env.REACT_APP_BACKEND_HOST}/classrooms/students`,
       { withCredentials: true }
     ).then((data: any) => {
-      return data.data.pageData;
-    })
-    .catch(() => {
+      return data.data;
+    }).catch(() => {
       props.requestFailed('Can`t get students');
       return [];
     });
@@ -92,7 +87,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const hide = () => setAutoCompleteDropdown(false);
 
   const onClassroomInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {value} = event.target;
+    const { value } = event.target;
     if (value && value.length >= 2) {
       setAutoCompleteDropdown(true);
     } else {
@@ -120,9 +115,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
         <Autocomplete
           open={autoCompleteOpen}
           options={[...classes, ...students]}
-          onChange={(e:any, c: any) => classroomSelected(c)}
-          getOptionLabel={(option:any) => option.isStudent ? `Student ${option.firstName} ${option.lastName}` : 'Class ' + option.name}
-          renderInput={(params:any) => (
+          onChange={(e: any, c: any) => classroomSelected(c)}
+          getOptionLabel={(option: any) => option.isStudent ? `Student ${option.firstName} ${option.lastName}` : 'Class ' + option.name}
+          renderInput={(params: any) => (
             <TextField
               onBlur={() => hide()}
               {...params}
