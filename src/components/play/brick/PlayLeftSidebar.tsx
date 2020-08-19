@@ -172,10 +172,23 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       }
     }
     return (
-      <div style={{width: '100%'}}>
+      <div style={{ width: '100%' }}>
         {this.renderHightlightButton()}
         {this.renderAnotateButton()}
         {this.renderAssignButton()}
+      </div>
+    );
+  }
+
+  renderDialogs() {
+    if (this.props.isPreview) { return ""; }
+    return (
+      <div>
+        <CommingSoonDialog isOpen={this.state.isCoomingSoonOpen} close={() => this.toggleCommingSoon()} />
+        <AssignPersonOrClassDialog
+          isOpen={this.state.isAssigningOpen}
+          close={() => { this.setState({ isAssigningOpen: false }) }}
+        />
       </div>
     );
   }
@@ -190,8 +203,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       <Grid container item className={className}>
         <div style={{ width: "100%" }}>{this.renderToggleButton()}</div>
         {this.renderButtons()}
-        <CommingSoonDialog isOpen={this.state.isCoomingSoonOpen} close={() => this.toggleCommingSoon()} />
-        <AssignPersonOrClassDialog isOpen={this.state.isAssigningOpen} close={() => { this.setState({ isAssigningOpen: false }) }} />
+        {this.renderDialogs()}
       </Grid>
     );
   }
