@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
-import axios from "axios";
 import { connect } from "react-redux";
 
 import './ManageClassrooms.scss';
+import sprite from "assets/img/icons-sprite.svg";
 
 import { User } from "model/user";
+import { MUser } from "../interface";
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 
@@ -22,10 +23,6 @@ import { getAllClassrooms, getAllStudents, createClass, assignStudentsToClassroo
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
-
-interface MUser extends User {
-  selected: boolean;
-}
 
 interface UsersListProps {
   user: User;
@@ -45,18 +42,17 @@ interface UsersListState {
 
   searchString: string;
   isSearching: boolean;
+  searchUsers: MUser[];
 
-  filterExpanded: boolean;
-  filterHeight: string;
   isAdmin: boolean;
   classrooms: ClassroomApi[];
 
   sortBy: UserSortBy;
   isAscending: boolean;
-  isClearFilter: boolean;
   createClassOpen: boolean;
   assignClassOpen: boolean;
   selectedUsers: MUser[];
+  activeClassroom: ClassroomApi | null;
 }
 
 class ManageClassrooms extends Component<UsersListProps, UsersListState> {
@@ -67,29 +63,35 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       classrooms: [],
       page: 0,
       pageSize: 12,
-      filterExpanded: true,
-
       totalCount: 0,
+
       searchString: "",
       isSearching: false,
-      filterHeight: "auto",
+      searchUsers: [],
 
       sortBy: UserSortBy.None,
       isAscending: false,
       isAdmin: checkAdmin(props.user.roles),
-      isClearFilter: false,
 
       createClassOpen: false,
       assignClassOpen: false,
+      activeClassroom: null,
       selectedUsers: []
     };
 
-    this.getUsers(this.state.page);
-
-    getAllStudents().then(res => {
-      console.log(res);
+    getAllStudents().then(students => {
+      if (students) {
+        students.map((u: any) => u.selected = false);
+        this.setState({ ...this.state, users: students as any[], totalCount: students.length });
+      } else {
+        // getting students failed
+      }
     });
 
+    this.getClassrooms();
+  }
+
+  getClassrooms() {
     getAllClassrooms().then(classrooms => {
       if (classrooms) {
         this.setState({ classrooms });
@@ -100,62 +102,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     });
   }
 
-  getUsers(
-    page: number,
-    sortBy: UserSortBy = UserSortBy.None,
-    isAscending: any = null,
-    search: string = ""
-  ) {
-    let searchString = "";
-    let orderBy = null;
-
-    if (sortBy === UserSortBy.None) {
-      sortBy = this.state.sortBy;
-    }
-
-    if (isAscending === null) {
-      isAscending = this.state.isAscending;
-    }
-
-    if (sortBy) {
-      if (sortBy === UserSortBy.Name) {
-        orderBy = "user.lastName";
-      }
-    }
-
-    if (search) {
-      searchString = search;
-    } else {
-      if (this.state.isSearching) {
-        searchString = this.state.searchString;
-      }
-    }
-
-    axios.post(
-      process.env.REACT_APP_BACKEND_HOST + "/users",
-      {
-        pageSize: this.state.pageSize,
-        page: page.toString(),
-        searchString,
-        subjectFilters: [],
-        roleFilters: [],
-        orderBy,
-        isAscending,
-      },
-      { withCredentials: true }
-    ).then((res) => {
-      res.data.pageData.map((u: any) => u.selected = false);
-      this.setState({ ...this.state, users: res.data.pageData, totalCount: res.data.totalCount });
-    }).catch((error) => {
-      alert("Can`t get users");
-    });
-  }
-
   createClass(name: string) {
     createClass(name).then(newClassroom => {
       if (newClassroom) {
         this.state.classrooms.push(newClassroom);
-        this.setState({...this.state});
+        this.setState({ ...this.state });
       } else {
         // creation failed
       }
@@ -175,15 +126,84 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   search() {
+    let students = this.state.users;
+    if (this.state.activeClassroom) {
+      students = this.state.activeClassroom.students as MUser[];
+    }
+    let searchUsers = [];
     const { searchString } = this.state;
-    this.getUsers(0, this.state.sortBy, this.state.isAscending, searchString);
+    for (let student of students) {
+      let res = student.firstName.toLowerCase().search(searchString.toLowerCase());
+      if (res >= 0) {
+        searchUsers.push(student)
+        continue;
+      }
+      res = student.lastName.toLocaleLowerCase().search(searchString.toLowerCase());
+      if (res >= 0) {
+        searchUsers.push(student);
+        continue;
+      }
+    }
+    this.setState({
+      isSearching: true,
+      selectedUsers: [],
+      searchUsers
+    });
   }
 
   toggleUser(i: number) {
-    const { users } = this.state;
+    let { users } = this.state;
+    if (this.state.activeClassroom) {
+      users = this.state.activeClassroom.students;
+    }
     users[i].selected = !users[i].selected;
-    let selectedUsers = this.state.users.filter(u => u.selected);
-    this.setState({ ...this.state, users, selectedUsers });
+    let selectedUsers = users.filter(u => u.selected);
+    this.setState({ ...this.state, selectedUsers });
+  }
+
+  setActiveClassroom(activeClassroom: ClassroomApi) {
+    this.unselectionClasses();
+    activeClassroom.isActive = true;
+    for (let user of this.state.users) {
+      user.selected = false;
+    }
+    this.setState({ activeClassroom, selectedUsers: [], isSearching: false });
+  }
+
+  unselectionClasses() {
+    for (let classroom of this.state.classrooms) {
+      classroom.isActive = false;
+      for (let student of classroom.students) {
+        student.selected = false;
+      }
+    }
+  }
+
+  unselectClasses() {
+    this.unselectionClasses();
+    this.setState({ activeClassroom: null, isSearching: false });
+  }
+
+  renderViewAllFilter() {
+    let className = "index-box";
+    if (!this.state.activeClassroom) {
+      className += " active";
+    }
+    return (
+      <div className={className} onClick={() => this.unselectClasses()}>
+        View All
+        <div className="right-index">
+          {this.state.users.length}
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#users"} />
+          </svg>
+          <div className="white-box">
+            {this.state.classrooms.length}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   renderSortAndFilterBox = () => {
@@ -198,16 +218,26 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <div className="create-class-button" onClick={() => this.setState({ createClassOpen: true })}>
           + Create Class
         </div>
-        <div className="filter-header">
-          View All
-        </div>
         <div className="indexes-box">
-          {this.state.classrooms.map(c =>
-            <div className="index-box" onClick={() => { }}>
-              {c.name}
-              <div className="right-index">{0}</div>
-            </div>
-          )}
+          {this.renderViewAllFilter()}
+          {this.state.classrooms.map((c, i) => {
+            let className = "index-box";
+            if (c.isActive) {
+              className += " active";
+            }
+            return (
+              <div key={i} className={className} onClick={() => this.setActiveClassroom(c)}>
+                {c.name}
+                <div className="right-index">
+                  {c.students.length}
+                  <svg className="svg active">
+                    {/*eslint-disable-next-line*/}
+                    <use href={sprite + "#users"} />
+                  </svg>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     );
@@ -223,22 +253,27 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       isAscending = false;
       this.setState({ ...this.state, isAscending, sortBy });
     }
-    this.getUsers(this.state.page, sortBy, isAscending);
   }
 
   moveToPage(page: number) {
     this.setState({ ...this.state, page, selectedUsers: [] });
-    this.getUsers(page);
   };
 
   assignSelectedStudents(classroomId: number) {
+    this.setState({ assignClassOpen: false });
     assignStudentsToClassroom(classroomId, this.state.selectedUsers).then(res => {
       if (res) {
         // assign success
+        this.getClassrooms();
       } else {
         // failed
       }
     });
+  }
+
+  getUsersByPage(users: MUser[]) {
+    const pageStart = this.state.page * this.state.pageSize;
+    return users.slice(pageStart, pageStart + this.state.pageSize);
   }
 
   renderTableHeader() {
@@ -250,17 +285,50 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     );
   }
 
+  renderPagination() {
+    let {users} = this.state;
+    if (this.state.activeClassroom) {
+      users = this.state.activeClassroom.students;
+    }
+    if (this.state.isSearching) {
+      users = this.state.searchUsers;
+    }
+
+    let totalCount = users.length;
+    users = this.getUsersByPage(users);
+
+    return (
+      <UsersPagination
+        users={users}
+        page={this.state.page}
+        totalCount={totalCount}
+        pageSize={this.state.pageSize}
+        moveToPage={page => this.moveToPage(page)}
+      />
+    );
+  }
+
   render() {
     const { history } = this.props;
+    let { users } = this.state;
+    if (this.state.activeClassroom) {
+      users = this.state.activeClassroom.students as MUser[];
+    }
+    if (this.state.isSearching) {
+      users = this.state.searchUsers;
+    }
+
+    users = this.getUsersByPage(users);
+    
     return (
       <div className="main-listing user-list-page manage-classrooms-page">
         <PageHeadWithMenu
-          page={PageEnum.ManageUsers}
+          page={PageEnum.ManageClasses}
           placeholder="Search by Name, Email or Subject"
           user={this.props.user}
           history={history}
           search={() => this.search()}
-          searching={(v: string) => this.searching(v)}
+          searching={v => this.searching(v)}
         />
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
@@ -269,7 +337,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           <Grid item xs={9} className="brick-row-container">
             {this.renderTableHeader()}
             <StudentTable
-              users={this.state.users}
+              users={users}
               selectedUsers={this.state.selectedUsers}
               sortBy={this.state.sortBy}
               isAscending={this.state.isAscending}
@@ -278,13 +346,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
               assignToClass={() => this.openAssignDialog()}
             />
             <RoleDescription />
-            <UsersPagination
-              users={this.state.users}
-              page={this.state.page}
-              totalCount={this.state.totalCount}
-              pageSize={this.state.pageSize}
-              moveToPage={page => this.moveToPage(page)}
-            />
+            {this.renderPagination()}
           </Grid>
         </Grid>
         <AssignClassDialog

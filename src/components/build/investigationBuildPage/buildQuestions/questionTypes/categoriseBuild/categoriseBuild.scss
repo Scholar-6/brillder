@@ -7,22 +7,6 @@
   > div {
     margin-bottom: 0.4vh;
   }
-  .categorise-box {
-    position: relative;
-    margin: 0;
-    width: 100%;
-    > div {
-      margin-bottom: 0.2vw;
-    }
-    >.document-editor {
-      position: relative;
-      .ck-editor {
-        .ck-content {
-          padding: 1vw !important
-        }
-      }
-    }
-  }
   > .document-editor {
     .ck-editor {
       .ck-content {
@@ -31,6 +15,22 @@
         overflow: hidden;
         p {
           text-align: center !important;
+        }
+      }
+    }
+  }
+  .categorise-box {
+    position: relative;
+    margin: 0;
+    width: 100%;
+    > div {
+      margin-bottom: 0.2vw;
+    }
+    > .document-editor {
+      position: relative;
+      .ck-editor {
+        .ck-content {
+          padding: 1vw !important;
         }
       }
     }

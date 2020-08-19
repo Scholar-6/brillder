@@ -13,7 +13,9 @@ export enum PageEnum {
   BackToWork,
   ViewAll,
   ManageUsers,
+  ManageClasses,
   MainPage,
+  Profile,
   Play
 }
 

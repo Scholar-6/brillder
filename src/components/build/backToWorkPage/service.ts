@@ -63,9 +63,6 @@ export const filterBricks = (filters: Filters, rawBricks: Brick[], userId: numbe
   if (filters.draft) {
     filteredBricks.push(...filterByStatus(bricks, BrickStatus.Draft));
   }
-  if (filters.build) {
-    filteredBricks.push(...filterByStatus(bricks, BrickStatus.Build));
-  }
   if (filters.review) {
     filteredBricks.push(...filterByStatus(bricks, BrickStatus.Review));
   }
@@ -73,7 +70,7 @@ export const filterBricks = (filters: Filters, rawBricks: Brick[], userId: numbe
     filteredBricks.push(...filterByStatus(bricks, BrickStatus.Publish));
   }
 
-  if (!filters.draft && !filters.build && !filters.review && !filters.publish) {
+  if (!filters.draft && !filters.review && !filters.publish) {
     return bricks;
   }
   return filteredBricks;
@@ -112,7 +109,6 @@ export const expandBrick = (bricks: Brick[], allBricks: Brick[], index: number) 
 
 export const clearStatusFilters = (filters: Filters) => {
   filters.draft = false;
-  filters.build = false;
   filters.review = false;
   filters.publish = false;
 }

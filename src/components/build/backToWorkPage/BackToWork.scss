@@ -11,9 +11,11 @@
 
     .tab-container {
       display: flex;
-      > div {
+      flex-wrap: nowrap;
+
+      >div {
         cursor: pointer;
-        width: calc(#{$width} / 2);
+        width: 100%;
         min-height: $backwork-tab-height;
         font-size: 4.5vh;
         border-top-left-radius: 0.5vw;
@@ -23,29 +25,109 @@
         color: var(--theme-dark-blue);
         background: var(--tab-gray);
         padding-left: 1.5vw;
+        border-top-right-radius: 0.5vw;
+        margin-right: $tabs-margin-between;
       }
 
       >div.active {
         background: var(--white);
       }
 
-      > div:first-child {
-        border-top-right-radius: 0.5vw;
-        margin-right: $tabs-margin-between;
+      >div:last-child {
+        border-top-right-radius: 0vw;
+        margin-right: 0;
       }
     }
   }
-  .bricks-list-container, .bricks-pagination {
+
+  .bricks-list-container,
+  .bricks-pagination {
     background: white;
+
+    .bottom-next-button {
+      position: inherit;
+      @extend %flexCenter;
+    }
   }
+
   .bricks-list-container {
     padding-top: $backwork-bricks-padding-top;
     height: $backwork-bricks-height !important;
+
     .main-brick-container {
       height: calc(#{$backwork-bricks-height-2} / 6) !important;
     }
   }
+  .tab-content {
+    height: $backwork-tab-content-height !important;
+    background: white;
+  }
+
   .private-core-toggle {
     top: 6.6vh;
+  }
+
+  // Teach
+  // Teach filter sidebar
+  .classrooms-filter {
+    height: 50vh;
+    overflow-y: scroll;
+
+    .index-box {
+      display: flex;
+      align-items: center;
+      .classroom-name {
+        text-transform: capitalize;
+      }
+      .arrow-right {
+        stroke-width: 1 !important;
+        margin-left: 0.5vw;
+        $icon-size: 1.8vw;
+        width: $icon-size;
+        height: $icon-size;
+      }
+    }
+    .student-row {
+      display: flex;
+      padding: 0.53vw 1.4vw;
+      .student-name {
+        text-transform: capitalize;
+      }
+    }
+    .right-index {
+      right: 0.3vw !important;
+      display: flex;
+      @extend %flexCenter;
+      background: transparent !important;
+      color: white !important;
+
+      .white-box {
+        margin-left: 0.3vw;
+        background: white;
+        color: var(--theme-dark-blue);
+        border-radius: 0.65vw;
+        padding: 0.25vw 0.6vw;
+        font-size: 1vw;
+        line-height: 1;
+      }
+
+      svg {
+        margin-left: 0.4vw;
+        $icon-size: 1.3vw;
+        width: $icon-size;
+        height: $icon-size;
+      }
+    }
+  }
+  // Teach classroom list
+  .classroom-list {
+    color: var(--theme-dark-blue);
+    padding-top: 3vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    .classroom-title {
+      font-size: 1.5vw;
+      text-transform: capitalize;
+    }
   }
 }

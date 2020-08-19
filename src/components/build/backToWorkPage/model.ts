@@ -32,8 +32,19 @@ export interface Filters {
 
   draft: boolean;
   review: boolean;
-  build: boolean;
   publish: boolean;
 
   isCore: boolean;
+}
+
+export interface PlayFilters {
+  completed: boolean;
+  submitted: boolean;
+  checked: boolean;
+}
+
+export interface TeachFilters {
+  assigned: boolean;
+  submitted: boolean;
+  completed: boolean;
 }

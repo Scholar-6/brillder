@@ -4,6 +4,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import axios from "axios";
 import { connect } from "react-redux";
 
+import actions from 'redux/actions/requestFailed';
 import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
@@ -15,12 +16,12 @@ import PhonePreview from "../build/baseComponents/phonePreview/PhonePreview";
 import { Subject } from "model/brick";
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import { checkAdmin, canBuild, canEdit } from "components/services/brickService";
-import UserProfileMenu from "./components/UserProfileMenu";
 import SubjectDialog from "./components/SubjectDialog";
 import { ReduxCombinedState } from "redux/reducers";
 import SaveProfileButton from "./components/SaveProfileButton";
 import ProfileSavedDialog from "./components/ProfileSavedDialog";
 import ProfileImage from "./components/ProfileImage";
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -28,6 +29,7 @@ const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(brickActions.forgetBrick()),
   getUser: () => dispatch(userActions.getUser()),
   redirectedToProfile: () => dispatch(authActions.redirectedToProfile()),
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
 });
 
 const connector = connect(mapState, mapDispatch);
@@ -43,6 +45,7 @@ interface UserProfileProps {
   forgetBrick(): void;
   redirectedToProfile(): void;
   getUser(): void;
+  requestFailed(e: string): void;
 }
 
 interface UserProfileState {
@@ -81,8 +84,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         }).then((res) => {
           const user = res.data as User;
           this.setState({ user: this.getUserProfile(user) });
-        }).catch((error) => {
-          alert("Can`t get user profile");
+        }).catch(() => {
+          this.props.requestFailed("Can`t get user profile");
         });
       } else {
         tempState.user = this.getUserProfile(user);
@@ -94,8 +97,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       withCredentials: true,
     }).then((res) => {
       this.setState({ subjects: res.data });
-    }).catch((error) => {
-      alert("Can`t get bricks");
+    }).catch(() => {
+      this.props.requestFailed("Can`t get bricks");
     });
   }
 
@@ -105,7 +108,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     return {
       id: user.id,
       username: user.username,
-      roles: roles ? roles: [],
+      roles: roles ? roles : [],
       email: user.email ? user.email : "",
       firstName: user.firstName ? user.firstName : "",
       lastName: user.lastName ? user.lastName : "",
@@ -246,8 +249,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
           this.setState({ savedDialogOpen: true });
           this.props.getUser();
         }
-      }).catch((error) => {
-        alert("Can`t save user profile");
+      }).catch(() => {
+        this.props.requestFailed("Can`t save user profile");
       });
     }
   }
@@ -371,10 +374,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const { user } = this.state;
     return (
       <div className="main-listing user-profile-page">
-        <UserProfileMenu
+        <PageHeadWithMenu
+          page={PageEnum.Profile}
           user={this.props.user}
-          forgetBrick={this.props.forgetBrick}
           history={this.props.history}
+          search={() => { }}
+          searching={() => { }}
         />
         <Grid container direction="row">
           <div className="profile-block">

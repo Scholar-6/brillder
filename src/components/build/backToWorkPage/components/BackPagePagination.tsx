@@ -62,24 +62,26 @@ const BackPagePagination: React.FC<BackPageTitleProps> = ({
   }
 
   return (
-    <Grid container direction="row" className="bricks-pagination">
-      <Grid item xs={4} className="left-pagination">
-        <div className="first-row">
-          {getBricksRange()}
-          <span className="gray">{" "} &nbsp;|&nbsp; {bricksLength}</span>
-        </div>
-        <div>
-          {(sortedIndex + pageSize) / pageSize}
-          <span className="gray">{" "} &nbsp;|&nbsp; {Math.ceil(bricksLength / pageSize)}</span>
-        </div>
+    <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+      <Grid container direction="row" className="bricks-pagination">
+        <Grid item xs={4} className="left-pagination">
+          <div className="first-row">
+            {getBricksRange()}
+            <span className="gray">{" "} &nbsp;|&nbsp; {bricksLength}</span>
+          </div>
+          <div>
+            {(sortedIndex + pageSize) / pageSize}
+            <span className="gray">{" "} &nbsp;|&nbsp; {Math.ceil(bricksLength / pageSize)}</span>
+          </div>
+        </Grid>
+        <Grid item xs={4} className="bottom-next-button">
+          <div>
+            {renderBackButton()}
+            {renderNextButton()}
+          </div>
+        </Grid>
       </Grid>
-      <Grid item xs={4} className="bottom-next-button">
-        <div>
-          {renderBackButton()}
-          {renderNextButton()}
-        </div>
-      </Grid>
-    </Grid>
+    </div>
   );
 }
 

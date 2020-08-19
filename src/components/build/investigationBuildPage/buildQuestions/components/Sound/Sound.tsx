@@ -143,46 +143,53 @@ const SoundComponent: React.FC<SoundProps> = ({ locked, ...props }) => {
         >
           {
             (status === AudioStatus.Start && !blobUrl) ?
-              <button className="btn bg-theme-orange start-record svgOnHover"
+              <button className="btn start-record svgOnHover"
                 onClick={() => startRecording()}>
+                <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#circle-filled"} className="text-theme-orange" />
+                </svg>
+                <span>Record</span>
+              </button>
+              : ''
+          }
+          {
+            (status === AudioStatus.Recording) ?
+              <button className="btn stop-record svgOnHover"
+                onClick={stopRecording}>
                 <svg className="svg active">
                   {/*eslint-disable-next-line*/}
                   <use href={sprite + "#circle-filled"} className="text-white" />
                 </svg>
-                <span>Record</span>
+                <span>Recording</span>
               </button>
-              : <div></div>
-          }
-          {
-            (status === AudioStatus.Recording) ?
-              <Button className="stop-record" onClick={stopRecording} type="button">
-                <FiberManualRecordIcon className="round-circle" />  <span>Recording</span>
-              </Button>
-              : <div></div>
+              : ''
           }
           {
             (status === AudioStatus.Recorded) ?
-              <button className="btn btn-transparent bg-white svgOnHover play-record" onClick={playRecord}>
+              <button className="btn svgOnHover play-record"
+                onClick={playRecord}>
                 <svg className="svg active">
                   {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#play-filled"} />
+                  <use href={sprite + "#play-filled"} className="text-theme-orange" />
                 </svg>
                 <span>Play</span>
               </button>
-              : <div></div>
+              : ''
           }
           {
             (status === AudioStatus.Play) ?
-              <button className="btn bg-white svgOnHover play-record" onClick={stopRecord}>
+              <button className="btn svgOnHover play-record"
+                onClick={stopRecord}>
                 <svg className="svg active">
                   {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#pause-filled"} />
+                  <use href={sprite + "#pause-filled"} className="text-theme-orange" />
                 </svg>
                 <span>Pause</span>
               </button>
-              : <div></div>
+              : ''
           }
-          <button className={"btn bg-white delete-record " + (canDelete ? 'disabled' : "")}
+          <button className={"btn delete-record " + (canDelete ? 'disabled' : "")}
             onClick={() => deleteAudio()}
             disabled={canDelete}>
             <span>Delete</span>
