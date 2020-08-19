@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import './AssignPersonOrClass.scss';
 import { ReduxCombinedState } from 'redux/reducers';
 import actions from 'redux/actions/requestFailed';
-import { UserBase, UserType } from 'model/user';
+import { UserBase } from 'model/user';
 import { Classroom } from 'model/classroom';
 import { Brick } from 'model/brick';
 
@@ -77,7 +77,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const assignToClass = async (classroom: Classroom) => {
     await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${props.brick.id}`,
-      [classroom.id],
+      {classesIds: [classroom.id]},
       { withCredentials: true }
     ).catch(() => {
       props.requestFailed('Can`t assign class to brick');
