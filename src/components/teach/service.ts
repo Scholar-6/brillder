@@ -17,31 +17,36 @@ export interface ClassroomApi {
  * @param name name of classroom
  * return classroom object if success or null if failed
  */
-export const createClass = (name: string) => {
-  return axios.post(
-    process.env.REACT_APP_BACKEND_HOST + "/classroom",
-    { name },
-    { withCredentials: true }
-  ).then((res) => {
+export const createClass = async (name: string) => {
+  try {
+    const res = await axios.post(
+      process.env.REACT_APP_BACKEND_HOST + "/classroom",
+      { name },
+      { withCredentials: true }
+    );
     if (res.data) {
-      let classroom = res.data as ClassroomApi;
+      let classroom = (res.data as ClassroomApi);
       classroom.students = [];
       return res.data as ClassroomApi;
     }
     return null;
-  }).catch(() => null);
+  }
+  catch (e) {
+    return null;
+  }
 }
 
 /**
  * Get all classrooms
  * return list of classrooms if success or null if failed
  */
-export const getAllClassrooms = () => {
-  return axios.get(process.env.REACT_APP_BACKEND_HOST + "/classrooms", {
-    withCredentials: true,
-  }).then(res => {
+export const getAllClassrooms = async () => {
+  try {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/classrooms", {
+      withCredentials: true,
+    });
     if (res.data) {
-      let classrooms = res.data as ClassroomApi[];
+      let classrooms = (res.data as ClassroomApi[]);
       for (let classroom of classrooms) {
         for (let student of classroom.students as MUser[]) {
           student.selected = false;
@@ -50,22 +55,29 @@ export const getAllClassrooms = () => {
       return res.data as ClassroomApi[];
     }
     return null;
-  }).catch(() => null);
+  }
+  catch (e) {
+    return null;
+  }
 }
 
 /**
  * Get all classrooms
  * return list of classrooms if success or null if failed
  */
-export const getAllStudents = () => {
-  return axios.get(process.env.REACT_APP_BACKEND_HOST + "/classrooms/students", {
-    withCredentials: true,
-  }).then(res => {
+export const getAllStudents = async () => {
+  try {
+    const res = await axios.get(process.env.REACT_APP_BACKEND_HOST + "/classrooms/students", {
+      withCredentials: true,
+    });
     if (res.data) {
       return res.data as ClassroomApi[];
     }
     return null;
-  }).catch(() => null);
+  }
+  catch (e) {
+    return null;
+  }
 }
 
 /**
@@ -73,16 +85,36 @@ export const getAllStudents = () => {
  * @param classroomId classroom id
  * @param students students to assign. all should have id
  */
-export const assignStudentsToClassroom = (classroomId: number, students: any[]) => {
+export const assignStudentsToClassroom = async (classroomId: number, students: any[]) => {
   let studentsIds = students.map(s => s.id);
-  return axios.post(
-    process.env.REACT_APP_BACKEND_HOST + "/classrooms/students/" + classroomId,
-    { studentsIds },
-    { withCredentials: true}
-  ).then(res => {
+  try {
+    const res = await axios.post(
+      process.env.REACT_APP_BACKEND_HOST + "/classrooms/students/" + classroomId,
+      { studentsIds },
+      { withCredentials: true }
+    );
     if (res.status === 200) {
       return true;
     }
     return false;
-  }).catch(() => false);
+  }
+  catch (e) {
+    return false;
+  }
+}
+
+export const unassignStudent = async (classroomId: number, studentId: number) => {
+  try {
+    const res = await axios.delete(
+      `${process.env.REACT_APP_BACKEND_HOST}/classrooms/students/${classroomId}/${studentId}`,
+      { withCredentials: true }
+    );
+    if (res.status === 200) {
+      return true;
+    }
+    return false;
+  }
+  catch (e) {
+    return false;
+  }
 }
