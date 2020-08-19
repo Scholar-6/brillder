@@ -9,15 +9,8 @@
   left: 0;
   z-index: 200;
   .dropzone {
-    background: inherit !important;
     cursor: pointer;
-    margin-left: 0vw;
-    border: none !important;
-    margin-right: 0vw;
-    height: 10%;
-    background: #fafafa;
-    font-size: 0.8vw;
-    font-family: $font-family-black !important;
+
     color: #aaa;
     width: 80%;
     margin: 0 auto;
@@ -29,14 +22,11 @@
       max-height: 8vh;
       width: 100%;
     }
-  }
-  .dropzone:hover {
-    color: var(--theme-orange);
-    .plus-image {
-      background: var(--theme-orange);
+    &:hover {
+      color: var(--theme-orange);
+      .plus-image {
+        background: var(--theme-orange);
+      }
     }
-  }
-  .dropzone.disabled {
-    background: inherit !important;
   }
 }
