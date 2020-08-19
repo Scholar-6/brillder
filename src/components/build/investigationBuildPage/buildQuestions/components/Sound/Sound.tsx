@@ -1,12 +1,10 @@
 import React from 'react'
 import { useDropzone } from 'react-dropzone';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import axios from 'axios';
 // @ts-ignore
 import ReactRecord from 'react-record';
 import sprite from "assets/img/icons-sprite.svg";
 import './Sound.scss';
-import { Button } from '@material-ui/core';
 
 interface SoundProps {
   locked: boolean;
