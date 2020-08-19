@@ -57,6 +57,8 @@ interface UsersListState {
 
   unassignStudent: MUser | null;
   unassignOpen: boolean;
+
+  pageStudentsSelected: boolean;
 }
 
 class ManageClassrooms extends Component<UsersListProps, UsersListState> {
@@ -83,7 +85,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       selectedUsers: [],
 
       unassignStudent: null,
-      unassignOpen: false
+      unassignOpen: false,
+
+      pageStudentsSelected: false
     };
 
     getAllStudents().then(students => {
@@ -119,6 +123,43 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       }
     });
   }
+
+  //#region Students selection
+  togglePageStudents() {
+    if (this.state.pageStudentsSelected) {
+      this.unselectAllStudents();
+      this.setState({pageStudentsSelected: false, selectedUsers: []});
+    } else {
+      // select whole page
+      this.selectPageStudents();
+      this.setState({pageStudentsSelected: true });
+    }
+  }
+
+  selectPageStudents() {
+    if (this.state.activeClassroom) {
+      this.selectPageClassStudents();
+    } else {
+      this.selectGlobalPageStudents();
+    }
+  }
+
+  selectPageClassStudents() {
+
+  }
+
+  selectGlobalPageStudents() {
+    let index = 0;
+    const { page, pageSize } = this.state;
+    for (let student of this.state.users) {
+      if (index >= page * pageSize && index < (page + 1) * pageSize) {
+        student.selected = true;
+        this.state.selectedUsers.push(student);
+      }
+      index += 1;
+    }
+  }
+  //#endregion 
 
   searching(searchString: string) {
     if (searchString.length === 0) {
@@ -158,23 +199,30 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     });
   }
 
-  toggleUser(i: number) {
+  toggleUser(userId: number) {
     let { users } = this.state;
     if (this.state.activeClassroom) {
       users = this.state.activeClassroom.students;
     }
-    users[i].selected = !users[i].selected;
+    const student = users.find(s => s.id === userId);
+    if (student) {
+      student.selected = !student.selected;
+    }
     let selectedUsers = users.filter(u => u.selected);
     this.setState({ ...this.state, selectedUsers });
   }
 
   setActiveClassroom(activeClassroom: ClassroomApi) {
-    this.unselectionClasses();
+    this.unselectAllStudents();
     activeClassroom.isActive = true;
+    this.setState({ activeClassroom, selectedUsers: [], isSearching: false });
+  }
+
+  unselectAllStudents() {
+    this.unselectionClasses();
     for (let user of this.state.users) {
       user.selected = false;
     }
-    this.setState({ activeClassroom, selectedUsers: [], isSearching: false });
   }
 
   unselectionClasses() {
@@ -263,7 +311,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   moveToPage(page: number) {
-    this.setState({ ...this.state, page, selectedUsers: [] });
+    this.unselectAllStudents();
+    this.setState({ ...this.state, pageStudentsSelected: false, page, selectedUsers: [] });
   };
 
   assignSelectedStudents(classroomId: number) {
@@ -377,9 +426,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
               sortBy={this.state.sortBy}
               isAscending={this.state.isAscending}
               sort={sortBy => this.sort(sortBy)}
-              toggleUser={i => this.toggleUser(i)}
+              pageStudentsSelected={this.state.pageStudentsSelected}
+              toggleUser={id => this.toggleUser(id)}
               assignToClass={() => this.openAssignDialog()}
               unassign={s => this.unassigningStudent(s)}
+              togglePageStudents={() => this.togglePageStudents()}
             />
             <RoleDescription />
             {this.renderPagination()}
