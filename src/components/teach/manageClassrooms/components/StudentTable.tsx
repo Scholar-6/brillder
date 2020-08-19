@@ -13,11 +13,13 @@ interface StudentTableProps {
 
   sortBy: UserSortBy;
   isAscending: boolean;
+  pageStudentsSelected: boolean;
 
-  toggleUser(i: number): void;
+  toggleUser(userId: number): void;
   sort(sortBy: UserSortBy): void;
   assignToClass(): void;
   unassign(student: MUser): void;
+  togglePageStudents(): void;
 }
 
 const StudentTable: React.FC<StudentTableProps> = props => {
@@ -77,7 +79,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
         </th>
         <th style={{ padding: 0, width: '20%' }}>
           <Grid container className="selected-column">
-            <Radio disabled={true} />
+            <Radio checked={props.pageStudentsSelected} onClick={props.togglePageStudents} />
             {renderAssignButton()}
             <div className="selected-label">
               <span className="selected-count">{props.selectedUsers.length}</span>
@@ -116,7 +118,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                 </td>
                 <td className="user-radio-column">
                   <div style={{ display: 'flex' }}>
-                    <Radio checked={user.selected} onClick={() => props.toggleUser(i)} />
+                    <Radio checked={user.selected} onClick={() => props.toggleUser(user.id)} />
                     <div className="action-buttons">
                     <div className="edit-button">
                       <svg className="svg">
