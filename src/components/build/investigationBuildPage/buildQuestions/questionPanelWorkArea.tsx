@@ -184,7 +184,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   />
                   <DragBox
                     locked={locked}
-                    name=".jpg" fontSize="2.5vw" label="I M A G E"
+                    name="jpg" fontSize="2.5vw" label="I M A G E"
                     hoverMarginTop="1vw"
                     marginTop="-2.8vw"
                     fontFamily="Brandon Grotesque Bold"
