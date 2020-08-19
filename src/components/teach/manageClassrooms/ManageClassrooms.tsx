@@ -281,6 +281,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           if (classroom) {
             let index = classroom.students.findIndex(s => s.id === studentId);
             classroom.students.splice(index, 1);
+            this.setState({classrooms:this.state.classrooms});
           }
         } else {
           // failture
