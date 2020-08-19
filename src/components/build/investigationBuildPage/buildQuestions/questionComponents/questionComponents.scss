@@ -8,16 +8,7 @@
   .drop-box {
     margin-bottom: 0.2vw;
     border-radius: $global-drop-border-radius;
-    .drop-box-text {
-      font-size: 1.6vw;
-      font-family: $font-family-bold;
-      color: var(--gray);
-      background-color: var(--tab-gray);
-      border-radius: 0.4vw;
-      border: 1px dashed var(--tab-dark-gray);
-    }
   }
-
   .add-dropbox {
     margin-bottom: 0.2vw;
   }

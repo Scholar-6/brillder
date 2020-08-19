@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import actions from 'redux/actions/requestFailed';
+import { connect } from 'react-redux';
 
 import { Subject } from 'model/brick';
 
@@ -9,6 +11,7 @@ import { Subject } from 'model/brick';
 interface SubjectAutoCompleteProps {
   selected: any[];
   onSubjectChange(subjects: any[]): void;
+  requestFailed(e: string): void;
 }
 
 interface SubjectAutoCompleteState {
@@ -36,8 +39,8 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
       process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true}
     ).then(res => {
       this.setState({...this.state, subjects: res.data });
-    }).catch(error => {
-      alert('Can`t get subjects');
+    }).catch(() => {
+      this.props.requestFailed('Can`t get subjects');
     });
   }
 
@@ -86,4 +89,10 @@ class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAut
   }
 }
 
-export default SubjectAutoComplete;
+const mapDispatch = (dispatch: any) => ({
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+})
+
+const connector = connect(null, mapDispatch);
+
+export default connector(SubjectAutoComplete);

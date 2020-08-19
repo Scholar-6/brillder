@@ -45,31 +45,23 @@ export function getAuthorRow(brick: Brick) {
 }
 
 export function checkBuilder(roles: UserRole[]) {
-  let isBuilder = roles.some((role:any) => role.roleId === UserType.Builder);
-  if (isBuilder) {
-    return true;
-  }
-  return false;
+  return roles.some(role => role.roleId === UserType.Builder);
 }
 
 export function checkTeacherOrAdmin(roles: UserRole[]) {
-  return !!roles.some(r => r.roleId === UserType.Teacher || r.roleId === UserType.Admin);
+  return roles.some(r => r.roleId === UserType.Teacher || r.roleId === UserType.Admin);
 }
 
 export function checkEditor(roles: UserRole[]) {
-  let isEditor = roles.some((role:any) => role.roleId === UserType.Editor);
-  if (isEditor) {
-    return true;
-  }
-  return false;
+  return roles.some(role => role.roleId === UserType.Editor);
+}
+
+export function checkTeacher(roles: UserRole[]) {
+  return roles.some(role => role.roleId === UserType.Teacher);
 }
 
 export function checkAdmin(roles: UserRole[]) {
-  let isAdmin = roles.some((role:any) => role.roleId === UserType.Admin);
-  if (isAdmin) {
-    return true;
-  }
-  return false;
+  return roles.some(role => role.roleId === UserType.Admin);
 }
 
 export function canEditBrick(brick: any, user: User) {

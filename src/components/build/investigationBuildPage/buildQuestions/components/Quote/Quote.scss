@@ -6,11 +6,12 @@
   width: 100%;
   .document-editor {
     .ck-editor {
-      width: 100%;
+      width: 100% !important;
       .ck-content {
         padding: 1vw;
         text-align: left;
-        background-color: var(--tab-gray) !important;
+        // REVERT Removed background from Text Component
+        // background-color: var(--tab-gray) !important;
       }
     }
   }

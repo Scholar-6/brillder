@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 import './AssignClassDialog.scss';
 import sprite from 'assets/img/icons-sprite.svg';
@@ -17,9 +19,7 @@ interface AssignClassProps {
 
 const AssignClassDialog: React.FC<AssignClassProps> = props => {
   const {users, classrooms} = props;
-  const [value, setValue] = React.useState("");
-  const [filteredClasses, setFilteredClasses] = React.useState(classrooms);
-  console.log(filteredClasses, classrooms)
+  const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
 
   const renderUserFullNames = () => {
     let tempUsers = users as any;
@@ -34,14 +34,21 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
     return names;
   }
 
-  useEffect(() => {setFilteredClasses(classrooms)}, [props]);
+  const hide = () => setAutoCompleteDropdown(false);
+  const classroomSelected = (selected: ClassroomApi) => props.submit(selected.id);
 
-  const filterClassrooms = (value: string) => {
-    let filtered = classrooms.filter(classroom => {
-      const found = classroom.name.search(value);
-      return !found;
-    });
-    setFilteredClasses(filtered);
+  const onClassroomInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const {value} = event.target;
+    if (value && value.length >= 2) {
+      setAutoCompleteDropdown(true);
+    } else {
+      setAutoCompleteDropdown(false);
+    }
+  }
+
+  let title = 'Which class would you like to add these students to?';
+  if (users.length <= 1) {
+    title = 'Which class would you like to add this student to?';
   }
 
   return (
@@ -51,7 +58,7 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
       className="dialog-box light-blue assign-class-dialog"
     >
       <div className="dialog-header">
-        <div className="title">Which class would you like to add these students to?</div>
+        <div className="title">{title}</div>
         <div className="students-box">
           <div className="students-count-box">
           {props.users.length}
@@ -62,12 +69,22 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
           </div>
           <div className="student-names">Selected: {renderUserFullNames()}</div>
         </div>
-        <input onChange={e => filterClassrooms(e.target.value)} />
-        <div className="records-box">
-          {filteredClasses.map((classroom, i) => {
-            return <div key={i} onClick={() => props.submit(classroom.id)}>{classroom.name}</div>
-          })}
-        </div>
+        <Autocomplete
+          open={autoCompleteOpen}
+          options={classrooms}
+          onChange={(e:any, c: any) => classroomSelected(c)}
+          getOptionLabel={(option:any) => option.name}
+          renderInput={(params:any) => (
+            <TextField
+              onBlur={() => hide()}
+              {...params}
+              onChange={e => onClassroomInput(e)}
+              variant="standard"
+              label="Classes: "
+              placeholder="Classes"
+            />
+          )}
+        />
       </div>
     </Dialog>
   );

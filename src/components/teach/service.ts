@@ -1,11 +1,15 @@
 import axios from "axios";
 
+import { MUser } from "./interface";
+
 export interface ClassroomApi {
   created: string;
   id: number;
   name: string;
   status: number;
+  students: MUser[];
   updated: string;
+  isActive: boolean;
 }
 
 /**
@@ -20,6 +24,8 @@ export const createClass = (name: string) => {
     { withCredentials: true }
   ).then((res) => {
     if (res.data) {
+      let classroom = res.data as ClassroomApi;
+      classroom.students = [];
       return res.data as ClassroomApi;
     }
     return null;
@@ -35,6 +41,12 @@ export const getAllClassrooms = () => {
     withCredentials: true,
   }).then(res => {
     if (res.data) {
+      let classrooms = res.data as ClassroomApi[];
+      for (let classroom of classrooms) {
+        for (let student of classroom.students as MUser[]) {
+          student.selected = false;
+        }
+      }
       return res.data as ClassroomApi[];
     }
     return null;
@@ -46,11 +58,10 @@ export const getAllClassrooms = () => {
  * return list of classrooms if success or null if failed
  */
 export const getAllStudents = () => {
-  return axios.get(process.env.REACT_APP_BACKEND_HOST + "/classroooms/students", {
+  return axios.get(process.env.REACT_APP_BACKEND_HOST + "/classrooms/students", {
     withCredentials: true,
   }).then(res => {
     if (res.data) {
-      console.log(res.data)
       return res.data as ClassroomApi[];
     }
     return null;
@@ -65,7 +76,7 @@ export const getAllStudents = () => {
 export const assignStudentsToClassroom = (classroomId: number, students: any[]) => {
   let studentsIds = students.map(s => s.id);
   return axios.post(
-    process.env.REACT_APP_BACKEND_HOST + "/classroooms/students/" + classroomId,
+    process.env.REACT_APP_BACKEND_HOST + "/classrooms/students/" + classroomId,
     { studentsIds },
     { withCredentials: true}
   ).then(res => {

@@ -7,12 +7,13 @@ import { connect } from 'react-redux';
 import "./PublishPage.scss";
 import { BrickStatus } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
-
+import actions from 'redux/actions/requestFailed';
 
 interface PublishBrickProps {
   history: any;
   match: any;
   user: User;
+  requestFailed(e: string): void;
 }
 
 enum ButtonStatus {
@@ -46,7 +47,7 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
     target.borderRadius = "20vw";
     e.target.style.fontSize = "3vw";
     e.target.innerHTML = `<img alt="tick" src="/images/tick-white.png" />`;
-    const canPublish = this.props.user.roles.some(role => role.roleId ===  UserType.Admin || role.roleId === UserType.Editor);
+    const canPublish = this.props.user.roles.some(role => role.roleId === UserType.Admin || role.roleId === UserType.Editor);
     const canSubmit = this.props.user.roles.some(role => role.roleId === UserType.Builder);
     if (canPublish) {
       this.publish();
@@ -69,49 +70,47 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
     }, 400);
   }
 
-  publish () {
-    const {brickId} = this.props.match.params;
+  publish() {
+    const { brickId } = this.props.match.params;
 
     return axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/publish/${brickId}`,
-      {}, {withCredentials: true}
+      {}, { withCredentials: true }
     ).then(response => {
-      const {data} = response;
+      const { data } = response;
       if (response.status === 200 && data.status === BrickStatus.Publish) {
         return;
       }
-      let {msg} = data;
+      let { msg } = data;
       if (!msg) {
-        const {errors} = data;
+        const { errors } = data;
         msg = errors[0].msg
       }
       alert(msg);
-    })
-    .catch(error => {
-      alert('Can`t update brick')
-    })
+    }).catch(() => {
+      this.props.requestFailed("Can`t update brick");
+    });
   }
 
-  review () {
-    const {brickId} = this.props.match.params;
+  review() {
+    const { brickId } = this.props.match.params;
 
     return axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/review/${brickId}`,
-      {}, {withCredentials: true}
+      {}, { withCredentials: true }
     ).then(response => {
-      const {data} = response;
+      const { data } = response;
       if (response.status === 200 && data.status === BrickStatus.Review) {
         return;
       }
-      let {msg} = data;
+      let { msg } = data;
       if (!msg) {
-        const {errors} = data;
+        const { errors } = data;
         msg = errors[0].msg
       }
       alert(msg);
-    })
-    .catch(error => {
-      alert('Can`t update brick')
+    }).catch(() => {
+      this.props.requestFailed("Can`t update brick");
     })
   }
 
@@ -159,8 +158,8 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
             </Grid>
           </button>
         ) : (
-          ""
-        )}
+            ""
+          )}
         {status === ButtonStatus.Pressed ? (
           <div className="brick-spinner">
             <CircularProgress
@@ -177,13 +176,13 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
             />
           </div>
         ) : (
-          ""
-        )}
+            ""
+          )}
         {status === ButtonStatus.Wider ? (
           <button
             className="publish-brick-button"
             ref={this.state.myRef}
-            style={{width: '7vw'}}
+            style={{ width: '7vw' }}
             onClick={() => this.props.history.push('/home')}
           >
             <Grid
@@ -196,8 +195,8 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
             </Grid>
           </button>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </Grid>
     );
   }
@@ -205,8 +204,12 @@ class PublishBrickPage extends Component<PublishBrickProps, PublishBrickState> {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-})
+});
 
-const connector = connect(mapState)
+const mapDispatch = (dispatch: any) => ({
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+});
+
+const connector = connect(mapState, mapDispatch);
 
 export default connector(PublishBrickPage);

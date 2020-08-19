@@ -3,12 +3,12 @@ import { Grid, Radio } from "@material-ui/core";
 
 import sprite from "assets/img/icons-sprite.svg";
 
-import { User } from "model/user";
+import { MUser } from "../../interface";
 import { UserSortBy } from '../ManageClassrooms';
 
 interface StudentTableProps {
-  users: User[];
-  selectedUsers: User[];
+  users: MUser[];
+  selectedUsers: MUser[];
 
   sortBy: UserSortBy;
   isAscending: boolean;
@@ -20,6 +20,10 @@ interface StudentTableProps {
 
 const StudentTable: React.FC<StudentTableProps> = props => {
   const { users, sortBy, isAscending } = props;
+
+  if (!users) {
+    return <div></div>;
+  }
 
   const renderSortArrow = (currentSortBy: UserSortBy) => {
     return (
@@ -36,6 +40,20 @@ const StudentTable: React.FC<StudentTableProps> = props => {
         onClick={() => props.sort(currentSortBy)}
       />
     );
+  }
+
+  const renderAssignButton = () => {
+    if (props.selectedUsers.length >= 1) {
+      return (
+        <div className="class-assign-button" onClick={props.assignToClass}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#plus"} />
+          </svg>
+        </div>
+      )
+    }
+    return "";
   }
 
   const renderUserTableHead = () => {
@@ -55,42 +73,30 @@ const StudentTable: React.FC<StudentTableProps> = props => {
             {renderSortArrow(UserSortBy.Name)}
           </Grid>
         </th>
-        <th style={{ padding: 0 }}>
+        <th style={{ padding: 0, width: '20%' }}>
           <Grid container className="selected-column">
             <Radio disabled={true} />
-            <span className="selected-count">{props.selectedUsers.length}</span>
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#users"} />
-            </svg>
-            Selected
+            {renderAssignButton()}
+            <div className="selected-label">
+              <span className="selected-count">{props.selectedUsers.length}</span>
+              <svg className="svg active">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#users"} />
+              </svg>
+              Selected
+            </div>
           </Grid>
         </th>
-        <th className="edit-button-column"></th>
       </tr>
     );
   }
 
-  const renderAssignButton = () => {
-    return (
-      <div className="class-assign-button" onClick={props.assignToClass}>
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#plus"} />
-        </svg>
-        <div>Add to...</div>
-      </div>
-    )
-  }
-  if (!users) {
-    return <div></div>;
-  }
   return (
     <div className="users-table">
       <table cellSpacing="0" cellPadding="0">
         <thead>{renderUserTableHead()}</thead>
         <tbody>
-          {users.map((user: any, i: number) => {
+          {users.map((user, i) => {
             return (
               <tr className="user-row" key={i}>
                 <td></td>
@@ -99,16 +105,24 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                   <span className="user-last-name">{user.lastName}</span>
                 </td>
                 <td>{user.email}</td>
-                <td></td>
-                <td className="user-radio-column">
-                  <div style={{display: 'flex'}}>
-                    <div>
-                      <Radio checked={user.selected} onClick={() => props.toggleUser(i)} />
-                    </div>
-                    {user.selected ? renderAssignButton() : ""}
+                <td>
+                  <div className="classroom-names">
+                    {user.studyClassrooms ? user.studyClassrooms.map((classroom, i) =>
+                      <div key={i} className="classroom-name">{classroom.name}</div>) : ""
+                    }
                   </div>
                 </td>
-                <td className="activate-button-container"></td>
+                <td className="user-radio-column">
+                  <div style={{ display: 'flex' }}>
+                    <Radio checked={user.selected} onClick={() => props.toggleUser(i)} />
+                    <div className="edit-button">
+                      <svg className="svg">
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#edit-outline"} />
+                      </svg>
+                    </div>
+                  </div>
+                </td>
               </tr>
             );
           })}

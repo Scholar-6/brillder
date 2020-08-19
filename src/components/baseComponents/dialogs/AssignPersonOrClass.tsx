@@ -1,24 +1,29 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { UserBase, UserType } from 'model/user';
-import { Classroom } from 'model/classroom';
-import { Brick } from 'model/brick';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import './AssignPersonOrClass.scss';
 import { ReduxCombinedState } from 'redux/reducers';
-import { connect } from 'react-redux';
+import actions from 'redux/actions/requestFailed';
+import { UserBase, UserType } from 'model/user';
+import { Classroom } from 'model/classroom';
+import { Brick } from 'model/brick';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
   isOpen: boolean;
   close(): void;
+  requestFailed(e: string): void;
 }
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
-  const [value, setValue] = React.useState("");
+  const [value] = React.useState("");
   const [students, setStudents] = React.useState<UserBase[]>([]);
   const [classes, setClasses] = React.useState<Classroom[]>([]);
+  const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
 
   useEffect(() => {
     getStudents();
@@ -26,52 +31,52 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }, [ value ]);
 
   const getStudents = async () => {
-    const { data } = await axios.post(
+    const students = await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/users`,
       {
         searchString: value,
         roleFilters: [UserType.Student]
       },
       { withCredentials: true }
-    );
-    setStudents(data.pageData);
+    ).then((data: any) => {
+      return data.data.pageData;
+    })
+    .catch(() => {
+      props.requestFailed('Can`t get students');
+      return [];
+    });
+    for (let student of students) {
+      student.isStudent = true;
+    }
+    setStudents(students);
   }
 
   const getClasses = async () => {
-    const { data } = await axios.post(
+    const classrooms = await axios.get(
       `${process.env.REACT_APP_BACKEND_HOST}/classrooms`,
-      {
-        searchString: value
-      },
       { withCredentials: true }
-    );
-    setClasses(data);
+    ).then((data: any) => {
+      return data.data;
+    }).catch(() => {
+      props.requestFailed('Can`t get classrooms');
+      return [];
+    });
+
+    for (let classroom of classrooms) {
+      classroom.isClass = true;
+    }
+
+    setClasses(classrooms);
   }
-
-  const renderStudent = (student: UserBase) => (
-    <div
-      onClick={() => assignToStudent(student)}
-      className="assign-list-item"
-    >
-      {student.firstName} {student.lastName}
-    </div>
-  )
-
-  const renderClassroom = (classroom: Classroom) => (
-    <div
-      onClick={() => assignToClass(classroom)}
-      className="assign-list-item"
-    >
-      {classroom.name}
-    </div>
-  )
 
   const assignToStudent = async (student: UserBase) => {
     await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignStudents/${props.brick.id}`,
       [student.id],
       { withCredentials: true }
-    );
+    ).catch(() => {
+      props.requestFailed('Can`t assign student to brick');
+    });
   }
 
   const assignToClass = async (classroom: Classroom) => {
@@ -79,25 +84,29 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${props.brick.id}`,
       [classroom.id],
       { withCredentials: true }
-    );
+    ).catch(() => {
+      props.requestFailed('Can`t assign class to brick');
+    });
   }
 
-  const handleKeyPress = async (e: any) => {
-    if(e.key === "Enter") {
-      tryAssign();
+  const hide = () => setAutoCompleteDropdown(false);
+
+  const onClassroomInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const {value} = event.target;
+    if (value && value.length >= 2) {
+      setAutoCompleteDropdown(true);
+    } else {
+      setAutoCompleteDropdown(false);
     }
   }
 
-  const tryAssign = async () => {
-    const totalCount = students.length + classes.length;
-    if(totalCount === 1) {
-      if(students.length === 1) {
-        assignToStudent(students[0]);
-      } else {
-        assignToClass(classes[0])
-      }
-      props.close();
+  const classroomSelected = (obj: any) => {
+    if (obj.isStudent) {
+      assignToStudent(obj);
+    } else {
+      assignToClass(obj);
     }
+    props.close();
   }
 
   return (
@@ -108,11 +117,22 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     >
       <div className="dialog-header">
         <div>Who would you like to assign this brick to?</div>
-        <input value={value} onChange={e => setValue(e.target.value)} onKeyPress={handleKeyPress} />
-        <div className="records-box">
-          {students.map(renderStudent)}
-          {classes.map(renderClassroom)}
-        </div>
+        <Autocomplete
+          open={autoCompleteOpen}
+          options={[...classes, ...students]}
+          onChange={(e:any, c: any) => classroomSelected(c)}
+          getOptionLabel={(option:any) => option.isStudent ? `Student ${option.firstName} ${option.lastName}` : 'Class ' + option.name}
+          renderInput={(params:any) => (
+            <TextField
+              onBlur={() => hide()}
+              {...params}
+              onChange={e => onClassroomInput(e)}
+              variant="standard"
+              label="Students and Classes: "
+              placeholder="Students and Classes"
+            />
+          )}
+        />
       </div>
     </Dialog>
   );
@@ -122,6 +142,10 @@ const mapState = (state: ReduxCombinedState) => ({
   brick: state.brick.brick
 });
 
-const connector = connect(mapState);
+const mapDispatch = (dispatch: any) => ({
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+})
+
+const connector = connect(mapState, mapDispatch);
 
 export default connector(AssignPersonOrClassDialog);

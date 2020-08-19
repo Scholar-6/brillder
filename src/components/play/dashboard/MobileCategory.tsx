@@ -15,6 +15,7 @@ import ShortBrickDescription from "components/baseComponents/ShortBrickDescripti
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
+import actions from 'redux/actions/requestFailed';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import map from 'components/map';
 import 'swiper/swiper.scss';
@@ -25,7 +26,8 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  forgetBrick: () => dispatch(brickActions.forgetBrick())
+  forgetBrick: () => dispatch(brickActions.forgetBrick()),
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
 });
 
 const connector = connect(mapState, mapDispatch);
@@ -34,6 +36,7 @@ interface BricksListProps {
   user: User;
   history: any;
   forgetBrick(): void;
+  requestFailed(e: string): void;
 }
 
 interface BricksListState {
@@ -63,7 +66,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
         finalBricks: res.data as Brick[],
       });
     }).catch(() => {
-      alert("Can`t get bricks");
+      this.props.requestFailed("Can`t get bricks");
     });
   }
 
@@ -106,24 +109,21 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
   search() {
     const { searchString } = this.state;
-    axios
-      .post(
-        process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
-        { searchString },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        this.hideBricks();
-        const searchBricks = res.data.map((brick: any) => brick.body);
-        this.setState({
-          ...this.state,
-          finalBricks: searchBricks,
-          isSearching: true,
-        });
-      })
-      .catch((error) => {
-        alert("Can`t get bricks");
+    axios.post(
+      process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
+      { searchString },
+      { withCredentials: true }
+    ).then((res) => {
+      this.hideBricks();
+      const searchBricks = res.data.map((brick: any) => brick.body);
+      this.setState({
+        ...this.state,
+        finalBricks: searchBricks,
+        isSearching: true,
       });
+    }).catch(() => {
+      this.props.requestFailed("Can`t get bricks");
+    });
   }
 
   getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
