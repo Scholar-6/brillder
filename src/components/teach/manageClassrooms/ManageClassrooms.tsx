@@ -323,7 +323,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     return (
       <div className="main-listing user-list-page manage-classrooms-page">
         <PageHeadWithMenu
-          page={PageEnum.ManageUsers}
+          page={PageEnum.ManageClasses}
           placeholder="Search by Name, Email or Subject"
           user={this.props.user}
           history={history}
