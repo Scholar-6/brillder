@@ -1,15 +1,21 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
+import { connect } from 'react-redux';
 
+import { ReduxCombinedState } from 'redux/reducers';
 import sprite from "assets/img/icons-sprite.svg";
 import { PlayMode } from './model';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';
+import { checkTeacherOrAdmin } from "components/services/brickService";
+import { User } from "model/user";
+
 
 interface SidebarProps {
   sidebarRolledUp: boolean;
   toggleSidebar(): void;
+  user: User;
 
   // play
   mode?: PlayMode;
@@ -123,6 +129,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   };
 
   renderAssignButton() {
+    let canSee = checkTeacherOrAdmin(this.props.user.roles);
+    if (!canSee) { return ""; }
     const openAssignDialog = () => {
       this.setState({ isAssigningOpen: true });
     }
@@ -182,13 +190,15 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   renderDialogs() {
     if (this.props.isPreview) { return ""; }
+    let canSee = checkTeacherOrAdmin(this.props.user.roles);
     return (
       <div>
         <CommingSoonDialog isOpen={this.state.isCoomingSoonOpen} close={() => this.toggleCommingSoon()} />
+        {canSee ?
         <AssignPersonOrClassDialog
           isOpen={this.state.isAssigningOpen}
           close={() => { this.setState({ isAssigningOpen: false }) }}
-        />
+        /> : ""}
       </div>
     );
   }
@@ -209,4 +219,8 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 };
 
-export default PlayLeftSidebarComponent;
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user
+});
+
+export default connect(mapState)(PlayLeftSidebarComponent);
