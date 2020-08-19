@@ -99,6 +99,8 @@
   .user-radio-column {
     padding-left: 0 !important;
 
+    @extend %radioBlue;
+
     .action-buttons {
       display: flex;
       justify-content: flex-end;
@@ -109,9 +111,6 @@
         $icon-size: 2vw;
         width: $icon-size;
         height: $icon-size;
-      }
-
-      .edit-button {
       }
 
       .trash-button {
