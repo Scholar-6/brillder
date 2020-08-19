@@ -19,7 +19,7 @@ import AssignClassDialog from './components/AssignClassDialog';
 import CreateClassDialog from './components/CreateClassDialog';
 import RoleDescription from 'components/baseComponents/RoleDescription';
 
-import { getAllClassrooms, getAllStudents, createClass, assignStudentsToClassroom, ClassroomApi } from '../service';
+import { getAllClassrooms, unassignStudent, getAllStudents, createClass, assignStudentsToClassroom, ClassroomApi } from '../service';
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
@@ -271,6 +271,19 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     });
   }
 
+  unassignStudent(studentId: number) {
+    if (this.state.activeClassroom) {
+      const { id } = this.state.activeClassroom;
+      unassignStudent(id, studentId).then(res => {
+        if (res) {
+          // success
+        } else {
+          // failture
+        }
+      });
+    }
+  }
+
   getUsersByPage(users: MUser[]) {
     const pageStart = this.state.page * this.state.pageSize;
     return users.slice(pageStart, pageStart + this.state.pageSize);
@@ -286,7 +299,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   renderPagination() {
-    let {users} = this.state;
+    let { users } = this.state;
     if (this.state.activeClassroom) {
       users = this.state.activeClassroom.students;
     }
@@ -319,7 +332,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     }
 
     users = this.getUsersByPage(users);
-    
+
     return (
       <div className="main-listing user-list-page manage-classrooms-page">
         <PageHeadWithMenu
@@ -338,12 +351,14 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             {this.renderTableHeader()}
             <StudentTable
               users={users}
+              isClassroom={!!this.state.activeClassroom}
               selectedUsers={this.state.selectedUsers}
               sortBy={this.state.sortBy}
               isAscending={this.state.isAscending}
               sort={sortBy => this.sort(sortBy)}
               toggleUser={i => this.toggleUser(i)}
               assignToClass={() => this.openAssignDialog()}
+              unassign={id => this.unassignStudent(id)}
             />
             <RoleDescription />
             {this.renderPagination()}

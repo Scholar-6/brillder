@@ -9,6 +9,7 @@ import { UserSortBy } from '../ManageClassrooms';
 interface StudentTableProps {
   users: MUser[];
   selectedUsers: MUser[];
+  isClassroom: boolean;
 
   sortBy: UserSortBy;
   isAscending: boolean;
@@ -16,6 +17,7 @@ interface StudentTableProps {
   toggleUser(i: number): void;
   sort(sortBy: UserSortBy): void;
   assignToClass(): void;
+  unassign(studentId: number): void;
 }
 
 const StudentTable: React.FC<StudentTableProps> = props => {
@@ -115,11 +117,21 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                 <td className="user-radio-column">
                   <div style={{ display: 'flex' }}>
                     <Radio checked={user.selected} onClick={() => props.toggleUser(i)} />
+                    <div className="action-buttons">
                     <div className="edit-button">
                       <svg className="svg">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#edit-outline"} />
                       </svg>
+                    </div>
+                    {props.isClassroom ? 
+                    <div className="trash-button" onClick={() => props.unassign(user.id)}>
+                      <svg className="svg">
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#trash-outline"} />
+                      </svg>
+                    </div> : ""
+                    }
                     </div>
                   </div>
                 </td>

@@ -3,6 +3,11 @@
 @import 'src/assets/sass/partials/extensions';
 
 .manage-classrooms-page {
+
+  .indexes-box {
+    max-height: 30vh !important;
+    overflow: auto;
+  }
   $base-filter-padding-left: 2vw;
 
   .brick-row-container {
@@ -95,7 +100,7 @@
   .user-radio-column {
     padding-left: 0 !important;
 
-    .edit-button {
+    .action-buttons {
       display: flex;
       justify-content: flex-end;
       width: 100%;
@@ -106,7 +111,15 @@
         width: $icon-size;
         height: $icon-size;
       }
+
+      .edit-button { }
+
+      .trash-button {
+        cursor: pointer;
+      }
     }
+
+    
   }
 
   .users-pagination {
