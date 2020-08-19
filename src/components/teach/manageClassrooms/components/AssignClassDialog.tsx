@@ -46,6 +46,11 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
     }
   }
 
+  let title = 'Which class would you like to add these students to?';
+  if (users.length <= 1) {
+    title = 'Which class would you like to add this student to?';
+  }
+
   return (
     <Dialog
       open={props.isOpen}
@@ -53,7 +58,7 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
       className="dialog-box light-blue assign-class-dialog"
     >
       <div className="dialog-header">
-        <div className="title">Which class would you like to add these students to?</div>
+        <div className="title">{title}</div>
         <div className="students-box">
           <div className="students-count-box">
           {props.users.length}
@@ -75,8 +80,8 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
               {...params}
               onChange={e => onClassroomInput(e)}
               variant="standard"
-              label="Subjects: "
-              placeholder="Subjects"
+              label="Classes: "
+              placeholder="Classes"
             />
           )}
         />
