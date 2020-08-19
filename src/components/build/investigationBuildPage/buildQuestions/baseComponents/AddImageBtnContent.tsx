@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-
+import sprite from "../../../../../assets/img/icons-sprite.svg";
 import './AddImageBtnContent.scss';
 
 
@@ -12,14 +12,13 @@ const AddImageBtnContent: React.FC = () => {
       justify="center"
       className="answer-image-drop-content drop-placeholder"
     >
-      <Grid container className="answer-image-drop-button" direction="row">
-        <Grid item xs={6}>
-          <img alt="" className="plus-image" src="/feathericons/plus-white.png" />
-        </Grid>
-        <Grid item xs={6}>
-          <span>jpg</span>
-        </Grid>
-      </Grid>
+      <div className="answer-image-drop-button svgOnHover">
+        <svg className="plus-image svg active">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#plus-circle"} />
+        </svg>
+        <span>jpg</span>
+      </div>
     </Grid>
   );
 };
