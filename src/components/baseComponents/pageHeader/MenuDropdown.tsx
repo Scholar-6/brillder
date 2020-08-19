@@ -6,12 +6,13 @@ import { connect } from 'react-redux';
 import actions from "redux/actions/brickActions";
 
 import sprite from "assets/img/icons-sprite.svg";
-import { User, UserType } from "model/user";
+import { User } from "model/user";
 import { PageEnum } from "./PageHeadWithMenu";
 import { clearProposal } from 'components/localStorage/proposal';
 
 
 import { ProposalSubject } from "components/map";
+import { checkAdmin, checkTeacherOrAdmin } from "components/services/brickService";
 
 const mapDispatch = (dispatch: any) => ({
   forgetBrick: () => dispatch(actions.forgetBrick())
@@ -31,10 +32,13 @@ interface MenuDropdownProps {
 
 const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   const { page } = props;
+
+  const move = (link: string) => props.history.push(link);
+
   const creatingBrick = () => {
     clearProposal();
     props.forgetBrick();
-    props.history.push(ProposalSubject);
+    move(ProposalSubject);
   };
 
   const renderViewAllItem = () => {
@@ -42,7 +46,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       return (
         <MenuItem
           className="first-item menu-item"
-          onClick={() => props.history.push("/play/dashboard")}
+          onClick={() => move("/play/dashboard")}
         >
           <span className="menu-text">View All Bricks</span>
           <div className="btn btn-transparent svgOnHover">
@@ -74,18 +78,54 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     return "";
   };
 
+  const renderManageClassesItem = () => {
+    if (page !== PageEnum.ManageClasses) {
+      return (
+        <MenuItem className="menu-item" onClick={() => move('/manage-classrooms')}>
+          <span className="menu-text">Manage Classes</span>
+        </MenuItem>
+      );
+    }
+    return "";
+  };
+
   const renderBackToWorkItem = () => {
     if (page !== PageEnum.BackToWork && page !== PageEnum.MainPage) {
+      const canSee = checkTeacherOrAdmin(props.user.roles);
+      if (canSee) {
+        return (
+          <MenuItem
+            className="menu-item"
+            onClick={() => move("/back-to-work")}
+          >
+            <span className="menu-text">Back To Work</span>
+            <div className="btn btn-transparent svgOnHover">
+              <svg className="svg active">
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#roller"} className="text-white" />
+              </svg>
+            </div>
+          </MenuItem>
+        );
+      }
+    }
+    return "";
+  };
+
+  const renderManageUsersItem = () => {
+    let isAdmin = checkAdmin(props.user.roles);
+
+    if (isAdmin && props.page !== PageEnum.ManageUsers) {
       return (
         <MenuItem
           className="menu-item"
-          onClick={() => props.history.push("/back-to-work")}
+          onClick={() => move("/users")}
         >
-          <span className="menu-text">Back To Work</span>
+          <span className="menu-text">Manage Users</span>
           <div className="btn btn-transparent svgOnHover">
             <svg className="svg active">
               {/*eslint-disable-next-line*/}
-              <use href={sprite + "#roller"} className="text-white" />
+              <use href={sprite + "#users"} className="text-white" />
             </svg>
           </div>
         </MenuItem>
@@ -94,22 +134,18 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
     return "";
   };
 
-  const renderManageUsersItem = () => {
-    let isAdmin = props.user.roles.some(
-      (role) => role.roleId === UserType.Admin
-    );
-
-    if (isAdmin && props.page !== PageEnum.ManageUsers) {
+  const renderProfileItem = () => {
+    if (page !== PageEnum.Profile) {
       return (
         <MenuItem
-          className="menu-item"
-          onClick={() => props.history.push("/users")}
+          className="view-profile menu-item"
+          onClick={() => move("/user-profile")}
         >
-          <span className="menu-text">Manage Users</span>
+          <span className="menu-text">View Profile</span>
           <div className="btn btn-transparent svgOnHover">
             <svg className="svg active">
               {/*eslint-disable-next-line*/}
-              <use href={sprite + "#users"} className="text-white" />
+              <use href={sprite + "#user"} className="text-white" />
             </svg>
           </div>
         </MenuItem>
@@ -128,18 +164,8 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       {renderStartBuildItem()}
       {renderBackToWorkItem()}
       {renderManageUsersItem()}
-      <MenuItem
-        className="view-profile menu-item"
-        onClick={() => props.history.push("/user-profile")}
-      >
-        <span className="menu-text">View Profile</span>
-        <div className="btn btn-transparent svgOnHover">
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#user"} className="text-white" />
-          </svg>
-        </div>
-      </MenuItem>
+      {renderManageClassesItem()}
+      {renderProfileItem()}
       <MenuItem className="menu-item" onClick={props.onLogout}>
         <span className="menu-text">Logout</span>
         <div className="btn btn-transparent svgOnHover">

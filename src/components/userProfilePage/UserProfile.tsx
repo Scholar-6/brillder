@@ -16,12 +16,12 @@ import PhonePreview from "../build/baseComponents/phonePreview/PhonePreview";
 import { Subject } from "model/brick";
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import { checkAdmin, canBuild, canEdit } from "components/services/brickService";
-import UserProfileMenu from "./components/UserProfileMenu";
 import SubjectDialog from "./components/SubjectDialog";
 import { ReduxCombinedState } from "redux/reducers";
 import SaveProfileButton from "./components/SaveProfileButton";
 import ProfileSavedDialog from "./components/ProfileSavedDialog";
 import ProfileImage from "./components/ProfileImage";
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -108,7 +108,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     return {
       id: user.id,
       username: user.username,
-      roles: roles ? roles: [],
+      roles: roles ? roles : [],
       email: user.email ? user.email : "",
       firstName: user.firstName ? user.firstName : "",
       lastName: user.lastName ? user.lastName : "",
@@ -374,10 +374,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const { user } = this.state;
     return (
       <div className="main-listing user-profile-page">
-        <UserProfileMenu
+        <PageHeadWithMenu
+          page={PageEnum.Profile}
           user={this.props.user}
-          forgetBrick={this.props.forgetBrick}
           history={this.props.history}
+          search={() => { }}
+          searching={() => { }}
         />
         <Grid container direction="row">
           <div className="profile-block">
