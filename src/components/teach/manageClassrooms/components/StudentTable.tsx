@@ -17,7 +17,7 @@ interface StudentTableProps {
   toggleUser(i: number): void;
   sort(sortBy: UserSortBy): void;
   assignToClass(): void;
-  unassign(studentId: number): void;
+  unassign(student: MUser): void;
 }
 
 const StudentTable: React.FC<StudentTableProps> = props => {
@@ -125,7 +125,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                       </svg>
                     </div>
                     {props.isClassroom ? 
-                    <div className="trash-button" onClick={() => props.unassign(user.id)}>
+                    <div className="trash-button" onClick={() => props.unassign(user)}>
                       <svg className="svg">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#trash-outline"} />
