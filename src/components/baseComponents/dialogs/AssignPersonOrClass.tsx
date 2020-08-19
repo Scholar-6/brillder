@@ -128,8 +128,8 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
               {...params}
               onChange={e => onClassroomInput(e)}
               variant="standard"
-              label="Subjects: "
-              placeholder="Subjects"
+              label="Students and Classes: "
+              placeholder="Students and Classes"
             />
           )}
         />
