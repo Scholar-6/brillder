@@ -60,6 +60,27 @@
   }
 }
 
+// 2560
+@mixin apple-macbook-air-width {
+  @media screen and (min-width:#{$apple-macbook-air-width}) {
+    @content;
+  }
+}
+
+// 3072
+@mixin apple-macbook-pro-width {
+  @media screen and (min-width:#{$apple-macbook-pro-width}) {
+    @content;
+  }
+}
+
+// 5120
+@mixin apple-imac-width {
+  @media screen and (min-width:#{$apple-imac-width}) {
+    @content;
+  }
+}
+
 @mixin print {
   @media print {
     @content;
