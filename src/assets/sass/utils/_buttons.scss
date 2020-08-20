@@ -1,7 +1,7 @@
 .btn {
   @extend %transitionAll300;
   text-transform: none;
-  border-radius: $global-drop-border-radius;
+  @extend %themeRadius;
   @extend %b0;
   font-family: $font-family-bold;
   letter-spacing: 0.2vw;
