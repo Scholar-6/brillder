@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
+import { isMobile } from "react-device-detect";
 
 import "./brick.scss";
 import Introduction from "./introduction/Introduction";
@@ -202,7 +203,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (live > 0 || score > 0 || synthesis > 0 || review > 0 || ending > 0) {
       isMobileHidden = true;
     }
-    if (sidebarRolledUp) {
+    if (!isMobile && sidebarRolledUp) {
       return <HomeButton link="/home" />;
     }
     return (
