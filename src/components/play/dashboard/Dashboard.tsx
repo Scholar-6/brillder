@@ -229,7 +229,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
     const { pageSize } = this.state;
     if (index + pageSize <= this.state.bricks.length) {
       this.setState({ ...this.state, sortedIndex: index + this.state.pageSize });
-    }f
+    }
   }
 
   hideBricks() {
