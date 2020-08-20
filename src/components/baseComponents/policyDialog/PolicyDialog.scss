@@ -52,14 +52,15 @@
         color: var(--theme-orange);
       }
 
-      p, ol {
+      p,
+      ol {
         margin-bottom: 2vh;
         text-align: justify;
       }
 
       h4 {
         font-family: $font-family-bold;
-        color: var(--theme-orange); 
+        color: var(--theme-orange);
         margin-bottom: 0;
       }
       h3 {
