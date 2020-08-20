@@ -11,9 +11,9 @@ class ChooseSeveralPreview extends Component<any, any> {
         <Grid container justify="center" className="small-text">
           Select the two terms that could be used to describe the geometry of transition metal complexes.
         </Grid>
-        <button className="green-button">Octahedral</button>
+        <button className="green-button animated">Octahedral</button>
         <button>Polydentate</button>
-        <button className="green-button">Square Planar</button>
+        <button className="green-button animated">Square Planar</button>
       </div>
     )
   }
