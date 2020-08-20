@@ -7,7 +7,7 @@
   margin-bottom: 0.4vw;
   overflow: hidden;
   color: var(--theme-dark-blue);
-  border-radius: $global-drop-border-radius;
+  @extend %themeRadius;
   display: flex;
   flex-direction: column;
   background: var(--white);
@@ -69,33 +69,26 @@
   .hover-hint {
     font-size: 3vw;
   }
-  .hint-container {
-    margin: 0;
-    float: left;
-    width: 100%;
-    &:only-child {
-      .document-editor {
-        border-bottom-left-radius: 0.4vw !important;
-        border-bottom-right-radius: 0.4vw !important;
-        .ck-editor {
-          .ck-content {
-            border-bottom-left-radius: 0.4vw !important;
-            border-bottom-right-radius: 0.4vw !important;
-          }
-        }
-      }
-    }
-    .document-editor {
+  .hint-content {
+    .hint-container {
+      margin: 0;
+      float: left;
       width: 100%;
-      border-radius: 0 !important;
-      .ck-editor {
-        width: 100% !important;
-        .ck-content {
-          padding: 0.5vw !important;
-          background: var(--light-gray) !important;
-          border-radius: 0 !important;
-          p {
-            text-align: left !important;
+      margin-bottom: 0.3vw;
+      &:only-child,
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .document-editor {
+        width: 100%;
+        .ck-editor {
+          width: 100% !important;
+          .ck-content {
+            padding: 0.5vw !important;
+            border-radius: 0 !important;
+            p {
+              text-align: left !important;
+            }
           }
         }
       }

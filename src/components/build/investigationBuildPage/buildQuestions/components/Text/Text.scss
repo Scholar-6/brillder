@@ -11,8 +11,7 @@
   .ck-editor {
     width: 100% !important;
     .ck-content {
-      // REVERT Removed background from Text Component
-      // background-color: var(--tab-gray) !important;
+      background-color: var(--tab-gray);
       padding: 0.5vw !important;
       text-align: left !important;
       border-top-left-radius: 0 !important;
