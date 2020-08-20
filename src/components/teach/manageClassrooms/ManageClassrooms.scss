@@ -3,7 +3,6 @@
 @import 'src/assets/sass/partials/extensions';
 
 .manage-classrooms-page {
-
   .indexes-box {
     height: calc(100vh - #{$page-head-height} - 5.9vh - 6.5vw) !important;
     overflow: auto;
@@ -100,6 +99,8 @@
   .user-radio-column {
     padding-left: 0 !important;
 
+    @extend %radioBlue;
+
     .action-buttons {
       display: flex;
       justify-content: flex-end;
@@ -112,14 +113,10 @@
         height: $icon-size;
       }
 
-      .edit-button { }
-
       .trash-button {
         cursor: pointer;
       }
     }
-
-    
   }
 
   .users-pagination {
