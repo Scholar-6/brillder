@@ -27,6 +27,7 @@ const initZendeskStyling = (iframe: any) => {
 }
 
 export function minimizeZendeskButton(iframe?: any) {
+  if (isMobile) { return; }
   if (!iframe) {
     iframe = getZendeskIframe();
     if (!iframe) { return; }
@@ -45,6 +46,7 @@ export function minimizeZendeskButton(iframe?: any) {
 }
 
 export function maximizeZendeskButton(iframe?: any) {
+  if (isMobile) { return; }
   if (!iframe) {
     iframe = getZendeskIframe();
     if (!iframe) { return; }
