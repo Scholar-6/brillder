@@ -336,7 +336,7 @@
           }
           input {
             width: calc(100% - 2vw);
-            border-radius: 0.4vw;
+            @extend %themeRadius;
             background-color: var(--tab-gray);
             padding: 0.5vw 1vw;
           }
