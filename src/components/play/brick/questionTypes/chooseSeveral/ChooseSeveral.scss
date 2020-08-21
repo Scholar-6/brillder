@@ -12,7 +12,8 @@
 
   .help-text {
     font-family: $font-family-regular;
-    margin-bottom: 3px;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
     @include phone_and_tabletP {
       font-size: 3vw;
     }
