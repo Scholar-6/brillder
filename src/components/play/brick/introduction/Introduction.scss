@@ -862,12 +862,17 @@ $play-mobile-height: calc(100vh - 55.8vw);
             width: 100%;
             position: relative;
             margin: 0;
+            
             > h2 {
               width: 100%;
               margin-top: 0;
               margin-bottom: 0;
               font-family: $font-family-bold;
               font-size: 2.6vw;
+              @include phone_and_tabletP {
+                font-size: 9vw;
+                text-align: center;
+              }
             }
             > h3,
             > span {

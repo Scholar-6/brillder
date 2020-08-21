@@ -55,7 +55,7 @@ $brick-radius: 1.2vh;
 $main-panel-radius: 2vw;
 
 $min-brick-height: 4.4vw;
-$global-drop-border-radius: 0.4vw;
+$theme-radius: 0.4vw;
 $base-lg-text-size: 0.65vw;
 $base-sm-text-size: 0.9vw;
 $base-md-text-size: 1.1vw;
@@ -78,6 +78,9 @@ $desktop-width: 1280px;
 $laptop-landscape-width: 1366px;
 $desktop-wide-width: 1440px;
 $ex-desktop-wide-width: 1680px;
+$apple-macbook-air-width: 2560px;
+$apple-macbook-pro-width: 3072px;
+$apple-imac-width: 5120px;
 
 // dashboard and back to work page
 $sorted-row-margin-top: 2vw;
@@ -89,25 +92,30 @@ $bricks-title-font-size: 5.2vw;
 $pagination-size: 6vh;
 $backwork-tab-height: 6.6vh;
 
-$bricks-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$bricks-title-font-size} - #{$bricks-title-padding-top} - #{$bricks-title-padding-bottom} - #{$pagination-size});
+$bricks-height: calc(
+  100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$bricks-title-font-size} - #{$bricks-title-padding-top} -
+    #{$bricks-title-padding-bottom} - #{$pagination-size}
+);
 
 $backwork-bricks-padding-top: 5.5vh;
 
-$backwork-bricks-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$pagination-size} - #{$backwork-tab-height} - 1vh);
-$backwork-bricks-height-2: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$pagination-size} - #{$backwork-tab-height} + 1.4vh - #{$backwork-bricks-padding-top});
+$backwork-bricks-height: calc(
+  100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$pagination-size} - #{$backwork-tab-height} - 1vh
+);
+$backwork-bricks-height-2: calc(
+  100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$pagination-size} - #{$backwork-tab-height} + 1.4vh - #{$backwork-bricks-padding-top}
+);
 
 $backwork-tab-content-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$backwork-tab-height});
 
 $filter-sidebar-size: 23vw;
 $filter-sidebar-margin: 1.2vw;
 
-
 // build suggestions sidebar
 $suggestion-sidebar-height: 76vh;
 $comment-button-size: 6vh;
-$comments-panel-margin-top: 3vh; 
+$comments-panel-margin-top: 3vh;
 $comments-panel-height: calc(#{$suggestion-sidebar-height} - #{$comments-panel-margin-top});
 
 $suggestions-title-font-size: 3vh;
 $suggestions-title-padding: 1vh;
-

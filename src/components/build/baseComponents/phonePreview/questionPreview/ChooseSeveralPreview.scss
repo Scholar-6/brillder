@@ -26,9 +26,22 @@
     height: 12.5%;
   }
 
+  @keyframes grey-to-green {
+    from {
+      font-family: $font-family-regular;
+      color: var(--theme-dark-blue);
+      background-color: var(--tab-gray);
+    }
+    to {
+      color: white;
+      background-color: var(--theme-green);
+      font-family: $font-family-bold;
+    }
+  }
+
   .green-button {
-    font-family: $font-family-bold;
-    background: var(--theme-green);
-    color: white;
+    animation-name: grey-to-green;
+    animation-duration: 0.5s;
+    animation-delay: 0.5s;
   }
 }

@@ -78,7 +78,7 @@ $space-between-boxes: 0.1vw;
   .drag-and-drop-box {
     min-height: 6vw;
     margin: 0;
-    border-radius: $global-drop-border-radius;
+    @extend %themeRadius;
   }
 
   .button-box {

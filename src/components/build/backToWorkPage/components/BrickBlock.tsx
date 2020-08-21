@@ -15,6 +15,7 @@ interface BrickBlockProps {
   row: number;
   shown: boolean;
   history: any;
+  isPlay?: boolean
   handleDeleteOpen(brickId: number): void;
   handleMouseHover(e: any): void;
   handleMouseLeave(e: any): void;
@@ -34,7 +35,13 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
 
   const isAdmin = props.user.roles.some(role => role.roleId === UserType.Admin);
 
-  const move = () => props.history.push(`/build/brick/${brick.id}/build/investigation/question`);
+  const move = () => {
+    if (props.isPlay) {
+      props.history.push(`/play/brick/${brick.id}/intro`);
+    } else {
+      props.history.push(`/build/brick/${brick.id}/build/investigation/question`);
+    }
+  }
 
   if (!brick.id) {
     return (
@@ -67,8 +74,8 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
                 onDelete={(brickId) => props.handleDeleteOpen(brickId)}
               />
             ) : (
-                <ShortBrickDecsiption color={color} brick={brick} />
-              )}
+              <ShortBrickDecsiption color={color} brick={brick} />
+            )}
           </div>
         </Box>
       </div>

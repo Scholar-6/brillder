@@ -7,6 +7,19 @@
   height: 100%;
   color: var(--theme-dark-blue);
 
+  @keyframes grey-to-green {
+    from {
+      font-family: $font-family-regular;
+      color: var(--theme-dark-blue);
+      background-color: var(--tab-gray);
+    }
+    to {
+      color: white;
+      background-color: var(--theme-green);
+      font-family: $font-family-bold;
+    }
+  }
+
   .small-text {
     padding: 28% 10% 13% 10%;
     font-size: 1.3vw;
@@ -27,8 +40,8 @@
   }
 
   .green-button {
-    font-family: $font-family-bold;
-    background: var(--theme-green);
-    color: white;
+    animation-name: grey-to-green;
+    animation-duration: 0.5s;
+    animation-delay: 0.5s;
   }
 }
