@@ -35,8 +35,8 @@ $space-between-boxes: 0.1vw;
       .help-text {
         font-family: $font-family-regular;
 
-        margin-top: 10px !important;
-        margin-bottom: 5px !important;
+        margin-top: 7px !important;
+        margin-bottom: 7px !important;
 
         @include phone_and_tabletP {
           font-size: 4vw;
