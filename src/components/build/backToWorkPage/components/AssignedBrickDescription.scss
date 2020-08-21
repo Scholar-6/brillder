@@ -1,0 +1,59 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.assigned-brick-description {
+  position: relative;
+  height: 9vh;
+
+  .left-brick-circle {
+    @include phone_and_tabletP {
+      margin-right: 3vw;
+    }
+
+    @include tabletP {
+      position: absolute;
+      top: 1.3vh;
+    }
+
+    >div {
+      height: 2.1vw;
+      width: 2.1vw;
+      border-radius: 20vw;
+      background-color: var(--gray);
+
+      @include phone_and_tabletP {
+        height: 9.5vw;
+        width: 9.5vw;
+      }
+    }
+  }
+
+  .short-brick-info {
+    font-size: 0.8vw;
+    padding: 0 3vw;
+    .link-description,
+    .link-info {
+      width: 100%;
+    }
+    .link-description {
+      text-transform: uppercase;
+      font-family: $font-family-bold;
+      line-height: 1.1;
+      margin-bottom: 0.5vh;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .link-info {
+      color: var(--theme-light-blue);
+      line-height: 1.3;
+      font-family: $font-family-regular;
+      margin-bottom: 0.1vh;
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}
