@@ -17,7 +17,7 @@ class UploadImageCustom extends Plugin {
       const view = new ButtonView(locale);
 
       view.set({
-        label: ".jpg",
+        label: "jpg",
         withText: true,
         tooltip: true,
       });

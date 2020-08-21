@@ -3,8 +3,8 @@
 @import 'src/assets/sass/partials/extensions';
 
 .document-editor {
-  border-radius: $global-drop-border-radius !important;
-  background-color: var(--white);
+  border-radius: $theme-radius !important;
+  background-color: var(--tab-gray);
   height: calc(100% - 0.2vh);
   position: relative;
   overflow: hidden;
@@ -22,6 +22,7 @@
         text-align: center;
         border: 0 !important;
         color: var(--theme-dark-blue);
+        background: var(--light-gray) !important;
         @include tabletP {
           font-size: $answer-input-text-size;
         }
@@ -49,13 +50,11 @@
   }
   .ck-toolbar {
     font-size: 1.4vh;
-    border-top-right-radius: 0.4vw !important;
-    border-bottom-right-radius: 0.4vw !important;
-    background: var(--white) !important;
     border: none !important;
+    background: var(--tab-gray) !important;
     padding: 0 !important;
     .ck-toolbar__items {
-      background: var(--white) !important;
+      background: var(--tab-gray) !important;
       display: block !important;
       button {
         border: none !important;

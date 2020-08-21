@@ -39,6 +39,12 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     setUploadDialog(true);
   }
 
+  const openAnotherUploadDialog = () => {
+    props.deleteImage();
+    setState({ ...state, src: null, result: null});
+    openUploadDialog();
+  }
+
   const dataURLtoFile = (dataurl: string, filename: string) => {
     try {
       var arr = dataurl.split(',') as any;
@@ -144,7 +150,7 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
           Doesn't quite capture you?
         </div>
         <div className="dialog-footer">
-          <button className="btn btn-md bg-theme-orange yes-button" onClick={openUploadDialog}>
+          <button className="btn btn-md bg-theme-orange yes-button" onClick={openAnotherUploadDialog}>
             <span>Add another</span>
           </button>
           <button className="btn btn-md bg-gray no-button" onClick={removeImage}>

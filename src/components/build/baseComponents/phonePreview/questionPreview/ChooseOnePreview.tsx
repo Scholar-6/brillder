@@ -12,7 +12,7 @@ class ChooseOnePreview extends Component<any, any> {
           Which of the following is a fundamental cell type?
         </Grid>
         <button>Exokaryotic</button>
-        <button className="green-button">Eukaryotic</button>
+        <button className="green-button animated">Eukaryotic</button>
         <button>Protokaryotic</button>
       </div>
     )

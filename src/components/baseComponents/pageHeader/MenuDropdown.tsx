@@ -80,11 +80,14 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
 
   const renderManageClassesItem = () => {
     if (page !== PageEnum.ManageClasses) {
-      return (
-        <MenuItem className="menu-item" onClick={() => move('/manage-classrooms')}>
-          <span className="menu-text">Manage Classes</span>
-        </MenuItem>
-      );
+      const canSee = checkTeacherOrAdmin(props.user.roles);
+      if (canSee) {
+        return (
+          <MenuItem className="menu-item" onClick={() => move('/manage-classrooms')}>
+            <span className="menu-text">Manage Classes</span>
+          </MenuItem>
+        );
+      }
     }
     return "";
   };

@@ -9,15 +9,4 @@
     width: 100%;
     padding: 0;
   }
-
-  .help-text {
-    font-family: $font-family-regular;
-    margin-bottom: 3px;
-    @include phone_and_tabletP {
-      font-size: 3vw;
-    }
-    @include tabletP {
-      font-size: 0.8vw;
-    }
-  }
 }
