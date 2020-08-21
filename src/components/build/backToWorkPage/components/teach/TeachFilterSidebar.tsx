@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { TeachClassroom, } from "model/classroom";
-import { TeachFilters } from '../model';
+import { TeachFilters } from '../../model';
 import sprite from "assets/img/icons-sprite.svg";
 
 enum TeachFilterFields {
@@ -101,7 +101,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
               <use href={sprite + "#users"} />
             </svg>
             <div className="white-box">
-              {0}
+              {c.assignments.length}
             </div>
           </div>
         </div>

@@ -107,6 +107,9 @@
     @include tabletP {
       padding: 25px 0;
     }
+    @include ex-desktop_wide {
+      padding: 3vh 0;
+    }
     .btn {
       display: flex;
       align-items: center;
@@ -117,15 +120,23 @@
         @extend %removePosition;
         height: 150px;
         width: 250px;
+        @include ex-desktop_wide {
+          height: auto;
+          width: 15vw;
+        }
       }
       .item-description {
         padding: 0;
         text-align: center;
         margin: 0;
-        font: 25px $font-family-light;
-        // font: 1.3vw $font-family-light;
+        font-size: 25px;
+        font-family: $font-family-light;
         letter-spacing: 7px;
         color: var(--tab-gray);
+        @include ex-desktop_wide {
+          font-size: 1.3vw;
+          letter-spacing: 0.27vw;
+        }
       }
       &:hover {
         .item-description {
@@ -138,6 +149,9 @@
     .btn {
       .svg {
         height: 110px;
+        @include ex-desktop_wide {
+          height: 11vh;
+        }
       }
     }
     .glass-eyes-left,
@@ -153,6 +167,11 @@
       @include phone_and_tabletP {
         display: none;
       }
+      @include ex-desktop_wide {
+        width: 5vw;
+        height: 5vw;
+        top: calc(50% - 3.3vw);
+      }
       .svg {
         width: 60%;
         height: 60%;
@@ -160,9 +179,15 @@
     }
     .glass-eyes-left {
       left: 16px;
+      @include ex-desktop_wide {
+        left: calc(50% - 6.2vw);
+      }
     }
     .glass-eyes-right {
       right: 15px;
+      @include ex-desktop_wide {
+        left: calc(100% - 6.2vw);
+      }
     }
     &:hover {
       .glass-eyes-left,
@@ -186,16 +211,26 @@
       }
       70% {
         transform: translateX(6px);
+        @include ex-desktop_wide {
+          transform: translateX(0.3vw);
+        }
       }
       100% {
         transform: translateX(6px);
+        @include ex-desktop_wide {
+          transform: translateX(0.3vw);
+        }
       }
     }
   }
-  .create-item-container {
+  .create-item-container,
+  .back-item-container {
     .btn {
       .svg {
-        width: 10.5vw;
+        @include ex-desktop_wide {
+          width: 12.5vw;
+          height: 10vw;
+        }
       }
     }
   }

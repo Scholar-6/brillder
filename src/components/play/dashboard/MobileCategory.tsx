@@ -2,7 +2,7 @@
 i.e. add back button on menu and row along top of 'my bricks'  6/7/2020 */
 import "./Dashboard.scss";
 import React, { Component } from "react";
-import { Box, Grid } from "@material-ui/core";
+import { Box, Grid, Grow } from "@material-ui/core";
 import axios from "axios";
 import { connect } from "react-redux";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
@@ -44,6 +44,7 @@ interface BricksListState {
   searchString: string;
   isSearching: boolean;
   finalBricks: Brick[];
+  shown: boolean;
 }
 
 class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
@@ -54,15 +55,17 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       finalBricks: [],
       searchString: "",
       isSearching: false,
+      shown: false,
     };
 
     axios.get(
       process.env.REACT_APP_BACKEND_HOST + "/bricks/byStatus/" + BrickStatus.Publish,
       { withCredentials: true }
-    ).then((res) => {
+    ).then(res => {
       this.setState({
         ...this.state,
         bricks: res.data,
+        shown: true,
         finalBricks: res.data as Brick[],
       });
     }).catch(() => {
@@ -79,7 +82,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     finalBricks.forEach(brick => brick.expanded = false);
   }
 
-  handleMouseClick(index: number) {
+  handleClick(index: number) {
     let { finalBricks } = this.state;
     if (finalBricks[index].expanded === true) {
       finalBricks[index].expanded = false;
@@ -113,7 +116,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
       { searchString },
       { withCredentials: true }
-    ).then((res) => {
+    ).then(res => {
       this.hideBricks();
       const searchBricks = res.data.map((brick: any) => brick.body);
       this.setState({
@@ -126,38 +129,34 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     });
   }
 
-  getSortedBrickContainer = (brick: Brick, key: number, row: any = 0) => {
-    let color = "";
-
-    if (!brick.subject) {
-      color = "#B0B0AD";
-    } else {
-      color = brick.subject.color;
-    }
-
-    let className = `sorted-brick absolute-container brick-row-${row}`;
+  renderBrick = (brick: Brick, key: number) => {
+    let color = !brick.subject ? "#B0B0AD" : brick.subject.color;
+    let className = 'sorted-brick absolute-container';
 
     if (brick.expanded) {
       className += " brick-hover";
     }
 
     return (
-      <div key={key} className="main-brick-container">
-        <Box className="brick-container">
-          <div
-            className={className}
-            onClick={() => this.handleMouseClick(key)}
-          >
-            <ShortBrickDescription
-              brick={brick}
-              color={color}
-              isMobile={true}
-              isExpanded={brick.expanded}
-              move={() => this.move(brick.id)}
-            />
-          </div>
-        </Box>
-      </div>
+      <Grow
+        in={this.state.shown}
+        style={{ transformOrigin: "0 0 0" }}
+        timeout={key * 150}
+      >
+        <div key={key} className="main-brick-container">
+          <Box className="brick-container">
+            <div className={className} onClick={() => this.handleClick(key)}>
+              <ShortBrickDescription
+                brick={brick}
+                color={color}
+                isMobile={true}
+                isExpanded={brick.expanded}
+                move={() => this.move(brick.id)}
+              />
+            </div>
+          </Box>
+        </div>
+      </Grow>
     );
   };
 
@@ -165,8 +164,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     let bricksList = [];
     for (let i = 0; i < this.state.finalBricks.length; i++) {
       if (this.state.finalBricks[i]) {
-        let row = Math.floor(i / 3);
-        bricksList.push(this.getSortedBrickContainer(this.state.finalBricks[i], i, row));
+        bricksList.push(this.renderBrick(this.state.finalBricks[i], i));
       }
     }
     return bricksList;
@@ -216,7 +214,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
 
     return (
       <Swiper slidesPerView={2}>
-        {bricksList.map((b, i) => <SwiperSlide key={i} onClick={() => this.handleMouseClick(i)} style={{ width: '50vw' }}>{b}</SwiperSlide>)}
+        {bricksList.map((b, i) => 
+          <SwiperSlide key={i} onClick={() => this.handleClick(i)} style={{ width: '50vw' }}>
+            {b}
+          </SwiperSlide>
+        )}
       </Swiper>
     );
   }

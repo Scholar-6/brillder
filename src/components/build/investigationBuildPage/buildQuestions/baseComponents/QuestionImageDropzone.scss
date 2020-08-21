@@ -9,11 +9,14 @@
   left: 0;
   z-index: 200;
   .dropzone {
-    cursor: pointer;
-
-    color: #aaa;
     width: 80%;
     margin: 0 auto;
+    background: transparent !important;
+    border: none !important;
+    min-height: inherit;
+    padding: 0 !important;
+    color: transparent !important;
+    background-color: transparent !important;
     svg {
       height: 1.4vw;
       width: 1.4vw;
@@ -21,12 +24,6 @@
     > img {
       max-height: 8vh;
       width: 100%;
-    }
-    &:hover {
-      color: var(--theme-orange);
-      .plus-image {
-        background: var(--theme-orange);
-      }
     }
   }
 }
