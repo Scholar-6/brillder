@@ -67,7 +67,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const assignToStudent = async (student: UserBase) => {
     await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignStudents/${props.brick.id}`,
-      [student.id],
+      {studentsIds: [student.id]},
       { withCredentials: true }
     ).catch(() => {
       props.requestFailed('Can`t assign student to brick');
