@@ -8,6 +8,7 @@ interface ClassroomListProps {
   classrooms: TeachClassroom[];
   startIndex: number;
   pageSize: number;
+  activeClassroom: TeachClassroom | null;
 }
 interface ClassroomListState {
   isArchive: boolean
@@ -44,6 +45,24 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
     return "";
   }
 
+  renderActiveClassroom(c: TeachClassroom) {
+    return (
+      <div className="classroom-title">
+        {c.name}
+        {}
+        {c.assignments.map((a, i) => <AssignedBrickDescription key={i} brick={a.brick} />)}
+      </div>
+    )
+  }
+
+  renderContent() {
+    const {activeClassroom} = this.props;
+    if (activeClassroom) {
+      return this.renderActiveClassroom(activeClassroom);
+    }
+    return this.props.classrooms.map(this.renderClassroom.bind(this));
+  }
+
   render() {
     return (
       <div className="classroom-list">
@@ -51,7 +70,7 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
           {this.renderLiveBricksButton()}
           {this.renderArchiveButton()}
         </div>
-        {this.props.classrooms.map(this.renderClassroom.bind(this))}
+        {this.renderContent()}
       </div>
     );
   }
