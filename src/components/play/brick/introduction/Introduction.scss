@@ -1094,20 +1094,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
     }
   }
 
-  .help-text {
-    font-family: $font-family-regular;
-
-    margin-bottom: 3px;
-
-    @include phone_and_tabletP {
-      font-size: 4vw;
-    }
-
-    @include tabletP {
-      font-size: 0.8vw;
-    }
-  }
-
   // class for desktop only
   .sorted-row-expanded {
     @include tabletP {
