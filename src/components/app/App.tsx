@@ -36,6 +36,7 @@ import BrickWrapper from './BrickWrapper';
 import { setBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'components/services/zendesk';
 import map from 'components/map';
+import ClassStatistics from 'components/teach/statistics/ClassStatistics';
 
 
 const App: React.FC = (props: any) => {
@@ -89,6 +90,7 @@ const App: React.FC = (props: any) => {
         <StudentRoute path={map.ViewAllPage} component={Dashboard} />
 
         <BuildRoute path="/manage-classrooms" component={ManageClassrooms} location={location} /> 
+        <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatistics} location={location} />
 
         <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
