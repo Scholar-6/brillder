@@ -12,14 +12,17 @@ $space-between-boxes: 0.1vw;
 .investigation-build-page {
   height: 100vh;
   overflow: hidden;
+
   .exit-arrow {
     position: fixed;
     top: 2.6vh;
     left: 4.7vw;
+
     img {
       height: 2vw;
     }
   }
+
   .play-preview {
     position: fixed !important;
   }
@@ -28,6 +31,21 @@ $space-between-boxes: 0.1vw;
     .custom-component {
       background: white;
       overflow-y: hidden;
+
+      .help-text {
+        font-family: $font-family-regular;
+
+        margin-top: 10px !important;
+        margin-bottom: 5px !important;
+
+        @include phone_and_tabletP {
+          font-size: 4vw;
+        }
+
+        @include tabletP {
+          font-size: 0.8vw;
+        }
+      }
     }
   }
 
@@ -58,6 +76,7 @@ $space-between-boxes: 0.1vw;
     cursor: pointer;
     color: var(--theme-orange);
     z-index: 999;
+
     &:hover {
       opacity: 0.5;
     }
@@ -93,6 +112,7 @@ $space-between-boxes: 0.1vw;
     color: white;
     font-family: $font-family-regular;
     z-index: 101;
+
     .tutorial-exit-label {
       width: 38%;
     }
@@ -119,6 +139,7 @@ $space-between-boxes: 0.1vw;
   .your-proposal-container {
     width: 9.35vw;
   }
+
   .additional-tooltip {
     margin-top: 4vh;
     font-size: 1.2vw;
@@ -152,41 +173,52 @@ $space-between-boxes: 0.1vw;
     letter-spacing: 0.3vw;
     font-family: $font-family-black;
     color: var(--light-blue);
+
     .svg {
       color: var(--light-blue);
     }
+
     &:hover {
       color: var(--white);
+
       .svg {
         color: var(--white);
       }
     }
+
     .proposal-edit-icon {
       height: 4.5vw;
       width: 4.5vw;
     }
+
     &.white {
       color: var(--white);
+
       .svg {
         color: var(--white);
       }
+
       .proposal-edit-icon {
         height: 3.5vw;
         width: 3.5vw;
       }
     }
+
     .proposal-text {
       @extend %transitionAll300;
       margin-top: 0vh;
       margin-left: 0.3vw;
     }
+
     &.invalid {
       @extend %transitionAll300;
       color: var(--theme-orange);
+
       svg {
         color: inherit !important;
       }
     }
+
     &.invalid:hover {
       opacity: 0.8;
     }
@@ -196,6 +228,7 @@ $space-between-boxes: 0.1vw;
     img {
       border: none;
     }
+
     .tooltip-text {
       opacity: 0;
     }
@@ -223,6 +256,7 @@ $space-between-boxes: 0.1vw;
     width: 34.3vw;
     color: white;
     text-align: center;
+
     img {
       margin-top: 0.3vw;
       height: 1.52vw;
@@ -244,6 +278,7 @@ $space-between-boxes: 0.1vw;
     border-radius: 0.6vw;
     padding: 0.1vh 0;
     padding-left: 0.5vw;
+
     &:before {
       border: 0.1vw dashed var(--theme-orange);
     }
