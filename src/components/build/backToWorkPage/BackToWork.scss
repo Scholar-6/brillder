@@ -121,12 +121,33 @@
   }
   // Teach classroom list
   .classroom-list {
+    position: relative;
     height: $backwork-inner-tab-content-height;
     overflow: auto;
     color: var(--theme-dark-blue);
     padding-top: 3vh;
     padding-left: 1.6vw;
     padding-right: 1vw;
+    .classroom-list-buttons {
+      position: absolute;
+      top: 3vh;
+      right: 1vw;
+      display: flex;
+
+      div {
+        cursor: pointer;
+        padding-left: 1vw;
+        padding-right: 1vw;
+        font-size: 0.9vw;
+        font-family: $font-family-bold;
+        letter-spacing: 0.1vw;
+        color: var(--gray);
+      }
+
+      div.active {
+        color: var(--theme-dark-blue);
+      }
+    }
     .classroom-title {
       font-size: 1.5vw;
       text-transform: capitalize;
