@@ -4,6 +4,7 @@ import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './AssignedBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
+import AssignedCircle from './AssignedCircle';
 
 interface AssignedDescriptionProps {
   brick: Brick;
@@ -57,16 +58,26 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
 
     return (
       <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
-        <div>3</div>
+        <div className="total-view-count">
+          8
+          <svg className="svg active">
+            <use href={sprite + "#eye-on"} className="text-theme-dark-blue" />
+          </svg>
+        </div>
         {this.renderCircle(color)}
-        <div className="short-brick-info">
-          <div className="link-description">
-            <span>{brick.title}</span>
+        <div style={{display: 'flex'}}>
+          <div className="short-brick-info">
+            <div className="link-description">
+              <span>{brick.title}</span>
             </div>
-          <div className="link-info">
-            {brick.subTopic} | {brick.alternativeTopics}
+            <div className="link-info">
+              {brick.subTopic} | {brick.alternativeTopics}
+            </div>
+            <div className="link-info">{getAuthorRow(brick)}</div>
           </div>
-          <div className="link-info">{getAuthorRow(brick)}</div>
+          <AssignedCircle />
+          <AssignedCircle />
+          <AssignedCircle />
         </div>
         {isExpanded ? this.renderPlayButton() : ""}
       </div>

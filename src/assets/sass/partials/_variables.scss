@@ -108,6 +108,8 @@ $backwork-bricks-height-2: calc(
 
 $backwork-tab-content-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$backwork-tab-height});
 
+$backwork-inner-tab-content-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$backwork-tab-height} - #{$pagination-size});
+
 $filter-sidebar-size: 23vw;
 $filter-sidebar-margin: 1.2vw;
 

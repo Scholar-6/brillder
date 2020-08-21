@@ -4,38 +4,47 @@
 
 .assigned-brick-description {
   position: relative;
-  height: 9vh;
+  height: 11.5vh;
+  padding-top: 1vh;
+
+  .total-view-count {
+    position: absolute;
+    @extend %flexCenter;
+    top: 1vh;
+    width: 2.1vw;
+    font-size: 1vw;
+    color: var(--theme-dark-blue);
+
+    svg {
+      margin-left: 0.2vw;
+      height: 1vw;
+      width: 1vw;
+    }
+  }
 
   .left-brick-circle {
-    @include phone_and_tabletP {
-      margin-right: 3vw;
-    }
-
-    @include tabletP {
-      position: absolute;
-      top: 1.3vh;
-    }
+    position: absolute;
+    top: 3.7vh;
 
     >div {
       height: 2.1vw;
       width: 2.1vw;
       border-radius: 20vw;
       background-color: var(--gray);
-
-      @include phone_and_tabletP {
-        height: 9.5vw;
-        width: 9.5vw;
-      }
     }
   }
 
   .short-brick-info {
     font-size: 0.8vw;
     padding: 0 3vw;
+    width: 20vw;
+    padding-top: 2.2vh;
+
     .link-description,
     .link-info {
       width: 100%;
     }
+
     .link-description {
       text-transform: uppercase;
       font-family: $font-family-bold;
@@ -45,6 +54,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
     }
+
     .link-info {
       color: var(--theme-light-blue);
       line-height: 1.3;

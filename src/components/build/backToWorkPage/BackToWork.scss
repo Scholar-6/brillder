@@ -121,6 +121,8 @@
   }
   // Teach classroom list
   .classroom-list {
+    height: $backwork-inner-tab-content-height;
+    overflow: auto;
     color: var(--theme-dark-blue);
     padding-top: 3vh;
     padding-left: 1.6vw;

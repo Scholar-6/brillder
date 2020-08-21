@@ -1,0 +1,24 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.teach-circle-flex-container {
+  display: flex;
+  justify-content: center;
+  width: 12vw;
+
+  .teach-circle-container {
+    .total-view-count-container {
+      height: 2.7vh;
+      width: 2vw;
+    }
+
+    .teach-circle {
+      @extend %flexCenter;
+      background: red;
+      border-radius: 50%;
+      height: 2.1vw;
+      width: 2.1vw;
+    }
+  }
+}
