@@ -33,13 +33,13 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
 
   renderClassroom(c: TeachClassroom, i: number) {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
-    return (
-      <div className="classroom-title" key={i}>
-        {c.name}
-        {}
-        {c.assignments.map((a, i) => <AssignedBrickDescription key={i} brick={a.brick} />)}
-      </div>
-    )
+      return (
+        <div className="classroom-title" key={i}>
+          {c.name}
+          {}
+          {c.assignments.map((a, i) => <AssignedBrickDescription key={i} brick={a.brick} />)}
+        </div>
+      )
     }
     return "";
   }

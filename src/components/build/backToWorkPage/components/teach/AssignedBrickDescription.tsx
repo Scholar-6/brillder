@@ -9,7 +9,6 @@ import AssignedCircle from './AssignedCircle';
 interface AssignedDescriptionProps {
   brick: Brick;
   index?: number;
-  color?: string;
   isMobile?: boolean;
   isExpanded?: boolean;
   onClick?(): void;
@@ -17,7 +16,11 @@ interface AssignedDescriptionProps {
 }
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
-  renderCircle(color: string) {
+  renderCircle() {
+    let color = this.props.brick.subject?.color;
+    if (!color) {
+      color = "#B0B0AD";
+    }
     return (
       <div className="left-brick-circle">
         <div className="round-button" style={{ background: color }} />
@@ -41,7 +44,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   }
 
   render() {
-    let { color, brick, isMobile, isExpanded, index } = this.props;
+    let { brick, isMobile, isExpanded, index } = this.props;
     let className = "assigned-brick-description";
 
     if (isMobile && isExpanded) {
@@ -49,11 +52,6 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     }
     if (index !== undefined && index >= 0) {
       className += " mobile-short-" + index;
-    }
-
-
-    if (!color) {
-      color = "#B0B0AD";
     }
 
     return (
@@ -64,7 +62,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <use href={sprite + "#eye-on"} className="text-theme-dark-blue" />
           </svg>
         </div>
-        {this.renderCircle(color)}
+        {this.renderCircle()}
         <div style={{ display: 'flex' }}>
           <div className="short-brick-info">
             <div className="link-description">

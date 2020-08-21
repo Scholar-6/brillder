@@ -101,7 +101,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
               <use href={sprite + "#users"} />
             </svg>
             <div className="white-box">
-              {0}
+              {c.assignments.length}
             </div>
           </div>
         </div>
