@@ -23,12 +23,12 @@ import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/Delet
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FilterSidebar from './components/FilterSidebar';
 import PlayFilterSidebar from './components/PlayFilterSidebar';
-import TeachFilterSidebar from './components/TeachFilterSidebar';
+import TeachFilterSidebar from './components/teach/TeachFilterSidebar';
+import ClassroomList from './components/teach/ClassroomList';
 import BackPagePagination from './components/BackPagePagination';
 import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import BrickBlock from './components/BrickBlock';
 import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
-import ClassroomList from './components/ClassroomList';
 import { TeachClassroom } from "model/classroom";
 import { getAllClassrooms } from "components/teach/service";
 
