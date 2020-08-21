@@ -65,7 +65,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
           </svg>
         </div>
         {this.renderCircle(color)}
-        <div style={{display: 'flex'}}>
+        <div style={{ display: 'flex' }}>
           <div className="short-brick-info">
             <div className="link-description">
               <span>{brick.title}</span>
@@ -78,6 +78,21 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
           <AssignedCircle />
           <AssignedCircle />
           <AssignedCircle />
+          <div className="teach-brick-actions-container">
+            <div className="stats-button-container">
+              <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#bar-chart-2"} />
+              </svg>
+            </div>
+            <div className="stats-text">Stats</div>
+            <div className="archive-button-container">
+              <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#archive"} className="text-gray" />
+              </svg>
+            </div>
+          </div>
         </div>
         {isExpanded ? this.renderPlayButton() : ""}
       </div>
