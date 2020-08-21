@@ -13,7 +13,7 @@
       display: flex;
       flex-wrap: nowrap;
 
-      >div {
+      > div {
         cursor: pointer;
         width: 100%;
         min-height: $backwork-tab-height;
@@ -29,11 +29,11 @@
         margin-right: $tabs-margin-between;
       }
 
-      >div.active {
+      > div.active {
         background: var(--white);
       }
 
-      >div:last-child {
+      > div:last-child {
         border-top-right-radius: 0vw;
         margin-right: 0;
       }

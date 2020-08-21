@@ -10,8 +10,7 @@
       .ck-content {
         padding: 1vw;
         text-align: left;
-        // REVERT Removed background from Text Component
-        // background-color: var(--tab-gray) !important;
+        background-color: var(--tab-gray);
       }
     }
   }
