@@ -64,6 +64,7 @@ interface BackToWorkState {
   filters: Filters;
   playFilters: PlayFilters;
   teachFilters: TeachFilters;
+  teachPageSize: number;
 }
 
 export interface BackToWorkProps {
@@ -150,6 +151,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         submitted: false,
         completed: false
       },
+      teachPageSize: 4,
 
       playFilters: {
         completed: false,
@@ -376,9 +378,23 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, filters, finalBricks, sortedIndex: 0 });
   }
 
-  // region Teach
+  //#region Teach
   teachFilterUpdated(teachFilters: TeachFilters) {
     this.setState({ teachFilters });
+  }
+
+  moveTeachNext() {
+    let index = this.state.sortedIndex;
+    if (index + this.state.teachPageSize < this.state.classrooms.length) {
+      this.setState({ ...this.state, sortedIndex: index + this.state.teachPageSize });
+    }
+  }
+
+  moveTeachBack() {
+    let index = this.state.sortedIndex;
+    if (index >= this.state.teachPageSize) {
+      this.setState({ ...this.state, sortedIndex: index - this.state.teachPageSize });
+    }
   }
 
   deactivateClassrooms() {
@@ -396,13 +412,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       this.setState({ classrooms });
     }
   }
-  // endregion 
+  //#endregion
 
-  // region Play
+  //#region Play
   playFilterUpdated(playFilters: PlayFilters) {
     this.setState({ playFilters });
   }
-  // endregion
+  //#endregion
 
   searching(searchString: string) {
     if (searchString.length === 0) {
@@ -490,6 +506,15 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   renderPagination = () => {
     let { sortedIndex, pageSize, finalBricks } = this.state;
+    if (this.state.activeTab === ActiveTab.Teach) {
+      return <BackPagePagination
+        sortedIndex={sortedIndex}
+        pageSize={this.state.teachPageSize}
+        bricksLength={this.state.classrooms.length}
+        moveNext={() => this.moveTeachNext()}
+        moveBack={() => this.moveTeachBack()}
+      />
+    }
     if (this.state.filters.viewAll) {
       return (
         <BackPagePaginationV2
@@ -595,7 +620,11 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                 activeTab === ActiveTab.Build ? this.renderBricksList() : ""
               }
               {
-                activeTab === ActiveTab.Teach ? <ClassroomList classrooms={this.state.classrooms} /> : ""
+                activeTab === ActiveTab.Teach ? <ClassroomList
+                  startIndex={this.state.sortedIndex}
+                  pageSize={this.state.teachPageSize}
+                  classrooms={this.state.classrooms}
+                /> : ""
               }
               {this.renderPagination()}
             </div>
