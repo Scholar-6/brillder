@@ -148,8 +148,14 @@
   .view-item-container {
     .btn {
       .svg {
-        height: 110px;
+        @include tabletP {
+          height: 110px;
+        }
         @include ex-desktop_wide {
+        }
+        @include ex-desktop_wide_hd {
+        }
+        @include apple-macbook-air-width {
           height: 11vh;
         }
       }
@@ -159,7 +165,6 @@
       width: 100px;
       height: 100px;
       position: absolute;
-      top: 4px;
       opacity: 0;
       transition-delay: 200ms;
       @extend %transitionAll300;
@@ -167,10 +172,21 @@
       @include phone_and_tabletP {
         display: none;
       }
+      @include tabletP {
+        top: 4px;
+        width: 100px;
+        height: 100px;
+      }
       @include ex-desktop_wide {
-        width: 5vw;
-        height: 5vw;
-        top: calc(50% - 3.3vw);
+        top: -2px;
+      }
+      @include ex-desktop_wide_hd {
+        top: 5px;
+      }
+      @include apple-macbook-air-width {
+        width: 4vw;
+        height: 4vw;
+        top: 0;
       }
       .svg {
         width: 60%;
@@ -178,15 +194,31 @@
       }
     }
     .glass-eyes-left {
-      left: 16px;
+      @include tabletP {
+        left: 16px;
+      }
       @include ex-desktop_wide {
-        left: calc(50% - 6.2vw);
+        left: 21px;
+      }
+      @include ex-desktop_wide_hd {
+        left: 30px;
+      }
+      @include apple-macbook-air-width {
+        left: 3.07vw;
       }
     }
     .glass-eyes-right {
-      right: 15px;
+      @include tabletP {
+        right: 15px;
+      }
       @include ex-desktop_wide {
-        left: calc(100% - 6.2vw);
+        right: 18px;
+      }
+      @include ex-desktop_wide_hd {
+        right: 28px;
+      }
+      @include apple-macbook-air-width {
+        right: 2.99vw;
       }
     }
     &:hover {
