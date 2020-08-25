@@ -1,0 +1,96 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.final-step-page {
+  color: var(--theme-dark-blue) !important;
+
+  .round-button {
+    background: var(--theme-green) !important;
+    svg {
+      $padding: 0.7vw;
+      padding: $padding;
+      color: var(--white);
+      height: calc(100% - #{$padding * 2}) !important;
+      width: calc(100% - #{$padding * 2}) !important;
+    }
+  }
+
+  .intro-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .left-brick-circle {
+    left: 1.8vw !important;
+    top: 3.7vh !important;
+  }
+
+  h2 {
+    text-transform: none !important;
+    text-align: center !important;
+    display: block !important;
+    padding: 0 !important;
+    width: 100%;
+    margin-top: 3.9vh !important;
+    font-size: 4.1vw !important;
+    font-family: $font-family-bold !important;
+  }
+
+  .direction-info {
+    font-size: 2.7vw;
+    font-family: $font-family-bold;
+    text-align: center;
+  }
+
+  p {
+    text-align: center;
+    font-size: 2.1vw;
+    margin-top: 4.2vh;
+    font-family: $font-family-bold;
+  }
+
+  .share-row {
+    margin-top: 12.5vh;
+
+    .button-container {
+      @extend %flexToXCenter;
+
+      svg {
+        $icon-size: 6vw;
+        height: $icon-size;
+        width: $icon-size;
+        stroke-width: 1;
+      }
+    }
+    .link-text {
+      margin-top: 2vh;
+      font-family: $font-family-bold;
+      text-align: center;
+      font-size: 2vw;
+    }
+
+    .link-description {
+      text-align: center;
+      font-family: "Brandon Grotesque Regular Italic";
+      font-size: 1.2vw;
+    }
+  }
+
+  .play-green {
+    padding: 2.5vw !important;
+
+    &:after {
+      @include phone_and_tabletP {
+        width: calc(100% + 3vw);
+        height: calc(100% + 3vw);
+      }
+      @include tabletP {
+        width: calc(100% + 1.4vw);
+        height: calc(100% + 1.4vw);
+      }
+    }
+  }
+}
