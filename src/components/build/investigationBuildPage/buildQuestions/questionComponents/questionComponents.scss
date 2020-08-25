@@ -20,8 +20,9 @@
 
 .component-title {
   margin-bottom: 0.4vh;
+  font-size: $base-sm-text-size;
   div {
-    font-size: $base-sm-text-size;
+    font-size: inherit;
     font-family: $font-family-regular;
     letter-spacing: 2px;
   }
@@ -46,11 +47,13 @@
     width: 2vw;
     height: 100%;
     position: absolute;
+    background: var(--white) !important;
     right: 0;
     top: 0;
     z-index: 1;
     padding: 0;
     .ck-toolbar__items {
+      background: inherit !important;
       .ck-button {
         min-width: inherit !important;
         min-height: inherit !important;
