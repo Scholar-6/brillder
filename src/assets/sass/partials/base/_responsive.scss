@@ -60,6 +60,13 @@
   }
 }
 
+// 1680
+@mixin ex-desktop_wide_hd {
+  @media screen and (min-width:#{$ex-desktop-wide-hd-width}) {
+    @content;
+  }
+}
+
 // 2560
 @mixin apple-macbook-air-width {
   @media screen and (min-width:#{$apple-macbook-air-width}) {
