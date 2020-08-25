@@ -12,6 +12,7 @@ import ProvisionalScore from "./provisionalScore/ProvisionalScore";
 import Synthesis from "./synthesis/Synthesis";
 import Review from "./review/ReviewPage";
 import Ending from "./ending/Ending";
+import FinalStep from "./finalStep/FinalStep";
 
 import { Brick } from "model/brick";
 import { ComponentAttempt, PlayStatus } from "./model/model";
@@ -73,6 +74,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [mode, setMode] = React.useState(PlayMode.Normal);
   const [liveEndTime, setLiveEndTime] = React.useState(null as any);
   const location = useLocation();
+  const finalStep = location.pathname.search("/finalStep") >= 0;
 
   // Commented this in order to allow students to also be builders and vice versa, we may need to add this back in (11/5/2020)
   // let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor);
@@ -282,6 +284,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             saveBrick={saveBrickAttempt}
           />
         </Route>
+        <Route exac path="/play/brick/:brickId/finalStep">
+          <FinalStep
+            status={status}
+            brick={brick}
+            history={props.history}
+            attempts={attempts}
+            brickAttempt={brickAttempt}
+            saveBrick={saveBrickAttempt}
+          />
+        </Route>
       </Switch>
     );
   };
@@ -295,7 +307,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     <div className="play-preview-pages">
       {renderHead()}
       <div className={className}>
-        <PlayLeftSidebar mode={mode} sidebarRolledUp={sidebarRolledUp} setMode={setMode} toggleSidebar={setSidebar} />
+        <PlayLeftSidebar mode={mode} sidebarRolledUp={sidebarRolledUp} empty={finalStep} setMode={setMode} toggleSidebar={setSidebar} />
         <div className="brick-row-container">
           {renderRouter()}
         </div>
