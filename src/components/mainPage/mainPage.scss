@@ -316,7 +316,7 @@
       .swiper-slide {
         width: 100%;
         @extend %flexCenter;
-        height: calc(33.33vh - 8vh);
+        height: calc(33.33% - 8%);
         opacity: 0.5;
         &.swiper-slide-next {
           transform: scale(1.2);
