@@ -80,6 +80,11 @@ $space-between-boxes: 0.1vw;
     &:hover {
       opacity: 0.5;
     }
+    svg {
+      $remove-button-size: 1vw;
+      height: $remove-button-size;
+      width: $remove-button-size;
+    }
   }
 
   .page-header {
