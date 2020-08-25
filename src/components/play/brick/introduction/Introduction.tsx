@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import sprite from "assets/img/icons-sprite.svg";
+import { isMobile } from "react-device-detect";
 
 import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
@@ -194,7 +195,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             />
           </svg>
         </div>
-        {!state.prepExpanded ? (
+        {!state.prepExpanded && !isMobile ? (
           <span className="help-prep">
             Expand to start the timer. Aim to spend around {timeToSpend} minutes
             on this section.
