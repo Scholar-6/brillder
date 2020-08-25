@@ -311,7 +311,7 @@
     }
     .swiper-container {
       width: 100%;
-      height: calc(100vh - 100px) !important;
+      height: calc(100% - 100px) !important;
       padding: 1vh 0;
       .swiper-slide {
         width: 100%;
