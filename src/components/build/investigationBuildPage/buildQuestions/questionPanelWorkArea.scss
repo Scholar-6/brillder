@@ -120,6 +120,12 @@
       padding: 0.3vw 0;
       > button {
         @extend %floatToCenter;
+
+        svg {
+          $scroll-button-size: 1vw;
+          height: $scroll-button-size;
+          width: $scroll-button-size;
+        }
       }
     }
     .scroll-text {
