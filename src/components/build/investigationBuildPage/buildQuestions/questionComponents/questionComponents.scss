@@ -8,6 +8,10 @@
   .drop-box {
     margin-bottom: 0.2vw;
     @extend %themeRadius;
+
+    .dropzone {
+      border: none !important;
+    }
   }
   .add-dropbox {
     margin-bottom: 0.2vw;
