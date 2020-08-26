@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 
 import './PairMatch.scss';
 import CompComponent from '../Comp';
-import {ComponentAttempt} from 'components/play/brick/model/model';
+import {ComponentAttempt} from 'components/play/brick/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import {QuestionValueType} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 import {Answer} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/pairMatchBuild/types';

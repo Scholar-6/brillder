@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Question } from "model/question";
-import { ComponentAttempt } from "../model/model";
+import { ComponentAttempt } from "../model";
 
 import sprite from "assets/img/icons-sprite.svg";
 

@@ -3,8 +3,8 @@ import { Grid, Hidden } from "@material-ui/core";
 
 import "./FinalStep.scss";
 import { Brick } from "model/brick";
-import { PlayStatus } from "../model/model";
-import { BrickAttempt } from "../PlayBrickRouting";
+import { PlayStatus } from "../model";
+import { BrickAttempt } from "../model";
 import sprite from "assets/img/icons-sprite.svg";
 import Clock from "../baseComponents/Clock";
 

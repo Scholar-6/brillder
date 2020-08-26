@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import Ending from './Ending';
-import { PlayStatus } from "../model/model";
-import { BrickAttempt } from "../PlayBrickRouting";
+import { PlayStatus } from "../model";
+import { BrickAttempt } from "../model";
 
 describe("Ending play", () => {
   beforeEach(() => {

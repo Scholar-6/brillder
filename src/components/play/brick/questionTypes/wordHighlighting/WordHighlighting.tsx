@@ -3,7 +3,7 @@ import React from "react";
 import "./WordHighlighting.scss";
 import CompComponent from "../Comp";
 import {CompQuestionProps} from '../types';
-import { ComponentAttempt } from "components/play/brick/model/model";
+import { ComponentAttempt } from "components/play/brick/model";
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import { PlayWord, IPlayWordComponent } from 'components/interfaces/word';
 

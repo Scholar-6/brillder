@@ -7,7 +7,7 @@ import './Sort.scss';
 import { Question } from "model/question";
 import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
-import {ComponentAttempt} from 'components/play/brick/model/model';
+import {ComponentAttempt} from 'components/play/brick/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { ReactSortable } from 'react-sortablejs';
 import {SortCategory, SortAnswer, QuestionValueType} from 'components/interfaces/sort';

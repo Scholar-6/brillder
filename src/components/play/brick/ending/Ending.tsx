@@ -4,8 +4,8 @@ import { CircularProgressbar } from "react-circular-progressbar";
 
 import "./Ending.scss";
 import { Brick } from "model/brick";
-import { PlayStatus } from "../model/model";
-import { BrickAttempt } from "../PlayBrickRouting";
+import { PlayStatus } from "../model";
+import { BrickAttempt } from "../model";
 import ReviewStepper from '../review/ReviewStepper';
 import sprite from "assets/img/icons-sprite.svg";
 import Clock from "../baseComponents/Clock";
