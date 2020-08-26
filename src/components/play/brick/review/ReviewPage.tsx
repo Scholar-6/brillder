@@ -9,7 +9,7 @@ import "./ReviewPage.scss";
 import { Question } from "model/question";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
-import { PlayStatus } from "../model/model";
+import { PlayStatus } from "../model";
 import sprite from "assets/img/icons-sprite.svg";
 import ReviewStepper from "./ReviewStepper";
 import { Moment } from "moment";
@@ -135,6 +135,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         question={question}
         answers={answers[index]}
         ref={questionRefs[index]}
+        isReview={true}
       />
     );
   };

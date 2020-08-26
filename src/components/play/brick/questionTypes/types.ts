@@ -1,5 +1,5 @@
 import { Question } from "model/question";
-import {ComponentAttempt} from '../model/model';
+import {ComponentAttempt} from '../model';
 
 export interface CompQuestionProps {
   question: Question;
@@ -7,5 +7,6 @@ export interface CompQuestionProps {
   attempt?: ComponentAttempt<any>;
   isPreview?: boolean;
   answers: any;
+  isReview?: boolean;
   onAttempted(): void;
 }

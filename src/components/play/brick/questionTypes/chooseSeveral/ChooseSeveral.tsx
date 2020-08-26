@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 
 import './ChooseSeveral.scss';
 import CompComponent from '../Comp';
-import { ComponentAttempt } from 'components/play/brick/model/model';
+import { ComponentAttempt } from 'components/play/brick/model';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from 'components/play/brick/baseComponents/ReviewGlobalHint';
 import { CompQuestionProps } from '../types';

@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core';
 import './VerticalShuffle.scss';
 import {CompQuestionProps} from '../types';
 import CompComponent from '../Comp';
-import {ComponentAttempt} from 'components/play/brick/model/model';
+import {ComponentAttempt} from 'components/play/brick/model';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';

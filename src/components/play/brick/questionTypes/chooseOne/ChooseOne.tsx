@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import './ChooseOne.scss';
 import CompComponent from '../Comp';
 import { CompQuestionProps } from '../types';
-import { ComponentAttempt } from 'components/play/brick/model/model';
+import { ComponentAttempt } from 'components/play/brick/model';
 import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
@@ -112,6 +112,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   }
 
   renderChoice(choice: ChooseOneChoice, index: number) {
+    const {attempt} = this.props;
     let isCorrect = this.isCorrect(index);
     let className = "choose-choice";
     const { activeItem } = this.state;
@@ -124,16 +125,19 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       className += " active";
     }
 
-    if (this.props.attempt && index === activeItem) {
-      let { answer } = this.props.attempt;
-      if (answer >= 0) {
-        if (answer === index) {
+    // if review show correct or wrong else just make answers active
+    if (attempt && index === activeItem) {
+      let { answer } = attempt;
+      if (answer >= 0 && answer === index) {
+        if (this.props.isReview) {
           if (isCorrect) {
             className += " correct";
           } else if (isCorrect === false) {
             className += " wrong";
           }
         }
+      } else {
+        className += " active";
       }
     }
 
@@ -150,7 +154,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
         {this.renderData(choice)}
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
-          attempt={this.props.attempt}
+          attempt={attempt}
           isCorrect={isCorrect}
           index={index}
           hint={this.props.question.hint}

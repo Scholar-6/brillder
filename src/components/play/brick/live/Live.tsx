@@ -8,7 +8,7 @@ import "./Live.scss";
 import { Question, QuestionTypeEnum } from "model/question";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
-import { PlayStatus, ComponentAttempt } from "../model/model";
+import { PlayStatus, ComponentAttempt } from "../model";
 import CountDown from "../baseComponents/CountDown";
 import sprite from "assets/img/icons-sprite.svg";
 
@@ -102,11 +102,16 @@ const LivePage: React.FC<LivePageProps> = ({
     }
   }
 
+  const setCurrentAnswerAttempt = () => {
+    let attempt = questionRefs[activeStep].current?.getAttempt();
+    console.log(attempt);
+    props.updateAttempts(attempt, activeStep);
+  }
+
   const setActiveAnswer = () => {
     const copyAnswers = Object.assign([], answers) as any[];
     copyAnswers[activeStep] = questionRefs[activeStep].current?.getAnswer();
-    let attempt = questionRefs[activeStep].current?.getAttempt();
-    props.updateAttempts(attempt, activeStep);
+    setCurrentAnswerAttempt();
     setAnswers(copyAnswers);
   };
 
@@ -190,6 +195,7 @@ const LivePage: React.FC<LivePageProps> = ({
         mode={props.mode}
         isTimeover={isTimeover}
         question={question}
+        attempt={props.attempts[index]}
         answers={answers[index]}
         ref={questionRefs[index]}
         onAttempted={() => onQuestionAttempted(index)}
@@ -243,6 +249,8 @@ const LivePage: React.FC<LivePageProps> = ({
     if (props.isPlayPreview) {
       mainPath = '/play-preview';
     }
+    let attempt = questionRefs[activeStep].current?.getRewritedAttempt();
+    props.updateAttempts(attempt, activeStep);
     history.push(`${mainPath}/brick/${brick.id}/intro?prepExtanded=true&resume=true`);
   }
 
