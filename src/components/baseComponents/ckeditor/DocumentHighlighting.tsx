@@ -70,11 +70,21 @@ class DocumentHighlightComponent extends React.Component<
   handleOnInit = (editor: any) => {
     this.setState({ ...this.state, editor });
 
+    
+/* 26/08/20 Changed how highlighting works.
     document.addEventListener('selectionchange', () => {
       const {mode} = this.props;
       if (mode === PlayMode.UnHighlighting) {
         editor.execute( 'fontBackgroundColor' );
       } else if (mode === PlayMode.Highlighting) {
+        editor.execute( 'fontBackgroundColor', { value: '#F6B72D' } );
+      }
+    });
+*/
+    editor.editing.view.document.on('selectionChange', (evt: any, { newSelection }: any) => {
+      if(newSelection.isBackward) {
+        editor.execute( 'fontBackgroundColor' );
+      } else {
         editor.execute( 'fontBackgroundColor', { value: '#F6B72D' } );
       }
     });
