@@ -117,10 +117,11 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   }
 
   renderEachHint(index: number) {
-    if (this.props.attempt) {
+    const {attempt} = this.props;
+    if (attempt && attempt.answer) {
       let isCorrect = false;
       let choice = this.props.component.choices[index];
-      let attemptedAnswer = this.props.attempt.answer[index].value;
+      let attemptedAnswer = attempt.answer[index].value;
       let answer = choice.answers[attemptedAnswer];
       if (answer && answer.checked) {
         isCorrect = true;
@@ -128,7 +129,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       return (
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
-          attempt={this.props.attempt}
+          attempt={attempt}
           isCorrect={isCorrect}
           index={index}
           hint={this.props.question.hint}
@@ -139,7 +140,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       return (
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
-          attempt={this.props.attempt}
+          attempt={attempt}
           isCorrect={false}
           index={index}
           hint={this.props.question.hint}
