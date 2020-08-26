@@ -11,6 +11,10 @@
   }
   .MuiPopover-paper {
     @include phone_and_tabletP {
+      box-shadow: none !important;
+      width: 100%;
+      transform: none !important;
+      transform-origin: 0 !important;
       left: 0 !important;
       top: unset !important;
       bottom: 60px;
@@ -143,9 +147,11 @@
         .notification-detail-single {
           @include phone_and_tabletP {
             font-size: 4vw;
+            padding: 15px 0;
           }
           @include tabletP {
             font-size: 1.2vw;
+            padding: 1vw 0;
           }
           @include tabletL {
             font-size: 1.4vw;
