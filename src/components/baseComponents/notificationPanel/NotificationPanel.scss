@@ -8,7 +8,6 @@
   }
   .MuiCardContent-root {
     padding: 1vw !important;
-    padding-bottom: 0 !important;
   }
   .MuiPopover-paper {
     @include phone_and_tabletP {
@@ -78,7 +77,6 @@
                   font-size: 0.9vw;
                 }
                 @include desktop {
-                  text-align: center;
                   font-size: 1vw;
                 }
               }
@@ -149,13 +147,15 @@
             font-size: 1.2vw;
           }
           @include tabletL {
-            font-size: 1.1vw;
+            font-size: 1.4vw;
           }
           color: white;
           font-family: $font-family-light;
-          text-transform: capitalize;
           text-align: center;
           font-size: 1vw;
+          em {
+            font-size: 1vw;
+          }
         }
       }
     }
