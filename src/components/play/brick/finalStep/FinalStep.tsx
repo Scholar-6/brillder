@@ -23,8 +23,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const [shareOpen, setShare] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
 
+  const link = `/play/brick/${brick.id}/intro`;
+
   if (status === PlayStatus.Live) {
-    history.push(`/play/brick/${brick.id}/intro`);
+    history.push(link);
   }
 
   const renderFooter = () => {
@@ -122,7 +124,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
           {renderFooter()}
         </div>
       </Hidden>
-      <InviteDialog isOpen={inviteOpen} link="wefwe" close={() => setInvite(false)} />
+      <InviteDialog isOpen={inviteOpen} link={document.location.host + link} close={() => setInvite(false)} />
       <ShareDialog isOpen={shareOpen} close={() => setShare(false)}/>
     </div>
   );
