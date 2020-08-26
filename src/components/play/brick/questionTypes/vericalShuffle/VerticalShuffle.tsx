@@ -140,7 +140,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     let isCorrect = this.checkAttemptAnswer(i);
     let className = "vertical-shuffle-choice";
 
-    if (!this.props.isPreview && this.props.attempt) {
+    if (!this.props.isPreview && this.props.attempt && this.props.isReview) {
       if (this.state.status !== DragAndDropStatus.Changed) {
         if (isCorrect === true) {
           className += " correct";

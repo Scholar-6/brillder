@@ -123,7 +123,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   renderAnswer(answer: any, i: number) {
     let isCorrect = this.checkAttemptAnswer(i);
     let className = "horizontal-shuffle-answer";
-    if (!this.props.isPreview && this.props.attempt) {
+    if (!this.props.isPreview && this.props.attempt && this.props.isReview) {
       if (this.state.status !== DragAndDropStatus.Changed) {
         if (isCorrect) {
           className += " correct";
