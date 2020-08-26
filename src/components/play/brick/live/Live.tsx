@@ -239,11 +239,11 @@ const LivePage: React.FC<LivePageProps> = ({
   };
 
   const moveToPrep = () => {
+    let mainPath = '/play'
     if (props.isPlayPreview) {
-      history.push(`/play-preview/brick/${brick.id}/intro?prepExtanded=true`);
-    } else {
-      history.push(`/play/brick/${brick.id}/intro?prepExtanded=true`);
+      mainPath = '/play-preview';
     }
+    history.push(`${mainPath}/brick/${brick.id}/intro?prepExtanded=true&resume=true`);
   }
 
   const renderStepper = () => {
