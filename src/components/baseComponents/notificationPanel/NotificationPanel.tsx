@@ -26,7 +26,7 @@ interface NotificationPanelProps {
 
 class NotificationPanel extends Component<NotificationPanelProps> {
   move(notification: Notification) {
-    const {history} = this.props;
+    const { history } = this.props;
     if (history) {
       if (notification.type === NotificationType.BrickPublished) {
         history.push(map.ViewAllPage);
@@ -102,7 +102,12 @@ class NotificationPanel extends Component<NotificationPanelProps> {
               )) :
                 (
                   <div className="notification-detail-single">
-                    Looks like you don't have any notifications...
+                    You have no new notifications
+                    <br />
+                    {/* For Admin, Teacher and Editor */}
+                    <em>“Nothing strengthens authority so much as silence”<br />- Leonardo da Vinci</em>
+                    {/* For student and builder */}
+                    <em>“Why then the world's mine oyster...”<br />- Shakespeare</em>
                   </div>
                 )
               }

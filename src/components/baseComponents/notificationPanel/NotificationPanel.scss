@@ -8,14 +8,13 @@
   }
   .MuiCardContent-root {
     padding: 1vw !important;
-    padding-bottom: 0 !important;
   }
   .MuiPopover-paper {
     @include phone_and_tabletP {
       left: 0 !important;
       top: unset !important;
-      bottom: 6vh;
-      border-radius: 2.5vw 0 0 0;
+      bottom: 60px;
+      border-radius: 12px 0 0 0;
       overflow: unset !important;
     }
     @include tabletP {
@@ -31,6 +30,7 @@
     }
     .notification-content {
       background-color: var(--light-blue);
+      box-shadow: none !important;
       @include phone_and_tabletP {
         width: 100vw;
         border-radius: 2.5vw 0 0 0;
@@ -78,7 +78,6 @@
                   font-size: 0.9vw;
                 }
                 @include desktop {
-                  text-align: center;
                   font-size: 1vw;
                 }
               }
@@ -149,13 +148,15 @@
             font-size: 1.2vw;
           }
           @include tabletL {
-            font-size: 1.1vw;
+            font-size: 1.4vw;
           }
           color: white;
           font-family: $font-family-light;
-          text-transform: capitalize;
           text-align: center;
           font-size: 1vw;
+          em {
+            font-size: 1vw;
+          }
         }
       }
     }
