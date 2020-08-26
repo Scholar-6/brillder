@@ -4,9 +4,10 @@ import { Grid, Hidden } from "@material-ui/core";
 import "./FinalStep.scss";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../model";
-import { BrickAttempt } from "../model";
 import sprite from "assets/img/icons-sprite.svg";
 import Clock from "../baseComponents/Clock";
+import ShareDialog from './ShareDialog';
+import InviteDialog from './InviteDialog';
 
 interface FinalStepProps {
   status: PlayStatus;
@@ -19,6 +20,9 @@ const FinalStep: React.FC<FinalStepProps> = ({
   brick,
   history,
 }) => {
+  const [shareOpen, setShare] = React.useState(false);
+  const [inviteOpen, setInvite] = React.useState(false);
+
   if (status === PlayStatus.Live) {
     history.push(`/play/brick/${brick.id}/intro`);
   }
@@ -68,7 +72,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                     <Grid container item xs={5} justify="center">
                       <div>
                         <div className="button-container">
-                          <svg className="svg active">
+                          <svg className="svg active" onClick={()=> setShare(true)}>
                             {/*eslint-disable-next-line*/}
                             <use href={sprite + "#share"} />
                           </svg>
@@ -80,7 +84,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                     </Grid>
                     <Grid container item xs={5} justify="center">
                       <div>
-                        <div className="button-container">
+                        <div className="button-container" onClick={()=> setInvite(true)}>
                           <svg className="svg active">
                             {/*eslint-disable-next-line*/}
                             <use href={sprite + "#user-plus"} />
@@ -118,6 +122,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
           {renderFooter()}
         </div>
       </Hidden>
+      <InviteDialog isOpen={inviteOpen} link="wefwe" close={() => setInvite(false)} />
+      <ShareDialog isOpen={shareOpen} close={() => setShare(false)}/>
     </div>
   );
 };
