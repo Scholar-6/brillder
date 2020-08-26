@@ -251,7 +251,11 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                             {
                               typeArray.map((typeName, i) => {
                                 const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
-                                return <MenuItem style={{ fontFamily: 'Brandon Grotesque Regular', fontSize: '1.2vw', lineHeight: '2vw' }} key={i} value={type}>{SplitByCapitalLetters(typeName)}</MenuItem>
+                                return (
+                                  <MenuItem key={i} value={type}>
+                                    {SplitByCapitalLetters(typeName)}
+                                  </MenuItem>
+                                )
                               })
                             }
                           </Select>
