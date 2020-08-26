@@ -107,7 +107,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   }
 
   checkChoice(choice: ChooseOneAnswer, index: number) {
-    if (this.props.attempt) {
+    if (this.props.attempt && this.props.isReview) {
       const { answer } = this.props.attempt;
       const found = answer.find((a: number) => a === index);
       if (found && found >= 0) {
@@ -119,9 +119,6 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
       }
     }
     return null;
-  }
-
-  renderEachHint(index: number) {
   }
 
   renderData(answer: ChooseOneAnswer) {
