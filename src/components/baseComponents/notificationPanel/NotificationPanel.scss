@@ -13,8 +13,8 @@
     @include phone_and_tabletP {
       left: 0 !important;
       top: unset !important;
-      bottom: 6vh;
-      border-radius: 2.5vw 0 0 0;
+      bottom: 60px;
+      border-radius: 12px 0 0 0;
       overflow: unset !important;
     }
     @include tabletP {
@@ -30,6 +30,7 @@
     }
     .notification-content {
       background-color: var(--light-blue);
+      box-shadow: none !important;
       @include phone_and_tabletP {
         width: 100vw;
         border-radius: 2.5vw 0 0 0;
