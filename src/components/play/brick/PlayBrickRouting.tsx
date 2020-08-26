@@ -149,7 +149,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       brickAttempt,
       { withCredentials: true }
     ).then(() => {
-      props.history.push(`/play/dashboard`);
+      props.history.push(`/play/brick/${brick.id}/finalStep`);
     }).catch(() => {
       alert("Can`t save your attempt");
     });
@@ -269,7 +269,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={props.history}
             attempts={attempts}
             brickAttempt={brickAttempt}
-            saveBrick={saveBrickAttempt}
+            saveAttempt={saveBrickAttempt}
           />
         </Route>
         <Route exac path="/play/brick/:brickId/finalStep">
@@ -277,9 +277,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             status={status}
             brick={brick}
             history={props.history}
-            attempts={attempts}
-            brickAttempt={brickAttempt}
-            saveBrick={saveBrickAttempt}
           />
         </Route>
       </Switch>

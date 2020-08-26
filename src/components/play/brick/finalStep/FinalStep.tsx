@@ -4,17 +4,15 @@ import { Grid, Hidden } from "@material-ui/core";
 import "./FinalStep.scss";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../model";
-import { BrickAttempt } from "../model";
 import sprite from "assets/img/icons-sprite.svg";
 import Clock from "../baseComponents/Clock";
+import ShareDialog from './ShareDialog';
+import InviteDialog from './InviteDialog';
 
 interface FinalStepProps {
   status: PlayStatus;
   brick: Brick;
   history: any;
-  brickAttempt: BrickAttempt;
-  attempts: any[];
-  saveBrick(): void;
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
@@ -22,9 +20,13 @@ const FinalStep: React.FC<FinalStepProps> = ({
   brick,
   history,
 }) => {
+  const [shareOpen, setShare] = React.useState(false);
+  const [inviteOpen, setInvite] = React.useState(false);
+
+  const link = `/play/brick/${brick.id}/intro`;
 
   if (status === PlayStatus.Live) {
-    //history.push(`/play/brick/${brick.id}/intro`);
+    history.push(link);
   }
 
   const renderFooter = () => {
@@ -38,6 +40,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
           <button
             type="button"
             className="play-preview svgOnHover play-green"
+            onClick={() => history.push('/play/dashboard')}
           >
             <svg className="svg w80 h80 active m-l-02">
               {/*eslint-disable-next-line*/}
@@ -59,22 +62,22 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 <div className="intro-header">
                   <div className="left-brick-circle">
                     <div className="round-button">
-                    <svg className="svg active">
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#check-icon-thin"} />
-                        </svg>
+                      <svg className="svg active">
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#check-icon-thin"} />
+                      </svg>
                     </div>
                   </div>
                   <h2>Final step?</h2>
-                  <p>Well done for completing “Brick Name”!</p>
+                  <p>Well done for completing “{brick.title}”!</p>
                   <Grid className="share-row" container direction="row" justify="center">
                     <Grid container item xs={5} justify="center">
                       <div>
                         <div className="button-container">
-                        <svg className="svg active">
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#share"} />
-                        </svg>
+                          <svg className="svg active" onClick={()=> setShare(true)}>
+                            {/*eslint-disable-next-line*/}
+                            <use href={sprite + "#share"} />
+                          </svg>
                         </div>
                         <div className="link-text">Share</div>
                         <div className="link-description">with external users via</div>
@@ -83,16 +86,15 @@ const FinalStep: React.FC<FinalStepProps> = ({
                     </Grid>
                     <Grid container item xs={5} justify="center">
                       <div>
-                        <div className="button-container">
-                        <svg className="svg active">
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#user-plus"} />
-                        </svg>
+                        <div className="button-container" onClick={()=> setInvite(true)}>
+                          <svg className="svg active">
+                            {/*eslint-disable-next-line*/}
+                            <use href={sprite + "#user-plus"} />
+                          </svg>
                         </div>
                         <div className="link-text">Invite</div>
                         <div className="link-description">internal users</div>
                         <div className="link-description">to play this brick</div>
-                        
                       </div>
                     </Grid>
                   </Grid>
@@ -122,6 +124,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
           {renderFooter()}
         </div>
       </Hidden>
+      <InviteDialog isOpen={inviteOpen} link={document.location.host + link} close={() => setInvite(false)} />
+      <ShareDialog isOpen={shareOpen} close={() => setShare(false)}/>
     </div>
   );
 };
