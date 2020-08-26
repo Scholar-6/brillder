@@ -168,4 +168,33 @@
       }
     }
   }
+  .close-button {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    svg {
+      stroke-width: 2;
+      $size: 2vw;
+      height: $size !important;
+      width: $size !important;
+      color: var(--theme-orange);
+
+      @include phone_and_tabletP {
+        $size: 8vw;
+        height: $size !important;
+        width: $size !important;
+      }
+    }
+  }
+  .social-share-row {
+    @extend %flexToXCenter;
+    svg {
+      margin: 1vw;
+      $icon-size: 2.7vw;
+      height: $icon-size;
+      width: $icon-size;
+    }
+  }
 }
