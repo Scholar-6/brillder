@@ -56,22 +56,22 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 <div className="intro-header">
                   <div className="left-brick-circle">
                     <div className="round-button">
-                    <svg className="svg active">
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#check-icon-thin"} />
-                        </svg>
+                      <svg className="svg active">
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#check-icon-thin"} />
+                      </svg>
                     </div>
                   </div>
                   <h2>Final step?</h2>
-                  <p>Well done for completing “Brick Name”!</p>
+                  <p>Well done for completing “{brick.title}”!</p>
                   <Grid className="share-row" container direction="row" justify="center">
                     <Grid container item xs={5} justify="center">
                       <div>
                         <div className="button-container">
-                        <svg className="svg active">
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#share"} />
-                        </svg>
+                          <svg className="svg active">
+                            {/*eslint-disable-next-line*/}
+                            <use href={sprite + "#share"} />
+                          </svg>
                         </div>
                         <div className="link-text">Share</div>
                         <div className="link-description">with external users via</div>
@@ -81,10 +81,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
                     <Grid container item xs={5} justify="center">
                       <div>
                         <div className="button-container">
-                        <svg className="svg active">
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#user-plus"} />
-                        </svg>
+                          <svg className="svg active">
+                            {/*eslint-disable-next-line*/}
+                            <use href={sprite + "#user-plus"} />
+                          </svg>
                         </div>
                         <div className="link-text">Invite</div>
                         <div className="link-description">internal users</div>
