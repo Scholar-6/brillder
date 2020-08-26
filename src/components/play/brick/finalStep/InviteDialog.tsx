@@ -13,7 +13,7 @@ const InviteDialog: React.FC<InviteProps> = props => {
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue">
       <div className="close-button">
-        <svg className="svg active">
+        <svg className="svg active" onClick={props.close}>
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#cancel"} />
         </svg>
