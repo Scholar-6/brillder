@@ -107,6 +107,9 @@ describe("notification panel", () => {
 
     it("should clear all notifications when 'clear all' is pressed", async () => {
         const store = mockStore({
+            user: {
+                user: {roles: []}
+            },
             notifications: {
                 notifications: [ mockNotification ]
             }
