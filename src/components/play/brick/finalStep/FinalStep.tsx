@@ -12,9 +12,6 @@ interface FinalStepProps {
   status: PlayStatus;
   brick: Brick;
   history: any;
-  brickAttempt: BrickAttempt;
-  attempts: any[];
-  saveBrick(): void;
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
@@ -22,9 +19,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
   brick,
   history,
 }) => {
-
   if (status === PlayStatus.Live) {
-    //history.push(`/play/brick/${brick.id}/intro`);
+    history.push(`/play/brick/${brick.id}/intro`);
   }
 
   const renderFooter = () => {
@@ -38,6 +34,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
           <button
             type="button"
             className="play-preview svgOnHover play-green"
+            onClick={() => history.push('/play/dashboard')}
           >
             <svg className="svg w80 h80 active m-l-02">
               {/*eslint-disable-next-line*/}
@@ -92,7 +89,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
                         <div className="link-text">Invite</div>
                         <div className="link-description">internal users</div>
                         <div className="link-description">to play this brick</div>
-                        
                       </div>
                     </Grid>
                   </Grid>

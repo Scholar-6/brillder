@@ -16,7 +16,7 @@ interface EndingProps {
   history: any;
   brickAttempt: BrickAttempt;
   attempts: any[];
-  saveBrick(): void;
+  saveAttempt(): void;
 }
 
 const EndingPage: React.FC<EndingProps> = ({
@@ -25,7 +25,7 @@ const EndingPage: React.FC<EndingProps> = ({
   brickAttempt,
   attempts,
   history,
-  saveBrick,
+  saveAttempt,
 }) => {
   const [minCurrentScore, setMinScore] = React.useState(0);
   const [maxCurrentScore, setMaxScore] = React.useState(0);
@@ -35,7 +35,7 @@ const EndingPage: React.FC<EndingProps> = ({
     history.push(`/play/brick/${brick.id}/intro`);
   }
 
-  const endBrick = () => saveBrick();
+  const endBrick = () => saveAttempt();
 
   const oldScore = brickAttempt.oldScore ? brickAttempt.oldScore : 0;
   const { score, maxScore } = brickAttempt;
