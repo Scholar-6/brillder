@@ -45,8 +45,12 @@ interface IntroductionState {
 const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const values = queryString.parse(props.location.search);
   let initPrepExpanded = false;
+  let resume = false;
   if (values.prepExtanded === 'true') {
     initPrepExpanded = true;
+  }
+  if (values.resume === 'true') {
+    resume = true;
   }
   const history = useHistory();
   const [state, setState] = React.useState({
@@ -127,15 +131,28 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     setState({ ...state, duration });
   };
 
+  const renderDesktopPlayText = () => {
+    if (resume) {
+      return (
+        <div className="direction-info">
+          <h2>Resume</h2>
+        </div>
+      );
+    }
+    return (
+      <div className="direction-info">
+        <h3>Ready?</h3>
+        <h2>Play Brick</h2>
+      </div>
+    );
+  }
+
   const renderPlayButton = () => {
     return (
       <div className="action-footer">
         <div></div>
         <Hidden only={["xs"]}>
-          <div className="direction-info">
-            <h3>Ready?</h3>
-            <h2>Play Brick</h2>
-          </div>
+          {renderDesktopPlayText()}
         </Hidden>
         <div>
           <button
