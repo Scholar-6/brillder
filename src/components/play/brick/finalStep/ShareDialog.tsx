@@ -16,7 +16,7 @@ const ShareDialog: React.FC<ShareProps> = props => {
       className="dialog-box light-blue"
     >
       <div className="close-button">
-        <svg className="svg active">
+        <svg className="svg active" onClick={props.close}>
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#cancel"} />
         </svg>
