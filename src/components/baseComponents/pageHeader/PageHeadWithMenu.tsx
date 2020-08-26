@@ -14,6 +14,7 @@ export enum PageEnum {
   ViewAll,
   ManageUsers,
   ManageClasses,
+  ClassStatistics,
   MainPage,
   Profile,
   Play
