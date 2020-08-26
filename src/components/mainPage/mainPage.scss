@@ -317,7 +317,7 @@
         width: 100%;
         @extend %flexCenter;
         height: calc(26%);
-        opacity: 0.65; 
+        opacity: 0.65;
         &.swiper-slide-next {
           transform: scale(1.2);
           @extend %transitionAll300;
@@ -353,5 +353,11 @@
     font-family: $font-family-regular;
     bottom: 0vh;
     right: 10vw;
+  }
+
+  .dialog-box {
+    .MuiDialog-container {
+      padding: 0 !important;
+    }
   }
 }
