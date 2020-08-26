@@ -98,7 +98,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (answer.answerType === QuestionValueType.Image) {
       className += " image-choice";
     }
-    if (this.props.attempt) {
+    if (this.props.attempt && this.props.isReview) {
       if (this.state.status !== DragAndDropStatus.Changed) {
         let state = this.getState(answer.index);
         if (state === 1) {
