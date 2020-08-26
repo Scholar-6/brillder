@@ -98,7 +98,7 @@ class WordHighlighting extends CompComponent<
       className += " active";
     }
 
-    if (this.props.attempt && word.selected) {
+    if (this.props.attempt && word.selected && this.props.isReview) {
       let status = this.props.attempt.answer.indexOf(index);
       if (status !== -1) {
         if (word.checked === true) {
