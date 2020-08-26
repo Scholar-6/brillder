@@ -288,7 +288,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 brick={props.brick}
                 attempts={attempts}
                 brickAttempt={brickAttempt}
-                saveBrick={saveBrickAttempt}
+                saveAttempt={saveBrickAttempt}
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/publish">

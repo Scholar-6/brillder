@@ -104,7 +104,7 @@ class LineHighlighting extends CompComponent<
       className += " active";
     }
 
-    if (this.props.attempt && line.selected) {
+    if (this.props.attempt && line.selected && this.props.isReview) {
       let status = this.props.attempt.answer.indexOf(index);
       if (status !== -1) {
         if (line.checked === true) {
