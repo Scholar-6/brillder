@@ -16,6 +16,7 @@ const InviteDialog: React.FC<InviteProps> = props => {
       linkEl.select();
       linkEl.setSelectionRange(0, 99999);
       document.execCommand('copy');
+      props.close();
     }
   }
 
