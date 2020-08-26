@@ -94,23 +94,20 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
 
   const renderBackToWorkItem = () => {
     if (page !== PageEnum.BackToWork && page !== PageEnum.MainPage) {
-      const canSee = checkTeacherOrAdmin(props.user.roles);
-      if (canSee) {
-        return (
-          <MenuItem
-            className="menu-item"
-            onClick={() => move("/back-to-work")}
-          >
-            <span className="menu-text">Back To Work</span>
-            <div className="btn btn-transparent svgOnHover">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#roller"} className="text-white" />
-              </svg>
-            </div>
-          </MenuItem>
-        );
-      }
+      return (
+        <MenuItem
+          className="menu-item"
+          onClick={() => move("/back-to-work")}
+        >
+          <span className="menu-text">Back To Work</span>
+          <div className="btn btn-transparent svgOnHover">
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#roller"} className="text-white" />
+            </svg>
+          </div>
+        </MenuItem>
+      );
     }
     return "";
   };
