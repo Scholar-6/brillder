@@ -67,7 +67,7 @@ describe("notification panel", () => {
             </Provider>
         );
 
-        const placeholderText = screen.queryByText("Looks like you don't have any notifications...");
+        const placeholderText = screen.queryByText("You have no new notifications");
         expect(placeholderText).toBeVisible();
     });
 
