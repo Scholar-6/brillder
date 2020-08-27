@@ -4,19 +4,21 @@ import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
 import update from "immutability-helper";
 import { useHistory } from "react-router-dom";
+import { Moment } from "moment";
 
 import "./ReviewPage.scss";
+import sprite from "assets/img/icons-sprite.svg";
 import { Question } from "model/question";
+import { PlayStatus } from "../model";
+import { PlayMode } from "../model";
+import { BrickLengthEnum } from "model/brick";
+
+import ReviewStepper from "./ReviewStepper";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
-import { PlayStatus } from "../model";
-import sprite from "assets/img/icons-sprite.svg";
-import ReviewStepper from "./ReviewStepper";
-import { Moment } from "moment";
 import CountDown from "../baseComponents/CountDown";
-import { BrickLengthEnum } from "model/brick";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import { PlayMode } from "../model";
+import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -46,6 +48,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const [activeStep, setActiveStep] = React.useState(0);
   let initAnswers: any[] = [];
   const [answers, setAnswers] = React.useState(initAnswers);
+  const [isSubmitOpen, setSubmitAnswers] = React.useState(false);
   const theme = useTheme();
 
   if (status === PlayStatus.Live) {
@@ -199,7 +202,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
       <button
         type="button"
         className="play-preview svgOnHover play-green mobile-next"
-        onClick={next}
+        onClick={() => setSubmitAnswers(true)}
       >
         <svg className="svg w80 h80 active m-l-02">
           {/*eslint-disable-next-line*/}
@@ -270,6 +273,11 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
           </div>
         </Grid>
       </Grid>
+      <SubmitAnswersDialog
+        isOpen={isSubmitOpen}
+        submit={moveNext}
+        close={() => setSubmitAnswers(false)}
+      />
     </div>
   );
 };

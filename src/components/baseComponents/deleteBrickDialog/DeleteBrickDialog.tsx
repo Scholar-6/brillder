@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from 'axios';
 import Dialog from "@material-ui/core/Dialog";
 import actions from 'redux/actions/requestFailed';
@@ -15,11 +15,11 @@ interface DeleteDialogProps {
   requestFailed(e: string): void;
 }
 
-const DeleteBrickDialog:React.FC<DeleteDialogProps> = (props) => {
+const DeleteBrickDialog: React.FC<DeleteDialogProps> = (props) => {
   const deleteBrick = () => {
-    const {brickId} = props;
+    const { brickId } = props;
     axios.delete(
-      process.env.REACT_APP_BACKEND_HOST + '/brick/' + brickId, {withCredentials: true}
+      process.env.REACT_APP_BACKEND_HOST + '/brick/' + brickId, { withCredentials: true }
     ).then(() => {
       props.onDelete(brickId);
     }).catch(() => {
@@ -27,23 +27,22 @@ const DeleteBrickDialog:React.FC<DeleteDialogProps> = (props) => {
     });
   }
 
-    return (
-      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
-        <div className="dialog-header">
-          <div>Permanently delete<br/>this brick?</div>
-        </div>
-        <div className="dialog-footer">
-          <button className="btn btn-md bg-theme-orange yes-button" onClick={deleteBrick}>
-            <span>Yes, delete</span>
-          </button>
-          <button className="btn btn-md bg-gray no-button"
-            onClick={props.close}>
-            <span>No, keep</span>
-          </button>
-        </div>
-      </Dialog>
-    );
-  }
+  return (
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
+      <div className="dialog-header">
+        <div>Permanently delete<br />this brick?</div>
+      </div>
+      <div className="dialog-footer">
+        <button className="btn btn-md bg-theme-orange yes-button" onClick={deleteBrick}>
+          <span>Yes, delete</span>
+        </button>
+        <button className="btn btn-md bg-gray no-button"
+          onClick={props.close}>
+          <span>No, keep</span>
+        </button>
+      </div>
+    </Dialog>
+  );
 }
 
 const mapDispatch = (dispatch: any) => ({
