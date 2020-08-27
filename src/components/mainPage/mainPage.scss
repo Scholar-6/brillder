@@ -118,9 +118,11 @@
       flex-direction: column;
       > .svg {
         @extend %removePosition;
-        height: 150px;
-        width: 250px;
-        @include ex-desktop_wide {
+        @include phone_and_tabletP {
+          width: 150px;
+          height: 120px;
+        }
+        @include tabletP {
           height: auto;
           width: 15vw;
         }
@@ -129,11 +131,13 @@
         padding: 0;
         text-align: center;
         margin: 0;
-        font-size: 25px;
         font-family: $font-family-light;
-        letter-spacing: 7px;
         color: var(--tab-gray);
-        @include ex-desktop_wide {
+        @include phone_and_tabletP {
+          font-size: 25px;
+          letter-spacing: 5px;
+        }
+        @include tabletP {
           font-size: 1.3vw;
           letter-spacing: 0.27vw;
         }
@@ -327,21 +331,11 @@
           transform: scale(0.85);
           pointer-events: none;
         }
-        .btn {
-          text-align: center;
-          flex-direction: column;
-          .svg {
-            width: 150px;
-            height: 120px;
-            @extend %removePosition;
-          }
-          .item-description {
-            padding: 0;
-            text-align: center;
-            margin: 0;
-            font: 5vw $font-family-light;
-            letter-spacing: 0.27vw;
-            color: var(--tab-gray);
+        .view-item-container {
+          @include phone_and_tabletP {
+            .svg {
+              width: 230px;
+            }
           }
         }
       }
