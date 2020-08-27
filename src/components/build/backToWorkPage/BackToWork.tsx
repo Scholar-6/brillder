@@ -31,16 +31,15 @@ import BrickBlock from './components/BrickBlock';
 import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
 import { TeachClassroom } from "model/classroom";
 import { getAllClassrooms } from "components/teach/service";
+import { getBricks, getCurrentUserBricks, getAssignedBricks } from "components/services/axios/brick";
 
-enum ActiveTab {
-  Play,
-  Build,
-  Teach
-}
+import Tab, {ActiveTab} from './components/Tab';
 
 interface BackToWorkState {
+  // build
   finalBricks: Brick[]; // bricks to display
   rawBricks: Brick[]; // loaded bricks
+  threeColumns: ThreeColumns;
 
   searchString: string;
   isSearching: boolean;
@@ -53,7 +52,6 @@ interface BackToWorkState {
   notificationsShown: boolean;
   shown: boolean;
   pageSize: number;
-  threeColumns: ThreeColumns;
   generalSubjectId: number;
   activeTab: ActiveTab;
 
@@ -63,10 +61,16 @@ interface BackToWorkState {
   filters: Filters;
   playFilters: PlayFilters;
 
+  // teach
   teachFilters: TeachFilters;
   classrooms: TeachClassroom[];
   teachPageSize: number;
   activeClassroom: TeachClassroom | null;
+
+  // play
+  rawPlayBricks: Brick[];
+  finalPlayBricks: Brick[];
+  playThreeColumns: ThreeColumns;
 }
 
 export interface BackToWorkProps {
@@ -129,6 +133,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.state = {
       finalBricks,
       rawBricks,
+      threeColumns,
+
       sortBy: SortBy.None,
       sortedIndex: 0,
       sortedReversed: false,
@@ -147,12 +153,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         isCore
       },
 
-      playFilters: {
-        completed: false,
-        submitted: false,
-        checked: false
-      },
-
       isTeach,
       isAdmin,
 
@@ -163,7 +163,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       shown: true,
       pageSize: 18,
 
-      threeColumns,
       generalSubjectId: -1,
 
       // Teach
@@ -176,6 +175,17 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         completed: false
       },
       teachPageSize: 4,
+
+      // Play
+      rawPlayBricks: [],
+      finalPlayBricks: [],
+      playThreeColumns: threeColumns,
+
+      playFilters: {
+        completed: false,
+        submitted: false,
+        checked: false
+      },
     };
 
     // load real bricks
@@ -209,26 +219,40 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, finalBricks: rawBricks, rawBricks, threeColumns });
   }
 
+  setPlayBricks(rawBricks: Brick[]) {
+    const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id, this.state.generalSubjectId);
+    this.setState({ ...this.state, finalPlayBricks: rawBricks, rawPlayBricks: rawBricks, playThreeColumns: threeColumns });
+  }
+
   getBricks() {
     const isAdmin = checkAdmin(this.props.user.roles);
     const isEditor = checkEditor(this.props.user.roles);
     if (isAdmin || isEditor) {
-      axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks", {
-        withCredentials: true,
-      }).then(res => {
-        this.setBricks(res.data);
-      }).catch(() => {
-        this.props.requestFailed('Can`t get bricks');
+      getBricks().then(bricks => {
+        if (bricks) {
+          this.setBricks(bricks);
+        } else {
+          this.props.requestFailed('Can`t get bricks');
+        }
       });
     } else {
-      axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
-        withCredentials: true,
-      }).then((res) => {
-        this.setBricks(res.data);
-      }).catch(() => {
-        this.props.requestFailed('Can`t get bricks for current user');
+      getCurrentUserBricks().then(bricks => {
+        if (bricks) {
+          this.setBricks(bricks);
+        } else {
+          this.props.requestFailed('Can`t get bricks for current user');
+        }
       });
     }
+    // get play tab bricks
+    getAssignedBricks().then(assignments => {
+      if (assignments) {
+        const bricks = assignments.map(a => a.brick);
+        this.setPlayBricks(bricks);
+      } else {
+        this.props.requestFailed('Can`t get bricks for current user');
+      }
+    })
   }
   //region loading and setting bricks
 
@@ -485,9 +509,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, threeColumns, filters, finalBricks });
   }
 
-  renderGroupedBricks = () => {
-    const data = prepareVisibleThreeColumnBricks(this.state.pageSize, this.state.sortedIndex, this.state.threeColumns);
-
+  renderGroupedBricks = (data: any[]) => {
     return data.map(item => {
       return <BrickBlock
         brick={item.brick}
@@ -504,9 +526,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     });
   }
 
+  renderBuildGroupedBricks = () => {
+    const data = prepareVisibleThreeColumnBricks(this.state.pageSize, this.state.sortedIndex, this.state.threeColumns);
+    return this.renderGroupedBricks(data);
+  }
+
   renderBricks = () => {
     if (this.state.filters.viewAll) {
-      return this.renderGroupedBricks();
+      return this.renderBuildGroupedBricks();
     }
     return this.renderSortedBricks();
   }
@@ -598,6 +625,24 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     );
   }
 
+  //#region render assiged bricks
+
+  renderAssignedGroupedBricks() {
+    const data = prepareVisibleThreeColumnBricks(this.state.pageSize, this.state.sortedIndex, this.state.playThreeColumns);
+    return this.renderGroupedBricks(data);
+  }
+
+  renderAssignedBricks() {
+    return (
+      <div className="bricks-list-container">
+        <div className="bricks-list">
+          {this.renderAssignedGroupedBricks()}
+        </div>
+      </div>
+    );
+  }
+  //#endregion
+
   render() {
     const { activeTab } = this.state;
     return (
@@ -613,28 +658,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         <Grid container direction="row" className="sorted-row">
           {this.renderFilterSidebar()}
           <Grid item xs={9} className="brick-row-container">
-            <div className="tab-container">
-              {(this.state.isTeach || this.state.isAdmin) ?
-                <div
-                  className={activeTab === ActiveTab.Teach ? 'active' : ''}
-                  onClick={() => this.setTab(ActiveTab.Teach)}
-                >
-                  Teach
-              </div> : ""
-              }
-              <div
-                className={activeTab === ActiveTab.Build ? 'active' : ''}
-                onClick={() => this.setTab(ActiveTab.Build)}
-              >
-                Build
-              </div>
-              <div
-                className={activeTab === ActiveTab.Play ? 'active' : ''}
-                onClick={() => this.setTab(ActiveTab.Play)}
-              >
-                Play
-              </div>
-            </div>
+            <Tab isTeach={this.state.isTeach || this.state.isAdmin} activeTab={activeTab} setTab={t => this.setTab(t)} />
             <div className="tab-content">
               {
                 activeTab === ActiveTab.Build ? this.renderBricksList() : ""
@@ -646,6 +670,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                   pageSize={this.state.teachPageSize}
                   classrooms={this.state.classrooms}
                 /> : ""
+              }
+              {
+                activeTab === ActiveTab.Play ? this.renderAssignedBricks() : ""
               }
               {this.renderPagination()}
             </div>
