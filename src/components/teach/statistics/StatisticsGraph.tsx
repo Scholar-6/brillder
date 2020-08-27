@@ -15,18 +15,18 @@ interface StatisticsGraphProps {
 }
 
 const StatisticsGraph: React.FC<StatisticsGraphProps> = props => {
-  const assignment = props.stats.assignments[0];
+  const assignments = props.stats.assignments.filter(assignment => assignment.stats != null);
 
   const xScale = scaleBand<number>({
     range: [0, 600],
-    domain: props.stats.assignments.map(assignment => assignment.assignmentId),
+    domain: assignments.map(assignment => assignment.id),
     paddingOuter: 0.4,
     paddingInner: 0.7
   });
 
   const yScale = scaleLinear<number>({
     rangeRound: [500, 0],
-    domain: [0, assignment.attempts[0].maxScore]
+    domain: [0, assignments[0].attempts[0].maxScore]
   });
 
   const boxWidth = xScale.bandwidth();
@@ -35,11 +35,11 @@ const StatisticsGraph: React.FC<StatisticsGraphProps> = props => {
   return (
   <div>
     <svg width="600" height="600">
-      {props.stats.assignments.map(assignment => (
+      {assignments.map(assignment => (
       <BoxPlot
         min={assignment.stats.minScore}
         max={assignment.stats.maxScore}
-        left={xScale(assignment.assignmentId)! + constrainedWidth * 0.4}
+        left={xScale(assignment.id)! + constrainedWidth * 0.4}
         fill="#eeeeee"
         stroke="#000000"
         firstQuartile={assignment.stats.quartiles.lower}
