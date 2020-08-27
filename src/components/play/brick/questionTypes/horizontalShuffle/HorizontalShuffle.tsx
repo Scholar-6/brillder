@@ -6,7 +6,7 @@ import { ReactSortable } from 'react-sortablejs';
 import './HorizontalShuffle.scss';
 import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
-import {ComponentAttempt} from 'components/play/brick/model/model';
+import {ComponentAttempt} from 'components/play/brick/model';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
@@ -123,7 +123,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   renderAnswer(answer: any, i: number) {
     let isCorrect = this.checkAttemptAnswer(i);
     let className = "horizontal-shuffle-answer";
-    if (!this.props.isPreview && this.props.attempt) {
+    if (!this.props.isPreview && this.props.attempt && this.props.isReview) {
       if (this.state.status !== DragAndDropStatus.Changed) {
         if (isCorrect) {
           className += " correct";

@@ -148,9 +148,16 @@
 
 .document-editor.highlight-editor {
   .ck-editor {
+    width: 100% !important;
     .ck-content {
       padding: 0 !important;
       text-align: left;
+      width: 100%;
+      font-size: 1.15vw;
+      background-color: var(--white) !important;
+      ::selection {
+        background-color: transparent;
+      }
     }
   }
 }

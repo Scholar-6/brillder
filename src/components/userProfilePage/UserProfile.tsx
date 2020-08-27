@@ -8,6 +8,7 @@ import actions from 'redux/actions/requestFailed';
 import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
+import { getGeneralSubject, loadSubjects } from 'components/services/subject';
 
 import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
@@ -66,6 +67,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.props.redirectedToProfile();
     const { userId } = props.match.params;
     const isAdmin = checkAdmin(props.user.roles);
+
     // check if admin wanna create new user
     if (userId === "new") {
       if (isAdmin) {
@@ -81,7 +83,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.state = tempState;
         axios.get(`${process.env.REACT_APP_BACKEND_HOST}/user/${userId}`, {
           withCredentials: true,
-        }).then((res) => {
+        }).then(res => {
           const user = res.data as User;
           this.setState({ user: this.getUserProfile(user) });
         }).catch(() => {
@@ -93,12 +95,17 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       }
     }
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
-      withCredentials: true,
-    }).then((res) => {
-      this.setState({ subjects: res.data });
-    }).catch(() => {
-      this.props.requestFailed("Can`t get bricks");
+    loadSubjects().then(subjects => {
+      if (subjects) {
+        let user = this.state.user;
+        const general = getGeneralSubject(subjects);
+        if (general) {
+          user.subjects = [general];
+        }
+        this.setState({ subjects, user });
+      } else {
+        this.props.requestFailed("Can`t get subjects");
+      }
     });
   }
 
@@ -359,12 +366,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderSubjects(user: UserProfile) {
-    if (user.id === -1) {
+    if (user.id === -1 || this.state.subjects.length === 0) {
       return;
     }
     return (
       <SubjectAutocomplete
         selected={user.subjects}
+        subjects={this.state.subjects}
         onSubjectChange={(subjects) => this.onSubjectChange(subjects)}
       />
     );

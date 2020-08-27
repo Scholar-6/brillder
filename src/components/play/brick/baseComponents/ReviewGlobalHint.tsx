@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {checkVisibility} from '../../services/hintService';
-import {ComponentAttempt} from '../model/model';
+import {ComponentAttempt} from '../model';
 import {Hint, HintStatus} from 'model/question';
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 

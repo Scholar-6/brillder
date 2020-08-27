@@ -15,7 +15,7 @@ interface BrickBlockProps {
   row: number;
   shown: boolean;
   history: any;
-  isPlay?: boolean
+  isPlay?: boolean;
   handleDeleteOpen(brickId: number): void;
   handleMouseHover(e: any): void;
   handleMouseLeave(e: any): void;
@@ -31,6 +31,14 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     color = "color3";
   } else if (brick.status === BrickStatus.Publish) {
     color = "color4";
+  }
+
+  if (props.isPlay) {
+    if (!brick.subject) {
+      color = "#B0B0AD";
+    } else {
+      color = brick.subject.color;
+    }
   }
 
   const isAdmin = props.user.roles.some(role => role.roleId === UserType.Admin);

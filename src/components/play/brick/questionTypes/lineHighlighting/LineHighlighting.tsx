@@ -3,7 +3,7 @@ import React from "react";
 import "./LineHighlighting.scss";
 import CompComponent from "../Comp";
 import {CompQuestionProps} from '../types';
-import { ComponentAttempt } from "components/play/brick/model/model";
+import { ComponentAttempt } from "components/play/brick/model";
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 
 
@@ -104,7 +104,7 @@ class LineHighlighting extends CompComponent<
       className += " active";
     }
 
-    if (this.props.attempt && line.selected) {
+    if (this.props.attempt && line.selected && this.props.isReview) {
       let status = this.props.attempt.answer.indexOf(index);
       if (status !== -1) {
         if (line.checked === true) {

@@ -8,7 +8,7 @@ import "./Live.scss";
 import { Question, QuestionTypeEnum } from "model/question";
 import QuestionLive from "../questionPlay/QuestionPlay";
 import TabPanel from "../baseComponents/QuestionTabPanel";
-import { PlayStatus, ComponentAttempt } from "../model/model";
+import { PlayStatus, ComponentAttempt } from "../model";
 import CountDown from "../baseComponents/CountDown";
 import sprite from "assets/img/icons-sprite.svg";
 
@@ -16,6 +16,7 @@ import { CashQuestionFromPlay } from "../../../localStorage/buildLocalStorage";
 import { Brick } from "model/brick";
 import LiveStepper from "./LiveStepper";
 import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";
+import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
 import PulsingCircleNumber from "./PulsingCircleNumber";
 import { PlayMode } from "../model";
 import { Moment } from 'moment';
@@ -55,6 +56,7 @@ const LivePage: React.FC<LivePageProps> = ({
   const [prevStep, setPrevStep] = React.useState(initStep);
   const [isShuffleOpen, setShuffleDialog] = React.useState(false);
   const [isTimeover, setTimeover] = React.useState(false);
+  const [isSubmitOpen, setSubmitAnswers] = React.useState(false);
   let initAnswers: any[] = [];
 
   const [answers, setAnswers] = React.useState(initAnswers);
@@ -102,11 +104,16 @@ const LivePage: React.FC<LivePageProps> = ({
     }
   }
 
+  const setCurrentAnswerAttempt = () => {
+    let attempt = questionRefs[activeStep].current?.getAttempt();
+    console.log(attempt);
+    props.updateAttempts(attempt, activeStep);
+  }
+
   const setActiveAnswer = () => {
     const copyAnswers = Object.assign([], answers) as any[];
     copyAnswers[activeStep] = questionRefs[activeStep].current?.getAnswer();
-    let attempt = questionRefs[activeStep].current?.getAttempt();
-    props.updateAttempts(attempt, activeStep);
+    setCurrentAnswerAttempt();
     setAnswers(copyAnswers);
   };
 
@@ -190,6 +197,7 @@ const LivePage: React.FC<LivePageProps> = ({
         mode={props.mode}
         isTimeover={isTimeover}
         question={question}
+        attempt={props.attempts[index]}
         answers={answers[index]}
         ref={questionRefs[index]}
         onAttempted={() => onQuestionAttempted(index)}
@@ -239,11 +247,13 @@ const LivePage: React.FC<LivePageProps> = ({
   };
 
   const moveToPrep = () => {
+    let mainPath = '/play'
     if (props.isPlayPreview) {
-      history.push(`/play-preview/brick/${brick.id}/intro?prepExtanded=true`);
-    } else {
-      history.push(`/play/brick/${brick.id}/intro?prepExtanded=true`);
+      mainPath = '/play-preview';
     }
+    let attempt = questionRefs[activeStep].current?.getRewritedAttempt();
+    props.updateAttempts(attempt, activeStep);
+    history.push(`${mainPath}/brick/${brick.id}/intro?prepExtanded=true&resume=true`);
   }
 
   const renderStepper = () => {
@@ -264,6 +274,22 @@ const LivePage: React.FC<LivePageProps> = ({
         type="button"
         className="play-preview svgOnHover play-green"
         onClick={next}
+      >
+        <svg className="svg w80 h80 active m-l-02">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#arrow-right"} />
+        </svg>
+      </button>
+    );
+  }
+
+  const renderMobileNext = () => {
+    if (questions.length - 1 > activeStep) { return; }
+    return (
+      <button
+        type="button"
+        className="play-preview svgOnHover play-green mobile-next"
+        onClick={() => setSubmitAnswers(true)}
       >
         <svg className="svg w80 h80 active m-l-02">
           {/*eslint-disable-next-line*/}
@@ -348,12 +374,18 @@ const LivePage: React.FC<LivePageProps> = ({
             <TabPanel index={questions.length} value={activeStep} />
           </SwipeableViews>
         </div>
+        {renderMobileNext()}
       </Hidden>
       <ShuffleAnswerDialog
         isOpen={isShuffleOpen}
         submit={() => nextFromShuffle()}
         hide={() => setShuffleDialog(false)}
         close={() => cleanAndNext()}
+      />
+      <SubmitAnswersDialog
+        isOpen={isSubmitOpen}
+        submit={moveNext}
+        close={() => setSubmitAnswers(false)}
       />
     </div>
   );

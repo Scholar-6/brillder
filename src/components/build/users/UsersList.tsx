@@ -601,8 +601,6 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         <Dialog
           open={this.state.isDeleteDialogOpen}
           onClose={() => this.closeDeleteDialog()}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
           className="dialog-box">
           <div className="dialog-header">
             <div>Permanently delete<br />this user?</div>
