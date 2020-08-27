@@ -5,6 +5,7 @@ import sprite from "assets/img/icons-sprite.svg";
 
 interface ShareProps {
   isOpen: boolean;
+  link(): void;
   close(): void;
 }
 
@@ -25,7 +26,7 @@ const ShareDialog: React.FC<ShareProps> = props => {
         <div>How would you like to share this brick?</div>
       </div>
       <div className="social-share-row">
-      <svg className="svg active">
+      <svg className="svg active" onClick={props.link}>
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#link"} />
         </svg>

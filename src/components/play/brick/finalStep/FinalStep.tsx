@@ -7,7 +7,7 @@ import { PlayStatus } from "../model";
 import sprite from "assets/img/icons-sprite.svg";
 import Clock from "../baseComponents/Clock";
 import ShareDialog from './ShareDialog';
-import InviteDialog from './InviteDialog';
+import LinkDialog from './LinkDialog';
 
 interface FinalStepProps {
   status: PlayStatus;
@@ -21,7 +21,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   history,
 }) => {
   const [shareOpen, setShare] = React.useState(false);
-  const [inviteOpen, setInvite] = React.useState(false);
+  const [linkOpen, setLink] = React.useState(false);
 
   const link = `/play/brick/${brick.id}/intro`;
 
@@ -86,7 +86,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                     </Grid>
                     <Grid container item xs={5} justify="center">
                       <div>
-                        <div className="button-container" onClick={()=> setInvite(true)}>
+                        <div className="button-container" onClick={()=> {}}>
                           <svg className="svg active">
                             {/*eslint-disable-next-line*/}
                             <use href={sprite + "#user-plus"} />
@@ -124,8 +124,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
           {renderFooter()}
         </div>
       </Hidden>
-      <InviteDialog isOpen={inviteOpen} link={document.location.host + link} close={() => setInvite(false)} />
-      <ShareDialog isOpen={shareOpen} close={() => setShare(false)}/>
+      <LinkDialog isOpen={linkOpen} link={document.location.host + link} close={() => setLink(false)} />
+      <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
     </div>
   );
 };
