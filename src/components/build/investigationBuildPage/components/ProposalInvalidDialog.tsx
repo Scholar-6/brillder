@@ -11,12 +11,7 @@ interface DialogProps {
 
 const ProposalInvalidDialog: React.FC<DialogProps> = (props) => {
   return (
-    <Dialog
-      open={props.isOpen}
-      onClose={props.close}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      className="dialog-box">
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
         <div>Your proposal is incomplete.</div>
         <div>Click through and fill in any fields marked in red.</div>
