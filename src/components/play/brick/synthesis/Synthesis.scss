@@ -75,12 +75,6 @@
       position: absolute !important;
       top: 0.2vw !important;
     }
-
-    .question-live-play {
-      @include phone_and_tabletP {
-        padding: 4vw;
-      }
-    }
   }
 }
 
@@ -119,6 +113,9 @@
   .synthesis-content {
     @include desktop {
       width: 53vw !important;
+      height: calc(100vh - 12vh - 2vw) !important;
+      margin: 12vh 3vw 1vw 4vw;
+      overflow-y: auto;
     }
   }
 }
