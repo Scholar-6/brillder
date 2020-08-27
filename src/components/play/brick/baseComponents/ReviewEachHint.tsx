@@ -1,13 +1,12 @@
 import React from 'react';
 
 import {checkVisibility} from '../../services/hintService';
-import {ComponentAttempt} from '../model';
 import {Hint, HintStatus} from 'model/question';
 import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 
 interface ReviewHintProps {
-  attempt?: ComponentAttempt<any>;
+  isReview?: boolean;
   index: number;
   isCorrect?: boolean;
   isPhonePreview?: boolean;
@@ -15,7 +14,7 @@ interface ReviewHintProps {
 }
 
 const ReviewEachHint: React.FC<ReviewHintProps> = ({ hint, ...props }) => {
-  const isShown = checkVisibility(props.attempt, props.isPhonePreview);
+  const isShown = checkVisibility(props.isReview, props.isPhonePreview);
 
   let hintText = hint.list[props.index];
   let className = "question-hint";

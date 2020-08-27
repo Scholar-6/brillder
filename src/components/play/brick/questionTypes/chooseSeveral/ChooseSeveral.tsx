@@ -165,7 +165,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
         {this.renderData(choice)}
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
-          attempt={this.props.attempt}
+          isReview={this.props.isReview}
           isCorrect={isCorrect ? isCorrect : false}
           index={index}
           hint={this.props.question.hint}
@@ -184,6 +184,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
           component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }
         <ReviewGlobalHint
+          isReview={this.props.isReview}
           attempt={this.props.attempt}
           isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}

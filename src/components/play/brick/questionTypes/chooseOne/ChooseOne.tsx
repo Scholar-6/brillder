@@ -5,10 +5,8 @@ import './ChooseOne.scss';
 import CompComponent from '../Comp';
 import { CompQuestionProps } from '../types';
 import { ComponentAttempt } from 'components/play/brick/model';
-import { HintStatus } from 'components/build/baseComponents/Hint/Hint';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import { checkVisibility } from '../../../services/hintService';
 import MathInHtml from '../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
@@ -82,18 +80,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     return attempt;
   }
 
-  renderEachHint(index: number) {
-    const isShown = checkVisibility(this.props.attempt, this.props.isPreview);
-    const { hint } = this.props.question;
-
-    if (isShown && this.props.question.hint.status === HintStatus.Each && hint.list[index]) {
-      return (
-        <span className="question-hint" dangerouslySetInnerHTML={{ __html: hint.list[index] }} />
-      );
-    }
-    return "";
-  }
-
   renderData(answer: ChooseOneChoice) {
     if (answer.answerType === QuestionValueType.Image) {
       return <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${answer.valueFile}`} />;
@@ -112,7 +98,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   }
 
   renderChoice(choice: ChooseOneChoice, index: number) {
-    const {attempt} = this.props;
+    const { attempt } = this.props;
     let isCorrect = this.isCorrect(index);
     let className = "choose-choice";
     const { activeItem } = this.state;
@@ -152,26 +138,25 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
         onClick={() => this.setActiveItem(index)}
       >
         {this.renderData(choice)}
-        <ReviewEachHint
-          isPhonePreview={this.props.isPreview}
-          attempt={attempt}
-          isCorrect={isCorrect}
-          index={index}
-          hint={this.props.question.hint}
-        />
+        {this.props.isReview ?
+          <ReviewEachHint
+            isPhonePreview={this.props.isPreview}
+            isReview={this.props.isReview}
+            isCorrect={isCorrect}
+            index={index}
+            hint={this.props.question.hint}
+          /> : ""}
       </Button>
     );
   }
 
   render() {
+    const { list } = this.props.component;
     return (
       <div className="choose-one-live">
-        {
-          this.props.component.list.map((choice, index) =>
-            this.renderChoice(choice, index)
-          )
-        }
+        {list.map((choice, index) => this.renderChoice(choice, index))}
         <ReviewGlobalHint
+          isReview={this.props.isReview}
           attempt={this.props.attempt}
           isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}

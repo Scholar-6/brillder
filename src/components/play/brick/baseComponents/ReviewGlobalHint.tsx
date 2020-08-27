@@ -7,13 +7,14 @@ import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
 
 
 interface ReviewHintProps {
+  isReview?: boolean;
   attempt?: ComponentAttempt<any>;
   isPhonePreview?: boolean;
   hint: Hint;
 }
 
 const ReviewGlobalHint: React.FC<ReviewHintProps> = ({ hint, ...props }) => {
-  const isShown = checkVisibility(props.attempt, props.isPhonePreview);
+  const isShown = checkVisibility(props.isReview, props.isPhonePreview);
 
   const renderHint = () => {
     return (

@@ -141,7 +141,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
         <div style={{display: "block"}}>
           <ReviewEachHint
             isPhonePreview={this.props.isPreview}
-            attempt={this.props.attempt}
+            isReview={this.props.isReview}
             index={i}
             isCorrect={isCorrect}
             hint={this.props.question.hint}
@@ -168,6 +168,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
           }
         </ReactSortable>
         <ReviewGlobalHint
+          isReview={this.props.isReview}
           attempt={this.props.attempt}
           isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}
