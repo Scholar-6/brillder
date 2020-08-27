@@ -23,6 +23,7 @@ import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
 import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
 import UserProfilePage from '../userProfilePage/UserProfile';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
+import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
@@ -89,6 +90,7 @@ const App: React.FC = () => {
         <StudentRoute path={map.ViewAllPage} component={Dashboard} />
 
         <BuildRoute path="/manage-classrooms" component={ManageClassrooms} location={location} /> 
+        <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
         <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
