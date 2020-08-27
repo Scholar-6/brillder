@@ -9,7 +9,7 @@ interface InviteProps {
   close(): void;
 }
 
-const InviteDialog: React.FC<InviteProps> = props => {
+const LinkDialog: React.FC<InviteProps> = props => {
   const copyToClipboard = () => {
     var linkEl = document.getElementById('invite-link') as HTMLInputElement;
     if (linkEl) {
@@ -41,4 +41,4 @@ const InviteDialog: React.FC<InviteProps> = props => {
   );
 }
 
-export default InviteDialog;
+export default LinkDialog;

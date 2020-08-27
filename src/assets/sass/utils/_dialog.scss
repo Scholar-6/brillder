@@ -191,6 +191,7 @@
   .social-share-row {
     @extend %flexToXCenter;
     svg {
+      cursor: pointer;
       margin: 1vw;
       $icon-size: 2.7vw;
       height: $icon-size;
