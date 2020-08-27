@@ -129,7 +129,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       return (
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
-          attempt={attempt}
+          isReview={this.props.isReview}
           isCorrect={isCorrect}
           index={index}
           hint={this.props.question.hint}
@@ -140,7 +140,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       return (
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
-          attempt={attempt}
+          isReview={this.props.isReview}
           isCorrect={false}
           index={index}
           hint={this.props.question.hint}
@@ -168,6 +168,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
           </div>
         ))}
         <ReviewGlobalHint
+          isReview={this.props.isReview}
           attempt={this.props.attempt}
           isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}

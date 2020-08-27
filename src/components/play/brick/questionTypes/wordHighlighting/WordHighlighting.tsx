@@ -136,6 +136,7 @@ class WordHighlighting extends CompComponent<
         </div>
         <br/>
         <ReviewGlobalHint
+          isReview={this.props.isReview}
           attempt={this.props.attempt}
           isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}
