@@ -1,10 +1,5 @@
 import React from 'react';
-import { ReduxCombinedState } from 'redux/reducers';
-import statsActions from 'redux/actions/stats';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { ClassroomStats, AssignmentWithStats } from 'model/stats';
-import PageLoader from 'components/baseComponents/loaders/pageLoader';
+import { ClassroomStats } from 'model/stats';
 
 import { BoxPlot } from '@vx/stats';
 import { scaleLinear, scaleUtc } from '@vx/scale';

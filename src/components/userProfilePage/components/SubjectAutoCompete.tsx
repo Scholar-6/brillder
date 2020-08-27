@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import actions from 'redux/actions/requestFailed';
 import { connect } from 'react-redux';
 
 import { Subject } from 'model/brick';
-import { loadSubjects } from 'components/services/subject';
 
 
 interface SubjectAutoCompleteProps {
