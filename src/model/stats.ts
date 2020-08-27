@@ -17,7 +17,7 @@ export interface AttemptStats {
 export interface ClassroomStats {
     stats: AssignmentStats;
     assignments: Array<{
-        assignmentId: number;
+        id: number;
         attempts: AttemptStats[];
         stats: AssignmentStats;
     }>;
