@@ -1,3 +1,5 @@
+import { Assignment } from "./classroom";
+
 export interface AssignmentStats {
     avgScore: number;
     maxScore: number;
@@ -14,11 +16,12 @@ export interface AttemptStats {
     maxScore: number;
 }
 
+export interface AssignmentWithStats extends Assignment {
+    attempts: AttemptStats[];
+    stats: AssignmentStats;
+}
+
 export interface ClassroomStats {
     stats: AssignmentStats;
-    assignments: Array<{
-        id: number;
-        attempts: AttemptStats[];
-        stats: AssignmentStats;
-    }>;
+    assignments: AssignmentWithStats[];
 }

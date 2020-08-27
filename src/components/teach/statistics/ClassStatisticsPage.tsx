@@ -18,7 +18,6 @@ interface ClassStatisticsPageProps {
 }
 
 const ClassStatisticsPage: React.FC<ClassStatisticsPageProps> = props => {
-  console.log("hello");
   if(!props.stats) {
     props.getStats(props.match.params.classroomId);
     return <PageLoader content="Getting Stats..." />;
