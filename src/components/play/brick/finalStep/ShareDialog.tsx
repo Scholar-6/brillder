@@ -23,7 +23,7 @@ const ShareDialog: React.FC<ShareProps> = props => {
         </svg>
       </div>
       <div className="dialog-header">
-        <div>How would you like to share this brick?</div>
+        <div className="title">How would you like to share this brick?</div>
       </div>
       <div className="social-share-row">
       <svg className="svg active" onClick={props.link}>
