@@ -1,16 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 
-import "./FailedRequestDialog.scss";
-
-
-interface ShuffleAnswerDialogProps {
+interface DialogProps {
   isOpen: boolean;
   submit(): void;
   close(): void;
 }
 
-const ShuffleAnswerDialog: React.FC<ShuffleAnswerDialogProps> = (props) => {
+const SubmitAnswersDialog: React.FC<DialogProps> = (props) => {
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
@@ -30,4 +27,4 @@ const ShuffleAnswerDialog: React.FC<ShuffleAnswerDialogProps> = (props) => {
   );
 }
 
-export default ShuffleAnswerDialog;
+export default SubmitAnswersDialog;

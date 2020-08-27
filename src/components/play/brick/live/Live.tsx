@@ -16,6 +16,7 @@ import { CashQuestionFromPlay } from "../../../localStorage/buildLocalStorage";
 import { Brick } from "model/brick";
 import LiveStepper from "./LiveStepper";
 import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";
+import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
 import PulsingCircleNumber from "./PulsingCircleNumber";
 import { PlayMode } from "../model";
 import { Moment } from 'moment';
@@ -55,6 +56,7 @@ const LivePage: React.FC<LivePageProps> = ({
   const [prevStep, setPrevStep] = React.useState(initStep);
   const [isShuffleOpen, setShuffleDialog] = React.useState(false);
   const [isTimeover, setTimeover] = React.useState(false);
+  const [isSubmitOpen, setSubmitAnswers] = React.useState(false);
   let initAnswers: any[] = [];
 
   const [answers, setAnswers] = React.useState(initAnswers);
@@ -287,7 +289,7 @@ const LivePage: React.FC<LivePageProps> = ({
       <button
         type="button"
         className="play-preview svgOnHover play-green mobile-next"
-        onClick={next}
+        onClick={() => setSubmitAnswers(true)}
       >
         <svg className="svg w80 h80 active m-l-02">
           {/*eslint-disable-next-line*/}
@@ -379,6 +381,11 @@ const LivePage: React.FC<LivePageProps> = ({
         submit={() => nextFromShuffle()}
         hide={() => setShuffleDialog(false)}
         close={() => cleanAndNext()}
+      />
+      <SubmitAnswersDialog
+        isOpen={isSubmitOpen}
+        submit={moveNext}
+        close={() => setSubmitAnswers(false)}
       />
     </div>
   );
