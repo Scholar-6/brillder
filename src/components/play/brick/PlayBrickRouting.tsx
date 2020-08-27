@@ -13,6 +13,7 @@ import Synthesis from "./synthesis/Synthesis";
 import Review from "./review/ReviewPage";
 import Ending from "./ending/Ending";
 import FinalStep from "./finalStep/FinalStep";
+import queryString from 'query-string';
 
 import { Brick } from "model/brick";
 import { PlayStatus, BrickAttempt } from "./model";
@@ -174,7 +175,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const moveToLive = () => {
-    props.history.push(`/play/brick/${brick.id}/live`);
+    let liveLink = `/play/brick/${brick.id}/live`;
+    const values = queryString.parse(props.location.search);
+    if (values.resume === 'true') {
+      if (values.activeStep) {
+        liveLink += '?activeStep=' + values.activeStep;
+      }
+    }
+    props.history.push(liveLink);
     setSidebar(true);
   }
 

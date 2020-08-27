@@ -16,17 +16,17 @@ import Review from 'components/play/brick/review/ReviewPage';
 import Ending from 'components/play/brick/ending/Ending'
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 
-import { GetCashedBuildQuestion } from '../../localStorage/buildLocalStorage';
+import { GetCashedBuildQuestion } from '../localStorage/buildLocalStorage';
 
 import { Brick } from 'model/brick';
-import { ComponentAttempt, PlayStatus } from '../../play/brick/model';
+import { ComponentAttempt, PlayStatus } from '../play/brick/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
 import { setBrillderTitle } from 'components/services/titleService';
-import PublishPage from '../investigationBuildPage/publish/PublishPage';
-import EditorPage from '../investigationBuildPage/editor/EditorPage';
-import FinishPage from '../investigationBuildPage/finish/FinishPage';
+import PublishPage from '../build/investigationBuildPage/publish/PublishPage';
+import EditorPage from '../build/investigationBuildPage/editor/EditorPage';
+import FinishPage from '../build/investigationBuildPage/finish/FinishPage';
 import { prefillAttempts } from 'components/services/PlayService';
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
 import { canEditBrick, checkEditor } from 'components/services/brickService';
