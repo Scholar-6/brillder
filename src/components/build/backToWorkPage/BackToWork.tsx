@@ -9,9 +9,9 @@ import { Brick, BrickStatus, Subject } from "model/brick";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
-import { ThreeColumns, SortBy, Filters, TeachFilters, PlayFilters } from './model';
+import { ThreeColumns, SortBy, Filters, TeachFilters, PlayFilters, ThreeAssignmentColumns } from './model';
 import {
-  getThreeColumnName, prepareTreeRows, getThreeColumnBrick, expandThreeColumnBrick, prepareVisibleThreeColumnBricks, getLongestColumn
+  getThreeColumnName, prepareTreeRows, prepareThreeAssignmentRows, prepareVisibleThreeColumnAssignments, getThreeColumnBrick, expandThreeColumnBrick, prepareVisibleThreeColumnBricks, getLongestColumn
 } from './threeColumnService';
 import {
   filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
@@ -34,6 +34,7 @@ import { getAllClassrooms } from "components/teach/service";
 import { getBricks, getCurrentUserBricks, getAssignedBricks } from "components/services/axios/brick";
 
 import Tab, {ActiveTab} from './components/Tab';
+import { AssignmentBrick } from "model/assignment";
 
 interface BackToWorkState {
   // build
@@ -68,9 +69,9 @@ interface BackToWorkState {
   activeClassroom: TeachClassroom | null;
 
   // play
-  rawPlayBricks: Brick[];
-  finalPlayBricks: Brick[];
-  playThreeColumns: ThreeColumns;
+  rawAssignments: AssignmentBrick[];
+  finalAssignments: AssignmentBrick[];
+  playThreeColumns: ThreeAssignmentColumns;
 }
 
 export interface BackToWorkProps {
@@ -91,19 +92,34 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     let finalBricks: Brick[] = [];
     let rawBricks: Brick[] = [];
     let threeColumns = {
-      draft: {
+      red: {
         rawBricks: [],
         finalBricks: []
       },
-      review: {
+      yellow: {
         rawBricks: [],
         finalBricks: []
       },
-      publish: {
+      green: {
         rawBricks: [],
         finalBricks: []
-      },
+      }
     } as ThreeColumns;
+
+    let threeAssignmentColumns = {
+      red: {
+        rawAssignments: [],
+        finalAssignments: []
+      },
+      yellow: {
+        rawAssignments: [],
+        finalAssignments: []
+      },
+      green: {
+        rawAssignments: [],
+        finalAssignments: []
+      }
+    } as ThreeAssignmentColumns;
 
     let isCore = false;
     const isTeach = checkTeacher(this.props.user.roles);
@@ -177,9 +193,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       teachPageSize: 4,
 
       // Play
-      rawPlayBricks: [],
-      finalPlayBricks: [],
-      playThreeColumns: threeColumns,
+      rawAssignments: [],
+      finalAssignments: [],
+      playThreeColumns: threeAssignmentColumns,
 
       playFilters: {
         completed: false,
@@ -219,9 +235,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, finalBricks: rawBricks, rawBricks, threeColumns });
   }
 
-  setPlayBricks(rawBricks: Brick[]) {
-    const threeColumns = prepareTreeRows(rawBricks, this.state.filters, this.props.user.id, this.state.generalSubjectId);
-    this.setState({ ...this.state, finalPlayBricks: rawBricks, rawPlayBricks: rawBricks, playThreeColumns: threeColumns });
+  setPlayBricks(rawBricks: AssignmentBrick[]) {
+    const threeColumns = prepareThreeAssignmentRows(rawBricks);
+    this.setState({ ...this.state, finalAssignments: rawBricks, rawAssignments: rawBricks, playThreeColumns: threeColumns });
   }
 
   getBricks() {
@@ -247,8 +263,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     // get play tab bricks
     getAssignedBricks().then(assignments => {
       if (assignments) {
-        const bricks = assignments.map(a => a.brick);
-        this.setPlayBricks(bricks);
+        this.setPlayBricks(assignments);
       } else {
         this.props.requestFailed('Can`t get bricks for current user');
       }
@@ -626,9 +641,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   //#region render assiged bricks
-
   renderAssignedGroupedBricks() {
-    const data = prepareVisibleThreeColumnBricks(this.state.pageSize, this.state.sortedIndex, this.state.playThreeColumns);
+    const data = prepareVisibleThreeColumnAssignments(this.state.pageSize, this.state.sortedIndex, this.state.playThreeColumns);
     return this.renderGroupedBricks(data);
   }
 
