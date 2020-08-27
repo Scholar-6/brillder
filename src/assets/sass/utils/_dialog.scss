@@ -202,6 +202,11 @@
       $icon-size: 3.4vw;
       height: $icon-size;
       width: $icon-size;
+      transition: all 0.2s ease-in-out;
+    }
+
+    svg:hover {
+      color: var(--theme-orange);
     }
   }
   &.unlimited {
