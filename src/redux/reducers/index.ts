@@ -6,6 +6,7 @@ import userReducer, {UserState} from './user';
 import notificationReducer, {NotificationsState} from './notifications';
 import commentsReducer, {CommentsState} from './comments';
 import requestFailedReducer, {RequestFailedState} from './requestFailed';
+import statsReducer, { StatsState } from './stats';
 
 
 export interface ReduxCombinedState {
@@ -16,6 +17,7 @@ export interface ReduxCombinedState {
   notifications: NotificationsState;
   comments: CommentsState;
   requestFailed: RequestFailedState;
+  stats: StatsState;
 }
 
 export default combineReducers({
@@ -25,5 +27,6 @@ export default combineReducers({
   user: userReducer,
   notifications: notificationReducer,
   comments: commentsReducer,
-  requestFailed: requestFailedReducer
+  requestFailed: requestFailedReducer,
+  stats: statsReducer
 });
