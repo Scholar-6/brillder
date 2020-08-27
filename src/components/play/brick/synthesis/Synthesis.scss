@@ -108,6 +108,16 @@
     height: calc(100vh - 12vh - 2vw - #{$page-head-height}) !important;
     margin: 12vh 3vw 1vw 4vw;
   }
+
+  @include phone_and_tabletP {
+    padding: 0;
+    position: fixed;
+    top: 4.3vh;
+    width: 96vw;
+    height: calc(100% - 4.3vh - 160px) !important;
+    padding-left: 2vw;
+    padding-right: 2vw;
+  }
 }
 
 .sorted-row-expanded {
