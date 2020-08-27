@@ -11,7 +11,7 @@ import VersionLabel from 'components/baseComponents/VersionLabel';
 import Dashboard from '../play/dashboard/Dashboard';
 import MobileCategory from '../play/dashboard/MobileCategory';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
-import PlayPreviewRouting from '../build/playPreview/PreviewBrickRouting';
+import PlayPreviewRouting from 'components/playPreview/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
 import MainPage from 'components/mainPage/mainPage';
 import BackToWorkPage from '../build/backToWorkPage/BackToWork';

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Hidden } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, Redirect, useLocation } from "react-router-dom";
 
 import "./Live.scss";
 import { Question, QuestionTypeEnum } from "model/question";
@@ -11,7 +11,7 @@ import TabPanel from "../baseComponents/QuestionTabPanel";
 import { PlayStatus, ComponentAttempt } from "../model";
 import CountDown from "../baseComponents/CountDown";
 import sprite from "assets/img/icons-sprite.svg";
-
+import queryString from 'query-string';
 import { CashQuestionFromPlay } from "../../../localStorage/buildLocalStorage";
 import { Brick } from "model/brick";
 import LiveStepper from "./LiveStepper";
@@ -62,7 +62,15 @@ const LivePage: React.FC<LivePageProps> = ({
   const [answers, setAnswers] = React.useState(initAnswers);
   const history = useHistory();
 
+  const location = useLocation();
   const theme = useTheme();
+
+  useEffect(() => {
+    const values = queryString.parse(location.search);
+    if (values.activeStep) {
+      setActiveStep(parseInt(values.activeStep as string));
+    }
+  }, [location.search]);
 
   if (status > PlayStatus.Live) {
     if (props.isPlayPreview) {
@@ -253,7 +261,7 @@ const LivePage: React.FC<LivePageProps> = ({
     }
     let attempt = questionRefs[activeStep].current?.getRewritedAttempt();
     props.updateAttempts(attempt, activeStep);
-    history.push(`${mainPath}/brick/${brick.id}/intro?prepExtanded=true&resume=true`);
+    history.push(`${mainPath}/brick/${brick.id}/intro?prepExtanded=true&resume=true&activeStep=${activeStep}`);
   }
 
   const renderStepper = () => {
