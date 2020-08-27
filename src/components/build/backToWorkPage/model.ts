@@ -1,10 +1,11 @@
 import { Brick } from "model/brick";
+import { AssignmentBrick } from "model/assignment";
 
 
 export enum ThreeColumnNames {
-  Draft = "draft",
-  Review = "review",
-  Publish = "publish",
+  Red = "red",
+  Yellow = "yellow",
+  Green = "green",
 };
 
 export interface BricksContent {
@@ -13,9 +14,20 @@ export interface BricksContent {
 }
 
 export interface ThreeColumns {
-  draft: BricksContent;
-  review: BricksContent;
-  publish: BricksContent;
+  red: BricksContent;
+  yellow: BricksContent;
+  green: BricksContent;
+}
+
+export interface AssignmentContent {
+  rawAssignments: AssignmentBrick[];
+  finalAssignments: AssignmentBrick[];
+}
+
+export interface ThreeAssignmentColumns {
+  red: AssignmentContent;
+  yellow: AssignmentContent;
+  green: AssignmentContent;
 }
 
 export enum SortBy {

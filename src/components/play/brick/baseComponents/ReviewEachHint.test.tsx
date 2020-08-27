@@ -30,4 +30,4 @@ describe("EachHint", () => {
     const elm = screen.queryByText(hint.list[1]);
     expect(elm).toBeVisible();
   });
-})
+});
