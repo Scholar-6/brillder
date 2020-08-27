@@ -185,7 +185,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               <SubjectPage subjects={user.subjects} subjectId={''} saveSubject={this.setSubject} />
             </Route>
             <Route path={map.ProposalTitle}>
-              <BrickTitle playStatus={playStatus} parentState={localBrick} canEdit={canEdit} saveTitles={this.setTitles} />
+              <BrickTitle history={this.props.history} playStatus={playStatus} parentState={localBrick} canEdit={canEdit} saveTitles={this.setTitles} />
             </Route>
             <Route path={map.ProposalOpenQuestion}>
               <OpenQuestion playStatus={playStatus} selectedQuestion={localBrick.openQuestion} canEdit={canEdit} saveOpenQuestion={this.setOpenQuestion} />
