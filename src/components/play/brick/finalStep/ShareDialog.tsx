@@ -14,12 +14,12 @@ const ShareDialog: React.FC<ShareProps> = props => {
     <Dialog
       open={props.isOpen}
       onClose={props.close}
-      className="dialog-box light-blue"
+      className="dialog-box light-blue unlimited"
     >
       <div className="close-button">
         <svg className="svg active" onClick={props.close}>
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#cancel"} />
+          <use href={sprite + "#cancel-thick"} />
         </svg>
       </div>
       <div className="dialog-header">
@@ -33,6 +33,10 @@ const ShareDialog: React.FC<ShareProps> = props => {
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#email"} />
+        </svg>
+        <svg className="svg active">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#whatsapp"} />
         </svg>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}

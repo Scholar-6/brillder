@@ -38,6 +38,13 @@
     letter-spacing: 0;
     color: var(--theme-dark-blue);
 
+    .link {
+      font-family: $font-family-bold;
+      margin-left: 2vw;
+      margin-right: 2vw;
+      margin-top: 4vh;
+    }
+
     @include phone_and_tabletP {
       margin-bottom: 2vw;
       font-size: 4.35vw !important;
@@ -171,11 +178,10 @@
   .close-button {
     cursor: pointer;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0.9vw;
+    right: 0.7vw;
 
     svg {
-      stroke-width: 2;
       $size: 2vw;
       height: $size !important;
       width: $size !important;
@@ -193,9 +199,28 @@
     svg {
       cursor: pointer;
       margin: 1vw;
-      $icon-size: 2.7vw;
+      $icon-size: 3.4vw;
       height: $icon-size;
       width: $icon-size;
+    }
+  }
+  &.unlimited {
+    .MuiDialog-paperWidthSm {
+      max-width: none !important;
+      .dialog-header > div {
+        width: auto;
+      }
+    }
+    .link {
+      font-size: 2vw;
+      margin-left: 2.6vw;
+      margin-right: 2.6vw;
+    }
+    button {
+      font-size: 2vw;
+      margin-bottom: 1vw !important;
+      padding-left: 2vw;
+      padding-right: 2vw;
     }
   }
 }
