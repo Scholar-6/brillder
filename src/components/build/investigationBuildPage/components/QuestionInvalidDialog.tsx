@@ -11,12 +11,7 @@ interface DialogProps {
 
 const QuestionInvalidDialog: React.FC<DialogProps> = (props) => {
   return (
-    <Dialog
-      open={props.isOpen}
-      onClose={props.close}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      className="dialog-box">
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
         <div>Some questions are incomplete.</div>
         <div>These are marked in red. Keep working?</div>

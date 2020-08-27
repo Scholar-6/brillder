@@ -331,3 +331,19 @@ h3 {
 .dropzone:hover {
   border-color: var(--theme-dark-blue) !important;
 }
+
+// material select
+.MuiPaper-root.MuiMenu-paper.MuiPopover-paper {
+  .MuiMenu-list {
+    span[role=menuitem] {
+      min-height: auto !important;
+      font-family: $font-family-regular !important;
+      font-size: 1.2vw !important;
+      line-height: 2.2vw !important;
+      color: var(--theme-dark-blue) !important;
+      &:hover {
+        background: var(--tab-gray) !important;
+      }
+    }
+  }
+}

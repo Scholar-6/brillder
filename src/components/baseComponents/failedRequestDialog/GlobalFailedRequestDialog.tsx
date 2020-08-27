@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import { connect } from 'react-redux';
 
@@ -12,37 +12,30 @@ interface DeleteDialogProps {
   forgetFailture(): void;
 }
 
-class FailedRequestDialog extends Component<DeleteDialogProps> {
-  render() {
-    return (
-      <Dialog
-        open={this.props.failed}
-        onClose={this.props.forgetFailture}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        className="dialog-box">
-        <div className="dialog-header">
-          <div>Sorry, we've run into a brick wall. Click refresh and see if we can get over it.</div>
-        </div>
-        <div className="dialog-footer">
-          <button className="btn btn-md bg-theme-orange yes-button"
-            onClick={this.props.forgetFailture}>
-            <span>Close</span>
-          </button>
-        </div>
-      </Dialog>
-    );
-  }
+const FailedRequestDialog: React.FC<DeleteDialogProps> = (props) => {
+  return (
+    <Dialog open={props.failed} onClose={props.forgetFailture} className="dialog-box">
+      <div className="dialog-header">
+        <div>Sorry, we've run into a brick wall. Click refresh and see if we can get over it.</div>
+      </div>
+      <div className="dialog-footer">
+        <button className="btn btn-md bg-theme-orange yes-button"
+          onClick={props.forgetFailture}>
+          <span>Close</span>
+        </button>
+      </div>
+    </Dialog>
+  );
 }
 
 const mapState = (state: ReduxCombinedState) => ({
   failed: state.requestFailed.failed,
   error: state.requestFailed.error,
-})
+});
 
 const mapDispatch = (dispatch: any) => ({
   forgetFailture: () => dispatch(actions.forgetFailture()),
-})
+});
 
 const connector = connect(mapState, mapDispatch);
 

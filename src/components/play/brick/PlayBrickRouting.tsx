@@ -12,9 +12,10 @@ import ProvisionalScore from "./provisionalScore/ProvisionalScore";
 import Synthesis from "./synthesis/Synthesis";
 import Review from "./review/ReviewPage";
 import Ending from "./ending/Ending";
+import FinalStep from "./finalStep/FinalStep";
 
 import { Brick } from "model/brick";
-import { ComponentAttempt, PlayStatus } from "./model/model";
+import { PlayStatus, BrickAttempt } from "./model";
 import {
   Question,
   QuestionTypeEnum,
@@ -27,22 +28,11 @@ import PageHeadWithMenu, {
   PageEnum,
 } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import PlayLeftSidebar from './PlayLeftSidebar';
-import { PlayMode} from './model';
+import { PlayMode } from './model';
 import { ReduxCombinedState } from "redux/reducers";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import { BrickFieldNames } from "components/build/proposal/model";
 import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
-
-export interface BrickAttempt {
-  brickId?: number;
-  studentId?: number;
-  brick?: Brick;
-  score: number;
-  oldScore?: number;
-  maxScore: number;
-  student?: any;
-  answers: ComponentAttempt<any>[];
-}
 
 
 function shuffle(a: any[]) {
@@ -73,6 +63,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [mode, setMode] = React.useState(PlayMode.Normal);
   const [liveEndTime, setLiveEndTime] = React.useState(null as any);
   const location = useLocation();
+  const finalStep = location.pathname.search("/finalStep") >= 0;
+
+  console.log(attempts)
 
   // Commented this in order to allow students to also be builders and vice versa, we may need to add this back in (11/5/2020)
   // let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor);
@@ -112,7 +105,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       brick: brick,
       score: score,
       maxScore: maxScore,
-      student: null,  
+      student: null,
       answers: attempts,
     };
     setStatus(PlayStatus.Review);
@@ -151,18 +144,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const saveBrickAttempt = () => {
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
-    return axios
-      .post(
-        process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
-        brickAttempt,
-        { withCredentials: true }
-      )
-      .then((res) => {
-        props.history.push(`/play/dashboard`);
-      })
-      .catch((error) => {
-        alert("Can`t save your attempt");
-      });
+    return axios.post(
+      process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
+      brickAttempt,
+      { withCredentials: true }
+    ).then(() => {
+      props.history.push(`/play/brick/${brick.id}/finalStep`);
+    }).catch(() => {
+      alert("Can`t save your attempt");
+    });
   };
 
   const setSidebar = (state?: boolean) => {
@@ -279,7 +269,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             history={props.history}
             attempts={attempts}
             brickAttempt={brickAttempt}
-            saveBrick={saveBrickAttempt}
+            saveAttempt={saveBrickAttempt}
+          />
+        </Route>
+        <Route exac path="/play/brick/:brickId/finalStep">
+          <FinalStep
+            status={status}
+            brick={brick}
+            history={props.history}
           />
         </Route>
       </Switch>
@@ -295,7 +292,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     <div className="play-preview-pages">
       {renderHead()}
       <div className={className}>
-        <PlayLeftSidebar mode={mode} sidebarRolledUp={sidebarRolledUp} setMode={setMode} toggleSidebar={setSidebar} />
+        <PlayLeftSidebar mode={mode} sidebarRolledUp={sidebarRolledUp} empty={finalStep} setMode={setMode} toggleSidebar={setSidebar} />
         <div className="brick-row-container">
           {renderRouter()}
         </div>

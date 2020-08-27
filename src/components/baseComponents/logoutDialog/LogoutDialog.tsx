@@ -23,24 +23,19 @@ const LogoutDialog: React.FC<LogoutComponentProps> = (props) => {
     props.history.push('/choose-login');
   }
 
-  const handleLogoutClose = () => props.close();
-
   return (
-    <Dialog
-      open={props.isOpen}
-      onClose={() => handleLogoutClose()}
-      className="dialog-box">
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
         <div>Are you sure</div>
         <div>you want to log out?</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button"
-          onClick={() => logout()}>
+          onClick={logout}>
           <span>Yes</span>
         </button>
         <button className="btn btn-md bg-gray no-button"
-          onClick={() => handleLogoutClose()}>
+          onClick={props.close}>
           <span>No</span>
         </button>
       </div>

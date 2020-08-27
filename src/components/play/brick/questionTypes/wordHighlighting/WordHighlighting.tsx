@@ -3,7 +3,7 @@ import React from "react";
 import "./WordHighlighting.scss";
 import CompComponent from "../Comp";
 import {CompQuestionProps} from '../types';
-import { ComponentAttempt } from "components/play/brick/model/model";
+import { ComponentAttempt } from "components/play/brick/model";
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import { PlayWord, IPlayWordComponent } from 'components/interfaces/word';
 
@@ -98,7 +98,7 @@ class WordHighlighting extends CompComponent<
       className += " active";
     }
 
-    if (this.props.attempt && word.selected) {
+    if (this.props.attempt && word.selected && this.props.isReview) {
       let status = this.props.attempt.answer.indexOf(index);
       if (status !== -1) {
         if (word.checked === true) {

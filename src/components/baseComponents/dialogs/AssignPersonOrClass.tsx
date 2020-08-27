@@ -105,11 +105,7 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }
 
   return (
-    <Dialog
-      open={props.isOpen}
-      onClose={props.close}
-      className="dialog-box light-blue"
-    >
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue">
       <div className="dialog-header">
         <div>Who would you like to assign this brick to?</div>
         <Autocomplete
@@ -139,7 +135,7 @@ const mapState = (state: ReduxCombinedState) => ({
 
 const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
-})
+});
 
 const connector = connect(mapState, mapDispatch);
 

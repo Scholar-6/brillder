@@ -7,7 +7,7 @@ import './Sort.scss';
 import { Question } from "model/question";
 import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
-import {ComponentAttempt} from 'components/play/brick/model/model';
+import {ComponentAttempt} from 'components/play/brick/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import { ReactSortable } from 'react-sortablejs';
 import {SortCategory, SortAnswer, QuestionValueType} from 'components/interfaces/sort';
@@ -200,7 +200,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     if (choice.answerType === QuestionValueType.Image) {
       className += " image-choice";
     }
-    if (!this.props.isPreview && this.props.attempt) {
+    if (!this.props.isPreview && this.props.attempt && this.props.isReview) {
       if (this.state.status !== DragAndDropStatus.Changed) {
         if (isCorrect) {
           className += " correct";

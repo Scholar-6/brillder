@@ -4,7 +4,7 @@ import { Grid, Hidden } from '@material-ui/core';
 import './Synthesis.scss';
 import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
-import { PlayStatus } from '../model/model';
+import { PlayStatus } from '../model';
 import { BrickLengthEnum } from 'model/brick';
 import TimerWithClock from "../baseComponents/TimerWithClock";
 import sprite from "assets/img/icons-sprite.svg";

@@ -39,7 +39,7 @@ import { setupZendesk } from 'components/services/zendesk';
 import map from 'components/map';
 
 
-const App: React.FC = (props: any) => {
+const App: React.FC = () => {
   setBrillderTitle();
   const history = useHistory();
   const location = useLocation();

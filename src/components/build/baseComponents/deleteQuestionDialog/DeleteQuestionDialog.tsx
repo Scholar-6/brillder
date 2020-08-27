@@ -13,12 +13,7 @@ const DeleteQuestionDialog: React.FC<DeleteQuestionDialogProps> = ({
   open, index, setDialog, deleteQuestion
 }) => {
   return (
-    <Dialog
-      open={open}
-      onClose={() => setDialog(false)}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      className="dialog-box">
+    <Dialog open={open} onClose={() => setDialog(false)} className="dialog-box">
       <div className="dialog-header">
         <div>Permanently delete<br />this question?</div>
       </div>

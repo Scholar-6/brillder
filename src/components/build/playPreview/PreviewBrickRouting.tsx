@@ -19,7 +19,7 @@ import HomeButton from "components/baseComponents/homeButton/HomeButton";
 import { GetCashedBuildQuestion } from '../../localStorage/buildLocalStorage';
 
 import { Brick } from 'model/brick';
-import { ComponentAttempt, PlayStatus } from '../../play/brick/model/model';
+import { ComponentAttempt, PlayStatus } from '../../play/brick/model';
 import {
   Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
 } from 'model/question';
@@ -288,7 +288,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 brick={props.brick}
                 attempts={attempts}
                 brickAttempt={brickAttempt}
-                saveBrick={saveBrickAttempt}
+                saveAttempt={saveBrickAttempt}
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/publish">
