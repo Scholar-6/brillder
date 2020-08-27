@@ -96,11 +96,17 @@
 
 .synthesis-content {
   padding-top: 2vh;
+  overflow-y: auto;
+  height: calc(100vh - 55.8vw);
+
   table {
     color: var(--theme-dark-blue);
   }
+
   @include desktop {
     width: 46.5vw !important;
+    height: calc(100vh - 12vh - 2vw - #{$page-head-height}) !important;
+    margin: 12vh 3vw 1vw 4vw;
   }
 }
 
@@ -114,8 +120,6 @@
     @include desktop {
       width: 53vw !important;
       height: calc(100vh - 12vh - 2vw) !important;
-      margin: 12vh 3vw 1vw 4vw;
-      overflow-y: auto;
     }
   }
 }
