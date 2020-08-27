@@ -32,7 +32,7 @@ const ShareDialog: React.FC<ShareProps> = props => {
         </svg>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#email"} />
+          <use href={sprite + "#email-feather"} />
         </svg>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
