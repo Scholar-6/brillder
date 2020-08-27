@@ -15,38 +15,29 @@ interface DeleteDialogProps {
   requestFailed(e: string): void;
 }
 
-class DeleteBrickDialog extends Component<DeleteDialogProps> {
-  handleDeleteClose = () => this.props.close();
-
-  delete() {
-    const {brickId} = this.props;
+const DeleteBrickDialog:React.FC<DeleteDialogProps> = (props) => {
+  const deleteBrick = () => {
+    const {brickId} = props;
     axios.delete(
       process.env.REACT_APP_BACKEND_HOST + '/brick/' + brickId, {withCredentials: true}
-    ).then(res => {
-      this.props.onDelete(brickId);
+    ).then(() => {
+      props.onDelete(brickId);
     }).catch(() => {
-      this.props.requestFailed('Can`t delete bricks');
+      props.requestFailed('Can`t delete bricks');
     });
   }
 
-  render() {
     return (
-      <Dialog
-        open={this.props.isOpen}
-        onClose={() => this.handleDeleteClose()}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        className="dialog-box">
+      <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
         <div className="dialog-header">
           <div>Permanently delete<br/>this brick?</div>
         </div>
         <div className="dialog-footer">
-          <button className="btn btn-md bg-theme-orange yes-button"
-            onClick={() => this.delete()}>
+          <button className="btn btn-md bg-theme-orange yes-button" onClick={deleteBrick}>
             <span>Yes, delete</span>
           </button>
           <button className="btn btn-md bg-gray no-button"
-            onClick={() => this.handleDeleteClose()}>
+            onClick={props.close}>
             <span>No, keep</span>
           </button>
         </div>
@@ -57,7 +48,7 @@ class DeleteBrickDialog extends Component<DeleteDialogProps> {
 
 const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
-})
+});
 
 const connector = connect(null, mapDispatch);
 

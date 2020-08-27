@@ -212,13 +212,7 @@ const QuestionComponents = ({
           <span>+ QUESTION COMPONENT</span>
         </button>
       </Grid>
-      <Dialog
-        open={dialogOpen}
-        onClose={hideDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        className="dialog-box"
-      >
+      <Dialog open={dialogOpen} onClose={hideDialog} className="dialog-box">
         <div className="dialog-header">
           <div>Permanently delete<br />this component?</div>
         </div>
@@ -233,13 +227,7 @@ const QuestionComponents = ({
           </button>
         </div>
       </Dialog>
-      <Dialog
-        open={sameAnswerDialogOpen}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        className="dialog-box"
-        onClose={hideSameAnswerDialog}
-      >
+      <Dialog open={sameAnswerDialogOpen} className="dialog-box" onClose={hideSameAnswerDialog}>
         <div className="dialog-header">
           <div>Looks like these two answers are the same</div>
         </div>

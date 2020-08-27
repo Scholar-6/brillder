@@ -1,31 +1,33 @@
 import React, { Component } from "react";
 import Dialog from "@material-ui/core/Dialog";
 
+import "./FailedRequestDialog.scss";
 
-interface CloseProposalDialogProps {
+
+interface ShuffleAnswerDialogProps {
   isOpen: boolean;
+  submit(): void;
   close(): void;
-  move(): void;
 }
 
-const CloseProposalDialog: React.FC<CloseProposalDialogProps> = (props) => {
+const ShuffleAnswerDialog: React.FC<ShuffleAnswerDialogProps> = (props) => {
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
-        <div>Your changes will not be saved.<br />Exit anyway?</div>
+        <div>Submit answers?</div>
       </div>
       <div className="dialog-footer">
         <button className="btn btn-md bg-theme-orange yes-button"
-          onClick={props.move}>
+          onClick={props.submit}>
           <span>Yes</span>
         </button>
         <button className="btn btn-md bg-gray no-button"
           onClick={props.close}>
-          <span>No</span>
+          <span>Not yet</span>
         </button>
       </div>
     </Dialog>
   );
 }
 
-export default CloseProposalDialog;
+export default ShuffleAnswerDialog;

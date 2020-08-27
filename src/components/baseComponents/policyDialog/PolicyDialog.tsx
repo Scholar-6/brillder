@@ -15,13 +15,7 @@ const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
   }
 
   return (
-    <Dialog
-      open={props.isOpen}
-      onClose={() => props.close()}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      className="dialog-box privacy-policy-dialog"
-    >
+    <Dialog open={props.isOpen} onClose={() => props.close()} className="dialog-box privacy-policy-dialog">
       <div className="private-policy-content">
         <div className="close-button" onClick={props.close}>
         <svg className="svg w100 h100 colored">
@@ -140,7 +134,8 @@ const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
           year. Please read the Zendesk documentation on their separate website for
           more information.
         </p>
-        <a rel="noopener noreferrer" target="_blank" style={{marginBottom: '1vh'}} href="https://support.zendesk.com/hc/en-us/articles/360022367393-Zendesk-in-product-cookie-policy">
+        <a rel="noopener noreferrer" target="_blank" style={{marginBottom: '1vh'}}
+          href="https://support.zendesk.com/hc/en-us/articles/360022367393-Zendesk-in-product-cookie-policy">
           https://support.zendesk.com/hc/en-us/articles/360022367393-Zendesk-in-product-cookie-policy
         </a>
         <p style={{marginTop: '2vh'}}>
