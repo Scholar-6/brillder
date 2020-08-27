@@ -193,6 +193,22 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     );
   };
 
+  const renderMobileNext = () => {
+    if (questions.length - 1 > activeStep) { return; }
+    return (
+      <button
+        type="button"
+        className="play-preview svgOnHover play-green mobile-next"
+        onClick={next}
+      >
+        <svg className="svg w80 h80 active m-l-02">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#arrow-right"} />
+        </svg>
+      </button>
+    );
+  }
+
   return (
     <div className="brick-container review-page">
       <Grid container direction="row">
@@ -218,6 +234,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
               {questions.map(renderQuestionContainer)}
               <TabPanel index={questions.length} value={activeStep} />
             </SwipeableViews>
+            {renderMobileNext()}
           </Hidden>
         </Grid>
         <Grid item sm={4} xs={12}>

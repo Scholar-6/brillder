@@ -281,6 +281,22 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   }
 
+  const renderMobileNext = () => {
+    if (questions.length - 1 > activeStep) { return; }
+    return (
+      <button
+        type="button"
+        className="play-preview svgOnHover play-green mobile-next"
+        onClick={next}
+      >
+        <svg className="svg w80 h80 active m-l-02">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#arrow-right"} />
+        </svg>
+      </button>
+    );
+  }
+
   const renderFooter = () => {
     return (
       <div className="action-footer">
@@ -356,6 +372,7 @@ const LivePage: React.FC<LivePageProps> = ({
             <TabPanel index={questions.length} value={activeStep} />
           </SwipeableViews>
         </div>
+        {renderMobileNext()}
       </Hidden>
       <ShuffleAnswerDialog
         isOpen={isShuffleOpen}
