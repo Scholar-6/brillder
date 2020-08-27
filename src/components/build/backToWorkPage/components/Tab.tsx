@@ -1,7 +1,5 @@
 import React from "react";
 
-import { Brick } from "model/brick";
-
 export enum ActiveTab {
   Play,
   Build,

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Action, Dispatch } from 'redux';
+import { Dispatch } from 'redux';
 
 import types from '../types';
 
