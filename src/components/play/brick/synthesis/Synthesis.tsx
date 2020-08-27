@@ -78,7 +78,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
         <Hidden only={['xs']}>
           <hr className="cuting-line"></hr>
         </Hidden>
-        <div className="question-live-play synthesis-content">
+        <div className="synthesis-content">
           <HighlightHtml mode={props.mode} value={brick.synthesis} onHighlight={
             value => {
               if (props.onHighlight) {
