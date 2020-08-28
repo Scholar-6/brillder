@@ -22,7 +22,7 @@ import DashboardFilter, { SortBy } from "./DashboardFilter";
 import DashboardPagination from "./DashboardPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import { checkAdmin } from "components/services/brickService";
-import BrickBlock from "components/build/backToWorkPage/components/BrickBlock";
+import BrickBlock from "components/backToWorkPage/components/BrickBlock";
 
 
 interface BricksListProps {

@@ -14,7 +14,7 @@ import PlayBrickRouting from '../play/brick/PlayBrickRouting';
 import PlayPreviewRouting from 'components/playPreview/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
 import MainPage from 'components/mainPage/mainPage';
-import BackToWorkPage from '../build/backToWorkPage/BackToWork';
+import BackToWorkPage from '../backToWorkPage/BackToWork';
 import UsersListPage from '../build/users/UsersList';
 import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
 import LoginPage from '../authPages/loginPage/loginPage';
