@@ -24,18 +24,18 @@ const LinkCopiedDialog: React.FC<ProfileSavedProps> = props => {
     >
       <div className="dialog-header">
         <ListItem>
-          <ListItemText primary="Link copied!" style={{ minWidth: '30vw' }} />
+          <ListItemText primary="Link copied!" className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-check">
               <svg className="svg active">
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#check-icon"} className="text-white" />
+                <use href={sprite + "#link"} className="text-white" />
               </svg>
             </Avatar>
           </ListItemAvatar>
         </ListItem>
         <ListItem>
-          <ListItemText primary="Paste it anywhere you like!" style={{ minWidth: '30vw' }} />
+          <ListItemText primary="Paste it anywhere you like" className="italic" style={{ minWidth: '30vw' }} />
         </ListItem>
       </div>
     </Dialog>
