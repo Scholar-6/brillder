@@ -37,4 +37,11 @@
       }
     }
   }
+  .italic .MuiTypography-root {
+    font-family: Brandon Grotesque Regular Italic !important;
+    font-size: 1.6vw !important;
+  }
+  .bold .MuiTypography-root {
+    font-family: $font-family-bold !important;
+  }
 }
