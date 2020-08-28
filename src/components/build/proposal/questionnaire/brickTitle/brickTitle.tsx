@@ -124,6 +124,7 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <form>
               <Grid item className="input-container">
                 <Input
+                  autoFocus={true}
                   disabled={!canEdit}
                   className="audience-inputs"
                   value={parentState.title}
