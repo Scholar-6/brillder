@@ -5,9 +5,11 @@ import "./FinalStep.scss";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../model";
 import sprite from "assets/img/icons-sprite.svg";
+
 import Clock from "../baseComponents/Clock";
-import ShareDialog from './ShareDialog';
-import LinkDialog from './LinkDialog';
+import ShareDialog from './dialogs/ShareDialog';
+import LinkDialog from './dialogs/LinkDialog';
+import LinkCopiedDialog from './dialogs/LinkCopiedDialog';
 
 interface FinalStepProps {
   status: PlayStatus;
@@ -22,6 +24,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
 }) => {
   const [shareOpen, setShare] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
+  const [linkCopiedOpen, setCopiedLink] = React.useState(false);
 
   const link = `/play/brick/${brick.id}/intro`;
 
@@ -124,7 +127,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
           {renderFooter()}
         </div>
       </Hidden>
-      <LinkDialog isOpen={linkOpen} link={document.location.host + link} close={() => setLink(false)} />
+      <LinkDialog isOpen={linkOpen} link={document.location.host + link} submit={() => setCopiedLink(true)} close={() => setLink(false)} />
+      <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
     </div>
   );

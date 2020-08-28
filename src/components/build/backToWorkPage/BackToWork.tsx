@@ -3,15 +3,20 @@ import { Grid } from "@material-ui/core";
 import axios from "axios";
 import { connect } from "react-redux";
 
+import { ReduxCombinedState } from "redux/reducers";
+import actions from 'redux/actions/requestFailed';
+import statActions from 'redux/actions/stats';
+
 import "./BackToWork.scss";
 import { User } from "model/user";
 import { Brick, BrickStatus, Subject } from "model/brick";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
-import { ReduxCombinedState } from "redux/reducers";
-import actions from 'redux/actions/requestFailed';
+
 import { ThreeColumns, SortBy, Filters, TeachFilters, PlayFilters, ThreeAssignmentColumns } from './model';
 import {
-  getThreeColumnName, prepareTreeRows, prepareThreeAssignmentRows, prepareVisibleThreeColumnAssignments, getThreeColumnBrick, expandThreeColumnBrick, prepareVisibleThreeColumnBricks, getLongestColumn
+  getThreeColumnName, prepareTreeRows, prepareThreeAssignmentRows,
+  prepareVisibleThreeColumnAssignments, getThreeColumnBrick,
+  expandThreeColumnBrick, prepareVisibleThreeColumnBricks, getLongestColumn
 } from './threeColumnService';
 import {
   filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
@@ -77,8 +82,10 @@ interface BackToWorkState {
 export interface BackToWorkProps {
   user: User;
   history: any;
+  stats: any;
   forgetBrick(): void;
   requestFailed(e: string): void;
+  getClassStats(id: number): void;
 
   //test data
   isMocked?: boolean;
@@ -452,6 +459,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     const { classrooms } = this.state;
     let classroom = classrooms.find(c => c.id === id);
     if (classroom) {
+      this.props.getClassStats(classroom.id);
       classroom.active = true;
       this.setState({ classrooms, activeClassroom: classroom });
     } else {
@@ -706,7 +714,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
 const mapDispatch = (dispatch: any) => ({
-  requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
+  getClassStats: (id: number) => dispatch(statActions.getClassStats(id)),
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e))
 });
 
 export default connect(mapState, mapDispatch)(BackToWorkPage);
