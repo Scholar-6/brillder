@@ -114,7 +114,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
           <Grid container direction="row">
             <Grid item xs={8}>
               <div className="introduction-page">
-                <h1>Provisional Score</h1>
+                <h1 className="title">Provisional Score</h1>
                 {renderProgressBar()}
               </div>
             </Grid>
