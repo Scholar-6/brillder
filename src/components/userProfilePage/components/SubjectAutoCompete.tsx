@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import actions from 'redux/actions/requestFailed';
@@ -9,42 +8,35 @@ import { Subject } from 'model/brick';
 
 
 interface SubjectAutoCompleteProps {
-  selected: any[];
+  subjects: Subject[];
+  selected: Subject[];
   onSubjectChange(subjects: any[]): void;
   requestFailed(e: string): void;
 }
 
 interface SubjectAutoCompleteState {
   subjects: Subject[];
-  selected: any[];
+  selected: Subject[];
   autoCompleteOpen: boolean;
 }
 
 class SubjectAutoComplete extends Component<SubjectAutoCompleteProps, SubjectAutoCompleteState> {
   constructor(props: SubjectAutoCompleteProps) {
     super(props)
-    let selectedSubjects = [];
+    let selectedSubjects:Subject[] = [];
 
     if (this.props.selected) {
       selectedSubjects = this.props.selected;
     }
 
     this.state = {
-      subjects: [],
+      subjects: props.subjects,
       selected: selectedSubjects,
       autoCompleteOpen: false,
     };
-
-    axios.get(
-      process.env.REACT_APP_BACKEND_HOST + '/subjects', {withCredentials: true}
-    ).then(res => {
-      this.setState({...this.state, subjects: res.data });
-    }).catch(() => {
-      this.props.requestFailed('Can`t get subjects');
-    });
   }
 
-  onSubjectChange(event: any, newValue: any[]) {
+  onSubjectChange(e: any, newValue: any[]) {
     this.setState({...this.state, selected: newValue});
     this.props.onSubjectChange(newValue);
   }

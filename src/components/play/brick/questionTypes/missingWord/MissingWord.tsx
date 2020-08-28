@@ -5,7 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import CompComponent from "../Comp";
 import "./MissingWord.scss";
 import {CompQuestionProps} from '../types';
-import { ComponentAttempt } from "components/play/brick/model/model";
+import { ComponentAttempt } from "components/play/brick/model";
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
@@ -117,10 +117,11 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   }
 
   renderEachHint(index: number) {
-    if (this.props.attempt) {
+    const {attempt} = this.props;
+    if (attempt && attempt.answer) {
       let isCorrect = false;
       let choice = this.props.component.choices[index];
-      let attemptedAnswer = this.props.attempt.answer[index].value;
+      let attemptedAnswer = attempt.answer[index].value;
       let answer = choice.answers[attemptedAnswer];
       if (answer && answer.checked) {
         isCorrect = true;
@@ -128,7 +129,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       return (
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
-          attempt={this.props.attempt}
+          isReview={this.props.isReview}
           isCorrect={isCorrect}
           index={index}
           hint={this.props.question.hint}
@@ -139,7 +140,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
       return (
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
-          attempt={this.props.attempt}
+          isReview={this.props.isReview}
           isCorrect={false}
           index={index}
           hint={this.props.question.hint}
@@ -167,6 +168,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
           </div>
         ))}
         <ReviewGlobalHint
+          isReview={this.props.isReview}
           attempt={this.props.attempt}
           isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}

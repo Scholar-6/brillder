@@ -9,11 +9,7 @@ interface CommingSoonProps {
 
 const CommingSoonDialog: React.FC<CommingSoonProps> = (props) => {
   return (
-    <Dialog
-      open={props.isOpen}
-      onClose={props.close}
-      className="dialog-box"
-    >
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
         <div>Coming soon! If you have any suggestions for this feature,</div>
         <div>send us a message via the 'Help' ('?') button in the bottom</div>

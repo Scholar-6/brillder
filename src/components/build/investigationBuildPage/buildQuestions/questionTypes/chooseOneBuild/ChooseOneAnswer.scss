@@ -20,6 +20,14 @@
     &.big-box {
       height: 14vh;
     }
+    .MuiButtonBase-root {
+      padding:0.45vw;
+    }
+    .MuiSvgIcon-root {
+      $checkbox-size: 1.25vw;
+      height: $checkbox-size;
+      width: $checkbox-size;
+    }
   }
 
   .checkbox-container ~ .question-image-drop {

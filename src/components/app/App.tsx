@@ -11,10 +11,10 @@ import VersionLabel from 'components/baseComponents/VersionLabel';
 import Dashboard from '../play/dashboard/Dashboard';
 import MobileCategory from '../play/dashboard/MobileCategory';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
-import PlayPreviewRouting from '../build/playPreview/PreviewBrickRouting';
+import PlayPreviewRouting from 'components/playPreview/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
 import MainPage from 'components/mainPage/mainPage';
-import BackToWorkPage from '../build/backToWorkPage/BackToWork';
+import BackToWorkPage from '../backToWorkPage/BackToWork';
 import UsersListPage from '../build/users/UsersList';
 import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
 import LoginPage from '../authPages/loginPage/loginPage';
@@ -23,6 +23,7 @@ import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
 import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
 import UserProfilePage from '../userProfilePage/UserProfile';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
+import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
@@ -38,7 +39,7 @@ import { setupZendesk } from 'components/services/zendesk';
 import map from 'components/map';
 
 
-const App: React.FC = (props: any) => {
+const App: React.FC = () => {
   setBrillderTitle();
   const history = useHistory();
   const location = useLocation();
@@ -89,6 +90,7 @@ const App: React.FC = (props: any) => {
         <StudentRoute path={map.ViewAllPage} component={Dashboard} />
 
         <BuildRoute path="/manage-classrooms" component={ManageClassrooms} location={location} /> 
+        <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
         <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />

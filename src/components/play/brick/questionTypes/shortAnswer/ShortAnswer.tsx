@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import CompComponent from "../Comp";
 
 import "./ShortAnswer.scss";
-import { ComponentAttempt } from "components/play/brick/model/model";
+import { ComponentAttempt } from "components/play/brick/model";
 import ReviewEachHint from "../../baseComponents/ReviewEachHint";
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import { CompQuestionProps } from "../types";
@@ -148,7 +148,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         <Grid container direction="row" justify="center">
           <ReviewEachHint
             isPhonePreview={this.props.isPreview}
-            attempt={this.props.attempt}
+            isReview={this.props.isReview}
             isCorrect={isCorrect}
             index={index}
             hint={this.props.question.hint}
@@ -173,6 +173,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
           return this.renderAnswer(answer, width, index);
         })}
         <ReviewGlobalHint
+          isReview={this.props.isReview}
           attempt={this.props.attempt}
           isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}

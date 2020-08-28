@@ -129,13 +129,14 @@ function setZendeskMode(iframe: any, location: any) {
  */
 export function setupZendesk(location: any, zendeskCreated: boolean, setZendesk: Function) {
   if (!zendeskCreated) {
+    console.log('create zendesk iframe. (this log can`t appear twice)');
+    setZendesk(true);
     addZendesk();
 
     // check untill zendesk is mounted
     const interval = setInterval(() => {
       const iframe = getZendeskIframe();
       if (iframe) {
-        setZendesk(true);
         try {
           initZendeskStyling(iframe);
           setZendeskMode(iframe, location);

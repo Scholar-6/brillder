@@ -74,12 +74,12 @@
       margin: 0;
       float: left;
       width: 100%;
-      margin-bottom: 0.3vw;
       &:only-child,
       &:last-child {
         margin-bottom: 0;
       }
       .document-editor {
+        border-radius: 0 !important;
         width: 100%;
         .ck-editor {
           width: 100% !important;

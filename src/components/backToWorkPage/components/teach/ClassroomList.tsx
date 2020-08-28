@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
+import { ReduxCombinedState } from "redux/reducers";
 import { TeachClassroom, } from "model/classroom";
 import AssignedBrickDescription from "./AssignedBrickDescription";
 
 
 interface ClassroomListProps {
+  stats: any;
   classrooms: TeachClassroom[];
   startIndex: number;
   pageSize: number;
@@ -76,4 +79,6 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
   }
 }
 
-export default ClassroomList;
+const mapState = (state: ReduxCombinedState) => ({ stats: state.stats.stats });
+
+export default connect(mapState)(ClassroomList);

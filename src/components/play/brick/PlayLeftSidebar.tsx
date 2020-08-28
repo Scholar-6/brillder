@@ -18,6 +18,7 @@ interface SidebarProps {
   user: User;
 
   // play
+  empty?: boolean;
   mode?: PlayMode;
   setMode?(mode: PlayMode): void;
 
@@ -43,7 +44,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   setHighlightMode() {
     if (this.props.setMode) {
       if (this.props.mode === PlayMode.Highlighting) {
-        this.props.setMode(PlayMode.UnHighlighting);
+        this.props.setMode(PlayMode.Normal);
       } else {
         this.props.setMode(PlayMode.Highlighting);
       }
@@ -207,6 +208,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     let className = "sort-and-filter-container play-sidebar";
     if (this.props.sidebarRolledUp) {
       className += " rolled-up";
+    }
+
+    if (this.props.empty) {
+      return <Grid container item className={className}></Grid>
     }
 
     return (

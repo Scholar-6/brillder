@@ -6,7 +6,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import './ProvisionalScore.scss';
 import { Brick } from 'model/brick';
 import { useHistory } from 'react-router-dom';
-import { PlayStatus } from '../model/model';
+import { PlayStatus } from '../model';
 import { Moment } from 'moment';
 import sprite from "assets/img/icons-sprite.svg";
 import ReviewStepper from '../review/ReviewStepper';

@@ -65,7 +65,7 @@ $right: 1.4vw;
 $answer-input-text-size: 1vw;
 
 $height-mobile-view: calc(100vh - 48.5vh);
-$back-to-work-height-mobile-view: 100vh;
+$back-to-work-height-mobile-view: 100%;
 $height-desktop-view: calc(100vh - 7.834vw);
 
 $answer-height: 3.9vw;
@@ -78,6 +78,7 @@ $desktop-width: 1280px;
 $laptop-landscape-width: 1366px;
 $desktop-wide-width: 1440px;
 $ex-desktop-wide-width: 1680px;
+$ex-desktop-wide-hd-width: 1920px;
 $apple-macbook-air-width: 2560px;
 $apple-macbook-pro-width: 3072px;
 $apple-imac-width: 5120px;
@@ -108,7 +109,9 @@ $backwork-bricks-height-2: calc(
 
 $backwork-tab-content-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$backwork-tab-height});
 
-$backwork-inner-tab-content-height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$backwork-tab-height} - #{$pagination-size});
+$backwork-inner-tab-content-height: calc(
+  100vh - #{$page-head-height} - #{$sorted-row-margin-top} - #{$backwork-tab-height} - #{$pagination-size}
+);
 
 $filter-sidebar-size: 23vw;
 $filter-sidebar-margin: 1.2vw;

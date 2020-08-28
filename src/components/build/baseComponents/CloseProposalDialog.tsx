@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 
 
@@ -8,31 +8,24 @@ interface CloseProposalDialogProps {
   move(): void;
 }
 
-class CloseProposalDialog extends Component<CloseProposalDialogProps> {
-  render() {
-    return (
-      <Dialog
-        open={this.props.isOpen}
-        onClose={() => this.props.close()}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        className="dialog-box">
-        <div className="dialog-header">
-          <div>Your changes will not be saved.<br />Exit anyway?</div>
-        </div>
-        <div className="dialog-footer">
-          <button className="btn btn-md bg-theme-orange yes-button"
-            onClick={() => this.props.move()}>
-            <span>Yes</span>
-          </button>
-          <button className="btn btn-md bg-gray no-button"
-            onClick={() => this.props.close()}>
-            <span>No</span>
-          </button>
-        </div>
-      </Dialog>
-    );
-  }
+const CloseProposalDialog: React.FC<CloseProposalDialogProps> = (props) => {
+  return (
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
+      <div className="dialog-header">
+        <div>Your changes will not be saved.<br />Exit anyway?</div>
+      </div>
+      <div className="dialog-footer">
+        <button className="btn btn-md bg-theme-orange yes-button"
+          onClick={props.move}>
+          <span>Yes</span>
+        </button>
+        <button className="btn btn-md bg-gray no-button"
+          onClick={props.close}>
+          <span>No</span>
+        </button>
+      </div>
+    </Dialog>
+  );
 }
 
 export default CloseProposalDialog;

@@ -126,8 +126,6 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
       <Dialog
         open={isUploadOpen}
         onClose={() => setUploadDialog(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
         className="dialog-box"
       >
         <div className="dialog-header">
@@ -142,8 +140,6 @@ const ProfileImage: React.FC<ProfileImageProps> = (props) => {
       <Dialog
         open={isDeleteOpen}
         onClose={() => setDeleteDialog(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
         className="dialog-box"
       >
         <div className="dialog-header">
