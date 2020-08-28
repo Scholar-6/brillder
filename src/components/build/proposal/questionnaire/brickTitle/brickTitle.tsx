@@ -3,13 +3,14 @@ import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep, PlayButtonStatus } from "../../model";
-import NextButton from '../../components/nextButton';
-import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
-import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { Brick } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
-import { useHistory } from "react-router-dom";
+import { enterPressed } from "components/services/key";
+
+import NextButton from '../../components/nextButton';
+import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
+import Navigation from 'components/build/proposal/components/navigation/Navigation';
 
 import map from 'components/map';
 
@@ -91,20 +92,13 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
     }
   }
 
-  enterPressed(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    if (e.keyCode === 13) {
-      return true;
-    }
-    return false;
-  }
-
   onChange(event: React.ChangeEvent<{ value: string }>, value: string) {
     const title = event.target.value.substr(0, 40);
     this.props.saveTitles({ ...this.props.parentState, [value]: title });
   };
 
   moveToRef(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, refName: RefName) {
-    if (this.enterPressed(e)) {
+    if (enterPressed(e)) {
       let ref = this.state[refName];
       if (ref && ref.current) {
         ref.current.getElementsByTagName("input")[0].focus();
@@ -151,9 +145,11 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
                   disabled={!canEdit}
                   className="audience-inputs"
                   value={parentState.alternativeTopics}
-                  onKeyUp={() => {
-                    saveTitles(parentState);
-                    this.props.history.push(map.ProposalOpenQuestion);
+                  onKeyUp={e => {
+                    if (enterPressed(e)) {
+                      saveTitles(parentState);
+                      this.props.history.push(map.ProposalOpenQuestion);
+                    }
                   }}
                   onChange={e => this.onChange(e, "alternativeTopics")}
                   placeholder="Enter Subtopic(s)..."
