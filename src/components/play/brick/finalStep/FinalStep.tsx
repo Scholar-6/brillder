@@ -90,7 +90,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                     <Grid container item xs={5} justify="center">
                       <div>
                         <div className="button-container" onClick={()=> {}}>
-                          <svg className="svg active">
+                          <svg className="svg active inline-button">
                             {/*eslint-disable-next-line*/}
                             <use href={sprite + "#user-plus"} />
                           </svg>
