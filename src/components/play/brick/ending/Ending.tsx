@@ -137,7 +137,7 @@ const EndingPage: React.FC<EndingProps> = ({
           <Grid container direction="row">
             <Grid item xs={8}>
               <div className="introduction-page">
-                <h1>Final Score : Agg.</h1>
+                <h1 className="title">Final Score : Agg.</h1>
                 {renderProgressBars()}
               </div>
             </Grid>

@@ -74,7 +74,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   const renderSynthesis = () => {
     return (
       <div className="introduction-page">
-        <h1>Synthesis</h1>
+        <h1 className="title">Synthesis</h1>
         <Hidden only={['xs']}>
           <hr className="cuting-line"></hr>
         </Hidden>

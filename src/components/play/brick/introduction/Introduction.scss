@@ -170,6 +170,12 @@ $play-mobile-height: calc(100vh - 55.8vw);
         font-family: $font-family-regular;
         position: relative;
 
+        @include desktop {
+          .title {
+            font-size: 4vw;
+          }
+        }
+
         @include phone_and_tabletP {
           height: 100%;
           position: relative;
