@@ -3,6 +3,9 @@ import React, { Component } from "react";
 import './ShortAnswerPreview.scss';
 import { Grid } from "@material-ui/core";
 
+interface State {
+  interval: number;
+}
 
 class ShortAnswerPreview extends Component<any, any> {
   constructor(props: any) {
@@ -11,7 +14,6 @@ class ShortAnswerPreview extends Component<any, any> {
     let text = 'Oscar Wilde'
 
     let count = 0;
-    this.state = { text: '' }
 
     let interval = setInterval(() => {
       this.setState({...this.state, text: this.state.text + text[count]});
@@ -20,6 +22,14 @@ class ShortAnswerPreview extends Component<any, any> {
       }
       count++;
     }, 150);
+
+    this.state = { interval, text: '' };
+  }
+
+  componentWillUnmount() {
+    if (this.state.interval) {
+      clearInterval(this.state.interval)
+    }
   }
 
   render() {

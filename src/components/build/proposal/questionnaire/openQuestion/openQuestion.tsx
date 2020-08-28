@@ -55,7 +55,8 @@ const OpenQuestion:React.FC<OpenQuestionProps> = ({
           <p className="sub-header">Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.</p>
           <Grid item className="input-container">
             <Input
-               onKeyUp={e => {
+              autoFocus={true}
+              onKeyUp={e => {
                 if (enterPressed(e)) {
                   history.push(map.ProposalBrief);
                 }
