@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ComponentAttempt} from '../model/model';
+import {ComponentAttempt} from '../model';
 
 
 class CompComponent<Props, State> extends React.Component<Props, State> {

@@ -147,12 +147,13 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
   }
 
   render() {
+    const {history} = this.props;
     const canEdit = canEditBrick(this.state.brick, this.props.user);
 
     setBrillderTitle();
 
     if (this.state.saved) {
-      this.props.history.push(`/build/brick/${this.props.brick.id}/build/investigation/question`);
+      history.push(`/build/brick/${this.props.brick.id}/build/investigation/question`);
     }
 
     const localBrick = this.state.brick;
@@ -185,10 +186,10 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               <SubjectPage subjects={user.subjects} subjectId={''} saveSubject={this.setSubject} />
             </Route>
             <Route path={map.ProposalTitle}>
-              <BrickTitle playStatus={playStatus} parentState={localBrick} canEdit={canEdit} saveTitles={this.setTitles} />
+              <BrickTitle history={history} playStatus={playStatus} parentState={localBrick} canEdit={canEdit} saveTitles={this.setTitles} />
             </Route>
             <Route path={map.ProposalOpenQuestion}>
-              <OpenQuestion playStatus={playStatus} selectedQuestion={localBrick.openQuestion} canEdit={canEdit} saveOpenQuestion={this.setOpenQuestion} />
+              <OpenQuestion playStatus={playStatus} history={history} selectedQuestion={localBrick.openQuestion} canEdit={canEdit} saveOpenQuestion={this.setOpenQuestion} />
             </Route>
             <Route path={map.ProposalBrief}>
               <Brief playStatus={playStatus} parentBrief={localBrick.brief} canEdit={canEdit} saveBrief={this.setBrief} />
@@ -203,7 +204,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               <ProposalReview
                 playStatus={playStatus}
                 brick={localBrick}
-                history={this.props.history}
+                history={history}
                 canEdit={canEdit}
                 user={user}
                 setBrickField={this.setBrickField}

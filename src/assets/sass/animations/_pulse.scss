@@ -21,6 +21,18 @@
     }
 }
 
+@include keyframes(pulse-red) {
+    0% {
+        @include box-shadow(0 0 0 0 #c43c30);
+    }
+    70% {
+        @include box-shadow(0 0 0 20px transparent);
+    }
+    100% {
+        @include box-shadow(0 0 0 0 transparent);
+    }
+}
+
 @include keyframes(pulse-blue) {
     0% {
         @include box-shadow(0 0 0 0 rgba(0, 28, 88, 0.5));

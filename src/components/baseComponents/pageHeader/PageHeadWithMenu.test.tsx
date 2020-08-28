@@ -28,6 +28,9 @@ const mockNotification = {
 describe("notification panel", () => {
   it("should create Header with Menu", () => {
     const store = mockStore({
+      user: {
+        user: {roles:[]}
+      },
       notifications: {
         notifications: [mockNotification]
       }
@@ -35,7 +38,7 @@ describe("notification panel", () => {
 
     render(
       <Provider store={store}>
-        <PageHead history={null} user={{roles:[]}} search={()=>{}} page={1} searching={()=>{}} />
+        <PageHead history={null} user={{roles:[]} as any} search={()=>{}} page={1} searching={()=>{}} />
       </Provider>
     );
     

@@ -43,8 +43,6 @@ const ProfileSavedDialog: React.FC<ProfileSavedProps> = props => {
       open={props.isOpen}
       onClick={close}
       onClose={close}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
       className="dialog-box profile-saved-dialog"
     >
       <div className="dialog-header">
@@ -62,8 +60,7 @@ const ProfileSavedDialog: React.FC<ProfileSavedProps> = props => {
       </div>
       <div className="dialog-footer">
         {renderLinkButton()}
-        <button className="btn btn-md bg-gray yes-button"
-          onClick={close}>
+        <button className="btn btn-md bg-gray yes-button" onClick={close}>
           <span>Continue editing</span>
         </button>
       </div>

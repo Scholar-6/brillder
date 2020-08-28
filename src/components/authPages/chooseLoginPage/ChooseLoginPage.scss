@@ -130,20 +130,6 @@
   }
 }
 
-.policy-text {
-  cursor: pointer;
-  vertical-align: middle;
-  text-align: right;
-  padding-right: 2.5vw;
-  padding-top: 2.8vh;
-  color: white;
-  font-size: 3vh;
-  height: 10%;
-  span:hover {
-    color: var(--theme-orange) !important;
-  }
-}
-
 .mobile-policy-text {
   position: absolute;
   bottom: 2.4vh;
@@ -152,4 +138,25 @@
   color: var(--theme-dark-blue);
   font-size: 6vw;
   line-height: 1;
+}
+
+.second-col {
+  position: relative;
+  .policy-text {
+    position: absolute;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 2.5vw;
+    color: var(--tab-gray);
+    font-family: $font-family-regular;
+    bottom: 2.4vh;
+    line-height: 2vw;
+    font-size: 1.6vw;
+    right: 0;
+
+    span:hover {
+      color: var(--theme-orange) !important;
+    }
+  }
 }

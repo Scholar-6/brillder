@@ -9,14 +9,19 @@ import moment from 'moment';
 import './NotificationPanel.scss';
 
 import map from 'components/map';
+import { isMobile } from 'react-device-detect';
+import { checkTeacherEditorOrAdmin } from 'components/services/brickService';
+import { User } from 'model/user';
 
 const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
   notifications: state.notifications.notifications
 });
 
 const connector = connect(mapState);
 
 interface NotificationPanelProps {
+  user: User;
   shown: boolean;
   notifications: Notification[] | null;
   handleClose(): void;
@@ -26,7 +31,7 @@ interface NotificationPanelProps {
 
 class NotificationPanel extends Component<NotificationPanelProps> {
   move(notification: Notification) {
-    const {history} = this.props;
+    const { history } = this.props;
     if (history) {
       if (notification.type === NotificationType.BrickPublished) {
         history.push(map.ViewAllPage);
@@ -53,6 +58,19 @@ class NotificationPanel extends Component<NotificationPanelProps> {
       `${process.env.REACT_APP_BACKEND_HOST}/notifications/unread/markAsRead`,
       {},
       { withCredentials: true }
+    );
+  }
+
+  renderQuotes() {
+    if (isMobile) { return ""; }
+    let canSee = checkTeacherEditorOrAdmin(this.props.user);
+    if (canSee) {
+      return (
+        <em>“Nothing strengthens authority so much as silence”<br />- Leonardo da Vinci</em>
+      );
+    }
+    return (
+      <em>“Why then the world's mine oyster...”<br />- Shakespeare</em>
     );
   }
 
@@ -102,7 +120,9 @@ class NotificationPanel extends Component<NotificationPanelProps> {
               )) :
                 (
                   <div className="notification-detail-single">
-                    Looks like you don't have any notifications...
+                    You have no new notifications
+                    <br />
+                    {this.renderQuotes()}
                   </div>
                 )
               }

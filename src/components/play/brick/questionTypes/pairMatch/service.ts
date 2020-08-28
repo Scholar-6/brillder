@@ -1,4 +1,4 @@
-import {ComponentAttempt} from 'components/play/brick/model/model';
+import {ComponentAttempt} from 'components/play/brick/model';
 import {PairMatchChoice, DragAndDropStatus} from './interface';
 
 

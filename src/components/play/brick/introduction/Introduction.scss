@@ -15,6 +15,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
   .sorted-row {
     @include phone_and_tabletP {
       height: $back-to-work-height-mobile-view;
+      overflow:hidden;
     }
 
     .play-sidebar {
@@ -558,7 +559,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
 
         .intro-text-row {
-          width: 100%;
           font-size: 1.15vw;
           font-family: $font-family-bold;
           color: var(--theme-dark-blue);

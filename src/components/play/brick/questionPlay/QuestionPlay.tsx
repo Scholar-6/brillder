@@ -3,7 +3,7 @@ import React from 'react';
 import './QuestionPlay.scss';
 import { Question, QuestionComponentTypeEnum, QuestionTypeEnum } from "model/question";
 import CompComponent from '../questionTypes/Comp';
-import { ComponentAttempt } from '../model/model';
+import { ComponentAttempt } from '../model';
 
 import TextLive from '../comp/TextLive';
 import QuoteLive from '../comp/QuoteLive';
@@ -29,6 +29,7 @@ interface QuestionProps {
   question: Question;
   isPhonePreview?: boolean;
   answers: any;
+  isReview?: boolean;
   onAttempted?(): void;
 
   // only for real play
@@ -55,9 +56,16 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
   getAttempt(): any {
     if (this.props.attempt?.correct === true) {
       return {
-        answer: this.props.attempt.answer, correct: true, marks: 0, maxMarks: this.props.attempt.maxMarks
+        answer: this.props.attempt.answer,
+        correct: true,
+        marks: 0,
+        maxMarks: this.props.attempt.maxMarks
       } as ComponentAttempt<any>;
     }
+    return this.state.answerRef.current?.getAttempt();
+  }
+
+  getRewritedAttempt(): any {
     return this.state.answerRef.current?.getAttempt();
   }
 
@@ -101,6 +109,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
           isPreview={this.props.isPhonePreview}
           question={question}
           component={component}
+          isReview={this.props.isReview}
           onAttempted={this.props.onAttempted}
         />
       );

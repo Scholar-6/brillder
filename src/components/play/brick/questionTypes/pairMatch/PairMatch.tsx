@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 
 import './PairMatch.scss';
 import CompComponent from '../Comp';
-import {ComponentAttempt} from 'components/play/brick/model/model';
+import {ComponentAttempt} from 'components/play/brick/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import {QuestionValueType} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
 import {Answer} from 'components/build/investigationBuildPage/buildQuestions/questionTypes/pairMatchBuild/types';
@@ -98,7 +98,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (answer.answerType === QuestionValueType.Image) {
       className += " image-choice";
     }
-    if (this.props.attempt) {
+    if (this.props.attempt && this.props.isReview) {
       if (this.state.status !== DragAndDropStatus.Changed) {
         let state = this.getState(answer.index);
         if (state === 1) {
@@ -157,6 +157,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
           </ReactSortable>
         </Grid>
         <ReviewGlobalHint
+          isReview={this.props.isReview}
           attempt={this.props.attempt}
           isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}

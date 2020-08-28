@@ -11,7 +11,7 @@
     height: fit-content;
     left: auto !important;
     @include phone_and_tabletP {
-      bottom: 5.9vh !important;
+      bottom: 60px !important;
       top: unset !important;
       width: 40vw;
       border-radius: 4vw 0 0;
@@ -33,8 +33,8 @@
         align-items: center;
         justify-content: space-between;
         @include phone_and_tabletP {
-          font-size: 3.45vw;
-          padding: 2vw 2vw 2vw 2.5vw;
+          font-size: 15px;
+          padding: 15px;
         }
         @include tabletP {
           padding: 0.8vw 0.8vw 0.8vw 1vw;
@@ -45,10 +45,16 @@
         }
         .btn {
           .svg {
-            width: 2.5vw;
-            height: 2.5vw;
             @extend %removePosition;
             background: transparent;
+            @include phone_and_tabletP {
+              width: 25px;
+              height: 25px;
+            }
+            @include tabletP {
+              width: 2.5vw;
+              height: 2.5vw;
+            }
           }
         }
         .svg-icon {

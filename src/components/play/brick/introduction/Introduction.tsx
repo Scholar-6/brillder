@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import sprite from "assets/img/icons-sprite.svg";
+import { isMobile } from "react-device-detect";
 
 import "./Introduction.scss";
 import { Brick, BrickLengthEnum } from "model/brick";
@@ -44,8 +45,12 @@ interface IntroductionState {
 const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const values = queryString.parse(props.location.search);
   let initPrepExpanded = false;
+  let resume = false;
   if (values.prepExtanded === 'true') {
     initPrepExpanded = true;
+  }
+  if (values.resume === 'true') {
+    resume = true;
   }
   const history = useHistory();
   const [state, setState] = React.useState({
@@ -126,15 +131,28 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
     setState({ ...state, duration });
   };
 
+  const renderDesktopPlayText = () => {
+    if (resume) {
+      return (
+        <div className="direction-info">
+          <h2>Resume</h2>
+        </div>
+      );
+    }
+    return (
+      <div className="direction-info">
+        <h3>Ready?</h3>
+        <h2>Play Brick</h2>
+      </div>
+    );
+  }
+
   const renderPlayButton = () => {
     return (
       <div className="action-footer">
         <div></div>
         <Hidden only={["xs"]}>
-          <div className="direction-info">
-            <h3>Ready?</h3>
-            <h2>Play Brick</h2>
-          </div>
+          {renderDesktopPlayText()}
         </Hidden>
         <div>
           <button
@@ -194,7 +212,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             />
           </svg>
         </div>
-        {!state.prepExpanded ? (
+        {!state.prepExpanded && !isMobile ? (
           <span className="help-prep">
             Expand to start the timer. Aim to spend around {timeToSpend} minutes
             on this section.

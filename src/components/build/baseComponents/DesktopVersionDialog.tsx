@@ -8,11 +8,7 @@ interface DesktopVersionProps {
 
 const DesktopVersionDialog:React.FC<DesktopVersionProps> = (props) => {
   return (
-    <Dialog
-      open={true}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      className="dialog-box">
+    <Dialog open={true} className="dialog-box">
       <div className="dialog-header">
         <div>You need desktop browser to use this page</div>
       </div>

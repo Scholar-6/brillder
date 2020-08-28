@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core';
 import './VerticalShuffle.scss';
 import {CompQuestionProps} from '../types';
 import CompComponent from '../Comp';
-import {ComponentAttempt} from 'components/play/brick/model/model';
+import {ComponentAttempt} from 'components/play/brick/model';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
@@ -140,7 +140,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     let isCorrect = this.checkAttemptAnswer(i);
     let className = "vertical-shuffle-choice";
 
-    if (!this.props.isPreview && this.props.attempt) {
+    if (!this.props.isPreview && this.props.attempt && this.props.isReview) {
       if (this.state.status !== DragAndDropStatus.Changed) {
         if (isCorrect === true) {
           className += " correct";
@@ -158,7 +158,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
         <Grid container direction="row" justify="center">
           <ReviewEachHint
             isPhonePreview={this.props.isPreview}
-            attempt={this.props.attempt}
+            isReview={this.props.isReview}
             isCorrect={isCorrect}
             index={i}
             hint={this.props.question.hint}
@@ -187,6 +187,7 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
           }
         </ReactSortable>
         <ReviewGlobalHint
+          isReview={this.props.isReview}
           attempt={this.props.attempt}
           isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}

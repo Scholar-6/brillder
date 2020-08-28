@@ -79,7 +79,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
   };
 
   const renderManageClassesItem = () => {
-    if (page !== PageEnum.ManageClasses) {
+    if (page !== PageEnum.ManageClasses && page !== PageEnum.MainPage) {
       const canSee = checkTeacherOrAdmin(props.user.roles);
       if (canSee) {
         return (
@@ -94,23 +94,20 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
 
   const renderBackToWorkItem = () => {
     if (page !== PageEnum.BackToWork && page !== PageEnum.MainPage) {
-      const canSee = checkTeacherOrAdmin(props.user.roles);
-      if (canSee) {
-        return (
-          <MenuItem
-            className="menu-item"
-            onClick={() => move("/back-to-work")}
-          >
-            <span className="menu-text">Back To Work</span>
-            <div className="btn btn-transparent svgOnHover">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#roller"} className="text-white" />
-              </svg>
-            </div>
-          </MenuItem>
-        );
-      }
+      return (
+        <MenuItem
+          className="menu-item"
+          onClick={() => move("/back-to-work")}
+        >
+          <span className="menu-text">Back To Work</span>
+          <div className="btn btn-transparent svgOnHover">
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#roller"} className="text-white" />
+            </svg>
+          </div>
+        </MenuItem>
+      );
     }
     return "";
   };
@@ -172,7 +169,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = (props) => {
       <MenuItem className="menu-item" onClick={props.onLogout}>
         <span className="menu-text">Logout</span>
         <div className="btn btn-transparent svgOnHover">
-          <svg className="svg active">
+          <svg className="svg active logout-icon">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#logout"} className="text-white" />
           </svg>

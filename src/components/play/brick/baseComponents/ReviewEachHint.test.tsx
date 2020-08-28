@@ -25,17 +25,9 @@ describe("EachHint", () => {
       status: HintStatus.Each
     }
 
-    let attempt = {
-      answer: null,
-      correct: true,
-      marks: 1,
-      maxMarks: 1,
-      attempted: true
-    }
-
-    render(<ReviewEachHint attempt={attempt} index={1} hint={hint} />);
+    render(<ReviewEachHint isReview={true} index={1} hint={hint} />);
 
     const elm = screen.queryByText(hint.list[1]);
     expect(elm).toBeVisible();
   });
-})
+});

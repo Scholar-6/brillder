@@ -12,12 +12,7 @@ interface UnassignStudentProps {
 
 const UnassignStudentDialog: React.FC<UnassignStudentProps> = props => {
   return (
-    <Dialog
-      open={props.isOpen}
-      onClose={props.close}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      className="dialog-box">
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
         <div>Remove {props.student?.firstName} {props.student?.lastName} from this class?</div>
       </div>

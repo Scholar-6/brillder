@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 
 import './ChooseSeveral.scss';
 import CompComponent from '../Comp';
-import { ComponentAttempt } from 'components/play/brick/model/model';
+import { ComponentAttempt } from 'components/play/brick/model';
 import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from 'components/play/brick/baseComponents/ReviewGlobalHint';
 import { CompQuestionProps } from '../types';
@@ -107,7 +107,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   }
 
   checkChoice(choice: ChooseOneAnswer, index: number) {
-    if (this.props.attempt) {
+    if (this.props.attempt && this.props.isReview) {
       const { answer } = this.props.attempt;
       const found = answer.find((a: number) => a === index);
       if (found && found >= 0) {
@@ -119,9 +119,6 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
       }
     }
     return null;
-  }
-
-  renderEachHint(index: number) {
   }
 
   renderData(answer: ChooseOneAnswer) {
@@ -168,7 +165,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
         {this.renderData(choice)}
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
-          attempt={this.props.attempt}
+          isReview={this.props.isReview}
           isCorrect={isCorrect ? isCorrect : false}
           index={index}
           hint={this.props.question.hint}
@@ -187,6 +184,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
           component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }
         <ReviewGlobalHint
+          isReview={this.props.isReview}
           attempt={this.props.attempt}
           isPhonePreview={this.props.isPreview}
           hint={this.props.question.hint}

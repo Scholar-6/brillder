@@ -18,9 +18,9 @@ const BackPagePaginationV2: React.FC<BackPageTitleProps> = ({
   sortedIndex, threeColumns, pageSize, moveNext, moveBack
 }) => {
   const getLongestColumn = () => {
-    let draftLength = threeColumns.draft.finalBricks.length;
-    let reviewLength = threeColumns.review.finalBricks.length;
-    let publishLenght = threeColumns.publish.finalBricks.length;
+    let draftLength = threeColumns.red.finalBricks.length;
+    let reviewLength = threeColumns.yellow.finalBricks.length;
+    let publishLenght = threeColumns.green.finalBricks.length;
     return Math.max(draftLength, reviewLength, publishLenght);
   }
 

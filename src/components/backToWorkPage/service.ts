@@ -19,13 +19,13 @@ export const removeBrickFromLists = (rawBricks: Brick[], finalBricks: Brick[], t
   removeBrickFromList(finalBricks, brickId);
   removeBrickFromList(rawBricks, brickId);
 
-  const { publish, draft, review } = threeColumns;
-  removeBrickFromList(publish.finalBricks, brickId);
-  removeBrickFromList(publish.rawBricks, brickId);
-  removeBrickFromList(draft.finalBricks, brickId);
-  removeBrickFromList(draft.rawBricks, brickId);
-  removeBrickFromList(review.finalBricks, brickId);
-  removeBrickFromList(review.rawBricks, brickId);
+  const { red, yellow, green } = threeColumns;
+  removeBrickFromList(green.finalBricks, brickId);
+  removeBrickFromList(green.rawBricks, brickId);
+  removeBrickFromList(red.finalBricks, brickId);
+  removeBrickFromList(red.rawBricks, brickId);
+  removeBrickFromList(yellow.finalBricks, brickId);
+  removeBrickFromList(yellow.rawBricks, brickId);
 }
 
 export const removeInboxFilters = (filters: Filters) => {

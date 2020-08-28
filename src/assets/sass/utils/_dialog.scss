@@ -17,9 +17,33 @@
     }
   }
 
+  .MuiInputBase-root {
+    background: white !important;
+    box-shadow: none !important;
+    .MuiAutocomplete-endAdornment {
+      height: 100%;
+      position: absolute;
+      top: 0;
+      .MuiAutocomplete-clearIndicator {
+        display: none !important;
+      }
+      .MuiAutocomplete-popupIndicator {
+        height: 100%;
+        border-radius: 0;
+      }
+    }
+  }
+
   .dialog-header {
     letter-spacing: 0;
     color: var(--theme-dark-blue);
+
+    .link {
+      font-family: $font-family-bold;
+      margin-left: 2vw;
+      margin-right: 2vw;
+      margin-top: 4vh;
+    }
 
     @include phone_and_tabletP {
       margin-bottom: 2vw;
@@ -33,7 +57,7 @@
 
     //!! only for profile page drag and drop and crop zone
     .cropper-container {
-      background: #E5E8ED;
+      background: #e5e8ed;
     }
     .cropper-view-box {
       border-radius: 50%;
@@ -41,10 +65,12 @@
     }
     $line-width: 0.5vw;
     .cropper-line {
-      &.line-w, &.line-e {
+      &.line-w,
+      &.line-e {
         width: $line-width;
       }
-      &.line-n, &.line-s {
+      &.line-n,
+      &.line-s {
         height: $line-width;
       }
     }
@@ -56,22 +82,30 @@
 
       $half-width: calc(#{$line-width} / -1.55);
 
-      &.point-n, &.point-ne, &.point-nw {
+      &.point-n,
+      &.point-ne,
+      &.point-nw {
         top: $half-width;
       }
-      &.point-e, &.point-ne, &.point-se {
+      &.point-e,
+      &.point-ne,
+      &.point-se {
         right: $half-width;
       }
-      &.point-s, &.point-sw, &.point-se {
+      &.point-s,
+      &.point-sw,
+      &.point-se {
         bottom: $half-width;
       }
-      &.point-w, &.point-sw, &.point-nw {
+      &.point-w,
+      &.point-sw,
+      &.point-nw {
         left: $half-width;
       }
     }
-    
+
     .dropzone-instructions {
-      >div {
+      > div {
         color: var(--theme-dark-blue);
         font-style: normal;
       }
@@ -92,7 +126,7 @@
       color: var(--theme-dark-blue);
       text-align: center;
       display: block;
-      content: "Drag Image Here | Click to Select Image";
+      content: 'Drag Image Here | Click to Select Image';
       font-family: $font-family-regular;
     }
   }
@@ -120,7 +154,7 @@
         margin-bottom: 0;
         color: inherit;
 
-        >div {
+        > div {
           margin-bottom: 4.5vh;
           text-align: center;
           width: 30vw;
@@ -139,6 +173,65 @@
           color: var(--theme-dark-blue);
         }
       }
+    }
+  }
+  .close-button {
+    cursor: pointer;
+    position: absolute;
+    top: 0.9vw;
+    right: 0.7vw;
+
+    svg {
+      $size: 2vw;
+      height: $size !important;
+      width: $size !important;
+      color: var(--theme-orange);
+
+      @include phone_and_tabletP {
+        $size: 8vw;
+        height: $size !important;
+        width: $size !important;
+      }
+    }
+  }
+  .social-share-row {
+    @extend %flexToXCenter;
+    svg {
+      cursor: pointer;
+      margin: 1vw;
+      $icon-size: 3.4vw;
+      height: $icon-size;
+      width: $icon-size;
+      transition: all 0.2s ease-in-out;
+    }
+
+    svg:hover {
+      color: var(--theme-orange);
+    }
+  }
+  &.unlimited {
+    .MuiDialog-paperWidthSm {
+      max-width: none !important;
+      .dialog-header > div {
+        width: auto;
+      }
+    }
+    .title {
+      color: var(--tab-gray);
+      font-family: $font-family-bold;
+    }
+    .link {
+      font-size: 1.7vw;
+      margin-left: 2.6vw;
+      margin-right: 2.6vw;
+      margin-bottom: 4vh;
+    }
+    button {
+      font-size: 1.7vw;
+      margin-bottom: 1vw !important;
+      padding-left: 2vw;
+      letter-spacing: 0.01vw !important;
+      padding-right: 2vw;
     }
   }
 }

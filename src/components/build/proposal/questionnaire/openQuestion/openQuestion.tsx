@@ -1,17 +1,20 @@
 import React from "react";
 import { Grid, Input, Hidden } from "@material-ui/core";
 
+import './openQuestion.scss';
+import { ProposalStep, PlayButtonStatus } from "../../model";
+import map from 'components/map';
+import { enterPressed } from "components/services/key";
+
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
-import { ProposalStep, PlayButtonStatus } from "../../model";
-import './openQuestion.scss';
-import map from 'components/map';
 
 interface OpenQuestionProps {
   selectedQuestion: any;
   canEdit: boolean;
   playStatus: PlayButtonStatus;
+  history: any;
   saveOpenQuestion(v: string): void;
 }
 
@@ -33,7 +36,9 @@ const HeadComponent: React.FC<any> = ({ data }) => {
   )
 }
 
-const OpenQuestion:React.FC<OpenQuestionProps> = ({ selectedQuestion, canEdit, playStatus, saveOpenQuestion }) => {
+const OpenQuestion:React.FC<OpenQuestionProps> = ({
+  selectedQuestion, history, canEdit, playStatus, saveOpenQuestion
+}) => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     saveOpenQuestion(event.target.value as string);
   };
@@ -50,6 +55,11 @@ const OpenQuestion:React.FC<OpenQuestionProps> = ({ selectedQuestion, canEdit, p
           <p className="sub-header">Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.</p>
           <Grid item className="input-container">
             <Input
+               onKeyUp={e => {
+                if (enterPressed(e)) {
+                  history.push(map.ProposalBrief);
+                }
+              }}
               className="audience-inputs"
               disabled={!canEdit}
               value={selectedQuestion}

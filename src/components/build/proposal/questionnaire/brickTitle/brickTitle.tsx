@@ -1,20 +1,35 @@
-import React from "react";
+import React, { Component } from "react";
 import { Grid, Input, Hidden } from "@material-ui/core";
 
 import './brickTitle.scss';
 import { ProposalStep, PlayButtonStatus } from "../../model";
-import NextButton from '../../components/nextButton';
-import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
-import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { Brick } from "model/brick";
 import { getDate, getMonth, getYear } from 'components/services/brickService';
 import { setBrillderTitle } from "components/services/titleService";
+import { enterPressed } from "components/services/key";
+
+import NextButton from '../../components/nextButton';
+import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
+import Navigation from 'components/build/proposal/components/navigation/Navigation';
+
+import map from 'components/map';
+
+enum RefName {
+  subTitleRef = 'subTitleRef',
+  altTitleRef = 'altTitleRef'
+}
 
 interface BrickTitleProps {
+  history: any;
   parentState: Brick;
   canEdit: boolean;
   playStatus: PlayButtonStatus;
   saveTitles(data: any): void;
+}
+
+interface BrickTitleState {
+  subTitleRef: React.RefObject<HTMLDivElement>;
+  altTitleRef: React.RefObject<HTMLDivElement>;
 }
 
 const BrickTitlePreviewComponent: React.FC<any> = (props) => {
@@ -67,77 +82,99 @@ const BrickTitlePreviewComponent: React.FC<any> = (props) => {
   )
 }
 
+class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
+  constructor(props: BrickTitleProps) {
+    super(props);
 
-const BrickTitle: React.FC<BrickTitleProps> = ({ parentState, canEdit, playStatus, saveTitles }) => {
-  const onTitleChange = (event: React.ChangeEvent<{ value: string }>) => {
-    const title = event.target.value.substr(0, 40);
-    saveTitles({ ...parentState, title });
-  };
-
-  const onSubTopicChange = (event: React.ChangeEvent<{ value: string }>) => {
-    const subTopic = event.target.value.substr(0, 40);
-    saveTitles({ ...parentState, subTopic });
-  };
-
-  const onAltTopicChange = (event: React.ChangeEvent<{ value: string }>) => {
-    const alternativeTopics = event.target.value.substr(0, 40);
-    saveTitles({ ...parentState, alternativeTopics });
-  };
-
-  if (parentState.title) {
-    setBrillderTitle(parentState.title);
+    this.state = {
+      subTitleRef: React.createRef<HTMLDivElement>(),
+      altTitleRef: React.createRef<HTMLDivElement>(),
+    }
   }
 
-  return (
-    <div className="tutorial-page brick-title-page">
-      <Navigation step={ProposalStep.BrickTitle} playStatus={playStatus} onMove={() => saveTitles(parentState)} />
-      <Grid container direction="row">
-        <Grid item className="left-block">
-          <div className="mobile-view-image">
-            <img alt="titles" src="/images/new-brick/titles.png" />
-          </div>
-          <h1>What is your brick about?</h1>
-          <Grid item className="input-container">
-            <Input
-              disabled={!canEdit}
-              className="audience-inputs"
-              value={parentState.title}
-              onChange={(onTitleChange)}
-              placeholder="Enter Proposed Title Here..."
-            />
-            <Input
-              disabled={!canEdit}
-              className="audience-inputs"
-              value={parentState.subTopic}
-              onChange={onSubTopicChange}
-              placeholder="Enter Topic..."
-            />
-            <Input
-              disabled={!canEdit}
-              className="audience-inputs"
-              value={parentState.alternativeTopics}
-              onChange={onAltTopicChange}
-              placeholder="Enter Subtopic(s)..."
-            />
+  onChange(event: React.ChangeEvent<{ value: string }>, value: string) {
+    const title = event.target.value.substr(0, 40);
+    this.props.saveTitles({ ...this.props.parentState, [value]: title });
+  };
+
+  moveToRef(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, refName: RefName) {
+    if (enterPressed(e)) {
+      let ref = this.state[refName];
+      if (ref && ref.current) {
+        ref.current.getElementsByTagName("input")[0].focus();
+      }
+    }
+  }
+
+  render() {
+    const { parentState, canEdit, saveTitles } = this.props;
+    if (parentState.title) {
+      setBrillderTitle(parentState.title);
+    }
+
+    return (
+      <div className="tutorial-page brick-title-page">
+        <Navigation step={ProposalStep.BrickTitle} playStatus={this.props.playStatus} onMove={() => saveTitles(parentState)} />
+        <Grid container direction="row">
+          <Grid item className="left-block">
+            <div className="mobile-view-image">
+              <img alt="titles" src="/images/new-brick/titles.png" />
+            </div>
+            <h1>What is your brick about?</h1>
+            <form>
+              <Grid item className="input-container">
+                <Input
+                  disabled={!canEdit}
+                  className="audience-inputs"
+                  value={parentState.title}
+                  onKeyUp={e => this.moveToRef(e, RefName.subTitleRef)}
+                  onChange={e => this.onChange(e, "title")}
+                  placeholder="Enter Proposed Title Here..."
+                />
+                <Input
+                  ref={this.state.subTitleRef}
+                  disabled={!canEdit}
+                  className="audience-inputs"
+                  value={parentState.subTopic}
+                  onKeyUp={e => this.moveToRef(e, RefName.altTitleRef)}
+                  onChange={e => this.onChange(e, "subTopic")}
+                  placeholder="Enter Topic..."
+                />
+                <Input
+                  ref={this.state.altTitleRef}
+                  disabled={!canEdit}
+                  className="audience-inputs"
+                  value={parentState.alternativeTopics}
+                  onKeyUp={e => {
+                    if (enterPressed(e)) {
+                      saveTitles(parentState);
+                      this.props.history.push(map.ProposalOpenQuestion);
+                    }
+                  }}
+                  onChange={e => this.onChange(e, "alternativeTopics")}
+                  placeholder="Enter Subtopic(s)..."
+                />
+              </Grid>
+            </form>
+            <div className="tutorial-pagination">
+              <NextButton
+                isActive={true}
+                step={ProposalStep.BrickTitle}
+                canSubmit={true}
+                onSubmit={saveTitles}
+                data={parentState}
+              />
+            </div>
+            <h2 className="pagination-text">1 of 4</h2>
           </Grid>
-          <div className="tutorial-pagination">
-            <NextButton
-              isActive={true}
-              step={ProposalStep.BrickTitle}
-              canSubmit={true}
-              onSubmit={saveTitles}
-              data={parentState}
-            />
-          </div>
-          <h2 className="pagination-text">1 of 4</h2>
+          <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
+          <Hidden only={['xs', 'sm']}>
+            <div className="red-right-block"></div>
+          </Hidden>
         </Grid>
-        <ProposalPhonePreview Component={BrickTitlePreviewComponent} data={parentState} />
-        <Hidden only={['xs', 'sm']}>
-          <div className="red-right-block"></div>
-        </Hidden>
-      </Grid>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
-export default BrickTitle
+export default BrickTitle;
