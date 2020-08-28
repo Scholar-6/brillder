@@ -42,7 +42,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         <div>
           <button
             type="button"
-            className="play-preview svgOnHover play-green"
+            className="play-preview svgOnHover roller-red"
             onClick={() => history.push('/play/dashboard')}
           >
             <svg className="svg w80 h80 active m-l-02">
