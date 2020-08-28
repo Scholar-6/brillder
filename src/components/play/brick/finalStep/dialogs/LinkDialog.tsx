@@ -6,6 +6,7 @@ import sprite from "assets/img/icons-sprite.svg";
 interface InviteProps {
   isOpen: boolean;
   link: string
+  submit(): void;
   close(): void;
 }
 
@@ -17,6 +18,7 @@ const LinkDialog: React.FC<InviteProps> = props => {
       linkEl.setSelectionRange(0, 99999);
       document.execCommand('copy');
       props.close();
+      props.submit();
     }
   }
 
