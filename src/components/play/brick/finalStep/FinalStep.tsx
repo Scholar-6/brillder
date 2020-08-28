@@ -29,17 +29,17 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const link = `/play/brick/${brick.id}/intro`;
 
   if (status === PlayStatus.Live) {
-    history.push(link);
+    //history.push(link);
   }
 
   const renderFooter = () => {
     return (
-      <div className="action-footer">
+      <div className="action-footer" style={{bottom: '10.5vh'}}>
         <div></div>
         <div className="direction-info">
           Exit
         </div>
-        <div>
+        <div style={{marginLeft: 0, marginRight: '1.7vw'}}>
           <button
             type="button"
             className="play-preview svgOnHover roller-red"
