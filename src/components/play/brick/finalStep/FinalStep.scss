@@ -85,6 +85,8 @@
 
   .roller-red {
     padding: 2.5vw !important;
+    height: 5.2vw;
+    width: 5.2vw;
 
     &:after {
       @include phone_and_tabletP {
@@ -92,14 +94,14 @@
         height: calc(100% + 3vw);
       }
       @include tabletP {
-        width: calc(100% + 1.4vw);
-        height: calc(100% + 1.4vw);
+        width: calc(100% + 1.7vw);
+        height: calc(100% + 1.7vw);
       }
     }
 
     background-color: var(--theme-orange);
     &:after {
-      background-color: var(--theme-orange-alpha3);
+      background-color: var(--theme-orange-alpha5);
     }
     .svg {
       color: var(--white);
