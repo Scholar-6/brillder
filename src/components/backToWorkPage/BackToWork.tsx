@@ -37,8 +37,10 @@ import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
 import { TeachClassroom } from "model/classroom";
 import { getAllClassrooms } from "components/teach/service";
 import { getBricks, getCurrentUserBricks, getAssignedBricks } from "components/services/axios/brick";
+import AssignedBricks from './components/play/AssignedBricks';
+import BuildBricks from './components/build/BuildBricks';
 
-import Tab, {ActiveTab} from './components/Tab';
+import Tab, { ActiveTab } from './components/Tab';
 import { AssignmentBrick } from "model/assignment";
 
 interface BackToWorkState {
@@ -505,60 +507,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     });
   }
 
-  renderSortedBricks = () => {
-    const data = prepareVisibleBricks(this.state.sortedIndex, this.state.pageSize, this.state.finalBricks)
-
-    return data.map(item => {
-      return <BrickBlock
-        brick={item.brick}
-        index={item.index}
-        row={item.row}
-        user={this.props.user}
-        key={item.index}
-        shown={this.state.shown}
-        history={this.props.history}
-        handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
-        handleMouseHover={() => this.handleMouseHover(item.key)}
-        handleMouseLeave={() => this.handleMouseLeave(item.key)}
-      />
-    });
-  };
-
   toggleCore() {
     const { filters } = this.state;
     filters.isCore = !filters.isCore;
     const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id, this.state.generalSubjectId);
     const threeColumns = prepareTreeRows(this.state.rawBricks, this.state.filters, this.props.user.id, this.state.generalSubjectId);
     this.setState({ ...this.state, threeColumns, filters, finalBricks });
-  }
-
-  renderGroupedBricks = (data: any[]) => {
-    return data.map(item => {
-      return <BrickBlock
-        brick={item.brick}
-        index={item.key}
-        row={item.row}
-        key={item.key}
-        user={this.props.user}
-        shown={this.state.shown}
-        history={this.props.history}
-        handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
-        handleMouseHover={() => this.onThreeColumnsMouseHover(item.key, item.brick.status)}
-        handleMouseLeave={() => this.onThreeColumnsMouseLeave(item.key, item.brick.status)}
-      />
-    });
-  }
-
-  renderBuildGroupedBricks = () => {
-    const data = prepareVisibleThreeColumnBricks(this.state.pageSize, this.state.sortedIndex, this.state.threeColumns);
-    return this.renderGroupedBricks(data);
-  }
-
-  renderBricks = () => {
-    if (this.state.filters.viewAll) {
-      return this.renderBuildGroupedBricks();
-    }
-    return this.renderSortedBricks();
   }
 
   renderTeachPagination = () => {
@@ -634,37 +588,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     />
   }
 
-  renderBricksList() {
-    return (
-      <div className="bricks-list-container">
-        <PrivateCoreToggle
-          isCore={this.state.filters.isCore}
-          onSwitch={() => this.toggleCore()}
-        />
-        <div className="bricks-list">
-          {this.renderBricks()}
-        </div>
-      </div>
-    );
-  }
-
-  //#region render assiged bricks
-  renderAssignedGroupedBricks() {
-    const data = prepareVisibleThreeColumnAssignments(this.state.pageSize, this.state.sortedIndex, this.state.playThreeColumns);
-    return this.renderGroupedBricks(data);
-  }
-
-  renderAssignedBricks() {
-    return (
-      <div className="bricks-list-container">
-        <div className="bricks-list">
-          {this.renderAssignedGroupedBricks()}
-        </div>
-      </div>
-    );
-  }
-  //#endregion
-
   render() {
     const { activeTab } = this.state;
     return (
@@ -683,7 +606,22 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
             <Tab isTeach={this.state.isTeach || this.state.isAdmin} activeTab={activeTab} setTab={t => this.setTab(t)} />
             <div className="tab-content">
               {
-                activeTab === ActiveTab.Build ? this.renderBricksList() : ""
+                activeTab === ActiveTab.Build ? <BuildBricks
+                  user={this.props.user}
+                  finalBricks={this.state.finalBricks}
+                  threeColumns={this.state.threeColumns}
+                  shown={this.state.shown}
+                  pageSize={this.state.pageSize}
+                  sortedIndex={this.state.sortedIndex}
+                  history={this.props.history}
+                  filters={this.state.filters}
+                  toggleCore={() => this.toggleCore()}
+                  handleDeleteOpen={this.handleDeleteOpen.bind(this)}
+                  handleMouseHover={this.handleMouseHover.bind(this)}
+                  handleMouseLeave={this.handleMouseLeave.bind(this)}
+                  onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
+                  onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
+                /> : ""
               }
               {
                 activeTab === ActiveTab.Teach ? <ClassroomList
@@ -694,7 +632,17 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                 /> : ""
               }
               {
-                activeTab === ActiveTab.Play ? this.renderAssignedBricks() : ""
+                activeTab === ActiveTab.Play ? <AssignedBricks
+                  user={this.props.user}
+                  shown={true}
+                  pageSize={this.state.pageSize}
+                  sortedIndex={this.state.sortedIndex}
+                  threeColumns={this.state.playThreeColumns}
+                  history={this.props.history}
+                  handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
+                  onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
+                  onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
+                /> : ""
               }
               {this.renderPagination()}
             </div>
