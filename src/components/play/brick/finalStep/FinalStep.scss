@@ -83,7 +83,7 @@
     }
   }
 
-  .play-green {
+  .roller-red {
     padding: 2.5vw !important;
 
     &:after {
@@ -95,6 +95,21 @@
         width: calc(100% + 1.4vw);
         height: calc(100% + 1.4vw);
       }
+    }
+
+    background-color: var(--theme-orange);
+    &:after {
+      background-color: var(--theme-orange-alpha3);
+    }
+    .svg {
+      color: var(--white);
+    }
+    &:hover {
+      animation-name: pulse-red;
+      animation-duration: 1s;
+      animation-delay: 0s;
+      animation-iteration-count: 5;
+      animation-timing-function: ease;
     }
   }
 }
