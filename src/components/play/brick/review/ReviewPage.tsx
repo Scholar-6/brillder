@@ -196,6 +196,31 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     );
   };
 
+  const renderNextButton = () => {
+    if (questions.length - 1 > activeStep) {
+      return (
+        <button type="button" className="play-preview svgOnHover play-green" onClick={next}>
+          <svg className="svg w80 h80 active m-l-02">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#arrow-right"} />
+          </svg>
+        </button>
+      );
+    }
+    return (
+      <button
+        type="button"
+        className="play-preview svgOnHover play-green"
+        onClick={() => setSubmitAnswers(true)}
+      >
+        <svg className="svg w80 h80 active" style={{ margin: 0 }}>
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#check-icon-thin"} />
+        </svg>
+      </button>
+    );
+  }
+
   const renderMobileNext = () => {
     if (questions.length - 1 > activeStep) { return; }
     return (
@@ -260,14 +285,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
                   <h2 className="text-center">Next</h2>
                   <span>Don’t panic, you can<br />always come back</span>
                 </div>
-                <div>
-                  <button type="button" className="play-preview svgOnHover play-green" onClick={next}>
-                    <svg className="svg w80 h80 active m-l-02">
-                      {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#arrow-right"} />
-                    </svg>
-                  </button>
-                </div>
+                <div>{renderNextButton()}</div>
               </div>
             </Hidden>
           </div>

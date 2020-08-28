@@ -276,15 +276,29 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   const renderNextButton = () => {
+    if (questions.length - 1 > activeStep) {
+      return (
+        <button
+          type="button"
+          className="play-preview svgOnHover play-green"
+          onClick={next}
+        >
+          <svg className="svg w80 h80 active m-l-02">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#arrow-right"} />
+          </svg>
+        </button>
+      );
+    }
     return (
       <button
         type="button"
         className="play-preview svgOnHover play-green"
-        onClick={next}
+        onClick={() => setSubmitAnswers(true)}
       >
-        <svg className="svg w80 h80 active m-l-02">
+        <svg className="svg w80 h80 active" style={{ margin: 0 }}>
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#arrow-right"} />
+          <use href={sprite + "#check-icon-thin"} />
         </svg>
       </button>
     );
@@ -298,9 +312,9 @@ const LivePage: React.FC<LivePageProps> = ({
         className="play-preview svgOnHover play-green mobile-next"
         onClick={() => setSubmitAnswers(true)}
       >
-        <svg className="svg w80 h80 active m-l-02">
+        <svg className="svg w80 h80 active" style={{ margin: 0 }}>
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#arrow-right"} />
+          <use href={sprite + "#check-icon-thin"} />
         </svg>
       </button>
     );
