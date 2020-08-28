@@ -196,6 +196,23 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     );
   };
 
+  const renderCenterText = () => {
+    if (questions.length - 1 > activeStep) {
+      return (
+        <div className="direction-info">
+          <h2 className="text-center">Next</h2>
+          <span>Don’t panic, you can<br />always come back</span>
+        </div>
+      );
+    }
+    return (
+      <div className="direction-info">
+        <h2 className="text-center">Submit</h2>
+        <span style={{bottom: '-1vw'}}>How do you think it went?</span>
+      </div>
+    );
+  }
+
   const renderNextButton = () => {
     if (questions.length - 1 > activeStep) {
       return (
@@ -281,10 +298,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
             <Hidden only={['xs']}>
               <div className="action-footer">
                 <div>{renderPrevButton()}</div>
-                <div className="direction-info">
-                  <h2 className="text-center">Next</h2>
-                  <span>Don’t panic, you can<br />always come back</span>
-                </div>
+                {renderCenterText()}
                 <div>{renderNextButton()}</div>
               </div>
             </Hidden>
