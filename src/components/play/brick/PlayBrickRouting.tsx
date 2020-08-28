@@ -66,12 +66,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const location = useLocation();
   const finalStep = location.pathname.search("/finalStep") >= 0;
 
-  // Commented this in order to allow students to also be builders and vice versa, we may need to add this back in (11/5/2020)
-  // let cantPlay = roles.some((role: any) => role.roleId === UserType.Builder || role.roleId === UserType.Editor);
-  // if (cantPlay) {
-  //   return <div>...Whoa slow down there, we need to give you the student role so you can play all the bricks...</div>
-  // }
-
   setBrillderTitle(brick.title);
 
   const updateAttempts = (attempt: any, index: number) => {

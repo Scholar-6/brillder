@@ -33,6 +33,10 @@ class CounterDown extends Component<CounterProps, CounterState> {
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.state.timerInterval);
+  }
+
   setTimer() {
     return setInterval(() => {
       let now = moment();

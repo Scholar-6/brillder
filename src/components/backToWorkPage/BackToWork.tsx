@@ -15,12 +15,11 @@ import { checkAdmin, checkTeacher, checkEditor } from "components/services/brick
 import { ThreeColumns, SortBy, Filters, TeachFilters, PlayFilters, ThreeAssignmentColumns } from './model';
 import {
   getThreeColumnName, prepareTreeRows, prepareThreeAssignmentRows,
-  prepareVisibleThreeColumnAssignments, getThreeColumnBrick,
-  expandThreeColumnBrick, prepareVisibleThreeColumnBricks, getLongestColumn
+  getThreeColumnBrick, expandThreeColumnBrick, getLongestColumn
 } from './threeColumnService';
 import {
   filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
-  removeBrickFromLists, sortBricks, hideAllBricks, prepareVisibleBricks, expandBrick
+  removeBrickFromLists, sortBricks, hideAllBricks, expandBrick
 } from './service';
 import { loadSubjects } from 'components/services/subject';
 
@@ -32,8 +31,6 @@ import TeachFilterSidebar from './components/teach/TeachFilterSidebar';
 import ClassroomList from './components/teach/ClassroomList';
 import BackPagePagination from './components/BackPagePagination';
 import BackPagePaginationV2 from './components/BackPagePaginationV2';
-import BrickBlock from './components/BrickBlock';
-import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
 import { TeachClassroom } from "model/classroom";
 import { getAllClassrooms } from "components/teach/service";
 import { getBricks, getCurrentUserBricks, getAssignedBricks } from "components/services/axios/brick";

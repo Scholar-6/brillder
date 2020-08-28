@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Brick, BrickStatus, Subject } from "model/brick";
+import { BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { ThreeAssignmentColumns } from '../../model';
 import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
