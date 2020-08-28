@@ -344,9 +344,19 @@
 
   .policy-text {
     position: fixed;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 2.5vw;
+    color: white;
     font-family: $font-family-regular;
-    bottom: 0vh;
+    bottom: 2.4vh;
+    line-height: 2vw;
     right: 10vw;
+    font-size: 1.6vw;
+    span:hover {
+      color: var(--theme-orange) !important;
+    }
   }
 
   .dialog-box {
