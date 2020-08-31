@@ -4,6 +4,8 @@ import './AssignedCircle.scss';
 import sprite from "assets/img/icons-sprite.svg";
 
 interface AssignedCircleProps {
+  total: number;
+  count: number;
 }
 
 class AssignedCircle extends Component<AssignedCircleProps> {
@@ -13,13 +15,13 @@ class AssignedCircle extends Component<AssignedCircleProps> {
       <div className="teach-circle-container">
         <div className="total-view-count-container">
         <div className="total-view-count">
-          8
+          {this.props.total}
           <svg className="svg active">
             <use href={sprite + "#eye-on"} className="text-theme-dark-blue" />
           </svg>
         </div>
         </div>
-        <div className="teach-circle">4</div>
+        <div className="teach-circle">{this.props.count}</div>
       </div>
       </div>
     );

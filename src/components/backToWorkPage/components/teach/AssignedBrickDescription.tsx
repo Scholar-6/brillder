@@ -5,8 +5,10 @@ import { Brick } from "model/brick";
 import './AssignedBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
 import AssignedCircle from './AssignedCircle';
+import { TeachClassroom } from "model/classroom";
 
 interface AssignedDescriptionProps {
+  classroom: TeachClassroom;
   brick: Brick;
   index?: number;
   isMobile?: boolean;
@@ -57,7 +59,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     return (
       <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
         <div className="total-view-count">
-          8
+          {this.props.classroom.students.length}
           <svg className="svg active">
             <use href={sprite + "#eye-on"} className="text-theme-dark-blue" />
           </svg>
@@ -73,9 +75,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             </div>
             <div className="link-info">{getAuthorRow(brick)}</div>
           </div>
-          <AssignedCircle />
-          <AssignedCircle />
-          <AssignedCircle />
+          <AssignedCircle total={6} count={4} />
+          <AssignedCircle total={6} count={4} />
+          <AssignedCircle total={6} count={4} />
           <div className="teach-brick-actions-container">
             <div className="stats-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>

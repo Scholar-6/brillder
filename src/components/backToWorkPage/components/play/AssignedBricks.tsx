@@ -6,6 +6,7 @@ import { ThreeAssignmentColumns } from '../../model';
 import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
 
 import BrickBlock from '../BrickBlock';
+import { AssignmentBrickStatus } from "model/assignment";
 
 interface AssignedBricksProps {
   user: User;
@@ -15,8 +16,8 @@ interface AssignedBricksProps {
   threeColumns: ThreeAssignmentColumns;
   history: any;
   handleDeleteOpen(brickId: number): void;
-  onThreeColumnsMouseHover(brickId: number, status: BrickStatus): void;
-  onThreeColumnsMouseLeave(brickId: number, status: BrickStatus): void;
+  onThreeColumnsMouseHover(brickId: number, status: AssignmentBrickStatus): void;
+  onThreeColumnsMouseLeave(brickId: number, status: AssignmentBrickStatus): void;
 }
 
 class AssignedBricks extends Component<AssignedBricksProps> {
@@ -31,8 +32,8 @@ class AssignedBricks extends Component<AssignedBricksProps> {
         shown={this.props.shown}
         history={this.props.history}
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
-        handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, item.brick.status)}
-        handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, item.brick.status)}
+        handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, item.status)}
+        handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, item.status)}
       />
     });
   }
