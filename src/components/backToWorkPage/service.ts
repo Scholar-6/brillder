@@ -99,10 +99,12 @@ export const sortBricks = (bricks: Brick[], sortBy: SortBy) => {
   return finalBricks;
 }
 
-export const hideAllThings = (bricks: Brick[] | AssignmentBrick[]) => bricks.forEach((b:Brick | AssignmentBrick) => b.expanded = false);
+export const hideBricks = (bricks: Brick[]) => bricks.forEach(b => b.expanded = false);
+
+export const hideAssignments = (assignments: AssignmentBrick[]) => assignments.forEach(a => a.brick.expanded = false);
 
 export const expandBrick = (bricks: Brick[], allBricks: Brick[], index: number) => {
-  hideAllThings(allBricks);
+  hideBricks(allBricks);
   if (!bricks[index].expandFinished) {
     bricks[index].expanded = true;
   }
