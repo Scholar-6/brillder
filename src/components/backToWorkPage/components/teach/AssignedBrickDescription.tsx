@@ -75,9 +75,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             </div>
             <div className="link-info">{getAuthorRow(brick)}</div>
           </div>
-          <AssignedCircle total={6} count={4} />
-          <AssignedCircle total={6} count={4} />
-          <AssignedCircle total={6} count={4} />
+          <AssignedCircle total={6} count={4} color="red" />
+          <AssignedCircle total={6} count={4} color="yellow" />
+          <AssignedCircle total={6} count={4} color="green" />
           <div className="teach-brick-actions-container">
             <div className="stats-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
