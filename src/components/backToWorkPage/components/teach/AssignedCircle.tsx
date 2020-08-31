@@ -6,10 +6,12 @@ import sprite from "assets/img/icons-sprite.svg";
 interface AssignedCircleProps {
   total: number;
   count: number;
+  color: string;
 }
 
 class AssignedCircle extends Component<AssignedCircleProps> {
   render() {
+    const className = `teach-circle ${this.props.color}`;
     return (
       <div className="teach-circle-flex-container">
       <div className="teach-circle-container">
@@ -21,7 +23,7 @@ class AssignedCircle extends Component<AssignedCircleProps> {
           </svg>
         </div>
         </div>
-        <div className="teach-circle">{this.props.count}</div>
+        <div className={className}>{this.props.count}</div>
       </div>
       </div>
     );

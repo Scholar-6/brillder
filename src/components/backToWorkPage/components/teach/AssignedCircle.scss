@@ -20,5 +20,15 @@
       height: 2.1vw;
       width: 2.1vw;
     }
+
+    .red {
+      background: var(--theme-orange);
+    }
+    .yellow {
+      background: var(--yellow);
+    }
+    .green {
+      background: var(--theme-green)
+    }
   }
 }
