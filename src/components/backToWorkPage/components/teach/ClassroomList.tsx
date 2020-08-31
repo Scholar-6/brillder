@@ -41,7 +41,7 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
         <div className="classroom-title" key={i}>
           {c.name}
           {}
-          {c.assignments.map((a, i) => <AssignedBrickDescription key={i} brick={a.brick} />)}
+          {c.assignments.map((a, i) => <AssignedBrickDescription key={i} classroom={c} brick={a.brick} />)}
         </div>
       )
     }
@@ -53,7 +53,7 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
       <div className="classroom-title">
         {c.name}
         {}
-        {c.assignments.map((a, i) => <AssignedBrickDescription key={i} brick={a.brick} />)}
+        {c.assignments.map((a, i) => <AssignedBrickDescription key={i} classroom={c} brick={a.brick} />)}
       </div>
     )
   }

@@ -50,6 +50,16 @@ export const getThreeColumnName = (status: BrickStatus) => {
   return name;
 }
 
+export const getPlayThreeColumnName = (status: AssignmentBrickStatus) => {
+  let name = ThreeColumnNames.Red;
+  if (status === AssignmentBrickStatus.CheckedByTeacher) {
+    name = ThreeColumnNames.Green;
+  } else if (status === AssignmentBrickStatus.SubmitedToTeacher) {
+    name = ThreeColumnNames.Yellow;
+  }
+  return name;
+}
+
 export const getThreeColumnBrick = (threeColumns: ThreeColumns, name: ThreeColumnNames, key: number) => {
   return threeColumns[name].finalBricks[key];
 }
@@ -58,6 +68,17 @@ export const expandThreeColumnBrick = (threeColumns: ThreeColumns, name: ThreeCo
   let brick = getThreeColumnBrick(threeColumns, name, key);
   if (brick && !brick.expandFinished) {
     brick.expanded = true;
+  }
+}
+
+export const getPlayThreeColumnBrick = (threeColumns: ThreeAssignmentColumns, name: ThreeColumnNames, key: number) => {
+  return threeColumns[name].finalAssignments[key];
+}
+
+export const expandPlayThreeColumnBrick = (threeColumns: ThreeAssignmentColumns, name: ThreeColumnNames, key: number) => {
+  let assignment = getPlayThreeColumnBrick(threeColumns, name, key);
+  if (assignment && !assignment.expandFinished) {
+    assignment.brick.expanded = true;
   }
 }
 

@@ -23,7 +23,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
 
   renderDeleteButton(brick: Brick) {
     if (!this.props.isAdmin) { return; }
-    if (brick.author.id === this.props.userId) { return; }
+    if (brick.author && brick.author.id === this.props.userId) { return; }
     return (
       <div>
         <button className="btn btn-transparent svgOnHover bin-button" onClick={() => this.props.onDelete(brick.id)}>
