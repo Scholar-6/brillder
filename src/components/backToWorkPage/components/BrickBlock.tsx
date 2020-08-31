@@ -64,13 +64,14 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       style={{ transformOrigin: "0 0 0" }}
       timeout={index * 150}
     >
-      <div className="main-brick-container">
+      <div className="main-brick-container"
+      onMouseEnter={props.handleMouseHover}
+      onMouseLeave={props.handleMouseLeave}
+      >
         <Box className={`brick-container ${color}`}>
           <div
             className={`absolute-container brick-row-${row} ${
               brick.expanded ? "brick-hover" : ""}`}
-            onMouseEnter={props.handleMouseHover}
-            onMouseLeave={props.handleMouseLeave}
           >
             {brick.expanded ? (
               <ExpandedBrickDecsiption

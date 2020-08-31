@@ -15,11 +15,11 @@ import { checkAdmin, checkTeacher, checkEditor } from "components/services/brick
 import { ThreeColumns, SortBy, Filters, TeachFilters, PlayFilters, ThreeAssignmentColumns } from './model';
 import {
   getThreeColumnName, prepareTreeRows, prepareThreeAssignmentRows,
-  getThreeColumnBrick, expandThreeColumnBrick, getLongestColumn, expandPlayThreeColumnBrick, getPlayThreeColumnName
+  getThreeColumnBrick, expandThreeColumnBrick, getLongestColumn, expandPlayThreeColumnBrick, getPlayThreeColumnName, getPlayThreeColumnBrick
 } from './threeColumnService';
 import {
   filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
-  removeBrickFromLists, sortBricks, hideAllThings, expandBrick
+  removeBrickFromLists, sortBricks, hideBricks, expandBrick, hideAssignments
 } from './service';
 import { loadSubjects } from 'components/services/subject';
 
@@ -324,7 +324,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   //region hover for normal bricks
   handleMouseHover(index: number) {
-    hideAllThings(this.state.rawBricks);
+    hideBricks(this.state.rawBricks);
     this.setState({ ...this.state });
     setTimeout(() => {
       expandBrick(this.state.finalBricks, this.state.rawBricks, index);
@@ -334,7 +334,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   handleMouseLeave(key: number) {
     let { finalBricks } = this.state;
-    hideAllThings(this.state.rawBricks);
+    hideBricks(this.state.rawBricks);
     finalBricks[key].expandFinished = true;
     this.setState({ ...this.state });
     setTimeout(() => {
@@ -353,13 +353,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   //region hover for three column bricks
   onThreeColumnsMouseHover(index: number, status: BrickStatus) {
-    hideAllThings(this.state.rawBricks);
+    hideBricks(this.state.rawBricks);
 
     let key = Math.floor(index / 3);
     this.setState({ ...this.state });
 
     setTimeout(() => {
-      hideAllThings(this.state.rawBricks);
+      hideBricks(this.state.rawBricks);
       let name = getThreeColumnName(status);
       expandThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
       this.setState({ ...this.state });
@@ -367,7 +367,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   onThreeColumnsMouseLeave(index: number, status: BrickStatus) {
-    hideAllThings(this.state.rawBricks);
+    hideBricks(this.state.rawBricks);
 
     let key = Math.ceil(index / 3);
     let name = getThreeColumnName(status);
@@ -469,7 +469,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   //#region Play
   handlePlayMouseHover(index: number) {
-    hideAllThings(this.state.rawAssignments);
+    hideAssignments(this.state.rawAssignments);
     this.setState({ ...this.state });
     setTimeout(() => {
       expandBrick(this.state.finalBricks, this.state.rawBricks, index);
@@ -479,7 +479,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   handlePlayMouseLeave(key: number) {
     let { finalAssignments } = this.state;
-    hideAllThings(this.state.rawAssignments);
+    hideAssignments(this.state.rawAssignments);
     finalAssignments[key].brick.expandFinished = true;
     this.setState({ ...this.state });
     setTimeout(() => {
@@ -489,13 +489,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   onPlayThreeColumnsMouseHover(index: number, status: AssignmentBrickStatus) {
-    hideAllThings(this.state.rawAssignments);
+    hideAssignments(this.state.rawAssignments);
 
     let key = Math.floor(index / 3);
     this.setState({ ...this.state });
 
     setTimeout(() => {
-      hideAllThings(this.state.rawAssignments);
+      hideAssignments(this.state.rawAssignments);
       let name = getPlayThreeColumnName(status);
       expandPlayThreeColumnBrick(this.state.playThreeColumns, name, key + this.state.sortedIndex);
       this.setState({ ...this.state });
@@ -503,24 +503,23 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   onPlayThreeColumnsMouseLeave(index: number, status: AssignmentBrickStatus) {
-    hideAllThings(this.state.rawAssignments);
+    hideAssignments(this.state.rawAssignments);
 
     let key = Math.ceil(index / 3);
     let name = getPlayThreeColumnName(status);
-    /*
-    let brick = getThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
 
-    if (brick) {
-      brick.expandFinished = true;
+    let assignment = getPlayThreeColumnBrick(this.state.playThreeColumns, name, key + this.state.sortedIndex);
+
+    if (assignment) {
+      assignment.brick.expandFinished = true;
       this.setState({ ...this.state });
       setTimeout(() => {
-        if (brick) {
-          brick.expandFinished = false;
+        if (assignment) {
+          assignment.brick.expandFinished = false;
           this.setState({ ...this.state });
         }
       }, 400);
     }
-    */
   }
 
   playFilterUpdated(playFilters: PlayFilters) {
