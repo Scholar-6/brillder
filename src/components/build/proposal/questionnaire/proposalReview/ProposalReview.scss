@@ -33,7 +33,7 @@
 
     h1 {
       font-weight: normal !important;
-      font-family: $font-family-black;
+      @extend %fontFamilyBlack;
       letter-spacing: 0.05vw;
       font-size: 2.8vw;
       margin: 0;
@@ -49,7 +49,7 @@
     h2 {
       font-weight: normal !important;
       font-size: 2.6vw;
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
       margin: 0;
     }
   }
@@ -172,8 +172,8 @@
       position: relative;
       line-height: 1.45;
       color: var(--theme-orange);
-      text-align: center;
-      font-family: $font-family-black;
+      @extend %textCenter;
+      @extend %fontFamilyBlack;
       .page-stitch {
         position: absolute;
         height: 100%;
@@ -263,13 +263,13 @@
           margin-left: 3vw;
           margin-right: 3vw;
           margin-top: 3vh;
-          font-family: $font-family-regular;
+          @extend %fontFamilyRegular;
           text-align: left;
           margin-left: 3.1vw;
           font-size: 1.3vw;
 
           .title {
-            font-family: $font-family-bold;
+            @extend %fontFamilyBold;
             text-transform: uppercase;
             height: 20vh;
           }
@@ -284,7 +284,7 @@
         overflow: auto;
         font-size: 1vw;
 
-        font-family: $font-family-regular;
+        @extend %fontFamilyRegular;
 
         .normal-page-container {
           height: $book-height;
@@ -311,7 +311,7 @@
         }
 
         .text-title {
-          font-family: $font-family-bold;
+          @extend %fontFamilyBold;
         }
         .text-title.brick-length {
           margin-top: 1vh;

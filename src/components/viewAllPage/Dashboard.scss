@@ -7,7 +7,7 @@
   background: var(--theme-dark-blue);
   height: 100%;
   width: 100%;
-  font-family: $font-family-regular;
+  @extend %fontFamilyRegular;
 }
 
 .mobile-category {

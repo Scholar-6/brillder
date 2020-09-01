@@ -18,7 +18,7 @@
         margin-left: 2vw;
         margin-bottom: 1.8vh;
         font-size: 3.05vw;
-        font-family: $font-family-bold;
+        @extend %fontFamilyBold;
       }
 
       .edit-border {
@@ -50,14 +50,14 @@
         margin: 2.3vh 0;
         padding: 0;
         font-size: 1.28vw;
-        text-align: center;
+        @extend %textCenter;
       }
       .proposal-box {
         margin-left: 0.5vw;
         h2 {
           margin: 4.1vh 0 0 0vw;
           padding: 0;
-          font-family: $font-family-bold;
+          @extend %fontFamilyBold;
           font-size: 2.1vw;
         }
         p {
@@ -71,7 +71,7 @@
     }
 
     .bold {
-      font-family: $font-family-bold;
+      @extend %fontFamilyBold;
     }
 
     .button-row {
@@ -88,7 +88,7 @@
         padding: 0;
         line-height: 1.36;
         padding: 0 0.8vw;
-        font-family: $font-family-bold;
+        @extend %fontFamilyBold;
         border: 0.1vw solid var(--theme-dark-blue);
         transition: all 0.2s ease-in-out;
       }

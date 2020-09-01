@@ -5,7 +5,7 @@
 .brick-counter {
   position: relative;
   text-align: right;
-  font-family: $font-family-black;
+  @extend %fontFamilyBlack;
   font-size: 2vw;
   color: var(--theme-dark-blue);
   min-width: 7vw;

@@ -3,7 +3,7 @@
   text-transform: none;
   @extend %themeRadius;
   @extend %b0;
-  font-family: $font-family-bold;
+  @extend %fontFamilyBold;
   letter-spacing: 0.2vw;
   &.btn-block {
     width: 100%;
@@ -51,7 +51,7 @@
     @extend %removePosition;
   }
   .synthesis-text {
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     line-height: 2.05;
     font-size: 2.6vh;
     letter-spacing: 0.3vw;

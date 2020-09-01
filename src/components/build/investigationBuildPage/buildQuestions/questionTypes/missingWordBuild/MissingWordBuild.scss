@@ -14,7 +14,7 @@
     padding-top: 0.4vh;
     border: none !important;
   }
-  text-align: center;
+  @extend %textCenter;
 
   .choose-several-box {
     position: relative;
@@ -36,7 +36,7 @@
     .input-answer {
       width: 100%;
       min-height: $answer-height;
-      text-align: center;
+      @extend %textCenter;
       border: none;
       background: var(--input-gray);
       @extend %themeRadius;

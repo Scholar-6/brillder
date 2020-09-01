@@ -39,7 +39,7 @@
     color: var(--theme-dark-blue);
 
     .link {
-      font-family: $font-family-bold;
+      @extend %fontFamilyBold;
       margin-left: 2vw;
       margin-right: 2vw;
       margin-top: 4vh;
@@ -124,10 +124,10 @@
       font-size: 1.4vw;
       width: 100%;
       color: var(--theme-dark-blue);
-      text-align: center;
+      @extend %textCenter;
       display: block;
       content: 'Drag Image Here | Click to Select Image';
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
     }
   }
 
@@ -156,7 +156,7 @@
 
         > div {
           margin-bottom: 4.5vh;
-          text-align: center;
+          @extend %textCenter;
           width: 30vw;
         }
 
@@ -218,7 +218,7 @@
     }
     .title {
       color: var(--tab-gray);
-      font-family: $font-family-bold;
+      @extend %fontFamilyBold;
     }
     .link {
       font-size: 1.7vw;
