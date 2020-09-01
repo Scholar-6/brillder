@@ -15,7 +15,7 @@
     color: var(--theme-dark-blue);
     font-size: $suggestions-title-font-size;
     letter-spacing: 1px;
-    font-family: 'Brandon Grotesque Black';
+    @extend %fontFamilyBlack;
     padding-top: $suggestions-title-padding;
     padding-bottom: $suggestions-title-padding;
 

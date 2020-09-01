@@ -8,10 +8,15 @@
   color: var(--theme-orange);
   @extend %fontFamilyBold;
   font-size: 2vw;
+  .drag-box-name {
+    @extend %fontFamilyBold;
+    font-size: 2.5vw;
+  }
   .drag-box-hover {
     @extend %fontFamilyRegular;
     font-size: 0.81vw;
     color: $global-light-text-gray;
+    letter-spacing: 0.5vw;
     opacity: 0;
   }
   .disabled {
