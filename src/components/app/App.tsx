@@ -8,8 +8,8 @@ import './app.scss';
 import GlobalFailedRequestDialog from "components/baseComponents/failedRequestDialog/GlobalFailedRequestDialog";
 
 import VersionLabel from 'components/baseComponents/VersionLabel';
-import Dashboard from '../play/dashboard/Dashboard';
-import MobileCategory from '../play/dashboard/MobileCategory';
+import Dashboard from '../viewAllPage/Dashboard';
+import MobileCategory from '../viewAllPage/MobileCategory';
 import PlayBrickRouting from '../play/brick/PlayBrickRouting';
 import PlayPreviewRouting from 'components/playPreview/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
