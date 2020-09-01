@@ -16,6 +16,9 @@ interface BrickBlockProps {
   shown: boolean;
   history: any;
   isPlay?: boolean;
+  isAssignment?: boolean;
+  assignmentId?: number;
+  color?: string;
   handleDeleteOpen(brickId: number): void;
   handleMouseHover(e: any): void;
   handleMouseLeave(e: any): void;
@@ -33,6 +36,10 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     color = "color4";
   }
 
+  if (props.color) {
+    color = props.color;
+  }
+
   if (props.isPlay) {
     if (!brick.subject) {
       color = "#B0B0AD";
@@ -46,6 +53,8 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
   const move = () => {
     if (props.isPlay) {
       props.history.push(`/play/brick/${brick.id}/intro`);
+    } else if (props.isAssignment && props.assignmentId) {
+      props.history.push(`/play/brick/${brick.id}/intro?assignmentId=${props.assignmentId}`);
     } else {
       props.history.push(`/build/brick/${brick.id}/build/investigation/question`);
     }
@@ -64,14 +73,13 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       style={{ transformOrigin: "0 0 0" }}
       timeout={index * 150}
     >
-      <div className="main-brick-container">
+      <div
+        className="main-brick-container"
+        onMouseEnter={props.handleMouseHover}
+        onMouseLeave={props.handleMouseLeave}
+      >
         <Box className={`brick-container ${color}`}>
-          <div
-            className={`absolute-container brick-row-${row} ${
-              brick.expanded ? "brick-hover" : ""}`}
-            onMouseEnter={props.handleMouseHover}
-            onMouseLeave={props.handleMouseLeave}
-          >
+          <div className={`absolute-container brick-row-${row} ${brick.expanded ? "brick-hover" : ""}`}>
             {brick.expanded ? (
               <ExpandedBrickDecsiption
                 userId={props.user.id}

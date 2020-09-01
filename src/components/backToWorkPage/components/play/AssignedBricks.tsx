@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 
-import { BrickStatus } from "model/brick";
 import { User } from "model/user";
-import { ThreeAssignmentColumns } from '../../model';
+import { ThreeAssignmentColumns, AssignmentBrickData } from '../../model';
 import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
 
 import BrickBlock from '../BrickBlock';
@@ -21,21 +20,35 @@ interface AssignedBricksProps {
 }
 
 class AssignedBricks extends Component<AssignedBricksProps> {
-  renderGroupedBricks = (data: any[]) => {
-    return data.map(item => {
-      return <BrickBlock
-        brick={item.brick}
-        index={item.key}
-        row={item.row}
-        key={item.key}
-        user={this.props.user}
-        shown={this.props.shown}
-        history={this.props.history}
-        handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
-        handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, item.status)}
-        handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, item.status)}
-      />
-    });
+  renderBrick(item: AssignmentBrickData) {
+    let color = '';
+    if (item.status === AssignmentBrickStatus.ToBeCompleted) {
+      color = 'color1';
+    } else if (item.status === AssignmentBrickStatus.SubmitedToTeacher) {
+      color = 'color2';
+    } else if (item.status === AssignmentBrickStatus.CheckedByTeacher) {
+      color = 'color3';
+    }
+
+    return <BrickBlock
+      brick={item.brick}
+      index={item.key}
+      row={item.row}
+      key={item.key}
+      user={this.props.user}
+      shown={this.props.shown}
+      color={color}
+      isAssignment={true}
+      assignmentId={item.assignmentId}
+      history={this.props.history}
+      handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
+      handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, item.status)}
+      handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, item.status)}
+    />
+  }
+
+  renderGroupedBricks = (data: AssignmentBrickData[]) => {
+    return data.map(item => this.renderBrick(item));
   }
 
   renderAssignedGroupedBricks() {
