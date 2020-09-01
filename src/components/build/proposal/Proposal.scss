@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .tutorial-page {
-  font-family: $font-family-regular;
+  @extend %fontFamilyRegular;
   color: var(--theme-dark-blue);
 
   ::-webkit-input-placeholder,
@@ -49,7 +49,7 @@
   }
 
   .only-tutorial-header {
-    font-family: $font-family-black;
+    @extend %fontFamilyBlack;
     margin-top: 4.7vh;
     font-size: 3.9vw;
     letter-spacing: 0.09vw;
@@ -79,14 +79,14 @@
       @extend %textCenter;
       color: var(--dark-gray);
       font-size: 1.2vw;
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
     }
 
     .audience-inputs {
       display: block !important;
       margin: 2vh 5.5vw;
       font-size: 1.3vw;
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
     }
   }
 }
@@ -99,7 +99,7 @@
     }
 
     h1 {
-      font-family: $font-family-black;
+      @extend %fontFamilyBlack;
       @include phone_and_tabletL {
         font-size: 9vw !important;
         padding: 0 !important;
@@ -113,7 +113,7 @@
     }
 
     .MuiInputBase-input {
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
       letter-spacing: 0.05vw;
     }
 
@@ -149,12 +149,12 @@
       @extend %width100;
       margin-top: 8vh;
       @extend %themeRadius;
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
       line-height: 1.2;
       letter-spacing: 0.03vw;
 
       .brick-title {
-        font-family: $font-family-bold;
+        @extend %fontFamilyBold;
         margin-bottom: 0.5vh;
         width: 15.5vw;
         overflow: hidden;
@@ -187,7 +187,7 @@
 
 //brief-page
 .brief-page {
-  font-family: $font-family-regular;
+  @extend %fontFamilyRegular;
   .left-block {
     margin-top: 15.5vh;
     > h1 {
@@ -254,7 +254,7 @@
     > h1 {
       @extend %m0;
       letter-spacing: 0.09vw;
-      font-family: $font-family-black;
+      @extend %fontFamilyBlack;
       line-height: 1.35;
       margin: 0 2vw;
       @include phone_and_tabletL {
@@ -284,7 +284,7 @@
   }
 
   .sub-header {
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     @extend %textCenter;
     color: var(--theme-dark-blue);
     @include phone_and_tabletL {
@@ -296,7 +296,7 @@
   }
 
   .audience-inputs {
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     @include tabletL {
       margin-bottom: 18.7vh;
       font-size: 1.4vw !important;
@@ -579,7 +579,7 @@
       @extend %posRelative;
       padding: 6vh 0vw 0 0vw;
       color: var(--theme-orange);
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
       letter-spacing: 0.1vw;
     }
   }
@@ -607,7 +607,7 @@
 }
 
 .brick-length-page {
-  font-family: $font-family-regular;
+  @extend %fontFamilyRegular;
   color: var(--theme-dark-blue);
 
   .left-block {
@@ -625,7 +625,7 @@
       color: var(--theme-dark-blue);
       letter-spacing: 0.07vw;
       line-height: 1.35;
-      font-family: $font-family-black;
+      @extend %fontFamilyBlack;
       @include phone_and_tabletL {
         font-size: 6vw;
         margin-top: 2.7vh;
@@ -646,7 +646,7 @@
 
       text-align: left;
       color: var(--theme-dark-blue);
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
       letter-spacing: 0.02vw;
 
       margin-bottom: 12vh;
@@ -758,7 +758,7 @@
       margin-top: 10%;
       color: var(--white);
       font-size: 1.2vw;
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
     }
   }
 }

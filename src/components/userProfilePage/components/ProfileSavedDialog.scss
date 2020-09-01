@@ -5,7 +5,7 @@
 .profile-saved-dialog {
   .dialog-header {
     .MuiListItemText-primary {
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
       font-size: 2vw;
       margin-right: 1vw;
       @include phone_and_tabletP {

@@ -6,10 +6,10 @@
   cursor: pointer;
   width: 100%;
   color: var(--theme-orange);
-  font-family: $font-family-bold;
+  @extend %fontFamilyBold;
   font-size: 2vw;
   .drag-box-hover {
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     font-size: 0.81vw;
     color: $global-light-text-gray;
     opacity: 0;

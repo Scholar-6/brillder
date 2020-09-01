@@ -70,7 +70,7 @@ $tile-height: 100%;
     }
     .tab-number {
       color: var(--theme-dark-blue);
-      font-family: $font-family-bold;
+      @extend %fontFamilyBold;
       font-size: 3.4vh;
       user-select: none;
     }
@@ -110,7 +110,7 @@ $tile-height: 100%;
     color: var(--theme-dark-blue);
     font-size: 1.3vw;
     overflow: hidden;
-    font-family: $font-family-bold;
+    @extend %fontFamilyBold;
     width: 2vw;
     height: 2vw;
   }

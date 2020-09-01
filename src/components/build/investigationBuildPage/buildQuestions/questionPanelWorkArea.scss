@@ -7,7 +7,7 @@
   $question-build-width: 45%;
 
   position: relative;
-  font-family: $font-family-regular;
+  @extend %fontFamilyRegular;
   background: white;
 
   border-bottom-left-radius: $question-radius;
@@ -32,12 +32,12 @@
 
   .ck-placeholder:before {
     color: #aaa;
-    font-family: $font-family-bold;
+    @extend %fontFamilyBold;
   }
 
   ::placeholder {
     color: #aaa;
-    font-family: $font-family-bold;
+    @extend %fontFamilyBold;
   }
 
   ::-webkit-scrollbar {
@@ -297,7 +297,7 @@
           width: 100%;
           text-align: center;
           color: var(--theme-dark-blue);
-          font-family: $font-family-bold;
+          @extend %fontFamilyBold;
         }
 
         button {

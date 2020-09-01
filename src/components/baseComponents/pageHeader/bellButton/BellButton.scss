@@ -23,7 +23,7 @@
     top: -0.5vh;
     margin: 0 !important;
     color: var(--theme-orange);
-    font-family: $font-family-bold;
+    @extend %fontFamilyBold;
   }
   &:hover {
     .bell-cup {

@@ -7,7 +7,7 @@
   overflow: hidden;
   height: 100%;
   width: 100%;
-  font-family: $font-family-regular;
+  @extend %fontFamilyRegular;
 
   .phone-question-preview-box {
     top: $page-head-height;
@@ -42,7 +42,7 @@
       font-size: 5.4vw;
       letter-spacing: 1.05vw;
       text-align: center;
-      font-family: $font-family-black;
+      @extend %fontFamilyBlack;
       color: var(--theme-dark-blue);
       line-height: 1;
       text-transform: uppercase;
@@ -209,7 +209,7 @@
           font-size: 1.82vw;
           letter-spacing: 0.36vw;
           color: var(--theme-dark-blue);
-          font-family: $font-family-black;
+          @extend %fontFamilyBlack;
           line-height: 1.41;
 
           @include phone_and_tabletP {

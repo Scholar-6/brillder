@@ -41,7 +41,7 @@
 
   .direction-info {
     font-size: 2.7vw;
-    font-family: $font-family-bold;
+    @extend %fontFamilyBold;
     text-align: center;
   }
 
@@ -49,7 +49,7 @@
     text-align: center;
     font-size: 2.1vw;
     margin-top: 4.2vh;
-    font-family: $font-family-bold;
+    @extend %fontFamilyBold;
   }
 
   .share-row {
@@ -71,14 +71,14 @@
     }
     .link-text {
       margin-top: 2vh;
-      font-family: $font-family-bold;
+      @extend %fontFamilyBold;
       text-align: center;
       font-size: 2vw;
     }
 
     .link-description {
       text-align: center;
-      font-family: "Brandon Grotesque Regular Italic";
+      font-family: 'Brandon Grotesque Regular Italic';
       font-size: 1.2vw;
     }
   }

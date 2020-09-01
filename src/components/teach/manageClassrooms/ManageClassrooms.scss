@@ -30,11 +30,11 @@
 
     .record-header {
       color: var(--dark-gray);
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
     }
 
     .class-header {
-      font-family: $font-family-bold;
+      @extend %fontFamilyBold;
     }
   }
 
@@ -45,7 +45,7 @@
     margin-bottom: 1vh;
     letter-spacing: 0.02vw;
     font-size: 1.1vw;
-    font-family: $font-family-bold;
+    @extend %fontFamilyBold;
   }
 
   .filter-header {
@@ -61,7 +61,7 @@
   }
 
   .selected-column {
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     letter-spacing: 0;
     position: relative;
 

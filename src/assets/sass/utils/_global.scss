@@ -4,7 +4,7 @@ body,
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: $font-family-regular;
+  @extend %fontFamilyRegular;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -203,7 +203,7 @@ textarea {
 
 h3 {
   color: white;
-  font-family: $font-family-regular;
+  @extend %fontFamilyRegular;
   font-weight: normal;
   margin-top: 2.5vh;
   margin-left: 1.05vw;
@@ -303,11 +303,11 @@ h3 {
 }
 
 .regular {
-  font-family: $font-family-regular;
+  @extend %fontFamilyRegular;
 }
 
 .bold {
-  font-family: $font-family-bold;
+  @extend %fontFamilyBold;
 }
 
 .dropzone {
@@ -335,7 +335,7 @@ h3 {
 // material select
 .MuiPaper-root.MuiMenu-paper.MuiPopover-paper {
   .MuiMenu-list {
-    span[role=menuitem] {
+    span[role='menuitem'] {
       min-height: auto !important;
       font-family: $font-family-regular !important;
       font-size: 1.2vw !important;

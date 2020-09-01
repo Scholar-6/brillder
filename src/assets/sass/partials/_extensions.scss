@@ -37,6 +37,19 @@
   text-transform: uppercase;
 }
 
+%fontFamilyLight {
+  font-family: $font-family-light;
+}
+%fontFamilyRegular {
+  font-family: $font-family-regular;
+}
+%fontFamilyBold {
+  font-family: $font-family-bold;
+}
+%fontFamilyBlack {
+  font-family: $font-family-black;
+}
+
 %fs9 {
   font-size: 9px;
 }

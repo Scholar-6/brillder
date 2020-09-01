@@ -34,7 +34,7 @@
       border-radius: 0.7vw;
       background: var(--light-blue);
       font-size: 1.4vw;
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
 
       .MuiSnackbarContent-action {
         padding: 0;
@@ -48,7 +48,7 @@
         font-size: 1.2vw;
         text-align: center;
         font-weight: bold;
-        font-family: $font-family-black;
+        @extend %fontFamilyBlack;
         color: white;
         background-color: var(--theme-orange);
       }
@@ -58,7 +58,7 @@
     width: 2vw;
     text-align: center;
     font-weight: bold;
-    font-family: $font-family-black;
+    @extend %fontFamilyBlack;
     color: white;
     font-size: 1.2vw;
   }
