@@ -7,7 +7,7 @@
   overflow: hidden;
   height: 100%;
   width: 100%;
-  font-family: $font-family-regular;
+  @extend %fontFamilyRegular;
 
   .phone-question-preview-box {
     top: $page-head-height;
@@ -41,8 +41,8 @@
       margin-left: 1.08vw;
       font-size: 5.4vw;
       letter-spacing: 1.05vw;
-      text-align: center;
-      font-family: $font-family-black;
+      @extend %textCenter;
+      @extend %fontFamilyBlack;
       color: var(--theme-dark-blue);
       line-height: 1;
       text-transform: uppercase;
@@ -97,7 +97,7 @@
         }
 
         .profile-image {
-          text-align: center;
+          @extend %textCenter;
           height: 11vw;
           width: 11vw;
           background: var(--tab-gray) 0% 0% no-repeat padding-box;
@@ -205,11 +205,11 @@
 
         .roles-title {
           width: 100%;
-          text-align: center;
+          @extend %textCenter;
           font-size: 1.82vw;
           letter-spacing: 0.36vw;
           color: var(--theme-dark-blue);
-          font-family: $font-family-black;
+          @extend %fontFamilyBlack;
           line-height: 1.41;
 
           @include phone_and_tabletP {
@@ -279,7 +279,8 @@
       padding-left: 4.5vw;
       padding-right: 4.2vw;
       .MuiAutocomplete-tag {
-        font: 1vw $font-family-regular;
+        font-size: 1vw;
+        @extend %fontFamilyRegular;
         color: var(--theme-dark-blue);
         background-color: var(--tab-gray);
       }

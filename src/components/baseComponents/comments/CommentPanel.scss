@@ -1,4 +1,6 @@
 @import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .comments-panel {
   background-color: var(--tab-gray);
@@ -9,11 +11,11 @@
 
   .comments-title {
     position: relative;
-    text-align: center;
+    @extend %textCenter;
     color: var(--theme-dark-blue);
     font-size: $suggestions-title-font-size;
     letter-spacing: 1px;
-    font-family: 'Brandon Grotesque Black';
+    @extend %fontFamilyBlack;
     padding-top: $suggestions-title-padding;
     padding-bottom: $suggestions-title-padding;
 
@@ -40,7 +42,7 @@
 
     .stretch {
       flex-grow: 1;
-      font-family: $font-family-bold;
+      @extend %fontFamilyBold;
     }
 
     .comment-reply-container {

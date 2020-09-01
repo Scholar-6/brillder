@@ -19,7 +19,7 @@
     margin-bottom: 10%;
     font-size: 1.9vw;
     letter-spacing: 0vw;
-    font-family: $font-family-black;
+    @extend %fontFamilyBlack;
   }
 
   .synthesis-text {
@@ -28,7 +28,7 @@
     letter-spacing: 0.014vw;
     line-height: 1.5;
     font-size: 0.8vw;
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
   }
 
   .table {

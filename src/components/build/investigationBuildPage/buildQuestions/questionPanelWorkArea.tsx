@@ -167,42 +167,40 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 >
                   <DragBox
                     locked={locked}
-                    name="T" fontSize="3.4vw" label="T E X T"
+                    name="T" fontSize="3.4vw"
+                    label="TEXT"
                     hoverMarginTop="0vw"
-                    fontFamily="Brandon Grotesque Bold"
                     value={QuestionComponentTypeEnum.Text}
                     className="text-box"
                   />
                   <DragBox
                     locked={locked}
-                    name="“ ”" fontSize="2.5vw" label="Q U O T E"
+                    name="“ ”"
+                    label="QUOTE"
                     hoverMarginTop="-0.65vw"
-                    fontFamily="Brandon Grotesque Bold"
                     letterSpacing="0.625vw"
                     marginLeft="0.3vw"
                     value={QuestionComponentTypeEnum.Quote}
                   />
                   <DragBox
                     locked={locked}
-                    name="jpg" fontSize="2.5vw" label="I M A G E"
+                    name="jpg"
+                    label="IMAGE"
                     hoverMarginTop="1vw"
                     marginTop="-2.8vw"
-                    fontFamily="Brandon Grotesque Bold"
                     value={QuestionComponentTypeEnum.Image}
                   />
                   <DragBox
                     locked={locked}
                     isImage={true} src="/images/soundicon.png"
-                    label="S O U N D"
+                    label="SOUND"
                     hoverMarginTop="0.5vw"
-                    fontFamily="Brandon Grotesque Bold"
                     value={QuestionComponentTypeEnum.Sound}
                   />
                 </ReactSortable>
                 <DragBox
                   locked={true}
-                  name="f(x)" fontSize="2.5vw" label="G R A P H"
-                  fontFamily="Brandon Grotesque Bold Italic"
+                  name="f(x)" label="GRAPH"
                   hoverMarginTop="0.9vw"
                   marginTop="-1vw"
                   className="disabled"

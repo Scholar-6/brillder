@@ -7,7 +7,7 @@
   $question-build-width: 45%;
 
   position: relative;
-  font-family: $font-family-regular;
+  @extend %fontFamilyRegular;
   background: white;
 
   border-bottom-left-radius: $question-radius;
@@ -32,12 +32,12 @@
 
   .ck-placeholder:before {
     color: #aaa;
-    font-family: $font-family-bold;
+    @extend %fontFamilyBold;
   }
 
   ::placeholder {
     color: #aaa;
-    font-family: $font-family-bold;
+    @extend %fontFamilyBold;
   }
 
   ::-webkit-scrollbar {
@@ -224,8 +224,7 @@
         padding-top: 8px;
         height: 14.5vh;
         width: 100%;
-        text-align: center;
-
+        @extend %textCenter;
         div {
           width: 100%;
         }
@@ -295,9 +294,9 @@
           margin-left: 0;
           letter-spacing: 0.2vw;
           width: 100%;
-          text-align: center;
+          @extend %textCenter;
           color: var(--theme-dark-blue);
-          font-family: $font-family-bold;
+          @extend %fontFamilyBold;
         }
 
         button {
@@ -307,7 +306,8 @@
           width: 89%;
           background-color: var(--tab-gray);
           border: 0;
-          font: 1.3vw $font-family-regular;
+          font-size: 1.3vw;
+          @extend %fontFamilyRegular;
           text-transform: none;
           border-radius: $question-radius;
           padding: 1.5vh 0;
@@ -329,7 +329,7 @@
       }
 
       .order-text-container {
-        text-align: center;
+        @extend %textCenter;
 
         div {
           max-width: 140px;
@@ -338,7 +338,7 @@
     }
 
     .build-question-footer {
-      text-align: center;
+      @extend %textCenter;
 
       button {
         margin: 5px;

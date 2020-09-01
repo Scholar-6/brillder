@@ -21,7 +21,7 @@
       min-width: 93%;
       letter-spacing: 0.03vw;
       font-size: 1.1vw;
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
     }
 
     .text-label-container {
@@ -41,8 +41,8 @@
       color: var(--theme-dark-blue);
       letter-spacing: 0.2vw;
       font-size: 1.3vw;
-      text-align: center;
-      font-family: $font-family-bold;
+      @extend %textCenter;
+      @extend %fontFamilyBold;
     }
     .edit-proposal-button {
       padding-top: 0.9vh;
@@ -52,7 +52,7 @@
 
       font-size: 1.3vw;
       text-transform: none;
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
       color: var(--theme-dark-blue);
       background: var(--tab-gray);
       border-radius: $border-radius;
@@ -73,7 +73,7 @@
       border-radius: $border-radius;
       letter-spacing: 0.4vw;
       font-size: 1.4vw;
-      font-family: $font-family-black;
+      @extend %fontFamilyBlack;
     }
 
     .comment-panel-container {

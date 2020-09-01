@@ -201,7 +201,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     return (
       <div className="direction-info">
         <h2 className="text-center">Submit</h2>
-        <span style={{bottom: '-1vw'}}>How do you think it went?</span>
+        <span>How do you think it went?</span>
       </div>
     );
   }

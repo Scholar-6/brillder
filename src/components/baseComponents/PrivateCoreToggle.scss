@@ -9,7 +9,7 @@
   top: calc(2.1vh + 1.35vw);
   display: flex;
   align-items: center;
-  font-family: $font-family-bold;
+  @extend %fontFamilyBold;
   .btn {
     display: flex;
     cursor: default !important;

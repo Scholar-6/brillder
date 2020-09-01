@@ -6,12 +6,17 @@
   cursor: pointer;
   width: 100%;
   color: var(--theme-orange);
-  font-family: $font-family-bold;
+  @extend %fontFamilyBold;
   font-size: 2vw;
+  .drag-box-name {
+    @extend %fontFamilyBold;
+    font-size: 2.5vw;
+  }
   .drag-box-hover {
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     font-size: 0.81vw;
     color: $global-light-text-gray;
+    letter-spacing: 0.5vw;
     opacity: 0;
   }
   .disabled {

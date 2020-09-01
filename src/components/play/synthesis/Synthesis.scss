@@ -35,7 +35,8 @@
     margin-right: 0px;
 
     > span {
-      font: 16px/24px $font-family-regular;
+      font-size: 16px/24px;
+      @extend %fontFamilyRegular;
       margin-right: 5px;
     }
   }
