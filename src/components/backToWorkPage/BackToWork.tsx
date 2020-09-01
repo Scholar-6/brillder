@@ -523,7 +523,31 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   playFilterUpdated(playFilters: PlayFilters) {
-    this.setState({ playFilters });
+    const { checked, submitted, completed } = playFilters;
+    let finalAssignments = this.state.rawAssignments;
+    
+    if (!checked && !submitted && !completed) {
+    } else {
+      finalAssignments = this.state.rawAssignments.filter(a => {
+        if (checked) {
+          if (a.status === AssignmentBrickStatus.CheckedByTeacher){
+            return true;
+          }
+        }
+        if (submitted) {
+          if (a.status === AssignmentBrickStatus.SubmitedToTeacher) {
+            return true;
+          }
+        }
+        if (completed) {
+          if (a.status === AssignmentBrickStatus.ToBeCompleted) {
+            return true;
+          }
+        }
+        return false;
+      });
+    }
+    this.setState({ playFilters, finalAssignments });
   }
   //#endregion
 
@@ -694,6 +718,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                   threeColumns={this.state.playThreeColumns}
                   history={this.props.history}
                   handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
+                  onMouseHover={()=>{}}
+                  onMouseLeave={()=>{}}
                   onThreeColumnsMouseHover={this.onPlayThreeColumnsMouseHover.bind(this)}
                   onThreeColumnsMouseLeave={this.onPlayThreeColumnsMouseLeave.bind(this)}
                 /> : ""
