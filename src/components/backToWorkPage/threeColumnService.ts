@@ -1,6 +1,6 @@
 import { Brick, BrickStatus } from 'model/brick';
 import { AssignmentBrick, AssignmentBrickStatus } from 'model/assignment';
-import { ThreeColumns, ThreeAssignmentColumns, Filters, ThreeColumnNames } from './model';
+import { ThreeColumns, ThreeAssignmentColumns, Filters, ThreeColumnNames, AssignmentBrickData } from './model';
 import {filterByStatus, filterByPrivate, filterByCore } from './service';
 
 export const filterAssignmentByStatus = (bricks: AssignmentBrick[], status: AssignmentBrickStatus) => {
@@ -11,8 +11,15 @@ const prepareBrickData = (data: any[], brick: Brick, index: number, key: number,
   data.push({ brick: brick, key, index, row });
 }
 
+const prepareAssignmentData = (data: any[], assignment: AssignmentBrick, index: number, key: number, row: number) => {
+  data.push({
+    brick: assignment.brick, key, index, row, assignmentId: assignment.id, status: assignment.status
+  } as AssignmentBrickData);
+}
+
 const setColumnBricksByStatus = (
-  res: ThreeColumns, filters: Filters, userId: number, generalSubjectId: number, name: ThreeColumnNames, bricks: Brick[], status: BrickStatus
+  res: ThreeColumns, filters: Filters, userId: number, generalSubjectId: number,
+  name: ThreeColumnNames, bricks: Brick[], status: BrickStatus
 ) => {
   let bs = filterByStatus(bricks, status);
   if (!filters.isCore) {
@@ -135,33 +142,33 @@ export const prepareVisibleThreeColumnBricks = (pageSize: number, sortedIndex: n
 }
 
 export const prepareVisibleThreeColumnAssignments = (pageSize: number, sortedIndex: number, threeColumns: ThreeAssignmentColumns) => {
-  let data: any[] = [];
+  let data: AssignmentBrickData[] = [];
   let count = 0;
 
   for (let i = 0 + sortedIndex; i < (pageSize / 3) + sortedIndex; i++) {
     let assignment = threeColumns.red.finalAssignments[i];
     let row = i - sortedIndex;
     if (assignment) {
-      prepareBrickData(data, assignment.brick, i, count, row);
+      prepareAssignmentData(data, assignment, i, count, row);
       count++;
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
+      prepareAssignmentData(data, { brick: {}} as AssignmentBrick, i, count, row);
       count++;
     }
     assignment = threeColumns.yellow.finalAssignments[i];
     if (assignment) {
-      prepareBrickData(data, assignment.brick, i, count, row);
+      prepareAssignmentData(data, assignment, i, count, row);
       count++;
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
+      prepareAssignmentData(data, { brick: {}} as AssignmentBrick, i, count, row);
       count++;
     }
     assignment = threeColumns.green.finalAssignments[i];
     if (assignment) {
-      prepareBrickData(data, assignment.brick, i, count, row);
+      prepareAssignmentData(data, assignment, i, count, row);
       count++;
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
+      prepareAssignmentData(data, { brick: {}} as AssignmentBrick, i, count, row);
       count++;
     }
   }

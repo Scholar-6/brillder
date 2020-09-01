@@ -3,7 +3,7 @@ import React from 'react';
 import {  Hidden, Grid } from '@material-ui/core';
 
 import './PhoneQuestionPreview.scss';
-import QuestionPlay from "components/play/brick/questionPlay/QuestionPlay";
+import QuestionPlay from "components/play/questionPlay/QuestionPlay";
 
 
 export interface PhonePreviewProps {

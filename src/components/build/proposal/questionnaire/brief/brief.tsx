@@ -8,7 +8,7 @@ import ProposalPhonePreview from "components/build/baseComponents/phonePreview/p
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep, PlayButtonStatus } from "../../model";
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
-import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
+import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import map from 'components/map';
 
 
