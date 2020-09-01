@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import { BrickStatus } from "model/brick";
 import { User } from "model/user";
 import { ThreeAssignmentColumns } from '../../model';
 import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
@@ -22,6 +21,7 @@ interface AssignedBricksProps {
 
 class AssignedBricks extends Component<AssignedBricksProps> {
   renderGroupedBricks = (data: any[]) => {
+    console.log(data[0]);
     return data.map(item => {
       return <BrickBlock
         brick={item.brick}
@@ -30,6 +30,8 @@ class AssignedBricks extends Component<AssignedBricksProps> {
         key={item.key}
         user={this.props.user}
         shown={this.props.shown}
+        isAssignment={true}
+        assignmentId={item.assignmentId}
         history={this.props.history}
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
         handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, item.status)}

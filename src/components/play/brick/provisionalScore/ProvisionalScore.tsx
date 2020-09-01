@@ -1,14 +1,16 @@
 import React from 'react';
 import { Grid, Hidden } from '@material-ui/core';
 import { CircularProgressbar } from 'react-circular-progressbar';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Moment } from 'moment';
 import 'react-circular-progressbar/dist/styles.css';
 
 import './ProvisionalScore.scss';
 import { Brick } from 'model/brick';
-import { useHistory } from 'react-router-dom';
 import { PlayStatus } from '../model';
-import { Moment } from 'moment';
 import sprite from "assets/img/icons-sprite.svg";
+import {getPlayPath, getAssignQueryString} from '../service';
+
 import ReviewStepper from '../review/ReviewStepper';
 import Clock from '../baseComponents/Clock';
 
@@ -24,21 +26,25 @@ interface ProvisionalScoreProps {
 
 const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, attempts, ...props }) => {
   const history = useHistory();
+  const location = useLocation();
   const [value, setValue] = React.useState(0);
+
+  const moveToIntro = () => {
+    let link = getPlayPath(props.isPlayPreview, brick.id);
+    history.push(`${link}/intro${getAssignQueryString(location)}`);
+  }
+
+  const moveToSynthesis = () => {
+    let link = getPlayPath(props.isPlayPreview, brick.id);
+    history.push(`${link}/synthesis${getAssignQueryString(location)}`);
+  }
+
   if (status === PlayStatus.Live) {
-    if (props.isPlayPreview) {
-      history.push(`/play-preview/brick/${brick.id}/intro`);
-    } else {
-      history.push(`/play/brick/${brick.id}/intro`);
-    }
+    moveToIntro();
   }
 
   const startBrick = () => {
-    if (props.isPlayPreview) {
-      history.push(`/play-preview/brick/${brick.id}/synthesis`);
-    } else {
-      history.push(`/play/brick/${brick.id}/synthesis`);
-    }
+    moveToSynthesis();
   }
 
   let score = attempts.reduce((acc, answer) => {

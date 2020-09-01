@@ -11,6 +11,10 @@ const prepareBrickData = (data: any[], brick: Brick, index: number, key: number,
   data.push({ brick: brick, key, index, row });
 }
 
+const prepareAssignmentData = (data: any[], assignment: AssignmentBrick, index: number, key: number, row: number) => {
+  data.push({ brick: assignment.brick, key, index, row, assignmentId: assignment.id });
+}
+
 const setColumnBricksByStatus = (
   res: ThreeColumns, filters: Filters, userId: number, generalSubjectId: number, name: ThreeColumnNames, bricks: Brick[], status: BrickStatus
 ) => {
@@ -142,26 +146,26 @@ export const prepareVisibleThreeColumnAssignments = (pageSize: number, sortedInd
     let assignment = threeColumns.red.finalAssignments[i];
     let row = i - sortedIndex;
     if (assignment) {
-      prepareBrickData(data, assignment.brick, i, count, row);
+      prepareAssignmentData(data, assignment, i, count, row);
       count++;
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
+      prepareAssignmentData(data, { brick: {}} as AssignmentBrick, i, count, row);
       count++;
     }
     assignment = threeColumns.yellow.finalAssignments[i];
     if (assignment) {
-      prepareBrickData(data, assignment.brick, i, count, row);
+      prepareAssignmentData(data, assignment, i, count, row);
       count++;
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
+      prepareAssignmentData(data, { brick: {}} as AssignmentBrick, i, count, row);
       count++;
     }
     assignment = threeColumns.green.finalAssignments[i];
     if (assignment) {
-      prepareBrickData(data, assignment.brick, i, count, row);
+      prepareAssignmentData(data, assignment, i, count, row);
       count++;
     } else {
-      prepareBrickData(data, {} as Brick, i, count, row);
+      prepareAssignmentData(data, { brick: {}} as AssignmentBrick, i, count, row);
       count++;
     }
   }

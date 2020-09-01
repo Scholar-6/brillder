@@ -3,7 +3,7 @@ import { Grid, Hidden } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
 import update from "immutability-helper";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Moment } from "moment";
 
 import "./ReviewPage.scss";
@@ -19,6 +19,7 @@ import TabPanel from "../baseComponents/QuestionTabPanel";
 import CountDown from "../baseComponents/CountDown";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
+import { getPlayPath, getAssignQueryString } from "../service";
 
 interface ReviewPageProps {
   status: PlayStatus;
@@ -45,32 +46,28 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   ...props
 }) => {
   const history = useHistory();
+  const location = useLocation();
   const [activeStep, setActiveStep] = React.useState(0);
   let initAnswers: any[] = [];
   const [answers, setAnswers] = React.useState(initAnswers);
   const [isSubmitOpen, setSubmitAnswers] = React.useState(false);
   const theme = useTheme();
+  let playPath = getPlayPath(props.isPlayPreview, brickId);
+
+  const moveToEnding = () => {
+    history.push(`${playPath}/ending${getAssignQueryString(location)}`)
+  }
 
   if (status === PlayStatus.Live) {
-    if (props.isPlayPreview) {
-      history.push(`/play-preview/brick/${brickId}/intro`);
-    } else {
-      history.push(`/play/brick/${brickId}/intro`);
-    }
+    history.push(`${playPath}/intro${getAssignQueryString(location)}`)
     return <PageLoader content="...Loading..." />;
   } else if (status === PlayStatus.Ending) {
-    if (props.isPlayPreview) {
-      history.push(`/play-preview/brick/${brickId}/ending`);
-    } else {
-      history.push(`/play/brick/${brickId}/ending`);
-    }
+    moveToEnding();
     return <PageLoader content="...Loading..." />;
   }
 
   let questionRefs: React.RefObject<QuestionLive>[] = [];
-  questions.forEach(() => {
-    questionRefs.push(React.createRef());
-  });
+  questions.forEach(() => questionRefs.push(React.createRef()));
 
   const handleStep = (step: number) => () => {
     const copyAnswers = Object.assign([], answers) as any[];
@@ -109,11 +106,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
 
   const moveNext = () => {
     finishBrick();
-    if (props.isPlayPreview) {
-      history.push(`/play-preview/brick/${brickId}/ending`);
-    } else {
-      history.push(`/play/brick/${brickId}/ending`);
-    }
+    moveToEnding();
   }
 
   /**
