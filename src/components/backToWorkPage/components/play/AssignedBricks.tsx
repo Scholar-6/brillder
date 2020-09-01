@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 
 import { User } from "model/user";
-import { ThreeAssignmentColumns, AssignmentBrickData } from '../../model';
+import { ThreeAssignmentColumns, AssignmentBrickData, PlayFilters } from '../../model';
+import { prepareVisibleAssignments } from '../../service';
 import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
+import { AssignmentBrickStatus, AssignmentBrick } from "model/assignment";
 
 import BrickBlock from '../BrickBlock';
-import { AssignmentBrickStatus } from "model/assignment";
+import BrickList from '../BrickList';
 
 interface AssignedBricksProps {
   user: User;
   shown: boolean;
   pageSize: number;
   sortedIndex: number;
+  filters: PlayFilters;
+  assignments: AssignmentBrick[];
   threeColumns: ThreeAssignmentColumns;
   history: any;
   handleDeleteOpen(brickId: number): void;
@@ -56,11 +60,31 @@ class AssignedBricks extends Component<AssignedBricksProps> {
     return this.renderGroupedBricks(data);
   }
 
+  renderSortedBricks() {
+    const data = prepareVisibleAssignments(this.props.sortedIndex, this.props.pageSize, this.props.assignments);
+
+    return <BrickList
+      data={data} shown={this.props.shown}
+      user={this.props.user} history={this.props.history}
+      handleDeleteOpen={this.props.handleDeleteOpen.bind(this)}
+      handleMouseHover={()=>{}}
+      handleMouseLeave={()=>{}}
+    />
+  }
+
+  renderAssignedBricks() {
+    const {checked, submitted, completed } = this.props.filters;
+    if (!checked && !submitted && !completed) {
+      return this.renderAssignedGroupedBricks();
+    }
+    return this.renderSortedBricks();
+  }
+
   render() {
     return (
       <div className="bricks-list-container">
         <div className="bricks-list">
-          {this.renderAssignedGroupedBricks()}
+          {this.renderAssignedBricks()}
         </div>
       </div>
     );

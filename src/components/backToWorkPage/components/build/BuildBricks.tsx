@@ -33,8 +33,6 @@ interface BuildBricksProps {
 }
 
 class BuildBricks extends Component<BuildBricksProps> {
-
-
   renderGroupedBricks = (data: any[]) => {
     return data.map(item => {
       return <BrickBlock
