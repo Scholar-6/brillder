@@ -504,6 +504,10 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         />
       );
     }
+    let type = QuestionTypeEnum.None;
+    if (activeQuestion && activeQuestion.type) {
+      type = activeQuestion.type;
+    }
     return (
       <QuestionTypePage
         history={history}
@@ -513,7 +517,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         activeQuestionType={activeQuestionType}
         setActiveQuestionType={setActiveType}
         setQuestionType={setQuestionTypeAndMove}
-        questionType={activeQuestion.type}
+        questionType={type}
       />
     );
   };
