@@ -27,7 +27,7 @@ $box-radius: 0.4vw;
       display: inline;
       overflow: hidden;
       overflow-y: auto;
-
+      @extend %radioBlue;
       @include phone_and_tabletP {
         max-height: calc(85vh - 16vh);
       }
