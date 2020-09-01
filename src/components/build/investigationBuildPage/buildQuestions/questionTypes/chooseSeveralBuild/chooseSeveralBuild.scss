@@ -3,5 +3,5 @@
 @import 'src/assets/sass/partials/extensions';
 
 .choose-several-build {
-  text-align: center;
+  @extend %textCenter;
 }

@@ -15,7 +15,7 @@
     .circle-check {
       $circle-size: 3.5vw;
       cursor: pointer;
-      text-align: center;
+      @extend %textCenter;
       height: $circle-size;
       width: $circle-size;
       background: var(--theme-green);
@@ -38,7 +38,7 @@
     }
   }
   .italic .MuiTypography-root {
-    font-family: Brandon Grotesque Regular Italic !important;
+    font-family: $font-family-regular-italic !important;
     font-size: 1.6vw !important;
   }
   .bold .MuiTypography-root {

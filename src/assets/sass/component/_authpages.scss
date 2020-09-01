@@ -51,7 +51,7 @@
       width: 32.3vw;
     }
     .back-box {
-      text-align: center;
+      @extend %textCenter;
       @include phone_and_tabletP {
         display: flex;
         align-items: center;
@@ -97,7 +97,7 @@
     .second-item {
       margin-top: 4.7vh;
       height: 80.6vh;
-      text-align: center;
+      @extend %textCenter;
       @include phone_and_tabletP {
         margin: 0;
         height: 100vh;
@@ -160,17 +160,18 @@
         margin-bottom: 2.7vh;
         transition: all 0.2s ease-in-out;
         @extend %flexCenter;
+        @extend %fontFamilyRegular;
         @include phone_and_tabletP {
           width: 100%;
-          font: 4.8vw $font-family-regular;
+          font-size: 4.8vw;
           border-radius: 2vh;
         }
         @include tabletP {
           width: 30vw;
-          font: 1.4vw $font-family-regular;
+          font-size: 1.4vw;
         }
         @include desktop {
-          font: 1vw $font-family-regular;
+          font-size: 1vw;
           width: 22vw;
         }
         .svg {
@@ -255,7 +256,7 @@
         }
         input {
           color: var(--white);
-          text-align: center;
+          @extend %textCenter;
           background: var(--theme-dark-blue);
           &::-webkit-input-placeholder {
             color: var(--white);
@@ -286,14 +287,15 @@
           letter-spacing: 0.3vw;
           margin: 0 0 2vh 0;
           flex: 1;
+          @extend %fontFamilyRegular;
           @include phone_and_tabletP {
             color: var(--black-blue);
             border-radius: 7vw;
-            font: 5.2vw $font-family-regular;
+            font-size: 5.2vw;
             padding: 0.5vh 1.2vw;
           }
           @include tabletP {
-            font: 1.2vw $font-family-regular;
+            font-size: 1.2vw;
             padding: 0.8vh 1.2vw;
             margin: 0px 0px 2vh;
             border-radius: 0.7vw;

@@ -42,11 +42,11 @@
   .direction-info {
     font-size: 2.7vw;
     @extend %fontFamilyBold;
-    text-align: center;
+    @extend %textCenter;
   }
 
   p {
-    text-align: center;
+    @extend %textCenter;
     font-size: 2.1vw;
     margin-top: 4.2vh;
     @extend %fontFamilyBold;
@@ -72,13 +72,13 @@
     .link-text {
       margin-top: 2vh;
       @extend %fontFamilyBold;
-      text-align: center;
+      @extend %textCenter;
       font-size: 2vw;
     }
 
     .link-description {
-      text-align: center;
-      font-family: 'Brandon Grotesque Regular Italic';
+      @extend %textCenter;
+      @extend %fontFamilyRegularItalic;
       font-size: 1.2vw;
     }
   }

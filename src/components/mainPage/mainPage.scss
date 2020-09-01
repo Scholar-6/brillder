@@ -13,7 +13,7 @@
 
   .welcome-col {
     width: $welcome-col-width;
-    text-align: center;
+    @extend %textCenter;
     padding-top: 15vh;
 
     .welcome-box {
@@ -80,7 +80,7 @@
       background: var(--light-blue);
       margin-top: 4.6vh;
       height: 6.2vh;
-      text-align: center;
+      @extend %textCenter;
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
     }
@@ -114,7 +114,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      text-align: center;
+      @extend %textCenter;
       flex-direction: column;
       > .svg {
         @extend %removePosition;
@@ -129,7 +129,7 @@
       }
       .item-description {
         padding: 0;
-        text-align: center;
+        @extend %textCenter;
         margin: 0;
         @extend %fontFamilyLight;
         color: var(--tab-gray);

@@ -113,7 +113,7 @@
     }
 
     .link-description {
-      text-align: center;
+      @extend %textCenter;
       margin: 0;
       line-height: 1.4;
       @extend %fontFamilyLight;
@@ -132,7 +132,7 @@
     bottom: 2vh;
   }
   .card-description {
-    text-align: center;
+    @extend %textCenter;
   }
 
   .set-type-button {

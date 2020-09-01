@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .horizontal-shuffle-build {
-  text-align: center;
+  @extend %textCenter;
   .horizontal-shuffle-box {
     position: relative;
     width: 100%;

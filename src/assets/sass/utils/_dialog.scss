@@ -124,7 +124,7 @@
       font-size: 1.4vw;
       width: 100%;
       color: var(--theme-dark-blue);
-      text-align: center;
+      @extend %textCenter;
       display: block;
       content: 'Drag Image Here | Click to Select Image';
       @extend %fontFamilyRegular;
@@ -156,7 +156,7 @@
 
         > div {
           margin-bottom: 4.5vh;
-          text-align: center;
+          @extend %textCenter;
           width: 30vw;
         }
 

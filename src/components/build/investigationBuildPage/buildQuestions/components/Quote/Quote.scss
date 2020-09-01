@@ -17,7 +17,7 @@
   input {
     width: 84%;
     height: 55px;
-    text-align: center;
+    @extend %textCenter;
     border: 1px solid black;
     padding-right: 8%;
     padding-left: 8%;

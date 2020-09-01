@@ -225,7 +225,7 @@ h3 {
   margin: 0 0 0.5vw 0 !important;
   padding: 0.3vw 0 !important;
   color: var(--theme-dark-blue) !important;
-  text-align: center;
+  @extend %textCenter;
   text-transform: none !important;
   width: 100%;
   border-radius: 0.4vw !important;
@@ -287,7 +287,7 @@ h3 {
 
 .zoom-item {
   cursor: pointer;
-  text-align: center;
+  @extend %textCenter;
   @extend %transitionAll300;
   &:hover {
     @include tabletP {

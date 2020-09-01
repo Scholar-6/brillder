@@ -150,7 +150,7 @@ $space-between-boxes: 0.1vw;
     font-size: 1.2vw;
     @extend %fontFamilyRegular;
     letter-spacing: 0;
-    text-align: center;
+    @extend %textCenter;
     color: white;
 
     button {
@@ -260,7 +260,7 @@ $space-between-boxes: 0.1vw;
     right: 0;
     width: 34.3vw;
     color: white;
-    text-align: center;
+    @extend %textCenter;
 
     img {
       margin-top: 0.3vw;

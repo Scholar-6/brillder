@@ -134,7 +134,7 @@
   position: absolute;
   bottom: 2.4vh;
   width: 88vw;
-  text-align: center;
+  @extend %textCenter;
   color: var(--theme-dark-blue);
   font-size: 6vw;
   line-height: 1;

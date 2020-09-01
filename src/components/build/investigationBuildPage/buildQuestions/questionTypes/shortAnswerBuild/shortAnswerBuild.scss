@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .short-answer-build {
-  text-align: center;
+  @extend %textCenter;
 
   .short-answer-box {
     position: relative;
@@ -46,7 +46,7 @@
         padding-right: 0.7vw;
         margin-right: 1vw;
         font-size: 1.2vw;
-        text-align: center;
+        @extend %textCenter;
         font-weight: bold;
         @extend %fontFamilyBlack;
         color: white;
@@ -56,7 +56,7 @@
   }
   .exclamation-mark {
     width: 2vw;
-    text-align: center;
+    @extend %textCenter;
     font-weight: bold;
     @extend %fontFamilyBlack;
     color: white;

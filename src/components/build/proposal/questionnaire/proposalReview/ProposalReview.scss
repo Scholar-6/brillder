@@ -172,7 +172,7 @@
       position: relative;
       line-height: 1.45;
       color: var(--theme-orange);
-      text-align: center;
+      @extend %textCenter;
       @extend %fontFamilyBlack;
       .page-stitch {
         position: absolute;
