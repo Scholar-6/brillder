@@ -217,9 +217,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const saveSynthesis = (text: string) => {
     synthesis = text;
-    setSynthesis(text);
-    console.log("auto save synthesis. log bellow is related to this one");
-    autoSaveBrick();
+    saveBrick();
   }
 
   const setNextQuestion = () => {
