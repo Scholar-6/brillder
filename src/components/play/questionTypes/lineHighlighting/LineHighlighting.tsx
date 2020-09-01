@@ -3,7 +3,7 @@ import React from "react";
 import "./LineHighlighting.scss";
 import CompComponent from "../Comp";
 import {CompQuestionProps} from '../types';
-import { ComponentAttempt } from "components/play/brick/model";
+import { ComponentAttempt } from "components/play/model";
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 
 

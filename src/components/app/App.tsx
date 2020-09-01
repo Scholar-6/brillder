@@ -10,7 +10,7 @@ import GlobalFailedRequestDialog from "components/baseComponents/failedRequestDi
 import VersionLabel from 'components/baseComponents/VersionLabel';
 import Dashboard from '../viewAllPage/Dashboard';
 import MobileCategory from '../viewAllPage/MobileCategory';
-import PlayBrickRouting from '../play/brick/PlayBrickRouting';
+import PlayBrickRouting from '../play/PlayBrickRouting';
 import PlayPreviewRouting from 'components/playPreview/PreviewBrickRouting';
 import Proposal from '../build/proposal/Proposal';
 import MainPage from 'components/mainPage/mainPage';

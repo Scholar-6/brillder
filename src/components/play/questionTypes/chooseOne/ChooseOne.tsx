@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import './ChooseOne.scss';
 import CompComponent from '../Comp';
 import { CompQuestionProps } from '../types';
-import { ComponentAttempt } from 'components/play/brick/model';
+import { ComponentAttempt } from 'components/play/model';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';

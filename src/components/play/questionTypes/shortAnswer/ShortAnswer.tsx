@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import CompComponent from "../Comp";
 
 import "./ShortAnswer.scss";
-import { ComponentAttempt } from "components/play/brick/model";
+import { ComponentAttempt } from "components/play/model";
 import ReviewEachHint from "../../baseComponents/ReviewEachHint";
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import { CompQuestionProps } from "../types";

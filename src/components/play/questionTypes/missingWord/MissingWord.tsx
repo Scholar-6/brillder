@@ -5,8 +5,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import CompComponent from "../Comp";
 import "./MissingWord.scss";
 import {CompQuestionProps} from '../types';
-import { ComponentAttempt } from "components/play/brick/model";
-import ReviewEachHint from 'components/play/brick/baseComponents/ReviewEachHint';
+import { ComponentAttempt } from "components/play/model";
+import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 
