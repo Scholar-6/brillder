@@ -241,6 +241,12 @@
 		v1.3C11.3,13,11.2,13.1,11.1,13.1z"/>
     <path d="M12.1,21h-2c-0.3,0-0.5-0.2-0.5-0.5V13c0-0.3,0.2-0.5,0.5-0.5h2c0.3,0,0.5,0.2,0.5,0.5v7.5C12.6,20.8,12.4,21,12.1,21z"/>
   </svg>
+  <svg id="maximize" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="15 3 21 3 21 9"></polyline>
+    <polyline points="9 21 3 21 3 15"></polyline>
+    <line x1="21" y1="3" x2="14" y2="10"></line>
+    <line x1="3" y1="21" x2="10" y2="14"></line>
+  </svg>
   <svg id="maximize-2" viewBox="0 0 24 24" fill="none" stroke="#c43c30" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="15 3 21 3 21 9"></polyline>
     <polyline points="9 21 3 21 3 15"></polyline>

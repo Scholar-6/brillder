@@ -2,7 +2,7 @@ import update from "immutability-helper";
 
 import {
   CasheBuildQuestion, BuildPlayRedirect
-} from 'components/localStorage/buildLocalStorage';
+} from 'localStorage/buildLocalStorage';
 
 
 import {

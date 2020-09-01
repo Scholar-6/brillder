@@ -25,8 +25,8 @@ import { loadSubjects } from 'components/services/subject';
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import FilterSidebar from './components/FilterSidebar';
-import PlayFilterSidebar from './components/PlayFilterSidebar';
+import FilterSidebar from './components/build/FilterSidebar';
+import PlayFilterSidebar from './components/play/PlayFilterSidebar';
 import TeachFilterSidebar from './components/teach/TeachFilterSidebar';
 import ClassroomList from './components/teach/ClassroomList';
 import BackPagePagination from './components/BackPagePagination';
@@ -523,7 +523,31 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   playFilterUpdated(playFilters: PlayFilters) {
-    this.setState({ playFilters });
+    const { checked, submitted, completed } = playFilters;
+    let finalAssignments = this.state.rawAssignments;
+    
+    if (!checked && !submitted && !completed) {
+    } else {
+      finalAssignments = this.state.rawAssignments.filter(a => {
+        if (checked) {
+          if (a.status === AssignmentBrickStatus.CheckedByTeacher){
+            return true;
+          }
+        }
+        if (submitted) {
+          if (a.status === AssignmentBrickStatus.SubmitedToTeacher) {
+            return true;
+          }
+        }
+        if (completed) {
+          if (a.status === AssignmentBrickStatus.ToBeCompleted) {
+            return true;
+          }
+        }
+        return false;
+      });
+    }
+    this.setState({ playFilters, finalAssignments });
   }
   //#endregion
 
@@ -676,6 +700,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
               }
               {
                 activeTab === ActiveTab.Teach ? <ClassroomList
+                  expand={id=> this.setActiveClassroom(id)}
                   startIndex={this.state.sortedIndex}
                   activeClassroom={this.state.activeClassroom}
                   pageSize={this.state.teachPageSize}
@@ -686,11 +711,15 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                 activeTab === ActiveTab.Play ? <AssignedBricks
                   user={this.props.user}
                   shown={true}
+                  filters={this.state.playFilters}
                   pageSize={this.state.pageSize}
                   sortedIndex={this.state.sortedIndex}
+                  assignments={this.state.finalAssignments}
                   threeColumns={this.state.playThreeColumns}
                   history={this.props.history}
                   handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
+                  onMouseHover={()=>{}}
+                  onMouseLeave={()=>{}}
                   onThreeColumnsMouseHover={this.onPlayThreeColumnsMouseHover.bind(this)}
                   onThreeColumnsMouseLeave={this.onPlayThreeColumnsMouseLeave.bind(this)}
                 /> : ""

@@ -312,7 +312,7 @@ const LivePage: React.FC<LivePageProps> = ({
     return (
       <div className="direction-info">
         <h2 className="text-center">Submit</h2>
-        <span>How do you think it went?</span>
+        <span style={{bottom: '-1vw'}}>How do you think it went?</span>
       </div>
     );
   }
