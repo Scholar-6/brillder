@@ -43,7 +43,7 @@
         margin: 3.6vh 0;
         padding: 0;
         font-size: 1.28vw;
-        text-align: center;
+        @extend %textCenter;
       }
       .proposal-box {
         margin-left: 1vw;

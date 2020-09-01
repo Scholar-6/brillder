@@ -107,7 +107,7 @@
               flex-direction: column;
               color: var(--tab-gray);
               .notification-time {
-                text-align: center;
+                @extend %textCenter;
                 white-space: nowrap;
                 margin-top: 0.4vh;
                 @include phone_and_tabletP {
@@ -158,7 +158,7 @@
           }
           color: white;
           @extend %fontFamilyLight;
-          text-align: center;
+          @extend %textCenter;
           font-size: 1vw;
           em {
             font-size: 1vw;

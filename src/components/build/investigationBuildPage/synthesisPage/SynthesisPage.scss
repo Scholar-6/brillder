@@ -41,7 +41,7 @@
       color: var(--theme-dark-blue);
       letter-spacing: 0.2vw;
       font-size: 1.3vw;
-      text-align: center;
+      @extend %textCenter;
       @extend %fontFamilyBold;
     }
     .edit-proposal-button {

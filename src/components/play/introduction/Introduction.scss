@@ -390,7 +390,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
             border-radius: 100vw;
             @extend %fontFamilyBlack;
             color: var(--theme-dark-blue);
-            text-align: center;
+            @extend %textCenter;
 
             @include phone_and_tabletP {
               width: 6vw;
@@ -903,7 +903,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
               transform: translateX(-50%);
               top: 100%;
               line-height: 1vw;
-              text-align: center;
+              @extend %textCenter;
               font-size: 1vw;
             }
           }
@@ -978,7 +978,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
           width: 50vh;
           top: 0;
           color: var(--theme-dark-blue);
-          text-align: center;
+          @extend %textCenter;
 
           @include phone_and_tabletP {
             height: inherit !important;

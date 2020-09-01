@@ -11,7 +11,7 @@
 
   .comments-title {
     position: relative;
-    text-align: center;
+    @extend %textCenter;
     color: var(--theme-dark-blue);
     font-size: $suggestions-title-font-size;
     letter-spacing: 1px;

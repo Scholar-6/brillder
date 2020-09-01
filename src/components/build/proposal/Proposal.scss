@@ -495,7 +495,7 @@
       width: 60vw;
     }
     h1 {
-      text-align: center;
+      @extend %textCenter;
       color: var(--theme-dark-blue);
       @include phone_and_tabletL {
         font-size: 5vw;
@@ -589,7 +589,8 @@
     @extend %textLeft;
     overflow: hidden;
     color: var(--white);
-    font: 1vw $font-family-regular;
+    font-size: 1vw;
+    @extend %fontFamilyRegular;
     overflow-y: auto;
     padding: 0 1vw;
     word-break: break-word;
@@ -618,7 +619,7 @@
       margin-left: 12.1vw;
     }
     > h1 {
-      text-align: center;
+      @extend %textCenter;
       color: var(--theme-dark-blue);
       letter-spacing: 0.07vw;
       line-height: 1.35;

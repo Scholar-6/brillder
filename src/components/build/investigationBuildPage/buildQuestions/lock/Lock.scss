@@ -5,7 +5,7 @@
 .lock-container {
   display: block !important;
   font-size: 0.9vw;
-  text-align: center;
+  @extend %textCenter;
   @extend %fontFamilyRegular;
   margin-top: 16vh !important;
 

@@ -19,7 +19,7 @@
         margin: 0;
         padding: 6vh 1vw 1vh 2.2vw;
         box-shadow: none !important;
-        text-align: center;
+        @extend %textCenter;
         border: 0 !important;
         color: var(--theme-dark-blue);
         background: var(--light-gray) !important;

@@ -6,7 +6,7 @@
   .sort-category {
     color: var(--theme-dark-blue);
     padding: 10px 0;
-    text-align: center;
+    @extend %textCenter;
     @extend %fontFamilyBold;
     background-color: var(--tab-gray);
     font-size: 1rem;

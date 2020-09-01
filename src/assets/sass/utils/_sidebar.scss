@@ -295,7 +295,7 @@
 
         .published-count {
           font-size: 1.05vw;
-          text-align: center;
+          @extend %textCenter;
           @extend %fontFamilyLight;
         }
 
@@ -718,7 +718,7 @@
           }
 
           .edit-button {
-            text-align: center;
+            @extend %textCenter;
             padding-bottom: 8px;
           }
 

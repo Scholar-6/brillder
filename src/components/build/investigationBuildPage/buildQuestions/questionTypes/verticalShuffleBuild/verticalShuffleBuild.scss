@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .vertical-shuffle-build {
-  text-align: center;
+  @extend %textCenter;
   .vertical-answer-box {
     position: relative;
     width: 100%;

@@ -42,7 +42,7 @@
     color: var(--theme-dark-blue);
     font-size: 4vh;
     line-height: 1;
-    text-align: center;
+    @extend %textCenter;
   }
 
   .intro-header {
