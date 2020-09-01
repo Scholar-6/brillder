@@ -33,7 +33,6 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
 
   onSynthesisChange(text: string) {
     this.setState({synthesis: text});
-    console.log(text)
     this.props.onSynthesisChange(text);
   }
 
