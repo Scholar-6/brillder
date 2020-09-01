@@ -11,7 +11,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
-import { clearProposal } from "components/localStorage/proposal";
+import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
 import WelcomeComponent from './WelcomeComponent';
 import { Notification } from 'model/notifications';

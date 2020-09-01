@@ -15,6 +15,7 @@ interface AssignedDescriptionProps {
   isExpanded?: boolean;
   onClick?(): void;
   move?(): void;
+  expand(): void;
 }
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
@@ -75,7 +76,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             </div>
             <div className="link-info">{getAuthorRow(brick)}</div>
           </div>
-          <AssignedCircle total={6} count={4} color="red" />
+          <AssignedCircle onClick={this.props.expand} total={6} count={4} color="red" />
           <AssignedCircle total={6} count={4} color="yellow" />
           <AssignedCircle total={6} count={4} color="green" />
           <div className="teach-brick-actions-container">

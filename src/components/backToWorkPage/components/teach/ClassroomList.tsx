@@ -12,6 +12,7 @@ interface ClassroomListProps {
   startIndex: number;
   pageSize: number;
   activeClassroom: TeachClassroom | null;
+  expand(classroomId: number): void;
 }
 interface ClassroomListState {
   isArchive: boolean
@@ -41,7 +42,7 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
         <div className="classroom-title" key={i}>
           {c.name}
           {}
-          {c.assignments.map((a, i) => <AssignedBrickDescription key={i} classroom={c} brick={a.brick} />)}
+          {c.assignments.map((a, i) => <AssignedBrickDescription expand={() => this.props.expand(c.id)} key={i} classroom={c} brick={a.brick} />)}
         </div>
       )
     }
@@ -53,7 +54,7 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
       <div className="classroom-title">
         {c.name}
         {}
-        {c.assignments.map((a, i) => <AssignedBrickDescription key={i} classroom={c} brick={a.brick} />)}
+        {c.assignments.map((a, i) => <AssignedBrickDescription expand={()=>{}} key={i} classroom={c} brick={a.brick} />)}
       </div>
     )
   }

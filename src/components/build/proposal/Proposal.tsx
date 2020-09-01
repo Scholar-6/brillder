@@ -27,7 +27,7 @@ import { validateQuestion } from "../investigationBuildPage/questionService/Vali
 import { parseQuestion, ApiQuestion } from "../investigationBuildPage/questionService/QuestionService";
 import map from 'components/map';
 
-import { setLocalBrick, getLocalBrick } from 'components/localStorage/proposal';
+import { setLocalBrick, getLocalBrick } from 'localStorage/proposal';
 import { Question } from "model/question";
 
 interface ProposalProps {
