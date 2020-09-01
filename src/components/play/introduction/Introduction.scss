@@ -897,12 +897,11 @@ $play-mobile-height: calc(100vh - 55.8vw);
                 top: -1vw;
               }
             }
-
             > span {
               width: 100%;
               left: 50%;
               transform: translateX(-50%);
-              bottom: -2vw;
+              top: 100%;
               line-height: 1vw;
               text-align: center;
             }
