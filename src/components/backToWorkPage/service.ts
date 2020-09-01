@@ -136,3 +136,17 @@ export const prepareVisibleBricks = (sortedIndex: number, pageSize: number, bric
   }
   return data;
 }
+
+export const prepareVisibleAssignments = (sortedIndex: number, pageSize: number, assignments: AssignmentBrick[]) => {
+  let data: any[] = [];
+  let count = 0;
+  for (let i = 0 + sortedIndex; i < pageSize + sortedIndex; i++) {
+    const assignment = assignments[i];
+    if (assignment) {
+      let row = Math.floor(count / 3);
+      data.push({ brick: assignment.brick, key: i, index: count, assignmentId: assignment.id, status: assignment.status, row });
+      count++;
+    }
+  }
+  return data;
+}

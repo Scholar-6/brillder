@@ -687,8 +687,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
                 activeTab === ActiveTab.Play ? <AssignedBricks
                   user={this.props.user}
                   shown={true}
+                  filters={this.state.playFilters}
                   pageSize={this.state.pageSize}
                   sortedIndex={this.state.sortedIndex}
+                  assignments={this.state.finalAssignments}
                   threeColumns={this.state.playThreeColumns}
                   history={this.props.history}
                   handleDeleteOpen={brickId => this.handleDeleteOpen(brickId)}
