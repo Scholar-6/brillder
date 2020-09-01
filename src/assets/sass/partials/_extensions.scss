@@ -440,3 +440,30 @@
     }
   }
 }
+
+%checkboxValidation {
+  .MuiSvgIcon-root {
+    color: var(--gray) !important;
+    &:hover {
+      background-color: var(--gray-alpha4) !important;
+    }
+  }
+  &.checkbox-invalid {
+    color: var(--theme-orange) !important;
+    &:hover {
+      background-color: var(--theme-orange-alpha4) !important;
+    }
+    svg {
+      color: var(--theme-orange) !important;
+    }
+  }
+  &.Mui-checked {
+    color: var(--theme-green) !important;
+    &:hover {
+      background-color: var(--theme-green-alpha4) !important;
+    }
+    svg {
+      color: var(--theme-green) !important;
+    }
+  }
+}
