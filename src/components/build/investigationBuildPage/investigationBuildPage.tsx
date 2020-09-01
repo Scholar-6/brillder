@@ -50,7 +50,7 @@ import {
 } from "./questionService/QuestionService";
 import { convertToQuestionType } from "./questionService/ConvertService";
 import { User } from "model/user";
-import { GetCashedBuildQuestion } from '../../localStorage/buildLocalStorage';
+import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
