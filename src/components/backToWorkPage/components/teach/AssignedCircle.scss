@@ -22,7 +22,13 @@
     }
 
     .red {
+      cursor: pointer;
       background: var(--theme-orange);
+      svg {
+        height: 68%;
+        width: 68%;
+        color: var(--tab-gray);
+      }
     }
     .yellow {
       background: var(--yellow);

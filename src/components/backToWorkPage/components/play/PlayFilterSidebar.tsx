@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { Brick } from "model/brick";
-import { PlayFilters } from '../model';
+import { PlayFilters } from '../../model';
 import { TeachClassroom } from "model/classroom";
 
 enum PlayFilterFields {

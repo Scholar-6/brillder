@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
 import { Brick, BrickStatus } from "model/brick";
-import { SortBy, Filters } from '../model';
+import { SortBy, Filters } from '../../model';
 
 import {
   clearStatusFilters
-} from '../service';
+} from '../../service';
 
 enum FilterFields {
   Draft = 'draft',
