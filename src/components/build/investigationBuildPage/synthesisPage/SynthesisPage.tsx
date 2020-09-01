@@ -33,6 +33,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
 
   onSynthesisChange(text: string) {
     this.setState({synthesis: text});
+    console.log(text)
     this.props.onSynthesisChange(text);
   }
 
@@ -55,7 +56,7 @@ class SynthesisPage extends React.Component<SynthesisProps, SynthesisState> {
                 ]}
                 defaultAlignment="justify"
                 onBlur={() => { }}
-                onChange={(text) => this.onSynthesisChange(text)}
+                onChange={this.onSynthesisChange.bind(this)}
               />
             </Grid>
             <Grid className="comment-panel-container" item>
