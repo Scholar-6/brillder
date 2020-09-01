@@ -1,5 +1,5 @@
 import { Brick } from "model/brick";
-import { AssignmentBrick } from "model/assignment";
+import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 
 
 export enum ThreeColumnNames {
@@ -59,4 +59,13 @@ export interface TeachFilters {
   assigned: boolean;
   submitted: boolean;
   completed: boolean;
+}
+
+export interface AssignmentBrickData {
+  brick: Brick;
+  key: number;
+  index: number;
+  row: number;
+  assignmentId: number;
+  status: AssignmentBrickStatus;
 }

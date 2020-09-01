@@ -26,6 +26,8 @@ export interface BrickAttempt {
   maxScore: number;
   student?: any;
   answers: ComponentAttempt<any>[];
+
+  assignmentId?: number;
 }
 
 export enum PlayStatus {

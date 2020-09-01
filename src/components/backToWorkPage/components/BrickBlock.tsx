@@ -18,6 +18,7 @@ interface BrickBlockProps {
   isPlay?: boolean;
   isAssignment?: boolean;
   assignmentId?: number;
+  color?: string;
   handleDeleteOpen(brickId: number): void;
   handleMouseHover(e: any): void;
   handleMouseLeave(e: any): void;
@@ -33,6 +34,10 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     color = "color3";
   } else if (brick.status === BrickStatus.Publish) {
     color = "color4";
+  }
+
+  if (props.color) {
+    color = props.color;
   }
 
   if (props.isPlay) {
