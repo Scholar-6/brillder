@@ -7,6 +7,8 @@ $distance: 2px;
 $tile-height: 100%;
 
 .drag-tabs {
+}
+.drag-tabs {
   display: inline-block;
   width: 100%;
   background: var(--theme-dark-blue) !important;
@@ -50,7 +52,6 @@ $tile-height: 100%;
       }
     }
   }
-
   .draggable-tab {
     width: 100%;
     height: 100%;
@@ -104,27 +105,33 @@ $tile-height: 100%;
       }
     }
   }
-
+  .add-tab {
+    .svg {
+      pointer-events: none;
+    }
+  }
   .last-tab {
     text-align: center;
     color: var(--theme-dark-blue);
-    font-size: 1.3vw;
     overflow: hidden;
     @extend %fontFamilyBold;
     width: 2vw;
     height: 2vw;
+    @include phone_and_tabletP {
+      font-size: 2.5vw;
+    }
+    @include tabletP {
+      font-size: 1.3vw;
+    }
   }
-
   .synthesis-tab {
     .drag-tile {
       background: var(--white);
     }
   }
-
   .invalid {
     background: var(--theme-orange) !important;
   }
-
   .tutorial-border {
     line-height: 1;
     padding: 0.25vw;
@@ -146,12 +153,6 @@ $tile-height: 100%;
     }
     .svg {
       @extend %removePosition;
-    }
-  }
-
-  .last-tab {
-    @include phone_and_tabletP {
-      font-size: 2.5vw !important;
     }
   }
 }

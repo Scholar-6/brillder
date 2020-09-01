@@ -40,7 +40,7 @@
       font-size: 1.2vw;
       @extend %fontFamilyLight;
       .student-names {
-        font-family: 'Brandon Grotesque Light Italic';
+        @extend %fontFamilyLightItalic;
         text-align: left;
       }
       .students-count-box {

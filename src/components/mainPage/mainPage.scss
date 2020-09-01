@@ -51,7 +51,7 @@
       .notifications-text-3 {
         margin-top: 0.6vh;
         color: var(--tab-gray);
-        font-family: 'Brandon Grotesque Light Italic';
+        @extend %fontFamilyLightItalic;
         letter-spacing: 0.05vw;
         font-size: 1.2vw;
       }
