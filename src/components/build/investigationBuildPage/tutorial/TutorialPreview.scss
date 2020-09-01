@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .tutorial-preview {
-  font-family: $font-family-black;
+  @extend %fontFamilyBlack;
   color: var(--light-blue);
 
   .tutorial-number {

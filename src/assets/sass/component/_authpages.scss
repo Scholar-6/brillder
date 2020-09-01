@@ -301,7 +301,7 @@
           &:hover {
             background: var(--theme-orange);
             box-shadow: none;
-            font-family: $font-family-bold;
+            @extend %fontFamilyBold;
           }
           &.sign-up-button {
             color: var(--white);

@@ -1,4 +1,6 @@
 @import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .comments-panel {
   background-color: var(--tab-gray);
@@ -40,7 +42,7 @@
 
     .stretch {
       flex-grow: 1;
-      font-family: $font-family-bold;
+      @extend %fontFamilyBold;
     }
 
     .comment-reply-container {

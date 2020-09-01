@@ -33,12 +33,12 @@
       height: 1.3vw;
     }
     .title {
-      font-family: $font-family-bold;
+      @extend %fontFamilyBold;
     }
     .students-box {
       display: flex;
       font-size: 1.2vw;
-      font-family: $font-family-light;
+      @extend %fontFamilyLight;
       .student-names {
         font-family: 'Brandon Grotesque Light Italic';
         text-align: left;

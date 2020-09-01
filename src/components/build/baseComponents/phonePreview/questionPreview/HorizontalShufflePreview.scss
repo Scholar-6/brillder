@@ -10,12 +10,12 @@
   .small-text {
     padding: 22% 12% 23% 12%;
     font-size: 1.3vw;
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
   }
 
   button {
     position: relative;
-    font-family: $font-family-bold;
+    @extend %fontFamilyBold;
     width: 22%;
     text-align: center;
     margin: 1%;

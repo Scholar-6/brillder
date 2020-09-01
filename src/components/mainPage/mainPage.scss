@@ -9,7 +9,7 @@
   position: fixed;
   width: 100%;
   height: 100%;
-  font-family: $font-family-black;
+  @extend %fontFamilyBlack;
 
   .welcome-col {
     width: $welcome-col-width;
@@ -20,7 +20,7 @@
       color: white;
       letter-spacing: 0.66vw;
       font-size: 2.58vw;
-      font-family: $font-family-bold;
+      @extend %fontFamilyBold;
       padding-right: 2.9vw;
 
       .smaller {
@@ -33,13 +33,13 @@
         margin-top: 3.2vh;
         font-weight: 600;
         text-transform: uppercase;
-        font-family: $font-family-light;
+        @extend %fontFamilyLight;
         color: var(--theme-orange);
       }
       .notifications-text {
         margin-top: 10vh;
         letter-spacing: 0.1vw;
-        font-family: $font-family-light;
+        @extend %fontFamilyLight;
         font-size: 1.5vw;
 
         &.clickable {
@@ -58,7 +58,7 @@
 
       b {
         font-weight: normal !important;
-        font-family: $font-family-bold;
+        @extend %fontFamilyBold;
       }
     }
   }
@@ -90,7 +90,7 @@
     color: var(--white);
     letter-spacing: 0.3vw;
     font-size: 1.4vw;
-    font-family: $font-family-light;
+    @extend %fontFamilyLight;
     width: calc(100vw - #{$welcome-col-width} - #{$first-col-width});
     @extend %flexCenter;
 
@@ -131,7 +131,7 @@
         padding: 0;
         text-align: center;
         margin: 0;
-        font-family: $font-family-light;
+        @extend %fontFamilyLight;
         color: var(--tab-gray);
         @include phone_and_tabletP {
           font-size: 25px;
@@ -144,7 +144,7 @@
       }
       &:hover {
         .item-description {
-          font-family: $font-family-bold;
+          @extend %fontFamilyBold;
         }
       }
     }
@@ -349,7 +349,7 @@
     text-align: right;
     padding-right: 2.5vw;
     color: var(--tab-gray);
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     bottom: 2.4vh;
     line-height: 2vw;
     right: 10vw;

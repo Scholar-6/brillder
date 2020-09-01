@@ -39,7 +39,7 @@
     color: var(--theme-dark-blue);
 
     .link {
-      font-family: $font-family-bold;
+      @extend %fontFamilyBold;
       margin-left: 2vw;
       margin-right: 2vw;
       margin-top: 4vh;
@@ -127,7 +127,7 @@
       text-align: center;
       display: block;
       content: 'Drag Image Here | Click to Select Image';
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
     }
   }
 
@@ -218,7 +218,7 @@
     }
     .title {
       color: var(--tab-gray);
-      font-family: $font-family-bold;
+      @extend %fontFamilyBold;
     }
     .link {
       font-size: 1.7vw;

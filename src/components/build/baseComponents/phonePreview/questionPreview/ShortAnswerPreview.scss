@@ -10,11 +10,11 @@
   .small-text {
     padding: 28% 10% 26% 10%;
     font-size: 1.3vw;
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
   }
 
   .big-animated-text {
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     > div {
       width: 78%;
       text-align: center;

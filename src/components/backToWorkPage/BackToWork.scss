@@ -19,7 +19,7 @@
         min-height: $backwork-tab-height;
         font-size: 4.5vh;
         border-top-left-radius: 0.5vw;
-        font-family: $font-family-black;
+        @extend %fontFamilyBlack;
         text-transform: uppercase;
         letter-spacing: 0.5vw;
         color: var(--theme-dark-blue);
@@ -139,7 +139,7 @@
         padding-left: 1vw;
         padding-right: 1vw;
         font-size: 0.9vw;
-        font-family: $font-family-bold;
+        @extend %fontFamilyBold;
         letter-spacing: 0.1vw;
         color: var(--gray);
       }
