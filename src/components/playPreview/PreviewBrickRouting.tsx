@@ -16,7 +16,7 @@ import Review from 'components/play/review/ReviewPage';
 import Ending from 'components/play/ending/Ending'
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
 
-import { GetCashedBuildQuestion } from '../localStorage/buildLocalStorage';
+import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 
 import { Brick } from 'model/brick';
 import { ComponentAttempt, PlayStatus } from '../play/model';

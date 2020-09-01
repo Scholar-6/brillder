@@ -8,7 +8,7 @@ import actions from "redux/actions/brickActions";
 import sprite from "assets/img/icons-sprite.svg";
 import { User } from "model/user";
 import { PageEnum } from "./PageHeadWithMenu";
-import { clearProposal } from 'components/localStorage/proposal';
+import { clearProposal } from 'localStorage/proposal';
 
 
 import { ProposalSubject } from "components/map";
