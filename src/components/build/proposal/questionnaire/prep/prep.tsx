@@ -7,7 +7,7 @@ import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWi
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/build/proposal/components/navigation/Navigation';
 import { ProposalStep, PlayButtonStatus } from "../../model";
-import YoutubeAndMath from 'components/play/brick/baseComponents/YoutubeAndMath';
+import YoutubeAndMath from 'components/play/baseComponents/YoutubeAndMath';
 import map from 'components/map';
 
 

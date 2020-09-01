@@ -12,7 +12,7 @@ import TabPanel from "../baseComponents/QuestionTabPanel";
 import { PlayStatus, ComponentAttempt } from "../model";
 import CountDown from "../baseComponents/CountDown";
 import sprite from "assets/img/icons-sprite.svg";
-import { CashQuestionFromPlay } from "../../../localStorage/buildLocalStorage";
+import { CashQuestionFromPlay } from "../../localStorage/buildLocalStorage";
 import { Brick } from "model/brick";
 import LiveStepper from "./LiveStepper";
 import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";

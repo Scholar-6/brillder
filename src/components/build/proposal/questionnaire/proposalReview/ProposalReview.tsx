@@ -10,8 +10,8 @@ import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
-import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
-import YoutubeAndMathInHtml from "components/play/brick/baseComponents/YoutubeAndMath";
+import MathInHtml from 'components/play/baseComponents/MathInHtml';
+import YoutubeAndMathInHtml from "components/play/baseComponents/YoutubeAndMath";
 import { BrickFieldNames, PlayButtonStatus } from '../../model';
 import map from 'components/map';
 import PlayButton from "components/build/investigationBuildPage/components/PlayButton";

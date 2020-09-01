@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {checkVisibility} from '../../services/hintService';
+import {checkVisibility} from '../services/hintService';
 import {ComponentAttempt} from '../model';
 import {Hint, HintStatus} from 'model/question';
-import MathInHtml from 'components/play/brick/baseComponents/MathInHtml';
+import MathInHtml from 'components/play/baseComponents/MathInHtml';
 
 
 interface ReviewHintProps {
