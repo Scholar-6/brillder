@@ -169,12 +169,16 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const moveToLive = () => {
     let liveLink = `/play/brick/${brick.id}/live`;
     const values = queryString.parse(props.location.search);
+    const query = {} as any;
     if (values.resume === 'true') {
       if (values.activeStep) {
-        liveLink += '?activeStep=' + values.activeStep;
+        query.activeStep = values.activeStep;
       }
     }
-    props.history.push(liveLink);
+    if (values.assignmentId) {
+      query.assignmentId = values.assignmentId;
+    }
+    props.history.push(liveLink + "?" + queryString.stringify(query));
     setSidebar(true);
   }
 

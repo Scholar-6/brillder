@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { Grid, Hidden } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
-import { useHistory, Redirect, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
+import queryString from 'query-string';
 
 import "./Live.scss";
 import { Question, QuestionTypeEnum } from "model/question";
@@ -11,7 +12,6 @@ import TabPanel from "../baseComponents/QuestionTabPanel";
 import { PlayStatus, ComponentAttempt } from "../model";
 import CountDown from "../baseComponents/CountDown";
 import sprite from "assets/img/icons-sprite.svg";
-import queryString from 'query-string';
 import { CashQuestionFromPlay } from "../../../localStorage/buildLocalStorage";
 import { Brick } from "model/brick";
 import LiveStepper from "./LiveStepper";
@@ -20,6 +20,7 @@ import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers
 import PulsingCircleNumber from "./PulsingCircleNumber";
 import { PlayMode } from "../model";
 import { Moment } from 'moment';
+import { getPlayPath, getAssignQueryString } from "../service";
 
 interface LivePageProps {
   status: PlayStatus;
@@ -72,14 +73,14 @@ const LivePage: React.FC<LivePageProps> = ({
     }
   }, [location.search]);
 
+  const moveToProvisional = () => {
+    let playPath = getPlayPath(props.isPlayPreview, brick.id);
+    history.push(`${playPath}/provisionalScore${getAssignQueryString(location)}`);
+  }
+
   if (status > PlayStatus.Live) {
-    if (props.isPlayPreview) {
-      return (
-        <Redirect to={`/play-preview/brick/${brick.id}/provisionalScore`} />
-      );
-    } else {
-      return <Redirect to={`/play/brick/${brick.id}/provisionalScore`} />;
-    }
+    moveToProvisional();
+    return <div></div>;
   }
 
   let questionRefs: React.RefObject<QuestionLive>[] = [];
@@ -140,11 +141,7 @@ const LivePage: React.FC<LivePageProps> = ({
     if (activeStep >= questions.length - 1) {
       questions.forEach((question) => (question.edited = false));
       props.finishBrick();
-      if (props.isPlayPreview) {
-        history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
-      } else {
-        history.push(`/play/brick/${brick.id}/provisionalScore`);
-      }
+      moveToProvisional();
     }
   };
 
@@ -184,11 +181,7 @@ const LivePage: React.FC<LivePageProps> = ({
   const moveNext = () => {
     questions.forEach((question) => (question.edited = false));
     props.finishBrick();
-    if (props.isPlayPreview) {
-      history.push(`/play-preview/brick/${brick.id}/provisionalScore`);
-    } else {
-      history.push(`/play/brick/${brick.id}/provisionalScore`);
-    }
+    moveToProvisional();
   }
 
   const onQuestionAttempted = (questionIndex: number) => {
@@ -254,13 +247,16 @@ const LivePage: React.FC<LivePageProps> = ({
   };
 
   const moveToPrep = () => {
-    let mainPath = '/play'
-    if (props.isPlayPreview) {
-      mainPath = '/play-preview';
-    }
     let attempt = questionRefs[activeStep].current?.getRewritedAttempt();
     props.updateAttempts(attempt, activeStep);
-    history.push(`${mainPath}/brick/${brick.id}/intro?prepExtanded=true&resume=true&activeStep=${activeStep}`);
+    let playPath = getPlayPath(props.isPlayPreview, brick.id);
+    const values = queryString.parse(location.search);
+    let link = `${playPath}/intro?prepExtanded=true&resume=true&activeStep=${activeStep}`;
+    if (values.assignmentId) {
+      link += '&assignmentId=' + values.assignmentId;
+    }
+
+    history.push(link);
   }
 
   const renderStepper = () => {

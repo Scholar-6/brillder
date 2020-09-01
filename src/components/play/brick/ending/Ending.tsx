@@ -9,6 +9,8 @@ import { BrickAttempt } from "../model";
 import ReviewStepper from '../review/ReviewStepper';
 import sprite from "assets/img/icons-sprite.svg";
 import Clock from "../baseComponents/Clock";
+import { getPlayPath, getAssignQueryString } from "../service";
+import { useLocation } from "react-router-dom";
 
 interface EndingProps {
   status: PlayStatus;
@@ -27,12 +29,15 @@ const EndingPage: React.FC<EndingProps> = ({
   history,
   saveAttempt,
 }) => {
+  const location = useLocation();
   const [minCurrentScore, setMinScore] = React.useState(0);
   const [maxCurrentScore, setMaxScore] = React.useState(0);
   const [currentScore, setCurrentScore] = React.useState(0);
+  
+  const playPath = getPlayPath(false, brick.id);
 
   if (status === PlayStatus.Live) {
-    history.push(`/play/brick/${brick.id}/intro`);
+    history.push(`${playPath}/intro${getAssignQueryString(location)}`);
   }
 
   const endBrick = () => saveAttempt();

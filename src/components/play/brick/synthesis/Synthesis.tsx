@@ -3,7 +3,7 @@ import { Grid, Hidden } from '@material-ui/core';
 
 import './Synthesis.scss';
 import { Brick } from 'model/brick';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { PlayStatus } from '../model';
 import { BrickLengthEnum } from 'model/brick';
 import TimerWithClock from "../baseComponents/TimerWithClock";
@@ -11,6 +11,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/build/proposal/model';
+import { getPlayPath, getAssignQueryString } from '../service';
 const moment = require('moment');
 
 interface SynthesisProps {
@@ -25,21 +26,16 @@ interface SynthesisProps {
 
 const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }) => {
   const history = useHistory();
+  const location = useLocation();
   const [startTime] = React.useState(moment());
+  const playPath = getPlayPath(props.isPlayPreview, brick.id);
+
   if (status === PlayStatus.Live) {
-    if (props.isPlayPreview) {
-      history.push(`/play-preview/brick/${brick.id}/intro`);
-    } else {
-      history.push(`/play/brick/${brick.id}/intro`);
-    }
+    history.push(`${playPath}/intro${getAssignQueryString(location)}`);
   }
 
   const reviewBrick = () => {
-    if (props.isPlayPreview) {
-      history.push(`/play-preview/brick/${brick.id}/review`);
-    } else {
-      history.push(`/play/brick/${brick.id}/review`);
-    }
+    history.push(`${playPath}/review${getAssignQueryString(location)}`);
   }
 
   const getSpendTime = () => {
