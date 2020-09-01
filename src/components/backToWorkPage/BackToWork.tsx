@@ -25,8 +25,8 @@ import { loadSubjects } from 'components/services/subject';
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-import FilterSidebar from './components/FilterSidebar';
-import PlayFilterSidebar from './components/PlayFilterSidebar';
+import FilterSidebar from './components/build/FilterSidebar';
+import PlayFilterSidebar from './components/play/PlayFilterSidebar';
 import TeachFilterSidebar from './components/teach/TeachFilterSidebar';
 import ClassroomList from './components/teach/ClassroomList';
 import BackPagePagination from './components/BackPagePagination';
@@ -676,6 +676,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
               }
               {
                 activeTab === ActiveTab.Teach ? <ClassroomList
+                  expand={id=> this.setActiveClassroom(id)}
                   startIndex={this.state.sortedIndex}
                   activeClassroom={this.state.activeClassroom}
                   pageSize={this.state.teachPageSize}
