@@ -22,7 +22,7 @@ const StatisticsGraph: React.FC<StatisticsGraphProps> = props => {
 
   const xScale = scaleUtc<number>({
     range: [0, 600],
-    domain: [ new Date("2020-08-13"), Date.now() ],
+    domain: [new Date("2020-08-13"), Date.now()],
   });
 
   const yScale = scaleLinear<number>({
@@ -58,19 +58,19 @@ const StatisticsGraph: React.FC<StatisticsGraphProps> = props => {
   }
 
   return (
-  <div>
-    <svg width="600" height="600" className="stats-graph">
-      {assignments.map(assignment => renderBox(assignment))}
-      <AxisBottom
-        axisClassName="stats-date-axis"
-        axisLineClassName="line"
-        tickClassName="tick"
-        tickLabelProps={() => ({ className: "tick-label" })}
-        top={500}
-        scale={xScale}
-      />
-    </svg>
-  </div>
+    <div>
+      <svg width="600" height="600" className="stats-graph">
+        {assignments.map(assignment => renderBox(assignment))}
+        <AxisBottom
+          axisClassName="stats-date-axis"
+          axisLineClassName="line"
+          tickClassName="tick"
+          tickLabelProps={() => ({ className: "tick-label" })}
+          top={500}
+          scale={xScale}
+        />
+      </svg>
+    </div>
   );
 };
 
