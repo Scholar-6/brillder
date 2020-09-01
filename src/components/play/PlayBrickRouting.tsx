@@ -137,6 +137,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const saveBrickAttempt = () => {
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = props.user.id;
+    let values = queryString.parse(location.search);
+    if (values.assignmentId) {
+      console.log(values.assignmentId);
+      brickAttempt.assignmentId = parseInt(values.assignmentId as string);
+    }
     return axios.post(
       process.env.REACT_APP_BACKEND_HOST + "/play/attempt",
       brickAttempt,
