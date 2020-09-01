@@ -1,5 +1,5 @@
 import { Brick, BrickStatus } from 'model/brick';
-import { SortBy, Filters, ThreeColumns } from './model';
+import { SortBy, Filters, ThreeColumns, AssignmentBrickData } from './model';
 import { AssignmentBrick } from "model/assignment";
 
 const getBrickById = (bricks: Brick[], brickId: number) => {
@@ -138,13 +138,15 @@ export const prepareVisibleBricks = (sortedIndex: number, pageSize: number, bric
 }
 
 export const prepareVisibleAssignments = (sortedIndex: number, pageSize: number, assignments: AssignmentBrick[]) => {
-  let data: any[] = [];
+  let data: AssignmentBrickData[] = [];
   let count = 0;
   for (let i = 0 + sortedIndex; i < pageSize + sortedIndex; i++) {
     const assignment = assignments[i];
     if (assignment) {
       let row = Math.floor(count / 3);
-      data.push({ brick: assignment.brick, key: i, index: count, assignmentId: assignment.id, status: assignment.status, row });
+      data.push({
+        brick: assignment.brick, key: i, index: count, assignmentId: assignment.id, status: assignment.status, row
+      } as AssignmentBrickData);
       count++;
     }
   }
