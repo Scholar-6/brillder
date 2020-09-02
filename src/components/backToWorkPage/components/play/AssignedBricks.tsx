@@ -7,7 +7,6 @@ import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
 import { AssignmentBrickStatus, AssignmentBrick } from "model/assignment";
 
 import BrickBlock from '../BrickBlock';
-import BrickList from '../BrickList';
 
 interface AssignedBricksProps {
   user: User;
