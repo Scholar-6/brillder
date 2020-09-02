@@ -37,6 +37,28 @@
   text-transform: uppercase;
 }
 
+%fontFamilyLightItalic {
+  font-family: $font-family-light-italic;
+}
+%fontFamilyLight {
+  font-family: $font-family-light;
+}
+%fontFamilyRegular {
+  font-family: $font-family-regular;
+}
+%fontFamilyRegularItalic {
+  font-family: $font-family-regular-italic;
+}
+%fontFamilyBold {
+  font-family: $font-family-bold;
+}
+%fontFamilyBlack {
+  font-family: $font-family-black;
+}
+%fontFamilyBlackItalic {
+  font-family: $font-family-black-italic;
+}
+
 %fs9 {
   font-size: 9px;
 }

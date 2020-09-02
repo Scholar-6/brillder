@@ -23,7 +23,7 @@
   font-size: $base-sm-text-size;
   div {
     font-size: inherit;
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     letter-spacing: 2px;
   }
 }
@@ -64,7 +64,7 @@
         padding: 0;
         color: var(--theme-dark-blue);
         .ck-button__label {
-          font-family: $font-family-regular;
+          @extend %fontFamilyRegular;
         }
         .ck-icon {
           font-size: 0.5vw;
@@ -108,7 +108,7 @@
     }
     input:not([type='checkbox']) {
       width: 84%;
-      text-align: center;
+      @extend %textCenter;
       border: none;
       background: var(--input-gray);
       padding-right: 8%;
@@ -116,7 +116,7 @@
       border-radius: 0;
       opacity: 0.8;
       font-size: $answer-input-text-size;
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
       height: $answer-height !important;
     }
     input[type='checkbox'] {

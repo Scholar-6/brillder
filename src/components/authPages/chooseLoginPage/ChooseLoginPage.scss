@@ -120,7 +120,7 @@
     font-size: 2.55vw;
 
     span {
-      font-family: $font-family-light;
+      @extend %fontFamilyLight;
       font-weight: 200 !important;
     }
 
@@ -134,7 +134,7 @@
   position: absolute;
   bottom: 2.4vh;
   width: 88vw;
-  text-align: center;
+  @extend %textCenter;
   color: var(--theme-dark-blue);
   font-size: 6vw;
   line-height: 1;
@@ -149,7 +149,7 @@
     text-align: right;
     padding-right: 2.5vw;
     color: var(--tab-gray);
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     bottom: 2.4vh;
     line-height: 2vw;
     font-size: 1.6vw;

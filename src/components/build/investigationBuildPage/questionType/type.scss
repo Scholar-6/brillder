@@ -26,7 +26,7 @@
       font-size: 1.4vw;
       margin-bottom: 0vh;
       letter-spacing: 0.01vw;
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
       color: var(--theme-dark-blue);
     }
   }
@@ -86,7 +86,7 @@
     height: 15.35vh;
     font-size: 1.5vw;
     padding: 0;
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -113,17 +113,17 @@
     }
 
     .link-description {
-      text-align: center;
+      @extend %textCenter;
       margin: 0;
       line-height: 1.4;
-      font-family: $font-family-light;
+      @extend %fontFamilyLight;
     }
     &:hover,
     &.active {
       background: var(--theme-orange);
       color: var(--white);
       .link-description {
-        font-family: $font-family-black;
+        @extend %fontFamilyBlack;
       }
     }
   }
@@ -132,7 +132,7 @@
     bottom: 2vh;
   }
   .card-description {
-    text-align: center;
+    @extend %textCenter;
   }
 
   .set-type-button {

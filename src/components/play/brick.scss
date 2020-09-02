@@ -24,7 +24,7 @@
     width: 79%;
     padding-right: 0.5vw;
     font-size: 1.6vw;
-    font-family: $font-family-bold;
+    @extend %fontFamilyBold;
 
     &.btn-small {
       margin-top: 6vh !important;

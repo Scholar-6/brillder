@@ -22,7 +22,7 @@
     margin-right: 0px;
 
     > span {
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
       font-size: 18px;
       margin-right: 10px;
     }
@@ -30,7 +30,7 @@
 
   .score-precentage {
     margin-top: 3vh;
-    font-family: $font-family-black;
+    @extend %fontFamilyBlack;
     color: var(--theme-dark-blue);
     font-size: 12.5vh;
     line-height: 1;
@@ -38,11 +38,11 @@
   }
 
   .score-number {
-    font-family: $font-family-bold;
+    @extend %fontFamilyBold;
     color: var(--theme-dark-blue);
     font-size: 4vh;
     line-height: 1;
-    text-align: center;
+    @extend %textCenter;
   }
 
   .intro-header {

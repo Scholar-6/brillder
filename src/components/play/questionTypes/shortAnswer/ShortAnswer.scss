@@ -21,7 +21,7 @@
         padding: 0.3vw 0.3vw 0 0.3vw !important;
         p {
           margin: 0;
-          text-align: center;
+          @extend %textCenter;
         }
       }
     }
