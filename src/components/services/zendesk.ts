@@ -1,5 +1,9 @@
 import { isMobile } from "react-device-detect";
 
+declare global {
+  interface Window { zESettings: any; }
+}
+
 const getZendeskIframe = () => document.getElementById("launcher") as any;
 
 const initZendeskStyling = (iframe: any) => {
@@ -66,12 +70,29 @@ export function maximizeZendeskButton(iframe?: any) {
 
 function addZendesk() {
   // #1473 need to double check if zendesk exists.
-  let zendeskIframe = getZendeskIframe();
+  const zendeskIframe = getZendeskIframe();
   if (zendeskIframe) { return; }
 
   var head = document.getElementsByTagName('head').item(0);
   if (head) {
-    var script = document.createElement('script');
+    window.zESettings = {
+      webWidget: {
+        chat: {
+          prechatForm: {
+            greeting: {
+              '*': 'Please fill out the form below to chat with us',
+              fr: "S'il vous plaît remplir le formulaire ci-dessous pour discuter avec nous"
+            },
+            departmentLabel: {
+              '*': 'Select a department',
+              fr: "S'il vous plaît remplir le formulaire ci-dessous pour discuter avec nous"
+            }
+          }
+        }
+      }
+    } as any;
+    console.log(process.env.REACT_APP_ZENDESK_ID)
+    const script = document.createElement('script');
     script.setAttribute('id', 'ze-snippet');
     script.setAttribute('type', 'text/javascript');
     script.setAttribute(
