@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import { getAuthorRow } from "components/services/brickService";
-import { Brick } from "model/brick";
 import './AssignedBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
 import AssignedCircle from './AssignedCircle';

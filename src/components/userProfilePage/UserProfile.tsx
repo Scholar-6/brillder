@@ -174,7 +174,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         tutorialPassed: false,
         email: "",
         password: "",
-        roles: [],
+        roles: [UserType.Student, UserType.Builder],
         subjects: [],
         status: UserStatus.Pending,
         profileImage: "",

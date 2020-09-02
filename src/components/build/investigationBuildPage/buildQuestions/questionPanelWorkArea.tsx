@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Select, FormControl, SvgIcon } from '@material-ui/core';
+import { Grid, Select, FormControl } from '@material-ui/core';
 import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
