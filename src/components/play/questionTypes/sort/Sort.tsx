@@ -2,16 +2,18 @@
 import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import { ReactSortable } from 'react-sortablejs';
 
 import './Sort.scss';
 import { Question } from "model/question";
 import CompComponent from '../Comp';
 import {CompQuestionProps} from '../types';
 import {ComponentAttempt} from 'components/play/model';
-import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
-import { ReactSortable } from 'react-sortablejs';
 import {SortCategory, SortAnswer, QuestionValueType} from 'components/interfaces/sort';
 import { DragAndDropStatus } from '../pairMatch/interface';
+
+import ReviewEachHint from '../../baseComponents/ReviewEachHint';
+import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 
 
 interface UserCategory {
@@ -194,7 +196,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     return <div dangerouslySetInnerHTML={{ __html: choice.value}} />;
   }
 
-  renderChoice(choice: SortAnswer, i: number) {
+  renderChoice(choice: SortAnswer, i: number, choiceIndex: number) {
     let isCorrect = this.getState(choice.value) === 1;
     let className="sortable-item";
     if (choice.answerType === QuestionValueType.Image) {
@@ -214,13 +216,28 @@ class Sort extends CompComponent<SortProps, SortState> {
         <ListItem>
           <ListItemText>
             {this.renderChoiceContent(choice)}
+            {this.props.isReview || this.props.isPreview ?
+              <ReviewEachHint
+                isPhonePreview={this.props.isPreview}
+                isReview={this.props.isReview}
+                isCorrect={isCorrect}
+                index={choiceIndex}
+                hint={this.props.question.hint}
+              />
+              : ""
+            }
           </ListItemText>
         </ListItem>
       </div>
     )
   }
 
+
   render() {
+    let count = -1;
+
+    const incrementCount = () => count++;
+
     return (
       <div className="sort-play">
         {
@@ -235,9 +252,10 @@ class Sort extends CompComponent<SortProps, SortState> {
                   group={{ name: "cloning-group-name"}}
                   setList={(list) => this.updateCategory(list, i)}
                 >
-                  {
-                    cat.choices.map((choice, i) => this.renderChoice(choice, i))
-                  }
+                  {cat.choices.map((choice, i) => {
+                    incrementCount();
+                    return this.renderChoice(choice, i, count);
+                  })}
                 </ReactSortable>
               </div>
             </div>

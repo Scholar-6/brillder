@@ -96,7 +96,6 @@ const CategoriseBuildComponent: React.FC<CategoriseBuildProps> = ({
     save();
   }
 
-
   const renderAnswer = (category: SortCategory, answer: SortAnswer, i: number) => {
     let customClass = 'categorise-answer ';
     if (answer.answerType === QuestionValueType.Image) {
