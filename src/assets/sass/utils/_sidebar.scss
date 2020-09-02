@@ -601,6 +601,17 @@
             }
           }
 
+          .round-button .round-button-icon {
+            color: var(--white);
+            height: 100%;
+            width: 100%;
+            @extend %flexCenter;
+            svg {
+              height: 70%;
+              width: 70%;
+            }
+          }
+
           .MuiExpansionPanel-root {
             background: var(--light-gray);
           }
