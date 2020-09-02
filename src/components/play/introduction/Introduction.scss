@@ -657,6 +657,12 @@ $play-mobile-height: calc(100vh - 55.8vw);
         p {
           font-size: 1.05vw;
         }
+        .MuiListItemText-root,
+        .MuiButton-label {
+          p {
+            font-size: 0.8vw;
+          }
+        }
         table {
           width: 100%;
           border-collapse: collapse;
@@ -685,7 +691,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
           position: relative;
           padding-top: 0;
         }
-
         .MuiStepper-root {
           padding-top: 20px;
           padding-bottom: 16px;
