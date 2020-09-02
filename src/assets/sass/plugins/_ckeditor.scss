@@ -1,7 +1,7 @@
 .ck-editor {
-	font-family: 'Brandon Grotesque Regular';
+  @extend %fontFamilyRegularItalic;
 }
 
 .ck-focused {
-	border-color: #c4c4c4 !important;
+  border-color: #c4c4c4 !important;
 }

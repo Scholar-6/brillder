@@ -64,7 +64,7 @@
           }
           .link-description {
             text-transform: uppercase;
-            font-family: $font-family-bold;
+            @extend %fontFamilyBold;
             line-height: 1.1;
             margin-bottom: 0.5vh;
             overflow: hidden;
@@ -82,7 +82,7 @@
           .link-info {
             color: var(--theme-light-blue);
             line-height: 1.3;
-            font-family: $font-family-regular;
+            @extend %fontFamilyRegular;
             margin-bottom: 0.1vh;
             width: 100%;
             overflow: hidden;

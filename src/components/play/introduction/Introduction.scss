@@ -15,7 +15,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
   .sorted-row {
     @include phone_and_tabletP {
       height: $back-to-work-height-mobile-view;
-      overflow:hidden;
+      overflow: hidden;
     }
 
     .play-sidebar {
@@ -167,7 +167,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
       }
 
       .introduction-page {
-        font-family: $font-family-regular;
+        @extend %fontFamilyRegular;
         position: relative;
 
         @include desktop {
@@ -303,7 +303,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
           margin-right: 0px;
 
           > span {
-            font-family: $font-family-regular;
+            @extend %fontFamilyRegular;
             font-size: 25px;
             margin-right: 10px;
           }
@@ -320,7 +320,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
           text-transform: uppercase;
           width: 100%;
           color: var(--theme-dark-blue);
-          font-family: $font-family-black;
+          @extend %fontFamilyBlack;
 
           @include phone_and_tabletP {
             position: unset;
@@ -388,9 +388,9 @@ $play-mobile-height: calc(100vh - 55.8vw);
             padding: 0;
             background: var(--tab-gray);
             border-radius: 100vw;
-            font-family: $font-family-black;
+            @extend %fontFamilyBlack;
             color: var(--theme-dark-blue);
-            text-align: center;
+            @extend %textCenter;
 
             @include phone_and_tabletP {
               width: 6vw;
@@ -454,7 +454,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
 
           .question-title {
             font-size: 2.5vw;
-            font-family: $font-family-black;
+            @extend %fontFamilyBlack;
             color: var(--theme-dark-blue);
           }
         }
@@ -493,7 +493,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
         .intro-header {
           position: relative;
           font-size: 2vw;
-          font-family: $font-family-black;
+          @extend %fontFamilyBlack;
           color: var(--theme-dark-blue);
 
           @include phone_and_tabletP {
@@ -566,7 +566,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
 
         .intro-text-row {
           font-size: 1.15vw;
-          font-family: $font-family-bold;
+          @extend %fontFamilyBold;
           color: var(--theme-dark-blue);
           display: flex;
           flex-direction: column;
@@ -597,7 +597,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
               justify-content: flex-start;
               cursor: pointer;
               font-size: 2vw;
-              font-family: $font-family-black;
+              @extend %fontFamilyBlack;
               color: #d3d4d5;
               &.completed,
               &.current {
@@ -641,7 +641,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
 
         .max-length {
-          font-family: $font-family-regular;
+          @extend %fontFamilyRegular;
           color: var(--theme-dark-blue);
           margin-left: 0.8vw;
 
@@ -868,12 +868,12 @@ $play-mobile-height: calc(100vh - 55.8vw);
             width: 100%;
             position: relative;
             margin: 0;
-            
+
             > h2 {
               width: 100%;
               margin-top: 0;
               margin-bottom: 0;
-              font-family: $font-family-bold;
+              @extend %fontFamilyBold;
               font-size: 2.6vw;
               @include phone_and_tabletP {
                 font-size: 9vw;
@@ -897,14 +897,14 @@ $play-mobile-height: calc(100vh - 55.8vw);
                 top: -1vw;
               }
             }
-
             > span {
               width: 100%;
               left: 50%;
               transform: translateX(-50%);
-              bottom: -2vw;
+              top: 100%;
               line-height: 1vw;
-              text-align: center;
+              @extend %textCenter;
+              font-size: 1vw;
             }
           }
         }
@@ -978,7 +978,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
           width: 50vh;
           top: 0;
           color: var(--theme-dark-blue);
-          text-align: center;
+          @extend %textCenter;
 
           @include phone_and_tabletP {
             height: inherit !important;
@@ -992,14 +992,14 @@ $play-mobile-height: calc(100vh - 55.8vw);
             }
 
             .score-precentage {
-              font-family: $font-family-black;
+              @extend %fontFamilyBlack;
               color: var(--theme-dark-blue);
               line-height: 1;
               font-size: 14vh;
             }
 
             .score-number {
-              font-family: $font-family-bold;
+              @extend %fontFamilyBold;
               color: var(--theme-dark-blue);
               line-height: 1;
               font-size: 4vh;
@@ -1075,8 +1075,8 @@ $play-mobile-height: calc(100vh - 55.8vw);
     }
 
     .help-prep {
-      color: var(--gray);
-
+      color: var(--theme-dark-blue);
+      @extend %fontFamilyRegular;
       @include phone_and_tabletP {
         font-size: 3vw;
       }

@@ -213,10 +213,10 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
           </svg>
         </div>
         {!state.prepExpanded && !isMobile ? (
-          <span className="help-prep">
+          <em className="help-prep">
             Expand to start the timer. Aim to spend around {timeToSpend} minutes
             on this section.
-          </span>
+          </em>
         ) : (
             ""
           )}

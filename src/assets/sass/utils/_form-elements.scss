@@ -86,7 +86,7 @@ input {
 
 .MuiAutocomplete-popper {
   .MuiAutocomplete-option {
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     color: var(--theme-dark-blue);
   }
 }

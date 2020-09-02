@@ -5,7 +5,7 @@
 .word-highlighting-play {
   font-size: 1rem;
   color: var(--theme-dark-blue);
-  font-family: $font-family-regular;
+  @extend %fontFamilyRegular;
   .words-container {
     width: 100%;
 

@@ -27,7 +27,7 @@
     border-top: 1px solid #d9d9d9;
     opacity: 0.8;
     font-size: $answer-input-text-size;
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     color: var(--theme-dark-blue);
@@ -35,7 +35,7 @@
     margin: 0.1vw 0;
   }
   .hint-type-text {
-    font-family: $font-family-regular;
+    @extend %fontFamilyRegular;
     color: $global-light-text-gray;
     margin-left: 0.5vw;
     text-align: left;
@@ -44,7 +44,7 @@
   }
   .hint-toggle-group {
     button {
-      font-family: $font-family-regular;
+      @extend %fontFamilyRegular;
       height: 1.6vw !important;
       font-size: $base-sm-text-size !important;
       text-transform: none !important;
@@ -60,9 +60,9 @@
     .question-mark {
       width: 100%;
       height: 100%;
-      text-align: center;
+      @extend %textCenter;
       font-weight: bold;
-      font-family: $font-family-black;
+      @extend %fontFamilyBlack;
     }
   }
 

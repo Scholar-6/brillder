@@ -5,7 +5,7 @@
 .save-image {
   $image-size: 3.5vw;
   cursor: pointer;
-  text-align: center;
+  @extend %textCenter;
   height: $image-size;
   width: $image-size;
   background: var(--tab-gray) 0% 0% no-repeat padding-box;
