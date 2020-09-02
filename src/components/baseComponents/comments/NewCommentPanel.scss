@@ -1,4 +1,6 @@
-@import "src/assets/sass/partials/variables";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .comment-text-form {
   background-color: var(--white);
@@ -12,7 +14,7 @@
   padding-right: 8%;
   border-radius: 0.25vw;
 
-  >div {
+  > div {
     padding: 0;
     margin: 0;
   }
@@ -51,7 +53,7 @@ button.comment-action-button {
   }
 
   &.cancel {
-    color: var(--theme-orange)
+    color: var(--theme-orange);
   }
 
   &.in-child {
