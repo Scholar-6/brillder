@@ -9,7 +9,7 @@ import './ProvisionalScore.scss';
 import { Brick } from 'model/brick';
 import { PlayStatus } from '../model';
 import sprite from "assets/img/icons-sprite.svg";
-import {getPlayPath, getAssignQueryString} from '../service';
+import { getPlayPath, getAssignQueryString } from '../service';
 
 import ReviewStepper from '../review/ReviewStepper';
 import Clock from '../baseComponents/Clock';
@@ -116,7 +116,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
   return (
     <div>
       <Hidden only={['xs']}>
-        <div className="brick-container provisional-score-page">
+        <div className="brick-container play-preview-panel provisional-score-page">
           <Grid container direction="row">
             <Grid item xs={8}>
               <div className="introduction-page">
@@ -143,7 +143,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
         </div>
       </Hidden>
       <Hidden only={['sm', 'md', 'lg', 'xl',]}>
-        <div className="brick-container provisional-score-page mobile-provisional-score">
+        <div className="brick-container play-preview-panel provisional-score-page mobile-provisional-score">
           <div className="introduction-info">
             <div className="intro-text-row">
               <span className="heading">Provisional Score</span>

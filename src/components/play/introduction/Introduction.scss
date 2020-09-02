@@ -652,11 +652,34 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
       }
 
-      &.live-page,
-      &.provisional-score-page,
-      &.review-page,
-      &.synthesis-page,
-      &.ending-page {
+      &.play-preview-panel {
+        color: var(--theme-dark-blue);
+        p {
+          font-size: 1.05vw;
+        }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+        .table {
+          width: 100%;
+          margin-left: 0;
+          margin-right: 0;
+        }
+        table,
+        td,
+        th {
+          border: 1px solid var(--theme-dark-blue);
+        }
+        td {
+          min-width: 0;
+          padding: 0;
+        }
+        .text-play {
+          overflow: auto;
+          margin-top: 5px;
+          margin-bottom: 5px;
+        }
         .MuiBox-root {
           padding: 0;
           position: relative;
@@ -672,20 +695,16 @@ $play-mobile-height: calc(100vh - 55.8vw);
             padding-bottom: 10px;
           }
         }
-
         .introduction-page {
           padding: 0;
           overflow-y: hidden;
-
           @include phone_and_tabletP {
             height: $play-mobile-height;
           }
-
           @include tabletP {
             height: $introduction-desktop-height;
             padding-left: 1vw;
           }
-
           .question-index-container ~ h1 {
             @include tabletP {
               text-align: center;
@@ -696,11 +715,9 @@ $play-mobile-height: calc(100vh - 55.8vw);
             }
           }
         }
-
         .fotter-text {
           margin-top: 3vw;
         }
-
         .introduction-info {
           @include phone_and_tabletP {
             position: relative !important;
@@ -709,37 +726,12 @@ $play-mobile-height: calc(100vh - 55.8vw);
           }
         }
       }
-
       &.synthesis-page,
       &.provisional-score-page,
       &.ending-page {
         .introduction-page {
           h1 {
             text-transform: capitalize;
-          }
-        }
-      }
-
-      &.synthesis-page {
-        .question-live-play {
-          height: calc(100vh - 27.6vh);
-
-          @include phone_and_tabletP {
-            width: 100%;
-            margin: 4vh 0 0;
-          }
-
-          @include tabletP {
-            margin: 12vh 3vw 1vw 4vw;
-          }
-        }
-
-        .introduction-info {
-          .intro-text-row {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-10vh);
-            margin: 0;
           }
         }
       }
@@ -774,23 +766,32 @@ $play-mobile-height: calc(100vh - 55.8vw);
             align-items: center !important;
           }
         }
+        .mobile-next {
+          top: auto !important;
+          bottom: 87px !important;
+          right: 13px !important;
+        }
       }
-
-      &.ending-page {
-        .introduction-page {
+      &.synthesis-page {
+        .question-live-play {
+          height: calc(100vh - 27.6vh);
+          @include phone_and_tabletP {
+            width: 100%;
+            margin: 4vh 0 0;
+          }
+          @include tabletP {
+            margin: 12vh 3vw 1vw 4vw;
+          }
+        }
+        .introduction-info {
           .intro-text-row {
-            .stepper {
-              .step {
-                color: var(--theme-dark-blue) !important;
-                .svg {
-                  @extend %removePosition;
-                }
-              }
-            }
+            position: absolute;
+            top: 50%;
+            transform: translateY(-10vh);
+            margin: 0;
           }
         }
       }
-
       &.mobile-synthesis-page,
       &.mobile-provisional-score,
       &.mobile-ending-page {
@@ -825,7 +826,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
           }
         }
       }
-
       .action-footer {
         display: flex;
         color: var(--theme-dark-blue);
@@ -906,7 +906,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
           }
         }
       }
-
       .circle-progress-container {
         position: relative;
         width: 100%;
@@ -1004,11 +1003,9 @@ $play-mobile-height: calc(100vh - 55.8vw);
           }
         }
       }
-
       .MuiCircularProgress-colorPrimary {
         color: #0076b4 !important;
       }
-
       .CircularProgressbar-trail {
         opacity: 0 !important;
       }
@@ -1083,17 +1080,22 @@ $play-mobile-height: calc(100vh - 55.8vw);
       }
     }
   }
-
   .expanded-text {
     width: 100%;
     color: var(--theme-dark-blue);
+    @extend %fontFamilyRegular;
     margin: 0 0 1vh 0;
-
     // @include phone_and_tabletP {
-    //   font: 6vw $font-family-regular;
+    //   font-size: 6vw;
     // }
     @include tabletP {
       font-size: 1.15vw;
+    }
+    #react-mathjax-preview p,
+    p {
+      @include tabletP {
+        font-size: 1.15vw;
+      }
     }
   }
 

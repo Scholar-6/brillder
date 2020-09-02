@@ -33,7 +33,7 @@ const EndingPage: React.FC<EndingProps> = ({
   const [minCurrentScore, setMinScore] = React.useState(0);
   const [maxCurrentScore, setMaxScore] = React.useState(0);
   const [currentScore, setCurrentScore] = React.useState(0);
-  
+
   const playPath = getPlayPath(false, brick.id);
 
   if (status === PlayStatus.Live) {
@@ -138,7 +138,7 @@ const EndingPage: React.FC<EndingProps> = ({
   return (
     <div>
       <Hidden only={['xs']}>
-        <div className="brick-container ending-page">
+        <div className="brick-container play-preview-panel ending-page">
           <Grid container direction="row">
             <Grid item xs={8}>
               <div className="introduction-page">
@@ -167,10 +167,10 @@ const EndingPage: React.FC<EndingProps> = ({
         </div>
       </Hidden>
       <Hidden only={['sm', 'md', 'lg', 'xl']}>
-        <div className="brick-container mobile-ending-page ending-page">
+        <div className="brick-container play-preview-panel ending-page mobile-ending-page">
           <div className="introduction-info">
             <div className="intro-text-row">
-            <span className="heading">Final Score : Agg.</span>
+              <span className="heading">Final Score : Agg.</span>
               <ReviewStepper
                 isEnd={true}
                 questions={brick.questions}
