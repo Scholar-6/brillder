@@ -1,5 +1,10 @@
 .ck-editor {
-  @extend %fontFamilyRegularItalic;
+  @extend %fontFamilyRegular;
+  .ck-content {
+    > p {
+      font-family: $font-family-regular !important;
+    }
+  }
 }
 
 .ck-focused {

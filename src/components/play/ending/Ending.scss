@@ -11,6 +11,18 @@
       text-align: center !important;
     }
   }
+  .introduction-page {
+    .intro-text-row {
+      .stepper {
+        .step {
+          color: var(--theme-dark-blue) !important;
+          .svg {
+            @extend %removePosition;
+          }
+        }
+      }
+    }
+  }
 
   .begin-row {
     margin-top: 15px;
