@@ -321,16 +321,13 @@ $play-mobile-height: calc(100vh - 55.8vw);
           width: 100%;
           color: var(--theme-dark-blue);
           @extend %fontFamilyBlack;
-
+          @extend %ellipsis;
           @include phone_and_tabletP {
             position: unset;
             transform: translate(0);
             padding-left: 0 !important;
             font-size: 3vh !important;
             text-align: center !important;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
           }
 
           @include tabletP {
