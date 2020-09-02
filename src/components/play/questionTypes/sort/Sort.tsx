@@ -55,7 +55,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     }
 
     choices = this.shuffle(choices);
-      
+
     if (!props.attempt) {
       userCats.push({choices: choices, name: 'Unsorted'});
     } else {
@@ -115,9 +115,7 @@ class Sort extends CompComponent<SortProps, SortState> {
   getChoices() {
     let choices:any = {};
     this.props.component.categories.forEach((cat, index) => {
-      cat.answers.forEach((choice) => {
-        choices[choice.value] = index;
-      });
+      cat.answers.forEach(choice => choices[choice.value] = index);
     });
 
     choices = this.shuffle(choices);
@@ -127,9 +125,7 @@ class Sort extends CompComponent<SortProps, SortState> {
   getAnswer(): any[] {
     var choices:any = {};
     this.state.userCats.forEach((cat, index) => {
-      cat.choices.forEach((choice) => {
-        choices[choice.value] = index;
-      });
+      cat.choices.forEach(choice => choices[choice.value] = index);
     });
     return choices;
   }
@@ -143,7 +139,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     let noAnswer = true;
     const unsortedCategory = this.props.component.categories.length;
     
-    Object.keys(attempt.answer).forEach((key, index) => {
+    Object.keys(attempt.answer).forEach(key => {
       if (attempt.answer[key] !== unsortedCategory) {
         noAnswer = false;
       }

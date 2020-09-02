@@ -179,6 +179,7 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   const moveNext = () => {
+    handleStep(activeStep + 1)();
     questions.forEach((question) => (question.edited = false));
     props.finishBrick();
     moveToProvisional();
