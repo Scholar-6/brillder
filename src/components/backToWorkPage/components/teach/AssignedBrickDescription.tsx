@@ -5,11 +5,11 @@ import { Brick } from "model/brick";
 import './AssignedBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
 import AssignedCircle from './AssignedCircle';
-import { TeachClassroom } from "model/classroom";
+import { TeachClassroom, Assignment } from "model/classroom";
 
 interface AssignedDescriptionProps {
   classroom: TeachClassroom;
-  brick: Brick;
+  assignment: Assignment;
   index?: number;
   isMobile?: boolean;
   isExpanded?: boolean;
@@ -20,7 +20,7 @@ interface AssignedDescriptionProps {
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   renderCircle() {
-    let color = this.props.brick.subject?.color;
+    let color = this.props.assignment.brick.subject?.color;
     if (!color) {
       color = "#B0B0AD";
     }
@@ -47,7 +47,8 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   }
 
   render() {
-    let { brick, isMobile, isExpanded, index } = this.props;
+    let { assignment, isMobile, isExpanded, index } = this.props;
+    const { brick, studentStatusCount } = assignment;
     let className = "assigned-brick-description";
 
     if (isMobile && isExpanded) {
@@ -76,9 +77,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             </div>
             <div className="link-info">{getAuthorRow(brick)}</div>
           </div>
-          <AssignedCircle onClick={this.props.expand} total={6} count={4} color="red" />
-          <AssignedCircle total={6} count={4} color="yellow" />
-          <AssignedCircle total={6} count={4} color="green" />
+          <AssignedCircle onClick={this.props.expand} total={studentStatusCount[0]} count={4} color="red" />
+          <AssignedCircle total={studentStatusCount[1]} count={4} color="yellow" />
+          <AssignedCircle total={studentStatusCount[2]} count={4} color="green" />
           <div className="teach-brick-actions-container">
             <div className="stats-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
