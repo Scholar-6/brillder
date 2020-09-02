@@ -108,12 +108,12 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     if (count >= 1) {
       return (
         <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
-          <SvgIcon>
-            <svg className="svg">
+          <div className="svgOnHover">
+            <svg className="svg w60 h60 active">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#message-square"} />
             </svg>
-          </SvgIcon>
+          </div>
           <div className="comments-count">
             {getCommentCount()}
           </div>
@@ -122,14 +122,14 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     }
     return (
       <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
-        <SvgIcon>
-          <svg className="svg">
+        <div className="comments-icon svgOnHover">
+          <svg className="svg w60 h60 active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#message-square"} />
           </svg>
-        </SvgIcon>
-        <div className="comments-plus">
-          <svg className="svg">
+        </div>
+        <div className="comments-plus svgOnHover">
+          <svg className="svg w60 h60 active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#plus"} />
           </svg>
