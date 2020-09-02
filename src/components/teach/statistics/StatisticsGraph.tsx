@@ -1,10 +1,11 @@
 import React from 'react';
 import { ClassroomStats } from 'model/stats';
 
-import { BoxPlot } from '@vx/stats';
-import { scaleLinear, scaleUtc } from '@vx/scale';
-import { AxisBottom } from '@vx/axis';
-import moment from 'moment';
+import { LinePath, Area } from '@vx/shape';
+import { curveNatural as curveType } from '@vx/curve';
+import { scaleLinear, scaleBand } from '@vx/scale';
+import { AxisBottom, AxisLeft } from '@vx/axis';
+import { Grid } from '@vx/grid';
 
 import './StatisticsGraph.scss';
 
@@ -15,62 +16,108 @@ interface StatisticsGraphProps {
 const StatisticsGraph: React.FC<StatisticsGraphProps> = props => {
   const assignments = props.stats.assignments
     .filter(assignment => assignment.stats != null)
-    .map(assignment => ({
-      ...assignment,
-      assignedDate: moment(assignment.assignedDate).startOf("day").toDate()
-    }));
+    .sort((a, b) => a.id - b.id);
 
-  const xScale = scaleUtc<number>({
-    range: [0, 600],
-    domain: [new Date("2020-08-13"), Date.now()],
+  const maxScore = assignments
+    .reduce<number>((max, assignment) => {
+      const newScore = assignment.attempts.find(attempt => attempt.maxScore)?.maxScore ?? 0;
+      return newScore > max ? newScore : max;
+    }, 0);
+
+  const totalWidth = 600;
+  const totalHeight = 600;
+  
+  const marginLeft = 50;
+  const marginTop = 50;
+  const marginRight = 50;
+  const marginBottom = 50;
+
+  const graphWidth = totalWidth - marginRight - marginLeft;
+  const graphHeight = totalWidth - marginBottom - marginTop;
+
+  const xScale = scaleBand<number>({
+    range: [0, graphWidth],
+    domain: assignments.map(a => a.id),
   });
 
   const yScale = scaleLinear<number>({
-    rangeRound: [500, 0],
-    domain: [0, assignments[0].attempts[0].maxScore]
+    rangeRound: [graphHeight, 0],
+    domain: [0, maxScore]
   });
 
-  const boxWidth = 35;
-
-  const renderBox = (assignment: any) => {
-    const assignmentsWithDate = assignments
-      .filter(item => item.assignedDate.valueOf() === assignment.assignedDate.valueOf())
-      .sort(item => item.id);
-
-    console.log(assignmentsWithDate);
-
-    const splitBoxWidth = boxWidth / assignmentsWithDate.length;
-    const offset = assignmentsWithDate.indexOf(assignment) * splitBoxWidth;
-
-    return (
-      <BoxPlot
-        className="stats-box-plot"
-        min={assignment.stats.minScore}
-        max={assignment.stats.maxScore}
-        left={xScale(assignment.assignedDate)! - (boxWidth / 2) + offset}
-        firstQuartile={assignment.stats.quartiles.lower}
-        median={assignment.stats.quartiles.median}
-        thirdQuartile={assignment.stats.quartiles.upper}
-        boxWidth={splitBoxWidth}
-        valueScale={yScale}
-      />
-    );
-  }
+  const rangeColor = "#8ad6e8";
+  const iqrColor = "#0681db";
 
   return (
-    <div>
-      <svg width="600" height="600" className="stats-graph">
-        {assignments.map(assignment => renderBox(assignment))}
+  <div>
+    <svg width={totalWidth} height={totalHeight} className="stats-graph">
+      <g transform={`translate(${marginLeft},${marginTop})`}>
+        <Area
+          curve={curveType}
+          data={assignments}
+          fill={rangeColor}
+          x={d => xScale(d.id)! + xScale.bandwidth() / 2}
+          y0={d => yScale(d.stats.minScore)!}
+          y1={d => yScale(d.stats.maxScore)!}
+        />
+        <Area
+          curve={curveType}
+          data={assignments}
+          fill={iqrColor}
+          x={d => xScale(d.id)! + xScale.bandwidth() / 2}
+          y0={d => yScale(d.stats.quartiles.lower)!}
+          y1={d => yScale(d.stats.quartiles.upper)!}
+        />
+        <LinePath
+          curve={curveType}
+          data={assignments}
+          x={d => xScale(d.id)! + xScale.bandwidth() / 2}
+          y={d => yScale(d.stats.avgScore)}
+          stroke="black"
+        />
+        {assignments.map((d, i) =>
+          d.attempts.map((e, j) => (
+            <circle
+              key={j}
+              r={3}
+              cx={xScale(d.id)! + xScale.bandwidth() / 2}
+              cy={yScale(e.score)}
+              stroke="rgba(0,0,0,0.5)"
+              fill="transparent"
+            />
+          ))
+        )}
+        <Grid
+          xScale={xScale}
+          xOffset={xScale.bandwidth() / 2}
+          yScale={yScale}
+          numTicksRows={5}
+          stroke="#000000"
+          strokeOpacity={0.1}
+          width={graphWidth}
+          height={graphHeight}
+        />
         <AxisBottom
           axisClassName="stats-date-axis"
           axisLineClassName="line"
           tickClassName="tick"
-          tickLabelProps={() => ({ className: "tick-label" })}
-          top={500}
+          tickLabelProps={(d) => ({
+            className: "tick-label",
+            textAnchor: "start",
+            angle: 45
+          })}
+          tickFormat={(v: number) => 
+            assignments.find(d => d.id === v)?.brick.title}
+          top={graphHeight}
           scale={xScale}
         />
-      </svg>
-    </div>
+        <AxisLeft
+          scale={yScale}
+          numTicks={5}
+        />
+      </g>
+    </svg>
+  </div>
   );
 };
 
