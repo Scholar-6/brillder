@@ -357,7 +357,7 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   return (
-    <div className="brick-container live-page">
+    <div className="brick-container play-preview-panel live-page">
       <Hidden only={["xs"]}>
         <Grid container direction="row">
           <Grid item xs={8}>

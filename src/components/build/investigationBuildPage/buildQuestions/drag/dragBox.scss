@@ -8,9 +8,20 @@
   color: var(--theme-orange);
   @extend %fontFamilyBold;
   font-size: 2vw;
+  padding: 1vw 0;
+  // height: 14.5vh;
+  @extend %textCenter;
+  > div {
+    width: 100%;
+    margin: auto;
+    @extend %flexCenter;
+    flex-direction: column;
+  }
   .drag-box-name {
     @extend %fontFamilyBold;
     font-size: 2.5vw;
+    width: 100%;
+    @extend %flexCenter;
   }
   .drag-box-hover {
     @extend %fontFamilyRegular;
@@ -19,8 +30,18 @@
     letter-spacing: 0.5vw;
     opacity: 0;
   }
+  .graph-box {
+    .drag-box-name {
+      @extend %fontFamilyBoldItalic;
+    }
+  }
   .disabled {
     color: var(--dark-gray);
+  }
+}
+.text-box {
+  .drag-box-name {
+    font-size: 3.5vw;
   }
 }
 .build-question-page {

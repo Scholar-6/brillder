@@ -2,6 +2,12 @@
   line-height: inherit !important;
 }
 
+%ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 %widthAuto {
   width: auto;
 }
@@ -36,27 +42,29 @@
 %uppercase {
   text-transform: uppercase;
 }
-
-%fontFamilyLightItalic {
-  font-family: $font-family-light-italic;
-}
 %fontFamilyLight {
-  font-family: $font-family-light;
+  font-family: 'Brandon Grotesque Light';
+}
+%fontFamilyLightItalic {
+  font-family: 'Brandon Grotesque Light Italic';
 }
 %fontFamilyRegular {
-  font-family: $font-family-regular;
+  font-family: 'Brandon Grotesque Regular';
 }
 %fontFamilyRegularItalic {
-  font-family: $font-family-regular-italic;
+  font-family: 'Brandon Grotesque Regular Italic';
 }
 %fontFamilyBold {
-  font-family: $font-family-bold;
+  font-family: 'Brandon Grotesque Bold';
+}
+%fontFamilyBoldItalic {
+  font-family: 'Brandon Grotesque Bold Italic';
 }
 %fontFamilyBlack {
-  font-family: $font-family-black;
+  font-family: 'Brandon Grotesque Black';
 }
 %fontFamilyBlackItalic {
-  font-family: $font-family-black-italic;
+  font-family: 'Brandon Grotesque Black Italic';
 }
 
 %fs9 {

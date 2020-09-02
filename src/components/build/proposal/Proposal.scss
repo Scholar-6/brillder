@@ -157,10 +157,7 @@
         @extend %fontFamilyBold;
         margin-bottom: 0.5vh;
         width: 15.5vw;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-
+        @extend %ellipsis;
         &.uppercase {
           text-transform: uppercase;
         }
@@ -172,10 +169,7 @@
 
       .brick-topics {
         width: 15.5vw;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-
+        @extend %ellipsis;
         .author-row {
           margin-top: 0.5vh;
           color: var(--white);

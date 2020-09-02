@@ -248,7 +248,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   }
 
   return (
-    <div className="brick-container review-page">
+    <div className="brick-container play-preview-panel review-page">
       <Grid container direction="row">
         <Grid item sm={8} xs={12}>
           <Hidden only={['xs']}>
