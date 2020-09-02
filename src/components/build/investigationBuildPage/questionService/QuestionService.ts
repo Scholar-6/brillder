@@ -1,8 +1,7 @@
 import update from "immutability-helper";
 
-import {
-  CasheBuildQuestion, BuildPlayRedirect
-} from 'localStorage/buildLocalStorage';
+import { validateQuestion } from "./ValidateQuestionService";
+import { CasheBuildQuestion, BuildPlayRedirect } from 'localStorage/buildLocalStorage';
 
 
 import {
@@ -36,7 +35,7 @@ export function getNewQuestion(type: number, active: boolean) {
 
 export function deactiveQuestions(questions: Question[]) {
   const updatedQuestions = questions.slice();
-  updatedQuestions.forEach(q => (q.active = false));
+  updatedQuestions.forEach(q => q.active = false);
   return updatedQuestions;
 }
 
@@ -130,4 +129,14 @@ export function setLastQuestionId(brick: Brick, questions: Question[]) {
   updatedQuestions[lastIndex].active = true;
   updatedQuestions[lastIndex].id = savedQuestions[lastIndex].id;
   return updatedQuestions;
+}
+
+export function activateFirstInvalidQuestion(qs: Question[]) {
+  for (const q of qs) {
+    let isQuestionValid = validateQuestion(q as any);
+    if (!isQuestionValid) {
+      q.active = true;
+      return;
+    }
+  }
 }
