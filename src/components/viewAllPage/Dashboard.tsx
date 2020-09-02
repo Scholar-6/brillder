@@ -420,7 +420,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       this.state.pageSize,
       this.state.finalBricks
     );
-    return data.map((item) => {
+    return data.map(item => {
       return (
         <BrickBlock
           brick={item.brick}
@@ -430,6 +430,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           key={item.index}
           shown={this.state.shown}
           history={this.props.history}
+          isAssigned={false}
           handleDeleteOpen={(brickId) => this.handleDeleteOpen(brickId)}
           handleMouseHover={() => this.handleMouseHover(item.key)}
           handleMouseLeave={() => this.handleMouseLeave(item.key)}
