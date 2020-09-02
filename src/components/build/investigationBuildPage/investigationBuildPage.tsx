@@ -46,6 +46,7 @@ import {
   removeQuestionByIndex,
   setQuestionTypeByIndex,
   setLastQuestionId,
+  activateFirstInvalidQuestion,
   parseQuestion,
 } from "./questionService/QuestionService";
 import { convertToQuestionType } from "./questionService/ConvertService";
@@ -399,9 +400,16 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     history.push(`/back-to-work`);
   }
 
+  const moveToRedTab = () => {
+    const updatedQuestions = deactiveQuestions(questions);
+    activateFirstInvalidQuestion(updatedQuestions);
+    setQuestions(update(questions, { $set: updatedQuestions }));
+  }
+
   const hideInvalidBrick = () => {
     setValidation(true);
     setSubmitDialog(false);
+    moveToRedTab();
   }
 
   const setAutoSaveTime = () => {
@@ -556,12 +564,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const renderQuestionTypePreview = () => {
     if (isTutorialPassed()) {
-      return (
-        <QuestionTypePreview
-          hoverQuestion={hoverQuestion}
-          activeQuestionType={activeQuestionType}
-        />
-      );
+      return <QuestionTypePreview hoverQuestion={hoverQuestion} activeQuestionType={activeQuestionType} />;
     }
     return <TutorialPhonePreview step={step} />;
   }
