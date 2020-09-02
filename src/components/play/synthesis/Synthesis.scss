@@ -45,28 +45,6 @@
     width: 100% !important;
   }
 
-  .table {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  table,
-  td,
-  th {
-    border: 1px solid var(--theme-dark-blue);
-  }
-
-  td {
-    min-width: 0;
-    padding: 0;
-  }
-
   &.mobile-synthesis-page {
     height: calc(100vh - 6vh) !important;
     position: relative;
