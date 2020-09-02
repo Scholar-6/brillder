@@ -123,38 +123,41 @@ class BrickTitle extends Component<BrickTitleProps, BrickTitleState> {
             <h1>What is your brick about?</h1>
             <form>
               <Grid item className="input-container">
-                <Input
-                  autoFocus={true}
-                  disabled={!canEdit}
-                  className="audience-inputs"
-                  value={parentState.title}
-                  onKeyUp={e => this.moveToRef(e, RefName.subTitleRef)}
-                  onChange={e => this.onChange(e, "title")}
-                  placeholder="Enter Proposed Title Here..."
-                />
-                <Input
-                  ref={this.state.subTitleRef}
-                  disabled={!canEdit}
-                  className="audience-inputs"
-                  value={parentState.subTopic}
-                  onKeyUp={e => this.moveToRef(e, RefName.altTitleRef)}
-                  onChange={e => this.onChange(e, "subTopic")}
-                  placeholder="Enter Topic..."
-                />
-                <Input
-                  ref={this.state.altTitleRef}
-                  disabled={!canEdit}
-                  className="audience-inputs"
-                  value={parentState.alternativeTopics}
-                  onKeyUp={e => {
-                    if (enterPressed(e)) {
-                      saveTitles(parentState);
-                      this.props.history.push(map.ProposalOpenQuestion);
-                    }
-                  }}
-                  onChange={e => this.onChange(e, "alternativeTopics")}
-                  placeholder="Enter Subtopic(s)..."
-                />
+                <div className="audience-inputs">
+                  <Input
+                    autoFocus={true}
+                    disabled={!canEdit}
+                    value={parentState.title}
+                    onKeyUp={e => this.moveToRef(e, RefName.subTitleRef)}
+                    onChange={e => this.onChange(e, "title")}
+                    placeholder="Enter Proposed Title Here..."
+                  />
+                </div>
+                <div className="audience-inputs">
+                  <Input
+                    ref={this.state.subTitleRef}
+                    disabled={!canEdit}
+                    value={parentState.subTopic}
+                    onKeyUp={e => this.moveToRef(e, RefName.altTitleRef)}
+                    onChange={e => this.onChange(e, "subTopic")}
+                    placeholder="Enter Topic..."
+                  />
+                </div>
+                <div className="audience-inputs">
+                  <Input
+                    ref={this.state.altTitleRef}
+                    disabled={!canEdit}
+                    value={parentState.alternativeTopics}
+                    onKeyUp={e => {
+                      if (enterPressed(e)) {
+                        saveTitles(parentState);
+                        this.props.history.push(map.ProposalOpenQuestion);
+                      }
+                    }}
+                    onChange={e => this.onChange(e, "alternativeTopics")}
+                    placeholder="Enter Subtopic(s)..."
+                  />
+                </div>
               </Grid>
             </form>
             <div className="tutorial-pagination">
