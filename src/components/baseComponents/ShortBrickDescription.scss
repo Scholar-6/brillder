@@ -67,9 +67,7 @@
             @extend %fontFamilyBold;
             line-height: 1.1;
             margin-bottom: 0.5vh;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            @extend %ellipsis;
             @include phone_and_tabletP {
               font-size: 3.8vw;
               width: 100%;
@@ -85,9 +83,7 @@
             @extend %fontFamilyRegular;
             margin-bottom: 0.1vh;
             width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            @extend %ellipsis;
             @include phone_and_tabletP {
               font-size: 3.8vw;
             }

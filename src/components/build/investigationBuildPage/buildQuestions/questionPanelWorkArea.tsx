@@ -167,46 +167,38 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 >
                   <DragBox
                     locked={locked}
-                    name="T" fontSize="3.4vw"
+                    name="T"
                     label="TEXT"
-                    hoverMarginTop="0vw"
-                    value={QuestionComponentTypeEnum.Text}
                     className="text-box"
+                    value={QuestionComponentTypeEnum.Text}
                   />
                   <DragBox
                     locked={locked}
                     name="“ ”"
                     label="QUOTE"
-                    hoverMarginTop="-0.65vw"
-                    letterSpacing="0.625vw"
-                    marginLeft="0.3vw"
                     value={QuestionComponentTypeEnum.Quote}
                   />
                   <DragBox
                     locked={locked}
                     name="jpg"
                     label="IMAGE"
-                    hoverMarginTop="1vw"
-                    marginTop="-2.8vw"
                     value={QuestionComponentTypeEnum.Image}
                   />
                   <DragBox
                     locked={locked}
                     isImage={true} src="/images/soundicon.png"
                     label="SOUND"
-                    hoverMarginTop="0.5vw"
                     value={QuestionComponentTypeEnum.Sound}
                   />
+                  <DragBox
+                    locked={true}
+                    name="f(x)"
+                    label="GRAPH"
+                    className="graph-box disabled"
+                    onClick={() => setCommingSoon(true)}
+                    value={QuestionComponentTypeEnum.Graph}
+                  />
                 </ReactSortable>
-                <DragBox
-                  locked={true}
-                  name="f(x)" label="GRAPH"
-                  hoverMarginTop="0.9vw"
-                  marginTop="-1vw"
-                  className="disabled"
-                  onClick={() => setCommingSoon(true)}
-                  value={QuestionComponentTypeEnum.Graph}
-                />
               </Grid>
             </Grid>
             <Grid container item xs={5} sm={6} md={6} className="question-components-list" ref={workarea}>

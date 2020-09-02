@@ -219,16 +219,6 @@
       padding-left: 10px;
       padding-right: 10px;
       height: 87% !important;
-
-      .drag-box-item {
-        padding-top: 8px;
-        height: 14.5vh;
-        width: 100%;
-        @extend %textCenter;
-        div {
-          width: 100%;
-        }
-      }
     }
 
     .left-sidebar:hover {
