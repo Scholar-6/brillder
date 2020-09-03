@@ -71,6 +71,9 @@
   border-right: 0;
   background: var(--tab-gray);
   border-radius: 2vh;
+  @include desktop {
+    width: 53vw !important;
+  }
 }
 
 .synthesis-content {
@@ -78,14 +81,17 @@
   padding-bottom: 4vh;
   overflow-y: auto;
   height: calc(100vh - 55.8vw);
-
   table {
     color: var(--theme-dark-blue);
   }
 
   @include desktop {
-    width: 46.5vw !important;
-    height: calc(100vh - 12vh - 2vw - #{$page-head-height}) !important;
+  }
+  @include desktop {
+    width: 53vw !important;
+    height: calc(100vh - 12vh - 2vw) !important;
+    // width: 46.5vw !important;
+    // height: calc(100vh - 12vh - 2vw - #{$page-head-height}) !important;
     margin: 12vh 3vw 1vw 4vw;
   }
 
@@ -97,19 +103,5 @@
     height: calc(100% - 4.3vh - 160px) !important;
     padding-left: 2vw;
     padding-right: 2vw;
-  }
-}
-
-.sorted-row-expanded {
-  .cuting-line {
-    @include desktop {
-      width: 53vw !important;
-    }
-  }
-  .synthesis-content {
-    @include desktop {
-      width: 53vw !important;
-      height: calc(100vh - 12vh - 2vw) !important;
-    }
   }
 }
