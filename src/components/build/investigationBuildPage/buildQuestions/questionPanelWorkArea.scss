@@ -251,8 +251,9 @@
           position: absolute;
           width: 100%;
           height: 100%;
-          @extend %displayFlex;
-          @extend %flexJustifyCenter;
+          @extend %flexCenter;
+          @extend %fontFamilyBold;
+          color: var(--theme-dark-blue);
           .svg {
             color: var(--theme-dark-blue);
           }

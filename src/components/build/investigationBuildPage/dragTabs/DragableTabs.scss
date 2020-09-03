@@ -76,16 +76,17 @@ $tile-height: 100%;
       user-select: none;
     }
     .unread-indicator {
-      width: 1.5vw;
-      height: 1.5vw;
+      width: 1vw;
+      height: 1vw;
       position: absolute;
-      right: 1.5vw;
+      left: 4px;
+      top: 3px;
       svg {
         .outer-circle {
-          fill: var(--blue-alpha5);
+          fill: var(--theme-orange-alpha5);
         }
         .inner-circle {
-          fill: var(--blue);
+          fill: var(--theme-orange);
         }
       }
     }
