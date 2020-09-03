@@ -105,7 +105,6 @@ const HintComponent: React.FC<HintProps> = ({
   };
 
   const renderHintInputs = () => {
-    console.log(state, state.list, props.count);
     if (state.status === HintStatus.All || !props.count || props.count === 1) {
       return (
         <div className="hint-container">

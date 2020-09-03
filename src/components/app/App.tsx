@@ -8,7 +8,7 @@ import './app.scss';
 import GlobalFailedRequestDialog from "components/baseComponents/failedRequestDialog/GlobalFailedRequestDialog";
 
 import VersionLabel from 'components/baseComponents/VersionLabel';
-import Dashboard from '../viewAllPage/Dashboard';
+import ViewAll from '../viewAllPage/ViewAll';
 import MobileCategory from '../viewAllPage/MobileCategory';
 import PlayBrickRouting from '../play/PlayBrickRouting';
 import PlayPreviewRouting from 'components/playPreview/PreviewBrickRouting';
@@ -87,7 +87,7 @@ const App: React.FC = () => {
       <Switch>
         <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
-        <StudentRoute path={map.ViewAllPage} component={Dashboard} />
+        <StudentRoute path={map.ViewAllPage} component={ViewAll} />
 
         <BuildRoute path="/manage-classrooms" component={ManageClassrooms} location={location} /> 
         <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />

@@ -43,11 +43,6 @@
       }
     }
   }
-  &.content-invalid {
-    .ck-content {
-      background: var(--theme-orange) !important;
-    }
-  }
   .ck-toolbar {
     font-size: 1.4vh;
     border: none !important;
@@ -168,4 +163,9 @@
       url('/feathericons/svg/cursor-highlighter.svg') 2x
     ),
     auto;
+}
+
+// color for invalid ck-editor content (in build)
+.document-editor.content-invalid .ck-editor .ck-editor__main .ck-content {
+  background: var(--theme-orange) !important;
 }

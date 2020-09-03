@@ -142,8 +142,6 @@ const QuestionComponents = ({
       return <PageLoader content="...Loading..." />;
     }
 
-    console.log(component.type);
-
     return (
       <SwitchQuestionComponent
         questionType={question.type}
