@@ -22,7 +22,7 @@ import ViewAllFilter, { SortBy } from "./ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import { checkAdmin } from "components/services/brickService";
-import BrickBlock from "components/backToWorkPage/components/BrickBlock";
+import BrickBlock from "components/baseComponents/BrickBlock";
 
 
 interface BricksListProps {
@@ -464,6 +464,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     row: any = 0
   ) => {
     let color = this.getBrickColor(brick);
+    let isAssigned = false;
+    if (brick.assignments && brick.assignments.length > 0) {
+      isAssigned = true;
+    }
 
     return (
       <div className="main-brick-container">
@@ -477,6 +481,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             <ShortBrickDescription
               brick={brick}
               color={color}
+              isAssigned={isAssigned}
               isMobile={true}
               isExpanded={brick.expanded}
               move={() => this.move(brick.id)}

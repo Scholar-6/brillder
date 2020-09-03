@@ -134,6 +134,11 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     if (brick.expanded) {
       className += " brick-hover";
     }
+    
+    let isAssigned = false;
+    if (brick.assignments && brick.assignments.length > 0) {
+      isAssigned = true;
+    }
 
     return (
       <Grow
@@ -148,6 +153,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 brick={brick}
                 color={color}
                 isMobile={true}
+                isAssigned={isAssigned}
                 isExpanded={brick.expanded}
                 move={() => this.move(brick.id)}
               />
@@ -205,8 +211,12 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     for (let i = 0; i < this.state.finalBricks.length; i++) {
       const brick = this.state.finalBricks[i]
       if (brick) {
+        let isAssigned = false;
+        if (brick.assignments && brick.assignments.length > 0) {
+          isAssigned = true;
+        }
         let color = this.getBrickColor(brick);
-        bricksList.push(<ShortBrickDescription brick={brick} index={i} color={color} />);
+        bricksList.push(<ShortBrickDescription isAssigned={isAssigned}  brick={brick} index={i} color={color} />);
       }
     }
 

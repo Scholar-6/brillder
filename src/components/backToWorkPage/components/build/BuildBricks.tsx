@@ -8,7 +8,7 @@ import { prepareVisibleBricks } from '../../service';
 import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
 import BrickList from '../BrickList';
 
-import BrickBlock from '../BrickBlock';
+import BrickBlock from "components/baseComponents/BrickBlock";
 
 interface BuildBricksProps {
   user: User;
