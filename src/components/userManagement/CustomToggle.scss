@@ -1,3 +1,7 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
 .custom-toggle {
   width: 4vw;
 
@@ -5,34 +9,51 @@
     display: none;
     pointer-events: none;
     & + label {
+      width: 100%;
+      min-height: 2vw;
       cursor: pointer;
+      padding: 0.5vw;
+      box-sizing: content-box;
+      @extend %posRelative;
+      @extend %flexCenter;
       svg {
         width: 4vw;
-        stroke: var(--theme-green);
-        stroke-width: 10;
+        min-height: 100%;
+        stroke-width: 16;
         fill: transparent;
-
+        @extend %floatToCenter;
+        .base-box,
         .box {
           stroke-dasharray: 173;
-          stroke-dashoffset: 258;
-          // fill: #ccc;
           stroke-linecap: round;
+          stroke-linejoin: round;
+          position: relative;
+          z-index: 3;
+        }
+        .base-box {
+          stroke-dasharray: none;
+          stroke: var(--gray-alpha4);
+          z-index: 0;
+        }
+      }
+      &.reverse {
+        svg {
+          .box {
+            stroke: var(--theme-green);
+            stroke-dashoffset: 430;
+            @extend %transitionAll300;
+          }
+        }
+      }
+      &.no-reverse {
+        svg {
+          .box {
+            stroke-dashoffset: 258;
+            stroke: var(--theme-orange);
+            @extend %transitionAll300;
+          }
         }
       }
     }
-  }
-}
-.reverse {
-  .box {
-    stroke-dashoffset: 430 !important;
-    transition: stroke-dashoffset 0.3s linear;
-  }
-}
-
-.no-reverse {
-  .box {
-    stroke-dashoffset: 431;
-    stroke: var(--theme-orange);
-    transition: stroke-dashoffset 0.3s linear;
   }
 }
