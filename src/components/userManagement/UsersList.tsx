@@ -23,6 +23,7 @@ import UserActionsCell from "./UserActionsCell";
 import RoleDescription from "components/baseComponents/RoleDescription";
 import NextButton from "components/baseComponents/pagination/NextButton";
 import PrevButton from "components/baseComponents/pagination/PrevButton";
+import CustomToggle from './CustomToggle';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -582,10 +583,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                   <td>{user.email}</td>
                   <td>{this.renderUserType(user)}</td>
                   <td className="activate-button-container">
-                    <IOSSwitch
-                      checked={user.status === UserStatus.Active}
-                      onChange={() => this.toggleUser(user)}
-                    />
+                    <CustomToggle checked={user.status === UserStatus.Active} onClick={() => this.toggleUser(user)}  />
                   </td>
                   <UserActionsCell
                     userId={user.id}
