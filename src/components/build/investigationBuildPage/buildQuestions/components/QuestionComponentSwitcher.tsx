@@ -82,6 +82,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   } else if (type === QuestionComponentTypeEnum.Component) {
     InnerComponent = uniqueComponent;
     let numberOfAnswers = getNumberOfAnswers(component);
+    console.log(uniqueComponent.name);
     if (uniqueComponent.name === "MissingWordComponent") {
       if (component.choices) {
         numberOfAnswers = component.choices.length;
