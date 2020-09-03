@@ -1,7 +1,7 @@
 import React from 'react'
 
 import sprite from "assets/img/icons-sprite.svg";
-import { QuestionComponentTypeEnum, Hint } from 'model/question';
+import { QuestionComponentTypeEnum, Hint, QuestionTypeEnum } from 'model/question';
 import TextComponent from './Text/Text'
 import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'
@@ -11,6 +11,7 @@ import HintComponent, { HintState } from '../../../baseComponents/Hint/Hint';
 
 
 export interface SwitchQuestionProps {
+  questionType: QuestionTypeEnum;
   type: QuestionComponentTypeEnum;
   index: number;
   questionIndex: number;
@@ -83,11 +84,11 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     InnerComponent = uniqueComponent;
     let numberOfAnswers = getNumberOfAnswers(component);
     console.log(uniqueComponent.name);
-    if (uniqueComponent.name === "MissingWordComponent") {
+    if (props.questionType === QuestionTypeEnum.MissingWord) {
       if (component.choices) {
         numberOfAnswers = component.choices.length;
       }
-    } else if (uniqueComponent.name === "CategoriseBuildComponent") {
+    } else if (props.questionType === QuestionTypeEnum.Sort) {
       if (component.categories) {
         numberOfAnswers = 0;
         for (let c of component.categories) {
