@@ -83,10 +83,7 @@
     }
 
     .audience-inputs {
-      display: block !important;
-      margin: 2vh 5.5vw;
-      font-size: 1.3vw;
-      @extend %fontFamilyRegular;
+      @extend %buildInputs;
     }
   }
 }
@@ -118,13 +115,16 @@
     }
 
     .input-container {
-      margin-left: 13vw;
-      margin-bottom: 6.2vh;
-
+      @extend %flexCenter;
+      flex-direction: column;
+      @include tabletL {
+        margin: 6vw auto;
+        width: 40vw !important;
+        font-size: 1.4vw !important;
+        border: transparent;
+      }
       .audience-inputs {
-        font-size: 1.4vw;
-        margin-bottom: 4.1vh;
-        width: 34vw;
+        @extend %buildInputs;
       }
     }
   }
@@ -259,13 +259,9 @@
       }
     }
     .input-container {
-      @include phone_and_tabletL {
-        background-color: var(--light-gray);
-        border-radius: 5.1vw;
-        padding: 1vh 2vh 0;
-        height: 15vh;
-        margin-bottom: 4vh;
-      }
+
+      @extend %inputContainer;
+
       .audience-inputs {
         &:before,
         &:after {
@@ -290,20 +286,7 @@
   }
 
   .audience-inputs {
-    @extend %fontFamilyRegular;
-    @include tabletL {
-      margin-bottom: 18.7vh;
-      font-size: 1.4vw !important;
-      margin-top: 6.2vh;
-      margin-left: 9vw;
-      width: 43vw !important;
-    }
-
-    input {
-      @include tabletL {
-        padding-bottom: 1.7vh;
-      }
-    }
+    @extend %buildInputs;
   }
 
   .MuiInputBase-input {
@@ -524,30 +507,9 @@
       }
     }
     .input-container {
-      @include phone_and_tabletL {
-        display: flex;
-        flex-direction: column;
-        margin-left: 5vw;
-        margin-right: 5vw;
-      }
-      > .audience-inputs {
-        @include phone_and_tabletL {
-          width: 100%;
-          font-size: 3.3vw;
-        }
-        @include phone_and_tabletP {
-          font-size: 6.3vw;
-        }
-        &:before {
-          @include phone_and_tabletL {
-            border-color: var(--gray-alpha4);
-          }
-        }
-        input {
-          @include phone_and_tabletL {
-            padding-bottom: 0;
-          }
-        }
+      @extend %inputContainer;
+      .audience-inputs {
+        @extend %buildInputs;
       }
     }
     .pagination-text {
