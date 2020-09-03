@@ -169,3 +169,8 @@
     ),
     auto;
 }
+
+// color for invalid ck-editor content (in build)
+.document-editor.content-invalid .ck-editor .ck-editor__main .ck-content {
+  background: var(--theme-orange) !important;
+}
