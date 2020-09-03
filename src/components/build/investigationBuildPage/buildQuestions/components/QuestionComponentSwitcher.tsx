@@ -44,6 +44,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     if (data.list && data.list.length) {
       return data.list.length;
     }
+    console.log(count);
     return count;
   }
 
@@ -94,6 +95,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           }
         }
       }
+      console.log('categorise', numberOfAnswers);
     }
 
     return (
