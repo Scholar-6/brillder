@@ -1,5 +1,5 @@
 
-import "./Dashboard.scss";
+import "./ViewAll.scss";
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 
@@ -11,7 +11,7 @@ export enum SortBy {
   Popularity,
 }
 
-interface DashboardFilterProps {
+interface FilterProps {
   sortBy: SortBy;
   subjects: any[];
   isClearFilter: any;
@@ -21,14 +21,13 @@ interface DashboardFilterProps {
   filterBySubject(index: number): void;
 }
 
-interface DashboardFilterState {
+interface FilterState {
   filterExpanded: boolean;
   filterHeight: any;
 }
 
-
-class DashboardFilterComponent extends Component<DashboardFilterProps, DashboardFilterState> {
-  constructor(props: DashboardFilterProps) {
+class ViewAllFilterComponent extends Component<FilterProps, FilterState> {
+  constructor(props: FilterProps) {
     super(props);
     this.state = {
       filterHeight: "auto",
@@ -107,4 +106,4 @@ class DashboardFilterComponent extends Component<DashboardFilterProps, Dashboard
   }
 }
 
-export default DashboardFilterComponent;
+export default ViewAllFilterComponent;

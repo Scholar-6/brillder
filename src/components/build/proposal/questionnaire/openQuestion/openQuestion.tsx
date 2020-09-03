@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, TextField, Input, Hidden } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 
 import './openQuestion.scss';
 import { ProposalStep, PlayButtonStatus } from "../../model";

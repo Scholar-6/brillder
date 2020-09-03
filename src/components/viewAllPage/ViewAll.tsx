@@ -1,4 +1,4 @@
-import "./Dashboard.scss";
+import "./ViewAll.scss";
 import React, { Component } from "react";
 import { Box, Grid, Hidden } from "@material-ui/core";
 import { Category } from "./interface";
@@ -18,8 +18,8 @@ import ShortBrickDescription from "components/baseComponents/ShortBrickDescripti
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import { ReduxCombinedState } from "redux/reducers";
-import DashboardFilter, { SortBy } from "./DashboardFilter";
-import DashboardPagination from "./DashboardPagination";
+import ViewAllFilter, { SortBy } from "./ViewAllFilter";
+import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import { checkAdmin } from "components/services/brickService";
 import BrickBlock from "components/backToWorkPage/components/BrickBlock";
@@ -53,7 +53,7 @@ interface BricksListState {
   shown: boolean;
 }
 
-class DashboardPage extends Component<BricksListProps, BricksListState> {
+class ViewAllPage extends Component<BricksListProps, BricksListState> {
   constructor(props: BricksListProps) {
     super(props);
 
@@ -421,6 +421,11 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
       this.state.finalBricks
     );
     return data.map(item => {
+      let isAssigned = false;
+      const {brick} = item;
+      if (brick.assignments && brick.assignments.length > 0) {
+        isAssigned = true;
+      }
       return (
         <BrickBlock
           brick={item.brick}
@@ -430,7 +435,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
           key={item.index}
           shown={this.state.shown}
           history={this.props.history}
-          isAssigned={false}
+          isAssigned={isAssigned}
           handleDeleteOpen={(brickId) => this.handleDeleteOpen(brickId)}
           handleMouseHover={() => this.handleMouseHover(item.key)}
           handleMouseLeave={() => this.handleMouseLeave(item.key)}
@@ -608,13 +613,13 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
         </Hidden>
         <Grid container direction="row" className="sorted-row">
           <Grid container item xs={3} className="sort-and-filter-container">
-            <DashboardFilter
+            <ViewAllFilter
               sortBy={this.state.sortBy}
               subjects={this.state.subjects}
               isClearFilter={this.state.isClearFilter}
-              handleSortChange={(e) => this.handleSortChange(e)}
+              handleSortChange={e => this.handleSortChange(e)}
               clearSubjects={() => this.clearSubjects()}
-              filterBySubject={(index) => this.filterBySubject(index)}
+              filterBySubject={index => this.filterBySubject(index)}
             />
           </Grid>
           <Grid item xs={9} className="brick-row-container">
@@ -658,7 +663,7 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
               {this.renderEmptyCategory("Top in Humanities")}
               {this.renderEmptyCategory("Top in Stem")}
             </Hidden>
-            <DashboardPagination
+            <ViewAllPagination
               pageSize={this.state.pageSize}
               sortedIndex={this.state.sortedIndex}
               bricksLength={this.state.finalBricks.length}
@@ -684,4 +689,4 @@ class DashboardPage extends Component<BricksListProps, BricksListState> {
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
-export default connect(mapState)(DashboardPage);
+export default connect(mapState)(ViewAllPage);

@@ -1,6 +1,4 @@
-/* TODO: KEEP THIS FILE for when clicking 'view all', so copy code from src/build/bricksListPage.tsx
-i.e. add back button on menu and row along top of 'my bricks'  6/7/2020 */
-import "./Dashboard.scss";
+import "./ViewAll.scss";
 import React, { Component } from "react";
 import { Box, Grid, Grow } from "@material-ui/core";
 import axios from "axios";
