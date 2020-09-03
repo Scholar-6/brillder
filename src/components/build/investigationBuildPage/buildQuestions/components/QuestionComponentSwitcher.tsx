@@ -45,7 +45,6 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
     if (data.list && data.list.length) {
       return data.list.length;
     }
-    console.log(count);
     return count;
   }
 
@@ -83,7 +82,6 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
   } else if (type === QuestionComponentTypeEnum.Component) {
     InnerComponent = uniqueComponent;
     let numberOfAnswers = getNumberOfAnswers(component);
-    console.log(uniqueComponent.name);
     if (props.questionType === QuestionTypeEnum.MissingWord) {
       if (component.choices) {
         numberOfAnswers = component.choices.length;
@@ -97,7 +95,6 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
           }
         }
       }
-      console.log('categorise', numberOfAnswers);
     }
 
     return (
