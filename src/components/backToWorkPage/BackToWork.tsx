@@ -59,6 +59,7 @@ interface BackToWorkState {
   pageSize: number;
   generalSubjectId: number;
   activeTab: ActiveTab;
+  subjects: Subject[];
 
   isTeach: boolean;
   isAdmin: boolean;
@@ -163,6 +164,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       deleteDialogOpen: false,
       deleteBrickId: -1,
       activeTab: ActiveTab.Play,
+      subjects: [],
 
       filters: {
         viewAll: true,
@@ -219,7 +221,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         if (generalSubject) {
           generalSubjectId = generalSubject.id;
         }
-        this.setState({ generalSubjectId });
+        this.setState({ generalSubjectId, subjects });
         if (!this.props.isMocked) {
           this.getBricks();
         }
@@ -700,6 +702,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
               }
               {
                 activeTab === ActiveTab.Teach ? <ClassroomList
+                  subjects={this.state.subjects}
                   expand={id=> this.setActiveClassroom(id)}
                   startIndex={this.state.sortedIndex}
                   activeClassroom={this.state.activeClassroom}

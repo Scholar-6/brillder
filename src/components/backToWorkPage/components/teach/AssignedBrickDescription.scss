@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .assigned-brick-description {
   position: relative;
@@ -31,6 +31,17 @@
       width: 2.1vw;
       border-radius: 20vw;
       background-color: var(--gray);
+    }
+
+    &.teach-circle {
+      .round-button {
+        @extend %flexCenter;
+        svg {
+          width: 68%;
+          height: 68%;
+          color: white;
+        }
+      }
     }
   }
 
