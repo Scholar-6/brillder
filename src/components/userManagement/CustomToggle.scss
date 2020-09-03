@@ -1,16 +1,16 @@
 .custom-toggle {
   width: 4vw;
 
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     display: none;
     pointer-events: none;
     & + label {
       cursor: pointer;
       svg {
         width: 4vw;
-        stroke: green;
+        stroke: var(--theme-green);
         stroke-width: 10;
-        fill: white;
+        fill: transparent;
 
         .box {
           stroke-dasharray: 173;
@@ -24,7 +24,7 @@
 }
 .reverse {
   .box {
-    stroke-dashoffset: 320 !important;
+    stroke-dashoffset: 430 !important;
     transition: stroke-dashoffset 0.3s linear;
   }
 }
@@ -32,7 +32,7 @@
 .no-reverse {
   .box {
     stroke-dashoffset: 431;
-    stroke: red;
+    stroke: var(--theme-orange);
     transition: stroke-dashoffset 0.3s linear;
   }
 }
