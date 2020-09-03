@@ -104,8 +104,7 @@
 
       @include tabletL {
         font-size: 3.6vw;
-        margin-top: 4.7vh;
-        margin-bottom: 12.1vh;
+        margin: 4.7vh 0;
       }
     }
 
@@ -259,9 +258,7 @@
       }
     }
     .input-container {
-
       @extend %inputContainer;
-
       .audience-inputs {
         &:before,
         &:after {
