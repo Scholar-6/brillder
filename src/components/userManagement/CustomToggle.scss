@@ -1,0 +1,38 @@
+.custom-toggle {
+  width: 4vw;
+
+  input[type="checkbox"] {
+    display: none;
+    pointer-events: none;
+    & + label {
+      cursor: pointer;
+      svg {
+        width: 4vw;
+        stroke: green;
+        stroke-width: 10;
+        fill: white;
+
+        .box {
+          stroke-dasharray: 173;
+          stroke-dashoffset: 258;
+          // fill: #ccc;
+          stroke-linecap: round;
+        }
+      }
+    }
+  }
+}
+.reverse {
+  .box {
+    stroke-dashoffset: 320 !important;
+    transition: stroke-dashoffset 0.3s linear;
+  }
+}
+
+.no-reverse {
+  .box {
+    stroke-dashoffset: 431;
+    stroke: red;
+    transition: stroke-dashoffset 0.3s linear;
+  }
+}

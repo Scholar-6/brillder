@@ -5,8 +5,11 @@ import './AssignedBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
 import AssignedCircle from './AssignedCircle';
 import { TeachClassroom, Assignment } from "model/classroom";
+import { Subject } from "model/brick";
+import { getSubjectColor } from "components/services/subject";
 
 interface AssignedDescriptionProps {
+  subjects: Subject[];
   classroom: TeachClassroom;
   assignment: Assignment;
   index?: number;
@@ -19,13 +22,20 @@ interface AssignedDescriptionProps {
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   renderCircle() {
-    let color = this.props.assignment.brick.subject?.color;
+    let subjectId = this.props.assignment.brick.subjectId;
+    let color = getSubjectColor(this.props.subjects, subjectId);
+
     if (!color) {
       color = "#B0B0AD";
     }
     return (
-      <div className="left-brick-circle">
-        <div className="round-button" style={{ background: color }} />
+      <div className="left-brick-circle teach-circle">
+        <div className="round-button" style={{ background: color }}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#maximize"} />
+          </svg>
+        </div>
       </div>
     );
   }
