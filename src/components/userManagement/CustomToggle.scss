@@ -10,25 +10,25 @@
     pointer-events: none;
     & + label {
       width: 100%;
-      height: 2vw;
+      min-height: 2vw;
       cursor: pointer;
+      padding: 0.5vw;
+      box-sizing: content-box;
       @extend %posRelative;
       @extend %flexCenter;
       svg {
         width: 4vw;
-        stroke-width: 10;
+        min-height: 100%;
+        stroke-width: 16;
         fill: transparent;
         @extend %floatToCenter;
         .base-box,
         .box {
           stroke-dasharray: 173;
-          stroke-dashoffset: 258;
           stroke-linecap: round;
+          stroke-linejoin: round;
           position: relative;
           z-index: 3;
-        }
-        .box {
-          stroke: var(--theme-orange);
         }
         .base-box {
           stroke-dasharray: none;
@@ -36,21 +36,24 @@
           z-index: 0;
         }
       }
+      &.reverse {
+        svg {
+          .box {
+            stroke: var(--theme-green);
+            stroke-dashoffset: 430;
+            @extend %transitionAll300;
+          }
+        }
+      }
+      &.no-reverse {
+        svg {
+          .box {
+            stroke-dashoffset: 258;
+            stroke: var(--theme-orange);
+            @extend %transitionAll300;
+          }
+        }
+      }
     }
-  }
-}
-.reverse {
-  .box {
-    stroke: var(--theme-green) !important;
-    stroke-dashoffset: 430 !important;
-    @extend %transitionAll300;
-  }
-}
-
-.no-reverse {
-  .box {
-    stroke-dashoffset: 431;
-    stroke: var(--theme-orange);
-    transition: stroke-dashoffset 0.3s linear;
   }
 }
