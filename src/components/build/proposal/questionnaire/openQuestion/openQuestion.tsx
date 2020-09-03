@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Input, Hidden } from "@material-ui/core";
+import { Grid, TextField, Input, Hidden } from "@material-ui/core";
 
 import './openQuestion.scss';
 import { ProposalStep, PlayButtonStatus } from "../../model";
@@ -36,7 +36,7 @@ const HeadComponent: React.FC<any> = ({ data }) => {
   )
 }
 
-const OpenQuestion:React.FC<OpenQuestionProps> = ({
+const OpenQuestion: React.FC<OpenQuestionProps> = ({
   selectedQuestion, history, canEdit, playStatus, saveOpenQuestion
 }) => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -54,19 +54,20 @@ const OpenQuestion:React.FC<OpenQuestionProps> = ({
           <h1 className="tutorial-header">Ideally, every brick should <br /> point to a bigger question.</h1>
           <p className="sub-header">Alternatively, bricks can present a puzzle or a challenge which over-arches the topic.</p>
           <Grid item className="input-container">
-            <Input
-              autoFocus={true}
-              onKeyUp={e => {
-                if (enterPressed(e)) {
-                  history.push(map.ProposalBrief);
-                }
-              }}
-              className="audience-inputs"
-              disabled={!canEdit}
-              value={selectedQuestion}
-              onChange={handleChange}
-              placeholder="Enter Open Question(s)..."
-            />
+            <div className="audience-inputs">
+              <textarea
+                autoFocus={true}
+                onKeyUp={e => {
+                  if (enterPressed(e)) {
+                    history.push(map.ProposalBrief);
+                  }
+                }}
+                disabled={!canEdit}
+                value={selectedQuestion}
+                onChange={handleChange}
+                placeholder="Enter Open Question(s)..."
+              />
+            </div>
           </Grid>
           <NavigationButtons
             step={ProposalStep.OpenQuestion}

@@ -20,13 +20,13 @@ const EditorPage: React.FC<EditorPageProps> = ({ brick, canEdit, saveEditor, his
   const [editorError, setEditorError] = React.useState("");
 
   const onNext = () => {
-    if(editor) {
+    if (editor) {
       saveEditor(editor.id);
     }
   };
 
   const onBlur = () => {
-    if(editorUsername !== "") {
+    if (editorUsername !== "") {
       try {
         axios.get(
           `${process.env.REACT_APP_BACKEND_HOST}/user/byUsername/${editorUsername}`,
@@ -37,7 +37,7 @@ const EditorPage: React.FC<EditorPageProps> = ({ brick, canEdit, saveEditor, his
         }).catch(error => {
           setEditorError(error.response.data);
         });
-      } catch(e) {
+      } catch (e) {
         console.log(e);
       }
     } else {
@@ -47,7 +47,7 @@ const EditorPage: React.FC<EditorPageProps> = ({ brick, canEdit, saveEditor, his
 
   return (
     <Grid container
-      direction="row" 
+      direction="row"
       alignContent="center"
       justify="center"
       className="editor-page"
@@ -55,17 +55,18 @@ const EditorPage: React.FC<EditorPageProps> = ({ brick, canEdit, saveEditor, his
       <Grid item className="left-block">
         <h1>Who will edit your brick?</h1>
         <Grid item className="input-container">
-          <TextField
-            disabled={!canEdit}
-            className="audience-inputs"
-            value={editorUsername}
-            onChange={(evt) => setEditorUsername(evt.target.value)}
-            onBlur={(evt) => onBlur()}
-            placeholder="Enter editor's username here..."
-            error={editorError !== ""}
-            helperText={editorError}
-            fullWidth
-          />
+          <div className="audience-inputs">
+            <TextField
+              disabled={!canEdit}
+              value={editorUsername}
+              onChange={(evt) => setEditorUsername(evt.target.value)}
+              onBlur={(evt) => onBlur()}
+              placeholder="Enter editor's username here..."
+              error={editorError !== ""}
+              helperText={editorError}
+              fullWidth
+            />
+          </div>
         </Grid>
       </Grid>
       <Grid item>
@@ -80,7 +81,7 @@ const EditorPage: React.FC<EditorPageProps> = ({ brick, canEdit, saveEditor, his
           </Fab>
         </div>
       </Grid>
-      <Hidden only={['xs','sm']}>
+      <Hidden only={['xs', 'sm']}>
         <div className="red-right-block"></div>
       </Hidden>
     </Grid>
