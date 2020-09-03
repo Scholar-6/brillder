@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { ReduxCombinedState } from "redux/reducers";
-import { TeachClassroom, } from "model/classroom";
+import { Subject } from "model/brick";
+import { TeachClassroom } from "model/classroom";
+
 import AssignedBrickDescription from "./AssignedBrickDescription";
 
 
 interface ClassroomListProps {
   stats: any;
+  subjects: Subject[];
   classrooms: TeachClassroom[];
   startIndex: number;
   pageSize: number;
@@ -42,7 +45,9 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
         <div className="classroom-title" key={i}>
           {c.name}
           {}
-          {c.assignments.map((a, i) => <AssignedBrickDescription expand={() => this.props.expand(c.id)} key={i} classroom={c} assignment={a} />)}
+          {c.assignments.map((a, i) => <AssignedBrickDescription
+            subjects={this.props.subjects} expand={() => this.props.expand(c.id)} key={i} classroom={c} assignment={a}
+          />)}
         </div>
       )
     }
@@ -54,7 +59,9 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
       <div className="classroom-title">
         {c.name}
         {}
-        {c.assignments.map((a, i) => <AssignedBrickDescription expand={()=>{}} key={i} classroom={c} assignment={a} />)}
+        {c.assignments.map((a, i) => <AssignedBrickDescription
+          subjects={this.props.subjects} expand={()=>{}} key={i} classroom={c} assignment={a}
+        />)}
       </div>
     )
   }
