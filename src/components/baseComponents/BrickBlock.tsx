@@ -90,6 +90,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
                 isAdmin={isAdmin}
                 color={color}
                 brick={brick}
+                isAssigned={props.isAssigned}
                 move={move}
                 onDelete={(brickId) => props.handleDeleteOpen(brickId)}
               />

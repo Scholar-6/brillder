@@ -1,6 +1,7 @@
 
 import { Question } from "./question";
 import { UserType } from "./user";
+import { Assignment } from "./classroom";
 
 export enum BrickLengthEnum {
   None = 0,
@@ -62,6 +63,8 @@ export interface Brick {
   status: BrickStatus;
   attemptsCount: number;
   locked: boolean;
+
+  assignments?: Assignment[];
 }
 
 export enum isAuthenticated {

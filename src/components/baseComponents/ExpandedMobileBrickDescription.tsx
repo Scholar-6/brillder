@@ -16,7 +16,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   getSubjectRow(brick: Brick) {
     return `${brick.subject ? brick.subject.name : "SUBJECT Code"} | No. ${
       brick.attemptsCount
-      } of Plays`;
+    } of Plays`;
   }
 
   render() {

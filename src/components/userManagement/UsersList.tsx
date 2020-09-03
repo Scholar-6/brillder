@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import axios from "axios";
 import { connect } from "react-redux";
-import grey from "@material-ui/core/colors/grey";
 import Dialog from "@material-ui/core/Dialog";
 
 import actions from 'redux/actions/requestFailed';

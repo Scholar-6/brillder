@@ -605,6 +605,7 @@
             width: 100%;
             @extend %flexCenter;
             svg {
+              margin-left: 2%;
               height: 70%;
               width: 70%;
             }

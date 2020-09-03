@@ -6,7 +6,7 @@ import { prepareVisibleAssignments } from '../../service';
 import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
 import { AssignmentBrickStatus, AssignmentBrick } from "model/assignment";
 
-import BrickBlock from '../BrickBlock';
+import BrickBlock from "components/baseComponents/BrickBlock";
 
 interface AssignedBricksProps {
   user: User;
