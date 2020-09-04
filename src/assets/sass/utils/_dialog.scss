@@ -98,9 +98,9 @@
     .students-box {
       display: flex;
       font-size: 1.2vw;
-      @extend %fontFamilyLight;
+      font-family: $font-family-light;
       .student-names {
-        @extend %fontFamilyLightItalic;
+        font-family: $font-family-light-italic;
         text-align: left;
       }
       .students-count-box {

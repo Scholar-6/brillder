@@ -157,7 +157,7 @@
             font-size: 1.4vw;
           }
           color: white;
-          @extend %fontFamilyLight;
+          font-family: $font-family-light;
           @extend %textCenter;
           font-size: 1vw;
           em {

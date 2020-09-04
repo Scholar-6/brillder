@@ -120,7 +120,7 @@
     font-size: 2.55vw;
 
     span {
-      @extend %fontFamilyLight;
+      font-family: $font-family-light;
       font-weight: 200 !important;
     }
 
