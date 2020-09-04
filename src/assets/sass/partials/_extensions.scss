@@ -690,9 +690,6 @@
       font-size: 3vw;
     }
     @include tabletP {
-      font-size: 2vw;
-    }
-    @include ex-desktop_wide_hd {
       font-size: 1vw;
     }
   }
