@@ -108,7 +108,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     if (count >= 1) {
       return (
         <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
-          <div className="svgOnHover">
+          <div className="comments-icon svgOnHover">
             <svg className="svg w60 h60 active">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#message-square"} />
