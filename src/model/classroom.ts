@@ -37,6 +37,11 @@ export interface Classroom {
     assignments: Assignment[];
 }
 
+export interface StudentStatus {
+  studentId: number;
+  status: number;
+}
+
 export interface TeachClassroom extends Classroom {
-    active: boolean;
+  active: boolean;
 }
