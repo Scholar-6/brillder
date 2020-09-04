@@ -10,7 +10,7 @@ import { enterPressed } from "components/services/key";
 
 import NextButton from '../../components/nextButton';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
-import Navigation from 'components/build/proposal/components/navigation/Navigation';
+import Navigation from 'components/proposal/components/navigation/Navigation';
 
 import map from 'components/map';
 

@@ -5,8 +5,8 @@ import { Grid, Hidden } from "@material-ui/core";
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import './brickLength.scss';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
-import Navigation from 'components/build/proposal/components/navigation/Navigation';
-import { ProposalStep, PlayButtonStatus } from "../../model";
+import Navigation from 'components/proposal/components/navigation/Navigation';
+import { ProposalStep, PlayButtonStatus } from "components/proposal/model";
 import { BrickLengthEnum } from 'model/brick';
 import map from 'components/map';
 

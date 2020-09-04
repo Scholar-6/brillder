@@ -4,7 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { connect } from 'react-redux';
 import { History } from 'history';
 
-import actions from '../../../redux/actions/brickActions';
+import actions from 'redux/actions/brickActions';
 import './Proposal.scss';
 import SubjectPage from './questionnaire/subject/Subject';
 import BrickTitle from './questionnaire/brickTitle/brickTitle';
@@ -23,8 +23,8 @@ import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames, PlayButtonStatus } from './model';
-import { validateQuestion } from "../investigationBuildPage/questionService/ValidateQuestionService";
-import { parseQuestion, ApiQuestion } from "../investigationBuildPage/questionService/QuestionService";
+import { validateQuestion } from "components/build/investigationBuildPage/questionService/ValidateQuestionService";
+import { parseQuestion, ApiQuestion } from "components/build/investigationBuildPage/questionService/QuestionService";
 import map from 'components/map';
 
 import { setLocalBrick, getLocalBrick } from 'localStorage/proposal';

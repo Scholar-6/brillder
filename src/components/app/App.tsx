@@ -12,7 +12,7 @@ import ViewAll from '../viewAllPage/ViewAll';
 import MobileCategory from '../viewAllPage/MobileCategory';
 import PlayBrickRouting from '../play/PlayBrickRouting';
 import PlayPreviewRouting from 'components/playPreview/PreviewBrickRouting';
-import Proposal from '../build/proposal/Proposal';
+import Proposal from 'components/proposal/Proposal';
 import MainPage from 'components/mainPage/mainPage';
 import BackToWorkPage from '../backToWorkPage/BackToWork';
 import UsersListPage from '../userManagement/UsersList';

@@ -55,7 +55,7 @@ import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
-import { validateProposal } from '../proposal/service/validation';
+import { validateProposal } from 'components/proposal/service/validation';
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;

@@ -5,7 +5,7 @@ import './prep.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
-import Navigation from 'components/build/proposal/components/navigation/Navigation';
+import Navigation from 'components/proposal/components/navigation/Navigation';
 import { ProposalStep, PlayButtonStatus } from "../../model";
 import YoutubeAndMath from 'components/play/baseComponents/YoutubeAndMath';
 import map from 'components/map';
