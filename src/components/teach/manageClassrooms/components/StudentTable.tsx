@@ -70,7 +70,6 @@ const StudentTable: React.FC<StudentTableProps> = props => {
             {renderSortArrow(UserSortBy.Name)}
           </Grid>
         </th>
-        <th className="email-column" style={{ width: '27%' }}>EMAIL</th>
         <th style={{ width: '29%' }}>
           <Grid container>
             CLASSES
@@ -108,7 +107,6 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                   <span className="user-first-name">{user.firstName} </span>
                   <span className="user-last-name">{user.lastName}</span>
                 </td>
-                <td>{user.email}</td>
                 <td>
                   <div className="classroom-names">
                     {user.studyClassrooms ? user.studyClassrooms.map((classroom, i) =>
