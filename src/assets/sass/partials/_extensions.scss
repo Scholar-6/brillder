@@ -685,3 +685,33 @@
     }
   }
 }
+
+%linkDescription {
+  .link-description {
+    text-transform: uppercase;
+    font-size: 1.7vh;
+    font-family: $font-family-bold;
+    line-height: 1.2;
+    @extend %ellipsis;
+    height: 1.7vh;
+    margin-bottom: 0.5vh;
+    @include phone_and_tabletP {
+      font-size: 3.8vw;
+      width: 100%;
+    }
+    @include tabletP {
+      font-size: 0.8vw;
+      width: 19vw;
+    }
+  }
+}
+
+%questionLinkDescription {
+  .link-description {
+    @extend %textCenter;
+    font-family: $font-family-regular;
+    font-size: 1.2vw;
+    line-height: 1.4vw;
+    margin: 0;
+  }
+}
