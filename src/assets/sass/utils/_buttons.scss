@@ -17,7 +17,7 @@
     @include tabletP {
       padding: 0.5vw 1vw;
       font-size: 1.5vw;
-      border-radius: 0.6vw;
+      border-radius: $editor-radius;
     }
   }
   &.btn-xl {

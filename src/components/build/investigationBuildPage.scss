@@ -279,8 +279,8 @@ $space-between-boxes: 0.1vw;
     }
   }
 
-  .saved-info .tutorial-border {
-    border-radius: 0.6vw;
+  .saved-info .editor-border {
+    border-radius: $editor-radius;
     padding: 0.1vh 0;
     padding-left: 0.5vw;
 

@@ -1,0 +1,70 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.open-question-page {
+  .left-block {
+    margin-top: 15.5vh;
+    > h1 {
+      @extend %m0;
+      letter-spacing: 0.09vw;
+      @extend %fontFamilyBlack;
+      line-height: 1.35;
+      margin: 0 2vw;
+      @include phone_and_tabletL {
+        font-size: 7.9vw !important;
+      }
+      @include tabletL {
+        font-size: 3.9vw;
+      }
+    }
+    .input-container {
+      @extend %inputContainer;
+      .audience-inputs {
+        &:before,
+        &:after {
+          @include phone_and_tabletL {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .sub-header {
+    @extend %fontFamilyRegular;
+    @extend %textCenter;
+    color: var(--theme-dark-blue);
+    @include phone_and_tabletL {
+      display: none;
+    }
+    @include tabletL {
+      font-size: 1.32vw;
+    }
+  }
+
+  .audience-inputs {
+    @extend %buildInputs;
+  }
+
+  .MuiInputBase-input {
+    letter-spacing: 0.05vw;
+  }
+
+  .last-buttons {
+    margin-top: 0.6vh;
+    margin-left: 1.5vw;
+  }
+
+  .phone-preview-component {
+    img {
+      @extend %widthAuto;
+      margin-top: 8.8vh;
+      height: 34%;
+    }
+    .typing-text {
+      height: 35%;
+      top: 54%;
+    }
+  }
+}

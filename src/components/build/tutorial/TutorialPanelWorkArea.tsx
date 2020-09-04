@@ -30,7 +30,7 @@ export interface TutorialProps {
   skipTutorial(): void;
 }
 
-const TutorialPanelWorkArea: React.FC<TutorialProps> = ({user, step, setStep, getUser, skipTutorial}) => {
+const TutorialPanelWorkArea: React.FC<TutorialProps> = ({ user, step, setStep, getUser, skipTutorial }) => {
   const skip = () => skipTutorial();
 
   const renderStepPanel = () => {
@@ -50,7 +50,7 @@ const TutorialPanelWorkArea: React.FC<TutorialProps> = ({user, step, setStep, ge
 
   return (
     <MuiThemeProvider >
-      <div className="build-question-page tutorial-panel" style={{width: '100%', height: '94%'}}>
+      <div className="build-question-page" style={{ width: '100%', height: '94%' }}>
         {renderStepPanel()}
       </div>
     </MuiThemeProvider>
