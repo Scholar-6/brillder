@@ -105,7 +105,10 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                     </SvgIcon>
                   </ListItemIcon>
                   <div className="content-box" onClick={() => this.move(notification)}>
-                    <ListItemText className="notification-detail" primary={notification.title} secondary={notification.text} />
+                    <div className="notification-detail">
+                      <p className="notif-title">{notification.title}</p>
+                      <p className="notif-desc">{notification.text}</p>
+                    </div>
                     <div className="actions">
                       <div className="notification-time">{moment(notification.timestamp).fromNow()}</div>
                       <button aria-label="clear" className="btn btn-transparent delete-notification svgOnHover" onClick={() => this.markAsRead(notification.id)}>

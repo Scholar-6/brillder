@@ -70,8 +70,9 @@
             display: flex;
             width: calc(100% - 56px);
             .notification-detail {
-              .MuiListItemText-primary,
-              .MuiListItemText-secondary {
+              border-bottom: 0.02vh solid var(--theme-dark-blue);
+              .notif-title,
+              .notif-desc {
                 @include phone_and_tabletP {
                   font-size: 3.5vw;
                 }
@@ -85,21 +86,12 @@
                   font-size: 1vw;
                 }
               }
-              .MuiListItemText-primary {
+              .notif-title {
                 color: var(--white);
                 text-transform: capitalize;
               }
-              .MuiListItemText-secondary {
+              .notif-desc {
                 color: var(--dark-gray);
-              }
-            }
-            .notification-detail {
-              border-bottom: 0.02vh solid var(--theme-dark-blue);
-              @include phone_and_tabletP {
-                padding-bottom: 1vh;
-              }
-              @include tabletP {
-                padding-bottom: 0.5vh;
               }
             }
             .actions {
