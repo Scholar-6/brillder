@@ -499,22 +499,7 @@
               top: 0.3vh;
               left: 3vw;
             }
-            .link-description {
-              text-transform: uppercase;
-              font-family: $font-family-bold;
-              line-height: 1.1;
-              margin-bottom: 0.5vh;
-              @extend %ellipsis;
-              @include phone_and_tabletP {
-                font-size: 3.8vw;
-                width: 100%;
-              }
-              @include tabletP {
-                font-size: 0.8vw;
-                overflow: hidden;
-                width: 19vw;
-              }
-            }
+            @extend %linkDescription;
             .link-info {
               color: var(--theme-light-blue);
               font-family: $font-family-regular;
