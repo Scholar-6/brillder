@@ -27,7 +27,7 @@ export interface LineHighlightingProps extends UniqueComponentProps {
 }
 
 const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
-  locked, data, save, updateComponent
+  locked, data, validationRequired, save, updateComponent
 }) => {
   const [state, setState] = React.useState(data);
 
@@ -94,10 +94,14 @@ const LineHighlightingComponent: React.FC<LineHighlightingProps> = ({
         </div>
       );
     }
+    let className = "lines-input";
+    if (validationRequired && !state.text) {
+      className += " content-invalid"
+    }
     return (
       <textarea
         disabled={locked}
-        className="lines-input"
+        className={className}
         value={state.text}
         onBlur={() => save()}
         onChange={updateText} placeholder="Enter Lines Here..." />
