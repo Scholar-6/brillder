@@ -44,30 +44,3 @@
     font-size: 3.5vw;
   }
 }
-.build-question-page {
-  &:not(.active) {
-    .text-box {
-      .drag-box-name {
-        animation: pulse1 1.5s ease infinite;
-      }
-    }
-  }
-}
-
-@keyframes pulse1 {
-  0% {
-    -ms-text-shadow: 0 0 0 var(--theme-orange-alpha5);
-    -o-text-shadow: 0 0 0 var(--theme-orange-alpha5);
-    text-shadow: 0 0 0 var(--theme-orange-alpha5);
-  }
-  70% {
-    -ms-text-shadow: 0 0 150px transparent;
-    -o-text-shadow: 0 0 150px transparent;
-    text-shadow: 0 0 150px transparent;
-  }
-  100% {
-    -ms-text-shadow: 0 0 0 transparent;
-    -o-text-shadow: 0 0 0 transparent;
-    text-shadow: 0 0 0 transparent;
-  }
-}

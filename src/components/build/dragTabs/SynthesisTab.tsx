@@ -16,7 +16,7 @@ const SynthesisTab: React.FC<SynthesisTabProps> = (props) => {
     className += " width-based";
   }
   if (props.tutorialStep === TutorialStep.Synthesis) {
-    className += " tutorial-border border-animation";
+    className += " editor-border svgOnHover border-animation";
   }
   return (
     <Grid

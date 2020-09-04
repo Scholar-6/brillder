@@ -13,10 +13,10 @@ export interface TutorialProps {
 
 const SynthesisPanel: React.FC<TutorialProps> = (props) => {
   return (
-    <div className="tutorial-synthesis-panel">
+    <div className="tutorial-panel tutorial-synthesis-panel">
       <div className="tutorial-step-1">
         <Grid container justify="center">
-          <div className="synthesis-border svgOnHover border-animation">
+          <div className="editor-border svgOnHover border-animation">
             <svg className="svg w60 h60 active">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#list"} className="text-theme-dark-blue" />

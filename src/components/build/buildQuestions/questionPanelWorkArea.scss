@@ -5,14 +5,17 @@
 .build-question-page {
   $left-sidebar-width: 27.5%;
   $question-build-width: 45%;
-
   position: relative;
   @extend %fontFamilyRegular;
   background: white;
-
-  border-bottom-left-radius: $question-radius;
-  border-bottom-right-radius: $question-radius;
-
+  border-radius: 0 0 $editor-radius $editor-radius;
+  &:not(.active) {
+    .text-box {
+      .drag-box-name {
+        animation: pulse1 1.5s ease infinite;
+      }
+    }
+  }
   .invalid {
     background: var(--theme-orange) !important;
   }
@@ -292,7 +295,7 @@
           font-size: 1.3vw;
           @extend %fontFamilyRegular;
           text-transform: none;
-          border-radius: $question-radius;
+          border-radius: $editor-radius;
           padding: 1.5vh 0;
           display: flex;
           align-items: center;
