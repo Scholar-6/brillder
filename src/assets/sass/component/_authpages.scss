@@ -160,7 +160,7 @@
         margin-bottom: 2.7vh;
         transition: all 0.2s ease-in-out;
         @extend %flexCenter;
-        @extend %fontFamilyRegular;
+        font-family: $font-family-regular;
         @include phone_and_tabletP {
           width: 100%;
           font-size: 4.8vw;
@@ -287,7 +287,7 @@
           letter-spacing: 0.3vw;
           margin: 0 0 2vh 0;
           flex: 1;
-          @extend %fontFamilyRegular;
+          font-family: $font-family-regular;
           @include phone_and_tabletP {
             color: var(--black-blue);
             border-radius: 7vw;
@@ -303,7 +303,7 @@
           &:hover {
             background: var(--theme-orange);
             box-shadow: none;
-            @extend %fontFamilyBold;
+            font-family: $font-family-bold;
           }
           &.sign-up-button {
             color: var(--white);

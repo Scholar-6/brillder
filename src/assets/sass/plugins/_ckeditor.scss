@@ -1,5 +1,5 @@
 .ck-editor {
-  @extend %fontFamilyRegular;
+  font-family: $font-family-regular;
   .ck-content {
     > p {
       font-family: $font-family-regular !important;

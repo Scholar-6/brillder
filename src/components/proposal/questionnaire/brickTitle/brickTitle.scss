@@ -15,7 +15,7 @@
     }
 
     h1 {
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
       @include phone_and_tabletL {
         font-size: 9vw !important;
         padding: 0 !important;
@@ -28,7 +28,7 @@
     }
 
     .MuiInputBase-input {
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
       letter-spacing: 0.05vw;
     }
 
@@ -67,12 +67,12 @@
       @extend %width100;
       margin-top: 8vh;
       @extend %themeRadius;
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
       line-height: 1.2;
       letter-spacing: 0.03vw;
 
       .brick-title {
-        @extend %fontFamilyBold;
+        font-family: $font-family-bold;
         margin-bottom: 0.5vh;
         width: 15.5vw;
         @extend %ellipsis;

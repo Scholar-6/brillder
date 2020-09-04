@@ -11,7 +11,7 @@
   font-size: 2vw;
   line-height: 2vw;
   letter-spacing: 0.4vw;
-  @extend %fontFamilyBlack;
+  font-family: $font-family-black;
   @extend %flexCenter;
   @include phone_and_tabletP {
     min-height: 5.3vw;

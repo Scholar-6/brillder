@@ -31,7 +31,7 @@ textarea {
   &::placeholder,
   &:-ms-input-placeholder,
   &::-ms-input-placeholder {
-    @extend %fontFamilyRegular;
+    font-family: $font-family-regular;
   }
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
