@@ -689,19 +689,18 @@
 %linkDescription {
   .link-description {
     text-transform: uppercase;
-    font-size: 1.7vh;
     font-family: $font-family-bold;
-    line-height: 1.2;
-    @extend %ellipsis;
-    height: 1.7vh;
     margin-bottom: 0.5vh;
+    @extend %ellipsis;
+    width: calc(100% - 3vw);
     @include phone_and_tabletP {
-      font-size: 3.8vw;
-      width: 100%;
+      font-size: 3vw;
     }
     @include tabletP {
-      font-size: 0.8vw;
-      width: 19vw;
+      font-size: 2vw;
+    }
+    @include ex-desktop_wide_hd {
+      font-size: 1vw;
     }
   }
 }
