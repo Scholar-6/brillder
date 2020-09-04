@@ -67,6 +67,9 @@ $box-radius: 0.4vw;
         @include tabletP {
           font-size: 2vw;
         }
+        @include ex-desktop_wide {
+          font-size: 1.8vw;
+        }
       }
     }
   }
