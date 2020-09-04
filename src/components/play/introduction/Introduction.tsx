@@ -13,7 +13,7 @@ import IntroductionDetails from "./IntroductionDetails";
 import PrepExpandedDialog from 'components/baseComponents/prepExpandedDialog/PrepExpandedDialog'
 import { PlayMode } from "../model";
 import HighlightHtml from '../baseComponents/HighlightHtml';
-import { BrickFieldNames } from 'components/build/proposal/model';
+import { BrickFieldNames } from 'components/proposal/model';
 import queryString from 'query-string';
 
 const moment = require("moment");

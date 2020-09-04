@@ -32,7 +32,7 @@ import PlayLeftSidebar from './PlayLeftSidebar';
 import { PlayMode } from './model';
 import { ReduxCombinedState } from "redux/reducers";
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
-import { BrickFieldNames } from "components/build/proposal/model";
+import { BrickFieldNames } from "components/proposal/model";
 import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
 
 

@@ -8,7 +8,7 @@ import { enterPressed } from "components/services/key";
 
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
-import Navigation from 'components/build/proposal/components/navigation/Navigation';
+import Navigation from 'components/proposal/components/navigation/Navigation';
 
 interface OpenQuestionProps {
   selectedQuestion: any;
