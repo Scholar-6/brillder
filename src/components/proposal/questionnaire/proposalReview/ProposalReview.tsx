@@ -14,7 +14,7 @@ import MathInHtml from 'components/play/baseComponents/MathInHtml';
 import YoutubeAndMathInHtml from "components/play/baseComponents/YoutubeAndMath";
 import { BrickFieldNames, PlayButtonStatus } from '../../model';
 import map from 'components/map';
-import PlayButton from "components/build/investigationBuildPage/components/PlayButton";
+import PlayButton from "components/build/components/PlayButton";
 
 
 interface ProposalProps {

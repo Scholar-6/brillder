@@ -3,7 +3,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import './ChooseOneAnswer.scss';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
-import QuestionImageDropzone from "../../baseComponents/QuestionImageDropzone";
+import QuestionImageDropzone from "components/build/baseComponents/QuestionImageDropzone";
 import { QuestionValueType } from "../types";
 import { ChooseOneAnswer } from './types';
 import sprite from "assets/img/icons-sprite.svg";

@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 
 import './QuestionImageDropzone.scss';
 import {uploadFile} from 'components/services/uploadFile';
-import { QuestionValueType } from "../questionTypes/types";
+import { QuestionValueType } from "../buildQuestions/questionTypes/types";
 import AddImageBtnContent from "./AddImageBtnContent";
 
 

@@ -10,8 +10,8 @@ import { CompQuestionProps } from "../types";
 import {
   ShrortAnswerData,
   ShortAnswerItem,
-} from "components/build/investigationBuildPage/buildQuestions/questionTypes/shortAnswerBuild/interface";
-import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
+} from "components/build/buildQuestions/questionTypes/shortAnswerBuild/interface";
+import { stripHtml } from "components/build/questionService/ConvertService";
 import DocumentWirisEditorComponent from "components/baseComponents/ckeditor/DocumentWirisEditor";
 
 interface ShortAnswerProps extends CompQuestionProps {

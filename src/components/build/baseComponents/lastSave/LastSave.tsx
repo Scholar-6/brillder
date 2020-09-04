@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import './LastSave.scss'
 import { Grid } from "@material-ui/core";
-import { TutorialStep } from "components/build/investigationBuildPage/tutorial/TutorialPanelWorkArea";
+import { TutorialStep } from "components/build/tutorial/TutorialPanelWorkArea";
 
 
 interface LastSaveProps {

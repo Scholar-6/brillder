@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 
 import './categoriseBuild.scss'
-import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import { UniqueComponentProps } from '../types';
-import QuestionImageDropZone from '../../baseComponents/QuestionImageDropzone';
+import QuestionImageDropZone from 'components/build/baseComponents/QuestionImageDropzone';
 import { SortCategory, QuestionValueType, SortAnswer } from 'components/interfaces/sort';
 import DocumentWirisEditorComponent from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import sprite from "assets/img/icons-sprite.svg";

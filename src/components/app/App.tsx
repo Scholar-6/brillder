@@ -16,11 +16,11 @@ import Proposal from 'components/proposal/Proposal';
 import MainPage from 'components/mainPage/mainPage';
 import BackToWorkPage from '../backToWorkPage/BackToWork';
 import UsersListPage from '../userManagement/UsersList';
-import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
+import InvestigationBuildPage from 'components/build/investigationBuildPage'
 import LoginPage from '../authPages/loginPage/loginPage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
-import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
-import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
+import SubmitBrickPage from '../build/submit/SubmitPage';
+import PublishBrickPage from 'components/build/publish/PublishPage';
 import UserProfilePage from '../userProfilePage/UserProfile';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';

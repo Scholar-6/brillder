@@ -5,7 +5,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import { UniqueComponentProps } from '../types';
 import { showSameAnswerPopup } from '../service/questionBuild';
 
-import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 

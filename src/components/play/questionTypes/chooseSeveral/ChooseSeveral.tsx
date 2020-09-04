@@ -8,8 +8,8 @@ import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from 'components/play/baseComponents/ReviewGlobalHint';
 import { CompQuestionProps } from '../types';
 import MathInHtml from '../../baseComponents/MathInHtml';
-import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
-import { ChooseOneAnswer } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/chooseOneBuild/types';
+import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
+import { ChooseOneAnswer } from 'components/build/buildQuestions/questionTypes/chooseOneBuild/types';
 
 
 interface ChooseSeveralProps extends CompQuestionProps {

@@ -7,8 +7,7 @@ import { UniqueComponentProps } from '../types';
 import { showSameAnswerPopup } from '../service/questionBuild';
 
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
-import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
-
+import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 
 
 const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({

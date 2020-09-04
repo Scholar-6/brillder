@@ -23,8 +23,8 @@ import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { BrickFieldNames, PlayButtonStatus } from './model';
-import { validateQuestion } from "components/build/investigationBuildPage/questionService/ValidateQuestionService";
-import { parseQuestion, ApiQuestion } from "components/build/investigationBuildPage/questionService/QuestionService";
+import { validateQuestion } from "components/build/questionService/ValidateQuestionService";
+import { parseQuestion, ApiQuestion } from "components/build/questionService/QuestionService";
 import map from 'components/map';
 
 import { setLocalBrick, getLocalBrick } from 'localStorage/proposal';

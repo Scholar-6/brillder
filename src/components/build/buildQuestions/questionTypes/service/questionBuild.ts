@@ -1,4 +1,4 @@
-import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
+import { stripHtml } from "components/build/questionService/ConvertService";
 
 export function showSameAnswerPopup(i: number, list: any, openSameAnswerDialog: Function) {
   let answerText = stripHtml(list[i].value);
