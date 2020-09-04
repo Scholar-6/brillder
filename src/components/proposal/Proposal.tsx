@@ -17,7 +17,7 @@ import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import ProposalReview from './questionnaire/proposalReview/ProposalReview';
 import { Brick, Author } from "model/brick";
 import { User } from "model/user";
-import CloseProposalDialog from 'components/build/baseComponents/CloseProposalDialog';
+import CloseProposalDialog from 'components/build/baseComponents/dialogs/CloseProposalDialog';
 import VersionLabel from "components/baseComponents/VersionLabel";
 import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
