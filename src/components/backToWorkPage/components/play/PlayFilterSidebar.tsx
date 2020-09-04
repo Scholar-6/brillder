@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
-import { Brick } from "model/brick";
 import { PlayFilters } from '../../model';
 import { TeachClassroom } from "model/classroom";
 import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
@@ -22,6 +21,7 @@ interface FilterSidebarProps {
 interface FilterSidebarState {
   activeClassroom: TeachClassroom | null;
   filterExpanded: boolean;
+  isClearFilter: boolean;
   filters: PlayFilters;
 }
 
@@ -30,6 +30,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
     super(props);
     this.state = {
       filterExpanded: true,
+      isClearFilter: false,
       activeClassroom: null,
       filters: {
         completed: false,
@@ -42,9 +43,27 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
   hideFilter() { this.setState({ filterExpanded: false }) }
   expandFilter() { this.setState({ filterExpanded: true }) }
 
+  filterClear(filters: PlayFilters) {
+    if (filters.checked || filters.completed || filters.submitted) {
+      this.setState({ isClearFilter: true, filters });
+    } else {
+      this.setState({ isClearFilter: false, filters });
+    }
+  }
+
+  clearStatus() {
+    const { filters } = this.state;
+    filters.checked = false;
+    filters.completed = false;
+    filters.submitted = false;
+    this.filterClear(filters);
+    this.props.filterChanged(filters);
+  }
+
   toggleFilter(filter: PlayFilterFields) {
     const { filters } = this.state;
     filters[filter] = !filters[filter];
+    this.filterClear(filters);
     this.props.filterChanged(filters);
   }
 
@@ -119,7 +138,26 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
     }
     return (
       <div className="sort-box">
-        <div className="filter-header">Filter</div>
+        <div className="filter-header">
+          Filter
+          <button
+            className={
+              "btn-transparent filter-icon " +
+              (this.state.filterExpanded
+                ? this.state.isClearFilter
+                  ? "arrow-cancel"
+                  : "arrow-down"
+                : "arrow-up")
+            }
+            onClick={() => {
+              this.state.filterExpanded
+                ? this.state.isClearFilter
+                  ? this.clearStatus()
+                  : (this.hideFilter())
+                : (this.expandFilter())
+            }}>
+          </button>
+        </div>
         {this.state.filterExpanded === true ? (
           <div className="filter-container subject-indexes-box" style={{ marginTop: '5vh' }}>
             <div className="index-box color1">
