@@ -24,7 +24,7 @@
       font-size: 1.4vw;
       margin-bottom: 0vh;
       letter-spacing: 0.01vw;
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
       color: var(--theme-dark-blue);
     }
   }
@@ -83,7 +83,7 @@
     height: 15.35vh;
     font-size: 1.5vw;
     padding: 0;
-    @extend %fontFamilyRegular;
+    font-family: $font-family-regular;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -120,7 +120,7 @@
       background: var(--theme-orange);
       color: var(--white);
       .link-description {
-        @extend %fontFamilyBlack;
+        font-family: $font-family-black;
       }
     }
   }

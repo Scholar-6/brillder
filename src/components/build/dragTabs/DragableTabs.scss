@@ -71,7 +71,7 @@ $tile-height: 100%;
     }
     .tab-number {
       color: var(--theme-dark-blue);
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
       font-size: 3.4vh;
       user-select: none;
     }
@@ -115,7 +115,7 @@ $tile-height: 100%;
     @extend %textCenter;
     color: var(--theme-dark-blue);
     overflow: hidden;
-    @extend %fontFamilyBold;
+    font-family: $font-family-bold;
     width: 2vw;
     height: 2vw;
     @include phone_and_tabletP {

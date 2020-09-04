@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .tutorial-page {
-  @extend %fontFamilyRegular;
+  font-family: $font-family-regular;
   color: var(--theme-dark-blue);
 
   ::-webkit-input-placeholder,
@@ -55,7 +55,7 @@
     }
   }
   .only-tutorial-header {
-    @extend %fontFamilyBlack;
+    font-family: $font-family-black;
     margin-top: 4.7vh;
     font-size: 3.9vw;
     letter-spacing: 0.09vw;
@@ -85,7 +85,7 @@
       @extend %textCenter;
       color: var(--dark-gray);
       font-size: 1.2vw;
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
     }
 
     .audience-inputs {
@@ -320,7 +320,7 @@
       @extend %posRelative;
       padding: 6vh 0vw 0 0vw;
       color: var(--theme-orange);
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
       letter-spacing: 0.1vw;
     }
   }
@@ -331,7 +331,7 @@
     overflow: hidden;
     color: var(--white);
     font-size: 1vw;
-    @extend %fontFamilyRegular;
+    font-family: $font-family-regular;
     overflow-y: auto;
     padding: 0 1vw;
     word-break: break-word;

@@ -353,7 +353,7 @@
 
       h3 {
         font-size: 1.6vw;
-        @extend %fontFamilyBlack;
+        font-family: $font-family-black;
         color: var(--white);
         letter-spacing: 0.3vw;
         margin: 0;
@@ -475,7 +475,7 @@
         .brick-container {
           width: 100%;
           position: relative;
-          @extend %fontFamilyRegular;
+          font-family: $font-family-regular;
           text-align: left;
 
           @include phone_and_tabletP {
@@ -501,7 +501,7 @@
             }
             .link-description {
               text-transform: uppercase;
-              @extend %fontFamilyBold;
+              font-family: $font-family-bold;
               line-height: 1.1;
               margin-bottom: 0.5vh;
               @extend %ellipsis;
@@ -517,7 +517,7 @@
             }
             .link-info {
               color: var(--theme-light-blue);
-              @extend %fontFamilyRegular;
+              font-family: $font-family-regular;
               margin-bottom: 0.1vh;
               @extend %ellipsis;
               @include phone_and_tabletP {
@@ -743,7 +743,7 @@
       letter-spacing: 0.015vw;
 
       .bold {
-        @extend %fontFamilyBold;
+        font-family: $font-family-bold;
       }
     }
 

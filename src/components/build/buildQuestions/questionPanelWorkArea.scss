@@ -6,7 +6,7 @@
   $left-sidebar-width: 27.5%;
   $question-build-width: 45%;
   position: relative;
-  @extend %fontFamilyRegular;
+  font-family: $font-family-regular;
   background: white;
   border-radius: 0 0 $editor-radius $editor-radius;
   &:not(.active) {
@@ -35,12 +35,12 @@
 
   .ck-placeholder:before {
     color: #aaa;
-    @extend %fontFamilyBold;
+    font-family: $font-family-bold;
   }
 
   ::placeholder {
     color: #aaa;
-    @extend %fontFamilyBold;
+    font-family: $font-family-bold;
   }
 
   ::-webkit-scrollbar {
@@ -255,7 +255,7 @@
           width: 100%;
           height: 100%;
           @extend %flexCenter;
-          @extend %fontFamilyBold;
+          font-family: $font-family-bold;
           color: var(--theme-dark-blue);
           .svg {
             color: var(--theme-dark-blue);
@@ -282,7 +282,7 @@
           width: 100%;
           @extend %textCenter;
           color: var(--theme-dark-blue);
-          @extend %fontFamilyBold;
+          font-family: $font-family-bold;
         }
 
         button {
@@ -293,7 +293,7 @@
           background-color: var(--tab-gray);
           border: 0;
           font-size: 1.3vw;
-          @extend %fontFamilyRegular;
+          font-family: $font-family-regular;
           text-transform: none;
           border-radius: $editor-radius;
           padding: 1.5vh 0;

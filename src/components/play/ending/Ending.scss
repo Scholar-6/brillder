@@ -34,7 +34,7 @@
     margin-right: 0px;
 
     > span {
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
       font-size: 18px;
       margin-right: 10px;
     }
@@ -42,7 +42,7 @@
 
   .score-precentage {
     margin-top: 3vh;
-    @extend %fontFamilyBlack;
+    font-family: $font-family-black;
     color: var(--theme-dark-blue);
     font-size: 12.5vh;
     line-height: 1;
@@ -50,7 +50,7 @@
   }
 
   .score-number {
-    @extend %fontFamilyBold;
+    font-family: $font-family-bold;
     color: var(--theme-dark-blue);
     font-size: 4vh;
     line-height: 1;

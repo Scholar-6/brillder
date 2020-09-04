@@ -3,7 +3,7 @@
 @import 'src/assets/sass/partials/extensions';
 
 .brick-length-page {
-  @extend %fontFamilyRegular;
+  font-family: $font-family-regular;
   color: var(--theme-dark-blue);
 
   .left-block {
@@ -21,7 +21,7 @@
       color: var(--theme-dark-blue);
       letter-spacing: 0.07vw;
       line-height: 1.35;
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
       @include phone_and_tabletL {
         font-size: 6vw;
         margin-top: 2.7vh;
@@ -42,7 +42,7 @@
 
       text-align: left;
       color: var(--theme-dark-blue);
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
       letter-spacing: 0.02vw;
 
       margin-bottom: 12vh;
@@ -154,7 +154,7 @@
       margin-top: 10%;
       color: var(--white);
       font-size: 1.2vw;
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
     }
   }
 }

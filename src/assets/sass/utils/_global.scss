@@ -4,7 +4,7 @@ body,
   margin: 0;
   padding: 0;
   height: 100%;
-  @extend %fontFamilyRegular;
+  font-family: $font-family-regular;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -203,7 +203,7 @@ textarea {
 
 h3 {
   color: white;
-  @extend %fontFamilyRegular;
+  font-family: $font-family-regular;
   font-weight: normal;
   margin-top: 2.5vh;
   margin-left: 1.05vw;
@@ -303,11 +303,11 @@ h3 {
 }
 
 .regular {
-  @extend %fontFamilyRegular;
+  font-family: $font-family-regular;
 }
 
 .bold {
-  @extend %fontFamilyBold;
+  font-family: $font-family-bold;
 }
 
 .dropzone {
