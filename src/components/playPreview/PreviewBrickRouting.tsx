@@ -28,9 +28,9 @@ import Synthesis from 'components/play/synthesis/Synthesis';
 import Review from 'components/play/review/ReviewPage';
 import Ending from 'components/play/ending/Ending'
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
-import PublishPage from 'components/build/publish/PublishPage';
-import EditorPage from 'components/build/editor/EditorPage';
-import FinishPage from 'components/build/finish/FinishPage';
+import PublishPage from './publish/PublishPage';
+import EditorPage from './editor/EditorPage';
+import FinishPage from './finish/FinishPage';
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
