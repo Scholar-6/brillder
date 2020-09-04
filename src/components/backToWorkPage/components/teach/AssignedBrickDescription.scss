@@ -1,6 +1,6 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .assigned-brick-description {
   position: relative;
@@ -55,6 +55,7 @@
     .link-info {
       width: 100%;
     }
+    @extend %linkDescription;
   }
   .teach-brick-actions-container {
     @extend %flexCenter;

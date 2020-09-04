@@ -15,16 +15,7 @@
     font-family: $font-family-regular;
     overflow: hidden;
     font-size: 1.7vh;
-    .link-description {
-      text-transform: uppercase;
-      font-size: 1.7vh;
-      font-family: $font-family-bold;
-      line-height: 1.2;
-      overflow: hidden;
-      height: 1.7vh;
-      margin-bottom: 0.5vh;
-    }
-
+    @extend %linkDescription;
     .link-info {
       color: var(--theme-light-blue);
       line-height: 1.3;
