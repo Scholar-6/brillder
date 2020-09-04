@@ -13,6 +13,14 @@
       max-width: $synthesis-box-width;
       min-width: $synthesis-box-width;
       padding-left: 2vw;
+      .ck-editor {
+        width: 100% !important;
+        .ck-content {
+          p {
+            font-size: 1.35vw;
+          }
+        }
+      }
     }
 
     .ckeditor-synthesis {
@@ -93,10 +101,6 @@
           height: 59.5vh;
         }
       }
-    }
-
-    .ck-editor {
-      width: 100% !important;
     }
   }
 }

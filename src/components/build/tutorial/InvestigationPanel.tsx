@@ -12,10 +12,10 @@ export interface TutorialProps {
 
 const InvestigationPanel: React.FC<TutorialProps> = (props) => {
   return (
-    <div className="tutorial-investigation-panel">
+    <div className="tutorial-panel tutorial-investigation-panel">
       <div className="tutorial-step-1">
         <Grid container justify="center">
-          <div className="add-icon border-animation">
+          <div className="editor-border svgOnHover border-animation">
             <svg className="svg w100 h100 active">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#plus"} className="text-theme-dark-blue" />
