@@ -184,11 +184,8 @@
       background: var(--tab-gray);
       border-radius: 0.3vw;
       display: flex;
-      text-overflow: ellipsis;
       height: 100%;
-
-      overflow: hidden;
-      white-space: nowrap;
+      @extend %ellipsis;
     }
   }
 }

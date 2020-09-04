@@ -60,7 +60,7 @@
     .question-mark {
       width: 100%;
       height: 100%;
-      text-align: center;
+      @extend %textCenter;
       font-weight: bold;
       font-family: $font-family-black;
     }

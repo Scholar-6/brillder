@@ -8,19 +8,19 @@ import './app.scss';
 import GlobalFailedRequestDialog from "components/baseComponents/failedRequestDialog/GlobalFailedRequestDialog";
 
 import VersionLabel from 'components/baseComponents/VersionLabel';
-import Dashboard from '../play/dashboard/Dashboard';
-import MobileCategory from '../play/dashboard/MobileCategory';
-import PlayBrickRouting from '../play/brick/PlayBrickRouting';
+import ViewAll from '../viewAllPage/ViewAll';
+import MobileCategory from '../viewAllPage/MobileCategory';
+import PlayBrickRouting from '../play/PlayBrickRouting';
 import PlayPreviewRouting from 'components/playPreview/PreviewBrickRouting';
-import Proposal from '../build/proposal/Proposal';
+import Proposal from 'components/proposal/Proposal';
 import MainPage from 'components/mainPage/mainPage';
 import BackToWorkPage from '../backToWorkPage/BackToWork';
-import UsersListPage from '../build/users/UsersList';
-import InvestigationBuildPage from '../build/investigationBuildPage/investigationBuildPage'
+import UsersListPage from '../userManagement/UsersList';
+import InvestigationBuildPage from 'components/build/investigationBuildPage'
 import LoginPage from '../authPages/loginPage/loginPage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
-import SubmitBrickPage from '../build/investigationBuildPage/submit/SubmitPage';
-import PublishBrickPage from '../build/investigationBuildPage/publish/PublishPage';
+import SubmitBrickPage from '../playPreview/submit/SubmitPage';
+import PublishBrickPage from 'components/playPreview/publish/PublishPage';
 import UserProfilePage from '../userProfilePage/UserProfile';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
@@ -87,7 +87,7 @@ const App: React.FC = () => {
       <Switch>
         <StudentRoute path="/play/brick/:brickId" component={BrickWrapper} innerComponent={PlayBrickRouting} />
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
-        <StudentRoute path={map.ViewAllPage} component={Dashboard} />
+        <StudentRoute path={map.ViewAllPage} component={ViewAll} />
 
         <BuildRoute path="/manage-classrooms" component={ManageClassrooms} location={location} /> 
         <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />

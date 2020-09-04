@@ -38,8 +38,8 @@ import Image from "@ckeditor/ckeditor5-image/src/image";
 
 import "./DocumentEditor.scss";
 import UploadImageCustom from "./UploadImageCustom";
-import { stripHtml } from "components/build/investigationBuildPage/questionService/ConvertService";
-import { PlayMode } from "components/play/brick/model";
+import { stripHtml } from "components/build/questionService/ConvertService";
+import { PlayMode } from "components/play/model";
 
 export interface DocumentHighlightingEditorProps {
   data: string;

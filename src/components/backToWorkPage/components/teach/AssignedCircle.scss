@@ -20,5 +20,21 @@
       height: 2.1vw;
       width: 2.1vw;
     }
+
+    .red {
+      cursor: pointer;
+      background: var(--theme-orange);
+      svg {
+        height: 68%;
+        width: 68%;
+        color: var(--tab-gray);
+      }
+    }
+    .yellow {
+      background: var(--yellow);
+    }
+    .green {
+      background: var(--theme-green)
+    }
   }
 }

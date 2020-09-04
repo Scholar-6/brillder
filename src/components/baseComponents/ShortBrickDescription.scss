@@ -67,9 +67,7 @@
             font-family: $font-family-bold;
             line-height: 1.1;
             margin-bottom: 0.5vh;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            @extend %ellipsis;
             @include phone_and_tabletP {
               font-size: 3.8vw;
               width: 100%;
@@ -85,9 +83,7 @@
             font-family: $font-family-regular;
             margin-bottom: 0.1vh;
             width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            @extend %ellipsis;
             @include phone_and_tabletP {
               font-size: 3.8vw;
             }
@@ -98,5 +94,18 @@
         }
       }
     }
+  }
+}
+
+.round-button-icon {
+  @extend %flexCenter;
+  height: inherit;
+  width: inherit;
+  @extend %flexCenter;
+  svg {
+    color: var(--white);
+    margin-left: 2%;
+    height: 70%;
+    width: 70%;
   }
 }

@@ -17,7 +17,7 @@ interface ProfileSavedProps {
 }
 
 const ProfileSavedDialog: React.FC<ProfileSavedProps> = props => {
-  const {close, history} = props;
+  const { close, history } = props;
   const renderLinkButton = () => {
     if (props.isAdmin) {
       return (
@@ -61,7 +61,7 @@ const ProfileSavedDialog: React.FC<ProfileSavedProps> = props => {
       <div className="dialog-footer">
         {renderLinkButton()}
         <button className="btn btn-md bg-gray yes-button" onClick={close}>
-          <span>Continue editing</span>
+          <span>Keep editing</span>
         </button>
       </div>
     </Dialog>

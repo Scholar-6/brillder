@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
-import { TeachClassroom, } from "model/classroom";
+import { TeachClassroom } from "model/classroom";
 import { TeachFilters } from '../../model';
 import sprite from "assets/img/icons-sprite.svg";
 
@@ -113,9 +113,11 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   }
 
   renderClassesBox() {
+    let totalBricks = 0;
     let totalCount = 0;
     for (let classroom of this.props.classrooms) {
       totalCount += classroom.students.length;
+      totalBricks += classroom.assignments.length;
     }
     return (
       <div className="sort-box">
@@ -135,7 +137,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
                 <use href={sprite + "#users"} />
               </svg>
               <div className="white-box">
-                {0}
+                {totalBricks}
               </div>
             </div>
           </div>
@@ -146,10 +148,20 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   };
 
   renderFilterBox = () => {
+    let assignedCount = 0;
+    let submitedCount = 0;
+
+    for (let classroom of this.props.classrooms) {
+      for (let assignemnt of classroom.assignments) {
+        assignedCount += assignemnt.studentStatusCount[0];
+        submitedCount += assignemnt.studentStatusCount[1];
+      }
+    }
+    
     return (
       <div className="sort-box" style={{ marginTop: '1vh' }}>
         <div className="filter-header">
-          Filter
+          OVERVIEW
           <button
             className={
               "btn-transparent filter-icon " +
@@ -175,7 +187,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
                 checked={this.state.filters.assigned}
                 control={<Radio onClick={() => this.toggleFilter(TeachFilterFields.Assigned)} className={"filter-radio custom-color"} />}
                 label="Assigned to class or Student" />
-              <div className="right-index">{0}</div>
+              <div className="right-index">{assignedCount}</div>
             </div>
             <div className="index-box color2">
               <FormControlLabel
@@ -184,7 +196,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
                   <Radio onClick={() => this.toggleFilter(TeachFilterFields.Submitted)} className={"filter-radio custom-color"} />
                 }
                 label="Submitted" />
-              <div className="right-index">{0}</div>
+              <div className="right-index">{submitedCount}</div>
             </div>
             <div className="index-box color4">
               <FormControlLabel

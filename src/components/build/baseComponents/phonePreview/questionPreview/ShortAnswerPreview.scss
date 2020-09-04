@@ -17,7 +17,7 @@
     font-family: $font-family-regular;
     > div {
       width: 78%;
-      text-align: center;
+      @extend %textCenter;
       line-height: 1.5;
       font-size: 2vw;
       border-bottom: 0.18vw solid var(--theme-dark-blue);

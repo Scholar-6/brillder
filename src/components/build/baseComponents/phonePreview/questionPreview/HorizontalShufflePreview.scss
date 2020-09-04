@@ -17,7 +17,7 @@
     position: relative;
     font-family: $font-family-bold;
     width: 22%;
-    text-align: center;
+    @extend %textCenter;
     margin: 1%;
     padding: 0vw 1vw;
     height: 5vw;

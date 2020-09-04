@@ -7,10 +7,22 @@ export enum ClassroomStatus {
     Deleted
 }
 
+export interface StudentStatus {
+    studentId: number;
+    status: number;
+}
+
 export interface Assignment {
     id: number;
     brick: Brick;
     assignedDate: string;
+
+    studentStatus: StudentStatus[];
+    studentStatusCount: {
+      0: number;
+      1: number;
+      2: number;
+    }
 }
 
 export interface Classroom {
@@ -25,6 +37,11 @@ export interface Classroom {
     assignments: Assignment[];
 }
 
+export interface StudentStatus {
+  studentId: number;
+  status: number;
+}
+
 export interface TeachClassroom extends Classroom {
-    active: boolean;
+  active: boolean;
 }

@@ -1,29 +1,41 @@
 import React, { Component } from "react";
 
 import { getAuthorRow } from "components/services/brickService";
-import { Brick } from "model/brick";
 import './AssignedBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
 import AssignedCircle from './AssignedCircle';
+import { TeachClassroom, Assignment } from "model/classroom";
+import { Subject } from "model/brick";
+import { getSubjectColor } from "components/services/subject";
 
 interface AssignedDescriptionProps {
-  brick: Brick;
+  subjects: Subject[];
+  classroom: TeachClassroom;
+  assignment: Assignment;
   index?: number;
   isMobile?: boolean;
   isExpanded?: boolean;
   onClick?(): void;
   move?(): void;
+  expand(): void;
 }
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   renderCircle() {
-    let color = this.props.brick.subject?.color;
+    let subjectId = this.props.assignment.brick.subjectId;
+    let color = getSubjectColor(this.props.subjects, subjectId);
+
     if (!color) {
       color = "#B0B0AD";
     }
     return (
-      <div className="left-brick-circle">
-        <div className="round-button" style={{ background: color }} />
+      <div className="left-brick-circle teach-circle">
+        <div className="round-button" style={{ background: color }}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#maximize"} />
+          </svg>
+        </div>
       </div>
     );
   }
@@ -44,7 +56,8 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   }
 
   render() {
-    let { brick, isMobile, isExpanded, index } = this.props;
+    let { assignment, isMobile, isExpanded, index } = this.props;
+    const { brick, studentStatusCount } = assignment;
     let className = "assigned-brick-description";
 
     if (isMobile && isExpanded) {
@@ -57,7 +70,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     return (
       <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
         <div className="total-view-count">
-          8
+          {this.props.classroom.students.length}
           <svg className="svg active">
             <use href={sprite + "#eye-on"} className="text-theme-dark-blue" />
           </svg>
@@ -73,9 +86,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             </div>
             <div className="link-info">{getAuthorRow(brick)}</div>
           </div>
-          <AssignedCircle />
-          <AssignedCircle />
-          <AssignedCircle />
+          <AssignedCircle onClick={this.props.expand} total={studentStatusCount[0]} count={4} color="red" />
+          <AssignedCircle total={studentStatusCount[1]} count={4} color="yellow" />
+          <AssignedCircle total={studentStatusCount[2]} count={4} color="green" />
           <div className="teach-brick-actions-container">
             <div className="stats-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>

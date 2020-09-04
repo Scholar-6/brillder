@@ -25,7 +25,7 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
   return (
     <Grid container direction="column" alignItems="stretch">
       <Grid item>
-        <form className="comment-text-form">
+        <form className="comment-text-form" onSubmit={e => { e.preventDefault(); }}>
           <Input
             className="comment-text-entry" placeholder="Add Suggestion..." value={text}
             onChange={(evt) => setText(evt.target.value)} disableUnderline

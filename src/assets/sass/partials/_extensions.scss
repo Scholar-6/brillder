@@ -2,6 +2,12 @@
   line-height: inherit !important;
 }
 
+%ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 %widthAuto {
   width: auto;
 }
@@ -35,6 +41,31 @@
 
 %uppercase {
   text-transform: uppercase;
+}
+
+%fontFamilyLight {
+  font-family: 'Brandon Grotesque Light';
+}
+%fontFamilyLightItalic {
+  font-family: 'Brandon Grotesque Light Italic';
+}
+%fontFamilyRegular {
+  font-family: 'Brandon Grotesque Regular';
+}
+%fontFamilyRegularItalic {
+  font-family: 'Brandon Grotesque Regular Italic';
+}
+%fontFamilyBold {
+  font-family: 'Brandon Grotesque Bold';
+}
+%fontFamilyBoldItalic {
+  font-family: 'Brandon Grotesque Bold Italic';
+}
+%fontFamilyBlack {
+  font-family: 'Brandon Grotesque Black';
+}
+%fontFamilyBlackItalic {
+  font-family: 'Brandon Grotesque Black Italic';
 }
 
 %fs9 {
@@ -436,6 +467,220 @@
         &:hover {
           background-color: var(--theme-dark-blue-alpha1);
         }
+      }
+    }
+  }
+}
+
+%checkboxValidation {
+  .MuiSvgIcon-root {
+    color: var(--gray) !important;
+    &:hover {
+      background-color: var(--gray-alpha4) !important;
+    }
+  }
+  &.checkbox-invalid {
+    color: var(--theme-orange) !important;
+    &:hover {
+      background-color: var(--theme-orange-alpha4) !important;
+    }
+    svg {
+      color: var(--theme-orange) !important;
+    }
+  }
+  &.Mui-checked {
+    color: var(--theme-green) !important;
+    &:hover {
+      background-color: var(--theme-green-alpha4) !important;
+    }
+    svg {
+      color: var(--theme-green) !important;
+    }
+  }
+}
+
+%inputContainer {
+  @extend %flexCenter;
+  flex-direction: column;
+  @include phone_and_tabletL {
+    background-color: var(--light-gray);
+    border-radius: 5.1vw;
+    padding: 1vh 2vh 0;
+    margin: 4vh auto;
+    height: 15vh;
+  }
+  @include tabletL {
+    margin: 6vw auto;
+    width: 40vw !important;
+    font-size: 1.4vw !important;
+    border: transparent;
+  }
+}
+%buildInputs {
+  @extend %posRelative;
+  width: 100%;
+  margin: 1vw 0;
+  .MuiInput-underline {
+    width: 100%;
+    color: var(--theme-dark-blue);
+    &:before {
+      display: none !important;
+    }
+  }
+  &:after,
+  &:before {
+    content: '';
+    @extend %floatToXCenter;
+    bottom: 0;
+    pointer-events: none;
+    transition: width 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 2px;
+    height: 4px;
+  }
+  &:before {
+    width: 0;
+    background-color: var(--theme-dark-blue);
+    z-index: 1;
+  }
+  &:after {
+    width: 100%;
+    background-color: var(--tab-gray);
+    z-index: 0;
+  }
+  &:hover,
+  &:focus-within {
+    &:before {
+      width: 100%;
+    }
+  }
+  input,
+  textarea {
+    width: 100%;
+    padding: 0 0 0.8vw 0;
+    border: 0;
+    @include phone {
+      font-size: 6.3vw;
+    }
+    @include tabletP {
+      font-size: 3.3vw;
+    }
+    @include tabletL {
+      font-size: 1.6vw;
+    }
+  }
+}
+
+%tutorialPanel {
+  &.tutorial-panel {
+    .tutorial-step-1 {
+      margin: 0 3vw;
+      margin-top: 3.3vh;
+      background: var(--off-white);
+      color: var(--theme-dark-blue);
+      border-radius: 0.7vw;
+      height: 72vh;
+      overflow: auto;
+      h1 {
+        margin-top: 1vh;
+        margin-left: 2vw;
+        margin-bottom: 1.8vh;
+        font-size: 3.05vw;
+        font-family: $font-family-bold;
+      }
+      .editor-border {
+        margin: 2vw 1vw 0 1vw;
+        padding: 1.5vw;
+        width: 8vw;
+        height: 8vw;
+        position: relative;
+        border: 0;
+        border-radius: 50%;
+        @extend %flexCenter;
+        &:before {
+          content: ' ';
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          border-width: 0.3vw;
+          border-style: dashed;
+          border-color: var(--theme-orange);
+          border-radius: 50%;
+        }
+        .svg {
+          @extend %removePosition;
+        }
+      }
+      .center {
+        margin: 2.3vh 0;
+        padding: 0;
+        font-size: 1.28vw;
+        @extend %textCenter;
+      }
+      .center-second {
+        margin: 0;
+        padding: 0;
+        font-size: 1.28vw;
+        @extend %textCenter;
+      }
+      .proposal-box {
+        margin-left: 1vw;
+        h2 {
+          margin: 4.1vh 0 0 0vw;
+          padding: 0;
+          font-family: $font-family-bold;
+          font-size: 2.1vw;
+        }
+        p {
+          margin: 0;
+          font-size: 1.45vw;
+        }
+        .last-text {
+          margin-top: 3.5vh;
+        }
+      }
+    }
+    .bold {
+      font-family: $font-family-bold;
+    }
+    .button-row {
+      margin-top: 2vh;
+      color: var(--theme-dark-blue);
+      font-size: 1.5vw;
+      button {
+        cursor: pointer;
+        background: white;
+        color: var(--theme-dark-blue);
+        border-radius: $editor-radius;
+        font-size: 1.5vw;
+        line-height: 1.36;
+        padding: 0 0.8vw;
+        font-family: $font-family-bold;
+        border: 0.1vw solid var(--theme-dark-blue);
+        transition: all 0.2s ease-in-out;
+        &:hover {
+          background: var(--theme-dark-blue);
+          color: white;
+        }
+      }
+      .left-arrow,
+      .right-arrow {
+        cursor: pointer;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 2.5vw;
+        width: 2.5vw;
+      }
+      .left-arrow {
+        background-image: url(/feathericons/chevron-left-orange.png);
+        margin-left: 1.8vw;
+        margin-right: 1.3vw;
+      }
+      .right-arrow {
+        background-image: url(/feathericons/chevron-right-orange.png);
+        margin-right: 2vw;
       }
     }
   }

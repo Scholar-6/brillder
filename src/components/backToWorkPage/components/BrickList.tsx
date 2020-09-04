@@ -2,7 +2,7 @@ import React from "react";
 
 import { Brick } from 'model/brick';
 import { User } from 'model/user';
-import BrickBlock from './BrickBlock';
+import BrickBlock from '../../baseComponents/BrickBlock';
 
 export interface BrickBlockItem {
   brick: Brick;

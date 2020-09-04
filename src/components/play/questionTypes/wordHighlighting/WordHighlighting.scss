@@ -1,0 +1,22 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.word-highlighting-play {
+  color: var(--theme-dark-blue);
+  .words-container {
+    width: 100%;
+    .word {
+      cursor: pointer;
+    }
+    .word.active {
+      background: var(--white-blue);
+    }
+    .word.correct {
+      background: var(--theme-green);
+    }
+    .word.wrong {
+      background: var(--theme-orange);
+    }
+  }
+}
