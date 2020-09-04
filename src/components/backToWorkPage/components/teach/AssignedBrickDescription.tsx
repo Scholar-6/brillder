@@ -72,7 +72,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
         <div className="total-view-count">
           {this.props.classroom.students.length}
           <svg className="svg active">
-            <use href={sprite + "#eye-on"} className="text-theme-dark-blue" />
+            <use href={sprite + "#users"} className="text-theme-dark-blue" />
           </svg>
         </div>
         {this.renderCircle()}
