@@ -419,13 +419,6 @@
   @include transition(all 600ms cubic-bezier(0.5, 1, 0.89, 1));
 }
 
-%removePosition {
-  position: unset !important;
-  top: unset !important;
-  left: unset !important;
-  transform: unset !important;
-}
-
 %floatToCenter {
   @extend %posAbsolute;
   left: 50%;
@@ -713,4 +706,11 @@
     line-height: 1.4vw;
     margin: 0;
   }
+}
+
+%removePosition {
+  position: unset !important;
+  top: unset !important;
+  left: unset !important;
+  transform: unset !important;
 }
