@@ -7,7 +7,7 @@
     color: var(--theme-dark-blue);
     padding: 10px 0;
     @extend %textCenter;
-    @extend %fontFamilyBold;
+    font-family: $font-family-bold;
     background-color: var(--tab-gray);
     font-size: 1rem;
     line-height: 1;

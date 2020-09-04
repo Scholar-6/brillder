@@ -1,8 +1,16 @@
 .ck-editor {
-  @extend %fontFamilyRegular;
+  font-family: $font-family-regular;
   .ck-content {
     > p {
       font-family: $font-family-regular !important;
+    }
+  }
+}
+
+.ck-rounded-corners {
+  .ck-editor__main {
+    > .ck-editor__editable {
+      border-radius: 0 0 $editor-radius $editor-radius !important;
     }
   }
 }

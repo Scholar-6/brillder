@@ -7,7 +7,7 @@
   height: 100%;
   margin-left: 8%;
   width: 92% !important;
-  border-radius: 10px 0 0 10px;
+  border-radius: $editor-radius 0 0 $editor-radius;
 
   .comments-title {
     position: relative;
@@ -15,7 +15,7 @@
     color: var(--theme-dark-blue);
     font-size: $suggestions-title-font-size;
     letter-spacing: 1px;
-    @extend %fontFamilyBlack;
+    font-family: $font-family-black;
     padding-top: $suggestions-title-padding;
     padding-bottom: $suggestions-title-padding;
 
@@ -42,7 +42,7 @@
 
     .stretch {
       flex-grow: 1;
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
 
     .comment-reply-container {

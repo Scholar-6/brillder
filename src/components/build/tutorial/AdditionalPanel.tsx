@@ -13,16 +13,16 @@ export interface TutorialProps {
 
 const AdditionalPanel: React.FC<TutorialProps> = (props) => {
   return (
-    <div className="tutorial-additional-panel">
+    <div className="tutorial-panel tutorial-additional-panel">
       <div className="tutorial-step-1">
         <Grid container justify="center">
-          <div className="zap-border svgOnHover border-animation">
+          <div className="editor-border svgOnHover border-animation">
             <svg className="svg w80 h80 active">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#zap-off"} className="text-gray" />
             </svg>
           </div>
-          <div className="zap-border svgOnHover border-animation">
+          <div className="editor-border svgOnHover border-animation">
             <svg className="svg w80 h80 active">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#zap"} className="text-theme-dark-blue" />

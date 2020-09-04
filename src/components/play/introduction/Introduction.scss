@@ -167,7 +167,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
       }
 
       .introduction-page {
-        @extend %fontFamilyRegular;
+        font-family: $font-family-regular;
         position: relative;
 
         @include desktop {
@@ -303,7 +303,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
           margin-right: 0px;
 
           > span {
-            @extend %fontFamilyRegular;
+            font-family: $font-family-regular;
             font-size: 25px;
             margin-right: 10px;
           }
@@ -319,7 +319,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
         h1 {
           text-transform: uppercase;
           width: 100%;
-          @extend %fontFamilyBlack;
+          font-family: $font-family-black;
           @include phone_and_tabletP {
             position: unset;
             transform: translate(0);
@@ -383,7 +383,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
             padding: 0;
             background: var(--tab-gray);
             border-radius: 100vw;
-            @extend %fontFamilyBlack;
+            font-family: $font-family-black;
             color: var(--theme-dark-blue);
             @extend %textCenter;
 
@@ -422,7 +422,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
           }
           .question-title {
             font-size: 2.5vw;
-            @extend %fontFamilyBlack;
+            font-family: $font-family-black;
             color: var(--theme-dark-blue);
           }
           &.review-content {
@@ -485,7 +485,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
         .intro-header {
           position: relative;
           font-size: 2vw;
-          @extend %fontFamilyBlack;
+          font-family: $font-family-black;
           color: var(--theme-dark-blue);
 
           @include phone_and_tabletP {
@@ -558,7 +558,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
 
         .intro-text-row {
           font-size: 1.15vw;
-          @extend %fontFamilyBold;
+          font-family: $font-family-bold;
           color: var(--theme-dark-blue);
           display: flex;
           flex-direction: column;
@@ -589,7 +589,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
               justify-content: flex-start;
               cursor: pointer;
               font-size: 2vw;
-              @extend %fontFamilyBlack;
+              font-family: $font-family-black;
               color: #d3d4d5;
               &.completed,
               &.current {
@@ -633,7 +633,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
 
         .max-length {
-          @extend %fontFamilyRegular;
+          font-family: $font-family-regular;
           color: var(--theme-dark-blue);
           margin-left: 0.8vw;
 
@@ -870,7 +870,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
               width: 100%;
               margin-top: 0;
               margin-bottom: 0;
-              @extend %fontFamilyBold;
+              font-family: $font-family-bold;
               font-size: 2.6vw;
               @include phone_and_tabletP {
                 font-size: 9vw;
@@ -988,14 +988,14 @@ $play-mobile-height: calc(100vh - 55.8vw);
             }
 
             .score-precentage {
-              @extend %fontFamilyBlack;
+              font-family: $font-family-black;
               color: var(--theme-dark-blue);
               line-height: 1;
               font-size: 14vh;
             }
 
             .score-number {
-              @extend %fontFamilyBold;
+              font-family: $font-family-bold;
               color: var(--theme-dark-blue);
               line-height: 1;
               font-size: 4vh;
@@ -1070,7 +1070,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
 
     .help-prep {
       color: var(--theme-dark-blue);
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
       @include phone_and_tabletP {
         font-size: 3vw;
       }
@@ -1083,7 +1083,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
   .expanded-text {
     width: 100%;
     color: var(--theme-dark-blue);
-    @extend %fontFamilyRegular;
+    font-family: $font-family-regular;
     margin: 0 0 1vh 0;
     // @include phone_and_tabletP {
     //   font-size: 6vw;

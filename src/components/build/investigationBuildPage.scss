@@ -33,7 +33,7 @@ $space-between-boxes: 0.1vw;
       overflow-y: hidden;
 
       .help-text {
-        @extend %fontFamilyRegular;
+        font-family: $font-family-regular;
 
         margin-top: 7px !important;
         margin-bottom: 7px !important;
@@ -115,7 +115,7 @@ $space-between-boxes: 0.1vw;
     width: 100%;
     height: 5%;
     color: white;
-    @extend %fontFamilyRegular;
+    font-family: $font-family-regular;
     z-index: 101;
 
     .tutorial-exit-label {
@@ -137,7 +137,7 @@ $space-between-boxes: 0.1vw;
     height: 5%;
     left: 33vw;
     font-size: 1.3vw;
-    @extend %fontFamilyRegular;
+    font-family: $font-family-regular;
     color: white;
   }
 
@@ -148,7 +148,7 @@ $space-between-boxes: 0.1vw;
   .additional-tooltip {
     margin-top: 4vh;
     font-size: 1.2vw;
-    @extend %fontFamilyRegular;
+    font-family: $font-family-regular;
     letter-spacing: 0;
     @extend %textCenter;
     color: white;
@@ -176,7 +176,7 @@ $space-between-boxes: 0.1vw;
     top: 33.5vh;
     font-size: 1.8vw;
     letter-spacing: 0.3vw;
-    @extend %fontFamilyBlack;
+    font-family: $font-family-black;
     color: var(--light-blue);
 
     .svg {
@@ -255,7 +255,7 @@ $space-between-boxes: 0.1vw;
 
   .saved-info {
     position: fixed;
-    @extend %fontFamilyRegular;
+    font-family: $font-family-regular;
     top: 7.7%;
     right: 0;
     width: 34.3vw;
@@ -279,8 +279,8 @@ $space-between-boxes: 0.1vw;
     }
   }
 
-  .saved-info .tutorial-border {
-    border-radius: 0.6vw;
+  .saved-info .editor-border {
+    border-radius: $editor-radius;
     padding: 0.1vh 0;
     padding-left: 0.5vw;
 
