@@ -5,9 +5,7 @@
 .question-type {
   position: relative;
   background: white;
-
-  border-bottom-left-radius: $question-radius;
-  border-bottom-right-radius: $question-radius;
+  border-radius: 0 0 $editor-radius $editor-radius;
   border-top: none;
   width: 100%;
   height: 94%;
@@ -26,7 +24,7 @@
       font-size: 1.4vw;
       margin-bottom: 0vh;
       letter-spacing: 0.01vw;
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
       color: var(--theme-dark-blue);
     }
   }
@@ -67,7 +65,6 @@
     .ck-editor {
       width: 100%;
       .ck-content {
-        font-size: 1vw;
         height: 70vh;
         border-top: none !important;
         border: 1px solid var(--ck-color-toolbar-border);
@@ -86,7 +83,7 @@
     height: 15.35vh;
     font-size: 1.5vw;
     padding: 0;
-    @extend %fontFamilyRegular;
+    font-family: $font-family-regular;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -123,7 +120,7 @@
       background: var(--theme-orange);
       color: var(--white);
       .link-description {
-        @extend %fontFamilyBlack;
+        font-family: $font-family-black;
       }
     }
   }

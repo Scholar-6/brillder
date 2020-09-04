@@ -20,11 +20,11 @@
     border: none;
     margin-top: 4.6vh;
     padding: 1.3vh 0;
-    border-radius: 0.6vw;
+    border-radius: $editor-radius;
     width: 79%;
     padding-right: 0.5vw;
     font-size: 1.6vw;
-    @extend %fontFamilyBold;
+    font-family: $font-family-bold;
 
     &.btn-small {
       margin-top: 6vh !important;

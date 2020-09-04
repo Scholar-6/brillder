@@ -7,7 +7,7 @@
   overflow: hidden;
   height: 100%;
   width: 100%;
-  @extend %fontFamilyRegular;
+  font-family: $font-family-regular;
 
   .phone-question-preview-box {
     top: $page-head-height;
@@ -42,7 +42,7 @@
       font-size: 5.4vw;
       letter-spacing: 1.05vw;
       @extend %textCenter;
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
       color: var(--theme-dark-blue);
       line-height: 1;
       text-transform: uppercase;
@@ -209,7 +209,7 @@
           font-size: 1.82vw;
           letter-spacing: 0.36vw;
           color: var(--theme-dark-blue);
-          @extend %fontFamilyBlack;
+          font-family: $font-family-black;
           line-height: 1.41;
 
           @include phone_and_tabletP {
@@ -280,7 +280,7 @@
       padding-right: 4.2vw;
       .MuiAutocomplete-tag {
         font-size: 1vw;
-        @extend %fontFamilyRegular;
+        font-family: $font-family-regular;
         color: var(--theme-dark-blue);
         background-color: var(--tab-gray);
       }

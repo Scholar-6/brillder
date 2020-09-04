@@ -10,7 +10,7 @@
     cursor: pointer;
     background: #3fca79;
     color: white;
-    @extend %fontFamilyBlack;
+    font-family: $font-family-black;
     border: 0.5vw solid #3fca79;
     font-size: 3vw;
     letter-spacing: 0.6vw;

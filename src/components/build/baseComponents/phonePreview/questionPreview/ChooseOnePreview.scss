@@ -9,27 +9,27 @@
 
   @keyframes grey-to-green {
     from {
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
       color: var(--theme-dark-blue);
       background-color: var(--tab-gray);
     }
     to {
       color: white;
       background-color: var(--theme-green);
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
   }
 
   .small-text {
     padding: 28% 10% 13% 10%;
     font-size: 1.3vw;
-    @extend %fontFamilyRegular;
+    font-family: $font-family-regular;
   }
 
   button {
     background: var(--tab-gray);
     color: var(--theme-dark-blue);
-    @extend %fontFamilyRegular;
+    font-family: $font-family-regular;
     margin-left: 7.5%;
     margin-bottom: 7.5%;
     width: 85%;
