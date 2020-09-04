@@ -41,7 +41,7 @@
 
   .direction-info {
     font-size: 2.7vw;
-    @extend %fontFamilyBold;
+    font-family: $font-family-bold;
     @extend %textCenter;
   }
 
@@ -49,7 +49,7 @@
     @extend %textCenter;
     font-size: 2.1vw;
     margin-top: 4.2vh;
-    @extend %fontFamilyBold;
+    font-family: $font-family-bold;
   }
 
   .share-row {
@@ -71,14 +71,14 @@
     }
     .link-text {
       margin-top: 2vh;
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
       @extend %textCenter;
       font-size: 2vw;
     }
 
     .link-description {
       @extend %textCenter;
-      @extend %fontFamilyRegularItalic;
+      font-family: $font-family-regular-italic;
       font-size: 1.2vw;
     }
   }

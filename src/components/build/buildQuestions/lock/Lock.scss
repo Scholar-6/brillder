@@ -6,7 +6,7 @@
   display: block !important;
   font-size: 0.9vw;
   @extend %textCenter;
-  @extend %fontFamilyRegular;
+  font-family: $font-family-regular;
   margin-top: 16vh !important;
 
   .unlock-icon,

@@ -53,7 +53,7 @@
       height: 1.3vw;
     }
     .MuiListItemText-primary {
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
       font-size: 2vw;
       margin-right: 1vw;
       @include phone_and_tabletP {
@@ -61,13 +61,13 @@
       }
     }
     .link {
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
       margin-left: 2vw;
       margin-right: 2vw;
       margin-top: 4vh;
     }
     .title {
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
       width: auto !important;
       margin-bottom: 3vh !important;
     }
@@ -177,7 +177,7 @@
       @extend %textCenter;
       display: block;
       content: 'Drag Image Here | Click to Select Image';
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
     }
   }
   .dialog-footer {
@@ -266,7 +266,7 @@
     }
     .title {
       color: var(--tab-gray);
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
     .link {
       font-size: 1.7vw;
