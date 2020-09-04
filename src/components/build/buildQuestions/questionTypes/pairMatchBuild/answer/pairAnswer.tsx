@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import sprite from "assets/img/icons-sprite.svg";
 import { QuestionValueType } from '../../types';
 import { Answer } from '../types';
-import QuestionImageDropZone from '../../../baseComponents/QuestionImageDropzone';
+import QuestionImageDropZone from 'components/build/baseComponents/QuestionImageDropzone';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 
 

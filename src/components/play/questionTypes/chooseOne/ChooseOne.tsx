@@ -8,7 +8,7 @@ import { ComponentAttempt } from 'components/play/model';
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
-import { QuestionValueType } from 'components/build/investigationBuildPage/buildQuestions/questionTypes/types';
+import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
 
 

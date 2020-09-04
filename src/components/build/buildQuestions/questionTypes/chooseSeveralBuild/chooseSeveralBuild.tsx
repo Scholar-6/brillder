@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react'
-import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 
-import './chooseSeveralBuild.scss'
+import './chooseSeveralBuild.scss';
 import ChooseOneAnswerComponent from '../chooseOneBuild/ChooseOneAnswer';
 import {ChooseOneAnswer} from '../chooseOneBuild/types';
 import { QuestionValueType } from '../types';
-import validator from '../../../questionService/UniqueValidator'
+import validator from '../../../questionService/UniqueValidator';
 import { showSameAnswerPopup } from '../service/questionBuild';
 
 export interface ChooseSeveralData {

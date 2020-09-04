@@ -10,7 +10,7 @@ import { UniqueComponentProps } from '../types';
 import validator from '../../../questionService/UniqueValidator'
 import { showSameAnswerPopup } from '../service/questionBuild';
 
-import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 
 
 interface Answer {

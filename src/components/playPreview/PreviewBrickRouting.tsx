@@ -8,6 +8,19 @@ import { connect } from "react-redux";
 import 'components/play/brick.scss';
 import './PreviewBrickRouting.scss';
 import actions from 'redux/actions/brickActions';
+import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
+import { Brick } from 'model/brick';
+import { ComponentAttempt, PlayStatus } from '../play/model';
+import {
+  Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
+} from 'model/question';
+import { setBrillderTitle } from 'components/services/titleService';
+import { prefillAttempts } from 'components/services/PlayService';
+import { canEditBrick, checkEditor } from 'components/services/brickService';
+import { ReduxCombinedState } from 'redux/reducers';
+import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
+import { User } from 'model/user';
+
 import Introduction from 'components/play/introduction/Introduction';
 import Live from 'components/play/live/Live';
 import ProvisionalScore from 'components/play/provisionalScore/ProvisionalScore';
@@ -15,26 +28,12 @@ import Synthesis from 'components/play/synthesis/Synthesis';
 import Review from 'components/play/review/ReviewPage';
 import Ending from 'components/play/ending/Ending'
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
-
-import { GetCashedBuildQuestion } from 'localStorage/buildLocalStorage';
-
-import { Brick } from 'model/brick';
-import { ComponentAttempt, PlayStatus } from '../play/model';
-import {
-  Question, QuestionTypeEnum, QuestionComponentTypeEnum, HintStatus
-} from 'model/question';
-import { setBrillderTitle } from 'components/services/titleService';
-import PublishPage from '../build/investigationBuildPage/publish/PublishPage';
-import EditorPage from '../build/investigationBuildPage/editor/EditorPage';
-import FinishPage from '../build/investigationBuildPage/finish/FinishPage';
-import { prefillAttempts } from 'components/services/PlayService';
+import PublishPage from 'components/build/publish/PublishPage';
+import EditorPage from 'components/build/editor/EditorPage';
+import FinishPage from 'components/build/finish/FinishPage';
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
-import { canEditBrick, checkEditor } from 'components/services/brickService';
-import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
-import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
-import { User } from 'model/user';
 
 
 export interface BrickAttempt {

@@ -8,7 +8,7 @@ import queryString from 'query-string';
 
 import "./investigationBuildPage.scss";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
-import PlayButton from 'components/build/investigationBuildPage/components/PlayButton';
+import PlayButton from './components/PlayButton';
 import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
 import TutorialWorkArea, { TutorialStep } from './tutorial/TutorialPanelWorkArea';
 import QuestionTypePage from "./questionType/questionType";
@@ -22,7 +22,7 @@ import DeleteQuestionDialog from "components/build/baseComponents/deleteQuestion
 import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
 import TutorialPhonePreview from "./tutorial/TutorialPreview";
 import YourProposalLink from './components/YourProposalLink';
-import DesktopVersionDialog from '../baseComponents/DesktopVersionDialog';
+import DesktopVersionDialog from 'components/build/baseComponents/DesktopVersionDialog';
 import QuestionInvalidDialog from './components/QuestionInvalidDialog';
 import ProposalInvalidDialog from './components/ProposalInvalidDialog';
 import TutorialLabels from './components/TutorialLabels';
@@ -33,7 +33,7 @@ import {
   Question,
   QuestionTypeEnum,
 } from "model/question";
-import actions from "../../../redux/actions/brickActions";
+import actions from "redux/actions/brickActions";
 import { socketUpdateBrick, socketStartEditing, socketNavigateToQuestion } from "redux/actions/socket";
 import { validateQuestion } from "./questionService/ValidateQuestionService";
 import {

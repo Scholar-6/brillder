@@ -5,7 +5,7 @@ import './pairMatchBuild.scss'
 import {Answer} from './types';
 import { UniqueComponentProps } from '../types';
 
-import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import PairAnswerComponent from './answer/pairAnswer';
 import PairOptionComponent from './option/pairOption';
 import { showSameAnswerPopup } from '../service/questionBuild';

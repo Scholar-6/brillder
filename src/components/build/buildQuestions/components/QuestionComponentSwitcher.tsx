@@ -7,7 +7,7 @@ import ImageComponent from './Image/Image'
 import QuoteComponent from './Quote/Quote'
 import SoundComponent from './Sound/Sound'
 import DropBox from './DropBox';
-import HintComponent, { HintState } from '../../../baseComponents/Hint/Hint';
+import HintComponent, { HintState } from 'components/build/baseComponents/Hint/Hint';
 
 
 export interface SwitchQuestionProps {

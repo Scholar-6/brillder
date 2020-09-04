@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import './chooseOneBuild.scss';
-import AddAnswerButton from '../../baseComponents/addAnswerButton/AddAnswerButton';
+import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
 import ChooseOneAnswerComponent from './ChooseOneAnswer';
 import { ChooseOneAnswer } from './types';
 import { QuestionValueType, UniqueComponentProps } from '../types';
