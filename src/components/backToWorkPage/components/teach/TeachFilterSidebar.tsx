@@ -149,7 +149,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     return (
       <div className="sort-box" style={{ marginTop: '1vh' }}>
         <div className="filter-header">
-          Filter
+          OVERVIEW
           <button
             className={
               "btn-transparent filter-icon " +

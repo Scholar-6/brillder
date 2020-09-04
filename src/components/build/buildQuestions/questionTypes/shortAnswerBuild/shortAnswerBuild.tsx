@@ -16,11 +16,7 @@ export interface ShortAnswerBuildProps extends UniqueComponentProps {
 }
 
 const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
-  locked,
-  editOnly,
-  data,
-  save,
-  ...props
+  locked, editOnly, data, save, ...props
 }) => {
   const [height, setHeight] = React.useState("0%");
 
@@ -95,6 +91,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
         {renderDeleteButton(index)}
         <DocumentWirisCKEditor
           disabled={locked}
+          validationRequired={props.validationRequired}
           editOnly={editOnly}
           data={answer.value}
           toolbar={["superscript", "subscript"]}

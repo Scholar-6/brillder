@@ -7,7 +7,7 @@ import './Navigation.scss';
 import { ReduxCombinedState } from 'redux/reducers';
 import { ProposalStep, PlayButtonStatus } from "../../model";
 import map from 'components/map';
-import PlayButton from "components/build/components/PlayButton";
+import PlayButton from "components/build/baseComponents/PlayButton";
 
 interface NextButtonProps {
   step: ProposalStep;

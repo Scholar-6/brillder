@@ -22,7 +22,7 @@ export interface WordHighlightingProps extends UniqueComponentProps {
 }
 
 const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
-  locked, data, save, updateComponent
+  locked, data, save, updateComponent, validationRequired
 }) => {
   const [state, setState] = React.useState(data);
 
@@ -192,10 +192,14 @@ const WordHighlightingComponent: React.FC<WordHighlightingProps> = ({
   }
 
   const renderTextBox = () => {
+    let className = "words-input";
+    if (validationRequired && !state.text) {
+      className += " content-invalid"
+    }
     return (
       <textarea
         disabled={locked}
-        className="words-input"
+        className={className}
         onBlur={() => save()}
         value={state.text}
         onChange={updateText}

@@ -19,8 +19,8 @@ import UsersListPage from '../userManagement/UsersList';
 import InvestigationBuildPage from 'components/build/investigationBuildPage'
 import LoginPage from '../authPages/loginPage/loginPage';
 import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
-import SubmitBrickPage from '../build/submit/SubmitPage';
-import PublishBrickPage from 'components/build/publish/PublishPage';
+import SubmitBrickPage from '../playPreview/submit/SubmitPage';
+import PublishBrickPage from 'components/playPreview/publish/PublishPage';
 import UserProfilePage from '../userProfilePage/UserProfile';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
