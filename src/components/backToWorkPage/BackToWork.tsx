@@ -642,7 +642,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     if (this.state.activeTab === ActiveTab.Play) {
       return <PlayFilterSidebar
         classrooms={this.state.classrooms}
-        rawBricks={this.state.rawBricks}
+        rawAssignments={this.state.rawAssignments}
         setActiveClassroom={this.setActiveClassroom.bind(this)}
         filterChanged={this.playFilterUpdated.bind(this)}
       />

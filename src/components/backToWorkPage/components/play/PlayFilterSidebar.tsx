@@ -4,6 +4,7 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 import { Brick } from "model/brick";
 import { PlayFilters } from '../../model';
 import { TeachClassroom } from "model/classroom";
+import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 
 enum PlayFilterFields {
   Completed = 'completed',
@@ -13,7 +14,7 @@ enum PlayFilterFields {
 
 interface FilterSidebarProps {
   classrooms: TeachClassroom[];
-  rawBricks: Brick[];
+  rawAssignments: AssignmentBrick[];
   filterChanged(filters: PlayFilters): void;
   setActiveClassroom(id: number | null): void;
 }
@@ -102,6 +103,20 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
 
   renderSortAndFilterBox = () => {
     const {filters} = this.state;
+
+    let toBeCompletedCount = 0;
+    let submittedCount = 0;
+    let checkedCount = 0;
+
+    for (const assignment of this.props.rawAssignments) {
+      if (assignment.status === AssignmentBrickStatus.ToBeCompleted) {
+        toBeCompletedCount++;
+      } else if (assignment.status === AssignmentBrickStatus.SubmitedToTeacher) {
+        submittedCount++;
+      } else if (assignment.status === AssignmentBrickStatus.CheckedByTeacher) {
+        checkedCount++;
+      }
+    }
     return (
       <div className="sort-box">
         <div className="filter-header">Filter</div>
@@ -114,7 +129,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
                   <Radio onClick={() => this.toggleFilter(PlayFilterFields.Completed)} className={"filter-radio custom-color"} />
                 }
                 label="To be completed" />
-              <div className="right-index">{0}</div>
+              <div className="right-index">{toBeCompletedCount}</div>
             </div>
             <div className="index-box color2">
               <FormControlLabel
@@ -123,7 +138,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
                   <Radio onClick={() => this.toggleFilter(PlayFilterFields.Submitted)} className={"filter-radio custom-color"} />
                 }
                 label="Submitted to Teacher" />
-              <div className="right-index">{0}</div>
+              <div className="right-index">{submittedCount}</div>
             </div>
             <div className="index-box color4">
               <FormControlLabel
@@ -132,7 +147,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
                   <Radio onClick={() => this.toggleFilter(PlayFilterFields.Checked)} className={"filter-radio custom-color"} />
                 }
                 label="Checked by Teacher" />
-              <div className="right-index">{0}</div>
+              <div className="right-index">{checkedCount}</div>
             </div>
           </div>
         ) : (
