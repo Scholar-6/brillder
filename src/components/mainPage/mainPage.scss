@@ -33,13 +33,13 @@
         margin-top: 3.2vh;
         font-weight: 600;
         text-transform: uppercase;
-        @extend %fontFamilyLight;
+        font-family: $font-family-light;
         color: var(--theme-orange);
       }
       .notifications-text {
         margin-top: 10vh;
         letter-spacing: 0.1vw;
-        @extend %fontFamilyLight;
+        font-family: $font-family-light;
         font-size: 1.5vw;
 
         &.clickable {
@@ -51,7 +51,7 @@
       .notifications-text-3 {
         margin-top: 0.6vh;
         color: var(--tab-gray);
-        @extend %fontFamilyLightItalic;
+        font-family: $font-family-light-italic;
         letter-spacing: 0.05vw;
         font-size: 1.2vw;
       }
@@ -90,7 +90,7 @@
     color: var(--white);
     letter-spacing: 0.3vw;
     font-size: 1.4vw;
-    @extend %fontFamilyLight;
+    font-family: $font-family-light;
     width: calc(100vw - #{$welcome-col-width} - #{$first-col-width});
     @extend %flexCenter;
 
@@ -142,7 +142,7 @@
       padding: 0;
       @extend %textCenter;
       margin: 0;
-      @extend %fontFamilyLight;
+      font-family: $font-family-light;
       color: var(--tab-gray);
       @include phone_and_tabletP {
         font-size: 25px;
