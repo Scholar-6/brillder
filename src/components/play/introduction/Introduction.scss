@@ -420,14 +420,17 @@ $play-mobile-height: calc(100vh - 55.8vw);
           @include tabletP {
             height: calc(100vh - 7vh);
           }
-
+          .question-title {
+            font-size: 2.5vw;
+            @extend %fontFamilyBlack;
+            color: var(--theme-dark-blue);
+          }
           &.review-content {
             @include phone_and_tabletP {
               width: 100% !important;
               padding: 4vw !important;
               margin: 0 !important;
             }
-
             @include tabletP {
               width: calc(100% - 7vw) !important;
               margin: 0 3vw 1vw 4vw;
@@ -445,12 +448,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
                 }
               }
             }
-          }
-
-          .question-title {
-            font-size: 2.5vw;
-            @extend %fontFamilyBlack;
-            color: var(--theme-dark-blue);
           }
         }
 

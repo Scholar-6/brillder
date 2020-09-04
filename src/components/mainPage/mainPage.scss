@@ -104,137 +104,157 @@
   .back-item-container {
     width: auto;
     @extend %flexCenter;
+    flex-direction: column;
     @include tabletP {
       padding: 25px 0;
     }
     @include ex-desktop_wide {
       padding: 3vh 0;
     }
+    .eye-glass-icon,
     .btn {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       @extend %textCenter;
       flex-direction: column;
-      > .svg {
+      .svg {
         @extend %removePosition;
         @include phone_and_tabletP {
           width: 150px;
           height: 120px;
         }
         @include tabletP {
-          height: auto;
           width: 15vw;
+          height: 10vw;
+        }
+        @include laptop {
+          width: 10vw;
+          height: 8vw;
+        }
+        @include ex-desktop_wide {
+          width: 12vw;
+          height: 8vw;
         }
       }
+    }
+    .item-description {
+      padding: 0;
+      @extend %textCenter;
+      margin: 0;
+      @extend %fontFamilyLight;
+      color: var(--tab-gray);
+      @include phone_and_tabletP {
+        font-size: 25px;
+        letter-spacing: 5px;
+      }
+      @include tabletP {
+        font-size: 1.5vw;
+        letter-spacing: 0.3vw;
+      }
+      @include laptop {
+        font-size: 1vw;
+        letter-spacing: 0.2vw;
+      }
+      @include ex-desktop_wide {
+        font-size: 1.2vw;
+        letter-spacing: 0.3vw;
+      }
+    }
+    &:hover {
       .item-description {
-        padding: 0;
-        @extend %textCenter;
-        margin: 0;
-        @extend %fontFamilyLight;
-        color: var(--tab-gray);
-        @include phone_and_tabletP {
-          font-size: 25px;
-          letter-spacing: 5px;
-        }
-        @include tabletP {
-          font-size: 1.3vw;
-          letter-spacing: 0.27vw;
-        }
-      }
-      &:hover {
-        .item-description {
-          @extend %fontFamilyBold;
-        }
+        @extend %fontFamilyBold;
       }
     }
   }
   .view-item-container {
+    .eye-glass-icon,
     .btn {
       .svg {
         @include tabletP {
-          height: 110px;
+          height: 60px;
         }
         @include ex-desktop_wide {
-        }
-        @include ex-desktop_wide_hd {
+          height: 5vw;
         }
         @include apple-macbook-air-width {
           height: 11vh;
         }
       }
     }
-    .glass-eyes-left,
-    .glass-eyes-right {
-      width: 100px;
-      height: 100px;
-      position: absolute;
-      opacity: 0;
-      transition-delay: 200ms;
-      @extend %transitionAll300;
-      transform: scale(0.9);
-      @include phone_and_tabletP {
+    .eye-glass-icon {
+      position: relative;
+      .glass-eyes-left,
+      .glass-eyes-right {
         display: none;
+        opacity: 0;
+        transition-delay: 200ms;
+        @extend %transitionAll300;
+        @extend %floatToYCenter;
+        @include phone_and_tabletP {
+        }
+        @include tabletP {
+          width: 5vw;
+          height: 5vw;
+        }
+        @include laptop {
+          width: 50px;
+          height: 50px;
+        }
+        @include ex-desktop_wide {
+          width: 4.5vw;
+          height: 4.5vw;
+        }
+        @include apple-macbook-air-width {
+          width: 3vw;
+          height: 3vw;
+        }
+        .svg {
+          width: 60%;
+          height: 60%;
+        }
       }
-      @include tabletP {
-        top: 4px;
-        width: 100px;
-        height: 100px;
+      .glass-eyes-left {
+        @include tabletP {
+          right: 15px;
+        }
+        @include laptop {
+          left: 10px;
+        }
+        @include ex-desktop_wide {
+          left: 16px;
+        }
+        @include apple-macbook-air-width {
+          left: 3.07vw;
+        }
       }
-      @include ex-desktop_wide {
-        top: -2px;
-      }
-      @include ex-desktop_wide_hd {
-        top: 5px;
-      }
-      @include apple-macbook-air-width {
-        width: 4vw;
-        height: 4vw;
-        top: 0;
-      }
-      .svg {
-        width: 60%;
-        height: 60%;
-      }
-    }
-    .glass-eyes-left {
-      @include tabletP {
-        left: 16px;
-      }
-      @include ex-desktop_wide {
-        left: 21px;
-      }
-      @include ex-desktop_wide_hd {
-        left: 30px;
-      }
-      @include apple-macbook-air-width {
-        left: 3.07vw;
-      }
-    }
-    .glass-eyes-right {
-      @include tabletP {
-        right: 15px;
-      }
-      @include ex-desktop_wide {
-        right: 18px;
-      }
-      @include ex-desktop_wide_hd {
-        right: 28px;
-      }
-      @include apple-macbook-air-width {
-        right: 2.99vw;
+      .glass-eyes-right {
+        @include tabletP {
+          right: 15px;
+        }
+        @include laptop {
+          right: 10px;
+        }
+        @include ex-desktop_wide {
+          right: 16px;
+        }
+        @include apple-macbook-air-width {
+          right: 2.99vw;
+        }
       }
     }
     &:hover {
-      .glass-eyes-left,
-      .glass-eyes-right {
-        opacity: 1;
-        .pupil {
-          animation-name: eye-movement;
-          animation-iteration-count: infinite;
-          animation-duration: 1300ms;
-          animation-delay: 0;
-          animation-direction: alternate;
+      .eye-glass-icon {
+        .glass-eyes-left,
+        .glass-eyes-right {
+          opacity: 1;
+          .pupil {
+            animation-name: eye-movement;
+            animation-iteration-count: infinite;
+            animation-duration: 1300ms;
+            animation-delay: 0;
+            animation-direction: alternate;
+          }
         }
       }
     }
@@ -255,17 +275,6 @@
         transform: translateX(6px);
         @include ex-desktop_wide {
           transform: translateX(0.3vw);
-        }
-      }
-    }
-  }
-  .create-item-container,
-  .back-item-container {
-    .btn {
-      .svg {
-        @include ex-desktop_wide {
-          width: 12.5vw;
-          height: 10vw;
         }
       }
     }

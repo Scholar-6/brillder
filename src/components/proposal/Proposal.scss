@@ -104,8 +104,7 @@
 
       @include tabletL {
         font-size: 3.6vw;
-        margin-top: 4.7vh;
-        margin-bottom: 12.1vh;
+        margin: 4.7vh 0;
       }
     }
 
@@ -119,8 +118,8 @@
       flex-direction: column;
       @include tabletL {
         margin: 6vw auto;
-        width: 40vw !important;
-        font-size: 1.4vw !important;
+        width: 43vw;
+        font-size: 1.4vw;
         border: transparent;
       }
       .audience-inputs {
@@ -259,9 +258,7 @@
       }
     }
     .input-container {
-
       @extend %inputContainer;
-
       .audience-inputs {
         &:before,
         &:after {
