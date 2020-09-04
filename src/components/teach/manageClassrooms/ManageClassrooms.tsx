@@ -377,7 +377,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     return (
       <div className="user-header">
         <h1 className="brick-row-title">ALL STUDENTS</h1>
-        <AddButton label="ADD STUDENT" link="/" history={this.props.history} />
+        <AddButton label="ADD NEW STUDENT" link="/" history={this.props.history} />
       </div>
     );
   }
