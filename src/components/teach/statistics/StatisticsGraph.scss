@@ -1,4 +1,5 @@
 .stats-graph {
+    margin: 1vw;
     .stats-box-plot {
         fill: #001c5844;
         stroke: var(--theme-dark-blue);
@@ -11,7 +12,6 @@
         .tick-label {
             fill: var(--theme-dark-blue);
             font-size: 10pt;
-            text-anchor: middle;
         }
     }
 }

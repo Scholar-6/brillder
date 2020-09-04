@@ -1,5 +1,6 @@
 import { Brick, BrickStatus } from 'model/brick';
-import { SortBy, Filters, ThreeColumns } from './model';
+import { SortBy, Filters, ThreeColumns, AssignmentBrickData } from './model';
+import { AssignmentBrick } from "model/assignment";
 
 const getBrickById = (bricks: Brick[], brickId: number) => {
   return bricks.find(b => b.id === brickId);
@@ -98,10 +99,12 @@ export const sortBricks = (bricks: Brick[], sortBy: SortBy) => {
   return finalBricks;
 }
 
-export const hideAllBricks = (bricks: Brick[]) => bricks.forEach(b => b.expanded = false);
+export const hideBricks = (bricks: Brick[]) => bricks.forEach(b => b.expanded = false);
+
+export const hideAssignments = (assignments: AssignmentBrick[]) => assignments.forEach(a => a.brick.expanded = false);
 
 export const expandBrick = (bricks: Brick[], allBricks: Brick[], index: number) => {
-  hideAllBricks(allBricks);
+  hideBricks(allBricks);
   if (!bricks[index].expandFinished) {
     bricks[index].expanded = true;
   }
@@ -128,6 +131,22 @@ export const prepareVisibleBricks = (sortedIndex: number, pageSize: number, bric
     if (brick) {
       let row = Math.floor(count / 3);
       data.push({ brick, key: i, index: count, row });
+      count++;
+    }
+  }
+  return data;
+}
+
+export const prepareVisibleAssignments = (sortedIndex: number, pageSize: number, assignments: AssignmentBrick[]) => {
+  let data: AssignmentBrickData[] = [];
+  let count = 0;
+  for (let i = 0 + sortedIndex; i < pageSize + sortedIndex; i++) {
+    const assignment = assignments[i];
+    if (assignment) {
+      let row = Math.floor(count / 3);
+      data.push({
+        brick: assignment.brick, key: i, index: count, assignmentId: assignment.id, status: assignment.status, row
+      } as AssignmentBrickData);
       count++;
     }
   }

@@ -11,7 +11,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
-import { clearProposal } from "components/localStorage/proposal";
+import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
 import WelcomeComponent from './WelcomeComponent';
 import { Notification } from 'model/notifications';
@@ -72,13 +72,14 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   renderViewAllButton() {
     return (
-      <div className="view-item-container">
-        <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/play/dashboard")}>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#glasses-home"} className="text-theme-orange" />
-          </svg>
-          <span className="item-description">View All Bricks</span>
+      <div className="view-item-container zoom-item" onClick={() => this.props.history.push("/play/dashboard")}>
+        <div className="eye-glass-icon">
+          <div className="svgOnHover">
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#glasses-home"} className="text-theme-orange" />
+            </svg>
+          </div>
           <div className="glass-eyes-left svgOnHover">
             <svg className="svg active" viewBox="0 0 24 24" fill="currentColor" stroke="none">
               <path fill="#F5F6F7" className="eyeball" d="M2,12c0,0,3.6-7.3,10-7.3S22,12,22,12s-3.6,7.3-10,7.3S2,12,2,12z" />
@@ -91,15 +92,16 @@ class MainPage extends Component<MainPageProps, MainPageState> {
               <path fill="#001C55" className="pupil" d="M13.1,12c0,2.1-1.7,3.8-3.8,3.8S5.5,14.1,5.5,12s1.7-3.8,3.8-3.8S13.1,9.9,13.1,12L13.1,12z" />
             </svg>
           </div>
-        </button>
+        </div>
+        <span className="item-description">View All Bricks</span>
       </div>
     );
   }
 
   renderCreateButton() {
     return (
-      <div className="create-item-container">
-        <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.creatingBrick()}>
+      <div className="create-item-container" onClick={() => this.creatingBrick()}>
+        <button className="btn btn-transparent zoom-item svgOnHover">
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#trowel-home"} className="text-theme-orange" />
@@ -112,8 +114,8 @@ class MainPage extends Component<MainPageProps, MainPageState> {
 
   renderWorkButton() {
     return (
-      <div className="back-item-container">
-        <button className="btn btn-transparent zoom-item svgOnHover" onClick={() => this.props.history.push("/back-to-work")}>
+      <div className="back-item-container" onClick={() => this.props.history.push("/back-to-work")}>
+        <button className="btn btn-transparent zoom-item svgOnHover">
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#roller-home"} className="text-theme-orange" />
@@ -178,7 +180,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             <WelcomeComponent
               user={this.props.user}
               notifications={this.props.notifications}
-              notificationClicked={() => this.setState({notificationExpanded: true})}
+              notificationClicked={() => this.setState({ notificationExpanded: true })}
             />
           </div>
           <div className="first-col">
@@ -191,16 +193,16 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           </div>
           <div className="second-col">
             {this.state.isTeacher ?
-            <div onClick={() => this.props.history.push('/manage-classrooms')}>
-              Manage Classrooms
+              <div onClick={() => this.props.history.push('/manage-classrooms')}>
+                Manage Classrooms
             </div>
-            : ""}
+              : ""}
           </div>
           <MainPageMenu
             user={this.props.user}
             history={this.props.history}
             notificationExpanded={this.state.notificationExpanded}
-            toggleNotification={() => this.setState({notificationExpanded: !this.state.notificationExpanded})}
+            toggleNotification={() => this.setState({ notificationExpanded: !this.state.notificationExpanded })}
           />
           <div className="policy-text">
             <span onClick={() => this.setPolicyDialog(true)}>Privacy Policy</span>

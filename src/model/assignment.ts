@@ -17,4 +17,6 @@ export interface AssignmentBrick {
   assignedDate: string;
   status: AssignmentBrickStatus;
   brick: Brick;
+  expanded?: boolean;
+  expandFinished?: boolean;
 }

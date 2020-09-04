@@ -8,9 +8,18 @@ import sprite from "assets/img/icons-sprite.svg";
 interface ShortDescriptionProps {
   brick: Brick;
   index?: number;
-  color?: string;
   isMobile?: boolean;
   isExpanded?: boolean;
+
+  // only for play tab in back to work
+  color?: string;
+
+  // only for view all page
+  isAssigned?: boolean;
+
+  // only for some pages
+  isInvited?: boolean;
+
   onClick?(): void;
   move?(): void;
 }
@@ -29,10 +38,26 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
     );
   }
 
+  renderIcon() {
+    if (this.props.isAssigned) {
+      return (
+        <div className="round-button-icon">
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#file-plus"} />
+          </svg>
+        </div>
+      );
+    }
+    return "";
+  }
+
   renderCircle(color: string) {
     return (
       <div className="left-brick-circle">
-        <div className="round-button" style={{ background: `${color}` }} />
+        <div className="round-button" style={{ background: `${color}` }}>
+          {this.renderIcon()}
+        </div>
       </div>
     );
   }

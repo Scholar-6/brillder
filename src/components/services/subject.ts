@@ -22,3 +22,12 @@ export const loadSubjects = () => {
 export const getGeneralSubject = (subjects: Subject[]) => {
   return subjects.find(s => s.name === GENERAL_SUBJECT);
 }
+
+export const getSubjectColor = (subjects: Subject[], subjectId: number) => {
+  for (const s of subjects) {
+    if (s.id === subjectId) {
+      return s.color;
+    }
+  }
+  return '';
+}

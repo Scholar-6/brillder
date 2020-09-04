@@ -22,13 +22,20 @@ interface WelcomeState {
   animatedNotificationText3: string;
   isTextClickable: boolean;
   animationStarted: boolean;
+  interval: number | null;
 }
 
 class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
   constructor(props: any) {
     super(props);
 
+    let interval = null;
+    if (this.props.notifications) {
+      interval = this.runAnimation(this.props);
+    }
+
     this.state = {
+      interval,
       animatedName: "",
       animatedNotificationText: '',
       animatedNotificationText2: '',
@@ -36,24 +43,26 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
       isTextClickable: false,
       animationStarted: false
     } as any;
-
-    if (this.props.notifications) {
-      this.runAnimation(this.props);
-    }
   }
 
   shouldComponentUpdate(props: WelcomeProps) {
     if (props.notifications && props.notifications !== this.props.notifications && !this.state.animationStarted) {
-      this.runAnimation(props);
+      this.runAnimation(props, true);
     }
     return true;
+  }
+
+  componentWillUnmount() {
+    if (this.state.interval) {
+      clearInterval(this.state.interval);
+    }
   }
 
   animateText(text: string[], fieldName: FieldName, callback?: Function) {
     let count = 0;
     const maxCount = text.length - 1;
 
-    let notificationsInterval = setInterval(() => {
+    const notificationsInterval = setInterval(() => {
       if (count >= maxCount) {
         clearInterval(notificationsInterval);
         if (callback) {
@@ -63,6 +72,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
       this.setState({ ...this.state, [fieldName]: this.state[fieldName] + text[count] });
       count++;
     }, 40);
+    this.setState({ interval: notificationsInterval });
     return;
   }
 
@@ -78,23 +88,14 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
     return [...firstPart, middlePart, ...lastPart];
   }
 
-  runAnimation(props: WelcomeProps) {
-    this.setState({
-      animationStarted: true,
-      animatedName: '',
-      animatedNotificationText: '',
-      animatedNotificationText2: '',
-      animatedNotificationText3: '',
-      isTextClickable: false
-    });
-
+  runAnimation(props: WelcomeProps, setState?: boolean) {
     let count = 0;
     let nameToFill = props.user.firstName
       ? (props.user.firstName as string)
       : "NAME";
     let maxCount = nameToFill.length - 1;
 
-    let setNameInterval = setInterval(() => {
+    const setNameInterval = setInterval(() => {
       this.setState({
         ...this.state,
         animatedName: this.state.animatedName + nameToFill[count],
@@ -105,6 +106,19 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
       }
       count++;
     }, 150);
+
+    if (setState) {
+      this.setState({
+        interval: setNameInterval,
+        animationStarted: true,
+        animatedName: '',
+        animatedNotificationText: '',
+        animatedNotificationText2: '',
+        animatedNotificationText3: '',
+        isTextClickable: false
+      });
+    }
+    return setNameInterval;
   }
 
   runNotificationAnimation(props: WelcomeProps) {
@@ -112,10 +126,10 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
     if (props.notifications && props.notifications.length >= 1) {
       notificationText = this.getNotificationsText(props.notifications);
       this.animateText(notificationText, FieldName.animatedNotificationText, () => {
-        this.setState({isTextClickable: true, animationStarted: false});
+        this.setState({ isTextClickable: true, animationStarted: false });
       });
     } else {
-      this.animateText(notificationText, FieldName.animatedNotificationText, ()=> {
+      this.animateText(notificationText, FieldName.animatedNotificationText, () => {
         const haveAccess = checkTeacherEditorOrAdmin(this.props.user);
         if (haveAccess) {
           const text = '“Nothing strengthens authority so much as silence”'.split("");
@@ -127,7 +141,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
           });
         } else {
           const text = "“Why then the world's mine oyster...”".split("");
-          this.animateText(text, FieldName.animatedNotificationText2, () => { 
+          this.animateText(text, FieldName.animatedNotificationText2, () => {
             const text = '- Shakespeare'.split("");
             this.animateText(text, FieldName.animatedNotificationText3, () => {
               this.setState({ animationStarted: false });
@@ -139,7 +153,7 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
   }
 
   render() {
-    let className="notifications-text";
+    let className = "notifications-text";
     if (this.state.isTextClickable) {
       className += " clickable"
     }

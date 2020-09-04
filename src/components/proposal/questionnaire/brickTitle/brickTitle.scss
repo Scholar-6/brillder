@@ -1,0 +1,98 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.proposal-phone-preview {
+  @include phone_and_tabletL {
+    display: none;
+  }
+}
+
+.brick-title-page {
+  .left-block {
+    @include tabletL {
+      margin-top: 10.5vh;
+    }
+
+    h1 {
+      font-family: $font-family-black;
+      @include phone_and_tabletL {
+        font-size: 9vw !important;
+        padding: 0 !important;
+      }
+
+      @include tabletL {
+        font-size: 3.6vw;
+        margin: 4.7vh 0;
+      }
+    }
+
+    .MuiInputBase-input {
+      font-family: $font-family-regular;
+      letter-spacing: 0.05vw;
+    }
+
+    .input-container {
+      @extend %flexCenter;
+      flex-direction: column;
+      @include tabletL {
+        margin: 6vw auto;
+        width: 43vw;
+        font-size: 1.4vw;
+        border: transparent;
+      }
+      .audience-inputs {
+        @extend %buildInputs;
+      }
+    }
+  }
+  .last-button {
+    margin-left: 1.6vw;
+    margin-top: 7vh;
+  }
+
+  .phone-preview-component {
+    .titles-image {
+      margin-top: 1.5vw;
+      height: 7vw;
+      &.big {
+        height: 12vw;
+      }
+    }
+    .brick-preview-container {
+      overflow: hidden;
+      @extend %posRelative;
+      padding: 0.6vh 1.25vw;
+      font-size: 0.8vw;
+      @extend %width100;
+      margin-top: 8vh;
+      @extend %themeRadius;
+      font-family: $font-family-regular;
+      line-height: 1.2;
+      letter-spacing: 0.03vw;
+
+      .brick-title {
+        font-family: $font-family-bold;
+        margin-bottom: 0.5vh;
+        width: 15.5vw;
+        @extend %ellipsis;
+        &.uppercase {
+          text-transform: uppercase;
+        }
+      }
+      .topic-filled {
+        color: var(--white);
+        font-size: 0.65vw;
+      }
+
+      .brick-topics {
+        width: 15.5vw;
+        @extend %ellipsis;
+        .author-row {
+          margin-top: 0.5vh;
+          color: var(--white);
+        }
+      }
+    }
+  }
+}

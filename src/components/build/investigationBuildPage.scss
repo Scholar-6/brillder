@@ -1,0 +1,291 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+$space-between-boxes: 0.1vw;
+
+.mobile-brick-dialog {
+  font-size: 5vw;
+  padding: 4vh 4vw !important;
+}
+
+.investigation-build-page {
+  height: 100vh;
+  overflow: hidden;
+
+  .exit-arrow {
+    position: fixed;
+    top: 2.6vh;
+    left: 4.7vw;
+
+    img {
+      height: 2vw;
+    }
+  }
+
+  .play-preview {
+    position: fixed !important;
+  }
+
+  .phone-question-preview {
+    .custom-component {
+      background: white;
+      overflow-y: hidden;
+
+      .help-text {
+        font-family: $font-family-regular;
+
+        margin-top: 7px !important;
+        margin-bottom: 7px !important;
+
+        @include phone_and_tabletP {
+          font-size: 4vw;
+        }
+
+        @include tabletP {
+          font-size: 0.8vw;
+        }
+      }
+    }
+  }
+
+  .investigation-build-background {
+    height: 100%;
+    background: var(--theme-dark-blue);
+  }
+
+  .right-top-drop-icon {
+    position: absolute;
+    top: 8px;
+    right: 1px;
+    cursor: pointer;
+    color: var(--theme-orange);
+    z-index: 2;
+  }
+
+  .right-top-drop-icon:hover {
+    opacity: 0.5;
+  }
+
+  .right-top-icon {
+    position: absolute;
+    right: 0.3vw !important;
+    top: 0.3vw !important;
+    height: $bin-size;
+    width: $bin-size;
+    cursor: pointer;
+    color: var(--theme-orange);
+    z-index: 999;
+
+    &:hover {
+      opacity: 0.5;
+    }
+    svg {
+      $remove-button-size: 1vw;
+      height: $remove-button-size;
+      width: $remove-button-size;
+    }
+  }
+
+  .page-header {
+    background: #b2b2b2;
+  }
+
+  .MuiStepConnector-root {
+    opacity: 0;
+  }
+
+  .tab-panel {
+    padding: 0;
+  }
+
+  .drag-and-drop-box {
+    min-height: 6vw;
+    margin: 0;
+    @extend %themeRadius;
+  }
+
+  .button-box {
+    margin: 0.2vw 0;
+  }
+
+  .tutorial-top-labels {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 5%;
+    color: white;
+    font-family: $font-family-regular;
+    z-index: 101;
+
+    .tutorial-exit-label {
+      width: 38%;
+    }
+
+    .tutorial-add-label {
+      width: 31%;
+    }
+
+    .tutorial-synthesis-label {
+      width: 31%;
+    }
+  }
+
+  .add-question-tutorial-label {
+    position: fixed;
+    vertical-align: bottom;
+    height: 5%;
+    left: 33vw;
+    font-size: 1.3vw;
+    font-family: $font-family-regular;
+    color: white;
+  }
+
+  .your-proposal-container {
+    width: 9.35vw;
+  }
+
+  .additional-tooltip {
+    margin-top: 4vh;
+    font-size: 1.2vw;
+    font-family: $font-family-regular;
+    letter-spacing: 0;
+    @extend %textCenter;
+    color: white;
+
+    button {
+      cursor: pointer;
+      background: inherit;
+      outline: none;
+      border: none;
+    }
+
+    img {
+      margin-top: 2.5vh;
+      height: 5.4vw;
+      padding: 0.7vw;
+      border-radius: 100vw;
+      border: 0.1vw dashed var(--theme-orange);
+    }
+  }
+
+  .proposal-container {
+    background: inherit;
+    cursor: pointer;
+    position: absolute;
+    top: 33.5vh;
+    font-size: 1.8vw;
+    letter-spacing: 0.3vw;
+    font-family: $font-family-black;
+    color: var(--light-blue);
+
+    .svg {
+      color: var(--light-blue);
+    }
+
+    &:hover {
+      color: var(--white);
+
+      .svg {
+        color: var(--white);
+      }
+    }
+
+    .proposal-edit-icon {
+      height: 4.5vw;
+      width: 4.5vw;
+    }
+
+    &.white {
+      color: var(--white);
+
+      .svg {
+        color: var(--white);
+      }
+
+      .proposal-edit-icon {
+        height: 3.5vw;
+        width: 3.5vw;
+      }
+    }
+
+    .proposal-text {
+      @extend %transitionAll300;
+      margin-top: 0vh;
+      margin-left: 0.3vw;
+    }
+
+    &.invalid {
+      @extend %transitionAll300;
+      color: var(--theme-orange);
+
+      svg {
+        color: inherit !important;
+      }
+    }
+
+    &.invalid:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .additional-tooltip.tooltip-off {
+    img {
+      border: none;
+    }
+
+    .tooltip-text {
+      opacity: 0;
+    }
+  }
+
+  .white.proposal .proposal-link {
+    left: 0.83vw;
+    top: 32.5vh;
+    padding: 1vh 0.5vw 2.3vh 0.5vw;
+    border-radius: 0.65vw;
+    border: 0.1vw dashed var(--theme-orange);
+    margin-bottom: 10vw;
+  }
+
+  .white.proposal:focus {
+    outline: none;
+    border: none;
+  }
+
+  .saved-info {
+    position: fixed;
+    font-family: $font-family-regular;
+    top: 7.7%;
+    right: 0;
+    width: 34.3vw;
+    color: white;
+    @extend %textCenter;
+
+    img {
+      margin-top: 0.3vw;
+      height: 1.52vw;
+      width: 1.52vw;
+      margin-right: 1.3vw;
+    }
+  }
+
+  .saved-info-row {
+    width: 10.7vw;
+
+    .text-container {
+      font-size: 1.05vw;
+      margin-left: 0.4vw;
+    }
+  }
+
+  .saved-info .editor-border {
+    border-radius: $editor-radius;
+    padding: 0.1vh 0;
+    padding-left: 0.5vw;
+
+    &:before {
+      border: 0.1vw dashed var(--theme-orange);
+    }
+  }
+}

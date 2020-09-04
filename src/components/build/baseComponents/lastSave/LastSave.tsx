@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import './LastSave.scss'
 import { Grid } from "@material-ui/core";
-import { TutorialStep } from "components/build/investigationBuildPage/tutorial/TutorialPanelWorkArea";
+import { TutorialStep } from "components/build/tutorial/TutorialPanelWorkArea";
 
 
 interface LastSaveProps {
@@ -11,7 +11,7 @@ interface LastSaveProps {
   updated: string;
 }
 
-const LastSave:React.FC<LastSaveProps> = (props) => {
+const LastSave: React.FC<LastSaveProps> = (props) => {
   const updated = new Date(props.updated);
   const [isSaving, setSaving] = React.useState(props.isSaving);
   const [saveTimeout, setSaveTimeout] = React.useState(null as any);
@@ -50,7 +50,7 @@ const LastSave:React.FC<LastSaveProps> = (props) => {
     }
   }
 
-  const {tutorialStep} = props;
+  const { tutorialStep } = props;
   if (tutorialStep === TutorialStep.Proposal
     || tutorialStep === TutorialStep.Investigation
     || tutorialStep === TutorialStep.Synthesis
@@ -61,7 +61,7 @@ const LastSave:React.FC<LastSaveProps> = (props) => {
 
   let className = "";
   if (tutorialStep === TutorialStep.Additional) {
-    className = " tutorial-border";
+    className = " editor-border";
   }
 
   return (

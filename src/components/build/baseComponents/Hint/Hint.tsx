@@ -131,7 +131,6 @@ const HintComponent: React.FC<HintProps> = ({
       for (let i = 0; i < props.count; i++) {
         if (state.list.length < props.count) {
           list.push('');
-
         } else {
           setState({ ...state, list });
           return <PageLoader content="...Preparing hints..." />;

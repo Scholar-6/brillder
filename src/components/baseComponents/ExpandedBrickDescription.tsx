@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import sprite from "assets/img/icons-sprite.svg";
 import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
@@ -10,6 +11,10 @@ interface ExpandedDescriptionProps {
   isAdmin: boolean;
   brick: Brick;
   color: string;
+  
+  // only for view all page
+  isAssigned?: boolean;
+  
   move(brickId: number): void;
   onDelete(brickId: number): void;
 }
@@ -23,7 +28,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
 
   renderDeleteButton(brick: Brick) {
     if (!this.props.isAdmin) { return; }
-    if (brick.author.id === this.props.userId) { return; }
+    if (brick.author && brick.author.id === this.props.userId) { return; }
     return (
       <div>
         <button className="btn btn-transparent svgOnHover bin-button" onClick={() => this.props.onDelete(brick.id)}>
@@ -34,6 +39,20 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
         </button>
       </div>
     );
+  }
+
+  renderIcon() {
+    if (this.props.isAssigned) {
+      return (
+        <div className="round-button-icon">
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#file-plus"} />
+          </svg>
+        </div>
+      );
+    }
+    return "";
   }
 
   render() {
@@ -57,7 +76,9 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
         </div>
         <div className="hover-icons-row">
           <div>
-            <div className="round-button" style={{ background: `${color}` }}></div>
+            <div className="round-button" style={{ background: `${color}` }}>
+              {this.renderIcon()}
+            </div>
           </div>
           {this.renderDeleteButton(brick)}
           <div>
