@@ -6,4 +6,7 @@
 
 .lines-input.content-invalid {
   background: var(--theme-orange) !important;
+  &::placeholder {
+    color: var(--white) !important;
+  }
 }
