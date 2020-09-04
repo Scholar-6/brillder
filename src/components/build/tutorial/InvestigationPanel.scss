@@ -2,126 +2,23 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-.build-question-page.tutorial-panel {
-  .tutorial-investigation-panel {
-    .tutorial-step-1 {
-      margin: 0 3vw;
-      margin-top: 3.3vh;
-      background: var(--off-white);
-      color: var(--theme-dark-blue);
-      border-radius: 0.7vw;
-      height: 72vh;
-      overflow: auto;
-
-      h1 {
-        margin-top: 1vh;
-        margin-left: 2vw;
-        margin-bottom: 1.8vh;
-        font-size: 3.05vw;
-        @extend %fontFamilyBold;
-      }
-
-      .add-icon {
-        width: 8vw;
-        height: 8vw;
-        line-height: 1;
-        margin-top: 5.5vh;
-        padding: 0.76vw 0.9vw;
-        position: relative;
-        border: 0;
-        border-radius: 50%;
-        @extend %flexCenter;
-        &:before {
-          content: ' ';
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 0;
-          bottom: 0;
-          border-width: 0.3vw;
-          border-style: dashed;
-          border-color: var(--theme-orange);
-          border-radius: 50%;
-        }
-      }
-      .center {
-        margin: 3.3vh 0;
-        padding: 0;
-        font-size: 1.28vw;
-        @extend %textCenter;
-      }
-      .proposal-box {
-        margin-left: 0.5vw;
-        h2 {
-          margin: 4.8vh 0 0 0vw;
-          padding: 0;
-          @extend %fontFamilyBold;
-          font-size: 2.1vw;
-        }
-        p {
-          margin: 0;
-          font-size: 1.45vw;
-        }
-        .last-text {
-          margin-top: 3.5vh;
-        }
+.tutorial-investigation-panel {
+  @extend %tutorialPanel;
+  .tutorial-step-1 {
+    .center {
+      margin: 3.3vh 0;
+    }
+    .proposal-box {
+      margin-left: 0.5vw;
+      h2 {
+        margin: 4.8vh 0 0 0vw;
       }
     }
+  }
 
-    .bold {
-      @extend %fontFamilyBold;
-    }
-
-    .button-row {
-      margin-top: 2vh;
-      color: var(--theme-dark-blue);
-      font-size: 1.5vw;
-
-      button {
-        cursor: pointer;
-        background: white;
-        color: var(--theme-dark-blue);
-        border-radius: 0.6vw;
-        font-size: 1.5vw;
-        padding: 0;
-        line-height: 1.36;
-        padding: 0 0.8vw;
-        @extend %fontFamilyBold;
-        border: 0.1vw solid var(--theme-dark-blue);
-        transition: all 0.2s ease-in-out;
-      }
-
-      button:hover {
-        background: var(--theme-dark-blue);
-        color: white;
-      }
-
-      .left-arrow {
-        cursor: pointer;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/feathericons/chevron-left-orange.png);
-        margin-left: 1.8vw;
-        margin-right: 1.3vw;
-        height: 2.5vw;
-        width: 2.5vw;
-      }
-
-      .button-label {
-        margin-top: 0.2vw;
-      }
-
-      .right-arrow {
-        cursor: pointer;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(/feathericons/chevron-right-orange.png);
-        height: 2.5vw;
-        width: 2.5vw;
-        margin-right: 2vw;
-      }
+  .button-row {
+    .button-label {
+      margin-top: 0.2vw;
     }
   }
 }

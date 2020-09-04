@@ -31,7 +31,7 @@ const PlayPanel: React.FC<TutorialProps> = (props) => {
   }
 
   return (
-    <div className="tutorial-play-panel">
+    <div className="tutorial-panel tutorial-play-panel">
       <div className="tutorial-step-1">
         <div className="icons-row">
           <div className="icon-container svgOnHover">
