@@ -70,7 +70,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
             {renderSortArrow(UserSortBy.Name)}
           </Grid>
         </th>
-        <th style={{ width: '29%' }}>
+        <th style={{ width: '56%' }}>
           <Grid container>
             CLASSES
             {renderSortArrow(UserSortBy.Name)}
