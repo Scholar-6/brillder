@@ -113,7 +113,7 @@
       @extend %textCenter;
       margin: 0;
       line-height: 1.4;
-      @extend %fontFamilyLight;
+      font-family: $font-family-light;
     }
     &:hover,
     &.active {

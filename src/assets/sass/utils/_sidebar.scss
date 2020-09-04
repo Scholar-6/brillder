@@ -295,7 +295,7 @@
         .published-count {
           font-size: 1.05vw;
           @extend %textCenter;
-          @extend %fontFamilyLight;
+          font-family: $font-family-light;
         }
 
         .MuiGrid-container {
