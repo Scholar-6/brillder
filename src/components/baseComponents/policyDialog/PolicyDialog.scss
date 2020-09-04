@@ -48,7 +48,7 @@
 
       .private-policy-title {
         text-transform: capitalize;
-        @extend %fontFamilyBlack;
+        font-family: $font-family-black;
         @extend %textCenter;
         margin-bottom: 2.5vh;
         color: var(--theme-orange);
@@ -58,11 +58,11 @@
       ol {
         margin-bottom: 2vh;
         text-align: justify;
-        @extend %fontFamilyRegular;
+        font-family: $font-family-regular;
       }
 
       h4 {
-        @extend %fontFamilyBold;
+        font-family: $font-family-bold;
         color: var(--theme-orange);
         margin-bottom: 0;
       }
@@ -70,7 +70,7 @@
         color: var(--theme-orange);
         font-size: 2vw;
         @extend %textCenter;
-        @extend %fontFamilyBold;
+        font-family: $font-family-bold;
         letter-spacing: 0;
       }
     }

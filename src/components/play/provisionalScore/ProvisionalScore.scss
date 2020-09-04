@@ -21,7 +21,7 @@
     margin-right: 0px;
 
     > span {
-      @extend %fontFamilyRegular;
+      font-family: $font-family-regular;
       font-size: 18px;
       margin-right: 10px;
     }

@@ -585,7 +585,7 @@
         margin-left: 2vw;
         margin-bottom: 1.8vh;
         font-size: 3.05vw;
-        @extend %fontFamilyBold;
+        font-family: $font-family-bold;
       }
       .editor-border {
         margin: 2vw 1vw 0 1vw;
@@ -629,7 +629,7 @@
         h2 {
           margin: 4.1vh 0 0 0vw;
           padding: 0;
-          @extend %fontFamilyBold;
+          font-family: $font-family-bold;
           font-size: 2.1vw;
         }
         p {
@@ -642,7 +642,7 @@
       }
     }
     .bold {
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
     .button-row {
       margin-top: 2vh;
@@ -656,7 +656,7 @@
         font-size: 1.5vw;
         line-height: 1.36;
         padding: 0 0.8vw;
-        @extend %fontFamilyBold;
+        font-family: $font-family-bold;
         border: 0.1vw solid var(--theme-dark-blue);
         transition: all 0.2s ease-in-out;
         &:hover {

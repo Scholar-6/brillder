@@ -76,7 +76,7 @@ $box-radius: 0.4vw;
 
   .only-tutorial-header {
     text-align: left;
-    @extend %fontFamilyBlack;
+    font-family: $font-family-black;
     margin-bottom: 5% !important;
     @include phone_and_tabletP {
       font-size: 10.9vw;
@@ -97,7 +97,7 @@ $box-radius: 0.4vw;
       @extend %textCenter;
       font-size: 2.1vw;
       color: var(--theme-dark-blue);
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
       width: 90%;
     }
   }
@@ -110,12 +110,12 @@ $box-radius: 0.4vw;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 10vw;
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
     }
     > div:nth-child(2) {
       margin-top: 10vw;
       font-size: 2vw;
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
   }
 
@@ -127,12 +127,12 @@ $box-radius: 0.4vw;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 10vw;
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
     }
     > div:nth-child(2) {
       margin-top: 10vw;
       font-size: 2vw;
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
   }
 
@@ -144,12 +144,12 @@ $box-radius: 0.4vw;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 8.5vw;
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
     }
     > div:nth-child(2) {
       margin-top: 7.6vw;
       font-size: 2vw;
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
   }
 
@@ -161,12 +161,12 @@ $box-radius: 0.4vw;
     > div:nth-child(1) {
       font-size: 3.2vw;
       margin-top: 14.5vw;
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
     }
     > div:nth-child(2) {
       margin-top: 12.8vw;
       font-size: 2vw;
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
   }
 
@@ -179,12 +179,12 @@ $box-radius: 0.4vw;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 13vw;
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
     }
     > div:nth-child(2) {
       margin-top: 11vw;
       font-size: 2vw;
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
   }
 
@@ -196,12 +196,12 @@ $box-radius: 0.4vw;
     > div:nth-child(1) {
       font-size: 3.2vw;
       margin-top: 14.5vw;
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
     }
     > div:nth-child(2) {
       margin-top: 12.8vw;
       font-size: 2vw;
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
   }
 
@@ -212,12 +212,12 @@ $box-radius: 0.4vw;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 6vw;
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
     }
     > div:nth-child(2) {
       margin-top: 6vw;
       font-size: 2vw;
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
   }
 
@@ -229,12 +229,12 @@ $box-radius: 0.4vw;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 4.5vw;
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
     }
     > div:nth-child(2) {
       margin-top: 3.7vw;
       font-size: 2vw;
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
   }
 
@@ -247,12 +247,12 @@ $box-radius: 0.4vw;
     > div:nth-child(1) {
       font-size: 2.8vw;
       margin-top: 8vw;
-      @extend %fontFamilyBlack;
+      font-family: $font-family-black;
     }
     > div:nth-child(2) {
       margin-top: 8.1vw;
       font-size: 2vw;
-      @extend %fontFamilyBold;
+      font-family: $font-family-bold;
     }
   }
 
