@@ -68,6 +68,7 @@
           .content-box {
             cursor: pointer;
             display: flex;
+            justify-content: space-between;
             width: calc(100% - 56px);
             .notification-detail {
               border-bottom: 0.02vh solid var(--theme-dark-blue);
