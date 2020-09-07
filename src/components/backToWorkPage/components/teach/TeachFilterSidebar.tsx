@@ -119,8 +119,12 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
       totalCount += classroom.students.length;
       totalBricks += classroom.assignments.length;
     }
+    let className = "sort-box teach-sort-box";
+    if (!this.state.filterExpanded) {
+      className += " sort-box-expanded";
+    }
     return (
-      <div className="sort-box">
+      <div className={className}>
         <div className="filter-container sort-by-box" style={{ paddingTop: '4vh', paddingBottom: '0.5vh' }}>
           <div className="sort-header">CLASSES</div>
         </div>
@@ -168,8 +172,8 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
               (this.state.filterExpanded
                 ? this.state.isClearFilter
                   ? "arrow-cancel"
-                  : "arrow-down"
-                : "arrow-up")
+                  : "arrow-up"
+                : "arrow-down")
             }
             onClick={() => {
               this.state.filterExpanded
