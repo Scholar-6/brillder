@@ -6,6 +6,12 @@
   color: var(--theme-dark-blue);
   .words-container {
     width: 100%;
+    @include phone_and_tabletP {
+      font-size: 3.5vw;
+    }
+    @include tabletP {
+      font-size: 1.05vw;
+    }
     .word {
       cursor: pointer;
     }
