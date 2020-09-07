@@ -33,7 +33,7 @@ export function getFormattedDate(date: string) {
   const year = getYear(dateObj);
   const month = getMonth(dateObj);
   const dateNum = getDate(dateObj);
-  return `${date}.${month}.${year}`;
+  return `${dateNum}.${month}.${year}`;
 }
 
 export function getAuthorRow(brick: Brick) {
