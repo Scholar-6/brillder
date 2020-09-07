@@ -55,7 +55,7 @@
     height: $backwork-bricks-height !important;
 
     .main-brick-container {
-      height: calc(#{$backwork-bricks-height-2} / 6) !important;
+      // height: calc(#{$backwork-bricks-height-2} / 6) !important;
     }
   }
   .tab-content {
@@ -64,8 +64,8 @@
   }
 
   .private-core-toggle {
-    top: 6.6vh;
-    height: calc(5.5vh + 0.8vw);
+    top: 7.5vh;
+    transform: scale(0.8);
   }
 
   // Teach
