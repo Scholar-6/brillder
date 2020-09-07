@@ -8,11 +8,10 @@ import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
 import { getGeneralSubject, loadSubjects } from 'components/services/subject';
-import { getUserById, createUser, updateUser } from './service';
+import { getUserById, createUser, updateUser, saveProfileImageName } from './service';
 
 import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
-import { saveProfileImageName } from "components/services/profile";
 import PhonePreview from "../build/baseComponents/phonePreview/PhonePreview";
 import { Subject } from "model/brick";
 import SubjectAutocomplete from "./components/SubjectAutoCompete";

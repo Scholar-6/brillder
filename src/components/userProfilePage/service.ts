@@ -42,3 +42,15 @@ export const getUserById = async (userId: number) => {
     return null;
   }
 }
+
+export const saveProfileImageName = async (userId: number, name: string) => {
+  try {
+    const res = await axios.put(
+      `${process.env.REACT_APP_BACKEND_HOST}/user/profileImage/${userId}/${name}`, {}, { withCredentials: true }
+    );
+    return res.data === "OK" ? true : false;
+  }
+  catch (error) {
+    return false;
+  }
+}
