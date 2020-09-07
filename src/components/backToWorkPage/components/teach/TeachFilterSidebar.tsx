@@ -89,11 +89,13 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     return (
       <div key={i} className="classes-box">
         <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.activateClassroom(c)}>
-          <span className="classroom-name">{c.name}</span>
-          <svg className="svg active arrow-right">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + (c.active ? "#arrow-down" : "#arrow-right")} />
-          </svg>
+          <div className="classroom-name svgOnHover">
+            <span>{c.name}</span>
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + (c.active ? "#arrow-down" : "#arrow-right")} />
+            </svg>
+          </div>
           <div className="right-index">
             {c.students.length}
             <svg className="svg active">
@@ -125,7 +127,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     }
     return (
       <div className={className}>
-        <div className="filter-container sort-by-box" style={{ paddingTop: '4vh', paddingBottom: '0.5vh' }}>
+        <div className="filter-container sort-by-box">
           <div className="sort-header">CLASSES</div>
         </div>
         <div className="filter-container indexes-box classrooms-filter">
@@ -158,7 +160,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     for (let classroom of this.props.classrooms) {
       for (let assignemnt of classroom.assignments) {
         if (assignemnt.byStatus) {
-          const {byStatus} = assignemnt;
+          const { byStatus } = assignemnt;
           assignedCount += byStatus[0] ? byStatus[0].count : 0;
           submitedCount += byStatus[1] ? byStatus[1].count : 0;
         } else {
@@ -166,9 +168,9 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
         }
       }
     }
-    
+
     return (
-      <div className="sort-box" style={{ marginTop: '1vh' }}>
+      <div className="sort-box">
         <div className="filter-header">
           OVERVIEW
           <button
@@ -190,7 +192,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
           </button>
         </div>
         {this.state.filterExpanded === true ? (
-          <div className="filter-container subject-indexes-box" style={{ marginTop: '1vh' }}>
+          <div className="filter-container subject-indexes-box">
             <div className="index-box color1">
               <FormControlLabel
                 checked={this.state.filters.assigned}

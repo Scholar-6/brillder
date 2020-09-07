@@ -9,9 +9,6 @@
     overflow: auto;
     .index-box {
       padding-left: $base-filter-padding-left !important;
-      &.active {
-        background: var(--theme-orange) !important;
-      }
     }
   }
 
