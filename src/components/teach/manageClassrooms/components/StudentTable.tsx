@@ -64,13 +64,13 @@ const StudentTable: React.FC<StudentTableProps> = props => {
     return (
       <tr>
         <th className="subject-title">SC</th>
-        <th className="user-full-name" style={{ width: '20%' }}>
+        <th className="user-full-name">
           <Grid container>
             NAME
             {renderSortArrow(UserSortBy.Name)}
           </Grid>
         </th>
-        <th style={{ width: '56%' }}>
+        <th className="classes-names">
           <Grid container>
             CLASSES
             {renderSortArrow(UserSortBy.Name)}

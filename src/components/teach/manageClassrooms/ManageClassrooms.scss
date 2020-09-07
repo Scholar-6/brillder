@@ -63,14 +63,21 @@
     height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - 5.2vw - 15vh) !important;
   }
 
+  .user-full-name {
+    width: 35vw;
+  }
+  .classes-names {
+    width: 50vw;
+  }
   .selected-column {
+    width: 15vw;
     letter-spacing: 0;
     position: relative;
     display: flex;
+    justify-content: flex-end;
     .selected-label,
     .action-buttons,
     .class-assign-button {
-      margin-right: 1.5vw;
       .svg {
         @extend %removePosition;
         width: 1.7vw;
@@ -78,6 +85,7 @@
       }
     }
     .selected-label {
+      margin-right: 1.5vw;
       > span {
         font-family: $font-family-regular !important;
         &.selected-count {
@@ -87,20 +95,22 @@
       }
     }
     .action-buttons {
+      margin-right: 1.5vw;
       display: flex;
       justify-content: flex-end;
       width: 100%;
       .edit-button,
       .trash-button {
         cursor: pointer;
+        margin-left: 0.7vw;
       }
     }
     .class-assign-button {
       z-index: 1000;
       cursor: pointer;
-      margin-left: 0.7vw;
-      font-size: 1.3vw;
-      @extend %flexCenter;
+      position: absolute;
+      right: 100%;
+      top: 0.45vw;
       svg {
         padding-top: 0;
         background: var(--theme-green);
@@ -110,11 +120,8 @@
     }
   }
   .user-radio-column {
-    padding-left: 0 !important;
-    width: 10%;
-    text-align: center !important;
+    width: 10vw;
     @extend %radioBlue;
-    padding: 0;
   }
   .MuiRadio-root.MuiIconButton-root {
     padding: 0 !important;
