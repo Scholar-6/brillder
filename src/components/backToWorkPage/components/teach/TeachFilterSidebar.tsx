@@ -159,7 +159,6 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
       for (let assignemnt of classroom.assignments) {
         if (assignemnt.byStatus) {
           const {byStatus} = assignemnt;
-          console.log(byStatus[0].count)
           assignedCount += byStatus[0] ? byStatus[0].count : 0;
           submitedCount += byStatus[1] ? byStatus[1].count : 0;
         } else {

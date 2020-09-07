@@ -71,7 +71,6 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     let second = 0;
     let third = 0;
     if (byStatus) {
-      console.log(byStatus)
       first = byStatus[0] ? byStatus[0].count : 0;
       second = byStatus[1] ? byStatus[1].count : 0;
       third= byStatus[2] ? byStatus[2].count : 0;
