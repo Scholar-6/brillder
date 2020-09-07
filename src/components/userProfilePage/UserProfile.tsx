@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
-import axios from "axios";
 import { connect } from "react-redux";
 
 import actions from 'redux/actions/requestFailed';
@@ -9,10 +8,10 @@ import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
 import { getGeneralSubject, loadSubjects } from 'components/services/subject';
+import { getUserById, createUser, updateUser, saveProfileImageName } from './service';
 
 import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
-import { saveProfileImageName } from "components/services/profile";
 import PhonePreview from "../build/baseComponents/phonePreview/PhonePreview";
 import { Subject } from "model/brick";
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
@@ -81,13 +80,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       let tempState: UserProfileState = this.getExistedUserState(user, isAdmin);
       if (userId) {
         this.state = tempState;
-        axios.get(`${process.env.REACT_APP_BACKEND_HOST}/user/${userId}`, {
-          withCredentials: true,
-        }).then(res => {
-          const user = res.data as User;
-          this.setState({ user: this.getUserProfile(user) });
-        }).catch(() => {
-          this.props.requestFailed("Can`t get user profile");
+        getUserById(userId).then(user => {
+          if (user) {
+            this.setState({ user: this.getUserProfile(user) });
+          } else {
+            this.props.requestFailed("Can`t get user profile");
+          }
         });
       } else {
         tempState.user = this.getUserProfile(user);
@@ -245,19 +243,22 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   save(userToSave: any) {
     if (this.state.isNewUser) {
-      // requet to add new user
-    } else {
-      axios.put(
-        `${process.env.REACT_APP_BACKEND_HOST}/user`,
-        { ...userToSave },
-        { withCredentials: true }
-      ).then((res) => {
-        if (res.data === "OK") {
+      createUser(userToSave).then(saved => {
+        if (saved) {
           this.setState({ savedDialogOpen: true });
           this.props.getUser();
+        } else {
+          this.props.requestFailed("Can`t save user profile");
         }
-      }).catch(() => {
-        this.props.requestFailed("Can`t save user profile");
+      });
+    } else {
+      updateUser(userToSave).then(saved => {
+        if (saved) {
+          this.setState({ savedDialogOpen: true });
+          this.props.getUser();
+        } else {
+          this.props.requestFailed("Can`t save user profile");
+        }
       });
     }
   }

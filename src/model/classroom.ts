@@ -18,6 +18,7 @@ export interface Assignment {
     assignedDate: string;
 
     studentStatus: StudentStatus[];
+    byStatus: any;
     studentStatusCount: {
       0: number;
       1: number;
