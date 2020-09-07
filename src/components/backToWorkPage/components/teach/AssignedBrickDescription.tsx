@@ -90,11 +90,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <div className="link-description">
               <span>{brick.title}</span>
             </div>
-            <div className="link-info"><span className="bold">Date Set: </span>{getFormattedDate(assignment.assignedDate)} <span className="bold">Deadline: </span></div>
+            <div className="link-info"><span className="bold">Date Set: </span>{getFormattedDate(assignment.assignedDate)} <span className="bold"> Deadline: </span>{getFormattedDate(assignment.assignedDate)}</div>
           </div>
           <AssignedCircle onClick={this.props.expand} total={first} count={4} color="red" />
-          <AssignedCircle total={second} count={4} color="yellow" />
-          <AssignedCircle total={third} count={4} color="green" />
+          <AssignedCircle total={second} count={4} color="green" />
           <div className="teach-brick-actions-container">
             <div className="stats-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
