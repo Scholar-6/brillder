@@ -650,12 +650,22 @@ $play-mobile-height: calc(100vh - 55.8vw);
       &.play-preview-panel {
         color: var(--theme-dark-blue);
         p {
-          font-size: 1.05vw;
+          @include phone_and_tabletP {
+            font-size: 3.5vw;
+          }
+          @include tabletP {
+            font-size: 1.05vw;
+          }
         }
         .MuiListItemText-root,
         .MuiButton-label {
           p {
-            font-size: 0.8vw;
+            @include phone_and_tabletP {
+              font-size: 3vw;
+            }
+            @include tabletP {
+              font-size: 1vw;
+            }
           }
         }
         table {
@@ -726,7 +736,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
           }
         }
       }
-      &.synthesis-page,
       &.provisional-score-page,
       &.ending-page {
         .introduction-page {
@@ -773,6 +782,12 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
       }
       &.synthesis-page {
+        .introduction-page {
+          h1 {
+            text-transform: capitalize;
+            margin: 0;
+          }
+        }
         .question-live-play {
           height: calc(100vh - 27.6vh);
           @include phone_and_tabletP {

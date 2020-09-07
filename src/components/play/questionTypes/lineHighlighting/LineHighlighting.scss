@@ -3,12 +3,15 @@
 @import 'src/assets/sass/partials/extensions';
 
 .line-highlighting-play {
-  font-size: 1.15vw;
   color: var(--theme-dark-blue);
-
   .lines-container {
     width: 100%;
-
+    @include phone_and_tabletP {
+      font-size: 3.5vw;
+    }
+    @include tabletP {
+      font-size: 1.05vw;
+    }
     .line {
       cursor: pointer;
     }
