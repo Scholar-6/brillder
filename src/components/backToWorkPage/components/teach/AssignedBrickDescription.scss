@@ -54,6 +54,11 @@
       width: 100%;
     }
     @extend %linkDescription;
+    padding-right: 0;
+
+    .link-description {
+      width: 100% !important;
+    }
   }
   .teach-brick-actions-container {
     @extend %flexCenter;

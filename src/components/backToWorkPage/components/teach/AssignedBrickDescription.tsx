@@ -86,7 +86,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
         </div>
         {this.renderCircle()}
         <div style={{ display: 'flex' }}>
-          <div className="short-brick-info">
+          <div className="short-brick-info long">
             <div className="link-description">
               <span>{brick.title}</span>
             </div>
