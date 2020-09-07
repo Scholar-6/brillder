@@ -66,29 +66,35 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     this.props.filterChanged(filters);
   }
 
-  removeClassrooms() {
-    const { classrooms } = this.props;
-    for (let classroom of classrooms) {
+  collapseClasses() {
+    for (let classroom of this.props.classrooms) {
       classroom.active = false;
     }
+  }
+
+  removeClassrooms() {
+    this.collapseClasses();
     this.setState({ activeClassroom: null });
     this.props.setActiveClassroom(null);
   }
 
-  activateClassroom(activeClassroom: TeachClassroom) {
-    const { classrooms } = this.props;
-    for (let classroom of classrooms) {
-      classroom.active = false;
+  toggleClassroom(activeClassroom: TeachClassroom) {
+    let active = !activeClassroom.active;
+    this.collapseClasses();
+    activeClassroom.active = active;
+    if (active === true) {
+      this.setState({ activeClassroom });
+      this.props.setActiveClassroom(activeClassroom.id);
+    } else {
+      this.setState({activeClassroom: null});
+      this.props.setActiveClassroom(null);
     }
-    activeClassroom.active = true;
-    this.setState({ activeClassroom });
-    this.props.setActiveClassroom(activeClassroom.id);
   }
 
   renderClassroom(c: TeachClassroom, i: number) {
     return (
       <div key={i} className="classes-box">
-        <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.activateClassroom(c)}>
+        <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.toggleClassroom(c)}>
           <span className="classroom-name">{c.name}</span>
           <svg className="svg active arrow-right">
             {/*eslint-disable-next-line*/}
