@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { List, ListItem, ListItemText, Popover, IconButton, SvgIcon, Card, CardContent, ListItemIcon, CardActions } from '@material-ui/core';
+import { List, ListItem, Popover, IconButton, SvgIcon, Card, CardContent, ListItemIcon, CardActions } from '@material-ui/core';
 import { ReduxCombinedState } from 'redux/reducers';
 import sprite from "assets/img/icons-sprite.svg";
 import { Notification, notificationTypeColors, NotificationType } from 'model/notifications';
