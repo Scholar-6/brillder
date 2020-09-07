@@ -194,7 +194,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
           <div className="second-col">
             {this.state.isTeacher ?
               <div onClick={() => this.props.history.push('/manage-classrooms')}>
-                Manage Classrooms
+                Manage Classes
             </div>
               : ""}
           </div>
