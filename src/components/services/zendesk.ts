@@ -34,7 +34,6 @@ const initZendeskStyling = (iframe: any) => {
   let widgetIframe = getWidgetIframe();
   var innerWidgetDoc = widgetIframe.contentDocument || widgetIframe.contentWindow.document;
  
-  /*
   var css = `
     input[name='key:${process.env.REACT_APP_ZENDESK_AGENT_FIELD}'],
     input[name='key:${process.env.REACT_APP_ZENDESK_SCREEN_SIZE_FIELD}']
@@ -47,7 +46,6 @@ const initZendeskStyling = (iframe: any) => {
 
   style.type = 'text/css';
   style.appendChild(document.createTextNode(css));
-  */
 }
 
 export function minimizeZendeskButton(iframe?: any) {
