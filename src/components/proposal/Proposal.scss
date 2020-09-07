@@ -55,9 +55,7 @@
     }
   }
   .only-tutorial-header {
-    font-family: $font-family-black;
     margin-top: 4.7vh;
-    font-size: 3.9vw;
     letter-spacing: 0.09vw;
     @extend %textCenter;
     color: var(--theme-dark-blue);
