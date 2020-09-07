@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { getAuthorRow } from "components/services/brickService";
+import { getFormattedDate } from "components/services/brickService";
 import './AssignedBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
 import AssignedCircle from './AssignedCircle';
@@ -56,8 +56,8 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   }
 
   render() {
-    let { assignment, isMobile, isExpanded, index } = this.props;
-    const { brick, studentStatusCount } = assignment;
+    let { assignment, isMobile, isExpanded, classroom, index } = this.props;
+    const { brick, byStatus } = assignment;
     let className = "assigned-brick-description";
 
     if (isMobile && isExpanded) {
@@ -67,10 +67,20 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
       className += " mobile-short-" + index;
     }
 
+    let first = classroom.students.length;
+    let second = 0;
+    let third = 0;
+    if (byStatus) {
+      console.log(byStatus)
+      first = byStatus[0] ? byStatus[0].count : 0;
+      second = byStatus[1] ? byStatus[1].count : 0;
+      third= byStatus[2] ? byStatus[2].count : 0;
+    }
+
     return (
       <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
         <div className="total-view-count">
-          {this.props.classroom.students.length}
+          {classroom.students.length}
           <svg className="svg active">
             <use href={sprite + "#users"} className="text-theme-dark-blue" />
           </svg>
@@ -81,14 +91,11 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <div className="link-description">
               <span>{brick.title}</span>
             </div>
-            <div className="link-info">
-              {brick.subTopic} | {brick.alternativeTopics}
-            </div>
-            <div className="link-info">{getAuthorRow(brick)}</div>
+            <div className="link-info"><span className="bold">Date Set: </span>{getFormattedDate(assignment.assignedDate)}<span className="bold">Deadline: </span></div>
           </div>
-          <AssignedCircle onClick={this.props.expand} total={studentStatusCount[0]} count={4} color="red" />
-          <AssignedCircle total={studentStatusCount[1]} count={4} color="yellow" />
-          <AssignedCircle total={studentStatusCount[2]} count={4} color="green" />
+          <AssignedCircle onClick={this.props.expand} total={first} count={4} color="red" />
+          <AssignedCircle total={second} count={4} color="yellow" />
+          <AssignedCircle total={third} count={4} color="green" />
           <div className="teach-brick-actions-container">
             <div className="stats-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
