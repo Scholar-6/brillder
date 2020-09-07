@@ -170,12 +170,14 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     name="T"
                     label="TEXT"
                     className="text-box"
+                    hoverMarginTop="-0.85vw"
                     value={QuestionComponentTypeEnum.Text}
                   />
                   <DragBox
                     locked={locked}
                     name="“ ”"
                     label="QUOTE"
+                    hoverMarginTop="-1.5vw"
                     value={QuestionComponentTypeEnum.Quote}
                   />
                   <DragBox
