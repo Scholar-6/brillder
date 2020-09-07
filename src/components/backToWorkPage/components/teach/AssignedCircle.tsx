@@ -37,7 +37,7 @@ class AssignedCircle extends Component<AssignedCircleProps> {
             <div className="total-view-count">
               {this.props.total}
               <svg className="svg active">
-                <use href={sprite + "#eye-on"} className="text-theme-dark-blue" />
+                <use href={sprite + "#users"} className="text-theme-dark-blue" />
               </svg>
             </div>
           </div>
