@@ -37,8 +37,24 @@ const initZendeskStyling = (iframe: any) => {
   var css = `
     input[name='key:${process.env.REACT_APP_ZENDESK_AGENT_FIELD}'],
     input[name='key:${process.env.REACT_APP_ZENDESK_SCREEN_SIZE_FIELD}']
-      { margin: 0; padding: 0; border: none; height: 0; min-height: 0; overflow: hidden }
-  `;
+      {
+        margin: 0;
+        padding: 0;
+        border: none;
+        height: 0;
+        min-height: 0;
+        overflow: hidden;
+        pointer-events: none;
+        cursor: not-allowed;
+        
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+    `;
   var head = innerWidgetDoc.head || innerWidgetDoc.getElementsByTagName('head')[0];
   var style = document.createElement('style');
 
