@@ -5,6 +5,7 @@ declare global {
 }
 
 const getZendeskIframe = () => document.getElementById("launcher") as any;
+const getWidgetIframe = () => document.getElementById("webWidget") as any;
 
 const initZendeskStyling = (iframe: any) => {
   if (isMobile) { return; }
@@ -28,6 +29,25 @@ const initZendeskStyling = (iframe: any) => {
   svg.style.minHeight = svgSize;
   svg.style.width = svgSize;
   svg.style.height = svgSize;
+
+  // hide custom fields
+  let widgetIframe = getWidgetIframe();
+  var innerWidgetDoc = widgetIframe.contentDocument || widgetIframe.contentWindow.document;
+ 
+  /*
+  var css = `
+    input[name='key:${process.env.REACT_APP_ZENDESK_AGENT_FIELD}'],
+    input[name='key:${process.env.REACT_APP_ZENDESK_SCREEN_SIZE_FIELD}']
+      { margin: 0; padding: 0; border: none; height: 0; min-height: 0; overflow: hidden }
+  `;
+  var head = innerWidgetDoc.head || innerWidgetDoc.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+
+  head.appendChild(style);
+
+  style.type = 'text/css';
+  style.appendChild(document.createTextNode(css));
+  */
 }
 
 export function minimizeZendeskButton(iframe?: any) {
@@ -97,13 +117,27 @@ function addZendesk() {
     script.setAttribute('type', 'text/javascript');
     script.setAttribute(
       'src',
-      `https://static.zdassets.com/ekr/snippet.js?key=${
-      process.env.REACT_APP_ZENDESK_ID
-        ? process.env.REACT_APP_ZENDESK_ID
-        : '1415bb80-138f-4547-9798-3082b781844a'
-      }`
+      `https://static.zdassets.com/ekr/snippet.js?key=${process.env.REACT_APP_ZENDESK_ID}`
     );
     head.appendChild(script);
+
+    // prefill zendesk fields
+    window.zESettings = {
+      webWidget: {
+        contactForm: {
+          fields: [
+            {
+              id: process.env.REACT_APP_ZENDESK_SCREEN_SIZE_FIELD,
+              prefill: { '*': `height: ${window.screen.height} width: ${window.screen.width}` }
+            },
+            {
+              id: process.env.REACT_APP_ZENDESK_AGENT_FIELD,
+              prefill: { '*': window.navigator.userAgent }
+            }
+          ]
+        }
+      }
+    };
   }
 }
 
