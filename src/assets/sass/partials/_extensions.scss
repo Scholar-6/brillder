@@ -688,10 +688,10 @@
     @extend %ellipsis;
     width: calc(100% - 3vw);
     @include phone_and_tabletP {
-      font-size: 3vw;
+      font-size: 2vw;
     }
     @include tabletP {
-      font-size: 1vw;
+      font-size: 0.8vw;
     }
   }
 }
@@ -700,9 +700,14 @@
   .link-description {
     @extend %textCenter;
     font-family: $font-family-regular;
-    font-size: 1.2vw;
     line-height: 1.4vw;
     margin: 0;
+    @include phone_and_tabletP {
+      font-size: 3vw;
+    }
+    @include tabletP {
+      font-size: 1vw;
+    }
   }
 }
 

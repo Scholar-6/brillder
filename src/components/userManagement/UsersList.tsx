@@ -533,7 +533,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                   <td>{user.email}</td>
                   <td>{this.renderUserType(user)}</td>
                   <td className="activate-button-container">
-                    <CustomToggle checked={user.status === UserStatus.Active} onClick={() => this.toggleUser(user)}  />
+                    <CustomToggle checked={user.status === UserStatus.Active} onClick={() => this.toggleUser(user)} />
                   </td>
                   <UserActionsCell
                     userId={user.id}
