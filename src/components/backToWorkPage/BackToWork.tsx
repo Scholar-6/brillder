@@ -153,17 +153,20 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       finalBricks = this.props.bricks;
     }
 
+    let activeTab = ActiveTab.Play;
+    if (isTeach) {
+      activeTab = ActiveTab.Teach;
+    }
+
     this.state = {
-      finalBricks,
-      rawBricks,
-      threeColumns,
+      finalBricks, rawBricks, threeColumns,
 
       sortBy: SortBy.None,
       sortedIndex: 0,
       sortedReversed: false,
       deleteDialogOpen: false,
       deleteBrickId: -1,
-      activeTab: ActiveTab.Play,
+      activeTab,
       subjects: [],
 
       filters: {
@@ -177,8 +180,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         isCore
       },
 
-      isTeach,
-      isAdmin,
+      isTeach, isAdmin,
 
       searchString: "",
       isSearching: false,
