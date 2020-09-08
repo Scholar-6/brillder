@@ -1,5 +1,9 @@
+.class-stats-container {
+    overflow-x: hidden;
+    overflow-y: hidden !important;
+}
+
 .stats-graph {
-    margin: 1vw;
     .stats-box-plot {
         fill: #001c5844;
         stroke: var(--theme-dark-blue);
