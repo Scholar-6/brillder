@@ -10,12 +10,13 @@ const getWidgetIframe = () => document.getElementById("webWidget") as any;
 const initZendeskStyling = (iframe: any) => {
   if (isMobile) { return; }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+  iframe.style.height = '2.3vw';
   let div = innerDoc.querySelectorAll('#Embed > div')[0]
   div.style.position = "absolute";
   div.style.width = '100%';
   div.style.height = '100%';
   let button = innerDoc.getElementsByTagName("button")[0];
-  button.style.padding = 0;
+  button.style.padding = '0 0 0 19.5vw';
   button.style.width = '100%';
   button.style.height = '100%';
   let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
@@ -70,12 +71,14 @@ export function minimizeZendeskButton(iframe?: any) {
     iframe = getZendeskIframe();
     if (!iframe) { return; }
   }
+  iframe.style.height = '2.6vw';
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
   let div = innerDoc.querySelectorAll('#Embed > div')[0]
-  div.style.width = '42%';
+  div.style.marginLeft = '18%';
+  div.style.width = '47.18%';
   div.style.height = '100%';
   var button = innerDoc.getElementsByTagName("button")[0];
-  button.style.paddingLeft = "11.6vw";
+  button.style.paddingLeft = "12vw";
   let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
   btnContent.style.padding = 0;
   let helpText = innerDoc.getElementsByClassName("label-3kk12");
@@ -90,7 +93,9 @@ export function maximizeZendeskButton(iframe?: any) {
     if (!iframe) { return; }
   }
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+  iframe.style.height = '2.3vw';
   let div = innerDoc.querySelectorAll('#Embed > div')[0]
+  div.style.marginLeft = '0';
   div.style.width = '100%';
   div.style.height = '100%';
   let button = innerDoc.getElementsByTagName("button")[0];
