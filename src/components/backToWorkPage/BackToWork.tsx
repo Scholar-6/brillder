@@ -195,7 +195,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
       teachFilters: {
         assigned: false,
-        submitted: false,
         completed: false
       },
       teachPageSize: 4,

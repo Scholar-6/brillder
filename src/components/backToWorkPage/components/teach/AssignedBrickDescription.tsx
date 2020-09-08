@@ -69,11 +69,11 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
 
     let first = classroom.students.length;
     let second = 0;
-    let third = 0;
+    let average = 0;
     if (byStatus) {
       first = byStatus[0] ? byStatus[0].count : 0;
       second = byStatus[1] ? byStatus[1].count : 0;
-      third= byStatus[2] ? byStatus[2].count : 0;
+      average = byStatus[1] ? Math.round(byStatus[1].avgScore) : 0;
     }
 
     return (
@@ -90,10 +90,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <div className="link-description">
               <span>{brick.title}</span>
             </div>
-            <div className="link-info"><span className="bold">Date Set: </span>{getFormattedDate(assignment.assignedDate)} <span className="bold"> Deadline: </span>{getFormattedDate(assignment.assignedDate)}</div>
+            <div className="link-info"><span className="bold">Date Set: </span>{getFormattedDate(assignment.assignedDate)} <span className="bold"> Deadline: </span></div>
           </div>
-          <AssignedCircle onClick={this.props.expand} total={first} count={4} color="red" />
-          <AssignedCircle total={second} count={4} color="green" />
+          <AssignedCircle onClick={this.props.expand} total={first} color="red" />
+          <AssignedCircle total={second} count={average} color="green" />
           <div className="teach-brick-actions-container">
             <div className="stats-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>

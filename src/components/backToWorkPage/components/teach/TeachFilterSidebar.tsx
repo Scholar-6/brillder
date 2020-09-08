@@ -7,7 +7,6 @@ import sprite from "assets/img/icons-sprite.svg";
 
 enum TeachFilterFields {
   Assigned = 'assigned',
-  Submitted = 'submitted',
   Completed = 'completed'
 }
 
@@ -33,7 +32,6 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
       isClearFilter: false,
       filters: {
         assigned: false,
-        submitted: false,
         completed: false
       }
     };
@@ -46,13 +44,12 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     const { filters } = this.state;
     filters.assigned = false;
     filters.completed = false;
-    filters.submitted = false;
     this.filterClear(filters);
     this.props.filterChanged(filters);
   }
 
   filterClear(filters: TeachFilters) {
-    if (filters.assigned || filters.completed || filters.submitted) {
+    if (filters.assigned || filters.completed) {
       this.setState({ isClearFilter: true, filters });
     } else {
       this.setState({ isClearFilter: false, filters });
@@ -86,7 +83,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
       this.setState({ activeClassroom });
       this.props.setActiveClassroom(activeClassroom.id);
     } else {
-      this.setState({ activeClassroom: null });
+      this.setState({activeClassroom: null});
       this.props.setActiveClassroom(null);
     }
   }
@@ -133,7 +130,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     }
     return (
       <div className={className}>
-        <div className="filter-container sort-by-box">
+        <div className="filter-container sort-by-box" style={{ paddingTop: '4vh', paddingBottom: '0.5vh' }}>
           <div className="sort-header">CLASSES</div>
         </div>
         <div className="filter-container indexes-box classrooms-filter">
@@ -161,22 +158,22 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
 
   renderFilterBox = () => {
     let assignedCount = 0;
-    let submitedCount = 0;
+    let completedCount = 0;
 
     for (let classroom of this.props.classrooms) {
       for (let assignemnt of classroom.assignments) {
         if (assignemnt.byStatus) {
-          const { byStatus } = assignemnt;
+          const {byStatus} = assignemnt;
           assignedCount += byStatus[0] ? byStatus[0].count : 0;
-          submitedCount += byStatus[1] ? byStatus[1].count : 0;
+          completedCount += byStatus[1] ? byStatus[1].count : 0;
         } else {
           assignedCount += classroom.students.length;
         }
       }
     }
-
+    
     return (
-      <div className="sort-box">
+      <div className="sort-box" style={{ marginTop: '1vh' }}>
         <div className="filter-header">
           OVERVIEW
           <button
@@ -198,22 +195,13 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
           </button>
         </div>
         {this.state.filterExpanded === true ? (
-          <div className="filter-container subject-indexes-box">
+          <div className="filter-container subject-indexes-box" style={{ marginTop: '1vh' }}>
             <div className="index-box color1">
               <FormControlLabel
                 checked={this.state.filters.assigned}
                 control={<Radio onClick={() => this.toggleFilter(TeachFilterFields.Assigned)} className={"filter-radio custom-color"} />}
                 label="Assigned to class or Student" />
               <div className="right-index">{assignedCount}</div>
-            </div>
-            <div className="index-box color2">
-              <FormControlLabel
-                checked={this.state.filters.submitted}
-                control={
-                  <Radio onClick={() => this.toggleFilter(TeachFilterFields.Submitted)} className={"filter-radio custom-color"} />
-                }
-                label="Submitted" />
-              <div className="right-index">{submitedCount}</div>
             </div>
             <div className="index-box color4">
               <FormControlLabel
@@ -222,7 +210,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
                   <Radio onClick={e => this.toggleFilter(TeachFilterFields.Completed)} className={"filter-radio custom-color"} />
                 }
                 label="Completed" />
-              <div className="right-index">{0}</div>
+              <div className="right-index">{completedCount}</div>
             </div>
           </div>
         ) : (

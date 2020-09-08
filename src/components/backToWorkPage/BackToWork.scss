@@ -112,10 +112,6 @@
   $classes-label-height: 7.7vh;
   height: calc(#{$filter-height} + #{$classes-label-height});
 
-  // .filter-container {
-  //   padding-top: 4vh;
-  //   padding-bottom: 0.5vh;
-  // }
   .classrooms-filter {
     height: $filter-height;
     overflow-y: scroll;
@@ -125,7 +121,7 @@
         align-items: center;
         .classroom-name {
           text-transform: capitalize;
-          .svg {
+          svg {
             @extend %removePosition;
             width: 1.6vw;
             height: 1.6vw;
