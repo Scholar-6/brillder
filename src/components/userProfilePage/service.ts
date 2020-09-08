@@ -67,7 +67,7 @@ export const saveProfileImageName = async (userId: number, name: string) => {
 }
 
 export const isValid = (user: UserProfile) => {
-  if (user.firstName && user.lastName && user.email) {
+  if (user.firstName && user.lastName && user.email && user.password) {
     return true;
   }
   return false;
