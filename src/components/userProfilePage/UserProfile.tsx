@@ -8,7 +8,7 @@ import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
 import { getGeneralSubject, loadSubjects } from 'components/services/subject';
-import { getUserById, createUser, updateUser, saveProfileImageName } from './service';
+import { isValid, getUserById, createUser, updateUser, saveProfileImageName } from './service';
 
 import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
@@ -58,6 +58,7 @@ interface UserProfileState {
   isAdmin: boolean;
   isStudent: boolean;
   roles: UserRoleItem[];
+  validationRequired: boolean;
 }
 
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
@@ -158,7 +159,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
       ],
       noSubjectDialogOpen: false,
-      savedDialogOpen: false
+      savedDialogOpen: false,
+      validationRequired: false
     };
   }
 
@@ -191,6 +193,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       ],
       noSubjectDialogOpen: false,
       savedDialogOpen: false,
+      validationRequired: false
     };
   }
 
@@ -242,6 +245,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   save(userToSave: any) {
+    const valid = isValid(userToSave);
+    if (!valid) {
+      this.setState({ validationRequired: true });
+      return;
+    }
+
     if (this.state.isNewUser) {
       createUser(userToSave).then(saved => {
         if (saved) {
@@ -380,7 +389,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   render() {
-    const { user } = this.state;
+    const { user, validationRequired } = this.state;
     return (
       <div className="main-listing user-profile-page">
         <PageHeadWithMenu
