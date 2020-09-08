@@ -64,7 +64,7 @@
   }
 
   .user-full-name {
-    width: 35vw;
+    width: 20vw !important;
   }
   .classes-names {
     width: 50vw;
@@ -120,7 +120,7 @@
     }
   }
   .user-radio-column {
-    width: 10vw;
+    width: 6vw;
     @extend %radioBlue;
   }
   .MuiRadio-root.MuiIconButton-root {
