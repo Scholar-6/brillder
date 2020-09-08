@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import './SaveProfileButton.scss';
 import sprite from "assets/img/icons-sprite.svg";
 
+import {isValid} from '../service';
 import { UserProfile } from "model/user";
 
 interface SaveProfileProps {
@@ -20,23 +21,16 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
     super(props);
 
     this.state = {
-      isValid: this.isValid(props.user),
+      isValid: isValid(props.user),
       shouldPulse: false
     }
-  }
-
-  isValid(user: UserProfile) {
-    if (user.firstName && user.lastName) {
-      return true;
-    }
-    return false;
   }
 
   shouldComponentUpdate(props: SaveProfileProps) {
     const { user } = props;
 
     // check pulsing
-    if (this.isValid(user)) {
+    if (isValid(user)) {
       if (this.state.isValid === false && this.state.shouldPulse === false) {
         this.setState({ shouldPulse: true });
         return true;
@@ -48,7 +42,7 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
     }
 
     // check validation
-    if (this.isValid(user)) {
+    if (isValid(user)) {
       if (!this.state.isValid) {
         this.setState({ isValid: true });
         return true;
@@ -71,11 +65,7 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
       className += " save-pulse";
     }
     return (
-      <button
-        type="button"
-        className={className}
-        onClick={this.props.onClick}
-      >
+      <button type="button" className={className} onClick={this.props.onClick}>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#save-icon"} />
