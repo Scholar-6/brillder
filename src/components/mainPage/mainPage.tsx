@@ -1,21 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Grid, Hidden } from "@material-ui/core";
-import sprite from 'assets/img/icons-sprite.svg';
+import 'swiper/swiper.scss';
+
 import "./mainPage.scss";
+import sprite from 'assets/img/icons-sprite.svg';
+
 import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";
 import { ReduxCombinedState } from "redux/reducers";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper.scss';
-import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
-import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
 import { clearProposal } from "localStorage/proposal";
 import map from 'components/map';
-import WelcomeComponent from './WelcomeComponent';
 import { Notification } from 'model/notifications';
 import { checkTeacherOrAdmin } from "components/services/brickService";
+
+import WelcomeComponent from './WelcomeComponent';
+import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
+import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
+
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -70,6 +74,10 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     this.props.history.push(map.ProposalSubject);
   }
 
+  renderViewAllLabel() {
+    return this.state.isTeacher ? "View & Assign Bricks" : "View All Bricks";
+  }
+
   renderViewAllButton() {
     return (
       <div className="view-item-container zoom-item" onClick={() => this.props.history.push("/play/dashboard")}>
@@ -93,7 +101,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             </svg>
           </div>
         </div>
-        <span className="item-description">View All Bricks</span>
+        <span className="item-description">{this.renderViewAllLabel()}</span>
       </div>
     );
   }

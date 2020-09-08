@@ -60,6 +60,9 @@ input {
       font-size: 1.5vw;
     }
   }
+  input[type='email']::placeholder, input[type='password']::placeholder {
+    color: rgb(141, 154, 180) !important;
+  }
   .hide-password-icon-container {
     @extend %flexCenter;
     position: absolute;

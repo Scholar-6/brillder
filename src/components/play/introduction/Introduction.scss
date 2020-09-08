@@ -1146,6 +1146,10 @@ $play-mobile-height: calc(100vh - 55.8vw);
         height: $introduction-expanded-height !important;
       }
 
+      .sidebar-button {
+        padding-right: 1.8vw !important;
+      }
+
       .circle-progress-container {
         margin-top: 0 !important;
         height: $introduction-expanded-height !important;
