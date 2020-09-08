@@ -83,7 +83,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
       this.setState({ activeClassroom });
       this.props.setActiveClassroom(activeClassroom.id);
     } else {
-      this.setState({activeClassroom: null});
+      this.setState({ activeClassroom: null });
       this.props.setActiveClassroom(null);
     }
   }
@@ -163,7 +163,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     for (let classroom of this.props.classrooms) {
       for (let assignemnt of classroom.assignments) {
         if (assignemnt.byStatus) {
-          const {byStatus} = assignemnt;
+          const { byStatus } = assignemnt;
           assignedCount += byStatus[0] ? byStatus[0].count : 0;
           completedCount += byStatus[1] ? byStatus[1].count : 0;
         } else {
@@ -171,7 +171,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
         }
       }
     }
-    
+
     return (
       <div className="sort-box" style={{ marginTop: '1vh' }}>
         <div className="filter-header">

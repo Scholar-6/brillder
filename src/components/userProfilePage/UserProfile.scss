@@ -193,6 +193,7 @@
         .MuiFormControlLabel-root,
         .MuiFormControlLabel-label {
           color: var(--theme-dark-blue) !important;
+          font-family: $font-family-regular;
         }
       }
 
