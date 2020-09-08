@@ -8,10 +8,11 @@ import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
 import { getGeneralSubject, loadSubjects } from 'components/services/subject';
+import { UpdateUserStatus, UserProfileField, UserRoleItem } from './model';
 import { isValid, getUserById, createUser, updateUser, saveProfileImageName } from './service';
 
 import "./UserProfile.scss";
-import { User, UserType, UserStatus, UserProfile, UserRole } from "model/user";
+import { User, UserType, UserStatus, UserProfile } from "model/user";
 import PhonePreview from "../build/baseComponents/phonePreview/PhonePreview";
 import { Subject } from "model/brick";
 import SubjectAutocomplete from "./components/SubjectAutoCompete";
@@ -20,6 +21,7 @@ import SubjectDialog from "./components/SubjectDialog";
 import { ReduxCombinedState } from "redux/reducers";
 import SaveProfileButton from "./components/SaveProfileButton";
 import ProfileSavedDialog from "./components/ProfileSavedDialog";
+import SimpleDialog from "../baseComponents/dialogs/SimpleDialog";
 import ProfileImage from "./components/ProfileImage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
@@ -34,17 +36,6 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(mapState, mapDispatch);
 
-interface UserRoleItem extends UserRole {
-  disabled: boolean;
-}
-
-enum UserProfileField {
-  LastName = 'lastName',
-  FirstName = 'firstName',
-  Email = 'email',
-  Password = 'password'
-}
-
 interface UserProfileProps {
   user: User;
   history: any;
@@ -58,9 +49,10 @@ interface UserProfileProps {
 interface UserProfileState {
   noSubjectDialogOpen: boolean;
   savedDialogOpen: boolean;
+  emailInvalidOpen: boolean;
+
   user: UserProfile;
   subjects: Subject[];
-  autoCompleteOpen: boolean;
   isNewUser: boolean;
   isAdmin: boolean;
   isStudent: boolean;
@@ -154,7 +146,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         profileImage: "",
       },
       subjects: [],
-      autoCompleteOpen: false,
       isNewUser: false,
       isStudent: isOnlyStudent,
       isAdmin,
@@ -167,6 +158,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       ],
       noSubjectDialogOpen: false,
       savedDialogOpen: false,
+      emailInvalidOpen: false,
       validationRequired: false
     };
   }
@@ -190,7 +182,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       isNewUser: true,
       isStudent: false,
       isAdmin,
-      autoCompleteOpen: false,
       roles: [
         { roleId: UserType.Student, name: "Student", disabled: false },
         { roleId: UserType.Teacher, name: "Teacher", disabled: false },
@@ -200,6 +191,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       ],
       noSubjectDialogOpen: false,
       savedDialogOpen: false,
+      emailInvalidOpen: false,
       validationRequired: false
     };
   }
@@ -259,10 +251,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     }
 
     if (this.state.isNewUser) {
-      createUser(userToSave).then(saved => {
-        if (saved) {
+      createUser(userToSave).then(status => {
+        if (status === UpdateUserStatus.Success) {
           this.setState({ savedDialogOpen: true });
           this.props.getUser();
+        } else if (status === UpdateUserStatus.InvalidEmail) {
+          this.setState({ emailInvalidOpen: true });
         } else {
           this.props.requestFailed("Can`t save user profile");
         }
@@ -277,6 +271,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         }
       });
     }
+  }
+
+  onInvalidEmailClose() {
+    this.setState({ emailInvalidOpen: false });
   }
 
   onSubjectDialogClose() {
@@ -471,15 +469,20 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             </Grid>
           </div>
         </Grid>
+        <SimpleDialog
+          isOpen={this.state.emailInvalidOpen}
+          label="Email is already in use"
+          close={this.onInvalidEmailClose.bind(this)}
+        />
         <SubjectDialog
           isOpen={this.state.noSubjectDialogOpen}
-          close={() => this.onSubjectDialogClose()}
+          close={this.onSubjectDialogClose.bind(this)}
         />
         <ProfileSavedDialog
           isAdmin={this.state.isAdmin}
           history={this.props.history}
           isOpen={this.state.savedDialogOpen}
-          close={() => this.onProfileSavedDialogClose()}
+          close={this.onProfileSavedDialogClose.bind(this)}
         />
       </div>
     );
