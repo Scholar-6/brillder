@@ -17,6 +17,7 @@ interface ClassroomListProps {
   activeClassroom: TeachClassroom | null;
   expand(classroomId: number): void;
 }
+
 interface ClassroomListState {
   isArchive: boolean
 }

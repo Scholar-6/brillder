@@ -15,7 +15,6 @@
 
     .teach-circle {
       @extend %flexCenter;
-      background: red;
       border-radius: 50%;
       height: 2.1vw;
       width: 2.1vw;
@@ -34,7 +33,8 @@
       background: var(--yellow);
     }
     .green {
-      background: var(--theme-green)
+      background: var(--theme-green);
+      color: var(--white);
     }
   }
 }
