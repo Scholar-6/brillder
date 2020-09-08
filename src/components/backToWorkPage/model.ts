@@ -57,7 +57,6 @@ export interface PlayFilters {
 
 export interface TeachFilters {
   assigned: boolean;
-  submitted: boolean;
   completed: boolean;
 }
 
