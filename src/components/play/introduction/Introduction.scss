@@ -28,7 +28,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
       .minimize-icon {
         cursor: pointer;
         margin-top: 1vw;
-        margin-right: 1.3vw;
+        margin-right: 1.5vw;
         width: $resize-icon-size;
         height: $resize-icon-size;
       }
@@ -1127,6 +1127,10 @@ $play-mobile-height: calc(100vh - 55.8vw);
 
       .introduction-info {
         height: $introduction-expanded-height !important;
+      }
+
+      .sidebar-button {
+        padding-right: 1.8vw !important;
       }
 
       .circle-progress-container {

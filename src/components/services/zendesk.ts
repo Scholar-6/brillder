@@ -74,11 +74,11 @@ export function minimizeZendeskButton(iframe?: any) {
   iframe.style.height = '2.6vw';
   var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
   let div = innerDoc.querySelectorAll('#Embed > div')[0]
-  div.style.marginLeft = '18%';
+  div.style.marginLeft = '13%';
   div.style.width = '47.18%';
   div.style.height = '100%';
   var button = innerDoc.getElementsByTagName("button")[0];
-  button.style.paddingLeft = "12vw";
+  button.style.paddingLeft = "12.26vw";
   let btnContent = button.getElementsByClassName("u-inlineBlock")[0];
   btnContent.style.padding = 0;
   let helpText = innerDoc.getElementsByClassName("label-3kk12");
