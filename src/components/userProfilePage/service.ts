@@ -1,6 +1,17 @@
 import axios from "axios";
 
 import { User, UserProfile } from 'model/user';
+import { UpdateUserStatus } from './model';
+
+const profileErrorHandler = (e: any) => {
+  const {response} = e;
+  if (response.status === 405) {
+    if (response.data === 'User with that email already exists.') {
+      return UpdateUserStatus.InvalidEmail;
+    }
+  }
+  return UpdateUserStatus.Failed;
+}
 
 export const createUser = async (userToSave: any) => {
   try {
@@ -9,10 +20,10 @@ export const createUser = async (userToSave: any) => {
       { ...userToSave },
       { withCredentials: true }
     );
-    return res.data === 'OK' ? true : false;
+    return res.data === 'OK' ? UpdateUserStatus.Success : UpdateUserStatus.Failed;
   }
   catch (e) {
-    return false;
+    return profileErrorHandler(e);
   }
 }
 
