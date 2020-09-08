@@ -467,7 +467,7 @@
 
         @include tabletP {
           padding: 0.8vw 0 0 0.8vw;
-          height: calc(#{$bricks-height / 6});
+          height: calc(#{$bricks-height / 6.35});
         }
 
         .brick-container {
