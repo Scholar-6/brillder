@@ -24,6 +24,10 @@ input {
         // font-size: 2vw;
       }
     }
+
+    &.invalid {
+      background: var(--theme-orange);
+    }
   }
 }
 .input-group {

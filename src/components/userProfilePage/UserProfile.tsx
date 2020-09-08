@@ -38,6 +38,13 @@ interface UserRoleItem extends UserRole {
   disabled: boolean;
 }
 
+enum UserProfileField {
+  LastName = 'lastName',
+  FirstName = 'firstName',
+  Email = 'email',
+  Password = 'password'
+}
+
 interface UserProfileProps {
   user: User;
   history: any;
@@ -280,27 +287,9 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     this.setState({ savedDialogOpen: false });
   }
 
-  onFirstNameChanged(e: any) {
+  onFieldChanged(e: React.ChangeEvent<HTMLInputElement>, name: UserProfileField) {
     const { user } = this.state;
-    user.firstName = e.target.value;
-    this.setState({ user });
-  }
-
-  onLastNameChanged(e: any) {
-    const { user } = this.state;
-    user.lastName = e.target.value;
-    this.setState({ user });
-  }
-
-  onEmailChanged(e: any) {
-    const { user } = this.state;
-    user.email = e.target.value;
-    this.setState({ user });
-  }
-
-  onPasswordChanged(e: any) {
-    const { user } = this.state;
-    user.password = e.target.value;
+    user[name] = e.target.value;
     this.setState({ user });
   }
 
@@ -388,8 +377,24 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     );
   }
 
+  renderInput(
+    value: string, initClassName: string, placeholder: string,
+    onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined,
+    type: string = 'text', shouldBeFilled: boolean = true
+  ) {
+    let className = initClassName + ' style2';
+    if (this.state.validationRequired && !value && shouldBeFilled) {
+      className += ' invalid';
+    }
+    return (
+      <div className="input-block">
+        <input type={type} className={className} value={value} onChange={onChange} placeholder={placeholder} />
+      </div>
+    );
+  }
+
   render() {
-    const { user, validationRequired } = this.state;
+    const { user } = this.state;
     return (
       <div className="main-listing user-profile-page">
         <PageHeadWithMenu
@@ -419,22 +424,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               />
               <div className="profile-inputs-container">
                 <div className="input-group">
-                  <div className="input-block">
-                    <input
-                      className="first-name style2"
-                      value={user.firstName}
-                      onChange={(e: any) => this.onFirstNameChanged(e)}
-                      placeholder="Name"
-                    />
-                  </div>
-                  <div className="input-block">
-                    <input
-                      className="last-name style2"
-                      value={user.lastName}
-                      onChange={(e: any) => this.onLastNameChanged(e)}
-                      placeholder="Surname"
-                    />
-                  </div>
+                  {this.renderInput(
+                    user.firstName, 'first-name', 'Name', e => this.onFieldChanged(e, UserProfileField.FirstName)
+                  )}
+                  {this.renderInput(
+                    user.lastName, 'last-name', 'Surname', e => this.onFieldChanged(e, UserProfileField.LastName)
+                  )}
                 </div>
                 <FormControlLabel
                   value="start"
@@ -443,24 +438,12 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   label="Keep me secret: I don't want to be searchable"
                   labelPlacement="end"
                 />
-                <div className="input-block">
-                  <input
-                    type="email"
-                    className="style2"
-                    value={user.email}
-                    onChange={(e: any) => this.onEmailChanged(e)}
-                    placeholder="username@domain.com"
-                  />
-                </div>
-                <div className="input-block">
-                  <input
-                    type="password"
-                    className="style2"
-                    value={user.password}
-                    onChange={(e: any) => this.onPasswordChanged(e)}
-                    placeholder="●●●●●●●●●●●"
-                  />
-                </div>
+                {this.renderInput(
+                  user.email, '', 'username@domain.com', e => this.onFieldChanged(e, UserProfileField.Email), 'email'
+                )}
+                {this.renderInput(
+                  user.password, '', '●●●●●●●●●●●', e => this.onFieldChanged(e, UserProfileField.Password), 'password', false
+                )}
               </div>
               <div className="profile-roles-container">
                 <div className="roles-title">ROLES</div>
