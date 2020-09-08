@@ -60,14 +60,14 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       return (
         <svg className="svg minimize-icon" onClick={() => this.props.toggleSidebar()}>
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#minimize-2"} />
+          <use href={sprite + "#minimize"} />
         </svg>
       );
     }
     return (
-      <svg className="svg minimize-icon" onClick={() => this.props.toggleSidebar()}>
+      <svg className="svg maximize-icon" onClick={() => this.props.toggleSidebar()}>
         {/*eslint-disable-next-line*/}
-        <use href={sprite + "#maximize-2"} />
+        <use href={sprite + "#maximize"} />
       </svg>
     );
   }
@@ -196,10 +196,10 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       <div>
         <CommingSoonDialog isOpen={this.state.isCoomingSoonOpen} close={() => this.toggleCommingSoon()} />
         {canSee ?
-        <AssignPersonOrClassDialog
-          isOpen={this.state.isAssigningOpen}
-          close={() => { this.setState({ isAssigningOpen: false }) }}
-        /> : ""}
+          <AssignPersonOrClassDialog
+            isOpen={this.state.isAssigningOpen}
+            close={() => { this.setState({ isAssigningOpen: false }) }}
+          /> : ""}
       </div>
     );
   }
@@ -216,7 +216,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     return (
       <Grid container item className={className}>
-        <div style={{ width: "100%" }}>{this.renderToggleButton()}</div>
+        <div className="minmax-icons">{this.renderToggleButton()}</div>
         {this.renderButtons()}
         {this.renderDialogs()}
       </Grid>

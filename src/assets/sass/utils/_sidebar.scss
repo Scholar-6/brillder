@@ -24,12 +24,10 @@
     flex-wrap: initial;
     flex-direction: column;
     position: relative;
-
     @include phone_and_tabletP {
       height: $height-mobile-view;
       display: none;
     }
-
     @include tabletP {
       height: $height-desktop-view;
     }

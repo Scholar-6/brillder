@@ -25,12 +25,29 @@ $play-mobile-height: calc(100vh - 55.8vw);
       $icons-size: 2vw;
       $right-padding: 1.6vw;
 
-      .minimize-icon {
-        cursor: pointer;
-        margin-top: 1vw;
-        margin-right: 1.3vw;
-        width: $resize-icon-size;
-        height: $resize-icon-size;
+      .minmax-icons {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+        .maximize-icon,
+        .minimize-icon {
+          margin: 1vw 1vw 0 0;
+          @extend %removePosition;
+          cursor: pointer;
+          width: $resize-icon-size;
+          height: $resize-icon-size;
+          color: var(--theme-orange);
+        }
+      }
+      &.rolled-up {
+        .minmax-icons {
+          justify-content: center;
+          .maximize-icon,
+          .minimize-icon {
+            margin: 1vw auto 0 auto;
+          }
+        }
       }
 
       .sidebar-button {
