@@ -218,8 +218,8 @@
         }
         .filter-icon {
           position: relative;
-          width: 30px;
-          height: 30px;
+          width: 1vw;
+          height: 1vw;
           cursor: pointer;
 
           &.arrow-up,
@@ -230,9 +230,9 @@
               content: '';
               position: absolute;
               top: 50%;
-              width: 2px;
+              width: 0.15vw;
+              height: 0.8vw;
               border-radius: 2px;
-              height: 13px;
               @extend %transitionAll300;
               background-color: var(--white);
             }
@@ -241,11 +241,11 @@
           &.arrow-up,
           &.arrow-down {
             &:before {
-              left: calc(50% - 4px);
+              left: calc(50% - 0.31vw);
             }
 
             &:after {
-              right: calc(50% - 6px);
+              right: calc(50% - 0.31vw);
             }
           }
           &.arrow-up {
@@ -266,11 +266,11 @@
           }
           &.arrow-cancel {
             &:before {
-              left: 15px;
+              left: 50%;
               transform: translate(-50%, -50%) rotate(45deg);
             }
             &:after {
-              right: 13px;
+              right: calc(50% - 0.15vw);
               transform: translate(-50%, -50%) rotate(-45deg);
             }
           }
