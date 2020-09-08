@@ -101,11 +101,11 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
 
   renderIndexesBox = () => {
     return (
-      <div className="sort-box">
-        <div className="filter-container sort-by-box" style={{ paddingTop: '4vh', paddingBottom: '0.5vh' }}>
+      <div className="sort-box teach-sort-box">
+        <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
-        <div className="filter-container indexes-box classrooms-filter" style={{ height: '39vh', overflowY: 'scroll' }}>
+        <div className="filter-container indexes-box classrooms-filter">
           <div
             className={"index-box " + (!this.state.activeClassroom ? "active" : "")}
             onClick={this.removeClassrooms.bind(this)}>
@@ -159,7 +159,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
           </button>
         </div>
         {this.state.filterExpanded === true ? (
-          <div className="filter-container subject-indexes-box" style={{ marginTop: '5vh' }}>
+          <div className="filter-container subject-indexes-box">
             <div className="index-box color1">
               <FormControlLabel
                 checked={filters.completed}
