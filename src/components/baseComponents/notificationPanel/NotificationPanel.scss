@@ -72,6 +72,7 @@
             width: calc(100% - 56px);
             .notification-detail {
               border-bottom: 0.02vh solid var(--theme-dark-blue);
+              padding: 0.5vw 0;
               .notif-title,
               .notif-desc {
                 @include phone_and_tabletP {
@@ -90,6 +91,7 @@
               .notif-title {
                 color: var(--white);
                 text-transform: capitalize;
+                font-family: $font-family-bold;
               }
               .notif-desc {
                 color: var(--dark-gray);
@@ -129,6 +131,7 @@
                 }
                 svg {
                   @extend %removePosition;
+                  stroke-width: 2;
                   &:hover {
                     color: var(--theme-orange);
                   }
