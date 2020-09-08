@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { User } from 'model/user';
+import { User, UserProfile } from 'model/user';
 
 export const createUser = async (userToSave: any) => {
   try {
@@ -53,4 +53,11 @@ export const saveProfileImageName = async (userId: number, name: string) => {
   catch (error) {
     return false;
   }
+}
+
+export const isValid = (user: UserProfile) => {
+  if (user.firstName && user.lastName && user.email && user.password) {
+    return true;
+  }
+  return false;
 }
