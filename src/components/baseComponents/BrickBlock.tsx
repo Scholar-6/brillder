@@ -66,8 +66,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
 
   if (!brick.id) {
     return (
-      <div className="main-brick-container">
-      </div>
+      <div className="main-brick-container"></div>
     );
   }
 
@@ -77,8 +76,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
       style={{ transformOrigin: "0 0 0" }}
       timeout={index * 150}
     >
-      <div
-        className="main-brick-container"
+      <div className="main-brick-container"
         onMouseEnter={props.handleMouseHover}
         onMouseLeave={props.handleMouseLeave}
       >
@@ -95,8 +93,8 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
                 onDelete={(brickId) => props.handleDeleteOpen(brickId)}
               />
             ) : (
-              <ShortBrickDecsiption isAssigned={props.isAssigned} color={color} brick={brick} />
-            )}
+                <ShortBrickDecsiption isAssigned={props.isAssigned} color={color} brick={brick} />
+              )}
           </div>
         </Box>
       </div>
