@@ -59,9 +59,9 @@
     padding-right: 0 !important;
   }
 
-  .users-table {
-    height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - 5.2vw - 15vh) !important;
-  }
+  // .users-table {
+  //   height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - 5.2vw - 15vh) !important;
+  // }
 
   .user-full-name {
     width: 20vw !important;
