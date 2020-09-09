@@ -109,7 +109,7 @@
       z-index: 1000;
       cursor: pointer;
       position: absolute;
-      right: 100%;
+      right: 95%;
       top: 0.45vw;
       svg {
         padding-top: 0;
@@ -120,7 +120,7 @@
     }
   }
   .user-radio-column {
-    width: 6vw;
+    width: 8vw;
     @extend %radioBlue;
   }
   .MuiRadio-root.MuiIconButton-root {

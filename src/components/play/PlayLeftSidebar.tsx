@@ -58,17 +58,21 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   renderToggleButton() {
     if (this.props.sidebarRolledUp) {
       return (
-        <svg className="svg minimize-icon" onClick={() => this.props.toggleSidebar()}>
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#minimize"} />
-        </svg>
+        <div className="minimize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#minimize"} />
+          </svg>
+        </div>
       );
     }
     return (
-      <svg className="svg maximize-icon" onClick={() => this.props.toggleSidebar()}>
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#maximize"} />
-      </svg>
+      <div className="maximize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
+        <svg className="svg active">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#maximize"} />
+        </svg>
+      </div>
     );
   }
 
@@ -84,23 +88,23 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   }
 
   renderHightlightButton() {
-    let className = "highlight-button sidebar-button";
+    let className = "highlight-button svgOnHover";
     let icon = "#highlighter"
     const { mode } = this.props;
     if (mode === PlayMode.Highlighting || mode === PlayMode.UnHighlighting) {
       className += " active";
     }
     if (mode === PlayMode.UnHighlighting) {
-      icon = "#delete-2";
+      icon = "#trash";
     }
     return (
-      <MenuItem className={className} onClick={() => this.setHighlightMode()}>
+      <div className={className} onClick={() => this.setHighlightMode()}>
         {this.renderHightlightText()}
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
-          <use href={sprite + icon} className="text-white" />
+          <use href={sprite + icon} />
         </svg>
-      </MenuItem>
+      </div>
     );
   };
 
@@ -119,13 +123,13 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
   renderAnotateButton() {
     return (
-      <MenuItem className="sidebar-button annotate-button" onClick={() => this.setAnotateMode()}>
+      <div className="annotate-button svgOnHover" onClick={() => this.setAnotateMode()}>
         {!this.props.sidebarRolledUp ? <span>Annotate Text</span> : ""}
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#pen-tool"} />
         </svg>
-      </MenuItem>
+      </div>
     );
   };
 
@@ -138,20 +142,18 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     if (!this.props.sidebarRolledUp) {
       return (
-        <div className="assign-button-container">
-          <button onClick={openAssignDialog} className="assign-class-button">Assign Brick</button>
-        </div>
+        <button onClick={openAssignDialog} className="assign-class-button svgOnHover">
+          <span>Assign Brick</span>
+        </button>
       );
     }
     return (
-      <div className="assign-button-container">
-        <button onClick={openAssignDialog} className="assign-class-button sidebar-button btn-small">
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#file-plus"} />
-          </svg>
-        </button>
-      </div>
+      <button onClick={openAssignDialog} className="assign-class-button svgOnHover">
+        <svg className="svg active">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#file-plus"} />
+        </svg>
+      </button>
     );
   }
 
@@ -181,7 +183,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       }
     }
     return (
-      <div style={{ width: '100%' }}>
+      <div className="sidebar-button">
         {this.renderHightlightButton()}
         {this.renderAnotateButton()}
         {this.renderAssignButton()}
@@ -216,9 +218,13 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
 
     return (
       <Grid container item className={className}>
-        <div className="minmax-icons">{this.renderToggleButton()}</div>
-        {this.renderButtons()}
-        {this.renderDialogs()}
+        <div className="collapsable-sidebar">
+          <div className="sidebar-button">
+            {this.renderToggleButton()}
+          </div>
+          {this.renderButtons()}
+          {this.renderDialogs()}
+        </div>
       </Grid>
     );
   }
