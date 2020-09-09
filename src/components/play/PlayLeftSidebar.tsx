@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
-import MenuItem from "@material-ui/core/MenuItem";
 import { connect } from 'react-redux';
 
 import { ReduxCombinedState } from 'redux/reducers';
@@ -75,7 +74,6 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       </div>
     );
   }
-
 
   renderHightlightText() {
     if (!this.props.sidebarRolledUp) {

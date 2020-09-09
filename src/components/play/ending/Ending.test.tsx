@@ -33,7 +33,6 @@ describe("Ending play", () => {
         brick={brick}
         history={historyMock}
         brickAttempt={attempt}
-        attempts={[]}
         saveAttempt={() => { }}
       />
     );

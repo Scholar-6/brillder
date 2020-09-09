@@ -79,15 +79,11 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     // The maximum number of marks is the number of entries * 5.
     attempt.maxMarks = this.props.component.list.length * 5;
 
-    console.log(555);
-
     this.props.component.list.forEach((answer, index) => {
-      console.log(answer, index)
       // if there is an answer given...
       if (this.state.userAnswers[index]) {
         let answerValue = stripHtml(answer.value);
         if (stripHtml(this.state.userAnswers[index]) === answerValue) {
-          console.log(answerValue, prev);
           // and the program is in the live phase...
           if (!prev) {
             // increase the marks by 5.

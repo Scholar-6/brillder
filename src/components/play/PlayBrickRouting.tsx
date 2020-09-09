@@ -88,7 +88,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const finishReview = () => {
-    var ba = calcBrickReviewAttempt(brick, attempts, brickAttempt);
+    var ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
   };
@@ -235,7 +235,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             status={status}
             brick={brick}
             history={props.history}
-            attempts={attempts}
             brickAttempt={brickAttempt}
             saveAttempt={saveBrickAttempt}
           />

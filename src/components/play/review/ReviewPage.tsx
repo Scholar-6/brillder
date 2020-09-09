@@ -73,6 +73,9 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
     const copyAnswers = Object.assign([], answers) as any[];
     copyAnswers[activeStep] = questionRefs[activeStep].current?.getAnswer();
     let attempt = questionRefs[activeStep].current?.getAttempt(true);
+    if (attempts[activeStep] && attempts[activeStep].liveCorrect) {
+      attempt.liveCorrect = true;
+    }
     updateAttempts(attempt, activeStep);
     setAnswers(copyAnswers);
     setActiveStep(step);
@@ -105,6 +108,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const onEnd = () => moveNext();
 
   const moveNext = () => {
+    handleStep(activeStep)();
     finishBrick();
     moveToEnding();
   }
