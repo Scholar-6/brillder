@@ -700,13 +700,14 @@
   .link-description {
     @extend %textCenter;
     font-family: $font-family-regular;
-    line-height: 1.4vw;
     margin: 0;
     @include phone_and_tabletP {
       font-size: 3vw;
+      line-height: 3.2vw;
     }
     @include tabletP {
-      font-size: 1vw;
+      font-size: 1.4vw;
+      line-height: 2vw;
     }
   }
 }
