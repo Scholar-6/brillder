@@ -54,15 +54,16 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
   }
 
   getAttempt(isReview: boolean): any {
+    /*
     if (this.props.attempt?.correct === true) {
       return {
         answer: this.props.attempt.answer,
         correct: true,
         marks: 0,
         maxMarks: this.props.attempt.maxMarks,
-        liveCorrect: true
+        reviewCorrect: true
       } as ComponentAttempt<any>;
-    }
+    }*/
     return this.state.answerRef.current?.getAttempt(isReview);
   }
 
