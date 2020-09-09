@@ -92,7 +92,8 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
   }
 
   mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
-    let markIncrement = prev ? 2 : 5;
+    const {isReview} = this.props;
+    let markIncrement = isReview ? 2 : 5;
     attempt.correct = true;
     attempt.marks = 0;
     attempt.maxMarks = 0;
@@ -101,7 +102,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
       if (index !== 0) {
         attempt.maxMarks += 5;
         if(answer.index - array[index-1].index === 1) {
-          if(!prev) {
+          if(!isReview) {
             attempt.marks += markIncrement;
           } else if (prev.answer[index] - prev.answer[index-1] !== 1) {
             attempt.marks += markIncrement;
@@ -112,7 +113,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
       }
     })
 
-    if(attempt.marks === 0 && !prev) attempt.marks = 1;
+    if(attempt.marks === 0 && !isReview) attempt.marks = 1;
 
     if (this.state.status === DragAndDropStatus.Changed) {
       attempt.dragged = true;
@@ -161,11 +162,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
           direction="horizontal"
           setList={(choices) => this.setUserAnswers(choices)}
         >
-          {
-            this.state.userAnswers.map((answer, i) => (
-              this.renderAnswer(answer, i)
-            ))
-          }
+          { this.state.userAnswers.map((answer, i) => this.renderAnswer(answer, i)) }
         </ReactSortable>
         <ReviewGlobalHint
           isReview={this.props.isReview}
