@@ -453,8 +453,8 @@
         display: grid;
 
         @include tabletP {
-          // grid-template-columns: repeat(auto-fit, minmax(33.33%, 1fr));
-          grid-template-columns: repeat(auto-fit, 33.33%);
+          grid-template-columns: repeat(auto-fit, minmax(33.33%, 1fr));
+          // grid-template-columns: repeat(auto-fit, 33.33%);
         }
       }
 
@@ -467,7 +467,7 @@
 
         @include tabletP {
           padding: 0.8vw 0 0 0.8vw;
-          height: calc(#{$bricks-height / 6});
+          height: calc(#{$bricks-height / 6.35});
         }
 
         .brick-container {
