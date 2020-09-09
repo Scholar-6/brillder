@@ -86,7 +86,8 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
   mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
     // If the question is answered in review phase, add 2 to the mark and not 5.
-    let markIncrement = prev ? 2 : 5;
+    const {isReview} = this.props;
+    let markIncrement = isReview ? 2 : 5;
     attempt.correct = true;
     attempt.marks = 0;
     attempt.maxMarks = 0;
@@ -100,25 +101,21 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
         // and if this item and the one before it are in the right order and are adjacent...
         if(answer.index - array[index-1].index === 1) {
           // and the program is in live phase...
-          if(!prev) {
+          if(!isReview) {
             // increase the marks by 5.
             attempt.marks += markIncrement;
-          }
-          // or the item wasn't correct in the live phase...
-          else if (prev.answer[index] - prev.answer[index-1] !== 1) {
+          } else if (prev.answer[index] - prev.answer[index-1] !== 1) {
             // increase the marks by 2.
             attempt.marks += markIncrement;
           }
-        }
-        // if not...
-        else {
+        } else {
           // the answer is not correct.
           attempt.correct = false;
         }
       }
-    })
+    });
     // Then, if the attempt scored no marks and the program is in live phase, then give the student a mark.
-    if(attempt.marks === 0 && !prev) attempt.marks = 1;
+    if(attempt.marks === 0 && !isReview) attempt.marks = 1;
 
     if (this.state.status === DragAndDropStatus.Changed) {
       attempt.dragged = true;
