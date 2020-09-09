@@ -19,18 +19,16 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
 
     useEffect(() => {
         if(props.data.graphState) {
-            console.log(props.data.graphState);
             setGraphState(props.data.graphState);
         }
 
         if(graphRef && graphRef.current) {
             var elt = graphRef.current;
             var calculator = Desmos.GraphingCalculator(elt, {
-                fontSize: Desmos.FontSizes.VERY_SMALL
+                fontSize: Desmos.FontSizes.VERY_SMALL,
+                administerSecretFolders: true
             });
-            console.log(calculator);
             if(props.data.graphState) {
-                console.log(props.data.graphState);
                 calculator.setState(props.data.graphState);
             }
             calculator.observeEvent('change', () => {
@@ -49,11 +47,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
     return (
     <div className="question-component-graph-container">
         <div className="question-component-graph-header">Graph</div>
-        <div className="question-component-graph dont-drag" ref={graphRef}  draggable="true" onDragStart={(e) => {
-            console.log("You tried to drag!")
-            e.preventDefault();
-            //e.stopPropagation();
-        }}/>
+        <div className="question-component-graph dont-drag" ref={graphRef}  draggable="true" onDragStart={(e) => e.preventDefault()}/>
     </div>
     )
 }
