@@ -23,6 +23,7 @@ import {
   QuestionComponentTypeEnum,
   HintStatus,
 } from "model/question";
+import { calcBrickLiveAttempt, calcBrickReviewAttempt } from './services/scoring';
 import { setBrillderTitle } from "components/services/titleService";
 import { prefillAttempts } from "components/services/PlayService";
 import PageHeadWithMenu, {
@@ -78,29 +79,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     setReviewAttempts(reviewAttempts);
   };
 
-  /* TODO: extract all of this scoring code into a scoring service 13/6/2020*/
-  const finishBrick = () => {
-    let score = attempts.reduce((acc, answer) => {
-      if (answer && answer.marks >= 0) {
-        return acc + answer.marks;
-      }
-      return acc;
-    }, 0);
-    /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
-    is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
-    let maxScore = attempts.reduce((acc, answer) => {
-      if (answer && answer.maxMarks) {
-        return acc + answer.maxMarks;
-      }
-      return acc;
-    }, 0);
-    var ba: BrickAttempt = {
-      brick: brick,
-      score: score,
-      maxScore: maxScore,
-      student: null,
-      answers: attempts,
-    };
+  const finishLive = () => {
+    var ba = calcBrickLiveAttempt(brick, attempts);
     setStatus(PlayStatus.Review);
     setBrickAttempt(ba);
     setReviewAttempts(Object.assign([], attempts));
@@ -108,28 +88,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   };
 
   const finishReview = () => {
-    let reviewScore = reviewAttempts.reduce((acc, answer) => {
-      if (answer && answer.marks >= 0) {
-        return acc + answer.marks;
-      }
-      return acc;
-    }, 0);
-    let score = reviewScore + brickAttempt.score;
-    let maxScore = reviewAttempts.reduce(
-      (acc, answer) => {
-        if (answer && answer.maxMarks >= 0) {
-          return acc + answer.maxMarks
-        }
-        return acc;
-      },
-      0
-    );
-    var ba: BrickAttempt = {
-      score,
-      maxScore,
-      oldScore: brickAttempt.score,
-      answers: reviewAttempts,
-    };
+    var ba = calcBrickReviewAttempt(brick, attempts, brickAttempt);
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
   };
@@ -238,7 +197,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             questions={brick.questions}
             brick={brick}
             updateAttempts={updateAttempts}
-            finishBrick={finishBrick}
+            finishBrick={finishLive}
             endTime={liveEndTime}
             setEndTime={time => {
               if (liveEndTime === null) {

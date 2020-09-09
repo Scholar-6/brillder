@@ -72,7 +72,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const handleStep = (step: number) => () => {
     const copyAnswers = Object.assign([], answers) as any[];
     copyAnswers[activeStep] = questionRefs[activeStep].current?.getAnswer();
-    let attempt = questionRefs[activeStep].current?.getAttempt();
+    let attempt = questionRefs[activeStep].current?.getAttempt(true);
     updateAttempts(attempt, activeStep);
     setAnswers(copyAnswers);
     setActiveStep(step);
@@ -81,7 +81,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
   const setActiveAnswer = () => {
     const copyAnswers = Object.assign([], answers) as any[];
     copyAnswers[activeStep] = questionRefs[activeStep].current?.getAnswer();
-    let attempt = questionRefs[activeStep].current?.getAttempt();
+    let attempt = questionRefs[activeStep].current?.getAttempt(true);
     updateAttempts(attempt, activeStep);
     setAnswers(copyAnswers);
   };

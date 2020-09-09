@@ -135,6 +135,8 @@ const EndingPage: React.FC<EndingProps> = ({
     );
   }
 
+  console.log(attempts);
+
   return (
     <div>
       <Hidden only={['xs']}>
