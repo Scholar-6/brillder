@@ -64,8 +64,9 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   }
 
   mark(attempt: any, prev: any): any {
+    const {isReview} = this.props;
     const markValue = 5;
-    const markIncrement = prev ? 2 : markValue;
+    const markIncrement = isReview ? 2 : markValue;
 
     attempt.correct = true;
     attempt.marks = 0;
@@ -80,7 +81,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     });
 
     attempt.answer = this.state.userAnswers;
-    if (attempt.marks === 0 && attempt.answer !== [] && !prev) {
+    if (attempt.marks === 0 && attempt.answer !== [] && !isReview) {
       attempt.marks = 1;
     }
 

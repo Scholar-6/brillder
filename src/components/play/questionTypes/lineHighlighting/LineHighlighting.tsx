@@ -38,14 +38,15 @@ class LineHighlighting extends CompComponent<
   }
 
   mark(attempt: any, prev: any): any {
-    let markIncrement = prev ? 2 : 5;
+    const {isReview} = this.props;
+    let markIncrement = isReview ? 2 : 5;
     attempt.correct = true;
     attempt.marks = 0;
     attempt.maxMarks = this.state.lines.length * 5;
 
     this.state.lines.forEach((line: any, index: number) => {
       if (attempt.answer.indexOf(index) !== -1 && line.checked === true) {
-        if (!prev) {
+        if (!isReview) {
           attempt.marks += markIncrement;
         } else {
           if (prev.answer.indexOf(index) === -1) {
@@ -56,7 +57,7 @@ class LineHighlighting extends CompComponent<
         line.checked === false &&
         attempt.answer.indexOf(index) === -1
       ) {
-        if (!prev) {
+        if (!isReview) {
           attempt.marks += markIncrement;
         }
       } else {
@@ -64,7 +65,7 @@ class LineHighlighting extends CompComponent<
       }
     });
 
-    if (attempt.marks === 0 && !prev) {
+    if (attempt.marks === 0 && !isReview) {
       attempt.marks = 1;
     }
 

@@ -131,7 +131,8 @@ class Sort extends CompComponent<SortProps, SortState> {
   }
 
   mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
-    let markIncrement = prev ? 2 : 5;
+    const {isReview} = this.props;
+    let markIncrement = isReview ? 2 : 5;
     attempt.correct = true;
     attempt.marks = 0;
     attempt.maxMarks = 0;
@@ -147,7 +148,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       if(attempt.answer[key] !== this.state.choices[key]) {
         attempt.correct = false;
       } else {
-        if(!prev) {
+        if(!isReview) {
           attempt.marks += markIncrement;
         } else if(prev.answer[key] !== this.state.choices[key]) {
           attempt.marks += markIncrement;
@@ -155,7 +156,7 @@ class Sort extends CompComponent<SortProps, SortState> {
       }
     });
 
-    if(attempt.marks === 0 && Object.keys(attempt.answer).length !== 0 && !prev) attempt.marks = 1;
+    if(attempt.marks === 0 && Object.keys(attempt.answer).length !== 0 && !isReview) attempt.marks = 1;
 
     if (noAnswer) {
       attempt.marks = 0;
