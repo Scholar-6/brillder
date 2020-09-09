@@ -111,7 +111,7 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
     if (this.props.attempt && this.props.isReview) {
       const { answer } = this.props.attempt;
       const found = answer.find((a: number) => a === index);
-      if (found && found >= 0) {
+      if (found !== undefined && found >= 0) {
         if (choice.checked) {
           return true;
         } else {
