@@ -26,11 +26,11 @@ const EndingStepper: React.FC<ReviewStepperProps> = ({
 
     if (attempt.liveCorrect || attempt.reviewCorrect) {
       if (attempt.liveCorrect && attempt.reviewCorrect) {
-        return <SuccessStep index={index} handleStep={()=>{}} />
+        return <SuccessStep key={index} index={index} handleStep={()=>{}} />
       }
-      return <AmberStep index={index} handleStep={()=>{}} />
+      return <AmberStep key={index} index={index} handleStep={()=>{}} />
     }
-    return <FailedStep index={index} handleStep={()=>{}} />;
+    return <FailedStep key={index} index={index} handleStep={()=>{}} />;
   };
 
   return (

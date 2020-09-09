@@ -9,7 +9,7 @@ interface StepProps {
 
 const FailedStep: React.FC<StepProps> = ({ index, handleStep }) => {
   return (
-    <div className="step" key={index} onClick={() => handleStep(index - 1)}>
+    <div className="step" onClick={() => handleStep(index - 1)}>
       <span className="blue">{index}</span>
       <svg className="svg active">
         {/*eslint-disable-next-line*/}
