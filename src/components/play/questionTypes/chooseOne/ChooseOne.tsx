@@ -53,9 +53,9 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   }
 
   mark(attempt: ComponentAttempt<number>, prev: ComponentAttempt<number>) {
-    const { component } = this.props;
+    const { component, isReview } = this.props;
     // If the question is answered in review phase, add 2 to the mark and not 5.
-    let markIncrement = prev ? 2 : 5;
+    let markIncrement = isReview ? 2 : 5;
     attempt.maxMarks = 5;
 
     // set attempt.correct to true by answer index.
@@ -69,9 +69,11 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
     });
 
     // if the attempt is correct, add the mark increment.
-    if (attempt.correct) attempt.marks = markIncrement;
+    if (attempt.correct && !prev.correct) {
+      attempt.marks = markIncrement;
+    }
     // if there is an answer given and the program is in the live phase, give the student an extra mark.
-    else if (attempt.answer != null && !prev) attempt.marks = 1;
+    else if (attempt.answer != null && !isReview) attempt.marks = 1;
     else attempt.marks = 0;
 
     if (attempt.answer === -1) {

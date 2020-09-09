@@ -86,7 +86,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         if (stripHtml(this.state.userAnswers[index]) === answerValue) {
           if (!isReview) {
             attempt.marks += markIncrement;
-          } else if (stripHtml(prev.answer[index]) !== answerValue) {
+          } else if (stripHtml(prev.answer[index]) == answerValue) {
             attempt.marks += markIncrement;
           }
         } else {
@@ -96,10 +96,10 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
       } else {
         // the answer is not correct.
         attempt.correct = false;
-      }
+      } 
     });
     // Then, if there are no marks, and there are no empty entries, and the program is in live phase, give the student a mark.
-    let emptyAnswer = this.state.userAnswers.indexOf("");
+    const emptyAnswer = this.state.userAnswers.indexOf("");
     if (attempt.marks === 0 && emptyAnswer === -1 && !isReview) attempt.marks = 1;
     return attempt;
   }

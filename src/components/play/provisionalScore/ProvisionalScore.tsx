@@ -47,8 +47,6 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
     moveToSynthesis();
   }
 
-  console.log(attempts);
-
   let score = attempts.reduce((acc, answer) => {
     if (!answer || !answer.marks) {
       return acc + 0;
@@ -69,7 +67,6 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
   setTimeout(() => setValue((score * 100) / maxScore), 400);
 
   const renderProgressBar = () => {
-    console.log(score, maxScore);
     return (
       <div className="question-live-play">
         <Grid container justify="center" alignContent="center" className="circle-progress-container">
