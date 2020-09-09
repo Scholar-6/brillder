@@ -193,11 +193,10 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     value={QuestionComponentTypeEnum.Sound}
                   />
                   <DragBox
-                    locked={true}
+                    locked={locked}
                     name="f(x)"
                     label="GRAPH"
-                    className="graph-box disabled"
-                    onClick={() => setCommingSoon(true)}
+                    className="graph-box"
                     value={QuestionComponentTypeEnum.Graph}
                   />
                 </ReactSortable>
