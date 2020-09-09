@@ -86,7 +86,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         if (stripHtml(this.state.userAnswers[index]) === answerValue) {
           if (!isReview) {
             attempt.marks += markIncrement;
-          } else if (stripHtml(prev.answer[index]) == answerValue) {
+          } else if (stripHtml(prev.answer[index]) !== answerValue) {
             attempt.marks += markIncrement;
           }
         } else {
