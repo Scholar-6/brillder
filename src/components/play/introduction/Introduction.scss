@@ -81,24 +81,28 @@ $play-mobile-height: calc(100vh - 55.8vw);
       .introduction-page {
         font-family: $font-family-regular;
         position: relative;
-
         @include desktop {
           .title {
             font-size: 4vw;
           }
         }
-
         @include phone_and_tabletP {
           height: 100%;
           position: relative;
         }
-
         @include tabletP {
           overflow-y: auto;
           height: calc(100vh - 15.8vh);
           padding: 4vh 2vw 4vh 7vw;
         }
-
+        p {
+          @include phone_and_tabletP {
+            font-size: 3.5vw;
+          }
+          @include tabletP {
+            font-size: 1.05vw;
+          }
+        }
         .intro-header {
           @extend %transitionAll600;
 
@@ -561,14 +565,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
 
       &.play-preview-panel {
         color: var(--theme-dark-blue);
-        p {
-          @include phone_and_tabletP {
-            font-size: 3.5vw;
-          }
-          @include tabletP {
-            font-size: 1.05vw;
-          }
-        }
         .MuiListItemText-root,
         .MuiButton-label {
           p {
