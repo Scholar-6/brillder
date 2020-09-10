@@ -39,6 +39,7 @@ interface TeachState {
   sortedIndex: number;
   classrooms: TeachClassroom[];
   activeClassroom: TeachClassroom | null;
+  totalCount: number;
 
   filters: TeachFilters;
 }
@@ -66,6 +67,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       classrooms: [],
       activeClassroom: null,
+
+      totalCount: 0,
 
       pageSize: 6,
       sortedIndex: 0,
@@ -114,8 +117,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   //#region pagination
   moveNext() {
-    let index = this.state.sortedIndex;
-    if (index + this.state.pageSize < this.state.classrooms.length) {
+    const index = this.state.sortedIndex;
+    const itemsCount = this.getTotalCount();
+    if (index + this.state.pageSize < itemsCount) {
       this.setState({ ...this.state, sortedIndex: index + this.state.pageSize });
     }
   }
@@ -127,10 +131,21 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
+  getTotalCount() {
+    const { classrooms } = this.state;
+    let itemsCount = classrooms.length;
+    for (const classroom of classrooms) {
+      itemsCount += classroom.assignments.length;
+    }
+    return itemsCount;
+  }
+
   renderTeachPagination = () => {
-    let itemsCount = this.state.classrooms.length;
+    let itemsCount = 0;
     if (this.state.activeClassroom) {
       itemsCount = this.state.activeClassroom.assignments.length;
+    } else {
+      itemsCount = this.getTotalCount();
     }
     return <BackPagePagination
       sortedIndex={this.state.sortedIndex}
