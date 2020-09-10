@@ -40,7 +40,8 @@
       }
       .users-table {
         width: 100%;
-        height: 58vh;
+        // height: 58vh;
+        height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - 5.2vw - 15vh) !important;
         overflow-y: auto;
         > table {
           width: 100%;
