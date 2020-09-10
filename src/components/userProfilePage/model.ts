@@ -11,6 +11,7 @@ export enum UserProfileField {
   LastName = 'lastName',
   FirstName = 'firstName',
   Email = 'email',
+  Bio = 'bio',
   Password = 'password'
 }
 
