@@ -39,7 +39,8 @@ class WordHighlighting extends CompComponent<
   }
 
   mark(attempt: any, prev: any): any {
-    let markIncrement = prev ? 2 : 5;
+    const {isReview} = this.props;
+    let markIncrement = isReview ? 2 : 5;
     attempt.correct = true;
     attempt.marks = 0;
     let correct = this.state.words.filter(w => w.checked === true);
@@ -47,7 +48,7 @@ class WordHighlighting extends CompComponent<
 
     this.state.words.forEach((word, index) => {
       if (attempt.answer.indexOf(index) !== -1 && word.checked === true) {
-        if (!prev) {
+        if (!isReview) {
           attempt.marks += markIncrement;
         } else {
           if (prev.answer.indexOf(index) === -1) {
@@ -60,7 +61,7 @@ class WordHighlighting extends CompComponent<
       }
     });
 
-    if(attempt.marks === 0 && !prev) attempt.marks = 1;
+    if(attempt.marks === 0 && !isReview) attempt.marks = 1;
 
     if (attempt.answer.length === 0) {
       attempt.marks = 0;

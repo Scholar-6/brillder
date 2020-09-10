@@ -24,12 +24,10 @@
     flex-wrap: initial;
     flex-direction: column;
     position: relative;
-
     @include phone_and_tabletP {
       height: $height-mobile-view;
       display: none;
     }
-
     @include tabletP {
       height: $height-desktop-view;
     }
@@ -218,8 +216,8 @@
         }
         .filter-icon {
           position: relative;
-          width: 30px;
-          height: 30px;
+          width: 1vw;
+          height: 1vw;
           cursor: pointer;
 
           &.arrow-up,
@@ -230,9 +228,9 @@
               content: '';
               position: absolute;
               top: 50%;
-              width: 2px;
+              width: 0.15vw;
+              height: 0.8vw;
               border-radius: 2px;
-              height: 13px;
               @extend %transitionAll300;
               background-color: var(--white);
             }
@@ -241,11 +239,11 @@
           &.arrow-up,
           &.arrow-down {
             &:before {
-              left: calc(50% - 4px);
+              left: calc(50% - 0.31vw);
             }
 
             &:after {
-              right: calc(50% - 6px);
+              right: calc(50% - 0.31vw);
             }
           }
           &.arrow-up {
@@ -266,11 +264,11 @@
           }
           &.arrow-cancel {
             &:before {
-              left: 15px;
+              left: 50%;
               transform: translate(-50%, -50%) rotate(45deg);
             }
             &:after {
-              right: 13px;
+              right: calc(50% - 0.15vw);
               transform: translate(-50%, -50%) rotate(-45deg);
             }
           }
@@ -295,7 +293,7 @@
         .published-count {
           font-size: 1.05vw;
           @extend %textCenter;
-          @extend %fontFamilyLight;
+          font-family: $font-family-light;
         }
 
         .MuiGrid-container {
@@ -455,8 +453,8 @@
         display: grid;
 
         @include tabletP {
-          // grid-template-columns: repeat(auto-fit, minmax(33.33%, 1fr));
-          grid-template-columns: repeat(auto-fit, 33.33%);
+          grid-template-columns: repeat(auto-fit, minmax(33.33%, 1fr));
+          // grid-template-columns: repeat(auto-fit, 33.33%);
         }
       }
 
@@ -469,7 +467,7 @@
 
         @include tabletP {
           padding: 0.8vw 0 0 0.8vw;
-          height: calc(#{$bricks-height / 6});
+          height: calc(#{$bricks-height / 6.35});
         }
 
         .brick-container {
@@ -499,22 +497,7 @@
               top: 0.3vh;
               left: 3vw;
             }
-            .link-description {
-              text-transform: uppercase;
-              font-family: $font-family-bold;
-              line-height: 1.1;
-              margin-bottom: 0.5vh;
-              @extend %ellipsis;
-              @include phone_and_tabletP {
-                font-size: 3.8vw;
-                width: 100%;
-              }
-              @include tabletP {
-                font-size: 0.8vw;
-                overflow: hidden;
-                width: 19vw;
-              }
-            }
+            @extend %linkDescription;
             .link-info {
               color: var(--theme-light-blue);
               font-family: $font-family-regular;

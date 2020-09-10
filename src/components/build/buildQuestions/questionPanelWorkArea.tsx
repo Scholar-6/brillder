@@ -170,12 +170,14 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     name="T"
                     label="TEXT"
                     className="text-box"
+                    hoverMarginTop="-0.85vw"
                     value={QuestionComponentTypeEnum.Text}
                   />
                   <DragBox
                     locked={locked}
                     name="“ ”"
                     label="QUOTE"
+                    hoverMarginTop="-1.5vw"
                     value={QuestionComponentTypeEnum.Quote}
                   />
                   <DragBox
@@ -191,11 +193,10 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                     value={QuestionComponentTypeEnum.Sound}
                   />
                   <DragBox
-                    locked={true}
+                    locked={locked}
                     name="f(x)"
                     label="GRAPH"
-                    className="graph-box disabled"
-                    onClick={() => setCommingSoon(true)}
+                    className="graph-box"
                     value={QuestionComponentTypeEnum.Graph}
                   />
                 </ReactSortable>

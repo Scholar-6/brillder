@@ -11,29 +11,102 @@
 }
 
 .play-sidebar {
-  .assign-button-container {
-    @extend %flexCenter;
-  }
-  .assign-class-button {
-    background: var(--theme-orange);
-    outline: none;
-    border: none;
-    margin-top: 4.6vh;
-    padding: 1.3vh 0;
-    border-radius: $editor-radius;
-    width: 79%;
-    padding-right: 0.5vw;
-    font-size: 1.6vw;
-    font-family: $font-family-bold;
-
-    &.btn-small {
-      margin-top: 6vh !important;
-      width: 3.5vw !important;
-      height: 3.5vw;
-      font-size: 1vw;
+  text-align: right;
+  $resize-icon-size: 2.7vw;
+  $icons-size: 2vw;
+  $right-padding: 1.6vw;
+  justify-content: flex-start !important;
+  .collapsable-sidebar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+    width: 100%;
+    .sidebar-button {
+      cursor: pointer;
+      font-family: $font-family-bold !important;
+      width: 100%;
+      font-size: 1.6vw;
       @extend %flexCenter;
-      padding: 0 !important;
-      justify-content: center !important;
+      flex-direction: column;
+      span,
+      .svg {
+        color: var(--white);
+      }
+      span {
+        letter-spacing: 0.03vw;
+        // padding-right: $right-padding;
+      }
+      .svg {
+        @extend %removePosition;
+        $size: calc(#{$icons-size} * 1.11);
+        width: $size;
+        height: $size;
+      }
+      .maximize-icon,
+      .minimize-icon,
+      .highlight-button,
+      .annotate-button {
+        width: calc(100% - 2vw);
+        margin: 2vw 1vw 0 1vw;
+        justify-content: center;
+      }
+      .maximize-icon,
+      .minimize-icon {
+        margin: 1vw 1vw 0 1vw;
+        justify-content: flex-end;
+        .svg {
+          color: var(--theme-orange);
+        }
+      }
+      .highlight-button {
+        &.active {
+          span,
+          .svg {
+            color: var(--yellow);
+          }
+        }
+      }
+      .annotate-button {
+        span,
+        .svg {
+          color: var(--dark-gray);
+        }
+      }
+      .assign-class-button {
+        background: var(--theme-orange);
+        outline: none;
+        border: none;
+        margin-top: 3vh;
+        padding: 1.3vh 0.5vw;
+        border-radius: $editor-radius;
+        width: 80%;
+        height: 3.5vw;
+        font-size: 1.6vw;
+        font-family: $font-family-bold;
+        @extend %flexCenter;
+      }
+    }
+  }
+  &.rolled-up {
+    margin-top: $home-button-size !important;
+    width: $home-button-size !important;
+    .collapsable-sidebar {
+      justify-content: center;
+      .sidebar-button {
+        .svg {
+          marker: 0 auto;
+        }
+      }
+      .maximize-icon,
+      .minimize-icon,
+      .highlight-button,
+      .annotate-button {
+        justify-content: center;
+      }
+      .assign-class-button {
+        width: 3.5vw;
+      }
     }
   }
 }

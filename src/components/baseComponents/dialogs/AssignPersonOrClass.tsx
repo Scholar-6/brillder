@@ -4,6 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import './AssignPersonOrClass.scss';
 import { ReduxCombinedState } from 'redux/reducers';
@@ -21,6 +22,7 @@ interface AssignPersonOrClassProps {
 
 const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) => {
   const [value] = React.useState("");
+  const [selectedObjs, setSelected] = React.useState<any[]>([]);
   const [students, setStudents] = React.useState<UserBase[]>([]);
   const [classes, setClasses] = React.useState<Classroom[]>([]);
   const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
@@ -64,20 +66,20 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     setClasses(classrooms);
   }
 
-  const assignToStudent = async (student: UserBase) => {
+  const assignToStudents = async (studentsIds: Number[]) => {
     await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignStudents/${props.brick.id}`,
-      {studentsIds: [student.id]},
+      {studentsIds },
       { withCredentials: true }
     ).catch(() => {
       props.requestFailed('Can`t assign student to brick');
     });
   }
 
-  const assignToClass = async (classroom: Classroom) => {
+  const assignToClasses = async (classesIds: Number[]) => {
     await axios.post(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignClasses/${props.brick.id}`,
-      {classesIds: [classroom.id]},
+      {classesIds},
       { withCredentials: true }
     ).catch(() => {
       props.requestFailed('Can`t assign class to brick');
@@ -95,11 +97,25 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
   }
 
-  const classroomSelected = (obj: any) => {
-    if (obj.isStudent) {
-      assignToStudent(obj);
-    } else {
-      assignToClass(obj);
+  const classroomSelected = (objs: any[]) => {
+    setSelected(objs);
+  }
+
+  const assign = (e: any) => {
+    let classroomIds:Number[] = [];
+    let studentIds:Number[] = [];
+    for (let obj of selectedObjs) {
+      if (obj.isStudent) {
+        studentIds.push(obj.id);
+      } else {
+        classroomIds.push(obj.id);
+      }
+    }
+    if (studentIds.length > 0) {
+      assignToStudents(studentIds);
+    }
+    if (classroomIds.length > 0) {
+      assignToClasses(classroomIds);
     }
     props.close();
   }
@@ -109,7 +125,9 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       <div className="dialog-header">
         <div>Who would you like to assign this brick to?</div>
         <Autocomplete
+          multiple
           open={autoCompleteOpen}
+          onBlur={e => assign(e)}
           options={[...classes, ...students]}
           onChange={(e: any, c: any) => classroomSelected(c)}
           getOptionLabel={(option: any) => option.isStudent ? `Student ${option.firstName} ${option.lastName}` : 'Class ' + option.name}
@@ -122,6 +140,15 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
               label="Students and Classes: "
               placeholder="Students and Classes"
             />
+          )}
+          renderOption={(option: any, { selected }) => (
+            <React.Fragment>
+              <Checkbox
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {option.isStudent ? `Student ${option.firstName} ${option.lastName}` : 'Class ' + option.name}
+            </React.Fragment>
           )}
         />
       </div>

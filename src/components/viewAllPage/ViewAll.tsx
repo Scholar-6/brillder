@@ -381,15 +381,15 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           <div
             className={`absolute-container brick-row-0 ${
               brick.expanded ? "brick-hover" : ""
-            }`}
+              }`}
             onMouseEnter={() => this.yourBricksMouseHover(key)}
             onMouseLeave={() => this.yourBricksMouseLeave(key)}
           >
             {brick.expanded ? (
               this.renderExpandedBrick(color, brick)
             ) : (
-              <ShortBrickDescription brick={brick} />
-            )}
+                <ShortBrickDescription brick={brick} />
+              )}
           </div>
         </Box>
       </div>
@@ -401,7 +401,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     pageSize: number,
     bricks: Brick[]
   ) => {
-     let data: any[] = [];
+    let data: any[] = [];
     let count = 0;
     for (let i = 0 + sortedIndex; i < pageSize + sortedIndex; i++) {
       const brick = bricks[i];
@@ -422,7 +422,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     );
     return data.map(item => {
       let isAssigned = false;
-      const {brick} = item;
+      const { brick } = item;
       if (brick.assignments && brick.assignments.length > 0) {
         isAssigned = true;
       }
@@ -475,7 +475,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           <div
             className={`sorted-brick absolute-container brick-row-${row} ${
               brick.expanded ? "brick-hover" : ""
-            }`}
+              }`}
             onClick={() => this.handleMobileClick(key)}
           >
             <ShortBrickDescription
@@ -658,9 +658,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
                 <div className="bricks-list">{this.renderSortedBricks()}</div>
               </Hidden>
               <Hidden only={["sm", "md", "lg", "xl"]}>
-                <div className="bricks-list">
-                  {this.renderSortedMobileBricks()}
-                </div>
+                <div className="bricks-list">{this.renderSortedMobileBricks()}</div>
               </Hidden>
             </div>
             <Hidden only={["sm", "md", "lg", "xl"]}>

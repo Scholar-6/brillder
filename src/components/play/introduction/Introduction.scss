@@ -17,94 +17,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
       height: $back-to-work-height-mobile-view;
       overflow: hidden;
     }
-
-    .play-sidebar {
-      text-align: right;
-      justify-content: inherit;
-      $resize-icon-size: 2.7vw;
-      $icons-size: 2vw;
-      $right-padding: 1.6vw;
-
-      .minimize-icon {
-        cursor: pointer;
-        margin-top: 1vw;
-        margin-right: 1.3vw;
-        width: $resize-icon-size;
-        height: $resize-icon-size;
-      }
-
-      .sidebar-button {
-        margin-top: 3.5vh;
-        font-family: $font-family-bold !important;
-        padding-right: $right-padding;
-        width: 100%;
-        align-items: center;
-        font-size: 1.55vw;
-        text-align: right;
-        justify-content: flex-end;
-
-        span {
-          padding-right: 1.5vw;
-          color: white;
-        }
-
-        .svg {
-          $size: calc(#{$icons-size} * 1.11);
-          width: $size;
-          height: $size;
-
-          use {
-            color: var(--white) !important;
-          }
-        }
-      }
-
-      .sidebar-button.active {
-        span,
-        use {
-          color: var(--yellow) !important;
-          fill: var(--yellow) !important;
-        }
-      }
-      .highlight-button {
-        margin-top: 2.5vh;
-        span {
-          margin-top: 0.4vw;
-          padding-right: 1.1vw;
-          letter-spacing: 0.03vw;
-          font-size: 1.6vw;
-        }
-      }
-      .annotate-button {
-        padding-right: 1.76vw;
-        margin-top: 2.8vh;
-        font-size: 1.58vw;
-        span {
-          font-size: 1.6vw;
-          letter-spacing: 0.04vw;
-          padding-right: 1.3vw;
-        }
-        span,
-        use {
-          color: var(--dark-gray) !important;
-        }
-        .svg {
-          margin-top: 0.2vw;
-          $size: calc(#{$icons-size} / 1.1);
-          width: $size;
-          height: $size;
-          use {
-            color: var(--dark-gray) !important;
-          }
-        }
-      }
-    }
-
-    .play-sidebar.rolled-up {
-      margin-top: $home-button-size;
-      width: $home-button-size;
-    }
-
     .sort-and-filter-container {
       @include phone_and_tabletP {
         height: $back-to-work-height-mobile-view;
@@ -169,24 +81,28 @@ $play-mobile-height: calc(100vh - 55.8vw);
       .introduction-page {
         font-family: $font-family-regular;
         position: relative;
-
         @include desktop {
           .title {
             font-size: 4vw;
           }
         }
-
         @include phone_and_tabletP {
           height: 100%;
           position: relative;
         }
-
         @include tabletP {
           overflow-y: auto;
           height: calc(100vh - 15.8vh);
           padding: 4vh 2vw 4vh 7vw;
         }
-
+        p {
+          @include phone_and_tabletP {
+            font-size: 3.5vw;
+          }
+          @include tabletP {
+            font-size: 1.05vw;
+          }
+        }
         .intro-header {
           @extend %transitionAll600;
 
@@ -649,13 +565,15 @@ $play-mobile-height: calc(100vh - 55.8vw);
 
       &.play-preview-panel {
         color: var(--theme-dark-blue);
-        p {
-          font-size: 1.05vw;
-        }
         .MuiListItemText-root,
         .MuiButton-label {
           p {
-            font-size: 0.8vw;
+            @include phone_and_tabletP {
+              font-size: 3vw;
+            }
+            @include tabletP {
+              font-size: 1vw;
+            }
           }
         }
         table {
@@ -726,7 +644,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
           }
         }
       }
-      &.synthesis-page,
       &.provisional-score-page,
       &.ending-page {
         .introduction-page {
@@ -773,6 +690,12 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
       }
       &.synthesis-page {
+        .introduction-page {
+          h1 {
+            text-transform: capitalize;
+            margin: 0;
+          }
+        }
         .question-live-play {
           height: calc(100vh - 27.6vh);
           @include phone_and_tabletP {

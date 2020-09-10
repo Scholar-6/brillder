@@ -20,7 +20,7 @@ const SubmitAnswersDialog: React.FC<DialogProps> = (props) => {
         </button>
         <button className="btn btn-md bg-gray no-button"
           onClick={props.close}>
-          <span>Not yet</span>
+          <span>Not yet!</span>
         </button>
       </div>
     </Dialog>

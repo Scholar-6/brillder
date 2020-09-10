@@ -1,10 +1,14 @@
-@import "src/assets/sass/partials/variables";
-@import "src/assets/sass/partials/mixins";
-@import "src/assets/sass/partials/extensions";
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
 
 .assigned-brick-description {
   position: relative;
-  height: 11.5vh;
+
+  @include tabletP {
+    height: calc(#{$bricks-height / 6.35});
+  }
+
   padding-top: 1vh;
 
   .total-view-count {
@@ -19,6 +23,16 @@
       margin-left: 0.2vw;
       height: 1vw;
       width: 1vw;
+    }
+  }
+
+  .teach-circles-container {
+    $width: 16vw;
+    width: calc(#{$width} * 2);
+    display: flex;
+
+    .teach-circle-flex-container {
+      width: $width;
     }
   }
 
@@ -48,12 +62,21 @@
   .short-brick-info {
     font-size: 0.8vw;
     padding: 0 3vw;
-    width: 20vw;
+    width: 23.8vw;
     padding-top: 2.2vh;
-
-    .link-description,
     .link-info {
       width: 100%;
+    }
+    @extend %linkDescription;
+    padding-right: 0;
+
+    .link-description {
+      width: 100% !important;
+      margin-bottom: 0;
+    }
+    .link-info {
+      font-size: 0.9vw;
+      text-align: justify;
     }
   }
   .teach-brick-actions-container {

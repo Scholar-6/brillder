@@ -12,12 +12,11 @@
       width: 100%;
       min-height: 2vw;
       cursor: pointer;
-      padding: 0.5vw;
       box-sizing: content-box;
       @extend %posRelative;
       @extend %flexCenter;
       svg {
-        width: 4vw;
+        width: 3vw;
         min-height: 100%;
         stroke-width: 16;
         fill: transparent;

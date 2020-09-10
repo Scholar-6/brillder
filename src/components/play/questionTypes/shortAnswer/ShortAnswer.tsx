@@ -72,45 +72,35 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   }
 
   mark(attempt: ComponentAttempt<string[]>, prev: ComponentAttempt<string[]>) {
+    const {isReview} = this.props;
     // If the question is answered in review phase, add 2 to the mark and not 5.
-    let markIncrement = prev ? 2 : 5;
+    let markIncrement = isReview ? 2 : 5;
     attempt.correct = true;
     attempt.marks = 0;
     // The maximum number of marks is the number of entries * 5.
     attempt.maxMarks = this.props.component.list.length * 5;
 
-
     this.props.component.list.forEach((answer, index) => {
-      // if there is an answer given...
       if (this.state.userAnswers[index]) {
         let answerValue = stripHtml(answer.value);
         if (stripHtml(this.state.userAnswers[index]) === answerValue) {
-          // and the program is in the live phase...
-          if (!prev) {
-            // increase the marks by 5.
+          if (!isReview) {
+            attempt.marks += markIncrement;
+          } else if (stripHtml(prev.answer[index]) !== answerValue) {
             attempt.marks += markIncrement;
           }
-          // or the answer was already correct before the review...
-          else if (stripHtml(prev.answer[index]) !== answerValue) {
-            // increase the marks by 2.
-            attempt.marks += markIncrement;
-          }
-        }
-        // if not...
-        else {
+        } else {
           // the answer is not correct.
           attempt.correct = false;
         }
-      }
-      // if not...
-      else {
+      } else {
         // the answer is not correct.
         attempt.correct = false;
-      }
+      } 
     });
     // Then, if there are no marks, and there are no empty entries, and the program is in live phase, give the student a mark.
-    let emptyAnswer = this.state.userAnswers.indexOf("");
-    if (attempt.marks === 0 && emptyAnswer === -1 && !prev) attempt.marks = 1;
+    const emptyAnswer = this.state.userAnswers.indexOf("");
+    if (attempt.marks === 0 && emptyAnswer === -1 && !isReview) attempt.marks = 1;
     return attempt;
   }
 
