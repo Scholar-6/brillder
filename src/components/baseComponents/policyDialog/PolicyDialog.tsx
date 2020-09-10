@@ -11,17 +11,18 @@ interface PolicyDialogProps {
 
 const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
   const renderBrillderLabel = () => {
-    return <span>Brillder<sup style={{fontSize: '0.75vw'}}>TM</sup></span>;
+    return <span>Brillder<sup style={{ fontSize: '0.75vw' }}>TM</sup></span>;
   }
 
   return (
     <Dialog open={props.isOpen} onClose={() => props.close()} className="dialog-box privacy-policy-dialog">
       <div className="private-policy-content">
-        <div className="close-button" onClick={props.close}>
-        <svg className="svg w100 h100 colored">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#cancel"} className="text-theme-orange" />
-        </svg>
+        <div className="close-button svgOnHover tooltip left" onClick={props.close}>
+          <svg className="svg w100 h100 active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#cancel"} />
+          </svg>
+          <span className="tooltip-inner">Close Dialog</span>
         </div>
         <h1 className="private-policy-title">Privacy Policy</h1>
         <p>
@@ -35,7 +36,7 @@ const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
           A brick is a unit of digital content which is published at a specific url on our web
           application. This is partially public and details such as your username and/or
           your full name may be displayed for the general public to view if your brick is
-          published to our library.  
+          published to our library.
         </p>
         <p>
           The default status of a brick is private, however you are able to share a link
@@ -48,7 +49,7 @@ const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
         <p>
           We currently store your email, first name, last name, a Google id (if you have
           logged in with Google), a username, subjects you have selected as relevant to
-          you, and any additional details you have added to your profile. 
+          you, and any additional details you have added to your profile.
         </p>
         <p>
           In order to optimise development and cross-platform compatibility, we track
@@ -59,7 +60,7 @@ const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
           For the application to function as (we hope!) you would expect it to (ie. for your
           actions to be remembered from page-to-page while navigating) we also track
           your user session using a session cookie. If you delete this cookie then you will
-          need to login again in order to access your account.   
+          need to login again in order to access your account.
         </p>
         <p>
           There is absolutely no external advertising on our platform, and we do not give
@@ -74,13 +75,13 @@ const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
           Limited to provide a better service to our users. Both of these reasons form the
           legal basis for storing and using your information.
         </p>
- 
+
         <h4>How do we use your information?</h4>
         <p>
           We use this information to provide a better service for our users including
           sending notifications when other users edit, suggest changes, or play your
           bricks. From time to time, we may also send marketing communications to your
-          email, from which you may opt out in the app. 
+          email, from which you may opt out in the app.
         </p>
         <p>
           We may use aggregate data from many different people with a machine learning
@@ -127,25 +128,25 @@ const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
         </p>
 
         <h3>Cookie Policy</h3>
-        <p style={{marginBottom: 0}}>
+        <p style={{ marginBottom: 0 }}>
           When accessing {renderBrillderLabel()} without logging in, there is a Zendesk widget (for
           reporting issues or sending us a message) that uses a cookie called __zlcmid, this
           can track your machine ID to any other website that uses Zendesk for up to 1
           year. Please read the Zendesk documentation on their separate website for
           more information.
         </p>
-        <a rel="noopener noreferrer" target="_blank" style={{marginBottom: '1vh'}}
+        <a rel="noopener noreferrer" target="_blank" style={{ marginBottom: '1vh' }}
           href="https://support.zendesk.com/hc/en-us/articles/360022367393-Zendesk-in-product-cookie-policy">
           https://support.zendesk.com/hc/en-us/articles/360022367393-Zendesk-in-product-cookie-policy
         </a>
-        <p style={{marginTop: '2vh'}}>
+        <p style={{ marginTop: '2vh' }}>
           By signing up with a user account and accepting the terms of use, you are
           agreeing to the use of various cookies that are associated with your user profile
           and personal details when logged in to {renderBrillderLabel()}.
         </p>
         <p>
           You can reject these cookies being used to track you at any time by signing out
-          of your account in the top right corner. 
+          of your account in the top right corner.
         </p>
 
         <h4>This policy is effective as of 29 July 2020.</h4>

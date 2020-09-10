@@ -26,26 +26,6 @@
       @include phone_and_tabletP {
         font-size: 4vw !important;
       }
-      .close-button {
-        cursor: pointer;
-        position: absolute;
-        top: 0;
-        right: 0;
-
-        svg {
-          stroke-width: 2;
-          $size: 2vw;
-          height: $size !important;
-          width: $size !important;
-
-          @include phone_and_tabletP {
-            $size: 8vw;
-            height: $size !important;
-            width: $size !important;
-          }
-        }
-      }
-
       .private-policy-title {
         text-transform: capitalize;
         font-family: $font-family-black;
@@ -53,7 +33,6 @@
         margin-bottom: 2.5vh;
         color: var(--theme-orange);
       }
-
       p,
       ol {
         margin-bottom: 2vh;
