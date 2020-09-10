@@ -4,7 +4,11 @@
 
 .assigned-brick-description {
   position: relative;
-  height: 11.5vh;
+
+  @include tabletP {
+    height: calc(#{$bricks-height / 6.35});
+  }
+
   padding-top: 1vh;
 
   .total-view-count {

@@ -77,7 +77,7 @@
     height: $backwork-inner-tab-content-height;
     overflow: auto;
     color: var(--theme-dark-blue);
-    padding-top: 3vh;
+    padding-top: 5.5vh;
     padding-left: 1.6vw;
     padding-right: 1vw;
     .classroom-list-buttons {
@@ -103,7 +103,9 @@
     .classroom-title {
       display: flex;
       @extend %flexAlignCenter;
-      height: 11.5vh;
+      @include tabletP {
+        height: calc(#{$bricks-height / 6.35});
+      }
       font-size: 1.5vw;
       text-transform: capitalize;
     }
