@@ -16,7 +16,7 @@ import {
   prepareThreeAssignmentRows, expandPlayThreeColumnBrick, getPlayThreeColumnName, getPlayThreeColumnBrick
 } from './threeColumnService';
 import { hideAssignments } from './service';
-import { loadSubjects } from 'components/services/subject';
+import { loadSubjects, getGeneralSubject } from 'components/services/subject';
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
@@ -143,7 +143,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       loadSubjects().then((subjects: Subject[] | null) => {
         if (!subjects) { return; }
         let generalSubjectId = - 1;
-        const generalSubject = subjects.find(s => s.name === "General");
+        let generalSubject = getGeneralSubject(subjects);
         if (generalSubject) {
           generalSubjectId = generalSubject.id;
         }
