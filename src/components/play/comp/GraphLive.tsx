@@ -14,13 +14,15 @@ const GraphLive: React.FC<ImageProps> = ({ component }) => {
 
   useEffect(() => {
     const state = component.graphState;
+    const settings = component.graphSettings;
     if(graphRef && graphRef.current) {
       var elt = graphRef.current
       const calculator = Desmos.GraphingCalculator(elt, {
-        expressions: false,
-        settingsMenu: false,
-        zoomButtons: false,
-        lockViewport: true
+        expressions: settings?.showSidebar ?? false,
+        settingsMenu: settings?.showSettings ?? false,
+        lockViewport: !(settings?.allowPanning ?? false),
+        pointsOfInterest: settings?.pointsOfInterest ?? false,
+        trace: settings?.trace ?? false
       });
       calculator.setState(state);
     }
