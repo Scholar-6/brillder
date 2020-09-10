@@ -1,6 +1,6 @@
 import { Brick } from 'model/brick';
 
-import {get} from './index';
+import {get, post} from './index';
 
 /**
  * Get all bricks
@@ -26,10 +26,17 @@ export const getCurrentUserBricks = async () => {
   }
 }
 
-
 export const getAssignedBricks = async () => {
   try {
     return await get<any[]>("/bricks/assigned"); 
+  } catch (e) {
+    return null;
+  }
+}
+
+export const searchBricks = async (searchString: string = '') => {
+  try {
+    return await post<Brick[]>("/bricks/search", { searchString });
   } catch (e) {
     return null;
   }
