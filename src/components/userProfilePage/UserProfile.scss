@@ -193,6 +193,7 @@
         .MuiFormControlLabel-root,
         .MuiFormControlLabel-label {
           color: var(--theme-dark-blue) !important;
+          font-family: $font-family-regular;
         }
       }
 
@@ -250,7 +251,7 @@
               margin-left: 1.15vw;
               font-size: 1.45vw;
               color: var(--theme-dark-blue);
-
+              font-family: $font-family-regular;
               @include phone_and_tabletP {
                 font-size: 4vw;
               }

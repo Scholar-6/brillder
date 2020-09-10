@@ -419,13 +419,6 @@
   @include transition(all 600ms cubic-bezier(0.5, 1, 0.89, 1));
 }
 
-%removePosition {
-  position: unset !important;
-  top: unset !important;
-  left: unset !important;
-  transform: unset !important;
-}
-
 %floatToCenter {
   @extend %posAbsolute;
   left: 50%;
@@ -523,7 +516,8 @@
   .MuiInput-underline {
     width: 100%;
     color: var(--theme-dark-blue);
-    &:before {
+    &:before,
+    &:after {
       display: none !important;
     }
   }
@@ -534,8 +528,8 @@
     bottom: 0;
     pointer-events: none;
     transition: width 200ms cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 2px;
-    height: 4px;
+    border-radius: 1px;
+    height: 2px;
   }
   &:before {
     width: 0;
@@ -684,4 +678,43 @@
       }
     }
   }
+}
+
+%linkDescription {
+  .link-description {
+    text-transform: uppercase;
+    font-family: $font-family-bold;
+    margin-bottom: 0.5vh;
+    @extend %ellipsis;
+    width: calc(100% - 3vw);
+    @include phone_and_tabletP {
+      font-size: 2vw;
+    }
+    @include tabletP {
+      font-size: 0.8vw;
+    }
+  }
+}
+
+%questionLinkDescription {
+  .link-description {
+    @extend %textCenter;
+    font-family: $font-family-regular;
+    margin: 0;
+    @include phone_and_tabletP {
+      font-size: 3vw;
+      line-height: 3.2vw;
+    }
+    @include tabletP {
+      font-size: 1.4vw;
+      line-height: 2vw;
+    }
+  }
+}
+
+%removePosition {
+  position: unset !important;
+  top: unset !important;
+  left: unset !important;
+  transform: unset !important;
 }

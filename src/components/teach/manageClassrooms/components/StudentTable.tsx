@@ -49,7 +49,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
   const renderAssignButton = () => {
     if (props.selectedUsers.length >= 1) {
       return (
-        <div className="class-assign-button" onClick={props.assignToClass}>
+        <div className="class-assign-button svgOnHover" onClick={props.assignToClass}>
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#plus"} />
@@ -64,31 +64,31 @@ const StudentTable: React.FC<StudentTableProps> = props => {
     return (
       <tr>
         <th className="subject-title">SC</th>
-        <th className="user-full-name" style={{ width: '20%' }}>
+        <th className="user-full-name">
           <Grid container>
             NAME
             {renderSortArrow(UserSortBy.Name)}
           </Grid>
         </th>
-        <th style={{ width: '56%' }}>
+        <th className="classes-names">
           <Grid container>
             CLASSES
             {renderSortArrow(UserSortBy.Name)}
           </Grid>
         </th>
-        <th style={{ padding: 0, width: '20%' }}>
-          <Grid container className="selected-column">
-            <Radio checked={props.pageStudentsSelected} onClick={props.togglePageStudents} />
-            {renderAssignButton()}
-            <div className="selected-label">
-              <span className="selected-count">{props.selectedUsers.length}</span>
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#users"} />
-              </svg>
-              Selected
-            </div>
-          </Grid>
+        <th className="user-radio-column">
+          <Radio checked={props.pageStudentsSelected} onClick={props.togglePageStudents} />
+        </th>
+        <th className="selected-column">
+          {renderAssignButton()}
+          <div className="selected-label svgOnHover">
+            <span className="selected-count">{props.selectedUsers.length}</span>
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#users"} />
+            </svg>
+            <span>Selected</span>
+          </div>
         </th>
       </tr>
     );
@@ -115,24 +115,24 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                   </div>
                 </td>
                 <td className="user-radio-column">
-                  <div style={{ display: 'flex' }}>
-                    <Radio checked={user.selected} onClick={() => props.toggleUser(user.id)} />
-                    <div className="action-buttons">
-                    <div className="edit-button">
-                      <svg className="svg">
+                  <Radio checked={user.selected} onClick={() => props.toggleUser(user.id)} />
+                </td>
+                <td className="selected-column">
+                  <div className="action-buttons">
+                    <div className="edit-button svgOnHover">
+                      <svg className="svg active">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#edit-outline"} />
                       </svg>
                     </div>
-                    {props.isClassroom ? 
-                    <div className="trash-button" onClick={() => props.unassign(user)}>
-                      <svg className="svg">
-                        {/*eslint-disable-next-line*/}
-                        <use href={sprite + "#trash-outline"} />
-                      </svg>
-                    </div> : ""
+                    {props.isClassroom ?
+                      <div className="trash-button  svgOnHover" onClick={() => props.unassign(user)}>
+                        <svg className="svg active">
+                          {/*eslint-disable-next-line*/}
+                          <use href={sprite + "#trash-outline"} />
+                        </svg>
+                      </div> : ""
                     }
-                    </div>
                   </div>
                 </td>
               </tr>

@@ -60,7 +60,8 @@ $box-radius: 0.4vw;
 
       .MuiFormControlLabel-label {
         color: var(--theme-dark-blue);
-        margin-left: 1.8vw;
+        margin-left: 1vw;
+        font-family: $font-family-regular;
         @include phone_and_tabletP {
           font-size: 6vw;
         }
@@ -76,8 +77,8 @@ $box-radius: 0.4vw;
 
   .only-tutorial-header {
     text-align: left;
-    font-family: $font-family-black;
     margin-bottom: 5% !important;
+    font-family: $font-family-black;
     @include phone_and_tabletP {
       font-size: 10.9vw;
       text-align: center;

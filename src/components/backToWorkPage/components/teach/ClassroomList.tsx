@@ -3,10 +3,14 @@ import { connect } from "react-redux";
 
 import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
-import { TeachClassroom } from "model/classroom";
+import { TeachClassroom, Assignment } from "model/classroom";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
 
+interface TeachListItem {
+  classroom: TeachClassroom;
+  assignment: Assignment | null;
+}
 
 interface ClassroomListProps {
   stats: any;
@@ -17,6 +21,7 @@ interface ClassroomListProps {
   activeClassroom: TeachClassroom | null;
   expand(classroomId: number): void;
 }
+
 interface ClassroomListState {
   isArchive: boolean
 }
@@ -39,17 +44,20 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
     return <div className={className} onClick={() => this.setState({ isArchive: false })}>LIVE BRICKS</div>;
   }
 
-  renderClassroom(c: TeachClassroom, i: number) {
+  renderTeachListItem(c: TeachListItem, i: number) {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
+      if (c.assignment && c.classroom) {
+        return <AssignedBrickDescription
+          subjects={this.props.subjects}
+          expand={() => this.props.expand(c.classroom.id)}
+          key={i} classroom={c.classroom} assignment={c.assignment}
+        />
+      }
       return (
         <div className="classroom-title" key={i}>
-          {c.name}
-          {}
-          {c.assignments.map((a, i) => <AssignedBrickDescription
-            subjects={this.props.subjects} expand={() => this.props.expand(c.id)} key={i} classroom={c} assignment={a}
-          />)}
+          {c.classroom.name}
         </div>
-      )
+      );
     }
     return "";
   }
@@ -66,12 +74,32 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
     )
   }
 
-  renderContent() {
-    const {activeClassroom} = this.props;
-    if (activeClassroom) {
-      return this.renderActiveClassroom(activeClassroom);
+  prepareClassItems(items: TeachListItem[], classroom: TeachClassroom) {
+    let item: TeachListItem = {
+      classroom,
+      assignment: null
+    };
+    items.push(item);
+    for (let assignment of classroom.assignments) {
+      let item: TeachListItem = {
+        classroom,
+        assignment
+      };
+      items.push(item);
     }
-    return this.props.classrooms.map(this.renderClassroom.bind(this));
+  }
+
+  renderContent() {
+    const {activeClassroom, classrooms} = this.props;
+    let items = [] as TeachListItem[];
+    if (activeClassroom) {
+      this.prepareClassItems(items, activeClassroom);
+    } else {
+      for (let classroom of classrooms) {
+        this.prepareClassItems(items, classroom);
+      }
+    }
+    return items.map(this.renderTeachListItem.bind(this));
   }
 
   render() {

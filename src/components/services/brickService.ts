@@ -28,6 +28,14 @@ export function getDate(date: Date) {
   return formatTwoLastDigits(days);
 }
 
+export function getFormattedDate(date: string) {
+  const dateObj = new Date(date);
+  const year = getYear(dateObj);
+  const month = getMonth(dateObj);
+  const dateNum = getDate(dateObj);
+  return `${dateNum}.${month}.${year}`;
+}
+
 export function getAuthorRow(brick: Brick) {
   let row = "";
   const created = new Date(brick.created);

@@ -6,7 +6,7 @@ import "./Ending.scss";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../model";
 import { BrickAttempt } from "../model";
-import ReviewStepper from '../review/ReviewStepper';
+import EndingStepper from './EndingStepper';
 import sprite from "assets/img/icons-sprite.svg";
 import Clock from "../baseComponents/Clock";
 import { getPlayPath, getAssignQueryString } from "../service";
@@ -17,7 +17,6 @@ interface EndingProps {
   brick: Brick;
   history: any;
   brickAttempt: BrickAttempt;
-  attempts: any[];
   saveAttempt(): void;
 }
 
@@ -25,10 +24,10 @@ const EndingPage: React.FC<EndingProps> = ({
   status,
   brick,
   brickAttempt,
-  attempts,
   history,
   saveAttempt,
 }) => {
+  const attempts = brickAttempt.answers;
   const location = useLocation();
   const [minCurrentScore, setMinScore] = React.useState(0);
   const [maxCurrentScore, setMaxScore] = React.useState(0);
@@ -153,8 +152,7 @@ const EndingPage: React.FC<EndingProps> = ({
                   <Clock brickLength={brick.brickLength} />
                 </div>
                 <div className="intro-text-row">
-                  <ReviewStepper
-                    isEnd={true}
+                  <EndingStepper
                     questions={brick.questions}
                     attempts={attempts}
                     handleStep={() => { }}
@@ -171,8 +169,7 @@ const EndingPage: React.FC<EndingProps> = ({
           <div className="introduction-info">
             <div className="intro-text-row">
               <span className="heading">Final Score : Agg.</span>
-              <ReviewStepper
-                isEnd={true}
+              <EndingStepper
                 questions={brick.questions}
                 attempts={attempts}
                 handleStep={() => { }}

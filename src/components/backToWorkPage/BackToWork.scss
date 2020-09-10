@@ -55,7 +55,7 @@
     height: $backwork-bricks-height !important;
 
     .main-brick-container {
-      height: calc(#{$backwork-bricks-height-2} / 6) !important;
+      // height: calc(#{$backwork-bricks-height-2} / 6) !important;
     }
   }
   .tab-content {
@@ -64,28 +64,84 @@
   }
 
   .private-core-toggle {
-    top: 6.6vh;
-    height: calc(5.5vh + 0.8vw);
+    top: 7.7vh;
+    transform: scale(0.8);
   }
 
   // Teach
   // Teach filter sidebar
-  .classrooms-filter {
-    height: 50vh;
-    overflow-y: scroll;
 
-    .index-box {
+  // Teach classroom list
+  .classroom-list {
+    position: relative;
+    height: $backwork-inner-tab-content-height;
+    overflow: auto;
+    color: var(--theme-dark-blue);
+    padding-top: 5.5vh;
+    padding-left: 1.6vw;
+    padding-right: 1vw;
+    .classroom-list-buttons {
+      position: absolute;
+      top: 1.8vh;
+      right: 1vw;
       display: flex;
-      align-items: center;
-      .classroom-name {
-        text-transform: capitalize;
+
+      div {
+        cursor: pointer;
+        padding-left: 1vw;
+        padding-right: 1vw;
+        font-size: 0.9vw;
+        font-family: $font-family-bold;
+        letter-spacing: 0.1vw;
+        color: var(--gray);
       }
-      .arrow-right {
-        stroke-width: 1 !important;
-        margin-left: 0.5vw;
-        $icon-size: 1.8vw;
-        width: $icon-size;
-        height: $icon-size;
+
+      div.active {
+        color: var(--theme-dark-blue);
+      }
+    }
+    .classroom-title {
+      display: flex;
+      @extend %flexAlignCenter;
+      @include tabletP {
+        height: calc(#{$bricks-height / 6.35});
+      }
+      font-size: 1.5vw;
+      text-transform: capitalize;
+    }
+  }
+}
+.teach-sort-box {
+  $filter-height: 52vh;
+  $expanded-filter-height: 62vh;
+  $classes-label-height: 7.7vh;
+  margin-bottom: 1vh;
+  // height: calc(#{$filter-height} + #{$classes-label-height});
+  .classrooms-filter {
+    height: $filter-height;
+    overflow-y: scroll;
+    .classes-box {
+      .index-box {
+        display: flex;
+        align-items: center;
+        .classroom-name {
+          text-transform: capitalize;
+          svg {
+            @extend %removePosition;
+            width: 1.5vw;
+            height: 1.5vw;
+          }
+        }
+      }
+      &.active {
+        .index-box {
+          background: var(--theme-orange) !important;
+          .classroom-name {
+            .svg {
+              @extend %transitionAll300;
+            }
+          }
+        }
       }
     }
     .student-row {
@@ -120,38 +176,17 @@
       }
     }
   }
-  // Teach classroom list
-  .classroom-list {
-    position: relative;
-    height: $backwork-inner-tab-content-height;
-    overflow: auto;
-    color: var(--theme-dark-blue);
-    padding-top: 3vh;
-    padding-left: 1.6vw;
-    padding-right: 1vw;
-    .classroom-list-buttons {
-      position: absolute;
-      top: 3vh;
-      right: 1vw;
-      display: flex;
 
-      div {
-        cursor: pointer;
-        padding-left: 1vw;
-        padding-right: 1vw;
-        font-size: 0.9vw;
-        font-family: $font-family-bold;
-        letter-spacing: 0.1vw;
-        color: var(--gray);
-      }
+  &.sort-box-expanded {
+    height: calc(#{$expanded-filter-height} + #{$classes-label-height});
 
-      div.active {
-        color: var(--theme-dark-blue);
-      }
+    .classrooms-filter {
+      height: $expanded-filter-height !important;
     }
-    .classroom-title {
-      font-size: 1.5vw;
-      text-transform: capitalize;
-    }
+  }
+}
+.teach-sort-box ~ .sort-box {
+  .subject-indexes-box {
+    margin-top: 3.5vh !important;
   }
 }

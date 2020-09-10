@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Live.scss";
+import "../Live.scss";
 import { Question } from "model/question";
 import PulsingCircle from './PulsingCircle';
 

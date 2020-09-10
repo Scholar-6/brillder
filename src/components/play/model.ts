@@ -8,6 +8,8 @@ export interface ComponentAttempt<T> {
   attempted: boolean;
   // only for pair match and shuffle attempts
   dragged?: boolean;
+  liveCorrect?: boolean;
+  reviewCorrect?: boolean;
 }
 
 export enum PlayMode {

@@ -39,7 +39,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
 
       filters: {
         draft: false,
-        review : false,
+        review: false,
         publish: false,
 
         isCore: false,
@@ -54,11 +54,11 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   expandFilter() { this.setState({ filterExpanded: true }) }
 
   toggleFilter(filter: FilterFields) {
-    const {filters} = this.state;
+    const { filters } = this.state;
     filters[filter] = !filters[filter];
-    this.setState({filters});
+    this.setState({ filters });
     this.filterClear();
-    this.props.filterChanged(filters); 
+    this.props.filterChanged(filters);
   }
 
   clearStatus() {

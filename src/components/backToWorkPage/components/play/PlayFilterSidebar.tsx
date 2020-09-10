@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
-import { Brick } from "model/brick";
 import { PlayFilters } from '../../model';
 import { TeachClassroom } from "model/classroom";
+import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 
 enum PlayFilterFields {
   Completed = 'completed',
@@ -13,7 +13,7 @@ enum PlayFilterFields {
 
 interface FilterSidebarProps {
   classrooms: TeachClassroom[];
-  rawBricks: Brick[];
+  rawAssignments: AssignmentBrick[];
   filterChanged(filters: PlayFilters): void;
   setActiveClassroom(id: number | null): void;
 }
@@ -21,6 +21,7 @@ interface FilterSidebarProps {
 interface FilterSidebarState {
   activeClassroom: TeachClassroom | null;
   filterExpanded: boolean;
+  isClearFilter: boolean;
   filters: PlayFilters;
 }
 
@@ -29,6 +30,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
     super(props);
     this.state = {
       filterExpanded: true,
+      isClearFilter: false,
       activeClassroom: null,
       filters: {
         completed: false,
@@ -41,9 +43,27 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
   hideFilter() { this.setState({ filterExpanded: false }) }
   expandFilter() { this.setState({ filterExpanded: true }) }
 
+  filterClear(filters: PlayFilters) {
+    if (filters.checked || filters.completed || filters.submitted) {
+      this.setState({ isClearFilter: true, filters });
+    } else {
+      this.setState({ isClearFilter: false, filters });
+    }
+  }
+
+  clearStatus() {
+    const { filters } = this.state;
+    filters.checked = false;
+    filters.completed = false;
+    filters.submitted = false;
+    this.filterClear(filters);
+    this.props.filterChanged(filters);
+  }
+
   toggleFilter(filter: PlayFilterFields) {
     const { filters } = this.state;
     filters[filter] = !filters[filter];
+    this.filterClear(filters);
     this.props.filterChanged(filters);
   }
 
@@ -81,11 +101,11 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
 
   renderIndexesBox = () => {
     return (
-      <div className="sort-box">
-        <div className="filter-container sort-by-box" style={{ paddingTop: '4vh', paddingBottom: '0.5vh' }}>
+      <div className="sort-box teach-sort-box">
+        <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
-        <div className="filter-container indexes-box classrooms-filter" style={{height: '39vh'}}>
+        <div className="filter-container indexes-box classrooms-filter">
           <div
             className={"index-box " + (!this.state.activeClassroom ? "active" : "")}
             onClick={this.removeClassrooms.bind(this)}>
@@ -101,12 +121,45 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
   };
 
   renderSortAndFilterBox = () => {
-    const {filters} = this.state;
+    const { filters } = this.state;
+
+    let toBeCompletedCount = 0;
+    let submittedCount = 0;
+    let checkedCount = 0;
+
+    for (const assignment of this.props.rawAssignments) {
+      if (assignment.status === AssignmentBrickStatus.ToBeCompleted) {
+        toBeCompletedCount++;
+      } else if (assignment.status === AssignmentBrickStatus.SubmitedToTeacher) {
+        submittedCount++;
+      } else if (assignment.status === AssignmentBrickStatus.CheckedByTeacher) {
+        checkedCount++;
+      }
+    }
     return (
       <div className="sort-box">
-        <div className="filter-header">Filter</div>
+        <div className="filter-header">
+          Filter
+          <button
+            className={
+              "btn-transparent filter-icon " +
+              (this.state.filterExpanded
+                ? this.state.isClearFilter
+                  ? "arrow-cancel"
+                  : "arrow-down"
+                : "arrow-up")
+            }
+            onClick={() => {
+              this.state.filterExpanded
+                ? this.state.isClearFilter
+                  ? this.clearStatus()
+                  : (this.hideFilter())
+                : (this.expandFilter())
+            }}>
+          </button>
+        </div>
         {this.state.filterExpanded === true ? (
-          <div className="filter-container subject-indexes-box" style={{ marginTop: '5vh' }}>
+          <div className="filter-container subject-indexes-box">
             <div className="index-box color1">
               <FormControlLabel
                 checked={filters.completed}
@@ -114,7 +167,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
                   <Radio onClick={() => this.toggleFilter(PlayFilterFields.Completed)} className={"filter-radio custom-color"} />
                 }
                 label="To be completed" />
-              <div className="right-index">{0}</div>
+              <div className="right-index">{toBeCompletedCount}</div>
             </div>
             <div className="index-box color2">
               <FormControlLabel
@@ -123,7 +176,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
                   <Radio onClick={() => this.toggleFilter(PlayFilterFields.Submitted)} className={"filter-radio custom-color"} />
                 }
                 label="Submitted to Teacher" />
-              <div className="right-index">{0}</div>
+              <div className="right-index">{submittedCount}</div>
             </div>
             <div className="index-box color4">
               <FormControlLabel
@@ -132,7 +185,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
                   <Radio onClick={() => this.toggleFilter(PlayFilterFields.Checked)} className={"filter-radio custom-color"} />
                 }
                 label="Checked by Teacher" />
-              <div className="right-index">{0}</div>
+              <div className="right-index">{checkedCount}</div>
             </div>
           </div>
         ) : (

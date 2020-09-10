@@ -5,7 +5,7 @@ import sprite from "assets/img/icons-sprite.svg";
 
 interface AssignedCircleProps {
   total: number;
-  count: number;
+  count?: number;
   color: string;
 
   onClick?(): void;
@@ -26,7 +26,12 @@ class AssignedCircle extends Component<AssignedCircleProps> {
       );
     }
 
-    return <div className={className}>{this.props.count}</div>;
+    let label = '';
+    const { count } = this.props;
+    if (count && count > 0) {
+      label = count.toString();
+    }
+    return <div className={className}>{label}</div>;
   }
 
   render() {
@@ -37,7 +42,7 @@ class AssignedCircle extends Component<AssignedCircleProps> {
             <div className="total-view-count">
               {this.props.total}
               <svg className="svg active">
-                <use href={sprite + "#eye-on"} className="text-theme-dark-blue" />
+                <use href={sprite + "#users"} className="text-theme-dark-blue" />
               </svg>
             </div>
           </div>

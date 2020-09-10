@@ -3,11 +3,14 @@
 @import 'src/assets/sass/partials/extensions';
 
 .manage-classrooms-page {
-  .indexes-box {
-    height: calc(100vh - #{$page-head-height} - 5.9vh - 6.5vw) !important;
-    overflow: auto;
-  }
   $base-filter-padding-left: 2vw;
+  .indexes-box {
+    height: calc(94vh - #{$page-head-height} - 5.9vh - 6.5vw) !important;
+    overflow: auto;
+    .index-box {
+      padding-left: $base-filter-padding-left !important;
+    }
+  }
 
   .brick-row-container {
     background: var(--white);
@@ -56,35 +59,70 @@
     padding-right: 0 !important;
   }
 
-  .users-table {
-    height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - 5.2vw - 15vh) !important;
-  }
+  // .users-table {
+  //   height: calc(100vh - #{$page-head-height} - #{$sorted-row-margin-top} - 5.2vw - 15vh) !important;
+  // }
 
+  .user-full-name {
+    width: 20vw !important;
+  }
+  .classes-names {
+    width: 50vw;
+  }
   .selected-column {
-    font-family: $font-family-regular;
+    width: 11vw;
     letter-spacing: 0;
     position: relative;
-
+    display: flex;
+    justify-content: flex-end;
+    .selected-label,
+    .action-buttons,
+    .class-assign-button {
+      .svg {
+        @extend %removePosition;
+        width: 1.7vw;
+        height: 1.7vw;
+      }
+    }
     .selected-label {
-      position: absolute;
-      right: 1.5vw;
+      margin-right: 1.5vw;
+      > span {
+        font-family: $font-family-regular !important;
+        &.selected-count {
+          margin-left: 0vw;
+          margin-right: 0.2vw;
+        }
+      }
+    }
+    .action-buttons {
+      margin-right: 1.5vw;
       display: flex;
       justify-content: flex-end;
       width: 100%;
+      .edit-button,
+      .trash-button {
+        cursor: pointer;
+        margin-left: 0.7vw;
+      }
     }
-
-    .selected-count {
-      margin-left: 0vw;
-      margin-right: 0.2vw;
-    }
-
-    svg {
-      padding-top: 0.4vh;
-      width: 1.7vw;
-      height: 1.4vw;
+    .class-assign-button {
+      z-index: 1000;
+      cursor: pointer;
+      position: absolute;
+      right: 95%;
+      top: 0.45vw;
+      svg {
+        padding-top: 0;
+        background: var(--theme-green);
+        border-radius: 50%;
+        color: var(--white);
+      }
     }
   }
-
+  .user-radio-column {
+    width: 8vw;
+    @extend %radioBlue;
+  }
   .MuiRadio-root.MuiIconButton-root {
     padding: 0 !important;
 
@@ -96,51 +134,10 @@
     }
   }
 
-  .user-radio-column {
-    padding-left: 0 !important;
-
-    @extend %radioBlue;
-
-    .action-buttons {
-      display: flex;
-      justify-content: flex-end;
-      width: 100%;
-
-      svg {
-        margin-right: 0.5vw;
-        $icon-size: 2vw;
-        width: $icon-size;
-        height: $icon-size;
-      }
-
-      .trash-button {
-        cursor: pointer;
-      }
-    }
-  }
-
   .users-pagination {
     position: absolute;
     width: 100%;
     bottom: 0;
-  }
-
-  .class-assign-button {
-    z-index: 1000;
-    cursor: pointer;
-    margin-left: 0.7vw;
-    font-size: 1.3vw;
-    @extend %flexCenter;
-
-    svg {
-      padding-top: 0;
-      background: var(--theme-green);
-      border-radius: 50%;
-      color: var(--white);
-      height: 1.6vw;
-      width: 1.6vw;
-      margin-right: 0.45vw;
-    }
   }
 
   .right-index {
@@ -167,10 +164,6 @@
     padding: 0.25vw 0.6vw;
     font-size: 1vw;
     line-height: 1;
-  }
-
-  .index-box {
-    padding-left: $base-filter-padding-left !important;
   }
 
   .classroom-names {

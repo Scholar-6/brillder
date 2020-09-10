@@ -4,23 +4,25 @@ import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
 import { useHistory, useLocation } from "react-router-dom";
 import queryString from 'query-string';
+import { Moment } from 'moment';
 
 import "./Live.scss";
 import { Question, QuestionTypeEnum } from "model/question";
 import QuestionLive from "../questionPlay/QuestionPlay";
-import TabPanel from "../baseComponents/QuestionTabPanel";
 import { PlayStatus, ComponentAttempt } from "../model";
-import CountDown from "../baseComponents/CountDown";
-import sprite from "assets/img/icons-sprite.svg";
 import { CashQuestionFromPlay } from "localStorage/buildLocalStorage";
 import { Brick } from "model/brick";
-import LiveStepper from "./LiveStepper";
+import { PlayMode } from "../model";
+import { getPlayPath, getAssignQueryString } from "../service";
+
+import CountDown from "../baseComponents/CountDown";
+import LiveStepper from "./components/LiveStepper";
+import TabPanel from "../baseComponents/QuestionTabPanel";
 import ShuffleAnswerDialog from "components/baseComponents/failedRequestDialog/ShuffleAnswerDialog";
 import SubmitAnswersDialog from "components/baseComponents/dialogs/SubmitAnswers";
-import PulsingCircleNumber from "./PulsingCircleNumber";
-import { PlayMode } from "../model";
-import { Moment } from 'moment';
-import { getPlayPath, getAssignQueryString } from "../service";
+import PulsingCircleNumber from "./components/PulsingCircleNumber";
+import LiveActionFooter from './components/LiveActionFooter';
+import MobileNextButton from './components/MobileNextButton';
 
 interface LivePageProps {
   status: PlayStatus;
@@ -114,7 +116,7 @@ const LivePage: React.FC<LivePageProps> = ({
   }
 
   const setCurrentAnswerAttempt = () => {
-    let attempt = questionRefs[activeStep].current?.getAttempt();
+    let attempt = questionRefs[activeStep].current?.getAttempt(false);
     props.updateAttempts(attempt, activeStep);
   }
 
@@ -125,13 +127,7 @@ const LivePage: React.FC<LivePageProps> = ({
     setAnswers(copyAnswers);
   };
 
-  const prev = () => {
-    if (activeStep === 0) {
-      moveToPrep();
-    } else {
-      handleStep(activeStep - 1)();
-    }
-  }
+  const prev = () => (activeStep === 0) ? moveToPrep() : handleStep(activeStep - 1)();
 
   const nextFromShuffle = () => {
     setShuffleDialog(false);
@@ -161,7 +157,7 @@ const LivePage: React.FC<LivePageProps> = ({
       question.type === QuestionTypeEnum.HorizontalShuffle ||
       question.type === QuestionTypeEnum.VerticalShuffle
     ) {
-      let attempt = questionRefs[activeStep].current?.getAttempt();
+      let attempt = questionRefs[activeStep].current?.getAttempt(false);
       if (!attempt.dragged) {
         setShuffleDialog(true);
         return;
@@ -229,26 +225,8 @@ const LivePage: React.FC<LivePageProps> = ({
     );
   };
 
-  const renderPrevButton = () => {
-    return (
-      <button
-        className="play-preview svgOnHover play-white"
-        onClick={prev}
-      >
-        <svg className="svg w80 h80 svg-default m-0">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#arrow-left"} className="text-gray" />
-        </svg>
-        <svg className="svg w80 h80 colored m-0">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#arrow-left"} className="text-white" />
-        </svg>
-      </button>
-    );
-  };
-
   const moveToPrep = () => {
-    let attempt = questionRefs[activeStep].current?.getRewritedAttempt();
+    let attempt = questionRefs[activeStep].current?.getRewritedAttempt(false);
     props.updateAttempts(attempt, activeStep);
     let playPath = getPlayPath(props.isPlayPreview, brick.id);
     const values = queryString.parse(location.search);
@@ -256,7 +234,6 @@ const LivePage: React.FC<LivePageProps> = ({
     if (values.assignmentId) {
       link += '&assignmentId=' + values.assignmentId;
     }
-
     history.push(link);
   }
 
@@ -269,78 +246,6 @@ const LivePage: React.FC<LivePageProps> = ({
         handleStep={handleStep}
         moveToPrep={moveToPrep}
       />
-    );
-  }
-
-  const renderNextButton = () => {
-    if (questions.length - 1 > activeStep) {
-      return (
-        <button
-          type="button"
-          className="play-preview svgOnHover play-green"
-          onClick={next}
-        >
-          <svg className="svg w80 h80 active m-l-02">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#arrow-right"} />
-          </svg>
-        </button>
-      );
-    }
-    return (
-      <button
-        type="button"
-        className="play-preview svgOnHover play-green"
-        onClick={() => setSubmitAnswers(true)}
-      >
-        <svg className="svg w80 h80 active" style={{ margin: 0 }}>
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#check-icon-thin"} />
-        </svg>
-      </button>
-    );
-  }
-
-  const renderCenterText = () => {
-    if (questions.length - 1 > activeStep) {
-      return (
-        <div className="direction-info">
-          <h2 className="text-center">Next</h2>
-          <span>Don’t panic, you can<br />always come back</span>
-        </div>
-      );
-    }
-    return (
-      <div className="direction-info">
-        <h2 className="text-center">Submit</h2>
-        <span>How do you think it went?</span>
-      </div>
-    );
-  }
-
-  const renderMobileNext = () => {
-    if (questions.length - 1 > activeStep) { return; }
-    return (
-      <button
-        type="button"
-        className="play-preview svgOnHover play-green mobile-next"
-        onClick={() => setSubmitAnswers(true)}
-      >
-        <svg className="svg w80 h80 active" style={{ margin: 0 }}>
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#check-icon-thin"} />
-        </svg>
-      </button>
-    );
-  }
-
-  const renderFooter = () => {
-    return (
-      <div className="action-footer">
-        <div>{renderPrevButton()}</div>
-        {renderCenterText()}
-        <div>{renderNextButton()}</div>
-      </div>
     );
   }
 
@@ -377,7 +282,13 @@ const LivePage: React.FC<LivePageProps> = ({
               <div className="intro-text-row">
                 {renderStepper()}
               </div>
-              {renderFooter()}
+              <LiveActionFooter
+                questions={questions}
+                activeStep={activeStep}
+                prev={prev}
+                next={next}
+                setSubmitAnswers={setSubmitAnswers}
+              />
             </div>
           </Grid>
         </Grid>
@@ -404,7 +315,7 @@ const LivePage: React.FC<LivePageProps> = ({
             <TabPanel index={questions.length} value={activeStep} />
           </SwipeableViews>
         </div>
-        {renderMobileNext()}
+        <MobileNextButton questions={questions} activeStep={activeStep} onClick={setSubmitAnswers} />
       </Hidden>
       <ShuffleAnswerDialog
         isOpen={isShuffleOpen}

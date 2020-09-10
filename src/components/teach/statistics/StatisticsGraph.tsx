@@ -11,6 +11,8 @@ import './StatisticsGraph.scss';
 
 interface StatisticsGraphProps {
   stats: ClassroomStats;
+  graphWidth: number;
+  graphHeight: number;
 }
 
 const StatisticsGraph: React.FC<StatisticsGraphProps> = props => {
@@ -24,8 +26,8 @@ const StatisticsGraph: React.FC<StatisticsGraphProps> = props => {
       return newScore > max ? newScore : max;
     }, 0);
 
-  const totalWidth = 600;
-  const totalHeight = 600;
+  const totalWidth = props.graphWidth;
+  const totalHeight = props.graphHeight;
   
   const marginLeft = 50;
   const marginTop = 50;
@@ -33,7 +35,7 @@ const StatisticsGraph: React.FC<StatisticsGraphProps> = props => {
   const marginBottom = 50;
 
   const graphWidth = totalWidth - marginRight - marginLeft;
-  const graphHeight = totalWidth - marginBottom - marginTop;
+  const graphHeight = totalHeight - marginBottom - marginTop;
 
   const xScale = scaleBand<number>({
     range: [0, graphWidth],
