@@ -9,31 +9,26 @@ import statActions from 'redux/actions/stats';
 import "./BackToWork.scss";
 import { User } from "model/user";
 import { Brick, Subject } from "model/brick";
-import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
+import { checkAdmin, checkTeacher } from "components/services/brickService";
 
-import { SortBy, Filters, TeachFilters, PlayFilters, ThreeAssignmentColumns } from './model';
+import { SortBy, PlayFilters, ThreeAssignmentColumns } from './model';
 import {
-  prepareTreeRows, prepareThreeAssignmentRows,
-  getThreeColumnBrick, expandThreeColumnBrick, getLongestColumn, expandPlayThreeColumnBrick, getPlayThreeColumnName, getPlayThreeColumnBrick
+  prepareThreeAssignmentRows, expandPlayThreeColumnBrick, getPlayThreeColumnName, getPlayThreeColumnBrick
 } from './threeColumnService';
-import {
-  filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
-  removeBrickFromLists, sortBricks, hideBricks, expandBrick, hideAssignments
-} from './service';
+import { hideAssignments } from './service';
 import { loadSubjects } from 'components/services/subject';
 
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import PlayFilterSidebar from './components/play/PlayFilterSidebar';
-import TeachFilterSidebar from './components/teach/TeachFilterSidebar';
-import ClassroomList from './components/teach/ClassroomList';
 import BackPagePagination from './components/BackPagePagination';
 import BackPagePaginationV2 from './components/BackPagePaginationV2';
 import { TeachClassroom } from "model/classroom";
 import { getAllClassrooms } from "components/teach/service";
-import {  searchBricks, getCurrentUserBricks, getAssignedBricks } from "components/services/axios/brick";
+import { getAssignedBricks } from "components/services/axios/brick";
 import AssignedBricks from './components/play/AssignedBricks';
 import BuildPage from './components/build/BuildPage';
+import TeachPage from './components/teach/TeachPage';
 
 import Tab, { ActiveTab } from './components/Tab';
 import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
@@ -60,9 +55,7 @@ interface BackToWorkState {
   playFilters: PlayFilters;
 
   // teach
-  teachFilters: TeachFilters;
   classrooms: TeachClassroom[];
-  teachPageSize: number;
   activeClassroom: TeachClassroom | null;
 
   // play
@@ -103,13 +96,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       }
     } as ThreeAssignmentColumns;
 
-    let isCore = false;
     const isTeach = checkTeacher(this.props.user.roles);
     const isAdmin = checkAdmin(this.props.user.roles);
-    const isEditor = checkEditor(this.props.user.roles)
-    if (isAdmin || isEditor) {
-      isCore = true;
-    }
 
     let activeTab = ActiveTab.Play;
     if (isTeach) {
@@ -136,17 +124,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
       generalSubjectId: -1,
 
-      // Teach
+      // Play
       classrooms: [],
       activeClassroom: null,
-
-      teachFilters: {
-        assigned: false,
-        completed: false
-      },
-      teachPageSize: 4,
-
-      // Play
       rawAssignments: [],
       finalAssignments: [],
       playThreeColumns: threeAssignmentColumns,
@@ -221,23 +201,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   //#region Teach
-  teachFilterUpdated(teachFilters: TeachFilters) {
-    this.setState({ teachFilters });
-  }
-
-  moveTeachNext() {
-    let index = this.state.sortedIndex;
-    if (index + this.state.teachPageSize < this.state.classrooms.length) {
-      this.setState({ ...this.state, sortedIndex: index + this.state.teachPageSize });
-    }
-  }
-
-  moveTeachBack() {
-    let index = this.state.sortedIndex;
-    if (index >= this.state.teachPageSize) {
-      this.setState({ ...this.state, sortedIndex: index - this.state.teachPageSize });
-    }
-  }
 
   deactivateClassrooms() {
     for (let classroom of this.state.classrooms) {
@@ -357,35 +320,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   search() {
-    const { searchString } = this.state;
     this.setState({ ...this.state, shown: false, isSearching: true });
-
-    /*
-    searchBricks(searchString).then(bricks => {
-      if (bricks) {
-        const threeColumns = prepareTreeRows(bricks, this.state.filters, this.props.user.id, this.state.generalSubjectId);
-        setTimeout(() => {
-          this.setState({ ...this.state, finalBricks: bricks, isSearching: true, shown: true, threeColumns });
-        }, 1400);
-      } else {
-        this.props.requestFailed('Can`t get bricks by search');
-      }
-    });
-    */
-  }
-
-  renderTeachPagination = () => {
-    let itemsCount = this.state.classrooms.length;
-    if (this.state.activeClassroom) {
-      itemsCount = this.state.activeClassroom.assignments.length;
-    }
-    return <BackPagePagination
-      sortedIndex={this.state.sortedIndex}
-      pageSize={this.state.teachPageSize}
-      bricksLength={itemsCount}
-      moveNext={() => this.moveTeachNext()}
-      moveBack={() => this.moveTeachBack()}
-    />
   }
 
   renderBuild() {
@@ -413,29 +348,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     if (activeTab !== ActiveTab.Teach) {
       return "";
     }
-    return (
-      <Grid container direction="row" className="sorted-row">
-        <TeachFilterSidebar
-          classrooms={this.state.classrooms}
-          setActiveClassroom={this.setActiveClassroom.bind(this)}
-          filterChanged={this.teachFilterUpdated.bind(this)}
-        />
-        <Grid item xs={9} className="brick-row-container">
-          <Tab isTeach={this.state.isTeach || this.state.isAdmin} activeTab={activeTab} setTab={t => this.setTab(t)} />
-          <div className="tab-content">
-            <ClassroomList
-              subjects={this.state.subjects}
-              expand={id=> this.setActiveClassroom(id)}
-              startIndex={this.state.sortedIndex}
-              activeClassroom={this.state.activeClassroom}
-              pageSize={this.state.teachPageSize}
-              classrooms={this.state.classrooms}
-            />
-            {this.renderTeachPagination()}
-          </div>
-        </Grid>
-      </Grid>
-    );
+    return <TeachPage
+      searchString={this.state.searchString}
+      isSearching={this.state.isSearching}
+      subjects={this.state.subjects}
+      activeTab={this.state.activeTab}
+      setTab={this.setTab.bind(this)}
+    />;
   }
 
   renderPlay() {
