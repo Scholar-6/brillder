@@ -202,7 +202,7 @@ const QuestionComponents = ({
       >
         {
           components.map((comp, i) => (
-            <Grid key={i} container direction="row" className={validateDropBox(comp)}>
+            <Grid key={`${questionId}-${i}`} container direction="row" className={validateDropBox(comp)}>
               {renderDropBox(comp, i)}
             </Grid>
           ))
