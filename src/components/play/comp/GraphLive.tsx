@@ -18,7 +18,10 @@ const GraphLive: React.FC<ImageProps> = ({ component }) => {
     const settings = component.graphSettings;
     console.log(graphRef);
     if(graphRef && graphRef.current) {
-      var elt = graphRef.current
+      if(calculator) {
+        calculator.destroy();
+      }
+      var elt = graphRef.current;
       const desmos = Desmos.GraphingCalculator(elt, {
         expressions: settings?.showSidebar ?? false,
         settingsMenu: settings?.showSettings ?? false,
