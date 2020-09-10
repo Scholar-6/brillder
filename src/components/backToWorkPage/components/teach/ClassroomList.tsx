@@ -74,24 +74,29 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
     )
   }
 
-  renderContent() {
-    const {activeClassroom, classrooms} = this.props;
-    if (activeClassroom) {
-      return this.renderActiveClassroom(activeClassroom);
-    }
-    let items = [];
-    for (let classroom of classrooms) {
+  prepareClassItems(items: TeachListItem[], classroom: TeachClassroom) {
+    let item: TeachListItem = {
+      classroom,
+      assignment: null
+    };
+    items.push(item);
+    for (let assignment of classroom.assignments) {
       let item: TeachListItem = {
         classroom,
-        assignment: null
+        assignment
       };
       items.push(item);
-      for (let assignment of classroom.assignments) {
-        let item: TeachListItem = {
-          classroom,
-          assignment
-        };
-        items.push(item);
+    }
+  }
+
+  renderContent() {
+    const {activeClassroom, classrooms} = this.props;
+    let items = [] as TeachListItem[];
+    if (activeClassroom) {
+      this.prepareClassItems(items, activeClassroom);
+    } else {
+      for (let classroom of classrooms) {
+        this.prepareClassItems(items, classroom);
       }
     }
     return items.map(this.renderTeachListItem.bind(this));

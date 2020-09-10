@@ -82,7 +82,7 @@
     padding-right: 1vw;
     .classroom-list-buttons {
       position: absolute;
-      top: 3.8vh;
+      top: 1.8vh;
       right: 1vw;
       display: flex;
 
@@ -101,6 +101,9 @@
       }
     }
     .classroom-title {
+      display: flex;
+      @extend %flexAlignCenter;
+      height: 11.5vh;
       font-size: 1.5vw;
       text-transform: capitalize;
     }

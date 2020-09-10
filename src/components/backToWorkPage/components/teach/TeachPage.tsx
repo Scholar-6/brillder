@@ -48,13 +48,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
   constructor(props: TeachProps) {
     super(props);
 
-    let isCore = false;
     const isTeach = checkTeacher(this.props.user.roles);
     const isAdmin = checkAdmin(this.props.user.roles);
-    const isEditor = checkEditor(this.props.user.roles)
-    if (isAdmin || isEditor) {
-      isCore = true;
-    }
 
     this.state = {
       isAdmin,
@@ -105,9 +100,9 @@ class TeachPage extends Component<TeachProps, TeachState> {
     if (classroom) {
       this.props.getClassStats(classroom.id);
       classroom.active = true;
-      this.setState({ classrooms, activeClassroom: classroom });
+      this.setState({ sortedIndex: 0, classrooms, activeClassroom: classroom });
     } else {
-      this.setState({ activeClassroom: null });
+      this.setState({ sortedIndex: 0, activeClassroom: null });
     }
   }
 
