@@ -100,7 +100,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
             font-size: 3.5vw;
           }
           @include tabletP {
-            font-size: 1.05vw;
+            font-size: 1.25vw;
           }
         }
         .intro-header {
@@ -710,8 +710,10 @@ $play-mobile-height: calc(100vh - 55.8vw);
           .intro-text-row {
             position: absolute;
             top: 50%;
+            left: 0;
             transform: translateY(-10vh);
             margin: 0;
+            width: 100%;
           }
         }
       }
