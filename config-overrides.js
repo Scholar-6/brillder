@@ -49,5 +49,9 @@ module.exports = function override(config, env) {
         return rule;
       });
 
+    config.externals = {
+        desmos: "Desmos"
+    }
+
     return config;
 }
