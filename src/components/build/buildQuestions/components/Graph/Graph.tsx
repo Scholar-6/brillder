@@ -9,16 +9,18 @@ interface GraphSettings {
     showSidebar: boolean;
     showSettings: boolean;
     allowPanning: boolean;
-    pointsOfInterest: boolean;
     trace: boolean;
+    pointsOfInterest: boolean;
 }
+
+const settingNames: (keyof GraphSettings)[] = ["showSidebar", "showSettings", "allowPanning", "trace", "pointsOfInterest"];
 
 const settingsStrings: { [key: string]: string } = {
     showSidebar: "Show Sidebar",
     showSettings: "Show Settings",
     allowPanning: "Allow Pan / Zoom",
-    pointsOfInterest: "Show Points of Interest",
     trace: "Allow Tracing",
+    pointsOfInterest: "Show Points of Interest",
 }
 
 interface GraphProps {
@@ -37,8 +39,8 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
         showSidebar: false,
         showSettings: false,
         allowPanning: false,
-        pointsOfInterest: false,
-        trace: false
+        trace: false,
+        pointsOfInterest: false
     });
 
     useEffect(() => {
@@ -84,10 +86,10 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
         <div className="question-component-graph-header">Graph</div>
         <div className="question-component-graph dont-drag" ref={graphRef}  draggable="true" onDragStart={(e) => e.preventDefault()}/>
         <div className="question-component-graph-settings">
-            {Object.entries(graphSettings).map(([key, value]) =>
-            <div className="graph-setting">
+            {settingNames.map((key) =>
+            <div className="graph-setting" key={key}>
                 <span>{settingsStrings[key]}</span>
-                <Checkbox key={key} checked={value}
+                <Checkbox checked={graphSettings[key]} disabled={key === "pointsOfInterest" && !graphSettings.trace}
                     onChange={(el) => setGraphSetting(key, el.target.checked)} />
             </div>)}
         </div>
