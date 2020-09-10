@@ -121,7 +121,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
       );
     }
     return (
-      <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
+      <div className="comment-button active" onClick={() => setCommentsShown(!commentsShown)}>
         <div className="comments-icon svgOnHover">
           <svg className="svg w60 h60 active">
             {/*eslint-disable-next-line*/}
