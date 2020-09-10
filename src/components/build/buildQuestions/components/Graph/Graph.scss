@@ -21,4 +21,11 @@
     .question-component-graph {
         flex-grow: 1;
     }
+
+    .question-component-graph-settings {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
