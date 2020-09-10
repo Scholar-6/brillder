@@ -26,6 +26,9 @@ input {
     }
 
     &.invalid {
+      @include placeholder {
+        color: var(--white) !important;
+      }
       background: var(--theme-orange);
     }
   }
@@ -65,7 +68,7 @@ input {
     }
   }
   input[type='email']::placeholder, input[type='password']::placeholder {
-    color: rgb(141, 154, 180) !important;
+    color: rgb(141, 154, 180);
   }
   .hide-password-icon-container {
     @extend %flexCenter;
