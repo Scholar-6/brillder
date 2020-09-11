@@ -26,16 +26,6 @@
     }
   }
 
-  .teach-circles-container {
-    $width: 16vw;
-    width: calc(#{$width} * 2);
-    display: flex;
-
-    .teach-circle-flex-container {
-      width: $width;
-    }
-  }
-
   .left-brick-circle {
     position: absolute;
     top: 3.7vh;
@@ -96,5 +86,15 @@
       margin-left: 1.5vw;
       margin-right: 0vw;
     }
+  }
+}
+
+.teach-circles-container {
+  $width: 16vw;
+  width: calc(#{$width} * 2);
+  display: flex;
+
+  .teach-circle-flex-container {
+    width: $width;
   }
 }
