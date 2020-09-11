@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import MissingWord from './MissingWord';
 import { QuestionComponentTypeEnum, Question } from 'model/question';
-import validator from 'components/build/investigationBuildPage/questionService/UniqueValidator';
+import validator from 'components/build/questionService/UniqueValidator';
 
 describe("Missing word play and validation", () => {
   it("should create Missing word", () => {
