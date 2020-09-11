@@ -20,12 +20,6 @@ const StatisticsGraph: React.FC<StatisticsGraphProps> = props => {
     .filter(assignment => assignment.stats != null)
     .sort((a, b) => a.id - b.id);
 
-  const maxScore = assignments
-    .reduce<number>((max, assignment) => {
-      const newScore = assignment.attempts.find(attempt => attempt.maxScore)?.maxScore ?? 0;
-      return newScore > max ? newScore : max;
-    }, 0);
-
   const totalWidth = props.graphWidth;
   const totalHeight = props.graphHeight;
   
@@ -44,7 +38,7 @@ const StatisticsGraph: React.FC<StatisticsGraphProps> = props => {
 
   const yScale = scaleLinear<number>({
     rangeRound: [graphHeight, 0],
-    domain: [0, maxScore]
+    domain: [0, 100]
   });
 
   const rangeColor = "#8ad6e8";
@@ -83,7 +77,7 @@ const StatisticsGraph: React.FC<StatisticsGraphProps> = props => {
               key={j}
               r={3}
               cx={xScale(d.id)! + xScale.bandwidth() / 2}
-              cy={yScale(e.score)}
+              cy={yScale(e.percentScore)}
               stroke="rgba(0,0,0,0.5)"
               fill="transparent"
             />
