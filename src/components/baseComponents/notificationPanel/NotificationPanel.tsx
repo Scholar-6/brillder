@@ -12,6 +12,7 @@ import map from 'components/map';
 import { isMobile } from 'react-device-detect';
 import { checkTeacherEditorOrAdmin } from 'components/services/brickService';
 import { User } from 'model/user';
+import { red100 } from 'material-ui/styles/colors';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -102,6 +103,15 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       <svg>
                         <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
                       </svg>
+                    </SvgIcon>
+                  </ListItemIcon>
+                  <ListItemIcon className="left-brick-circle" style={{position: 'absolute', left: 0}}>
+                    <SvgIcon fontSize="large" style={{height: '0.8em'}}>
+                      {notification.type === NotificationType.AssignedToEdit ?
+                        <svg className="svg w50 h50 active" style={{display: 'flex', width: '0.5em', height: '0.5em'}}>
+                          {/*eslint-disable-next-line*/}
+                          <use href={sprite + "#edit-outline"} className="text-theme-dark-blue" />
+                        </svg> : ""}
                     </SvgIcon>
                   </ListItemIcon>
                   <div className="content-box" onClick={() => this.move(notification)}>
