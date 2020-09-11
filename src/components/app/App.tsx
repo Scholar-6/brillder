@@ -18,7 +18,6 @@ import BackToWorkPage from '../backToWorkPage/BackToWork';
 import UsersListPage from '../userManagement/UsersList';
 import InvestigationBuildPage from 'components/build/investigationBuildPage'
 import LoginPage from '../authPages/loginPage/loginPage';
-import ChooseLoginPage from '../authPages/chooseLoginPage/ChooseLoginPage';
 import SubmitBrickPage from '../playPreview/submit/SubmitPage';
 import PublishBrickPage from 'components/playPreview/publish/PublishPage';
 import UserProfilePage from '../userProfilePage/UserProfile';
@@ -50,7 +49,7 @@ const App: React.FC = () => {
   }, function (error) {
     let { url } = error.response.config;
     if (url.search('/auth/login/') === -1 && error.response.status === 401) {
-      history.push("/choose-login");
+      history.push("/login");
     }
     return Promise.reject(error);
   });
@@ -104,9 +103,8 @@ const App: React.FC = () => {
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />
         <BuildRoute path="/home" component={MainPage} location={location} />
 
-        <AuthRoute path="/choose-login" component={ChooseLoginPage} />
         <AuthRoute path="/login/:privacy" component={LoginPage} />
-        <AuthRoute path="/login" component={LoginPage} />
+        <AuthRoute path={map.Login} component={LoginPage} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>

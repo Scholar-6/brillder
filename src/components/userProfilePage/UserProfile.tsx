@@ -416,7 +416,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   render() {
     const { user } = this.state;
-    let valid = isValid(user) && !this.state.emailInvalid;
+    //let valid = isValid(user) && !this.state.emailInvalid;
     return (
       <div className="main-listing user-profile-page">
         <PageHeadWithMenu

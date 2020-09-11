@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 
 import './LogoutDialog.scss';
 import authActions from 'redux/actions/auth';
-
+import map from 'components/map';
 
 const mapDispatch = (dispatch: any) => {
   return { logout: () => dispatch(authActions.logout()) }
@@ -20,7 +20,7 @@ interface LogoutComponentProps {
 const LogoutDialog: React.FC<LogoutComponentProps> = (props) => {
   const logout = () => {
     props.logout();
-    props.history.push('/choose-login');
+    props.history.push(map.Login);
   }
 
   return (
