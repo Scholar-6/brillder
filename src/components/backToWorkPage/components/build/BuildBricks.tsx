@@ -35,17 +35,24 @@ interface BuildBricksProps {
 class BuildBricks extends Component<BuildBricksProps> {
   renderGroupedBricks = (data: any[]) => {
     return data.map(item => {
+      const {brick} = item;
+      let circleIcon = '';
+      if (brick.editor && brick.editor.id === this.props.user.id) {
+        console.log(brick.editor, this.props.user)
+        circleIcon="edit-outline";
+      }
       return <BrickBlock
-        brick={item.brick}
+        brick={brick}
         index={item.key}
         row={item.row}
         key={item.key}
+        circleIcon={circleIcon}
         user={this.props.user}
         shown={this.props.shown}
         history={this.props.history}
         handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
-        handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, item.brick.status)}
-        handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, item.brick.status)}
+        handleMouseHover={() => this.props.onThreeColumnsMouseHover(item.key, brick.status)}
+        handleMouseLeave={() => this.props.onThreeColumnsMouseLeave(item.key, brick.status)}
       />
     });
   }

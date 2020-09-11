@@ -21,7 +21,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import ViewAllFilter, { SortBy } from "./ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
-import { checkAdmin } from "components/services/brickService";
+import { checkAdmin, getAssignmentIcon } from "components/services/brickService";
 import BrickBlock from "components/baseComponents/BrickBlock";
 
 
@@ -421,11 +421,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       this.state.finalBricks
     );
     return data.map(item => {
-      let isAssigned = false;
-      const { brick } = item;
-      if (brick.assignments && brick.assignments.length > 0) {
-        isAssigned = true;
-      }
+      const circleIcon = getAssignmentIcon(item.brick);
       return (
         <BrickBlock
           brick={item.brick}
@@ -435,7 +431,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
           key={item.index}
           shown={this.state.shown}
           history={this.props.history}
-          isAssigned={isAssigned}
+          circleIcon={circleIcon}
           handleDeleteOpen={(brickId) => this.handleDeleteOpen(brickId)}
           handleMouseHover={() => this.handleMouseHover(item.key)}
           handleMouseLeave={() => this.handleMouseLeave(item.key)}
@@ -463,11 +459,8 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     key: number,
     row: any = 0
   ) => {
-    let color = this.getBrickColor(brick);
-    let isAssigned = false;
-    if (brick.assignments && brick.assignments.length > 0) {
-      isAssigned = true;
-    }
+    const color = this.getBrickColor(brick);
+    const circleIcon = getAssignmentIcon(brick);
 
     return (
       <div className="main-brick-container">
@@ -481,7 +474,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
             <ShortBrickDescription
               brick={brick}
               color={color}
-              isAssigned={isAssigned}
+              circleIcon={circleIcon}
               isMobile={true}
               isExpanded={brick.expanded}
               move={() => this.move(brick.id)}

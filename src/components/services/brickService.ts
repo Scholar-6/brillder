@@ -106,3 +106,11 @@ export function checkTeacherEditorOrAdmin(user: User) {
     return roleId === UserType.Teacher || roleId === UserType.Editor || roleId === UserType.Admin;
   });
 }
+
+export function getAssignmentIcon(brick: Brick) {
+  let circleIcon = '';
+  if (brick.assignments && brick.assignments.length > 0) {
+    circleIcon = 'file-plus';
+  }
+  return circleIcon;
+}
