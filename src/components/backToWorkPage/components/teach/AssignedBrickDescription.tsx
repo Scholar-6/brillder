@@ -90,7 +90,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <div className="link-description">
               <span>{brick.title}</span>
             </div>
-            <div className="link-info"><span className="bold">Date Set: </span>{getFormattedDate(assignment.assignedDate)} <span className="bold"> Deadline: </span></div>
+            <div className="link-info">
+              <span className="bold">Date Set: </span>{getFormattedDate(assignment.assignedDate)} 
+              { assignment.deadline ? <span className="bold"> Deadline: {getFormattedDate(assignment.deadline)}</span> : "" }
+            </div>
           </div>
           <div className="teach-circles-container">
             <AssignedCircle onClick={this.props.expand} total={first} color="red" />
