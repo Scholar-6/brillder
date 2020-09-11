@@ -6,7 +6,6 @@ import { ThreeColumns } from '../../model';
 import { prepareVisibleThreeColumnBricks } from '../../threeColumnService';
 import { prepareVisibleBricks } from '../../service';
 import PrivateCoreToggle from 'components/baseComponents/PrivateCoreToggle';
-import BrickList from '../BrickList';
 
 import BrickBlock from "components/baseComponents/BrickBlock";
 
@@ -62,14 +61,31 @@ class BuildBricks extends Component<BuildBricksProps> {
   renderSortedBricks = () => {
     const data = prepareVisibleBricks(this.props.sortedIndex, this.props.pageSize, this.props.finalBricks)
 
-    return <BrickList
-      data={data} shown={this.props.shown}
-      user={this.props.user} history={this.props.history}
-      handleDeleteOpen={this.props.handleDeleteOpen.bind(this)}
-      handleMouseHover={this.props.handleMouseHover.bind(this)}
-      handleMouseLeave={this.props.handleMouseLeave.bind(this)}
-    />
-  };
+    return data.map(item => {
+      const {brick} = item;
+      let circleIcon = '';
+      let iconColor = '';
+      if (brick.editor && brick.editor.id === this.props.user.id) {
+        circleIcon="edit-outline";
+        iconColor = 'text-theme-dark-blue';
+      }
+      
+      return <BrickBlock
+        brick={item.brick}
+        index={item.index}
+        row={item.row}
+        user={this.props.user}
+        key={item.index}
+        shown={this.props.shown}
+        history={this.props.history}
+        circleIcon={circleIcon}
+        iconColor={iconColor}
+        handleDeleteOpen={brickId => this.props.handleDeleteOpen(brickId)}
+        handleMouseHover={() => this.props.handleMouseHover(item.key)}
+        handleMouseLeave={() => this.props.handleMouseLeave(item.key)}
+      />
+    });
+  }
 
   renderBuildGroupedBricks = () => {
     const data = prepareVisibleThreeColumnBricks(this.props.pageSize, this.props.sortedIndex, this.props.threeColumns);
