@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import PairMatch from './PairMatch';
 import { PairMatchComponent } from './interface';
 import { QuestionComponentTypeEnum, Question } from 'model/question';
-import validator from 'components/build/investigationBuildPage/questionService/UniqueValidator';
+import validator from 'components/build/questionService/UniqueValidator';
 
 describe("Pair match play and validation", () => {
   it("should create PairMatch", () => {
