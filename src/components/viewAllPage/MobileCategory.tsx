@@ -17,6 +17,7 @@ import actions from 'redux/actions/requestFailed';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import map from 'components/map';
 import 'swiper/swiper.scss';
+import { getAssignmentIcon } from "components/services/brickService";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -128,18 +129,14 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
   }
 
   renderBrick = (brick: Brick, key: number) => {
-    let color = !brick.subject ? "#B0B0AD" : brick.subject.color;
+    const color = !brick.subject ? "#B0B0AD" : brick.subject.color;
+    const circleIcon = getAssignmentIcon(brick);
     let className = 'sorted-brick absolute-container';
 
     if (brick.expanded) {
       className += " brick-hover";
     }
     
-    let isAssigned = false;
-    if (brick.assignments && brick.assignments.length > 0) {
-      isAssigned = true;
-    }
-
     return (
       <Grow
         in={this.state.shown}
@@ -153,7 +150,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
                 brick={brick}
                 color={color}
                 isMobile={true}
-                isAssigned={isAssigned}
+                circleIcon={circleIcon}
                 isExpanded={brick.expanded}
                 move={() => this.move(brick.id)}
               />
@@ -211,12 +208,9 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
     for (let i = 0; i < this.state.finalBricks.length; i++) {
       const brick = this.state.finalBricks[i]
       if (brick) {
-        let isAssigned = false;
-        if (brick.assignments && brick.assignments.length > 0) {
-          isAssigned = true;
-        }
-        let color = this.getBrickColor(brick);
-        bricksList.push(<ShortBrickDescription isAssigned={isAssigned}  brick={brick} index={i} color={color} />);
+        const color = this.getBrickColor(brick);
+        const circleIcon = getAssignmentIcon(brick);
+        bricksList.push(<ShortBrickDescription circleIcon={circleIcon}  brick={brick} index={i} color={color} />);
       }
     }
 

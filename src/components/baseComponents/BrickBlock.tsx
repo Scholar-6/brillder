@@ -19,9 +19,7 @@ interface BrickBlockProps {
   isAssignment?: boolean;
   assignmentId?: number;
   color?: string;
-
-  // only for view all page
-  isAssigned?: boolean;
+  circleIcon?: string;
 
   handleDeleteOpen(brickId: number): void;
   handleMouseHover(e: any): void;
@@ -88,13 +86,13 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
                 isAdmin={isAdmin}
                 color={color}
                 brick={brick}
-                isAssigned={props.isAssigned}
+                circleIcon={props.circleIcon}
                 move={move}
                 onDelete={(brickId) => props.handleDeleteOpen(brickId)}
               />
             ) : (
-                <ShortBrickDecsiption isAssigned={props.isAssigned} color={color} brick={brick} />
-              )}
+              <ShortBrickDecsiption circleIcon={props.circleIcon} color={color} brick={brick} />
+            )}
           </div>
         </Box>
       </div>

@@ -11,9 +11,7 @@ interface ExpandedDescriptionProps {
   isAdmin: boolean;
   brick: Brick;
   color: string;
-  
-  // only for view all page
-  isAssigned?: boolean;
+  circleIcon?: string;
   
   move(brickId: number): void;
   onDelete(brickId: number): void;
@@ -42,12 +40,13 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   }
 
   renderIcon() {
-    if (this.props.isAssigned) {
+    const {circleIcon} = this.props;
+    if (circleIcon) {
       return (
         <div className="round-button-icon">
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#file-plus"} />
+            <use href={`${sprite}#${circleIcon}`} />
           </svg>
         </div>
       );
