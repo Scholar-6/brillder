@@ -8,7 +8,7 @@ import { isAuthenticated } from 'model/brick';
 import { User, UserType } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
-
+import map from 'components/map';
 
 interface StudentRouteProps {
   path: string;
@@ -47,7 +47,7 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, inner
     rest.isAuthorized()
     return <PageLoader content="...Checking rights..." />;
   } else {
-    return <Redirect to="/choose-login" />
+    return <Redirect to={map.Login} />
   }
 }
 

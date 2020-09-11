@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import queryString from 'query-string';
 import { connect } from 'react-redux';
 
+import map from 'components/map';
 import actions from '../../redux/actions/auth';
 import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
@@ -59,7 +60,7 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
     props.isAuthorized();
     return <PageLoader content="...Checking rights..." />;
   } else {
-    return <Redirect to="/choose-login" />
+    return <Redirect to={map.Login} />
   }
 }
 

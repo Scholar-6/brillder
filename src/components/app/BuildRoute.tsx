@@ -9,7 +9,7 @@ import { User, UserType } from 'model/user';
 import {setBrillderTitle} from 'components/services/titleService';
 import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
-
+import map from 'components/map';
 
 interface BuildRouteProps {
   exact?: any;
@@ -60,7 +60,7 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
     rest.isAuthorized()
     return <PageLoader content="...Checking rights..." />;
   } else {
-    return <Redirect to="/choose-login" />
+    return <Redirect to={map.Login} />
   }
 }
 
