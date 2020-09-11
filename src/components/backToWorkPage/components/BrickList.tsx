@@ -24,18 +24,30 @@ interface BrickListProps {
 const BrickListComponent: React.FC<BrickListProps> = props => {
   return (
     <div>
-      {props.data.map(item => <BrickBlock
-        brick={item.brick}
-        index={item.index}
-        row={item.row}
-        user={props.user}
-        key={item.index}
-        shown={props.shown}
-        history={props.history}
-        handleDeleteOpen={brickId => props.handleDeleteOpen(brickId)}
-        handleMouseHover={() => props.handleMouseHover(item.key)}
-        handleMouseLeave={() => props.handleMouseLeave(item.key)}
-      />)}
+      {props.data.map(item => {
+        const {brick} = item;
+        let circleIcon = '';
+        let iconColor = '';
+        if (brick.editor && brick.editor.id === props.user.id) {
+          circleIcon="edit-outline";
+          iconColor = 'text-theme-dark-blue';
+        }
+        
+        return <BrickBlock
+          brick={item.brick}
+          index={item.index}
+          row={item.row}
+          user={props.user}
+          key={item.index}
+          shown={props.shown}
+          history={props.history}
+          circleIcon={circleIcon}
+          iconColor={iconColor}
+          handleDeleteOpen={brickId => props.handleDeleteOpen(brickId)}
+          handleMouseHover={() => props.handleMouseHover(item.key)}
+          handleMouseLeave={() => props.handleMouseLeave(item.key)}
+        />
+      })}
     </div>
   );
 }

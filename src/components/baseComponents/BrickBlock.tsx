@@ -20,6 +20,7 @@ interface BrickBlockProps {
   assignmentId?: number;
   color?: string;
   circleIcon?: string;
+  iconColor?: string;
 
   handleDeleteOpen(brickId: number): void;
   handleMouseHover(e: any): void;
@@ -87,11 +88,12 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
                 color={color}
                 brick={brick}
                 circleIcon={props.circleIcon}
+                iconColor={props.iconColor}
                 move={move}
                 onDelete={(brickId) => props.handleDeleteOpen(brickId)}
               />
             ) : (
-              <ShortBrickDecsiption circleIcon={props.circleIcon} color={color} brick={brick} />
+              <ShortBrickDecsiption circleIcon={props.circleIcon} iconColor={props.iconColor} color={color} brick={brick} />
             )}
           </div>
         </Box>

@@ -37,9 +37,10 @@ class BuildBricks extends Component<BuildBricksProps> {
     return data.map(item => {
       const {brick} = item;
       let circleIcon = '';
+      let iconColor = '';
       if (brick.editor && brick.editor.id === this.props.user.id) {
-        console.log(brick.editor, this.props.user)
         circleIcon="edit-outline";
+        iconColor = 'text-theme-dark-blue';
       }
       return <BrickBlock
         brick={brick}
@@ -47,6 +48,7 @@ class BuildBricks extends Component<BuildBricksProps> {
         row={item.row}
         key={item.key}
         circleIcon={circleIcon}
+        iconColor={iconColor}
         user={this.props.user}
         shown={this.props.shown}
         history={this.props.history}
