@@ -17,6 +17,7 @@ export interface StudentStatus {
 export interface Assignment {
   id: number;
   brick: Brick;
+  deadline: string;
   assignedDate: string;
 
   studentStatus: StudentStatus[];
