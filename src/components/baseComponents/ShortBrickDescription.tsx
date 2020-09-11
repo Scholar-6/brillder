@@ -11,6 +11,7 @@ interface ShortDescriptionProps {
   isMobile?: boolean;
   isExpanded?: boolean;
   circleIcon?: string;
+  iconColor?: string;
 
   // only for play tab in back to work
   color?: string;
@@ -37,11 +38,17 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   }
 
   renderIcon() {
-    const {circleIcon} = this.props;
+    const {circleIcon, iconColor} = this.props;
+    let svgClass = 'svg active ';
+    if (iconColor) {
+      svgClass += iconColor;
+    } else {
+      svgClass += 'text-white';
+    }
     if (circleIcon) {
       return (
         <div className="round-button-icon">
-          <svg className="svg active text-white">
+          <svg className={svgClass}>
             {/*eslint-disable-next-line*/}
             <use href={`${sprite}#${circleIcon}`} />
           </svg>
