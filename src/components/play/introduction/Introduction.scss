@@ -595,7 +595,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
           padding: 0;
         }
         .text-play {
-          overflow: auto;
+          //#1684 bug fix - overflow: auto;
           margin-top: 5px;
           margin-bottom: 5px;
         }
