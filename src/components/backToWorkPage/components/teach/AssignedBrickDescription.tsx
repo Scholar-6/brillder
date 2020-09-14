@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { getFormattedDate } from "components/services/brickService";
 import './AssignedBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
-import AssignedCircle from './AssignedCircle';
 import { TeachClassroom, Assignment } from "model/classroom";
 import { Subject } from "model/brick";
 import { getSubjectColor } from "components/services/subject";
@@ -21,16 +20,21 @@ interface AssignedDescriptionProps {
 }
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
-  renderCircle() {
-    let subjectId = this.props.assignment.brick.subjectId;
-    let color = getSubjectColor(this.props.subjects, subjectId);
-
-    if (!color) {
-      color = "#B0B0AD";
-    }
+  renderVertical(color: string) {
     return (
-      <div className="left-brick-circle teach-circle">
-        <div className="round-button" style={{ background: color }}>
+      <div className="vertical-brick" style={{ background: color }}>
+        <svg className="svg active">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#maximize"} />
+        </svg>
+      </div>
+    );
+  }
+
+  renderHorizontal(color: string) {
+    return (
+      <div className="left-brick-circle">
+        <div className="horizontal-brick" style={{ background: color }}>
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#maximize"} />
@@ -56,6 +60,13 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   }
 
   render() {
+    let subjectId = this.props.assignment.brick.subjectId;
+    let color = getSubjectColor(this.props.subjects, subjectId);
+
+    if (!color) {
+      color = "#B0B0AD";
+    }
+
     let { assignment, isMobile, isExpanded, classroom, index } = this.props;
     const { brick, byStatus } = assignment;
     let className = "assigned-brick-description";
@@ -67,11 +78,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
       className += " mobile-short-" + index;
     }
 
-    let first = classroom.students.length;
     let second = 0;
     let average = 0;
     if (byStatus) {
-      first = byStatus[0] ? byStatus[0].count : 0;
       second = byStatus[1] ? byStatus[1].count : 0;
       average = byStatus[1] ? Math.round(byStatus[1].avgScore) : 0;
     }
@@ -84,20 +93,30 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <use href={sprite + "#users"} className="text-theme-dark-blue" />
           </svg>
         </div>
-        {this.renderCircle()}
+        {this.renderHorizontal(color)}
         <div style={{ display: 'flex' }}>
           <div className="short-brick-info long">
             <div className="link-description">
               <span>{brick.title}</span>
             </div>
             <div className="link-info">
-              <span className="bold">Date Set: </span>{getFormattedDate(assignment.assignedDate)} 
-              { assignment.deadline ? <span className="bold"> Deadline: {getFormattedDate(assignment.deadline)}</span> : "" }
+              {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)} 
+            </div>
+            <div className="link-info">
+              { assignment.deadline ? <span> Deadline: {getFormattedDate(assignment.deadline)}</span> : "" }
             </div>
           </div>
-          <div className="teach-circles-container">
-            <AssignedCircle onClick={this.props.expand} total={first} color="red" />
-            {second > 0 ? <AssignedCircle total={second} count={average} color="green" /> : ""}
+          <div className="assignment-second-part">
+            {this.renderVertical(color)}
+            <div className="users-complete-count">
+              {second}
+              <svg className="svg active">
+                <use href={sprite + "#users"} className="text-theme-dark-blue" />
+              </svg>
+            </div>
+            <div className="average">
+              Avg: {average}
+            </div>
           </div>
           <div className="teach-brick-actions-container">
             <div className="stats-button-container">
