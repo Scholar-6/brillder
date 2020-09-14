@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import './ExpandedAssignment.scss';
+import sprite from "assets/img/icons-sprite.svg";
 import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
+import { UserBase } from "model/user";
 import { Assignment, TeachClassroom } from "model/classroom";
 
 import AssignedBrickDescription from './AssignedBrickDescription';
-import { UserBase } from "model/user";
 
 interface AssignmentBrickProps {
   stats: any;
@@ -22,7 +23,6 @@ interface AssignmentBrickProps {
 class ExpandedAssignment extends Component<AssignmentBrickProps> {
   renderStudent(student: UserBase, i: number) {
     const studentStatus = this.props.assignment.studentStatus.find(s => s.studentId === student.id);
-    console.log(studentStatus, this.props.assignment);
     return (
       <tr className="user-row" key={i}>
         <td className="student-left-padding"></td>
@@ -31,6 +31,16 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
           { !studentStatus ?
             ""
             : <div className="teach-circle">{Math.round(studentStatus.avgScore)}</div>}
+        </td>
+        <td style={{width: '22.5vw'}}></td>
+        <td>
+          <div style={{display: 'flex'}}>
+            <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw', display: 'flex' }}>
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#trending-up"} />
+            </svg>
+            <div className="stats-text">Stats</div>
+          </div>
         </td>
         <td></td>
       </tr>
