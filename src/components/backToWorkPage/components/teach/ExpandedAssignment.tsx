@@ -34,13 +34,15 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
         </td>
         <td style={{width: '22.5vw'}}></td>
         <td>
-          <div style={{display: 'flex'}}>
-            <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw', display: 'flex' }}>
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#trending-up"} />
-            </svg>
-            <div className="stats-text">Stats</div>
-          </div>
+          { studentStatus ?
+            <div style={{display: 'flex'}}>
+              <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw', display: 'flex' }}>
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#trending-up"} />
+              </svg>
+              <div className="stats-text">Stats</div>
+            </div>
+            : "" }
         </td>
         <td></td>
       </tr>
