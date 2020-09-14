@@ -282,6 +282,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             </Route>
             <Route exac path="/play-preview/brick/:brickId/ending">
               <Ending
+                location={location}
                 status={status}
                 history={props.history}
                 brick={props.brick}

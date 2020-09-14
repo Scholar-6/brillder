@@ -11,6 +11,7 @@ import "./loginPage.scss";
 import sprite from "assets/img/icons-sprite.svg";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import LoginLogo from './LoginLogo';
+import map from 'components/map';
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -35,7 +36,10 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
+  const [isLogin, setLogin] = React.useState(false);
 
+  const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/build`;
+  const moveToLogin = () => setLogin(true);
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -43,6 +47,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     }
     return "Fill required fields";
   };
+
 
   function handleSubmit(event: any) {
     event.preventDefault();
@@ -125,6 +130,42 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     });
   };
 
+  const renderLogo = () => {
+    return (
+      <Grid container style={{ height: '100%' }} justify="center" alignItems="center">
+        <div>
+          <img alt="Logo" src="/images/choose-login/logo.png" className="logo-image" />
+          <Grid container justify="center">
+            <img alt="Logo" src="/images/choose-user/brillder-white-text.svg" className="logo-text-image" />
+          </Grid>
+        </div>
+      </Grid>
+    );
+  }
+
+  const renderButtons = () => {
+    return (
+      <Grid container style={{ height: '100%' }} justify="center" alignItems="center">
+        <div className="button-box">
+          <button className="email-button svgOnHover" onClick={moveToLogin}>
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#email"} />
+            </svg>
+            <span>Register &nbsp;|&nbsp; Sign in with email</span>
+          </button>
+          <a className="google-button svgOnHover" href={googleLink}>
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#gmail"} />
+            </svg>
+            <span>Register &nbsp;|&nbsp; Sign in with Google</span>
+          </a>
+        </div>
+      </Grid>
+    );
+  }
+
   const renderForm = () => {
     return (
       <form onSubmit={handleSubmit} className="content-box">
@@ -192,10 +233,16 @@ const LoginPage: React.FC<LoginProps> = (props) => {
             <div className="second-col"></div>
             <div className="third-col"></div>
           </Grid>
-          <Grid container direction="row" className="second-row">
-            <div className="first-col"><LoginLogo /></div>
-            <div className="second-col">{renderForm()}</div>
-          </Grid>
+          { isLogin ?
+            <Grid container direction="row" className="second-row">
+              <div className="first-col"><LoginLogo /></div>
+              <div className="second-col">{renderForm()}</div>
+            </Grid>
+            : <Grid container direction="row" className="second-row">
+              <div className="first-col">{renderLogo()}</div>
+              <div className="second-col">{renderButtons()}</div>
+            </Grid>
+          }
           <Grid container direction="row" className="third-row">
             <div className="first-col"></div>
             <div className="second-col">
@@ -205,12 +252,13 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           </Grid>
         </div>
       </Hidden>
+      {isLogin ? 
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="back-col">
           <div className="back-box">
             <svg
               className="svg active back-button"
-              onClick={() => props.history.push("/choose-login")}
+              onClick={() => props.history.push(map.Login)}
             >
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#arrow-down"} className="theme-orange" />
@@ -222,7 +270,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
             <div className="logo-box">
               <svg
                 className="svg active logo-image mobile"
-                onClick={() => props.history.push("/choose-login")}
+                onClick={() => props.history.push(map.Login)}
               >
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#login"} className="text-theme-orange" />
@@ -281,6 +329,50 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           </div>
         </div>
       </Hidden>
+      :
+      <Hidden only={['sm', 'md', 'lg', 'xl']}>
+        <div className="back-col">
+          <div className="back-box">
+            <svg className="svg active back-button" onClick={moveToLogin}>
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#arrow-down"} />
+            </svg>
+          </div>
+        </div>
+        <div className="first-col">
+          <div className="second-item">
+            <div className="logo-box">
+              <svg
+                className="svg active logo-image mobile"
+                onClick={moveToLogin}
+              >
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#logo"} className="text-theme-orange" />
+              </svg>
+            </div>
+            <div className="mobile-button-box button-box">
+              <button className="email-button svgOnHover" onClick={moveToLogin}>
+                <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#email"} />
+                </svg>
+                <span>Register &nbsp;|&nbsp; Sign in with email</span>
+              </button>
+              <a className="google-button svgOnHover" href={googleLink}>
+                <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#gmail"} />
+                </svg>
+                <span>Register &nbsp;|&nbsp; Sign in with Google</span>
+              </a>
+              <div className="mobile-policy-text">
+                <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Hidden>
+      }
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={alertShown}

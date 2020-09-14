@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 
 import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
-import { TeachClassroom, Assignment } from "model/classroom";
+import { TeachClassroom, Assignment, StudentStatus } from "model/classroom";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
+import { UserBase } from "model/user";
 
 interface TeachListItem {
   classroom: TeachClassroom;
@@ -44,14 +45,53 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
     return <div className={className} onClick={() => this.setState({ isArchive: false })}>LIVE BRICKS</div>;
   }
 
+  renderStudent(student: UserBase, i: number, studentsStatus: StudentStatus[]) {
+    const studentStatus = studentsStatus.find(s => s.studentId === student.id);
+    return (
+      <div style={{display: 'flex', paddingTop: '0.5vh', paddingBottom: '0.5vh'}} >
+        <div style={{width: '23.8vw'}}>{student.firstName} {student.lastName}</div>
+        <div className="teach-circles-container">
+          <div className="teach-circle-flex-container">
+            { !studentStatus ?
+              <div className="teach-circle-container">
+                <div className="teach-circle student-circle red" />
+              </div> : ""}
+          </div>
+          <div className="teach-circle-flex-container">
+            { studentStatus ?
+              <div className="teach-circle-container">
+                <div className="teach-circle student-circle green">
+                  {Math.round(studentStatus.avgScore)}
+                </div>
+              </div> : ""}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderStudentsList(c: TeachClassroom, a: Assignment) {
+    if (!this.props.activeClassroom) return "";
+    return (
+      <div>
+        {c.students.map((s, i) => this.renderStudent(s, i, a.studentStatus))}
+      </div>
+    );
+  }
+
   renderTeachListItem(c: TeachListItem, i: number) {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
       if (c.assignment && c.classroom) {
-        return <AssignedBrickDescription
-          subjects={this.props.subjects}
-          expand={() => this.props.expand(c.classroom.id)}
-          key={i} classroom={c.classroom} assignment={c.assignment}
-        />
+        return (
+          <div>
+            <AssignedBrickDescription
+              subjects={this.props.subjects}
+              expand={() => this.props.expand(c.classroom.id)}
+              key={i} classroom={c.classroom} assignment={c.assignment}
+            />
+            {this.renderStudentsList(c.classroom, c.assignment)}
+          </div>
+        );
       }
       return (
         <div className="classroom-title" key={i}>

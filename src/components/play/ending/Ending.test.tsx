@@ -31,6 +31,7 @@ describe("Ending play", () => {
       <Ending
         status={PlayStatus.Ending}
         brick={brick}
+        location={{pathname: ''}}
         history={historyMock}
         brickAttempt={attempt}
         saveAttempt={() => { }}

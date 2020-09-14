@@ -19,6 +19,15 @@
     }
   }
 
+  .invalid-bottom-text {
+    margin-left: 0.6vw;
+    color: var(--theme-orange);
+  }
+
+  .type-invalid {
+    margin-bottom: 0 !important;
+  }
+
   .profile-block {
     position: relative;
     background: var(--light-gray);

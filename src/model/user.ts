@@ -25,6 +25,7 @@ export interface UserBase {
   tutorialPassed: boolean;
   email: string;
   subjects: any[];
+  bio: string;
   status: UserStatus;
   profileImage: string;
 }

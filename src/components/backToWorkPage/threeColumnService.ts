@@ -27,6 +27,7 @@ const setColumnBricksByStatus = (
   } else {
     bs = filterByCore(bs, generalSubjectId);
   }
+  bs = bs.sort(b => (b.editor && b.editor.id === userId) ? -1 : 1);
   res[name] = { rawBricks: bs, finalBricks: bs };
 }
 

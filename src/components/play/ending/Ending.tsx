@@ -10,12 +10,12 @@ import EndingStepper from './EndingStepper';
 import sprite from "assets/img/icons-sprite.svg";
 import Clock from "../baseComponents/Clock";
 import { getPlayPath, getAssignQueryString } from "../service";
-import { useLocation } from "react-router-dom";
 
 interface EndingProps {
   status: PlayStatus;
   brick: Brick;
   history: any;
+  location: any;
   brickAttempt: BrickAttempt;
   saveAttempt(): void;
 }
@@ -23,12 +23,12 @@ interface EndingProps {
 const EndingPage: React.FC<EndingProps> = ({
   status,
   brick,
+  location,
   brickAttempt,
   history,
   saveAttempt,
 }) => {
   const attempts = brickAttempt.answers;
-  const location = useLocation();
   const [minCurrentScore, setMinScore] = React.useState(0);
   const [maxCurrentScore, setMaxScore] = React.useState(0);
   const [currentScore, setCurrentScore] = React.useState(0);

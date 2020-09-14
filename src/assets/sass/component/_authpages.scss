@@ -137,19 +137,8 @@
       }
     }
   }
-  &.pre-login-page {
+  &.login-page {
     .button-box {
-      @include phone_and_tabletP {
-        background-color: $button-box;
-        border-top-right-radius: 10vw;
-        overflow: hidden;
-        margin-top: 4vh;
-        height: calc(50vh - 2vh);
-        display: flex;
-        flex-direction: column-reverse;
-        justify-content: flex-end;
-        padding: 3vh 6vw 0;
-      }
       .email-button,
       .google-button {
         padding: 2.5vh;

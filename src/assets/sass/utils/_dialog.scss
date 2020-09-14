@@ -196,19 +196,26 @@
   .close-button {
     cursor: pointer;
     position: absolute;
-    top: 0.9vw;
-    right: 0.7vw;
-
+    top: 0.5vw;
+    right: 0.5vw;
+    width: 2vw;
+    height: 2vw;
     svg {
-      $size: 2vw;
-      height: $size !important;
-      width: $size !important;
+      stroke-width: 3;
       color: var(--theme-orange);
-
+      @extend %transitionAll300;
       @include phone_and_tabletP {
-        $size: 8vw;
-        height: $size !important;
-        width: $size !important;
+        height: 8vw !important;
+        width: 8vw !important;
+      }
+      @include tabletP {
+        height: 1.5vw !important;
+        width: 1.5vw !important;
+      }
+    }
+    &:hover {
+      .svg {
+        color: var(--theme-dark-blue);
       }
     }
   }

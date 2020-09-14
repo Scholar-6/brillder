@@ -9,7 +9,7 @@ import {get, post} from './index';
 export const getBricks = async () => {
   try {
     return await get<Brick[]>("/bricks");
-  } catch (e) {
+  } catch {
     return null;
   }
 }
