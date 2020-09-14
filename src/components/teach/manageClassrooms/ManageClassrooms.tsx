@@ -195,12 +195,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     let searchUsers = [];
     const { searchString } = this.state;
     for (let student of students) {
-      let res = student.firstName.toLowerCase().search(searchString.toLowerCase());
+      let res = student.firstName?.toLowerCase().search(searchString.toLowerCase());
       if (res >= 0) {
         searchUsers.push(student)
         continue;
       }
-      res = student.lastName.toLocaleLowerCase().search(searchString.toLowerCase());
+      res = student.lastName?.toLocaleLowerCase().search(searchString.toLowerCase());
       if (res >= 0) {
         searchUsers.push(student);
         continue;
