@@ -35,6 +35,8 @@ import Table from "@ckeditor/ckeditor5-table/src/table";
 import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar";
 // @ts-ignore
 import Image from "@ckeditor/ckeditor5-image/src/image";
+// @ts-ignore
+import UpcastWriter from "@ckeditor/ckeditor5-engine/src/view/upcastwriter";
 import "./DocumentEditor.scss";
 import UploadImageCustom from './UploadImageCustom';
 //import CommentCustom from './CommentCustom';
@@ -130,6 +132,26 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
       this.props.onChange(data);
       this.replaceHtml("ck-label", "Document colors", "Document colours");
       this.setState({ ...this.state, data });
+    })
+    
+    const upcastWriter = new UpcastWriter();
+    editor.plugins.get('Clipboard').on('inputTransformation', (evt: any, data: any) => {
+      const frag = data.content;
+
+      const convertTree = (node: any) => {
+        if(node.is('element')) {
+          upcastWriter.removeStyle('color', node);
+          if(node.childCount > 0) {
+            for(const child of node.getChildren()) {
+              convertTree(child);
+            }
+          }
+        }
+      }
+
+      for(const node of frag) {
+        convertTree(node);
+      }
     })
   };
 
