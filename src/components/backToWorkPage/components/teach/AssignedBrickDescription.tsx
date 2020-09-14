@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 
-import { getFormattedDate } from "components/services/brickService";
 import './AssignedBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
 import { TeachClassroom, Assignment } from "model/classroom";
 import { Subject } from "model/brick";
+import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
   classroom: TeachClassroom;
   assignment: Assignment;
-  index?: number;
-  isMobile?: boolean;
   isExpanded?: boolean;
   move?(): void;
   expand?(classroomId: number, assignmentId: number): void;
@@ -61,21 +59,6 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     );
   }
 
-  renderPlayButton() {
-    return (
-      <div className="play-button-link svgOnHover" onClick={() => this.props.move ? this.props.move() : {}}>
-        <svg className="svg w100 h100 svg-default">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#play-thin"} className="text-gray" />
-        </svg>
-        <svg className="svg w100 h100 colored">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#play-thick"} className="text-gray" />
-        </svg>
-      </div>
-    )
-  }
-
   render() {
     let subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
@@ -84,16 +67,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
       color = "#B0B0AD";
     }
 
-    let { assignment, isMobile, isExpanded, classroom, index } = this.props;
+    let { assignment, classroom } = this.props;
     const { brick, byStatus } = assignment;
     let className = "assigned-brick-description";
-
-    if (isMobile && isExpanded) {
-      className += " mobile-expanded";
-    }
-    if (index !== undefined && index >= 0) {
-      className += " mobile-short-" + index;
-    }
 
     let second = 0;
     let average = 0;
@@ -139,7 +115,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <div className="stats-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#bar-chart-2"} />
+                <use href={sprite + (this.props.isExpanded ? "#trending-up" : "#bar-chart-2")} />
               </svg>
             </div>
             <div className="stats-text">Stats</div>
@@ -151,7 +127,6 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             </div>
           </div>
         </div>
-        {isExpanded ? this.renderPlayButton() : ""}
       </div>
     );
   }

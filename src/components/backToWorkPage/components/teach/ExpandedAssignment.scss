@@ -44,7 +44,11 @@
     td {
       padding-left: 0 !important;
       text-transform: capitalize;
-
+      
+      .stats-text {
+        margin-left: 1vw;
+        font-size: 1.3vw;
+      }
     }
   }
 }
