@@ -1,0 +1,26 @@
+.expanded-assignment {
+  padding-top: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+
+  .classroom-title {
+    padding-top: 3vh;
+    height: calc(1.5vw + 5vh) !important;
+    padding-left: 1.6vw;
+  }
+
+  .assigned-brick-description {
+    padding-left: 1.6vw;
+    padding-right: 1vw;
+  }
+  .users-table {
+    height: calc(100%) !important;
+    .student-left-padding {
+      width: 6vw;
+    }
+    td {
+      padding-left: 0 !important;
+      text-transform: capitalize;
+    }
+  }
+}

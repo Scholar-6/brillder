@@ -20,31 +20,10 @@ interface ClassroomListProps {
   startIndex: number;
   pageSize: number;
   activeClassroom: TeachClassroom | null;
-  expand(classroomId: number): void;
+  expand(classroomId: number, assignmentId: number): void;
 }
 
-interface ClassroomListState {
-  isArchive: boolean
-}
-
-class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
-  constructor(props: ClassroomListProps) {
-    super(props);
-    this.state = {
-      isArchive: false
-    }
-  }
-
-  renderArchiveButton() {
-    let className = this.state.isArchive ? "active" : "";
-    return <div className={className} onClick={() => this.setState({ isArchive: true })}>ARCHIVE</div>;
-  }
-
-  renderLiveBricksButton() {
-    let className = this.state.isArchive ? "" : "active";
-    return <div className={className} onClick={() => this.setState({ isArchive: false })}>LIVE BRICKS</div>;
-  }
-
+class ClassroomList extends Component<ClassroomListProps> {
   renderStudent(student: UserBase, i: number, studentsStatus: StudentStatus[]) {
     const studentStatus = studentsStatus.find(s => s.studentId === student.id);
     return (
@@ -86,7 +65,7 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
           <div>
             <AssignedBrickDescription
               subjects={this.props.subjects}
-              expand={() => this.props.expand(c.classroom.id)}
+              expand={this.props.expand.bind(this)}
               key={i} classroom={c.classroom} assignment={c.assignment}
             />
             {this.renderStudentsList(c.classroom, c.assignment)}
@@ -108,7 +87,7 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
         {c.name}
         {}
         {c.assignments.map((a, i) => <AssignedBrickDescription
-          subjects={this.props.subjects} expand={()=>{}} key={i} classroom={c} assignment={a}
+          subjects={this.props.subjects} expand={this.props.expand.bind(this)} key={i} classroom={c} assignment={a}
         />)}
       </div>
     )
@@ -145,10 +124,6 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
   render() {
     return (
       <div className="classroom-list">
-        <div className="classroom-list-buttons">
-          {this.renderLiveBricksButton()}
-          {this.renderArchiveButton()}
-        </div>
         {this.renderContent()}
       </div>
     );

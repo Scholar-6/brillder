@@ -61,6 +61,27 @@
   .tab-content {
     height: $backwork-tab-content-height !important;
     background: white;
+
+    .classroom-list-buttons {
+      position: absolute;
+      top: calc(6.6vh + 1.8vh);
+      right: 1vw;
+      display: flex;
+
+      div {
+        cursor: pointer;
+        padding-left: 1vw;
+        padding-right: 1vw;
+        font-size: 0.9vw;
+        font-family: $font-family-bold;
+        letter-spacing: 0.1vw;
+        color: var(--gray);
+      }
+
+      div.active {
+        color: var(--theme-dark-blue);
+      }
+    }
   }
 
   .private-core-toggle {
@@ -80,26 +101,6 @@
     padding-top: 5.5vh;
     padding-left: 1.6vw;
     padding-right: 1vw;
-    .classroom-list-buttons {
-      position: absolute;
-      top: 1.8vh;
-      right: 1vw;
-      display: flex;
-
-      div {
-        cursor: pointer;
-        padding-left: 1vw;
-        padding-right: 1vw;
-        font-size: 0.9vw;
-        font-family: $font-family-bold;
-        letter-spacing: 0.1vw;
-        color: var(--gray);
-      }
-
-      div.active {
-        color: var(--theme-dark-blue);
-      }
-    }
     .classroom-title {
       display: flex;
       @extend %flexAlignCenter;
@@ -108,6 +109,86 @@
       }
       font-size: 1.5vw;
       text-transform: capitalize;
+    }
+    .users-table {
+      width: 100%;
+      overflow-y: auto;
+      > table {
+        width: 100%;
+        border: none;
+        thead {
+          background: var(--tab-gray);
+          color: var(--theme-dark-blue);
+          font-family: $font-family-black;
+          font-size: 1.3vw;
+          letter-spacing: 0.25vw;
+          tr {
+            th {
+              padding-top: 0.6vh;
+              padding-bottom: 0.6vh;
+              text-align: left;
+              padding-left: 0.5vw;
+
+              .sort-button {
+                cursor: pointer;
+                margin-top: 0.3vh;
+                margin-left: 0.4vw;
+                height: 1.5vw;
+                width: 1.5vw;
+              }
+            }
+
+            .subject-title {
+              width: 5%;
+            }
+            .user-full-name {
+              width: 30%;
+            }
+            .email-column {
+              width: 31.3%;
+            }
+            .edit-button-column {
+              width: 2.5vw;
+            }
+          }
+        }
+        tr {
+          height: 5vh;
+          overflow-y: auto;
+          &.user-row {
+            height: 4.4vh;
+            font-family: $font-family-regular;
+            &:nth-child(even) {
+              background: var(--tab-gray);
+            }
+            td {
+              padding-left: 0.5vw;
+              color: var(--theme-dark-blue);
+              font-size: 1vw;
+              padding-top: 0;
+            }
+            .user-actions-cell {
+              min-width: 5.5vw;
+              .delete-button,
+              .edit-button {
+                display: inline-block;
+                cursor: pointer;
+                height: 1.85vw;
+                width: 1.85vw;
+              }
+              .edit-button {
+                margin-left: 1vw;
+              }
+            }
+            .activate-button-container {
+              padding-left: 2vw;
+            }
+          }
+          .user-last-name {
+            font-family: $font-family-bold;
+          }
+        }
+      }
     }
   }
 }
