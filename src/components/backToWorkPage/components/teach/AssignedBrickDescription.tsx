@@ -23,7 +23,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     return (
       <div
         className="vertical-brick" style={{ background: color }}
-        onClick={() => this.props.expand(this.props.classroom.id, assignmentId)}
+        onClick={() => {
+          console.log(this.props.classroom, assignmentId);
+          return this.props.expand(this.props.classroom.id, assignmentId)
+        }}
       >
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
