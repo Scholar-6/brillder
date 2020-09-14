@@ -20,11 +20,17 @@ interface AssignmentBrickProps {
 
 class ExpandedAssignment extends Component<AssignmentBrickProps> {
   renderStudent(student: UserBase, i: number) {
+    const studentStatus = this.props.assignment.studentStatus.find(s => s.studentId === student.id);
+    console.log(studentStatus, this.props.assignment);
     return (
       <tr className="user-row" key={i}>
         <td className="student-left-padding"></td>
-        <td>{student.firstName} {student.lastName}</td>
-        <td></td>
+        <td className="assigned-student-name">{student.firstName} {student.lastName}</td>
+        <td className="circle-td">
+          { !studentStatus ?
+            ""
+            : <div className="teach-circle">{Math.round(studentStatus.avgScore)}</div>}
+        </td>
         <td></td>
       </tr>
     );
@@ -47,7 +53,7 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
         <div className="users-table">
           <table cellSpacing="0" cellPadding="0">
           <tbody>
-            {students.map(this.renderStudent)}
+            {students.map(this.renderStudent.bind(this))}
           </tbody>
         </table>
         </div>

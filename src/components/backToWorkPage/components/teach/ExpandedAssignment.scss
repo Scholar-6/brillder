@@ -1,3 +1,7 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
 .expanded-assignment {
   padding-top: 0 !important;
   padding-left: 0 !important;
@@ -24,9 +28,25 @@
     .student-left-padding {
       width: 6vw;
     }
+    
+    .assigned-student-name {
+      width: 19vw;
+    }
+    .circle-td {
+      width: 5vw;
+      .teach-circle {
+        @extend %flexCenter;
+        height: 4.4vh;
+        width: 4.4vh;
+        background: var(--theme-green);
+        border-radius: 50%;
+        color: var(--white);
+      }
+    }
     td {
       padding-left: 0 !important;
       text-transform: capitalize;
+
     }
   }
 }
