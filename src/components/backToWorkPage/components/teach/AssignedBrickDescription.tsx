@@ -14,15 +14,17 @@ interface AssignedDescriptionProps {
   index?: number;
   isMobile?: boolean;
   isExpanded?: boolean;
-  onClick?(): void;
   move?(): void;
-  expand(): void;
+  expand(classroomId: number, assignmentId: number): void;
 }
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
-  renderVertical(color: string) {
+  renderVertical(assignmentId: number, color: string) {
     return (
-      <div className="vertical-brick" style={{ background: color }}>
+      <div
+        className="vertical-brick" style={{ background: color }}
+        onClick={() => this.props.expand(this.props.classroom.id, assignmentId)}
+      >
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#maximize"} />
@@ -31,10 +33,13 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     );
   }
 
-  renderHorizontal(color: string) {
+  renderHorizontal(assignmentId: number, color: string) {
     return (
       <div className="left-brick-circle">
-        <div className="horizontal-brick" style={{ background: color }}>
+        <div
+          className="horizontal-brick" style={{ background: color }}
+          onClick={() => this.props.expand(this.props.classroom.id, assignmentId)}
+        >
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#maximize"} />
@@ -86,14 +91,14 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     }
 
     return (
-      <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
+      <div className={className}>
         <div className="total-view-count">
           {classroom.students.length}
           <svg className="svg active">
             <use href={sprite + "#users"} className="text-theme-dark-blue" />
           </svg>
         </div>
-        {this.renderHorizontal(color)}
+        {this.renderHorizontal(assignment.id, color)}
         <div style={{ display: 'flex' }}>
           <div className="short-brick-info long">
             <div className="link-description">
@@ -107,7 +112,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             </div>
           </div>
           <div className="assignment-second-part">
-            {this.renderVertical(color)}
+            {this.renderVertical(assignment.id, color)}
             <div className="users-complete-count">
               {second}
               <svg className="svg active">
