@@ -48,4 +48,5 @@ export interface StudentStatus {
 
 export interface TeachClassroom extends Classroom {
   active: boolean;
+  isClass?: boolean;
 }
