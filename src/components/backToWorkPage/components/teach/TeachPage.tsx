@@ -96,14 +96,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
-  deactivateClassrooms() {
-    for (let classroom of this.state.classrooms) {
-      classroom.active = false;
-    }
-  }
-
   setActiveClassroom(id: number | null) {
-    this.deactivateClassrooms();
+    this.collapseClasses();
     const { classrooms } = this.state;
     let classroom = classrooms.find(c => c.id === id);
     if (classroom) {
@@ -116,15 +110,27 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   setActiveAssignment(classroomId: number, assignmentId: number) {
-    this.deactivateClassrooms();
+    this.collapseClasses();
     const classroom = this.state.classrooms.find(c => c.id === classroomId);
     if (classroom) {
       this.props.getClassStats(classroom.id);
       const assignment = classroom.assignments.find(c => c.id === assignmentId);
       if (assignment) {
+        classroom.active = true;
         this.setState({ sortedIndex: 0, activeClassroom: classroom, activeAssignment: assignment });
       }
     }    
+  }
+
+  collapseClasses() {
+    for (let classroom of this.state.classrooms) {
+      classroom.active = false;
+    }
+  }
+
+  unselectAssignment() {
+    this.collapseClasses();
+    this.setState({ sortedIndex: 0, activeClassroom: null, activeAssignment: null });
   }
 
   teachFilterUpdated(filters: TeachFilters) {
@@ -204,6 +210,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       <Grid container direction="row" className="sorted-row">
         <TeachFilterSidebar
           classrooms={this.state.classrooms}
+          activeClassroom={this.state.activeClassroom}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
           filterChanged={this.teachFilterUpdated.bind(this)}
         />
@@ -225,6 +232,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 subjects={this.props.subjects}
                 startIndex={this.state.sortedIndex}
                 pageSize={this.state.assignmentPageSize}
+                minimize={() => this.unselectAssignment()}
               />
               :
               <ClassroomList

@@ -16,6 +16,7 @@ interface AssignmentBrickProps {
   pageSize: number;
   classroom: TeachClassroom;
   assignment: Assignment;
+  minimize(): void;
 }
 
 class ExpandedAssignment extends Component<AssignmentBrickProps> {
@@ -45,8 +46,9 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
         <div className="classroom-title">{classroom.name}</div>
         <div>
           <AssignedBrickDescription
+            isExpanded={true}
             subjects={this.props.subjects}
-            expand={() => {}}
+            minimize={this.props.minimize}
             classroom={classroom} assignment={assignment}
           />
         </div>

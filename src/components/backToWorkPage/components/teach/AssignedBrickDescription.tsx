@@ -15,7 +15,8 @@ interface AssignedDescriptionProps {
   isMobile?: boolean;
   isExpanded?: boolean;
   move?(): void;
-  expand(classroomId: number, assignmentId: number): void;
+  expand?(classroomId: number, assignmentId: number): void;
+  minimize?(): void;
 }
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
@@ -24,8 +25,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
       <div
         className="vertical-brick" style={{ background: color }}
         onClick={() => {
-          console.log(this.props.classroom, assignmentId);
-          return this.props.expand(this.props.classroom.id, assignmentId)
+          if (this.props.expand) {
+            return this.props.expand(this.props.classroom.id, assignmentId)
+          }
         }}
       >
         <svg className="svg active">
@@ -37,15 +39,22 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   }
 
   renderHorizontal(assignmentId: number, color: string) {
+    const {isExpanded} = this.props;
     return (
       <div className="left-brick-circle">
         <div
           className="horizontal-brick" style={{ background: color }}
-          onClick={() => this.props.expand(this.props.classroom.id, assignmentId)}
+          onClick={() => {
+            if (isExpanded && this.props.minimize) {
+              this.props.minimize();
+            } else if (this.props.expand) {
+              this.props.expand(this.props.classroom.id, assignmentId);
+            }
+          }}
         >
-          <svg className="svg active">
+          <svg className="svg active text-white">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#maximize"} />
+            <use href={sprite + (isExpanded ? "#minimize" : "#maximize")} />
           </svg>
         </div>
       </div>
