@@ -14,6 +14,7 @@ export interface AssignmentStats {
 export interface AttemptStats {
     score: number;
     maxScore: number;
+    percentScore: number;
 }
 
 export interface AssignmentWithStats extends Assignment {

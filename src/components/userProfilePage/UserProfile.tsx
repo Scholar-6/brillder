@@ -9,7 +9,8 @@ import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
 import { getGeneralSubject, loadSubjects } from 'components/services/subject';
 import { UpdateUserStatus, UserProfileField, UserRoleItem } from './model';
-import { isValid, getUserById, createUser, updateUser, saveProfileImageName } from './service';
+import { getUserById, createUser, updateUser, saveProfileImageName } from 'components/services/axios/user';
+import { isValid,  getUserProfile, newStudentProfile } from './service';
 
 import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile } from "model/user";
@@ -58,6 +59,7 @@ interface UserProfileState {
   isStudent: boolean;
   roles: UserRoleItem[];
   validationRequired: boolean;
+  emailInvalid: boolean;
 }
 
 class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
@@ -82,13 +84,13 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.state = tempState;
         getUserById(userId).then(user => {
           if (user) {
-            this.setState({ user: this.getUserProfile(user) });
+            this.setState({ user: getUserProfile(user) });
           } else {
             this.props.requestFailed("Can`t get user profile");
           }
         });
       } else {
-        tempState.user = this.getUserProfile(user);
+        tempState.user = getUserProfile(user);
         this.state = tempState;
       }
     }
@@ -105,24 +107,6 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         this.props.requestFailed("Can`t get subjects");
       }
     });
-  }
-
-  getUserProfile(user: User): UserProfile {
-    let roles = user.roles.map(role => role.roleId);
-
-    return {
-      id: user.id,
-      username: user.username,
-      roles: roles ? roles : [],
-      email: user.email ? user.email : "",
-      firstName: user.firstName ? user.firstName : "",
-      lastName: user.lastName ? user.lastName : "",
-      subjects: user.subjects ? user.subjects : [],
-      profileImage: user.profileImage ? user.profileImage : "",
-      status: UserStatus.Pending,
-      tutorialPassed: false,
-      password: ""
-    }
   }
 
   getExistedUserState(user: User, isAdmin: boolean) {
@@ -143,6 +127,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         roles: [],
         subjects: [],
         status: UserStatus.Pending,
+        bio: '',
         profileImage: "",
       },
       subjects: [],
@@ -151,7 +136,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       isAdmin,
       roles: [
         { roleId: UserType.Student, name: "Student", disabled: !isBuilder },
-        { roleId: UserType.Teacher, name: "Teacher", disabled: !isBuilder },
+        { roleId: UserType.Teacher, name: "Teacher", disabled: !isAdmin },
         { roleId: UserType.Builder, name: "Builder", disabled: !isBuilder },
         { roleId: UserType.Editor, name: "Editor", disabled: !isEditor },
         { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
@@ -159,25 +144,15 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       noSubjectDialogOpen: false,
       savedDialogOpen: false,
       emailInvalidOpen: false,
-      validationRequired: false
+
+      validationRequired: false,
+      emailInvalid: false
     };
   }
 
   getNewUserState(isAdmin: boolean) {
     return {
-      user: {
-        id: 0,
-        username: "",
-        firstName: "",
-        lastName: "",
-        tutorialPassed: false,
-        email: "",
-        password: "",
-        roles: [UserType.Student, UserType.Builder],
-        subjects: [],
-        status: UserStatus.Pending,
-        profileImage: "",
-      },
+      user: newStudentProfile(),
       subjects: [],
       isNewUser: true,
       isStudent: false,
@@ -192,7 +167,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       noSubjectDialogOpen: false,
       savedDialogOpen: false,
       emailInvalidOpen: false,
-      validationRequired: false
+      validationRequired: false,
+      emailInvalid: false
     };
   }
 
@@ -212,6 +188,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     userToSave.firstName = user.firstName;
     userToSave.lastName = user.lastName;
     userToSave.email = user.email;
+    userToSave.bio = user.bio;
 
     if (user.password) {
       userToSave.password = user.password;
@@ -247,6 +224,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const valid = isValid(userToSave);
     if (!valid) {
       this.setState({ validationRequired: true });
+      return;
+    }
+    if (this.state.emailInvalid) {
+      this.setState({ emailInvalidOpen: true });
       return;
     }
 
@@ -289,6 +270,17 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     const { user } = this.state;
     user[name] = e.target.value;
     this.setState({ user });
+  }
+  
+  onEmailChanged(e: React.ChangeEvent<HTMLInputElement>) {
+    const { user } = this.state;
+    const {value} = e.target;
+    user.email = value;
+    let emailInvalid = false;
+    if (!/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
+      emailInvalid = true;
+    }
+    this.setState({ user, emailInvalid });
   }
 
   onProfileImageChanged(name: string) {
@@ -393,6 +385,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
 
   render() {
     const { user } = this.state;
+    //let valid = isValid(user) && !this.state.emailInvalid;
     return (
       <div className="main-listing user-profile-page">
         <PageHeadWithMenu
@@ -437,7 +430,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   labelPlacement="end"
                 />
                 {this.renderInput(
-                  user.email, '', 'Email', e => this.onFieldChanged(e, UserProfileField.Email), 'email'
+                  user.email, '', 'Email', e => this.onEmailChanged(e), 'email'
                 )}
                 {this.renderInput(
                   user.password, '', 'Password', e => this.onFieldChanged(e, UserProfileField.Password), 'password'
@@ -455,6 +448,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               <textarea
                 className="style2"
                 placeholder="Write a short bio here..."
+                onChange={e => this.onFieldChanged(e as any, UserProfileField.Bio)}
               />
             </Grid>
           </div>
@@ -471,7 +465,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         </Grid>
         <SimpleDialog
           isOpen={this.state.emailInvalidOpen}
-          label="Email is already in use"
+          label={this.state.emailInvalid ? "Email is invalid" : "Email is already in use"}
           close={this.onInvalidEmailClose.bind(this)}
         />
         <SubjectDialog

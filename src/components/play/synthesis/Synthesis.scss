@@ -12,6 +12,12 @@
     }
   }
 
+  .introduction-info {
+    .intro-text-row {
+      text-align: center;
+    }
+  }
+
   .synthesis-expansion-panel {
     background: white !important;
 
@@ -90,8 +96,8 @@
   @include desktop {
     width: 48vw;
     height: calc(100vh - 12vh - 2vw);
-    // width: 46.5vw !important;
     // height: calc(100vh - 12vh - 2vw - #{$page-head-height}) !important;
+    // width: 46.5vw !important;
     margin: 12vh 3vw 1vw 4vw;
   }
 

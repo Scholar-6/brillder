@@ -1,3 +1,4 @@
+export const Login = '/login';
 export const Build = '/build';
 export const ProposalBase = `${Build}/new-brick`;
 export const BackToWorkPage = '/back-to-work';
@@ -38,6 +39,7 @@ export const playPreviewIntro = (brickId: number) => {
 
 export default {
   Build,
+  Login,
   ProposalBase,
   ProposalSubject,
   ProposalTitle,

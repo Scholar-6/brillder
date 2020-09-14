@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import ChooseSeveral from './ChooseSeveral';
 import { QuestionComponentTypeEnum, Question } from 'model/question';
 import { HintStatus } from 'model/question';
-import validator from 'components/build/investigationBuildPage/questionService/UniqueValidator';
+import validator from 'components/build/questionService/UniqueValidator';
 
 describe("Choose Several play and validation", () => {
   it("should create Choose Several", () => {

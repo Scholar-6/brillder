@@ -10,12 +10,11 @@ interface ShortDescriptionProps {
   index?: number;
   isMobile?: boolean;
   isExpanded?: boolean;
+  circleIcon?: string;
+  iconColor?: string;
 
   // only for play tab in back to work
   color?: string;
-
-  // only for view all page
-  isAssigned?: boolean;
 
   // only for some pages
   isInvited?: boolean;
@@ -39,12 +38,19 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   }
 
   renderIcon() {
-    if (this.props.isAssigned) {
+    const {circleIcon, iconColor} = this.props;
+    let svgClass = 'svg active ';
+    if (iconColor) {
+      svgClass += iconColor;
+    } else {
+      svgClass += 'text-white';
+    }
+    if (circleIcon) {
       return (
         <div className="round-button-icon">
-          <svg className="svg active">
+          <svg className={svgClass}>
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#file-plus"} />
+            <use href={`${sprite}#${circleIcon}`} />
           </svg>
         </div>
       );

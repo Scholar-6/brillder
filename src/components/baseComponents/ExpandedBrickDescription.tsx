@@ -11,9 +11,8 @@ interface ExpandedDescriptionProps {
   isAdmin: boolean;
   brick: Brick;
   color: string;
-  
-  // only for view all page
-  isAssigned?: boolean;
+  circleIcon?: string;
+  iconColor?: string;
   
   move(brickId: number): void;
   onDelete(brickId: number): void;
@@ -23,7 +22,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   getSubjectRow(brick: Brick) {
     return `${brick.subject ? brick.subject.name : "SUBJECT Code"} | No. ${
       brick.attemptsCount
-      } of Plays`;
+    } of Plays`;
   }
 
   renderDeleteButton(brick: Brick) {
@@ -42,12 +41,19 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
   }
 
   renderIcon() {
-    if (this.props.isAssigned) {
+    const {circleIcon, iconColor} = this.props;
+    let svgClass = 'svg active ';
+    if (iconColor) {
+      svgClass += iconColor;
+    } else {
+      svgClass += 'text-white';
+    }
+    if (circleIcon) {
       return (
         <div className="round-button-icon">
-          <svg className="svg active">
+          <svg className={svgClass}>
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#file-plus"} />
+            <use href={`${sprite}#${circleIcon}`} />
           </svg>
         </div>
       );
