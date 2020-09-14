@@ -52,7 +52,7 @@
   .short-brick-info {
     font-size: 0.8vw;
     padding: 0 4.4vw;
-    width: 23.8vw;
+    width: 31.6vw;
     padding-top: 0;
     .link-info {
       width: 100%;
@@ -62,7 +62,7 @@
 
     .link-description {
       width: 100% !important;
-      font-size: 2vw;
+      font-size: 1.2vw;
       margin-bottom: 0;
     }
     .link-info {
@@ -72,7 +72,7 @@
   }
   .assignment-second-part  {
     display: flex;
-    width: 32vw;
+    width: 24vw;
     font-size: 1.4vw;
     .vertical-brick {
       cursor: pointer;
@@ -115,6 +115,7 @@
     .stats-text {
       margin-left: 0.5vw;
       margin-right: 2vw;
+      font-size: 1.3vw;
     }
 
     .archive-button-container {
