@@ -18,19 +18,17 @@
     padding-right: 1vw;
   }
   .users-table {
-    height: calc( 100vh - 5.834vw - 2vw - 6.6vh - 6vh  - 1.5vw - 5vh - 1vh - (100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35) !important;
-    table {
-      height: 100%;
-    }
+    $table-height: calc( 100vh - 5.834vw - 2vw - 6.6vh - 6vh  - 1.5vw - 5vh - 1vh - (100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh)/6.35);
+    height: $table-height !important;
     .user-row {
-      height: 12.5% !important;
+      height: calc(#{$table-height / 8}) !important;
     }
     .student-left-padding {
       width: 6vw;
     }
     
     .assigned-student-name {
-      width: 19vw;
+      width: 26.8vw;
     }
     .circle-td {
       width: 5vw;
