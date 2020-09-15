@@ -103,23 +103,11 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     ).length ?? 0
   }
 
-  const getHasReplied = () => {
-    let replies = props.comments?.filter(comment => (comment.question?.id ?? -1) === question.id);
-    replies = replies?.sort((a, b) => b.timestamp.valueOf() - a.timestamp.valueOf());
-    if(replies && replies.length > 0) { // if there is at least one comment here...
-      const mostRecentReply = replies[0]; // get the most recent one...
-      return mostRecentReply.author.id === props.currentUser.id; // and check if it was written by the current user.
-    } else {
-      return false;
-    }
-  }
-
   const renderCommentButton = () => {
     let count = getCommentCount();
-    let hasReplied = getHasReplied();
     if (count >= 1) {
       return (
-        <div className="comment-button active animated pulse iteration-2 duration-1s" onClick={() => setCommentsShown(!commentsShown)}>
+        <div className="comment-button active pulse" onClick={() => setCommentsShown(!commentsShown)}>
           <div className="comments-icon svgOnHover">
             <svg className="svg w60 h60 active">
               {/*eslint-disable-next-line*/}
@@ -133,7 +121,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
       );
     }
     return (
-      <div className={"comment-button" + (hasReplied ? " has-replied" : "")} onClick={() => setCommentsShown(!commentsShown)}>
+      <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
         <div className="comments-icon svgOnHover">
           <svg className="svg w60 h60 active">
             {/*eslint-disable-next-line*/}
