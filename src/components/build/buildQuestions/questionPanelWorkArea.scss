@@ -267,6 +267,18 @@
           width: $comment-button-size / 1.7;
           margin-bottom: 0.51vw;
         }
+        &.active {
+          background: var(--theme-orange);
+          animation: pulse1 1.5s ease infinite;
+          .comments-icon,
+          .comments-plus,
+          .comments-count {
+            color: var(--white);
+            .svg {
+              color: var(--white);
+            }
+          }
+        }
       }
 
       .question-button-container {
