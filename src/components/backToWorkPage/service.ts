@@ -39,16 +39,25 @@ export const filterByStatus = (bricks: Brick[], status: BrickStatus) => {
   return bricks.filter(b => b.status === status);
 }
 
+
 export const filterByCurretUser = (bricks: Brick[], userId: number) => {
   return bricks.filter(b => b.author.id === userId);
 }
 
+export const checkPrivateBrick = (b: Brick, userId: number, generalSubjectId: number) => {
+  return b.author.id === userId || b.subjectId === generalSubjectId;
+}
+
 export const filterByPrivate = (bricks: Brick[], userId: number, generalSubjectId: number) => {
-  return bricks.filter(b => b.author.id === userId || b.subjectId === generalSubjectId);
+  return bricks.filter(b => checkPrivateBrick(b, userId, generalSubjectId));
+}
+
+export const checkCoreBrick = (b: Brick, generalSubjectId: number) => {
+  return b.subjectId !== generalSubjectId;
 }
 
 export const filterByCore = (bricks: Brick[], generalSubjectId: number) => {
-  return bricks.filter(b => b.subjectId !== generalSubjectId);
+  return bricks.filter(b => checkCoreBrick(b, generalSubjectId));
 }
 
 export const filterBricks = (filters: Filters, rawBricks: Brick[], userId: number, generalSubjectId: number): Brick[] => {

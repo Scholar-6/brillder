@@ -18,6 +18,10 @@ interface AssignedBricksProps {
   assignments: AssignmentBrick[];
   threeColumns: ThreeAssignmentColumns;
   history: any;
+
+  isCore: boolean;
+  toggleCore(): void;
+
   handleDeleteOpen(brickId: number): void;
   onMouseHover(key: number): void;
   onMouseLeave(key: number): void;
@@ -100,10 +104,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
   render() {
     return (
       <div className="bricks-list-container">
-        <PrivateCoreToggle
-          isCore={true}
-          onSwitch={() => {}}
-        />
+        <PrivateCoreToggle isCore={this.props.isCore} onSwitch={this.props.toggleCore} />
         <div className="bricks-list">
           {this.renderAssignedBricks()}
         </div>

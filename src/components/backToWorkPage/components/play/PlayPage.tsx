@@ -8,12 +8,9 @@ import { TeachClassroom } from "model/classroom";
 import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 import actions from 'redux/actions/requestFailed';
 import { getAssignedBricks } from "components/services/axios/brick";
-import { getLongestColumn, hideAssignments } from './service';
-import { checkAdmin, checkTeacher } from "components/services/brickService";
+import service, { getLongestColumn, hideAssignments } from './service';
+import { checkAdmin, checkEditor, checkTeacher } from "components/services/brickService";
 
-import {
-  prepareThreeAssignmentRows, expandPlayThreeColumnBrick, getPlayThreeColumnName, getPlayThreeColumnBrick
-} from '../../threeColumnService';
 import { User } from "model/user";
 
 import Tab, { ActiveTab } from '../Tab';
@@ -25,6 +22,7 @@ import BackPagePaginationV2 from "../BackPagePaginationV2";
 
 interface PlayProps {
   history: any;
+  generalSubjectId: number;
   classrooms: TeachClassroom[];
   setTab(t: ActiveTab): void;
 
@@ -45,6 +43,7 @@ interface PlayState {
   pageSize: number;
   isAdmin: boolean;
   isTeach: boolean;
+  isCore: boolean;
 }
 
 class PlayPage extends Component<PlayProps, PlayState> {
@@ -53,6 +52,12 @@ class PlayPage extends Component<PlayProps, PlayState> {
 
     const isTeach = checkTeacher(this.props.user.roles);
     const isAdmin = checkAdmin(this.props.user.roles);
+    const isEditor = checkEditor(this.props.user.roles)
+
+    let isCore = false;
+    if (isAdmin || isEditor) {
+      isCore = true;
+    }
 
     const threeColumns = {
       red: {
@@ -73,6 +78,8 @@ class PlayPage extends Component<PlayProps, PlayState> {
       finalAssignments: [],
       rawAssignments: [],
       threeColumns,
+
+      isCore,
       
       filterExpanded: true,
       isClearFilter: false,
@@ -90,17 +97,26 @@ class PlayPage extends Component<PlayProps, PlayState> {
       }
     }
 
-    this.setAssignments();
+    this.getAssignments();
   }
 
-  async setAssignments() {
+  async getAssignments() {
     const assignments = await getAssignedBricks();
     if (assignments) {
-      const threeColumns = prepareThreeAssignmentRows(assignments);
-      this.setState({ ...this.state, finalAssignments: assignments, rawAssignments: assignments, threeColumns });
+      this.setAssignments(assignments);
     } else {
       this.props.requestFailed('Can`t get bricks for current user');
     }
+  }
+
+  getFilteredAssignemnts(assignments: AssignmentBrick[], isCore: boolean) {
+    return service.filterAssignments(assignments, isCore, this.props.user.id, this.props.generalSubjectId);
+  }
+
+  setAssignments(assignments: AssignmentBrick[]) {
+    const finalAssignments = this.getFilteredAssignemnts(assignments, this.state.isCore);
+    const threeColumns = service.prepareThreeAssignmentRows(finalAssignments);
+    this.setState({ ...this.state, finalAssignments: finalAssignments, rawAssignments: assignments, threeColumns });
   }
 
   onThreeColumnsMouseHover(index: number, status: AssignmentBrickStatus) {
@@ -111,8 +127,8 @@ class PlayPage extends Component<PlayProps, PlayState> {
 
     setTimeout(() => {
       hideAssignments(this.state.rawAssignments);
-      const name = getPlayThreeColumnName(status);
-      expandPlayThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
+      const name = service.getPlayThreeColumnName(status);
+      service.expandPlayThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
       this.setState({ ...this.state });
     }, 400);
   }
@@ -121,9 +137,9 @@ class PlayPage extends Component<PlayProps, PlayState> {
     hideAssignments(this.state.rawAssignments);
 
     const key = Math.ceil(index / 3);
-    const name = getPlayThreeColumnName(status);
+    const name = service.getPlayThreeColumnName(status);
 
-    const assignment = getPlayThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
+    const assignment = service.getPlayThreeColumnBrick(this.state.threeColumns, name, key + this.state.sortedIndex);
 
     if (assignment) {
       assignment.brick.expandFinished = true;
@@ -135,6 +151,18 @@ class PlayPage extends Component<PlayProps, PlayState> {
         }
       }, 400);
     }
+  }
+
+  deactivateClassrooms() {
+    for (let classroom of this.props.classrooms) {
+      classroom.active = false;
+    }
+  }
+
+  activateClassroom(activeClassroom: TeachClassroom) {
+    this.deactivateClassrooms();
+    activeClassroom.active = true;
+    this.setState({ activeClassroom });
   }
 
   playFilterUpdated(filters: PlayFilters) {
@@ -187,6 +215,28 @@ class PlayPage extends Component<PlayProps, PlayState> {
       finalAssignments[key].brick.expandFinished = false;
       this.setState({ ...this.state });
     }, 400);
+  }
+
+  toggleCore() {
+    let isCore = !this.state.isCore;
+    const {filters} = this.state;
+    filters.viewAll = true;
+    filters.completed = false;
+    filters.checked = false;
+    filters.submitted = false;
+
+    this.deactivateClassrooms();
+    const finalAssignments = this.getFilteredAssignemnts(this.state.rawAssignments, isCore);
+    const threeColumns = service.prepareThreeAssignmentRows(finalAssignments);
+    
+    this.setState({
+      isCore,
+      finalAssignments,
+      threeColumns,
+      activeClassroom: null,
+      sortedIndex: 0,
+      filters
+    });
   }
 
   //#region Pagination
@@ -253,9 +303,11 @@ class PlayPage extends Component<PlayProps, PlayState> {
     return (
       <Grid container direction="row" className="sorted-row">
         <PlayFilterSidebar
+          filters={this.state.filters}
+          activeClassroom={this.state.activeClassroom}
           classrooms={this.props.classrooms}
-          rawAssignments={this.state.rawAssignments}
-          setActiveClassroom={() => {}}
+          assignments={this.state.finalAssignments}
+          setActiveClassroom={this.activateClassroom.bind(this)}
           filterChanged={this.playFilterUpdated.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">
@@ -268,6 +320,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
             <AssignedBricks
               user={this.props.user}
               shown={true}
+              isCore={this.state.isCore}
               filters={this.state.filters}
               pageSize={this.state.pageSize}
               sortedIndex={this.state.sortedIndex}
@@ -275,6 +328,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
               threeColumns={this.state.threeColumns}
               history={this.props.history}
               handleDeleteOpen={() => {}}
+              toggleCore={this.toggleCore.bind(this)}
               onMouseHover={this.onMouseHover.bind(this)}
               onMouseLeave={this.onMouseLeave.bind(this)}
               onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
