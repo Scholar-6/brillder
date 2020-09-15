@@ -1,6 +1,5 @@
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { ClassroomApi } from 'components/teach/service';
 
 interface DeleteProps {
   isOpen: boolean;
