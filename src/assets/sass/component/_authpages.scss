@@ -163,12 +163,30 @@
         margin: 0px auto;
         margin-top: 16vh;
       }
+      &.expanding {
+        .google-button,
+        .email-button {
+          transition: all 450ms ease-out;
+          width: 100%;
+        }
+        .button-box {
+          margin-top: -100px;
+          z-index: -1;
+          transition: all 450ms ease-out;
+        }
+      }
+      &.expanded {
+        .button-box {
+          margin-top: 0px;
+          z-index: 1;
+        }
+      }
     }
     .content-box {
       @extend %flexColumn;
       .button-box {
         width: 100%;
-        margin-top: 0;
+
       }
       .input-block {
         margin-bottom: 2.7vh;
@@ -350,13 +368,6 @@
           .svg {
             transform: scale(1.4);
           }
-        }
-      }
-      &.expanding {
-        .google-button,
-        .email-button {
-          transition: all 450ms ease-in-out;
-          width: 100%;
         }
       }
     }
