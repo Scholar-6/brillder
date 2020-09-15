@@ -108,11 +108,10 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     const replies = props.comments?.filter(comment => (comment.question?.id ?? -1) === question.id)
       .sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
     console.log(replies);
-    if(replies && replies.length > 0) {
+    if (replies && replies.length > 0) {
       let currentIndex = 0;
-      while(currentIndex < replies.length
-        && replies[currentIndex].author.id === props.currentUser.id)
-      {
+      while (currentIndex < replies.length
+        && replies[currentIndex].author.id === props.currentUser.id) {
         console.log(replies[currentIndex]);
         currentIndex += 1;
       }
@@ -149,15 +148,15 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
           </svg>
         </div>
         {numberOfReplies > 0 ?
-        <div className="comments-count">
-          {numberOfReplies}
-        </div> :
-        <div className="comments-plus svgOnHover">
-          <svg className="svg w60 h60 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#plus"} />
-          </svg>
-        </div>}
+          <div className="comments-count">
+            {numberOfReplies}
+          </div> :
+          <div className="comments-plus svgOnHover">
+            <svg className="svg w60 h60 active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#plus"} />
+            </svg>
+          </div>}
       </div>
     );
   }

@@ -267,9 +267,12 @@
           width: $comment-button-size / 1.7;
           margin-bottom: 0.51vw;
         }
+        &.active,
+        &.has-replied {
+          animation: pulse1 1.5s ease infinite;
+        }
         &.active {
           background: var(--theme-orange);
-          animation: pulse1 1.5s ease infinite;
           .comments-icon,
           .comments-plus,
           .comments-count {
@@ -279,8 +282,10 @@
             }
           }
         }
+        &.has-replied {
+          background: var(--theme-yellow);
+        }
       }
-
       .question-button-container {
         margin-top: 2.1vh;
         width: 100%;

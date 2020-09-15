@@ -352,13 +352,13 @@
           }
         }
       }
-    }
-  }
-
-  .button-box.expanding.animated {
-    .google-button, .email-button {
-      transition: all 300ms ease-in-out;
-      width: 100%;
+      &.expanding {
+        .google-button,
+        .email-button {
+          transition: all 450ms ease-in-out;
+          width: 100%;
+        }
+      }
     }
   }
 }
