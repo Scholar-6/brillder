@@ -68,4 +68,5 @@ export interface AssignmentBrickData {
   row: number;
   assignmentId: number;
   status: AssignmentBrickStatus;
+  isInvitation: boolean;
 }

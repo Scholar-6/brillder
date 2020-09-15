@@ -309,6 +309,10 @@ h3 {
   font-family: $font-family-bold;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
 .dropzone {
   margin: 0;
   border: 2px dashed var(--gray-alpha5) !important;

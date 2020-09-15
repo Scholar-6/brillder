@@ -34,6 +34,7 @@ import FinishPage from './finish/FinishPage';
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
+import BuildCompletePage from './buildComplete/BuildCompletePage';
 
 
 export interface BrickAttempt {
@@ -292,6 +293,9 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             </Route>
             <Route exac path="/play-preview/brick/:brickId/publish">
               <PublishPage history={props.history} match={props.match} />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/build-complete">
+              <BuildCompletePage brick={props.brick} history={props.history} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/editor">
               <EditorPage

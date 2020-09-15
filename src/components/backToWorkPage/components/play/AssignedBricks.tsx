@@ -43,6 +43,11 @@ class AssignedBricks extends Component<AssignedBricksProps> {
 
   renderBrick(item: AssignmentBrickData) {
     const color = this.getColor(item);
+    let circleIcon = '';
+    console.log(item.isInvitation);
+    if (item.isInvitation) {
+      circleIcon="users";
+    }
 
     return <BrickBlock
       brick={item.brick}
@@ -53,6 +58,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       shown={this.props.shown}
       history={this.props.history}
       color={color}
+      circleIcon={circleIcon}
       handleDeleteOpen={this.props.handleDeleteOpen}
       handleMouseHover={() => this.props.onMouseHover(item.key)}
       handleMouseLeave={() => this.props.onMouseLeave(item.key)}
@@ -61,6 +67,11 @@ class AssignedBricks extends Component<AssignedBricksProps> {
 
   renderGroupedBrick(item: AssignmentBrickData) {
     const color = this.getColor(item);
+    let circleIcon = '';
+    if (item.isInvitation) {
+      circleIcon="users";
+    }
+    console.log(item.isInvitation);
 
     return <BrickBlock
       brick={item.brick}
@@ -70,6 +81,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       user={this.props.user}
       shown={this.props.shown}
       color={color}
+      circleIcon={circleIcon}
       isAssignment={true}
       assignmentId={item.assignmentId}
       history={this.props.history}
