@@ -98,7 +98,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     brickAttempt.studentId = props.user.id;
     let values = queryString.parse(location.search);
     if (values.assignmentId) {
-      console.log(values.assignmentId);
       brickAttempt.assignmentId = parseInt(values.assignmentId as string);
     }
     return axios.post(

@@ -142,7 +142,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const index = this.state.sortedIndex;
     const itemsCount = this.getTotalCount();
     if (index + pageSize < itemsCount) {
-      console.log('move next')
       this.setState({ ...this.state, sortedIndex: index + pageSize });
     }
   }
