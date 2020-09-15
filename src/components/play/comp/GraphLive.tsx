@@ -23,6 +23,7 @@ const GraphLive: React.FC<ImageProps> = ({ component }) => {
       }
       var elt = graphRef.current;
       const desmos = Desmos.GraphingCalculator(elt, {
+        fontSize: Desmos.FontSizes.VERY_SMALL,
         expressions: settings?.showSidebar ?? false,
         settingsMenu: settings?.showSettings ?? false,
         lockViewport: !(settings?.allowPanning ?? false),

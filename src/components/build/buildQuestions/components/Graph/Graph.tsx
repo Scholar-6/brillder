@@ -5,7 +5,7 @@ import Desmos from 'desmos';
 
 import './Graph.scss';
 
-interface GraphSettings {
+export interface GraphSettings {
     showSidebar: boolean;
     showSettings: boolean;
     allowPanning: boolean;
@@ -49,20 +49,6 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
         }
         if(props.data.graphSettings) {
             setGraphSettings(props.data.graphSettings);
-        }
-
-        if(graphRef && graphRef.current) {
-            var elt = graphRef.current;
-            var calculator = Desmos.GraphingCalculator(elt, {
-                fontSize: Desmos.FontSizes.VERY_SMALL,
-                administerSecretFolders: true
-            });
-            if(props.data.graphState) {
-                calculator.setState(props.data.graphState);
-            }
-            calculator.observeEvent('change', () => {
-                setGraphState(calculator.getState());
-            });
         }
     }, []);
 
