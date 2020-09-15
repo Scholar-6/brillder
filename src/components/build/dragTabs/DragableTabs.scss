@@ -7,8 +7,6 @@ $distance: 2px;
 $tile-height: 100%;
 
 .drag-tabs {
-}
-.drag-tabs {
   display: inline-block;
   width: 100%;
   background: var(--theme-dark-blue) !important;
@@ -87,6 +85,14 @@ $tile-height: 100%;
         }
         .inner-circle {
           fill: var(--theme-orange);
+        }
+      }
+      &.has-replied {
+        .outer-circle {
+          fill: var(--yellow-alpha5);
+        }
+        .inner-circle {
+          fill: var(--yellow);
         }
       }
     }

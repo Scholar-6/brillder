@@ -72,9 +72,13 @@ class ClassroomList extends Component<ClassroomListProps> {
           </div>
         );
       }
+      let className = 'classroom-title';
+      if (i === 0) {
+         className += ' first';
+      }
       return (
-        <div className="classroom-title" key={i}>
-          {c.classroom.name}
+        <div className={className} key={i}>
+          <div>{c.classroom.name}</div>
         </div>
       );
     }

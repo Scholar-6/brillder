@@ -128,7 +128,7 @@ class WordHighlighting extends CompComponent<
     }
 
     return (
-      <div className="word-highlighting-play">
+      <div className="question-unique-play word-highlighting-play">
         <p className="help-text">Click to highlight.</p>
         <div className="words-container">
           {component.words.map((word: any, index: number) => (

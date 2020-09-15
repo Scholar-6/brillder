@@ -155,7 +155,7 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     const { component } = this.props;
 
     return (
-      <div className="missing-word-live">
+      <div className="question-unique-play missing-word-live">
         {component.choices.map((choice: any, index: number) => (
           <div key={index} className="missing-word-choice">
             <span>
