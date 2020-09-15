@@ -142,7 +142,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   };
 
   const renderButtons = () => {
-    let className = 'button-box f-column animated';
+    let className = 'button-box f-column';
     if (loginState === LoginState.ButtonsAnimation) {
       className += ' expanding';
     }
@@ -167,8 +167,12 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   }
 
   const renderForm = () => {
+    let className = 'content-box';
+    if (loginState != LoginState.ButtonsAnimation) {
+        className += ' expanded';
+    }
     return (
-      <form onSubmit={handleSubmit} className="content-box animated">
+      <form onSubmit={handleSubmit} className={className}>
         <div className="input-block">
           <input
             type="email"
@@ -203,6 +207,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
         </div>
       </form>
     );
+
   };
 
   return (
