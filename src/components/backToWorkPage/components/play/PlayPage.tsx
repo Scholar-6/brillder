@@ -8,7 +8,7 @@ import { TeachClassroom } from "model/classroom";
 import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 import actions from 'redux/actions/requestFailed';
 import { getAssignedBricks } from "components/services/axios/brick";
-import { hideAssignments } from '../../service';
+import { getLongestColumn, hideAssignments } from './service';
 import { checkAdmin, checkTeacher } from "components/services/brickService";
 
 import {
@@ -19,6 +19,8 @@ import { User } from "model/user";
 import Tab, { ActiveTab } from '../Tab';
 import AssignedBricks from "./AssignedBricks";
 import PlayFilterSidebar from "./PlayFilterSidebar";
+import BackPagePagination from "../BackPagePagination";
+import BackPagePaginationV2 from "../BackPagePaginationV2";
 
 
 interface PlayProps {
@@ -81,6 +83,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
       isAdmin, isTeach,
 
       filters: {
+        viewAll: true,
         completed: false,
         submitted: false,
         checked: false
@@ -186,6 +189,66 @@ class PlayPage extends Component<PlayProps, PlayState> {
     }, 400);
   }
 
+  //#region Pagination
+  moveThreeColumnsNext() {
+    const longest = getLongestColumn(this.state.threeColumns);
+    const { pageSize } = this.state;
+
+    let index = this.state.sortedIndex;
+    if (index + pageSize / 3 <= longest) {
+      this.setState({ ...this.state, sortedIndex: index + (pageSize / 3) });
+    }
+  }
+
+  moveThreeColumnsBack() {
+    let index = this.state.sortedIndex;
+    if (index >= this.state.pageSize / 3) {
+      this.setState({ ...this.state, sortedIndex: index - (this.state.pageSize / 3) });
+    }
+  }
+
+  moveBack() {
+    let index = this.state.sortedIndex;
+    if (index >= this.state.pageSize) {
+      this.setState({ ...this.state, sortedIndex: index - this.state.pageSize });
+    }
+  }
+
+  moveNext() {
+    let index = this.state.sortedIndex;
+    if (index + this.state.pageSize <= this.state.finalAssignments.length) {
+      this.setState({ ...this.state, sortedIndex: index + this.state.pageSize });
+    }
+  }
+
+  renderPagination = () => {
+    let { sortedIndex, pageSize } = this.state;
+
+    if (this.state.filters.viewAll) {
+      const longestColumn = getLongestColumn(this.state.threeColumns);
+
+      return (
+        <BackPagePaginationV2
+          sortedIndex={sortedIndex}
+          pageSize={pageSize}
+          longestColumn={longestColumn}
+          moveNext={() => this.moveThreeColumnsNext()}
+          moveBack={() => this.moveThreeColumnsBack()}
+        />
+      )
+    }
+    return (
+      <BackPagePagination
+        sortedIndex={sortedIndex}
+        pageSize={pageSize}
+        bricksLength={this.state.finalAssignments.length}
+        moveNext={() => this.moveNext()}
+        moveBack={() => this.moveBack()}
+      />
+    );
+  }
+  //#endregion
+
   render() {
     return (
       <Grid container direction="row" className="sorted-row">
@@ -217,6 +280,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
               onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
               onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
             />
+            {this.renderPagination()}
           </div>
         </Grid>
       </Grid>

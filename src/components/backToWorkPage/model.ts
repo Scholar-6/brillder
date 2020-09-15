@@ -50,6 +50,7 @@ export interface Filters {
 }
 
 export interface PlayFilters {
+  viewAll: boolean;
   completed: boolean;
   submitted: boolean;
   checked: boolean;
