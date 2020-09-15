@@ -155,10 +155,14 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     if (this.state.activeTab !== ActiveTab.Play) {
       return "";
     }
+    if (this.state.generalSubjectId === - 1) {
+      return "";
+    }
     return (
       <PlayPage
         history={this.props.history}
         classrooms={this.state.classrooms}
+        generalSubjectId={this.state.generalSubjectId}
         setTab={this.setTab.bind(this)}
       />
     );
