@@ -188,7 +188,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
   setTab(activeTab: ActiveTab) {
     this.deactivateClassrooms();
-    console.log(activeTab);
     this.setState({ activeTab });
   }
 
