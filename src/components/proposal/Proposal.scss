@@ -54,12 +54,20 @@
       display: none;
     }
   }
-  .only-tutorial-header {
-    margin-top: 4.7vh;
-    letter-spacing: 0.09vw;
+  h1 {
+    // margin-top: 4.7vh;
+    // letter-spacing: 0.09vw;
     @extend %textCenter;
-    color: var(--theme-dark-blue);
-    margin-bottom: 12.1vh;
+    // color: var(--theme-dark-blue);
+    // margin-bottom: 12.1vh;
+    font-family: $font-family-black;
+    @include phone_and_tabletP {
+      font-size: 10.9vw;
+    }
+    @include tabletP {
+      // font-size: 3.9vw;
+      // margin-top: 21vh;
+    }
   }
   .left-card {
     border: 1px solid gray;
