@@ -75,7 +75,10 @@ const DragableTabs: React.FC<DragTabsProps> = ({
 
   const getHasReplied = (questionId: number) => {
     let replies = props.comments?.filter(comment => (comment.question?.id ?? -1) === questionId);
-    replies = replies?.sort((a, b) => b.timestamp.valueOf() - a.timestamp.valueOf());
+    replies = replies?.sort((a, b) => {
+      return new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf()
+    });
+    console.log(replies);
     if(replies && replies.length > 0) { // if there is at least one comment here...
       const mostRecentReply = replies[0]; // get the most recent one...
       return mostRecentReply.author.id === props.user.id; // and check if it was written by the current user.
