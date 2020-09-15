@@ -24,8 +24,6 @@ import PlayFilterSidebar from "./PlayFilterSidebar";
 interface PlayProps {
   history: any;
   classrooms: TeachClassroom[];
-
-  activeTab: ActiveTab;
   setTab(t: ActiveTab): void;
 
   // redux
@@ -196,7 +194,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
         <Grid item xs={9} className="brick-row-container">
           <Tab
             isTeach={this.state.isTeach || this.state.isAdmin}
-            activeTab={this.props.activeTab}
+            activeTab={ActiveTab.Play}
             setTab={t => this.props.setTab(t)}
           />
           <div className="tab-content">

@@ -33,7 +33,6 @@ interface BuildProps {
   user: User;
   generalSubjectId: number;
   history: any;
-  activeTab: ActiveTab;
   setTab(t: ActiveTab): void;
 
   // redux
@@ -357,7 +356,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         <Grid item xs={9} className="brick-row-container">
           <Tab
             isTeach={this.state.isTeach || this.state.isAdmin}
-            activeTab={this.props.activeTab}
+            activeTab={ActiveTab.Build}
             setTab={t => this.props.setTab(t)}
           />
             <div className="tab-content">

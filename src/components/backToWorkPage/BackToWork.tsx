@@ -7,7 +7,7 @@ import actions from 'redux/actions/requestFailed';
 import "./BackToWork.scss";
 import { User } from "model/user";
 import { Subject } from "model/brick";
-import { checkAdmin, checkTeacher } from "components/services/brickService";
+import { checkTeacher } from "components/services/brickService";
 
 import { loadSubjects, getGeneralSubject } from 'components/services/subject';
 import { ActiveTab } from './components/Tab';
@@ -31,7 +31,6 @@ interface BackToWorkState {
 
   isTeach: boolean;
 
-  // teach
   classrooms: TeachClassroom[];
   activeClassroom: TeachClassroom | null;
 }
@@ -73,7 +72,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       activeClassroom: null,
     };
 
-    // load real bricks
     loadSubjects().then((subjects: Subject[] | null) => {
       if (!subjects) {
         this.props.requestFailed('Can`t get subjects');
@@ -100,17 +98,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.deactivateClassrooms();
     this.setState({ activeTab });
   }
-  //#region Teach
 
   deactivateClassrooms() {
     for (let classroom of this.state.classrooms) {
       classroom.active = false;
     }
   }
-  //#endregion
 
-  //#region Play
-  //#endregion
   searching(searchString: string) {
     if (searchString.length === 0) {
       this.setState({
@@ -127,9 +121,20 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, isSearching: true });
   }
 
+  renderTeach() {
+    if (this.state.activeTab !== ActiveTab.Teach) {
+      return "";
+    }
+    return <TeachPage
+      searchString={this.state.searchString}
+      isSearching={this.state.isSearching}
+      subjects={this.state.subjects}
+      setTab={this.setTab.bind(this)}
+    />;
+  }
+
   renderBuild() {
-    const { activeTab } = this.state;
-    if (activeTab !== ActiveTab.Build) {
+    if (this.state.activeTab !== ActiveTab.Build) {
       return "";
     }
     if (this.state.generalSubjectId === - 1) {
@@ -141,28 +146,12 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         searchString={this.state.searchString}
         generalSubjectId={this.state.generalSubjectId}
         history={this.props.history}
-        activeTab={activeTab}
         setTab={this.setTab.bind(this)}
       />
     );
   }
 
-  renderTeach() {
-    const { activeTab } = this.state;
-    if (activeTab !== ActiveTab.Teach) {
-      return "";
-    }
-    return <TeachPage
-      searchString={this.state.searchString}
-      isSearching={this.state.isSearching}
-      subjects={this.state.subjects}
-      activeTab={this.state.activeTab}
-      setTab={this.setTab.bind(this)}
-    />;
-  }
-
   renderPlay() {
-    const {activeTab} = this.state;
     if (this.state.activeTab !== ActiveTab.Play) {
       return "";
     }
@@ -170,13 +159,13 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       <PlayPage
         history={this.props.history}
         classrooms={this.state.classrooms}
-        activeTab={this.state.activeTab}
         setTab={this.setTab.bind(this)}
       />
     );
   }
 
   render() {
+    const {activeTab} = this.state;
     return (
       <div className="main-listing back-to-work-page">
         <PageHeadWithMenu
@@ -187,8 +176,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           search={() => this.search()}
           searching={(v: string) => this.searching(v)}
         />
-        {this.renderBuild()}
         {this.renderTeach()}
+        {this.renderBuild()}
         {this.renderPlay()}
       </div>
     );

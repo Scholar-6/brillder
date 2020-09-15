@@ -25,7 +25,6 @@ interface TeachProps {
   isSearching: boolean;
 
   subjects: Subject[];
-  activeTab: ActiveTab;
   setTab(t: ActiveTab): void;
 
   // redux
@@ -216,7 +215,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
         <Grid item xs={9} className="brick-row-container">
           <Tab
             isTeach={this.state.isTeach || this.state.isAdmin}
-            activeTab={this.props.activeTab}
+            activeTab={ActiveTab.Teach}
             setTab={t => this.props.setTab(t)}
           />
           <div className="tab-content">
