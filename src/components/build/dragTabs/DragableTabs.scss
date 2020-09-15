@@ -89,7 +89,7 @@ $tile-height: 100%;
       }
       &.has-replied {
         .outer-circle {
-          fill: var(--yellow-alpha5);
+          fill: var(--theme-yellow-alpha5);
         }
         .inner-circle {
           fill: var(--theme-yellow);
