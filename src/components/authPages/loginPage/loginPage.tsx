@@ -142,9 +142,9 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   };
 
   const renderButtons = () => {
-    let className = 'button-box f-column';
+    let className = 'button-box f-column animated';
     if (loginState === LoginState.ButtonsAnimation) {
-      className += ' animated expanding';
+      className += ' expanding';
     }
     return (
       <div className={className}>
