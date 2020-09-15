@@ -107,6 +107,7 @@ const DragableTabs: React.FC<DragTabsProps> = ({
             index={index}
             id={question.id}
             active={question.active}
+            isValid={isValid}
             getUnreadComments={getUnreadComments}
             selectQuestion={props.selectQuestion}
             removeQuestion={props.removeQuestion}
