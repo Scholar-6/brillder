@@ -99,7 +99,6 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
 
     const getGraphSettings = () => {
         const settings = settingNames.filter(name => graphSettings[name] === true);
-        console.log(settings)
         return settings;
     }
 
