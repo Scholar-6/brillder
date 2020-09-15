@@ -147,7 +147,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     if (canEdit) {
       let editor = checkEditor(props.user.roles);
       if (editor && props.user.id === props.brick.author.id) {
-        props.history.push(`/play-preview/brick/${brickId}/editor`);
+        props.history.push(`/play-preview/brick/${brickId}/build-complete`);
       } else {
         props.history.push(`/play-preview/brick/${brickId}/publish`);
       }
