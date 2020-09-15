@@ -315,15 +315,17 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
   }
 
-  renderBuildPagination = () => {
-    let { sortedIndex, pageSize, finalBricks } = this.state;
+  renderPagination = () => {
+    let { sortedIndex, pageSize } = this.state;
 
     if (this.state.filters.viewAll) {
+      const longestColumn = getLongestColumn(this.state.threeColumns);
+  
       return (
         <BackPagePaginationV2
           sortedIndex={sortedIndex}
           pageSize={pageSize}
-          threeColumns={this.state.threeColumns}
+          longestColumn={longestColumn}
           moveNext={() => this.moveThreeColumnsNext()}
           moveBack={() => this.moveThreeColumnsBack()}
         />
@@ -333,7 +335,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       <BackPagePagination
         sortedIndex={sortedIndex}
         pageSize={pageSize}
-        bricksLength={finalBricks.length}
+        bricksLength={this.state.finalBricks.length}
         moveNext={() => this.moveAllNext()}
         moveBack={() => this.moveAllBack()}
       />
@@ -376,7 +378,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
                 onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
               />
-              {this.renderBuildPagination()}
+              {this.renderPagination()}
           </div>
         </Grid>
         <DeleteBrickDialog
