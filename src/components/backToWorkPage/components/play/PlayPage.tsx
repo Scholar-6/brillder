@@ -100,7 +100,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
     }
   }
 
-  onPlayThreeColumnsMouseHover(index: number, status: AssignmentBrickStatus) {
+  onThreeColumnsMouseHover(index: number, status: AssignmentBrickStatus) {
     hideAssignments(this.state.rawAssignments);
 
     const key = Math.floor(index / 3);
@@ -114,7 +114,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
     }, 400);
   }
 
-  onPlayThreeColumnsMouseLeave(index: number, status: AssignmentBrickStatus) {
+  onThreeColumnsMouseLeave(index: number, status: AssignmentBrickStatus) {
     hideAssignments(this.state.rawAssignments);
 
     const key = Math.ceil(index / 3);
@@ -162,16 +162,20 @@ class PlayPage extends Component<PlayProps, PlayState> {
     this.setState({ filters, finalAssignments });
   }
 
-  handlePlayMouseHover(index: number) {
+  onMouseHover(index: number) {
     hideAssignments(this.state.rawAssignments);
     this.setState({ ...this.state });
     setTimeout(() => {
-      //expandBrick(this.state.rawAssignments, this.state.rawAssignments, index);
+      hideAssignments(this.state.rawAssignments);
+      const assignment = this.state.finalAssignments[index];
+      if (assignment) {
+        assignment.brick.expanded = true;
+      }
       this.setState({ ...this.state });
     }, 400);
   }
 
-  handlePlayMouseLeave(key: number) {
+  onMouseLeave(key: number) {
     let { finalAssignments } = this.state;
     hideAssignments(this.state.rawAssignments);
     finalAssignments[key].brick.expandFinished = true;
@@ -208,10 +212,10 @@ class PlayPage extends Component<PlayProps, PlayState> {
               threeColumns={this.state.threeColumns}
               history={this.props.history}
               handleDeleteOpen={() => {}}
-              onMouseHover={()=>{}}
-              onMouseLeave={()=>{}}
-              onThreeColumnsMouseHover={this.onPlayThreeColumnsMouseHover.bind(this)}
-              onThreeColumnsMouseLeave={this.onPlayThreeColumnsMouseLeave.bind(this)}
+              onMouseHover={this.onMouseHover.bind(this)}
+              onMouseLeave={this.onMouseLeave.bind(this)}
+              onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
+              onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
             />
           </div>
         </Grid>
