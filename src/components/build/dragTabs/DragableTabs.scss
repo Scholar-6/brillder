@@ -79,8 +79,8 @@ $tile-height: 100%;
       width: 1vw;
       height: 1vw;
       position: absolute;
-      left: 4px;
-      top: 3px;
+      left: 0.3vw;
+      top: 0.3vw;
       svg {
         .outer-circle {
           fill: var(--theme-orange-alpha5);
@@ -98,8 +98,8 @@ $tile-height: 100%;
       &.active {
         display: flex;
         position: absolute;
-        right: 0;
-        top: 0;
+        right: 0.3vw;
+        top: 0.3vw;
       }
       .svg {
         stroke-width: 2;
