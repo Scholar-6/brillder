@@ -33,6 +33,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
       isClearFilter: false,
       activeClassroom: null,
       filters: {
+        viewAll: true,
         completed: false,
         submitted: false,
         checked: false
@@ -53,6 +54,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
 
   clearStatus() {
     const { filters } = this.state;
+    filters.viewAll = true;
     filters.checked = false;
     filters.completed = false;
     filters.submitted = false;
@@ -62,7 +64,12 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
 
   toggleFilter(filter: PlayFilterFields) {
     const { filters } = this.state;
+    filters.viewAll = false;
     filters[filter] = !filters[filter];
+    // if any selected then view all
+    if (!filters.completed && !filters.submitted && !filters.checked) {
+      filters.viewAll = true;
+    }
     this.filterClear(filters);
     this.props.filterChanged(filters);
   }

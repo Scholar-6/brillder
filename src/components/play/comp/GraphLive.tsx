@@ -16,7 +16,6 @@ const GraphLive: React.FC<ImageProps> = ({ component }) => {
   useEffect(() => {
     const state = component.graphState;
     const settings = component.graphSettings;
-    console.log(graphRef);
     if(graphRef && graphRef.current) {
       if(calculator) {
         calculator.destroy();
