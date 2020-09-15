@@ -49,7 +49,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     setLoginState(LoginState.ButtonsAnimation);
     setTimeout(() => {
       setLoginState(LoginState.Login);
-    }, 300);
+    }, 450);
   }
 
   const validateForm = () => {
