@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import axios from 'axios';
-import { User, UserType } from 'model/user';
-import { Grid, CircularProgress, Radio } from "@material-ui/core";
+import { Grid, Radio } from "@material-ui/core";
 import { connect } from 'react-redux';
 
 import "./BuildCompletePage.scss";
@@ -20,7 +18,7 @@ interface BuildCompleteProps {
 interface BuildCompleteState {
 }
 
-class BuildCompletePage extends Component<BuildCompleteProps> {
+class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState> {
   constructor(props: BuildCompleteProps) {
     super(props);
   }
@@ -36,7 +34,7 @@ class BuildCompletePage extends Component<BuildCompleteProps> {
           <button
             type="button"
             className="play-preview svgOnHover play-green"
-            onClick={() => this.props.history.push('/play/dashboard')}
+            onClick={() => this.props.history.push(`/play-preview/brick/${this.props.brick.id}/editor`)}
           >
             <svg className="svg w80 h80 active m-l-02">
               {/*eslint-disable-next-line*/}
