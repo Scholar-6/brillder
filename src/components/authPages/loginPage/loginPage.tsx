@@ -19,6 +19,12 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(null, mapDispatch);
 
+enum LoginState {
+  ChooseLogin,
+  ButtonsAnimation,
+  Login
+}
+
 interface LoginProps {
   loginSuccess(): void;
   history: History;
@@ -36,10 +42,15 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
-  const [isLogin, setLogin] = React.useState(false);
+  const [loginState, setLoginState] = React.useState(LoginState.ChooseLogin);
 
   const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/build`;
-  const moveToLogin = () => setLogin(true);
+  const moveToLogin = () => {
+    setLoginState(LoginState.ButtonsAnimation);
+    setTimeout(() => {
+      setLoginState(LoginState.Login);
+    }, 300);
+  }
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -131,8 +142,12 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   };
 
   const renderButtons = () => {
+    let className = 'button-box f-column';
+    if (loginState === LoginState.ButtonsAnimation) {
+      className += ' animated expanding';
+    }
     return (
-      <div className="button-box animated f-column">
+      <div className={className}>
         <button className="email-button svgOnHover" onClick={moveToLogin}>
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
@@ -210,7 +225,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
               <LoginLogo />
             </div>
             <div className="second-col">
-              {isLogin ?
+              {loginState === LoginState.Login ?
                 renderForm()
                 :
                 renderButtons()
@@ -226,7 +241,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           </Grid>
         </div>
       </Hidden>
-      {isLogin ?
+      {loginState !== LoginState.ChooseLogin ?
         <Hidden only={["sm", "md", "lg", "xl"]}>
           <div className="back-col">
             <div className="back-box">
