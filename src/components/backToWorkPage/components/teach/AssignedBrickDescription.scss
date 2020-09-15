@@ -4,6 +4,7 @@
 
 .assigned-brick-description {
   position: relative;
+  padding-left: 1.6vw;
 
   @include tabletP {
     height: calc(#{$bricks-height / 6.35});
@@ -11,29 +12,31 @@
 
   padding-top: 1vh;
 
+  $base: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh);
+
   .total-view-count {
     position: absolute;
     @extend %flexCenter;
     top: 1.2vh;
-    width: 3vw;
-    font-size: 1.2vw;
+    width: calc(#{$base/6.35/1.5});
+    font-size: calc(#{$base/6.35/4});
     line-height: 1;
     color: var(--theme-dark-blue);
 
     svg {
       margin-left: 0.2vw;
-      height: 1.2vw;
-      width: 1.2vw;
+      height: calc(#{$base/6.35/5});
+      width: calc(#{$base/6.35/5});
     }
   }
 
   .left-brick-circle {
     position: absolute;
-    top: calc(1.2vh + 1.2vw + 1vh);
+    top: calc(1.2vh  + 1vh + calc(#{$base/6.35/6}));
 
     > div {
-      height: 1.4vw;
-      width: 3vw;
+      height: calc(#{$base/6.35/1.5/2.2});
+      width: calc(#{$base/6.35/1.5});
       border-radius: 0.3vw;
       background-color: var(--gray);
     }
@@ -51,7 +54,7 @@
 
   .short-brick-info {
     font-size: 0.8vw;
-    padding: 0 4.4vw;
+    padding: 0 calc(#{$base/6.35});
     width: 31.6vw;
     padding-top: 0;
     .link-info {

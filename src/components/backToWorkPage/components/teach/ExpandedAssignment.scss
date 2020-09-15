@@ -44,6 +44,15 @@
     td {
       padding-left: 0 !important;
       text-transform: capitalize;
+
+      .reminder-icon {
+        color: white;
+        border-radius: 50%;
+        padding: 0.25vw;
+        width: 1.7vw;
+        height: 1.7vw;
+        background: var(--yellow);
+      }
       
       .stats-text {
         margin-left: 1vw;

@@ -99,8 +99,8 @@
     overflow: auto;
     color: var(--theme-dark-blue);
     padding-top: 5.5vh;
-    padding-left: 1.6vw;
-    padding-right: 1vw;
+    padding-left: 0;
+    padding-right: 0;
     .classroom-title {
       display: flex;
       @extend %flexAlignCenter;
@@ -109,6 +109,17 @@
       }
       font-size: 1.5vw;
       text-transform: capitalize;
+      > div {
+        width: 100%;
+        line-height: 1.8;
+        padding-left:1.6vw;
+        background: var(--off-white);  
+      }
+      &.first {
+        > div {
+          background: inherit;
+        }
+      }
     }
     .users-table {
       width: 100%;

@@ -6,7 +6,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
 import { UserBase } from "model/user";
-import { Assignment, TeachClassroom } from "model/classroom";
+import { Assignment, StudentStatus, TeachClassroom } from "model/classroom";
 
 import AssignedBrickDescription from './AssignedBrickDescription';
 
@@ -21,6 +21,17 @@ interface AssignmentBrickProps {
 }
 
 class ExpandedAssignment extends Component<AssignmentBrickProps> {
+  renderStatus(studentStatus: StudentStatus | undefined) {
+    if (studentStatus) {
+      return <div className="teach-circle">{Math.round(studentStatus.avgScore)}</div>;
+    }
+    return (
+      <svg className="svg active reminder-icon">
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#reminder"} />
+      </svg>
+    );
+  }
   renderStudent(student: UserBase, i: number) {
     const studentStatus = this.props.assignment.studentStatus.find(s => s.studentId === student.id);
     return (
@@ -28,9 +39,7 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
         <td className="student-left-padding"></td>
         <td className="assigned-student-name">{student.firstName} {student.lastName}</td>
         <td className="circle-td">
-          { !studentStatus ?
-            ""
-            : <div className="teach-circle">{Math.round(studentStatus.avgScore)}</div>}
+          {this.renderStatus(studentStatus)}
         </td>
         <td style={{width: '22.5vw'}}></td>
         <td>
