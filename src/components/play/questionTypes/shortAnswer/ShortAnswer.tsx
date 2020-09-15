@@ -158,7 +158,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     if (this.props.isPreview) width = 100;
 
     return (
-      <div className="short-answer-live">
+      <div className="question-unique-play short-answer-live">
         {component.list.map((answer, index) => {
           return this.renderAnswer(answer, width, index);
         })}
