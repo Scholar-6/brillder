@@ -152,7 +152,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         props.history.push(`/play-preview/brick/${brickId}/publish`);
       }
     } else {
-      props.history.push(`/play-preview/brick/${brickId}/finish`);
+      props.history.push(`/play-preview/brick/${brickId}/build-complete`);
     }
   }
 
