@@ -12,7 +12,6 @@ import map from 'components/map';
 import { isMobile } from 'react-device-detect';
 import { checkTeacherEditorOrAdmin } from 'components/services/brickService';
 import { User } from 'model/user';
-import { red100 } from 'material-ui/styles/colors';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,

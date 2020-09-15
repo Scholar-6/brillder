@@ -42,9 +42,9 @@ const setColumnAssignmentByStatus = (
 }
 
 export const getLongestColumn = (threeColumns: ThreeColumns) => {
-  let draftLength = threeColumns.red.finalBricks.length;
-  let reviewLength = threeColumns.yellow.finalBricks.length;
-  let publishLenght = threeColumns.green.finalBricks.length;
+  const draftLength = threeColumns.red.finalBricks.length;
+  const reviewLength = threeColumns.yellow.finalBricks.length;
+  const publishLenght = threeColumns.green.finalBricks.length;
   return Math.max(draftLength, reviewLength, publishLenght);
 }
 

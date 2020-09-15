@@ -8,7 +8,7 @@ import { TeachClassroom } from "model/classroom";
 import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 import actions from 'redux/actions/requestFailed';
 import { getAssignedBricks } from "components/services/axios/brick";
-import { hideAssignments } from '../../service';
+import { getLongestColumn, hideAssignments } from './service';
 import { checkAdmin, checkTeacher } from "components/services/brickService";
 
 import {
@@ -19,13 +19,13 @@ import { User } from "model/user";
 import Tab, { ActiveTab } from '../Tab';
 import AssignedBricks from "./AssignedBricks";
 import PlayFilterSidebar from "./PlayFilterSidebar";
+import BackPagePagination from "../BackPagePagination";
+import BackPagePaginationV2 from "../BackPagePaginationV2";
 
 
 interface PlayProps {
   history: any;
   classrooms: TeachClassroom[];
-
-  activeTab: ActiveTab;
   setTab(t: ActiveTab): void;
 
   // redux
@@ -83,6 +83,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
       isAdmin, isTeach,
 
       filters: {
+        viewAll: true,
         completed: false,
         submitted: false,
         checked: false
@@ -102,7 +103,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
     }
   }
 
-  onPlayThreeColumnsMouseHover(index: number, status: AssignmentBrickStatus) {
+  onThreeColumnsMouseHover(index: number, status: AssignmentBrickStatus) {
     hideAssignments(this.state.rawAssignments);
 
     const key = Math.floor(index / 3);
@@ -116,7 +117,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
     }, 400);
   }
 
-  onPlayThreeColumnsMouseLeave(index: number, status: AssignmentBrickStatus) {
+  onThreeColumnsMouseLeave(index: number, status: AssignmentBrickStatus) {
     hideAssignments(this.state.rawAssignments);
 
     const key = Math.ceil(index / 3);
@@ -164,16 +165,20 @@ class PlayPage extends Component<PlayProps, PlayState> {
     this.setState({ filters, finalAssignments });
   }
 
-  handlePlayMouseHover(index: number) {
+  onMouseHover(index: number) {
     hideAssignments(this.state.rawAssignments);
     this.setState({ ...this.state });
     setTimeout(() => {
-      //expandBrick(this.state.rawAssignments, this.state.rawAssignments, index);
+      hideAssignments(this.state.rawAssignments);
+      const assignment = this.state.finalAssignments[index];
+      if (assignment) {
+        assignment.brick.expanded = true;
+      }
       this.setState({ ...this.state });
     }, 400);
   }
 
-  handlePlayMouseLeave(key: number) {
+  onMouseLeave(key: number) {
     let { finalAssignments } = this.state;
     hideAssignments(this.state.rawAssignments);
     finalAssignments[key].brick.expandFinished = true;
@@ -183,6 +188,66 @@ class PlayPage extends Component<PlayProps, PlayState> {
       this.setState({ ...this.state });
     }, 400);
   }
+
+  //#region Pagination
+  moveThreeColumnsNext() {
+    const longest = getLongestColumn(this.state.threeColumns);
+    const { pageSize } = this.state;
+
+    let index = this.state.sortedIndex;
+    if (index + pageSize / 3 <= longest) {
+      this.setState({ ...this.state, sortedIndex: index + (pageSize / 3) });
+    }
+  }
+
+  moveThreeColumnsBack() {
+    let index = this.state.sortedIndex;
+    if (index >= this.state.pageSize / 3) {
+      this.setState({ ...this.state, sortedIndex: index - (this.state.pageSize / 3) });
+    }
+  }
+
+  moveBack() {
+    let index = this.state.sortedIndex;
+    if (index >= this.state.pageSize) {
+      this.setState({ ...this.state, sortedIndex: index - this.state.pageSize });
+    }
+  }
+
+  moveNext() {
+    let index = this.state.sortedIndex;
+    if (index + this.state.pageSize <= this.state.finalAssignments.length) {
+      this.setState({ ...this.state, sortedIndex: index + this.state.pageSize });
+    }
+  }
+
+  renderPagination = () => {
+    let { sortedIndex, pageSize } = this.state;
+
+    if (this.state.filters.viewAll) {
+      const longestColumn = getLongestColumn(this.state.threeColumns);
+
+      return (
+        <BackPagePaginationV2
+          sortedIndex={sortedIndex}
+          pageSize={pageSize}
+          longestColumn={longestColumn}
+          moveNext={() => this.moveThreeColumnsNext()}
+          moveBack={() => this.moveThreeColumnsBack()}
+        />
+      )
+    }
+    return (
+      <BackPagePagination
+        sortedIndex={sortedIndex}
+        pageSize={pageSize}
+        bricksLength={this.state.finalAssignments.length}
+        moveNext={() => this.moveNext()}
+        moveBack={() => this.moveBack()}
+      />
+    );
+  }
+  //#endregion
 
   render() {
     return (
@@ -196,7 +261,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
         <Grid item xs={9} className="brick-row-container">
           <Tab
             isTeach={this.state.isTeach || this.state.isAdmin}
-            activeTab={this.props.activeTab}
+            activeTab={ActiveTab.Play}
             setTab={t => this.props.setTab(t)}
           />
           <div className="tab-content">
@@ -210,11 +275,12 @@ class PlayPage extends Component<PlayProps, PlayState> {
               threeColumns={this.state.threeColumns}
               history={this.props.history}
               handleDeleteOpen={() => {}}
-              onMouseHover={()=>{}}
-              onMouseLeave={()=>{}}
-              onThreeColumnsMouseHover={this.onPlayThreeColumnsMouseHover.bind(this)}
-              onThreeColumnsMouseLeave={this.onPlayThreeColumnsMouseLeave.bind(this)}
+              onMouseHover={this.onMouseHover.bind(this)}
+              onMouseLeave={this.onMouseLeave.bind(this)}
+              onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
+              onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
             />
+            {this.renderPagination()}
           </div>
         </Grid>
       </Grid>

@@ -27,7 +27,7 @@ class ClassroomList extends Component<ClassroomListProps> {
   renderStudent(student: UserBase, i: number, studentsStatus: StudentStatus[]) {
     const studentStatus = studentsStatus.find(s => s.studentId === student.id);
     return (
-      <div style={{display: 'flex', paddingTop: '0.5vh', paddingBottom: '0.5vh'}} >
+      <div key={i} style={{display: 'flex', paddingTop: '0.5vh', paddingBottom: '0.5vh'}} >
         <div style={{width: '23.8vw'}}>{student.firstName} {student.lastName}</div>
         <div className="teach-circles-container">
           <div className="teach-circle-flex-container">
@@ -62,7 +62,7 @@ class ClassroomList extends Component<ClassroomListProps> {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
       if (c.assignment && c.classroom) {
         return (
-          <div>
+          <div key={i}>
             <AssignedBrickDescription
               subjects={this.props.subjects}
               expand={this.props.expand.bind(this)}

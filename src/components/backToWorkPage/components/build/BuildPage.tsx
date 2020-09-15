@@ -33,7 +33,6 @@ interface BuildProps {
   user: User;
   generalSubjectId: number;
   history: any;
-  activeTab: ActiveTab;
   setTab(t: ActiveTab): void;
 
   // redux
@@ -316,15 +315,17 @@ class BuildPage extends Component<BuildProps, BuildState> {
     }
   }
 
-  renderBuildPagination = () => {
-    let { sortedIndex, pageSize, finalBricks } = this.state;
+  renderPagination = () => {
+    let { sortedIndex, pageSize } = this.state;
 
     if (this.state.filters.viewAll) {
+      const longestColumn = getLongestColumn(this.state.threeColumns);
+  
       return (
         <BackPagePaginationV2
           sortedIndex={sortedIndex}
           pageSize={pageSize}
-          threeColumns={this.state.threeColumns}
+          longestColumn={longestColumn}
           moveNext={() => this.moveThreeColumnsNext()}
           moveBack={() => this.moveThreeColumnsBack()}
         />
@@ -334,7 +335,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       <BackPagePagination
         sortedIndex={sortedIndex}
         pageSize={pageSize}
-        bricksLength={finalBricks.length}
+        bricksLength={this.state.finalBricks.length}
         moveNext={() => this.moveAllNext()}
         moveBack={() => this.moveAllBack()}
       />
@@ -357,7 +358,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         <Grid item xs={9} className="brick-row-container">
           <Tab
             isTeach={this.state.isTeach || this.state.isAdmin}
-            activeTab={this.props.activeTab}
+            activeTab={ActiveTab.Build}
             setTab={t => this.props.setTab(t)}
           />
             <div className="tab-content">
@@ -377,7 +378,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
                 onThreeColumnsMouseHover={this.onThreeColumnsMouseHover.bind(this)}
                 onThreeColumnsMouseLeave={this.onThreeColumnsMouseLeave.bind(this)}
               />
-              {this.renderBuildPagination()}
+              {this.renderPagination()}
           </div>
         </Grid>
         <DeleteBrickDialog
