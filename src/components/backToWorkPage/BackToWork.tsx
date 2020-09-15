@@ -165,7 +165,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   render() {
-    const {activeTab} = this.state;
     return (
       <div className="main-listing back-to-work-page">
         <PageHeadWithMenu
