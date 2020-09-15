@@ -60,9 +60,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, playStatus
           <div className="mobile-view-image">
             <img alt="titles" src="/images/new-brick/brief-circles.png" />
           </div>
-          <h1 className="only-tutorial-header">
-            Outline the purpose of this brick.
-          </h1>
+          <h1>Outline the purpose of this brick.</h1>
           <DocumentWirisCKEditor
             disabled={!canEdit}
             data={parentBrief}
@@ -83,7 +81,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, playStatus
           <h2 className="pagination-text m-0">3 of 4</h2>
         </Grid>
         <ProposalPhonePreview Component={BriefPreviewComponent} data={parentBrief} />
-        <Hidden only={['xs','sm']}>
+        <Hidden only={['xs', 'sm']}>
           <div className="red-right-block"></div>
         </Hidden>
       </Grid>
