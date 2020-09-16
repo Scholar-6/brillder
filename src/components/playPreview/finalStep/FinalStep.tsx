@@ -1,11 +1,15 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 import queryString from 'query-string';
+import { connect } from "react-redux";
 
+import actions from 'redux/actions/requestFailed';
 import "./FinalStep.scss";
 import sprite from "assets/img/icons-sprite.svg";
-import { Brick } from "model/brick";
+import { User } from "model/user";
+import { Brick, BrickStatus } from "model/brick";
 import { PlayStatus } from "components/play/model";
+import { checkAdmin } from "components/services/brickService";
 
 import Clock from "components/play/baseComponents/Clock";
 import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
@@ -15,24 +19,36 @@ import LinkCopiedDialog from 'components/play/finalStep/dialogs/LinkCopiedDialog
 import ExitButton from "components/play/finalStep/ExitButton";
 import ShareColumn from "components/play/finalStep/ShareColumn";
 import InviteColumn from "components/play/finalStep/InviteColumn";
+import PublishColumn from './PublishColumn';
+import { publishBrick } from "components/services/axios/brick";
+import SimpleDialog from "components/baseComponents/dialogs/SimpleDialog";
+
+enum PublishStatus {
+  None,
+  Popup,
+  Published,
+}
 
 interface FinalStepProps {
+  user: User;
   status: PlayStatus;
   brick: Brick;
   history: any;
   location: any;
+
+  requestFailed(e: string): void;
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
-  status,
-  brick,
-  history,
-  location
+  user, brick, location, requestFailed
 }) => {
   const [shareOpen, setShare] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
+  const [publishSuccess, setPublishSuccess] = React.useState(PublishStatus.None);
+
+  const isAdmin = checkAdmin(user.roles);
 
   let isPersonal = false;
   const values = queryString.parse(location.search);
@@ -42,10 +58,20 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   const link = `/play/brick/${brick.id}/intro`;
 
-  const renderInviteColumn = () => {
+  const publish = async (brickId: number) => {
+    let success = await publishBrick(brickId);
+    if (success) {
+      setPublishSuccess(PublishStatus.Popup);
+    } else {
+      requestFailed("Can`t publish brick");
+    }
+  }
+
+  const renderInviteColumn = (size: 5 | 3) => {
     return (
       <InviteColumn
-       firstLabel="internal users to play"
+        size={size}
+        firstLabel="internal users to play"
         secondLabel="or edit this brick"
         onClick={()=> setInvite(true)}
       />
@@ -53,18 +79,27 @@ const FinalStep: React.FC<FinalStepProps> = ({
   }
 
   const renderActionColumns = () => {
+    let size: 5 | 3 = 5;
+
+    let canPublish = isAdmin && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published;
+    if (canPublish) {
+      size = 3;
+    }
+
     if (isPersonal) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          <ShareColumn onClick={() => setShare(true)} />
-          {renderInviteColumn()}
+          <ShareColumn size={size} onClick={() => setShare(true)} />
+          {renderInviteColumn(size)}
+          {canPublish ? <PublishColumn onClick={() => publish(brick.id)} /> : ""}
         </Grid>
       );
     }
     return (
       <Grid className="share-row" container direction="row" justify="center">
-        {renderInviteColumn()}
-        <ShareColumn onClick={() => setShare(true)} />
+        {renderInviteColumn(size)}
+        <ShareColumn size={size} onClick={() => setShare(true)} />
+        {canPublish ? <PublishColumn onClick={() => publish(brick.id)} /> : ""}
       </Grid>
     );
   }
@@ -121,8 +156,17 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
       <InviteDialog canEdit={true} brick={brick} isOpen={inviteOpen} link={() => { setInvite(false); }} close={() => setInvite(false)} />
+      <SimpleDialog
+        label="Publish Successful!"
+        isOpen={publishSuccess === PublishStatus.Popup}
+        close={() => setPublishSuccess(PublishStatus.Published)}
+      />
     </div>
   );
 };
 
-export default FinalStep;
+const mapDispatch = (dispatch: any) => ({
+  requestFailed: (e: string) => dispatch(actions.requestFailed(e))
+});
+
+export default connect(null, mapDispatch)(FinalStep);
