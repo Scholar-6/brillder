@@ -4,15 +4,15 @@ import { Grid, Hidden } from "@material-ui/core";
 import "./FinalStep.scss";
 import sprite from "assets/img/icons-sprite.svg";
 import { Brick } from "model/brick";
-import { PlayStatus } from "../model";
+import { PlayStatus } from "components/play/model";
 
-import Clock from "../baseComponents/Clock";
-import ShareDialog from './dialogs/ShareDialog';
-import LinkDialog from './dialogs/LinkDialog';
-import LinkCopiedDialog from './dialogs/LinkCopiedDialog';
-import ShareColumn from "./ShareColumn";
-import InviteColumn from "./InviteColumn";
-import ExitButton from "./ExitButton";
+import Clock from "components/play/baseComponents/Clock";
+import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
+import LinkDialog from 'components/play/finalStep/dialogs/LinkDialog';
+import LinkCopiedDialog from 'components/play/finalStep/dialogs/LinkCopiedDialog';
+import ExitButton from "components/play/finalStep/ExitButton";
+import ShareColumn from "components/play/finalStep/ShareColumn";
+import InviteColumn from "components/play/finalStep/InviteColumn";
 
 interface FinalStepProps {
   status: PlayStatus;
@@ -30,6 +30,29 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
 
   const link = `/play/brick/${brick.id}/intro`;
+
+  const renderFooter = () => {
+    return (
+      <div className="action-footer" style={{bottom: '10.5vh'}}>
+        <div></div>
+        <div className="direction-info">
+          Exit
+        </div>
+        <div style={{marginLeft: 0, marginRight: '1.7vw'}}>
+          <button
+            type="button"
+            className="play-preview svgOnHover roller-red"
+            onClick={() => history.push('/play/dashboard')}
+          >
+            <svg className="svg w80 h80 active m-l-02">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#roller-home"} />
+            </svg>
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -51,7 +74,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
                   <p>Well done for completing “{brick.title}”!</p>
                   <Grid className="share-row" container direction="row" justify="center">
                     <ShareColumn onClick={() => setShare(true)} />
-                    <InviteColumn onClick={()=>{}} />
+                    <InviteColumn
+                      firstLabel="internal users to play"
+                      secondLabel="or edit this brick"
+                      onClick={()=>{}}
+                    />
                   </Grid>
                 </div>
               </div>
@@ -63,7 +90,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 </div>
                 <div className="intro-text-row">
                 </div>
-                <ExitButton onClick={() => history.push('/play/dashboard')} />
+                <ExitButton onClick={() => {}} />
               </div>
             </Grid>
           </Grid>
@@ -76,13 +103,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
           </div>
           <div className="introduction-page">
           </div>
-          <ExitButton onClick={() => history.push('/play/dashboard')} />
+          <ExitButton onClick={() => {}} />
         </div>
       </Hidden>
-      <LinkDialog
-        isOpen={linkOpen} link={document.location.host + link}
-        submit={() => setCopiedLink(true)} close={() => setLink(false)}
-      />
+      <LinkDialog isOpen={linkOpen} link={document.location.host + link} submit={() => setCopiedLink(true)} close={() => setLink(false)} />
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
     </div>

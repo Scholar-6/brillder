@@ -34,7 +34,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
           <button
             type="button"
             className="play-preview svgOnHover play-green"
-            onClick={() => this.props.history.push(`/play-preview/brick/${this.props.brick.id}/editor`)}
+            onClick={() => this.props.history.push(`/play-preview/brick/${this.props.brick.id}/finalStep`)}
           >
             <svg className="svg w80 h80 active m-l-02">
               {/*eslint-disable-next-line*/}

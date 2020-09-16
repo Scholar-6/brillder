@@ -35,6 +35,7 @@ import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
 import BuildCompletePage from './buildComplete/BuildCompletePage';
+import FinalStep from './finalStep/FinalStep';
 
 
 export interface BrickAttempt {
@@ -144,16 +145,15 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     brickAttempt.brickId = props.brick.id;
     brickAttempt.studentId = props.user.id;
     let canEdit = canEditBrick(props.brick, props.user);
+    let link = `/play-preview/brick/${brickId}/build-complete`;
     if (canEdit) {
       let editor = checkEditor(props.user.roles);
       if (editor && props.user.id === props.brick.author.id) {
-        props.history.push(`/play-preview/brick/${brickId}/build-complete`);
       } else {
-        props.history.push(`/play-preview/brick/${brickId}/publish`);
+        link = `/play-preview/brick/${brickId}/publish`;
       }
-    } else {
-      props.history.push(`/play-preview/brick/${brickId}/build-complete`);
     }
+    props.history.push(link);
   }
 
   const saveEditor = (editorId: number) => {
@@ -227,6 +227,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     className += " sorted-row-expanded";
   }
 
+  const {brick, history} = props;
+
   return (
     <div className="play-preview-pages">
       {renderHead()}
@@ -242,7 +244,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
             <Route exac path="/play-preview/brick/:brickId/intro">
               <Introduction
                 location={props.location}
-                brick={props.brick}
+                brick={brick}
                 isPlayPreview={true}
                 startTime={startTime}
                 setStartTime={setStartTime}
@@ -254,8 +256,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 attempts={attempts}
                 previewQuestionIndex={getBuildQuestionNumber()}
                 isPlayPreview={true}
-                brick={props.brick}
-                questions={props.brick.questions}
+                brick={brick}
+                questions={brick.questions}
                 endTime={null}
                 updateAttempts={updateAttempts}
                 finishBrick={finishBrick}
@@ -263,19 +265,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/provisionalScore">
-              <ProvisionalScore status={status} brick={props.brick} startTime={startTime} attempts={attempts} isPlayPreview={true} />
+              <ProvisionalScore status={status} brick={brick} startTime={startTime} attempts={attempts} isPlayPreview={true} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/synthesis">
-              <Synthesis status={status} brick={props.brick} isPlayPreview={true} />
+              <Synthesis status={status} brick={brick} isPlayPreview={true} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/review">
               <Review
                 isPlayPreview={true}
                 status={status}
-                questions={props.brick.questions}
-                brickId={props.brick.id}
+                questions={brick.questions}
+                brickId={brick.id}
                 startTime={startTime}
-                brickLength={props.brick.brickLength}
+                brickLength={brick.brickLength}
                 updateAttempts={updateReviewAttempts}
                 attempts={attempts}
                 finishBrick={finishReview}
@@ -285,28 +287,26 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               <Ending
                 location={location}
                 status={status}
-                history={props.history}
-                brick={props.brick}
+                history={history}
+                brick={brick}
                 brickAttempt={brickAttempt}
                 saveAttempt={saveBrickAttempt}
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/publish">
-              <PublishPage history={props.history} match={props.match} />
+              <PublishPage history={history} match={props.match} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/build-complete">
-              <BuildCompletePage brick={props.brick} history={props.history} />
+              <BuildCompletePage brick={brick} history={history} />
+            </Route>
+            <Route exac path="/play-preview/brick/:brickId/finalStep">
+              <FinalStep status={status} brick={brick} history={history} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/editor">
-              <EditorPage
-                brick={props.brick}
-                canEdit={true}
-                saveEditor={saveEditor}
-                history={props.history}
-              />
+              <EditorPage brick={brick} canEdit={true} saveEditor={saveEditor} history={history} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/finish">
-              <FinishPage history={props.history} match={props.match} />
+              <FinishPage history={history} match={props.match} />
             </Route>
           </Switch>
         </div>
