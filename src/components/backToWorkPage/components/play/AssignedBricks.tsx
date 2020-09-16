@@ -7,6 +7,7 @@ import { prepareVisibleThreeColumnAssignments } from '../../threeColumnService';
 import { AssignmentBrickStatus, AssignmentBrick } from "model/assignment";
 
 import BrickBlock from "components/baseComponents/BrickBlock";
+import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 
 interface AssignedBricksProps {
   user: User;
@@ -17,6 +18,10 @@ interface AssignedBricksProps {
   assignments: AssignmentBrick[];
   threeColumns: ThreeAssignmentColumns;
   history: any;
+
+  isCore: boolean;
+  toggleCore(): void;
+
   handleDeleteOpen(brickId: number): void;
   onMouseHover(key: number): void;
   onMouseLeave(key: number): void;
@@ -38,6 +43,11 @@ class AssignedBricks extends Component<AssignedBricksProps> {
 
   renderBrick(item: AssignmentBrickData) {
     const color = this.getColor(item);
+    let circleIcon = '';
+    console.log(item.isInvitation);
+    if (item.isInvitation) {
+      circleIcon="users";
+    }
 
     return <BrickBlock
       brick={item.brick}
@@ -48,6 +58,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       shown={this.props.shown}
       history={this.props.history}
       color={color}
+      circleIcon={circleIcon}
       handleDeleteOpen={this.props.handleDeleteOpen}
       handleMouseHover={() => this.props.onMouseHover(item.key)}
       handleMouseLeave={() => this.props.onMouseLeave(item.key)}
@@ -56,6 +67,11 @@ class AssignedBricks extends Component<AssignedBricksProps> {
 
   renderGroupedBrick(item: AssignmentBrickData) {
     const color = this.getColor(item);
+    let circleIcon = '';
+    if (item.isInvitation) {
+      circleIcon="users";
+    }
+    console.log(item.isInvitation);
 
     return <BrickBlock
       brick={item.brick}
@@ -65,6 +81,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
       user={this.props.user}
       shown={this.props.shown}
       color={color}
+      circleIcon={circleIcon}
       isAssignment={true}
       assignmentId={item.assignmentId}
       history={this.props.history}
@@ -99,6 +116,7 @@ class AssignedBricks extends Component<AssignedBricksProps> {
   render() {
     return (
       <div className="bricks-list-container">
+        <PrivateCoreToggle isCore={this.props.isCore} onSwitch={this.props.toggleCore} />
         <div className="bricks-list">
           {this.renderAssignedBricks()}
         </div>

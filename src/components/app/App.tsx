@@ -18,8 +18,6 @@ import BackToWorkPage from '../backToWorkPage/BackToWork';
 import UsersListPage from '../userManagement/UsersList';
 import InvestigationBuildPage from 'components/build/investigationBuildPage'
 import LoginPage from '../authPages/loginPage/loginPage';
-import SubmitBrickPage from '../playPreview/submit/SubmitPage';
-import PublishBrickPage from 'components/playPreview/publish/PublishPage';
 import UserProfilePage from '../userProfilePage/UserProfile';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
@@ -93,8 +91,6 @@ const App: React.FC = () => {
 
         <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
-        <BuildRoute exact path="/build/brick/:brickId/build/investigation/submit" component={SubmitBrickPage} location={location} />
-        <BuildRoute exact path="/build/brick/:brickId/build/investigation/publish" component={PublishBrickPage} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId/build/investigation/question-component/:questionId" component={InvestigationBuildPage} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />

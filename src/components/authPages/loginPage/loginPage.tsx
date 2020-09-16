@@ -19,6 +19,12 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(null, mapDispatch);
 
+enum LoginState {
+  ChooseLogin,
+  ButtonsAnimation,
+  Login
+}
+
 interface LoginProps {
   loginSuccess(): void;
   history: History;
@@ -36,10 +42,15 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
-  const [isLogin, setLogin] = React.useState(false);
+  const [loginState, setLoginState] = React.useState(LoginState.ChooseLogin);
 
   const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/build`;
-  const moveToLogin = () => setLogin(true);
+  const moveToLogin = () => {
+    setLoginState(LoginState.ButtonsAnimation);
+    setTimeout(() => {
+      setLoginState(LoginState.Login);
+    }, 450);
+  }
 
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
@@ -130,45 +141,38 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     });
   };
 
-  const renderLogo = () => {
-    return (
-      <Grid container style={{ height: '100%' }} justify="center" alignItems="center">
-        <div>
-          <img alt="Logo" src="/images/choose-login/logo.png" className="logo-image" />
-          <Grid container justify="center">
-            <img alt="Logo" src="/images/choose-user/brillder-white-text.svg" className="logo-text-image" />
-          </Grid>
-        </div>
-      </Grid>
-    );
-  }
-
   const renderButtons = () => {
+    let className = 'button-box f-column';
+    if (loginState === LoginState.ButtonsAnimation) {
+      className += ' expanding';
+    }
     return (
-      <Grid container style={{ height: '100%' }} justify="center" alignItems="center">
-        <div className="button-box">
-          <button className="email-button svgOnHover" onClick={moveToLogin}>
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#email"} />
-            </svg>
-            <span>Register &nbsp;|&nbsp; Sign in with email</span>
-          </button>
-          <a className="google-button svgOnHover" href={googleLink}>
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#gmail"} />
-            </svg>
-            <span>Register &nbsp;|&nbsp; Sign in with Google</span>
-          </a>
-        </div>
-      </Grid>
+      <div className={className}>
+        <button className="email-button svgOnHover" onClick={moveToLogin}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#email"} />
+          </svg>
+          <span>Register &nbsp;|&nbsp; Sign in with email</span>
+        </button>
+        <a className="google-button svgOnHover" href={googleLink}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#gmail"} />
+          </svg>
+          <span>Register &nbsp;|&nbsp; Sign in with Google</span>
+        </a>
+      </div>
     );
   }
 
   const renderForm = () => {
+    let className = 'content-box';
+    if (loginState != LoginState.ButtonsAnimation) {
+        className += ' expanded';
+    }
     return (
-      <form onSubmit={handleSubmit} className="content-box">
+      <form onSubmit={handleSubmit} className={className}>
         <div className="input-block">
           <input
             type="email"
@@ -195,27 +199,15 @@ const LoginPage: React.FC<LoginProps> = (props) => {
             />
           </div>
         </div>
-        <div className="input-block button-box">
-          <Button
-            variant="contained"
-            color="primary"
-            className="sign-up-button"
-            type="button"
-            onClick={() => register(email, password)}
-          >
-            Sign up
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            className="sign-in-button"
-            type="submit"
-          >
-            Sign in
-          </Button>
+        <div className="input-block">
+          <div className="button-box">
+            <button type="button" className="sign-up-button" onClick={() => register(email, password)}>Sign up</button>
+            <button type="submit" className="sign-in-button">Sign in</button>
+          </div>
         </div>
       </form>
     );
+
   };
 
   return (
@@ -233,16 +225,18 @@ const LoginPage: React.FC<LoginProps> = (props) => {
             <div className="second-col"></div>
             <div className="third-col"></div>
           </Grid>
-          { isLogin ?
-            <Grid container direction="row" className="second-row">
-              <div className="first-col"><LoginLogo /></div>
-              <div className="second-col">{renderForm()}</div>
-            </Grid>
-            : <Grid container direction="row" className="second-row">
-              <div className="first-col">{renderLogo()}</div>
-              <div className="second-col">{renderButtons()}</div>
-            </Grid>
-          }
+          <Grid container direction="row" className="second-row">
+            <div className="first-col">
+              <LoginLogo />
+            </div>
+            <div className="second-col">
+              {loginState === LoginState.Login ?
+                renderForm()
+                :
+                renderButtons()
+              }
+            </div>
+          </Grid>
           <Grid container direction="row" className="third-row">
             <div className="first-col"></div>
             <div className="second-col">
@@ -252,126 +246,126 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           </Grid>
         </div>
       </Hidden>
-      {isLogin ? 
-      <Hidden only={["sm", "md", "lg", "xl"]}>
-        <div className="back-col">
-          <div className="back-box">
-            <svg
-              className="svg active back-button"
-              onClick={() => props.history.push(map.Login)}
-            >
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#arrow-down"} className="theme-orange" />
-            </svg>
-          </div>
-        </div>
-        <div className="first-col">
-          <div className="second-item">
-            <div className="logo-box">
+      {loginState !== LoginState.ChooseLogin ?
+        <Hidden only={["sm", "md", "lg", "xl"]}>
+          <div className="back-col">
+            <div className="back-box">
               <svg
-                className="svg active logo-image mobile"
+                className="svg active back-button"
                 onClick={() => props.history.push(map.Login)}
               >
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#login"} className="text-theme-orange" />
+                <use href={sprite + "#arrow-down"} className="theme-orange" />
               </svg>
             </div>
-            <form onSubmit={handleSubmit} className="content-box">
-              <div className="input-block">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="login-field"
-                  required
-                  placeholder="Email"
-                />
+          </div>
+          <div className="first-col">
+            <div className="second-item">
+              <div className="logo-box">
+                <svg
+                  className="svg active logo-image mobile"
+                  onClick={() => props.history.push(map.Login)}
+                >
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#login"} className="text-theme-orange" />
+                </svg>
               </div>
-              <div className="input-block">
-                <input
-                  type={passwordHidden ? "password" : "text"}
-                  value={password}
-                  className="login-field password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  placeholder="Password"
-                />
-                <div className="hide-password-icon-container">
-                  <VisibilityIcon
-                    className="hide-password-icon"
-                    onClick={() => setHidden(!passwordHidden)}
+              <form onSubmit={handleSubmit} className="content-box">
+                <div className="input-block">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="login-field"
+                    required
+                    placeholder="Email"
                   />
                 </div>
-              </div>
-              <div className="input-block button-box">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className="sign-up-button"
-                  type="button"
-                  onClick={() => register(email, password)}
-                >
-                  Sign up
+                <div className="input-block">
+                  <input
+                    type={passwordHidden ? "password" : "text"}
+                    value={password}
+                    className="login-field password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    placeholder="Password"
+                  />
+                  <div className="hide-password-icon-container">
+                    <VisibilityIcon
+                      className="hide-password-icon"
+                      onClick={() => setHidden(!passwordHidden)}
+                    />
+                  </div>
+                </div>
+                <div className="input-block button-box">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className="sign-up-button"
+                    type="button"
+                    onClick={() => register(email, password)}
+                  >
+                    Sign up
                 </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className="sign-in-button"
-                  type="submit"
-                >
-                  Sign in
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className="sign-in-button"
+                    type="submit"
+                  >
+                    Sign in
                 </Button>
-              </div>
-              <div className="mobile-policy-text">
-                <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
-              </div>
-            </form>
+                </div>
+                <div className="mobile-policy-text">
+                  <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-      </Hidden>
-      :
-      <Hidden only={['sm', 'md', 'lg', 'xl']}>
-        <div className="back-col">
-          <div className="back-box">
-            <svg className="svg active back-button" onClick={moveToLogin}>
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#arrow-down"} />
-            </svg>
-          </div>
-        </div>
-        <div className="first-col">
-          <div className="second-item">
-            <div className="logo-box">
-              <svg
-                className="svg active logo-image mobile"
-                onClick={moveToLogin}
-              >
+        </Hidden>
+        :
+        <Hidden only={['sm', 'md', 'lg', 'xl']}>
+          <div className="back-col">
+            <div className="back-box">
+              <svg className="svg active back-button" onClick={moveToLogin}>
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#logo"} className="text-theme-orange" />
+                <use href={sprite + "#arrow-down"} />
               </svg>
             </div>
-            <div className="mobile-button-box button-box">
-              <button className="email-button svgOnHover" onClick={moveToLogin}>
-                <svg className="svg active">
+          </div>
+          <div className="first-col">
+            <div className="second-item">
+              <div className="logo-box">
+                <svg
+                  className="svg active logo-image mobile"
+                  onClick={moveToLogin}
+                >
                   {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#email"} />
+                  <use href={sprite + "#logo"} className="text-theme-orange" />
                 </svg>
-                <span>Register &nbsp;|&nbsp; Sign in with email</span>
-              </button>
-              <a className="google-button svgOnHover" href={googleLink}>
-                <svg className="svg active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#gmail"} />
-                </svg>
-                <span>Register &nbsp;|&nbsp; Sign in with Google</span>
-              </a>
-              <div className="mobile-policy-text">
-                <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
+              </div>
+              <div className="mobile-button-box button-box">
+                <button className="email-button svgOnHover" onClick={moveToLogin}>
+                  <svg className="svg active">
+                    {/*eslint-disable-next-line*/}
+                    <use href={sprite + "#email"} />
+                  </svg>
+                  <span>Register &nbsp;|&nbsp; Sign in with email</span>
+                </button>
+                <a className="google-button svgOnHover" href={googleLink}>
+                  <svg className="svg active">
+                    {/*eslint-disable-next-line*/}
+                    <use href={sprite + "#gmail"} />
+                  </svg>
+                  <span>Register &nbsp;|&nbsp; Sign in with Google</span>
+                </a>
+                <div className="mobile-policy-text">
+                  <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Hidden>
+        </Hidden>
       }
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}

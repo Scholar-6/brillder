@@ -4,6 +4,7 @@
 
 .assigned-brick-description {
   position: relative;
+  padding-left: 1.6vw;
 
   @include tabletP {
     height: calc(#{$bricks-height / 6.35});
@@ -11,29 +12,31 @@
 
   padding-top: 1vh;
 
+  $base: calc(100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh);
+
   .total-view-count {
     position: absolute;
     @extend %flexCenter;
     top: 1.2vh;
-    width: 3vw;
-    font-size: 1.2vw;
+    width: calc(#{$base/6.35/1.5});
+    font-size: calc(#{$base/6.35/4});
     line-height: 1;
     color: var(--theme-dark-blue);
 
     svg {
       margin-left: 0.2vw;
-      height: 1.2vw;
-      width: 1.2vw;
+      height: calc(#{$base/6.35/5});
+      width: calc(#{$base/6.35/5});
     }
   }
 
   .left-brick-circle {
     position: absolute;
-    top: calc(1.2vh + 1.2vw + 1vh);
+    top: calc(1.2vh  + 1vh + calc(#{$base/6.35/6}));
 
     > div {
-      height: 1.4vw;
-      width: 3vw;
+      height: calc(#{$base/6.35/1.5/2.2});
+      width: calc(#{$base/6.35/1.5});
       border-radius: 0.3vw;
       background-color: var(--gray);
     }
@@ -51,8 +54,8 @@
 
   .short-brick-info {
     font-size: 0.8vw;
-    padding: 0 4.4vw;
-    width: 23.8vw;
+    padding: 0 calc(#{$base/6.35});
+    width: 31.6vw;
     padding-top: 0;
     .link-info {
       width: 100%;
@@ -62,6 +65,7 @@
 
     .link-description {
       width: 100% !important;
+      font-size: 1.2vw;
       margin-bottom: 0;
     }
     .link-info {
@@ -71,7 +75,7 @@
   }
   .assignment-second-part  {
     display: flex;
-    width: 32vw;
+    width: 24vw;
     font-size: 1.4vw;
     .vertical-brick {
       cursor: pointer;
@@ -85,7 +89,7 @@
 
       svg {
         margin: 10%;
-        width: 100%;
+        height: inherit;
         color: white;
       }
     }
@@ -114,6 +118,7 @@
     .stats-text {
       margin-left: 0.5vw;
       margin-right: 2vw;
+      font-size: 1.3vw;
     }
 
     .archive-button-container {

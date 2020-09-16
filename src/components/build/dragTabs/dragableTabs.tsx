@@ -73,6 +73,18 @@ const DragableTabs: React.FC<DragTabsProps> = ({
       comment.readBy.filter(user => user.id === props.user.id).length === 0 // which have not been read.
     ).length ?? 0
 
+  const getHasReplied = (questionId: number) => {
+    let replies = props.comments?.filter(comment => (comment.question?.id ?? -1) === questionId);
+    replies = replies?.sort((a, b) =>
+      new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
+    if(replies && replies.length > 0) { // if there is at least one comment here...
+      const mostRecentReply = replies[0]; // get the most recent one...
+      return mostRecentReply.author.id === props.user.id; // and check if it was written by the current user.
+    } else {
+      return false;
+    }
+  }
+
   const renderQuestionTab = (questions: Question[], question: Question, index: number, comlumns: number) => {
     let titleClassNames = "drag-tile-container";
     let cols = 2;
@@ -107,7 +119,9 @@ const DragableTabs: React.FC<DragTabsProps> = ({
             index={index}
             id={question.id}
             active={question.active}
+            isValid={isValid}
             getUnreadComments={getUnreadComments}
+            getHasReplied={getHasReplied}
             selectQuestion={props.selectQuestion}
             removeQuestion={props.removeQuestion}
           />

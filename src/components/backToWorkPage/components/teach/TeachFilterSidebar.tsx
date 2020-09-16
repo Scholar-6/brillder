@@ -12,12 +12,12 @@ enum TeachFilterFields {
 
 interface FilterSidebarProps {
   classrooms: TeachClassroom[];
+  activeClassroom: TeachClassroom | null;
   setActiveClassroom(id: number | null): void;
   filterChanged(filters: TeachFilters): void;
 }
 
 interface FilterSidebarState {
-  activeClassroom: TeachClassroom | null;
   filterExpanded: boolean;
   filters: TeachFilters;
   isClearFilter: boolean;
@@ -27,7 +27,6 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
   constructor(props: FilterSidebarProps) {
     super(props);
     this.state = {
-      activeClassroom: null,
       filterExpanded: true,
       isClearFilter: false,
       filters: {
@@ -63,27 +62,15 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     this.props.filterChanged(filters);
   }
 
-  collapseClasses() {
-    for (let classroom of this.props.classrooms) {
-      classroom.active = false;
-    }
-  }
-
   removeClassrooms() {
-    this.collapseClasses();
-    this.setState({ activeClassroom: null });
     this.props.setActiveClassroom(null);
   }
 
   toggleClassroom(activeClassroom: TeachClassroom) {
     let active = !activeClassroom.active;
-    this.collapseClasses();
-    activeClassroom.active = active;
     if (active === true) {
-      this.setState({ activeClassroom });
       this.props.setActiveClassroom(activeClassroom.id);
     } else {
-      this.setState({ activeClassroom: null });
       this.props.setActiveClassroom(null);
     }
   }
@@ -135,7 +122,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
         </div>
         <div className="filter-container indexes-box classrooms-filter">
           <div
-            className={"index-box " + (!this.state.activeClassroom ? "active" : "")}
+            className={"index-box " + (!this.props.activeClassroom ? "active" : "")}
             onClick={this.removeClassrooms.bind(this)}
           >
             View All Classes

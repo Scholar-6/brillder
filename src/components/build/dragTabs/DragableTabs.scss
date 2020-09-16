@@ -7,8 +7,6 @@ $distance: 2px;
 $tile-height: 100%;
 
 .drag-tabs {
-}
-.drag-tabs {
   display: inline-block;
   width: 100%;
   background: var(--theme-dark-blue) !important;
@@ -79,14 +77,24 @@ $tile-height: 100%;
       width: 1vw;
       height: 1vw;
       position: absolute;
-      left: 4px;
-      top: 3px;
+      left: 0.3vw;
+      top: 0.3vw;
       svg {
         .outer-circle {
-          fill: var(--theme-orange-alpha5);
+          color: var(--theme-orange-alpha5);
         }
         .inner-circle {
-          fill: var(--theme-orange);
+          color: var(--theme-orange);
+        } 
+      }
+      &.has-replied {
+        svg {
+          .outer-circle {
+            color: var(--theme-yellow-alpha5);
+          }
+          .inner-circle {
+            color: var(--theme-yellow);
+          }
         }
       }
     }
@@ -98,11 +106,11 @@ $tile-height: 100%;
       &.active {
         display: flex;
         position: absolute;
-        right: 0;
-        top: 0;
+        right: 0.3vw;
+        top: 0.3vw;
       }
       .svg {
-        stroke-width: 2;
+        stroke-width: 3;
       }
     }
   }

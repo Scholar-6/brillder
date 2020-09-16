@@ -236,7 +236,7 @@ class Sort extends CompComponent<SortProps, SortState> {
     const incrementCount = () => count++;
 
     return (
-      <div className="sort-play">
+      <div className="question-unique-play sort-play">
         {
           this.state.userCats.map((cat, i) => (
             <div key={i}>

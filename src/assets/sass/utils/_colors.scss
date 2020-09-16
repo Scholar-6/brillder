@@ -28,3 +28,30 @@
 .text-dark-gray {
   color: var(--dark-gray) !important;
 }
+
+.MuiButtonBase-root.MuiIconButton-root.MuiRadio-root.white {
+  color: white;
+  height: 3.5vw;
+  width: 3.5vw;
+  padding: 0 !important;
+
+  span {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: inherit;
+    width: inherit;
+  }
+
+  svg {
+    margin: 0 !important;
+    height: 3vw !important;
+    width: 3vw !important;
+  }
+
+  input {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: inherit !important;
+    width: inherit !important;
+  }
+}

@@ -155,7 +155,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   render() {
     const { list } = this.props.component;
     return (
-      <div className="choose-one-live">
+      <div className="question-unique-play choose-one-live">
         {list.map((choice, index) => this.renderChoice(choice, index))}
         <ReviewGlobalHint
           isReview={this.props.isReview}

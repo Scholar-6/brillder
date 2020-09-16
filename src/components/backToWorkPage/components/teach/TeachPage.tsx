@@ -10,20 +10,21 @@ import { TeachClassroom } from "model/classroom";
 import { getAllClassrooms } from "components/teach/service";
 import { User } from "model/user";
 import { Subject } from "model/brick";
-import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
+import { checkAdmin, checkTeacher } from "components/services/brickService";
 import { TeachFilters } from '../../model';
+import { Assignment } from "model/classroom";
 
 import Tab, { ActiveTab } from '../Tab';
 import BackPagePagination from '../BackPagePagination';
 import TeachFilterSidebar from './TeachFilterSidebar';
 import ClassroomList from './ClassroomList';
+import ExpandedAssignment from './ExpandedAssignment';
 
 interface TeachProps {
   searchString: string;
   isSearching: boolean;
 
   subjects: Subject[];
-  activeTab: ActiveTab;
   setTab(t: ActiveTab): void;
 
   // redux
@@ -35,10 +36,13 @@ interface TeachProps {
 interface TeachState {
   isTeach: boolean;
   isAdmin: boolean;
+  isArchive: boolean;
   pageSize: number;
+  assignmentPageSize: number;
   sortedIndex: number;
   classrooms: TeachClassroom[];
   activeClassroom: TeachClassroom | null;
+  activeAssignment: Assignment | null;
   totalCount: number;
 
   filters: TeachFilters;
@@ -55,6 +59,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
       isAdmin,
       isTeach,
 
+      isArchive: false,
+
       filters: {
         assigned: false,
         completed: false
@@ -62,10 +68,12 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
       classrooms: [],
       activeClassroom: null,
+      activeAssignment: null,
 
       totalCount: 0,
 
       pageSize: 6,
+      assignmentPageSize: 8,
       sortedIndex: 0,
     }
     getAllClassrooms().then((classrooms: any) => {
@@ -87,23 +95,41 @@ class TeachPage extends Component<TeachProps, TeachState> {
     }
   }
 
-  deactivateClassrooms() {
-    for (let classroom of this.state.classrooms) {
-      classroom.active = false;
-    }
-  }
-
   setActiveClassroom(id: number | null) {
-    this.deactivateClassrooms();
+    this.collapseClasses();
     const { classrooms } = this.state;
     let classroom = classrooms.find(c => c.id === id);
     if (classroom) {
       this.props.getClassStats(classroom.id);
       classroom.active = true;
-      this.setState({ sortedIndex: 0, classrooms, activeClassroom: classroom });
+      this.setState({ sortedIndex: 0, classrooms, activeClassroom: classroom, activeAssignment: null });
     } else {
-      this.setState({ sortedIndex: 0, activeClassroom: null });
+      this.setState({ sortedIndex: 0, activeClassroom: null, activeAssignment: null });
     }
+  }
+
+  setActiveAssignment(classroomId: number, assignmentId: number) {
+    this.collapseClasses();
+    const classroom = this.state.classrooms.find(c => c.id === classroomId);
+    if (classroom) {
+      this.props.getClassStats(classroom.id);
+      const assignment = classroom.assignments.find(c => c.id === assignmentId);
+      if (assignment) {
+        classroom.active = true;
+        this.setState({ sortedIndex: 0, activeClassroom: classroom, activeAssignment: assignment });
+      }
+    }    
+  }
+
+  collapseClasses() {
+    for (let classroom of this.state.classrooms) {
+      classroom.active = false;
+    }
+  }
+
+  unselectAssignment() {
+    this.collapseClasses();
+    this.setState({ sortedIndex: 0, activeClassroom: null, activeAssignment: null });
   }
 
   teachFilterUpdated(filters: TeachFilters) {
@@ -111,18 +137,18 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   //#region pagination
-  moveNext() {
+  moveNext(pageSize: number) {
     const index = this.state.sortedIndex;
     const itemsCount = this.getTotalCount();
-    if (index + this.state.pageSize < itemsCount) {
-      this.setState({ ...this.state, sortedIndex: index + this.state.pageSize });
+    if (index + pageSize < itemsCount) {
+      this.setState({ ...this.state, sortedIndex: index + pageSize });
     }
   }
 
-  moveBack() {
+  moveBack(pageSize: number) {
     let index = this.state.sortedIndex;
-    if (index >= this.state.pageSize) {
-      this.setState({ ...this.state, sortedIndex: index - this.state.pageSize });
+    if (index >= pageSize) {
+      this.setState({ ...this.state, sortedIndex: index - pageSize });
     }
   }
 
@@ -135,10 +161,35 @@ class TeachPage extends Component<TeachProps, TeachState> {
     return itemsCount;
   }
 
+  renderArchiveButton() {
+    let className = this.state.isArchive ? "active" : "";
+    return <div className={className} onClick={() => this.setState({ isArchive: true })}>ARCHIVE</div>;
+  }
+
+  renderLiveBricksButton() {
+    let className = this.state.isArchive ? "" : "active";
+    return <div className={className} onClick={() => this.setState({ isArchive: false })}>LIVE BRICKS</div>;
+  }
+
+  renderAssignmentPagination = (classroom: TeachClassroom) => {
+    const {assignmentPageSize} = this.state;
+    const itemsCount = classroom.students.length;
+    return <BackPagePagination
+      sortedIndex={this.state.sortedIndex}
+      pageSize={this.state.assignmentPageSize}
+      bricksLength={itemsCount}
+      moveNext={() => this.moveNext(assignmentPageSize)}
+      moveBack={() => this.moveBack(assignmentPageSize)}
+    />
+  }
+
   renderTeachPagination = () => {
     let itemsCount = 0;
-    if (this.state.activeClassroom) {
-      itemsCount = this.state.activeClassroom.assignments.length;
+    const {pageSize, activeClassroom} = this.state;
+    if (activeClassroom && this.state.activeAssignment) {
+      return this.renderAssignmentPagination(activeClassroom);
+    } else if (activeClassroom) {
+      itemsCount = activeClassroom.assignments.length;
     } else {
       itemsCount = this.getTotalCount();
     }
@@ -146,8 +197,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
       sortedIndex={this.state.sortedIndex}
       pageSize={this.state.pageSize}
       bricksLength={itemsCount}
-      moveNext={this.moveNext.bind(this)}
-      moveBack={this.moveBack.bind(this)}
+      moveNext={() => this.moveNext(pageSize)}
+      moveBack={() => this.moveBack(pageSize)}
     />
   }
   //#endregion
@@ -157,24 +208,40 @@ class TeachPage extends Component<TeachProps, TeachState> {
       <Grid container direction="row" className="sorted-row">
         <TeachFilterSidebar
           classrooms={this.state.classrooms}
+          activeClassroom={this.state.activeClassroom}
           setActiveClassroom={this.setActiveClassroom.bind(this)}
           filterChanged={this.teachFilterUpdated.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">
           <Tab
             isTeach={this.state.isTeach || this.state.isAdmin}
-            activeTab={this.props.activeTab}
+            activeTab={ActiveTab.Teach}
             setTab={t => this.props.setTab(t)}
           />
           <div className="tab-content">
-            <ClassroomList
-              subjects={this.props.subjects}
-              expand={this.setActiveClassroom.bind(this)}
-              startIndex={this.state.sortedIndex}
-              activeClassroom={this.state.activeClassroom}
-              pageSize={this.state.pageSize}
-              classrooms={this.state.classrooms}
-            />
+            <div className="classroom-list-buttons">
+              {this.renderLiveBricksButton()}
+              {this.renderArchiveButton()}
+            </div>
+            {this.state.activeAssignment && this.state.activeClassroom ?
+              <ExpandedAssignment
+                classroom={this.state.activeClassroom}
+                assignment={this.state.activeAssignment}
+                subjects={this.props.subjects}
+                startIndex={this.state.sortedIndex}
+                pageSize={this.state.assignmentPageSize}
+                minimize={() => this.unselectAssignment()}
+              />
+              :
+              <ClassroomList
+                subjects={this.props.subjects}
+                expand={this.setActiveAssignment.bind(this)}
+                startIndex={this.state.sortedIndex}
+                classrooms={this.state.classrooms}
+                activeClassroom={this.state.activeClassroom}
+                pageSize={this.state.pageSize}
+              />
+            }
             {this.renderTeachPagination()}
           </div>
         </Grid>

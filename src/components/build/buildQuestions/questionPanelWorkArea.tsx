@@ -18,6 +18,7 @@ import { Comment } from 'model/comments';
 import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { User } from 'model/user';
+import user from 'redux/reducers/user';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -103,11 +104,29 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     ).length ?? 0
   }
 
+  const getNumberOfReplies = () => {
+    const replies = props.comments?.filter(comment => (comment.question?.id ?? -1) === question.id)
+      .sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
+    console.log(replies);
+    if (replies && replies.length > 0) {
+      let currentIndex = 0;
+      while (currentIndex < replies.length
+        && replies[currentIndex].author.id === props.currentUser.id) {
+        console.log(replies[currentIndex]);
+        currentIndex += 1;
+      }
+      return currentIndex;
+    } else {
+      return 0;
+    }
+  }
+
   const renderCommentButton = () => {
     let count = getCommentCount();
+    let numberOfReplies = getNumberOfReplies();
     if (count >= 1) {
       return (
-        <div className="comment-button active" onClick={() => setCommentsShown(!commentsShown)}>
+        <div className="comment-button active animated pulse iteration-2 duration-1s" onClick={() => setCommentsShown(!commentsShown)}>
           <div className="comments-icon svgOnHover">
             <svg className="svg w60 h60 active">
               {/*eslint-disable-next-line*/}
@@ -115,25 +134,29 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             </svg>
           </div>
           <div className="comments-count">
-            {getCommentCount()}
+            {count}
           </div>
         </div>
       );
     }
     return (
-      <div className="comment-button" onClick={() => setCommentsShown(!commentsShown)}>
+      <div className={"comment-button" + (numberOfReplies > 0 ? " has-replied" : "")} onClick={() => setCommentsShown(!commentsShown)}>
         <div className="comments-icon svgOnHover">
           <svg className="svg w60 h60 active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#message-square"} />
           </svg>
         </div>
-        <div className="comments-plus svgOnHover">
-          <svg className="svg w60 h60 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#plus"} />
-          </svg>
-        </div>
+        {numberOfReplies > 0 ?
+          <div className="comments-count">
+            {numberOfReplies}
+          </div> :
+          <div className="comments-plus svgOnHover">
+            <svg className="svg w60 h60 active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#plus"} />
+            </svg>
+          </div>}
       </div>
     );
   }

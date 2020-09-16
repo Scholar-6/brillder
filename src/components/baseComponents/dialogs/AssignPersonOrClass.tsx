@@ -12,6 +12,7 @@ import actions from 'redux/actions/requestFailed';
 import { UserBase } from 'model/user';
 import { Classroom } from 'model/classroom';
 import { Brick } from 'model/brick';
+import { getClassrooms, getStudents } from 'components/services/axios/classroom';
 
 interface AssignPersonOrClassProps {
   brick: Brick;
@@ -28,20 +29,17 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
 
   useEffect(() => {
-    getStudents();
+    getAllStudents();
     getClasses();
   }, [value]);
 
-  const getStudents = async () => {
-    const students = await axios.get(
-      `${process.env.REACT_APP_BACKEND_HOST}/classrooms/students`,
-      { withCredentials: true }
-    ).then((data: any) => {
-      return data.data;
-    }).catch(() => {
+  const getAllStudents = async () => {
+    let students = await getStudents();
+    if (!students) {
       props.requestFailed('Can`t get students');
-      return [];
-    });
+      students = [];
+    }
+
     for (let student of students) {
       student.isStudent = true;
     }
@@ -49,15 +47,17 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   }
 
   const getClasses = async () => {
-    const classrooms = await axios.get(
-      `${process.env.REACT_APP_BACKEND_HOST}/classrooms`,
-      { withCredentials: true }
-    ).then((data: any) => {
-      return data.data;
-    }).catch(() => {
+    let classrooms = await getClassrooms();
+    if (!classrooms) {
       props.requestFailed('Can`t get classrooms');
-      return [];
-    });
+      classrooms = [];
+    }
+
+    classrooms = classrooms.filter(s => s.students.length > 0);
+
+    if (!classrooms) {
+      classrooms = [];
+    }
 
     for (let classroom of classrooms) {
       classroom.isClass = true;

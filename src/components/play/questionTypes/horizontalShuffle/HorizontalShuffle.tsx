@@ -154,7 +154,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
 
   render() {
     return (
-      <div className="horizontal-shuffle-play">
+      <div className="question-unique-play horizontal-shuffle-play">
         <p className="help-text">Drag to rearrange.</p>
         <ReactSortable
           list={this.state.userAnswers}
