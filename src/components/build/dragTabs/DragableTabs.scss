@@ -85,8 +85,10 @@ $tile-height: 100%;
         }
         .inner-circle {
           color: var(--theme-orange);
-        }
-        &.has-replied {
+        } 
+      }
+      &.has-replied {
+        svg {
           .outer-circle {
             color: var(--theme-yellow-alpha5);
           }
