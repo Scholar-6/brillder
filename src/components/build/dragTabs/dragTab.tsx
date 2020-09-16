@@ -26,7 +26,7 @@ const DragTab: React.FC<DragTabProps> = ({
   }
 
   const renderRemoveIcon = () => {
-    if (!active) {return;}
+    if (!active) { return; }
     let color = 'text-theme-dark-blue'
     if (!isValid) {
       color = 'text-white';
@@ -43,7 +43,7 @@ const DragTab: React.FC<DragTabProps> = ({
   let tabClass = 'tab-number';
   if (!isValid && active) {
     tabClass += ' text-white';
-  } 
+  }
 
   return (
     <div className="draggable-tab" onClick={activateTab}>
@@ -52,12 +52,12 @@ const DragTab: React.FC<DragTabProps> = ({
       </div>
       {
         (getUnreadComments(id) > 0 || getHasReplied(id)) &&
-          <div className={"unread-indicator svgOnHover active" + (getHasReplied(id) ? " has-replied" : "")}>
-            <svg className="svg w100 h100 active" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="12" className="outer-circle" stroke="none" />
-              <circle cx="12" cy="12" r="6" className="inner-circle" stroke="none" />
-            </svg>
-          </div>
+        <div className={"unread-indicator svgOnHover active" + (getHasReplied(id) ? " has-replied" : "")}>
+          <svg className="svg w100 h100 active" viewBox="0 0 24 24" stroke="none" fill="currentColor">
+            <circle cx="12" cy="12" r="12" className="outer-circle" />
+            <circle cx="12" cy="12" r="6" className="inner-circle" />
+          </svg>
+        </div>
       }
       {renderRemoveIcon()}
     </div>
