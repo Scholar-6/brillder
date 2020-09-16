@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
+import queryString from 'query-string';
 
 import "./FinalStep.scss";
 import sprite from "assets/img/icons-sprite.svg";
@@ -18,39 +19,51 @@ interface FinalStepProps {
   status: PlayStatus;
   brick: Brick;
   history: any;
+  location: any;
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
   status,
   brick,
   history,
+  location
 }) => {
   const [shareOpen, setShare] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
 
+  let isPersonal = false;
+  const values = queryString.parse(location.search);
+  if (values.isPersonal) {
+    isPersonal = true;
+  }
+
   const link = `/play/brick/${brick.id}/intro`;
 
-  const renderFooter = () => {
+  const renderInviteColumn = () => {
     return (
-      <div className="action-footer" style={{bottom: '10.5vh'}}>
-        <div></div>
-        <div className="direction-info">
-          Exit
-        </div>
-        <div style={{marginLeft: 0, marginRight: '1.7vw'}}>
-          <button
-            type="button"
-            className="play-preview svgOnHover roller-red"
-            onClick={() => history.push('/play/dashboard')}
-          >
-            <svg className="svg w80 h80 active m-l-02">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#roller-home"} />
-            </svg>
-          </button>
-        </div>
-      </div>
+      <InviteColumn
+       firstLabel="internal users to play"
+        secondLabel="or edit this brick"
+        onClick={()=>{}}
+      />
+    );
+  }
+
+  const renderActionColumns = () => {
+    if (isPersonal) {
+      return (
+        <Grid className="share-row" container direction="row" justify="center">
+          <ShareColumn onClick={() => setShare(true)} />
+          {renderInviteColumn()}
+        </Grid>
+      );
+    }
+    return (
+      <Grid className="share-row" container direction="row" justify="center">
+        {renderInviteColumn()}
+        <ShareColumn onClick={() => setShare(true)} />
+      </Grid>
     );
   }
 
@@ -72,14 +85,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                   </div>
                   <h2>Final step?</h2>
                   <p>Well done for completing “{brick.title}”!</p>
-                  <Grid className="share-row" container direction="row" justify="center">
-                    <ShareColumn onClick={() => setShare(true)} />
-                    <InviteColumn
-                      firstLabel="internal users to play"
-                      secondLabel="or edit this brick"
-                      onClick={()=>{}}
-                    />
-                  </Grid>
+                  {renderActionColumns()}
                 </div>
               </div>
             </Grid>

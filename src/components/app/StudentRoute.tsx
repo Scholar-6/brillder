@@ -55,7 +55,7 @@ const mapState = (state: ReduxCombinedState) => ({
   isAuthenticated: state.auth.isAuthenticated,
   isRedirectedToProfile: state.auth.isRedirectedToProfile,
   user: state.user.user,
-})
+});
 
 const mapDispatch = (dispatch: any) => ({
   isAuthorized: () => dispatch(actions.isAuthorized()),

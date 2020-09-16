@@ -5,6 +5,14 @@
 .build-complete-page {
   color: var(--theme-dark-blue) !important;
 
+  .MuiRadio-root {
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .MuiIconButton-root.MuiRadio-colorSecondary.Mui-checked {
+    color: var(--theme-dark-blue);
+  }
+
   .introduction-page {
     padding: 0 !important;
   }
