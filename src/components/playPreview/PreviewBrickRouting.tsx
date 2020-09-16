@@ -14,7 +14,6 @@ import {
 } from 'model/question';
 import { setBrillderTitle } from 'components/services/titleService';
 import { prefillAttempts } from 'components/services/PlayService';
-import { canEditBrick, checkEditor } from 'components/services/brickService';
 import { ReduxCombinedState } from 'redux/reducers';
 import { maximizeZendeskButton, minimizeZendeskButton } from 'components/services/zendesk';
 import { User } from 'model/user';
@@ -278,7 +277,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               <BuildCompletePage brick={brick} history={history} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/finalStep">
-              <FinalStep status={status} brick={brick} history={history} location={location} />
+              <FinalStep user={props.user} status={status} brick={brick} history={history} location={location} />
             </Route>
           </Switch>
         </div>
