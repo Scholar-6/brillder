@@ -131,11 +131,11 @@
           &.color2 {
             .round-button,
             .right-index {
-              background: var(--yellow);
+              background: var(--theme-yellow);
             }
 
             svg {
-              color: var(--yellow);
+              color: var(--theme-yellow);
             }
           }
 
@@ -551,11 +551,11 @@
           &.color2 {
             .round-button,
             .right-index {
-              background: var(--yellow) !important;
+              background: var(--theme-yellow) !important;
             }
 
             svg {
-              color: var(--yellow);
+              color: var(--theme-yellow);
             }
           }
 

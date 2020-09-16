@@ -3,10 +3,6 @@ import { AssignmentBrick, AssignmentBrickStatus } from 'model/assignment';
 import { ThreeColumns, ThreeAssignmentColumns, Filters, ThreeColumnNames, AssignmentBrickData } from './model';
 import {filterByStatus, filterByPrivate, filterByCore } from './service';
 
-export const filterAssignmentByStatus = (bricks: AssignmentBrick[], status: AssignmentBrickStatus) => {
-  return bricks.filter(b => b.status === status);
-}
-
 const prepareBrickData = (data: any[], brick: Brick, index: number, key: number, row: number) => {
   data.push({ brick: brick, key, index, row });
 }
@@ -31,20 +27,10 @@ const setColumnBricksByStatus = (
   res[name] = { rawBricks: bs, finalBricks: bs };
 }
 
-const setColumnAssignmentByStatus = (
-  res: ThreeAssignmentColumns,
-  name: ThreeColumnNames,
-  bricks: AssignmentBrick[],
-  status: AssignmentBrickStatus
-) => {
-  let bs = filterAssignmentByStatus(bricks, status);
-  res[name] = { rawAssignments: bs, finalAssignments: bs };
-}
-
 export const getLongestColumn = (threeColumns: ThreeColumns) => {
-  let draftLength = threeColumns.red.finalBricks.length;
-  let reviewLength = threeColumns.yellow.finalBricks.length;
-  let publishLenght = threeColumns.green.finalBricks.length;
+  const draftLength = threeColumns.red.finalBricks.length;
+  const reviewLength = threeColumns.yellow.finalBricks.length;
+  const publishLenght = threeColumns.green.finalBricks.length;
   return Math.max(draftLength, reviewLength, publishLenght);
 }
 
@@ -53,16 +39,6 @@ export const getThreeColumnName = (status: BrickStatus) => {
   if (status === BrickStatus.Publish) {
     name = ThreeColumnNames.Green;
   } else if (status === BrickStatus.Review) {
-    name = ThreeColumnNames.Yellow;
-  }
-  return name;
-}
-
-export const getPlayThreeColumnName = (status: AssignmentBrickStatus) => {
-  let name = ThreeColumnNames.Red;
-  if (status === AssignmentBrickStatus.CheckedByTeacher) {
-    name = ThreeColumnNames.Green;
-  } else if (status === AssignmentBrickStatus.SubmitedToTeacher) {
     name = ThreeColumnNames.Yellow;
   }
   return name;
@@ -79,17 +55,6 @@ export const expandThreeColumnBrick = (threeColumns: ThreeColumns, name: ThreeCo
   }
 }
 
-export const getPlayThreeColumnBrick = (threeColumns: ThreeAssignmentColumns, name: ThreeColumnNames, key: number) => {
-  return threeColumns[name].finalAssignments[key];
-}
-
-export const expandPlayThreeColumnBrick = (threeColumns: ThreeAssignmentColumns, name: ThreeColumnNames, key: number) => {
-  let assignment = getPlayThreeColumnBrick(threeColumns, name, key);
-  if (assignment && !assignment.expandFinished) {
-    assignment.brick.expanded = true;
-  }
-}
-
 export const prepareTreeRows = (bricks: Brick[], filters: Filters, userId: number, generalSubjectId: number) => {
   let threeColumns = {} as ThreeColumns;
   if (filters) {
@@ -97,14 +62,6 @@ export const prepareTreeRows = (bricks: Brick[], filters: Filters, userId: numbe
     setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Yellow, bricks, BrickStatus.Review);
     setColumnBricksByStatus(threeColumns, filters, userId, generalSubjectId, ThreeColumnNames.Green, bricks, BrickStatus.Publish);
   }
-  return threeColumns;
-}
-
-export const prepareThreeAssignmentRows = (assignments: AssignmentBrick[]) => {
-  let threeColumns = {} as ThreeAssignmentColumns;
-  setColumnAssignmentByStatus(threeColumns, ThreeColumnNames.Red, assignments, AssignmentBrickStatus.ToBeCompleted);
-  setColumnAssignmentByStatus(threeColumns, ThreeColumnNames.Yellow, assignments, AssignmentBrickStatus.SubmitedToTeacher);
-  setColumnAssignmentByStatus(threeColumns, ThreeColumnNames.Green, assignments, AssignmentBrickStatus.CheckedByTeacher);
   return threeColumns;
 }
 

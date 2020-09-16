@@ -50,6 +50,7 @@ export interface Filters {
 }
 
 export interface PlayFilters {
+  viewAll: boolean;
   completed: boolean;
   submitted: boolean;
   checked: boolean;
@@ -67,4 +68,5 @@ export interface AssignmentBrickData {
   row: number;
   assignmentId: number;
   status: AssignmentBrickStatus;
+  isInvitation: boolean;
 }

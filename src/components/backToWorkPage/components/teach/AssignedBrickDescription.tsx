@@ -1,28 +1,33 @@
 import React, { Component } from "react";
 
-import { getFormattedDate } from "components/services/brickService";
 import './AssignedBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
 import { TeachClassroom, Assignment } from "model/classroom";
 import { Subject } from "model/brick";
+import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
   classroom: TeachClassroom;
   assignment: Assignment;
-  index?: number;
-  isMobile?: boolean;
   isExpanded?: boolean;
-  onClick?(): void;
   move?(): void;
-  expand(): void;
+  expand?(classroomId: number, assignmentId: number): void;
+  minimize?(): void;
 }
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
-  renderVertical(color: string) {
+  renderVertical(assignmentId: number, color: string) {
     return (
-      <div className="vertical-brick" style={{ background: color }}>
+      <div
+        className="vertical-brick" style={{ background: color }}
+        onClick={() => {
+          if (this.props.expand) {
+            return this.props.expand(this.props.classroom.id, assignmentId)
+          }
+        }}
+      >
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#maximize"} />
@@ -31,32 +36,27 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     );
   }
 
-  renderHorizontal(color: string) {
+  renderHorizontal(assignmentId: number, color: string) {
+    const {isExpanded} = this.props;
     return (
       <div className="left-brick-circle">
-        <div className="horizontal-brick" style={{ background: color }}>
-          <svg className="svg active">
+        <div
+          className="horizontal-brick" style={{ background: color }}
+          onClick={() => {
+            if (isExpanded && this.props.minimize) {
+              this.props.minimize();
+            } else if (this.props.expand) {
+              this.props.expand(this.props.classroom.id, assignmentId);
+            }
+          }}
+        >
+          <svg className="svg active text-white">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#maximize"} />
+            <use href={sprite + (isExpanded ? "#minimize" : "#maximize")} />
           </svg>
         </div>
       </div>
     );
-  }
-
-  renderPlayButton() {
-    return (
-      <div className="play-button-link svgOnHover" onClick={() => this.props.move ? this.props.move() : {}}>
-        <svg className="svg w100 h100 svg-default">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#play-thin"} className="text-gray" />
-        </svg>
-        <svg className="svg w100 h100 colored">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#play-thick"} className="text-gray" />
-        </svg>
-      </div>
-    )
   }
 
   render() {
@@ -67,16 +67,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
       color = "#B0B0AD";
     }
 
-    let { assignment, isMobile, isExpanded, classroom, index } = this.props;
+    let { assignment, classroom } = this.props;
     const { brick, byStatus } = assignment;
     let className = "assigned-brick-description";
-
-    if (isMobile && isExpanded) {
-      className += " mobile-expanded";
-    }
-    if (index !== undefined && index >= 0) {
-      className += " mobile-short-" + index;
-    }
 
     let second = 0;
     let average = 0;
@@ -86,14 +79,14 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     }
 
     return (
-      <div className={className} onClick={() => this.props.onClick ? this.props.onClick() : {}}>
+      <div className={className}>
         <div className="total-view-count">
           {classroom.students.length}
           <svg className="svg active">
             <use href={sprite + "#users"} className="text-theme-dark-blue" />
           </svg>
         </div>
-        {this.renderHorizontal(color)}
+        {this.renderHorizontal(assignment.id, color)}
         <div style={{ display: 'flex' }}>
           <div className="short-brick-info long">
             <div className="link-description">
@@ -107,7 +100,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             </div>
           </div>
           <div className="assignment-second-part">
-            {this.renderVertical(color)}
+            {this.renderVertical(assignment.id, color)}
             <div className="users-complete-count">
               {second}
               <svg className="svg active">
@@ -122,7 +115,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <div className="stats-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#bar-chart-2"} />
+                <use href={sprite + (this.props.isExpanded ? "#trending-up" : "#bar-chart-2")} />
               </svg>
             </div>
             <div className="stats-text">Stats</div>
@@ -134,7 +127,6 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             </div>
           </div>
         </div>
-        {isExpanded ? this.renderPlayButton() : ""}
       </div>
     );
   }

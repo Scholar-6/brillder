@@ -16,13 +16,13 @@ const GraphLive: React.FC<ImageProps> = ({ component }) => {
   useEffect(() => {
     const state = component.graphState;
     const settings = component.graphSettings;
-    console.log(graphRef);
     if(graphRef && graphRef.current) {
       if(calculator) {
         calculator.destroy();
       }
       var elt = graphRef.current;
       const desmos = Desmos.GraphingCalculator(elt, {
+        fontSize: Desmos.FontSizes.VERY_SMALL,
         expressions: settings?.showSidebar ?? false,
         settingsMenu: settings?.showSettings ?? false,
         lockViewport: !(settings?.allowPanning ?? false),

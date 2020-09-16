@@ -12,17 +12,17 @@ enum PlayFilterFields {
 }
 
 interface FilterSidebarProps {
+  filters: PlayFilters;
+  activeClassroom: TeachClassroom | null;
   classrooms: TeachClassroom[];
-  rawAssignments: AssignmentBrick[];
+  assignments: AssignmentBrick[];
   filterChanged(filters: PlayFilters): void;
-  setActiveClassroom(id: number | null): void;
+  setActiveClassroom(classroom: TeachClassroom | null): void;
 }
 
 interface FilterSidebarState {
-  activeClassroom: TeachClassroom | null;
   filterExpanded: boolean;
   isClearFilter: boolean;
-  filters: PlayFilters;
 }
 
 class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
@@ -31,12 +31,6 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
     this.state = {
       filterExpanded: true,
       isClearFilter: false,
-      activeClassroom: null,
-      filters: {
-        completed: false,
-        submitted: false,
-        checked: false
-      }
     }
   }
 
@@ -45,14 +39,15 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
 
   filterClear(filters: PlayFilters) {
     if (filters.checked || filters.completed || filters.submitted) {
-      this.setState({ isClearFilter: true, filters });
+      this.setState({ isClearFilter: true });
     } else {
-      this.setState({ isClearFilter: false, filters });
+      this.setState({ isClearFilter: false });
     }
   }
 
   clearStatus() {
-    const { filters } = this.state;
+    const { filters } = this.props;
+    filters.viewAll = true;
     filters.checked = false;
     filters.completed = false;
     filters.submitted = false;
@@ -61,20 +56,15 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
   }
 
   toggleFilter(filter: PlayFilterFields) {
-    const { filters } = this.state;
+    const { filters } = this.props;
+    filters.viewAll = false;
     filters[filter] = !filters[filter];
+    // if any selected then view all
+    if (!filters.completed && !filters.submitted && !filters.checked) {
+      filters.viewAll = true;
+    }
     this.filterClear(filters);
     this.props.filterChanged(filters);
-  }
-
-  activateClassroom(activeClassroom: TeachClassroom) {
-    const { classrooms } = this.props;
-    for (let classroom of classrooms) {
-      classroom.active = false;
-    }
-    activeClassroom.active = true;
-    this.setState({ activeClassroom });
-    this.props.setActiveClassroom(activeClassroom.id);
   }
 
   removeClassrooms() {
@@ -82,14 +72,13 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
     for (let classroom of classrooms) {
       classroom.active = false;
     }
-    this.setState({ activeClassroom: null });
     this.props.setActiveClassroom(null);
   }
 
   renderClassroom(c: TeachClassroom, i: number) {
     return (
       <div key={i} className="classes-box">
-        <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.activateClassroom(c)}>
+        <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.props.setActiveClassroom(c)}>
           <span className="classroom-name">{c.name}</span>
           <div className="right-index">
             <div className="white-box">{0}</div>
@@ -107,7 +96,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
         </div>
         <div className="filter-container indexes-box classrooms-filter">
           <div
-            className={"index-box " + (!this.state.activeClassroom ? "active" : "")}
+            className={"index-box " + (!this.props.activeClassroom ? "active" : "")}
             onClick={this.removeClassrooms.bind(this)}>
             View All
             <div className="right-index">
@@ -121,13 +110,13 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
   };
 
   renderSortAndFilterBox = () => {
-    const { filters } = this.state;
+    const { filters } = this.props;
 
     let toBeCompletedCount = 0;
     let submittedCount = 0;
     let checkedCount = 0;
 
-    for (const assignment of this.props.rawAssignments) {
+    for (const assignment of this.props.assignments) {
       if (assignment.status === AssignmentBrickStatus.ToBeCompleted) {
         toBeCompletedCount++;
       } else if (assignment.status === AssignmentBrickStatus.SubmitedToTeacher) {

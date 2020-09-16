@@ -7,8 +7,12 @@ import sprite from "assets/img/icons-sprite.svg";
 
 import { User } from "model/user";
 import { MUser } from "../interface";
+import { deleteClassroom } from 'components/services/axios/classroom';
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
+import {
+  getAllClassrooms, unassignStudent, getAllStudents, createClass, assignStudentsToClassroom, ClassroomApi
+} from '../service';
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 
@@ -17,10 +21,10 @@ import StudentTable from './components/StudentTable';
 import UsersPagination from './components/UsersPagination';
 import AssignClassDialog from './components/AssignClassDialog';
 import CreateClassDialog from './components/CreateClassDialog';
+import DeleteClassDialog from './components/DeleteClassDialog';
 import UnassignStudentDialog from './components/UnassignStudentDialog';
 import RoleDescription from 'components/baseComponents/RoleDescription';
 
-import { getAllClassrooms, unassignStudent, getAllStudents, createClass, assignStudentsToClassroom, ClassroomApi } from '../service';
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 const connector = connect(mapState);
@@ -50,10 +54,14 @@ interface UsersListState {
 
   sortBy: UserSortBy;
   isAscending: boolean;
+  
   createClassOpen: boolean;
   assignClassOpen: boolean;
+  deleteClassOpen: boolean;
+  
   selectedUsers: MUser[];
   activeClassroom: ClassroomApi | null;
+  classroomToRemove: ClassroomApi | null;
 
   unassignStudent: MUser | null;
   unassignOpen: boolean;
@@ -81,6 +89,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
 
       createClassOpen: false,
       assignClassOpen: false,
+      deleteClassOpen: false,
+
+      classroomToRemove: null,
       activeClassroom: null,
       selectedUsers: [],
 
@@ -102,15 +113,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.getClassrooms();
   }
 
-  getClassrooms() {
-    getAllClassrooms().then(classrooms => {
-      if (classrooms) {
-        this.setState({ classrooms });
-      } else {
-        // geting classrooms failed
-        console.log('geting classrooms failed');
-      }
-    });
+  async getClassrooms() {
+    const classrooms = await getAllClassrooms();
+    if (classrooms) {
+      this.setState({ classrooms });
+    } else {
+      console.log('geting classrooms failed');
+    }
   }
 
   createClass(name: string) {
@@ -195,12 +204,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     let searchUsers = [];
     const { searchString } = this.state;
     for (let student of students) {
-      let res = student.firstName.toLowerCase().search(searchString.toLowerCase());
+      let res = student.firstName?.toLowerCase().search(searchString.toLowerCase());
       if (res >= 0) {
         searchUsers.push(student)
         continue;
       }
-      res = student.lastName.toLocaleLowerCase().search(searchString.toLowerCase());
+      res = student.lastName?.toLocaleLowerCase().search(searchString.toLowerCase());
       if (res >= 0) {
         searchUsers.push(student);
         continue;
@@ -230,6 +239,24 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
     this.unselectAllStudents();
     activeClassroom.isActive = true;
     this.setState({ activeClassroom, page: 0, selectedUsers: [], isSearching: false });
+  }
+
+  async deleteClass() {
+    const {classroomToRemove} = this.state;
+    if (!classroomToRemove) {
+      return this.setState({ deleteClassOpen: false, activeClassroom: null, classroomToRemove: null, page: 0 });
+    }
+    let deleted = await deleteClassroom(classroomToRemove.id);
+    if (deleted) {
+      const {classrooms} = this.state;
+      let index = classrooms.indexOf(classroomToRemove);
+      classrooms.splice(index, 1);
+      this.setState({ classrooms, activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, page: 0 });
+    }
+  }
+
+  onDeleteClass(c: ClassroomApi) {
+    this.setState({ deleteClassOpen: true, classroomToRemove: c});
   }
 
   unselectAllStudents() {
@@ -302,6 +329,10 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#users"} />
+                  </svg>
+                  <svg className="svg active text-theme-orange" onClick={() => this.onDeleteClass(c)}>
+                    {/*eslint-disable-next-line*/}
+                    <use href={sprite + "#trash-outline"} />
                   </svg>
                 </div>
               </div>
@@ -455,6 +486,11 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           classrooms={this.state.classrooms}
           isOpen={this.state.assignClassOpen}
           submit={classroomId => this.assignSelectedStudents(classroomId)}
+          close={() => { this.setState({ assignClassOpen: false }) }}
+        />
+        <DeleteClassDialog
+          isOpen={this.state.deleteClassOpen}
+          submit={() => this.deleteClass()}
           close={() => { this.setState({ assignClassOpen: false }) }}
         />
         <CreateClassDialog

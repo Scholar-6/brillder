@@ -1,4 +1,4 @@
-import { Brick } from 'model/brick';
+import { Brick, BrickStatus } from 'model/brick';
 
 import {get, post} from './index';
 
@@ -41,3 +41,16 @@ export const searchBricks = async (searchString: string = '') => {
     return null;
   }
 }
+
+export const publishBrick = async (brickId: number) => {
+  try {
+    const brick = await post<Brick>(`/brick/publish/${brickId}`, {});
+    if (brick && brick.status === BrickStatus.Publish) {
+      return true;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+ 

@@ -38,3 +38,7 @@ export interface UserProfile extends UserBase {
   password: string;
   roles: number[];
 }
+
+export interface Student extends UserBase {
+  isStudent?: boolean;
+}

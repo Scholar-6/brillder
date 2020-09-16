@@ -20,35 +20,14 @@ interface ClassroomListProps {
   startIndex: number;
   pageSize: number;
   activeClassroom: TeachClassroom | null;
-  expand(classroomId: number): void;
+  expand(classroomId: number, assignmentId: number): void;
 }
 
-interface ClassroomListState {
-  isArchive: boolean
-}
-
-class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
-  constructor(props: ClassroomListProps) {
-    super(props);
-    this.state = {
-      isArchive: false
-    }
-  }
-
-  renderArchiveButton() {
-    let className = this.state.isArchive ? "active" : "";
-    return <div className={className} onClick={() => this.setState({ isArchive: true })}>ARCHIVE</div>;
-  }
-
-  renderLiveBricksButton() {
-    let className = this.state.isArchive ? "" : "active";
-    return <div className={className} onClick={() => this.setState({ isArchive: false })}>LIVE BRICKS</div>;
-  }
-
+class ClassroomList extends Component<ClassroomListProps> {
   renderStudent(student: UserBase, i: number, studentsStatus: StudentStatus[]) {
     const studentStatus = studentsStatus.find(s => s.studentId === student.id);
     return (
-      <div style={{display: 'flex', paddingTop: '0.5vh', paddingBottom: '0.5vh'}} >
+      <div key={i} style={{display: 'flex', paddingTop: '0.5vh', paddingBottom: '0.5vh'}} >
         <div style={{width: '23.8vw'}}>{student.firstName} {student.lastName}</div>
         <div className="teach-circles-container">
           <div className="teach-circle-flex-container">
@@ -83,19 +62,23 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
     if (i >= this.props.startIndex && i < this.props.startIndex + this.props.pageSize) {
       if (c.assignment && c.classroom) {
         return (
-          <div>
+          <div key={i}>
             <AssignedBrickDescription
               subjects={this.props.subjects}
-              expand={() => this.props.expand(c.classroom.id)}
+              expand={this.props.expand.bind(this)}
               key={i} classroom={c.classroom} assignment={c.assignment}
             />
             {this.renderStudentsList(c.classroom, c.assignment)}
           </div>
         );
       }
+      let className = 'classroom-title';
+      if (i === 0) {
+         className += ' first';
+      }
       return (
-        <div className="classroom-title" key={i}>
-          {c.classroom.name}
+        <div className={className} key={i}>
+          <div>{c.classroom.name}</div>
         </div>
       );
     }
@@ -108,7 +91,7 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
         {c.name}
         {}
         {c.assignments.map((a, i) => <AssignedBrickDescription
-          subjects={this.props.subjects} expand={()=>{}} key={i} classroom={c} assignment={a}
+          subjects={this.props.subjects} expand={this.props.expand.bind(this)} key={i} classroom={c} assignment={a}
         />)}
       </div>
     )
@@ -145,10 +128,6 @@ class ClassroomList extends Component<ClassroomListProps, ClassroomListState> {
   render() {
     return (
       <div className="classroom-list">
-        <div className="classroom-list-buttons">
-          {this.renderLiveBricksButton()}
-          {this.renderArchiveButton()}
-        </div>
         {this.renderContent()}
       </div>
     );

@@ -1,0 +1,66 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.expanded-assignment {
+  padding-top: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+
+  .classroom-title {
+    padding-top: 3vh;
+    height: calc(1.5vw + 5vh) !important;
+    padding-left: 1.6vw;
+  }
+
+  .assigned-brick-description {
+    padding-left: 1.6vw;
+    padding-right: 1vw;
+  }
+  .users-table {
+    $table-height: calc(
+      100vh - 5.834vw - 2vw - 6.6vh - 6vh - 1.5vw - 5vh - 1vh - (100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh) /
+        6.35
+    );
+    height: $table-height !important;
+    .user-row {
+      height: calc(#{$table-height / 8}) !important;
+    }
+    .student-left-padding {
+      width: 6vw;
+    }
+
+    .assigned-student-name {
+      width: 26.8vw;
+    }
+    .circle-td {
+      width: 5vw;
+      .teach-circle {
+        @extend %flexCenter;
+        height: 4.4vh;
+        width: 4.4vh;
+        background: var(--theme-green);
+        border-radius: 50%;
+        color: var(--white);
+      }
+    }
+    td {
+      padding-left: 0 !important;
+      text-transform: capitalize;
+
+      .reminder-icon {
+        color: white;
+        border-radius: 50%;
+        padding: 0.25vw;
+        width: 1.7vw;
+        height: 1.7vw;
+        background: var(--theme-yellow);
+      }
+
+      .stats-text {
+        margin-left: 1vw;
+        font-size: 1.3vw;
+      }
+    }
+  }
+}

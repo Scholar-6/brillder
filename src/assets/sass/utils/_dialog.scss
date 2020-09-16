@@ -274,6 +274,19 @@
     .title {
       color: var(--tab-gray);
       font-family: $font-family-bold;
+
+      &.left {
+        margin-left: 1vw;
+        text-align: left !important;
+        margin-bottom: 0 !important;
+      }
+    }
+    .text {
+      font-size: 1vw;
+      &.left {
+        margin-left: 1vw;
+        text-align: left !important;
+      }
     }
     .link {
       font-size: 1.7vw;
@@ -287,6 +300,13 @@
       padding-left: 2vw;
       letter-spacing: 0.01vw !important;
       padding-right: 2vw;
+      @extend %flexCenter;
+
+      .send-icon {
+        margin-left: 2vw;
+        height: 2vw;
+        width: 2vw;
+      }
     }
   }
 }
