@@ -2,6 +2,7 @@ import {get, put, post} from './index';
 
 import { User } from 'model/user';
 import { UpdateUserStatus } from 'components/userProfilePage/model';
+import { Editor } from 'model/brick';
 
 const profileErrorHandler = (e: any) => {
   const {response} = e;
@@ -45,5 +46,20 @@ export const saveProfileImageName = async (userId: number, name: string) => {
     return data === "OK" ? true : false;
   } catch {
     return false;
+  }
+}
+
+export const getUserByUserName = async (userName: string) => {
+  try {
+    let user = await get<Editor>(`/user/byUsername/${userName}`);
+    return {
+      success: true,
+      user
+    }
+  } catch (e) {
+    return {
+      success: false,
+      message: e.response.data
+    }
   }
 }
