@@ -22,6 +22,7 @@ interface InviteProps {
 const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
   const [accessGranted, setAccess] = React.useState(null as boolean | null);
 
+  const [isValid, setValid] = React.useState(false);
   const [editorUsername, setEditorUsername] = React.useState(brick.editor?.username ?? "");
   const [editor, setEditor] = React.useState(brick.editor);
   const [editorError, setEditorError] = React.useState("");
@@ -32,7 +33,7 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
   }
 
   const onNext = () => {
-    if (editor) {
+    if (isValid && editor) {
       saveEditor(editor.id);
     }
   };
@@ -41,12 +42,15 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
     if (editorUsername !== "") {
       let data = await getUserByUserName(editorUsername);
       if (data.user) {
+        setValid(true);
         setEditor(data.user);
         setEditorError("");
       } else {
+        setValid(false);
         setEditorError(data.message);
       }
     } else {
+      setValid(false);
       setEditorError("No username input.");
     }
   }

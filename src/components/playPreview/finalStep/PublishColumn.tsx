@@ -3,21 +3,20 @@ import { Grid } from "@material-ui/core";
 
 import sprite from "assets/img/icons-sprite.svg";
 
-interface InviteProps {
-  size?: 3 | 4 | 5 | 6 | 7 | 8;
+interface PublishProps {
   firstLabel?: string;
   secondLabel?: string;
   onClick(): void;
 }
 
-const InviteColumn: React.FC<InviteProps> = props => {
+const PublishColumn: React.FC<PublishProps> = props => {
   return (
-    <Grid container item xs={props.size ? props.size : 5} justify="center">
+    <Grid container item xs={3} justify="center">
       <div>
         <div className="button-container" onClick={props.onClick}>
           <svg className="svg active inline-button">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#user-plus"} />
+            <use href={sprite + "#award"} />
           </svg>
         </div>
         <div className="link-text">Invite</div>
@@ -32,4 +31,4 @@ const InviteColumn: React.FC<InviteProps> = props => {
   );
 };
 
-export default InviteColumn;
+export default PublishColumn;

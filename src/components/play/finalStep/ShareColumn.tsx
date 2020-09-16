@@ -1,15 +1,18 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
+
+
 import sprite from "assets/img/icons-sprite.svg";
 
 interface ShareProps {
+  size?: 3 | 4 | 5 | 6 | 7 | 8;
   onClick(): void;
 }
 
 const ShareColumn: React.FC<ShareProps> = props => {
   return (
-    <Grid container item xs={5} justify="center">
+    <Grid container item xs={props.size ? props.size : 5} justify="center">
       <div>
         <div className="button-container">
           <svg className="svg active" onClick={props.onClick}>

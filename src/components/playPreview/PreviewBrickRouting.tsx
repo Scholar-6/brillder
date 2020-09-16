@@ -26,9 +26,6 @@ import Synthesis from 'components/play/synthesis/Synthesis';
 import Review from 'components/play/review/ReviewPage';
 import Ending from 'components/play/ending/Ending'
 import HomeButton from "components/baseComponents/homeButton/HomeButton";
-import PublishPage from './publish/PublishPage';
-import EditorPage from './editor/EditorPage';
-import FinishPage from './finish/FinishPage';
 import PageHeadWithMenu, { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
@@ -144,21 +141,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     const {user} = props;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = user.id;
-    let canEdit = canEditBrick(brick, user);
-    let link = `/play-preview/brick/${brickId}/build-complete`;
-    if (canEdit) {
-      let editor = checkEditor(user.roles);
-      if (editor && user.id === brick.author.id) {
-      } else {
-        link = `/play-preview/brick/${brickId}/publish`;
-      }
-    }
-    history.push(link);
-  }
-
-  const saveEditor = (editorId: number) => {
-    props.assignEditor({ ...brick, editor: { id: editorId } });
-    history.push(`/play-preview/brick/${brick.id}/finish`);
+    history.push(`/play-preview/brick/${brickId}/build-complete`);
   }
 
   const moveToBuild = () => {
@@ -291,20 +274,11 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
                 saveAttempt={saveBrickAttempt}
               />
             </Route>
-            <Route exac path="/play-preview/brick/:brickId/publish">
-              <PublishPage history={history} match={match} />
-            </Route>
             <Route exac path="/play-preview/brick/:brickId/build-complete">
               <BuildCompletePage brick={brick} history={history} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/finalStep">
               <FinalStep status={status} brick={brick} history={history} location={location} />
-            </Route>
-            <Route exac path="/play-preview/brick/:brickId/editor">
-              <EditorPage brick={brick} canEdit={true} saveEditor={saveEditor} history={history} />
-            </Route>
-            <Route exac path="/play-preview/brick/:brickId/finish">
-              <FinishPage history={history} match={match} />
             </Route>
           </Switch>
         </div>
