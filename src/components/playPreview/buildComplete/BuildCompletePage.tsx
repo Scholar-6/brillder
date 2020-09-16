@@ -9,6 +9,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 import Clock from "components/play/baseComponents/Clock";
 
+
 interface BuildCompleteProps {
   history: any;
   brick: Brick;
@@ -16,11 +17,22 @@ interface BuildCompleteProps {
 }
 
 interface BuildCompleteState {
+  isPersonal?: boolean;
 }
 
 class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState> {
   constructor(props: BuildCompleteProps) {
     super(props);
+
+    this.state = { }
+  }
+
+  moveNext() {
+    let link = `/play-preview/brick/${this.props.brick.id}/finalStep`;
+    if (this.state.isPersonal) {
+      link += '?isPersonal=true';
+    }
+    this.props.history.push(link);
   }
   
   renderFooter() {
@@ -34,7 +46,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
           <button
             type="button"
             className="play-preview svgOnHover play-green"
-            onClick={() => this.props.history.push(`/play-preview/brick/${this.props.brick.id}/finalStep`)}
+            onClick={() => this.moveNext()}
           >
             <svg className="svg w80 h80 active m-l-02">
               {/*eslint-disable-next-line*/}
@@ -67,7 +79,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                   What would you like to do with <span className="bold uppercase">‘{brick.title}’</span>?
                 </p>
                 <div className="radio-container">
-                  <Radio />
+                  <Radio checked={this.state.isPersonal === true} onClick={() => this.setState({isPersonal: true})} />
                   <span className="radio-text">Keep it Personal</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
@@ -78,7 +90,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                   Bask in your own glory, share on your favourite platforms, invite anyone to play or edit<span className="text-theme-orange">*</span>
                 </div>
                 <div className="radio-container">
-                  <Radio />
+                  <Radio checked={this.state.isPersonal === false} onClick={()=> this.setState({isPersonal: false})} />
                   <span className="radio-text">Educate the word</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}

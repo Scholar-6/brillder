@@ -68,9 +68,11 @@ interface BrickRoutingProps {
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
+  const {brick, history, location, match} = props;
+
   let initAttempts: any[] = [];
-  if (props.brick) {
-    initAttempts = prefillAttempts(props.brick.questions);
+  if (brick) {
+    initAttempts = prefillAttempts(brick.questions);
   }
 
   let cashedBuildQuestion = GetCashedBuildQuestion();
@@ -81,7 +83,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
   const [startTime, setStartTime] = React.useState(undefined);
   const [sidebarRolledUp, toggleSideBar] = React.useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     if (props.brick) {
@@ -90,13 +91,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     }
   }, [props.brick]);
 
-  const brickId = parseInt(props.match.params.brickId);
-  if (!props.brick || props.brick.id !== brickId || !props.brick.author) {
+  const brickId = parseInt(match.params.brickId);
+  if (!brick || brick.id !== brickId || !brick.author) {
     props.fetchBrick(brickId);
     return <PageLoader content="...Loading brick..." />;
   }
 
-  setBrillderTitle(props.brick.title);
+  setBrillderTitle(brick.title);
 
   const updateAttempts = (attempt: any, index: number) => {
     attempts[index] = attempt;
@@ -116,7 +117,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
     let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba: BrickAttempt = {
-      brick: props.brick,
+      brick,
       score: score,
       maxScore: maxScore,
       student: null,
@@ -142,27 +143,28 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const saveBrickAttempt = () => {
-    brickAttempt.brickId = props.brick.id;
-    brickAttempt.studentId = props.user.id;
-    let canEdit = canEditBrick(props.brick, props.user);
+    const {user} = props;
+    brickAttempt.brickId = brick.id;
+    brickAttempt.studentId = user.id;
+    let canEdit = canEditBrick(brick, user);
     let link = `/play-preview/brick/${brickId}/build-complete`;
     if (canEdit) {
-      let editor = checkEditor(props.user.roles);
-      if (editor && props.user.id === props.brick.author.id) {
+      let editor = checkEditor(user.roles);
+      if (editor && user.id === brick.author.id) {
       } else {
         link = `/play-preview/brick/${brickId}/publish`;
       }
     }
-    props.history.push(link);
+    history.push(link);
   }
 
   const saveEditor = (editorId: number) => {
-    props.assignEditor({ ...props.brick, editor: { id: editorId } });
-    props.history.push(`/play-preview/brick/${props.brick.id}/finish`);
+    props.assignEditor({ ...brick, editor: { id: editorId } });
+    history.push(`/play-preview/brick/${brick.id}/finish`);
   }
 
   const moveToBuild = () => {
-    props.history.push(`/build/brick/${brickId}/build/investigation/question`);
+    history.push(`/build/brick/${brickId}/build/investigation/question`);
   }
 
   const setSidebar = (state?: boolean) => {
@@ -215,7 +217,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         isMobileHidden={isMobileHidden}
         page={PageEnum.Play}
         user={props.user}
-        history={props.history}
+        history={history}
         search={() => { }}
         searching={() => { }}
       />
@@ -226,8 +228,6 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   if (sidebarRolledUp) {
     className += " sorted-row-expanded";
   }
-
-  const {brick, history} = props;
 
   return (
     <div className="play-preview-pages">
@@ -243,7 +243,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
           <Switch>
             <Route exac path="/play-preview/brick/:brickId/intro">
               <Introduction
-                location={props.location}
+                location={location}
                 brick={brick}
                 isPlayPreview={true}
                 startTime={startTime}
@@ -294,19 +294,19 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/publish">
-              <PublishPage history={history} match={props.match} />
+              <PublishPage history={history} match={match} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/build-complete">
               <BuildCompletePage brick={brick} history={history} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/finalStep">
-              <FinalStep status={status} brick={brick} history={history} />
+              <FinalStep status={status} brick={brick} history={history} location={location} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/editor">
               <EditorPage brick={brick} canEdit={true} saveEditor={saveEditor} history={history} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/finish">
-              <FinishPage history={history} match={props.match} />
+              <FinishPage history={history} match={match} />
             </Route>
           </Switch>
         </div>
@@ -394,7 +394,7 @@ const mapState = (state: ReduxCombinedState) => ({
 const mapDispatch = (dispatch: any) => ({
   fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
   assignEditor: (brick: any) => dispatch(actions.assignEditor(brick))
-})
+});
 
 const connector = connect(mapState, mapDispatch);
 
