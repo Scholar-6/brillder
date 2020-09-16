@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
 import { isMobile } from "react-device-detect";
-
 import { connect } from "react-redux";
 
 import 'components/play/brick.scss';
