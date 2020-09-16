@@ -9,6 +9,7 @@ import { PlayStatus } from "components/play/model";
 
 import Clock from "components/play/baseComponents/Clock";
 import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
+import InviteDialog from 'components/play/finalStep/dialogs/InviteDialog';
 import LinkDialog from 'components/play/finalStep/dialogs/LinkDialog';
 import LinkCopiedDialog from 'components/play/finalStep/dialogs/LinkCopiedDialog';
 import ExitButton from "components/play/finalStep/ExitButton";
@@ -29,6 +30,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   location
 }) => {
   const [shareOpen, setShare] = React.useState(false);
+  const [inviteOpen, setInvite] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
 
@@ -45,7 +47,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <InviteColumn
        firstLabel="internal users to play"
         secondLabel="or edit this brick"
-        onClick={()=>{}}
+        onClick={()=> setInvite(true)}
       />
     );
   }
@@ -112,9 +114,13 @@ const FinalStep: React.FC<FinalStepProps> = ({
           <ExitButton onClick={() => {}} />
         </div>
       </Hidden>
-      <LinkDialog isOpen={linkOpen} link={document.location.host + link} submit={() => setCopiedLink(true)} close={() => setLink(false)} />
+      <LinkDialog
+        isOpen={linkOpen} link={document.location.host + link}
+        submit={() => setCopiedLink(true)} close={() => setLink(false)}
+      />
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
+      <InviteDialog isOpen={inviteOpen} link={() => { setInvite(false); }} close={() => setInvite(false)} />
     </div>
   );
 };
