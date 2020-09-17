@@ -18,7 +18,7 @@ export default (state = NotificationsInitialState, action: any) => {
         case types.GET_NOTIFICATIONS_FAILURE:
             return { error: action.error } as NotificationsState;
         case types.RECEIVED_NOTIFICATION:
-            return { notifications: [ ...(state.notifications ?? []), action.notification ] } as NotificationsState;
+            return { notifications: [ action.notification, ...(state.notifications ?? []) ] } as NotificationsState;
         case types.NOTIFICATION_CLEAR:
             return {
             // eslint-disable-next-line
