@@ -61,6 +61,7 @@
           @extend %displayFlex;
           @extend %flexAlignCenter;
           .left-brick-circle {
+            cursor: pointer;
             .MuiSvgIcon-fontSizeLarge {
               font-size: 2.8rem;
             }

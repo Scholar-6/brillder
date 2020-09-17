@@ -12,6 +12,7 @@ import map from 'components/map';
 import { isMobile } from 'react-device-detect';
 import { checkTeacherEditorOrAdmin } from 'components/services/brickService';
 import { User } from 'model/user';
+import { ActiveTab } from 'components/backToWorkPage/components/Tab';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
@@ -36,7 +37,11 @@ class NotificationPanel extends Component<NotificationPanelProps> {
       if (notification.type === NotificationType.BrickPublished) {
         history.push(map.ViewAllPage);
       } else if (notification.type === NotificationType.AssignedToEdit || notification.type === NotificationType.BrickSubmittedForReview) {
-        history.push(map.BackToWorkPage);
+        if (notification.type === NotificationType.AssignedToEdit) {
+          window.location.href = map.BackToWorkPage + '?activeTab=' + ActiveTab.Build;
+        } else {
+          history.push(map.BackToWorkPage);
+        }
       } else if (notification.type === NotificationType.NewCommentOnBrick) {
         if (notification.brick && notification.brick.id >= 1 && notification.question && notification.question.id >= 1) {
           history.push(map.investigationQuestionSuggestions(notification.brick.id, notification.question.id));
@@ -97,14 +102,14 @@ class NotificationPanel extends Component<NotificationPanelProps> {
               {/* eslint-disable-next-line */}
               {(this.props.notifications && this.props.notifications.length != 0) ? this.props.notifications.map((notification) => (
                 <ListItem key={notification.id}>
-                  <ListItemIcon className="left-brick-circle">
+                  <ListItemIcon className="left-brick-circle" onClick={() => this.move(notification)}>
                     <SvgIcon fontSize="large">
                       <svg>
                         <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
                       </svg>
                     </SvgIcon>
                   </ListItemIcon>
-                  <ListItemIcon className="left-brick-circle" style={{position: 'absolute', left: 0}}>
+                  <ListItemIcon className="left-brick-circle" style={{position: 'absolute', left: 0}} onClick={() => this.move(notification)}>
                     <SvgIcon fontSize="large" style={{height: '0.8em'}}>
                       {notification.type === NotificationType.AssignedToEdit ?
                         <svg className="svg w50 h50 active" style={{display: 'flex', width: '0.5em', height: '0.5em'}}>
