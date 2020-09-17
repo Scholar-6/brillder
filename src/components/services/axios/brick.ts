@@ -53,4 +53,13 @@ export const publishBrick = async (brickId: number) => {
     return null;
   }
 }
- 
+
+export const inviteUser = async (brickId: number, userId: number) => {
+  try {
+    const brick = await post<Brick>(`/brick/inviteToBrick/${brickId}`, {userIds: [userId]});
+    console.log('res', brick)
+    return true;
+  } catch {
+    return null;
+  }
+}

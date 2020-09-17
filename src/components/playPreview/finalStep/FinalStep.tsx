@@ -51,6 +51,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const [publishSuccess, setPublishSuccess] = React.useState(PublishStatus.None);
   const [inviteSuccess, setInviteSuccess] = React.useState({
     isOpen: false,
+    accessGranted: false,
     name: ''
   });
 
@@ -163,11 +164,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
       <InviteDialog
         canEdit={true} brick={brick} isOpen={inviteOpen}
-        submit={name => { setInviteSuccess({ isOpen: true, name }); }}
+        submit={(name, accessGranted) => { setInviteSuccess({ isOpen: true, name, accessGranted }); }}
         close={() => setInvite(false)} />
       <InvitationSuccessDialog
-        isOpen={inviteSuccess.isOpen} name={inviteSuccess.name}
-        close={() => setInviteSuccess({ isOpen: false, name: '' })} />
+        isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={inviteSuccess.accessGranted}
+        close={() => setInviteSuccess({ isOpen: false, name: '', accessGranted: false })} />
       <SimpleDialog
         label="Publish Successful!"
         isOpen={publishSuccess === PublishStatus.Popup}

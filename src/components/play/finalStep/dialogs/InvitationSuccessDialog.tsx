@@ -12,10 +12,18 @@ import sprite from "assets/img/icons-sprite.svg";
 interface InvitationProps {
   isOpen: boolean;
   name: string;
+  accessGranted: boolean;
   close(): void;
 }
 
 const InvitationSuccessDialog: React.FC<InvitationProps> = props => {
+  const getCustomText = () => {
+    if (props.accessGranted) {
+      return props.name + " will be able to suggest edits to your brick";
+    }
+    return `I'm sure ${props.name} is dying to play your brick`;
+  }
+
   return (
     <Dialog
       open={props.isOpen}
@@ -36,9 +44,7 @@ const InvitationSuccessDialog: React.FC<InvitationProps> = props => {
           </ListItemAvatar>
         </ListItem>
         <ListItem>
-          <ListItemText
-            primary={props.name + " will be able to suggest edits to your brick"}
-            className="italic" style={{ minWidth: '30vw' }} />
+          <ListItemText primary={getCustomText()} className="italic" style={{ minWidth: '30vw' }} />
         </ListItem>
       </div>
     </Dialog>
