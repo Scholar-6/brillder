@@ -3,13 +3,10 @@
 @import 'src/assets/sass/partials/extensions';
 
 .expanded-assignment {
-  padding-top: 0 !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
 
   .classroom-title {
-    padding-top: 3vh;
-    height: calc(1.5vw + 5vh) !important;
     padding-left: 1.6vw;
   }
 
@@ -18,10 +15,7 @@
     padding-right: 1vw;
   }
   .users-table {
-    $table-height: calc(
-      100vh - 5.834vw - 2vw - 6.6vh - 6vh - 1.5vw - 5vh - 1vh - (100vh - 5.834vw - 2vw - 5.2vw - 2.1vh - 0.5vh - 6vh) /
-        6.35
-    );
+    $table-height: calc(53.5vh - 4vw);
     height: $table-height !important;
     .user-row {
       height: calc(#{$table-height / 8}) !important;

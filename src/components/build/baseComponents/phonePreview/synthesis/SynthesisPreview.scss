@@ -51,4 +51,10 @@
     min-width: 0;
     padding: 0;
   }
+
+  figure.image {
+    img {
+      width: 100%;
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { Grid, TextField } from "@material-ui/core";
 import { Radio } from '@material-ui/core';
@@ -8,12 +8,13 @@ import actions from 'redux/actions/brickActions';
 import sprite from "assets/img/icons-sprite.svg";
 import { Brick, Editor } from 'model/brick';
 import {getUserByUserName} from 'components/services/axios/user';
+import {inviteUser} from 'components/services/axios/brick';
 
 interface InviteProps {
   canEdit: boolean;
   isOpen: boolean;
   brick: Brick;
-  link(): void;
+  submit(name: string, accessGranted: boolean): void;
   close(): void;
 
   assignEditor(brick: Brick): void;
@@ -27,14 +28,29 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
   const [editor, setEditor] = React.useState(brick.editor);
   const [editorError, setEditorError] = React.useState("");
 
-  const saveEditor = (editorId: number) => {
+  const saveEditor = (editorId: number, fullName: string) => {
     props.assignEditor({ ...brick, editor: { id: editorId } as Editor });
+    props.submit(fullName, accessGranted || false);
+  }
+
+  const inviteUserById = async (userId: number, fullName: string) => {
+    let success = await inviteUser(brick.id, userId);
+    if (success) {
+      props.submit(fullName, accessGranted || false);
+    } else {
+      // failed
+    }
     props.close();
   }
 
   const onNext = () => {
     if (isValid && editor) {
-      saveEditor(editor.id);
+      if (accessGranted) {
+        saveEditor(editor.id, editor.firstName);
+        props.close();
+      } else {
+        inviteUserById(editor.id, editor.firstName);
+      }
     }
   };
 
@@ -55,28 +71,57 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
     }
   }
 
+  useEffect(() => {
+    onBlur();
+  }, [brick]);
+
+  const renderCustomText = () => {
+    let name = 'Name';
+    if (editorUsername) {
+      name = editorUsername;
+    }
+    return `Allow “${name}” to comment on the build panels of your brick`;
+  }
+
+  const renderSendButton = () => {
+    return (
+      <button
+        className="btn bold btn-md bg-theme-orange yes-button"
+        style={{width: 'auto', paddingLeft: '4vw'}}
+        onClick={onNext}
+      >
+        Send Invite
+        <svg className="svg active send-icon" onClick={props.close}>
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#send"} />
+        </svg>
+      </button>
+    );
+  }
+
   return (
     <Dialog
       open={props.isOpen}
       onClose={props.close}
       className="dialog-box light-blue unlimited"
     >
-      <div className="close-button">
+      <div className="close-button" style={{width: '1.5vw', height: '1.5vw'}}>
         <svg className="svg active" onClick={props.close}>
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#cancel-thick"} />
         </svg>
       </div>
-      <div className="dialog-header">
+      <div className="dialog-header" style={{minWidth: '30vw'}}>
         <div className="title left">Who would you like to invite to play this brick?</div>
         <div style={{marginTop: '1.8vh'}}></div>
         <Grid item className="input-container">
-          <div className="audience-inputs">
+          <div className="audience-inputs border-rounded">
             <TextField
               disabled={!props.canEdit}
               value={editorUsername}
+              style={{background: 'inherit'}}
               onChange={(evt) => setEditorUsername(evt.target.value)}
-              onBlur={(evt) => onBlur()}
+              onBlur={() => onBlur()}
               placeholder="Enter editor's username here..."
               error={editorError !== ""}
               helperText={editorError}
@@ -86,7 +131,7 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
         </Grid>
         <div style={{marginTop: '1.8vh'}}></div>
         <div className="title left">Grant editing access?</div>
-        <div className="text left">Allow “Name” to comment on the build panels of your brick</div>
+        <div className="text left" style={{marginBottom: '1.8vh'}}>{renderCustomText()}</div>
         <div className="title left">
           Yes <Radio className="white" checked={accessGranted === true} style={{marginRight: '4vw'}} onClick={() => setAccess(true)} />
           No <Radio className="white" checked={accessGranted === false} onClick={() => setAccess(false)} />
@@ -94,17 +139,7 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
       </div>
       <div style={{marginTop: '1.8vh'}}></div>
       <div className="dialog-footer" style={{justifyContent: 'center'}}>
-        <button
-          className="btn btn-md bg-theme-orange yes-button"
-          style={{width: 'auto', paddingLeft: '4vw'}}
-          onClick={onNext}
-        >
-          Send Invite
-          <svg className="svg active send-icon" onClick={props.close}>
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#send"} />
-          </svg>
-        </button>
+        {renderSendButton()}
       </div>
     </Dialog>
   );

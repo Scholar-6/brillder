@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import queryString from 'query-string';
 import { connect } from "react-redux";
 
 import { ReduxCombinedState } from "redux/reducers";
@@ -8,14 +9,12 @@ import "./BackToWork.scss";
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { checkTeacher } from "components/services/brickService";
-
 import { loadSubjects, getGeneralSubject } from 'components/services/subject';
-import { ActiveTab } from './components/Tab';
-
-import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import { TeachClassroom } from "model/classroom";
 import { getAllClassrooms } from "components/teach/service";
 
+import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import { ActiveTab } from './components/Tab';
 import TeachPage from './components/teach/TeachPage';
 import BuildPage from './components/build/BuildPage';
 import PlayPage from './components/play/PlayPage';
@@ -38,6 +37,7 @@ interface BackToWorkState {
 export interface BackToWorkProps {
   user: User;
   history: any;
+  location: any;
   stats: any;
   forgetBrick(): void;
   requestFailed(e: string): void;
@@ -48,11 +48,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     super(props);
 
     const isTeach = checkTeacher(this.props.user.roles);
-
-    let activeTab = ActiveTab.Play;
-    if (isTeach) {
-      activeTab = ActiveTab.Teach;
-    }
+    const activeTab = this.getActiveTab(isTeach);
 
     this.state = {
       activeTab,
@@ -67,7 +63,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
 
       generalSubjectId: -1,
 
-      // Play
+      // Play, Teach
       classrooms: [],
       activeClassroom: null,
     };
@@ -92,6 +88,23 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         this.props.requestFailed('Can`t get classrooms');
       }
     });
+  }
+
+  getActiveTab(isTeach: boolean) {
+    let activeTab = ActiveTab.Play;
+    if (isTeach) {
+      activeTab = ActiveTab.Teach;
+    }
+    const values = queryString.parse(this.props.location.search);
+    if (values.activeTab) {
+      try {
+        let queryTab = parseInt(values.activeTab as string) as ActiveTab;
+        if (queryTab === ActiveTab.Build || queryTab === ActiveTab.Play || queryTab === ActiveTab.Teach) {
+          activeTab = queryTab;
+        }
+      } catch {}
+    }
+    return activeTab;
   }
 
   setTab(activeTab: ActiveTab) {

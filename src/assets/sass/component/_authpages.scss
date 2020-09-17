@@ -186,7 +186,6 @@
       @extend %flexColumn;
       .button-box {
         width: 100%;
-
       }
       .input-block {
         margin-bottom: 2.7vh;
@@ -280,6 +279,8 @@
         width: calc(50% - 2vw);
         background: var(--theme-orange);
         flex: 1;
+        text-transform: uppercase;
+        padding: 0.7vw;
         @include phone_and_tabletP {
           color: var(--black-blue);
         }

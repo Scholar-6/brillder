@@ -19,4 +19,5 @@ export interface AssignmentBrick {
   brick: Brick;
   expanded?: boolean;
   expandFinished?: boolean;
+  isInvitation: boolean;
 }

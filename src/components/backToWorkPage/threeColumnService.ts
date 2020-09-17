@@ -9,7 +9,7 @@ const prepareBrickData = (data: any[], brick: Brick, index: number, key: number,
 
 const prepareAssignmentData = (data: any[], assignment: AssignmentBrick, index: number, key: number, row: number) => {
   data.push({
-    brick: assignment.brick, key, index, row, assignmentId: assignment.id, status: assignment.status
+    brick: assignment.brick, key, index, row, assignmentId: assignment.id, status: assignment.status, isInvitation: assignment.isInvitation
   } as AssignmentBrickData);
 }
 

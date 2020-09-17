@@ -2,35 +2,35 @@ import { Brick } from "./brick";
 import { Question } from "./question";
 
 export interface Sender {
-    email: string;
-    firstName: string;
-    lastName: string;
+  email: string;
+  firstName: string;
+  lastName: string;
 }
 
 export enum NotificationType {
-    Generic,
-    BrickSubmittedForReview,
-    BrickPublished,
-    AssignedToEdit,
-    NewCommentOnBrick
+  Generic,
+  BrickSubmittedForReview,
+  BrickPublished,
+  AssignedToEdit,
+  NewCommentOnBrick
 }
 
 export interface Notification {
-    id: number;
-    sender: Sender;
-    title: string;
-    text: string;
-    type: NotificationType;
-    read: boolean;
-    timestamp: Date;
-    brick?: Brick;
-    question?: Question;
+  id: number;
+  sender: Sender;
+  title: string;
+  text: string;
+  type: NotificationType;
+  read: boolean;
+  timestamp: Date;
+  brick?: Brick;
+  question?: Question;
 }
 
 export const notificationTypeColors = {
-    [NotificationType.Generic]: "#bdc2c8",
-    [NotificationType.BrickSubmittedForReview]: "#ff9800",
-    [NotificationType.BrickPublished]: "#00c86b",
-    [NotificationType.AssignedToEdit]: "#d42c24",
-    [NotificationType.NewCommentOnBrick]: "#006bfd",
+  [NotificationType.Generic]: "generic",
+  [NotificationType.BrickSubmittedForReview]: "submitted-for-review",
+  [NotificationType.BrickPublished]: "published",
+  [NotificationType.AssignedToEdit]: "assigned-to-edit",
+  [NotificationType.NewCommentOnBrick]: "new-comment",
 };
