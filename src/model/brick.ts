@@ -1,6 +1,6 @@
 
 import { Question } from "./question";
-import { UserType } from "./user";
+import { UserBase, UserType } from "./user";
 import { Assignment } from "./classroom";
 
 export enum BrickLengthEnum {
@@ -27,8 +27,7 @@ export interface Author {
   type: UserType;
 }
 
-export interface Editor {
-  id: number;
+export interface Editor extends UserBase {
   username: string;
 }
 

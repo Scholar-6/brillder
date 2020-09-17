@@ -11,6 +11,7 @@ import { User } from "model/user";
 import { Brick, BrickStatus } from "model/brick";
 import { PlayStatus } from "components/play/model";
 import { checkAdmin } from "components/services/brickService";
+import { publishBrick } from "components/services/axios/brick";
 
 import Clock from "components/play/baseComponents/Clock";
 import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
@@ -21,8 +22,8 @@ import ExitButton from "components/play/finalStep/ExitButton";
 import ShareColumn from "components/play/finalStep/ShareColumn";
 import InviteColumn from "components/play/finalStep/InviteColumn";
 import PublishColumn from './PublishColumn';
-import { publishBrick } from "components/services/axios/brick";
 import SimpleDialog from "components/baseComponents/dialogs/SimpleDialog";
+import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
 
 enum PublishStatus {
   None,
@@ -48,6 +49,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
   const [publishSuccess, setPublishSuccess] = React.useState(PublishStatus.None);
+  const [inviteSuccess, setInviteSuccess] = React.useState({
+    isOpen: false,
+    name: ''
+  });
 
   const isAdmin = checkAdmin(user.roles);
 
@@ -156,7 +161,13 @@ const FinalStep: React.FC<FinalStepProps> = ({
       />
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
-      <InviteDialog canEdit={true} brick={brick} isOpen={inviteOpen} link={() => { setInvite(false); }} close={() => setInvite(false)} />
+      <InviteDialog
+        canEdit={true} brick={brick} isOpen={inviteOpen}
+        submit={name => { setInviteSuccess({ isOpen: true, name }); }}
+        close={() => setInvite(false)} />
+      <InvitationSuccessDialog
+        isOpen={inviteSuccess.isOpen} name={inviteSuccess.name}
+        close={() => setInviteSuccess({ isOpen: false, name: '' })} />
       <SimpleDialog
         label="Publish Successful!"
         isOpen={publishSuccess === PublishStatus.Popup}

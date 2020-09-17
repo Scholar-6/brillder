@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { Grid, TextField } from "@material-ui/core";
 import { Radio } from '@material-ui/core';
@@ -13,7 +13,7 @@ interface InviteProps {
   canEdit: boolean;
   isOpen: boolean;
   brick: Brick;
-  link(): void;
+  submit(name: string): void;
   close(): void;
 
   assignEditor(brick: Brick): void;
@@ -27,15 +27,16 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
   const [editor, setEditor] = React.useState(brick.editor);
   const [editorError, setEditorError] = React.useState("");
 
-  const saveEditor = (editorId: number) => {
+  const saveEditor = (editorId: number, fullName: string) => {
     props.assignEditor({ ...brick, editor: { id: editorId } as Editor });
-    props.close();
+    props.submit(fullName);
   }
 
   const onNext = () => {
     if (isValid && editor) {
-      saveEditor(editor.id);
+      saveEditor(editor.id, editor.firstName + ' ' + editor.lastName);
     }
+    props.close();
   };
 
   const onBlur = async () => {
@@ -54,6 +55,10 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
       setEditorError("No username input.");
     }
   }
+
+  useEffect(() => {
+    onBlur();
+  }, [brick]);
 
   return (
     <Dialog
