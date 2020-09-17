@@ -91,7 +91,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                 </div>
                 <div className="radio-container">
                   <Radio checked={this.state.isPersonal === false} onClick={()=> this.setState({isPersonal: false})} />
-                  <span className="radio-text">Educate the word</span>
+                  <span className="radio-text">Educate the World</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#globe"} />
