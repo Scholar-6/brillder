@@ -21,4 +21,27 @@
     .question-component-graph {
         flex-grow: 1;
     }
+
+    .question-component-graph-settings {
+        width: 100%;
+        padding: 0.5vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        .MuiToggleButton-root {
+            color: var(--theme-dark-blue);
+
+            &.Mui-disabled {
+                color: var(--dark-gray);
+            }
+        }
+    }
+}
+
+.fx {
+    font-family: "Brandon Grotesque Regular";
+    text-transform: none;
+    text-anchor: middle;
+    font-size: 45%;
 }
