@@ -5,7 +5,7 @@ import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 import Desmos from 'desmos';
 
 import './Graph.scss';
-import { Button, SvgIcon, Tooltip } from '@material-ui/core';
+import { Button, Fab, SvgIcon, Tooltip } from '@material-ui/core';
 import GraphDialog from './GraphDialog';
 
 import sprite from 'assets/img/icons-sprite.svg';
@@ -108,7 +108,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
     <div className="question-component-graph-container">
         <div className="question-component-graph-header">Graph</div>
         <div className="question-component-graph" ref={graphRef} />
-        <Button onClick={() => setDialogOpen(true)}>Edit Graph</Button>
+        
         <GraphDialog
             graphState={graphState}
             graphSettings={graphSettings}
@@ -118,6 +118,16 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
             setGraphSettings={setGraphSettings}
         />
         <div className="question-component-graph-settings">
+            <Tooltip title="Add / Edit Expressions">
+                <Fab onClick={() => setDialogOpen(true)} color="primary">
+                    <SvgIcon fontSize="default">
+                        <svg className="svg active">
+                            {/*eslint-disable-next-line*/}
+                            <use href={sprite + "#edit-outline"} />
+                        </svg>
+                    </SvgIcon>
+                </Fab>
+            </Tooltip>
             <ToggleButtonGroup size="large" value={getGraphSettings()} onChange={setGraphSetting}>
                 <ToggleButton value="allowPanning">
                     <Tooltip title="Allow Pan / Zoom">
