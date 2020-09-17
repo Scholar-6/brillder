@@ -7,6 +7,7 @@
 
   .MuiRadio-root {
     color: rgba(0, 0, 0, 0.54);
+    color: var(--theme-dark-blue) !important;
   }
 
   .MuiIconButton-root.MuiRadio-colorSecondary.Mui-checked {
@@ -77,7 +78,7 @@
   }
 
   .inner-radio-text {
-    margin-left: 4.3vw;
+    margin-left: 4vw;
 
     &.last-one {
       font-family: $font-family-regular-italic;
