@@ -50,17 +50,6 @@
   .MuiTypography-root {
     width: 100% !important;
   }
-
-  &.mobile-synthesis-page {
-    height: calc(100vh - 6vh) !important;
-    position: relative;
-    overflow-y: inherit !important;
-
-    h1 {
-      position: absolute !important;
-      top: 0.2vw !important;
-    }
-  }
 }
 
 .cuting-line {
@@ -87,10 +76,8 @@
     height: calc(100vh - 55.8vw);
     @include phone_and_tabletP {
       padding: 0;
-      position: fixed;
-      top: 4.3vh;
       width: 96vw;
-      height: calc(100% - 4.3vh - 160px);
+      height: 100%;
       padding-left: 2vw;
       padding-right: 2vw;
     }

@@ -54,11 +54,11 @@ interface UsersListState {
 
   sortBy: UserSortBy;
   isAscending: boolean;
-  
+
   createClassOpen: boolean;
   assignClassOpen: boolean;
   deleteClassOpen: boolean;
-  
+
   selectedUsers: MUser[];
   activeClassroom: ClassroomApi | null;
   classroomToRemove: ClassroomApi | null;
@@ -137,15 +137,15 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   togglePageStudents() {
     if (this.state.pageStudentsSelected) {
       this.unselectAllStudents();
-      const {activeClassroom} = this.state;
+      const { activeClassroom } = this.state;
       if (activeClassroom) {
-        activeClassroom.isActive= true;
+        activeClassroom.isActive = true;
       }
-      this.setState({pageStudentsSelected: false, selectedUsers: []});
+      this.setState({ pageStudentsSelected: false, selectedUsers: [] });
     } else {
       // select whole page
       this.selectPageStudents();
-      this.setState({pageStudentsSelected: true });
+      this.setState({ pageStudentsSelected: true });
     }
   }
 
@@ -158,7 +158,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   selectPageClassStudents() {
-    const {page, pageSize, activeClassroom} = this.state;
+    const { page, pageSize, activeClassroom } = this.state;
     if (activeClassroom) {
       let index = 0;
       for (let student of activeClassroom.students) {
@@ -182,7 +182,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       index += 1;
     }
   }
-  //#endregion 
+  //#endregion
 
   searching(searchString: string) {
     if (searchString.length === 0) {
@@ -242,13 +242,13 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   async deleteClass() {
-    const {classroomToRemove} = this.state;
+    const { classroomToRemove } = this.state;
     if (!classroomToRemove) {
       return this.setState({ deleteClassOpen: false, activeClassroom: null, classroomToRemove: null, page: 0 });
     }
     let deleted = await deleteClassroom(classroomToRemove.id);
     if (deleted) {
-      const {classrooms} = this.state;
+      const { classrooms } = this.state;
       let index = classrooms.indexOf(classroomToRemove);
       classrooms.splice(index, 1);
       this.setState({ classrooms, activeClassroom: null, classroomToRemove: null, deleteClassOpen: false, page: 0 });
@@ -256,7 +256,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   onDeleteClass(c: ClassroomApi) {
-    this.setState({ deleteClassOpen: true, classroomToRemove: c});
+    this.setState({ deleteClassOpen: true, classroomToRemove: c });
   }
 
   unselectAllStudents() {
@@ -330,9 +330,9 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#users"} />
                   </svg>
-                  <svg className="svg active text-theme-orange" onClick={() => this.onDeleteClass(c)}>
+                  <svg className="svg active" onClick={() => this.onDeleteClass(c)}>
                     {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#trash-outline"} />
+                    <use href={sprite + "#trash-outline"} className="text-white" />
                   </svg>
                 </div>
               </div>
@@ -373,7 +373,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
   }
 
   unassignStudent(student: MUser | null) {
-    const {activeClassroom} = this.state;
+    const { activeClassroom } = this.state;
     if (activeClassroom && student) {
       const { id } = activeClassroom;
       unassignStudent(id, student.id).then(res => {
@@ -382,20 +382,20 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
           if (classroom) {
             let index = classroom.students.findIndex(s => s.id === student.id);
             classroom.students.splice(index, 1);
-            this.setState({classrooms:this.state.classrooms, unassignOpen: false});
+            this.setState({ classrooms: this.state.classrooms, unassignOpen: false });
           }
         } else {
           // failture
-          this.setState({unassignOpen: false});
+          this.setState({ unassignOpen: false });
         }
       });
     }
   }
 
   unassigningStudent(student: MUser) {
-    const {activeClassroom} = this.state;
+    const { activeClassroom } = this.state;
     if (activeClassroom) {
-      this.setState({unassignStudent: student, unassignOpen: true });
+      this.setState({ unassignStudent: student, unassignOpen: true });
     }
   }
 
@@ -504,8 +504,8 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         <UnassignStudentDialog
           isOpen={this.state.unassignOpen}
           student={this.state.unassignStudent}
-          close={()=> this.setState({unassignOpen: false})}
-          submit={()=> this.unassignStudent(this.state.unassignStudent)}
+          close={() => this.setState({ unassignOpen: false })}
+          submit={() => this.unassignStudent(this.state.unassignStudent)}
         />
       </div>
     );

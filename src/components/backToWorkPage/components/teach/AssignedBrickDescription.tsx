@@ -115,7 +115,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <div className="stats-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + (this.props.isExpanded ? "#trending-up" : "#bar-chart-2")} />
+                <use href={sprite + "#activity"} />
               </svg>
             </div>
             <div className="stats-text">Stats</div>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import "./BuildCompletePage.scss";
 import sprite from "assets/img/icons-sprite.svg";
-import { Brick, BrickStatus } from "model/brick";
+import { Brick } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 import Clock from "components/play/baseComponents/Clock";
@@ -91,7 +91,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                 </div>
                 <div className="radio-container">
                   <Radio checked={this.state.isPersonal === false} onClick={()=> this.setState({isPersonal: false})} />
-                  <span className="radio-text">Educate the word</span>
+                  <span className="radio-text">Educate the World</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#globe"} />

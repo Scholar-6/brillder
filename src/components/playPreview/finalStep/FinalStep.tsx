@@ -3,6 +3,7 @@ import { Grid, Hidden } from "@material-ui/core";
 import queryString from 'query-string';
 import { connect } from "react-redux";
 
+import map from 'components/map';
 import actions from 'redux/actions/requestFailed';
 import "./FinalStep.scss";
 import sprite from "assets/img/icons-sprite.svg";
@@ -10,6 +11,7 @@ import { User } from "model/user";
 import { Brick, BrickStatus } from "model/brick";
 import { PlayStatus } from "components/play/model";
 import { checkAdmin } from "components/services/brickService";
+import { publishBrick } from "components/services/axios/brick";
 
 import Clock from "components/play/baseComponents/Clock";
 import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
@@ -20,8 +22,8 @@ import ExitButton from "components/play/finalStep/ExitButton";
 import ShareColumn from "components/play/finalStep/ShareColumn";
 import InviteColumn from "components/play/finalStep/InviteColumn";
 import PublishColumn from './PublishColumn';
-import { publishBrick } from "components/services/axios/brick";
 import SimpleDialog from "components/baseComponents/dialogs/SimpleDialog";
+import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
 
 enum PublishStatus {
   None,
@@ -40,13 +42,18 @@ interface FinalStepProps {
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
-  user, brick, location, requestFailed
+  user, brick, location, history, requestFailed
 }) => {
   const [shareOpen, setShare] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
   const [publishSuccess, setPublishSuccess] = React.useState(PublishStatus.None);
+  const [inviteSuccess, setInviteSuccess] = React.useState({
+    isOpen: false,
+    accessGranted: false,
+    name: ''
+  });
 
   const isAdmin = checkAdmin(user.roles);
 
@@ -133,7 +140,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 </div>
                 <div className="intro-text-row">
                 </div>
-                <ExitButton onClick={() => {}} />
+                <ExitButton onClick={() => history.push(map.BackToWorkPage)} />
               </div>
             </Grid>
           </Grid>
@@ -146,7 +153,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
           </div>
           <div className="introduction-page">
           </div>
-          <ExitButton onClick={() => {}} />
+          <ExitButton onClick={() => history.push(map.BackToWorkPage)} />
         </div>
       </Hidden>
       <LinkDialog
@@ -155,7 +162,13 @@ const FinalStep: React.FC<FinalStepProps> = ({
       />
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
-      <InviteDialog canEdit={true} brick={brick} isOpen={inviteOpen} link={() => { setInvite(false); }} close={() => setInvite(false)} />
+      <InviteDialog
+        canEdit={true} brick={brick} isOpen={inviteOpen}
+        submit={(name, accessGranted) => { setInviteSuccess({ isOpen: true, name, accessGranted }); }}
+        close={() => setInvite(false)} />
+      <InvitationSuccessDialog
+        isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={inviteSuccess.accessGranted}
+        close={() => setInviteSuccess({ isOpen: false, name: '', accessGranted: false })} />
       <SimpleDialog
         label="Publish Successful!"
         isOpen={publishSuccess === PublishStatus.Popup}

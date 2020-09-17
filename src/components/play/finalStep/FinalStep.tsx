@@ -21,7 +21,6 @@ interface FinalStepProps {
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
-  status,
   brick,
   history,
 }) => {

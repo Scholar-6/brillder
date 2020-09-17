@@ -33,7 +33,7 @@ const TabComponent: React.FC<TabProps> = ({ isTeach, activeTab, setTab }) => {
         className={activeTab === ActiveTab.Play ? 'active' : ''}
         onClick={() => setTab(ActiveTab.Play)}
       >
-        Play
+        Learn
       </div>
     </div>
   )
