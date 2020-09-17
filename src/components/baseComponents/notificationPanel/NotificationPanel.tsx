@@ -98,26 +98,51 @@ class NotificationPanel extends Component<NotificationPanelProps> {
       >
         <Card className="notification-content">
           <CardContent>
-            <List className="notification-list">
+            <ul className="notification-list">
               {/* eslint-disable-next-line */}
               {(this.props.notifications && this.props.notifications.length != 0) ? this.props.notifications.map((notification) => (
-                <ListItem key={notification.id}>
-                  <ListItemIcon className="left-brick-circle" onClick={() => this.move(notification)}>
-                    <SvgIcon fontSize="large">
-                      <svg>
-                        <circle cx="50%" cy="50%" r="50%" fill={notificationTypeColors[notification.type]} />
+                <li key={notification.id}>
+                  <div className={"left-brick-circle svgOnHover " + notificationTypeColors[notification.type]}
+                    onClick={() => this.move(notification)}>
+                    {notification.type === NotificationType.Generic ?
+                      ""
+                      :
+                      ""
+                    }
+                    {notification.type === NotificationType.BrickSubmittedForReview ?
+                      <svg className="svg w60 h60 active">
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#message-square"} />
                       </svg>
-                    </SvgIcon>
-                  </ListItemIcon>
-                  <ListItemIcon className="left-brick-circle" style={{position: 'absolute', left: 0}} onClick={() => this.move(notification)}>
-                    <SvgIcon fontSize="large" style={{height: '0.8em'}}>
-                      {notification.type === NotificationType.AssignedToEdit ?
-                        <svg className="svg w50 h50 active" style={{display: 'flex', width: '0.5em', height: '0.5em'}}>
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#edit-outline"} className="text-theme-dark-blue" />
-                        </svg> : ""}
-                    </SvgIcon>
-                  </ListItemIcon>
+                      :
+                      ""
+                    }
+                    {notification.type === NotificationType.AssignedToEdit ?
+                      <svg className="svg w60 h60 active">
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#edit-outline"}/>
+                      </svg>
+                      :
+                      ""
+                    }
+                    {notification.type === NotificationType.BrickPublished ?
+                      <svg className="svg w60 h60 active">
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#award"} />
+                      </svg>
+                      :
+                      ""
+                    }
+                    {notification.type === NotificationType.NewCommentOnBrick ?
+                      <svg className="svg w60 h60 active">
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#message-square"} />
+                      </svg>
+                      :
+                      ""
+                    }
+
+                  </div>
                   <div className="content-box" onClick={() => this.move(notification)}>
                     <div className="notification-detail">
                       <p className="notif-title">{notification.title}</p>
@@ -133,17 +158,19 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       </button>
                     </div>
                   </div>
-                </ListItem>
+                </li>
               )) :
                 (
-                  <div className="notification-detail-single">
-                    You have no new notifications
-                    <br />
-                    {this.renderQuotes()}
-                  </div>
+                  <li>
+                    <div className="notification-detail-single">
+                      You have no new notifications
+                      <br />
+                      {this.renderQuotes()}
+                    </div>
+                  </li>
                 )
               }
-            </List>
+            </ul>
           </CardContent>
           {/* eslint-disable-next-line */}
           {(this.props.notifications && this.props.notifications.length != 0) &&
