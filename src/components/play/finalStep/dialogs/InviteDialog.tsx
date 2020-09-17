@@ -8,12 +8,13 @@ import actions from 'redux/actions/brickActions';
 import sprite from "assets/img/icons-sprite.svg";
 import { Brick, Editor } from 'model/brick';
 import {getUserByUserName} from 'components/services/axios/user';
+import {inviteUser} from 'components/services/axios/brick';
 
 interface InviteProps {
   canEdit: boolean;
   isOpen: boolean;
   brick: Brick;
-  submit(name: string): void;
+  submit(name: string, accessGranted: boolean): void;
   close(): void;
 
   assignEditor(brick: Brick): void;
@@ -29,14 +30,24 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
 
   const saveEditor = (editorId: number, fullName: string) => {
     props.assignEditor({ ...brick, editor: { id: editorId } as Editor });
-    props.submit(fullName);
+    props.submit(fullName, accessGranted || false);
+  }
+
+  const inviteUserById = async (userId: number, fullName: string) => {
+    let res = await inviteUser(brick.id, userId);
+    props.submit(fullName, accessGranted || false);
+    props.close();
   }
 
   const onNext = () => {
     if (isValid && editor) {
-      saveEditor(editor.id, editor.firstName);
+      if (accessGranted) {
+        saveEditor(editor.id, editor.firstName);
+        props.close();
+      } else {
+        inviteUserById(editor.id, editor.firstName);
+      }
     }
-    props.close();
   };
 
   const onBlur = async () => {
@@ -60,6 +71,22 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
     onBlur();
   }, [brick]);
 
+  const renderSendButton = () => {
+    return (
+      <button
+        className="btn btn-md bg-theme-orange yes-button"
+        style={{width: 'auto', paddingLeft: '4vw'}}
+        onClick={onNext}
+      >
+        Send Invite
+        <svg className="svg active send-icon" onClick={props.close}>
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#send"} />
+        </svg>
+      </button>
+    );
+  }
+
   return (
     <Dialog
       open={props.isOpen}
@@ -81,7 +108,7 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
               disabled={!props.canEdit}
               value={editorUsername}
               onChange={(evt) => setEditorUsername(evt.target.value)}
-              onBlur={(evt) => onBlur()}
+              onBlur={() => onBlur()}
               placeholder="Enter editor's username here..."
               error={editorError !== ""}
               helperText={editorError}
@@ -99,17 +126,7 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
       </div>
       <div style={{marginTop: '1.8vh'}}></div>
       <div className="dialog-footer" style={{justifyContent: 'center'}}>
-        <button
-          className="btn btn-md bg-theme-orange yes-button"
-          style={{width: 'auto', paddingLeft: '4vw'}}
-          onClick={onNext}
-        >
-          Send Invite
-          <svg className="svg active send-icon" onClick={props.close}>
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#send"} />
-          </svg>
-        </button>
+        {renderSendButton()}
       </div>
     </Dialog>
   );
