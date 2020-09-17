@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import "./BuildCompletePage.scss";
 import sprite from "assets/img/icons-sprite.svg";
-import { Brick, BrickStatus } from "model/brick";
+import { Brick } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 import Clock from "components/play/baseComponents/Clock";
