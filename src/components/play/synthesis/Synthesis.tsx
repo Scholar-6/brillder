@@ -108,8 +108,6 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
             </div>
             <span>{renderSpendTime()}</span>
           </div>
-        </div>
-        <div className="introduction-page">
           {renderSynthesisContent()}
         </div>
         {renderFooter()}
@@ -118,7 +116,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   }
 
   return (
-    <div>
+    <div style={{height: '100%'}}>
       <Hidden only={['xs']}>
         <div className="brick-container play-preview-panel synthesis-page">
           <Grid container direction="row">
