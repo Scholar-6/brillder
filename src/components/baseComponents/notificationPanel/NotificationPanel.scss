@@ -7,7 +7,7 @@
     background: inherit;
   }
   .MuiCardContent-root {
-    padding: 1vw !important;
+    padding: 1vw 1vw 0 1vw !important;
   }
   .MuiPopover-paper {
     @include phone_and_tabletP {
@@ -62,15 +62,35 @@
           @extend %flexAlignCenter;
           .left-brick-circle {
             cursor: pointer;
-            .MuiSvgIcon-fontSizeLarge {
-              font-size: 2.8rem;
+            font-size: 2vw;
+            width: 3vw;
+            height: 3vw;
+            @extend %radCircle;
+            margin-right: 0.5vw;
+            .svg {
+              color: var(--white);
+            }
+            &.generic {
+              background-color: #bdc2c8;
+            }
+            &.submitted-for-review {
+              background-color: #ff9800;
+            }
+            &.published {
+              background-color: #00c86b;
+            }
+            &.assigned-to-edit {
+              background-color: #d42c24;
+            }
+            &.new-comment {
+              background-color: #006bfd;
             }
           }
           .content-box {
             cursor: pointer;
             display: flex;
             justify-content: space-between;
-            width: calc(100% - 56px);
+            width: calc(100% - 3.5vw);
             .notification-detail {
               border-bottom: 0.02vh solid var(--theme-dark-blue);
               padding: 0.5vw 0;
