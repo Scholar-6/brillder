@@ -83,18 +83,29 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
   }
 
   const renderSpendTime = () => {
-    return <div>Aim to spend {getSpendTime()} minutes on this section.</div>;
+    return <p><span>Aim to spend {getSpendTime()} minutes on this section.</span></p>;
   }
 
   const renderMobile = () => {
+    let color = "#B0B0AD";
+
+    if (brick.subject) {
+      color = brick.subject.color;
+    }
+
     return (
-      <div className="brick-container play-preview-panel synthesis-page mobile-synthesis-page">
-        <div className="introduction-info">
-          <div className="intro-header">
-            <BrickCounter isArrowUp={true} startTime={startTime} />
-          </div>
-          <div className="intro-text-row">
-            <span className="heading">Synthesis</span>
+      <div className="brick-container synthesis-page mobile-synthesis-page">
+        <div className="introduction-page">
+          <div className="intro-header expanded-intro-header">
+            <div className="intro-header">
+              <BrickCounter isArrowUp={true} startTime={startTime} />
+            </div>
+            <div className="flex f-align-center">
+              <div className="left-brick-circle">
+                <div className="round-button" style={{ background: `${color}` }}></div>
+              </div>
+              <h1 style={{textTransform: 'uppercase'}}>Synthesis</h1>
+            </div>
             <span>{renderSpendTime()}</span>
           </div>
         </div>
