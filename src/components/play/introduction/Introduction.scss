@@ -691,6 +691,11 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
       }
       &.synthesis-page {
+        .introduction-info .intro-text-row {
+          @include phone_and_tabletP {
+            padding-top: 3vw !important;
+          }
+        }
         .introduction-page {
           h1 {
             text-transform: capitalize;

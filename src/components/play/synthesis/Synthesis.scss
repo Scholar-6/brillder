@@ -50,17 +50,6 @@
   .MuiTypography-root {
     width: 100% !important;
   }
-
-  &.mobile-synthesis-page {
-    height: calc(100vh - 6vh) !important;
-    position: relative;
-    overflow-y: inherit !important;
-
-    h1 {
-      position: absolute !important;
-      top: 0.2vw !important;
-    }
-  }
 }
 
 .cuting-line {
