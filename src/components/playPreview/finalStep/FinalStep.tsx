@@ -3,6 +3,7 @@ import { Grid, Hidden } from "@material-ui/core";
 import queryString from 'query-string';
 import { connect } from "react-redux";
 
+import map from 'components/map';
 import actions from 'redux/actions/requestFailed';
 import "./FinalStep.scss";
 import sprite from "assets/img/icons-sprite.svg";
@@ -40,7 +41,7 @@ interface FinalStepProps {
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
-  user, brick, location, requestFailed
+  user, brick, location, history, requestFailed
 }) => {
   const [shareOpen, setShare] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
@@ -133,7 +134,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 </div>
                 <div className="intro-text-row">
                 </div>
-                <ExitButton onClick={() => {}} />
+                <ExitButton onClick={() => history.push(map.BackToWorkPage)} />
               </div>
             </Grid>
           </Grid>
@@ -146,7 +147,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
           </div>
           <div className="introduction-page">
           </div>
-          <ExitButton onClick={() => {}} />
+          <ExitButton onClick={() => history.push(map.BackToWorkPage)} />
         </div>
       </Hidden>
       <LinkDialog
