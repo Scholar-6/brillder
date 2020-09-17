@@ -75,6 +75,14 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
     onBlur();
   }, [brick]);
 
+  const renderCustomText = () => {
+    let name = 'Name';
+    if (editorUsername) {
+      name = editorUsername;
+    }
+    return `Allow “${name}” to comment on the build panels of your brick`;
+  }
+
   const renderSendButton = () => {
     return (
       <button
@@ -107,10 +115,11 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
         <div className="title left">Who would you like to invite to play this brick?</div>
         <div style={{marginTop: '1.8vh'}}></div>
         <Grid item className="input-container">
-          <div className="audience-inputs">
+          <div className="audience-inputs border-rounded">
             <TextField
               disabled={!props.canEdit}
               value={editorUsername}
+              style={{background: 'inherit'}}
               onChange={(evt) => setEditorUsername(evt.target.value)}
               onBlur={() => onBlur()}
               placeholder="Enter editor's username here..."
@@ -122,7 +131,7 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
         </Grid>
         <div style={{marginTop: '1.8vh'}}></div>
         <div className="title left">Grant editing access?</div>
-        <div className="text left">Allow “Name” to comment on the build panels of your brick</div>
+        <div className="text left">{renderCustomText()}</div>
         <div className="title left">
           Yes <Radio className="white" checked={accessGranted === true} style={{marginRight: '4vw'}} onClick={() => setAccess(true)} />
           No <Radio className="white" checked={accessGranted === false} onClick={() => setAccess(false)} />
