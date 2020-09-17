@@ -12,6 +12,7 @@ import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/proposal/model';
 import { getPlayPath, getAssignQueryString } from '../service';
+import BrickCounter from '../baseComponents/BrickCounter';
 const moment = require('moment');
 
 interface SynthesisProps {
@@ -48,6 +49,20 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     return timeMinutes;
   }
 
+  const renderSynthesisContent = () => {
+    return (
+      <div className="synthesis-content">
+        <HighlightHtml mode={props.mode} value={brick.synthesis} onHighlight={
+          value => {
+            if (props.onHighlight) {
+              props.onHighlight(BrickFieldNames.synthesis, value);
+            }
+          }
+        } />
+      </div>
+    );
+  }
+
   const renderFooter = () => {
     return (
       <div className="action-footer">
@@ -67,22 +82,26 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
     );
   }
 
-  const renderSynthesis = () => {
+  const renderSpendTime = () => {
+    return <div>Aim to spend {getSpendTime()} minutes on this section.</div>;
+  }
+
+  const renderMobile = () => {
     return (
-      <div className="introduction-page">
-        <h1 className="title">Synthesis</h1>
-        <Hidden only={['xs']}>
-          <hr className="cuting-line"></hr>
-        </Hidden>
-        <div className="synthesis-content">
-          <HighlightHtml mode={props.mode} value={brick.synthesis} onHighlight={
-            value => {
-              if (props.onHighlight) {
-                props.onHighlight(BrickFieldNames.synthesis, value);
-              }
-            }
-          } />
+      <div className="brick-container play-preview-panel synthesis-page mobile-synthesis-page">
+        <div className="introduction-info">
+          <div className="intro-header">
+            <BrickCounter isArrowUp={true} startTime={startTime} />
+          </div>
+          <div className="intro-text-row">
+            <span className="heading">Synthesis</span>
+            <span>{renderSpendTime()}</span>
+          </div>
         </div>
+        <div className="introduction-page">
+          {renderSynthesisContent()}
+        </div>
+        {renderFooter()}
       </div>
     );
   }
@@ -93,13 +112,17 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
         <div className="brick-container play-preview-panel synthesis-page">
           <Grid container direction="row">
             <Grid item xs={8}>
-              {renderSynthesis()}
+              <div className="introduction-page">
+                <h1 className="title">Synthesis</h1>
+                <hr className="cuting-line"></hr>
+                {renderSynthesisContent()}
+              </div>
             </Grid>
             <Grid item xs={4}>
               <div className="introduction-info">
                 <TimerWithClock isArrowUp={true} startTime={startTime} brickLength={brick.brickLength} />
                 <div className="intro-text-row">
-                  <div>Aim to spend {getSpendTime()} minutes on this section.</div>
+                  {renderSpendTime()}
                   <br />
                   <p>When you’re ready to move on, you will have</p>
                   <p>3 minutes to try to improve your score.</p>
@@ -111,10 +134,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
         </div>
       </Hidden>
       <Hidden only={['sm', 'md', 'lg', 'xl']}>
-        <div className="brick-container play-preview-panel synthesis-page mobile-synthesis-page">
-          {renderSynthesis()}
-          {renderFooter()}
-        </div>
+        {renderMobile()}
       </Hidden>
     </div>
   );

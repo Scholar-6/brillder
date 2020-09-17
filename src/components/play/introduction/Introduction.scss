@@ -653,6 +653,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
       }
       &.live-page,
+      &.synthesis-page,
       &.review-page {
         .introduction-info {
           .intro-text-row {
@@ -704,16 +705,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
           }
           @include tabletP {
             margin: 12vh 3vw 1vw 4vw;
-          }
-        }
-        .introduction-info {
-          .intro-text-row {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-10vh);
-            margin: 0;
-            width: 100%;
           }
         }
       }
