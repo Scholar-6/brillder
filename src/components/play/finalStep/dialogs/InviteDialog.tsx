@@ -86,7 +86,7 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
   const renderSendButton = () => {
     return (
       <button
-        className="btn btn-md bg-theme-orange yes-button"
+        className="btn bold btn-md bg-theme-orange yes-button"
         style={{width: 'auto', paddingLeft: '4vw'}}
         onClick={onNext}
       >
@@ -105,13 +105,13 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
       onClose={props.close}
       className="dialog-box light-blue unlimited"
     >
-      <div className="close-button">
+      <div className="close-button" style={{width: '1.5vw', height: '1.5vw'}}>
         <svg className="svg active" onClick={props.close}>
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#cancel-thick"} />
         </svg>
       </div>
-      <div className="dialog-header">
+      <div className="dialog-header" style={{minWidth: '30vw'}}>
         <div className="title left">Who would you like to invite to play this brick?</div>
         <div style={{marginTop: '1.8vh'}}></div>
         <Grid item className="input-container">
@@ -131,7 +131,7 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
         </Grid>
         <div style={{marginTop: '1.8vh'}}></div>
         <div className="title left">Grant editing access?</div>
-        <div className="text left">{renderCustomText()}</div>
+        <div className="text left" style={{marginBottom: '1.8vh'}}>{renderCustomText()}</div>
         <div className="title left">
           Yes <Radio className="white" checked={accessGranted === true} style={{marginRight: '4vw'}} onClick={() => setAccess(true)} />
           No <Radio className="white" checked={accessGranted === false} onClick={() => setAccess(false)} />
