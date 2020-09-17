@@ -5,8 +5,10 @@ import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 import Desmos from 'desmos';
 
 import './Graph.scss';
-import { Button } from '@material-ui/core';
+import { Button, SvgIcon, Tooltip } from '@material-ui/core';
 import GraphDialog from './GraphDialog';
+
+import sprite from 'assets/img/icons-sprite.svg';
 
 export interface GraphSettings {
     showSidebar: boolean;
@@ -115,13 +117,60 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
             setGraphState={setGraphState}
             setGraphSettings={setGraphSettings}
         />
-        <ToggleButtonGroup value={getGraphSettings()} onChange={setGraphSetting}>
-            {Object.keys(graphSettings).map(key =>
-            <ToggleButton key={key} value={key} disabled={key === "pointsOfInterest" && !graphSettings.trace}>
-                {settingsStrings[key]}
-            </ToggleButton>
-            )}
-        </ToggleButtonGroup>
+        <div className="question-component-graph-settings">
+            <ToggleButtonGroup size="large" value={getGraphSettings()} onChange={setGraphSetting}>
+                <ToggleButton value="allowPanning">
+                    <Tooltip title="Allow Pan / Zoom">
+                        <SvgIcon fontSize="default">
+                            <svg className="svg active">
+                                {/*eslint-disable-next-line*/}
+                                <use href={sprite + "#feather-search"} />
+                            </svg>
+                        </SvgIcon>
+                    </Tooltip>
+                </ToggleButton>
+                <ToggleButton value="showSidebar">
+                    <Tooltip title="Show Expressions">
+                        <SvgIcon fontSize="large">
+                            <svg className="svg active" viewBox="0 0 24 24">
+                                {/*eslint-disable-next-line*/}
+                                <text x="50%" y="55%" className="fx" dominantBaseline="middle">f(x)</text>
+                            </svg>
+                        </SvgIcon>
+                    </Tooltip>
+                </ToggleButton>
+                <ToggleButton value="trace">
+                    <Tooltip title="Allow Tracing">
+                        <SvgIcon fontSize="large">
+                            <svg className="svg active" viewBox="0 0 24 24">
+                                {/*eslint-disable-next-line*/}
+                                <use href={sprite + "#graph-tracing"} />
+                            </svg>
+                        </SvgIcon>
+                    </Tooltip>
+                </ToggleButton>
+                <ToggleButton value="pointsOfInterest" disabled={!graphSettings.trace}>
+                    <Tooltip title="Show Points of Interest">
+                        <SvgIcon fontSize="large">
+                            <svg className="svg active" viewBox="0 0 24 24">
+                                {/*eslint-disable-next-line*/}
+                                <use href={sprite + "#graph-poi"} />
+                            </svg>
+                        </SvgIcon>
+                    </Tooltip>
+                </ToggleButton>
+                <ToggleButton value="showSettings">
+                    <Tooltip title="Show Graph Settings">
+                        <SvgIcon fontSize="default">
+                            <svg className="svg active">
+                                {/*eslint-disable-next-line*/}
+                                <use href={sprite + "#settings"} />
+                            </svg>
+                        </SvgIcon>
+                    </Tooltip>
+                </ToggleButton>
+            </ToggleButtonGroup>
+        </div>
     </div>
     )
 }
