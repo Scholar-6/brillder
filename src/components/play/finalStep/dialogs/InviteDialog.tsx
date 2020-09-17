@@ -34,8 +34,12 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
   }
 
   const inviteUserById = async (userId: number, fullName: string) => {
-    let res = await inviteUser(brick.id, userId);
-    props.submit(fullName, accessGranted || false);
+    let success = await inviteUser(brick.id, userId);
+    if (success) {
+      props.submit(fullName, accessGranted || false);
+    } else {
+      // failed
+    }
     props.close();
   }
 
