@@ -34,7 +34,7 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
 
   const onNext = () => {
     if (isValid && editor) {
-      saveEditor(editor.id, editor.firstName + ' ' + editor.lastName);
+      saveEditor(editor.id, editor.firstName);
     }
     props.close();
   };
