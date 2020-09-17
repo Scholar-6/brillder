@@ -44,11 +44,9 @@ class AssignedBricks extends Component<AssignedBricksProps> {
   renderBrick(item: AssignmentBrickData) {
     const color = this.getColor(item);
     let circleIcon = '';
-    console.log(item.isInvitation);
     if (item.isInvitation) {
       circleIcon="users";
     }
-
     return <BrickBlock
       brick={item.brick}
       index={item.index}
@@ -71,7 +69,6 @@ class AssignedBricks extends Component<AssignedBricksProps> {
     if (item.isInvitation) {
       circleIcon="users";
     }
-    console.log(item.isInvitation);
 
     return <BrickBlock
       brick={item.brick}
