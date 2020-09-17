@@ -1,7 +1,7 @@
 import { User, UserProfile, UserType, UserStatus } from 'model/user';
 
 export const isValid = (user: UserProfile) => {
-  if (user.firstName && user.lastName && user.email && user.password) {
+  if (user.firstName && user.lastName && user.email) {
     return true;
   }
   return false;
