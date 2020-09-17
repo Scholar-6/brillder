@@ -128,7 +128,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
                     </SvgIcon>
                 </Fab>
             </Tooltip>
-            <ToggleButtonGroup size="large" value={getGraphSettings()} onChange={setGraphSetting}>
+            <ToggleButtonGroup size="medium" value={getGraphSettings()} onChange={setGraphSetting}>
                 <ToggleButton value="allowPanning">
                     <Tooltip title="Allow Pan / Zoom">
                         <SvgIcon fontSize="default">
