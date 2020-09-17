@@ -7,6 +7,7 @@
 
   .MuiRadio-root {
     color: rgba(0, 0, 0, 0.54);
+    color: var(--theme-dark-blue) !important;
   }
 
   .MuiIconButton-root.MuiRadio-colorSecondary.Mui-checked {
