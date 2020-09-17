@@ -104,17 +104,44 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                 <li key={notification.id}>
                   <div className={"left-brick-circle svgOnHover " + notificationTypeColors[notification.type]}
                     onClick={() => this.move(notification)}>
+                    {notification.type === NotificationType.Generic ?
+                      ""
+                      :
+                      ""
+                    }
+                    {notification.type === NotificationType.BrickSubmittedForReview ?
+                      <svg className="svg w60 h60 active">
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#message-square"} />
+                      </svg>
+                      :
+                      ""
+                    }
                     {notification.type === NotificationType.AssignedToEdit ?
                       <svg className="svg w60 h60 active">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#edit-outline"}/>
                       </svg>
                       :
+                      ""
+                    }
+                    {notification.type === NotificationType.BrickPublished ?
                       <svg className="svg w60 h60 active">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#award"} />
                       </svg>
+                      :
+                      ""
                     }
+                    {notification.type === NotificationType.NewCommentOnBrick ?
+                      <svg className="svg w60 h60 active">
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#message-square"} />
+                      </svg>
+                      :
+                      ""
+                    }
+
                   </div>
                   <div className="content-box" onClick={() => this.move(notification)}>
                     <div className="notification-detail">
