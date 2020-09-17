@@ -357,4 +357,26 @@
   <svg id="activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
   </svg>
+  <svg id="feather-search" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+  <svg id="settings" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="3"></circle>
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+  </svg>
+  <svg id="graph-tracing" height="24" width="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+    <circle r="2.6861653" cy="13.717236" cx="15.783906" fill="currentColor" stroke="none" />
+    <path d="M 20.655637,11.728432 22.649712,8.2733517" />
+    <path d="m 19.925134,9.0038543 2.724578,-0.7305026 0.730502,2.7245773" />
+    <path d="m 16.265704,18.681974 -1.994075,3.45508" />
+    <path d="m 16.996207,21.406551 -2.724578,0.730503 -0.730502,-2.724578"/>
+    <path d="m 0.64468017,2.2426048 c 0,0 5.11983113,16.6377722 10.02342583,16.6377722 4.903595,0 9.591625,-16.6377722 9.591625,-16.6377722" />
+  </svg>
+  <svg id="graph-poi" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+    <line y1="18.346716" x2="23.739717" x1="0.32480454" y2="6.6392584" />
+    <circle cx="17.235577" cy="9.8190613" r="2.3125842" fill="currentColor" stroke="none" />
+    <circle cx="5.9617281" cy="15.311449" r="2.3125842" fill="currentColor" stroke="none" />
+    <path d="m 1.6001625,4.4712083 c 0,0 4.4077853,14.3238567 8.6294075,14.3238567 4.221622,0 8.25766,-14.3238567 8.25766,-14.3238567" />
+  </svg>
 </svg>
