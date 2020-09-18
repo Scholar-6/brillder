@@ -130,13 +130,15 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
             />
           </div>
         </Grid>
-        <div style={{marginTop: '1.8vh'}}></div>
-        <div className="title left">Grant editing access?</div>
-        <div className="text left" style={{marginBottom: '1.8vh'}}>{renderCustomText()}</div>
         {props.hideAccess ? "" :
-        <div className="title left">
-          Yes <Radio className="white" checked={accessGranted === true} style={{marginRight: '4vw'}} onClick={() => setAccess(true)} />
-          No <Radio className="white" checked={accessGranted === false} onClick={() => setAccess(false)} />
+        <div>
+          <div style={{marginTop: '1.8vh'}}></div>
+          <div className="title left">Grant editing access?</div>
+          <div className="text left" style={{marginBottom: '1.8vh'}}>{renderCustomText()}</div>
+          <div className="title left">
+            Yes <Radio className="white" checked={accessGranted === true} style={{marginRight: '4vw'}} onClick={() => setAccess(true)} />
+            No <Radio className="white" checked={accessGranted === false} onClick={() => setAccess(false)} />
+          </div>
         </div>}
       </div>
       <div style={{marginTop: '1.8vh'}}></div>
