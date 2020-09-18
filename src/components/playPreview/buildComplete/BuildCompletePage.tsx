@@ -82,26 +82,26 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                 <p className="complete-brick-name">
                   What would you like to do with <span className="bold uppercase">‘{brick.title}’</span>?
                 </p>
-                <div className="radio-container">
-                  <Radio checked={this.state.isCore === false} onClick={() => this.setState({isCore: false})} />
-                  <span className="radio-text">Keep Control</span>
+                <div className="radio-container" onClick={() => this.setState({isCore: false})}>
+                  <Radio checked={this.state.isCore === false} />
+                  <span className="radio-text pointer">Keep Control</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#key"} />
                   </svg>
                 </div>
-                <div className="inner-radio-text">
+                <div className="inner-radio-text pointer" onClick={() => this.setState({isCore: false})}>
                   Share on your favourite platforms, invite anyone to play or comment
                 </div>
-                <div className="radio-container">
-                  <Radio checked={this.state.isCore === true} onClick={()=> this.setState({isCore: true})} />
+                <div className="radio-container pointer" onClick={()=> this.setState({isCore: true})} >
+                  <Radio checked={this.state.isCore === true} />
                   <span className="radio-text">Educate the World</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#globe"} />
                   </svg>
                 </div>
-                <div className="inner-radio-text">
+                <div className="inner-radio-text pointer" onClick={()=> this.setState({isCore: true})}>
                   All the above and more: submit to a subject specialist, receive editorial feedback,
                   be considered for our core library and paid for your work!
                 </div>
