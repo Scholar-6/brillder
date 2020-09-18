@@ -182,7 +182,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
           {/* eslint-disable-next-line */}
           {(this.props.notifications && this.props.notifications.length != 0) &&
             <CardActions className="clear-notification">
-              <div>Clear All</div>
+              <div className="bold">Clear All</div>
               <IconButton aria-label="clear-all" onClick={() => this.markAllAsRead()}>
                 <SvgIcon>
                   <svg className="svg text-white">

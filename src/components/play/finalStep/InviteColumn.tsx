@@ -22,7 +22,7 @@ const InviteColumn: React.FC<InviteProps> = props => {
         </div>
         <div className="link-text">Invite</div>
         <div className="link-description">
-          {props.firstLabel ? props.firstLabel : "finternal users"}
+          {props.firstLabel ? props.firstLabel : "internal users"}
         </div>
         <div className="link-description">
           {props.secondLabel ? props.secondLabel : "to play this brick"}

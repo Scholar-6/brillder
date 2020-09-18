@@ -77,10 +77,10 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
 
   const renderCustomText = () => {
     let name = 'Name';
-    if (editorUsername) {
-      name = editorUsername;
+    if (editor) {
+      name = editor.firstName;
     }
-    return `Allow “${name}” to comment on the build panels of your brick`;
+    return `Allow ${name} to comment on the build panels of your brick`;
   }
 
   const renderSendButton = () => {
