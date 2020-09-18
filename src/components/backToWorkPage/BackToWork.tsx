@@ -13,8 +13,6 @@ import { User } from "model/user";
 import { Subject } from "model/brick";
 import { checkTeacher } from "components/services/brickService";
 import { loadSubjects, getGeneralSubject } from 'components/services/subject';
-import { TeachClassroom } from "model/classroom";
-import { getAllClassrooms } from "components/teach/service";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import { ActiveTab } from './components/Tab';
@@ -33,9 +31,6 @@ interface BackToWorkState {
   subjects: Subject[];
 
   isTeach: boolean;
-
-  classrooms: TeachClassroom[];
-  activeClassroom: TeachClassroom | null;
 }
 
 export interface BackToWorkProps {
@@ -66,10 +61,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       notificationsShown: false,
 
       generalSubjectId: -1,
-
-      // Play, Teach
-      classrooms: [],
-      activeClassroom: null,
     };
 
     loadSubjects().then((subjects: Subject[] | null) => {
@@ -83,14 +74,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         generalSubjectId = generalSubject.id;
       }
       this.setState({ generalSubjectId, subjects });
-    });
-
-    getAllClassrooms().then((classrooms: any) => {
-      if (classrooms) {
-        this.setState({ classrooms: classrooms as TeachClassroom[] });
-      } else {
-        this.props.requestFailed('Can`t get classrooms');
-      }
     });
 
     if (props.location.pathname === '/back-to-work') {
@@ -122,15 +105,8 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
   }
 
   setTab(activeTab: ActiveTab) {
-    this.deactivateClassrooms();
     const link = getTabLink(activeTab);
     this.props.history.push(link);
-  }
-
-  deactivateClassrooms() {
-    for (let classroom of this.state.classrooms) {
-      classroom.active = false;
-    }
   }
 
   searching(searchString: string) {
@@ -182,7 +158,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           <Route path={map.BackToWorkLearnTab}>
             <PlayPage
               history={this.props.history}
-              classrooms={this.state.classrooms}
               generalSubjectId={this.state.generalSubjectId}
               setTab={this.setTab.bind(this)}
             />
