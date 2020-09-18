@@ -18,7 +18,6 @@ import { Comment } from 'model/comments';
 import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { User } from 'model/user';
-import user from 'redux/reducers/user';
 
 
 function SplitByCapitalLetters(element: string): string {

@@ -1,5 +1,3 @@
-import { ActiveTab } from "./backToWorkPage/components/Tab";
-
 export const Login = '/login';
 export const Build = '/build';
 export const ProposalBase = `${Build}/new-brick`;
