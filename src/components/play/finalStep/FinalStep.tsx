@@ -4,7 +4,6 @@ import { Grid, Hidden } from "@material-ui/core";
 import "./FinalStep.scss";
 import sprite from "assets/img/icons-sprite.svg";
 import { Brick } from "model/brick";
-import { PlayStatus } from "../model";
 
 import Clock from "../baseComponents/Clock";
 import ShareDialog from './dialogs/ShareDialog';
@@ -13,22 +12,38 @@ import LinkCopiedDialog from './dialogs/LinkCopiedDialog';
 import ShareColumn from "./ShareColumn";
 import InviteColumn from "./InviteColumn";
 import ExitButton from "./ExitButton";
+import InviteDialog from "./dialogs/InviteDialog";
+import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
+import { User } from "model/user";
 
 interface FinalStepProps {
-  status: PlayStatus;
   brick: Brick;
   history: any;
+  user: User;
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
   brick,
+  user,
   history,
 }) => {
   const [shareOpen, setShare] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
+  const [inviteOpen, setInvite] = React.useState(false);
 
   const link = `/play/brick/${brick.id}/intro`;
+
+  const [inviteSuccess, setInviteSuccess] = React.useState({
+    isOpen: false,
+    accessGranted: false,
+    name: ''
+  });
+
+  let isAuthor = false;
+  try {
+    isAuthor = brick.author.id === user.id;
+  } catch {}
 
   return (
     <div>
@@ -50,7 +65,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                   <p>Well done for completing “{brick.title}”!</p>
                   <Grid className="share-row" container direction="row" justify="center">
                     <ShareColumn onClick={() => setShare(true)} />
-                    <InviteColumn onClick={()=>{}} />
+                    <InviteColumn onClick={()=> setInvite(true)} />
                   </Grid>
                 </div>
               </div>
@@ -82,6 +97,14 @@ const FinalStep: React.FC<FinalStepProps> = ({
         isOpen={linkOpen} link={document.location.host + link}
         submit={() => setCopiedLink(true)} close={() => setLink(false)}
       />
+      <InviteDialog
+        canEdit={true} brick={brick} isOpen={inviteOpen} hideAccess={true}
+        submit={(name, accessGranted) => { setInviteSuccess({ isOpen: true, name, accessGranted: false }); }}
+        close={() => setInvite(false)} />
+      <InvitationSuccessDialog
+        isAuthor={isAuthor}
+        isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={inviteSuccess.accessGranted}
+        close={() => setInviteSuccess({ isOpen: false, name: '', accessGranted: false })} />
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
     </div>
