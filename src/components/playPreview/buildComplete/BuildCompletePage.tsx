@@ -84,14 +84,14 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                 </p>
                 <div className="radio-container">
                   <Radio checked={this.state.isCore === false} onClick={() => this.setState({isCore: false})} />
-                  <span className="radio-text">Keep it Personal</span>
+                  <span className="radio-text">Keep Control</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#key"} />
                   </svg>
                 </div>
                 <div className="inner-radio-text">
-                  Bask in your own glory, share on your favourite platforms, invite anyone to play or edit<span className="text-theme-orange">*</span>
+                  Share on your favourite platforms, invite anyone to play or comment
                 </div>
                 <div className="radio-container">
                   <Radio checked={this.state.isCore === true} onClick={()=> this.setState({isCore: true})} />
@@ -102,12 +102,11 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                   </svg>
                 </div>
                 <div className="inner-radio-text">
-                  All the above and more: submit your brick to a subject specialist, receive editorial feedback,
-                  have the chance to be published in our core library and be paid for your work!<span className="text-theme-orange">*</span>
+                  All the above and more: submit to a subject specialist, receive editorial feedback,
+                  be considered for our core library and paid for your work!
                 </div>
                 <div className="inner-radio-text last-one">
-                  <span className="text-theme-orange">*</span>No time wasters and trouble makers please: users found to breach our <span className="bold">submission guidelines</span> for
-                  appropriate content may be blocked from Brillder and/or reported to relevant authorities.
+                  Users who breach our <span className="bold">submission guidelines</span> for appropriate content may be blocked from Brillder and/or reported to relevant authorities.
                 </div>
               </div>
             </div>
