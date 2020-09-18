@@ -30,16 +30,12 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
   }
 
   async moveNext() {
-    let link = `/play-preview/brick/${this.props.brick.id}/finalStep`;
-    if (this.state.isCore) {
-      link += '?isCore=true';
-    }
     let success = await setCoreLibrary(this.props.brick.id, this.state.isCore);
     if (success) {
       this.props.brick.isCore = this.state.isCore;
-      this.props.history.push(link);
+      this.props.history.push(`/play-preview/brick/${this.props.brick.id}/finalStep`);
     } else {
-      this.props.requestFailed('Can`t set library');
+      this.props.requestFailed('Can`t set brick library');
     }
   }
   
