@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
-import queryString from 'query-string';
 import { connect } from "react-redux";
 
 import map from 'components/map';
@@ -24,7 +23,6 @@ import InviteColumn from "components/play/finalStep/InviteColumn";
 import PublishColumn from './PublishColumn';
 import SimpleDialog from "components/baseComponents/dialogs/SimpleDialog";
 import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
-import { ActiveTab } from "components/backToWorkPage/components/Tab";
 
 enum PublishStatus {
   None,
@@ -55,6 +53,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
     accessGranted: false,
     name: ''
   });
+
+
+  let isAuthor = false;
+  try {
+    isAuthor = brick.author.id === user.id;
+  } catch {}
 
   const isAdmin = checkAdmin(user.roles);
 
@@ -163,6 +167,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         submit={(name, accessGranted) => { setInviteSuccess({ isOpen: true, name, accessGranted }); }}
         close={() => setInvite(false)} />
       <InvitationSuccessDialog
+        isAuthor={isAuthor}
         isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={inviteSuccess.accessGranted}
         close={() => setInviteSuccess({ isOpen: false, name: '', accessGranted: false })} />
       <SimpleDialog
