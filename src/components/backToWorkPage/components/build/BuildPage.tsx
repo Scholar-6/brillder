@@ -143,7 +143,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
         if (bricks) {
           let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
           bs = bs.sort(b => (b.editor && b.editor.id === this.props.user.id) ? -1 : 1);
-          bs = bs.sort(b => b.hasNotifications === true ? -1 : 1);
+          bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
           this.setBricks(bs);
         } else {
           this.props.requestFailed('Can`t get bricks');
