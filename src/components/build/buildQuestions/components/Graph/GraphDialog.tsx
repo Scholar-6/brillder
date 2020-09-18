@@ -20,14 +20,12 @@ const GraphDialog: React.FC<GraphDialogProps> = props => {
   const graphRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    console.log(graphRef);
     if(graphRef && graphRef.current) {
       var elt = graphRef.current;
       var calculator = Desmos.GraphingCalculator(elt, {
         fontSize: Desmos.FontSizes.VERY_SMALL,
         administerSecretFolders: true
       });
-      console.log(calculator);
       if(props.graphState) {
         calculator.setState(props.graphState);
       }
