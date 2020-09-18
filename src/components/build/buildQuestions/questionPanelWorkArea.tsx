@@ -106,7 +106,6 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
       const latestAuthor = replies[0].author.id;
       while (currentIndex < replies.length
         && replies[currentIndex].author.id === latestAuthor) {
-        console.log(replies[currentIndex]);
         currentIndex += 1;
       }
       const isCurrentUser = latestAuthor === props.currentUser.id;
