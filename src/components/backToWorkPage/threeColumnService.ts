@@ -1,5 +1,5 @@
 import { Brick, BrickStatus } from 'model/brick';
-import { AssignmentBrick, AssignmentBrickStatus } from 'model/assignment';
+import { AssignmentBrick } from 'model/assignment';
 import { ThreeColumns, ThreeAssignmentColumns, Filters, ThreeColumnNames, AssignmentBrickData } from './model';
 import {filterByStatus, filterByPrivate, filterByCore } from './service';
 
