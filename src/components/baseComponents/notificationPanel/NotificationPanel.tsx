@@ -12,7 +12,6 @@ import map from 'components/map';
 import { isMobile } from 'react-device-detect';
 import { checkTeacherEditorOrAdmin } from 'components/services/brickService';
 import { User } from 'model/user';
-import { ActiveTab } from 'components/backToWorkPage/components/Tab';
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
