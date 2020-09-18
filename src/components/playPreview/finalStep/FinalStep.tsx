@@ -24,6 +24,7 @@ import InviteColumn from "components/play/finalStep/InviteColumn";
 import PublishColumn from './PublishColumn';
 import SimpleDialog from "components/baseComponents/dialogs/SimpleDialog";
 import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
+import { ActiveTab } from "components/backToWorkPage/components/Tab";
 
 enum PublishStatus {
   None,
@@ -134,7 +135,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 </div>
                 <div className="intro-text-row">
                 </div>
-                <ExitButton onClick={() => history.push(map.BackToWorkPage)} />
+                <ExitButton onClick={() =>
+                  history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`)} />
               </div>
             </Grid>
           </Grid>

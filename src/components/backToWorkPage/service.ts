@@ -1,6 +1,8 @@
 import { Brick, BrickStatus } from 'model/brick';
 import { SortBy, Filters, ThreeColumns, AssignmentBrickData } from './model';
 import { AssignmentBrick } from "model/assignment";
+import { ActiveTab } from './components/Tab';
+import map from 'components/map';
 
 const getBrickById = (bricks: Brick[], brickId: number) => {
   return bricks.find(b => b.id === brickId);
@@ -158,4 +160,14 @@ export const prepareVisibleAssignments = (sortedIndex: number, pageSize: number,
     }
   }
   return data;
+}
+
+export const getTabLink = (activeTab: ActiveTab) => {
+  let link = map.BackToWorkBuildTab;
+  if (activeTab === ActiveTab.Teach) {
+    link = map.BackToWorkTeachTab;
+  } else if (activeTab === ActiveTab.Play) {
+    link = map.BackToWorkLearnTab;
+  }
+  return link;
 }
