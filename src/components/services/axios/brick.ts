@@ -1,6 +1,6 @@
 import { Brick, BrickStatus } from 'model/brick';
 
-import {get, post} from './index';
+import {get, put, post} from './index';
 
 /**
  * Get all bricks
@@ -57,6 +57,19 @@ export const publishBrick = async (brickId: number) => {
 export const inviteUser = async (brickId: number, userId: number) => {
   try {
     await post<Brick>(`/brick/inviteToBrick/${brickId}`, {userIds: [userId]});
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export const setCoreLibrary = async (brickId: number, isCore?: boolean) => {
+  try {
+    let core = false;
+    if (isCore) {
+      core = true;
+    }
+    await put<Brick>(`/brick/setCoreLibrary/${brickId}/${core}`, {});
     return true;
   } catch {
     return false;
