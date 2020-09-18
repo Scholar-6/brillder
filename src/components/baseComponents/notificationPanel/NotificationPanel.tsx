@@ -110,7 +110,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       ""
                     }
                     {notification.type === NotificationType.BrickSubmittedForReview ?
-                      <svg className="svg w60 h60 active">
+                      <svg className="svg w60 h60 active text-theme-dark-blue">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#message-square"} />
                       </svg>
@@ -118,7 +118,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       ""
                     }
                     {notification.type === NotificationType.AssignedToEdit ?
-                      <svg className="svg w60 h60 active">
+                      <svg className="svg w60 h60 active text-theme-dark-blue">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#edit-outline"}/>
                       </svg>
@@ -126,7 +126,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       ""
                     }
                     {notification.type === NotificationType.BrickPublished ?
-                      <svg className="svg w60 h60 active">
+                      <svg className="svg w60 h60 active text-theme-dark-blue">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#award"} />
                       </svg>
@@ -134,7 +134,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       ""
                     }
                     {notification.type === NotificationType.NewCommentOnBrick ?
-                      <svg className="svg w60 h60 active">
+                      <svg className="svg w60 h60 active text-theme-dark-blue">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#message-square"} />
                       </svg>
@@ -142,7 +142,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       ""
                     }
                     {notification.type === NotificationType.InvitedToPlayBrick ?
-                      <svg className="svg w60 h60 active" style={{marginLeft: '0.2vw'}}>
+                      <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginLeft: '0.2vw'}}>
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#play-thin"} />
                       </svg>
