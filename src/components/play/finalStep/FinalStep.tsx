@@ -99,7 +99,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       />
       <InviteDialog
         canEdit={true} brick={brick} isOpen={inviteOpen} hideAccess={true}
-        submit={(name, accessGranted) => { setInviteSuccess({ isOpen: true, name, accessGranted: false }); }}
+        submit={name => { setInviteSuccess({ isOpen: true, name, accessGranted: false }); }}
         close={() => setInvite(false)} />
       <InvitationSuccessDialog
         isAuthor={isAuthor}
