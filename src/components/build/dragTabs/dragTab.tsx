@@ -52,7 +52,7 @@ const DragTab: React.FC<DragTabProps> = ({
         {index + 1}
       </div>
       {
-        (replyType != 0) &&
+        (replyType !== 0) &&
         <div className={"unread-indicator svgOnHover active" + (replyType > 0 ? " has-replied" : "")}>
           <svg className="svg w100 h100 active" viewBox="0 0 24 24" stroke="none" fill="currentColor">
             <circle cx="12" cy="12" r="12" className="outer-circle" />

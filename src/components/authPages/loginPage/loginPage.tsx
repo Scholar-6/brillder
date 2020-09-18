@@ -168,7 +168,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
 
   const renderForm = () => {
     let className = 'content-box';
-    if (loginState != LoginState.ButtonsAnimation) {
+    if (loginState !== LoginState.ButtonsAnimation) {
         className += ' expanded';
     }
     return (
