@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import queryString from 'query-string';
 import { connect } from "react-redux";
+import { Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
 import "./BackToWork.scss";
+import map from 'components/map';
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { checkTeacher } from "components/services/brickService";
@@ -18,6 +21,7 @@ import { ActiveTab } from './components/Tab';
 import TeachPage from './components/teach/TeachPage';
 import BuildPage from './components/build/BuildPage';
 import PlayPage from './components/play/PlayPage';
+import { getTabLink } from "./service";
 
 interface BackToWorkState {
   searchString: string;
@@ -88,6 +92,10 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         this.props.requestFailed('Can`t get classrooms');
       }
     });
+
+    if (props.location.pathname === '/back-to-work') {
+      this.setAutoTab(isTeach);
+    }
   }
 
   getActiveTab(isTeach: boolean) {
@@ -107,9 +115,16 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return activeTab;
   }
 
+  setAutoTab(isTeach: boolean) {
+    const activeTab = this.getActiveTab(isTeach);
+    const link = getTabLink(activeTab);
+    this.props.history.push(link);
+  }
+
   setTab(activeTab: ActiveTab) {
     this.deactivateClassrooms();
-    this.setState({ activeTab });
+    const link = getTabLink(activeTab);
+    this.props.history.push(link);
   }
 
   deactivateClassrooms() {
@@ -134,53 +149,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, isSearching: true });
   }
 
-  renderTeach() {
-    if (this.state.activeTab !== ActiveTab.Teach) {
-      return "";
-    }
-    return <TeachPage
-      searchString={this.state.searchString}
-      isSearching={this.state.isSearching}
-      subjects={this.state.subjects}
-      setTab={this.setTab.bind(this)}
-    />;
-  }
-
-  renderBuild() {
-    if (this.state.activeTab !== ActiveTab.Build) {
-      return "";
-    }
-    if (this.state.generalSubjectId === - 1) {
-      return "";
-    }
-    return (
-      <BuildPage
-        isSearching={this.state.isSearching}
-        searchString={this.state.searchString}
-        generalSubjectId={this.state.generalSubjectId}
-        history={this.props.history}
-        setTab={this.setTab.bind(this)}
-      />
-    );
-  }
-
-  renderPlay() {
-    if (this.state.activeTab !== ActiveTab.Play) {
-      return "";
-    }
-    if (this.state.generalSubjectId === - 1) {
-      return "";
-    }
-    return (
-      <PlayPage
-        history={this.props.history}
-        classrooms={this.state.classrooms}
-        generalSubjectId={this.state.generalSubjectId}
-        setTab={this.setTab.bind(this)}
-      />
-    );
-  }
-
   render() {
     return (
       <div className="main-listing back-to-work-page">
@@ -192,9 +160,34 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           search={() => this.search()}
           searching={(v: string) => this.searching(v)}
         />
-        {this.renderTeach()}
-        {this.renderBuild()}
-        {this.renderPlay()}
+        <Switch>
+          <Route path={map.BackToWorkTeachTab}>
+            <TeachPage
+              searchString={this.state.searchString}
+              isSearching={this.state.isSearching}
+              subjects={this.state.subjects}
+              setTab={this.setTab.bind(this)}
+            />
+          </Route>
+          <Route path={map.BackToWorkBuildTab}>
+            <BuildPage
+              isSearching={this.state.isSearching}
+              searchString={this.state.searchString}
+              generalSubjectId={this.state.generalSubjectId}
+              location={this.props.location}
+              history={this.props.history}
+              setTab={this.setTab.bind(this)}
+            />
+          </Route>
+          <Route path={map.BackToWorkLearnTab}>
+            <PlayPage
+              history={this.props.history}
+              classrooms={this.state.classrooms}
+              generalSubjectId={this.state.generalSubjectId}
+              setTab={this.setTab.bind(this)}
+            />
+          </Route>
+        </Switch>
       </div>
     );
   }

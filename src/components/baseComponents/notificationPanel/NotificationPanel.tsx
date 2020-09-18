@@ -38,7 +38,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         history.push(map.ViewAllPage);
       } else if (notification.type === NotificationType.AssignedToEdit || notification.type === NotificationType.BrickSubmittedForReview) {
         if (notification.type === NotificationType.AssignedToEdit) {
-          window.location.href = map.BackToWorkPage + '?activeTab=' + ActiveTab.Build;
+          window.location.href = map.BackToWorkBuildTab;
         } else {
           history.push(map.BackToWorkPage);
         }

@@ -1,7 +1,14 @@
+import { ActiveTab } from "./backToWorkPage/components/Tab";
+
 export const Login = '/login';
 export const Build = '/build';
 export const ProposalBase = `${Build}/new-brick`;
 export const BackToWorkPage = '/back-to-work';
+
+export const BackToWorkTeachTab = BackToWorkPage + '/teach';
+export const BackToWorkBuildTab = BackToWorkPage + '/build';
+export const BackToWorkLearnTab = BackToWorkPage + '/learn';
+
 export const ViewAllPage = '/play/dashboard';
 
 export const InvestigationBuild = (brickId: number) => {
@@ -50,6 +57,10 @@ export default {
   ProposalReview,
 
   BackToWorkPage,
+  BackToWorkTeachTab,
+  BackToWorkBuildTab,
+  BackToWorkLearnTab,
+
   ViewAllPage,
 
   InvestigationBuild,
