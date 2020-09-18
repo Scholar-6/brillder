@@ -57,12 +57,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   const isAdmin = checkAdmin(user.roles);
 
-  let isPersonal = false;
-  const values = queryString.parse(location.search);
-  if (values.isPersonal) {
-    isPersonal = true;
-  }
-
   const link = `/play/brick/${brick.id}/intro`;
 
   const publish = async (brickId: number) => {
@@ -93,7 +87,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       size = 3;
     }
 
-    if (isPersonal) {
+    if (!brick.isCore) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
           <ShareColumn size={size} onClick={() => setShare(true)} />
