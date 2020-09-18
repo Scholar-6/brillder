@@ -60,3 +60,14 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## MAP
+/back-to-work       - auto redirect to build learn or teach tab based on user roles
+/back-to-work/learn - learn tab
+/back-to-work/build - build tab
+/back-to-work/teach - teach tab
+
+/play/dashboard        - view all page
+/build/new-brick - create new brick page
+/build/brick/{brickId}/build/investigation/question - investigation build page
