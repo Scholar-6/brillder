@@ -97,36 +97,37 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     }
   }
 
-  const getCommentCount = () => {
-    return props.comments?.filter(comment => // count comments...
-      (comment.question?.id ?? -1) === question.id && // on the correct question...
-      comment.readBy.filter(user => user.id === props.currentUser.id).length === 0 // and where it has not been read.
-    ).length ?? 0
-  }
-
   const getNumberOfReplies = () => {
     const replies = props.comments?.filter(comment => (comment.question?.id ?? -1) === question.id)
+      .map(getLatestChild)
       .sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
-    console.log(replies);
     if (replies && replies.length > 0) {
       let currentIndex = 0;
+      const latestAuthor = replies[0].author.id;
       while (currentIndex < replies.length
-        && replies[currentIndex].author.id === props.currentUser.id) {
-        console.log(replies[currentIndex]);
+        && replies[currentIndex].author.id === latestAuthor) {
         currentIndex += 1;
       }
-      return currentIndex;
+      const isCurrentUser = latestAuthor === props.currentUser.id;
+      return isCurrentUser ? currentIndex : -currentIndex;
     } else {
       return 0;
     }
   }
 
+  const getLatestChild = (comment: Comment) => {
+    if(!comment.children || comment.children.length <= 0) {
+      return comment;
+    }
+    const replies = comment.children.sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
+    return replies[0];
+  }
+
   const renderCommentButton = () => {
-    let count = getCommentCount();
     let numberOfReplies = getNumberOfReplies();
-    if (count >= 1) {
+    if (numberOfReplies != 0) {
       return (
-        <div className="comment-button active animated pulse iteration-2 duration-1s" onClick={() => setCommentsShown(!commentsShown)}>
+        <div className={"comment-button " + (numberOfReplies > 0 ? "has-replied" : "active") +" animated pulse iteration-2 duration-1s"} onClick={() => setCommentsShown(!commentsShown)}>
           <div className="comments-icon svgOnHover">
             <svg className="svg w60 h60 active">
               {/*eslint-disable-next-line*/}
@@ -134,29 +135,25 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             </svg>
           </div>
           <div className="comments-count">
-            {count}
+            {numberOfReplies > 0 ? numberOfReplies : -numberOfReplies}
           </div>
         </div>
       );
     }
     return (
-      <div className={"comment-button" + (numberOfReplies > 0 ? " has-replied" : "")} onClick={() => setCommentsShown(!commentsShown)}>
+      <div className={"comment-button"} onClick={() => setCommentsShown(!commentsShown)}>
         <div className="comments-icon svgOnHover">
           <svg className="svg w60 h60 active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#message-square"} />
           </svg>
         </div>
-        {numberOfReplies > 0 ?
-          <div className="comments-count">
-            {numberOfReplies}
-          </div> :
           <div className="comments-plus svgOnHover">
             <svg className="svg w60 h60 active">
               {/*eslint-disable-next-line*/}
               <use href={sprite + "#plus"} />
             </svg>
-          </div>}
+          </div>
       </div>
     );
   }
