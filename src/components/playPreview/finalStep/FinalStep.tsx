@@ -162,7 +162,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
       <InviteDialog
-        canEdit={true} brick={brick} isOpen={inviteOpen}
+        canEdit={true} brick={brick} isOpen={inviteOpen} isAuthor={isAuthor}
         submit={(name, accessGranted) => { setInviteSuccess({ isOpen: true, name, accessGranted }); }}
         close={() => setInvite(false)} />
       <InvitationSuccessDialog
