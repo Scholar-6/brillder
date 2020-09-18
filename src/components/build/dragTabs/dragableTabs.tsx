@@ -66,23 +66,25 @@ const DragableTabs: React.FC<DragTabsProps> = ({
   let isInit = true;
   let isSynthesisPresent = true;
 
-
-  const getUnreadComments = (questionId: number) =>
-    props.comments?.filter(comment => // count comments...
-      (comment.question?.id ?? -1) === questionId && // on the current question...
-      comment.readBy.filter(user => user.id === props.user.id).length === 0 // which have not been read.
-    ).length ?? 0
-
   const getHasReplied = (questionId: number) => {
-    let replies = props.comments?.filter(comment => (comment.question?.id ?? -1) === questionId);
-    replies = replies?.sort((a, b) =>
-      new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
-    if(replies && replies.length > 0) { // if there is at least one comment here...
-      const mostRecentReply = replies[0]; // get the most recent one...
-      return mostRecentReply.author.id === props.user.id; // and check if it was written by the current user.
+    const replies = props.comments?.filter(comment => (comment.question?.id ?? -1) === questionId)
+      .map(getLatestChild)
+      .sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
+    if (replies && replies.length > 0) {
+      const latestAuthor = replies[0].author.id;
+      const isCurrentUser = latestAuthor === props.user.id;
+      return isCurrentUser ? 1 : -1;
     } else {
-      return false;
+      return 0;
     }
+  }
+
+  const getLatestChild = (comment: Comment) => {
+    if(!comment.children || comment.children.length <= 0) {
+      return comment;
+    }
+    const replies = comment.children.sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
+    return replies[0];
   }
 
   const renderQuestionTab = (questions: Question[], question: Question, index: number, comlumns: number) => {
@@ -120,7 +122,6 @@ const DragableTabs: React.FC<DragTabsProps> = ({
             id={question.id}
             active={question.active}
             isValid={isValid}
-            getUnreadComments={getUnreadComments}
             getHasReplied={getHasReplied}
             selectQuestion={props.selectQuestion}
             removeQuestion={props.removeQuestion}
