@@ -136,7 +136,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                     {notification.type === NotificationType.NewCommentOnBrick ?
                       <svg className="svg w60 h60 active text-theme-dark-blue">
                         {/*eslint-disable-next-line*/}
-                        <use href={sprite + "#message-square"} />
+                        <use href={sprite + "#message-square-thick"} />
                       </svg>
                       :
                       ""
@@ -144,7 +144,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                     {notification.type === NotificationType.InvitedToPlayBrick ?
                       <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginLeft: '0.2vw'}}>
                         {/*eslint-disable-next-line*/}
-                        <use href={sprite + "#play-thin"} />
+                        <use href={sprite + "#play-thick"} />
                       </svg>
                       :
                       ""
