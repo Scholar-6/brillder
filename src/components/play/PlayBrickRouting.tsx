@@ -241,7 +241,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route exac path="/play/brick/:brickId/finalStep">
           <FinalStep
-            status={status}
+            user={props.user}
             brick={brick}
             history={props.history}
           />

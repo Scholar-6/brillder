@@ -54,7 +54,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
     name: ''
   });
 
-
   let isAuthor = false;
   try {
     isAuthor = brick.author.id === user.id;
