@@ -12,10 +12,37 @@ import map from 'components/map';
 
 
 const BrickLengthPreviewComponent: React.FC<any> = ({ data }) => {
+  let prepare = 5;
+  let investigation = 8;
+  let synthesis = 4;
+  let review = 3;
+
+  if (data === 40) {
+    prepare = 10;
+    investigation = 16;
+    synthesis = 8;
+    review= 6;
+  } else if (data === 60) {
+    prepare = 15;
+    investigation = 24;
+    synthesis= 12;
+    review= 9;
+  }
+
   return (
     <Grid container justify="center" className="phone-preview-component">
       <img alt="head" src="/images/new-brick/brick-length.png"></img>
-      <div>{data === 0 ? "" : data + ' minutes'}</div>
+      <div className="">{data === 0 ? "" : data + ' minutes'}</div>
+      {data !== 0 ? 
+      <div className="preview-length-list">
+        Students will have:
+        <ul>
+          <li>Around {prepare} minutes to prepare</li>
+          <li>{investigation} minutes to answer questions</li>
+          <li>{synthesis} minutes to read your Synthesis</li>
+          <li>{review} minutes to review their answers</li>
+        </ul>
+      </div> : ""}
     </Grid>
   )
 }
@@ -77,7 +104,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
             canSubmit={length !== BrickLengthEnum.None}
             onSubmit={saveBrick}
             data={length}
-            backLink={map.ProposalPrep}
+            backLink={map.ProposalOpenQuestion}
           />
         </Grid>
         <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} />

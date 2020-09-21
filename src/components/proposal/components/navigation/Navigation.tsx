@@ -47,6 +47,13 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
             onClick={() => move(map.ProposalOpenQuestion)}
           />
         </div>
+        <div className={`step-container ${step === ProposalStep.BrickLength ? 'active' : ''}`}>
+          <div className="step-label">Length</div>
+          <div
+            onClick={() => move(map.ProposalLength)}
+            className={`navigation-button navigation-length ${step >= ProposalStep.BrickLength ? 'active' : ''}`}
+          />
+        </div>
         <div className={`step-container ${step === ProposalStep.Brief ? 'active' : ''}`}>
           <div className="step-label">Brief</div>
           <div
@@ -59,13 +66,6 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
           <div
             onClick={() => move(map.ProposalPrep)}
             className={`navigation-button navigation-prep ${step >= ProposalStep.Prep ? 'active' : ''}`}
-          />
-        </div>
-        <div className={`step-container ${step === ProposalStep.BrickLength ? 'active' : ''}`}>
-          <div className="step-label">Length</div>
-          <div
-            onClick={() => move(map.ProposalLength)}
-            className={`navigation-button navigation-length ${step >= ProposalStep.BrickLength ? 'active' : ''}`}
           />
         </div>
       </Grid>

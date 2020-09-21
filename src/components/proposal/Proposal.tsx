@@ -188,6 +188,9 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             <Route path={map.ProposalTitle}>
               <BrickTitle history={history} playStatus={playStatus} parentState={localBrick} canEdit={canEdit} saveTitles={this.setTitles} />
             </Route>
+            <Route path={map.ProposalLength}>
+              <BrickLength playStatus={playStatus} length={localBrick.brickLength} canEdit={canEdit} saveLength={this.setLength} saveBrick={this.setLengthAndSave} />
+            </Route>
             <Route path={map.ProposalOpenQuestion}>
               <OpenQuestion playStatus={playStatus} history={history} selectedQuestion={localBrick.openQuestion} canEdit={canEdit} saveOpenQuestion={this.setOpenQuestion} />
             </Route>
@@ -196,9 +199,6 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
             </Route>
             <Route path={map.ProposalPrep}>
               <Prep playStatus={playStatus} parentPrep={localBrick.prep} canEdit={canEdit} savePrep={this.setPrep} />
-            </Route>
-            <Route path={map.ProposalLength}>
-              <BrickLength playStatus={playStatus} length={localBrick.brickLength} canEdit={canEdit} saveLength={this.setLength} saveBrick={this.setLengthAndSave} />
             </Route>
             <Route path={map.ProposalReview}>
               <ProposalReview
