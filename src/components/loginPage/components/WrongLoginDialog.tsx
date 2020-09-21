@@ -7,18 +7,18 @@ interface WrongLoginDialogProps {
   close(): void;
 }
 
-const WrongLoginDialog: React.FC<WrongLoginDialogProps> = ({ isOpen, close, submit }) => {
+const WrongLoginDialog: React.FC<WrongLoginDialogProps> = props => {
   return (
-    <Dialog open={isOpen} onClose={close} className="dialog-box">
+    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
       <div className="dialog-header">
-        <div>We don't appear to have a record of you yet. Sign up</div>
+      <div>We don't appear to have a record of you yet. Sign up</div>
       </div>
       <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange yes-button" onClick={submit}>
+        <button className="btn btn-md bg-theme-orange yes-button" onClick={props.submit}>
           <span>Yes</span>
         </button>
-        <button className="btn btn-md bg-theme-orange no-button" onClick={close}>
-          <span>No</span>
+        <button className="btn btn-md bg-gray no-button" onClick={props.close}>
+          <span>Not yet!</span>
         </button>
       </div>
     </Dialog>
