@@ -33,13 +33,25 @@ export const ProposalReview = `${ProposalBase}/proposal`;
 
 // play preview
 export const PlayPreviewBase = '/play-preview/brick';
+export const PlayIntroLastPrefix = '/intro';
 
 export const playPreview = (brickId: number) => {
   return  PlayPreviewBase + '/' + brickId;
 }
 
 export const playPreviewIntro = (brickId: number) => {
-  return playPreview(brickId) + '/intro';
+  return playPreview(brickId) + PlayIntroLastPrefix;
+}
+
+// play
+export const PlayBase = '/play/brick';
+
+export const realPlay = (brickId: number) => {
+  return  PlayBase + '/' + brickId;
+}
+
+export const playIntro = (brickId: number) => {
+  return realPlay(brickId) + PlayIntroLastPrefix;
 }
 
 export default {
@@ -64,5 +76,6 @@ export default {
   InvestigationBuild,
   investigationBuildQuestion,
   investigationQuestionSuggestions,
-  playPreviewIntro
+  playPreviewIntro,
+  playIntro
 }
