@@ -99,8 +99,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
           horizontal: 'right',
         }}
       >
-        <Card className="notification-content">
-          <CardContent>
+        <div className="notification-content">
             <ul className="notification-list">
               {/* eslint-disable-next-line */}
               {(this.props.notifications && this.props.notifications.length != 0) ? this.props.notifications.map((notification) => (
@@ -181,10 +180,9 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                 )
               }
             </ul>
-          </CardContent>
           {/* eslint-disable-next-line */}
           {(this.props.notifications && this.props.notifications.length != 0) &&
-            <CardActions className="clear-notification">
+            <div className="clear-notification">
               <div className="bold">Clear All</div>
               <IconButton aria-label="clear-all" onClick={() => this.markAllAsRead()}>
                 <SvgIcon>
@@ -194,8 +192,9 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                   </svg>
                 </SvgIcon>
               </IconButton>
-            </CardActions>}
-        </Card>
+            </div>
+          }
+        </div>
       </Popover>
     );
   }

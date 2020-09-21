@@ -6,9 +6,6 @@
   .MuiPaper-root {
     background: inherit;
   }
-  .MuiCardContent-root {
-    padding: 1vw 1vw 0 1vw !important;
-  }
   .MuiPopover-paper {
     @include phone_and_tabletP {
       box-shadow: none !important;
@@ -30,7 +27,7 @@
     }
     @include desktop {
       box-shadow: none;
-      left: calc(100% - 25vw) !important;
+      left: calc(100% - 27.3vw) !important;
     }
     .notification-content {
       background-color: var(--light-blue);
@@ -47,14 +44,18 @@
         width: 30vw;
       }
       @include desktop {
-        width: 25vw;
+        width: 27.3vw;
       }
       .notification-list {
-        max-height: 30vh;
-        overflow-x: auto;
-        padding: 0;
+        padding: 1vw 1vw 0 1vw !important;
+        overflow: hidden;
+        overflow-y: auto;
+        max-height: 33vh;
         @include phone_and_tabletP {
           max-height: 26vh;
+        }
+        @include ex-desktop_wide_hd {
+          max-height: 35vh;
         }
         li {
           padding: 0;
@@ -66,7 +67,7 @@
             width: 3vw;
             height: 3vw;
             @extend %radCircle;
-            margin-right: 0.5vw;
+            margin-right: 1vw;
             .svg {
               color: var(--white);
             }
@@ -97,6 +98,7 @@
             .notification-detail {
               border-bottom: 0.02vh solid var(--theme-dark-blue);
               padding: 0.5vw 0;
+              margin-right: 1vw;
               .notif-title,
               .notif-desc {
                 @include phone_and_tabletP {
@@ -189,6 +191,8 @@
     .clear-notification {
       background-color: var(--theme-orange);
       color: var(--white);
+      display: flex;
+      align-items: center;
       justify-content: flex-end;
       padding: 0;
       @include phone_and_tabletP {
