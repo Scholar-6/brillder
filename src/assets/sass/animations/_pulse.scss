@@ -1,4 +1,4 @@
-@include keyframes(pulse1) {
+@include keyframes(pulse-orange-alpha5) {
   0% {
     text-shadow: 0 0 0 var(--theme-orange-alpha5);
   }
@@ -57,8 +57,26 @@
   }
 }
 
-.pulse {
+.pulse-gray {
+  animation-name: pulse-gray;
+  animation-delay: 0s;
+  animation-timing-function: ease;
+  animation-play-state: running;
+}
+.pulse-green {
+  animation-name: pulse-green;
+  animation-delay: 0s;
+  animation-timing-function: ease;
+  animation-play-state: running
+}
+.pulse-red {
   animation-name: pulse-red;
+  animation-delay: 0s;
+  animation-timing-function: ease;
+  animation-play-state: running;
+}
+.pulse-blue {
+  animation-name: pulse-blue;
   animation-delay: 0s;
   animation-timing-function: ease;
   animation-play-state: running;
