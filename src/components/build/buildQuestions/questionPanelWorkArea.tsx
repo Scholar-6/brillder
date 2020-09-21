@@ -18,6 +18,7 @@ import { Comment } from 'model/comments';
 import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { User } from 'model/user';
+import { TextComponentObj } from './components/Text/interface';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -37,6 +38,7 @@ export interface QuestionProps {
   initSuggestionExpanded: boolean;
   saveBrick(): void;
   setQuestion(index: number, question: Question): void;
+  updateFirstComponent(component: TextComponentObj): void;
   updateComponents(components: any[]): void;
   setQuestionType(type: QuestionTypeEnum): void;
   nextOrNewQuestion(): void;
@@ -231,6 +233,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 question={question}
                 validationRequired={validationRequired}
                 saveBrick={props.saveBrick}
+                updateFirstComponent={props.updateFirstComponent}
                 updateComponents={props.updateComponents}
                 setQuestionHint={setQuestionHint}
               />

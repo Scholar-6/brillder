@@ -299,6 +299,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             id: question.id,
             type: question.type,
             hint: parsedQuestion.hint,
+            firstComponent: parsedQuestion.firstComponent ? parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
             components: parsedQuestion.components
           } as Question;
           parsedQuestions.push(q);
