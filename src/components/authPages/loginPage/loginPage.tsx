@@ -12,6 +12,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import LoginLogo from './LoginLogo';
 import map from 'components/map';
+import TypingInput from "./TypingInput";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -40,11 +41,13 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState("");
+  const [emailPlaceholder, setEmailPlaceholder] = useState("");
   const [password, setPassword] = useState("");
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [loginState, setLoginState] = React.useState(LoginState.ChooseLogin);
 
   const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/build`;
+
   const moveToLogin = () => {
     setLoginState(LoginState.ButtonsAnimation);
     setTimeout(() => {
@@ -58,7 +61,6 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     }
     return "Fill required fields";
   };
-
 
   function handleSubmit(event: any) {
     event.preventDefault();
@@ -174,23 +176,23 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     return (
       <form onSubmit={handleSubmit} className={className}>
         <div className="input-block">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="login-field"
+          <TypingInput
             required
+            type="email"
+            className="login-field"
             placeholder="Email"
+            value={email}
+            onChange={setEmail}
           />
         </div>
         <div className="input-block">
-          <input
-            type={passwordHidden ? "password" : "text"}
-            value={password}
-            className="login-field password"
-            onChange={(e) => setPassword(e.target.value)}
+          <TypingInput
             required
+            type={passwordHidden ? "password" : "text"}
+            className="login-field password"
+            value={password}
             placeholder="Password"
+            onChange={setPassword}
           />
           <div className="hide-password-icon-container">
             <VisibilityIcon
