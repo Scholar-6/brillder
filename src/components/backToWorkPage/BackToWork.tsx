@@ -27,17 +27,13 @@ interface BackToWorkState {
   dropdownShown: boolean;
   notificationsShown: boolean;
   generalSubjectId: number;
-  activeTab: ActiveTab;
   subjects: Subject[];
-
-  isTeach: boolean;
 }
 
 export interface BackToWorkProps {
   user: User;
   history: any;
   location: any;
-  stats: any;
   forgetBrick(): void;
   requestFailed(e: string): void;
 }
@@ -47,20 +43,16 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     super(props);
 
     const isTeach = checkTeacher(this.props.user.roles);
-    const activeTab = this.getActiveTab(isTeach);
 
     this.state = {
-      activeTab,
       subjects: [],
-
-      isTeach,
+      generalSubjectId: -1,
 
       searchString: "",
       isSearching: false,
+
       dropdownShown: false,
       notificationsShown: false,
-
-      generalSubjectId: -1,
     };
 
     loadSubjects().then((subjects: Subject[] | null) => {

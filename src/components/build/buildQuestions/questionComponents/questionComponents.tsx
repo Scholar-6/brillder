@@ -19,6 +19,8 @@ import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/que
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import { getNonEmptyComponent } from "../../questionService/ValidateQuestionService";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import FixedTextComponent from "../components/Text/FixedText";
+import { TextComponentObj } from "../components/Text/interface";
 
 
 type QuestionComponentsProps = {
@@ -30,30 +32,38 @@ type QuestionComponentsProps = {
   question: Question;
   validationRequired: boolean;
   saveBrick(): void;
+  updateFirstComponent(component: TextComponentObj): void;
   updateComponents(components: any[]): void;
   setQuestionHint(hintState: HintState): void;
 }
 
 const QuestionComponents = ({
   questionIndex, locked, editOnly, history, brickId, question, validationRequired,
-  updateComponents, setQuestionHint, saveBrick
+  updateComponents, setQuestionHint, saveBrick, updateFirstComponent
 }: QuestionComponentsProps) => {
-  let componentsCopy = Object.assign([], question.components) as any[]
-  const [questionId, setQuestionId] = useState(question.id);
+  
+  let firstComponent = Object.assign({}, question.firstComponent) as any;
+  if (!firstComponent.type || firstComponent.type !== QuestionComponentTypeEnum.Text) {
+    firstComponent = {
+      type: QuestionComponentTypeEnum.Text,
+      value: ''
+    };
+  }
+
+  const componentsCopy = Object.assign([], question.components) as any[]
   const [components, setComponents] = useState(componentsCopy);
+  const [questionId, setQuestionId] = useState(question.id);
   const [removeIndex, setRemovedIndex] = useState(-1);
   const [dialogOpen, setDialog] = useState(false);
   const [sameAnswerDialogOpen, setSameAnswerDialog] = useState(false);
 
   useEffect(() => {
-    let componentsCopy = Object.assign([], question.components) as any[];
-    setComponents(componentsCopy);
+    setComponents(Object.assign([], question.components) as any[]);
   }, [question]);
 
   if (questionId !== question.id) {
     setQuestionId(question.id);
-    let compsCopy = Object.assign([], question.components);
-    setComponents(compsCopy);
+    setComponents(Object.assign([], question.components));
   }
 
   const hideSameAnswerDialog = () => setSameAnswerDialog(false);
@@ -63,15 +73,6 @@ const QuestionComponents = ({
     if (locked) { return; }
     const comps = Object.assign([], components) as any[];
     comps.splice(componentIndex, 1);
-    setComponents(comps);
-    updateComponents(comps);
-    saveBrick();
-  }
-
-  const addInnerComponent = () => {
-    if (locked) { return; }
-    const comps = Object.assign([], components) as any[];
-    comps.push({ type: 0 });
     setComponents(comps);
     updateComponents(comps);
     saveBrick();
@@ -194,6 +195,16 @@ const QuestionComponents = ({
 
   return (
     <div className="questions">
+      <Grid container direction="row" className={validateDropBox(firstComponent)}>
+        <FixedTextComponent
+          locked={locked}
+          editOnly={editOnly}
+          data={firstComponent}
+          save={saveBrick}
+          validationRequired={validationRequired}
+          updateComponent={updateFirstComponent}
+        />
+      </Grid>
       <ReactSortable
         list={components}
         animation={150}
@@ -208,11 +219,6 @@ const QuestionComponents = ({
           ))
         }
       </ReactSortable>
-      <Grid container direction="row" className={"add-dropbox " + (locked ? 'hide' : '')}>
-        <button className="btn btn-xl btn-block bg-theme-orange" onClick={addInnerComponent}>
-          <span>+ QUESTION COMPONENT</span>
-        </button>
-      </Grid>
       <Dialog open={dialogOpen} onClose={hideDialog} className="dialog-box">
         <div className="dialog-header">
           <div>Permanently delete<br />this component?</div>
