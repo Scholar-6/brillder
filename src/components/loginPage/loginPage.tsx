@@ -16,7 +16,6 @@ import GoogleButton from "./components/GoogleButton";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import RegisterButton from "./components/RegisterButton";
 import DesktopLoginForm from "./components/DesktopLoginForm";
-import { enterPressed } from "components/services/key";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -49,18 +48,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [loginState, setLoginState] = React.useState(LoginState.ChooseLogin);
 
-  const onKeyPressed = (e: any) => {
-    if (enterPressed(e)) {
-      handleSubmit(e);
-    }
-  }
-
-  useEffect( () => () => {
-    document.removeEventListener("keydown", onKeyPressed, false);
-  }, []);
-
   const moveToLogin = () => {
-    document.addEventListener("keydown", onKeyPressed, false);
     setLoginState(LoginState.ButtonsAnimation);
     setTimeout(() => {
       setLoginState(LoginState.Login);

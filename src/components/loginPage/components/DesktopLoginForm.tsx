@@ -5,6 +5,10 @@ import { LoginState } from "../loginPage";
 import TypingInput from "./TypingInput";
 import { enterPressed } from "components/services/key";
 
+interface LoginsState {
+  handleSubmit(e: any): void;
+}
+
 interface LoginFormProps {
   email: string;
   setEmail(email: string): void;
@@ -20,9 +24,27 @@ interface LoginFormProps {
   setHidden(passwordHidden: boolean): void;
 }
 
-class DesktopLoginForm extends React.Component<LoginFormProps> {
+class DesktopLoginForm extends React.Component<LoginFormProps, LoginsState> {
   constructor(props: LoginFormProps) {
     super(props);
+
+    this.state = {
+      handleSubmit: this.onKeyPressed.bind(this)
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.state.handleSubmit, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.state.handleSubmit, false);
+  }
+
+  onKeyPressed(e: any) {
+    if (enterPressed(e)) {
+      this.props.handleSubmit(e);
+    }
   }
 
   render() {
