@@ -30,7 +30,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
         <div className="btn btn-transparent roller-button svgOnHover">
           <svg className="svg w100 h100 active">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#roller"} className="text-theme-green" />
+            <use href={sprite + "#award"} className="text-theme-green" />
           </svg>
         </div>
       </div>
@@ -38,7 +38,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   }
 
   renderIcon() {
-    const {circleIcon, iconColor} = this.props;
+    const { circleIcon, iconColor } = this.props;
     let svgClass = 'svg active ';
     if (iconColor) {
       svgClass += iconColor;
@@ -100,7 +100,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
         <div className="short-brick-info">
           <div className="link-description">
             <span>{brick.title}</span>
-            </div>
+          </div>
           <div className="link-info">
             {brick.subTopic} | {brick.alternativeTopics}
           </div>
