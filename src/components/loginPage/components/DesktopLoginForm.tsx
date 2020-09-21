@@ -25,20 +25,6 @@ class DesktopLoginForm extends React.Component<LoginFormProps> {
     super(props);
   }
 
-  componentDidMount() {
-    document.addEventListener("keydown", this.onKeyPressed.bind(this), false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.onKeyPressed.bind(this), false);
-  }
-  
-  onKeyPressed(e: any) {
-    if (enterPressed(e)) {
-      this.props.handleSubmit(e);
-    }
-  }
-
   render() {
     let className = 'content-box';
     if (this.props.loginState !== LoginState.ButtonsAnimation) {
