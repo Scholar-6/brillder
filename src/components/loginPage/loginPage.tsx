@@ -9,10 +9,13 @@ import axios from "axios";
 import actions from "redux/actions/auth";
 import "./loginPage.scss";
 import sprite from "assets/img/icons-sprite.svg";
-import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
-import LoginLogo from './LoginLogo';
 import map from 'components/map';
-import TypingInput from "./TypingInput";
+
+import LoginLogo from './components/LoginLogo';
+import TypingInput from "./components/TypingInput";
+import GoogleButton from "./components/GoogleButton";
+import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
+import RegisterButton from "./components/RegisterButton";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -41,12 +44,9 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [alertShown, toggleAlertMessage] = useState(false);
   const [passwordHidden, setHidden] = useState(true);
   const [email, setEmail] = useState("");
-  const [emailPlaceholder, setEmailPlaceholder] = useState("");
   const [password, setPassword] = useState("");
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [loginState, setLoginState] = React.useState(LoginState.ChooseLogin);
-
-  const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/build`;
 
   const moveToLogin = () => {
     setLoginState(LoginState.ButtonsAnimation);
@@ -150,20 +150,8 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     }
     return (
       <div className={className}>
-        <button className="email-button svgOnHover" onClick={moveToLogin}>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#email"} />
-          </svg>
-          <span>Register &nbsp;|&nbsp; Sign in with email</span>
-        </button>
-        <a className="google-button svgOnHover" href={googleLink}>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#gmail"} />
-          </svg>
-          <span>Register &nbsp;|&nbsp; Sign in with Google</span>
-        </a>
+        <RegisterButton onClick={moveToLogin} />
+        <GoogleButton />
       </div>
     );
   }
@@ -171,7 +159,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const renderForm = () => {
     let className = 'content-box';
     if (loginState !== LoginState.ButtonsAnimation) {
-        className += ' expanded';
+      className += ' expanded';
     }
     return (
       <form onSubmit={handleSubmit} className={className}>
@@ -308,7 +296,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                     onClick={() => register(email, password)}
                   >
                     Sign up
-                </Button>
+                  </Button>
                   <Button
                     variant="contained"
                     color="primary"
@@ -347,20 +335,8 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                 </svg>
               </div>
               <div className="mobile-button-box button-box">
-                <button className="email-button svgOnHover" onClick={moveToLogin}>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#email"} />
-                  </svg>
-                  <span>Register &nbsp;|&nbsp; Sign in with email</span>
-                </button>
-                <a className="google-button svgOnHover" href={googleLink}>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#gmail"} />
-                  </svg>
-                  <span>Register &nbsp;|&nbsp; Sign in with Google</span>
-                </a>
+                <RegisterButton onClick={moveToLogin} />
+                <GoogleButton />
                 <div className="mobile-policy-text">
                   <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
                 </div>
