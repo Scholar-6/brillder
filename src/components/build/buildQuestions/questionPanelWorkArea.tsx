@@ -126,7 +126,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     let numberOfReplies = getNumberOfReplies();
     if (numberOfReplies !== 0) {
       return (
-        <div className={"comment-button " + (numberOfReplies > 0 ? "has-replied" : "active") +" animated pulse iteration-2 duration-1s"} onClick={() => setCommentsShown(!commentsShown)}>
+        <div className={"comment-button " + (numberOfReplies > 0 ? "has-replied" : "active") +" animated pulse-red iteration-2 duration-1s"} onClick={() => setCommentsShown(!commentsShown)}>
           <div className="comments-icon svgOnHover">
             <svg className="svg w60 h60 active">
               {/*eslint-disable-next-line*/}
