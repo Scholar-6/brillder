@@ -280,6 +280,8 @@
         background: var(--theme-orange);
         flex: 1;
         text-transform: uppercase;
+        font-family: $font-family-black;
+        letter-spacing: 0.2vw;
         padding: 0.7vw;
         @include phone_and_tabletP {
           color: var(--black-blue);

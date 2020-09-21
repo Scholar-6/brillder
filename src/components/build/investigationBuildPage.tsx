@@ -56,6 +56,7 @@ import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { validateProposal } from 'components/proposal/service/validation';
+import { TextComponentObj } from "./buildQuestions/components/Text/interface";
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
   brick: any;
@@ -471,6 +472,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     setQuestions(update(questions, { $set: updatedQuestions }));
   }
 
+  const updateFirstComponent = (component: TextComponentObj) => {
+    if (locked) { return; }
+    const index = getQuestionIndex(activeQuestion);
+    const updatedQuestions = questions.slice();
+    updatedQuestions[index].firstComponent = component;
+    setQuestions(update(questions, { $set: updatedQuestions }));
+  }
+
   const exitAndSave = () => {
     saveBrick();
     history.push('/home');
@@ -488,6 +497,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         locked={locked}
         validationRequired={validationRequired}
         initSuggestionExpanded={initSuggestionExpanded}
+        updateFirstComponent={updateFirstComponent}
         getQuestionIndex={getQuestionIndex}
         setQuestion={setQuestion}
         toggleLock={toggleLock}

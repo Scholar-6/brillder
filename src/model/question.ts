@@ -54,6 +54,7 @@ export interface Question {
   active: boolean;
   type: QuestionTypeEnum;
   hint: Hint;
+  firstComponent: any;
   components: any[];
   edited?: boolean;
   contentBlocks? : string;
