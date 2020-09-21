@@ -9,9 +9,15 @@ import axios from "axios";
 import actions from "redux/actions/auth";
 import "./loginPage.scss";
 import sprite from "assets/img/icons-sprite.svg";
-import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
-import LoginLogo from './LoginLogo';
 import map from 'components/map';
+
+import LoginLogo from './components/LoginLogo';
+import TypingInput from "./components/TypingInput";
+import GoogleButton from "./components/GoogleButton";
+import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
+import RegisterButton from "./components/RegisterButton";
+import { enterPressed } from "components/services/key";
+import DesktopLoginForm from "./components/DesktopLoginForm";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -19,7 +25,7 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(null, mapDispatch);
 
-enum LoginState {
+export enum LoginState {
   ChooseLogin,
   ButtonsAnimation,
   Login
@@ -44,7 +50,6 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [loginState, setLoginState] = React.useState(LoginState.ChooseLogin);
 
-  const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/build`;
   const moveToLogin = () => {
     setLoginState(LoginState.ButtonsAnimation);
     setTimeout(() => {
@@ -58,7 +63,6 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     }
     return "Fill required fields";
   };
-
 
   function handleSubmit(event: any) {
     event.preventDefault();
@@ -103,7 +107,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
             //props.history.push("/sign-up-success");
           } else if (msg === "INVALID_EMAIL_OR_PASSWORD") {
             toggleAlertMessage(true);
-            setAlertMessage("Password is not correct");
+            setAlertMessage("We don't appear to have a record of you yet. Sign up?");
           }
         }
       } else {
@@ -148,67 +152,11 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     }
     return (
       <div className={className}>
-        <button className="email-button svgOnHover" onClick={moveToLogin}>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#email"} />
-          </svg>
-          <span>Register &nbsp;|&nbsp; Sign in with email</span>
-        </button>
-        <a className="google-button svgOnHover" href={googleLink}>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#gmail"} />
-          </svg>
-          <span>Register &nbsp;|&nbsp; Sign in with Google</span>
-        </a>
+        <RegisterButton onClick={moveToLogin} />
+        <GoogleButton />
       </div>
     );
   }
-
-  const renderForm = () => {
-    let className = 'content-box';
-    if (loginState !== LoginState.ButtonsAnimation) {
-        className += ' expanded';
-    }
-    return (
-      <form onSubmit={handleSubmit} className={className}>
-        <div className="input-block">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="login-field"
-            required
-            placeholder="Email"
-          />
-        </div>
-        <div className="input-block">
-          <input
-            type={passwordHidden ? "password" : "text"}
-            value={password}
-            className="login-field password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            placeholder="Password"
-          />
-          <div className="hide-password-icon-container">
-            <VisibilityIcon
-              className="hide-password-icon"
-              onClick={() => setHidden(!passwordHidden)}
-            />
-          </div>
-        </div>
-        <div className="input-block">
-          <div className="button-box">
-            <button type="button" className="sign-up-button" onClick={() => register(email, password)}>Sign up</button>
-            <button type="submit" className="sign-in-button">Sign in</button>
-          </div>
-        </div>
-      </form>
-    );
-
-  };
 
   return (
     <Grid
@@ -231,7 +179,17 @@ const LoginPage: React.FC<LoginProps> = (props) => {
             </div>
             <div className="second-col">
               {loginState === LoginState.Login ?
-                renderForm()
+                <DesktopLoginForm
+                  loginState={loginState}
+                  email={email}
+                  setEmail={setEmail}
+                  password={password}
+                  setPassword={setPassword}
+                  passwordHidden={passwordHidden}
+                  setHidden={setHidden}
+                  handleSubmit={handleSubmit}
+                  register={() => register(email, password)}
+                />
                 :
                 renderButtons()
               }
@@ -306,7 +264,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                     onClick={() => register(email, password)}
                   >
                     Sign up
-                </Button>
+                  </Button>
                   <Button
                     variant="contained"
                     color="primary"
@@ -345,20 +303,8 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                 </svg>
               </div>
               <div className="mobile-button-box button-box">
-                <button className="email-button svgOnHover" onClick={moveToLogin}>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#email"} />
-                  </svg>
-                  <span>Register &nbsp;|&nbsp; Sign in with email</span>
-                </button>
-                <a className="google-button svgOnHover" href={googleLink}>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#gmail"} />
-                  </svg>
-                  <span>Register &nbsp;|&nbsp; Sign in with Google</span>
-                </a>
+                <RegisterButton onClick={moveToLogin} />
+                <GoogleButton />
                 <div className="mobile-policy-text">
                   <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
                 </div>
