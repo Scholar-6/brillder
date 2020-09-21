@@ -45,6 +45,10 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         if (notification.brick && notification.brick.id >= 1 && notification.question && notification.question.id >= 1) {
           history.push(map.investigationQuestionSuggestions(notification.brick.id, notification.question.id));
         }
+      } else if (notification.type === NotificationType.InvitedToPlayBrick) {
+        if (notification.brick && notification.brick.id >= 1) {
+          history.push(map.playIntro(notification.brick.id));
+        }
       }
     }
   }

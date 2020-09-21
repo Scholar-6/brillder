@@ -34,5 +34,5 @@ export const notificationTypeColors = {
   [NotificationType.BrickPublished]: "published",
   [NotificationType.AssignedToEdit]: "assigned-to-edit",
   [NotificationType.NewCommentOnBrick]: "new-comment",
-  [NotificationType.InvitedToPlayBrick]: "published"
+  [NotificationType.InvitedToPlayBrick]: "invited-to-play"
 };

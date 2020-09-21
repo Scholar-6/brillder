@@ -85,6 +85,9 @@
             &.new-comment {
               background-color: #006bfd;
             }
+            &.invited-to-play {
+              background-color: var(--white);
+            }
           }
           .content-box {
             cursor: pointer;
