@@ -77,7 +77,7 @@ const BrickLength: React.FC<BrickLengthProps> = (
             canSubmit={length !== BrickLengthEnum.None}
             onSubmit={saveBrick}
             data={length}
-            backLink={map.ProposalPrep}
+            backLink={map.ProposalOpenQuestion}
           />
         </Grid>
         <ProposalPhonePreview Component={BrickLengthPreviewComponent} data={length} />

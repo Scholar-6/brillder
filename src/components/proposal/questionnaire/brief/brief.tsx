@@ -76,7 +76,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, playStatus
             canSubmit={true}
             data={parentBrief}
             onSubmit={saveBrief}
-            backLink={map.ProposalOpenQuestion}
+            backLink={map.ProposalLength}
           />
           <h2 className="pagination-text m-0">3 of 4</h2>
         </Grid>
