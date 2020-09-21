@@ -89,20 +89,20 @@ const logout = () => {
       dispatch(logoutFailure(error.message))
     })
   }
-}
+} 
 
 const isAuthorized = () => {
-  return function (dispatch: Dispatch) {
-    return axios.get(process.env.REACT_APP_BACKEND_HOST + '/bricks', {withCredentials: true}).then(response => {
-      if (response.data) {
+  return async function (dispatch: Dispatch) {
+    try {
+      const response = await axios.get(process.env.REACT_APP_BACKEND_HOST + '/auth/check', { withCredentials: true });
+      if (response.status === 200 && response.data === "OK") {
         dispatch(authorizedSuccess());
       } else {
         dispatch(authorizedFailure('Something wrong in response'));
       }
-    })
-    .catch(error => {
+    } catch (error) {
       dispatch(authorizedFailure(error.message));
-    });
+    }
   }
 }
 
