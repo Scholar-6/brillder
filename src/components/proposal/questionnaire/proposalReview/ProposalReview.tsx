@@ -159,7 +159,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
         {renderPlayButton()}
         <Grid container direction="row" style={{ height: '100% !important' }} justify="center">
           <Grid className="back-button-container" container alignContent="center">
-            <div className="back-button" onClick={() => this.props.history.push(map.ProposalLength)} />
+            <div className="back-button" onClick={() => this.props.history.push(map.ProposalPrep)} />
           </Grid>
           <Grid className="main-text-container">
             <h1>Your proposal has been saved!</h1>
