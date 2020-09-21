@@ -66,6 +66,8 @@ export function getActiveQuestion(questions: Question[]) {
 export function getApiQuestion(question: Question) {
   const questionObject = {
     components: question.components,
+    firstComponent: question.firstComponent ?
+      question.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
     hint: question.hint
   };
   const apiQuestion = {
@@ -116,6 +118,8 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
       id: question.id,
       type: question.type,
       hint: parsedQuestion.hint,
+      firstComponent: parsedQuestion.firstComponent ?
+        parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
       components: parsedQuestion.components
     } as Question;
     parsedQuestions.push(q);

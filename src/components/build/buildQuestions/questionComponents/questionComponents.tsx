@@ -20,6 +20,7 @@ import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import { getNonEmptyComponent } from "../../questionService/ValidateQuestionService";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import FixedTextComponent from "../components/Text/FixedText";
+import { TextComponentObj } from "../components/Text/interface";
 
 
 type QuestionComponentsProps = {
@@ -31,23 +32,25 @@ type QuestionComponentsProps = {
   question: Question;
   validationRequired: boolean;
   saveBrick(): void;
+  updateFirstComponent(component: TextComponentObj): void;
   updateComponents(components: any[]): void;
   setQuestionHint(hintState: HintState): void;
 }
 
 const QuestionComponents = ({
   questionIndex, locked, editOnly, history, brickId, question, validationRequired,
-  updateComponents, setQuestionHint, saveBrick
+  updateComponents, setQuestionHint, saveBrick, updateFirstComponent
 }: QuestionComponentsProps) => {
-  const componentsCopy = Object.assign([], question.components) as any[]
-  let firstComponentCopy = Object.assign({}, question.firstComponent) as any;
-  if (!firstComponentCopy.type || firstComponentCopy.type !== QuestionComponentTypeEnum.Text) {
-    firstComponentCopy = {
-      type: 1,
+  
+  let firstComponent = Object.assign({}, question.firstComponent) as any;
+  if (!firstComponent.type || firstComponent.type !== QuestionComponentTypeEnum.Text) {
+    firstComponent = {
+      type: QuestionComponentTypeEnum.Text,
       value: ''
-    }
+    };
   }
-  const [firstComponent, setFirstComponent] = useState(firstComponentCopy);
+
+  const componentsCopy = Object.assign([], question.components) as any[]
   const [components, setComponents] = useState(componentsCopy);
   const [questionId, setQuestionId] = useState(question.id);
   const [removeIndex, setRemovedIndex] = useState(-1);
@@ -55,14 +58,12 @@ const QuestionComponents = ({
   const [sameAnswerDialogOpen, setSameAnswerDialog] = useState(false);
 
   useEffect(() => {
-    let componentsCopy = Object.assign([], question.components) as any[];
-    setComponents(componentsCopy);
+    setComponents(Object.assign([], question.components) as any[]);
   }, [question]);
 
   if (questionId !== question.id) {
     setQuestionId(question.id);
-    let compsCopy = Object.assign([], question.components);
-    setComponents(compsCopy);
+    setComponents(Object.assign([], question.components));
   }
 
   const hideSameAnswerDialog = () => setSameAnswerDialog(false);
@@ -201,7 +202,7 @@ const QuestionComponents = ({
           data={firstComponent}
           save={saveBrick}
           validationRequired={validationRequired}
-          updateComponent={() => {}}
+          updateComponent={updateFirstComponent}
         />
       </Grid>
       <ReactSortable

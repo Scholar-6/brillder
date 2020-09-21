@@ -3,6 +3,7 @@ import React from 'react'
 
 import './Text.scss'
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
+import { TextComponentObj } from './interface';
 
 
 export interface TextComponentProps {
@@ -11,7 +12,7 @@ export interface TextComponentProps {
   data: any;
   validationRequired: boolean;
   save(): void;
-  updateComponent(component: any): void;
+  updateComponent(component: TextComponentObj): void;
 }
 
 const FixedTextComponent: React.FC<TextComponentProps> = ({locked, editOnly, data, ...props}) => {
