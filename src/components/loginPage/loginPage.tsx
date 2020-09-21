@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Snackbar, Hidden } from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Button from "@material-ui/core/Button";
@@ -12,12 +12,11 @@ import sprite from "assets/img/icons-sprite.svg";
 import map from 'components/map';
 
 import LoginLogo from './components/LoginLogo';
-import TypingInput from "./components/TypingInput";
 import GoogleButton from "./components/GoogleButton";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import RegisterButton from "./components/RegisterButton";
-import { enterPressed } from "components/services/key";
 import DesktopLoginForm from "./components/DesktopLoginForm";
+import { enterPressed } from "components/services/key";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -50,7 +49,18 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [loginState, setLoginState] = React.useState(LoginState.ChooseLogin);
 
+  const onKeyPressed = (e: any) => {
+    if (enterPressed(e)) {
+      handleSubmit(e);
+    }
+  }
+
+  useEffect( () => () => {
+    document.removeEventListener("keydown", onKeyPressed, false);
+  }, []);
+
   const moveToLogin = () => {
+    document.addEventListener("keydown", onKeyPressed, false);
     setLoginState(LoginState.ButtonsAnimation);
     setTimeout(() => {
       setLoginState(LoginState.Login);
