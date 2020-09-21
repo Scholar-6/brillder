@@ -59,7 +59,7 @@ const OpenQuestion: React.FC<OpenQuestionProps> = ({
                 autoFocus={true}
                 onKeyUp={e => {
                   if (enterPressed(e)) {
-                    history.push(map.ProposalBrief);
+                    history.push(map.ProposalLength);
                   }
                 }}
                 disabled={!canEdit}

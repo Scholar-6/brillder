@@ -12,12 +12,11 @@ import sprite from "assets/img/icons-sprite.svg";
 import map from 'components/map';
 
 import LoginLogo from './components/LoginLogo';
-import TypingInput from "./components/TypingInput";
 import GoogleButton from "./components/GoogleButton";
 import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
 import RegisterButton from "./components/RegisterButton";
-import { enterPressed } from "components/services/key";
 import DesktopLoginForm from "./components/DesktopLoginForm";
+import WrongLoginDialog from "./components/WrongLoginDialog";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -49,6 +48,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [password, setPassword] = useState("");
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [loginState, setLoginState] = React.useState(LoginState.ChooseLogin);
+  const [isLoginWrong, setLoginWrong] = React.useState(false);
 
   const moveToLogin = () => {
     setLoginState(LoginState.ButtonsAnimation);
@@ -64,7 +64,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     return "Fill required fields";
   };
 
-  function handleSubmit(event: any) {
+  function handleLoginSubmit(event: any) {
     event.preventDefault();
 
     let res = validateForm();
@@ -106,8 +106,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           if (msg === "USER_IS_NOT_ACTIVE") {
             //props.history.push("/sign-up-success");
           } else if (msg === "INVALID_EMAIL_OR_PASSWORD") {
-            toggleAlertMessage(true);
-            setAlertMessage("We don't appear to have a record of you yet. Sign up?");
+            setLoginWrong(true);
           }
         }
       } else {
@@ -187,7 +186,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                   setPassword={setPassword}
                   passwordHidden={passwordHidden}
                   setHidden={setHidden}
-                  handleSubmit={handleSubmit}
+                  handleSubmit={handleLoginSubmit}
                   register={() => register(email, password)}
                 />
                 :
@@ -228,7 +227,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                   <use href={sprite + "#login"} className="text-theme-orange" />
                 </svg>
               </div>
-              <form onSubmit={handleSubmit} className="content-box">
+              <form onSubmit={handleLoginSubmit} className="content-box">
                 <div className="input-block">
                   <input
                     type="email"
@@ -313,6 +312,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           </div>
         </Hidden>
       }
+      <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={alertShown}
