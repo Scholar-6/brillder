@@ -19,6 +19,7 @@ import { Question, QuestionTypeEnum, QuestionComponentTypeEnum } from 'model/que
 import { HintState } from 'components/build/baseComponents/Hint/Hint';
 import { getNonEmptyComponent } from "../../questionService/ValidateQuestionService";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import FixedTextComponent from "../components/Text/FixedText";
 
 
 type QuestionComponentsProps = {
@@ -38,9 +39,17 @@ const QuestionComponents = ({
   questionIndex, locked, editOnly, history, brickId, question, validationRequired,
   updateComponents, setQuestionHint, saveBrick
 }: QuestionComponentsProps) => {
-  let componentsCopy = Object.assign([], question.components) as any[]
-  const [questionId, setQuestionId] = useState(question.id);
+  const componentsCopy = Object.assign([], question.components) as any[]
+  let firstComponentCopy = Object.assign({}, question.firstComponent) as any;
+  if (!firstComponentCopy.type || firstComponentCopy.type !== QuestionComponentTypeEnum.Text) {
+    firstComponentCopy = {
+      type: 1,
+      value: ''
+    }
+  }
+  const [firstComponent, setFirstComponent] = useState(firstComponentCopy);
   const [components, setComponents] = useState(componentsCopy);
+  const [questionId, setQuestionId] = useState(question.id);
   const [removeIndex, setRemovedIndex] = useState(-1);
   const [dialogOpen, setDialog] = useState(false);
   const [sameAnswerDialogOpen, setSameAnswerDialog] = useState(false);
@@ -63,15 +72,6 @@ const QuestionComponents = ({
     if (locked) { return; }
     const comps = Object.assign([], components) as any[];
     comps.splice(componentIndex, 1);
-    setComponents(comps);
-    updateComponents(comps);
-    saveBrick();
-  }
-
-  const addInnerComponent = () => {
-    if (locked) { return; }
-    const comps = Object.assign([], components) as any[];
-    comps.push({ type: 0 });
     setComponents(comps);
     updateComponents(comps);
     saveBrick();
@@ -194,6 +194,16 @@ const QuestionComponents = ({
 
   return (
     <div className="questions">
+      <Grid container direction="row" className={validateDropBox(firstComponent)}>
+        <FixedTextComponent
+          locked={locked}
+          editOnly={editOnly}
+          data={firstComponent}
+          save={saveBrick}
+          validationRequired={validationRequired}
+          updateComponent={() => {}}
+        />
+      </Grid>
       <ReactSortable
         list={components}
         animation={150}
@@ -208,13 +218,6 @@ const QuestionComponents = ({
           ))
         }
       </ReactSortable>
-      {/* 9/21/2020 button removed
-      <Grid container direction="row" className={"add-dropbox " + (locked ? 'hide' : '')}>
-        <button className="btn btn-xl btn-block bg-theme-orange" onClick={addInnerComponent}>
-          <span>+ QUESTION COMPONENT</span>
-        </button>
-      </Grid>
-      */}
       <Dialog open={dialogOpen} onClose={hideDialog} className="dialog-box">
         <div className="dialog-header">
           <div>Permanently delete<br />this component?</div>
