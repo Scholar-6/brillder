@@ -52,12 +52,10 @@
   }
 
   .phone-preview-component {
+    padding-top: 5.5vh !important;
     .titles-image {
-      margin-top: 1.5vw;
-      height: 7vw;
-      &.big {
-        height: 12vw;
-      }
+      margin-top: 0vw;
+      height: 14vw;
     }
     .brick-preview-container {
       overflow: hidden;
@@ -65,7 +63,7 @@
       padding: 0.6vh 1.25vw;
       font-size: 0.8vw;
       @extend %width100;
-      margin-top: 8vh;
+      margin-top: 3vh;
       @extend %themeRadius;
       font-family: $font-family-regular;
       line-height: 1.2;
