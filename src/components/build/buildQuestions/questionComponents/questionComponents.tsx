@@ -208,11 +208,13 @@ const QuestionComponents = ({
           ))
         }
       </ReactSortable>
+      {/* 9/21/2020 button removed
       <Grid container direction="row" className={"add-dropbox " + (locked ? 'hide' : '')}>
         <button className="btn btn-xl btn-block bg-theme-orange" onClick={addInnerComponent}>
           <span>+ QUESTION COMPONENT</span>
         </button>
       </Grid>
+      */}
       <Dialog open={dialogOpen} onClose={hideDialog} className="dialog-box">
         <div className="dialog-header">
           <div>Permanently delete<br />this component?</div>
