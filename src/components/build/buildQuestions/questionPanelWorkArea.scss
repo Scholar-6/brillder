@@ -12,7 +12,7 @@
   &:not(.active) {
     .text-box {
       .drag-box-name {
-        animation: pulse1 1.5s ease infinite;
+        animation: pulse-orange-alpha5 1.5s ease infinite;
       }
     }
   }
@@ -269,7 +269,7 @@
         }
         &.active,
         &.has-replied {
-          animation: pulse1 1.5s ease infinite;
+          animation: pulse-orange-alpha5 1.5s ease infinite;
           .comments-icon,
           .comments-plus,
           .comments-count {
