@@ -26,9 +26,9 @@ export function getNewQuestion(type: number, active: boolean) {
       status: HintStatus.None
     },
     components: [
-      { type: 0 },
+      { type: QuestionComponentTypeEnum.None },
       { type: QuestionComponentTypeEnum.Component },
-      { type: 0 }
+      { type: QuestionComponentTypeEnum.None }
     ]
   } as Question;
 };
