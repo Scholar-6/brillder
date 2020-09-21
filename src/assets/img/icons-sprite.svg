@@ -49,6 +49,10 @@
     <circle cx="19" cy="12" r="1"/>
     <circle cx="5" cy="12" r="1"/>
   </svg>
+  <svg id="search-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
   <svg id="search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="13.1" cy="10.9" r="8.9"/>
     <line x1="6.8" y1="17.2" x2="2" y2="22"/>
