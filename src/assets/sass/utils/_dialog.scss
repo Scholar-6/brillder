@@ -208,9 +208,9 @@
     right: 0.5vw;
     width: 2vw;
     height: 2vw;
-    svg {
+    .svg {
       stroke-width: 3;
-      color: var(--theme-orange);
+      color: var(--white);
       @extend %transitionAll300;
       @include phone_and_tabletP {
         height: 8vw !important;
@@ -223,7 +223,7 @@
     }
     &:hover {
       .svg {
-        color: var(--theme-dark-blue);
+        color: var(--theme-orange);
       }
     }
   }
