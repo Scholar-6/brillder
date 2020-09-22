@@ -27,7 +27,7 @@ const PublishSuccessDialog: React.FC<ProfileSavedProps> = props => {
             <Avatar className="circle-check">
               <svg className="svg active">
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#award"} className="text-white" />
+                <use href={sprite + "#award"} className="text-white" style={{strokeWidth: 2}} />
               </svg>
             </Avatar>
           </ListItemAvatar>

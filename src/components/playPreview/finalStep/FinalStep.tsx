@@ -41,7 +41,7 @@ interface FinalStepProps {
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
-  user, brick, location, history, requestFailed
+  user, brick, history, requestFailed
 }) => {
   const [shareOpen, setShare] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
@@ -76,8 +76,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <InviteColumn
         size={size}
-        firstLabel="internal users to play"
-        secondLabel="or edit this brick"
+        firstLabel="internal user to edit"
+        secondLabel="this brick"
         onClick={()=> setInvite(true)}
       />
     );
@@ -124,8 +124,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
                       </svg>
                     </div>
                   </div>
-                  <h2>Final step?</h2>
-                  <p>Well done for completing “{brick.title}”!</p>
+                  <h2>Submit for Review?</h2>
+                  <p>Invite an editor to begin the publication process</p>
                   {renderActionColumns()}
                 </div>
               </div>
@@ -161,7 +161,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
       <InviteDialog
-        canEdit={true} brick={brick} isOpen={inviteOpen} isAuthor={isAuthor}
+        canEdit={true} brick={brick} isOpen={inviteOpen} isAuthor={isAuthor && !brick.isCore}
+        title="Who would you like to edit this brick?"
         submit={(name, accessGranted) => { setInviteSuccess({ isOpen: true, name, accessGranted }); }}
         close={() => setInvite(false)} />
       <InvitationSuccessDialog

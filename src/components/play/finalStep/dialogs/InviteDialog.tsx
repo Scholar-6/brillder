@@ -16,6 +16,7 @@ interface InviteProps {
   brick: Brick;
   hideAccess?: boolean;
   isAuthor: boolean;
+  title?: string;
   submit(name: string, accessGranted: boolean): void;
   close(): void;
 
@@ -114,7 +115,9 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
         </svg>
       </div>
       <div className="dialog-header" style={{minWidth: '30vw'}}>
-        <div className="title left">Who would you like to invite to play this brick?</div>
+        <div className="title left">
+          {props.title ? props.title : 'Who would you like to invite to play this brick?'}
+        </div>
         <div style={{marginTop: '1.8vh'}}></div>
         <Grid item className="input-container">
           <div className="audience-inputs border-rounded">
