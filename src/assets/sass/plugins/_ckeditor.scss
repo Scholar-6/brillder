@@ -18,3 +18,11 @@
 .ck-focused {
   border-color: #c4c4c4 !important;
 }
+.ck,
+a.ck {
+  &.ck-button {
+    .ck-button__label {
+      font-size:0.8vw !important;
+    }
+  }
+}
