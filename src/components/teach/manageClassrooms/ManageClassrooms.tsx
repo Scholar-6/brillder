@@ -7,7 +7,7 @@ import sprite from "assets/img/icons-sprite.svg";
 
 import { User } from "model/user";
 import { MUser } from "../interface";
-import { deleteClassroom } from 'components/services/axios/classroom';
+import { deleteClassroom, getStudents } from 'components/services/axios/classroom';
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import {
@@ -101,16 +101,18 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
       pageStudentsSelected: false
     };
 
-    getAllStudents().then(students => {
-      if (students) {
-        students.map((u: any) => u.selected = false);
-        this.setState({ ...this.state, users: students as any[], totalCount: students.length });
-      } else {
-        // getting students failed
-      }
-    });
-
+    this.getStudents();
     this.getClassrooms();
+  }
+
+  async getStudents() {
+    const users = await getStudents() as MUser[] | null;
+    if (users) {
+      users.map(u => u.selected = false);
+      this.setState({ ...this.state, users, totalCount: users.length });
+    } else {
+      // getting students failed
+    }
   }
 
   async getClassrooms() {
