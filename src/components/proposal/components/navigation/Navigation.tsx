@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Grid, Hidden } from "@material-ui/core";
 import { connect } from 'react-redux';
 
+import sprite from "assets/img/icons-sprite.svg";
 import './Navigation.scss';
 import { ReduxCombinedState } from 'redux/reducers';
 import { ProposalStep, PlayButtonStatus } from "../../model";
@@ -35,17 +36,20 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
       <Grid container item justify="center">
         <div className={`step-container ${step === ProposalStep.BrickTitle ? 'active' : ''}`}>
           <div className="step-label">Title</div>
-          <div
-            className="navigation-button navigation-titles"
-            onClick={() => move(map.ProposalTitle)}
-          />
+          <svg className="svg active navigation-button navigation-titles" onClick={() => move(map.ProposalTitle)}>
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#search-flip-thick"} />
+          </svg>
         </div>
         <div className={`step-container ${step === ProposalStep.OpenQuestion ? 'active' : ''}`}>
           <div className="step-label">Open Question</div>
-          <div
+          <svg
             className={`navigation-button navigation-question ${step >= ProposalStep.OpenQuestion ? 'active' : ''}`}
             onClick={() => move(map.ProposalOpenQuestion)}
-          />
+          >
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#help-circle"} />
+          </svg>
         </div>
         <div className={`step-container ${step === ProposalStep.BrickLength ? 'active' : ''}`}>
           <div className="step-label">Length</div>

@@ -2,6 +2,7 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
+import sprite from "assets/img/icons-sprite.svg";
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import './brickLength.scss';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
@@ -31,7 +32,10 @@ const BrickLengthPreviewComponent: React.FC<any> = ({ data }) => {
 
   return (
     <Grid container justify="center" className="phone-preview-component">
-      <img alt="head" src="/images/new-brick/brick-length.png"></img>
+      <svg>
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#clock"} />
+      </svg>
       <div className="">{data === 0 ? "" : data + ' minutes'}</div>
       {data !== 0 ? 
       <div className="preview-length-list">
