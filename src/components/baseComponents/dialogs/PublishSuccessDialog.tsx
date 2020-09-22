@@ -5,8 +5,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import './LinkCopiedDialog.scss';
-
 import sprite from "assets/img/icons-sprite.svg";
 
 interface ProfileSavedProps {
@@ -24,18 +22,18 @@ const PublishSuccessDialog: React.FC<ProfileSavedProps> = props => {
     >
       <div className="dialog-header">
         <ListItem>
-          <ListItemText primary="Link copied!" className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemText primary="Publish Successful!" className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-check">
               <svg className="svg active">
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#link"} className="text-white" />
+                <use href={sprite + "#award"} className="text-white" />
               </svg>
             </Avatar>
           </ListItemAvatar>
         </ListItem>
         <ListItem>
-          <ListItemText primary="Publish Successful!" className="italic" style={{ minWidth: '30vw' }} />
+          <ListItemText primary="Thank you for adding to our library" className="italic" style={{ minWidth: '30vw' }} />
         </ListItem>
       </div>
     </Dialog>
