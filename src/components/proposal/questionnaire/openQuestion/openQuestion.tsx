@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
+import sprite from "assets/img/icons-sprite.svg";
 import './openQuestion.scss';
 import { ProposalStep, PlayButtonStatus } from "../../model";
 import map from 'components/map';
@@ -19,21 +20,17 @@ interface OpenQuestionProps {
 }
 
 const HeadComponent: React.FC<any> = ({ data }) => {
-  if (data) {
-    return (
-      <Grid container justify="center" className="phone-preview-component">
-        <img alt="head" src="/images/new-brick/head.png"></img>
-        <div className="typing-text">
-          <p>{data}</p>
-        </div>
-      </Grid>
-    )
-  }
   return (
     <Grid container justify="center" className="phone-preview-component">
-      <img alt="head" src="/images/new-brick/head.png" style={{ marginTop: '34%', height: '54%' }}></img>
+      <svg>
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#help-circle"} />
+      </svg>
+      <div className="typing-text">
+        <p>{data}</p>
+      </div>
     </Grid>
-  )
+  );
 }
 
 const OpenQuestion: React.FC<OpenQuestionProps> = ({

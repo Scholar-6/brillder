@@ -61,14 +61,16 @@
       background-size: 100% 100%;
       background-repeat: no-repeat;
       background-position: center;
+      color: var(--tab-gray);
     }
 
     .navigation-titles {
-      background-image: url(/images/new-brick/titles.png);
+      width: 2vw !important;
+      height: 2vw !important;
     }
     .navigation-question {
-      width: 1.6vw;
-      background-image: url(/images/new-brick/head-grey.png);
+      width: 2vw;
+      stroke-width: 2px;
     }
     .navigation-brief {
       background-image: url(/images/new-brick/brief-circles-grey.png);
@@ -83,11 +85,8 @@
     .navigation-editor {
       background-image: url(/images/new-brick/edit-grey.png);
     }
-    .navigation-titles.active {
-      background-image: url(/images/new-brick/titles.png);
-    }
-    .navigation-question.active {
-      background-image: url(/images/new-brick/head.png);
+    .navigation-titles.active, .navigation-question.active {
+      color: var(--theme-orange);
     }
     .navigation-brief.active {
       background-image: url(/images/new-brick/brief-circles.png);
@@ -104,15 +103,10 @@
   }
 
   .step-container:hover {
+    .navigation-button,
     .step-label {
       color: var(--light-blue);
       opacity: 1;
-    }
-    .navigation-titles {
-      background-image: url(/images/new-brick/titles-hover.png);
-    }
-    .navigation-question {
-      background-image: url(/images/new-brick/head-hover.png);
     }
     .navigation-brief {
       background-image: url(/images/new-brick/brief-circles-hover.png);
@@ -129,12 +123,6 @@
   }
 
   .step-container.active {
-    .navigation-titles {
-      background-image: url(/images/new-brick/titles.png);
-    }
-    .navigation-question {
-      background-image: url(/images/new-brick/head.png);
-    }
     .navigation-brief {
       background-image: url(/images/new-brick/brief-circles.png);
     }
@@ -146,6 +134,9 @@
     }
     .navigation-editor {
       background-image: url(/images/new-brick/edit.png);
+    }
+    .navigation-button {
+      color: var(--theme-orange);
     }
   }
 
