@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import { History } from 'history';
 import { connect } from 'react-redux';
 
+import sprite from "assets/img/icons-sprite.svg";
 import './PostPlay.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import { Brick } from "model/brick";
@@ -103,10 +104,13 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                     <div>
                       <div className="image-background-container">
                       <div className="book-image-container">
-                        <img alt="" src="/images/choose-login/logo.png" />
+                        <svg style={{color: color}}>
+                          {/*eslint-disable-next-line*/}
+                          <use href={sprite + "#brick-icon"} />
+                        </svg>
                       </div>
                       </div>
-                      <div>{brick.title}</div>
+                      <div className="brick-title">{brick.title}</div>
                       {renderUserRow()}
                     </div>
                   </Grid>

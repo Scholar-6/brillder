@@ -212,18 +212,21 @@
           border-radius: 1vh;
           @extend %flexCenter;
         
-          img {
+          svg {
             height: 21.5vh;
           }
         }
       }
 
-      .white-text {
+      .brick-title {
         margin-top: 5vh;
         margin-left: 1.9vw;
         letter-spacing: 0.8vw;
         font-size: 3.5vw;
-        color: white;
+        text-transform: uppercase;
+        color: var(--theme-dark-blue);
+        font-size: 2vw;
+        overflow-x: hidden;
       }
       .names-row {
         margin-top: 1vh;
@@ -281,7 +284,7 @@
             font-family: $font-family-bold;
             text-transform: uppercase;
             height: 20vh;
-          }
+          }  
         }
       }
     }
