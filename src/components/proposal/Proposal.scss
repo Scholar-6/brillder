@@ -356,3 +356,17 @@
     right: 0;
   }
 }
+
+.tutorial-page {
+  .phone-preview-component {
+    svg {
+      margin-top: 6.8vh;
+      color: var(--theme-orange);
+      &.big {
+        margin-top: 0;
+        height: 95%;
+        width: 100%;
+      }
+    }
+  }
+}
