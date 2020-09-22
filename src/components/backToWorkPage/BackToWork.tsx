@@ -55,6 +55,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       notificationsShown: false,
     };
 
+    this.props.requestFailed('Can`t get subjects');
+
+
     loadSubjects().then((subjects: Subject[] | null) => {
       if (!subjects) {
         this.props.requestFailed('Can`t get subjects');
