@@ -1,0 +1,25 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.back-to-work-teach {
+  .right-index {
+    height: 100%;
+  }
+
+  .index-box, classes-box {
+    @extend %flexToYCenter;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 4.7vh !important;
+    font-size: 1.8vh !important;
+  }
+  .white-box {
+    padding: 0 !important;
+    border-radius: calc(#{$bricks-height / 6.35 / 20}) !important;
+    width: 5vh !important;
+    height: 2.3vh !important;
+    @extend %flexCenter;
+    font-size: 2.1vh !important;
+  }
+}

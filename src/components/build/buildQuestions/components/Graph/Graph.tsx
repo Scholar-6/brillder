@@ -1,11 +1,10 @@
-import React, { useLayoutEffect, useEffect } from 'react';
-import Checkbox from '@material-ui/core/Checkbox';
+import React, { useEffect } from 'react';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab'
 //@ts-ignore
 import Desmos from 'desmos';
 
 import './Graph.scss';
-import { Button, Fab, SvgIcon, Tooltip } from '@material-ui/core';
+import { Fab, SvgIcon, Tooltip } from '@material-ui/core';
 import GraphDialog from './GraphDialog';
 
 import sprite from 'assets/img/icons-sprite.svg';
@@ -19,14 +18,6 @@ export interface GraphSettings {
 }
 
 const settingNames: (keyof GraphSettings)[] = ["showSidebar", "showSettings", "allowPanning", "trace", "pointsOfInterest"];
-
-const settingsStrings: { [key: string]: string } = {
-    showSidebar: "Show Sidebar",
-    showSettings: "Show Settings",
-    allowPanning: "Allow Pan / Zoom",
-    trace: "Allow Tracing",
-    pointsOfInterest: "Show Points of Interest",
-}
 
 interface GraphProps {
     locked: boolean;
@@ -60,7 +51,6 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
         }
         if(graphRef && graphRef.current) {
             const state = graphState;
-            const settings = graphSettings;
             if(calculator) {
               calculator.destroy();
             }
@@ -96,7 +86,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
 
     const setGraphSetting = (evt: React.MouseEvent<HTMLElement>, newSettings: string[]) => {
         setGraphSettings(Object.fromEntries(settingNames.map(name => 
-            [name, newSettings.findIndex(s => s === name) != -1])) as any);
+            [name, newSettings.findIndex(s => s === name) !== -1])) as any);
     }
 
     const getGraphSettings = () => {

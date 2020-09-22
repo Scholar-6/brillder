@@ -57,14 +57,16 @@
   }
 
   .phone-preview-component {
-    img {
+    svg {
       @extend %widthAuto;
-      margin-top: 8.8vh;
+      color: var(--theme-orange);
+      margin-top: 7.3vh;
       height: 34%;
+      stroke-width: 1.2;
     }
     .typing-text {
       height: 35%;
-      top: 54%;
+      top: 48%;
     }
   }
 }

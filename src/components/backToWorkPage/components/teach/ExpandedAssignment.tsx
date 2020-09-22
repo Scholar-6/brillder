@@ -64,7 +64,7 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
     students = students.slice(startIndex, startIndex + pageSize);
     return (
       <div className="expanded-assignment classroom-list">
-        <div className="classroom-title">{classroom.name}</div>
+        <div className="classroom-title first">{classroom.name}</div>
         <div>
           <AssignedBrickDescription
             isExpanded={true}

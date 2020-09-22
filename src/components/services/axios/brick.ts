@@ -1,6 +1,6 @@
 import { Brick, BrickStatus } from 'model/brick';
 
-import {get, post} from './index';
+import {get, put, post} from './index';
 
 /**
  * Get all bricks
@@ -9,6 +9,18 @@ import {get, post} from './index';
 export const getBricks = async () => {
   try {
     return await get<Brick[]>("/bricks");
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Get bricks by status
+ * return list of bricks if success or null if failed
+ */
+export const getPublishedBricks = async () => {
+  try {
+    return await get<Brick[]>(`/bricks/byStatus/${BrickStatus.Publish}`);
   } catch {
     return null;
   }
@@ -57,6 +69,19 @@ export const publishBrick = async (brickId: number) => {
 export const inviteUser = async (brickId: number, userId: number) => {
   try {
     await post<Brick>(`/brick/inviteToBrick/${brickId}`, {userIds: [userId]});
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export const setCoreLibrary = async (brickId: number, isCore?: boolean) => {
+  try {
+    let core = false;
+    if (isCore) {
+      core = true;
+    }
+    await put<Brick>(`/brick/setCoreLibrary/${brickId}/${core}`, {});
     return true;
   } catch {
     return false;

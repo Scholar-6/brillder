@@ -9,12 +9,11 @@ export interface DragTabProps {
   isValid: boolean;
   selectQuestion: Function,
   removeQuestion: Function,
-  getUnreadComments(questionId: number): number
-  getHasReplied(questionId: number): boolean
+  getHasReplied(questionId: number): number
 }
 
 const DragTab: React.FC<DragTabProps> = ({
-  id, index, active, isValid, selectQuestion, removeQuestion, getUnreadComments, getHasReplied
+  id, index, active, isValid, selectQuestion, removeQuestion, getHasReplied
 }) => {
   const removeTab = (event: React.ChangeEvent<any>) => {
     event.stopPropagation();
@@ -45,14 +44,16 @@ const DragTab: React.FC<DragTabProps> = ({
     tabClass += ' text-white';
   }
 
+  const replyType = getHasReplied(id);
+
   return (
     <div className="draggable-tab" onClick={activateTab}>
       <div className={tabClass}>
         {index + 1}
       </div>
       {
-        (getUnreadComments(id) > 0 || getHasReplied(id)) &&
-        <div className={"unread-indicator svgOnHover active" + (getHasReplied(id) ? " has-replied" : "")}>
+        (replyType !== 0) &&
+        <div className={"unread-indicator svgOnHover active" + (replyType > 0 ? " has-replied" : "")}>
           <svg className="svg w100 h100 active" viewBox="0 0 24 24" stroke="none" fill="currentColor">
             <circle cx="12" cy="12" r="12" className="outer-circle" />
             <circle cx="12" cy="12" r="6" className="inner-circle" />

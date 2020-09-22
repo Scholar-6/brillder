@@ -12,7 +12,8 @@ export enum NotificationType {
   BrickSubmittedForReview,
   BrickPublished,
   AssignedToEdit,
-  NewCommentOnBrick
+  NewCommentOnBrick,
+  InvitedToPlayBrick
 }
 
 export interface Notification {
@@ -33,4 +34,5 @@ export const notificationTypeColors = {
   [NotificationType.BrickPublished]: "published",
   [NotificationType.AssignedToEdit]: "assigned-to-edit",
   [NotificationType.NewCommentOnBrick]: "new-comment",
+  [NotificationType.InvitedToPlayBrick]: "invited-to-play"
 };

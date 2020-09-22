@@ -241,7 +241,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
         </Route>
         <Route exac path="/play/brick/:brickId/finalStep">
           <FinalStep
-            status={status}
+            user={props.user}
             brick={brick}
             history={props.history}
           />
@@ -283,6 +283,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
             id: question.id,
             type: question.type,
             hint: parsedQuestion.hint,
+            firstComponent: parsedQuestion.firstComponent ? parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
             components: parsedQuestion.components,
           } as Question;
           parsedQuestions.push(q);

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
+import './TeachPage.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 import statActions from 'redux/actions/stats';
@@ -75,14 +76,18 @@ class TeachPage extends Component<TeachProps, TeachState> {
       pageSize: 6,
       assignmentPageSize: 8,
       sortedIndex: 0,
+    };
+
+    this.getClassrooms();
+  }
+
+  async getClassrooms() {
+    const classrooms = await getAllClassrooms() as TeachClassroom[] | null;
+    if (classrooms) {
+      this.setState({ classrooms });
+    } else {
+      this.props.requestFailed('can`t get classrooms');
     }
-    getAllClassrooms().then((classrooms: any) => {
-      if (classrooms) {
-        this.setState({ classrooms: classrooms as TeachClassroom[] });
-      } else {
-        this.props.requestFailed('can`t get classrooms');
-      }
-    });
   }
 
   componentWillReceiveProps(nextProps: TeachProps) {
@@ -205,7 +210,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   render() {
     return (
-      <Grid container direction="row" className="sorted-row">
+      <Grid container direction="row" className="sorted-row back-to-work-teach">
         <TeachFilterSidebar
           classrooms={this.state.classrooms}
           activeClassroom={this.state.activeClassroom}

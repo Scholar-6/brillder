@@ -249,6 +249,7 @@
     .bottom-next-button {
       bottom: 1vh;
       position: relative;
+      @extend %flexCenter;
       .btn {
         height: 4.7vh;
         width: 4.7vh;

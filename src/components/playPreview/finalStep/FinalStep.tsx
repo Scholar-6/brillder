@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
-import queryString from 'query-string';
 import { connect } from "react-redux";
 
 import map from 'components/map';
@@ -55,13 +54,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
     name: ''
   });
 
-  const isAdmin = checkAdmin(user.roles);
+  let isAuthor = false;
+  try {
+    isAuthor = brick.author.id === user.id;
+  } catch {}
 
-  let isPersonal = false;
-  const values = queryString.parse(location.search);
-  if (values.isPersonal) {
-    isPersonal = true;
-  }
+  const isAdmin = checkAdmin(user.roles);
 
   const link = `/play/brick/${brick.id}/intro`;
 
@@ -93,7 +91,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
       size = 3;
     }
 
-    if (isPersonal) {
+    if (!brick.isCore) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
           <ShareColumn size={size} onClick={() => setShare(true)} />
@@ -140,7 +138,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 </div>
                 <div className="intro-text-row">
                 </div>
-                <ExitButton onClick={() => history.push(map.BackToWorkPage)} />
+                <ExitButton onClick={() =>
+                  history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`)} />
               </div>
             </Grid>
           </Grid>
@@ -163,10 +162,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
       <InviteDialog
-        canEdit={true} brick={brick} isOpen={inviteOpen}
+        canEdit={true} brick={brick} isOpen={inviteOpen} isAuthor={isAuthor}
         submit={(name, accessGranted) => { setInviteSuccess({ isOpen: true, name, accessGranted }); }}
         close={() => setInvite(false)} />
       <InvitationSuccessDialog
+        isAuthor={isAuthor}
         isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={inviteSuccess.accessGranted}
         close={() => setInviteSuccess({ isOpen: false, name: '', accessGranted: false })} />
       <SimpleDialog

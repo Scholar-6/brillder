@@ -1,23 +1,25 @@
 import React, { Component } from "react";
 import queryString from 'query-string';
 import { connect } from "react-redux";
+import { Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 
 import "./BackToWork.scss";
+import map from 'components/map';
 import { User } from "model/user";
 import { Subject } from "model/brick";
 import { checkTeacher } from "components/services/brickService";
 import { loadSubjects, getGeneralSubject } from 'components/services/subject';
-import { TeachClassroom } from "model/classroom";
-import { getAllClassrooms } from "components/teach/service";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import { ActiveTab } from './components/Tab';
 import TeachPage from './components/teach/TeachPage';
 import BuildPage from './components/build/BuildPage';
 import PlayPage from './components/play/PlayPage';
+import { getTabLink } from "./service";
 
 interface BackToWorkState {
   searchString: string;
@@ -25,20 +27,13 @@ interface BackToWorkState {
   dropdownShown: boolean;
   notificationsShown: boolean;
   generalSubjectId: number;
-  activeTab: ActiveTab;
   subjects: Subject[];
-
-  isTeach: boolean;
-
-  classrooms: TeachClassroom[];
-  activeClassroom: TeachClassroom | null;
 }
 
 export interface BackToWorkProps {
   user: User;
   history: any;
   location: any;
-  stats: any;
   forgetBrick(): void;
   requestFailed(e: string): void;
 }
@@ -48,24 +43,16 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     super(props);
 
     const isTeach = checkTeacher(this.props.user.roles);
-    const activeTab = this.getActiveTab(isTeach);
 
     this.state = {
-      activeTab,
       subjects: [],
-
-      isTeach,
+      generalSubjectId: -1,
 
       searchString: "",
       isSearching: false,
+
       dropdownShown: false,
       notificationsShown: false,
-
-      generalSubjectId: -1,
-
-      // Play, Teach
-      classrooms: [],
-      activeClassroom: null,
     };
 
     loadSubjects().then((subjects: Subject[] | null) => {
@@ -81,13 +68,9 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
       this.setState({ generalSubjectId, subjects });
     });
 
-    getAllClassrooms().then((classrooms: any) => {
-      if (classrooms) {
-        this.setState({ classrooms: classrooms as TeachClassroom[] });
-      } else {
-        this.props.requestFailed('Can`t get classrooms');
-      }
-    });
+    if (props.location.pathname === '/back-to-work') {
+      this.setAutoTab(isTeach);
+    }
   }
 
   getActiveTab(isTeach: boolean) {
@@ -107,15 +90,15 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     return activeTab;
   }
 
-  setTab(activeTab: ActiveTab) {
-    this.deactivateClassrooms();
-    this.setState({ activeTab });
+  setAutoTab(isTeach: boolean) {
+    const activeTab = this.getActiveTab(isTeach);
+    const link = getTabLink(activeTab);
+    this.props.history.push(link);
   }
 
-  deactivateClassrooms() {
-    for (let classroom of this.state.classrooms) {
-      classroom.active = false;
-    }
+  setTab(activeTab: ActiveTab) {
+    const link = getTabLink(activeTab);
+    this.props.history.push(link);
   }
 
   searching(searchString: string) {
@@ -134,53 +117,6 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
     this.setState({ ...this.state, isSearching: true });
   }
 
-  renderTeach() {
-    if (this.state.activeTab !== ActiveTab.Teach) {
-      return "";
-    }
-    return <TeachPage
-      searchString={this.state.searchString}
-      isSearching={this.state.isSearching}
-      subjects={this.state.subjects}
-      setTab={this.setTab.bind(this)}
-    />;
-  }
-
-  renderBuild() {
-    if (this.state.activeTab !== ActiveTab.Build) {
-      return "";
-    }
-    if (this.state.generalSubjectId === - 1) {
-      return "";
-    }
-    return (
-      <BuildPage
-        isSearching={this.state.isSearching}
-        searchString={this.state.searchString}
-        generalSubjectId={this.state.generalSubjectId}
-        history={this.props.history}
-        setTab={this.setTab.bind(this)}
-      />
-    );
-  }
-
-  renderPlay() {
-    if (this.state.activeTab !== ActiveTab.Play) {
-      return "";
-    }
-    if (this.state.generalSubjectId === - 1) {
-      return "";
-    }
-    return (
-      <PlayPage
-        history={this.props.history}
-        classrooms={this.state.classrooms}
-        generalSubjectId={this.state.generalSubjectId}
-        setTab={this.setTab.bind(this)}
-      />
-    );
-  }
-
   render() {
     return (
       <div className="main-listing back-to-work-page">
@@ -192,9 +128,33 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
           search={() => this.search()}
           searching={(v: string) => this.searching(v)}
         />
-        {this.renderTeach()}
-        {this.renderBuild()}
-        {this.renderPlay()}
+        <Switch>
+          <Route path={map.BackToWorkTeachTab}>
+            <TeachPage
+              searchString={this.state.searchString}
+              isSearching={this.state.isSearching}
+              subjects={this.state.subjects}
+              setTab={this.setTab.bind(this)}
+            />
+          </Route>
+          <Route path={map.BackToWorkBuildTab}>
+            <BuildPage
+              isSearching={this.state.isSearching}
+              searchString={this.state.searchString}
+              generalSubjectId={this.state.generalSubjectId}
+              location={this.props.location}
+              history={this.props.history}
+              setTab={this.setTab.bind(this)}
+            />
+          </Route>
+          <Route path={map.BackToWorkLearnTab}>
+            <PlayPage
+              history={this.props.history}
+              generalSubjectId={this.state.generalSubjectId}
+              setTab={this.setTab.bind(this)}
+            />
+          </Route>
+        </Switch>
       </div>
     );
   }

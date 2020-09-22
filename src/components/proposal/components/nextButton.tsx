@@ -30,12 +30,12 @@ const NextButton:React.FC<NextButtonProps> = (
         case ProposalStep.BrickTitle:
           return history.push(map.ProposalOpenQuestion);
         case ProposalStep.OpenQuestion:
-          return history.push(map.ProposalBrief);
-        case ProposalStep.Brief:
-          return history.push(map.ProposalPrep);
-        case ProposalStep.Prep:
           return history.push(map.ProposalLength);
         case ProposalStep.BrickLength:
+          return history.push(map.ProposalBrief);
+          case ProposalStep.Brief:
+          return history.push(map.ProposalPrep);
+        case ProposalStep.Prep:
           return history.push(map.ProposalReview);
       }
     }

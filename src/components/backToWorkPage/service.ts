@@ -1,6 +1,8 @@
 import { Brick, BrickStatus } from 'model/brick';
 import { SortBy, Filters, ThreeColumns, AssignmentBrickData } from './model';
 import { AssignmentBrick } from "model/assignment";
+import { ActiveTab } from './components/Tab';
+import map from 'components/map';
 
 const getBrickById = (bricks: Brick[], brickId: number) => {
   return bricks.find(b => b.id === brickId);
@@ -45,7 +47,7 @@ export const filterByCurretUser = (bricks: Brick[], userId: number) => {
 }
 
 export const checkPrivateBrick = (b: Brick, userId: number, generalSubjectId: number) => {
-  return b.author.id === userId || b.subjectId === generalSubjectId;
+  return b.author.id === userId || b.subjectId === generalSubjectId || b.isCore === false;
 }
 
 export const filterByPrivate = (bricks: Brick[], userId: number, generalSubjectId: number) => {
@@ -53,7 +55,7 @@ export const filterByPrivate = (bricks: Brick[], userId: number, generalSubjectI
 }
 
 export const checkCoreBrick = (b: Brick, generalSubjectId: number) => {
-  return b.subjectId !== generalSubjectId;
+  return b.subjectId !== generalSubjectId || b.isCore === true;
 }
 
 export const filterByCore = (bricks: Brick[], generalSubjectId: number) => {
@@ -158,4 +160,14 @@ export const prepareVisibleAssignments = (sortedIndex: number, pageSize: number,
     }
   }
   return data;
+}
+
+export const getTabLink = (activeTab: ActiveTab) => {
+  let link = map.BackToWorkBuildTab;
+  if (activeTab === ActiveTab.Teach) {
+    link = map.BackToWorkTeachTab;
+  } else if (activeTab === ActiveTab.Play) {
+    link = map.BackToWorkLearnTab;
+  }
+  return link;
 }

@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import { ReduxCombinedState } from "redux/reducers";
 import { PlayFilters, ThreeAssignmentColumns } from '../../model';
-import { TeachClassroom } from "model/classroom";
 import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 import actions from 'redux/actions/requestFailed';
 import { getAssignedBricks } from "components/services/axios/brick";
@@ -23,7 +22,6 @@ import BackPagePaginationV2 from "../BackPagePaginationV2";
 interface PlayProps {
   history: any;
   generalSubjectId: number;
-  classrooms: TeachClassroom[];
   setTab(t: ActiveTab): void;
 
   // redux
@@ -32,7 +30,6 @@ interface PlayProps {
 }
 
 interface PlayState {
-  activeClassroom: TeachClassroom | null;
   filterExpanded: boolean;
   isClearFilter: boolean;
   filters: PlayFilters;
@@ -83,7 +80,6 @@ class PlayPage extends Component<PlayProps, PlayState> {
       
       filterExpanded: true,
       isClearFilter: false,
-      activeClassroom: null,
       sortedIndex: 0,
       pageSize: 18,
 
@@ -153,18 +149,6 @@ class PlayPage extends Component<PlayProps, PlayState> {
     }
   }
 
-  deactivateClassrooms() {
-    for (let classroom of this.props.classrooms) {
-      classroom.active = false;
-    }
-  }
-
-  activateClassroom(activeClassroom: TeachClassroom) {
-    this.deactivateClassrooms();
-    activeClassroom.active = true;
-    this.setState({ activeClassroom });
-  }
-
   playFilterUpdated(filters: PlayFilters) {
     const { checked, submitted, completed } = filters;
     let finalAssignments = this.state.rawAssignments;
@@ -225,7 +209,6 @@ class PlayPage extends Component<PlayProps, PlayState> {
     filters.checked = false;
     filters.submitted = false;
 
-    this.deactivateClassrooms();
     const finalAssignments = this.getFilteredAssignemnts(this.state.rawAssignments, isCore);
     const threeColumns = service.prepareThreeAssignmentRows(finalAssignments);
     
@@ -233,7 +216,6 @@ class PlayPage extends Component<PlayProps, PlayState> {
       isCore,
       finalAssignments,
       threeColumns,
-      activeClassroom: null,
       sortedIndex: 0,
       filters
     });
@@ -304,10 +286,7 @@ class PlayPage extends Component<PlayProps, PlayState> {
       <Grid container direction="row" className="sorted-row">
         <PlayFilterSidebar
           filters={this.state.filters}
-          activeClassroom={this.state.activeClassroom}
-          classrooms={this.props.classrooms}
           assignments={this.state.finalAssignments}
-          setActiveClassroom={this.activateClassroom.bind(this)}
           filterChanged={this.playFilterUpdated.bind(this)}
         />
         <Grid item xs={9} className="brick-row-container">
