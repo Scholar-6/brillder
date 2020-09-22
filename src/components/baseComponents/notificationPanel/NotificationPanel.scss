@@ -27,7 +27,7 @@
     }
     @include desktop {
       box-shadow: none;
-      left: calc(100% - 27.3vw) !important;
+      left: calc(100% - #{$notification-width}) !important;
     }
     .notification-content {
       background-color: var(--light-blue);
@@ -44,7 +44,7 @@
         width: 30vw;
       }
       @include desktop {
-        width: 27.3vw;
+        width: $notification-width;
       }
       .notification-list {
         padding: 1vw 1vw 0 1vw !important;

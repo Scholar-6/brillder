@@ -299,7 +299,7 @@
     }
 
     &.notification-expanded {
-      width: 25vw;
+      width: $notification-width;
       border-bottom-left-radius: 0;
     }
   }
