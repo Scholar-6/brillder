@@ -6,15 +6,13 @@
     background-color: transparent;
     @extend %flexCenter;
     @include phone_and_tabletP {
-      background-color: var(--light-blue);
-      margin-bottom: 4vh;
-      height: calc(50vh - 2vh);
+      background-color: var(--theme-light-blue);
+      margin-bottom: 60px;
+      height: calc(42vh - 60px) !important;
       border-bottom-right-radius: 10vw;
       overflow: hidden;
     }
     .logo-image {
-      margin-top: 6.1vh;
-      margin-bottom: 3.9vh;
       height: 20vh;
       color: var(--theme-orange);
 
@@ -131,7 +129,7 @@
     }
     .first-item,
     .second-item {
-      background: var(--light-blue);
+      background: var(--theme-light-blue);
       @include phone_and_tabletP {
         background-color: transparent;
       }
@@ -198,10 +196,16 @@
         input {
           color: var(--white);
           @extend %textCenter;
-          padding: 2.5vh !important;
-          min-height: 9.663vh;
           background: var(--theme-dark-blue);
           box-sizing: border-box !important;
+          padding: 2.5vh !important;
+          @include phone_and_tabletP {
+            min-height: 6.663vh;
+            border-radius: 2.4vw;
+          }
+          @include tabletP {
+            min-height: 9.663vh;
+          }
           &::-webkit-input-placeholder {
             color: var(--white);
             opacity: 0.8;
@@ -250,13 +254,17 @@
           font-size: 3.6vh;
         }
       }
+      &.mobile-button-box {
+        @include phone_and_tabletP {
+          background-color: var(--theme-light-blue) !important;
+        }
+      }
     }
     .button-box {
       a,
       button {
         font-family: $font-family-regular;
         box-shadow: none;
-        border-radius: $button-radius !important;
         border: 0;
         text-transform: none;
         letter-spacing: 0.1vw;
@@ -265,8 +273,10 @@
         @include phone_and_tabletP {
           font-size: 4.8vw;
           padding: 0.5vh 1.2vw;
+          border-radius: 2.4vw !important;
         }
         @include tabletP {
+          border-radius: $button-radius !important;
           font-size: 1.4vw;
           padding: 0.8vh 1.2vw;
         }
@@ -285,6 +295,12 @@
         padding: 0.7vw;
         @include phone_and_tabletP {
           color: var(--black-blue);
+        }
+      }
+      .sign-in-button,
+      .sign-up-button {
+        @include phone_and_tabletP {
+          border-radius:2.4vw !important;
         }
       }
       .sign-up-button {
@@ -317,11 +333,12 @@
       .google-button {
         @extend %flexCenter;
         padding: 2.5vh;
-        min-height: 9.663vh;
         @include phone_and_tabletP {
           width: 100%;
+          min-height: 6.663vh;
         }
         @include tabletP {
+          min-height: 9.663vh;
           width: 30vw;
         }
         @include desktop {

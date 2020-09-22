@@ -183,13 +183,13 @@
           height: 100%;
           right: 0;
           width: 0.8vw;
-          background: var(--light-blue);
+          background: var(--theme-light-blue);
         }
         .horizontal-line {
           position: absolute;
           height: 0.8vw;
           width: 100%;
-          background: var(--light-blue);
+          background: var(--theme-light-blue);
         }
         .top-line-1 {
           top: 7.8vh;
@@ -219,7 +219,7 @@
       .names-row {
         margin-top: 1vh;
         font-size: 2.4vw;
-        color: var(--light-blue);
+        color: var(--theme-light-blue);
       }
     }
 
