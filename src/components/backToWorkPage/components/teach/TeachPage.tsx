@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
+import './TeachPage.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 import statActions from 'redux/actions/stats';
@@ -209,7 +210,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   render() {
     return (
-      <Grid container direction="row" className="sorted-row">
+      <Grid container direction="row" className="sorted-row back-to-work-teach">
         <TeachFilterSidebar
           classrooms={this.state.classrooms}
           activeClassroom={this.state.activeClassroom}
