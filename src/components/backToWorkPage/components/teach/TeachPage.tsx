@@ -75,14 +75,18 @@ class TeachPage extends Component<TeachProps, TeachState> {
       pageSize: 6,
       assignmentPageSize: 8,
       sortedIndex: 0,
+    };
+
+    this.getClassrooms();
+  }
+
+  async getClassrooms() {
+    const classrooms = await getAllClassrooms() as TeachClassroom[] | null;
+    if (classrooms) {
+      this.setState({ classrooms });
+    } else {
+      this.props.requestFailed('can`t get classrooms');
     }
-    getAllClassrooms().then((classrooms: any) => {
-      if (classrooms) {
-        this.setState({ classrooms: classrooms as TeachClassroom[] });
-      } else {
-        this.props.requestFailed('can`t get classrooms');
-      }
-    });
   }
 
   componentWillReceiveProps(nextProps: TeachProps) {

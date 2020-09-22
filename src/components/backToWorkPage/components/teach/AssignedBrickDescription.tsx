@@ -21,17 +21,25 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   renderVertical(assignmentId: number, color: string) {
     return (
       <div
-        className="vertical-brick" style={{ background: color }}
+        className="vertical-brick"
         onClick={() => {
           if (this.props.expand) {
             return this.props.expand(this.props.classroom.id, assignmentId)
           }
         }}
       >
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#maximize"} />
-        </svg>
+        <div>
+        <div className="brick-top" style={{ background: color }}></div>
+        <div className="brick-top-middle" style={{ background: color }}></div>
+        <div className="brick-middle" style={{ background: color }}>
+          <svg className="svg active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#maximize"} />
+          </svg>
+        </div>
+        <div className="brick-bottom-middle" style={{ background: color }}></div>
+        <div className="brick-bottom" style={{ background: color }}></div>
+        </div>
       </div>
     );
   }
@@ -86,7 +94,6 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <use href={sprite + "#users"} className="text-theme-dark-blue" />
           </svg>
         </div>
-        {this.renderHorizontal(assignment.id, color)}
         <div style={{ display: 'flex' }}>
           <div className="short-brick-info long">
             <div className="link-description">
@@ -112,13 +119,14 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             </div>
           </div>
           <div className="teach-brick-actions-container">
+            {/* 9/22/2020 temp commented
             <div className="stats-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
-                {/*eslint-disable-next-line*/}
                 <use href={sprite + "#activity"} />
               </svg>
             </div>
             <div className="stats-text">Stats</div>
+            */}
             <div className="archive-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
                 {/*eslint-disable-next-line*/}
