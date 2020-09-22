@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
-import { TeachClassroom, Assignment } from "model/classroom";
+import { TeachClassroom, Assignment, StudentStatus } from "model/classroom";
 import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
@@ -19,44 +19,48 @@ interface AssignedDescriptionProps {
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   renderVertical(assignmentId: number, color: string) {
+    const {isExpanded} = this.props;
     return (
       <div
-        className="vertical-brick" style={{ background: color }}
+        className="vertical-brick"
         onClick={() => {
-          if (this.props.expand) {
-            return this.props.expand(this.props.classroom.id, assignmentId)
+          if (this.props.isExpanded) {
+            if (this.props.minimize) {
+              return this.props.minimize();
+            }
+          } else {
+            if (this.props.expand) {
+              return this.props.expand(this.props.classroom.id, assignmentId)
+            }
           }
         }}
       >
-        <svg className="svg active">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#maximize"} />
-        </svg>
-      </div>
-    );
-  }
-
-  renderHorizontal(assignmentId: number, color: string) {
-    const {isExpanded} = this.props;
-    return (
-      <div className="left-brick-circle">
-        <div
-          className="horizontal-brick" style={{ background: color }}
-          onClick={() => {
-            if (isExpanded && this.props.minimize) {
-              this.props.minimize();
-            } else if (this.props.expand) {
-              this.props.expand(this.props.classroom.id, assignmentId);
-            }
-          }}
-        >
-          <svg className="svg active text-white">
+        <div>
+        <div className="brick-top" style={{ background: color }}></div>
+        <div className="brick-top-middle" style={{ background: color }}></div>
+        <div className="brick-middle" style={{ background: color }}>
+          <svg className="svg active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + (isExpanded ? "#minimize" : "#maximize")} />
           </svg>
         </div>
+        <div className="brick-bottom-middle" style={{ background: color }}></div>
+        <div className="brick-bottom" style={{ background: color }}></div>
+        </div>
       </div>
     );
+  }
+
+  renderStatus(studentStatus: StudentStatus[]) {
+    let {length} = this.props.classroom.students;
+    if (length !== studentStatus.length) {
+      return (
+        <svg className="svg active reminder-icon">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#reminder"} />
+        </svg>
+      );
+    }
   }
 
   render() {
@@ -86,7 +90,6 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <use href={sprite + "#users"} className="text-theme-dark-blue" />
           </svg>
         </div>
-        {this.renderHorizontal(assignment.id, color)}
         <div style={{ display: 'flex' }}>
           <div className="short-brick-info long">
             <div className="link-description">
@@ -111,14 +114,18 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
               Avg: {average}
             </div>
           </div>
+          <div className="reminder-container">
+            {this.renderStatus(assignment.studentStatus)}
+          </div>
           <div className="teach-brick-actions-container">
+            {/* 9/22/2020 temp commented
             <div className="stats-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
-                {/*eslint-disable-next-line*/}
                 <use href={sprite + "#activity"} />
               </svg>
             </div>
             <div className="stats-text">Stats</div>
+            */}
             <div className="archive-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
                 {/*eslint-disable-next-line*/}

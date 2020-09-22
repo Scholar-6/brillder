@@ -7,12 +7,12 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import sprite from "assets/img/icons-sprite.svg";
 
-interface FailedRequestProps {
+interface ProfileSavedProps {
   isOpen: boolean;
   close(): void;
 }
 
-const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
+const PublishSuccessDialog: React.FC<ProfileSavedProps> = props => {
   return (
     <Dialog
       open={props.isOpen}
@@ -22,22 +22,22 @@ const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
     >
       <div className="dialog-header">
         <ListItem>
-          <ListItemText primary="Sorry, we've run into a brick wall" className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemText primary="Publish Successful!" className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
-            <Avatar className="alert-icon">
-              <svg className="svg active" style={{strokeWidth: 2, marginBottom: '0.3vw'}}>
+            <Avatar className="circle-check">
+              <svg className="svg active">
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#alert-triangle"} />
+                <use href={sprite + "#award"} className="text-white" />
               </svg>
             </Avatar>
           </ListItemAvatar>
         </ListItem>
         <ListItem>
-          <ListItemText primary="Click refresh and see if we can get over it" className="italic" style={{ minWidth: '30vw' }} />
+          <ListItemText primary="Thank you for adding to our library" className="italic" style={{ minWidth: '30vw' }} />
         </ListItem>
       </div>
     </Dialog>
   );
 };
 
-export default FailedRequestDialog;
+export default PublishSuccessDialog;

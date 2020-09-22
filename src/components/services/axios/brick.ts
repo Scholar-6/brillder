@@ -15,6 +15,18 @@ export const getBricks = async () => {
 }
 
 /**
+ * Get bricks by status
+ * return list of bricks if success or null if failed
+ */
+export const getPublishedBricks = async () => {
+  try {
+    return await get<Brick[]>(`/bricks/byStatus/${BrickStatus.Publish}`);
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Get current user bricks
  * return list of bricks if success or null if failed
  */

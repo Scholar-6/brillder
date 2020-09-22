@@ -19,7 +19,7 @@ const PublishColumn: React.FC<PublishProps> = props => {
         </div>
         <div className="link-text">Publish</div>
         <div className="link-description">
-            to Core Library
+          to Core Library
         </div>
       </div>
     </Grid>

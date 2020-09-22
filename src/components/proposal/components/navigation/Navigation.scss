@@ -69,14 +69,8 @@
       width: 2vw !important;
       height: 2vw !important;
     }
-    .navigation-editor {
-      background-image: url(/images/new-brick/edit-grey.png);
-    }
     .navigation-button.active {
       color: var(--theme-orange);
-    }
-    .navigation-editor.active {
-      background-image: url(/images/new-brick/edit.png);
     }
   }
 
@@ -86,15 +80,9 @@
       color: var(--theme-light-blue);
       opacity: 1;
     }
-    .navigation-editor {
-      background-image: url(/images/new-brick/edit-hover.png);
-    }
   }
 
   .step-container.active {
-    .navigation-editor {
-      background-image: url(/images/new-brick/edit.png);
-    }
     .navigation-button {
       color: var(--theme-orange);
     }
