@@ -85,17 +85,17 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
         </div>
         <div className="filter-container indexes-box">
           <div className={"index-box " + (this.props.filters.viewAll ? "active" : "")}
-            onClick={() => this.props.showAll()}>
+            onClick={this.props.showAll}>
             View All
 					<div className="right-index">{this.props.rawBricks.length}</div>
           </div>
           <div className={"index-box " + (this.props.filters.buildAll ? "active" : "")}
-            onClick={() => this.props.showBuildAll()}>
+            onClick={this.props.showBuildAll}>
             Build
 					<div className="right-index">{build}</div>
           </div>
           <div className={"index-box " + (this.props.filters.editAll ? "active" : "")}
-            onClick={() => this.props.showEditAll()}>
+            onClick={this.props.showEditAll}>
             Edit
 					<div className="right-index">{edit}</div>
           </div>
