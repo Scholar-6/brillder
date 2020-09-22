@@ -72,35 +72,32 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   }
 
   mark(attempt: ComponentAttempt<string[]>, prev: ComponentAttempt<string[]>) {
-    const {isReview} = this.props;
-    // If the question is answered in review phase, add 2 to the mark and not 5.
-    let markIncrement = isReview ? 2 : 5;
+    // The maximum number of marks is the number of entries * 5.
+    attempt.maxMarks = 6;
+
+    // The maximum number of marks is divided between all answers.
+    let markIncrement = attempt.maxMarks / this.props.component.list.length;
     attempt.correct = true;
     attempt.marks = 0;
-    // The maximum number of marks is the number of entries * 5.
-    attempt.maxMarks = this.props.component.list.length * 5;
 
     this.props.component.list.forEach((answer, index) => {
       if (this.state.userAnswers[index]) {
-        let answerValue = stripHtml(answer.value);
-        if (stripHtml(this.state.userAnswers[index]) === answerValue) {
-          if (!isReview) {
-            attempt.marks += markIncrement;
-          } else if (stripHtml(prev.answer[index]) !== answerValue) {
-            attempt.marks += markIncrement;
-          }
+        let correctAnswer = stripHtml(answer.value);
+        if (stripHtml(this.state.userAnswers[index]) === correctAnswer) {
+          // add the correct amount of marks
+          attempt.marks += markIncrement;
         } else {
           // the answer is not correct.
           attempt.correct = false;
         }
       } else {
-        // the answer is not correct.
+        // the answer is not filled in.
         attempt.correct = false;
       } 
     });
-    // Then, if there are no marks, and there are no empty entries, and the program is in live phase, give the student a mark.
+    // Then, if there are no marks, and there are no empty entries, give the student half a mark.
     const emptyAnswer = this.state.userAnswers.indexOf("");
-    if (attempt.marks === 0 && emptyAnswer === -1 && !isReview) attempt.marks = 1;
+    if (attempt.marks === 0 && emptyAnswer === -1) attempt.marks += 0.5;
     return attempt;
   }
 
