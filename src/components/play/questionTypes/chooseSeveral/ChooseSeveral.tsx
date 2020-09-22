@@ -87,14 +87,13 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   mark(attempt: ComponentAttempt<number[]>, prev: ComponentAttempt<number[]>) {
     const {isReview} = this.props;
     let correctAnswers = this.getCorrectAnswers();
-    const markValue = 5;
-    const markIncrement = isReview ? Math.floor(markValue / correctAnswers) : markValue;
+    const markValue = 2;
 
     attempt.correct = true;
     attempt.marks = 0;
 
     attempt.maxMarks = correctAnswers * markValue;
-    this.markLiveChoices(attempt, markIncrement);
+    this.markLiveChoices(attempt, markValue);
 
     // Then, if the attempt scored no marks or negative and the program is in live phase, then give the student a mark.
     if (attempt.marks <= 0 && attempt.answer !== [] && !isReview) { attempt.marks = 1; }
