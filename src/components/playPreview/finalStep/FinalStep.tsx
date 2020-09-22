@@ -23,6 +23,7 @@ import InviteColumn from "components/play/finalStep/InviteColumn";
 import PublishColumn from './PublishColumn';
 import SimpleDialog from "components/baseComponents/dialogs/SimpleDialog";
 import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
+import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
 
 enum PublishStatus {
   None,
@@ -169,8 +170,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         isAuthor={isAuthor}
         isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={inviteSuccess.accessGranted}
         close={() => setInviteSuccess({ isOpen: false, name: '', accessGranted: false })} />
-      <SimpleDialog
-        label="Publish Successful!"
+      <PublishSuccessDialog
         isOpen={publishSuccess === PublishStatus.Popup}
         close={() => setPublishSuccess(PublishStatus.Published)}
       />

@@ -22,7 +22,7 @@ interface OpenQuestionProps {
 const HeadComponent: React.FC<any> = ({ data }) => {
   return (
     <Grid container justify="center" className="phone-preview-component">
-      <svg>
+      <svg className={data ? "" : "big"}>
         {/*eslint-disable-next-line*/}
         <use href={sprite + "#help-circle"} />
       </svg>
