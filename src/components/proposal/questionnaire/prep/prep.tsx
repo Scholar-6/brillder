@@ -22,7 +22,7 @@ interface PrepProps {
 const PrepPreviewComponent: React.FC<any> = ({ data }) => {
   return (
     <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
-      <svg>
+      <svg className={data ? "" : "big"}>
         {/*eslint-disable-next-line*/}
         <use href={sprite + "#file-text"} />
       </svg>
