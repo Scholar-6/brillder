@@ -21,7 +21,6 @@ import ExitButton from "components/play/finalStep/ExitButton";
 import ShareColumn from "components/play/finalStep/ShareColumn";
 import InviteColumn from "components/play/finalStep/InviteColumn";
 import PublishColumn from './PublishColumn';
-import SimpleDialog from "components/baseComponents/dialogs/SimpleDialog";
 import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
 import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
 
