@@ -14,8 +14,18 @@
       }
     }
   }
-  .typing-text {
-    top: 48%;
-    height: 51%;
+  .phone-preview-component {
+    svg {
+      width: auto;
+      margin-left: 0vw;
+      margin-top: 4vw;
+      color: var(--theme-orange);
+      stroke-width: 1.2px;
+      height: 12.7vw;
+    }
+    .typing-text {
+      top: 48%;
+      height: 51%;
+    }
   }
 }

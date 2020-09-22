@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
+import sprite from "assets/img/icons-sprite.svg";
 import './prep.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
@@ -19,28 +20,17 @@ interface PrepProps {
 }
 
 const PrepPreviewComponent: React.FC<any> = ({ data }) => {
-  if (data) {
-    return (
-      <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
-        <img className="first-phone-image"
-          alt="head"
-          src="/images/new-brick/prep.png">
-        </img>
-        <div className="typing-text">
-          <YoutubeAndMath value={data} />
-        </div>
-      </Grid>
-    )
-  }
   return (
     <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
-      <img className="first-phone-image"
-        alt="head"
-        style={{ height: '45%' }}
-        src="/images/new-brick/prep.png">
-      </img>
+      <svg>
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#file-text"} />
+      </svg>
+      <div className="typing-text">
+        <YoutubeAndMath value={data} />
+      </div>
     </Grid>
-  )
+  );
 }
 
 const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, playStatus, savePrep }) => {

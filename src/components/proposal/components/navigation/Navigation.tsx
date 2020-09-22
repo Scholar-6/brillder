@@ -53,24 +53,33 @@ const NavigationButtons: React.FC<NextButtonProps> = ({ step, brickId, playStatu
         </div>
         <div className={`step-container ${step === ProposalStep.BrickLength ? 'active' : ''}`}>
           <div className="step-label">Length</div>
-          <div
-            onClick={() => move(map.ProposalLength)}
+          <svg
             className={`navigation-button navigation-length ${step >= ProposalStep.BrickLength ? 'active' : ''}`}
-          />
+            onClick={() => move(map.ProposalLength)}
+          >
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#clock"} />
+          </svg>
         </div>
         <div className={`step-container ${step === ProposalStep.Brief ? 'active' : ''}`}>
           <div className="step-label">Brief</div>
-          <div
+          <svg
             className={`navigation-button navigation-brief ${step >= ProposalStep.Brief ? 'active' : ''}`}
             onClick={() => move(map.ProposalBrief)}
-          />
+          >
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#crosshair"} />
+          </svg>
         </div>
         <div className={`step-container ${step === ProposalStep.Prep ? 'active' : ''}`}>
           <div className="step-label">Prep</div>
-          <div
+          <svg
             onClick={() => move(map.ProposalPrep)}
             className={`navigation-button navigation-prep ${step >= ProposalStep.Prep ? 'active' : ''}`}
-          />
+          >
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#file-text"} />
+          </svg>
         </div>
       </Grid>
     );

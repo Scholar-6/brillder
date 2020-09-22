@@ -19,13 +19,18 @@
       display: none;
     }
   }
-  .prep-phone-preview {
-    width: 100%;
-    height: 100%;
-    background: var(--theme-dark-blue);
+  .phone-preview-component {
+    svg {
+      width: auto;
+      margin-left: 0vw;
+      margin-top: 3.7vw;
+      color: var(--theme-orange);
+      stroke-width: 1;
+      height: 15vw;
+    }
   }
   .typing-text {
-    top: 47.9%;
+    top: 54%;
     left: 0;
     height: 46.5%;
     figure {
