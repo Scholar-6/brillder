@@ -119,7 +119,7 @@
     }
     .cropper-view-box {
       border-radius: 50%;
-      outline: 0.2vw solid var(--light-blue);
+      outline: 0.2vw solid var(--theme-light-blue);
     }
     $line-width: 0.5vw;
     .cropper-line {
@@ -135,7 +135,7 @@
     .cropper-point {
       width: $line-width;
       height: $line-width;
-      background: var(--light-blue);
+      background: var(--theme-light-blue);
 
       $half-width: calc(#{$line-width} / -1.55);
 
@@ -244,7 +244,7 @@
   }
   &.light-blue {
     .MuiDialog-paper {
-      background: var(--light-blue);
+      background: var(--theme-light-blue);
       color: white;
 
       .dialog-header {
