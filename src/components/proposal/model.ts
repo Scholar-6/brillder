@@ -2,10 +2,10 @@ export enum ProposalStep {
   Subject = 1,
   BrickTitle = 2,
   OpenQuestion = 3,
-  Brief = 4,
-  Prep = 5,
-  Synthesis = 6,
-  BrickLength = 7,
+  BrickLength = 4,
+  Brief = 5,
+  Prep = 6,
+  Synthesis = 7,
   ProposalReview = 8,
 }
 

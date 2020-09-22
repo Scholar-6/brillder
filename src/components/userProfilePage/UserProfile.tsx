@@ -433,7 +433,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                   user.email, '', 'Email', e => this.onEmailChanged(e), 'email'
                 )}
                 {this.renderInput(
-                  user.password, '', 'Password', e => this.onFieldChanged(e, UserProfileField.Password), 'password', false
+                  user.password, '', '●●●●●●●●●●●', e => this.onFieldChanged(e, UserProfileField.Password), 'password', false
                 )}
               </div>
               <div className="profile-roles-container">

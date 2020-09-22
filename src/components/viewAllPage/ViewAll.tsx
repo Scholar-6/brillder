@@ -2,7 +2,6 @@ import "./ViewAll.scss";
 import React, { Component } from "react";
 import { Box, Grid, Hidden } from "@material-ui/core";
 import { Category } from "./interface";
-import axios from "axios";
 import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
@@ -23,6 +22,8 @@ import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import { checkAdmin, getAssignmentIcon } from "components/services/brickService";
 import BrickBlock from "components/baseComponents/BrickBlock";
+import { getCurrentUserBricks, getPublishedBricks, searchBricks } from "components/services/axios/brick";
+import { getSubjects } from "components/services/axios/subject";
 
 
 interface BricksListProps {
@@ -76,40 +77,35 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       failedRequest: false,
       isAdmin: checkAdmin(this.props.user.roles),
       isCore: true,
-      shown: true,
+      shown: false,
     };
 
-    axios.get(
-      `${process.env.REACT_APP_BACKEND_HOST}/bricks/byStatus/${BrickStatus.Publish}`,
-      { withCredentials: true }
-    ).then(res => {
-      const finalBricks = this.filter(res.data as Brick[]);
-      this.setState({
-        ...this.state,
-        bricks: res.data,
-        finalBricks,
-      });
-    }).catch(() => {
-      this.setState({ ...this.state, failedRequest: true });
-    });
+    this.loadData();
+  }
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + "/subjects", {
-      withCredentials: true,
-    }).then(res => {
-      this.setState({ ...this.state, subjects: res.data });
-    }).catch(() => {
+  async loadData() {
+    const subjects = await getSubjects();
+    if(subjects) {
+      this.setState({ ...this.state, subjects });
+    } else {
       this.setState({ ...this.state, failedRequest: true });
-    });
+    }
 
-    axios.get(process.env.REACT_APP_BACKEND_HOST + "/bricks/currentUser", {
-      withCredentials: true,
-    }).then(res => {
-      const bricks = res.data as Brick[];
-      const yourBricks = bricks.filter(brick => brick.status === BrickStatus.Publish);
-      this.setState({ ...this.state, yourBricks });
-    }).catch(() => {
+    const currentBricks = await getCurrentUserBricks();
+    if (currentBricks) {
+      const yourBricks = currentBricks.filter(brick => brick.status === BrickStatus.Publish);
+      this.setState({ ...this.state, yourBricks })
+    } else {
       this.setState({ ...this.state, failedRequest: true });
-    });
+    }
+
+    const bricks = await getPublishedBricks();
+    if (bricks) {
+      const finalBricks = this.filter(bricks);
+      this.setState({ ...this.state, bricks, finalBricks, shown: true });
+    } else {
+      this.setState({ ...this.state, failedRequest: true });
+    }
   }
 
   delete(brickId: number) {
@@ -207,7 +203,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     const { subjects } = this.state;
     subjects[i].checked = !subjects[i].checked;
     const finalBricks = this.filter(this.state.bricks);
-    this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks });
+    this.setState({ ...this.state, shown: false });
+    setTimeout(() => {
+      this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
+    }, 1400);
   };
 
   clearSubjects = () => {
@@ -328,24 +327,25 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   showDropdown() { this.setState({ ...this.state, dropdownShown: true }) }
   hideDropdown() { this.setState({ ...this.state, dropdownShown: false }) }
 
-  search() {
+  async search() {
     const { searchString } = this.state;
-    axios.post(
-      process.env.REACT_APP_BACKEND_HOST + "/bricks/search",
-      { searchString },
-      { withCredentials: true }
-    ).then(res => {
-      this.hideBricks();
-      const finalBricks = this.filter(res.data);
-      this.setState({
-        ...this.state,
-        searchBricks: res.data,
-        finalBricks,
-        isSearching: true,
-      });
-    }).catch(() => {
-      this.setState({ ...this.state, failedRequest: true });
-    });
+    this.setState({shown: false});
+    const bricks = await searchBricks(searchString);
+    setTimeout(() => {
+      if (bricks) {
+        this.hideBricks();
+        const finalBricks = this.filter(bricks);
+        this.setState({
+          ...this.state,
+          searchBricks: bricks,
+          finalBricks,
+          shown: true,
+          isSearching: true,
+        });
+      } else {
+        this.setState({ ...this.state, failedRequest: true });
+      }
+    }, 1400);
   }
 
   getBrickColor(brick: Brick) {
@@ -587,8 +587,11 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
 
   toggleCore() {
     const isCore = !this.state.isCore;
-    const finalBricks = this.filter(this.state.bricks, isCore);
-    this.setState({ isCore, finalBricks });
+    this.setState({ isCore, shown: false });
+    setTimeout(() => {
+      const finalBricks = this.filter(this.state.bricks, isCore);
+      this.setState({ shown: true, finalBricks });
+    }, 1400);
   }
 
   render() {

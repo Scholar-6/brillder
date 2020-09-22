@@ -2,6 +2,7 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
+import sprite from "assets/img/icons-sprite.svg";
 import './brief.scss';
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
@@ -20,31 +21,17 @@ interface BriefProps {
 }
 
 const BriefPreviewComponent: React.FC<any> = ({ data }) => {
-  if (data) {
-    return (
-      <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
-        <img
-          alt="head"
-          className="first-phone-image"
-          src="/images/new-brick/brief-circles.png"
-        >
-        </img>
-        <div className="typing-text">
-          <MathInHtml value={data} />
-        </div>
-      </Grid>
-    )
-  }
   return (
-    <Grid container justify="center" className="phone-preview-component">
-      <img
-        alt="head"
-        className="first-phone-image"
-        style={{ height: '40%' }}
-        src="/images/new-brick/brief-circles.png">
-      </img>
+    <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
+      <svg>
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#crosshair"} />
+      </svg>
+      <div className="typing-text">
+        <MathInHtml value={data} />
+      </div>
     </Grid>
-  )
+  );
 }
 
 const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, playStatus, saveBrief }) => {
@@ -58,7 +45,10 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, playStatus
       <Grid container direction="row" style={{ height: '100%' }} alignItems="center">
         <Grid className="left-block">
           <div className="mobile-view-image">
-            <img alt="titles" src="/images/new-brick/brief-circles.png" />
+            <svg>
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#crosshair"} />
+            </svg>
           </div>
           <h1>Outline the purpose of this brick.</h1>
           <DocumentWirisCKEditor
@@ -76,7 +66,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, playStatus
             canSubmit={true}
             data={parentBrief}
             onSubmit={saveBrief}
-            backLink={map.ProposalOpenQuestion}
+            backLink={map.ProposalLength}
           />
           <h2 className="pagination-text m-0">3 of 4</h2>
         </Grid>

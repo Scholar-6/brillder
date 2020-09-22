@@ -47,7 +47,7 @@ export function getAuthorRow(brick: Brick) {
     if (author.firstName || author.firstName) {
       row += `${author.firstName} ${author.lastName} | `
     }
-    row += `${date}.${month}.${year} | ${brick.brickLength} mins`;
+    row += `${date}.${month}.${year} | ${brick.brickLength} mins`; // ${getDate(new Date(brick.updated))} ${getMonth(new Date(brick.updated))} ${brick.hasNotifications}`;
   }
   return row;
 }

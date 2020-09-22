@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid, Input, Hidden } from "@material-ui/core";
 
+import sprite from "assets/img/icons-sprite.svg";
 import './brickTitle.scss';
 import { ProposalStep, PlayButtonStatus } from "../../model";
 import { Brick } from "model/brick";
@@ -48,24 +49,17 @@ const BrickTitlePreviewComponent: React.FC<any> = (props) => {
     return data;
   }
 
-  if (!title && !alternativeTopics && !subTopic) {
-    return (
-      <Grid container alignContent="flex-start" className="phone-preview-component title">
-        <Grid container justify="center">
-          <img alt="titles" src="/images/new-brick/titles.png" className="titles-image big" />
-        </Grid>
-      </Grid>
-    );
-  }
-
   return (
     <Grid container alignContent="flex-start" className="phone-preview-component title">
       <Grid container justify="center">
-        <img alt="titles" src="/images/new-brick/titles.png" className="titles-image" />
+        <svg className="svg active titles-image big">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#search-flip"} />
+        </svg>
       </Grid>
       <div className="brick-preview-container">
         <div className={"brick-title uppercase " + (title ? 'topic-filled' : '')}>
-          {title ? title : 'TITLE'}
+          {title ? title : 'BRICK TITLE'}
         </div>
         <div className="brick-topics">
           <span className={subTopic ? 'topic-filled' : ''}>

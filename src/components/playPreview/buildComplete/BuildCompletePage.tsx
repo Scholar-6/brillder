@@ -7,6 +7,8 @@ import sprite from "assets/img/icons-sprite.svg";
 import { Brick } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
+import {setCoreLibrary} from 'components/services/axios/brick';
+
 import Clock from "components/play/baseComponents/Clock";
 
 
@@ -17,22 +19,24 @@ interface BuildCompleteProps {
 }
 
 interface BuildCompleteState {
-  isPersonal?: boolean;
+  isCore?: boolean;
 }
 
 class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState> {
   constructor(props: BuildCompleteProps) {
     super(props);
 
-    this.state = { }
+    this.state = { isCore: props.brick.isCore }
   }
 
-  moveNext() {
-    let link = `/play-preview/brick/${this.props.brick.id}/finalStep`;
-    if (this.state.isPersonal) {
-      link += '?isPersonal=true';
+  async moveNext() {
+    let success = await setCoreLibrary(this.props.brick.id, this.state.isCore);
+    if (success) {
+      this.props.brick.isCore = this.state.isCore;
+      this.props.history.push(`/play-preview/brick/${this.props.brick.id}/finalStep`);
+    } else {
+      this.props.requestFailed('Can`t set brick library');
     }
-    this.props.history.push(link);
   }
   
   renderFooter() {
@@ -78,46 +82,45 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                 <p className="complete-brick-name">
                   What would you like to do with <span className="bold uppercase">‘{brick.title}’</span>?
                 </p>
-                <div className="radio-container">
-                  <Radio checked={this.state.isPersonal === true} onClick={() => this.setState({isPersonal: true})} />
-                  <span className="radio-text">Keep it Personal</span>
+                <div className="radio-container" onClick={() => this.setState({isCore: false})}>
+                  <Radio checked={this.state.isCore === false} />
+                  <span className="radio-text pointer">Keep Control</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#key"} />
                   </svg>
                 </div>
-                <div className="inner-radio-text">
-                  Bask in your own glory, share on your favourite platforms, invite anyone to play or edit<span className="text-theme-orange">*</span>
+                <div className="inner-radio-text pointer" onClick={() => this.setState({isCore: false})}>
+                  Share on your favourite platforms, invite anyone to play or comment
                 </div>
-                <div className="radio-container">
-                  <Radio checked={this.state.isPersonal === false} onClick={()=> this.setState({isPersonal: false})} />
+                <div className="radio-container pointer" onClick={()=> this.setState({isCore: true})} >
+                  <Radio checked={this.state.isCore === true} />
                   <span className="radio-text">Educate the World</span>
                   <svg className="svg active">
                     {/*eslint-disable-next-line*/}
                     <use href={sprite + "#globe"} />
                   </svg>
                 </div>
-                <div className="inner-radio-text">
-                  All the above and more: submit your brick to a subject specialist, receive editorial feedback,
-                  have the chance to be published in our core library and be paid for your work!<span className="text-theme-orange">*</span>
+                <div className="inner-radio-text pointer" onClick={()=> this.setState({isCore: true})}>
+                  All the above and more: submit to a subject specialist, receive editorial feedback,
+                  be considered for our core library and paid for your work!
                 </div>
                 <div className="inner-radio-text last-one">
-                  <span className="text-theme-orange">*</span>No time wasters and trouble makers please: users found to breach our <span className="bold">submission guidelines</span> for
-                  appropriate content may be blocked from Brillder and/or reported to relevant authorities.
+                  Users who breach our <span className="bold">submission guidelines</span> for appropriate content may be blocked from Brillder and/or reported to relevant authorities.
                 </div>
               </div>
             </div>
           </Grid>
           <Grid item xs={4}>
-              <div className="introduction-info">
-                <div className="intro-header">
-                  <Clock brickLength={brick.brickLength} />
-                </div>
-                <div className="intro-text-row">
-                </div>
-                {this.renderFooter()}
+            <div className="introduction-info">
+              <div className="intro-header">
+                <Clock brickLength={brick.brickLength} />
               </div>
-            </Grid>
+              <div className="intro-text-row">
+              </div>
+              {this.renderFooter()}
+            </div>
+          </Grid>
         </Grid>
       </div>
     );

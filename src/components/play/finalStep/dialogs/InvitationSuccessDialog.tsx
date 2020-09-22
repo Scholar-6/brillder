@@ -12,6 +12,7 @@ import sprite from "assets/img/icons-sprite.svg";
 interface InvitationProps {
   isOpen: boolean;
   name: string;
+  isAuthor: boolean;
   accessGranted: boolean;
   close(): void;
 }
@@ -21,7 +22,10 @@ const InvitationSuccessDialog: React.FC<InvitationProps> = props => {
     if (props.accessGranted) {
       return props.name + " will be able to suggest edits to your brick";
     }
-    return `I'm sure ${props.name} is dying to play your brick`;
+    if (props.isAuthor) {
+      return `${props.name} will be able to play your brick`;
+    }
+    return `${props.name} will be able to play this brick`;
   }
 
   return (

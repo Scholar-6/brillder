@@ -62,6 +62,8 @@ export interface Brick {
   status: BrickStatus;
   attemptsCount: number;
   locked: boolean;
+  isCore?: boolean;
+  hasNotifications?: boolean;
 
   assignments?: Assignment[];
 }

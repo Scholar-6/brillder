@@ -142,19 +142,27 @@
     @extend %posRelative;
     background: var(--theme-dark-blue);
 
-    img {
+    svg {
       width: auto;
       margin-left: 0vw;
-      margin-top: 11vw;
-      height: 10.5vw;
+      margin-top: 4vw;
+      color: var(--theme-orange);
+      stroke-width: 1.2px;
+      height: 12.7vw;
     }
     div {
       position: absolute;
-      top: 21.8vw;
+      top: 15.5vw;
       margin-top: 10%;
       color: var(--white);
-      font-size: 1.2vw;
-      font-family: $font-family-regular;
+      font-size: 1.7vw;
+      font-family: $font-family-bold;
     }
+  }
+
+  .preview-length-list {
+    top: 20.4vw !important;
+    color: white;
+    font-size: 1vw !important;
   }
 }

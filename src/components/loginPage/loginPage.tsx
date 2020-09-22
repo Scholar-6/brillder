@@ -9,9 +9,14 @@ import axios from "axios";
 import actions from "redux/actions/auth";
 import "./loginPage.scss";
 import sprite from "assets/img/icons-sprite.svg";
-import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
-import LoginLogo from './LoginLogo';
 import map from 'components/map';
+
+import LoginLogo from './components/LoginLogo';
+import GoogleButton from "./components/GoogleButton";
+import PolicyDialog from 'components/baseComponents/policyDialog/PolicyDialog';
+import RegisterButton from "./components/RegisterButton";
+import DesktopLoginForm from "./components/DesktopLoginForm";
+import WrongLoginDialog from "./components/WrongLoginDialog";
 
 const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
@@ -19,7 +24,7 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(null, mapDispatch);
 
-enum LoginState {
+export enum LoginState {
   ChooseLogin,
   ButtonsAnimation,
   Login
@@ -43,8 +48,8 @@ const LoginPage: React.FC<LoginProps> = (props) => {
   const [password, setPassword] = useState("");
   const [isPolicyOpen, setPolicyDialog] = React.useState(initPolicyOpen);
   const [loginState, setLoginState] = React.useState(LoginState.ChooseLogin);
+  const [isLoginWrong, setLoginWrong] = React.useState(false);
 
-  const googleLink = `${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/build`;
   const moveToLogin = () => {
     setLoginState(LoginState.ButtonsAnimation);
     setTimeout(() => {
@@ -59,8 +64,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     return "Fill required fields";
   };
 
-
-  function handleSubmit(event: any) {
+  function handleLoginSubmit(event: any) {
     event.preventDefault();
 
     let res = validateForm();
@@ -102,8 +106,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           if (msg === "USER_IS_NOT_ACTIVE") {
             //props.history.push("/sign-up-success");
           } else if (msg === "INVALID_EMAIL_OR_PASSWORD") {
-            toggleAlertMessage(true);
-            setAlertMessage("Password is not correct");
+            setLoginWrong(true);
           }
         }
       } else {
@@ -148,67 +151,11 @@ const LoginPage: React.FC<LoginProps> = (props) => {
     }
     return (
       <div className={className}>
-        <button className="email-button svgOnHover" onClick={moveToLogin}>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#email"} />
-          </svg>
-          <span>Register &nbsp;|&nbsp; Sign in with email</span>
-        </button>
-        <a className="google-button svgOnHover" href={googleLink}>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#gmail"} />
-          </svg>
-          <span>Register &nbsp;|&nbsp; Sign in with Google</span>
-        </a>
+        <RegisterButton onClick={moveToLogin} />
+        <GoogleButton />
       </div>
     );
   }
-
-  const renderForm = () => {
-    let className = 'content-box';
-    if (loginState != LoginState.ButtonsAnimation) {
-        className += ' expanded';
-    }
-    return (
-      <form onSubmit={handleSubmit} className={className}>
-        <div className="input-block">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="login-field"
-            required
-            placeholder="Email"
-          />
-        </div>
-        <div className="input-block">
-          <input
-            type={passwordHidden ? "password" : "text"}
-            value={password}
-            className="login-field password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            placeholder="Password"
-          />
-          <div className="hide-password-icon-container">
-            <VisibilityIcon
-              className="hide-password-icon"
-              onClick={() => setHidden(!passwordHidden)}
-            />
-          </div>
-        </div>
-        <div className="input-block">
-          <div className="button-box">
-            <button type="button" className="sign-up-button" onClick={() => register(email, password)}>Sign up</button>
-            <button type="submit" className="sign-in-button">Sign in</button>
-          </div>
-        </div>
-      </form>
-    );
-
-  };
 
   return (
     <Grid
@@ -231,7 +178,17 @@ const LoginPage: React.FC<LoginProps> = (props) => {
             </div>
             <div className="second-col">
               {loginState === LoginState.Login ?
-                renderForm()
+                <DesktopLoginForm
+                  loginState={loginState}
+                  email={email}
+                  setEmail={setEmail}
+                  password={password}
+                  setPassword={setPassword}
+                  passwordHidden={passwordHidden}
+                  setHidden={setHidden}
+                  handleSubmit={handleLoginSubmit}
+                  register={() => register(email, password)}
+                />
                 :
                 renderButtons()
               }
@@ -270,7 +227,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                   <use href={sprite + "#login"} className="text-theme-orange" />
                 </svg>
               </div>
-              <form onSubmit={handleSubmit} className="content-box">
+              <form onSubmit={handleLoginSubmit} className="content-box">
                 <div className="input-block">
                   <input
                     type="email"
@@ -306,7 +263,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                     onClick={() => register(email, password)}
                   >
                     Sign up
-                </Button>
+                  </Button>
                   <Button
                     variant="contained"
                     color="primary"
@@ -345,20 +302,8 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                 </svg>
               </div>
               <div className="mobile-button-box button-box">
-                <button className="email-button svgOnHover" onClick={moveToLogin}>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#email"} />
-                  </svg>
-                  <span>Register &nbsp;|&nbsp; Sign in with email</span>
-                </button>
-                <a className="google-button svgOnHover" href={googleLink}>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#gmail"} />
-                  </svg>
-                  <span>Register &nbsp;|&nbsp; Sign in with Google</span>
-                </a>
+                <RegisterButton onClick={moveToLogin} />
+                <GoogleButton />
                 <div className="mobile-policy-text">
                   <span onClick={() => setPolicyDialog(true)}>Privacy Policy</span>
                 </div>
@@ -367,6 +312,7 @@ const LoginPage: React.FC<LoginProps> = (props) => {
           </div>
         </Hidden>
       }
+      <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={alertShown}

@@ -2,6 +2,11 @@ export const Login = '/login';
 export const Build = '/build';
 export const ProposalBase = `${Build}/new-brick`;
 export const BackToWorkPage = '/back-to-work';
+
+export const BackToWorkTeachTab = BackToWorkPage + '/teach';
+export const BackToWorkBuildTab = BackToWorkPage + '/build';
+export const BackToWorkLearnTab = BackToWorkPage + '/learn';
+
 export const ViewAllPage = '/play/dashboard';
 
 export const InvestigationBuild = (brickId: number) => {
@@ -28,13 +33,25 @@ export const ProposalReview = `${ProposalBase}/proposal`;
 
 // play preview
 export const PlayPreviewBase = '/play-preview/brick';
+export const PlayIntroLastPrefix = '/intro';
 
 export const playPreview = (brickId: number) => {
   return  PlayPreviewBase + '/' + brickId;
 }
 
 export const playPreviewIntro = (brickId: number) => {
-  return playPreview(brickId) + '/intro';
+  return playPreview(brickId) + PlayIntroLastPrefix;
+}
+
+// play
+export const PlayBase = '/play/brick';
+
+export const realPlay = (brickId: number) => {
+  return  PlayBase + '/' + brickId;
+}
+
+export const playIntro = (brickId: number) => {
+  return realPlay(brickId) + PlayIntroLastPrefix;
 }
 
 export default {
@@ -50,10 +67,15 @@ export default {
   ProposalReview,
 
   BackToWorkPage,
+  BackToWorkTeachTab,
+  BackToWorkBuildTab,
+  BackToWorkLearnTab,
+
   ViewAllPage,
 
   InvestigationBuild,
   investigationBuildQuestion,
   investigationQuestionSuggestions,
-  playPreviewIntro
+  playPreviewIntro,
+  playIntro
 }

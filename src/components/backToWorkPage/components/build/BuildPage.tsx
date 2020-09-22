@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
+import queryString from 'query-string';
 
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
@@ -33,6 +34,7 @@ interface BuildProps {
   user: User;
   generalSubjectId: number;
   history: any;
+  location: any;
   setTab(t: ActiveTab): void;
 
   // redux
@@ -62,13 +64,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
   constructor(props: BuildProps) {
     super(props);
 
-    let isCore = false;
     const isTeach = checkTeacher(this.props.user.roles);
     const isAdmin = checkAdmin(this.props.user.roles);
     const isEditor = checkEditor(this.props.user.roles)
-    if (isAdmin || isEditor) {
-      isCore = true;
-    }
+    const isCore = this.getCore(isAdmin, isEditor);
 
     let threeColumns = {
       red: {
@@ -142,7 +141,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
     if (isAdmin || isEditor) {
       getBricks().then(bricks => {
         if (bricks) {
-          const bs = bricks.sort(b => (b.editor && b.editor.id === this.props.user.id) ? -1 : 1);
+          let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
+          bs = bs.sort(b => (b.editor && b.editor.id === this.props.user.id) ? -1 : 1);
+          bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
           this.setBricks(bs);
         } else {
           this.props.requestFailed('Can`t get bricks');
@@ -157,6 +158,25 @@ class BuildPage extends Component<BuildProps, BuildState> {
         }
       });
     }
+  }
+
+  getCore(isAdmin: boolean, isEditor: boolean) {
+    let isCore = false;
+    if (isAdmin || isEditor) {
+      isCore = true;
+    }
+
+    const values = queryString.parse(this.props.location.search);
+    if (values.isCore) {
+      try {
+        if (values.isCore === "true") {
+          isCore = true;
+        } else if (values.isCore === "false") {
+          isCore = false;
+        }
+      } catch {}
+    }
+    return isCore;
   }
 
   setBricks(rawBricks: Brick[]) {
@@ -359,7 +379,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
           <Tab
             isTeach={this.state.isTeach || this.state.isAdmin}
             activeTab={ActiveTab.Build}
-            setTab={t => this.props.setTab(t)}
+            setTab={this.props.setTab}
           />
             <div className="tab-content">
               <BuildBricks

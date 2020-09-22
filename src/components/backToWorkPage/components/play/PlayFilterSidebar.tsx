@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { PlayFilters } from '../../model';
-import { TeachClassroom } from "model/classroom";
 import { AssignmentBrick, AssignmentBrickStatus } from "model/assignment";
 
 enum PlayFilterFields {
@@ -13,11 +12,8 @@ enum PlayFilterFields {
 
 interface FilterSidebarProps {
   filters: PlayFilters;
-  activeClassroom: TeachClassroom | null;
-  classrooms: TeachClassroom[];
   assignments: AssignmentBrick[];
   filterChanged(filters: PlayFilters): void;
-  setActiveClassroom(classroom: TeachClassroom | null): void;
 }
 
 interface FilterSidebarState {
@@ -67,27 +63,6 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
     this.props.filterChanged(filters);
   }
 
-  removeClassrooms() {
-    const { classrooms } = this.props;
-    for (let classroom of classrooms) {
-      classroom.active = false;
-    }
-    this.props.setActiveClassroom(null);
-  }
-
-  renderClassroom(c: TeachClassroom, i: number) {
-    return (
-      <div key={i} className="classes-box">
-        <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.props.setActiveClassroom(c)}>
-          <span className="classroom-name">{c.name}</span>
-          <div className="right-index">
-            <div className="white-box">{0}</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   renderIndexesBox = () => {
     return (
       <div className="sort-box teach-sort-box">
@@ -95,15 +70,12 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
           <div className="sort-header">INBOX</div>
         </div>
         <div className="filter-container indexes-box classrooms-filter">
-          <div
-            className={"index-box " + (!this.props.activeClassroom ? "active" : "")}
-            onClick={this.removeClassrooms.bind(this)}>
+          <div className={"index-box active"}>
             View All
             <div className="right-index">
               <div className="white-box">{0}</div>
             </div>
           </div>
-          {this.props.classrooms.map(this.renderClassroom.bind(this))}
         </div>
       </div>
     );
