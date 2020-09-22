@@ -21,6 +21,7 @@ import LoginPage from '../loginPage/loginPage';
 import UserProfilePage from '../userProfilePage/UserProfile';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
+import PostPlay from 'components/postPlay/PostPlay';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
@@ -101,6 +102,7 @@ const App: React.FC = () => {
 
         <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path={map.Login} component={LoginPage} />
+        <StudentRoute path="/post-play/:brickId" component={BrickWrapper} innerComponent={PostPlay} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>
