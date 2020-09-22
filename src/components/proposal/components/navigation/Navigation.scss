@@ -62,40 +62,18 @@
       background-repeat: no-repeat;
       background-position: center;
       color: var(--tab-gray);
+      width: 2vw;
+      stroke-width: 2px;
     }
-
     .navigation-titles {
       width: 2vw !important;
       height: 2vw !important;
     }
-    .navigation-question {
-      width: 2vw;
-      stroke-width: 2px;
-    }
-    .navigation-brief {
-      background-image: url(/images/new-brick/brief-circles-grey.png);
-    }
-    .navigation-prep {
-      width: 1.5vw;
-      background-image: url(/images/new-brick/prep-grey.png);
-    }
-    .navigation-length {
-      background-image: url(/feathericons/clock-grey.png);
-    }
     .navigation-editor {
       background-image: url(/images/new-brick/edit-grey.png);
     }
-    .navigation-titles.active, .navigation-question.active {
+    .navigation-button.active {
       color: var(--theme-orange);
-    }
-    .navigation-brief.active {
-      background-image: url(/images/new-brick/brief-circles.png);
-    }
-    .navigation-prep.active {
-      background-image: url(/images/new-brick/prep.png);
-    }
-    .navigation-length.active {
-      background-image: url(/feathericons/clock.png);
     }
     .navigation-editor.active {
       background-image: url(/images/new-brick/edit.png);
@@ -108,30 +86,12 @@
       color: var(--light-blue);
       opacity: 1;
     }
-    .navigation-brief {
-      background-image: url(/images/new-brick/brief-circles-hover.png);
-    }
-    .navigation-prep {
-      background-image: url(/images/new-brick/prep-hover.png);
-    }
-    .navigation-length {
-      background-image: url(/feathericons/clock-hover.png);
-    }
     .navigation-editor {
       background-image: url(/images/new-brick/edit-hover.png);
     }
   }
 
   .step-container.active {
-    .navigation-brief {
-      background-image: url(/images/new-brick/brief-circles.png);
-    }
-    .navigation-prep {
-      background-image: url(/images/new-brick/prep.png);
-    }
-    .navigation-length {
-      background-image: url(/feathericons/clock.png);
-    }
     .navigation-editor {
       background-image: url(/images/new-brick/edit.png);
     }
