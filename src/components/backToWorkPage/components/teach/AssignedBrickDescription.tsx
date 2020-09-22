@@ -19,12 +19,19 @@ interface AssignedDescriptionProps {
 
 class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   renderVertical(assignmentId: number, color: string) {
+    const {isExpanded} = this.props;
     return (
       <div
         className="vertical-brick"
         onClick={() => {
-          if (this.props.expand) {
-            return this.props.expand(this.props.classroom.id, assignmentId)
+          if (this.props.isExpanded) {
+            if (this.props.minimize) {
+              return this.props.minimize();
+            }
+          } else {
+            if (this.props.expand) {
+              return this.props.expand(this.props.classroom.id, assignmentId)
+            }
           }
         }}
       >
@@ -34,7 +41,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
         <div className="brick-middle" style={{ background: color }}>
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#maximize"} />
+            <use href={sprite + (isExpanded ? "#minimize" : "#maximize")} />
           </svg>
         </div>
         <div className="brick-bottom-middle" style={{ background: color }}></div>
