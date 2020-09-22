@@ -104,7 +104,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <Grid className="share-row" container direction="row" justify="center">
         {renderInviteColumn(size)}
-        <ShareColumn size={size} onClick={() => setShare(true)} />
         {canPublish ? <PublishColumn onClick={() => publish(brick.id)} /> : ""}
       </Grid>
     );
