@@ -30,7 +30,7 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
         <div className="btn btn-transparent roller-button svgOnHover">
           <svg className="svg w80 h80 active">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#award"} className="text-theme-green" />
+            <use href={sprite + "#award"} className="text-theme-green" style={{strokeWidth: 2}} />
           </svg>
         </div>
       </div>

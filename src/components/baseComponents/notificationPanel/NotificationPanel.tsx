@@ -130,7 +130,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                     {notification.type === NotificationType.BrickPublished ?
                       <svg className="svg w60 h60 active text-theme-dark-blue">
                         {/*eslint-disable-next-line*/}
-                        <use href={sprite + "#award"} />
+                        <use href={sprite + "#award"} style={{strokeWidth: 2}} />
                       </svg>
                       :
                       ""
