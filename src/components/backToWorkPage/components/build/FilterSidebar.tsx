@@ -27,7 +27,6 @@ interface FilterSidebarProps {
 interface FilterSidebarState {
   filterExpanded: boolean;
   isClearFilter: boolean;
-  filters: Filters;
 }
 
 class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
@@ -36,17 +35,6 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     this.state = {
       filterExpanded: true,
       isClearFilter: false,
-
-      filters: {
-        draft: false,
-        review: false,
-        publish: false,
-
-        isCore: false,
-        viewAll: false,
-        buildAll: false,
-        editAll: false
-      }
     }
   }
 
@@ -54,23 +42,21 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
   expandFilter() { this.setState({ filterExpanded: true }) }
 
   toggleFilter(filter: FilterFields) {
-    const { filters } = this.state;
+    const { filters } = this.props;
     filters[filter] = !filters[filter];
-    this.setState({ filters });
     this.filterClear();
     this.props.filterChanged(filters);
   }
 
   clearStatus() {
-    const { filters } = this.state;
+    const { filters } = this.props;
     clearStatusFilters(filters);
-    this.setState({ filters });
     this.filterClear();
     this.props.filterChanged(filters);
   }
 
   filterClear() {
-    let { draft, review, publish } = this.state.filters
+    let { draft, review, publish } = this.props.filters
     if (draft || review || publish) {
       this.setState({ isClearFilter: true })
     } else {
@@ -196,21 +182,21 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
           <div className="filter-container subject-indexes-box">
             <div className="index-box color1">
               <FormControlLabel
-                checked={this.state.filters.draft}
+                checked={this.props.filters.draft}
                 control={<Radio onClick={() => this.toggleFilter(FilterFields.Draft)} className={"filter-radio custom-color"} />}
                 label="Draft" />
               <div className="right-index">{draft}</div>
             </div>
             <div className="index-box color2">
               <FormControlLabel
-                checked={this.state.filters.review}
+                checked={this.props.filters.review}
                 control={<Radio onClick={() => this.toggleFilter(FilterFields.Review)} className={"filter-radio custom-color"} />}
                 label="Submitted for Review" />
               <div className="right-index">{review}</div>
             </div>
             <div className="index-box color4">
               <FormControlLabel
-                checked={this.state.filters.publish}
+                checked={this.props.filters.publish}
                 control={<Radio onClick={e => this.toggleFilter(FilterFields.Publish)} className={"filter-radio custom-color"} />}
                 label="Published" />
               <div className="right-index">{publish}</div>
