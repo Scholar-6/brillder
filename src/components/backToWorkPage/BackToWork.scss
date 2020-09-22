@@ -115,6 +115,9 @@
         background: var(--off-white);
       }
       &.first {
+        position: absolute;
+        top: 1.8vh;
+        height: 2vh;
         > div {
           background: inherit;
         }
