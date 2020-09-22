@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import './AssignedBrickDescription.scss';
 import sprite from "assets/img/icons-sprite.svg";
-import { TeachClassroom, Assignment } from "model/classroom";
+import { TeachClassroom, Assignment, StudentStatus } from "model/classroom";
 import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
@@ -44,27 +44,16 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     );
   }
 
-  renderHorizontal(assignmentId: number, color: string) {
-    const {isExpanded} = this.props;
-    return (
-      <div className="left-brick-circle">
-        <div
-          className="horizontal-brick" style={{ background: color }}
-          onClick={() => {
-            if (isExpanded && this.props.minimize) {
-              this.props.minimize();
-            } else if (this.props.expand) {
-              this.props.expand(this.props.classroom.id, assignmentId);
-            }
-          }}
-        >
-          <svg className="svg active text-white">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + (isExpanded ? "#minimize" : "#maximize")} />
-          </svg>
-        </div>
-      </div>
-    );
+  renderStatus(studentStatus: StudentStatus[]) {
+    let {length} = this.props.classroom.students;
+    if (length !== studentStatus.length) {
+      return (
+        <svg className="svg active reminder-icon">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#reminder"} />
+        </svg>
+      );
+    }
   }
 
   render() {
@@ -117,6 +106,9 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <div className="average">
               Avg: {average}
             </div>
+          </div>
+          <div className="reminder-container">
+            {this.renderStatus(assignment.studentStatus)}
           </div>
           <div className="teach-brick-actions-container">
             {/* 9/22/2020 temp commented
