@@ -32,7 +32,7 @@ const BrickLengthPreviewComponent: React.FC<any> = ({ data }) => {
 
   return (
     <Grid container justify="center" className="phone-preview-component">
-      <svg>
+      <svg className={data === 0 ? "big" : ""}>
         {/*eslint-disable-next-line*/}
         <use href={sprite + "#clock"} />
       </svg>

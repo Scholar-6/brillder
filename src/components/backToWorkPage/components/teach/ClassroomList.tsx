@@ -23,7 +23,7 @@ interface ClassroomListProps {
   expand(classroomId: number, assignmentId: number): void;
 }
 
-class ClassroomList extends Component<ClassroomListProps> {
+  class ClassroomList extends Component<ClassroomListProps> {
   renderStudent(student: UserBase, i: number, studentsStatus: StudentStatus[]) {
     const studentStatus = studentsStatus.find(s => s.studentId === student.id);
     return (
