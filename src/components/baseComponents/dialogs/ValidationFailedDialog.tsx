@@ -7,12 +7,14 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import sprite from "assets/img/icons-sprite.svg";
 
-interface FailedRequestProps {
+interface ValidationFailedProps {
   isOpen: boolean;
+  header: string;
+  label: string;
   close(): void;
 }
 
-const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
+const ValidationFailedDialog: React.FC<ValidationFailedProps> = props => {
   return (
     <Dialog
       open={props.isOpen}
@@ -22,9 +24,9 @@ const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
     >
       <div className="dialog-header">
         <ListItem>
-          <ListItemText primary="Sorry, we've run into a brick wall" className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemText primary={props.header} className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
-            <Avatar className="alert-icon">
+            <Avatar className="circle-check alert-icon">
               <svg className="svg active" style={{strokeWidth: 2, marginBottom: '0.3vw'}}>
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#alert-triangle"} />
@@ -33,11 +35,11 @@ const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
           </ListItemAvatar>
         </ListItem>
         <ListItem>
-          <ListItemText primary="Click refresh and see if we can get over it" className="italic" style={{ minWidth: '30vw' }} />
+          <ListItemText primary={props.label} className="italic" style={{ minWidth: '30vw' }} />
         </ListItem>
       </div>
     </Dialog>
   );
 };
 
-export default FailedRequestDialog;
+export default ValidationFailedDialog;

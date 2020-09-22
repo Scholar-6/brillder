@@ -188,7 +188,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
                 checked={this.state.filters.assigned}
                 control={<Radio onClick={() => this.toggleFilter(TeachFilterFields.Assigned)} className={"filter-radio custom-color"} />}
                 label="Assigned to class or Student" />
-              <div className="right-index">{assignedCount}</div>
+              <div className="right-index" style={{height: 'auto'}}>{assignedCount}</div>
             </div>
             <div className="index-box color4">
               <FormControlLabel
@@ -197,7 +197,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
                   <Radio onClick={e => this.toggleFilter(TeachFilterFields.Completed)} className={"filter-radio custom-color"} />
                 }
                 label="Completed" />
-              <div className="right-index">{completedCount}</div>
+              <div className="right-index" style={{height: 'auto'}}>{completedCount}</div>
             </div>
           </div>
         ) : (

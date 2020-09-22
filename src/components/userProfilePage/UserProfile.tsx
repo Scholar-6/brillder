@@ -25,6 +25,7 @@ import ProfileSavedDialog from "./components/ProfileSavedDialog";
 import SimpleDialog from "../baseComponents/dialogs/SimpleDialog";
 import ProfileImage from "./components/ProfileImage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
+import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -463,9 +464,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             </Grid>
           </div>
         </Grid>
-        <SimpleDialog
+        <ValidationFailedDialog
           isOpen={this.state.emailInvalidOpen}
-          label={this.state.emailInvalid ? "Email is invalid" : "Email is already in use"}
+          header={this.state.emailInvalid ? "That email address doesn’t look right" : "Email is already in use"}
+          label="Have you spelled it correctly?"
           close={this.onInvalidEmailClose.bind(this)}
         />
         <SubjectDialog
