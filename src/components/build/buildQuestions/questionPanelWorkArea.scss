@@ -9,13 +9,13 @@
   font-family: $font-family-regular;
   background: white;
   border-radius: 0 0 $editor-radius $editor-radius;
-  &:not(.active) {
-    .text-box {
-      .drag-box-name {
-        animation: pulse-orange-alpha5 1.5s ease infinite;
-      }
-    }
-  }
+  // &:not(.active) {
+  //   .text-box {
+  //     .drag-box-name {
+  //       animation: pulse-orange-alpha5 1.5s ease infinite;
+  //     }
+  //   }
+  // }
   .invalid {
     background: var(--theme-orange) !important;
   }
@@ -216,6 +216,10 @@
       height: 100%;
       min-width: $left-sidebar-width;
       max-width: $left-sidebar-width;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 2vw;
     }
 
     .left-sidebar {

@@ -48,19 +48,16 @@ const DragBox: React.FC<BoxProps> = ({
     }
     return (
       <div className={className}>
-        <div className="drag-box-name" style={{ fontFamily, letterSpacing, marginLeft }}>{name}</div>
+        <div className="drag-box-name">{name}</div>
         <HoverBox label={label} marginTop={hoverMarginTop} />
       </div>
     );
   }
 
   return (
-    <Grid
-      container item xs={12} onClick={onClick}
-      className="drag-box-item" style={{ fontSize: fontSize, marginTop }}
-    >
+    <div onClick={onClick} className="drag-box-item">
       {renderContent()}
-    </Grid>
+    </div>
   )
 }
 
