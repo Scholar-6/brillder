@@ -48,6 +48,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, playStatus, s
             data={parentPrep}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
             mediaEmbed={true}
+            link={true}
             toolbar={[
               'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
             ]}
