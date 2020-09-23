@@ -11,7 +11,6 @@
   }
 
   .users-table {
-    //$table-height: calc(100vh - 50vw);
     $table-height: calc(64vh - 6.5vw);
     height: calc(#{$table-height} + 5vh) !important;
     .user-row {
