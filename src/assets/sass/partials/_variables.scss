@@ -6,9 +6,9 @@ $colors: (
   'gray': #b0b0ad,
   'dark-gray': #acacac,
   'blue': #0681db,
-  'light-blue': #193266,
+  'light-blue': #304775,
   'black-blue': #0b3b7f,
-  'theme-light-blue': #304775,
+  'theme-light-blue': #193266,
   'theme-dark-blue': #001c58,
   'white-blue': #8ad6e8,
   'tab-dark-gray': #e6e6ed,
@@ -40,7 +40,7 @@ $left: 0.8vw;
 $right: 1.4vw;
 
 $mobile-col-radius: 8vw;
-$mobile-col-color: var(--light-blue);
+$mobile-col-color: var(--theme-light-blue);
 $mobile-background: var(--theme-dark-blue);
 $mobile-arrow-color: #96a0b6;
 

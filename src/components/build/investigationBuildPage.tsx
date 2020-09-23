@@ -38,6 +38,7 @@ import { socketUpdateBrick, socketStartEditing, socketNavigateToQuestion } from 
 import { validateQuestion } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
+  getNewFirstQuestion,
   activeQuestionByIndex,
   deactiveQuestions,
   getActiveQuestion,
@@ -94,7 +95,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let proposalRes = validateProposal(props.brick);
 
   const [questions, setQuestions] = React.useState([
-    getNewQuestion(QuestionTypeEnum.None, true)
+    getNewFirstQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
@@ -246,18 +247,18 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     });
 
     if (history.location.pathname.slice(-10) === '/synthesis') {
-      history.push(`/build/brick/${brickId}/build/investigation/question`);
+      history.push(`/build/brick/${brickId}/investigation/question`);
     }
   };
 
   const moveToSynthesis = () => {
-    history.push(`/build/brick/${brickId}/build/investigation/synthesis`);
+    history.push(`/build/brick/${brickId}/investigation/synthesis`);
   }
 
   const setQuestionTypeAndMove = (type: QuestionTypeEnum) => {
     if (locked) { return; }
     setQuestionType(type);
-    history.push(`/build/brick/${brickId}/build/investigation/question-component`);
+    history.push(`/build/brick/${brickId}/investigation/question-component`);
   };
 
   const setQuestionType = (type: QuestionTypeEnum) => {
@@ -298,7 +299,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     const updatedQuestions = activateQuestionByIndex(index);
     setQuestions(update(questions, { $set: updatedQuestions }));
     if (history.location.pathname.slice(-10) === '/synthesis') {
-      history.push(`/build/brick/${brickId}/build/investigation/question`)
+      history.push(`/build/brick/${brickId}/investigation/question`)
     }
   };
 
@@ -559,13 +560,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const renderPanel = () => {
     return (
       <Switch>
-        <Route path="/build/brick/:brickId/build/investigation/question-component">
+        <Route path="/build/brick/:brickId/investigation/question-component">
           {renderBuildQuestion}
         </Route>
-        <Route path="/build/brick/:brickId/build/investigation/question">
+        <Route path="/build/brick/:brickId/investigation/question">
           {renderQuestionComponent}
         </Route>
-        <Route path="/build/brick/:brickId/build/investigation/synthesis">
+        <Route path="/build/brick/:brickId/investigation/synthesis">
           <SynthesisPage locked={locked} editOnly={!canEdit} synthesis={synthesis} onSynthesisChange={saveSynthesis} />
         </Route>
       </Switch>
@@ -663,13 +664,13 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             </Grid>
           </Grid>
           <LastSave updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} />
-          <Route path="/build/brick/:brickId/build/investigation/question-component">
+          <Route path="/build/brick/:brickId/investigation/question-component">
             <PhoneQuestionPreview question={activeQuestion} />
           </Route>
-          <Route path="/build/brick/:brickId/build/investigation/question">
+          <Route path="/build/brick/:brickId/investigation/question">
             {renderQuestionTypePreview()}
           </Route>
-          <Route path="/build/brick/:brickId/build/investigation/synthesis">
+          <Route path="/build/brick/:brickId/investigation/synthesis">
             <PhonePreview Component={SynthesisPreviewComponent} data={synthesis} />
           </Route>
         </Grid>

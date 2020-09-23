@@ -16,7 +16,7 @@ export interface ApiQuestion {
   type: number;
 }
 
-export function getNewQuestion(type: number, active: boolean) {
+export function getNewFirstQuestion(type: number, active: boolean) {
   return {
     type,
     active,
@@ -27,6 +27,22 @@ export function getNewQuestion(type: number, active: boolean) {
     },
     components: [
       { type: QuestionComponentTypeEnum.None },
+      { type: QuestionComponentTypeEnum.Component },
+      { type: QuestionComponentTypeEnum.None }
+    ]
+  } as Question;
+};
+
+export function getNewQuestion(type: number, active: boolean) {
+  return {
+    type,
+    active,
+    hint: {
+      value: "",
+      list: [] as string[],
+      status: HintStatus.None
+    },
+    components: [
       { type: QuestionComponentTypeEnum.Component },
       { type: QuestionComponentTypeEnum.None }
     ]

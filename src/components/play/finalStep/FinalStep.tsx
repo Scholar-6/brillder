@@ -45,6 +45,23 @@ const FinalStep: React.FC<FinalStepProps> = ({
     isAuthor = brick.author.id === user.id;
   } catch {}
 
+  const renderActionColumns = () => {
+    if (!brick.isCore) {
+      return (
+        <Grid className="share-row" container direction="row" justify="center">
+          <ShareColumn onClick={() => setShare(true)} />
+          <InviteColumn onClick={()=> setInvite(true)} />
+        </Grid>
+      );
+    } else {
+      return (
+        <Grid className="share-row" container direction="row" justify="center">
+          <InviteColumn onClick={()=> setInvite(true)} />
+        </Grid>
+      );
+    }
+  }
+
   return (
     <div>
       <Hidden only={['xs']}>
@@ -63,10 +80,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                   </div>
                   <h2>Final step?</h2>
                   <p>Well done for completing “{brick.title}”!</p>
-                  <Grid className="share-row" container direction="row" justify="center">
-                    <ShareColumn onClick={() => setShare(true)} />
-                    <InviteColumn onClick={()=> setInvite(true)} />
-                  </Grid>
+                  {renderActionColumns()}
                 </div>
               </div>
             </Grid>

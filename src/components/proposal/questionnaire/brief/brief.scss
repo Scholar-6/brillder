@@ -18,16 +18,8 @@
     svg {
       width: auto;
       margin-left: 0vw;
-      margin-top: 4vw;
-      color: var(--theme-orange);
       stroke-width: 1.2px;
       height: 12.7vw;
-
-      &.big {
-        margin-top: 0;
-        height: 100%;
-        width: 100%;
-      }
     }
     .typing-text {
       top: 48%;

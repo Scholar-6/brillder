@@ -17,7 +17,7 @@ const InviteColumn: React.FC<InviteProps> = props => {
         <div className="button-container" onClick={props.onClick}>
           <svg className="svg active inline-button">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#user-plus"} />
+            <use href={sprite + "#user-plus"} style={{strokeWidth: 1.5}} />
           </svg>
         </div>
         <div className="link-text">Invite</div>

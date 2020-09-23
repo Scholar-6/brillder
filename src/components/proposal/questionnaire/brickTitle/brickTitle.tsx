@@ -49,10 +49,21 @@ const BrickTitlePreviewComponent: React.FC<any> = (props) => {
     return data;
   }
 
+  if (!title && !subTopic && !alternativeTopics) {
+    return (
+      <Grid container alignContent="flex-start" className="phone-preview-component">
+        <svg className="svg active titles-image big">
+          {/*eslint-disable-next-line*/}
+          <use href={sprite + "#search-flip"} />
+        </svg>
+      </Grid>
+    );
+  }
+
   return (
     <Grid container alignContent="flex-start" className="phone-preview-component title">
       <Grid container justify="center">
-        <svg className="svg active titles-image big">
+        <svg className="svg active titles-image">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#search-flip"} />
         </svg>

@@ -140,6 +140,12 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     let brick = this.setLength(brickLength);
     this.saveBrick(brick);
   }
+
+  setPrepAndSave = (prep: string) => {
+    const brick = { ...this.state.brick, prep } as Brick;
+    this.saveLocalBrick(brick);
+    this.saveBrick(brick);
+  }
   
   saveAndMove = () => {
     this.saveBrick(this.state.brick);
@@ -153,7 +159,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     setBrillderTitle();
 
     if (this.state.saved) {
-      history.push(`/build/brick/${this.props.brick.id}/build/investigation/question`);
+      history.push(`/build/brick/${this.props.brick.id}/investigation/question`);
     }
 
     const localBrick = this.state.brick;
@@ -189,7 +195,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               <BrickTitle history={history} playStatus={playStatus} parentState={localBrick} canEdit={canEdit} saveTitles={this.setTitles} />
             </Route>
             <Route path={map.ProposalLength}>
-              <BrickLength playStatus={playStatus} length={localBrick.brickLength} canEdit={canEdit} saveLength={this.setLength} saveBrick={this.setLengthAndSave} />
+              <BrickLength playStatus={playStatus} length={localBrick.brickLength} canEdit={canEdit} saveLength={this.setLength} saveBrick={this.setLength} />
             </Route>
             <Route path={map.ProposalOpenQuestion}>
               <OpenQuestion playStatus={playStatus} history={history} selectedQuestion={localBrick.openQuestion} canEdit={canEdit} saveOpenQuestion={this.setOpenQuestion} />
@@ -198,7 +204,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
               <Brief playStatus={playStatus} parentBrief={localBrick.brief} canEdit={canEdit} saveBrief={this.setBrief} />
             </Route>
             <Route path={map.ProposalPrep}>
-              <Prep playStatus={playStatus} parentPrep={localBrick.prep} canEdit={canEdit} savePrep={this.setPrep} />
+              <Prep playStatus={playStatus} parentPrep={localBrick.prep} canEdit={canEdit} savePrep={this.setPrep} saveBrick={this.setPrepAndSave} />
             </Route>
             <Route path={map.ProposalReview}>
               <ProposalReview

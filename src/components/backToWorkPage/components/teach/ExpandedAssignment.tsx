@@ -7,8 +7,13 @@ import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
 import { UserBase } from "model/user";
 import { Assignment, StudentStatus, TeachClassroom } from "model/classroom";
+import { getSubjectColor } from "components/services/subject";
 
 import AssignedBrickDescription from './AssignedBrickDescription';
+
+interface AssignemntExpandedState {
+  sortBy: any[];
+}
 
 interface AssignmentBrickProps {
   stats: any;
@@ -21,9 +26,31 @@ interface AssignmentBrickProps {
 }
 
 class ExpandedAssignment extends Component<AssignmentBrickProps> {
+  constructor(props: AssignmentBrickProps) {
+    super(props);
+
+    this.state = {
+
+    }
+  }
+  renderAvgScore(studentStatus: StudentStatus) {
+    let subjectId = this.props.assignment.brick.subjectId;
+    let color = getSubjectColor(this.props.subjects, subjectId);
+  
+    if (!color) {
+      color = "#B0B0AD";
+    }
+
+    return (
+      <div className="circle" style={{background: color}}>
+        {Math.round(studentStatus.avgScore)}
+      </div>
+    );
+  }
+
   renderStatus(studentStatus: StudentStatus | undefined) {
     if (studentStatus) {
-      return <div className="teach-circle">{Math.round(studentStatus.avgScore)}</div>;
+      return this.renderAvgScore(studentStatus);
     }
     return (
       <svg className="svg active reminder-icon">
@@ -32,28 +59,34 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
       </svg>
     );
   }
+
+  renderBookIcon() {
+    return (
+      <svg className="svg active book-open-icon">
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#book-open"} />
+      </svg>
+    );
+  }
+
   renderStudent(student: UserBase, i: number) {
     const studentStatus = this.props.assignment.studentStatus.find(s => s.studentId === student.id);
     return (
       <tr className="user-row" key={i}>
-        <td className="student-left-padding"></td>
+        <td className="padding-left-column"></td>
+        <td className="student-status">
+          <div>
+            {this.renderStatus(studentStatus)}
+          </div>
+        </td>
+        <td className="student-book">
+          {studentStatus ?
+          <div>
+            {this.renderBookIcon()}
+          </div> : ""}
+        </td>
         <td className="assigned-student-name">{student.firstName} {student.lastName}</td>
-        <td className="circle-td">
-          {this.renderStatus(studentStatus)}
-        </td>
-        <td style={{width: '22.5vw'}}></td>
-        <td>
-          { studentStatus ?
-            <div style={{display: 'flex'}}>
-              <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw', display: 'flex' }}>
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#trending-up"} />
-              </svg>
-              <div className="stats-text">Stats</div>
-            </div>
-            : "" }
-        </td>
-        <td></td>
+        { Array.from(new Array(24), (x, i) => i).map(a => <td></td>)}
       </tr>
     );
   }
@@ -75,9 +108,35 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
         </div>
         <div className="users-table">
           <table cellSpacing="0" cellPadding="0">
-          <tbody>
-            {students.map(this.renderStudent.bind(this))}
-          </tbody>
+            <thead>
+              <tr>
+                <th></th>
+                <th>
+                  <div className="center">
+                    <button className="btn btn-transparent svgOnHover btn-grey-circle">
+                      <svg className="svg active">
+                        <use href={sprite + "#arrow-down"} className="text-theme-dark-blue" />
+                      </svg>
+                    </button>
+                  </div>
+                </th>
+                <th>
+                  <div className="center">
+                    <button className="btn btn-transparent svgOnHover btn-grey-circle">
+                      <svg className="svg active">
+                        <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
+                      </svg>
+                    </button>
+                  </div>
+                </th>
+                <th></th>
+                { Array.from(new Array(24), (x, i) => i).map((a, i) => <th>{i + 1}</th>)}
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {students.map(this.renderStudent.bind(this))}
+            </tbody>
         </table>
         </div>
       </div>
