@@ -109,9 +109,7 @@ const QuestionComponents = ({
         setDialog(true);
         setRemovedIndex(index);
       } else {
-        component.type = QuestionTypeEnum.None;
-        component.value = "";
-        updatingComponent(component);
+        removeInnerComponent(index);
       }
       saveBrick();
     }
@@ -225,7 +223,10 @@ const QuestionComponents = ({
         </div>
         <div className="dialog-footer">
           <button className="btn btn-md bg-theme-orange yes-button"
-            onClick={removeComponentType}>
+            onClick={() => {
+              removeInnerComponent(removeIndex);
+              hideDialog();
+            }}>
             <span>Yes, delete</span>
           </button>
           <button className="btn btn-md bg-gray no-button"
