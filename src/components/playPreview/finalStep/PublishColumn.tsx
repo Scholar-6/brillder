@@ -14,7 +14,7 @@ const PublishColumn: React.FC<PublishProps> = props => {
         <div className="button-container" onClick={props.onClick}>
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#award"} style={{strokeWidth: 1.3}} />
+            <use href={sprite + "#award"} style={{strokeWidth: 1.5}} />
           </svg>
         </div>
         <div className="link-text">Publish</div>
