@@ -72,7 +72,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   }
 
   mark(attempt: ComponentAttempt<string[]>, prev: ComponentAttempt<string[]>) {
-    const {isReview} = this.props;
+    const { isReview } = this.props;
     // If the question is answered in review phase, add 2 to the mark and not 5.
     let markIncrement = isReview ? 2 : 5;
     attempt.correct = true;
@@ -96,7 +96,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
       } else {
         // the answer is not correct.
         attempt.correct = false;
-      } 
+      }
     });
     // Then, if there are no marks, and there are no empty entries, and the program is in live phase, give the student a mark.
     const emptyAnswer = this.state.userAnswers.indexOf("");
@@ -132,18 +132,14 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         className={`short-answer-input ${isCorrect ? "correct" : ""}`}
         style={{ width: `${width}%` }}
       >
-        <Grid container direction="row" justify="center">
-          {this.renderCkeditor(index)}
-        </Grid>
-        <Grid container direction="row" justify="center">
-          <ReviewEachHint
-            isPhonePreview={this.props.isPreview}
-            isReview={this.props.isReview}
-            isCorrect={isCorrect}
-            index={index}
-            hint={this.props.question.hint}
-          />
-        </Grid>
+        {this.renderCkeditor(index)}
+        <ReviewEachHint
+          isPhonePreview={this.props.isPreview}
+          isReview={this.props.isReview}
+          isCorrect={isCorrect}
+          index={index}
+          hint={this.props.question.hint}
+        />
       </div>
     );
   }
