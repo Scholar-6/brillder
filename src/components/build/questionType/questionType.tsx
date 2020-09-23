@@ -22,7 +22,7 @@ const QuestionTypePage: React.FC<QuestionTypeProps> = ({
   setQuestionType, setHoverQuestion, setActiveQuestionType
 }: QuestionTypeProps) => {
   if (questionType !== QuestionTypeEnum.None) {
-    history.push(`/build/brick/${brickId}/build/investigation/question-component/${questionId}`);
+    history.push(`/build/brick/${brickId}/investigation/question-component/${questionId}`);
   }
 
   const type = activeQuestionType;

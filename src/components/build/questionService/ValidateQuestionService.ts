@@ -43,6 +43,10 @@ const validateHint = (hint: Hint) => {
 export function validateQuestion(question: Question) {
   const {type, hint, components} = question;
 
+  if (!question.firstComponent || !question.firstComponent.value) {
+    return false;
+  }
+
   let noComponent = getNonEmptyComponent(components);
   if (noComponent) {
     return false;

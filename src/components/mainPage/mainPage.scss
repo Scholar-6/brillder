@@ -68,7 +68,7 @@
     height: 100%;
 
     .first-item {
-      background: var(--light-blue);
+      background: var(--theme-light-blue);
       height: 89.2vh;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
@@ -77,7 +77,7 @@
     }
     .second-item {
       position: relative;
-      background: var(--light-blue);
+      background: var(--theme-light-blue);
       margin-top: 4.6vh;
       height: 6.2vh;
       @extend %textCenter;
@@ -133,8 +133,8 @@
           height: 8vw;
         }
         @include ex-desktop_wide {
-          width: 12vw;
-          height: 8vw;
+          width: 13vw;
+          height: 9vw;
         }
       }
     }
@@ -289,7 +289,7 @@
     height: $page-head-height;
     right: 0;
     position: fixed;
-    background: var(--light-blue);
+    background: var(--theme-light-blue);
     transition: all 150ms;
     border-bottom-left-radius: 2vw;
 

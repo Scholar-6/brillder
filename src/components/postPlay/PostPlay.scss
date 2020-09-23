@@ -2,9 +2,10 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
-.proposal-page {
+.post-play-page {
   height: 100% !important;
-  color: var(--theme-dark-blue);
+  background: var(--theme-dark-blue);
+  color: var(--white);
 
   .red-right-block {
     position: fixed;
@@ -29,7 +30,7 @@
     width: 38vw;
     top: 16.1vh;
     left: 14vw;
-    color: var(--theme-dark-blue);
+    margin-top: 2vh;
 
     h1 {
       font-weight: normal !important;
@@ -37,20 +38,14 @@
       letter-spacing: 0.05vw;
       font-size: 2.8vw;
       margin: 0;
-      line-height: 1.7;
-    }
-
-    .text-line-1 {
-      margin-top: 6vh;
-    }
-    .text-line-2 {
-      margin-top: 7vh;
+      line-height: 2;
     }
     h2 {
       font-weight: normal !important;
-      font-size: 2.6vw;
+      font-size: 1.9vw;
       font-family: $font-family-regular;
       margin: 0;
+      line-height: 2.3;
     }
   }
 
@@ -174,22 +169,24 @@
       color: var(--theme-orange);
       @extend %textCenter;
       font-family: $font-family-black;
+      background: var(--tab-gray);
+
       .page-stitch {
         position: absolute;
         height: 100%;
         width: 1.76vw;
-        .vertical-line {
+        .vertical-line, .horizontal-line {
           position: absolute;
+          background: var(--white );
+        }
+        .vertical-line {
           height: 100%;
           right: 0;
           width: 0.8vw;
-          background: var(--theme-light-blue);
         }
         .horizontal-line {
-          position: absolute;
           height: 0.8vw;
           width: 100%;
-          background: var(--theme-light-blue);
         }
         .top-line-1 {
           top: 7.8vh;
@@ -204,17 +201,32 @@
           bottom: 7.8vh;
         }
       }
-      img {
-        margin-left: 1vw;
-        margin-top: 6.5vh;
-        height: 21.5vh;
+      
+      .image-background-container {
+        width: 100%;
+        @extend %flexCenter;
+        .book-image-container {
+          background: var(--white);
+          width: 25vh;
+          height: 25vh;
+          border-radius: 1vh;
+          @extend %flexCenter;
+        
+          svg {
+            height: 21.5vh;
+          }
+        }
       }
-      .white-text {
+
+      .brick-title {
         margin-top: 5vh;
         margin-left: 1.9vw;
         letter-spacing: 0.8vw;
         font-size: 3.5vw;
-        color: white;
+        text-transform: uppercase;
+        color: var(--theme-dark-blue);
+        font-size: 2vw;
+        overflow-x: hidden;
       }
       .names-row {
         margin-top: 1vh;
@@ -272,7 +284,7 @@
             font-family: $font-family-bold;
             text-transform: uppercase;
             height: 20vh;
-          }
+          }  
         }
       }
     }

@@ -24,6 +24,8 @@ import List from "@ckeditor/ckeditor5-list/src/list";
 // @ts-ignore
 import Link from '@ckeditor/ckeditor5-link/src/link';
 // @ts-ignore
+import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
+// @ts-ignore
 import MathType from "@wiris/mathtype-ckeditor5/src/plugin";
 // @ts-ignore
 import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed";
@@ -49,6 +51,7 @@ export interface DocumentWEditorProps {
   toolbar?: any;
   placeholder?: string;
   mediaEmbed?: boolean;
+  link?: boolean;
   defaultAlignment?: string;
   validationRequired?: boolean;
   onBlur(): void;
@@ -210,8 +213,12 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
     /* MediaEmbed plugin enables media links in editor */
     if (this.props.mediaEmbed) {
       config.plugins.push(MediaEmbed);
-      config.plugins.push(Link);
       config.toolbar.push("mediaEmbed");
+    }
+
+    if (this.props.link) {
+      config.plugins.push(Link);
+      config.plugins.push(AutoLink);
       config.link = { addTargetToExternalLinks: true };
     }
 

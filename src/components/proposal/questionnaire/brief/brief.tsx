@@ -54,6 +54,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, playStatus
           <DocumentWirisCKEditor
             disabled={!canEdit}
             data={parentBrief}
+            link={true}
             placeholder="Enter Brief Here..."
             toolbar={[
               'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
