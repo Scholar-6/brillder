@@ -6,9 +6,7 @@
   width: 100%;
 
   .drop-box {
-    margin-bottom: 0.2vw;
     @extend %themeRadius;
-
     .dropzone {
       border: none !important;
     }
@@ -126,8 +124,8 @@
 }
 
 .unique-component-wrapper {
-  margin: 0.2vh 0;
-  padding: 0.4vw 0.4vw 0 0.4vw;
+  margin: #{$editor-spacing} 0;
+  padding: $editor-radius;
   width: 100%;
   background: var(--tab-gray);
   @extend %themeRadius;

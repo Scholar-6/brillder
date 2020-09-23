@@ -207,8 +207,8 @@
       overflow-y: auto;
       border: 0.13vw solid var(--tab-gray);
       background-color: var(--white);
-      border-radius: 0.6vw;
-      padding: 0.2vw 0.2vw 0 0.2vw;
+      @extend %themeRadius;
+      padding: $editor-spacing;
     }
 
     .parent-left-sidebar {
