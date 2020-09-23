@@ -4,7 +4,7 @@
 
 .assigned-brick-description {
   position: relative;
-  padding-left: 3vw;
+  padding-left: 3vw !important;
 
   @include tabletP {
     height: calc(#{$bricks-height / 6.35});
