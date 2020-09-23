@@ -686,9 +686,10 @@
     font-family: $font-family-bold;
     margin-bottom: 0.5vh;
     @extend %ellipsis;
+    color: var(--theme-dark-blue);
     width: calc(100% - 3vw);
     @include phone_and_tabletP {
-      font-size: 2vw;
+      font-size: 4vw;
     }
     @include tabletP {
       font-size: 0.8vw;
