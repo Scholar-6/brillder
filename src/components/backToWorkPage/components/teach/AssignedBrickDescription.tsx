@@ -84,13 +84,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
 
     return (
       <div className={className}>
-        <div className="total-view-count">
-          {classroom.students.length}
-          <svg className="svg active">
-            <use href={sprite + "#users"} className="text-theme-dark-blue" />
-          </svg>
-        </div>
         <div style={{ display: 'flex' }}>
+          <div className="first-part">
+            {this.renderVertical(assignment.id, color)}
+          </div>
           <div className="short-brick-info long">
             <div className="link-description">
               <span>{brick.title}</span>
@@ -102,8 +99,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
               { assignment.deadline ? <span> Deadline: {getFormattedDate(assignment.deadline)}</span> : "" }
             </div>
           </div>
+          <div className="reminder-container">
+            {this.renderStatus(assignment.studentStatus)}
+          </div>
           <div className="assignment-second-part">
-            {this.renderVertical(assignment.id, color)}
             <div className="users-complete-count">
               {second}
               <svg className="svg active">
@@ -114,18 +113,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
               Avg: {average}
             </div>
           </div>
-          <div className="reminder-container">
-            {this.renderStatus(assignment.studentStatus)}
-          </div>
           <div className="teach-brick-actions-container">
-            {/* 9/22/2020 temp commented
-            <div className="stats-button-container">
-              <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
-                <use href={sprite + "#activity"} />
-              </svg>
-            </div>
-            <div className="stats-text">Stats</div>
-            */}
             <div className="archive-button-container">
               <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
                 {/*eslint-disable-next-line*/}
