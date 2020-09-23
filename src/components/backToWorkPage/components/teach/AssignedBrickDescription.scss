@@ -17,6 +17,7 @@
   
   .first-part  {
     display: flex;
+    @extend %flexCenter;
   }
 
   .left-brick-circle {
@@ -115,11 +116,14 @@
   .assignment-second-part  {
     display: flex;
     width: 30vw;
-    font-size: 1.4vw;
     .users-complete-count {
       margin-left: 2vw;
       margin-right: 2vw;
       @extend %flexCenter;
+      span {
+        font-size: 1.5vw;
+        margin-right: 0.5vw;
+      }
       svg {
         margin-left: 0.3vw;
         height: 1.4vw;
@@ -128,6 +132,7 @@
     }
     .average {
       @extend %flexCenter;
+      font-size: 1.5vw;
     }
   }
   .reminder-container {

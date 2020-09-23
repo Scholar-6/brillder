@@ -74,6 +74,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     let { assignment, classroom } = this.props;
     const { brick, byStatus } = assignment;
     let className = "assigned-brick-description";
+    const studentsCount = classroom.students.length;
 
     let second = 0;
     let average = 0;
@@ -83,43 +84,41 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
     }
 
     return (
-      <div className={className}>
-        <div style={{ display: 'flex' }}>
-          <div className="first-part">
-            {this.renderVertical(assignment.id, color)}
+      <div className={className} style={{ display: 'flex' }}>
+        <div className="first-part">
+          {this.renderVertical(assignment.id, color)}
+        </div>
+        <div className="short-brick-info long">
+          <div className="link-description">
+            <span>{brick.title}</span>
           </div>
-          <div className="short-brick-info long">
-            <div className="link-description">
-              <span>{brick.title}</span>
-            </div>
-            <div className="link-info">
-              {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)} 
-            </div>
-            <div className="link-info">
-              { assignment.deadline ? <span> Deadline: {getFormattedDate(assignment.deadline)}</span> : "" }
-            </div>
+          <div className="link-info">
+            {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)} 
           </div>
-          <div className="reminder-container">
-            {this.renderStatus(assignment.studentStatus)}
+          <div className="link-info">
+            { assignment.deadline ? <span> Deadline: {getFormattedDate(assignment.deadline)}</span> : "" }
           </div>
-          <div className="assignment-second-part">
-            <div className="users-complete-count">
-              {second}
-              <svg className="svg active">
-                <use href={sprite + "#users"} className="text-theme-dark-blue" />
-              </svg>
-            </div>
-            <div className="average">
-              Avg: {average}
-            </div>
+        </div>
+        <div className="reminder-container">
+          {this.renderStatus(assignment.studentStatus)}
+        </div>
+        <div className="assignment-second-part">
+          <div className="users-complete-count">
+            <span>{second}/{studentsCount}</span>
+            <svg className="svg active">
+              <use href={sprite + "#users"} className="text-theme-dark-blue" />
+            </svg>
           </div>
-          <div className="teach-brick-actions-container">
-            <div className="archive-button-container">
-              <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#archive"} className="text-gray" />
-              </svg>
-            </div>
+          <div className="average">
+            Avg: {average}
+          </div>
+        </div>
+        <div className="teach-brick-actions-container">
+          <div className="archive-button-container">
+            <svg className="svg active" style={{ height: '2.1vw', width: '2.1vw' }}>
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#archive"} className="text-gray" />
+            </svg>
           </div>
         </div>
       </div>
