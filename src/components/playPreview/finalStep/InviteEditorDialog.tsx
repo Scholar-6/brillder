@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import actions from 'redux/actions/brickActions';
 import sprite from "assets/img/icons-sprite.svg";
 import { Brick, Editor } from 'model/brick';
-import {getUserByUserName} from 'components/services/axios/user';
+import { getUserByUserName } from 'components/services/axios/user';
 
 interface InviteProps {
   canEdit: boolean;
@@ -19,7 +19,7 @@ interface InviteProps {
   assignEditor(brick: Brick): void;
 }
 
-const InviteEditorDialog: React.FC<InviteProps> = ({brick, ...props}) => {
+const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [isValid, setValid] = React.useState(false);
   const [editorUsername, setEditorUsername] = React.useState(brick.editor?.username ?? "");
   const [editor, setEditor] = React.useState(brick.editor);
@@ -62,7 +62,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({brick, ...props}) => {
     return (
       <button
         className="btn bold btn-md bg-theme-orange yes-button"
-        style={{width: 'auto', paddingLeft: '4vw'}}
+        style={{ width: 'auto', paddingLeft: '4vw' }}
         onClick={onNext}
       >
         Send Invite
@@ -80,23 +80,24 @@ const InviteEditorDialog: React.FC<InviteProps> = ({brick, ...props}) => {
       onClose={props.close}
       className="dialog-box light-blue unlimited"
     >
-      <div className="close-button" style={{width: '1.5vw', height: '1.5vw'}}>
-        <svg className="svg active" onClick={props.close}>
+      <div className="close-button svgOnHover tooltip left" onClick={props.close}>
+        <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#cancel-thick"} />
         </svg>
+        <span className="tooltip-inner">Close Dialog</span>
       </div>
-      <div className="dialog-header" style={{minWidth: '30vw'}}>
+      <div className="dialog-header" style={{ minWidth: '30vw' }}>
         <div className="title left">
           {props.title ? props.title : 'Who would you like to invite to play this brick?'}
         </div>
-        <div style={{marginTop: '1.8vh'}}></div>
+        <div style={{ marginTop: '1.8vh' }}></div>
         <Grid item className="input-container">
           <div className="audience-inputs border-rounded">
             <TextField
               disabled={!props.canEdit}
               value={editorUsername}
-              style={{background: 'inherit'}}
+              style={{ background: 'inherit' }}
               onChange={(evt) => setEditorUsername(evt.target.value)}
               onBlur={() => onBlur()}
               placeholder="Enter editor's username here..."
@@ -107,8 +108,8 @@ const InviteEditorDialog: React.FC<InviteProps> = ({brick, ...props}) => {
           </div>
         </Grid>
       </div>
-      <div style={{marginTop: '1.8vh'}}></div>
-      <div className="dialog-footer" style={{justifyContent: 'center'}}>
+      <div style={{ marginTop: '1.8vh' }}></div>
+      <div className="dialog-footer" style={{ justifyContent: 'center' }}>
         {renderSendButton()}
       </div>
     </Dialog>
