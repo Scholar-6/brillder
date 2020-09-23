@@ -159,7 +159,7 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     setBrillderTitle();
 
     if (this.state.saved) {
-      history.push(`/build/brick/${this.props.brick.id}/build/investigation/question`);
+      history.push(`/build/brick/${this.props.brick.id}/investigation/question`);
     }
 
     const localBrick = this.state.brick;

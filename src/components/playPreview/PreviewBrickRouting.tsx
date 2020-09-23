@@ -144,7 +144,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const moveToBuild = () => {
-    history.push(`/build/brick/${brickId}/build/investigation/question`);
+    history.push(`/build/brick/${brickId}/investigation/question`);
   }
 
   const setSidebar = (state?: boolean) => {
