@@ -6,7 +6,7 @@ const mark: ScoreFunction<ChooseOneComponent, ChooseOneAnswer> = (component, att
 
     // set attempt.correct to true by answer index.
     attempt.correct = false;
-    if(attempt.answer && component.list[attempt.answer].checked === true) {
+    if(attempt.answer && attempt.answer !== -1 && component.list[attempt.answer].checked === true) {
       attempt.correct = true;
     }
 
