@@ -76,8 +76,8 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <InviteColumn
         size={size}
-        firstLabel="internal user to edit"
-        secondLabel="this brick"
+        firstLabel="An internal user"
+        secondLabel="to edit this brick"
         onClick={()=> setInvite(true)}
       />
     );
