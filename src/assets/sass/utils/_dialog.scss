@@ -206,8 +206,9 @@
     position: absolute;
     top: 0.5vw;
     right: 0.5vw;
-    width: 2vw;
-    height: 2vw;
+    width: 1.5vw;
+    height: 1.5vw;
+    @extend %flexCenter;
     .svg {
       stroke-width: 3;
       color: var(--white);

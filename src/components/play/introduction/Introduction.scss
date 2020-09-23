@@ -342,6 +342,24 @@ $play-mobile-height: calc(100vh - 55.8vw);
             font-family: $font-family-black;
             color: var(--theme-dark-blue);
           }
+          .short-answer-input {
+            border-radius: 0 !important;
+            background: transparent !important;
+          }
+          .short-answer-live {
+            .document-editor {
+              border-radius: 0 !important;
+              background: transparent !important;
+              .ck-editor {
+                .ck-content {
+                  background: transparent !important;
+                  border-radius: 0 !important;
+                  padding: 0.5vw 0 !important;
+                  border-bottom: 1px solid var(--gray) !important;
+                }
+              }
+            }
+          }
           &.review-content {
             @include phone_and_tabletP {
               width: 100% !important;
@@ -352,18 +370,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
               width: calc(100% - 7vw) !important;
               margin: 0 3vw 1vw 4vw;
               padding-top: 1.5vh;
-            }
-            .short-answer-live {
-              .document-editor {
-                .ck-editor {
-                  .ck-content {
-                    background: transparent;
-                    padding: 0 !important;
-                    padding-bottom: 0.3vw !important;
-                    border-bottom: 1px solid var(--gray) !important;
-                  }
-                }
-              }
             }
           }
         }
