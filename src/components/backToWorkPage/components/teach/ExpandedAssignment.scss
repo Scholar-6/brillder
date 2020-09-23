@@ -11,8 +11,9 @@
   }
 
   .users-table {
-    $table-height: calc(53.5vh - 4vw);
-    height: $table-height !important;
+    //$table-height: calc(100vh - 50vw);
+    $table-height: calc(64vh - 6.5vw);
+    height: calc($table-height + 5vh) !important;
     .user-row {
       height: calc(#{$table-height / 8}) !important;
     }
@@ -27,7 +28,8 @@
     }
 
     .assigned-student-name {
-      width: 26.8vw;
+      padding-left: 0.7vw !important;
+      width: 18vw;
     }
     .circle-td {
       width: 5vw;
@@ -43,6 +45,7 @@
     thead {
       background: inherit !important;
       th {
+        font-family: $font-family-regular !important;
         padding: 0 !important;
         .center {
           @extend %flexCenter;

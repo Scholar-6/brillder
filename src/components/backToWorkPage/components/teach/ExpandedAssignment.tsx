@@ -49,7 +49,7 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
           </div>
         </td>
         <td className="assigned-student-name">{student.firstName} {student.lastName}</td>
-        { Array.from(new Array(20), (x, i) => i).map(a => <td></td>)}
+        { Array.from(new Array(24), (x, i) => i).map(a => <td></td>)}
       </tr>
     );
   }
@@ -93,7 +93,8 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
                   </div>
                 </th>
                 <th></th>
-                { Array.from(new Array(20), (x, i) => i).map((a, i) => <td>{i}</td>)}
+                { Array.from(new Array(24), (x, i) => i).map((a, i) => <th>{i + 1}</th>)}
+                <th></th>
               </tr>
             </thead>
             <tbody>
