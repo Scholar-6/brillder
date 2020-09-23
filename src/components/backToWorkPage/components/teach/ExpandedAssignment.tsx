@@ -11,6 +11,10 @@ import { getSubjectColor } from "components/services/subject";
 
 import AssignedBrickDescription from './AssignedBrickDescription';
 
+interface AssignemntExpandedState {
+  sortBy: any[];
+}
+
 interface AssignmentBrickProps {
   stats: any;
   subjects: Subject[];
@@ -22,6 +26,13 @@ interface AssignmentBrickProps {
 }
 
 class ExpandedAssignment extends Component<AssignmentBrickProps> {
+  constructor(props: AssignmentBrickProps) {
+    super(props);
+
+    this.state = {
+
+    }
+  }
   renderAvgScore(studentStatus: StudentStatus) {
     let subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
