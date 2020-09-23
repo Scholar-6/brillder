@@ -38,6 +38,7 @@ import { socketUpdateBrick, socketStartEditing, socketNavigateToQuestion } from 
 import { validateQuestion } from "./questionService/ValidateQuestionService";
 import {
   getNewQuestion,
+  getNewFirstQuestion,
   activeQuestionByIndex,
   deactiveQuestions,
   getActiveQuestion,
@@ -94,7 +95,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let proposalRes = validateProposal(props.brick);
 
   const [questions, setQuestions] = React.useState([
-    getNewQuestion(QuestionTypeEnum.None, true)
+    getNewFirstQuestion(QuestionTypeEnum.None, true)
   ] as Question[]);
   const [loaded, setStatus] = React.useState(false);
   let [locked, setLock] = React.useState(props.brick ? props.brick.locked : false);
