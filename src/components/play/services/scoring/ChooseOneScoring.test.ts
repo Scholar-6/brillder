@@ -9,7 +9,8 @@ const mockComponent: ChooseOneComponent = {
     list: [
         { value: "A", valueFile: "", checked: false, answerType: QuestionValueType.String },
         { value: "B", valueFile: "", checked: true,  answerType: QuestionValueType.String },
-        { value: "C", valueFile: "", checked: false, answerType: QuestionValueType.String }],
+        { value: "C", valueFile: "", checked: false, answerType: QuestionValueType.String }
+    ],
 }
 
 describe("choose one scoring", () => {
