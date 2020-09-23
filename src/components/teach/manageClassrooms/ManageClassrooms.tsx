@@ -296,7 +296,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#users"} />
           </svg>
-          <div className="white-box">
+          <div className="classrooms-box">
             {this.state.classrooms.length}
           </div>
         </div>
