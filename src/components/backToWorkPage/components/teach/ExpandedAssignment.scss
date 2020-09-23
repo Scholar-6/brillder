@@ -10,18 +10,20 @@
     padding-left: 1.6vw;
   }
 
-  .assigned-brick-description {
-    padding-left: 1.6vw;
-    padding-right: 1vw;
-  }
   .users-table {
     $table-height: calc(53.5vh - 4vw);
     height: $table-height !important;
     .user-row {
       height: calc(#{$table-height / 8}) !important;
     }
-    .student-left-padding {
-      width: 6vw;
+    .padding-left-column {
+      width: 0.7vw;
+    }
+    .student-status, .student-book {
+      width: 2.75vw;
+      > div {
+        @extend %flexCenter;
+      }
     }
 
     .assigned-student-name {
@@ -36,6 +38,26 @@
         background: var(--theme-green);
         border-radius: 50%;
         color: var(--white);
+      }
+    }
+    thead {
+      background: inherit !important;
+      th {
+        padding: 0 !important;
+        .center {
+          @extend %flexCenter;
+        }
+        .btn-grey-circle {
+          background: var(--tab-gray) !important;
+          border-radius: 50%;
+          height: 1.3vw;
+          width: 1.3vw;
+
+          svg {
+            height: 1vw;
+            width: 1vw;
+          }
+        }
       }
     }
     td {
