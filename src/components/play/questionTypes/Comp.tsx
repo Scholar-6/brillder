@@ -1,14 +1,14 @@
 import React from 'react';
 
 import {ComponentAttempt} from '../model';
+import { mark as markAttempt } from '../services/scoring';
+import { CompQuestionProps } from './types';
 
-
-class CompComponent<Props, State> extends React.Component<Props, State> {
+class CompComponent<Props extends CompQuestionProps, State> extends React.Component<Props, State> {
   getAnswer() { };
 
   getAttempt(isReview: boolean): ComponentAttempt<any> {
-    let props = this.props as any;
-    let att = this.mark({ answer: this.getAnswer(), attempted: true, correct: false, marks: 0, maxMarks: 0 }, props.attempt);
+    let att = this.mark(this.props.component, { answer: this.getAnswer(), attempted: true, correct: false, marks: 0, maxMarks: 0 });
 
     if (att.correct === true) {
       if (isReview) {
@@ -20,7 +20,16 @@ class CompComponent<Props, State> extends React.Component<Props, State> {
     return att;
   };
 
-  mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) { return attempt; }
+  // Called before the marking function. Use this to set up the attempt with the data needed to mark it.
+  prepareAttempt(component: any, attempt: ComponentAttempt<any>) {
+    return attempt;
+  }
+
+  mark(component: any, attempt: ComponentAttempt<any>) {
+    console.log("marking...");
+    this.prepareAttempt(component, attempt);
+    return markAttempt(this.props.question.type, component, attempt);
+  }
 }
 
 export default CompComponent;

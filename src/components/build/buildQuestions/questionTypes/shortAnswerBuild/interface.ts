@@ -2,6 +2,6 @@ export interface ShortAnswerItem {
   value: string;
 }
   
-export interface ShrortAnswerData {
+export interface ShortAnswerData {
   list: ShortAnswerItem[];
 }

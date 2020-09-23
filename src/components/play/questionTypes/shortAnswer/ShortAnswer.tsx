@@ -8,16 +8,18 @@ import ReviewEachHint from "../../baseComponents/ReviewEachHint";
 import ReviewGlobalHint from "../../baseComponents/ReviewGlobalHint";
 import { CompQuestionProps } from "../types";
 import {
-  ShrortAnswerData,
+  ShortAnswerData,
   ShortAnswerItem,
 } from "components/build/buildQuestions/questionTypes/shortAnswerBuild/interface";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import DocumentWirisEditorComponent from "components/baseComponents/ckeditor/DocumentWirisEditor";
 
+export type ShortAnswerAnswer = string[];
+
 interface ShortAnswerProps extends CompQuestionProps {
-  component: ShrortAnswerData;
+  component: ShortAnswerData;
   isTimeover: boolean;
-  attempt: ComponentAttempt<string[]>;
+  attempt: ComponentAttempt<ShortAnswerAnswer>;
   answers: string[];
 }
 
@@ -71,33 +73,9 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     return false;
   }
 
-  mark(attempt: ComponentAttempt<string[]>, prev: ComponentAttempt<string[]>) {
-    // The maximum number of marks is the number of entries * 5.
-    attempt.maxMarks = 6;
+  prepareAttempt(component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerAnswer>) {
+    attempt.answer = this.state.userAnswers;
 
-    // The maximum number of marks is divided between all answers.
-    let markIncrement = attempt.maxMarks / this.props.component.list.length;
-    attempt.correct = true;
-    attempt.marks = 0;
-
-    this.props.component.list.forEach((answer, index) => {
-      if (this.state.userAnswers[index]) {
-        let correctAnswer = stripHtml(answer.value);
-        if (stripHtml(this.state.userAnswers[index]) === correctAnswer) {
-          // add the correct amount of marks
-          attempt.marks += markIncrement;
-        } else {
-          // the answer is not correct.
-          attempt.correct = false;
-        }
-      } else {
-        // the answer is not filled in.
-        attempt.correct = false;
-      } 
-    });
-    // Then, if there are no marks, and there are no empty entries, give the student half a mark.
-    const emptyAnswer = this.state.userAnswers.indexOf("");
-    if (attempt.marks === 0 && emptyAnswer === -1) attempt.marks += 0.5;
     return attempt;
   }
 
