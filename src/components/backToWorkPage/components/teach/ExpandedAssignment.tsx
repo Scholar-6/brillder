@@ -11,8 +11,14 @@ import { getSubjectColor } from "components/services/subject";
 
 import AssignedBrickDescription from './AssignedBrickDescription';
 
+enum SortBy {
+  None,
+  AvgIncreasing,
+  AvgDecreasing
+}
+
 interface AssignemntExpandedState {
-  sortBy: any[];
+  sortBy: SortBy;
 }
 
 interface AssignmentBrickProps {
@@ -25,14 +31,15 @@ interface AssignmentBrickProps {
   minimize(): void;
 }
 
-class ExpandedAssignment extends Component<AssignmentBrickProps> {
+class ExpandedAssignment extends Component<AssignmentBrickProps, AssignemntExpandedState> {
   constructor(props: AssignmentBrickProps) {
     super(props);
 
     this.state = {
-
-    }
+      sortBy: SortBy.None
+    };
   }
+
   renderAvgScore(studentStatus: StudentStatus) {
     let subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
@@ -95,6 +102,8 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
     const {assignment, classroom, startIndex, pageSize} = this.props;
     let {students} = classroom;
     students = students.slice(startIndex, startIndex + pageSize);
+    if (this.state.sortBy !== SortBy.None) {
+    }
     return (
       <div className="expanded-assignment classroom-list">
         <div className="classroom-title first">{classroom.name}</div>
@@ -113,7 +122,10 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
                 <th></th>
                 <th>
                   <div className="center">
-                    <button className="btn btn-transparent svgOnHover btn-grey-circle">
+                    <button
+                      className="btn btn-transparent svgOnHover btn-grey-circle"
+                      onClick={() => this.setState({sortBy: SortBy.AvgDecreasing})}
+                    >
                       <svg className="svg active">
                         <use href={sprite + "#arrow-down"} className="text-theme-dark-blue" />
                       </svg>
