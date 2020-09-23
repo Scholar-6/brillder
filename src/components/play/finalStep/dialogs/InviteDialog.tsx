@@ -7,8 +7,8 @@ import { connect } from "react-redux";
 import actions from 'redux/actions/brickActions';
 import sprite from "assets/img/icons-sprite.svg";
 import { Brick, Editor } from 'model/brick';
-import {getUserByUserName} from 'components/services/axios/user';
-import {inviteUser} from 'components/services/axios/brick';
+import { getUserByUserName } from 'components/services/axios/user';
+import { inviteUser } from 'components/services/axios/brick';
 
 interface InviteProps {
   canEdit: boolean;
@@ -23,7 +23,7 @@ interface InviteProps {
   assignEditor(brick: Brick): void;
 }
 
-const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
+const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [accessGranted, setAccess] = React.useState(null as boolean | null);
 
   const [isValid, setValid] = React.useState(false);
@@ -90,7 +90,7 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
     return (
       <button
         className="btn bold btn-md bg-theme-orange yes-button"
-        style={{width: 'auto', paddingLeft: '4vw'}}
+        style={{ width: 'auto', paddingLeft: '4vw' }}
         onClick={onNext}
       >
         Send Invite
@@ -108,23 +108,24 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
       onClose={props.close}
       className="dialog-box light-blue unlimited"
     >
-      <div className="close-button" style={{width: '1.5vw', height: '1.5vw'}}>
-        <svg className="svg active" onClick={props.close}>
+      <div className="close-button svgOnHover tooltip left" onClick={props.close}>
+        <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#cancel-thick"} />
         </svg>
+        <span className="tooltip-inner">Close Dialog</span>
       </div>
-      <div className="dialog-header" style={{minWidth: '30vw'}}>
+      <div className="dialog-header" style={{ minWidth: '30vw' }}>
         <div className="title left">
           {props.title ? props.title : 'Who would you like to invite to play this brick?'}
         </div>
-        <div style={{marginTop: '1.8vh'}}></div>
+        <div style={{ marginTop: '1.8vh' }}></div>
         <Grid item className="input-container">
           <div className="audience-inputs border-rounded">
             <TextField
               disabled={!props.canEdit}
               value={editorUsername}
-              style={{background: 'inherit'}}
+              style={{ background: 'inherit' }}
               onChange={(evt) => setEditorUsername(evt.target.value)}
               onBlur={() => onBlur()}
               placeholder="Enter editor's username here..."
@@ -134,19 +135,19 @@ const InviteDialog: React.FC<InviteProps> = ({brick, ...props}) => {
             />
           </div>
         </Grid>
-        {props.isAuthor ? 
-        <div>
-          <div style={{marginTop: '1.8vh'}}></div>
-          <div className="title left">Grant editing access?</div>
-          <div className="text left" style={{marginBottom: '1.8vh'}}>{renderCustomText()}</div>
-          <div className="title left">
-            Yes <Radio className="white" checked={accessGranted === true} style={{marginRight: '4vw'}} onClick={() => setAccess(true)} />
+        {props.isAuthor ?
+          <div>
+            <div style={{ marginTop: '1.8vh' }}></div>
+            <div className="title left">Grant editing access?</div>
+            <div className="text left" style={{ marginBottom: '1.8vh' }}>{renderCustomText()}</div>
+            <div className="title left">
+              Yes <Radio className="white" checked={accessGranted === true} style={{ marginRight: '4vw' }} onClick={() => setAccess(true)} />
             No <Radio className="white" checked={accessGranted === false} onClick={() => setAccess(false)} />
-          </div>
-        </div> : ""}
+            </div>
+          </div> : ""}
       </div>
-      <div style={{marginTop: '1.8vh'}}></div>
-      <div className="dialog-footer" style={{justifyContent: 'center'}}>
+      <div style={{ marginTop: '1.8vh' }}></div>
+      <div className="dialog-footer" style={{ justifyContent: 'center' }}>
         {renderSendButton()}
       </div>
     </Dialog>
