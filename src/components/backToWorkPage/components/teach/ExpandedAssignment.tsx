@@ -32,6 +32,7 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
       </svg>
     );
   }
+
   renderStudent(student: UserBase, i: number) {
     const studentStatus = this.props.assignment.studentStatus.find(s => s.studentId === student.id);
     return (
@@ -48,7 +49,7 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
           </div>
         </td>
         <td className="assigned-student-name">{student.firstName} {student.lastName}</td>
-        <td></td>
+        { Array.from(new Array(20), (x, i) => i).map(a => <td></td>)}
       </tr>
     );
   }
@@ -92,12 +93,7 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
                   </div>
                 </th>
                 <th></th>
-                <th>4</th>
-                <th>5</th>
-                <th>6</th>
-                <th>7</th>
-                <th>8</th>
-                <th>9</th>
+                { Array.from(new Array(20), (x, i) => i).map((a, i) => <td>{i}</td>)}
               </tr>
             </thead>
             <tbody>
