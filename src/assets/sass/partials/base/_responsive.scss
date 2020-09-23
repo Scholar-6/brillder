@@ -60,7 +60,7 @@
   }
 }
 
-// 1680
+// 1920
 @mixin ex-desktop_wide_hd {
   @media screen and (min-width:#{$ex-desktop-wide-hd-width}) {
     @content;
