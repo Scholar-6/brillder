@@ -1,5 +1,28 @@
 import {Brick} from 'model/brick';
+import { QuestionTypeEnum } from 'model/question';
 import {BrickAttempt, ComponentAttempt} from '../model';
+
+import ChooseOneMark from './scoring/ChooseOneScoring';
+import ShortAnswerMark from './scoring/ShortAnswerScoring';
+
+export type ScoreFunction<C extends QuestionComponent, A> = (component: C, attempt: ComponentAttempt<A>) => ComponentAttempt<A>;
+export type QuestionComponent = { type: QuestionTypeEnum };
+
+export type ScoreFunctionMap = { [key in QuestionTypeEnum]?: ScoreFunction<any, any> }
+export const scoreFunctions: ScoreFunctionMap = {
+  [QuestionTypeEnum.ChooseOne]: ChooseOneMark,
+  [QuestionTypeEnum.ShortAnswer]: ShortAnswerMark
+}
+
+export const mark = <C extends QuestionComponent, A>(questionType: QuestionTypeEnum, component: C, attempt: ComponentAttempt<A>) => {
+  const scoreFunction = scoreFunctions[questionType];
+  
+  if(scoreFunction) {
+    return scoreFunction(component, attempt);
+  } else {
+    return attempt;
+  }
+}
 
 const getScore = (attempts: ComponentAttempt<any>[]) => {
   return attempts.reduce((acc, answer) => {
@@ -22,6 +45,6 @@ export const calcBrickLiveAttempt = (brick: Brick, answers: ComponentAttempt<any
 export const calcBrickReviewAttempt = (brick: Brick, answers: ComponentAttempt<any>[], brickAttempt: BrickAttempt) => {
   let score = getScore(answers);
   let maxScore = getMaxScore(answers);
-  score += brickAttempt.score;
+  console.log(score);
   return { brick, score, oldScore: brickAttempt.score, maxScore, student: null, answers } as BrickAttempt;
 }

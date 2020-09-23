@@ -11,11 +11,12 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
 
-
-interface ChooseOneComponent {
+export interface ChooseOneComponent {
   type: number;
   list: ChooseOneChoice[];
 }
+
+export type ChooseOneAnswer = number;
 
 interface ChooseOneProps extends CompQuestionProps {
   component: ChooseOneComponent;
@@ -50,29 +51,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   getAnswer(): number {
     return this.state.activeItem;
-  }
-
-  mark(attempt: ComponentAttempt<number>, prev: ComponentAttempt<number>) {
-    const { component, isReview } = this.props;
-    attempt.maxMarks = 6;
-
-    // set attempt.correct to true by answer index.
-    attempt.correct = false;
-    if(attempt.answer && component.list[attempt.answer].checked === true) {
-      attempt.correct = true;
-    }
-
-    if (attempt.correct) {
-      // if the attempt is correct, then add the marks.
-      attempt.marks = attempt.maxMarks;
-    } else if (attempt.answer !== null && attempt.answer !== -1) {
-      // if there is an answer given, give the student an extra half a mark.
-      attempt.marks = 0.5;
-    } else {
-      attempt.marks = 0;
-    }
-    
-    return attempt;
   }
 
   renderData(answer: ChooseOneChoice) {
