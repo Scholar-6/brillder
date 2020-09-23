@@ -22,7 +22,6 @@ import SubjectDialog from "./components/SubjectDialog";
 import { ReduxCombinedState } from "redux/reducers";
 import SaveProfileButton from "./components/SaveProfileButton";
 import ProfileSavedDialog from "./components/ProfileSavedDialog";
-import SimpleDialog from "../baseComponents/dialogs/SimpleDialog";
 import ProfileImage from "./components/ProfileImage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";

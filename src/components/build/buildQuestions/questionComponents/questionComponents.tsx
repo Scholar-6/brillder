@@ -80,22 +80,6 @@ const QuestionComponents = ({
 
   let canRemove = (components.length > 3) ? true : false;
 
-  const updateComponentByIndex = (compData: any, index: number) => {
-    let copyComponents = Object.assign([], components) as any[];
-    copyComponents[index] = compData;
-    setComponents(copyComponents);
-    updateComponents(copyComponents);
-  }
-
-  const removeComponentType = () => {
-    const component = components[removeIndex];
-    component.type = QuestionTypeEnum.None;
-    component.value = "";
-    updateComponentByIndex(component, removeIndex);
-    setDialog(false);
-    setRemovedIndex(-1);
-  }
-
   const renderDropBox = (component: any, index: number) => {
     const updatingComponent = (compData: any) => {
       let copyComponents = Object.assign([], components) as any[];

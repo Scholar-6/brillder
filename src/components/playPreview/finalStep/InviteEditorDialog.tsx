@@ -7,7 +7,6 @@ import actions from 'redux/actions/brickActions';
 import sprite from "assets/img/icons-sprite.svg";
 import { Brick, Editor } from 'model/brick';
 import {getUserByUserName} from 'components/services/axios/user';
-import {inviteUser} from 'components/services/axios/brick';
 
 interface InviteProps {
   canEdit: boolean;
