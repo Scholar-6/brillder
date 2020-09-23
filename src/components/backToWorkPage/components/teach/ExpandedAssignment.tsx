@@ -7,6 +7,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { Subject } from "model/brick";
 import { UserBase } from "model/user";
 import { Assignment, StudentStatus, TeachClassroom } from "model/classroom";
+import { getSubjectColor } from "components/services/subject";
 
 import AssignedBrickDescription from './AssignedBrickDescription';
 
@@ -21,14 +22,38 @@ interface AssignmentBrickProps {
 }
 
 class ExpandedAssignment extends Component<AssignmentBrickProps> {
+  renderAvgScore(studentStatus: StudentStatus) {
+    let subjectId = this.props.assignment.brick.subjectId;
+    let color = getSubjectColor(this.props.subjects, subjectId);
+  
+    if (!color) {
+      color = "#B0B0AD";
+    }
+
+    return (
+      <div className="circle" style={{background: color}}>
+        {Math.round(studentStatus.avgScore)}
+      </div>
+    );
+  }
+
   renderStatus(studentStatus: StudentStatus | undefined) {
     if (studentStatus) {
-      return <div className="teach-circle">{Math.round(studentStatus.avgScore)}</div>;
+      return this.renderAvgScore(studentStatus);
     }
     return (
       <svg className="svg active reminder-icon">
         {/*eslint-disable-next-line*/}
         <use href={sprite + "#reminder"} />
+      </svg>
+    );
+  }
+
+  renderBookIcon() {
+    return (
+      <svg className="svg active book-open-icon">
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#book-open"} />
       </svg>
     );
   }
@@ -44,9 +69,10 @@ class ExpandedAssignment extends Component<AssignmentBrickProps> {
           </div>
         </td>
         <td className="student-book">
+          {studentStatus ?
           <div>
-            {this.renderStatus(studentStatus)}
-          </div>
+            {this.renderBookIcon()}
+          </div> : ""}
         </td>
         <td className="assigned-student-name">{student.firstName} {student.lastName}</td>
         { Array.from(new Array(24), (x, i) => i).map(a => <td></td>)}

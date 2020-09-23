@@ -67,14 +67,29 @@
       padding-left: 0 !important;
       text-transform: capitalize;
 
-      .reminder-icon {
+      .reminder-icon, .book-open-icon {
         color: white;
         border-radius: 50%;
         padding: 0.25vw;
         stroke-width: 1.5;
         width: 1.7vw;
         height: 1.7vw;
+      }
+
+      .reminder-icon {
         background: var(--theme-yellow);
+      }
+
+      .book-open-icon {
+        background: var(--theme-green);
+      }
+
+      .circle {
+        border-radius: 50%;
+        width: 2.18vw;
+        height: 2.18vw;
+        color: white;
+        @extend %flexCenter;
       }
 
       .stats-text {
