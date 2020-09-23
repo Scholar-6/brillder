@@ -139,7 +139,7 @@ const QuestionComponents = ({
     } else if (type === QuestionTypeEnum.WordHighlighting) {
       uniqueComponent = WordHighlightingComponent;
     } else {
-      history.push(`/build/brick/${brickId}/build/investigation/question`);
+      history.push(`/build/brick/${brickId}/investigation/question`);
       return <PageLoader content="...Loading..." />;
     }
 
