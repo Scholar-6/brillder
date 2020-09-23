@@ -14,7 +14,7 @@ import { publishBrick } from "components/services/axios/brick";
 
 import Clock from "components/play/baseComponents/Clock";
 import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
-import InviteDialog from 'components/play/finalStep/dialogs/InviteDialog';
+import InviteEditorDialog from './InviteEditorDialog';
 import LinkDialog from 'components/play/finalStep/dialogs/LinkDialog';
 import LinkCopiedDialog from 'components/play/finalStep/dialogs/LinkCopiedDialog';
 import ExitButton from "components/play/finalStep/ExitButton";
@@ -50,7 +50,6 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const [publishSuccess, setPublishSuccess] = React.useState(PublishStatus.None);
   const [inviteSuccess, setInviteSuccess] = React.useState({
     isOpen: false,
-    accessGranted: false,
     name: ''
   });
 
@@ -76,7 +75,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
     return (
       <InviteColumn
         size={size}
-        firstLabel="An internal user"
+        firstLabel="an internal user"
         secondLabel="to edit this brick"
         onClick={()=> setInvite(true)}
       />
@@ -160,15 +159,15 @@ const FinalStep: React.FC<FinalStepProps> = ({
       />
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={()=> setCopiedLink(false)} />
       <ShareDialog isOpen={shareOpen} link={() => { setShare(false); setLink(true) }} close={() => setShare(false)} />
-      <InviteDialog
-        canEdit={true} brick={brick} isOpen={inviteOpen} isAuthor={isAuthor && !brick.isCore}
+      <InviteEditorDialog
+        canEdit={true} brick={brick} isOpen={inviteOpen}
         title="Who would you like to edit this brick?"
-        submit={(name, accessGranted) => { setInviteSuccess({ isOpen: true, name, accessGranted }); }}
+        submit={name => { setInviteSuccess({ isOpen: true, name }); }}
         close={() => setInvite(false)} />
       <InvitationSuccessDialog
         isAuthor={isAuthor}
-        isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={inviteSuccess.accessGranted}
-        close={() => setInviteSuccess({ isOpen: false, name: '', accessGranted: false })} />
+        isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={true}
+        close={() => setInviteSuccess({ isOpen: false, name: '' })} />
       <PublishSuccessDialog
         isOpen={publishSuccess === PublishStatus.Popup}
         close={() => setPublishSuccess(PublishStatus.Published)}
