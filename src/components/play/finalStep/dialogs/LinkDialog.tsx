@@ -24,12 +24,11 @@ const LinkDialog: React.FC<InviteProps> = props => {
 
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue unlimited">
-      <div className="close-button svgOnHover tooltip left" onClick={props.close}>
+      <div className="close-button svgOnHover" onClick={props.close}>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#cancel-thick"} />
         </svg>
-        <span className="tooltip-inner">Close Dialog</span>
       </div>
       <div className="dialog-header">
         <div className="link">{props.link}</div>

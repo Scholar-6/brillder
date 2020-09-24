@@ -167,6 +167,7 @@
           }
         }
         .notification-detail-single {
+          width: 100%;
           @include phone_and_tabletP {
             font-size: 4vw;
             padding: 15px 0;

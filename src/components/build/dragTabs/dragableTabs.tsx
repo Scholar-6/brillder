@@ -139,9 +139,12 @@ const DragableTabs: React.FC<DragTabsProps> = ({
     columns = (questions.length * 2) + 2;
   }
 
-  const setQuestions = (questions: Question[]) => {
+  const setQuestions = (newQuestions: Question[], d:any) => {
     if (isInit === false) {
-      props.setQuestions(questions);
+      let switched = newQuestions.find((q, i) => questions[i].id !== q.id);
+      if (switched) {
+        props.setQuestions(newQuestions);
+      }
     } else {
       isInit = false;
     }

@@ -108,12 +108,11 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
       onClose={props.close}
       className="dialog-box light-blue unlimited"
     >
-      <div className="close-button svgOnHover tooltip left" onClick={props.close}>
+      <div className="close-button svgOnHover" onClick={props.close}>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#cancel-thick"} />
         </svg>
-        <span className="tooltip-inner">Close Dialog</span>
       </div>
       <div className="dialog-header" style={{ minWidth: '30vw' }}>
         <div className="title left">
