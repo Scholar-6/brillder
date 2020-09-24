@@ -47,11 +47,6 @@ export function validateQuestion(question: Question) {
     return false;
   }
 
-  let noComponent = getNonEmptyComponent(components);
-  if (noComponent) {
-    return false;
-  }
-
   let isValid = validateComponentValues(components);
   if (!isValid) {
     return false;

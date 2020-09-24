@@ -3,6 +3,18 @@ import { Brick, BrickStatus } from 'model/brick';
 import {get, put, post} from './index';
 
 /**
+ * Get brick by Id
+ * return brick or null if failed
+ */
+export const getBrickById = async (id: number) => {
+  try {
+    return await get<Brick[]>("/bricks");
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Get all bricks
  * return list of bricks if success or null if failed
  */

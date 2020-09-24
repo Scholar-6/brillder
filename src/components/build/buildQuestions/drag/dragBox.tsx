@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import { Grid } from '@material-ui/core';
 import MediaQuery from 'react-responsive';
 
 import './dragBox.scss';
