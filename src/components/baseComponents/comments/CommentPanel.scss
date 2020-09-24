@@ -35,12 +35,32 @@
     margin-left: 5%;
     margin-right: 5%;
     padding: 0.7vh;
+    padding-left:0.1vh;
     width: 90%;
     border-radius: 1.2vh;
     background-color: #ffffff;
     font-size: 1vw;
 
+    .profile-image-container {
+      @extend %flexCenter;
+      width: 17%;
+      height: 3vw;
+      .profile-image {
+        background: var(--tab-gray);
+        width: 1.8vw;
+        height: 1.8vw;
+        border-radius: 50%;
+        overflow: hidden;
+
+        svg, img {
+          height: 1.8vw;
+          width: 1.8vw;
+        }
+      }
+    }
+
     .stretch {
+      margin-left: 19%;
       flex-grow: 1;
       font-family: $font-family-bold;
     }

@@ -41,6 +41,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
             &&
             <CommentItem
               key={comment.id}
+              currentUser={props.currentUser}
               comment={comment}
               currentBrick={props.currentBrick}
               createComment={props.createComment}
