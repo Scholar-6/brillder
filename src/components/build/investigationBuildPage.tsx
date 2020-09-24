@@ -7,28 +7,7 @@ import { connect } from "react-redux";
 import queryString from 'query-string';
 
 import "./investigationBuildPage.scss";
-import HomeButton from 'components/baseComponents/homeButton/HomeButton';
-import PlayButton from './baseComponents/PlayButton';
-import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
-import TutorialWorkArea, { TutorialStep } from './tutorial/TutorialPanelWorkArea';
-import QuestionTypePage from "./questionType/questionType";
-import SynthesisPage from "./synthesisPage/SynthesisPage";
-import LastSave from "components/build/baseComponents/lastSave/LastSave";
-import DragableTabs from "./dragTabs/dragableTabs";
-import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
-import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
-import SynthesisPreviewComponent from "./baseComponents/phonePreview/synthesis/SynthesisPreview";
-import DeleteQuestionDialog from "./baseComponents/dialogs/DeleteQuestionDialog";
-import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
-import TutorialPhonePreview from "./tutorial/TutorialPreview";
-import YourProposalLink from './baseComponents/YourProposalLink';
-import DesktopVersionDialog from 'components/build/baseComponents/dialogs/DesktopVersionDialog';
-import QuestionInvalidDialog from './baseComponents/dialogs/QuestionInvalidDialog';
-import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialog';
-import TutorialLabels from './baseComponents/TutorialLabels';
-import PageLoader from "components/baseComponents/loaders/pageLoader";
 import map from 'components/map';
-
 import {
   Question,
   QuestionTypeEnum,
@@ -57,6 +36,27 @@ import { setBrillderTitle } from "components/services/titleService";
 import { canEditBrick } from "components/services/brickService";
 import { ReduxCombinedState } from "redux/reducers";
 import { validateProposal } from 'components/proposal/service/validation';
+
+import HomeButton from 'components/baseComponents/homeButton/HomeButton';
+import PlayButton from './baseComponents/PlayButton';
+import QuestionPanelWorkArea from "./buildQuestions/questionPanelWorkArea";
+import TutorialWorkArea, { TutorialStep } from './tutorial/TutorialPanelWorkArea';
+import QuestionTypePage from "./questionType/questionType";
+import SynthesisPage from "./synthesisPage/SynthesisPage";
+import LastSave from "components/build/baseComponents/lastSave/LastSave";
+import DragableTabs from "./dragTabs/dragableTabs";
+import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";
+import PhoneQuestionPreview from "components/build/baseComponents/phonePreview/phoneQuestionPreview/PhoneQuestionPreview";
+import SynthesisPreviewComponent from "./baseComponents/phonePreview/synthesis/SynthesisPreview";
+import DeleteQuestionDialog from "./baseComponents/dialogs/DeleteQuestionDialog";
+import QuestionTypePreview from "components/build/baseComponents/QuestionTypePreview";
+import TutorialPhonePreview from "./tutorial/TutorialPreview";
+import YourProposalLink from './baseComponents/YourProposalLink';
+import DesktopVersionDialog from 'components/build/baseComponents/dialogs/DesktopVersionDialog';
+import QuestionInvalidDialog from './baseComponents/dialogs/QuestionInvalidDialog';
+import ProposalInvalidDialog from './baseComponents/dialogs/ProposalInvalidDialog';
+import TutorialLabels from './baseComponents/TutorialLabels';
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { TextComponentObj } from "./buildQuestions/components/Text/interface";
 
 interface InvestigationBuildProps extends RouteComponentProps<any> {
@@ -121,18 +121,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   let initSynthesis = props.brick ? props.brick.synthesis as string : "";
   let [synthesis, setSynthesis] = React.useState(initSynthesis);
-  useEffect(() => {
-    if (props.brick) {
-      if (props.brick.id === brickId) {
-        if (props.brick.synthesis || props.brick.synthesis === '') {
-          setSynthesis(props.brick.synthesis)
-        }
-        if (props.brick.locked) {
-          setLock(true);
-        }
-      }
-    }
-  }, [props.brick, brickId]);
   /* Synthesis */
 
   // start editing on socket on load.
@@ -220,6 +208,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const saveSynthesis = (text: string) => {
     synthesis = text;
+    setSynthesis(synthesis);
     saveBrick();
   }
 
@@ -589,15 +578,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   });
 
   const switchQuestions = (questions: Question[]) => {
-    setQuestions(questions);
     if (canEdit === true) {
+      setQuestions(questions);
       setAutoSaveTime();
       setSavingStatus(true);
+      questions.map((question, index) => question.order = index);
       prepareBrickToSave(brick, questions, synthesis);
-      for (let [index, question] of brick.questions.entries()) {
-        question.order = index;
-      }
-      console.log('question switched. save brick');
       props.saveBrick(brick);
     }
   }
