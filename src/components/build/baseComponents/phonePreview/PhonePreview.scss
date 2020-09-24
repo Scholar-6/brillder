@@ -81,6 +81,24 @@
       padding-left: 1vw;
       padding-right: 1vw;
     }
+    .short-answer-input {
+      border-radius: 0 !important;
+      background: transparent !important;
+    }
+    .short-answer-live {
+      .document-editor {
+        border-radius: 0 !important;
+        background: transparent !important;
+        .ck-editor {
+          .ck-content {
+            background: transparent !important;
+            border-radius: 0 !important;
+            padding: 0.5vw 0 !important;
+            border-bottom: 1px solid var(--gray) !important;
+          }
+        }
+      }
+    }
     .MuiButton-label {
       flex-direction: column;
       img {

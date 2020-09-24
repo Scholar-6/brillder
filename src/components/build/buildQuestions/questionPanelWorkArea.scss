@@ -10,10 +10,9 @@
   background: white;
   border-radius: 0 0 $editor-radius $editor-radius;
   &:not(.active) {
-    .text-box {
-      .drag-box-name {
-        animation: pulse-orange-alpha5 1.5s ease infinite;
-      }
+    .drag-box-name {
+      // animation: pulse-orange-alpha5 1.5s ease infinite;
+      animation: heartbeat 2s ease infinite;
     }
   }
   .invalid {
@@ -208,14 +207,18 @@
       overflow-y: auto;
       border: 0.13vw solid var(--tab-gray);
       background-color: var(--white);
-      border-radius: 0.6vw;
-      padding: 0.2vw 0.2vw 0 0.2vw;
+      @extend %themeRadius;
+      padding: $editor-spacing;
     }
 
     .parent-left-sidebar {
       height: 100%;
       min-width: $left-sidebar-width;
       max-width: $left-sidebar-width;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 2vw;
     }
 
     .left-sidebar {
