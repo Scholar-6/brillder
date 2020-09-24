@@ -5,7 +5,7 @@ interface IntroductionProps {
   brickLength: number;
 }
 
-const IntroductionDetails: React.FC<IntroductionProps> = ({brickLength}) => {
+const IntroductionDetails: React.FC<IntroductionProps> = ({ brickLength }) => {
   let prepare = 5;
   let investigation = 8;
   let synthesis = 4;
@@ -15,16 +15,16 @@ const IntroductionDetails: React.FC<IntroductionProps> = ({brickLength}) => {
     prepare = 10;
     investigation = 16;
     synthesis = 8;
-    review= 6;
+    review = 6;
   } else if (brickLength === 60) {
     prepare = 15;
     investigation = 24;
-    synthesis= 12;
-    review= 9;
+    synthesis = 12;
+    review = 9;
   }
 
   return (
-    <div className="intro-text-row m-t-10">
+    <div className="intro-text-row">
       <p>Bricks are divided into four sections.</p>
       <ul>
         <li>Set aside around {prepare} minutes to prepare</li>

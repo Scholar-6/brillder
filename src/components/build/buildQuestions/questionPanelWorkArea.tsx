@@ -210,6 +210,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                   locked={locked}
                   isImage={true} src="/images/soundicon.png"
                   label="SOUND"
+                  className="drag-box-name"
                   value={QuestionComponentTypeEnum.Sound}
                 />
                 <DragBox
