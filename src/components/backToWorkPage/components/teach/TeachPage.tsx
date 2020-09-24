@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import './TeachPage.scss';
 import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
-import statActions from 'redux/actions/stats';
 
 import { TeachClassroom } from "model/classroom";
 import { getAllClassrooms } from "components/teach/service";
@@ -20,6 +19,8 @@ import BackPagePagination from '../BackPagePagination';
 import TeachFilterSidebar from './TeachFilterSidebar';
 import ClassroomList from './ClassroomList';
 import ExpandedAssignment from './ExpandedAssignment';
+import { getAssignmentStats } from "components/services/axios/stats";
+import { ApiAssignemntStats } from "model/stats";
 
 interface TeachProps {
   searchString: string;
@@ -30,7 +31,6 @@ interface TeachProps {
 
   // redux
   user: User;
-  getClassStats(id: number): void;
   requestFailed(e: string): void;
 }
 
@@ -44,6 +44,7 @@ interface TeachState {
   classrooms: TeachClassroom[];
   activeClassroom: TeachClassroom | null;
   activeAssignment: Assignment | null;
+  assignmentStats: ApiAssignemntStats | null;
   totalCount: number;
 
   filters: TeachFilters;
@@ -70,6 +71,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       classrooms: [],
       activeClassroom: null,
       activeAssignment: null,
+      assignmentStats: null,
 
       totalCount: 0,
 
@@ -105,23 +107,22 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const { classrooms } = this.state;
     let classroom = classrooms.find(c => c.id === id);
     if (classroom) {
-      this.props.getClassStats(classroom.id);
       classroom.active = true;
-      this.setState({ sortedIndex: 0, classrooms, activeClassroom: classroom, activeAssignment: null });
+      this.setState({ sortedIndex: 0, classrooms, activeClassroom: classroom, activeAssignment: null, assignmentStats: null });
     } else {
-      this.setState({ sortedIndex: 0, activeClassroom: null, activeAssignment: null });
+      this.setState({ sortedIndex: 0, activeClassroom: null, activeAssignment: null, assignmentStats: null });
     }
   }
 
-  setActiveAssignment(classroomId: number, assignmentId: number) {
+  async setActiveAssignment(classroomId: number, assignmentId: number) {
     this.collapseClasses();
     const classroom = this.state.classrooms.find(c => c.id === classroomId);
     if (classroom) {
-      this.props.getClassStats(classroom.id);
       const assignment = classroom.assignments.find(c => c.id === assignmentId);
       if (assignment) {
         classroom.active = true;
-        this.setState({ sortedIndex: 0, activeClassroom: classroom, activeAssignment: assignment });
+        const assignmentStats = await getAssignmentStats(assignment.id);
+        this.setState({ sortedIndex: 0, activeClassroom: classroom, activeAssignment: assignment, assignmentStats });
       }
     }    
   }
@@ -134,7 +135,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
 
   unselectAssignment() {
     this.collapseClasses();
-    this.setState({ sortedIndex: 0, activeClassroom: null, activeAssignment: null });
+    this.setState({ sortedIndex: 0, activeClassroom: null, activeAssignment: null, assignmentStats: null });
   }
 
   teachFilterUpdated(filters: TeachFilters) {
@@ -228,10 +229,11 @@ class TeachPage extends Component<TeachProps, TeachState> {
               {this.renderLiveBricksButton()}
               {this.renderArchiveButton()}
             </div>
-            {this.state.activeAssignment && this.state.activeClassroom ?
+            {this.state.activeAssignment && this.state.assignmentStats && this.state.activeClassroom ?
               <ExpandedAssignment
                 classroom={this.state.activeClassroom}
                 assignment={this.state.activeAssignment}
+                stats={this.state.assignmentStats}
                 subjects={this.props.subjects}
                 startIndex={this.state.sortedIndex}
                 pageSize={this.state.assignmentPageSize}
@@ -259,7 +261,6 @@ const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
 const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
-  getClassStats: (id: number) => dispatch(statActions.getClassStats(id))
 });
 
 export default connect(mapState, mapDispatch)(TeachPage);
