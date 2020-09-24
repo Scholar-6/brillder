@@ -10,19 +10,36 @@
 .ck-rounded-corners {
   .ck-editor__main {
     > .ck-editor__editable {
-      border-radius: 0 0 $editor-radius $editor-radius !important;
     }
+  }
+}
+.hint-component {
+  .hint-content {
+    .hint-container {
+      .document-editor {
+        .ck-editor {
+          .ck-content {
+            border-radius:  0 0 0.6vw !important;
+          }
+        }
+      }
+    }
+  }
+}
+.document-editor {
+  .ck-toolbar {
+    border-top-right-radius: 0.6vw !important;
+    border-bottom-right-radius: 0.6vw !important;
   }
 }
 
 .ck-focused {
   border-color: #c4c4c4 !important;
 }
-.ck,
-a.ck {
-  &.ck-button {
-    .ck-button__label {
-      font-size:0.8vw !important;
-    }
+.ck-rounded-corners {
+  .ck-rounded-corners {
+    border-bottom-right-radius: 0 !important;
+  }
+  .ck-toolbar {
   }
 }
