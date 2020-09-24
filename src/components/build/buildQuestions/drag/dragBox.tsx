@@ -41,7 +41,7 @@ const DragBox: React.FC<BoxProps> = ({
   const renderContent = () => {
     if (isImage) {
       return <div>
-        <img alt="" style={{ width: '35%' }} src={src} />
+        <img alt="" className={className} style={{ width: '35%' }} src={src} />
         <HoverBox label={label} marginTop={hoverMarginTop} />
       </div>
     }

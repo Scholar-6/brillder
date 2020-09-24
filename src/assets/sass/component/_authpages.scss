@@ -154,12 +154,12 @@
       }
       @include tabletP {
         width: 90%;
-      }
-      @include tabletL {
-        width: 80%;
         justify-content: space-between;
         margin: 0px auto;
         margin-top: 16vh;
+      }
+      @include tabletL {
+        width: 80%;
       }
       &.expanding {
         .google-button,
