@@ -10,10 +10,9 @@
   background: white;
   border-radius: 0 0 $editor-radius $editor-radius;
   &:not(.active) {
-    .text-box {
-      .drag-box-name {
-        animation: pulse1 1.5s ease infinite;
-      }
+    .drag-box-name {
+      // animation: pulse1 1.5s ease infinite;
+      animation: heartbeat 2s infinite;
     }
   }
   .invalid {
