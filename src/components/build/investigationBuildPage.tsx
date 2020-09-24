@@ -208,6 +208,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const saveSynthesis = (text: string) => {
     synthesis = text;
+    setSynthesis(synthesis);
     saveBrick();
   }
 
