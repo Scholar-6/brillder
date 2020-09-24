@@ -180,7 +180,10 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
     return (
       <div className="question-unique-play choose-several-live">
-        <p className="help-text">Choose more than one option.</p>
+        {
+          this.props.isReview ?
+            <p className="help-text">Choose more than one option.</p> : ""
+        }
         {
           component.list.map((choice: any, index: number) => this.renderButton(choice, index))
         }
