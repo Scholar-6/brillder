@@ -41,6 +41,8 @@ import Image from "@ckeditor/ckeditor5-image/src/image";
 import UpcastWriter from "@ckeditor/ckeditor5-engine/src/view/upcastwriter";
 import "./DocumentEditor.scss";
 import UploadImageCustom from './UploadImageCustom';
+import { isMathJax, parseDataToArray } from "components/services/mathJaxService";
+import { stripHtml } from "components/build/questionService/ConvertService";
 //import CommentCustom from './CommentCustom';
 //import { parseDataToArray } from 'components/services/mathJaxService';
 
@@ -124,6 +126,7 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
     var wirisAfterInsertionListener = windowRef.WirisPlugin.Listeners.newListener(
       "onAfterFormulaInsertion",
       (res: any) => {
+        console.log(res)
         this.setState({ ...this.state, isWirisInserting: false });
       }
     );
@@ -269,6 +272,19 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
               return;
             }
             let data = editor.getData();
+            /* 9/24/2020 preparation for changing color of math jax
+            try {
+              let newRes = [];
+              const res = parseDataToArray(data);
+              for (let item of res) {
+                if (isMathJax(item)) {
+                  console.log(item);
+                }
+                newRes.push(item);
+              }
+            } catch { }
+            */
+
             let editorContent = document.createElement('div');
             editorContent.innerHTML = data;
             data = mediaContentFix(data, editorContent);

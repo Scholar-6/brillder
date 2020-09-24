@@ -14,7 +14,6 @@ export const getBrickById = async (id: number) => {
   }
 }
 
-
 /**
  * Get all bricks
  * return list of bricks if success or null if failed

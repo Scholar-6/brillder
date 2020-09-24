@@ -95,6 +95,13 @@
         margin-left: 1vw;
         font-size: 1.3vw;
       }
+
+      &.icon-container {
+        svg {
+          width: 2vw;
+          height: 2vw;
+        }
+      }
     }
   }
 }

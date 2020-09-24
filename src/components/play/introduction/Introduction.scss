@@ -105,7 +105,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
         .intro-header {
           @extend %transitionAll600;
-
           @include phone_and_tabletP {
             display: flex;
             flex-direction: column;
@@ -113,7 +112,9 @@ $play-mobile-height: calc(100vh - 55.8vw);
             padding: 4vw;
             position: relative;
           }
-
+          @include tabletP {
+            margin-bottom: 10vh;
+          }
           > .intro-header {
             @include phone_and_tabletP {
               position: absolute;
@@ -122,11 +123,6 @@ $play-mobile-height: calc(100vh - 55.8vw);
               top: 3vw;
             }
           }
-
-          @include tabletP {
-            margin-bottom: 10vh;
-          }
-
           &.expanded-intro-header {
             @include phone_and_tabletP {
               align-items: flex-start;
@@ -403,36 +399,35 @@ $play-mobile-height: calc(100vh - 55.8vw);
         @include tabletP {
           padding: 4vh 2vw;
           height: $introduction-desktop-height;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
-
         .intro-header {
-          position: relative;
           font-size: 2vw;
           font-family: $font-family-black;
           color: var(--theme-dark-blue);
-
           @include phone_and_tabletP {
             display: inline-block;
             padding: 0;
             position: absolute;
             right: 5vw;
             margin-top: 2vw;
-
             .brick-counter {
               display: none;
             }
-
             .play-clock {
               display: flex;
             }
           }
-
           @include tabletP {
             display: flex;
             align-items: center;
             justify-content: flex-end;
+            position: absolute;
+            right: 2.2vw;
+            top: 2.2vw;
           }
-
           .brick-counter {
             @include phone_and_tabletP {
               position: absolute;
@@ -441,19 +436,16 @@ $play-mobile-height: calc(100vh - 55.8vw);
               font-size: 5vw;
             }
           }
-
           .clock-image {
             @include phone_and_tabletP {
               width: 5vw;
               height: 5vw;
             }
-
             @include tabletP {
               width: 2vw;
               height: 2vw;
             }
           }
-
           .clock {
             margin-left: 3vw;
             display: flex;
@@ -465,12 +457,10 @@ $play-mobile-height: calc(100vh - 55.8vw);
               height: 2vw;
             }
           }
-
           .counter {
             .counter-seconds {
               font-size: 1vw;
             }
-
             // @include phone_and_tabletP {
             //   position: absolute;
             //   top: 0;
@@ -478,24 +468,18 @@ $play-mobile-height: calc(100vh - 55.8vw);
             // }
           }
         }
-
         .intro-text-row {
+          width: 100%;
           font-size: 1.15vw;
           font-family: $font-family-bold;
           color: var(--theme-dark-blue);
           display: flex;
           flex-direction: column;
           justify-content: center;
-
           @include phone_and_tabletP {
             padding: 3vw;
             font-size: 4.4vw;
           }
-
-          @include tabletP {
-            margin-top: 3vw;
-          }
-
           > p,
           > ul {
             margin: 0;
