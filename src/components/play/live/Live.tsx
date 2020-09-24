@@ -112,7 +112,7 @@ const LivePage: React.FC<LivePageProps> = ({
    * @param status string - almost all time is "move" and in the end "end"
    */
   const handleSwipe = (step: number, status: string) => {
-    if (status === "move" && step === questions.length - 1) { 
+    if (status === "move" && step === questions.length - 1) {
       swipeLastQuestion(step);
     }
     if (status === "end") {
@@ -284,7 +284,7 @@ const LivePage: React.FC<LivePageProps> = ({
           <Grid item xs={4}>
             <div className="introduction-info">
               {renderCountDown()}
-              <div className="intro-text-row">
+              <div className="intro-text-row f-align-self-start m-t-5">
                 {renderStepper()}
               </div>
               <LiveActionFooter
