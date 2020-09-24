@@ -23,9 +23,7 @@ const fetchBrick = (id: number) => {
     return axios.get(process.env.REACT_APP_BACKEND_HOST + '/brick/' + id, {withCredentials: true})
       .then(res => {
         let brick = res.data as Brick;
-
         brick.questions.sort((q1, q2) => q1.order - q2.order);
-
         dispatch(fetchBrickSuccess(brick));
         dispatch(comments.getComments(brick.id));
       })
