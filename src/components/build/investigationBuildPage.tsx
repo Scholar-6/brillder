@@ -77,7 +77,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   if (values.suggestionsExpanded) {
     initSuggestionExpanded = true;
   }
-  console.log(props.brick.questions);
 
   let initQuestionId = -1;
   if (params.questionId) {
@@ -323,7 +322,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           parseQuestion(question, parsedQuestions);
         } catch (e) { }
       }
-      console.log(parsedQuestions);
       if (parsedQuestions.length > 0) {
         let initQuestionSet = false;
         if (initQuestionId) {
@@ -583,9 +581,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       setQuestions(questions);
       setAutoSaveTime();
       setSavingStatus(true);
-      questions.map((question, index) => {
-        question.order = index;
-      });
+      questions.map((question, index) => question.order = index);
       prepareBrickToSave(brick, questions, synthesis);
       props.saveBrick(brick);
     }

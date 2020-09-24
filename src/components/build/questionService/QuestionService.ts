@@ -14,6 +14,7 @@ export interface ApiQuestion {
   id?: number;
   contentBlocks: string;
   type: number;
+  order: number;
 }
 
 export function getNewFirstQuestion(type: number, active: boolean) {
@@ -94,6 +95,7 @@ export function getApiQuestion(question: Question) {
     apiQuestion.id = question.id;
     apiQuestion.type = question.type;
   }
+  apiQuestion.order = question.order;
   return apiQuestion;
 }
 
@@ -134,7 +136,7 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
       id: question.id,
       type: question.type,
       hint: parsedQuestion.hint,
-      order: parsedQuestion.order,
+      order: question.order,
       firstComponent: parsedQuestion.firstComponent ?
         parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
       components: parsedQuestion.components
