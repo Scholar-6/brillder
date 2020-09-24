@@ -17,12 +17,11 @@ const PolicyDialog: React.FC<PolicyDialogProps> = (props) => {
   return (
     <Dialog open={props.isOpen} onClose={() => props.close()} className="dialog-box privacy-policy-dialog">
       <div className="private-policy-content">
-        <div className="close-button svgOnHover tooltip left" onClick={props.close}>
+        <div className="close-button svgOnHover" onClick={props.close}>
           <svg className="svg w100 h100 active">
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#cancel"} />
           </svg>
-          <span className="tooltip-inner">Close Dialog</span>
         </div>
         <h1 className="private-policy-title">Privacy Policy</h1>
         <p>

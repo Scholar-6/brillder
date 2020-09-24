@@ -117,7 +117,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   }
 
   const getLatestChild = (comment: Comment) => {
-    if(!comment.children || comment.children.length <= 0) {
+    if (!comment.children || comment.children.length <= 0) {
       return comment;
     }
     const replies = comment.children.sort((a, b) => new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf());
@@ -128,7 +128,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     let numberOfReplies = getNumberOfReplies();
     if (numberOfReplies !== 0) {
       return (
-        <div className={"comment-button " + (numberOfReplies > 0 ? "has-replied" : "active") +" animated pulse-red iteration-2 duration-1s"} onClick={() => setCommentsShown(!commentsShown)}>
+        <div className={"comment-button " + (numberOfReplies > 0 ? "has-replied" : "active") + " animated pulse-red iteration-2 duration-1s"} onClick={() => setCommentsShown(!commentsShown)}>
           <div className="comments-icon svgOnHover">
             <svg className="svg w60 h60 active">
               {/*eslint-disable-next-line*/}
@@ -149,12 +149,12 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             <use href={sprite + "#message-square"} />
           </svg>
         </div>
-          <div className="comments-plus svgOnHover">
-            <svg className="svg w60 h60 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#plus"} />
-            </svg>
-          </div>
+        <div className="comments-plus svgOnHover">
+          <svg className="svg w60 h60 active">
+            {/*eslint-disable-next-line*/}
+            <use href={sprite + "#plus"} />
+          </svg>
+        </div>
       </div>
     );
   }
@@ -177,109 +177,107 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             }
           </div>
         </div>
-        <Grid container justify="center" className="build-question-column" item xs={12}>
-          <Grid container direction="row" style={{ height: '100%' }}>
-            <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
-              <Grid container item xs={12} className="left-sidebar" alignItems="center">
-                <ReactSortable
-                  list={componentTypes}
-                  group={{ name: "cloning-group-name", pull: "clone" }}
-                  setList={setComponentType} sort={false}
-                >
-                  <DragBox
-                    locked={locked}
-                    name="T"
-                    label="TEXT"
-                    className="text-box"
-                    hoverMarginTop="-0.85vw"
-                    value={QuestionComponentTypeEnum.Text}
-                  />
-                  <DragBox
-                    locked={locked}
-                    name="“ ”"
-                    label="QUOTE"
-                    hoverMarginTop="-1.5vw"
-                    value={QuestionComponentTypeEnum.Quote}
-                  />
-                  <DragBox
-                    locked={locked}
-                    name="jpg"
-                    label="IMAGE"
-                    value={QuestionComponentTypeEnum.Image}
-                  />
-                  <DragBox
-                    locked={locked}
-                    isImage={true} src="/images/soundicon.png"
-                    label="SOUND"
-                    value={QuestionComponentTypeEnum.Sound}
-                  />
-                  <DragBox
-                    locked={locked}
-                    name="f(x)"
-                    label="GRAPH"
-                    className="graph-box"
-                    value={QuestionComponentTypeEnum.Graph}
-                  />
-                </ReactSortable>
-              </Grid>
-            </Grid>
-            <Grid container item xs={5} sm={6} md={6} className="question-components-list" ref={workarea}>
-              <QuestionComponents
-                questionIndex={index}
-                locked={locked}
-                editOnly={!props.canEdit}
-                brickId={brickId}
-                history={history}
-                question={question}
-                validationRequired={validationRequired}
-                saveBrick={props.saveBrick}
-                updateFirstComponent={props.updateFirstComponent}
-                updateComponents={props.updateComponents}
-                setQuestionHint={setQuestionHint}
-              />
-            </Grid>
-            <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="center">
-              {commentsShown ?
-                <Grid className="question-comments-panel" item container direction="row" justify="flex-start" xs>
-                  <CommentPanel setCommentsShown={setCommentsShown} haveBackButton={true} currentQuestionId={question.id} />
-                </Grid> :
-                <Grid container item alignItems="center" style={{ height: '100%' }}>
-                  <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
-                    {renderCommentButton()}
-                    <Grid container direction="row" alignItems="center">
-                      <Grid container justify="center" item sm={12}>
-                        <FormControl variant="outlined">
-                          <Select
-                            className="select-question-type"
-                            disabled={locked}
-                            value={type}
-                            inputProps={{
-                              name: 'age',
-                              id: 'age-native-simple',
-                            }}
-                            onChange={(e) => {
-                              props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
-                            }}
-                          >
-                            {
-                              typeArray.map((typeName, i) => {
-                                const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
-                                return (
-                                  <MenuItem key={i} value={type}>
-                                    {SplitByCapitalLetters(typeName)}
-                                  </MenuItem>
-                                )
-                              })
-                            }
-                          </Select>
-                        </FormControl>
-                      </Grid>
+        <Grid container direction="row" className="build-question-column">
+          <Grid container item xs={4} sm={3} md={3} alignItems="center" className="parent-left-sidebar">
+            <div className="left-sidebar">
+              <ReactSortable
+                list={componentTypes}
+                group={{ name: "cloning-group-name", pull: "clone" }}
+                setList={setComponentType} sort={false}
+              >
+                <DragBox
+                  locked={locked}
+                  name="T"
+                  label="TEXT"
+                  className="text-box"
+                  hoverMarginTop="-0.85vw"
+                  value={QuestionComponentTypeEnum.Text}
+                />
+                <DragBox
+                  locked={locked}
+                  name="“ ”"
+                  label="QUOTE"
+                  hoverMarginTop="-1.5vw"
+                  value={QuestionComponentTypeEnum.Quote}
+                />
+                <DragBox
+                  locked={locked}
+                  name="jpg"
+                  label="IMAGE"
+                  value={QuestionComponentTypeEnum.Image}
+                />
+                <DragBox
+                  locked={locked}
+                  isImage={true} src="/images/soundicon.png"
+                  label="SOUND"
+                  value={QuestionComponentTypeEnum.Sound}
+                />
+                <DragBox
+                  locked={locked}
+                  name="f(x)"
+                  label="GRAPH"
+                  className="graph-box"
+                  value={QuestionComponentTypeEnum.Graph}
+                />
+              </ReactSortable>
+            </div>
+          </Grid>
+          <Grid container item xs={5} sm={6} md={6} className="question-components-list" ref={workarea}>
+            <QuestionComponents
+              questionIndex={index}
+              locked={locked}
+              editOnly={!props.canEdit}
+              brickId={brickId}
+              history={history}
+              question={question}
+              validationRequired={validationRequired}
+              saveBrick={props.saveBrick}
+              updateFirstComponent={props.updateFirstComponent}
+              updateComponents={props.updateComponents}
+              setQuestionHint={setQuestionHint}
+            />
+          </Grid>
+          <Grid container item xs={3} sm={3} md={3} direction="column" className="right-sidebar" alignItems="center">
+            {commentsShown ?
+              <Grid className="question-comments-panel" item container direction="row" justify="flex-start" xs>
+                <CommentPanel setCommentsShown={setCommentsShown} haveBackButton={true} currentQuestionId={question.id} />
+              </Grid> :
+              <Grid container item alignItems="center" style={{ height: '100%' }}>
+                <Grid container item justify="center" style={{ height: "87%", width: '100%' }}>
+                  {renderCommentButton()}
+                  <Grid container direction="row" alignItems="center">
+                    <Grid container justify="center" item sm={12}>
+                      <FormControl variant="outlined">
+                        <Select
+                          className="select-question-type"
+                          disabled={locked}
+                          value={type}
+                          inputProps={{
+                            name: 'age',
+                            id: 'age-native-simple',
+                          }}
+                          onChange={(e) => {
+                            props.setQuestionType(parseInt(e.target.value as string) as QuestionTypeEnum);
+                          }}
+                        >
+                          {
+                            typeArray.map((typeName, i) => {
+                              const type = QuestionTypeObj[typeName] as QuestionTypeEnum;
+                              return (
+                                <MenuItem key={i} value={type}>
+                                  {SplitByCapitalLetters(typeName)}
+                                </MenuItem>
+                              )
+                            })
+                          }
+                        </Select>
+                      </FormControl>
                     </Grid>
-                    <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
                   </Grid>
+                  <LockComponent locked={locked} disabled={!props.canEdit} onChange={props.toggleLock} />
                 </Grid>
-              }
-            </Grid>
+              </Grid>
+            }
           </Grid>
         </Grid>
         <div className="bottom-scroll-area">
