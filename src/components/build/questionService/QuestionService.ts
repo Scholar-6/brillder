@@ -134,6 +134,7 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
       id: question.id,
       type: question.type,
       hint: parsedQuestion.hint,
+      order: parsedQuestion.order,
       firstComponent: parsedQuestion.firstComponent ?
         parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
       components: parsedQuestion.components
