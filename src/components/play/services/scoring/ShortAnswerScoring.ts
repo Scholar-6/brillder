@@ -4,7 +4,6 @@ import { stripHtml } from "components/build/questionService/ConvertService";
 import { ComponentAttempt } from "components/play/model";
 
 const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerAnswer>) => {
-    // The maximum number of marks is the number of entries * 5.
     attempt.maxMarks = 6;
 
     // The maximum number of marks is divided between all answers.
