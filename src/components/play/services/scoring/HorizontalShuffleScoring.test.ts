@@ -1,4 +1,4 @@
-import mark from './HorizontalShuffleScoring';
+import mark from './ShuffleScoring';
 
 import { HorizontalShuffleComponent } from '../../questionTypes/horizontalShuffle/HorizontalShuffle';
 import { ComponentAttempt } from 'components/play/model';

@@ -1,5 +1,6 @@
 import { ComponentAttempt } from "components/play/model";
 import { HorizontalShuffleComponent } from "components/play/questionTypes/horizontalShuffle/HorizontalShuffle";
+import { VerticalShuffleComponent } from "components/play/questionTypes/vericalShuffle/VerticalShuffle";
 
 const permute = (n: number): [number, number][] => {
     const permutations: [number, number][] = [];
@@ -11,7 +12,7 @@ const permute = (n: number): [number, number][] => {
     return permutations;
 }
 
-const mark = (component: HorizontalShuffleComponent, attempt: ComponentAttempt<any>) => {
+const mark = (component: HorizontalShuffleComponent | VerticalShuffleComponent, attempt: ComponentAttempt<any>) => {
     const n = component.list.length;
     const max = (n * (n - 1)) / 2;
 
@@ -26,22 +27,7 @@ const mark = (component: HorizontalShuffleComponent, attempt: ComponentAttempt<a
             attempt.correct = false;
         }
     })
-/*
-    attempt.answer.forEach((answer: any, index: number, array: any[]) => {
-        if (index !== 0) {
-        attempt.maxMarks += 5;
-        if(answer.index - array[index-1].index === 1) {
-            if(!isReview) {
-            attempt.marks += markIncrement;
-            } else if (prev.answer[index] - prev.answer[index-1] !== 1) {
-            attempt.marks += markIncrement;
-            }
-        } else {
-            attempt.correct = false;
-        }
-        }
-    })
-*/
+
     if(attempt.marks === 0 && !attempt.dragged) attempt.marks = 0.5;
     console.log(attempt);
 
