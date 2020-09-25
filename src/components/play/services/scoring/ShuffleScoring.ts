@@ -28,9 +28,7 @@ const mark = (component: HorizontalShuffleComponent | VerticalShuffleComponent, 
         }
     })
 
-    if(attempt.marks === 0 && !attempt.dragged) attempt.marks = 0.5;
-    console.log(attempt);
-
+    if(attempt.marks === 0 && attempt.dragged) attempt.marks = 0.5;
     return attempt;
 }
 

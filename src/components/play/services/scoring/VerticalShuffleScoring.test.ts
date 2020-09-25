@@ -58,7 +58,7 @@ describe("vertical shuffle scoring", () => {
         expect(result.correct).toStrictEqual(false);
     })
 
-    it("should mark an incorrect answer with 0.5 marks", () => {
+    it("should mark an incorrect answer with 0.5 marks if it was dragged", () => {
         // arrange
         const mockAttempt: ComponentAttempt<{ index: number }[]> = {
             answer: [
@@ -67,7 +67,8 @@ describe("vertical shuffle scoring", () => {
                 { index: 2 },
                 { index: 1 },
                 { index: 0 },
-            ]
+            ],
+            dragged: true
         } as ComponentAttempt<{ index: number }[]>;
 
         // act
@@ -75,6 +76,28 @@ describe("vertical shuffle scoring", () => {
 
         // assert
         expect(result.marks).toStrictEqual(0.5);
+        expect(result.maxMarks).toStrictEqual(10);
+        expect(result.correct).toStrictEqual(false);
+    });
+
+    it("should mark an incorrect answer with 0 marks if it was not dragged", () => {
+        // arrange
+        const mockAttempt: ComponentAttempt<{ index: number }[]> = {
+            answer: [
+                { index: 4 },
+                { index: 3 },
+                { index: 2 },
+                { index: 1 },
+                { index: 0 },
+            ],
+            dragged: false
+        } as ComponentAttempt<{ index: number }[]>;
+
+        // act
+        const result = mark(mockComponent, mockAttempt);
+
+        // assert
+        expect(result.marks).toStrictEqual(0);
         expect(result.maxMarks).toStrictEqual(10);
         expect(result.correct).toStrictEqual(false);
     });
