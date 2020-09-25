@@ -9,6 +9,8 @@ import sprite from "assets/img/icons-sprite.svg";
 import { Brick, Editor } from 'model/brick';
 import { getUserByUserName } from 'components/services/axios/user';
 import { inviteUser } from 'components/services/axios/brick';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
 
 interface InviteProps {
   canEdit: boolean;
@@ -30,6 +32,7 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [editorUsername, setEditorUsername] = React.useState(brick.editor?.username ?? "");
   const [editor, setEditor] = React.useState(brick.editor);
   const [editorError, setEditorError] = React.useState("");
+  const [suggestions, setSuggestions] = React.useState([] as string[]);
 
   const saveEditor = (editorId: number, fullName: string) => {
     props.assignEditor({ ...brick, editor: { id: editorId } as Editor });
@@ -121,16 +124,14 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         <div style={{ marginTop: '1.8vh' }}></div>
         <Grid item className="input-container">
           <div className="audience-inputs border-rounded">
-            <TextField
-              disabled={!props.canEdit}
-              value={editorUsername}
-              style={{ background: 'inherit' }}
-              onChange={(evt) => setEditorUsername(evt.target.value)}
-              onBlur={() => onBlur()}
+            <AutocompleteUsername
+              canEdit={props.canEdit}
+              brick={brick}
+              editorError={editorError}
               placeholder="Enter editor's username here..."
-              error={editorError !== ""}
-              helperText={editorError}
-              fullWidth
+              onBlur={onBlur}
+              username={editorUsername}
+              setUsername={setEditorUsername}
             />
           </div>
         </Grid>
