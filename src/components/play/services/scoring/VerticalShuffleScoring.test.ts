@@ -1,20 +1,20 @@
 import mark from './ShuffleScoring';
 
-import { HorizontalShuffleComponent } from '../../questionTypes/horizontalShuffle/HorizontalShuffle';
+import { VerticalShuffleComponent } from '../../questionTypes/vericalShuffle/VerticalShuffle';
 import { ComponentAttempt } from 'components/play/model';
 
-const mockComponent: HorizontalShuffleComponent = {
+const mockComponent: VerticalShuffleComponent = {
     type: 127,
     list: [
-        { value: "A" },
-        { value: "B" },
-        { value: "C" },
-        { value: "D" },
-        { value: "E" },
+        { value: "A", index: 0 },
+        { value: "B", index: 1 },
+        { value: "C", index: 2 },
+        { value: "D", index: 3 },
+        { value: "E", index: 4 },
     ]
 };
 
-describe("horizontal shuffle scoring", () => {
+describe("vertical shuffle scoring", () => {
 
     it("should mark a correct answer with 10 marks", () => {
         // arrange

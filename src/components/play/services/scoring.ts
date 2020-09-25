@@ -5,7 +5,7 @@ import {BrickAttempt, ComponentAttempt} from '../model';
 import ChooseOneMark from './scoring/ChooseOneScoring';
 import ChooseSeveralMark from './scoring/ChooseSeveralScoring';
 import ShortAnswerMark from './scoring/ShortAnswerScoring';
-import HorizontalShuffleMark from './scoring/HorizontalShuffleScoring';
+import ShuffleMark from './scoring/ShuffleScoring';
 
 export type ScoreFunction<C extends QuestionComponent, A> = (component: C, attempt: ComponentAttempt<A>) => ComponentAttempt<A>;
 export type QuestionComponent = { type: QuestionTypeEnum };
@@ -15,7 +15,8 @@ export const scoreFunctions: ScoreFunctionMap = {
   [QuestionTypeEnum.ChooseOne]: ChooseOneMark,
   [QuestionTypeEnum.ChooseSeveral]: ChooseSeveralMark,
   [QuestionTypeEnum.ShortAnswer]: ShortAnswerMark,
-  [QuestionTypeEnum.HorizontalShuffle]: HorizontalShuffleMark
+  [QuestionTypeEnum.HorizontalShuffle]: ShuffleMark,
+  [QuestionTypeEnum.VerticalShuffle]: ShuffleMark
 }
 
 export const mark = <C extends QuestionComponent, A>(questionType: QuestionTypeEnum, component: C, attempt: ComponentAttempt<A>) => {
