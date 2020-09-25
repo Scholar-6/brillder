@@ -22,7 +22,15 @@ const CommentChild: React.FC<CommentChildProps> = (props) => {
 
   return (
     <div className="comment-child-container">
-      
+      <div style={{position: 'absolute'}} className="profile-image-container">
+        <div className="profile-image">
+          {
+            props.comment.author?.profileImage
+              ? <img src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
+              : <svg><use href={sprite + "#user"} /></svg>
+          }
+        </div>
+      </div>
       <div className="comment-head-bar">
         <div className="comment-author bold">
           {props.comment.author.firstName} {props.comment.author.lastName}
@@ -44,7 +52,7 @@ const CommentChild: React.FC<CommentChildProps> = (props) => {
         )}
       </div>
       <div>
-        <small>{moment(props.comment.timestamp).format("H:mm D MMM")}</small>
+        <small style={{marginLeft: '19%'}}>{moment(props.comment.timestamp).format("H:mm D MMM")}</small>
       </div>
       <div>
         <i>
