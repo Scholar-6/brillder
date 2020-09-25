@@ -32,6 +32,14 @@ export const updateUser = async (userToSave: any) => {
   }
 }
 
+export const suggestUsername = async (name: string) => {
+  try {
+    return await get<string[]>(`/user/suggest/${name}`);
+  } catch {
+    return null;
+  }
+}
+
 export const getUserById = async (userId: number) => {
   try {
     return await get<User>(`/user/${userId}`);

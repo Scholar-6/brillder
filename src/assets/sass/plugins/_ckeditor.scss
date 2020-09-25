@@ -6,20 +6,13 @@
     }
   }
 }
-
-.ck-rounded-corners {
-  .ck-editor__main {
-    > .ck-editor__editable {
-    }
-  }
-}
 .hint-component {
   .hint-content {
     .hint-container {
       .document-editor {
         .ck-editor {
           .ck-content {
-            border-radius:  0 0 0.6vw !important;
+            border-radius: 0 0 0.6vw !important;
           }
         }
       }
@@ -36,10 +29,40 @@
 .ck-focused {
   border-color: #c4c4c4 !important;
 }
+
 .ck-rounded-corners {
   .ck-rounded-corners {
     border-bottom-right-radius: 0 !important;
   }
+}
+.ck {
+  &.ck-dropdown {
+    .ck-button {
+      &.ck-dropdown__button {
+        width: auto !important;
+      }
+    }
+  }
+}
+.ck,
+a.ck {
+  &.ck-button {
+    .ck-button__label {
+      font-size: 0.8vw !important;
+      width: 100%;
+      min-height: 2vh;
+    }
+  }
+}
+.document-editor {
   .ck-toolbar {
+    .ck-toolbar__items {
+      .ck-dropdown {
+        padding: 0 !important;
+      }
+      .ck-button {
+        margin:0 0.2vw !important;
+      }
+    }
   }
 }

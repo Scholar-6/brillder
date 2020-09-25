@@ -32,6 +32,8 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
     return <div>Loading comments...</div>;
   }
 
+  console.log(props.comments);
+
   const renderComments = () => {
     return (
       <div className="comments-column-wrapper">
@@ -42,16 +44,18 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
             <CommentItem
               key={comment.id}
               comment={comment}
+              currentUser={props.currentUser}
               currentBrick={props.currentBrick}
               createComment={props.createComment}
               isAuthor={comment.author.id === props.currentUser.id}>
-              {comment.children && comment.children.map(child => (
+              {comment.children && comment.children.map(child =>
                 <CommentChild
                   key={child.id}
                   comment={child}
+                  currentUser={props.currentUser}
                   currentBrick={props.currentBrick}
                   isAuthor={child.author.id === props.currentUser.id} />
-              ))}
+              )}
             </CommentItem>
           )) : ""}
         </Grid>
