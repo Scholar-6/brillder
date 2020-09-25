@@ -136,7 +136,9 @@ function addZendesk() {
     script.setAttribute('type', 'text/javascript');
     script.setAttribute(
       'src',
-      `https://static.zdassets.com/ekr/snippet.js?key=${process.env.REACT_APP_ZENDESK_ID}`
+      `https://static.zdassets.com/ekr/snippet.js?key=${process.env.REACT_APP_ZENDESK_ID
+        ? process.env.REACT_APP_ZENDESK_ID
+        : '33210b3d-b3d5-43ba-9b07-70acce8c10b6'}`
     );
     head.appendChild(script);
 

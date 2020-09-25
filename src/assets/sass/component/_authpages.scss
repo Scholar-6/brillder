@@ -257,6 +257,12 @@
       &.mobile-button-box {
         @include phone_and_tabletP {
           background-color: var(--theme-light-blue) !important;
+          // hide policy-text
+          // .input-block {
+          //   &:focus-within ~ .mobile-policy-text {
+          //     display: none;
+          //   }
+          // }
         }
       }
     }

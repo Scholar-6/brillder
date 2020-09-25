@@ -11,10 +11,31 @@ export interface AssignmentStats {
     };
 }
 
+export interface AssignmentAttepmtAnswer {
+    answer: string;
+    correct: boolean;
+    marks: number;
+    maxMarks: number;
+}
+
 export interface AttemptStats {
+    answers: AssignmentAttepmtAnswer[];
     score: number;
+    oldScore: number;
     maxScore: number;
     percentScore: number;
+}
+
+export interface AssignmentStudent {
+    attempts: AttemptStats[];
+    avg_score: number;
+    status: number;
+    studentId: number;
+}
+
+export interface ApiAssignemntStats {
+    byStudent: AssignmentStudent[];
+    stats: AssignmentStats;
 }
 
 export interface AssignmentWithStats extends Assignment {
