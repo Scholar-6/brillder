@@ -73,7 +73,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
           </div>
         </Grid>
         <h5 className="comment-date">{moment(props.comment.timestamp).format("H:mm D MMM")}</h5>
-        <Grid item className="break-word">
+        <Grid item className="comment-text break-word">
           <span className="bold">Comment: </span>
           <Hyphenated language={gb}>
             <i>{props.comment.text}</i>
@@ -81,9 +81,9 @@ const CommentItem: React.FC<CommentItemProps> = props => {
         </Grid>
         {/*eslint-disable-next-line*/}
         {props.children && props.children instanceof Array && props.children.length != 0 &&
-        <Grid className="comment-reply-container" item container direction="column">
+        <div className="comment-reply-container">
           {props.children}
-        </Grid>}
+        </div>}
         <Collapse in={replyPanelShown}>
           <ReplyCommentPanel
             parentComment={props.comment}

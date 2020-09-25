@@ -48,18 +48,21 @@
       width: $margin-left;
       height: 2.5vw;
       .profile-image {
+        @extend %flexCenter;
         background: var(--tab-gray);
-        width: 1.8vw;
-        height: 1.8vw;
+        width: 2.2vw;
+        height: 2.2vw;
         border-radius: 50%;
         overflow: hidden;
 
         svg, img {
           height: 1.8vw;
           width: 1.8vw;
+          border-radius: 50%;
+          overflow: hidden;
         }
 
-        $border-width: 2px;
+        $border-width: 0.2vw;
         &.red-border {
           border: $border-width solid var(--theme-orange);
         }
@@ -89,6 +92,10 @@
     }
     .comment-date {
       margin-left: $margin-left;
+    }
+
+    .comment-text {
+      margin-left: 3%;
     }
 
     .comment-reply-container {
