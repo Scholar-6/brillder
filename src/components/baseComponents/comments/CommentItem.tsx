@@ -52,24 +52,19 @@ const CommentItem: React.FC<CommentItemProps> = props => {
           </Grid>
           <div className="buttons-container">
             {props.isAuthor &&
-            <IconButton aria-label="delete" size="small" color="secondary"
-              onClick={() => handleDeleteComment()}>
-              <SvgIcon fontSize="inherit">
+              <button className="cancel-button svgOnHover" onClick={() => handleDeleteComment()}>
                 <svg className="svg active">
                   {/*eslint-disable-next-line*/}
                   <use href={sprite + "#cancel"} />
                 </svg>
-              </SvgIcon>
-            </IconButton>}
-            <IconButton aria-label="reply" size="small" color="primary"
-              onClick={() => setReplyPanelShown(!replyPanelShown)}>
-              <SvgIcon fontSize="inherit">
-                <svg className="svg active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#message-square"} />
-                </svg>
-              </SvgIcon>
-            </IconButton>
+              </button>
+            }
+          <button className="message-button svgOnHover" onClick={() => setReplyPanelShown(!replyPanelShown)}>
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#message-square"} />
+            </svg>
+          </button>
           </div>
         </Grid>
         <h5 className="comment-date">{moment(props.comment.timestamp).format("H:mm D MMM")}</h5>
