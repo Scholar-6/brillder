@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import { Grid } from '@material-ui/core';
 import MediaQuery from 'react-responsive';
 
 import './dragBox.scss';
@@ -42,25 +41,22 @@ const DragBox: React.FC<BoxProps> = ({
   const renderContent = () => {
     if (isImage) {
       return <div>
-        <img alt="" style={{ width: '35%' }} src={src} />
+        <img alt="" className={className} style={{ width: '35%' }} src={src} />
         <HoverBox label={label} marginTop={hoverMarginTop} />
       </div>
     }
     return (
       <div className={className}>
-        <div className="drag-box-name" style={{ fontFamily, letterSpacing, marginLeft }}>{name}</div>
+        <div className="drag-box-name">{name}</div>
         <HoverBox label={label} marginTop={hoverMarginTop} />
       </div>
     );
   }
 
   return (
-    <Grid
-      container item xs={12} onClick={onClick}
-      className="drag-box-item" style={{ fontSize: fontSize, marginTop }}
-    >
+    <div onClick={onClick} className="drag-box-item">
       {renderContent()}
-    </Grid>
+    </div>
   )
 }
 

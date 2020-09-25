@@ -16,8 +16,8 @@ const ShareDialog: React.FC<ShareProps> = props => {
       onClose={props.close}
       className="dialog-box light-blue unlimited"
     >
-      <div className="close-button">
-        <svg className="svg active" onClick={props.close}>
+      <div className="close-button svgOnHover" onClick={props.close}>
+        <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#cancel-thick"} />
         </svg>
@@ -26,7 +26,7 @@ const ShareDialog: React.FC<ShareProps> = props => {
         <div className="title">How would you like to share this brick?</div>
       </div>
       <div className="social-share-row">
-      <svg className="svg active" onClick={props.link}>
+        <svg className="svg active" onClick={props.link}>
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#link"} />
         </svg>

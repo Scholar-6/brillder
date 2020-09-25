@@ -80,22 +80,6 @@ const QuestionComponents = ({
 
   let canRemove = (components.length > 3) ? true : false;
 
-  const updateComponentByIndex = (compData: any, index: number) => {
-    let copyComponents = Object.assign([], components) as any[];
-    copyComponents[index] = compData;
-    setComponents(copyComponents);
-    updateComponents(copyComponents);
-  }
-
-  const removeComponentType = () => {
-    const component = components[removeIndex];
-    component.type = QuestionTypeEnum.None;
-    component.value = "";
-    updateComponentByIndex(component, removeIndex);
-    setDialog(false);
-    setRemovedIndex(-1);
-  }
-
   const renderDropBox = (component: any, index: number) => {
     const updatingComponent = (compData: any) => {
       let copyComponents = Object.assign([], components) as any[];
@@ -109,9 +93,7 @@ const QuestionComponents = ({
         setDialog(true);
         setRemovedIndex(index);
       } else {
-        component.type = QuestionTypeEnum.None;
-        component.value = "";
-        updatingComponent(component);
+        removeInnerComponent(index);
       }
       saveBrick();
     }
@@ -139,7 +121,7 @@ const QuestionComponents = ({
     } else if (type === QuestionTypeEnum.WordHighlighting) {
       uniqueComponent = WordHighlightingComponent;
     } else {
-      history.push(`/build/brick/${brickId}/build/investigation/question`);
+      history.push(`/build/brick/${brickId}/investigation/question`);
       return <PageLoader content="...Loading..." />;
     }
 
@@ -225,7 +207,10 @@ const QuestionComponents = ({
         </div>
         <div className="dialog-footer">
           <button className="btn btn-md bg-theme-orange yes-button"
-            onClick={removeComponentType}>
+            onClick={() => {
+              removeInnerComponent(removeIndex);
+              hideDialog();
+            }}>
             <span>Yes, delete</span>
           </button>
           <button className="btn btn-md bg-gray no-button"

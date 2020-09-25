@@ -227,7 +227,8 @@ const LoginPage: React.FC<LoginProps> = (props) => {
                   <use href={sprite + "#login"} className="text-theme-orange" />
                 </svg>
               </div>
-              <form onSubmit={handleLoginSubmit} className="content-box">
+
+              <form onSubmit={handleLoginSubmit} className="mobile-button-box content-box">
                 <div className="input-block">
                   <input
                     type="email"

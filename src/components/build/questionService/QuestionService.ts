@@ -14,7 +14,25 @@ export interface ApiQuestion {
   id?: number;
   contentBlocks: string;
   type: number;
+  order: number;
 }
+
+export function getNewFirstQuestion(type: number, active: boolean) {
+  return {
+    type,
+    active,
+    hint: {
+      value: "",
+      list: [] as string[],
+      status: HintStatus.None
+    },
+    components: [
+      { type: QuestionComponentTypeEnum.None },
+      { type: QuestionComponentTypeEnum.Component },
+      { type: QuestionComponentTypeEnum.None }
+    ]
+  } as Question;
+};
 
 export function getNewQuestion(type: number, active: boolean) {
   return {
@@ -26,7 +44,6 @@ export function getNewQuestion(type: number, active: boolean) {
       status: HintStatus.None
     },
     components: [
-      { type: QuestionComponentTypeEnum.None },
       { type: QuestionComponentTypeEnum.Component },
       { type: QuestionComponentTypeEnum.None }
     ]
@@ -78,6 +95,7 @@ export function getApiQuestion(question: Question) {
     apiQuestion.id = question.id;
     apiQuestion.type = question.type;
   }
+  apiQuestion.order = question.order;
   return apiQuestion;
 }
 
@@ -118,6 +136,7 @@ export function parseQuestion(question: ApiQuestion, parsedQuestions: Question[]
       id: question.id,
       type: question.type,
       hint: parsedQuestion.hint,
+      order: question.order,
       firstComponent: parsedQuestion.firstComponent ?
         parsedQuestion.firstComponent : { type: QuestionComponentTypeEnum.Text, value: '' },
       components: parsedQuestion.components

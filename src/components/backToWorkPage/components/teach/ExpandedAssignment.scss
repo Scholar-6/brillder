@@ -10,22 +10,25 @@
     padding-left: 1.6vw;
   }
 
-  .assigned-brick-description {
-    padding-left: 1.6vw;
-    padding-right: 1vw;
-  }
   .users-table {
-    $table-height: calc(53.5vh - 4vw);
-    height: $table-height !important;
+    $table-height: calc(64vh - 6.5vw);
+    height: calc(#{$table-height} + 5vh) !important;
     .user-row {
       height: calc(#{$table-height / 8}) !important;
     }
-    .student-left-padding {
-      width: 6vw;
+    .padding-left-column {
+      width: 0.7vw;
+    }
+    .student-status, .student-book {
+      width: 2.75vw;
+      > div {
+        @extend %flexCenter;
+      }
     }
 
     .assigned-student-name {
-      width: 26.8vw;
+      padding-left: 0.7vw !important;
+      width: 18vw;
     }
     .circle-td {
       width: 5vw;
@@ -38,22 +41,66 @@
         color: var(--white);
       }
     }
+    thead {
+      background: inherit !important;
+      th {
+        font-family: $font-family-regular !important;
+        padding: 0 !important;
+        .center {
+          @extend %flexCenter;
+        }
+        .btn-grey-circle {
+          background: var(--tab-gray) !important;
+          border-radius: 50%;
+          height: 1.3vw;
+          width: 1.3vw;
+
+          svg {
+            height: 1vw;
+            width: 1vw;
+          }
+        }
+      }
+    }
     td {
       padding-left: 0 !important;
       text-transform: capitalize;
 
-      .reminder-icon {
+      .reminder-icon, .book-open-icon {
         color: white;
         border-radius: 50%;
         padding: 0.25vw;
+        stroke-width: 1.5;
         width: 1.7vw;
         height: 1.7vw;
+      }
+
+      .reminder-icon {
         background: var(--theme-yellow);
+      }
+
+      .book-open-icon {
+        background: var(--theme-green);
+      }
+
+      .circle {
+        border-radius: 50%;
+        width: 2.18vw;
+        height: 2.18vw;
+        color: white;
+        @extend %flexCenter;
       }
 
       .stats-text {
         margin-left: 1vw;
         font-size: 1.3vw;
+      }
+
+      &.icon-container {
+        svg {
+          width: 2vw;
+          height: 2vw;
+        }
       }
     }
   }

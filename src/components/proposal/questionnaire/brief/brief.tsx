@@ -23,7 +23,7 @@ interface BriefProps {
 const BriefPreviewComponent: React.FC<any> = ({ data }) => {
   return (
     <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
-      <svg>
+      <svg className={data ? "" : "big"}>
         {/*eslint-disable-next-line*/}
         <use href={sprite + "#crosshair"} />
       </svg>
@@ -54,6 +54,7 @@ const BriefComponent: React.FC<BriefProps> = ({ parentBrief, canEdit, playStatus
           <DocumentWirisCKEditor
             disabled={!canEdit}
             data={parentBrief}
+            link={true}
             placeholder="Enter Brief Here..."
             toolbar={[
               'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'

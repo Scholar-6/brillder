@@ -106,9 +106,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
         buildAll: false,
         editAll: false,
 
-        draft: false,
-        review: false,
-        publish: false,
+        draft: true,
+        review: true,
+        publish: true,
         isCore
       }
     }
@@ -203,6 +203,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const { filters } = this.state;
     removeAllFilters(filters);
     filters.viewAll = true;
+    filters.publish = true;
+    filters.review = true;
+    filters.draft = true;
     this.setState({ ...this.state, filters, sortedIndex: 0, finalBricks: this.state.rawBricks });
   }
 
@@ -210,6 +213,8 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const { filters } = this.state;
     removeAllFilters(filters);
     filters.editAll = true;
+    filters.publish = true;
+    filters.review = true;
     let bricks = filterByStatus(this.state.rawBricks, BrickStatus.Review);
     bricks.push(...filterByStatus(this.state.rawBricks, BrickStatus.Publish));
     this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks: bricks });
@@ -219,6 +224,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
     const { filters } = this.state;
     removeAllFilters(filters);
     filters.buildAll = true;
+    filters.draft = true;
     let bricks = filterByStatus(this.state.rawBricks, BrickStatus.Draft);
     this.setState({ ...this.state, sortedIndex: 0, filters, finalBricks: bricks });
   }
@@ -229,6 +235,13 @@ class BuildPage extends Component<BuildProps, BuildState> {
     filters.review = newFilters.review;
     filters.draft = newFilters.draft;
     removeInboxFilters(filters);
+    if (filters.publish && filters.review && filters.draft) {
+      filters.viewAll = true;
+    } else if (filters.draft && filters.review) {
+      filters.editAll = true;
+    } else if (filters.draft && !filters.publish) {
+      filters.buildAll = true;
+    }
     const finalBricks = filterBricks(this.state.filters, this.state.rawBricks, this.props.user.id, this.props.generalSubjectId);
     this.setState({ ...this.state, filters, finalBricks, sortedIndex: 0 });
   }

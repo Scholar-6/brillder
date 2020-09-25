@@ -11,7 +11,7 @@ import { deleteClassroom, getStudents } from 'components/services/axios/classroo
 import { ReduxCombinedState } from "redux/reducers";
 import { checkAdmin } from "components/services/brickService";
 import {
-  getAllClassrooms, unassignStudent, getAllStudents, createClass, assignStudentsToClassroom, ClassroomApi
+  getAllClassrooms, unassignStudent, createClass, assignStudentsToClassroom, ClassroomApi
 } from '../service';
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
@@ -296,7 +296,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
             {/*eslint-disable-next-line*/}
             <use href={sprite + "#users"} />
           </svg>
-          <div className="white-box">
+          <div className="classrooms-box">
             {this.state.classrooms.length}
           </div>
         </div>

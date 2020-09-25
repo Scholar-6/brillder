@@ -129,7 +129,7 @@ const ProvisionalScore: React.FC<ProvisionalScoreProps> = ({ status, brick, atte
                 <div className="intro-header">
                   <Clock brickLength={brick.brickLength} />
                 </div>
-                <div className="intro-text-row">
+                <div className="intro-text-row f-align-self-start m-t-5">
                   <ReviewStepper
                     questions={brick.questions}
                     attempts={attempts}

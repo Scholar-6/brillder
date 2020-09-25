@@ -95,6 +95,7 @@
       display: flex;
       justify-content: flex-end;
       width: 100%;
+      height: 36.8px;
       .edit-button,
       .trash-button {
         cursor: pointer;
@@ -152,12 +153,12 @@
     }
   }
 
-  .white-box {
+  .classrooms-box {
     margin-left: 0.3vw;
-    background: white;
-    color: var(--theme-dark-blue);
+    border: 0.1vw solid var(--white);
+    color: var(--white);
     border-radius: 0.65vw;
-    padding: 0.25vw 0.6vw;
+    padding: 0.1vw 0.4vw;
     font-size: 1vw;
     line-height: 1;
   }

@@ -24,6 +24,8 @@ import List from "@ckeditor/ckeditor5-list/src/list";
 // @ts-ignore
 import Link from '@ckeditor/ckeditor5-link/src/link';
 // @ts-ignore
+import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
+// @ts-ignore
 import MathType from "@wiris/mathtype-ckeditor5/src/plugin";
 // @ts-ignore
 import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed";
@@ -39,6 +41,8 @@ import Image from "@ckeditor/ckeditor5-image/src/image";
 import UpcastWriter from "@ckeditor/ckeditor5-engine/src/view/upcastwriter";
 import "./DocumentEditor.scss";
 import UploadImageCustom from './UploadImageCustom';
+import { isMathJax, parseDataToArray } from "components/services/mathJaxService";
+import { stripHtml } from "components/build/questionService/ConvertService";
 //import CommentCustom from './CommentCustom';
 //import { parseDataToArray } from 'components/services/mathJaxService';
 
@@ -49,6 +53,7 @@ export interface DocumentWEditorProps {
   toolbar?: any;
   placeholder?: string;
   mediaEmbed?: boolean;
+  link?: boolean;
   defaultAlignment?: string;
   validationRequired?: boolean;
   onBlur(): void;
@@ -121,6 +126,7 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
     var wirisAfterInsertionListener = windowRef.WirisPlugin.Listeners.newListener(
       "onAfterFormulaInsertion",
       (res: any) => {
+        console.log(res)
         this.setState({ ...this.state, isWirisInserting: false });
       }
     );
@@ -210,8 +216,12 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
     /* MediaEmbed plugin enables media links in editor */
     if (this.props.mediaEmbed) {
       config.plugins.push(MediaEmbed);
-      config.plugins.push(Link);
       config.toolbar.push("mediaEmbed");
+    }
+
+    if (this.props.link) {
+      config.plugins.push(Link);
+      config.plugins.push(AutoLink);
       config.link = { addTargetToExternalLinks: true };
     }
 
@@ -262,6 +272,19 @@ class DocumentWirisEditorComponent extends Component<DocumentWEditorProps, Docum
               return;
             }
             let data = editor.getData();
+            /* 9/24/2020 preparation for changing color of math jax
+            try {
+              let newRes = [];
+              const res = parseDataToArray(data);
+              for (let item of res) {
+                if (isMathJax(item)) {
+                  console.log(item);
+                }
+                newRes.push(item);
+              }
+            } catch { }
+            */
+
             let editorContent = document.createElement('div');
             editorContent.innerHTML = data;
             data = mediaContentFix(data, editorContent);

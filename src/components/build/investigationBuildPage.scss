@@ -177,10 +177,10 @@ $space-between-boxes: 0.1vw;
     font-size: 1.8vw;
     letter-spacing: 0.3vw;
     font-family: $font-family-black;
-    color: var(--light-blue);
+    color: var(--theme-light-blue);
 
     .svg {
-      color: var(--light-blue);
+      color: var(--theme-light-blue);
     }
 
     &:hover {

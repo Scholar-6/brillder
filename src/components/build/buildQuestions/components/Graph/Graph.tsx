@@ -70,7 +70,6 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
 
     useEffect(() => {
         const state = graphState;
-        const settings = graphSettings;
         if(calculator) {
           calculator.setState(state);
         }

@@ -59,7 +59,7 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
     } else if (props.isAssignment && props.assignmentId) {
       props.history.push(`/play/brick/${brick.id}/intro?assignmentId=${props.assignmentId}`);
     } else {
-      props.history.push(`/build/brick/${brick.id}/build/investigation/question`);
+      props.history.push(`/build/brick/${brick.id}/investigation/question`);
     }
   }
 

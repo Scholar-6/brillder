@@ -21,6 +21,7 @@ import LoginPage from '../loginPage/loginPage';
 import UserProfilePage from '../userProfilePage/UserProfile';
 import ManageClassrooms from 'components/teach/manageClassrooms/ManageClassrooms';
 import ClassStatisticsPage from 'components/teach/statistics/ClassStatisticsPage';
+import PostPlay from 'components/postPlay/PostPlay';
 
 import AuthRoute from './AuthRoute';
 import BuildRoute from './BuildRoute';
@@ -91,7 +92,7 @@ const App: React.FC = () => {
 
         <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
-        <BuildBrickRoute path="/build/brick/:brickId/build/investigation/question-component/:questionId" component={InvestigationBuildPage} location={location} />
+        <BuildBrickRoute path="/build/brick/:brickId/investigation/question-component/:questionId" component={InvestigationBuildPage} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
         <BuildRoute path={map.BackToWorkPage} component={BackToWorkPage} location={location} />
         <BuildRoute path="/users" component={UsersListPage} location={location} />
@@ -101,6 +102,7 @@ const App: React.FC = () => {
 
         <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path={map.Login} component={LoginPage} />
+        <StudentRoute path="/post-play/:brickId" component={BrickWrapper} innerComponent={PostPlay} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>

@@ -1,31 +1,25 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { Grid, TextField } from "@material-ui/core";
-import { Radio } from '@material-ui/core';
 import { connect } from "react-redux";
 
 import actions from 'redux/actions/brickActions';
 import sprite from "assets/img/icons-sprite.svg";
 import { Brick, Editor } from 'model/brick';
 import { getUserByUserName } from 'components/services/axios/user';
-import { inviteUser } from 'components/services/axios/brick';
 
 interface InviteProps {
   canEdit: boolean;
   isOpen: boolean;
   brick: Brick;
   hideAccess?: boolean;
-  isAuthor: boolean;
   title?: string;
-  submit(name: string, accessGranted: boolean): void;
+  submit(name: string): void;
   close(): void;
-
   assignEditor(brick: Brick): void;
 }
 
-const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
-  const [accessGranted, setAccess] = React.useState(null as boolean | null);
-
+const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [isValid, setValid] = React.useState(false);
   const [editorUsername, setEditorUsername] = React.useState(brick.editor?.username ?? "");
   const [editor, setEditor] = React.useState(brick.editor);
@@ -33,27 +27,13 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
 
   const saveEditor = (editorId: number, fullName: string) => {
     props.assignEditor({ ...brick, editor: { id: editorId } as Editor });
-    props.submit(fullName, accessGranted || false);
-  }
-
-  const inviteUserById = async (userId: number, fullName: string) => {
-    let success = await inviteUser(brick.id, userId);
-    if (success) {
-      props.submit(fullName, accessGranted || false);
-    } else {
-      // failed
-    }
-    props.close();
+    props.submit(fullName);
   }
 
   const onNext = () => {
     if (isValid && editor) {
-      if (accessGranted) {
-        saveEditor(editor.id, editor.firstName);
-        props.close();
-      } else {
-        inviteUserById(editor.id, editor.firstName);
-      }
+      saveEditor(editor.id, editor.firstName);
+      props.close();
     }
   };
 
@@ -77,14 +57,6 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   useEffect(() => {
     onBlur();
   }, [brick]);
-
-  const renderCustomText = () => {
-    let name = 'Name';
-    if (editor) {
-      name = editor.firstName;
-    }
-    return `Allow ${name} to comment on the build panels of your brick`;
-  }
 
   const renderSendButton = () => {
     return (
@@ -134,16 +106,6 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
             />
           </div>
         </Grid>
-        {props.isAuthor ?
-          <div>
-            <div style={{ marginTop: '1.8vh' }}></div>
-            <div className="title left">Grant editing access?</div>
-            <div className="text left" style={{ marginBottom: '1.8vh' }}>{renderCustomText()}</div>
-            <div className="title left">
-              Yes <Radio className="white" checked={accessGranted === true} style={{ marginRight: '4vw' }} onClick={() => setAccess(true)} />
-            No <Radio className="white" checked={accessGranted === false} onClick={() => setAccess(false)} />
-            </div>
-          </div> : ""}
       </div>
       <div style={{ marginTop: '1.8vh' }}></div>
       <div className="dialog-footer" style={{ justifyContent: 'center' }}>
@@ -159,4 +121,4 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(null, mapDispatch);
 
-export default connector(InviteDialog);
+export default connector(InviteEditorDialog);
