@@ -332,6 +332,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
 
           @include tabletP {
             height: calc(100vh - #{$home-button-size} - #{$sorted-row-margin-top});
+            overflow: hidden;
           }
           .question-title {
             font-size: 2.5vw;
