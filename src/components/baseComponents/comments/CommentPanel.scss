@@ -79,6 +79,13 @@
       position: absolute;
       top: 0;
       right: 0;
+      .MuiIconButton-sizeSmall {
+        padding: 0 !important;
+      }
+      .MuiSvgIcon-root {
+        height: 1.3vw;
+        width: 1.3vw;
+      }
     }
     .comment-date {
       margin-left: $margin-left;
