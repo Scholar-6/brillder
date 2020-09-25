@@ -60,9 +60,9 @@ const CommentChild: React.FC<CommentChildProps> = (props) => {
         )}
       </div>
       <div className="comment-date">
-        <small>{moment(props.comment.timestamp).format("H:mm D MMM")}</small>
+        {moment(props.comment.timestamp).format("H:mm D MMM")}
       </div>
-      <div>
+      <div className="comment-text">
         <i>
           {props.comment.text === "" ? "No text inserted" : props.comment.text}
         </i>

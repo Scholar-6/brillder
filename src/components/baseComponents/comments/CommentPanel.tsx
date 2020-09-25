@@ -48,17 +48,13 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
               currentBrick={props.currentBrick}
               createComment={props.createComment}
               isAuthor={comment.author.id === props.currentUser.id}>
-              {comment.children && comment.children.map(child => {
-                console.log(child)
-                  return (
+              {comment.children && comment.children.map(child =>
                 <CommentChild
                   key={child.id}
                   comment={child}
                   currentUser={props.currentUser}
                   currentBrick={props.currentBrick}
                   isAuthor={child.author.id === props.currentUser.id} />
-                  );
-                }
               )}
             </CommentItem>
           )) : ""}
