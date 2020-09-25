@@ -31,7 +31,6 @@ interface ProposalProps {
 }
 
 interface ProposalState {
-  bookHovered: boolean;
   bookState: BookState;
 }
 
@@ -39,7 +38,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
     this.state = {
-      bookHovered: false,
       bookState: BookState.Closed
     }
   }
@@ -48,9 +46,13 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
   closeDialog = () => this.setState({ });
 
   onBookHover() {
-    setTimeout(() => {
-      this.setState({ bookHovered: true, bookState: BookState.Hovered });
-    }, 800);
+    if (this.state.bookState === BookState.Closed) {
+      this.setState({ bookState: BookState.Hovered });
+    }
+  }
+
+  moveToQuestions() {
+    this.setState({ bookState: BookState.FirstPage});
   }
 
   render() {
@@ -79,7 +81,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     let bookClass = 'book-main-container';
     if (this.state.bookState === BookState.Hovered) {
-      bookClass += ' hovered';
+      bookClass += ' expanded hovered';
+    } else if (this.state.bookState === BookState.FirstPage) {
+      bookClass += ' expanded sheet-1';
     }
 
     return (
@@ -93,7 +97,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
           </Grid>
           <div className={bookClass}>
             <div className="book-container">
-              <div className="book" onMouseOver={() => this.onBookHover()}>
+              <div className="book" onMouseOver={this.onBookHover.bind(this)}>
                 <div className="back"></div>
                 <div className="page1">
                   <div className="flipped-page">
@@ -113,7 +117,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       <h2>OVERALL</h2>
                       <h2>STATS, AVGs</h2>
                       <h2>etc.</h2>
-                      <div className="bottom-button" onClick={()=>{}}>
+                      <div className="bottom-button" onClick={this.moveToQuestions.bind(this)}>
                         View Questions
                         <svg>
                           {/*eslint-disable-next-line*/}
@@ -123,10 +127,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                     </div>
                   </div>
                 </div>
-                <div className="page4"></div>
                 <div className="page3"></div>
+                <div className="page4"></div>
                 <div className="page6"></div>
                 <div className="page5"></div>
+                <div className="front-cover"></div>
                 <div className="front">
                   <div className="page-stitch" style={{background: color}}>
                     <div className="vertical-line"></div>
