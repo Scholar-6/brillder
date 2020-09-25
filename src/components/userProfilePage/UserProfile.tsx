@@ -447,6 +447,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <Grid container direction="row" className="big-input-container">
               <textarea
                 className="style2"
+                value={user.bio}
                 placeholder="Write a short bio here..."
                 onChange={e => this.onFieldChanged(e as any, UserProfileField.Bio)}
               />
