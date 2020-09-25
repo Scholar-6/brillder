@@ -140,7 +140,7 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
         onClick={() => this.setActiveItem(index)}
       >
         {this.renderData(choice)}
-        {this.props.isReview ?
+        {(this.props.isReview || this.props.isPreview) ?
           <ReviewEachHint
             isPhonePreview={this.props.isPreview}
             isReview={this.props.isReview}
