@@ -104,7 +104,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     if (bricks) {
       let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
       bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
-         
       const finalBricks = this.filter(bs);
       this.setState({ ...this.state, bricks, finalBricks, shown: true });
     } else {
@@ -425,7 +424,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       this.state.finalBricks
     );
     return data.map(item => {
-      const circleIcon = getAssignmentIcon(item.brick);
+      let circleIcon = getAssignmentIcon(item.brick);
+      if (item.brick.editor?.id === this.props.user.id) {
+        circleIcon = 'award';
+      }
       return (
         <BrickBlock
           brick={item.brick}
