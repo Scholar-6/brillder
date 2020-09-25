@@ -79,6 +79,25 @@
       position: absolute;
       top: 0;
       right: 0;
+      @extend %flexCenter;
+      > button {
+        border: 0;
+        background-color: transparent;
+        .svg {
+          stroke-width: 2;
+          @extend %removePosition;
+        }
+        &.message-button {
+          .svg {
+            color: var(--theme-dark-blue);
+          }
+        }
+        &.cancel-button {
+          .svg {
+            color: var(--theme-orange);
+          }
+        }
+      }
     }
     .comment-date {
       margin-left: $margin-left;
