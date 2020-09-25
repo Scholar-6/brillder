@@ -10,6 +10,20 @@
   $book-height: 60vh;
   $real-book-height: 63.6vh;
 
+  .flipped-page {
+    height: 100%;
+    width: 100%;
+
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    -o-transform: scale(-1, 1);
+    -ms-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+
+    padding-top: 3.5vh;
+    color: var(--theme-dark-blue);
+  }
+
   .main-text-container {
     position: fixed;
     height: 100%;
@@ -183,18 +197,6 @@
     .page1 {
       background: #fafafa;
       .flipped-page {
-        height: 100%;
-        width: 100%;
-
-        -moz-transform: scale(-1, 1);
-        -webkit-transform: scale(-1, 1);
-        -o-transform: scale(-1, 1);
-        -ms-transform: scale(-1, 1);
-        transform: scale(-1, 1);
-
-        padding-top: 3.5vh;
-        color: var(--theme-dark-blue);
-
         .circle-icon {
           margin-top: 2vh;
           margin-bottom: 2vh;
@@ -331,36 +333,63 @@
     }
 
     &.sheet-1 {
+      .front {
+        transform: rotateY(-181deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 10;
+      }
+
+      .front-cover {
+        transform: rotateY(-179deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        background: #efefef;
+      }
+
+      .back {
+        transform: rotateY(0.4deg) scale($scale);
+      }
+
       .page1 {
-        transform: rotateY(-130deg) scale($scale);
+        transform: rotateY(-180deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 5;
       }
 
       .page2 {
-        transform: rotateY(-130deg) scale($scale);
+        transform: rotateY(-181deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 4;
       }
 
       .page3 {
-        transform: rotateY(-129.6deg) scale($scale);
+        transform: rotateY(-176deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 6;
+        color: var(--theme-dark-blue);
       }
 
       .page4 {
-        transform: rotateY(-50deg) scale($scale);
-        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        transform: rotateY(-4deg) scale($scale);
+        box-shadow: none;
+        //box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 7;
+        color: var(--theme-dark-blue);
+        &.flipping {
+          transform: rotateY(-180deg) scale($scale);
+        }
       }
 
       .page6 {
-        transform: rotateY(-30deg) scale($scale);
+        transform: rotateY(0.5deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 8;
       }
-    } 
+
+      .back {
+        transform: rotateY(0.5deg) scale($scale);
+      }
+    }
   }
   //#endregion
 }
