@@ -50,6 +50,16 @@ a.ck {
   &.ck-button {
     .ck-button__label {
       font-size: 0.8vw !important;
+      width: 100%;
+    }
+  }
+}
+.document-editor {
+  .ck-toolbar {
+    .ck-toolbar__items {
+      button {
+        margin: 0 0.2vw !important;
+      }
     }
   }
 }
