@@ -7,22 +7,8 @@
   background: var(--theme-dark-blue);
   color: var(--white);
 
-  .red-right-block {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    background: var(--theme-orange);
-    height: 74.6vh;
-    width: 47.9vw;
-    border-top-left-radius: 2vw;
-    z-index: -1;
-  }
-
-  .beta-text {
-    color: var(--theme-dark-blue);
-  }
-
   $book-height: 60vh;
+  $real-book-height: 63.6vh;
 
   .main-text-container {
     position: fixed;
@@ -49,53 +35,6 @@
     }
   }
 
-  .back-button-container {
-    position: fixed;
-    height: 100vh !important;
-    width: 15vw;
-    left: 0;
-    top: 0;
-
-    .back-button {
-      cursor: pointer;
-      height: 3.6vw;
-      width: 2vw;
-      margin-left: 5.5vw;
-      color: var(--theme-orange);
-      transition: all 0.2s ease-in-out;
-      transform-origin: 200% 50%;
-
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url(/feathericons/big-chevron-left-orange.png);
-    }
-  }
-
-  .next-button-container {
-    position: fixed;
-    top: 0;
-    height: 100%;
-    width: 15vw;
-    right: 0;
-    color: var(--theme-orange);
-
-    .next-button {
-      z-index: 12;
-      cursor: pointer;
-      height: 3.6vw;
-      width: 2vw;
-      margin-left: 8vw;
-      transition: all 0.2s ease-in-out;
-      transform-origin: -100% 50%;
-
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url(/feathericons/big-chevron-right-blue.png);
-    }
-  }
-
   .book-main-container {
     position: fixed;
     right: 0;
@@ -117,7 +56,7 @@
       transform-style: preserve-3d;
       -webkit-transform-style: preserve-3d;
       position: relative;
-      height: 63.6vh;
+      height: $real-book-height;
       backface-visibility: visible;
     }
 
@@ -143,7 +82,7 @@
     .front,
     .back {
       width: 30.5vw;
-      height: 63.8vh;
+      height: $real-book-height;
       background: var(--theme-dark-blue);
     }
 
@@ -234,24 +173,8 @@
         color: var(--theme-light-blue);
       }
     }
-
+    
     .page1 {
-      background: #efefef;
-    }
-
-    .page2 {
-      background: #efefef;
-    }
-
-    .page3 {
-      background: #f5f5f5;
-    }
-
-    .page4 {
-      background: #f5f5f5;
-    }
-
-    .page5 {
       background: #fafafa;
       .flipped-page {
         height: 100%;
@@ -267,7 +190,9 @@
         color: var(--theme-orange);
 
         .circle-icon {
-          font-size: 7.3vw;
+          height: 6vw;
+          width: 6vw;
+          border-radius: 50%;
         }
 
         .proposal-titles {
@@ -288,81 +213,65 @@
         }
       }
     }
-
-    .page6 {
+    
+    .page2 {
       background: #fdfdfd;
       .normal-page {
-        height: 100%;
-        overflow: auto;
-        font-size: 1vw;
-
-        font-family: $font-family-regular;
-
         .normal-page-container {
-          height: $book-height;
-          margin-left: 2vw;
+          position: relative;
+          height: calc(#{$real-book-height} - 15vh - 5vh);
+          font-family: $font-family-black;
+          color: #d3d4d5;
+          margin-top: 15vh;
+          margin-bottom: 5vh;
+          margin-left: 5vw;
           margin-right: 2vw;
-          iframe {
-            width: 100%;
+          letter-spacing: 0.6vw;
+          font-size: 1vw;
+
+          h2 {
+            font-size: 2vw;
           }
-        }
 
-        .edit-icon {
-          cursor: pointer;
-          margin-top: 2vh;
-          height: 3.5vw;
-          width: 3.5vw;
-          color: var(--theme-dark-blue);
-          &.active {
-            color: var(--theme-orange);
-          }
-        }
+          .bottom-button {
+            cursor: pointer;
+            color: var(--theme-dark-blue);
+            position: absolute;
+            bottom: 0;
+            font-size: 1.2vw;
+            letter-spacing: 0.1vw;
+            margin-left: 4vw;
+            @extend %flexCenter;
 
-        p {
-          margin: 0;
-        }
-
-        .text-title {
-          font-family: $font-family-bold;
-        }
-        .text-title.brick-length {
-          margin-top: 1vh;
-        }
-        .proposal-text {
-          margin-left: 1.3vw;
-          margin-bottom: 1vh;
-          .document-editor {
-            width: 100%;
-            .ck-toolbar {
-              .ck-toolbar__items {
-                background-color: var(--light-gray) !important;
-              }
-            }
-            .ck-editor {
-              width: 100% !important;
-              .ck-content {
-                background-color: var(--tab-gray);
-                padding: 1vw;
-              }
+            svg {
+              margin-left: 1vw;
+              height: 3vw;
+              width: 3vw;
             }
           }
-          input {
-            width: calc(100% - 2vw);
-            @extend %themeRadius;
-            background-color: var(--tab-gray);
-            padding: 0.5vw 1vw;
-          }
-        }
-
-        input {
-          width: 100%;
         }
       }
     }
-  }
-  .book-main-container:hover {
-    width: 50vw;
 
+    .page5 {
+      background: #efefef;
+    }
+
+    .page6 {
+      background: #efefef;
+    }
+
+    .page3 {
+      background: #f5f5f5;
+    }
+
+    .page4 {
+      background: #f5f5f5;
+    }
+  }
+
+  .book-main-container.hovered {
+    width: 50vw;
     $scale: 1.15;
 
     .front {
@@ -370,14 +279,26 @@
       box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
       z-index: 10;
     }
-
+    
     .page1 {
+      transform: rotateY(-130deg) scale($scale);
+      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+      z-index: 5;
+    }
+
+    .page2 {
+      transform: rotateY(-50deg) scale($scale);
+      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+      z-index: 4;
+    }
+
+    .page5 {
       transform: rotateY(-150deg) scale($scale);
       box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
       z-index: 9;
     }
 
-    .page2 {
+    .page6 {
       transform: rotateY(-30deg) scale($scale);
       box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
       z-index: 8;
@@ -393,18 +314,6 @@
       transform: rotateY(-40deg) scale($scale);
       box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
       z-index: 6;
-    }
-
-    .page5 {
-      transform: rotateY(-130deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 5;
-    }
-
-    .page6 {
-      transform: rotateY(-50deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 4;
     }
 
     .back {
