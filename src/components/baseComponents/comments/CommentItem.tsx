@@ -1,5 +1,7 @@
 import React from 'react';
-import { Grid,/* Box,*/ SvgIcon, IconButton, Collapse } from '@material-ui/core';
+import moment from 'moment';
+import axios from 'axios';
+import { Grid, SvgIcon, IconButton, Collapse } from '@material-ui/core';
 //@ts-ignore
 import Hyphenated from 'react-hyphen';
 //@ts-ignore
@@ -7,13 +9,14 @@ import gb from 'hyphenated-en-gb';
 
 import sprite from "assets/img/icons-sprite.svg";
 
-import moment from 'moment';
-import ReplyCommentPanel from './ReplyCommentPanel';
 import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
-import axios from 'axios';
+import { User } from 'model/user';
+
+import ReplyCommentPanel from './ReplyCommentPanel';
 
 interface CommentItemProps {
+  currentUser: User;
   comment: Comment;
   isAuthor: boolean;
   currentBrick: Brick;
@@ -30,14 +33,13 @@ const CommentItem: React.FC<CommentItemProps> = props => {
     );
   }
 
-
   return (
   <Grid item className="comment-container">
     <div className="comment-item-container">
       <Grid container direction="column">
         <Grid item container direction="row" style={{position: 'relative'}}>
           <div style={{position: 'absolute'}} className="profile-image-container">
-            <div className="profile-image">
+            <div className={`profile-image ${props.isAuthor ? 'red-border' : 'yellow-border'}`}>
               {
                 props.comment.author?.profileImage
                   ? <img src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
@@ -48,27 +50,29 @@ const CommentItem: React.FC<CommentItemProps> = props => {
           <Grid className="stretch" item>
             <h4>{props.comment.author.firstName} {props.comment.author.lastName}</h4>
           </Grid>
-          {props.isAuthor &&
-          <IconButton aria-label="delete" size="small" color="secondary"
-            onClick={() => handleDeleteComment()}>
-            <SvgIcon fontSize="inherit">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#cancel"} />
-              </svg>
-            </SvgIcon>
-          </IconButton>}
-          <IconButton aria-label="reply" size="small" color="primary"
-            onClick={() => setReplyPanelShown(!replyPanelShown)}>
-            <SvgIcon fontSize="inherit">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#message-square"} />
-              </svg>
-            </SvgIcon>
-          </IconButton>
+          <div className="buttons-container">
+            {props.isAuthor &&
+            <IconButton aria-label="delete" size="small" color="secondary"
+              onClick={() => handleDeleteComment()}>
+              <SvgIcon fontSize="inherit">
+                <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#cancel"} />
+                </svg>
+              </SvgIcon>
+            </IconButton>}
+            <IconButton aria-label="reply" size="small" color="primary"
+              onClick={() => setReplyPanelShown(!replyPanelShown)}>
+              <SvgIcon fontSize="inherit">
+                <svg className="svg active">
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#message-square"} />
+                </svg>
+              </SvgIcon>
+            </IconButton>
+          </div>
         </Grid>
-        <h5 style={{ marginLeft: '19%', marginBottom: "10px" }}>{moment(props.comment.timestamp).format("H:mm D MMM")}</h5>
+        <h5 className="comment-date">{moment(props.comment.timestamp).format("H:mm D MMM")}</h5>
         <Grid item className="break-word">
           <span className="bold">Comment: </span>
           <Hyphenated language={gb}>

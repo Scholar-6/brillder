@@ -44,6 +44,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
             <CommentItem
               key={comment.id}
               comment={comment}
+              currentUser={props.currentUser}
               currentBrick={props.currentBrick}
               createComment={props.createComment}
               isAuthor={comment.author.id === props.currentUser.id}>
@@ -53,6 +54,7 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
                 <CommentChild
                   key={child.id}
                   comment={child}
+                  currentUser={props.currentUser}
                   currentBrick={props.currentBrick}
                   isAuthor={child.author.id === props.currentUser.id} />
                   );
