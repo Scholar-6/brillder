@@ -41,10 +41,12 @@
     background-color: #ffffff;
     font-size: 1vw;
 
+    $margin-left: 21%;
+
     .profile-image-container {
       @extend %flexCenter;
-      width: 17%;
-      height: 3vw;
+      width: $margin-left;
+      height: 2.5vw;
       .profile-image {
         background: var(--tab-gray);
         width: 1.8vw;
@@ -56,19 +58,37 @@
           height: 1.8vw;
           width: 1.8vw;
         }
+
+        $border-width: 2px;
+        &.red-border {
+          border: $border-width solid var(--theme-orange);
+        }
+        &.yellow-border {
+          border: $border-width solid var(--theme-yellow);
+        }
       }
     }
 
     .stretch {
-      margin-left: 19%;
+      margin-left: $margin-left;
       flex-grow: 1;
+      line-height: 1.3;
       font-family: $font-family-bold;
+    }
+    .buttons-container {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+    .comment-date {
+      margin-left: $margin-left;
     }
 
     .comment-reply-container {
       border-top: 1px solid lightgrey;
       padding-top: 1vh;
       margin-top: 1vh;
+
 
       .comment-child-container {
         position: relative;
@@ -77,9 +97,15 @@
           flex-direction: row;
 
           .comment-author {
-            margin-left: 19%;
+            margin-left: $margin-left;
             flex-grow: 1;
+            line-height: 1.3;
           }
+        }
+        .comment-date {
+          margin-left: $margin-left;
+          line-height: 1.3;
+          margin-bottom: 10px;
         }
       }
     }
