@@ -97,7 +97,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
         p {
           @include phone_and_tabletP {
-            font-size: 3.5vw;
+            font-size: 4.5vw;
           }
           @include tabletP {
             font-size: 1.25vw;
