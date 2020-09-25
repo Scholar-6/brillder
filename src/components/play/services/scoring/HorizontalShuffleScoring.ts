@@ -21,7 +21,7 @@ const mark = (component: HorizontalShuffleComponent, attempt: ComponentAttempt<a
 
     const permutations = permute(n);
     permutations.forEach(([i, j]) => {
-        if(attempt.answer[i] > attempt.answer[j]) {
+        if(attempt.answer[i].index > attempt.answer[j].index) {
             attempt.marks -= 1;
             attempt.correct = false;
         }
@@ -43,6 +43,7 @@ const mark = (component: HorizontalShuffleComponent, attempt: ComponentAttempt<a
     })
 */
     if(attempt.marks === 0 && !attempt.dragged) attempt.marks = 0.5;
+    console.log(attempt);
 
     return attempt;
 }

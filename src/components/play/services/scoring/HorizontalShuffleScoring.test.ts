@@ -18,9 +18,15 @@ describe("horizontal shuffle scoring", () => {
 
     it("should mark a correct answer with 10 marks", () => {
         // arrange
-        const mockAttempt: ComponentAttempt<number[]> = {
-            answer: [0, 1, 2, 3, 4]
-        } as ComponentAttempt<number[]>;
+        const mockAttempt: ComponentAttempt<{ index: number }[]> = {
+            answer: [
+                { index: 0 },
+                { index: 1 },
+                { index: 2 },
+                { index: 3 },
+                { index: 4 },
+            ]
+        } as ComponentAttempt<{ index: number }[]>;
 
         // act
         const result = mark(mockComponent, mockAttempt);
@@ -33,9 +39,15 @@ describe("horizontal shuffle scoring", () => {
 
     it("should mark a partially correct answer with 6 marks", () => {
         // arrange
-        const mockAttempt: ComponentAttempt<number[]> = {
-            answer: [1, 2, 3, 4, 0]
-        } as ComponentAttempt<number[]>;
+        const mockAttempt: ComponentAttempt<{ index: number }[]> = {
+            answer: [
+                { index: 1 },
+                { index: 2 },
+                { index: 3 },
+                { index: 4 },
+                { index: 0 },
+            ]
+        } as ComponentAttempt<{ index: number }[]>;
 
         // act
         const result = mark(mockComponent, mockAttempt);
@@ -48,9 +60,15 @@ describe("horizontal shuffle scoring", () => {
 
     it("should mark an incorrect answer with 0.5 marks", () => {
         // arrange
-        const mockAttempt: ComponentAttempt<number[]> = {
-            answer: [4, 3, 2, 1, 0]
-        } as ComponentAttempt<number[]>;
+        const mockAttempt: ComponentAttempt<{ index: number }[]> = {
+            answer: [
+                { index: 4 },
+                { index: 3 },
+                { index: 2 },
+                { index: 1 },
+                { index: 0 },
+            ]
+        } as ComponentAttempt<{ index: number }[]>;
 
         // act
         const result = mark(mockComponent, mockAttempt);
