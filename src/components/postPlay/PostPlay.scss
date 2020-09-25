@@ -1,6 +1,6 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .post-play-page {
   height: 100% !important;
@@ -61,8 +61,10 @@
     }
 
     .front,
+    .front-cover,
     .back,
     .page1,
+    .page1-cover,
     .page2,
     .page3,
     .page4,
@@ -80,6 +82,7 @@
     }
 
     .front,
+    .front-cover,
     .back {
       width: 30.5vw;
       height: $real-book-height;
@@ -87,7 +90,9 @@
     }
 
     .front,
+    .front-cover,
     .page1,
+    .page1-cover,
     .page3,
     .page5 {
       border-bottom-right-radius: $book-radius;
@@ -114,9 +119,10 @@
         position: absolute;
         height: 100%;
         width: 1.76vw;
-        .vertical-line, .horizontal-line {
+        .vertical-line,
+        .horizontal-line {
           position: absolute;
-          background: var(--white );
+          background: var(--white);
         }
         .vertical-line {
           height: 100%;
@@ -140,7 +146,7 @@
           bottom: 7.8vh;
         }
       }
-      
+
       .image-background-container {
         width: 100%;
         @extend %flexCenter;
@@ -150,7 +156,7 @@
           height: 25vh;
           border-radius: 1vh;
           @extend %flexCenter;
-        
+
           svg {
             height: 21.5vh;
           }
@@ -173,7 +179,7 @@
         color: var(--theme-light-blue);
       }
     }
-    
+
     .page1 {
       background: #fafafa;
       .flipped-page {
@@ -212,11 +218,11 @@
             text-transform: uppercase;
             letter-spacing: 0.3vw;
             height: 20vh;
-          }  
+          }
         }
       }
     }
-    
+
     .page2 {
       background: #fdfdfd;
       .normal-page {
@@ -273,54 +279,88 @@
     }
   }
 
-  .book-main-container.hovered {
-    width: 50vw;
+  //#region book animations
+  .book-main-container {
     $scale: 1.15;
 
-    .front {
-      transform: rotateY(-160deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 10;
-    }
-    
-    .page1 {
-      transform: rotateY(-130deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 5;
+    &.expanded {
+      width: 50vw;
+
+      .front {
+        transform: rotateY(-160deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 10;
+      }
+
+      .front-cover {
+        transform: rotateY(-159.6deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        background: #efefef;
+      }
+
+      .back {
+        transform: rotateY(-20deg) scale($scale);
+      }
     }
 
-    .page2 {
-      transform: rotateY(-50deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 4;
+    &.hovered {
+      .page1, .page1-cover {
+        transform: rotateY(-130deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 5;
+      }
+
+      .page2 {
+        transform: rotateY(-50deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 4;
+      }
+
+      .page3 {
+        transform: rotateY(-49.6deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 6;
+      }
+
+      .page6 {
+        transform: rotateY(-30deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 8;
+      }
     }
 
-    .page5 {
-      transform: rotateY(-150deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 9;
-    }
+    &.sheet-1 {
+      .page1 {
+        transform: rotateY(-130deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 5;
+      }
 
-    .page6 {
-      transform: rotateY(-30deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 8;
-    }
+      .page2 {
+        transform: rotateY(-130deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 4;
+      }
 
-    .page3 {
-      transform: rotateY(-140deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 7;
-    }
+      .page3 {
+        transform: rotateY(-129.6deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 6;
+      }
 
-    .page4 {
-      transform: rotateY(-40deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 6;
-    }
+      .page4 {
+        transform: rotateY(-50deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 7;
+      }
 
-    .back {
-      transform: rotateY(-20deg) scale($scale);
-    }
+      .page6 {
+        transform: rotateY(-30deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 8;
+      }
+    } 
   }
+  //#endregion
 }
