@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { Grid, TextField } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
-import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import actions from 'redux/actions/brickActions';
 import sprite from "assets/img/icons-sprite.svg";
 import { Brick, Editor } from 'model/brick';
-import { getUserByUserName, suggestUsername } from 'components/services/axios/user';
+import { getUserByUserName } from 'components/services/axios/user';
+import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
 
 interface InviteProps {
   canEdit: boolean;
@@ -25,7 +25,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [editorUsername, setEditorUsername] = React.useState(brick.editor?.username ?? "");
   const [editor, setEditor] = React.useState(brick.editor);
   const [editorError, setEditorError] = React.useState("");
-  const [suggestions, setSuggestions] = React.useState([] as string[]);
+  const [locked, setLock] = React.useState(false);
 
   const saveEditor = (editorId: number, fullName: string) => {
     props.assignEditor({ ...brick, editor: { id: editorId } as Editor });
@@ -41,6 +41,8 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
 
   const onBlur = async () => {
     if (editorUsername !== "") {
+      setLock(true);
+      console.log('set lock')
       let data = await getUserByUserName(editorUsername);
       if (data.user) {
         setValid(true);
@@ -50,6 +52,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         setValid(false);
         setEditorError(data.message);
       }
+      setLock(false);
     } else {
       setValid(false);
       setEditorError("No username input.");
@@ -63,7 +66,8 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const renderSendButton = () => {
     return (
       <button
-        className="btn bold btn-md bg-theme-orange yes-button"
+        disabled={locked}
+        className={`btn bold btn-md yes-button bg-theme-orange`}
         style={{ width: 'auto', paddingLeft: '4vw' }}
         onClick={onNext}
       >
@@ -95,43 +99,14 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         <div style={{ marginTop: '1.8vh' }}></div>
         <Grid item className="input-container">
           <div className="audience-inputs border-rounded">
-            <Autocomplete
-              disabled={!props.canEdit}
-              value={editorUsername}
-              options={suggestions} 
-              style={{ background: 'inherit' }}
-              onChange={(e: any, value: string | null) => {
-                if (value) {
-                  console.log('2', value);
-                  setEditorUsername(value);
-                }
-              }}
-              renderInput={(params) => <TextField
-                {...params}
-                error={editorError !== ""}
-                helperText={editorError}
-                fullWidth
-                onBlur={() => onBlur()}
-                onChange={evt => {
-                  const {value} = evt.target;
-                  console.log(value);
-                  setEditorUsername(value)
-                  if (value.length >= 3) {
-                    suggestUsername(value).then(res => {
-                      if (res && res.length > 0) {
-                        setSuggestions(res);
-                      } else {
-                        setSuggestions([]);
-                      }
-                    });
-                  } else {
-                    setSuggestions([]);
-                  }
-                }}
-                placeholder="Enter editor's username here..."
-                variant="outlined"
-                />
-              }
+            <AutocompleteUsername
+              canEdit={props.canEdit}
+              brick={brick}
+              editorError={editorError}
+              placeholder="Enter editor's username here..."
+              onBlur={onBlur}
+              username={editorUsername}
+              setUsername={setEditorUsername}
             />
           </div>
         </Grid>
