@@ -1,5 +1,4 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
 import CompComponent from "../Comp";
 
 import "./ShortAnswer.scss";
@@ -107,18 +106,14 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
         className={`short-answer-input ${isCorrect ? "correct" : ""}`}
         style={{ width: `${width}%` }}
       >
-        <Grid container direction="row" justify="center">
-          {this.renderCkeditor(index)}
-        </Grid>
-        <Grid container direction="row" justify="center">
-          <ReviewEachHint
-            isPhonePreview={this.props.isPreview}
-            isReview={this.props.isReview}
-            isCorrect={isCorrect}
-            index={index}
-            hint={this.props.question.hint}
-          />
-        </Grid>
+        {this.renderCkeditor(index)}
+        <ReviewEachHint
+          isPhonePreview={this.props.isPreview}
+          isReview={this.props.isReview}
+          isCorrect={isCorrect}
+          index={index}
+          hint={this.props.question.hint}
+        />
       </div>
     );
   }

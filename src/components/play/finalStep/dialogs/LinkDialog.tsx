@@ -24,8 +24,8 @@ const LinkDialog: React.FC<InviteProps> = props => {
 
   return (
     <Dialog open={props.isOpen} onClose={props.close} className="dialog-box light-blue unlimited">
-      <div className="close-button">
-        <svg className="svg active" onClick={props.close}>
+      <div className="close-button svgOnHover" onClick={props.close}>
+        <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#cancel-thick"} />
         </svg>
@@ -34,8 +34,8 @@ const LinkDialog: React.FC<InviteProps> = props => {
         <div className="link">{props.link}</div>
       </div>
       <input id="invite-link" style={{ opacity: 0, height: 0 }} value={props.link} />
-      <div className="dialog-footer" style={{justifyContent: 'center'}}>
-        <button className="btn btn-md bg-theme-orange yes-button" style={{width: 'auto'}} onClick={copyToClipboard}>
+      <div className="dialog-footer" style={{ justifyContent: 'center' }}>
+        <button className="btn btn-md bg-theme-orange yes-button" style={{ width: 'auto' }} onClick={copyToClipboard}>
           <span className="bold">Copy Link</span>
         </button>
       </div>

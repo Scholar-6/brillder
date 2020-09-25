@@ -70,4 +70,4 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 /play/dashboard        - view all page
 /build/new-brick - create new brick page
-/build/brick/{brickId}/build/investigation/question - investigation build page
+/build/brick/{brickId}/investigation/question - investigation build page

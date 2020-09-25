@@ -51,7 +51,7 @@
     margin-top: 7vh;
   }
 
-  .phone-preview-component {
+  .phone-preview-component.title {
     padding-top: 5.5vh !important;
     .titles-image {
       margin-top: 0vw;
@@ -86,10 +86,10 @@
       .brick-topics {
         width: 15.5vw;
         @extend %ellipsis;
-        .author-row {
-          margin-top: 0.5vh;
-          color: var(--white);
-        }
+      }
+      .author-row {
+        margin-top: 0.5vh;
+        color: var(--white) !important;
       }
     }
   }

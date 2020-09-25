@@ -10,7 +10,7 @@ export const BackToWorkLearnTab = BackToWorkPage + '/learn';
 export const ViewAllPage = '/play/dashboard';
 
 export const InvestigationBuild = (brickId: number) => {
-  return `/build/brick/${brickId}/build/investigation/question-component`;
+  return `/build/brick/${brickId}/investigation/question-component`;
 }
 
 export const investigationBuildQuestion = (brickId: number, questionId: number) => {

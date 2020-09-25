@@ -30,7 +30,7 @@
       left: calc(100% - #{$notification-width}) !important;
     }
     .notification-content {
-      background-color: var(--light-blue);
+      background-color: var(--theme-light-blue);
       box-shadow: none !important;
       @include phone_and_tabletP {
         width: 100vw;
@@ -167,6 +167,7 @@
           }
         }
         .notification-detail-single {
+          width: 100%;
           @include phone_and_tabletP {
             font-size: 4vw;
             padding: 15px 0;

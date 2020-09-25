@@ -17,12 +17,13 @@ interface PrepProps {
   canEdit: boolean;
   playStatus: PlayButtonStatus;
   savePrep(prep: string): void;
+  saveBrick(prep: string): void;
 }
 
 const PrepPreviewComponent: React.FC<any> = ({ data }) => {
   return (
     <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
-      <svg>
+      <svg className={data ? "" : "big"}>
         {/*eslint-disable-next-line*/}
         <use href={sprite + "#file-text"} />
       </svg>
@@ -33,7 +34,7 @@ const PrepPreviewComponent: React.FC<any> = ({ data }) => {
   );
 }
 
-const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, playStatus, savePrep }) => {
+const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, playStatus, savePrep, saveBrick }) => {
   return (
     <div className="tutorial-page prep-page">
       <Navigation step={ProposalStep.Prep} playStatus={playStatus} onMove={() => savePrep(parentPrep)} />
@@ -48,6 +49,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, playStatus, s
             data={parentPrep}
             placeholder="Enter Instructions, Links to Videos and Webpages Here…"
             mediaEmbed={true}
+            link={true}
             toolbar={[
               'bold', 'italic', 'fontColor', 'mathType', 'chemType', 'bulletedList', 'numberedList'
             ]}
@@ -58,7 +60,7 @@ const PrepComponent: React.FC<PrepProps> = ({ parentPrep, canEdit, playStatus, s
             step={ProposalStep.Prep}
             canSubmit={true}
             data={parentPrep}
-            onSubmit={savePrep}
+            onSubmit={saveBrick}
             backLink={map.ProposalBrief}
           />
           <h2 className="pagination-text">4 of 4</h2>

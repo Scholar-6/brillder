@@ -4,6 +4,7 @@ import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import CommentItem from './CommentItem';
 import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
+import { User } from 'model/user';
 
 const mockBrick: Brick = {
   id: 1

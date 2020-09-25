@@ -1,28 +1,43 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
+import Avatar from "@material-ui/core/Avatar";
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import "./FailedRequestDialog.scss";
+import sprite from "assets/img/icons-sprite.svg";
 
-
-interface DeleteDialogProps {
+interface FailedRequestProps {
   isOpen: boolean;
   close(): void;
 }
 
-const FailedRequestDialog: React.FC<DeleteDialogProps> = (props) => {
+const FailedRequestDialog: React.FC<FailedRequestProps> = props => {
   return (
-    <Dialog open={props.isOpen} onClose={props.close} className="dialog-box">
+    <Dialog
+      open={props.isOpen}
+      onClick={props.close}
+      onClose={props.close}
+      className="dialog-box link-copied-dialog"
+    >
       <div className="dialog-header">
-        <div>Sorry, we've run into a brick wall. Click refresh and see if we can get over it.</div>
-      </div>
-      <div className="dialog-footer">
-        <button className="btn btn-md bg-theme-orange yes-button"
-          onClick={props.close}>
-          <span>Close</span>
-        </button>
+        <ListItem>
+          <ListItemText primary="Sorry, we've run into a brick wall" className="bold" style={{ minWidth: '30vw' }} />
+          <ListItemAvatar>
+            <Avatar className="alert-icon">
+              <svg className="svg active" style={{strokeWidth: 2, marginBottom: '0.3vw'}}>
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#alert-triangle"} />
+              </svg>
+            </Avatar>
+          </ListItemAvatar>
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Click refresh and see if we can get over it" className="italic" style={{ minWidth: '30vw' }} />
+        </ListItem>
       </div>
     </Dialog>
   );
-}
+};
 
 export default FailedRequestDialog;

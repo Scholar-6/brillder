@@ -101,7 +101,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
 
     const bricks = await getPublishedBricks();
     if (bricks) {
-      const finalBricks = this.filter(bricks);
+      let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
+      bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
+         
+      const finalBricks = this.filter(bs);
       this.setState({ ...this.state, bricks, finalBricks, shown: true });
     } else {
       this.setState({ ...this.state, failedRequest: true });

@@ -10,10 +10,9 @@
   background: white;
   border-radius: 0 0 $editor-radius $editor-radius;
   &:not(.active) {
-    .text-box {
-      .drag-box-name {
-        animation: pulse-orange-alpha5 1.5s ease infinite;
-      }
+    .drag-box-name {
+      // animation: pulse1 1.5s ease infinite;
+      animation: heartbeat 2s infinite;
     }
   }
   .invalid {
@@ -26,7 +25,7 @@
 
   .help-arrow {
     position: absolute;
-    top: 8.5vh;
+    top: 10vh;
     left: 8.2vw;
     width: 9.5vw;
     z-index: 1000;
@@ -261,15 +260,23 @@
             color: var(--theme-dark-blue);
           }
         }
-        .comments-plus,
+
         .comments-count {
           height: $comment-button-size / 1.7;
           width: $comment-button-size / 1.7;
           margin-bottom: 0.51vw;
         }
+        .comments-plus {
+          width: 100%;
+          height: 5.88vh;
+          margin-bottom: 1vw;
+          align-items: start;
+          top: 44%;
+          transform: translateY(-50%);
+        }
         &.active,
         &.has-replied {
-          animation: pulse-orange-alpha5 1.5s ease infinite;
+          animation: pulse1 1.5s ease infinite;
           .comments-icon,
           .comments-plus,
           .comments-count {
