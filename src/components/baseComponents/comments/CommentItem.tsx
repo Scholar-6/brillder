@@ -12,8 +12,10 @@ import ReplyCommentPanel from './ReplyCommentPanel';
 import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
 import axios from 'axios';
+import { User } from 'model/user';
 
 interface CommentItemProps {
+  currentUser: User;
   comment: Comment;
   isAuthor: boolean;
   currentBrick: Brick;
@@ -30,11 +32,21 @@ const CommentItem: React.FC<CommentItemProps> = props => {
     );
   }
 
+
   return (
   <Grid item className="comment-container">
     <div className="comment-item-container">
       <Grid container direction="column">
         <Grid item container direction="row">
+          <div style={{position: 'absolute'}} className="profile-image-container">
+            <div className="profile-image">
+              {
+                props.currentUser.profileImage
+                  ? <img src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.currentUser.profileImage}`} />
+                  : <svg><use href={sprite + "#user"} /></svg>
+                }
+            </div>
+          </div>
           <Grid className="stretch" item>
             <h4>{props.comment.author.firstName} {props.comment.author.lastName}</h4>
           </Grid>
@@ -58,9 +70,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
             </SvgIcon>
           </IconButton>
         </Grid>
-        <Grid item>
-          <h5 style={{ marginBottom: "10px" }}>{moment(props.comment.timestamp).format("H:mm D MMM")}</h5>
-        </Grid>
+        <h5 style={{ marginLeft: '19%', marginBottom: "10px" }}>{moment(props.comment.timestamp).format("H:mm D MMM")}</h5>
         <Grid item className="break-word">
           <span className="bold">Comment: </span>
           <Hyphenated language={gb}>
