@@ -134,7 +134,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 <div className="intro-header">
                   <Clock brickLength={brick.brickLength} />
                 </div>
-                <div className="intro-text-row f-align-self-start m-t-5">
+                <div className="intro-text-row">
                 </div>
                 <ExitButton onClick={() =>
                   history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`)} />

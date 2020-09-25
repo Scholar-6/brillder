@@ -151,7 +151,7 @@ const EndingPage: React.FC<EndingProps> = ({
                   <div>Range: {minPScore}%-{maxPScore}%</div>
                   <Clock brickLength={brick.brickLength} />
                 </div>
-                <div className="intro-text-row">
+                <div className="intro-text-row f-align-self-start m-t-5">
                   <EndingStepper
                     questions={brick.questions}
                     attempts={attempts}
