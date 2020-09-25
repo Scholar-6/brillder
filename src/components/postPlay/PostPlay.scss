@@ -1,28 +1,28 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .post-play-page {
   height: 100% !important;
   background: var(--theme-dark-blue);
   color: var(--white);
 
-  .red-right-block {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    background: var(--theme-orange);
-    height: 74.6vh;
-    width: 47.9vw;
-    border-top-left-radius: 2vw;
-    z-index: -1;
-  }
+  $book-height: 60vh;
+  $real-book-height: 63.6vh;
 
-  .beta-text {
+  .flipped-page {
+    height: 100%;
+    width: 100%;
+
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    -o-transform: scale(-1, 1);
+    -ms-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+
+    padding-top: 3.5vh;
     color: var(--theme-dark-blue);
   }
-
-  $book-height: 60vh;
 
   .main-text-container {
     position: fixed;
@@ -49,53 +49,6 @@
     }
   }
 
-  .back-button-container {
-    position: fixed;
-    height: 100vh !important;
-    width: 15vw;
-    left: 0;
-    top: 0;
-
-    .back-button {
-      cursor: pointer;
-      height: 3.6vw;
-      width: 2vw;
-      margin-left: 5.5vw;
-      color: var(--theme-orange);
-      transition: all 0.2s ease-in-out;
-      transform-origin: 200% 50%;
-
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url(/feathericons/big-chevron-left-orange.png);
-    }
-  }
-
-  .next-button-container {
-    position: fixed;
-    top: 0;
-    height: 100%;
-    width: 15vw;
-    right: 0;
-    color: var(--theme-orange);
-
-    .next-button {
-      z-index: 12;
-      cursor: pointer;
-      height: 3.6vw;
-      width: 2vw;
-      margin-left: 8vw;
-      transition: all 0.2s ease-in-out;
-      transform-origin: -100% 50%;
-
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-image: url(/feathericons/big-chevron-right-blue.png);
-    }
-  }
-
   .book-main-container {
     position: fixed;
     right: 0;
@@ -117,13 +70,15 @@
       transform-style: preserve-3d;
       -webkit-transform-style: preserve-3d;
       position: relative;
-      height: 63.6vh;
+      height: $real-book-height;
       backface-visibility: visible;
     }
 
     .front,
+    .front-cover,
     .back,
     .page1,
+    .page1-cover,
     .page2,
     .page3,
     .page4,
@@ -141,14 +96,17 @@
     }
 
     .front,
+    .front-cover,
     .back {
       width: 30.5vw;
-      height: 63.8vh;
+      height: $real-book-height;
       background: var(--theme-dark-blue);
     }
 
     .front,
+    .front-cover,
     .page1,
+    .page1-cover,
     .page3,
     .page5 {
       border-bottom-right-radius: $book-radius;
@@ -175,9 +133,10 @@
         position: absolute;
         height: 100%;
         width: 1.76vw;
-        .vertical-line, .horizontal-line {
+        .vertical-line,
+        .horizontal-line {
           position: absolute;
-          background: var(--white );
+          background: var(--white);
         }
         .vertical-line {
           height: 100%;
@@ -201,7 +160,7 @@
           bottom: 7.8vh;
         }
       }
-      
+
       .image-background-container {
         width: 100%;
         @extend %flexCenter;
@@ -211,7 +170,7 @@
           height: 25vh;
           border-radius: 1vh;
           @extend %flexCenter;
-        
+
           svg {
             height: 21.5vh;
           }
@@ -236,38 +195,14 @@
     }
 
     .page1 {
-      background: #efefef;
-    }
-
-    .page2 {
-      background: #efefef;
-    }
-
-    .page3 {
-      background: #f5f5f5;
-    }
-
-    .page4 {
-      background: #f5f5f5;
-    }
-
-    .page5 {
       background: #fafafa;
       .flipped-page {
-        height: 100%;
-        width: 100%;
-
-        -moz-transform: scale(-1, 1);
-        -webkit-transform: scale(-1, 1);
-        -o-transform: scale(-1, 1);
-        -ms-transform: scale(-1, 1);
-        transform: scale(-1, 1);
-
-        padding-top: 3.5vh;
-        color: var(--theme-orange);
-
         .circle-icon {
-          font-size: 7.3vw;
+          margin-top: 2vh;
+          margin-bottom: 2vh;
+          height: 5vw;
+          width: 5vw;
+          border-radius: 50%;
         }
 
         .proposal-titles {
@@ -283,132 +218,178 @@
           .title {
             font-family: $font-family-bold;
             text-transform: uppercase;
+            letter-spacing: 0.3vw;
             height: 20vh;
-          }  
+          }
         }
       }
-    }
-
-    .page6 {
-      background: #fdfdfd;
-      .normal-page {
-        height: 100%;
-        overflow: auto;
-        font-size: 1vw;
-
-        font-family: $font-family-regular;
-
-        .normal-page-container {
-          height: $book-height;
-          margin-left: 2vw;
-          margin-right: 2vw;
-          iframe {
-            width: 100%;
-          }
-        }
-
-        .edit-icon {
-          cursor: pointer;
-          margin-top: 2vh;
-          height: 3.5vw;
-          width: 3.5vw;
-          color: var(--theme-dark-blue);
-          &.active {
-            color: var(--theme-orange);
-          }
-        }
-
-        p {
-          margin: 0;
-        }
-
-        .text-title {
-          font-family: $font-family-bold;
-        }
-        .text-title.brick-length {
-          margin-top: 1vh;
-        }
-        .proposal-text {
-          margin-left: 1.3vw;
-          margin-bottom: 1vh;
-          .document-editor {
-            width: 100%;
-            .ck-toolbar {
-              .ck-toolbar__items {
-                background-color: var(--light-gray) !important;
-              }
-            }
-            .ck-editor {
-              width: 100% !important;
-              .ck-content {
-                background-color: var(--tab-gray);
-                padding: 1vw;
-              }
-            }
-          }
-          input {
-            width: calc(100% - 2vw);
-            @extend %themeRadius;
-            background-color: var(--tab-gray);
-            padding: 0.5vw 1vw;
-          }
-        }
-
-        input {
-          width: 100%;
-        }
-      }
-    }
-  }
-  .book-main-container:hover {
-    width: 50vw;
-
-    $scale: 1.15;
-
-    .front {
-      transform: rotateY(-160deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 10;
-    }
-
-    .page1 {
-      transform: rotateY(-150deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 9;
     }
 
     .page2 {
-      transform: rotateY(-30deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 8;
-    }
+      background: #fdfdfd;
+      .normal-page {
+        .normal-page-container {
+          position: relative;
+          height: calc(#{$real-book-height} - 15vh - 5vh);
+          font-family: $font-family-black;
+          color: #d3d4d5;
+          margin-top: 15vh;
+          margin-bottom: 5vh;
+          margin-left: 5vw;
+          margin-right: 2vw;
+          letter-spacing: 0.6vw;
+          font-size: 1vw;
 
-    .page3 {
-      transform: rotateY(-140deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 7;
-    }
+          h2 {
+            font-size: 2vw;
+          }
 
-    .page4 {
-      transform: rotateY(-40deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 6;
+          .bottom-button {
+            cursor: pointer;
+            color: var(--theme-dark-blue);
+            position: absolute;
+            bottom: 0;
+            font-size: 1.2vw;
+            letter-spacing: 0.1vw;
+            margin-left: 4vw;
+            @extend %flexCenter;
+
+            svg {
+              margin-left: 1vw;
+              height: 3vw;
+              width: 3vw;
+            }
+          }
+        }
+      }
     }
 
     .page5 {
-      transform: rotateY(-130deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 5;
+      background: #efefef;
     }
 
     .page6 {
-      transform: rotateY(-50deg) scale($scale);
-      box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
-      z-index: 4;
+      background: #efefef;
     }
 
-    .back {
-      transform: rotateY(-20deg) scale($scale);
+    .page3 {
+      background: #f5f5f5;
+    }
+
+    .page4 {
+      background: #f5f5f5;
     }
   }
+
+  //#region book animations
+  .book-main-container {
+    $scale: 1.15;
+
+    &.expanded {
+      width: 50vw;
+
+      .front {
+        transform: rotateY(-160deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 10;
+      }
+
+      .front-cover {
+        transform: rotateY(-159.6deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        background: #efefef;
+      }
+
+      .back {
+        transform: rotateY(-20deg) scale($scale);
+      }
+    }
+
+    &.hovered {
+      .page1, .page1-cover {
+        transform: rotateY(-130deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 5;
+      }
+
+      .page2 {
+        transform: rotateY(-50deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 4;
+      }
+
+      .page3 {
+        transform: rotateY(-49.6deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 6;
+      }
+
+      .page6 {
+        transform: rotateY(-30deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 8;
+      }
+    }
+
+    &.sheet-1 {
+      .front {
+        transform: rotateY(-181deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 10;
+      }
+
+      .front-cover {
+        transform: rotateY(-179deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        background: #efefef;
+      }
+
+      .back {
+        transform: rotateY(0.4deg) scale($scale);
+      }
+
+      .page1 {
+        transform: rotateY(-180deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 5;
+      }
+
+      .page2 {
+        transform: rotateY(-181deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 4;
+      }
+
+      .page3 {
+        transform: rotateY(-176deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 6;
+        color: var(--theme-dark-blue);
+      }
+
+      .page4 {
+        transform: rotateY(-4deg) scale($scale);
+        box-shadow: none;
+        //box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 7;
+        color: var(--theme-dark-blue);
+        &.flipping {
+          transform: rotateY(-180deg) scale($scale);
+        }
+      }
+
+      .page6 {
+        transform: rotateY(0.5deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 8;
+      }
+
+      .back {
+        transform: rotateY(0.5deg) scale($scale);
+      }
+    }
+  }
+  //#endregion
 }

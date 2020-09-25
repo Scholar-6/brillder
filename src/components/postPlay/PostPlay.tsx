@@ -13,6 +13,12 @@ import { setBrillderTitle } from "components/services/titleService";
 import HomeButton from 'components/baseComponents/homeButton/HomeButton';
 import { BrickFieldNames, PlayButtonStatus } from '../proposal/model';
 
+enum BookState {
+  Closed,
+  Hovered,
+  QuestionPage
+}
+
 
 interface ProposalProps {
   brick: Brick;
@@ -25,21 +31,41 @@ interface ProposalProps {
 }
 
 interface ProposalState {
-  bookHovered: boolean;
+  bookState: BookState;
+  questionIndex: number;
+  animationRunning: boolean;
 }
 
 class PostPlay extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
     this.state = {
-      bookHovered: false
+      bookState: BookState.Closed,
+      questionIndex: 0,
+      animationRunning: false
     }
   }
 
   openDialog = () => this.setState({  });
   closeDialog = () => this.setState({ });
 
-  onBookHover() { setTimeout(() => this.setState({ bookHovered: true }), 800) }
+  onBookHover() {
+    if (this.state.bookState === BookState.Closed) {
+      this.setState({ bookState: BookState.Hovered });
+    }
+  }
+
+  moveToQuestions() {
+    this.setState({ bookState: BookState.QuestionPage, questionIndex: 0});
+  }
+
+  nextQuestion() {
+    if (this.state.animationRunning) { return; }
+    this.setState({animationRunning: true });
+    setTimeout(() => {
+      this.setState({animationRunning: false, questionIndex: this.state.questionIndex + 1});
+    }, 800);
+  }
 
   render() {
     const { brick } = this.props;
@@ -49,7 +75,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
 
     const renderUserRow = () => {
-      console.log(this.props.user);
       const { firstName, lastName } = this.props.user;
 
       return (
@@ -65,6 +90,13 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       color = brick.subject.color;
     }
 
+    let bookClass = 'book-main-container';
+    if (this.state.bookState === BookState.Hovered) {
+      bookClass += ' expanded hovered';
+    } else if (this.state.bookState === BookState.QuestionPage) {
+      bookClass += ` expanded sheet-1`;
+    }
+
     return (
       <div className="post-play-page">
         <HomeButton onClick={() => this.openDialog()} />
@@ -74,24 +106,50 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             <h2>Hover your mouse over the cover to see</h2>
             <h2>a summary of your results.</h2>
           </Grid>
-          <div className="book-main-container">
+          <div className={bookClass}>
             <div className="book-container">
-              <div className="book" onMouseOver={() => this.onBookHover()}>
+              <div className="book" onMouseOver={this.onBookHover.bind(this)}>
                 <div className="back"></div>
-                <div className="page6">
-                  <div className="normal-page">
-                    <div className="normal-page-container">
+                <div className="page1">
+                  <div className="flipped-page">
+                    <Grid container justify="center">
+                      <div className="circle-icon" style={{background: color}} />
+                    </Grid>
+                    <div className="proposal-titles">
+                      <div className="title">{this.props.brick.title}</div>
+                      <div>{this.props.brick.subTopic}</div>
+                      <div>{this.props.brick.alternativeTopics}</div>
                     </div>
                   </div>
                 </div>
-                <div className="page5">
-                  <div className="flipped-page">
+                <div className="page2">
+                  <div className="normal-page">
+                    <div className="normal-page-container">
+                      <h2>OVERALL</h2>
+                      <h2>STATS, AVGs</h2>
+                      <h2>etc.</h2>
+                      <div className="bottom-button" onClick={this.moveToQuestions.bind(this)}>
+                        View Questions
+                        <svg>
+                          {/*eslint-disable-next-line*/}
+                          <use href={sprite + "#arrow-right"} />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="page4"></div>
-                <div className="page3"></div>
-                <div className="page2"></div>
-                <div className="page1"></div>
+                <div className="page3">
+                  <div className="flipped-page">
+                    {this.state.bookState === BookState.QuestionPage ? <div>{this.state.questionIndex}Investigation</div> : ""}
+                  </div>
+                </div>
+                <div className={`page4 ${this.state.animationRunning ? 'fliping' : ''}`}>
+                  {this.state.bookState === BookState.QuestionPage ? <div>Investigation</div> : ""}
+                  <div onClick={() => this.nextQuestion()}>next</div>
+                </div>
+                <div className="page6"></div>
+                <div className="page5"></div>
+                <div className="front-cover"></div>
                 <div className="front">
                   <div className="page-stitch" style={{background: color}}>
                     <div className="vertical-line"></div>
@@ -101,7 +159,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                     <div className="horizontal-line bottom-line-2"></div>
                   </div>
                   <Grid container justify="center" alignContent="center" style={{ height: '100%' }}>
-                    <div>
+                    <div style={{width: '100%'}}>
                       <div className="image-background-container">
                       <div className="book-image-container">
                         <svg style={{color: color}}>
@@ -117,15 +175,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 </div>
               </div>
             </div>
-            <Grid className="next-button-container" container alignContent="center">
-              {
-                this.state.bookHovered ? (
-                  <div>
-                    <div className="next-button" onClick={() => this.props.saveBrick()}></div>
-                  </div>
-                ) : ""
-              }
-            </Grid>
           </div>
         </Grid>
       </div>

@@ -109,6 +109,9 @@
                 .edit-button {
                   margin-left: 1vw;
                 }
+                >div {
+                  @extend %displayFlex;
+                }
               }
               .activate-button-container {
                 padding-left: 2vw;
