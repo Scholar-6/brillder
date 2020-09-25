@@ -124,7 +124,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
    * @param status string - almost all time is "move" and in the end "end"
    */
   const handleSwipe = (step: number, status: string) => {
-    if (status === "move" && step === questions.length - 1) { 
+    if (status === "move" && step === questions.length - 1) {
       swipeLastQuestion(step);
     }
     if (status === "end") {
@@ -286,7 +286,7 @@ const ReviewPage: React.FC<ReviewPageProps> = ({
         <Grid item sm={4} xs={12}>
           <div className="introduction-info">
             <CountDown brickLength={props.brickLength} endTime={null} setEndTime={() => { }} onEnd={onEnd} />
-            <div className="intro-text-row">
+            <div className="intro-text-row f-align-self-start m-t-5">
               <Hidden only={['sm', 'md', 'lg', 'xl']}>
                 <span className="heading">Review</span>
               </Hidden>
