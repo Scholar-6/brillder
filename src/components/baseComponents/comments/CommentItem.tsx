@@ -12,10 +12,8 @@ import ReplyCommentPanel from './ReplyCommentPanel';
 import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
 import axios from 'axios';
-import { User } from 'model/user';
 
 interface CommentItemProps {
-  currentUser: User;
   comment: Comment;
   isAuthor: boolean;
   currentBrick: Brick;
@@ -41,8 +39,8 @@ const CommentItem: React.FC<CommentItemProps> = props => {
           <div style={{position: 'absolute'}} className="profile-image-container">
             <div className="profile-image">
               {
-                props.currentUser.profileImage
-                  ? <img src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.currentUser.profileImage}`} />
+                props.comment.author?.profileImage
+                  ? <img src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
                   : <svg><use href={sprite + "#user"} /></svg>
                 }
             </div>

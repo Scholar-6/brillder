@@ -44,7 +44,7 @@ describe('comment item', () => {
     const createComment = jest.fn();
 
     render(
-      <CommentItem currentUser={{} as User} comment={mockComment} createComment={createComment} isAuthor={false} currentBrick={mockBrick} />
+      <CommentItem comment={mockComment} createComment={createComment} isAuthor={false} currentBrick={mockBrick} />
     );
 
     const commentText = screen.queryByText(mockComment.text);
@@ -70,7 +70,7 @@ describe('comment item', () => {
     );
 
     render(
-      <CommentItem currentUser={{} as User} comment={mockComment} createComment={createComment} isAuthor={false} currentBrick={mockBrick}>
+      <CommentItem comment={mockComment} createComment={createComment} isAuthor={false} currentBrick={mockBrick}>
         {[<MockCommentChild key={mockChild.id} comment={mockChild} currentBrick={mockBrick} isAuthor={false} />]}
       </CommentItem>
     );
@@ -83,7 +83,6 @@ describe('comment item', () => {
 
     render(
       <CommentItem
-        currentUser={{} as User}
         comment={mockComment}
         createComment={createComment}
         isAuthor={true}

@@ -71,13 +71,12 @@
       margin-top: 1vh;
 
       .comment-child-container {
-        margin-left: 1rem;
-
         .comment-head-bar {
           display: flex;
           flex-direction: row;
 
           .comment-author {
+            margin-left: 19%;
             flex-grow: 1;
           }
         }
