@@ -35,7 +35,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
   <Grid item className="comment-container">
     <div className="comment-item-container">
       <Grid container direction="column">
-        <Grid item container direction="row">
+        <Grid item container direction="row" style={{position: 'relative'}}>
           <div style={{position: 'absolute'}} className="profile-image-container">
             <div className="profile-image">
               {
