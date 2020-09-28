@@ -241,6 +241,9 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 
   yourBricksMouseHover(index: number) {
+    let { yourBricks } = this.state;
+    if (yourBricks[index] && yourBricks[index].expanded) return;
+
     this.hideBricks();
     this.setState({ ...this.state });
     setTimeout(() => {
