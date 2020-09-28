@@ -8,8 +8,8 @@ const mark = (component: any, attempt: ComponentAttempt<any>) => {
     attempt.maxMarks = component.choices.length * markIncrement;
     
     attempt.answer.forEach((choice: any, index: number) => {
-        if(choice.value) {
-            if (component.choices[index].answers[choice.value]?.checked === true) {
+        if(component.choices[index].answers[choice.value]) {
+            if (component.choices[index].answers[choice.value].checked === true) {
                 attempt.marks += markIncrement;
             } else {
                 attempt.marks += 0.5;
