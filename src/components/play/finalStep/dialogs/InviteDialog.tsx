@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { Grid, TextField } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { Radio } from '@material-ui/core';
 import { connect } from "react-redux";
 
@@ -9,6 +9,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import { Brick, Editor } from 'model/brick';
 import { getUserByUserName } from 'components/services/axios/user';
 import { inviteUser } from 'components/services/axios/brick';
+import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
 
 interface InviteProps {
   canEdit: boolean;
@@ -121,16 +122,14 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         <div style={{ marginTop: '1.8vh' }}></div>
         <Grid item className="input-container">
           <div className="audience-inputs border-rounded">
-            <TextField
-              disabled={!props.canEdit}
-              value={editorUsername}
-              style={{ background: 'inherit' }}
-              onChange={(evt) => setEditorUsername(evt.target.value)}
-              onBlur={() => onBlur()}
+            <AutocompleteUsername
+              canEdit={props.canEdit}
+              brick={brick}
+              editorError={editorError}
               placeholder="Enter editor's username here..."
-              error={editorError !== ""}
-              helperText={editorError}
-              fullWidth
+              onBlur={onBlur}
+              username={editorUsername}
+              setUsername={setEditorUsername}
             />
           </div>
         </Grid>

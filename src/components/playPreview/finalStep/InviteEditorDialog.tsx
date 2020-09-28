@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { Grid, TextField } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import actions from 'redux/actions/brickActions';
 import sprite from "assets/img/icons-sprite.svg";
 import { Brick, Editor } from 'model/brick';
 import { getUserByUserName } from 'components/services/axios/user';
+import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
 
 interface InviteProps {
   canEdit: boolean;
@@ -24,6 +25,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [editorUsername, setEditorUsername] = React.useState(brick.editor?.username ?? "");
   const [editor, setEditor] = React.useState(brick.editor);
   const [editorError, setEditorError] = React.useState("");
+  const [locked, setLock] = React.useState(false);
 
   const saveEditor = (editorId: number, fullName: string) => {
     props.assignEditor({ ...brick, editor: { id: editorId } as Editor });
@@ -39,6 +41,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
 
   const onBlur = async () => {
     if (editorUsername !== "") {
+      setLock(true);
       let data = await getUserByUserName(editorUsername);
       if (data.user) {
         setValid(true);
@@ -48,6 +51,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         setValid(false);
         setEditorError(data.message);
       }
+      setLock(false);
     } else {
       setValid(false);
       setEditorError("No username input.");
@@ -61,7 +65,8 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const renderSendButton = () => {
     return (
       <button
-        className="btn bold btn-md bg-theme-orange yes-button"
+        disabled={locked}
+        className={`btn bold btn-md yes-button bg-theme-orange`}
         style={{ width: 'auto', paddingLeft: '4vw' }}
         onClick={onNext}
       >
@@ -93,16 +98,14 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
         <div style={{ marginTop: '1.8vh' }}></div>
         <Grid item className="input-container">
           <div className="audience-inputs border-rounded">
-            <TextField
-              disabled={!props.canEdit}
-              value={editorUsername}
-              style={{ background: 'inherit' }}
-              onChange={(evt) => setEditorUsername(evt.target.value)}
-              onBlur={() => onBlur()}
+            <AutocompleteUsername
+              canEdit={props.canEdit}
+              brick={brick}
+              editorError={editorError}
               placeholder="Enter editor's username here..."
-              error={editorError !== ""}
-              helperText={editorError}
-              fullWidth
+              onBlur={onBlur}
+              username={editorUsername}
+              setUsername={setEditorUsername}
             />
           </div>
         </Grid>

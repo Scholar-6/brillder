@@ -16,7 +16,7 @@ import { BrickFieldNames, PlayButtonStatus } from '../proposal/model';
 enum BookState {
   Closed,
   Hovered,
-  FirstPage
+  QuestionPage
 }
 
 
@@ -32,13 +32,17 @@ interface ProposalProps {
 
 interface ProposalState {
   bookState: BookState;
+  questionIndex: number;
+  animationRunning: boolean;
 }
 
 class PostPlay extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
     this.state = {
-      bookState: BookState.Closed
+      bookState: BookState.Closed,
+      questionIndex: 0,
+      animationRunning: false
     }
   }
 
@@ -52,7 +56,15 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
   }
 
   moveToQuestions() {
-    this.setState({ bookState: BookState.FirstPage});
+    this.setState({ bookState: BookState.QuestionPage, questionIndex: 0});
+  }
+
+  nextQuestion() {
+    if (this.state.animationRunning) { return; }
+    this.setState({animationRunning: true });
+    setTimeout(() => {
+      this.setState({animationRunning: false, questionIndex: this.state.questionIndex + 1});
+    }, 800);
   }
 
   render() {
@@ -63,7 +75,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
 
     const renderUserRow = () => {
-      console.log(this.props.user);
       const { firstName, lastName } = this.props.user;
 
       return (
@@ -82,8 +93,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     let bookClass = 'book-main-container';
     if (this.state.bookState === BookState.Hovered) {
       bookClass += ' expanded hovered';
-    } else if (this.state.bookState === BookState.FirstPage) {
-      bookClass += ' expanded sheet-1';
+    } else if (this.state.bookState === BookState.QuestionPage) {
+      bookClass += ` expanded sheet-1`;
     }
 
     return (
@@ -127,8 +138,15 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                     </div>
                   </div>
                 </div>
-                <div className="page3"></div>
-                <div className="page4"></div>
+                <div className="page3">
+                  <div className="flipped-page">
+                    {this.state.bookState === BookState.QuestionPage ? <div>{this.state.questionIndex}Investigation</div> : ""}
+                  </div>
+                </div>
+                <div className={`page4 ${this.state.animationRunning ? 'fliping' : ''}`}>
+                  {this.state.bookState === BookState.QuestionPage ? <div>Investigation</div> : ""}
+                  <div onClick={() => this.nextQuestion()}>next</div>
+                </div>
                 <div className="page6"></div>
                 <div className="page5"></div>
                 <div className="front-cover"></div>
@@ -141,7 +159,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                     <div className="horizontal-line bottom-line-2"></div>
                   </div>
                   <Grid container justify="center" alignContent="center" style={{ height: '100%' }}>
-                    <div>
+                    <div style={{width: '100%'}}>
                       <div className="image-background-container">
                       <div className="book-image-container">
                         <svg style={{color: color}}>
