@@ -53,6 +53,7 @@ interface UserProfileState {
   noSubjectDialogOpen: boolean;
   savedDialogOpen: boolean;
   emailInvalidOpen: boolean;
+  previewAnimationFinished: boolean;
 
   user: UserProfile;
   subjects: Subject[];
@@ -148,7 +149,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       emailInvalidOpen: false,
 
       validationRequired: false,
-      emailInvalid: false
+      emailInvalid: false,
+      previewAnimationFinished: false
     };
   }
 
@@ -170,7 +172,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       savedDialogOpen: false,
       emailInvalidOpen: false,
       validationRequired: false,
-      emailInvalid: false
+      emailInvalid: false,
+      previewAnimationFinished: false
     };
   }
 
@@ -385,6 +388,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     );
   }
 
+  previewAnimationFinished() {
+    this.setState({previewAnimationFinished: true})
+  }
+
   render() {
     const { user } = this.state;
     //let valid = isValid(user) && !this.state.emailInvalid;
@@ -448,7 +455,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <div style={{display: 'flex'}}>
               {this.renderSubjects(user)}
               <div className="centered">
-                <svg className="svg red-circle">
+                <svg className={`svg red-circle ${this.state.previewAnimationFinished ? '' : 'hidden'}`}>
                   <use href={sprite + "#arrow-left-2"} />
                 </svg>
               </div>
@@ -469,7 +476,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               alignContent="center"
               style={{ height: "100%" }}
             >
-              <PhonePreview Component={UserProfilePreview} />
+              <PhonePreview Component={UserProfilePreview} action={this.previewAnimationFinished.bind(this)} />
             </Grid>
           </div>
         </Grid>
