@@ -3,6 +3,7 @@ import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import { connect } from "react-redux";
 
+import sprite from "assets/img/icons-sprite.svg";
 import actions from 'redux/actions/requestFailed';
 import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
@@ -444,7 +445,14 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 </Grid>
               </div>
             </div>
-            {this.renderSubjects(user)}
+            <div style={{display: 'flex'}}>
+              {this.renderSubjects(user)}
+              <div className="centered">
+                <svg className="svg red-circle">
+                  <use href={sprite + "#arrow-left-2"} />
+                </svg>
+              </div>
+            </div>
             <Grid container direction="row" className="big-input-container">
               <textarea
                 className="style2"
