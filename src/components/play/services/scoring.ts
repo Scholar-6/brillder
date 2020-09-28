@@ -9,6 +9,7 @@ import ShuffleMark from './scoring/ShuffleScoring';
 import PairMatchMark from './scoring/PairMatchScoring';
 import SortMark from './scoring/SortScoring';
 import MissingWordMark from './scoring/MissingWordScoring';
+import LineHighlightingMark from './scoring/LineHighlightingScoring';
 
 export type ScoreFunction<C extends QuestionComponent, A> = (component: C, attempt: ComponentAttempt<A>) => ComponentAttempt<A>;
 export type QuestionComponent = { type: QuestionTypeEnum };
@@ -22,7 +23,8 @@ export const scoreFunctions: ScoreFunctionMap = {
   [QuestionTypeEnum.VerticalShuffle]: ShuffleMark,
   [QuestionTypeEnum.PairMatch]: PairMatchMark,
   [QuestionTypeEnum.Sort]: SortMark,
-  [QuestionTypeEnum.MissingWord]: MissingWordMark
+  [QuestionTypeEnum.MissingWord]: MissingWordMark,
+  [QuestionTypeEnum.LineHighlighting]: LineHighlightingMark
 }
 
 export const mark = <C extends QuestionComponent, A>(questionType: QuestionTypeEnum, component: C, attempt: ComponentAttempt<A>) => {
