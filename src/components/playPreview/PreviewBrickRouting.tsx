@@ -245,7 +245,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/provisionalScore">
-              <ProvisionalScore status={status} brick={brick} startTime={startTime} attempts={attempts} isPlayPreview={true} />
+              <ProvisionalScore
+                history={history}
+                location={location}
+                status={status}
+                brick={brick}
+                attempts={attempts}
+                isPlayPreview={true}
+              />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/synthesis">
               <Synthesis status={status} brick={brick} isPlayPreview={true} />
