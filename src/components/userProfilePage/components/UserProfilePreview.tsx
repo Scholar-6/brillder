@@ -11,6 +11,7 @@ interface PreiewState {
 }
 
 interface PreviewProps {
+  action(): void;
 }
 
 class UserProfilePreview extends Component<PreviewProps, PreiewState> {
@@ -49,7 +50,10 @@ class UserProfilePreview extends Component<PreviewProps, PreiewState> {
         </div>
         <div className="label">
           {this.state.titleTyped ?
-            <TypingLabel label="Add subjects to your profile via the dropdown on the left" onEnd={()=>{}} className="" /> : ""}
+            <TypingLabel
+              label="Add subjects to your profile via the dropdown on the left"
+              onEnd={this.props.action}
+              className="" /> : ""}
         </div>
       </div>
     );

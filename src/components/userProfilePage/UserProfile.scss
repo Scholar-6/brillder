@@ -329,6 +329,12 @@
         background: var(--theme-orange);
         color: white;
         stroke-width: 1.5;
+        transition: all 0.4s ease-out;
+        opacity: 1;
+
+        &.hidden {
+          opacity: 0;
+        }
       }
     }
   }
