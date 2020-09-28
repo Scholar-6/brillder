@@ -7,9 +7,15 @@
   .leonardo-image {
     @extend %flexCenter;
     img {
-      margin-top: 4.5vh;
+      margin-top: 15vh;
       margin-right: 1vh;
       width: 68%;
+      transition: all 450ms ease-out;
+    }
+    &.small {
+      img {
+        margin-top: 4.5vh;
+      }
     }
   }
   .title {
