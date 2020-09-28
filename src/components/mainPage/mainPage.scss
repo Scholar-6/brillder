@@ -133,6 +133,10 @@
           height: 8vw;
         }
         @include ex-desktop_wide {
+          width: 12vw;
+          height: 8vw;
+        }
+        @include apple-macbook-air-width {
           width: 13vw;
           height: 9vw;
         }
