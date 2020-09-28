@@ -13,13 +13,15 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
 
     component.list.forEach((answer, index) => {
         if (attempt.answer[index]) {
-            let correctAnswer = stripHtml(answer.value);
-            if (stripHtml(attempt.answer[index]) === correctAnswer) {
+            const correctAnswer = stripHtml(answer.value);
+            const givenAnswer = stripHtml(attempt.answer[index]);
+            if (givenAnswer === correctAnswer) {
                 // add the correct amount of marks
                 attempt.marks += markIncrement;
             } else {
                 // the answer is not correct.
                 attempt.correct = false;
+                attempt.marks += 0.5;
             }
         } else {
             // the answer is not filled in.
@@ -27,9 +29,6 @@ const mark = (component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerA
         } 
     });
 
-    // Then, if there are no marks, and there are no empty entries, give the student half a mark.
-    const emptyAnswer = attempt.answer.indexOf("");
-    if (attempt.marks === 0 && emptyAnswer === -1) attempt.marks += 0.5;
     return attempt;
 }
 
