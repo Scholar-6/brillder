@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { Grid, TextField } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { Radio } from '@material-ui/core';
 import { connect } from "react-redux";
 
@@ -9,7 +9,6 @@ import sprite from "assets/img/icons-sprite.svg";
 import { Brick, Editor } from 'model/brick';
 import { getUserByUserName } from 'components/services/axios/user';
 import { inviteUser } from 'components/services/axios/brick';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import AutocompleteUsername from 'components/play/baseComponents/AutocompleteUsername';
 
 interface InviteProps {
@@ -32,7 +31,6 @@ const InviteDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [editorUsername, setEditorUsername] = React.useState(brick.editor?.username ?? "");
   const [editor, setEditor] = React.useState(brick.editor);
   const [editorError, setEditorError] = React.useState("");
-  const [suggestions, setSuggestions] = React.useState([] as string[]);
 
   const saveEditor = (editorId: number, fullName: string) => {
     props.assignEditor({ ...brick, editor: { id: editorId } as Editor });
