@@ -34,7 +34,7 @@ const CommentChild: React.FC<CommentChildProps> = (props) => {
         <div className={`profile-image ${mineComment ? 'red-border' : 'yellow-border'}`}>
           {
             props.comment.author?.profileImage
-              ? <img src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
+              ? <img alt="profile" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
               : <svg><use href={sprite + "#user"} /></svg>
           }
         </div>

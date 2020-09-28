@@ -41,10 +41,6 @@ import Image from "@ckeditor/ckeditor5-image/src/image";
 import UpcastWriter from "@ckeditor/ckeditor5-engine/src/view/upcastwriter";
 import "./DocumentEditor.scss";
 import UploadImageCustom from './UploadImageCustom';
-import { isMathJax, parseDataToArray } from "components/services/mathJaxService";
-import { stripHtml } from "components/build/questionService/ConvertService";
-//import CommentCustom from './CommentCustom';
-//import { parseDataToArray } from 'components/services/mathJaxService';
 
 export interface DocumentWEditorProps {
   disabled: boolean;
