@@ -399,3 +399,22 @@
     }
   }
 }
+
+// phone
+@include phone_and_tabletP {
+  .auth-page .logo-box {
+    transition: all 2000ms ease-out !important;
+    .svg {
+      transition: all 2000ms ease-out !important;
+      height: 70% !important;
+      width: 70% !important;
+    }
+  }
+  .auth-page .big {
+    height: 100% !important;
+    svg {
+      height: 70% !important;
+      width: 70% !important;
+    }
+  }
+}
