@@ -23,6 +23,7 @@ import InviteColumn from "components/play/finalStep/InviteColumn";
 import PublishColumn from './PublishColumn';
 import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
 import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
+import CustomColumn from "./CustomColumn";
 
 enum PublishStatus {
   None,
@@ -59,6 +60,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   } catch {}
 
   const isAdmin = checkAdmin(user.roles);
+  let isCurrentEditor = brick.editor?.id === user.id;
 
   const link = `/play/brick/${brick.id}/intro`;
 
@@ -83,11 +85,18 @@ const FinalStep: React.FC<FinalStepProps> = ({
   }
 
   const renderActionColumns = () => {
-    let size: 5 | 3 = 5;
-
     let canPublish = isAdmin && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published;
-    if (canPublish) {
-      size = 3;
+
+    let size: 5 | 3 = canPublish ? 3 : 5;
+
+    if (isCurrentEditor) {
+      return (
+        <Grid className="share-row" container direction="row" justify="center">
+          <CustomColumn icon="repeat" title="Return to author" label="for futher changes" size={size} onClick={() => {}} />
+          <CustomColumn icon="send" title="Send to publisher" label="for final review" size={size} onClick={()=>{}} />
+          {canPublish ? <PublishColumn onClick={() => publish(brick.id)} /> : ""}
+        </Grid>
+      );
     }
 
     if (!brick.isCore) {
@@ -123,8 +132,15 @@ const FinalStep: React.FC<FinalStepProps> = ({
                       </svg>
                     </div>
                   </div>
-                  <h2>Submit for Review?</h2>
-                  <p>Invite an editor to begin the publication process</p>
+                  {isCurrentEditor ?
+                    <div>
+                      <h2>All done!</h2>
+                    </div>
+                    :
+                    <div>
+                      <h2>Submit for Review?</h2>
+                      <p>Invite an editor to begin the publication process</p>
+                    </div>}
                   {renderActionColumns()}
                 </div>
               </div>
