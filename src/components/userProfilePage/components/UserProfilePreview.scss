@@ -1,0 +1,27 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.phone-preview-component.user-profile-preview {
+  color: var(--theme-dark-blue);
+  .leonardo-image {
+    @extend %flexCenter;
+    img {
+      margin-top: 4.5vh;
+      margin-right: 1vh;
+      width: 68%;
+    }
+  }
+  .title {
+    text-align: center;
+    font-size: 6vh;
+    margin-bottom: 3vh;
+    font-family: $font-family-bold;
+  }
+  .label {
+    font-family: $font-family-regular-italic;
+    padding-left: 3vh;
+    padding-right: 3vh;
+    font-size: 2.4vh;
+  }
+}
