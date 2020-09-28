@@ -67,7 +67,8 @@ describe("horizontal shuffle scoring", () => {
                 { index: 2 },
                 { index: 1 },
                 { index: 0 },
-            ]
+            ],
+            dragged: true
         } as ComponentAttempt<{ index: number }[]>;
 
         // act
