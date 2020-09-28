@@ -4,25 +4,25 @@ import mark from './MissingWordScoring';
 const mockComponent = {
     choices: [
         {
-            answers: {
-                "A": { checked: true  },
-                "B": { checked: false },
-                "C": { checked: false },
-            }
+            answers: [
+                { value: "A", checked: true  },
+                { value: "B", checked: false },
+                { value: "C", checked: false },
+            ]
         },
         {
-            answers: {
-                "A": { checked: false },
-                "B": { checked: true  },
-                "C": { checked: false },
-            }
+            answers: [
+                { value: "A", checked: false },
+                { value: "B", checked: true  },
+                { value: "C", checked: false },
+            ]
         },
         {
-            answers: {
-                "A": { checked: false },
-                "B": { checked: false },
-                "C": { checked: true  },
-            }
+            answers: [
+                { value: "A", checked: false },
+                { value: "B", checked: false },
+                { value: "C", checked: true  },
+            ]
         }
     ]
 }
@@ -33,9 +33,9 @@ describe("missing word scoring", () => {
         // arrange
         const mockAttempt = {
             answer: [
-                { value: "A" },
-                { value: "B" },
-                { value: "C" },
+                { value: 0 },
+                { value: 1 },
+                { value: 2 },
             ]
         } as ComponentAttempt<any>;
 
@@ -52,9 +52,9 @@ describe("missing word scoring", () => {
         // arrange
         const mockAttempt = {
             answer: [
-                { value: "B" },
-                { value: "C" },
-                { value: "A" },
+                { value: 1 },
+                { value: 2 },
+                { value: 0 },
             ]
         } as ComponentAttempt<any>;
 
@@ -71,9 +71,9 @@ describe("missing word scoring", () => {
         // arrange
         const mockAttempt = {
             answer: [
-                { value: "" },
-                { value: "" },
-                { value: "" },
+                { value: null },
+                { value: null },
+                { value: null },
             ]
         } as ComponentAttempt<any>;
 
