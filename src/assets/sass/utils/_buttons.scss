@@ -84,7 +84,7 @@
   @include phone_and_tabletP {
     width: 17vw;
     height: 17vw;
-    bottom: 10vh;
+    bottom: calc(85px);
     right: 5vw;
   }
   @include tabletP {

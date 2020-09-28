@@ -1129,3 +1129,9 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
     }
   }
 }
+
+.question-live-play {
+  .circle-progress-container {
+    height: inherit !important;
+  }
+}
