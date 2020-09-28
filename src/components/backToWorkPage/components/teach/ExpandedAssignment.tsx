@@ -76,6 +76,15 @@ class ExpandedAssignment extends Component<
     );
   }
 
+  renderCommentIcon() {
+    return (
+      <svg className="svg active comment-icon">
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#message-square"} />
+      </svg>
+    );
+  }
+
   renderBookIcon() {
     return (
       <svg className="svg active book-open-icon">
@@ -95,10 +104,7 @@ class ExpandedAssignment extends Component<
       if (attempt.correct === true) {
         return (
           <svg>
-            <use
-              href={sprite + "#check-icon-thin"}
-              className="text-theme-green"
-            />
+            <use href={sprite + "#check-icon-thin"} className="text-theme-green" />
           </svg>
         );
       }
@@ -112,10 +118,7 @@ class ExpandedAssignment extends Component<
       if (attempt.marks >= attempt.maxMarks) {
         return (
           <svg>
-            <use
-              href={sprite + "#check-icon-thin"}
-              className="text-theme-green"
-            />
+            <use href={sprite + "#check-icon-thin"} className="text-theme-green" />
           </svg>
         );
       }
@@ -151,25 +154,25 @@ class ExpandedAssignment extends Component<
           <div>{this.renderStatus(studentStatus)}</div>
         </td>
         <td className="student-book">
-          {studentStatus ? <div>{this.renderBookIcon()}</div> : ""}
+          {studentStatus ? <div className="centered">{this.renderBookIcon()}</div> : ""}
         </td>
-        <td className="assigned-student-name">
+        <td className={`assigned-student-name`}>
           {student.firstName} {student.lastName}
         </td>
         {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
           (a, i) => {
             return (
               <td key={i} className="icon-container">
-                {this.renderQuestionAttemptIcon(
-                  studentResult,
-                  studentStatus,
-                  i
-                )}
+                <div className="centered">
+                  {this.renderQuestionAttemptIcon(studentResult, studentStatus, i)}
+                </div>
               </td>
             );
           }
         )}
-        <td></td>
+        <td>
+          {studentStatus ? <div className="centered">{this.renderCommentIcon()}</div> : ""}
+        </td>
       </tr>
     );
   }
@@ -186,10 +189,7 @@ class ExpandedAssignment extends Component<
                 onClick={() => this.setState({ sortBy: SortBy.AvgDecreasing })}
               >
                 <svg className="svg active">
-                  <use
-                    href={sprite + "#arrow-down"}
-                    className="text-theme-dark-blue"
-                  />
+                  <use href={sprite + "#arrow-down"} className="text-theme-dark-blue" />
                 </svg>
               </button>
             </div>
@@ -198,10 +198,7 @@ class ExpandedAssignment extends Component<
             <div className="center">
               <button className="btn btn-transparent svgOnHover btn-grey-circle">
                 <svg className="svg active">
-                  <use
-                    href={sprite + "#arrow-right"}
-                    className="text-theme-dark-blue"
-                  />
+                  <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
                 </svg>
               </button>
             </div>
@@ -209,7 +206,7 @@ class ExpandedAssignment extends Component<
           <th></th>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
             (a, i) => (
-              <th key={i}>{i + 1}</th>
+              <th key={i}><div className="centered">{i + 1}</div></th>
             )
           )}
           <th></th>
