@@ -25,6 +25,7 @@ import ProfileSavedDialog from "./components/ProfileSavedDialog";
 import ProfileImage from "./components/ProfileImage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import UserProfilePreview from "./components/UserProfilePreview";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -460,7 +461,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               alignContent="center"
               style={{ height: "100%" }}
             >
-              <PhonePreview />
+              <PhonePreview Component={UserProfilePreview} />
             </Grid>
           </div>
         </Grid>
