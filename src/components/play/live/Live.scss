@@ -7,12 +7,12 @@
 }
 .live-page {
   @include phone_and_tabletP {
-    height: calc(100% - 14vh) !important;
+    height: calc(100% - 60px) !important;
     overflow-y: hidden !important;
   }
   .introduction-page {
     @include phone_and_tabletP {
-      height: calc(100vh - 59.8vw) !important;
+      height: calc(100vh - 60px - 19vw) !important;
     }
     .question-index-container,
     .question-title {
