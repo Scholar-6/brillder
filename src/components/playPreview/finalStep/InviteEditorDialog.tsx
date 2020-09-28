@@ -42,7 +42,6 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const onBlur = async () => {
     if (editorUsername !== "") {
       setLock(true);
-      console.log('set lock')
       let data = await getUserByUserName(editorUsername);
       if (data.user) {
         setValid(true);

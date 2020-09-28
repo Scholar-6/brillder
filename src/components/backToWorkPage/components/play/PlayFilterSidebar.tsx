@@ -65,7 +65,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
 
   renderIndexesBox = () => {
     return (
-      <div className="sort-box teach-sort-box">
+      <div className="sort-box teach-sort-box play-index-box">
         <div className="filter-container sort-by-box">
           <div className="sort-header">INBOX</div>
         </div>
@@ -98,7 +98,7 @@ class PlayFilterSidebar extends Component<FilterSidebarProps, FilterSidebarState
       }
     }
     return (
-      <div className="sort-box">
+      <div className="sort-box play-box">
         <div className="filter-header">
           Filter
           <button

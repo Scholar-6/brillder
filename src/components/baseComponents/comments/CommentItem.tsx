@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import axios from 'axios';
-import { Grid, SvgIcon, IconButton, Collapse } from '@material-ui/core';
+import { Grid, Collapse } from '@material-ui/core';
 //@ts-ignore
 import Hyphenated from 'react-hyphen';
 //@ts-ignore
@@ -42,7 +42,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
             <div className={`profile-image ${props.isAuthor ? 'red-border' : 'yellow-border'}`}>
               {
                 props.comment.author?.profileImage
-                  ? <img src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
+                  ? <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
                   : <svg><use href={sprite + "#user"} /></svg>
                 }
             </div>
