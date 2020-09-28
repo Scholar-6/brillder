@@ -126,8 +126,6 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
       return <div key={index}></div>
     }
 
-    console.log(question.firstComponent)
-
     try {
       return (
         <div>

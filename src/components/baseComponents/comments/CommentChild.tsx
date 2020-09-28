@@ -1,13 +1,16 @@
 import React from "react";
-import { Comment } from "model/comments";
-import moment from "moment";
 import axios from "axios";
-import sprite from "assets/img/icons-sprite.svg";
+import moment from "moment";
 import { IconButton, SvgIcon } from "@material-ui/core";
+
+import sprite from "assets/img/icons-sprite.svg";
+import { Comment } from "model/comments";
 import { Brick } from "model/brick";
+import { User } from "model/user";
 
 export interface CommentChildProps {
   comment: Comment;
+  currentUser: User;
   currentBrick: Brick;
   isAuthor: boolean;
 }
@@ -20,13 +23,18 @@ const CommentChild: React.FC<CommentChildProps> = (props) => {
     );
   };
 
+  let mineComment = false;
+  if (props.comment.author.id === props.currentUser.id) {
+    mineComment = true;
+  }
+
   return (
     <div className="comment-child-container">
       <div style={{position: 'absolute'}} className="profile-image-container">
-        <div className="profile-image">
+        <div className={`profile-image ${mineComment ? 'red-border' : 'yellow-border'}`}>
           {
             props.comment.author?.profileImage
-              ? <img src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
+              ? <img alt="profile" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
               : <svg><use href={sprite + "#user"} /></svg>
           }
         </div>
@@ -51,10 +59,10 @@ const CommentChild: React.FC<CommentChildProps> = (props) => {
           </IconButton>
         )}
       </div>
-      <div>
-        <small style={{marginLeft: '19%'}}>{moment(props.comment.timestamp).format("H:mm D MMM")}</small>
+      <div className="comment-date">
+        {moment(props.comment.timestamp).format("H:mm D MMM")}
       </div>
-      <div>
+      <div className="comment-text">
         <i>
           {props.comment.text === "" ? "No text inserted" : props.comment.text}
         </i>

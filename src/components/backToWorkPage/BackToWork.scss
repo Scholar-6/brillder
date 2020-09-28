@@ -280,10 +280,20 @@
   }
 }
 .teach-sort-box ~ .sort-box {
+
   .subject-indexes-box {
     margin-top: 2.5vh !important;
     .index-box {
       margin-bottom: 1.5vh !important;
     }
   }
+}
+
+.sort-box.play-index-box {
+  height: 70%;
+}
+
+.sort-box.play-box {
+  height: 30% !important;
+  overflow: hidden !important;
 }

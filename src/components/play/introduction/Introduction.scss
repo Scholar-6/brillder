@@ -6,7 +6,7 @@ $expanded-intro-padding: 2vw;
 $introduction-desktop-height: calc(100vh - #{$expanded-intro-padding} - #{$page-head-height});
 $introduction-expanded-height: calc(100vh - #{$expanded-intro-padding});
 
-$play-mobile-height: calc(100vh - 55.8vw);
+$play-mobile-height: calc(100vh - 60px - 19vw) !important;
 
 .play-preview-pages {
   background: var(--theme-dark-blue);
@@ -74,8 +74,8 @@ $play-mobile-height: calc(100vh - 55.8vw);
 
     .brick-container {
       @include phone_and_tabletP {
-        height: calc(100% - 26vh);
-        overflow-y: auto;
+        height: calc(100% - 60px);
+        // overflow-y: auto;
       }
 
       .introduction-page {
@@ -97,7 +97,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
         }
         p {
           @include phone_and_tabletP {
-            font-size: 3.5vw;
+            font-size: 4.5vw;
           }
           @include tabletP {
             font-size: 1.25vw;
@@ -128,6 +128,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
               align-items: flex-start;
               padding: 3vw;
               background-color: var(--light-gray);
+              height: 86px;
             }
 
             @include tabletP {
@@ -258,6 +259,8 @@ $play-mobile-height: calc(100vh - 55.8vw);
         .intro-content {
           @include phone_and_tabletP {
             padding: 0 4vw;
+            height: calc(100vh - 60px - 86px);
+            overflow-y: auto;
           }
         }
 
@@ -332,6 +335,7 @@ $play-mobile-height: calc(100vh - 55.8vw);
 
           @include tabletP {
             height: calc(100vh - #{$home-button-size} - #{$sorted-row-margin-top});
+            overflow: hidden;
           }
           .question-title {
             font-size: 2.5vw;
@@ -755,7 +759,12 @@ $play-mobile-height: calc(100vh - 55.8vw);
           bottom: 5vw;
         }
         .play-preview {
-          @extend %floatToCenter;
+          @include tabletP {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+          }
         }
         > div {
           display: flex;
