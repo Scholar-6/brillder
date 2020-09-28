@@ -10,8 +10,7 @@ import {ComponentAttempt} from 'components/play/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import {QuestionValueType} from 'components/build/buildQuestions/questionTypes/types';
 import {Answer} from 'components/build/buildQuestions/questionTypes/pairMatchBuild/types';
-import { PairMatchProps, PairMatchState, DragAndDropStatus } from './interface';
-import {mark} from './service';
+import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, PairMatchComponent } from './interface';
 import MathInHtml from '../../baseComponents/MathInHtml';
 
 
@@ -67,8 +66,12 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     } else { return 0; }
   }
 
-  mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
-    return mark(this.props.component.list, attempt, prev, this.state.status, this.props.isReview);
+  prepareAttempt(component: PairMatchComponent, attempt: ComponentAttempt<PairMatchAnswer>) {
+    if (this.state.status === DragAndDropStatus.Changed) {
+      attempt.dragged = true;
+    }
+
+    return attempt;
   }
 
   renderOptionContent(answer: Answer) {

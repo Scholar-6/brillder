@@ -1,7 +1,7 @@
 import mark from './ShortAnswerScoring';
 
 import { ShortAnswerData } from 'components/build/buildQuestions/questionTypes/shortAnswerBuild/interface';
-import ShortAnswer, { ShortAnswerAnswer } from 'components/play/questionTypes/shortAnswer/ShortAnswer';
+import { ShortAnswerAnswer } from 'components/play/questionTypes/shortAnswer/ShortAnswer';
 import { ComponentAttempt } from 'components/play/model';
 
 const mockComponent: ShortAnswerData = {
