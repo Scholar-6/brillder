@@ -23,6 +23,7 @@ import { getAssignmentStats } from "components/services/axios/stats";
 import { ApiAssignemntStats } from "model/stats";
 
 interface TeachProps {
+  history: any;
   searchString: string;
   isSearching: boolean;
 
@@ -237,6 +238,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
                 subjects={this.props.subjects}
                 startIndex={this.state.sortedIndex}
                 pageSize={this.state.assignmentPageSize}
+                history={this.props.history}
                 minimize={() => this.unselectAssignment()}
               />
               :

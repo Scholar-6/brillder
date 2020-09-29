@@ -131,6 +131,7 @@ class BackToWorkPage extends Component<BackToWorkProps, BackToWorkState> {
         <Switch>
           <Route path={map.BackToWorkTeachTab}>
             <TeachPage
+              history={this.props.history}
               searchString={this.state.searchString}
               isSearching={this.state.isSearching}
               subjects={this.state.subjects}

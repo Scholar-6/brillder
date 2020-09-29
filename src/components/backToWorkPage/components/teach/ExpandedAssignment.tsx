@@ -9,6 +9,7 @@ import { getSubjectColor } from "components/services/subject";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import { ApiAssignemntStats, AssignmentStudent } from "model/stats";
+import map from "components/map";
 
 enum SortBy {
   None,
@@ -28,6 +29,7 @@ interface AssignmentBrickProps {
   pageSize: number;
   classroom: TeachClassroom;
   assignment: Assignment;
+  history: any;
   minimize(): void;
 }
 
@@ -87,7 +89,7 @@ class ExpandedAssignment extends Component<
 
   renderBookIcon() {
     return (
-      <svg className="svg active book-open-icon">
+      <svg className="svg active book-open-icon" onClick={() => this.props.history.push(map.postPlay(this.props.assignment.brick.id))}>
         {/*eslint-disable-next-line*/}
         <use href={sprite + "#book-open"} />
       </svg>
