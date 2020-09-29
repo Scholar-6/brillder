@@ -54,7 +54,8 @@ interface BrickRoutingProps {
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  const [brick, setBrick] = React.useState(props.brick);
+  const parsedBrick = parseAndShuffleQuestions(props.brick);
+  const [brick, setBrick] = React.useState(parsedBrick);
   const initAttempts = prefillAttempts(brick.questions);
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
@@ -351,7 +352,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  brick: parseAndShuffleQuestions(state.brick.brick) as Brick,
+  brick: state.brick.brick
 });
 
 const connector = connect(mapState);
