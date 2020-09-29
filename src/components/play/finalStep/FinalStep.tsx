@@ -103,7 +103,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                   if (isAuthor || isAdmin || isEditor) {
                     history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`);
                   } else {
-                    history.push(`${map.BackToWorkLearnTab}?isCore=${brick.isCore});
+                    history.push(`${map.BackToWorkLearnTab}?isCore=${brick.isCore}`);
                   }
                  }} />
               </div>
