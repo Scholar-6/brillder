@@ -68,8 +68,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     if (this.state.animationRunning) {
       return;
     }
-    this.setState({ questionIndex: this.state.questionIndex + 1, animationRunning: true });
-    setTimeout(() => this.setState({ animationRunning: false }), 1200);
+    if (this.state.questionIndex < this.props.brick.questions.length - 1) {
+      this.setState({ questionIndex: this.state.questionIndex + 1, animationRunning: true });
+      setTimeout(() => this.setState({ animationRunning: false }), 1200);
+    }
   }
 
   prevQuestion() {
@@ -119,21 +121,33 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     const renderQuestionPage = (question: Question, i: number) => {
       return (
-        <div style={{ display: "flex" }}>
-          <div className="question-number">
-            <div>{i + 1}</div>
-          </div>
-          <div>
-            <h2>Investigation</h2>
-            <QuestionPlay question={question} answers={[]} />
+        <div
+          className={`page3 ${i === 0 ? 'first' : ''}`}
+          style={getQuestionStyle(i)}
+          onClick={this.prevQuestion.bind(this)}
+        >
+          <div className="flipped-page question-page">
+            <div style={{ display: "flex" }}>
+              <div className="question-number">
+                <div>{i + 1}</div>
+              </div>
+              <div>
+                <h2>Investigation</h2>
+                <QuestionPlay question={question} answers={[]} />
+              </div>
+            </div>
           </div>
         </div>
       );
     };
 
-    const renderAnswersPage = () => {
+    const renderAnswersPage = (i: number) => {
       return (
-        <div onClick={() => this.nextQuestion()}>
+        <div
+          className={`page4 result-page ${i === 0 ? 'first' : ''}`}
+          style={getResultStyle(i)}
+          onClick={this.nextQuestion.bind(this)}
+        >
           <h2>My Answer(s)</h2>
           <div style={{ display: "flex" }}>
             <div className="col">
@@ -249,22 +263,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                   return (
                     <div>
                       {i === 0 ? <div className="page3-cover first" style={getQuestionCoverStyle(i)}></div> : ""}
-                      <div
-                        className={`page3 ${i === 0 ? 'first' : ''}`}
-                        style={getQuestionStyle(i)}
-                        onClick={this.prevQuestion.bind(this)}
-                      >
-                        <div className="flipped-page question-page">
-                          {renderQuestionPage(q, i)}
-                        </div>
-                      </div>
-                      <div
-                        className={`page4 result-page ${i === 0 ? 'first' : ''}`}
-                        style={getResultStyle(i)}
-                        onClick={this.nextQuestion.bind(this)}
-                      >
-                        {renderAnswersPage()}
-                      </div>
+                      {renderQuestionPage(q, i)}
+                      {renderAnswersPage(i)}
                     </div>
                   );
                 })}
