@@ -164,6 +164,20 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       return {};
     }
 
+    const getQuestionCoverStyle = (index: number) => {
+      const scale = 1.15;
+      if (this.state.bookState === BookState.QuestionPage) {
+        if (index === this.state.questionIndex) {
+          return { transform: `rotateY(-178.3deg) scale(${scale})` }
+        } else if (index < this.state.questionIndex) {
+          return { transform: `rotateY(-180.4deg) scale(${scale})` };
+        } else if (index > this.state.questionIndex) {
+          return { transform: `rotateY(1deg) scale(${scale})` };
+        }
+      }
+      return {};
+    }
+
     const getResultStyle = (index: number) => {
       const scale = 1.15;
       if (this.state.bookState === BookState.QuestionPage) {
@@ -230,12 +244,14 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 {questions.map((q, i) => {
                   return (
                     <div>
-                      <div className="page3" style={getQuestionStyle(i)}>
+                      <div className={`page3-cover ${i === 0 ? 'first' : ''}`} style={getQuestionCoverStyle(i)}></div>
+                      <div className={`page3 ${i === 0 ? 'first' : ''}`} style={getQuestionStyle(i)}>
                         <div className="flipped-page question-page">
                           {renderQuestionPage(q, i)}
                         </div>
                       </div>
-                      <div className="page4 result-page" style={getResultStyle(i)}>
+                      <div className="cover-page4"></div>
+                      <div className={`page4 result-page ${i === 0 ? 'first' : ''}`} style={getResultStyle(i)}>
                         {renderAnswersPage()}
                       </div>
                     </div>
