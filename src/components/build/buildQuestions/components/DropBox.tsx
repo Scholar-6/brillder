@@ -11,7 +11,7 @@ const DropBox: React.FC<DropBoxProps> = ({ locked, onDrop }) => {
   const [components] = React.useState([]);
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative',marginBottom:'0.5vh' }}>
       <div className="dropzone" style={{ minHeight: '15vh' }}>Drag Component Here</div>
       <ReactSortable
         list={components}
