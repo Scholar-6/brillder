@@ -138,8 +138,8 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
           }
         </div>
       );
-    }
-    catch {
+    } catch(e) {
+      console.log(e)
       return <div>Oops something is not working on this question.</div>
     }
   }
