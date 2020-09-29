@@ -69,7 +69,17 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       return;
     }
     this.setState({ questionIndex: this.state.questionIndex + 1, animationRunning: true });
-    setTimeout(() => this.setState({ animationRunning: false }), 800);
+    setTimeout(() => this.setState({ animationRunning: false }), 1200);
+  }
+
+  prevQuestion() {
+    if (this.state.animationRunning) {
+      return;
+    }
+    if (this.state.questionIndex > 0) {
+      this.setState({ questionIndex: this.state.questionIndex - 1, animationRunning: true });
+      setTimeout(() => this.setState({ animationRunning: false }), 1200);
+    }
   }
 
   render() {
@@ -239,7 +249,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                   return (
                     <div>
                       {i === 0 ? <div className="page3-cover first" style={getQuestionCoverStyle(i)}></div> : ""}
-                      <div className={`page3 ${i === 0 ? 'first' : ''}`} style={getQuestionStyle(i)}>
+                      <div
+                        className={`page3 ${i === 0 ? 'first' : ''}`}
+                        style={getQuestionStyle(i)}
+                        onClick={this.prevQuestion.bind(this)}
+                      >
                         <div className="flipped-page question-page">
                           {renderQuestionPage(q, i)}
                         </div>
