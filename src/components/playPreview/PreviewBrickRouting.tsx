@@ -62,17 +62,15 @@ interface BrickRoutingProps {
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  const {brick, history, location, match} = props;
-
-  let initAttempts: any[] = [];
-  if (brick) {
-    initAttempts = prefillAttempts(brick.questions);
-  }
+  const {history, location, match} = props;
+  const parsedBrick = parseAndShuffleQuestions(props.brick);
 
   let cashedBuildQuestion = GetCashedBuildQuestion();
-
+  
+  const [brick, setBrick] = React.useState(parsedBrick);
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
+  const initAttempts = prefillAttempts(brick.questions);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
   const [startTime, setStartTime] = React.useState(undefined);
@@ -80,7 +78,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   useEffect(() => {
     if (props.brick) {
-      let initAttempts = prefillAttempts(props.brick.questions);
+      const initAttempts = prefillAttempts(props.brick.questions);
       setAttempts(initAttempts);
     }
   }, [props.brick]);
@@ -367,7 +365,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  brick: parseAndShuffleQuestions(state.brick.brick) as Brick,
+  brick: state.brick.brick,
 });
 
 const mapDispatch = (dispatch: any) => ({

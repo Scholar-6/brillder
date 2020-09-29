@@ -90,7 +90,7 @@ const App: React.FC = () => {
         <BuildRoute path="/manage-classrooms" component={ManageClassrooms} location={location} /> 
         <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
-        <BuildRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
+        <BuildBrickRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
         <BuildRoute path={map.ProposalBase} component={Proposal} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId/investigation/question-component/:questionId" component={InvestigationBuildPage} location={location} />
         <BuildBrickRoute path="/build/brick/:brickId" component={InvestigationBuildPage} location={location} />
