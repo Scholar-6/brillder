@@ -112,11 +112,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       parseQuestion(question as ApiQuestion, questions);
     }
 
-    const renderQuestionPage = (question: Question) => {
+    const renderQuestionPage = (question: Question, i: number) => {
       return (
         <div style={{ display: "flex" }}>
           <div className="question-number">
-            <div>{this.state.questionIndex + 1}</div>
+            <div>{i + 1}</div>
           </div>
           <div>
             <h2>Investigation</h2>
@@ -151,13 +151,30 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     };
 
     const getQuestionStyle = (index: number) => {
-      console.log(index, this.state.questionIndex);
+      const scale = 1.15;
       if (this.state.bookState === BookState.QuestionPage) {
-        return {
-          transform: 'rotateY(-150deg) scale(1.15)'
+        if (index === this.state.questionIndex) {
+          return { transform: `rotateY(-178deg) scale(${scale})` }
+        } else if (index < this.state.questionIndex) {
+          return { transform: `rotateY(-180.2deg) scale(${scale})` };
+        } else if (index > this.state.questionIndex) {
+          return { transform: `rotateY(1deg) scale(${scale})` };
         }
       }
+      return {};
+    }
 
+    const getResultStyle = (index: number) => {
+      const scale = 1.15;
+      if (this.state.bookState === BookState.QuestionPage) {
+        if (index === this.state.questionIndex) {
+          return { transform: `rotateY(-4deg) scale(${scale})` }
+        } else if (index < this.state.questionIndex) {
+          return { transform: `rotateY(-180.2deg) scale(${scale})` };
+        } else if (index > this.state.questionIndex) {
+          return { transform: `rotateY(1deg) scale(${scale})` };
+        }
+      }
       return {};
     }
 
@@ -182,10 +199,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <div className="page1">
                   <div className="flipped-page">
                     <Grid container justify="center">
-                      <div
-                        className="circle-icon"
-                        style={{ background: color }}
-                      />
+                      <div className="circle-icon" style={{ background: color }} />
                     </Grid>
                     <div className="proposal-titles">
                       <div className="title">{this.props.brick.title}</div>
@@ -218,14 +232,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                     <div>
                       <div className="page3" style={getQuestionStyle(i)}>
                         <div className="flipped-page question-page">
-                          {renderQuestionPage(questions[0])}
+                          {renderQuestionPage(q, i)}
                         </div>
                       </div>
-                      <div
-                        className={`page4 result-page ${
-                          this.state.animationRunning ? "fliping" : ""
-                        }`}
-                      >
+                      <div className="page4 result-page" style={getResultStyle(i)}>
                         {renderAnswersPage()}
                       </div>
                     </div>
