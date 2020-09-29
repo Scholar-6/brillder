@@ -152,7 +152,7 @@
       top: 0;
       left: 0;
       transform-origin: left center;
-      transition: transform 1s ease-in-out, box-shadow 0.7s ease-in-out;
+      transition: transform 10s ease-in-out, box-shadow 0.7s ease-in-out;
     }
 
     .front,
@@ -430,7 +430,7 @@
       }
 
       .page2 {
-        transform: rotateY(-181deg) scale($scale);
+        transform: rotateY(-178.3deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 4;
       }
@@ -448,15 +448,8 @@
         z-index: 6;
       }
 
-      .page4-cover {
-        transform: rotateY(-4deg) scale($scale) !important;
-        box-shadow: none;
-        z-index: 7;
-        color: var(--theme-dark-blue);
-      }
-
       .page4 {
-        transform: rotateY(-4deg) scale($scale) !important;
+        transform: rotateY(-4deg) scale($scale);
         box-shadow: none;
         z-index: 7;
         color: var(--theme-dark-blue);

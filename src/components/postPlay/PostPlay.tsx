@@ -68,13 +68,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     if (this.state.animationRunning) {
       return;
     }
-    this.setState({ animationRunning: true });
-    setTimeout(() => {
-      this.setState({
-        animationRunning: false,
-        questionIndex: this.state.questionIndex + 1,
-      });
-    }, 800);
+    this.setState({ questionIndex: this.state.questionIndex + 1, animationRunning: true });
+    setTimeout(() => this.setState({ animationRunning: false }), 800);
   }
 
   render() {
@@ -128,7 +123,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     const renderAnswersPage = () => {
       return (
-        <div>
+        <div onClick={() => this.nextQuestion()}>
           <h2>My Answer(s)</h2>
           <div style={{ display: "flex" }}>
             <div className="col">
@@ -145,7 +140,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
               <div></div>
             </div>
           </div>
-          <div onClick={() => this.nextQuestion()}>next</div>
         </div>
       );
     };
@@ -156,9 +150,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
         if (index === this.state.questionIndex) {
           return { transform: `rotateY(-178deg) scale(${scale})` }
         } else if (index < this.state.questionIndex) {
-          return { transform: `rotateY(-180.2deg) scale(${scale})` };
+          return { transform: `rotateY(-178.2deg) scale(${scale})` };
         } else if (index > this.state.questionIndex) {
-          return { transform: `rotateY(1deg) scale(${scale})` };
+          return { transform: `rotateY(-3deg) scale(${scale})` };
         }
       }
       return {};
@@ -168,11 +162,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       const scale = 1.15;
       if (this.state.bookState === BookState.QuestionPage) {
         if (index === this.state.questionIndex) {
-          return { transform: `rotateY(-178.3deg) scale(${scale})` }
+          return { transform: `rotateY(-178.1deg) scale(${scale})` }
         } else if (index < this.state.questionIndex) {
-          return { transform: `rotateY(-180.4deg) scale(${scale})` };
+          return { transform: `rotateY(-178.2deg) scale(${scale})` };
         } else if (index > this.state.questionIndex) {
-          return { transform: `rotateY(1deg) scale(${scale})` };
+          return { transform: `rotateY(-3.7deg) scale(${scale})` };
         }
       }
       return {};
@@ -184,9 +178,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
         if (index === this.state.questionIndex) {
           return { transform: `rotateY(-4deg) scale(${scale})` }
         } else if (index < this.state.questionIndex) {
-          return { transform: `rotateY(-180.2deg) scale(${scale})` };
+          return { transform: `rotateY(-178.3deg) scale(${scale})` };
         } else if (index > this.state.questionIndex) {
-          return { transform: `rotateY(1deg) scale(${scale})` };
+          return { transform: `rotateY(-3deg) scale(${scale})` };
         }
       }
       return {};
@@ -194,7 +188,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     return (
       <div className="post-play-page">
-        <HomeButton onClick={() => this.openDialog()} />
+        <HomeButton onClick={() => this.props.history.push('/')} />
         <Grid
           container
           direction="row"
@@ -244,14 +238,17 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 {questions.map((q, i) => {
                   return (
                     <div>
-                      <div className={`page3-cover ${i === 0 ? 'first' : ''}`} style={getQuestionCoverStyle(i)}></div>
+                      {i === 0 ? <div className="page3-cover first" style={getQuestionCoverStyle(i)}></div> : ""}
                       <div className={`page3 ${i === 0 ? 'first' : ''}`} style={getQuestionStyle(i)}>
                         <div className="flipped-page question-page">
                           {renderQuestionPage(q, i)}
                         </div>
                       </div>
-                      <div className="cover-page4"></div>
-                      <div className={`page4 result-page ${i === 0 ? 'first' : ''}`} style={getResultStyle(i)}>
+                      <div
+                        className={`page4 result-page ${i === 0 ? 'first' : ''}`}
+                        style={getResultStyle(i)}
+                        onClick={this.nextQuestion.bind(this)}
+                      >
                         {renderAnswersPage()}
                       </div>
                     </div>
