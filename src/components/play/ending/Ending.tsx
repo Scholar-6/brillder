@@ -65,8 +65,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
     let step = 3;
     const {oldScore} = this.state;
     const {score, maxScore} = this.props.brickAttempt;
-    let liveScore = (oldScore * 100) / maxScore;
-    let reviewScore = (score * 100) / maxScore;
+    let liveScore = Math.round((oldScore * 100) / maxScore);
+    let reviewScore = Math.round((score * 100) / maxScore);
     let currentScore = Math.round(((oldScore + score) * 50) / maxScore);
     let interval = setInterval(() => {
       let tempReviewScore = this.state.reviewScore;
