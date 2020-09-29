@@ -111,7 +111,7 @@ class ExpandedAssignment extends Component<
       if (attempt.marks < 3) {
         return (
           <svg>
-            <use href={sprite + "#cancel"} className="text-theme-orange" />
+            <use href={sprite + "#cancel"} style={{strokeWidth: 2}} className="text-theme-orange" />
           </svg>
         );
       }
