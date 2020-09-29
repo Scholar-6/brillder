@@ -61,5 +61,5 @@ export const calcBrickReviewAttempt = (brick: Brick, answers: ComponentAttempt<a
   let score = getScore(answers);
   let maxScore = getMaxScore(answers);
   console.log(score);
-  return { brick, score, oldScore: brickAttempt.score, maxScore, student: null, answers } as BrickAttempt;
+  return { brick, score, oldScore: brickAttempt.score, maxScore, student: null, answers, liveAnswers: brickAttempt.answers } as BrickAttempt;
 }
