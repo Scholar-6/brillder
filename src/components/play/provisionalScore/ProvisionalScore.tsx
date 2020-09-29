@@ -61,7 +61,7 @@ class ProvisionalScore extends React.Component<ProvisionalScoreProps, Provisiona
 
   componentDidMount() {
     let step = 3;
-    let percentages = (this.state.score * 100) / this.state.maxScore;
+    let percentages = Math.round((this.state.score * 100) / this.state.maxScore);
     const interval = setInterval(() => {
       if (this.state.value < percentages - 3) {
         this.setState({value: this.state.value + step});

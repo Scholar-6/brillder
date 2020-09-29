@@ -10,6 +10,12 @@
   $book-height: 60vh;
   $real-book-height: 63.6vh;
 
+  h2 {
+    font-family: $font-family-bold;
+    font-size: 1.7vw;
+    margin-bottom: 2.5vh;
+  }
+
   .flipped-page {
     height: 100%;
     width: 100%;
@@ -22,6 +28,58 @@
 
     padding-top: 3.5vh;
     color: var(--theme-dark-blue);
+
+    &.question-page {
+      padding-top: 1.5vh;
+      padding-left: 10%;
+      padding-right: 10%;
+      position: relative;
+
+      .question-number {
+        width: 10%;
+        position: absolute;
+        left: 0;
+        top: calc(1.5vh + 0.57vw);
+        @extend %flexCenter;
+
+        div {
+          width: 1.3vw;
+          height: 1.3vw;
+          background: var(--tab-gray);
+          border-radius: 50%;
+          font-size: 1.3vw;
+          font-family: $font-family-bold;
+          @extend %flexCenter;
+        }
+      }
+    }
+  }
+
+  .result-page {
+    padding-top: 1.5vh;
+    padding-left: 10%;
+    padding-right: 10%;
+
+    .col {
+      width: 33%;
+    }
+
+    h3 {
+      color: var(--theme-dark-blue);
+      margin: 0;
+      padding-bottom: 1.3vh;
+      letter-spacing: 0;
+      font-family: $font-family-bold;
+      font-size: 1.2vw;
+    }
+
+    div {
+      font-size: 0.9vw;
+    }
+
+    h2 {
+      text-align: center;
+    }
   }
 
   .main-text-container {
@@ -370,6 +428,17 @@
       }
 
       .page4 {
+        transform: rotateY(-4deg) scale($scale);
+        box-shadow: none;
+        //box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 7;
+        color: var(--theme-dark-blue);
+        &.flipping {
+          transform: rotateY(-180deg) scale($scale);
+        }
+      }
+
+      .page-x {
         transform: rotateY(-4deg) scale($scale);
         box-shadow: none;
         //box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
