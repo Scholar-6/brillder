@@ -184,3 +184,9 @@
     }
   }
 }
+
+.question-build-text-editor {
+  .ck.ck-button, a.ck.ck-button {
+    padding: 0 !important;
+  }
+}
