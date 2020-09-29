@@ -16,6 +16,7 @@ import InviteDialog from "./dialogs/InviteDialog";
 import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
 import { User } from "model/user";
 import { checkAdmin } from "components/services/brickService";
+import map from "components/map";
 
 interface FinalStepProps {
   brick: Brick;
@@ -100,9 +101,9 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 </div>
                 <ExitButton onClick={() => {
                   if (isAuthor || isAdmin || isEditor) {
-                    history.push('/back-to-work/build');
+                    history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`);
                   } else {
-                    history.push('/back-to-work/learn');
+                    history.push(`${map.BackToWorkLearnTab}?isCore=${brick.isCore});
                   }
                  }} />
               </div>
@@ -117,7 +118,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
           </div>
           <div className="introduction-page">
           </div>
-          <ExitButton onClick={() => history.push('/play/dashboard')} />
+          <ExitButton onClick={() => history.push(map.ViewAllPage)} />
         </div>
       </Hidden>
       <LinkDialog
