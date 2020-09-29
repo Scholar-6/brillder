@@ -151,6 +151,14 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       :
                       ""
                     }
+                    {notification.type === NotificationType.BrickAttemptSaved ?
+                      <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginRight: '0vw', strokeWidth: 2}}>
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#book-open"} />
+                      </svg>
+                      :
+                      ""
+                    }
                   </div>
                   <div className="content-box" onClick={() => this.move(notification)}>
                     <div className="notification-detail">
