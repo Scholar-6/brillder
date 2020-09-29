@@ -86,7 +86,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                       </svg>
                     </div>
                   </div>
-                  <h2>Final step?</h2>
+                  <h2>All done!</h2>
                   <p>Well done for completing “{brick.title}”!</p>
                   {renderActionColumns()}
                 </div>
