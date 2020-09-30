@@ -63,7 +63,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   let isAuthor = false;
   try {
-    isAuthor = brick.author.id === user.id;
+    isAuthor = brick.author.id === user.id; 
   } catch {}
 
   const isAdmin = checkAdmin(user.roles);
@@ -99,10 +99,14 @@ const FinalStep: React.FC<FinalStepProps> = ({
     if (isCurrentEditor) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          <CustomColumn icon="repeat" title="Return to author" label="for futher changes" size={size} onClick={() => {}} />
+          <CustomColumn
+            icon="repeat" title="Return to author" label="for futher changes"
+            size={size} onClick={() => {}} />
           {
-            publisherConfirmed === false ?
-            <CustomColumn icon="send" title="Send to publisher" label="for final review" size={size} onClick={() => props.sendToPublisher(brick.id)} />
+            publisherConfirmed === false && !brick.publisher ?
+            <CustomColumn
+              icon="send" title="Send to publisher" label="for final review"
+              size={size} onClick={() => props.sendToPublisher(brick.id)} />
             : ""
           }
           {canPublish ? <PublishColumn onClick={() => publish(brick.id)} /> : ""}
