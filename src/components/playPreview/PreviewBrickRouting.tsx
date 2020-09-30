@@ -78,7 +78,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   useEffect(() => {
     if (props.brick) {
-      const initAttempts = prefillAttempts(props.brick.questions);
+      const parsedBrick = parseAndShuffleQuestions(props.brick);
+      const initAttempts = prefillAttempts(parsedBrick.questions);
       setAttempts(initAttempts);
     }
   }, [props.brick]);
