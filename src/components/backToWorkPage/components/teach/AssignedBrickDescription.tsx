@@ -93,7 +93,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
             <span>{brick.title}</span>
           </div>
           <div className="link-info">
-            {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)} 
+            {brick.brickLength} mins | Assigned: {getFormattedDate(assignment.assignedDate)}
           </div>
           <div className="link-info">
             { assignment.deadline ? <span> Deadline: {getFormattedDate(assignment.deadline)}</span> : "" }
