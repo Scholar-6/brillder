@@ -65,11 +65,13 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
     width: calc(17.15vw - 1vw);
     align-items: center;
     justify-content: center;
+    transition: 700ms width;
   }
 
   .brick-row-container {
     @include tabletP {
       width: calc(82.85vw - 1vw);
+      transition: 700ms width;
     }
 
     .brick-container {
