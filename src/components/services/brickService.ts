@@ -28,6 +28,16 @@ export function getDate(date: Date) {
   return formatTwoLastDigits(days);
 }
 
+export function getHours(date: string) {
+  const hours = new Date(date).getHours();
+  return formatTwoLastDigits(hours);
+}
+
+export function getMinutes(date: string) {
+  const minutes = new Date(date).getMinutes();
+  return formatTwoLastDigits(minutes);
+}
+
 export function getFormattedDate(date: string) {
   const dateObj = new Date(date);
   const year = getYear(dateObj);

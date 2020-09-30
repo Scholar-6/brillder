@@ -102,7 +102,7 @@ const App: React.FC = () => {
 
         <AuthRoute path="/login/:privacy" component={LoginPage} />
         <AuthRoute path={map.Login} component={LoginPage} />
-        <StudentRoute path="/post-play/brick/:brickId" component={BrickWrapper} innerComponent={PostPlay} />
+        <StudentRoute path="/post-play/brick/:brickId/:userId" component={PostPlay} />
 
         <Route component={AuthRedirectRoute} />
       </Switch>

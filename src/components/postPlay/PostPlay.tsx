@@ -18,6 +18,10 @@ import {
   parseQuestion,
 } from "components/build/questionService/QuestionService";
 import { Question } from "model/question";
+import { getAttempts } from "components/services/axios/attempt";
+import { PlayAttempt } from "model/attempt";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
+import { getHours, getMinutes, getFormattedDate } from "components/services/brickService";
 
 enum BookState {
   Closed,
@@ -30,6 +34,7 @@ interface ProposalProps {
   user: User;
   canEdit: boolean;
   history: History;
+  match: any;
   playStatus: PlayButtonStatus;
   saveBrick(): void;
   setBrickField(name: BrickFieldNames, value: string): void;
@@ -39,6 +44,7 @@ interface ProposalState {
   bookState: BookState;
   questionIndex: number;
   animationRunning: boolean;
+  attempt: PlayAttempt | null;
 }
 
 class PostPlay extends React.Component<ProposalProps, ProposalState> {
@@ -48,7 +54,18 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       bookState: BookState.Closed,
       questionIndex: 0,
       animationRunning: false,
+      attempt: null
     };
+
+    this.loadData();
+  }
+
+  async loadData() {
+    const {userId, brickId} = this.props.match.params;
+    let attempts = await getAttempts(brickId, userId);
+    if (attempts) {
+      this.setState({attempt: attempts[attempts.length - 1]})
+    }
   }
 
   openDialog = () => this.setState({});
@@ -64,11 +81,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.setState({ bookState: BookState.QuestionPage, questionIndex: 0 });
   }
 
-  nextQuestion() {
+  nextQuestion(brick: Brick) {
     if (this.state.animationRunning) {
       return;
     }
-    if (this.state.questionIndex < this.props.brick.questions.length - 1) {
+    if (this.state.questionIndex < brick.questions.length - 1) {
       this.setState({ questionIndex: this.state.questionIndex + 1, animationRunning: true });
       setTimeout(() => this.setState({ animationRunning: false }), 1200);
     }
@@ -84,15 +101,20 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
+  
   render() {
-    const { brick } = this.props;
+    if (!this.state.attempt) {
+      return <PageLoader content="...Getting Attempt..." />;
+    }
+    const { brick, student, answers, timestamp } = this.state.attempt;
+    console.log(this.state.attempt);
 
     if (brick.title) {
       setBrillderTitle(brick.title);
     }
 
     const renderUserRow = () => {
-      const { firstName, lastName } = this.props.user;
+      const { firstName, lastName } = student;
 
       return (
         <div className="names-row">
@@ -120,6 +142,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
 
     const renderQuestionPage = (question: Question, i: number) => {
+      let res = JSON.parse(answers[i].answer);
+      console.log(answers[i].answer, res);
       return (
         <div
           className={`page3 ${i === 0 ? 'first' : ''}`}
@@ -133,7 +157,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
               </div>
               <div>
                 <h2>Investigation</h2>
-                <QuestionPlay question={question} isBookPreview={true} answers={[]} />
+                <QuestionPlay question={question} isBookPreview={true} answers={res} />
               </div>
             </div>
           </div>
@@ -146,14 +170,14 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
         <div
           className={`page4 result-page ${i === 0 ? 'first' : ''}`}
           style={getResultStyle(i)}
-          onClick={this.nextQuestion.bind(this)}
+          onClick={() => this.nextQuestion(brick)}
         >
           <h2>My Answer(s)</h2>
           <div style={{ display: "flex" }}>
             <div className="col">
               <h3>Attempt1</h3>
-              <div>23.09.34</div>
-              <div>34.09.23</div>
+              <div className="bold">{getFormattedDate(timestamp)}</div>
+              <div>{getHours(timestamp)}:{getMinutes(timestamp)}</div>
             </div>
             <div className="col">
               <h3>Investigation</h3>
@@ -234,9 +258,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                       <div className="circle-icon" style={{ background: color }} />
                     </Grid>
                     <div className="proposal-titles">
-                      <div className="title">{this.props.brick.title}</div>
-                      <div>{this.props.brick.subTopic}</div>
-                      <div>{this.props.brick.alternativeTopics}</div>
+                      <div className="title">{brick.title}</div>
+                      <div>{brick.subTopic}</div>
+                      <div>{brick.alternativeTopics}</div>
                     </div>
                   </div>
                 </div>
