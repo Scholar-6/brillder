@@ -120,53 +120,54 @@ class MobileLoginPage extends React.Component<MobileLoginProps> {
     );
   }
 
+  renderChooseLoginPage(loginState: LoginState) {
+    return (
+      <div style={{ width: "100%" }}>
+        <div className="first-col">
+          <div className="second-item">
+            <div
+              className={`logo-box ${
+                loginState === LoginState.ChooseLoginAnimation ? "big" : ""
+              }`}
+            >
+              <div className="logo-box-inner">
+                <svg
+                  className="svg active logo-image mobile"
+                  onClick={this.props.moveToLogin}
+                >
+                  {/*eslint-disable-next-line*/}
+                  <use href={sprite + "#logo"} className="text-theme-orange" />
+                </svg>
+                <img
+                  className="logo-text-image"
+                  alt="text"
+                  src="/images/choose-user/brillder-white-text.svg"
+                />
+              </div>
+            </div>
+            {loginState !== LoginState.ChooseLoginAnimation ? (
+              <div className="mobile-button-box button-box">
+                <RegisterButton onClick={this.props.moveToLogin} />
+                <GoogleButton />
+                {this.renderPrivacyPolicy()}
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { loginState } = this.props;
     return (
       <Hidden only={["sm", "md", "lg", "xl"]}>
         {loginState !== LoginState.ChooseLogin &&
-        loginState !== LoginState.ChooseLoginAnimation ? (
-          this.renderSignInPage()
-        ) : (
-          <div style={{ width: "100%" }}>
-            <div className="first-col">
-              <div className="second-item">
-                <div
-                  className={`logo-box ${
-                    loginState === LoginState.ChooseLoginAnimation ? "big" : ""
-                  }`}
-                >
-                  <div className="logo-box-inner">
-                    <svg
-                      className="svg active logo-image mobile"
-                      onClick={this.props.moveToLogin}
-                    >
-                      {/*eslint-disable-next-line*/}
-                      <use
-                        href={sprite + "#logo"}
-                        className="text-theme-orange"
-                      />
-                    </svg>
-                    <img
-                      className="logo-text-image"
-                      alt="text"
-                      src="/images/choose-user/brillder-white-text.svg"
-                    />
-                  </div>
-                </div>
-                {loginState !== LoginState.ChooseLoginAnimation ? (
-                  <div className="mobile-button-box button-box">
-                    <RegisterButton onClick={this.props.moveToLogin} />
-                    <GoogleButton />
-                    {this.renderPrivacyPolicy()}
-                  </div>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
-          </div>
-        )}
+        loginState !== LoginState.ChooseLoginAnimation
+          ? this.renderSignInPage()
+          : this.renderChooseLoginPage(loginState)}
       </Hidden>
     );
   }
