@@ -99,3 +99,16 @@ export const setCoreLibrary = async (brickId: number, isCore?: boolean) => {
     return false;
   }
 }
+
+export const sendToPublisher = async (brickId: number) => {
+  try {
+    await post<any>(`/brick/sendToPublisher/${brickId}`, {});
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export default {
+  sendToPublisher
+}
