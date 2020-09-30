@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import map from 'components/map';
 import actions from 'redux/actions/requestFailed';
+import brickActions from 'redux/actions/brickActions';
 import "./FinalStep.scss";
 import sprite from "assets/img/icons-sprite.svg";
 import { User } from "model/user";
@@ -24,6 +25,8 @@ import PublishColumn from './PublishColumn';
 import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
 import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
 import CustomColumn from "./CustomColumn";
+import { ReduxCombinedState } from "redux/reducers";
+import SendPublisherSuccessDialog from "./SendPublisherSuccess";
 
 enum PublishStatus {
   None,
@@ -38,15 +41,18 @@ interface FinalStepProps {
   history: any;
   location: any;
 
+  sendedToPublisher: boolean;
+  publisherConfirmed: boolean;
+  sendToPublisherConfirmed(): void;
+  sendToPublisher(brickId: number): void;
   requestFailed(e: string): void;
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
-  user, brick, history, requestFailed
+  user, brick, history, publisherConfirmed, sendedToPublisher, requestFailed, ...props
 }) => {
   const [shareOpen, setShare] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
-  const [publisherOpen, setPublisher] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
   const [publishSuccess, setPublishSuccess] = React.useState(PublishStatus.None);
@@ -94,7 +100,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
       return (
         <Grid className="share-row" container direction="row" justify="center">
           <CustomColumn icon="repeat" title="Return to author" label="for futher changes" size={size} onClick={() => {}} />
-          <CustomColumn icon="send" title="Send to publisher" label="for final review" size={size} onClick={()=>{}} />
+          {
+            publisherConfirmed === false ?
+            <CustomColumn icon="send" title="Send to publisher" label="for final review" size={size} onClick={() => props.sendToPublisher(brick.id)} />
+            : ""
+          }
           {canPublish ? <PublishColumn onClick={() => publish(brick.id)} /> : ""}
         </Grid>
       );
@@ -189,12 +199,19 @@ const FinalStep: React.FC<FinalStepProps> = ({
         isOpen={publishSuccess === PublishStatus.Popup}
         close={() => setPublishSuccess(PublishStatus.Published)}
       />
+      <SendPublisherSuccessDialog isOpen={sendedToPublisher && publisherConfirmed === false} close={() => props.sendToPublisherConfirmed()} />
     </div>
   );
 };
+const mapState = (state: ReduxCombinedState) => ({
+  sendedToPublisher: state.sendPublisher.success,
+  publisherConfirmed: state.sendPublisher.confirmed,
+});
 
 const mapDispatch = (dispatch: any) => ({
+  sendToPublisher: (brickId: number) => dispatch(brickActions.sendToPublisher(brickId)),
+  sendToPublisherConfirmed: () => dispatch(brickActions.sendToPublisherConfirmed()),
   requestFailed: (e: string) => dispatch(actions.requestFailed(e))
 });
 
-export default connect(null, mapDispatch)(FinalStep);
+export default connect(mapState, mapDispatch)(FinalStep);

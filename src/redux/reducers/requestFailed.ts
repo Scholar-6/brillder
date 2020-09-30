@@ -14,6 +14,8 @@ export default (state = AccountInitialState, action: any) => {
   switch (action.type) {
     case types.REQUEST_FAILED:
       return { failed: true, error: action.error } as RequestFailedState;
+    case types.SEND_TO_PUBLISHER_FAILURE:
+      return { failed: true, error: action.error } as RequestFailedState;
     case types.REQUEST_FAILTURE_FORGOTTEN:
       return { failed: false, error: '' } as RequestFailedState;
     default: return state;
