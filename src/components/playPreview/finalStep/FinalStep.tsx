@@ -10,7 +10,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import { User } from "model/user";
 import { Brick, BrickStatus } from "model/brick";
 import { PlayStatus } from "components/play/model";
-import { checkAdmin } from "components/services/brickService";
+import { checkAdmin, checkPublisher } from "components/services/brickService";
 import { publishBrick } from "components/services/axios/brick";
 
 import Clock from "components/play/baseComponents/Clock";
@@ -66,9 +66,9 @@ const FinalStep: React.FC<FinalStepProps> = ({
     isAuthor = brick.author.id === user.id; 
   } catch {}
 
-  const isAdmin = checkAdmin(user.roles);
+  const isPublisher = checkPublisher(user, brick);
   let isCurrentEditor = brick.editor?.id === user.id;
-  console.log('isEditor', isCurrentEditor, brick.editor, user.id);
+  console.log('isEditor', isCurrentEditor, 'isPublisher', isPublisher, 'editor', brick.editor, 'userId', user.id);
   const link = `/play/brick/${brick.id}/intro`;
 
   const publish = async (brickId: number) => {
@@ -92,9 +92,9 @@ const FinalStep: React.FC<FinalStepProps> = ({
   }
 
   const renderActionColumns = () => {
-    let canPublish = isAdmin && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published;
+    const canPublish = isPublisher && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published;
 
-    let size: 5 | 3 = canPublish ? 3 : 5;
+    const size: 5 | 3 = canPublish ? 3 : 5;
 
     if (isCurrentEditor) {
       return (

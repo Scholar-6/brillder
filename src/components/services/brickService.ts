@@ -64,6 +64,25 @@ export function checkEditor(roles: UserRole[]) {
   return roles.some(role => role.roleId === UserType.Editor);
 }
 
+export function checkPublisher(user: User, brick: Brick) {
+  if (!brick.publisher) {
+    return false;
+  }
+  const isAdmin = checkAdmin(user.roles);
+  if (isAdmin) {
+    return true;
+  }
+  const isEditor = checkEditor(user.roles);
+  if (!isEditor) {
+    return false;
+  }
+  let res = user.subjects.find(s => s.id === brick.subject?.id);
+  if (res) {
+    return true;
+  }
+  return false;
+}
+
 export function checkTeacher(roles: UserRole[]) {
   return roles.some(role => role.roleId === UserType.Teacher);
 }
