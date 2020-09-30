@@ -46,6 +46,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
 }) => {
   const [shareOpen, setShare] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
+  const [publisherOpen, setPublisher] = React.useState(false);
   const [linkOpen, setLink] = React.useState(false);
   const [linkCopiedOpen, setCopiedLink] = React.useState(false);
   const [publishSuccess, setPublishSuccess] = React.useState(PublishStatus.None);
@@ -61,7 +62,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   const isAdmin = checkAdmin(user.roles);
   let isCurrentEditor = brick.editor?.id === user.id;
-
+  console.log('isEditor', isCurrentEditor, brick.editor, user.id);
   const link = `/play/brick/${brick.id}/intro`;
 
   const publish = async (brickId: number) => {
