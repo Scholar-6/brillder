@@ -246,7 +246,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   const renderPrepExpandText = () => {
     if (state.prepExpanded) {
       return (
-        <div className="expanded-text">
+        <div className="expanded-text prep-box">
           <HighlightHtml
             value={brick.prep}
             mode={props.mode}
