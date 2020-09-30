@@ -1021,7 +1021,9 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
       }
     }
     &.prep-box {
-      margin-bottom:85px;
+      @include phone_and_tabletP {
+        margin-bottom:85px;
+      }
     }
   }
 
