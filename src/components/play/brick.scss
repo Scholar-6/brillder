@@ -16,6 +16,7 @@
   $icons-size: 2vw;
   $right-padding: 1.6vw;
   justify-content: flex-start !important;
+
   .collapsable-sidebar {
     display: flex;
     align-items: center;
@@ -36,6 +37,11 @@
       span {
         letter-spacing: 0.03vw;
         // padding-right: $right-padding;
+        width: 70%;
+        transition: 700ms width;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
       }
       .svg {
         @extend %removePosition;
@@ -43,8 +49,8 @@
         width: $size;
         height: $size;
       }
-      .maximize-icon,
-      .minimize-icon,
+      // .maximize-icon,
+      // .minimize-icon,
       .highlight-button,
       .annotate-button {
         width: calc(100% - 2vw);
@@ -85,6 +91,7 @@
         font-size: 1.6vw;
         font-family: $font-family-bold;
         @extend %flexCenter;
+        overflow: hidden;
       }
     }
   }
@@ -97,6 +104,9 @@
         .svg {
           marker: 0 auto;
         }
+      }
+      span {
+        width: 0%;
       }
       .maximize-icon,
       .minimize-icon,
