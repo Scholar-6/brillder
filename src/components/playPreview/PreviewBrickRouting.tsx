@@ -67,7 +67,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   let cashedBuildQuestion = GetCashedBuildQuestion();
   
-  const [brick, setBrick] = React.useState(parsedBrick);
+  const [brick] = React.useState(parsedBrick);
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
   const initAttempts = prefillAttempts(brick.questions);
