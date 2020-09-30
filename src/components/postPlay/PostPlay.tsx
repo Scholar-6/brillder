@@ -133,7 +133,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
               </div>
               <div>
                 <h2>Investigation</h2>
-                <QuestionPlay question={question} answers={[]} />
+                <QuestionPlay question={question} isBookPreview={true} answers={[]} />
               </div>
             </div>
           </div>

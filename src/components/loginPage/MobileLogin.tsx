@@ -31,10 +31,6 @@ interface MobileLoginProps {
 }
 
 class MobileLoginPage extends React.Component<MobileLoginProps> {
-  constructor(props: MobileLoginProps) {
-    super(props);
-  }
-
   componentDidMount() {
     setTimeout(() => {
       this.props.setLoginState(LoginState.ChooseLogin);
