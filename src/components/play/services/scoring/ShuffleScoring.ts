@@ -1,3 +1,4 @@
+import { MarkunreadSharp } from "@material-ui/icons";
 import { ComponentAttempt } from "components/play/model";
 import { HorizontalShuffleComponent } from "components/play/questionTypes/horizontalShuffle/HorizontalShuffle";
 import { VerticalShuffleComponent } from "components/play/questionTypes/vericalShuffle/VerticalShuffle";
@@ -27,6 +28,11 @@ const mark = (component: HorizontalShuffleComponent | VerticalShuffleComponent, 
             attempt.correct = false;
         }
     })
+
+    if(attempt.maxMarks > 12) {
+        attempt.marks = Math.ceil(attempt.marks * (12 / attempt.maxMarks));
+        attempt.maxMarks = 12;
+    }
 
     if(attempt.marks === 0 && attempt.dragged) attempt.marks = 0.5;
     return attempt;
