@@ -60,11 +60,13 @@ class Sort extends CompComponent<SortProps, SortState> {
       userCats.push({choices: choices, name: 'Unsorted'});
     } else {
       userCats.push({ choices: [], name: "Unsorted" });
+      if (!this.props.isBookPreview) {
       Object.keys(props.attempt.answer).forEach((value) => {
         if (props.attempt) {
           userCats[props.attempt.answer[value]].choices.push({value} as SortAnswer);
         }
       });
+      }
     }
 
     this.state = { status: DragAndDropStatus.None, userCats, choices: this.getChoices() };

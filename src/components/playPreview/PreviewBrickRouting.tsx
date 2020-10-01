@@ -290,7 +290,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               <BuildCompletePage brick={brick} history={history} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/finalStep">
-              <FinalStep user={props.user} status={status} brick={brick} history={history} location={location} />
+              <FinalStep user={props.user} status={status} history={history} location={location} />
             </Route>
           </Switch>
         </div>
