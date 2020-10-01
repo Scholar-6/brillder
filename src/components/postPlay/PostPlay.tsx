@@ -158,6 +158,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     const renderQuestionPage = (question: Question, i: number) => {
       const parsedAnswers = JSON.parse(JSON.parse(answers[i].answer));
+      console.log(parsedAnswers, question);
       return (
         <div
           className={`page3 ${i === 0 ? 'first' : ''}`}
@@ -171,7 +172,12 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
               </div>
               <div>
                 <h2>Investigation</h2>
-                <QuestionPlay question={question} attempt={this.state.attempt as any} isBookPreview={true} answers={parsedAnswers} />
+                <QuestionPlay
+                  question={question}
+                  attempt={this.state.attempt as any}
+                  isBookPreview={true}
+                  answers={parsedAnswers}
+                />
               </div>
             </div>
           </div>
