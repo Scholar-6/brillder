@@ -412,7 +412,7 @@
     transition: all 2000ms ease-out !important;
     .logo-text-image {
       transition: all 1000ms ease-out !important;
-      height: 0;
+      margin-left: -200vw;
     }
     .logo-box-inner {
       transition: all 2000ms ease-out !important;
@@ -436,7 +436,9 @@
       height: 70vw;
     }
     .logo-text-image {
+      margin-left: 0;
       height: 20vw !important;
+      max-height: 20vw !important;
       width: 55vw;
     }
   }
