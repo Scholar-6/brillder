@@ -76,6 +76,16 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     } else { return 0; }
   }
 
+  getBookState(entry: number): number {
+    const answers = this.props.answers as any;
+    if (
+      answers[entry].value.toLowerCase().replace(/ /g, '') ===
+      this.props.component.list[entry].value.toLowerCase().replace(/ /g, '')
+    ) {
+      return 1;
+    } else { return -1; }
+  }
+
   prepareAttempt(component: PairMatchComponent, attempt: ComponentAttempt<PairMatchAnswer>) {
     if (this.state.status === DragAndDropStatus.Changed) {
       attempt.dragged = true;
@@ -122,8 +132,12 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       }
     }
     if (this.props.isBookPreview) {
-      //let state = this.getState(answer.index);
-      console.log(answer, i);
+      let state = this.getBookState(answer.index);
+      if (state === 1) {
+        className += " correct";
+      } else {
+        className += " wrong";
+      }
     }
     return (
       <div key={i} className={className}>
