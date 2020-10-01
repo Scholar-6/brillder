@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg"
+<svg
+  xmlns="http://www.w3.org/2000/svg"
   xmlnsXlink="http://www.w3.org/1999/xlink" width="38px" height="38px" viewBox="0 0 38 38" preserveAspectRatio="none" xml:space="preserve" style="display:none">
   <svg id="arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="15 18 9 12 15 6"></polyline>
@@ -40,9 +41,12 @@
   <svg id="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="20 6 9 17 4 12"></polyline>
   </svg>
-  <svg id="cancel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18"></line>
-    <line x1="6" y1="6" x2="18" y2="18"></line>
+
+  <svg id="cancel" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <path d="M13.414,12l5.293-5.293c0.391-0.391,0.391-1.023,0-1.414s-1.023-0.391-1.414,0L12,10.586L6.707,5.293
+    c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414L10.586,12l-5.293,5.293c-0.391,0.391-0.391,1.023,0,1.414
+    C5.488,18.902,5.744,19,6,19s0.512-0.098,0.707-0.293L12,13.414l5.293,5.293C17.488,18.902,17.744,19,18,19s0.512-0.098,0.707-0.293
+    c0.391-0.391,0.391-1.023,0-1.414L13.414,12z"/>
   </svg>
   <svg id="cancel-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
     <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -310,7 +314,7 @@
   <svg id="message-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
   </svg>
-    <svg id="message-square-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <svg id="message-square-thick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
   </svg>
   <svg id="file-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
