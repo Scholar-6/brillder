@@ -337,7 +337,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
 
           @include tabletP {
             height: calc(100vh - #{$home-button-size} - #{$sorted-row-margin-top});
-            overflow: hidden;
+            // overflow: hidden;
           }
           .question-title {
             font-size: 2.5vw;
@@ -646,6 +646,11 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
         .introduction-page {
           h1 {
             text-transform: capitalize;
+          }
+        }
+        .question-live-play {
+          @include tabletP {
+            overflow: hidden;
           }
         }
       }
