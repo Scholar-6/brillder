@@ -1,4 +1,3 @@
-import { MarkunreadSharp } from "@material-ui/icons";
 import { ComponentAttempt } from "components/play/model";
 import { HorizontalShuffleComponent } from "components/play/questionTypes/horizontalShuffle/HorizontalShuffle";
 import { VerticalShuffleComponent } from "components/play/questionTypes/vericalShuffle/VerticalShuffle";
