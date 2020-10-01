@@ -411,18 +411,20 @@
     background: var(--theme-light-blue) !important;
     transition: all 2000ms ease-out !important;
     .logo-text-image {
-      transition: all 1000ms ease-out !important;
-      margin-left: -200vw;
+      transition: all 800ms ease-out !important;
+      width: 55vw;
+      max-height: 20vw !important;
+      opacity: 0;
     }
     .logo-box-inner {
       transition: all 2000ms ease-out !important;
       width: 100%;
-      height: 100%;
+      height: 80%;
     }
     .svg {
       transition: all 2000ms ease-out !important;
       max-height: 70vw;
-      height: 90%;
+      height: 100%;
       width: 100%;
     }
   }
@@ -430,16 +432,14 @@
     height: 100% !important;
     .logo-box-inner {
       height: 90vw;
+      width: 100%;
     }
     .svg {
       width: 100vw;
       height: 70vw;
     }
     .logo-text-image {
-      margin-left: 0;
-      height: 20vw !important;
-      max-height: 20vw !important;
-      width: 55vw;
+      opacity: 1;
     }
   }
 }
