@@ -1,4 +1,3 @@
-import { ScoreFunction } from "../scoring";
 import { ComponentAttempt } from "components/play/model";
 import { ChooseSeveralAnswer } from "components/play/questionTypes/chooseSeveral/ChooseSeveral";
 

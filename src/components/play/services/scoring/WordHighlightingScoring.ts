@@ -5,8 +5,6 @@ const mark = (component: IPlayWordComponent, attempt: ComponentAttempt<any>) => 
     attempt.correct = true;
     attempt.maxMarks = 6;
 
-    let correctWords = component.words.filter(w => w.checked === true);
-
     component.words.forEach((word, index) => {
         const isChecked = attempt.answer.indexOf(index) !== -1;
         const shouldBeChecked = word.checked === true;

@@ -20,7 +20,6 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     let status = DragAndDropStatus.None;
     let userAnswers = [];
 
-    console.log(props)
     const {component} = props;
 
     if (props.isPreview === true) {
