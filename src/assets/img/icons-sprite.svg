@@ -443,4 +443,8 @@
     <polyline points="7 23 3 19 7 15"></polyline>
     <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
   </svg>
+  <svg id="corner-up-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="9 14 4 9 9 4"></polyline>
+    <path d="M20 20v-7a4 4 0 0 0-4-4H4"></path>
+  </svg>
 </svg>

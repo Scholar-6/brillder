@@ -208,7 +208,9 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     const finalBricks = this.filter(this.state.bricks);
     this.setState({ ...this.state, shown: false });
     setTimeout(() => {
-      this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
+      try {
+        this.setState({ ...this.state, isClearFilter: this.isFilterClear(), finalBricks, shown: true });
+      } catch {}
     }, 1400);
   };
 
@@ -247,12 +249,14 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     this.hideBricks();
     this.setState({ ...this.state });
     setTimeout(() => {
-      let { yourBricks } = this.state;
-      this.hideBricks();
-      if (!yourBricks[index].expandFinished) {
-        yourBricks[index].expanded = true;
-      }
-      this.setState({ ...this.state });
+      try {
+        let { yourBricks } = this.state;
+        this.hideBricks();
+        if (!yourBricks[index].expandFinished) {
+          yourBricks[index].expanded = true;
+        }
+        this.setState({ ...this.state });
+      } catch {}
     }, 400);
   }
 
@@ -262,8 +266,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     yourBricks[key].expandFinished = true;
     this.setState({ ...this.state });
     setTimeout(() => {
-      yourBricks[key].expandFinished = false;
-      this.setState({ ...this.state });
+      try {
+        yourBricks[key].expandFinished = false;
+        this.setState({ ...this.state });
+      } catch {}
     }, 400);
   }
 
@@ -274,12 +280,14 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     this.hideBricks();
     this.setState({ ...this.state });
     setTimeout(() => {
-      let { finalBricks } = this.state;
-      this.hideBricks();
-      if (!finalBricks[index].expandFinished) {
-        finalBricks[index].expanded = true;
-      }
-      this.setState({ ...this.state });
+      try {
+        let { finalBricks } = this.state;
+        this.hideBricks();
+        if (!finalBricks[index].expandFinished) {
+          finalBricks[index].expanded = true;
+        }
+        this.setState({ ...this.state });
+      } catch {}
     }, 400);
   }
 
@@ -307,8 +315,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     finalBricks[key].expandFinished = true;
     this.setState({ ...this.state });
     setTimeout(() => {
-      finalBricks[key].expandFinished = false;
-      this.setState({ ...this.state });
+      try {
+        finalBricks[key].expandFinished = false;
+        this.setState({ ...this.state });
+      } catch {}
     }, 400);
   }
 
@@ -340,20 +350,23 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     const { searchString } = this.state;
     this.setState({shown: false});
     const bricks = await searchBricks(searchString);
+
     setTimeout(() => {
-      if (bricks) {
-        this.hideBricks();
-        const finalBricks = this.filter(bricks);
-        this.setState({
-          ...this.state,
-          searchBricks: bricks,
-          finalBricks,
-          shown: true,
-          isSearching: true,
-        });
-      } else {
-        this.setState({ ...this.state, failedRequest: true });
-      }
+      try {
+        if (bricks) {
+          this.hideBricks();
+          const finalBricks = this.filter(bricks);
+          this.setState({
+            ...this.state,
+            searchBricks: bricks,
+            finalBricks,
+            shown: true,
+            isSearching: true,
+          });
+        } else {
+          this.setState({ ...this.state, failedRequest: true });
+        }
+      } catch {}
     }, 1400);
   }
 
@@ -601,8 +614,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     const isCore = !this.state.isCore;
     this.setState({ isCore, shown: false });
     setTimeout(() => {
-      const finalBricks = this.filter(this.state.bricks, isCore);
-      this.setState({ shown: true, finalBricks });
+      try {
+        const finalBricks = this.filter(this.state.bricks, isCore);
+        this.setState({ shown: true, finalBricks });
+      } catch {}
     }, 1400);
   }
 

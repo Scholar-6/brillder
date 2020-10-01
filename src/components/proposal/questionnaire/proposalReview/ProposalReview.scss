@@ -348,10 +348,11 @@
       }
     }
   }
-  .book-main-container:hover {
-    width: 50vw;
+  $scale: 1.15;
 
-    $scale: 1.15;
+
+  .book-main-container.hovered {
+    width: 50vw;
 
     .front {
       transform: rotateY(-160deg) scale($scale);
@@ -397,6 +398,21 @@
 
     .back {
       transform: rotateY(-20deg) scale($scale);
+    }
+  }
+
+  .book.flat {
+    .front, .page3 {
+      transform: rotateY(-180deg) scale($scale);
+    }
+    .page5 {
+      transform: rotateY(-178deg) scale($scale);
+    }
+    .page6 {
+      transform: rotateY(-4deg) scale($scale);
+    }
+    .page4, .page2, .back {
+      transform: rotateY(0deg) scale($scale);
     }
   }
 }

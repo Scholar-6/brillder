@@ -58,8 +58,8 @@ export const playIntro = (brickId: number) => {
 
 export const PostPlay = '/post-play/brick';
 
-export const postPlay = (brickId: number) => {
-  return PostPlay + '/' + brickId;
+export const postPlay = (brickId: number, userId: number) => {
+  return PostPlay + '/' + brickId + '/' + userId;
 }
 
 export default {

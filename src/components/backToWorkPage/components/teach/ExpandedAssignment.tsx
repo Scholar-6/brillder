@@ -87,9 +87,13 @@ class ExpandedAssignment extends Component<
     );
   }
 
-  renderBookIcon() {
+  renderBookIcon(studentId: number) {
+    const {history, assignment} = this.props;
     return (
-      <svg className="svg active book-open-icon" onClick={() => this.props.history.push(map.postPlay(this.props.assignment.brick.id))}>
+      <svg
+        className="svg active book-open-icon"
+        onClick={() => history.push(map.postPlay(assignment.brick.id, studentId))}
+      >
         {/*eslint-disable-next-line*/}
         <use href={sprite + "#book-open"} />
       </svg>
@@ -156,7 +160,7 @@ class ExpandedAssignment extends Component<
           <div>{this.renderStatus(studentStatus)}</div>
         </td>
         <td className="student-book">
-          {studentStatus ? <div className="centered">{this.renderBookIcon()}</div> : ""}
+          {studentStatus ? <div className="centered">{this.renderBookIcon(student.id)}</div> : ""}
         </td>
         <td className={`assigned-student-name`}>
           {student.firstName} {student.lastName}

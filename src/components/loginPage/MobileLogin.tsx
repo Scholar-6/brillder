@@ -11,6 +11,10 @@ import GoogleButton from "./components/GoogleButton";
 import RegisterButton from "./components/RegisterButton";
 import { LoginState } from "./loginPage";
 
+interface MobileLoginState {
+  animationFinished: boolean;
+}
+
 interface MobileLoginProps {
   email: string;
   password: string;
@@ -30,11 +34,21 @@ interface MobileLoginProps {
   setLoginState(loginState: LoginState): void;
 }
 
-class MobileLoginPage extends React.Component<MobileLoginProps> {
+class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState> {
+  constructor(props: MobileLoginProps) {
+    super(props);
+
+    this.state = {
+      animationFinished: false
+    };
+  }
   componentDidMount() {
     setTimeout(() => {
-      this.props.setLoginState(LoginState.ChooseLogin);
-    }, 300);
+      this.props.setLoginState(LoginState.ChooseLogin)
+      setTimeout(() => {
+        this.setState({animationFinished: true});
+      }, 2200);
+    }, 700);
   }
 
   renderPrivacyPolicy() {
@@ -122,38 +136,32 @@ class MobileLoginPage extends React.Component<MobileLoginProps> {
 
   renderChooseLoginPage(loginState: LoginState) {
     return (
-      <div style={{ width: "100%" }}>
-        <div className="first-col">
-          <div className="second-item">
-            <div
-              className={`logo-box ${
-                loginState === LoginState.ChooseLoginAnimation ? "big" : ""
-              }`}
-            >
-              <div className="logo-box-inner">
-                <svg
-                  className="svg active logo-image mobile"
-                  onClick={this.props.moveToLogin}
-                >
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#logo"} className="text-theme-orange" />
-                </svg>
-                <img
-                  className="logo-text-image"
-                  alt="text"
-                  src="/images/choose-user/brillder-white-text.svg"
-                />
-              </div>
+      <div className={`first-col ${!this.state.animationFinished ? 'filled' : ''}`}>
+        <div className="second-item">
+          <div
+            className={`logo-box ${
+              loginState === LoginState.ChooseLoginAnimation ? "big" : ""
+            }`}
+          >
+            <div className="logo-box-inner">
+              <svg
+                className="svg active logo-image mobile"
+                onClick={this.props.moveToLogin}
+              >
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#logo"} className="text-theme-orange" />
+              </svg>
+              <img
+                className="logo-text-image"
+                alt="text"
+                src="/images/choose-user/brillder-white-text.svg"
+              />
             </div>
-            {loginState !== LoginState.ChooseLoginAnimation ? (
-              <div className="mobile-button-box button-box">
-                <RegisterButton onClick={this.props.moveToLogin} />
-                <GoogleButton />
-                {this.renderPrivacyPolicy()}
-              </div>
-            ) : (
-              ""
-            )}
+          </div>
+          <div className="mobile-button-box button-box">
+            <RegisterButton onClick={this.props.moveToLogin} />
+            <GoogleButton />
+            {this.state.animationFinished && this.renderPrivacyPolicy()}
           </div>
         </div>
       </div>

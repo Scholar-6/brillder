@@ -91,30 +91,7 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
     return false;
   }
 
-  mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
-    const {isReview} = this.props;
-    let markIncrement = isReview ? 2 : 5;
-    attempt.correct = true;
-    attempt.marks = 0;
-    attempt.maxMarks = 0;
-
-    attempt.answer.forEach((answer: any, index: number, array: any[]) => {
-      if (index !== 0) {
-        attempt.maxMarks += 5;
-        if(answer.index - array[index-1].index === 1) {
-          if(!isReview) {
-            attempt.marks += markIncrement;
-          } else if (prev.answer[index] - prev.answer[index-1] !== 1) {
-            attempt.marks += markIncrement;
-          }
-        } else {
-          attempt.correct = false;
-        }
-      }
-    })
-
-    if(attempt.marks === 0 && !isReview) attempt.marks = 1;
-
+  prepareAttempt(component: HorizontalShuffleComponent, attempt: ComponentAttempt<any>) {
     if (this.state.status === DragAndDropStatus.Changed) {
       attempt.dragged = true;
     }

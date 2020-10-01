@@ -51,7 +51,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         }
       } else if (notification.type === NotificationType.BrickAttemptSaved) {
         if (notification.brick && notification.brick.id) {
-          history.push(map.postPlay(notification.brick.id));
+          history.push(map.postPlay(notification.brick.id, this.props.user.id));
         }
       }
     }

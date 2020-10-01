@@ -45,13 +45,13 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
 const mapState = (state: ReduxCombinedState) => ({
   isAuthenticated: state.auth.isAuthenticated,
   user: state.user.user,
-})
+});
 
 const mapDispatch = (dispatch: any) => ({
   isAuthorized: () => dispatch(actions.isAuthorized()),
   getUser: () => dispatch(userActions.getUser()),
-})
+});
 
-const connector = connect(mapState, mapDispatch)
+const connector = connect(mapState, mapDispatch);
 
 export default connector(AllUsersRoute);
