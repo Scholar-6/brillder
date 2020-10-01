@@ -216,7 +216,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 <div className="page4"></div>
                 <div className="page3"></div>
                 <div className="page2"></div>
-                <div className="page5"></div>
                 <div className="front">
                   <div className="page-stitch">
                     <div className="vertical-line"></div>
