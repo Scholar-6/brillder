@@ -165,6 +165,13 @@
   }
 }
 
+@include phone_and_tabletP {
+  .first-col.filled {
+    z-index: 100;
+    background: var(--theme-dark-blue);
+  }
+}
+
 .mobile-button-box {
   @include phone_and_tabletP {
     background-color: $button-box;

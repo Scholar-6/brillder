@@ -11,6 +11,10 @@ import GoogleButton from "./components/GoogleButton";
 import RegisterButton from "./components/RegisterButton";
 import { LoginState } from "./loginPage";
 
+interface MobileLoginState {
+  animationFinished: boolean;
+}
+
 interface MobileLoginProps {
   email: string;
   password: string;
@@ -30,11 +34,21 @@ interface MobileLoginProps {
   setLoginState(loginState: LoginState): void;
 }
 
-class MobileLoginPage extends React.Component<MobileLoginProps> {
+class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState> {
+  constructor(props: MobileLoginProps) {
+    super(props);
+
+    this.state = {
+      animationFinished: false
+    };
+  }
   componentDidMount() {
     setTimeout(() => {
-      this.props.setLoginState(LoginState.ChooseLogin);
-    }, 600);
+      this.props.setLoginState(LoginState.ChooseLogin)
+      setTimeout(() => {
+        this.setState({animationFinished: true});
+      }, 2200);
+    }, 700);
   }
 
   renderPrivacyPolicy() {
@@ -122,7 +136,7 @@ class MobileLoginPage extends React.Component<MobileLoginProps> {
 
   renderChooseLoginPage(loginState: LoginState) {
     return (
-      <div className="first-col">
+      <div className={`first-col ${!this.state.animationFinished ? 'filled' : ''}`}>
         <div className="second-item">
           <div
             className={`logo-box ${
@@ -147,7 +161,7 @@ class MobileLoginPage extends React.Component<MobileLoginProps> {
           <div className="mobile-button-box button-box">
             <RegisterButton onClick={this.props.moveToLogin} />
             <GoogleButton />
-            {this.renderPrivacyPolicy()}
+            {this.state.animationFinished && this.renderPrivacyPolicy()}
           </div>
         </div>
       </div>
