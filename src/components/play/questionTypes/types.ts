@@ -7,6 +7,7 @@ export interface CompQuestionProps {
   attempt?: ComponentAttempt<any>;
   isPreview?: boolean;
   answers: any;
+  isBookPreview?: boolean;
   isReview?: boolean;
   onAttempted(): void;
 }
