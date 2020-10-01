@@ -8,7 +8,7 @@
     @include phone_and_tabletP {
       background-color: var(--theme-light-blue);
       margin-bottom: 20px;
-      height: calc(42vh - 20px) !important;
+      height: calc(42% - 20px) !important;
       border-bottom-right-radius: 10vw;
       overflow: hidden;
     }
