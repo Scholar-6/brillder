@@ -146,7 +146,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     const {user} = props;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = user.id;
-    history.push(`/play-preview/brick/${brickId}/build-complete`);
+
+    let isCurrentEditor = brick.editor?.id === user.id;
+    if (isCurrentEditor) {
+      history.push(`/play-preview/brick/${brickId}/finalStep`);
+    } else {
+      history.push(`/play-preview/brick/${brickId}/build-complete`);
+    }
   }
 
   const moveToBuild = () => {
