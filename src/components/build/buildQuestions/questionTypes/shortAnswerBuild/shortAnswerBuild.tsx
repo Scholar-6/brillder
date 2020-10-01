@@ -4,7 +4,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import "./shortAnswerBuild.scss";
 import sprite from "assets/img/icons-sprite.svg";
 import { UniqueComponentProps } from "../types";
-import { ShrortAnswerData, ShortAnswerItem } from "./interface";
+import { ShortAnswerData, ShortAnswerItem } from "./interface";
 
 import { stripHtml } from "components/build/questionService/ConvertService";
 import DocumentWirisCKEditor from "components/baseComponents/ckeditor/DocumentWirisEditor";
@@ -12,7 +12,7 @@ import AddAnswerButton from "components/build/baseComponents/addAnswerButton/Add
 
 
 export interface ShortAnswerBuildProps extends UniqueComponentProps {
-  data: ShrortAnswerData;
+  data: ShortAnswerData;
 }
 
 const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({

@@ -54,6 +54,14 @@ export const playIntro = (brickId: number) => {
   return realPlay(brickId) + PlayIntroLastPrefix;
 }
 
+// post play
+
+export const PostPlay = '/post-play/brick';
+
+export const postPlay = (brickId: number, userId: number) => {
+  return PostPlay + '/' + brickId + '/' + userId;
+}
+
 export default {
   Build,
   Login,
@@ -72,6 +80,7 @@ export default {
   BackToWorkLearnTab,
 
   ViewAllPage,
+  postPlay,
 
   InvestigationBuild,
   investigationBuildQuestion,

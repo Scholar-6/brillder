@@ -116,9 +116,15 @@ class PlayPage extends Component<PlayProps, PlayState> {
   }
 
   onThreeColumnsMouseHover(index: number, status: AssignmentBrickStatus) {
+    const key = Math.floor(index / 3);
+    const name = service.getPlayThreeColumnName(status);
+    const {threeColumns} = this.state;
+
+    let assignment = service.getPlayThreeColumnBrick(threeColumns, name, key);
+    if (assignment && assignment.brick.expanded) return;
+  
     hideAssignments(this.state.rawAssignments);
 
-    const key = Math.floor(index / 3);
     this.setState({ ...this.state });
 
     setTimeout(() => {

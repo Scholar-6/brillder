@@ -82,12 +82,27 @@
       position: absolute;
       top: 0;
       right: 0;
-      .MuiIconButton-sizeSmall {
-        padding: 0 !important;
-      }
-      .MuiSvgIcon-root {
-        height: 1.3vw;
-        width: 1.3vw;
+      @extend %flexCenter;
+      > button {
+        border: 0;
+        background-color: transparent;
+        .svg {
+          stroke-width: 2;
+          @extend %removePosition;
+          height: 1.3vw;
+          width: 1.3vw;
+
+        }
+        &.message-button {
+          .svg {
+            color: var(--theme-dark-blue);
+          }
+        }
+        &.cancel-button {
+          .svg {
+            color: var(--theme-orange);
+          }
+        }
       }
     }
     .comment-date {

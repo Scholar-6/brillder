@@ -4,11 +4,27 @@
 
 .questions {
   width: 100%;
-
+  display: flex;
+  flex-direction: column;
+  .dropzone {
+    border: 0 !important;
+  }
   .drop-box {
     @extend %themeRadius;
-    .dropzone {
-      border: none !important;
+    .dragableBox {
+      margin-bottom: 0 !important;
+      .dropzone {
+        border: none !important;
+      }
+    }
+  }
+  > div {
+    display: flex;
+    flex-direction: column;
+    >.drop-box  {
+      &:last-child {
+        order: 1;
+      }
     }
   }
   .add-dropbox {

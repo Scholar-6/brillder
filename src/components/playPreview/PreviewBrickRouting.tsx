@@ -30,6 +30,7 @@ import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
 import BuildCompletePage from './buildComplete/BuildCompletePage';
 import FinalStep from './finalStep/FinalStep';
+import { calcBrickLiveAttempt, calcBrickReviewAttempt } from 'components/play/services/scoring';
 
 
 export interface BrickAttempt {
@@ -62,17 +63,15 @@ interface BrickRoutingProps {
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
-  const {brick, history, location, match} = props;
-
-  let initAttempts: any[] = [];
-  if (brick) {
-    initAttempts = prefillAttempts(brick.questions);
-  }
+  const {history, location, match} = props;
+  const parsedBrick = parseAndShuffleQuestions(props.brick);
 
   let cashedBuildQuestion = GetCashedBuildQuestion();
-
+  
+  const [brick] = React.useState(parsedBrick);
   const [status, setStatus] = React.useState(PlayStatus.Live);
   const [brickAttempt, setBrickAttempt] = React.useState({} as BrickAttempt);
+  const initAttempts = prefillAttempts(brick.questions);
   const [attempts, setAttempts] = React.useState(initAttempts);
   const [reviewAttempts, setReviewAttempts] = React.useState(initAttempts);
   const [startTime, setStartTime] = React.useState(undefined);
@@ -80,7 +79,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
 
   useEffect(() => {
     if (props.brick) {
-      let initAttempts = prefillAttempts(props.brick.questions);
+      const parsedBrick = parseAndShuffleQuestions(props.brick);
+      const initAttempts = prefillAttempts(parsedBrick.questions);
       setAttempts(initAttempts);
     }
   }, [props.brick]);
@@ -104,11 +104,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishBrick = () => {
-    /* If no answer given or no mark provided for question then return acc accumulated score +0 so
-    it still has an integer value, else return acc + additional mark */
+    /* 25/09 change to use scoring service
+    // If no answer given or no mark provided for question then return acc accumulated score +0 so
+    // it still has an integer value, else return acc + additional mark
     let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
-    /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
-    is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
+    // MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
+    // is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.
     let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba: BrickAttempt = {
       brick,
@@ -117,6 +118,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       student: null,
       answers: attempts
     };
+    */
+    const ba = calcBrickLiveAttempt(brick, attempts);
     setStatus(PlayStatus.Review);
     setBrickAttempt(ba);
     setReviewAttempts(Object.assign([], attempts));
@@ -124,7 +127,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishReview = () => {
-    let score = reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0) + brickAttempt.score;
+    /* 25/09 change to use scoring service
+    let score = reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0);
     let maxScore = reviewAttempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba: BrickAttempt = {
       score,
@@ -132,6 +136,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       oldScore: brickAttempt.score,
       answers: reviewAttempts
     };
+    */
+    const ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
   }
@@ -245,7 +251,14 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/provisionalScore">
-              <ProvisionalScore status={status} brick={brick} startTime={startTime} attempts={attempts} isPlayPreview={true} />
+              <ProvisionalScore
+                history={history}
+                location={location}
+                status={status}
+                brick={brick}
+                attempts={attempts}
+                isPlayPreview={true}
+              />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/synthesis">
               <Synthesis status={status} brick={brick} isPlayPreview={true} />
@@ -360,7 +373,7 @@ const parseAndShuffleQuestions = (brick: Brick): Brick => {
 
 const mapState = (state: ReduxCombinedState) => ({
   user: state.user.user,
-  brick: parseAndShuffleQuestions(state.brick.brick) as Brick,
+  brick: state.brick.brick,
 });
 
 const mapDispatch = (dispatch: any) => ({

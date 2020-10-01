@@ -11,10 +11,11 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneAnswer } from 'components/build/buildQuestions/questionTypes/chooseOneBuild/types';
 
+export type ChooseSeveralAnswer = number[];
 
 interface ChooseSeveralProps extends CompQuestionProps {
   component: any;
-  attempt: ComponentAttempt<number[]>;
+  attempt: ComponentAttempt<ChooseSeveralAnswer>;
   answers: number[];
 }
 
@@ -52,59 +53,6 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
 
   getAnswer(): number[] {
     return this.state.activeItems;
-  }
-
-  markLiveChoices(attempt: ComponentAttempt<any>, markIncrement: number) {
-    const choices = this.props.component.list;
-    for (let [index, choice] of choices.entries()) {
-      const checked = attempt.answer.find((answer: number) => answer === index);
-      if (checked >= 0) {
-        if (choice.checked) {
-          attempt.marks += markIncrement;
-        } else {
-          attempt.marks -= markIncrement;
-          attempt.correct = false;
-        }
-      } else {
-        if (choice.checked) {
-          attempt.marks -= markIncrement;
-          attempt.correct = false;
-        }
-      }
-    }
-  }
-
-  getCorrectAnswers() {
-    let count = 0;
-    for (let item of this.props.component.list) {
-      if (item.checked) {
-        count += 1;
-      }
-    }
-    return count;
-  }
-
-  mark(attempt: ComponentAttempt<number[]>, prev: ComponentAttempt<number[]>) {
-    const {isReview} = this.props;
-    let correctAnswers = this.getCorrectAnswers();
-    const markValue = 5;
-    const markIncrement = isReview ? Math.floor(markValue / correctAnswers) : markValue;
-
-    attempt.correct = true;
-    attempt.marks = 0;
-
-    attempt.maxMarks = correctAnswers * markValue;
-    this.markLiveChoices(attempt, markIncrement);
-
-    // Then, if the attempt scored no marks or negative and the program is in live phase, then give the student a mark.
-    if (attempt.marks <= 0 && attempt.answer !== [] && !isReview) { attempt.marks = 1; }
-    if (attempt.marks <= 0) { attempt.marks = 0; }
-
-    if (attempt.answer.length === 0) {
-      attempt.marks = 0;
-    }
-
-    return attempt;
   }
 
   checkChoice(choice: ChooseOneAnswer, index: number) {

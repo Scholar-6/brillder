@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 
-import './ExpandedAssignment.scss';
+import "./ExpandedAssignment.scss";
 import sprite from "assets/img/icons-sprite.svg";
 import { Subject } from "model/brick";
 import { UserBase } from "model/user";
 import { Assignment, StudentStatus, TeachClassroom } from "model/classroom";
 import { getSubjectColor } from "components/services/subject";
 
-import AssignedBrickDescription from './AssignedBrickDescription';
+import AssignedBrickDescription from "./AssignedBrickDescription";
 import { ApiAssignemntStats, AssignmentStudent } from "model/stats";
+import map from "components/map";
 
 enum SortBy {
   None,
   AvgIncreasing,
-  AvgDecreasing
+  AvgDecreasing,
 }
 
 interface AssignemntExpandedState {
@@ -28,10 +29,14 @@ interface AssignmentBrickProps {
   pageSize: number;
   classroom: TeachClassroom;
   assignment: Assignment;
+  history: any;
   minimize(): void;
 }
 
-class ExpandedAssignment extends Component<AssignmentBrickProps, AssignemntExpandedState> {
+class ExpandedAssignment extends Component<
+  AssignmentBrickProps,
+  AssignemntExpandedState
+> {
   constructor(props: AssignmentBrickProps) {
     super(props);
 
@@ -42,20 +47,20 @@ class ExpandedAssignment extends Component<AssignmentBrickProps, AssignemntExpan
 
     this.state = {
       sortBy: SortBy.None,
-      questionCount: questionCount
+      questionCount: questionCount,
     };
   }
 
   renderAvgScore(studentStatus: StudentStatus) {
     let subjectId = this.props.assignment.brick.subjectId;
     let color = getSubjectColor(this.props.subjects, subjectId);
-  
+
     if (!color) {
       color = "#B0B0AD";
     }
 
     return (
-      <div className="circle" style={{background: color}}>
+      <div className="circle" style={{ background: color }}>
         {Math.round(studentStatus.avgScore)}
       </div>
     );
@@ -73,22 +78,46 @@ class ExpandedAssignment extends Component<AssignmentBrickProps, AssignemntExpan
     );
   }
 
-  renderBookIcon() {
+  renderCommentIcon() {
     return (
-      <svg className="svg active book-open-icon">
+      <svg className="svg active comment-icon">
+        {/*eslint-disable-next-line*/}
+        <use href={sprite + "#message-square"} />
+      </svg>
+    );
+  }
+
+  renderBookIcon(studentId: number) {
+    const {history, assignment} = this.props;
+    return (
+      <svg
+        className="svg active book-open-icon"
+        onClick={() => history.push(map.postPlay(assignment.brick.id, studentId))}
+      >
         {/*eslint-disable-next-line*/}
         <use href={sprite + "#book-open"} />
       </svg>
     );
   }
 
-  renderQuestionAttemptIcon(studentResult: AssignmentStudent | undefined, studentStatus: StudentStatus | undefined, questionNumber: number) {
+  renderQuestionAttemptIcon(
+    studentResult: AssignmentStudent | undefined,
+    studentStatus: StudentStatus | undefined,
+    questionNumber: number
+  ) {
     if (studentResult && studentStatus) {
-      const attempt = studentResult.attempts[questionNumber].answers[questionNumber]
+      const attempt = studentResult.attempts[0].answers[questionNumber];
+      if (attempt.correct === true) {
+        return (
+          <svg>
+            <use href={sprite + "#check-icon-thin"} className="text-theme-green" />
+          </svg>
+        );
+      }
       if (attempt.marks < 3) {
         return (
           <svg>
-            <use href={sprite + "#cancel"} className="text-theme-orange" />
+            <use href={sprite + "#cancel"} style={{strokeWidth: 2}} className="text-theme-orange" />
           </svg>
         );
       }
@@ -117,36 +146,84 @@ class ExpandedAssignment extends Component<AssignmentBrickProps, AssignemntExpan
 
   renderStudent(student: UserBase, i: number) {
     console.log(this.props.stats.byStudent);
-    let studentResult = this.props.stats.byStudent.find(s => s.studentId === student.id);
-    const studentStatus = this.props.assignment.studentStatus.find(s => s.studentId === student.id);
+    let studentResult = this.props.stats.byStudent.find(
+      (s) => s.studentId === student.id
+    );
+    const studentStatus = this.props.assignment.studentStatus.find(
+      (s) => s.studentId === student.id
+    );
 
     return (
       <tr className="user-row" key={i}>
         <td className="padding-left-column"></td>
         <td className="student-status">
-          <div>
-            {this.renderStatus(studentStatus)}
-          </div>
+          <div>{this.renderStatus(studentStatus)}</div>
         </td>
         <td className="student-book">
-          {studentStatus ?
-          <div>
-            {this.renderBookIcon()}
-          </div> : ""}
+          {studentStatus ? <div className="centered">{this.renderBookIcon(student.id)}</div> : ""}
         </td>
-        <td className="assigned-student-name">{student.firstName} {student.lastName}</td>
-        { Array.from(new Array(this.state.questionCount), (x, i) => i).map((a, i) => {
-          return (
-            <td key={i} className="icon-container">{this.renderQuestionAttemptIcon(studentResult, studentStatus, i)}</td>
-          );
-        })}
+        <td className={`assigned-student-name`}>
+          {student.firstName} {student.lastName}
+        </td>
+        {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
+          (a, i) => {
+            return (
+              <td key={i} className="icon-container">
+                <div className="centered">
+                  {this.renderQuestionAttemptIcon(studentResult, studentStatus, i)}
+                </div>
+              </td>
+            );
+          }
+        )}
+        <td>
+          {studentStatus ? <div className="centered">{this.renderCommentIcon()}</div> : ""}
+        </td>
       </tr>
     );
   }
 
+  renderTableHead() {
+    return (
+      <thead>
+        <tr>
+          <th></th>
+          <th>
+            <div className="center">
+              <button
+                className="btn btn-transparent svgOnHover btn-grey-circle"
+                onClick={() => this.setState({ sortBy: SortBy.AvgDecreasing })}
+              >
+                <svg className="svg active">
+                  <use href={sprite + "#arrow-down"} className="text-theme-dark-blue" />
+                </svg>
+              </button>
+            </div>
+          </th>
+          <th>
+            <div className="center">
+              <button className="btn btn-transparent svgOnHover btn-grey-circle">
+                <svg className="svg active">
+                  <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
+                </svg>
+              </button>
+            </div>
+          </th>
+          <th></th>
+          {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
+            (a, i) => (
+              <th key={i}><div className="centered">{i + 1}</div></th>
+            )
+          )}
+          <th></th>
+        </tr>
+      </thead>
+    );
+  }
+
   render() {
-    const {assignment, classroom, startIndex, pageSize} = this.props;
-    let {students} = classroom;
+    const { assignment, classroom, startIndex, pageSize } = this.props;
+    let { students } = classroom;
     students = students.slice(startIndex, startIndex + pageSize);
     if (this.state.sortBy !== SortBy.None) {
     }
@@ -158,44 +235,15 @@ class ExpandedAssignment extends Component<AssignmentBrickProps, AssignemntExpan
             isExpanded={true}
             subjects={this.props.subjects}
             minimize={this.props.minimize}
-            classroom={classroom} assignment={assignment}
+            classroom={classroom}
+            assignment={assignment}
           />
         </div>
         <div className="users-table">
           <table cellSpacing="0" cellPadding="0">
-            <thead>
-              <tr>
-                <th></th>
-                <th>
-                  <div className="center">
-                    <button
-                      className="btn btn-transparent svgOnHover btn-grey-circle"
-                      onClick={() => this.setState({sortBy: SortBy.AvgDecreasing})}
-                    >
-                      <svg className="svg active">
-                        <use href={sprite + "#arrow-down"} className="text-theme-dark-blue" />
-                      </svg>
-                    </button>
-                  </div>
-                </th>
-                <th>
-                  <div className="center">
-                    <button className="btn btn-transparent svgOnHover btn-grey-circle">
-                      <svg className="svg active">
-                        <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
-                      </svg>
-                    </button>
-                  </div>
-                </th>
-                <th></th>
-                { Array.from(new Array(this.state.questionCount), (x, i) => i).map((a, i) => <th key={i}>{i + 1}</th>)}
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map(this.renderStudent.bind(this))}
-            </tbody>
-        </table>
+            {this.renderTableHead()}
+            <tbody>{students.map(this.renderStudent.bind(this))}</tbody>
+          </table>
         </div>
       </div>
     );

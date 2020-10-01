@@ -26,11 +26,14 @@
         font-size: 1.05vw;
         @include tabletP {
           font-size: $answer-input-text-size;
+          min-height: 8vh;
         }
         p {
           color: var(--theme-dark-blue);
           margin: 0 !important;
-          font-size: 1.05vw;
+          @include tabletP {
+            font-size: 1.05vw;
+          }
         }
         .table {
           display: block;

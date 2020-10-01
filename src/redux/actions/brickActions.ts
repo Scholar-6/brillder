@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Action, Dispatch } from 'redux';
 import { Brick } from 'model/brick';
 import comments from './comments';
+import service from 'components/services/axios/brick';
 
 const fetchBrickSuccess = (data:any) => {
   return {
@@ -127,4 +128,21 @@ const assignEditor = (brick: any) => {
   }
 }
 
-export default { fetchBrick, createBrick, saveBrick, forgetBrick, assignEditor }
+const sendToPublisher = (brickId: number) => {
+  return async function (dispatch: Dispatch) {
+    const res = await service.sendToPublisher(brickId);
+    if (res) {
+      dispatch({ type: types.SEND_TO_PUBLISHER_SUCCESS } as Action);
+    } else {
+      dispatch({ type: types.SEND_TO_PUBLISHER_FAILURE } as Action);
+    }
+  }
+}
+
+const sendToPublisherConfirmed = () => {
+  return async function (dispatch: Dispatch) {
+    dispatch({ type: types.SEND_TO_PUBLISHER_CONFIRMED } as Action);
+  }
+}
+
+export default { fetchBrick, createBrick, saveBrick, forgetBrick, assignEditor, sendToPublisher, sendToPublisherConfirmed }

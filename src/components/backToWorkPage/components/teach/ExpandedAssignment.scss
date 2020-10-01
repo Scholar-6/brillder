@@ -6,6 +6,10 @@
   padding-left: 0 !important;
   padding-right: 0 !important;
 
+  .centered {
+    @extend %flexCenter;
+  }
+
   .classroom-title {
     padding-left: 1.6vw;
   }
@@ -73,6 +77,16 @@
         stroke-width: 1.5;
         width: 1.7vw;
         height: 1.7vw;
+      }
+
+      .comment-icon {
+        color: var(--theme-dark-blue);
+        background: var(--off-white);
+        border-radius: 50%;
+        padding: 0.3vw;
+        stroke-width: 1.5;
+        width: 1.6vw;
+        height: 1.6vw;
       }
 
       .reminder-icon {

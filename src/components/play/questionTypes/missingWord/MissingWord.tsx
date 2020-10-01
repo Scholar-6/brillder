@@ -63,38 +63,9 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     return this.state.userAnswers;
   }
 
-  mark(attempt: any, prev: any): any {
-    const {isReview} = this.props;
-    const markValue = 5;
-    const markIncrement = isReview ? 2 : markValue;
-
-    attempt.correct = true;
-    attempt.marks = 0;
-    attempt.maxMarks = this.state.choices.length * 5;
-
-    this.state.userAnswers.forEach((choice, i) => {
-      if (this.state.choices[i].answers[choice.value]?.checked === true) {
-        attempt.marks += markIncrement;
-      } else {
-        attempt.correct = false;
-      }
-    });
-
+  prepareAttempt(component: any, attempt: ComponentAttempt<any>) {
     attempt.answer = this.state.userAnswers;
-    if (attempt.marks === 0 && attempt.answer !== [] && !isReview) {
-      attempt.marks = 1;
-    }
 
-    let noAnswer = true;
-    for (let answer of attempt.answer) {
-      if (answer.value !== -1) {
-        noAnswer = false;
-      }
-    }
-
-    if (noAnswer) {
-      attempt.marks = 0;
-    }
     return attempt;
   }
 

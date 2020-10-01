@@ -74,8 +74,7 @@
   height: 4.5vw;
   position: fixed;
   font-size: 1.15vw;
-  top: 1.4vw;
-  right: 1.4vw;
+
   letter-spacing: 0.05vw;
   z-index: 1000;
   cursor: pointer;
@@ -85,6 +84,12 @@
   @include phone_and_tabletP {
     width: 17vw;
     height: 17vw;
+    bottom: calc(85px);
+    right: 5vw;
+  }
+  @include tabletP {
+    top: 1.4vw;
+    right: 1.4vw;
   }
   &:after {
     content: '';

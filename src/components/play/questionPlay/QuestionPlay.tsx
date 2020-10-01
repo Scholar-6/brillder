@@ -31,6 +31,7 @@ interface QuestionProps {
   isPhonePreview?: boolean;
   answers: any;
   isReview?: boolean;
+  isBookPreview?: boolean;
   onAttempted?(): void;
 
   // only for real play
@@ -100,6 +101,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
           attempt={this.props.attempt}
           answers={this.props.answers}
           isPreview={this.props.isPhonePreview}
+          isBookPreview={this.props.isBookPreview}
           question={question}
           component={component}
           isReview={this.props.isReview}
@@ -126,8 +128,6 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
       return <div key={index}></div>
     }
 
-    console.log(question.firstComponent)
-
     try {
       return (
         <div>
@@ -140,8 +140,7 @@ class QuestionLive extends React.Component<QuestionProps, QuestionState> {
           }
         </div>
       );
-    }
-    catch {
+    } catch {
       return <div>Oops something is not working on this question.</div>
     }
   }

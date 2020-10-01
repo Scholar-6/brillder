@@ -15,6 +15,8 @@ import ExitButton from "./ExitButton";
 import InviteDialog from "./dialogs/InviteDialog";
 import InvitationSuccessDialog from "./dialogs/InvitationSuccessDialog";
 import { User } from "model/user";
+import { checkAdmin } from "components/services/brickService";
+import map from "components/map";
 
 interface FinalStepProps {
   brick: Brick;
@@ -40,6 +42,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
     name: ''
   });
 
+  let isAdmin = checkAdmin(user.roles);
+  let isEditor = false;
+  try {
+    isEditor = brick.editor?.id === user.id;
+  } catch {}
+  
   let isAuthor = false;
   try {
     isAuthor = brick.author.id === user.id;
@@ -78,7 +86,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                       </svg>
                     </div>
                   </div>
-                  <h2>Final step?</h2>
+                  <h2>All done!</h2>
                   <p>Well done for completing “{brick.title}”!</p>
                   {renderActionColumns()}
                 </div>
@@ -91,7 +99,13 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 </div>
                 <div className="intro-text-row">
                 </div>
-                <ExitButton onClick={() => history.push('/play/dashboard')} />
+                <ExitButton onClick={() => {
+                  if (isAuthor || isAdmin || isEditor) {
+                    history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`);
+                  } else {
+                    history.push(`${map.BackToWorkLearnTab}?isCore=${brick.isCore}`);
+                  }
+                 }} />
               </div>
             </Grid>
           </Grid>
@@ -104,7 +118,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
           </div>
           <div className="introduction-page">
           </div>
-          <ExitButton onClick={() => history.push('/play/dashboard')} />
+          <ExitButton onClick={() => history.push(map.ViewAllPage)} />
         </div>
       </Hidden>
       <LinkDialog

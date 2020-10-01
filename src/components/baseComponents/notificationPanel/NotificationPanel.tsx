@@ -49,6 +49,10 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         if (notification.brick && notification.brick.id >= 1) {
           history.push(map.playIntro(notification.brick.id));
         }
+      } else if (notification.type === NotificationType.BrickAttemptSaved) {
+        if (notification.brick && notification.brick.id) {
+          history.push(map.postPlay(notification.brick.id, this.props.user.id));
+        }
       }
     }
   }
@@ -147,6 +151,14 @@ class NotificationPanel extends Component<NotificationPanelProps> {
                       <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginLeft: '0.2vw'}}>
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#play-thick"} />
+                      </svg>
+                      :
+                      ""
+                    }
+                    {notification.type === NotificationType.BrickAttemptSaved ?
+                      <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginRight: '0vw', strokeWidth: 2}}>
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#book-open"} />
                       </svg>
                       :
                       ""

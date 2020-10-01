@@ -6,10 +6,24 @@ import "./Ending.scss";
 import { Brick } from "model/brick";
 import { PlayStatus } from "../model";
 import { BrickAttempt } from "../model";
-import EndingStepper from './EndingStepper';
+import EndingStepper from "./EndingStepper";
 import sprite from "assets/img/icons-sprite.svg";
 import Clock from "../baseComponents/Clock";
 import { getPlayPath, getAssignQueryString } from "../service";
+
+interface EndingState {
+  oldScore: number;
+
+  liveScore: number;
+  reviewScore: number;
+  currentScore: number;
+
+  currentPScore: number;
+  minPScore: number;
+  maxPScore: number;
+
+  interval: number;
+}
 
 interface EndingProps {
   status: PlayStatus;
@@ -20,40 +34,77 @@ interface EndingProps {
   saveAttempt(): void;
 }
 
-const EndingPage: React.FC<EndingProps> = ({
-  status,
-  brick,
-  location,
-  brickAttempt,
-  history,
-  saveAttempt,
-}) => {
-  const attempts = brickAttempt.answers;
-  const [minCurrentScore, setMinScore] = React.useState(0);
-  const [maxCurrentScore, setMaxScore] = React.useState(0);
-  const [currentScore, setCurrentScore] = React.useState(0);
+class EndingPage extends React.Component<EndingProps, EndingState> {
+  constructor(props: EndingProps) {
+    super(props);
 
-  const playPath = getPlayPath(false, brick.id);
+    const {oldScore, maxScore, score} = this.props.brickAttempt;
 
-  if (status === PlayStatus.Live) {
-    history.push(`${playPath}/intro${getAssignQueryString(location)}`);
+    const oldScoreNumber = oldScore ? oldScore : 0;
+
+    const currentPScore = Math.round(((score + oldScoreNumber) * 50) / maxScore);
+    const minPScore = Math.round((oldScoreNumber * 100) / maxScore);
+    const maxPScore = Math.round((score * 100) / maxScore);
+
+    this.state = {
+      oldScore: oldScoreNumber,
+
+      currentScore: 0,
+      liveScore: 0,
+      reviewScore: 0,
+
+      currentPScore,
+      minPScore,
+      maxPScore,
+
+      interval: 0
+    };
   }
 
-  const endBrick = () => saveAttempt();
+  componentDidMount() {
+    let step = 3;
+    const {oldScore} = this.state;
+    const {score, maxScore} = this.props.brickAttempt;
+    let liveScore = Math.round((oldScore * 100) / maxScore);
+    let reviewScore = Math.round((score * 100) / maxScore);
+    let currentScore = Math.round(((oldScore + score) * 50) / maxScore);
+    let interval = setInterval(() => {
+      let tempReviewScore = this.state.reviewScore;
+      let tempLiveScore = this.state.liveScore;
+      let tempCurrentScore = this.state.currentScore;
 
-  const oldScore = brickAttempt.oldScore ? brickAttempt.oldScore : 0;
-  const { score, maxScore } = brickAttempt;
-  const currentPScore = Math.round(((score + oldScore) * 50) / maxScore);
-  const minPScore = Math.round((oldScore * 100) / maxScore);
-  const maxPScore = Math.round((score * 100) / maxScore);
+      if (tempReviewScore < reviewScore - step) {
+        tempReviewScore += step;
+      } else {
+        tempReviewScore = reviewScore;
+      }
+      if (tempLiveScore < liveScore - step) {
+        tempLiveScore += step;
+      } else {
+        tempLiveScore = liveScore;
+      }
 
-  setTimeout(() => {
-    setMinScore((oldScore * 100) / maxScore);
-    setMaxScore((score * 100) / maxScore);
-    setCurrentScore(Math.round((oldScore + score) * 50 / maxScore));
-  }, 400);
+      if (tempCurrentScore < currentScore - step) {
+        tempCurrentScore += step;
+      } else {
+        tempCurrentScore = currentScore;
+      }
 
-  const renderProgressBars = () => {
+      this.setState({liveScore: tempLiveScore, reviewScore: tempReviewScore, currentScore: tempCurrentScore});
+      
+      if( liveScore === this.state.liveScore && reviewScore === tempReviewScore && currentScore === tempCurrentScore) {
+        clearInterval(interval);
+      }
+    }, 100);
+    this.setState({interval});
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.interval);
+  }
+
+  renderProgressBars() {
+    const {score, maxScore} = this.props.brickAttempt;
     return (
       <div className="question-live-play">
         <Grid
@@ -66,7 +117,7 @@ const EndingPage: React.FC<EndingProps> = ({
             className="circle-progress-first"
             strokeWidth={4}
             counterClockwise={true}
-            value={minCurrentScore}
+            value={this.state.liveScore}
           />
           <Grid
             container
@@ -78,7 +129,7 @@ const EndingPage: React.FC<EndingProps> = ({
               className="circle-progress-second"
               counterClockwise={true}
               strokeWidth={4}
-              value={maxCurrentScore}
+              value={this.state.reviewScore}
             />
           </Grid>
           <Grid
@@ -91,7 +142,7 @@ const EndingPage: React.FC<EndingProps> = ({
               className="circle-progress-third"
               counterClockwise={true}
               strokeWidth={4}
-              value={currentScore}
+              value={this.state.currentScore}
             />
           </Grid>
           <Grid
@@ -101,9 +152,13 @@ const EndingPage: React.FC<EndingProps> = ({
             className="score-circle"
           >
             <div>
-              <div className="score-precentage">{currentPScore}%</div>
-              <div className="score-number">{oldScore}/{maxScore}</div>
-              <div className="score-number">{score}/{maxScore}</div>
+              <div className="score-precentage">{this.state.currentPScore}%</div>
+              <div className="score-number">
+                {this.state.oldScore}/{maxScore}
+              </div>
+              <div className="score-number">
+                {score}/{maxScore}
+              </div>
             </div>
           </Grid>
         </Grid>
@@ -111,7 +166,7 @@ const EndingPage: React.FC<EndingProps> = ({
     );
   }
 
-  const renderFooter = () => {
+  renderFooter() {
     return (
       <div className="action-footer">
         <div></div>
@@ -122,7 +177,7 @@ const EndingPage: React.FC<EndingProps> = ({
           <button
             type="button"
             className="play-preview svgOnHover play-green"
-            onClick={endBrick}
+            onClick={this.props.saveAttempt}
           >
             <svg className="svg w80 h80 active m-l-02">
               {/*eslint-disable-next-line*/}
@@ -134,56 +189,68 @@ const EndingPage: React.FC<EndingProps> = ({
     );
   }
 
-  return (
-    <div>
-      <Hidden only={['xs']}>
-        <div className="brick-container play-preview-panel ending-page">
-          <Grid container direction="row">
-            <Grid item xs={8}>
-              <div className="introduction-page">
-                <h1 className="title">Final Score : Agg.</h1>
-                {renderProgressBars()}
-              </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div className="introduction-info">
-                <div className="intro-header">
-                  <div>Range: {minPScore}%-{maxPScore}%</div>
-                  <Clock brickLength={brick.brickLength} />
+  renderStepper() {
+    return (
+      <EndingStepper
+        questions={this.props.brick.questions}
+        attempts={this.props.brickAttempt.answers}
+        handleStep={() => {}}
+      />
+    );
+  }
+
+  render() {
+    const playPath = getPlayPath(false, this.props.brick.id);
+
+    if (this.props.status === PlayStatus.Live) {
+      this.props.history.push(
+        `${playPath}/intro${getAssignQueryString(this.props.location)}`
+      );
+    }
+
+    return (
+      <div>
+        <Hidden only={["xs"]}>
+          <div className="brick-container play-preview-panel ending-page">
+            <Grid container direction="row">
+              <Grid item xs={8}>
+                <div className="introduction-page">
+                  <h1 className="title">Final Score : Agg.</h1>
+                  {this.renderProgressBars()}
                 </div>
-                <div className="intro-text-row f-align-self-start m-t-5">
-                  <EndingStepper
-                    questions={brick.questions}
-                    attempts={attempts}
-                    handleStep={() => { }}
-                  />
+              </Grid>
+              <Grid item xs={4}>
+                <div className="introduction-info">
+                  <div className="intro-header">
+                    <div>
+                      Range: {this.state.minPScore}%-{this.state.maxPScore}%
+                    </div>
+                    <Clock brickLength={this.props.brick.brickLength} />
+                  </div>
+                  <div className="intro-text-row f-align-self-start m-t-5">
+                    {this.renderStepper()}
+                  </div>
+                  {this.renderFooter()}
                 </div>
-                {renderFooter()}
-              </div>
+              </Grid>
             </Grid>
-          </Grid>
-        </div>
-      </Hidden>
-      <Hidden only={['sm', 'md', 'lg', 'xl']}>
-        <div className="brick-container play-preview-panel ending-page mobile-ending-page">
-          <div className="introduction-info">
-            <div className="intro-text-row">
-              <span className="heading">Final Score : Agg.</span>
-              <EndingStepper
-                questions={brick.questions}
-                attempts={attempts}
-                handleStep={() => { }}
-              />
+          </div>
+        </Hidden>
+        <Hidden only={["sm", "md", "lg", "xl"]}>
+          <div className="brick-container play-preview-panel ending-page mobile-ending-page">
+            <div className="introduction-info">
+              <div className="intro-text-row">
+                <span className="heading">Final Score : Agg.</span>
+                {this.renderStepper()}
+              </div>
             </div>
+            <div className="introduction-page">{this.renderProgressBars()}</div>
+            {this.renderFooter()}
           </div>
-          <div className="introduction-page">
-            {renderProgressBars()}
-          </div>
-          {renderFooter()}
-        </div>
-      </Hidden>
-    </div>
-  );
-};
+        </Hidden>
+      </div>
+    );
+  }
+}
 
 export default EndingPage;

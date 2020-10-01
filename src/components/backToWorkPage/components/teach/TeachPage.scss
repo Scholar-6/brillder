@@ -1,13 +1,14 @@
-@import 'src/assets/sass/partials/variables';
-@import 'src/assets/sass/partials/mixins';
-@import 'src/assets/sass/partials/extensions';
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
 
 .back-to-work-teach {
   .right-index {
     height: 100%;
   }
 
-  .index-box, classes-box {
+  .index-box,
+  classes-box {
     @extend %flexToYCenter;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -15,11 +16,12 @@
     font-size: 1.8vh !important;
   }
   .white-box {
-    padding: 0 !important;
-    border-radius: calc(#{$bricks-height / 6.35 / 20}) !important;
-    width: 5vh !important;
-    height: 2.3vh !important;
-    @extend %flexCenter;
-    font-size: 2.1vh !important;
+    margin-left: 0.3vw;
+    background: white;
+    color: var(--theme-dark-blue);
+    border-radius: 0.65vw;
+    padding: 0.25vw 0.6vw;
+    font-size: 1vw;
+    line-height: 1;
   }
 }

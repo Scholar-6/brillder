@@ -4,15 +4,17 @@ import { connect } from 'react-redux';
 
 import './CommentPanel.scss';
 import sprite from "assets/img/icons-sprite.svg";
-import CommentItem from './CommentItem';
 import { ReduxCombinedState } from 'redux/reducers';
-
 import comments from 'redux/actions/comments';
 import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
+import { User } from 'model/user';
+import { deleteComment } from 'components/services/axios/brick';
+
+import CommentItem from './CommentItem';
 import CommentChild from './CommentChild';
 import NewCommentPanel from './NewCommentPanel';
-import { User } from 'model/user';
+import CommentDeleteDialog from './CommentDeleteDialog';
 
 
 interface CommentPanelProps {
@@ -27,12 +29,20 @@ interface CommentPanelProps {
 }
 
 const CommentPanel: React.FC<CommentPanelProps> = props => {
+  const initDeleteData = { isOpen: false, brickId: -1, commentId: -1 }
+  const [deleteData, setDeleteData] = React.useState(initDeleteData);
+
   if (!props.comments) {
     props.getComments(props.currentBrick.id);
     return <div>Loading comments...</div>;
   }
 
-  console.log(props.comments);
+  console.log('CommentPanel. Comments: ', props.comments);
+
+  const onDelete = (brickId: number, commentId: number) => {
+    console.log('wef')
+    setDeleteData({ isOpen: true, brickId, commentId });
+  }
 
   const renderComments = () => {
     return (
@@ -47,14 +57,18 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
               currentUser={props.currentUser}
               currentBrick={props.currentBrick}
               createComment={props.createComment}
-              isAuthor={comment.author.id === props.currentUser.id}>
+              isAuthor={comment.author.id === props.currentUser.id}
+              onDelete={onDelete}
+            >
               {comment.children && comment.children.map(child =>
                 <CommentChild
                   key={child.id}
                   comment={child}
                   currentUser={props.currentUser}
                   currentBrick={props.currentBrick}
-                  isAuthor={child.author.id === props.currentUser.id} />
+                  isAuthor={child.author.id === props.currentUser.id}
+                  onDelete={onDelete}
+                />
               )}
             </CommentItem>
           )) : ""}
@@ -94,6 +108,13 @@ const CommentPanel: React.FC<CommentPanelProps> = props => {
           createComment={props.createComment} />
       </Grid>
       {renderComments()}
+      <CommentDeleteDialog
+        isOpen={deleteData.isOpen}
+        submit={() => {
+          deleteComment(deleteData.brickId, deleteData.commentId);
+          setDeleteData(initDeleteData)
+        }}
+        close={() => setDeleteData(initDeleteData)} />
     </Grid>
   );
 };
