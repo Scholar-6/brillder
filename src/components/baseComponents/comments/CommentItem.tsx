@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import axios from 'axios';
-import { Grid, SvgIcon, IconButton, Collapse } from '@material-ui/core';
+import { Grid, Collapse } from '@material-ui/core';
 //@ts-ignore
 import Hyphenated from 'react-hyphen';
 //@ts-ignore
@@ -21,17 +20,11 @@ interface CommentItemProps {
   isAuthor: boolean;
   currentBrick: Brick;
   createComment(comment: any): void;
+  onDelete(brickId: number, commentId: number): void;
 }
 
 const CommentItem: React.FC<CommentItemProps> = props => {
   const [replyPanelShown, setReplyPanelShown] = React.useState(false);
-
-  const handleDeleteComment = () => {
-    return axios.delete(
-      `${process.env.REACT_APP_BACKEND_HOST}/brick/${props.currentBrick.id}/comment/${props.comment.id}`,
-      { withCredentials: true }
-    );
-  }
 
   return (
   <Grid item className="comment-container">
@@ -39,10 +32,10 @@ const CommentItem: React.FC<CommentItemProps> = props => {
       <Grid container direction="column">
         <Grid item container direction="row" style={{position: 'relative'}}>
           <div style={{position: 'absolute'}} className="profile-image-container">
-            <div className={`profile-image ${props.isAuthor ? 'red-border' : 'yellow-border'}`}>
+            <div className={`profile-image ${props.isAuthor ? 'yellow-border' : 'red-border'}`}>
               {
                 props.comment.author?.profileImage
-                  ? <img src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
+                  ? <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
                   : <svg><use href={sprite + "#user"} /></svg>
                 }
             </div>
@@ -51,25 +44,24 @@ const CommentItem: React.FC<CommentItemProps> = props => {
             <h4>{props.comment.author.firstName} {props.comment.author.lastName}</h4>
           </Grid>
           <div className="buttons-container">
+          <button aria-label="reply" className="message-button svgOnHover" onClick={() => setReplyPanelShown(!replyPanelShown)}>
+            <svg className="svg active">
+              {/*eslint-disable-next-line*/}
+              <use href={sprite + "#corner-up-left"} />
+            </svg>
+          </button>
             {props.isAuthor &&
-            <IconButton aria-label="delete" size="small" color="secondary"
-              onClick={() => handleDeleteComment()}>
-              <SvgIcon fontSize="inherit">
+              <button
+                aria-label="delete"
+                className="cancel-button svgOnHover"
+                onClick={() => props.onDelete(props.currentBrick.id, props.comment.id)}
+              >
                 <svg className="svg active">
                   {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#cancel"} />
+                  <use href={sprite + "#trash-outline"} />
                 </svg>
-              </SvgIcon>
-            </IconButton>}
-            <IconButton aria-label="reply" size="small" color="primary"
-              onClick={() => setReplyPanelShown(!replyPanelShown)}>
-              <SvgIcon fontSize="inherit">
-                <svg className="svg active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#message-square"} />
-                </svg>
-              </SvgIcon>
-            </IconButton>
+              </button>
+            }
           </div>
         </Grid>
         <h5 className="comment-date">{moment(props.comment.timestamp).format("H:mm D MMM")}</h5>

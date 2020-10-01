@@ -60,7 +60,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         <div className="minimize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
           <svg className="svg active">
             {/*eslint-disable-next-line*/}
-            <use href={sprite + "#minimize"} />
+            <use href={sprite + "#maximize"} />
           </svg>
         </div>
       );
@@ -69,7 +69,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
       <div className="maximize-icon svgOnHover" onClick={() => this.props.toggleSidebar()}>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
-          <use href={sprite + "#maximize"} />
+          <use href={sprite + "#minimize"} />
         </svg>
       </div>
     );
@@ -81,8 +81,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         return <span>Unhighlight Text</span>;
       }
       return <span>Highlight Text</span>;
+    } else {
+      return <span></span>;
     }
-    return "";
   }
 
   renderHightlightButton() {
@@ -122,7 +123,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
   renderAnotateButton() {
     return (
       <div className="annotate-button svgOnHover" onClick={() => this.setAnotateMode()}>
-        {!this.props.sidebarRolledUp ? <span>Annotate Text</span> : ""}
+        {!this.props.sidebarRolledUp ? <span>Annotate Text</span> : <span></span>}
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#pen-tool"} />
@@ -147,6 +148,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     }
     return (
       <button onClick={openAssignDialog} className="assign-class-button svgOnHover">
+        <span></span>
         <svg className="svg active">
           {/*eslint-disable-next-line*/}
           <use href={sprite + "#file-plus"} />
@@ -217,7 +219,7 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
     return (
       <Grid container item className={className}>
         <div className="collapsable-sidebar">
-          <div className="sidebar-button">
+          <div className="sidebar-button f-align-end">
             {this.renderToggleButton()}
           </div>
           {this.renderButtons()}

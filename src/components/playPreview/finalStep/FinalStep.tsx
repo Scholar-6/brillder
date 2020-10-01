@@ -4,12 +4,13 @@ import { connect } from "react-redux";
 
 import map from 'components/map';
 import actions from 'redux/actions/requestFailed';
+import brickActions from 'redux/actions/brickActions';
 import "./FinalStep.scss";
 import sprite from "assets/img/icons-sprite.svg";
 import { User } from "model/user";
 import { Brick, BrickStatus } from "model/brick";
 import { PlayStatus } from "components/play/model";
-import { checkAdmin } from "components/services/brickService";
+import { checkPublisher } from "components/services/brickService";
 import { publishBrick } from "components/services/axios/brick";
 
 import Clock from "components/play/baseComponents/Clock";
@@ -23,6 +24,9 @@ import InviteColumn from "components/play/finalStep/InviteColumn";
 import PublishColumn from './PublishColumn';
 import InvitationSuccessDialog from "components/play/finalStep/dialogs/InvitationSuccessDialog";
 import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSuccessDialog";
+import CustomColumn from "./CustomColumn";
+import { ReduxCombinedState } from "redux/reducers";
+import SendPublisherSuccessDialog from "./SendPublisherSuccess";
 
 enum PublishStatus {
   None,
@@ -37,11 +41,15 @@ interface FinalStepProps {
   history: any;
   location: any;
 
+  sendedToPublisher: boolean;
+  publisherConfirmed: boolean;
+  sendToPublisherConfirmed(): void;
+  sendToPublisher(brickId: number): void;
   requestFailed(e: string): void;
 }
 
 const FinalStep: React.FC<FinalStepProps> = ({
-  user, brick, history, requestFailed
+  user, brick, history, publisherConfirmed, sendedToPublisher, requestFailed, ...props
 }) => {
   const [shareOpen, setShare] = React.useState(false);
   const [inviteOpen, setInvite] = React.useState(false);
@@ -55,11 +63,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   let isAuthor = false;
   try {
-    isAuthor = brick.author.id === user.id;
+    isAuthor = brick.author.id === user.id; 
   } catch {}
 
-  const isAdmin = checkAdmin(user.roles);
-
+  const isPublisher = checkPublisher(user, brick);
+  let isCurrentEditor = brick.editor?.id === user.id;
+  console.log('isEditor', isCurrentEditor, 'isPublisher', isPublisher, 'editor', brick.editor, 'userId', user.id);
   const link = `/play/brick/${brick.id}/intro`;
 
   const publish = async (brickId: number) => {
@@ -83,11 +92,26 @@ const FinalStep: React.FC<FinalStepProps> = ({
   }
 
   const renderActionColumns = () => {
-    let size: 5 | 3 = 5;
+    const canPublish = isPublisher && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published;
 
-    let canPublish = isAdmin && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published;
-    if (canPublish) {
-      size = 3;
+    const size: 5 | 3 = canPublish ? 3 : 5;
+
+    if (isCurrentEditor) {
+      return (
+        <Grid className="share-row" container direction="row" justify="center">
+          <CustomColumn
+            icon="repeat" title="Return to author" label="for futher changes"
+            size={size} onClick={() => {}} />
+          {
+            publisherConfirmed === false && !brick.publisher ?
+            <CustomColumn
+              icon="send" title="Send to publisher" label="for final review"
+              size={size} onClick={() => props.sendToPublisher(brick.id)} />
+            : ""
+          }
+          {canPublish ? <PublishColumn onClick={() => publish(brick.id)} /> : ""}
+        </Grid>
+      );
     }
 
     if (!brick.isCore) {
@@ -123,8 +147,15 @@ const FinalStep: React.FC<FinalStepProps> = ({
                       </svg>
                     </div>
                   </div>
-                  <h2>Submit for Review?</h2>
-                  <p>Invite an editor to begin the publication process</p>
+                  {isCurrentEditor ?
+                    <div>
+                      <h2>All done!</h2>
+                    </div>
+                    :
+                    <div>
+                      <h2>Submit for Review?</h2>
+                      <p>Invite an editor to begin the publication process</p>
+                    </div>}
                   {renderActionColumns()}
                 </div>
               </div>
@@ -172,12 +203,19 @@ const FinalStep: React.FC<FinalStepProps> = ({
         isOpen={publishSuccess === PublishStatus.Popup}
         close={() => setPublishSuccess(PublishStatus.Published)}
       />
+      <SendPublisherSuccessDialog isOpen={sendedToPublisher && publisherConfirmed === false} close={() => props.sendToPublisherConfirmed()} />
     </div>
   );
 };
+const mapState = (state: ReduxCombinedState) => ({
+  sendedToPublisher: state.sendPublisher.success,
+  publisherConfirmed: state.sendPublisher.confirmed,
+});
 
 const mapDispatch = (dispatch: any) => ({
+  sendToPublisher: (brickId: number) => dispatch(brickActions.sendToPublisher(brickId)),
+  sendToPublisherConfirmed: () => dispatch(brickActions.sendToPublisherConfirmed()),
   requestFailed: (e: string) => dispatch(actions.requestFailed(e))
 });
 
-export default connect(null, mapDispatch)(FinalStep);
+export default connect(mapState, mapDispatch)(FinalStep);

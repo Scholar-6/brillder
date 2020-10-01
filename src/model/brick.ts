@@ -57,6 +57,7 @@ export interface Brick {
   questions: Question[];
   author: Author;
   editor?: Editor;
+  publisher?: Editor;
   expanded?: boolean;
   expandFinished?: boolean;
   status: BrickStatus;

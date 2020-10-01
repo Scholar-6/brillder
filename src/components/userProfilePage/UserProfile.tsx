@@ -3,6 +3,7 @@ import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import { connect } from "react-redux";
 
+import sprite from "assets/img/icons-sprite.svg";
 import actions from 'redux/actions/requestFailed';
 import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
@@ -25,6 +26,7 @@ import ProfileSavedDialog from "./components/ProfileSavedDialog";
 import ProfileImage from "./components/ProfileImage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
+import UserProfilePreview from "./components/UserProfilePreview";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -51,6 +53,7 @@ interface UserProfileState {
   noSubjectDialogOpen: boolean;
   savedDialogOpen: boolean;
   emailInvalidOpen: boolean;
+  previewAnimationFinished: boolean;
 
   user: UserProfile;
   subjects: Subject[];
@@ -146,7 +149,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       emailInvalidOpen: false,
 
       validationRequired: false,
-      emailInvalid: false
+      emailInvalid: false,
+      previewAnimationFinished: false
     };
   }
 
@@ -168,7 +172,8 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
       savedDialogOpen: false,
       emailInvalidOpen: false,
       validationRequired: false,
-      emailInvalid: false
+      emailInvalid: false,
+      previewAnimationFinished: false
     };
   }
 
@@ -383,6 +388,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     );
   }
 
+  previewAnimationFinished() {
+    this.setState({previewAnimationFinished: true})
+  }
+
   render() {
     const { user } = this.state;
     //let valid = isValid(user) && !this.state.emailInvalid;
@@ -443,7 +452,14 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 </Grid>
               </div>
             </div>
-            {this.renderSubjects(user)}
+            <div style={{display: 'flex'}}>
+              {this.renderSubjects(user)}
+              <div className="centered">
+                <svg className={`svg red-circle ${this.state.previewAnimationFinished ? '' : 'hidden'}`}>
+                  <use href={sprite + "#arrow-left-2"} />
+                </svg>
+              </div>
+            </div>
             <Grid container direction="row" className="big-input-container">
               <textarea
                 className="style2"
@@ -460,7 +476,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
               alignContent="center"
               style={{ height: "100%" }}
             >
-              <PhonePreview />
+              <PhonePreview Component={UserProfilePreview} action={this.previewAnimationFinished.bind(this)} />
             </Grid>
           </div>
         </Grid>

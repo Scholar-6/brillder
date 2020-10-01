@@ -93,8 +93,9 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
 
     const currentBricks = await getCurrentUserBricks();
     if (currentBricks) {
-      const yourBricks = currentBricks.filter(brick => brick.status === BrickStatus.Publish);
-      this.setState({ ...this.state, yourBricks })
+      let yourBricks = currentBricks.filter(brick => brick.status === BrickStatus.Publish);
+      yourBricks = yourBricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
+      this.setState({ ...this.state, yourBricks });
     } else {
       this.setState({ ...this.state, failedRequest: true });
     }
@@ -103,7 +104,6 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     if (bricks) {
       let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
       bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
-         
       const finalBricks = this.filter(bs);
       this.setState({ ...this.state, bricks, finalBricks, shown: true });
     } else {
@@ -241,6 +241,9 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 
   yourBricksMouseHover(index: number) {
+    let { yourBricks } = this.state;
+    if (yourBricks[index] && yourBricks[index].expanded) return;
+
     this.hideBricks();
     this.setState({ ...this.state });
     setTimeout(() => {
@@ -265,6 +268,9 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 
   handleMouseHover(index: number) {
+    let { finalBricks } = this.state;
+    if (finalBricks[index] && finalBricks[index].expanded) return;
+
     this.hideBricks();
     this.setState({ ...this.state });
     setTimeout(() => {
@@ -424,7 +430,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       this.state.finalBricks
     );
     return data.map(item => {
-      const circleIcon = getAssignmentIcon(item.brick);
+      let circleIcon = getAssignmentIcon(item.brick);
+      if (item.brick.editor?.id === this.props.user.id) {
+        circleIcon = 'award';
+      }
       return (
         <BrickBlock
           brick={item.brick}

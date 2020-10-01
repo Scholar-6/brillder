@@ -375,9 +375,9 @@
 
     @include tabletP {
       background: var(--light-gray);
-      overflow-y: auto;
       width: calc(100vw - #{$filter-sidebar-size} - #{$filter-sidebar-margin * 2});
       height: $height-desktop-view;
+      overflow: hidden;
     }
 
     .brick-row-title {

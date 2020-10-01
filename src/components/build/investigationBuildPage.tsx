@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { RouteComponentProps, Switch } from "react-router-dom";
+import { Redirect, RouteComponentProps, Switch } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import update from "immutability-helper";
@@ -115,7 +115,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   /* Synthesis */
   let isSynthesisPage = false;
-  if (history.location.pathname.slice(-10) === '/synthesis') {
+  if (history.location.pathname.slice(-10).toLowerCase() === '/synthesis') {
     isSynthesisPage = true;
   }
 
@@ -650,6 +650,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             </Grid>
           </Grid>
           <LastSave updated={brick.updated} tutorialStep={isTutorialPassed() ? TutorialStep.None : step} isSaving={isSaving} />
+          <Route path="/build/brick/:brickId/investigation/">
+            <Redirect to={`/build/brick/${brick.id}/investigation/question`} />
+          </Route>
           <Route path="/build/brick/:brickId/investigation/question-component">
             <PhoneQuestionPreview question={activeQuestion} />
           </Route>

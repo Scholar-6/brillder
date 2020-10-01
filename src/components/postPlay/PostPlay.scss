@@ -10,6 +10,12 @@
   $book-height: 60vh;
   $real-book-height: 63.6vh;
 
+  h2 {
+    font-family: $font-family-bold;
+    font-size: 1.7vw;
+    margin-bottom: 2.5vh;
+  }
+
   .flipped-page {
     height: 100%;
     width: 100%;
@@ -22,6 +28,75 @@
 
     padding-top: 3.5vh;
     color: var(--theme-dark-blue);
+
+    &.question-page {
+      padding-top: 1.5vh;
+      padding-left: 10%;
+      padding-right: 10%;
+      overflow: auto;
+      position: relative;
+
+      .question-number {
+        width: 10%;
+        position: absolute;
+        left: 0;
+        top: calc(1.5vh + 0.57vw);
+        @extend %flexCenter;
+
+        div {
+          width: 1.3vw;
+          height: 1.3vw;
+          background: var(--tab-gray);
+          border-radius: 50%;
+          font-size: 1.3vw;
+          font-family: $font-family-bold;
+          @extend %flexCenter;
+        }
+      }
+    }
+  }
+
+  .result-page {
+    padding-top: 1.5vh;
+    padding-left: 10%;
+    padding-right: 10%;
+
+    .col {
+      width: 33%;
+
+      .centered {
+        @extend %flexCenter;
+      }
+
+      svg {
+        width: 2vw;
+        height: 2vw;
+        margin-left: 0.3vw;
+        margin-right: 0.3vw;
+        stroke-width: 3;
+
+        &.active {
+          cursor: pointer;
+        }
+      }
+    }
+
+    h3 {
+      color: var(--theme-dark-blue);
+      margin: 0;
+      padding-bottom: 1.3vh;
+      letter-spacing: 0;
+      font-family: $font-family-bold;
+      font-size: 1.2vw;
+    }
+
+    div {
+      font-size: 0.9vw;
+    }
+
+    h2 {
+      text-align: center;
+    }
   }
 
   .main-text-container {
@@ -81,6 +156,8 @@
     .page1-cover,
     .page2,
     .page3,
+    .page3-cover,
+    .page4-cover,
     .page4,
     .page5,
     .page6 {
@@ -107,6 +184,7 @@
     .front-cover,
     .page1,
     .page1-cover,
+    .page3-cover,
     .page3,
     .page5 {
       border-bottom-right-radius: $book-radius;
@@ -272,7 +350,7 @@
       background: #efefef;
     }
 
-    .page3 {
+    .page3, .page3-cover {
       background: #f5f5f5;
     }
 
@@ -320,9 +398,21 @@
       }
 
       .page3 {
-        transform: rotateY(-49.6deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 6;
+        &.first {
+          transform: rotateY(-49.6deg) scale($scale);
+        }
+      }
+
+      .page3-cover.first {
+        transform: rotateY(-49.9deg) scale($scale);
+      }
+
+      .page4 {
+        &.first {
+          transform: rotateY(-31deg) scale($scale);
+        }
       }
 
       .page6 {
@@ -357,7 +447,7 @@
       }
 
       .page2 {
-        transform: rotateY(-181deg) scale($scale);
+        transform: rotateY(-178.3deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 4;
       }
@@ -369,15 +459,17 @@
         color: var(--theme-dark-blue);
       }
 
+      .page3-cover {
+        transform: rotateY(-175deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 6;
+      }
+
       .page4 {
         transform: rotateY(-4deg) scale($scale);
         box-shadow: none;
-        //box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 7;
         color: var(--theme-dark-blue);
-        &.flipping {
-          transform: rotateY(-180deg) scale($scale);
-        }
       }
 
       .page6 {

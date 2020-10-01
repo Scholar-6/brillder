@@ -255,6 +255,9 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   handleMouseHover(index: number) {
+    let { finalBricks } = this.state;
+    if (finalBricks[index] && finalBricks[index].expanded) return;
+
     hideBricks(this.state.rawBricks);
     hideBricks(this.state.finalBricks);
 
@@ -277,10 +280,16 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 
   onThreeColumnsMouseHover(index: number, status: BrickStatus) {
+    let key = Math.floor(index / 3);
+
+    const {threeColumns} = this.state;
+    let name = getThreeColumnName(status);
+    let brick = getThreeColumnBrick(threeColumns, name, key);
+    if (brick.expanded) return;
+
     hideBricks(this.state.rawBricks);
     hideBricks(this.state.finalBricks);
 
-    let key = Math.floor(index / 3);
     this.setState({ ...this.state });
 
     setTimeout(() => {

@@ -7,6 +7,8 @@ export interface PairMatchChoice {
   hint: string;
   option: string;
 }
+
+export type PairMatchAnswer = { index: number; }[]
   
 export interface PairMatchComponent {
   type: QuestionComponentTypeEnum;

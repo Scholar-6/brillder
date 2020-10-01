@@ -10,8 +10,7 @@ import {ComponentAttempt} from 'components/play/model';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import {QuestionValueType} from 'components/build/buildQuestions/questionTypes/types';
 import {Answer} from 'components/build/buildQuestions/questionTypes/pairMatchBuild/types';
-import { PairMatchProps, PairMatchState, DragAndDropStatus } from './interface';
-import {mark} from './service';
+import { PairMatchProps, PairMatchState, DragAndDropStatus, PairMatchAnswer, PairMatchComponent } from './interface';
 import MathInHtml from '../../baseComponents/MathInHtml';
 
 
@@ -22,12 +21,17 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     let userAnswers = [];
 
     const {component} = props;
+
     if (props.isPreview === true) {
       userAnswers = component.list ? component.list : [];
     } else {
       if (this.props.attempt) {
         let choices = this.props.attempt.answer;
         userAnswers = Object.assign([], choices);
+
+        if (this.props.isBookPreview) {
+          userAnswers = this.props.answers as any;
+        }
       } else {
         userAnswers =  component.choices ? component.choices : [];
       }
@@ -39,6 +43,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (props.isPreview === true && props.component) {
       if (this.state.userAnswers !== props.component.list) {
         this.setState({userAnswers: props.component.list});
+      }
+    }
+    if (props.isBookPreview === true) {
+      if (this.state.userAnswers !== props.answers as any) {
+        this.setState({userAnswers: this.props.answers as any});
       }
     }
   }
@@ -67,8 +76,12 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     } else { return 0; }
   }
 
-  mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
-    return mark(this.props.component.list, attempt, prev, this.state.status, this.props.isReview);
+  prepareAttempt(component: PairMatchComponent, attempt: ComponentAttempt<PairMatchAnswer>) {
+    if (this.state.status === DragAndDropStatus.Changed) {
+      attempt.dragged = true;
+    }
+
+    return attempt;
   }
 
   renderOptionContent(answer: Answer) {
@@ -108,6 +121,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         }
       }
     }
+    if (this.props.isBookPreview) {
+      //let state = this.getState(answer.index);
+      console.log(answer, i);
+    }
     return (
       <div key={i} className={className}>
         <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
@@ -144,22 +161,29 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
             this.props.component.list.map((item:any, i) => this.renderOption(item, i))
           }
           </List>
-          <ReactSortable
-            list={this.state.userAnswers}
-            animation={150}
-            group={{ name: "cloning-group-name" }}
-            className="answers-list"
-            setList={(choices) => this.setUserAnswers(choices)}
-          >
-            {
-              this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
-            }
-          </ReactSortable>
+          {
+            this.props.isBookPreview ? 
+            <div className="answers-list">
+              {this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))}
+            </div>
+            :
+            <ReactSortable
+              list={this.state.userAnswers}
+              animation={150}
+              group={{ name: "cloning-group-name" }}
+              className="answers-list"
+              setList={(choices) => this.setUserAnswers(choices)}
+            >
+              {
+                this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
+              }
+            </ReactSortable>
+          }
         </Grid>
         <ReviewGlobalHint
           isReview={this.props.isReview}
           attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
+          isPhonePreview={this.props.isPreview || this.props.isBookPreview}
           hint={this.props.question.hint}
         />
       </div>

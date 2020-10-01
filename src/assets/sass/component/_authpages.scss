@@ -7,8 +7,8 @@
     @extend %flexCenter;
     @include phone_and_tabletP {
       background-color: var(--theme-light-blue);
-      margin-bottom: 60px;
-      height: calc(42vh - 60px) !important;
+      margin-bottom: 20px;
+      height: calc(42% - 20px) !important;
       border-bottom-right-radius: 10vw;
       overflow: hidden;
     }
@@ -98,7 +98,7 @@
       @extend %textCenter;
       @include phone_and_tabletP {
         margin: 0;
-        height: 100vh;
+        height: 100%;
       }
     }
   }
@@ -396,6 +396,50 @@
           }
         }
       }
+    }
+  }
+}
+
+// phone
+@include phone_and_tabletP {
+  .centered {
+    @extend %flexCenter;
+    height: auto;
+    width: 100%;
+  }
+  .auth-page .logo-box {
+    background: var(--theme-light-blue) !important;
+    transition: all 2000ms ease-out !important;
+    .logo-text-image {
+      transition: all 800ms ease-out !important;
+      width: 55vw;
+      max-height: 20vw !important;
+      opacity: 0;
+    }
+    .logo-box-inner {
+      transition: all 2000ms ease-out !important;
+      width: 100%;
+      height: 80%;
+    }
+    .svg {
+      transition: all 2000ms ease-out !important;
+      max-height: 70vw;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .auth-page .big {
+    height: 100% !important;
+    .logo-box-inner {
+      height: 90vw;
+      width: 100%;
+    }
+    .svg {
+      width: 100vw;
+      height: 70vw;
+    }
+    .logo-text-image {
+      opacity: 1;
     }
   }
 }

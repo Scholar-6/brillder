@@ -6,18 +6,19 @@ import './PhonePreview.scss';
 
 
 export interface PhonePreviewProps {
-  link?: string
-  Component?: any
-  data?: any
+  link?: string;
+  Component?: any;
+  data?: any;
+  action?(): any;
 }
 
-const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data }) => {
+const PhonePreview: React.FC<PhonePreviewProps> = ({ link, Component, data, action }) => {
   const renderInner = () => {
     if (link) {
       return <iframe title="phone-preview-screen" src={link} />;
     }
     if (Component) {
-      return <Component data={data} />;
+      return <Component data={data} action={action} />;
     }
     return "";
   }

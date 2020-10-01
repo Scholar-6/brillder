@@ -83,6 +83,7 @@
   @extend %flexCenter;
   height: inherit;
   width: inherit;
+  stroke-width: 2;
   @extend %flexCenter;
   svg {
     color: var(--white);

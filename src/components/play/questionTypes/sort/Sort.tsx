@@ -21,7 +21,7 @@ interface UserCategory {
   choices: SortAnswer[];
 }
 
-interface SortComponent {
+export interface SortComponent {
   type: number;
   list: SortAnswer[];
   categories: SortCategory[];
@@ -128,41 +128,6 @@ class Sort extends CompComponent<SortProps, SortState> {
       cat.choices.forEach(choice => choices[choice.value] = index);
     });
     return choices;
-  }
-
-  mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
-    const {isReview} = this.props;
-    let markIncrement = isReview ? 2 : 5;
-    attempt.correct = true;
-    attempt.marks = 0;
-    attempt.maxMarks = 0;
-
-    let noAnswer = true;
-    const unsortedCategory = this.props.component.categories.length;
-    
-    Object.keys(attempt.answer).forEach(key => {
-      if (attempt.answer[key] !== unsortedCategory) {
-        noAnswer = false;
-      }
-      attempt.maxMarks += 5;
-      if(attempt.answer[key] !== this.state.choices[key]) {
-        attempt.correct = false;
-      } else {
-        if(!isReview) {
-          attempt.marks += markIncrement;
-        } else if(prev.answer[key] !== this.state.choices[key]) {
-          attempt.marks += markIncrement;
-        }
-      }
-    });
-
-    if(attempt.marks === 0 && Object.keys(attempt.answer).length !== 0 && !isReview) attempt.marks = 1;
-
-    if (noAnswer) {
-      attempt.marks = 0;
-    }
-
-    return attempt;
   }
 
   updateCategory(list: any[], index:number) {
