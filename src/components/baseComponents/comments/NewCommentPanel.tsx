@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Button, Input } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import './NewCommentPanel.scss';
 
 import { Brick } from 'model/brick';
@@ -26,9 +26,9 @@ const NewCommentPanel: React.FC<NewCommentPanelProps> = props => {
     <Grid container direction="column" alignItems="stretch">
       <Grid item>
         <form className="comment-text-form" onSubmit={e => { e.preventDefault(); }}>
-          <Input
+          <textarea
             className="comment-text-entry" placeholder="Add Suggestion..." value={text}
-            onChange={(evt) => setText(evt.target.value)} disableUnderline
+            onChange={(evt) => setText(evt.target.value)}
           />
         </form>
       </Grid>

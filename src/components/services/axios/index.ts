@@ -10,6 +10,17 @@ export const get = async <T>(path: string) => {
   return null;
 }
 
+export const axiosDelete = async (path: string) => {
+  const res = await axios.delete(process.env.REACT_APP_BACKEND_HOST + path, {
+    withCredentials: true,
+  });
+  if (res.status === 200) {
+    return true;
+  }
+  return false;
+}
+
+
 export const del = async (path: string) => {
   const res = await axios.delete(process.env.REACT_APP_BACKEND_HOST + path, {
     withCredentials: true,
