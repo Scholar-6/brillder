@@ -34,7 +34,7 @@ class MobileLoginPage extends React.Component<MobileLoginProps> {
   componentDidMount() {
     setTimeout(() => {
       this.props.setLoginState(LoginState.ChooseLogin);
-    }, 300);
+    }, 600);
   }
 
   renderPrivacyPolicy() {
@@ -122,38 +122,32 @@ class MobileLoginPage extends React.Component<MobileLoginProps> {
 
   renderChooseLoginPage(loginState: LoginState) {
     return (
-      <div style={{ width: "100%" }}>
-        <div className="first-col">
-          <div className="second-item">
-            <div
-              className={`logo-box ${
-                loginState === LoginState.ChooseLoginAnimation ? "big" : ""
-              }`}
-            >
-              <div className="logo-box-inner">
-                <svg
-                  className="svg active logo-image mobile"
-                  onClick={this.props.moveToLogin}
-                >
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#logo"} className="text-theme-orange" />
-                </svg>
-                <img
-                  className="logo-text-image"
-                  alt="text"
-                  src="/images/choose-user/brillder-white-text.svg"
-                />
-              </div>
+      <div className="first-col">
+        <div className="second-item">
+          <div
+            className={`logo-box ${
+              loginState === LoginState.ChooseLoginAnimation ? "big" : ""
+            }`}
+          >
+            <div className="logo-box-inner">
+              <svg
+                className="svg active logo-image mobile"
+                onClick={this.props.moveToLogin}
+              >
+                {/*eslint-disable-next-line*/}
+                <use href={sprite + "#logo"} className="text-theme-orange" />
+              </svg>
+              <img
+                className="logo-text-image"
+                alt="text"
+                src="/images/choose-user/brillder-white-text.svg"
+              />
             </div>
-            {loginState !== LoginState.ChooseLoginAnimation ? (
-              <div className="mobile-button-box button-box">
-                <RegisterButton onClick={this.props.moveToLogin} />
-                <GoogleButton />
-                {this.renderPrivacyPolicy()}
-              </div>
-            ) : (
-              ""
-            )}
+          </div>
+          <div className="mobile-button-box button-box">
+            <RegisterButton onClick={this.props.moveToLogin} />
+            <GoogleButton />
+            {this.renderPrivacyPolicy()}
           </div>
         </div>
       </div>
