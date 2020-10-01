@@ -133,7 +133,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
         size={size}
         onClick={async () => {
           await props.sendToPublisher(brick.id);
-          props.fetchBrick(brick.id);
+          history.push(`${map.BackToWorkBuildTab}?isCore=${brick.isCore}`);
         }}
       />
     );
@@ -156,11 +156,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
       );
     }
 
-    if (isCurrentEditor) {
+    if (isCurrentEditor && !brick.publisher) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          {renderReturnToAuthorColumn(size)}
-          { !brick.publisher && renderSendToPublisherColumn(size) }
+          { renderReturnToAuthorColumn(size) }
+          { renderSendToPublisherColumn(size) }
         </Grid>
       );
     }
