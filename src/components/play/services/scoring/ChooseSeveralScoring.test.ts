@@ -62,4 +62,19 @@ describe("choose one scoring", () => {
         expect(result.correct).toStrictEqual(false);
     });
 
+    it("should mark a full answer with 0 marks", () => {
+        // arrange
+        const mockAttempt: ComponentAttempt<ChooseSeveralAnswer> = {
+            answer: [0, 1, 2, 3, 4] as number[]
+        } as ComponentAttempt<ChooseSeveralAnswer>;
+
+        // act
+        const result = mark(mockComponent, mockAttempt);
+
+        // assert
+        expect(result.marks).toStrictEqual(0);
+        expect(result.maxMarks).toStrictEqual(10);
+        expect(result.correct).toStrictEqual(false);
+    })
+
 });
