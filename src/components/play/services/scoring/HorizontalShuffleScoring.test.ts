@@ -37,6 +37,42 @@ describe("horizontal shuffle scoring", () => {
         expect(result.correct).toStrictEqual(true);
     });
 
+    it("should scale down a score greater than 12 to 12", () => {
+        // arrange
+        const mockComponent: HorizontalShuffleComponent = {
+            type: 127,
+            list: [
+                { value: "A" },
+                { value: "B" },
+                { value: "C" },
+                { value: "D" },
+                { value: "E" },
+                { value: "F" },
+                { value: "G" },
+            ]
+        };
+
+        const mockAttempt: ComponentAttempt<{ index: number }[]> = {
+            answer: [
+                { index: 0 },
+                { index: 1 },
+                { index: 2 },
+                { index: 3 },
+                { index: 4 },
+                { index: 5 },
+                { index: 6 },
+            ]
+        } as ComponentAttempt<{ index: number }[]>;
+
+        // act
+        const result = mark(mockComponent, mockAttempt);
+
+        // assert
+        expect(result.marks).toStrictEqual(12);
+        expect(result.maxMarks).toStrictEqual(12);
+        expect(result.correct).toStrictEqual(true);
+    })
+
     it("should mark a partially correct answer with 6 marks", () => {
         // arrange
         const mockAttempt: ComponentAttempt<{ index: number }[]> = {
