@@ -98,7 +98,7 @@
       @extend %textCenter;
       @include phone_and_tabletP {
         margin: 0;
-        height: 100vh;
+        height: 100%;
       }
     }
   }
@@ -411,7 +411,7 @@
     background: var(--theme-light-blue) !important;
     transition: all 2000ms ease-out !important;
     .logo-text-image {
-      transition: all 400ms ease-out !important;
+      transition: all 1000ms ease-out !important;
       height: 0;
     }
     .logo-box-inner {
