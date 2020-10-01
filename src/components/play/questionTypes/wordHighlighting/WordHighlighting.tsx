@@ -38,38 +38,6 @@ class WordHighlighting extends CompComponent<
       .map(word => word.i);
   }
 
-  mark(attempt: any, prev: any): any {
-    const {isReview} = this.props;
-    let markIncrement = isReview ? 2 : 5;
-    attempt.correct = true;
-    attempt.marks = 0;
-    let correct = this.state.words.filter(w => w.checked === true);
-    attempt.maxMarks = correct.length * 5;
-
-    this.state.words.forEach((word, index) => {
-      if (attempt.answer.indexOf(index) !== -1 && word.checked === true) {
-        if (!isReview) {
-          attempt.marks += markIncrement;
-        } else {
-          if (prev.answer.indexOf(index) === -1) {
-            attempt.marks += markIncrement;
-          }
-        }
-      } else if (!word.checked && attempt.answer.indexOf(index) === -1) {
-      } else {
-        attempt.correct = false;
-      }
-    });
-
-    if(attempt.marks === 0 && !isReview) attempt.marks = 1;
-
-    if (attempt.answer.length === 0) {
-      attempt.marks = 0;
-    }
-
-    return attempt;
-  }
-
   highlighting(index: number) {
     this.state.words[index].selected = !this.state.words[index].selected;
     if (this.props.onAttempted) {

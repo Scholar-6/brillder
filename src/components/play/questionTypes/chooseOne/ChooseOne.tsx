@@ -11,11 +11,12 @@ import MathInHtml from '../../baseComponents/MathInHtml';
 import { QuestionValueType } from 'components/build/buildQuestions/questionTypes/types';
 import { ChooseOneChoice } from 'components/interfaces/chooseOne';
 
-
-interface ChooseOneComponent {
+export interface ChooseOneComponent {
   type: number;
   list: ChooseOneChoice[];
 }
+
+export type ChooseOneAnswer = number;
 
 interface ChooseOneProps extends CompQuestionProps {
   component: ChooseOneComponent;
@@ -50,36 +51,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
 
   getAnswer(): number {
     return this.state.activeItem;
-  }
-
-  mark(attempt: ComponentAttempt<number>, prev: ComponentAttempt<number>) {
-    const { component, isReview } = this.props;
-    // If the question is answered in review phase, add 2 to the mark and not 5.
-    let markIncrement = isReview ? 2 : 5;
-    attempt.maxMarks = 5;
-
-    // set attempt.correct to true by answer index.
-    attempt.correct = false;
-    component.list.forEach((choice, index) => {
-      if (attempt.answer === index) {
-        if (choice.checked === true) {
-          attempt.correct = true;
-        }
-      }
-    });
-
-    // if the attempt is correct, add the mark increment.
-    if (attempt.correct && !prev.correct) {
-      attempt.marks = markIncrement;
-    }
-    // if there is an answer given and the program is in the live phase, give the student an extra mark.
-    else if (attempt.answer != null && !isReview) attempt.marks = 1;
-    else attempt.marks = 0;
-
-    if (attempt.answer === -1) {
-      attempt.marks = 0;
-    }
-    return attempt;
   }
 
   renderData(answer: ChooseOneChoice) {
