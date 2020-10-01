@@ -10,10 +10,13 @@ import actions from 'redux/actions/requestFailed';
 import {setCoreLibrary} from 'components/services/axios/brick';
 
 import Clock from "components/play/baseComponents/Clock";
+import { Redirect } from "react-router-dom";
+import { User } from "model/user";
 
 
 interface BuildCompleteProps {
   history: any;
+  user: User;
   brick: Brick;
   requestFailed(e: string): void;
 }
@@ -64,6 +67,10 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
 
   render() {
     const {brick} = this.props;
+    let isCurrentEditor = brick.editor?.id === this.props.user.id;
+    if (isCurrentEditor) {
+      return <Redirect to={`/play-preview/brick/${brick.id}/finalStep`} />;
+    }
     return (
       <div className="brick-container build-complete-page">
         <Grid container direction="row">
