@@ -27,6 +27,7 @@ import PublishSuccessDialog from "components/baseComponents/dialogs/PublishSucce
 import CustomColumn from "./CustomColumn";
 import { ReduxCombinedState } from "redux/reducers";
 import SendPublisherSuccessDialog from "./SendPublisherSuccess";
+import { Redirect } from "react-router-dom";
 
 enum PublishStatus {
   None,
@@ -72,6 +73,10 @@ const FinalStep: React.FC<FinalStepProps> = ({
   const isPublisher = checkPublisher(user, brick);
   let isCurrentEditor = brick.editor?.id === user.id;
   const link = `/play/brick/${brick.id}/intro`;
+
+  if (!isAuthor && !isCurrentEditor && !isPublisher) {
+    return <Redirect to={map.BackToWorkBuildTab} />;
+  }
 
   const publish = async (brickId: number) => {
     let success = await publishBrick(brickId);
