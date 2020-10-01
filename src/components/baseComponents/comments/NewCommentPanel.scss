@@ -6,13 +6,21 @@
   background-color: var(--white);
   margin: 0;
   padding: 0;
-  padding-top: 0.8vh;
-  padding-bottom: 0.8vh;
   margin-left: 5%;
   margin-right: 5%;
-  padding-left: 8%;
-  padding-right: 8%;
   border-radius: 0.25vw;
+
+  .comment-text-entry {
+    padding: 0;
+    font-size: 2vh;
+    width: 84%;
+    height: 1.5vw;
+    padding-top: 0.8vh;
+    padding-bottom: 0.8vh;
+    padding-left: 8%;
+    padding-right: 8%;
+    border: none;
+  }
 
   > div {
     padding: 0;

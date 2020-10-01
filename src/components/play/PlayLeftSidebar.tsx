@@ -81,11 +81,9 @@ class PlayLeftSidebarComponent extends Component<SidebarProps, SidebarState> {
         return <span>Unhighlight Text</span>;
       }
       return <span>Highlight Text</span>;
+    } else {
+      return <span></span>;
     }
-      else {
-        return <span></span>;
-      }
-    return "";
   }
 
   renderHightlightButton() {

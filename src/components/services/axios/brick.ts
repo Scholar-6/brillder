@@ -1,6 +1,6 @@
 import { Brick, BrickStatus } from 'model/brick';
 
-import {get, put, post} from './index';
+import {get, put, post, axiosDelete} from './index';
 
 /**
  * Get brick by Id
@@ -104,6 +104,14 @@ export const sendToPublisher = async (brickId: number) => {
   try {
     await post<any>(`/brick/sendToPublisher/${brickId}`, {});
     return true;
+  } catch {
+    return false;
+  }
+}
+
+export const deleteComment = async (brickId: number, commentId: number) => {
+  try {
+    return await axiosDelete(`/brick/${brickId}/comment/${commentId}`);
   } catch {
     return false;
   }

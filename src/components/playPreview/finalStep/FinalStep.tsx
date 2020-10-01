@@ -10,7 +10,7 @@ import sprite from "assets/img/icons-sprite.svg";
 import { User } from "model/user";
 import { Brick, BrickStatus } from "model/brick";
 import { PlayStatus } from "components/play/model";
-import { checkAdmin, checkPublisher } from "components/services/brickService";
+import { checkPublisher } from "components/services/brickService";
 import { publishBrick } from "components/services/axios/brick";
 
 import Clock from "components/play/baseComponents/Clock";

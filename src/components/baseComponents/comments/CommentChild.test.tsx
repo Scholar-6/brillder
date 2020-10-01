@@ -3,6 +3,7 @@ import CommentChild from './CommentChild';
 import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
 import { render, screen } from '@testing-library/react';
+import { User } from 'model/user';
 
 const mockBrick: Brick = {
     id: 1
@@ -24,7 +25,7 @@ const mockChild: Comment = {
 describe("comment child", () => {
     it("should display reply information", async () => {
         render(
-            <CommentChild key={mockChild.id} comment={mockChild} currentBrick={mockBrick} isAuthor={false} />
+            <CommentChild onDelete={() => {}} currentUser={{} as User} key={mockChild.id} comment={mockChild} currentBrick={mockBrick} isAuthor={false} />
         );
 
         const replyText = screen.getByText(mockChild.text);
