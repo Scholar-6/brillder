@@ -26,11 +26,7 @@ export function getNewFirstQuestion(type: number, active: boolean) {
       list: [] as string[],
       status: HintStatus.None
     },
-    components: [
-      { type: QuestionComponentTypeEnum.None },
-      { type: QuestionComponentTypeEnum.Component },
-      { type: QuestionComponentTypeEnum.None }
-    ]
+    components: [{ type: QuestionComponentTypeEnum.Component }]
   } as Question;
 };
 
@@ -43,10 +39,7 @@ export function getNewQuestion(type: number, active: boolean) {
       list: [] as string[],
       status: HintStatus.None
     },
-    components: [
-      { type: QuestionComponentTypeEnum.Component },
-      { type: QuestionComponentTypeEnum.None }
-    ]
+    components: [{ type: QuestionComponentTypeEnum.Component }]
   } as Question;
 };
 
