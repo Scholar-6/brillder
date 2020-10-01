@@ -37,45 +37,6 @@ class LineHighlighting extends CompComponent<
       .map(line => line.i);
   }
 
-  mark(attempt: any, prev: any): any {
-    const {isReview} = this.props;
-    let markIncrement = isReview ? 2 : 5;
-    attempt.correct = true;
-    attempt.marks = 0;
-    attempt.maxMarks = this.state.lines.length * 5;
-
-    this.state.lines.forEach((line: any, index: number) => {
-      if (attempt.answer.indexOf(index) !== -1 && line.checked === true) {
-        if (!isReview) {
-          attempt.marks += markIncrement;
-        } else {
-          if (prev.answer.indexOf(index) === -1) {
-            attempt.marks += markIncrement;
-          }
-        }
-      } else if (
-        line.checked === false &&
-        attempt.answer.indexOf(index) === -1
-      ) {
-        if (!isReview) {
-          attempt.marks += markIncrement;
-        }
-      } else {
-        attempt.correct = false;
-      }
-    });
-
-    if (attempt.marks === 0 && !isReview) {
-      attempt.marks = 1;
-    }
-
-    if (attempt.answer.length === 0) {
-      attempt.marks = 0;
-    }
-
-    return attempt;
-  }
-
   highlighting(index: number) {
     this.state.lines[index].selected = !this.state.lines[index].selected;
     if (this.props.onAttempted) {

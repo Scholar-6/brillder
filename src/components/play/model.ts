@@ -28,6 +28,7 @@ export interface BrickAttempt {
   maxScore: number;
   student?: any;
   answers: ComponentAttempt<any>[];
+  liveAnswers?: ComponentAttempt<any>[];
 
   assignmentId?: number;
 }
