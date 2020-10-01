@@ -10,8 +10,8 @@ import sprite from "assets/img/icons-sprite.svg";
 import { User } from "model/user";
 import { Brick, BrickStatus } from "model/brick";
 import { PlayStatus } from "components/play/model";
-import { checkPublisher } from "components/services/brickService";
-import { publishBrick } from "components/services/axios/brick";
+import { checkAdmin, checkPublisher } from "components/services/brickService";
+import { publishBrick, returnToAuthor, returnToEditor } from "components/services/axios/brick";
 
 import Clock from "components/play/baseComponents/Clock";
 import ShareDialog from 'components/play/finalStep/dialogs/ShareDialog';
@@ -43,6 +43,8 @@ interface FinalStepProps {
 
   sendedToPublisher: boolean;
   publisherConfirmed: boolean;
+
+  fetchBrick(brickId: number): void;
   sendToPublisherConfirmed(): void;
   sendToPublisher(brickId: number): void;
   requestFailed(e: string): void;
@@ -63,12 +65,12 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   let isAuthor = false;
   try {
-    isAuthor = brick.author.id === user.id; 
+    isAuthor = brick.author.id === user.id;
   } catch {}
 
+  const isAdmin = checkAdmin(user.roles);
   const isPublisher = checkPublisher(user, brick);
   let isCurrentEditor = brick.editor?.id === user.id;
-  console.log('isEditor', isCurrentEditor, 'isPublisher', isPublisher, 'editor', brick.editor, 'userId', user.id);
   const link = `/play/brick/${brick.id}/intro`;
 
   const publish = async (brickId: number) => {
@@ -91,25 +93,69 @@ const FinalStep: React.FC<FinalStepProps> = ({
     );
   }
 
+  const renderReturnToAuthorColumn = (size: 5 | 3) => {
+    return (
+      <CustomColumn
+        icon="repeat"
+        title="Return to author"
+        label="for futher changes"
+        size={size}
+        onClick={async () => {
+          await returnToAuthor(brick.id);
+          props.fetchBrick(brick.id);
+        }}
+      />
+    );
+  }
+
+  const renderReturnToEditorColumn = (size: 5 | 3) => {
+    return (
+      <CustomColumn
+        icon="repeat" title="Return to editor" label="for futher changes"
+        size={size}
+        onClick={async () => {
+          await returnToEditor(brick.id);
+          props.fetchBrick(brick.id);
+        }}
+      />
+    )
+  }
+
+  const renderSendToPublisherColumn = (size: 5 | 3) => {
+    return (
+      <CustomColumn
+        icon="send" title="Send to publisher" label="for final review"
+        size={size}
+        onClick={async () => {
+          await props.sendToPublisher(brick.id);
+          props.fetchBrick(brick.id);
+        }}
+      />
+    );
+  }
+
   const renderActionColumns = () => {
     const canPublish = isPublisher && brick.status !== BrickStatus.Publish && publishSuccess !== PublishStatus.Published;
 
     const size: 5 | 3 = canPublish ? 3 : 5;
 
+    if (canPublish) {
+      return (
+        <Grid className="share-row" container direction="row" justify="center">
+          {isAdmin && renderInviteColumn(size)}
+          {
+            canPublish && renderReturnToEditorColumn(size)
+          }
+          {canPublish && <PublishColumn onClick={() => publish(brick.id)} />}
+        </Grid>
+      );
+    }
+
     if (isCurrentEditor) {
       return (
         <Grid className="share-row" container direction="row" justify="center">
-          <CustomColumn
-            icon="repeat" title="Return to author" label="for futher changes"
-            size={size} onClick={() => {}} />
-          {
-            publisherConfirmed === false && !brick.publisher ?
-            <CustomColumn
-              icon="send" title="Send to publisher" label="for final review"
-              size={size} onClick={() => props.sendToPublisher(brick.id)} />
-            : ""
-          }
-          {canPublish ? <PublishColumn onClick={() => publish(brick.id)} /> : ""}
+          {renderReturnToAuthorColumn(size)}
+          { !brick.publisher && renderSendToPublisherColumn(size) }
         </Grid>
       );
     }
@@ -119,14 +165,15 @@ const FinalStep: React.FC<FinalStepProps> = ({
         <Grid className="share-row" container direction="row" justify="center">
           <ShareColumn size={size} onClick={() => setShare(true)} />
           {renderInviteColumn(size)}
-          {canPublish ? <PublishColumn onClick={() => publish(brick.id)} /> : ""}
+          { canPublish && renderReturnToEditorColumn(size) }
+          {canPublish && <PublishColumn onClick={() => publish(brick.id)} />}
         </Grid>
       );
     }
     return (
       <Grid className="share-row" container direction="row" justify="center">
         {renderInviteColumn(size)}
-        {canPublish ? <PublishColumn onClick={() => publish(brick.id)} /> : ""}
+        { canPublish && renderReturnToEditorColumn(size) }
       </Grid>
     );
   }
@@ -198,7 +245,11 @@ const FinalStep: React.FC<FinalStepProps> = ({
       <InvitationSuccessDialog
         isAuthor={isAuthor}
         isOpen={inviteSuccess.isOpen} name={inviteSuccess.name} accessGranted={true}
-        close={() => setInviteSuccess({ isOpen: false, name: '' })} />
+        close={() => {
+          setInviteSuccess({ isOpen: false, name: '' });
+          props.fetchBrick(brick.id);
+        }}
+      />
       <PublishSuccessDialog
         isOpen={publishSuccess === PublishStatus.Popup}
         close={() => setPublishSuccess(PublishStatus.Published)}
@@ -208,11 +259,13 @@ const FinalStep: React.FC<FinalStepProps> = ({
   );
 };
 const mapState = (state: ReduxCombinedState) => ({
+  brick: state.brick.brick,
   sendedToPublisher: state.sendPublisher.success,
   publisherConfirmed: state.sendPublisher.confirmed,
 });
 
 const mapDispatch = (dispatch: any) => ({
+  fetchBrick: (brickId: number) => dispatch(brickActions.fetchBrick(brickId)),
   sendToPublisher: (brickId: number) => dispatch(brickActions.sendToPublisher(brickId)),
   sendToPublisherConfirmed: () => dispatch(brickActions.sendToPublisherConfirmed()),
   requestFailed: (e: string) => dispatch(actions.requestFailed(e))
