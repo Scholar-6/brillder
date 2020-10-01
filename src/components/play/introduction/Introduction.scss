@@ -1027,7 +1027,7 @@ $play-mobile-height: calc(100vh - 60px - 19vw) !important;
     }
     &.prep-box {
       @include phone_and_tabletP {
-        margin-bottom:85px;
+        margin-bottom: 21vh;
       }
     }
   }
