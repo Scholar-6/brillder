@@ -21,12 +21,17 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     let userAnswers = [];
 
     const {component} = props;
+
     if (props.isPreview === true) {
       userAnswers = component.list ? component.list : [];
     } else {
       if (this.props.attempt) {
         let choices = this.props.attempt.answer;
         userAnswers = Object.assign([], choices);
+
+        if (this.props.isBookPreview) {
+          userAnswers = this.props.answers as any;
+        }
       } else {
         userAnswers =  component.choices ? component.choices : [];
       }
@@ -38,6 +43,11 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     if (props.isPreview === true && props.component) {
       if (this.state.userAnswers !== props.component.list) {
         this.setState({userAnswers: props.component.list});
+      }
+    }
+    if (props.isBookPreview === true) {
+      if (this.state.userAnswers !== props.answers as any) {
+        this.setState({userAnswers: this.props.answers as any});
       }
     }
   }
@@ -147,17 +157,24 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
             this.props.component.list.map((item:any, i) => this.renderOption(item, i))
           }
           </List>
-          <ReactSortable
-            list={this.state.userAnswers}
-            animation={150}
-            group={{ name: "cloning-group-name" }}
-            className="answers-list"
-            setList={(choices) => this.setUserAnswers(choices)}
-          >
-            {
-              this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
-            }
-          </ReactSortable>
+          {
+            this.props.isBookPreview ? 
+            <div className="answers-list">
+              {this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))}
+            </div>
+            :
+            <ReactSortable
+              list={this.state.userAnswers}
+              animation={150}
+              group={{ name: "cloning-group-name" }}
+              className="answers-list"
+              setList={(choices) => this.setUserAnswers(choices)}
+            >
+              {
+                this.state.userAnswers.map((a: Answer, i: number) => this.renderAnswer(a, i))
+              }
+            </ReactSortable>
+          }
         </Grid>
         <ReviewGlobalHint
           isReview={this.props.isReview}

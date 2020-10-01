@@ -19,9 +19,10 @@ import {
 } from "components/build/questionService/QuestionService";
 import { Question } from "model/question";
 import { getAttempts } from "components/services/axios/attempt";
-import { PlayAttempt } from "model/attempt";
+import { AttemptAnswer, PlayAttempt } from "model/attempt";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { getHours, getMinutes, getFormattedDate } from "components/services/brickService";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 enum BookState {
   Closed,
@@ -45,6 +46,7 @@ interface ProposalState {
   questionIndex: number;
   animationRunning: boolean;
   attempt: PlayAttempt | null;
+  mode: boolean; // live - false, review - true
 }
 
 class PostPlay extends React.Component<ProposalProps, ProposalState> {
@@ -54,6 +56,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       bookState: BookState.Closed,
       questionIndex: 0,
       animationRunning: false,
+      mode: false,
       attempt: null
     };
 
@@ -101,13 +104,25 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
-  
+  getAttemptStatus(answers: AttemptAnswer[]) {
+    return !answers.find(a => a.correct === false);
+  }
+
   render() {
     if (!this.state.attempt) {
       return <PageLoader content="...Getting Attempt..." />;
     }
-    const { brick, student, answers, timestamp } = this.state.attempt;
-    console.log(this.state.attempt);
+    const { brick, student, timestamp } = this.state.attempt;
+
+    const reviewCorrect = this.getAttemptStatus(this.state.attempt.answers);
+    const liveCorrect = this.getAttemptStatus(this.state.attempt.liveAnswers);
+
+    let answers = this.state.attempt.liveAnswers;
+    if (this.state.mode) {
+      answers = this.state.attempt.answers;
+    }
+
+    console.log(answers);
 
     if (brick.title) {
       setBrillderTitle(brick.title);
@@ -156,7 +171,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
               </div>
               <div>
                 <h2>Investigation</h2>
-                <QuestionPlay question={question} isBookPreview={true} answers={parsedAnswers} />
+                <QuestionPlay question={question} attempt={this.state.attempt as any} isBookPreview={true} answers={parsedAnswers} />
               </div>
             </div>
           </div>
@@ -179,12 +194,32 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
               <div>{getHours(timestamp)}:{getMinutes(timestamp)}</div>
             </div>
             <div className="col">
-              <h3>Investigation</h3>
-              <div></div>
+              <h3 className="centered">Investigation</h3>
+              <div className="centered">
+                {liveCorrect
+                  ? <SpriteIcon name="ok" className="text-theme-green" />
+                  : <SpriteIcon name="cancel" className="text-theme-orange" />
+                }
+                {
+                  this.state.mode
+                    ? <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={() => this.setState({mode: false})} />
+                    : <SpriteIcon name="eye-on" className="text-theme-dark-blue" />
+                }
+              </div>
             </div>
             <div className="col">
-              <h3>Review</h3>
-              <div></div>
+              <h3 className="centered">Review</h3>
+              <div className="centered">
+                {reviewCorrect
+                  ? <SpriteIcon name="ok" className="text-theme-green" />
+                  : <SpriteIcon name="cancel" className="text-theme-orange" />
+                }
+                {
+                  this.state.mode
+                    ? <SpriteIcon name="eye-on" className="text-theme-dark-blue" />
+                    : <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={() => this.setState({mode: true})} />
+                }
+              </div>
             </div>
           </div>
         </div>
@@ -284,7 +319,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 </div>
                 {questions.map((q, i) => {
                   return (
-                    <div>
+                    <div key={i}>
                       {i === 0 ? <div className="page3-cover first" style={getQuestionCoverStyle(i)}></div> : ""}
                       {renderQuestionPage(q, i)}
                       {renderAnswersPage(i)}
