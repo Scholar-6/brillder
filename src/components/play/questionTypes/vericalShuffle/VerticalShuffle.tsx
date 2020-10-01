@@ -5,7 +5,6 @@ import { Grid } from '@material-ui/core';
 import './VerticalShuffle.scss';
 import {CompQuestionProps} from '../types';
 import CompComponent from '../Comp';
-import {ComponentAttempt} from 'components/play/model';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
@@ -82,45 +81,6 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
         this.setState({userAnswers: props.component.list});
       }
     }
-  }
-
-  mark(attempt: ComponentAttempt<any>, prev: ComponentAttempt<any>) {
-    // If the question is answered in review phase, add 2 to the mark and not 5.
-    const {isReview} = this.props;
-    let markIncrement = isReview ? 2 : 5;
-    attempt.correct = true;
-    attempt.marks = 0;
-    attempt.maxMarks = 0;
-    // For every item in the answer...
-    
-    attempt.answer.forEach((answer: any, index: number, array: any[]) => {
-      // except the first one...
-      if (index !== 0) {
-        // increase the max marks by 5,
-        attempt.maxMarks += 5;
-        // and if this item and the one before it are in the right order and are adjacent...
-        if(answer.index - array[index-1].index === 1) {
-          // and the program is in live phase...
-          if(!isReview) {
-            // increase the marks by 5.
-            attempt.marks += markIncrement;
-          } else if (prev.answer[index] - prev.answer[index-1] !== 1) {
-            // increase the marks by 2.
-            attempt.marks += markIncrement;
-          }
-        } else {
-          // the answer is not correct.
-          attempt.correct = false;
-        }
-      }
-    });
-    // Then, if the attempt scored no marks and the program is in live phase, then give the student a mark.
-    if(attempt.marks === 0 && !isReview) attempt.marks = 1;
-
-    if (this.state.status === DragAndDropStatus.Changed) {
-      attempt.dragged = true;
-    }
-    return attempt;
   }
 
   checkAttemptAnswer(index: number) {

@@ -41,7 +41,9 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
-  onBookHover() { setTimeout(() => this.setState({ bookHovered: true }), 800) }
+  onBookHover() { 
+    setTimeout(() => this.setState({ bookHovered: true }), 200);
+  }
 
   switchMode() {
     if (this.props.canEdit) {
@@ -171,9 +173,9 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             <div className="text-line-2"></div>
             <h2>When you're ready, start building!</h2>
           </Grid>
-          <div className="book-main-container">
+          <div className={`book-main-container ${this.state.bookHovered ? 'hovered' : ''}`}>
             <div className="book-container">
-              <div className="book" onMouseOver={() => this.onBookHover()}>
+              <div className={`book ${this.state.mode === true ? 'flat' : ''}`} onMouseOver={() => this.onBookHover()}>
                 <div className="back"></div>
                 <div className="page6">
                   <div className="normal-page">
@@ -214,7 +216,6 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                 <div className="page4"></div>
                 <div className="page3"></div>
                 <div className="page2"></div>
-                <div className="page5"></div>
                 <div className="front">
                   <div className="page-stitch">
                     <div className="vertical-line"></div>

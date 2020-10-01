@@ -165,13 +165,20 @@
   }
 }
 
+@include phone_and_tabletP {
+  .first-col.filled {
+    z-index: 100;
+    background: var(--theme-dark-blue);
+  }
+}
+
 .mobile-button-box {
   @include phone_and_tabletP {
     background-color: $button-box;
     border-top-right-radius: 10vw;
     overflow: hidden;
     margin-top: 34px;
-    height: calc(58vh - 60px);
+    height: calc(58% - 60px);
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-end;

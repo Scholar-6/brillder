@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import moment from "moment";
 import { IconButton, SvgIcon } from "@material-ui/core";
 
@@ -13,16 +12,10 @@ export interface CommentChildProps {
   currentUser: User;
   currentBrick: Brick;
   isAuthor: boolean;
+  onDelete(brickId: number, commentId: number): void;
 }
 
 const CommentChild: React.FC<CommentChildProps> = (props) => {
-  const handleDeleteComment = () => {
-    return axios.delete(
-      `${process.env.REACT_APP_BACKEND_HOST}/brick/${props.currentBrick.id}/comment/${props.comment.id}`,
-      { withCredentials: true }
-    );
-  };
-
   let mineComment = false;
   if (props.comment.author.id === props.currentUser.id) {
     mineComment = true;
@@ -31,7 +24,7 @@ const CommentChild: React.FC<CommentChildProps> = (props) => {
   return (
     <div className="comment-child-container">
       <div style={{position: 'absolute'}} className="profile-image-container">
-        <div className={`profile-image ${mineComment ? 'red-border' : 'yellow-border'}`}>
+        <div className={`profile-image ${mineComment ? 'yellow-border' : 'red-border'}`}>
           {
             props.comment.author?.profileImage
               ? <img alt="profile" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
@@ -48,12 +41,12 @@ const CommentChild: React.FC<CommentChildProps> = (props) => {
             aria-label="reply"
             size="small"
             color="secondary"
-            onClick={() => handleDeleteComment()}
+            onClick={() => props.onDelete(props.currentBrick.id, props.comment.id)}
           >
             <SvgIcon fontSize="inherit">
               <svg className="svg active">
                 {/*eslint-disable-next-line*/}
-                <use href={sprite + "#cancel"} />
+                <use href={sprite + "#trash-outline"} />
               </svg>
             </SvgIcon>
           </IconButton>

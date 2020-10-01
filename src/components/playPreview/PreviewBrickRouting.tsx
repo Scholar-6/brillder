@@ -30,6 +30,7 @@ import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import PlayLeftSidebar from 'components/play/PlayLeftSidebar';
 import BuildCompletePage from './buildComplete/BuildCompletePage';
 import FinalStep from './finalStep/FinalStep';
+import { calcBrickLiveAttempt, calcBrickReviewAttempt } from 'components/play/services/scoring';
 
 
 export interface BrickAttempt {
@@ -103,11 +104,12 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishBrick = () => {
-    /* If no answer given or no mark provided for question then return acc accumulated score +0 so
-    it still has an integer value, else return acc + additional mark */
+    /* 25/09 change to use scoring service
+    // If no answer given or no mark provided for question then return acc accumulated score +0 so
+    // it still has an integer value, else return acc + additional mark
     let score = attempts.reduce((acc, answer) => acc + answer.marks, 0);
-    /* MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
-    is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.*/
+    // MaxScore allows the percentage to be worked out at the end. If no answer or no maxMarks for the question
+    // is provided for a question then add a standard 5 marks to the max score, else add the maxMarks of the question.
     let maxScore = attempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba: BrickAttempt = {
       brick,
@@ -116,6 +118,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       student: null,
       answers: attempts
     };
+    */
+    const ba = calcBrickLiveAttempt(brick, attempts);
     setStatus(PlayStatus.Review);
     setBrickAttempt(ba);
     setReviewAttempts(Object.assign([], attempts));
@@ -123,7 +127,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
   }
 
   const finishReview = () => {
-    let score = reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0) + brickAttempt.score;
+    /* 25/09 change to use scoring service
+    let score = reviewAttempts.reduce((acc, answer) => acc + answer.marks, 0);
     let maxScore = reviewAttempts.reduce((acc, answer) => acc + answer.maxMarks, 0);
     var ba: BrickAttempt = {
       score,
@@ -131,6 +136,8 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
       oldScore: brickAttempt.score,
       answers: reviewAttempts
     };
+    */
+    const ba = calcBrickReviewAttempt(brick, reviewAttempts, brickAttempt);
     setBrickAttempt(ba);
     setStatus(PlayStatus.Ending);
   }
@@ -283,7 +290,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               <BuildCompletePage brick={brick} history={history} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/finalStep">
-              <FinalStep user={props.user} status={status} brick={brick} history={history} location={location} />
+              <FinalStep user={props.user} status={status} history={history} location={location} />
             </Route>
           </Switch>
         </div>
