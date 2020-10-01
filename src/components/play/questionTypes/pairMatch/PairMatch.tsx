@@ -20,6 +20,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
     let status = DragAndDropStatus.None;
     let userAnswers = [];
 
+    console.log(props)
     const {component} = props;
 
     if (props.isPreview === true) {
@@ -121,6 +122,10 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         }
       }
     }
+    if (this.props.isBookPreview) {
+      //let state = this.getState(answer.index);
+      console.log(answer, i);
+    }
     return (
       <div key={i} className={className}>
         <div className="MuiListItem-root" style={{height: '100%', textAlign: 'center'}}>
@@ -179,7 +184,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
         <ReviewGlobalHint
           isReview={this.props.isReview}
           attempt={this.props.attempt}
-          isPhonePreview={this.props.isPreview}
+          isPhonePreview={this.props.isPreview || this.props.isBookPreview}
           hint={this.props.question.hint}
         />
       </div>
