@@ -169,7 +169,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             <h1>to check all is in order.</h1>
             <div className="text-line-1"></div>
             <h2>Slide your mouse over the cover to</h2>
-            <h2>open it. &nbsp;Click back to edit.</h2>
+            <h2>open it. &nbsp;Click the icon at the top of the page to edit.</h2>
             <div className="text-line-2"></div>
             <h2>When you're ready, start building!</h2>
           </Grid>
