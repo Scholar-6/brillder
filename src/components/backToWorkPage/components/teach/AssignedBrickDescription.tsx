@@ -40,7 +40,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
         <div className="brick-top" style={{ background: color }}></div>
         <div className="brick-top-middle" style={{ background: color }}></div>
         <div className="brick-middle" style={{ background: color }}>
-          <SpriteIcon name={isExpanded ? "minimize" : "maximize")} className="active" />
+          <SpriteIcon name={isExpanded ? "minimize" : "maximize"} className="active" />
         </div>
         <div className="brick-bottom-middle" style={{ background: color }}></div>
         <div className="brick-bottom" style={{ background: color }}></div>
