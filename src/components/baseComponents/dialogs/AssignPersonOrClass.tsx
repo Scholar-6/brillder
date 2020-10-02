@@ -28,15 +28,12 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
   const [classes, setClasses] = React.useState<Classroom[]>([]);
   const [autoCompleteOpen, setAutoCompleteDropdown] = React.useState(false);
 
-  useEffect(() => {
-    getAllStudents();
-    getClasses();
-  }, [value]);
+  const { requestFailed } = props;
 
-  const getAllStudents = async () => {
+  const getAllStudents = React.useCallback(async () => {
     let students = await getStudents();
     if (!students) {
-      props.requestFailed('Can`t get students');
+      requestFailed('Can`t get students');
       students = [];
     }
 
@@ -44,12 +41,12 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
       student.isStudent = true;
     }
     setStudents(students);
-  }
+  }, [requestFailed]);
 
-  const getClasses = async () => {
+  const getClasses = React.useCallback(async () => {
     let classrooms = await getClassrooms();
     if (!classrooms) {
-      props.requestFailed('Can`t get classrooms');
+      requestFailed('Can`t get classrooms');
       classrooms = [];
     }
 
@@ -64,7 +61,12 @@ const AssignPersonOrClassDialog: React.FC<AssignPersonOrClassProps> = (props) =>
     }
 
     setClasses(classrooms);
-  }
+  }, [requestFailed]);
+
+  useEffect(() => {
+    getAllStudents();
+    getClasses();
+  }, [value, getAllStudents, getClasses]);
 
   const assignToStudents = async (studentsIds: Number[]) => {
     await axios.post(

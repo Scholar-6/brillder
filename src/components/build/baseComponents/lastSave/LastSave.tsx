@@ -25,7 +25,7 @@ const LastSave: React.FC<LastSaveProps> = (props) => {
       let timeout = setTimeout(() => setSaving(false), 1000);
       setSaveTimeout(timeout);
     }
-  }, [props]);
+  }, [props, saveTimeout]);
 
   const formatTwoDigits = (number: Number) => {
     let str = number.toString();

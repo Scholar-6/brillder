@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 //@ts-ignore
 import Desmos from 'desmos';
