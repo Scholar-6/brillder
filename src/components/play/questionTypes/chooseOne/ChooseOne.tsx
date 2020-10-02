@@ -31,15 +31,28 @@ interface ChooseOneState {
 class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   constructor(props: ChooseOneProps) {
     super(props);
+    const activeItem = this.getActiveItem(props);
+    this.state = { activeItem };
+  }
 
+  getActiveItem(props: ChooseOneProps) {
     let activeItem = -1;
     if (props.answers >= 0) {
       activeItem = props.answers;
     } else if (props.attempt && props.attempt.answer >= 0) {
       activeItem = props.attempt.answer;
     }
+    return activeItem;
+  }
 
-    this.state = { activeItem };
+  componentDidUpdate(prevProp: ChooseOneProps) {
+    if (this.props.isBookPreview) {
+      if (this.props.answers !== prevProp.answers) {
+        console.log(this.props.attempt);
+        const activeItem = this.getActiveItem(this.props);
+        this.setState({activeItem});
+      }
+    }
   }
 
   setActiveItem(activeItem: number) {

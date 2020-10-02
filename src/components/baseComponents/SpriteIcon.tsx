@@ -5,13 +5,13 @@ import sprite from "assets/img/icons-sprite.svg";
 interface SpriteIconProps {
   name: string;
   className?: string;
-  onClick?(): void;
+  onClick?(e: React.MouseEvent<SVGSVGElement, MouseEvent>): void;
 }
 
 const SpriteIcon:React.FC<SpriteIconProps> = ({name, className, onClick}) => {
-  const onSvgClick = () => {
+  const onSvgClick = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     if (onClick) {
-      onClick();
+      onClick(e);
     }
   }
   return (
