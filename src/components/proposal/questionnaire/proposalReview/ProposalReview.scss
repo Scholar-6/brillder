@@ -289,6 +289,7 @@
           }
 
           input {
+            width: 100%;
             color: var(--theme-orange) !important;
           }
         }
@@ -338,6 +339,9 @@
         .proposal-text {
           margin-top: 2%;
           margin-left: 1.3vw;
+          &.edit-mode {
+            margin-left: 1vw;
+          }
           margin-bottom: 1vh;
           .document-editor {
             width: 100%;
@@ -358,6 +362,7 @@
             width: calc(100% - 2vw);
             @extend %themeRadius;
             background-color: var(--tab-gray);
+            color: var(--theme-dark-blue);
             padding: 0.5vw 1vw;
           }
         }
@@ -369,7 +374,6 @@
     }
   }
   $scale: 1.15;
-
 
   .book-main-container.hovered {
     width: 50vw;

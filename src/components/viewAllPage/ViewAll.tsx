@@ -1,4 +1,3 @@
-import "./ViewAll.scss";
 import React, { Component } from "react";
 import { Box, Grid, Hidden } from "@material-ui/core";
 import { Category } from "./interface";
@@ -6,28 +5,32 @@ import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
 
+import "./ViewAll.scss";
 import sprite from "assets/img/icons-sprite.svg";
+
+import { User } from "model/user";
+import { Notification } from 'model/notifications';
+import { Brick, BrickStatus } from "model/brick";
+import { ReduxCombinedState } from "redux/reducers";
+import { checkAdmin, getAssignmentIcon } from "components/services/brickService";
+import { getCurrentUserBricks, getPublishedBricks, searchBricks } from "components/services/axios/brick";
+import { getSubjects } from "components/services/axios/subject";
 
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import FailedRequestDialog from "components/baseComponents/failedRequestDialog/FailedRequestDialog";
 import DeleteBrickDialog from "components/baseComponents/deleteBrickDialog/DeleteBrickDialog";
-import { Brick, BrickStatus } from "model/brick";
-import { User } from "model/user";
 import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDescription from "components/baseComponents/ExpandedBrickDescription";
 import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
-import { ReduxCombinedState } from "redux/reducers";
 import ViewAllFilter, { SortBy } from "./ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
-import { checkAdmin, getAssignmentIcon } from "components/services/brickService";
 import BrickBlock from "components/baseComponents/BrickBlock";
-import { getCurrentUserBricks, getPublishedBricks, searchBricks } from "components/services/axios/brick";
-import { getSubjects } from "components/services/axios/subject";
 
 
 interface BricksListProps {
   user: User;
+  notifications: Notification[] | null;
   history: any;
 }
 
@@ -83,6 +86,17 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     this.loadData();
   }
 
+  // load bricks when notification come
+  componentDidUpdate(prevProps: BricksListProps) {
+    const {notifications} = this.props;
+    const oldNotifications = prevProps.notifications;
+    if (notifications && oldNotifications) {
+      if (notifications.length > oldNotifications.length) {
+        this.loadBricks();
+      }
+    }
+  }
+
   async loadData() {
     const subjects = await getSubjects();
     if(subjects) {
@@ -91,6 +105,10 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       this.setState({ ...this.state, failedRequest: true });
     }
 
+    this.loadBricks();
+  }
+
+  async loadBricks() {
     const currentBricks = await getCurrentUserBricks();
     if (currentBricks) {
       let yourBricks = currentBricks.filter(brick => brick.status === BrickStatus.Publish);
@@ -713,6 +731,9 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  notifications: state.notifications.notifications
+});
 
 export default connect(mapState)(ViewAllPage);

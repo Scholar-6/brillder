@@ -26,8 +26,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Redirect } from "react-router-dom";
 
 enum BookState {
-  Closed,
-  Hovered,
+  Titles,
   QuestionPage,
 }
 
@@ -43,6 +42,8 @@ interface ProposalProps {
 }
 
 interface ProposalState {
+  closeTimeout: number;
+  bookHovered: boolean;
   bookState: BookState;
   questionIndex: number;
   animationRunning: boolean;
@@ -54,11 +55,13 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
     this.state = {
-      bookState: BookState.Closed,
+      bookState: BookState.Titles,
       questionIndex: 0,
       animationRunning: false,
       mode: false,
-      attempt: null
+      attempt: null,
+      closeTimeout: -1,
+      bookHovered: false
     };
 
     this.loadData();
@@ -75,10 +78,18 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
   openDialog = () => this.setState({});
   closeDialog = () => this.setState({});
 
-  onBookHover() {
-    if (this.state.bookState === BookState.Closed) {
-      this.setState({ bookState: BookState.Hovered });
+  onBookHover() { 
+    clearTimeout(this.state.closeTimeout);
+    if (!this.state.bookHovered) {
+      this.setState({ bookHovered: true });
     }
+  }
+
+  onBookClose() {
+    const closeTimeout = setTimeout(() => {
+      this.setState({ bookHovered: false });
+    }, 400);
+    this.setState({ closeTimeout });
   }
 
   moveToQuestions() {
@@ -150,10 +161,12 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
 
     let bookClass = "book-main-container";
-    if (this.state.bookState === BookState.Hovered) {
-      bookClass += " expanded hovered";
-    } else if (this.state.bookState === BookState.QuestionPage) {
-      bookClass += ` expanded sheet-1`;
+    if (this.state.bookHovered) {
+      if (this.state.bookState === BookState.Titles) {
+        bookClass += " expanded hovered";
+      } else if (this.state.bookState === BookState.QuestionPage) {
+        bookClass += ` expanded question-attempt`;
+      }
     }
 
     let questions: Question[] = [];
@@ -239,7 +252,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     const getQuestionStyle = (index: number) => {
       const scale = 1.15;
-      if (this.state.bookState === BookState.QuestionPage) {
+      if (this.state.bookHovered && this.state.bookState === BookState.QuestionPage) {
         if (index === this.state.questionIndex) {
           return { transform: `rotateY(-178deg) scale(${scale})` }
         } else if (index < this.state.questionIndex) {
@@ -253,7 +266,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     const getQuestionCoverStyle = (index: number) => {
       const scale = 1.15;
-      if (this.state.bookState === BookState.QuestionPage) {
+      if (this.state.bookHovered && this.state.bookState === BookState.QuestionPage) {
         if (index === this.state.questionIndex) {
           return { transform: `rotateY(-178.1deg) scale(${scale})` }
         } else if (index < this.state.questionIndex) {
@@ -267,7 +280,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     const getResultStyle = (index: number) => {
       const scale = 1.15;
-      if (this.state.bookState === BookState.QuestionPage) {
+      if (this.state.bookHovered && this.state.bookState === BookState.QuestionPage) {
         if (index === this.state.questionIndex) {
           return { transform: `rotateY(-4deg) scale(${scale})` }
         } else if (index < this.state.questionIndex) {
@@ -294,7 +307,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             <h2>a summary of your results.</h2>
           </Grid>
           <div className={bookClass}>
-            <div className="book-container">
+            <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>
               <div className="book" onMouseOver={this.onBookHover.bind(this)}>
                 <div className="back"></div>
                 <div className="page1">
