@@ -130,7 +130,7 @@
 
       &.flat {
         margin-top: 10vh;
-        height: 74vh;
+        height: 80vh;
       }
     }
 
@@ -278,9 +278,18 @@
           font-size: 1.3vw;
 
           .title {
-            font-family: $font-family-bold;
             text-transform: uppercase;
+            font-family: $font-family-bold;
             height: 20vh;
+
+            input {
+              text-transform: uppercase;
+              font-family: $font-family-bold !important;
+            }
+          }
+
+          input {
+            color: var(--theme-orange) !important;
           }
         }
       }
@@ -327,6 +336,7 @@
           margin-top: 1vh;
         }
         .proposal-text {
+          margin-top: 2%;
           margin-left: 1.3vw;
           margin-bottom: 1vh;
           .document-editor {
