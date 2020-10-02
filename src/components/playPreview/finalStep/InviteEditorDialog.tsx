@@ -39,7 +39,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
     }
   };
 
-  const onBlur = async () => {
+  const onBlur = React.useCallback(async () => {
     if (editorUsername !== "") {
       setLock(true);
       let data = await getUserByUserName(editorUsername);
@@ -56,11 +56,11 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
       setValid(false);
       setEditorError("No username input.");
     }
-  }
+  }, [editorUsername]);
 
   useEffect(() => {
     onBlur();
-  }, [brick]);
+  }, [brick, onBlur]);
 
   const renderSendButton = () => {
     return (

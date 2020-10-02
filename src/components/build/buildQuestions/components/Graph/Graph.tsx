@@ -31,8 +31,10 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
     const graphRef = React.useRef<HTMLDivElement>(null);
     const [calculator, setCalculator] = React.useState<any>(null);
 
-    const [graphState, setGraphState] = React.useState<any>(undefined);
-    const [graphSettings, setGraphSettings] = React.useState<GraphSettings>({
+    const initialProps = React.useRef(props);
+
+    const [graphState, setGraphState] = React.useState<any>(props.data.graphState ?? null);
+    const [graphSettings, setGraphSettings] = React.useState<GraphSettings>(props.data.graphSettings ?? {
         showSidebar: false,
         showSettings: false,
         allowPanning: false,
@@ -43,17 +45,7 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
     const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
 
     useEffect(() => {
-        if(props.data.graphState) {
-            setGraphState(props.data.graphState);
-        }
-        if(props.data.graphSettings) {
-            setGraphSettings(props.data.graphSettings);
-        }
         if(graphRef && graphRef.current) {
-            const state = graphState;
-            if(calculator) {
-              calculator.destroy();
-            }
             var elt = graphRef.current;
             const desmos = Desmos.GraphingCalculator(elt, {
               fontSize: Desmos.FontSizes.VERY_SMALL,
@@ -63,9 +55,15 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
               pointsOfInterest: true,
               trace: true
             });
-            desmos.setState(state);
-            setCalculator(desmos);
+            desmos.setState(graphState);
+            setCalculator((calc: any) => {
+                if(calc) {
+                    calc.destroy();
+                }
+                return desmos
+            });
         }
+    // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
@@ -73,14 +71,15 @@ const GraphComponent: React.FC<GraphProps> = (props) => {
         if(calculator) {
           calculator.setState(state);
         }
-    }, [graphState, graphSettings]);
+    }, [graphState, graphSettings, calculator]);
 
     useEffect(() => {
-        let comp = Object.assign({}, props.data);
+        let comp = Object.assign({}, initialProps.current.data);
         comp.graphState = graphState;
         comp.graphSettings = graphSettings;
-        props.updateComponent(comp, props.index);
-        props.save();
+        console.log("Saving...")
+        initialProps.current.updateComponent(comp, initialProps.current.index);
+        initialProps.current.save();
     }, [graphState, graphSettings]);
 
     const setGraphSetting = (evt: React.MouseEvent<HTMLElement>, newSettings: string[]) => {
