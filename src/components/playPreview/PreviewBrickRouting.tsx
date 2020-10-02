@@ -59,7 +59,6 @@ interface BrickRoutingProps {
   history: any;
   location: any;
   fetchBrick(brickId: number): void;
-  assignEditor(brick: any): void;
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
@@ -377,8 +376,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
-  assignEditor: (brick: any) => dispatch(actions.assignEditor(brick))
+  fetchBrick: (id: number) => dispatch(actions.fetchBrick(id))
 });
 
 const connector = connect(mapState, mapDispatch);
