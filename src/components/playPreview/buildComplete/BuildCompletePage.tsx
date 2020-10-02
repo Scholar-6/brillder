@@ -71,7 +71,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
 
   render() {
     const {brick} = this.props;
-    let isCurrentEditor = brick.editor?.id === this.props.user.id;
+    let isCurrentEditor = (brick.editors?.findIndex(e => e.id === this.props.user.id) ?? -1) >= 0;
     if (isCurrentEditor) {
       return <Redirect to={`/play-preview/brick/${brick.id}/finalStep`} />;
     }
