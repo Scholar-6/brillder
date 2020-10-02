@@ -113,7 +113,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                   </svg>
                 </div>
                 <div className="inner-radio-text pointer" onClick={()=> this.setState({isCore: true})}>
-                  All the above and more: submit to a subject specialist, receive editorial feedback,
+                  Submit to a subject specialist, receive editorial feedback,
                   be considered for our core library and paid for your work!
                 </div>
                 <div className="inner-radio-text last-one">
