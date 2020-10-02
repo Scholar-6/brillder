@@ -146,7 +146,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = user.id;
 
-    let isCurrentEditor = brick.editor?.id === user.id;
+    let isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
     if (isCurrentEditor) {
       history.push(`/play-preview/brick/${brickId}/finalStep`);
     } else {
