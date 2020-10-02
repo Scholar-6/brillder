@@ -26,6 +26,8 @@ export default (state = NotificationsInitialState, action: any) => {
             };
         case types.NOTIFICATION_CLEAR_ALL:
             return { notifications: [] };
+        case types.NOTIFICATION_RESET:
+            return { notifications: undefined };
         case types.NOTIFICATION_CHANGED:
             return { notifications: [
                 ...(state.notifications ?? []).filter(notification => notification.id !== action.notification.id),
