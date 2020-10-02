@@ -38,6 +38,9 @@ export const removeInboxFilters = (filters: Filters) => {
 }
 
 export const filterByStatus = (bricks: Brick[], status: BrickStatus) => {
+  if (status === BrickStatus.Review) {
+    return bricks.filter(b => b.status === status || b.status === BrickStatus.Build);
+  }
   return bricks.filter(b => b.status === status);
 }
 
