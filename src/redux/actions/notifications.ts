@@ -52,4 +52,10 @@ const notificationClearedAll = () => {
     } as Action;
 }
 
-export default { getNotifications, receivedNotification, notificationCleared, notificationClearedAll }
+const notificationReset = () => {
+    return {
+        type: types.NOTIFICATION_RESET
+    } as Action;
+}
+
+export default { getNotifications, receivedNotification, notificationCleared, notificationClearedAll, notificationReset }

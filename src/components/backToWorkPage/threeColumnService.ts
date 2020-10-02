@@ -23,7 +23,7 @@ const setColumnBricksByStatus = (
   } else {
     bs = filterByCore(bs, generalSubjectId);
   }
-  bs = bs.sort(b => (b.editor && b.editor.id === userId) ? -1 : 1);
+  bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === userId)) ? -1 : 1);
   res[name] = { rawBricks: bs, finalBricks: bs };
 }
 
@@ -38,7 +38,7 @@ export const getThreeColumnName = (status: BrickStatus) => {
   let name = ThreeColumnNames.Red;
   if (status === BrickStatus.Publish) {
     name = ThreeColumnNames.Green;
-  } else if (status === BrickStatus.Review) {
+  } else if (status === BrickStatus.Review || status === BrickStatus.Build) {
     name = ThreeColumnNames.Yellow;
   }
   return name;

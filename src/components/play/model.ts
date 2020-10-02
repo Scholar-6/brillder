@@ -6,6 +6,7 @@ export interface ComponentAttempt<T> {
   marks: number;
   maxMarks: number;
   attempted: boolean;
+  questionId: number;
   // only for pair match and shuffle attempts
   dragged?: boolean;
   liveCorrect?: boolean;

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
-import sprite from "assets/img/icons-sprite.svg";
 import { getAuthorRow } from "components/services/brickService";
 import { Brick } from "model/brick";
 import './ExpandedBrickDescription.scss';
+import SpriteIcon from "./SpriteIcon";
 
 
 interface ExpandedDescriptionProps {
@@ -30,10 +30,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
     return (
       <div>
         <button className="btn btn-transparent svgOnHover bin-button" onClick={() => this.props.onDelete(brick.id)}>
-          <svg className="svg w100 h100 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#trash-outline"} />
-          </svg>
+          <SpriteIcon name="trash-outline" className="w100 h100 active" />
         </button>
       </div>
     );
@@ -50,10 +47,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
     if (circleIcon) {
       return (
         <div className="round-button-icon">
-          <svg className={svgClass}>
-            {/*eslint-disable-next-line*/}
-            <use href={`${sprite}#${circleIcon}`} />
-          </svg>
+          <SpriteIcon name={circleIcon} className={svgClass} />
         </div>
       );
     }
@@ -88,10 +82,7 @@ class ExpandedBrickDescription extends Component<ExpandedDescriptionProps> {
           {this.renderDeleteButton(brick)}
           <div>
             <button className="btn btn-transparent svgOnHover play-button" onClick={() => this.props.move(brick.id)}>
-              <svg className="svg w100 h100 active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#play-filled"} />
-              </svg>
+              <SpriteIcon name="play-filled" className="w100 h100 active" />
             </button>
           </div>
         </div>

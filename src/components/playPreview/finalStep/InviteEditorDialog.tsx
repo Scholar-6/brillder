@@ -17,18 +17,18 @@ interface InviteProps {
   title?: string;
   submit(name: string): void;
   close(): void;
-  assignEditor(brick: Brick): void;
+  assignEditor(brick: Brick, editor: Editor): void;
 }
 
 const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
   const [isValid, setValid] = React.useState(false);
-  const [editorUsername, setEditorUsername] = React.useState(brick.editor?.username ?? "");
-  const [editor, setEditor] = React.useState(brick.editor);
+  const [editorUsername, setEditorUsername] = React.useState("");
+  const [editor, setEditor] = React.useState<Editor>();
   const [editorError, setEditorError] = React.useState("");
   const [locked, setLock] = React.useState(false);
 
   const saveEditor = (editorId: number, fullName: string) => {
-    props.assignEditor({ ...brick, editor: { id: editorId } as Editor });
+    props.assignEditor(brick, { id: editorId } as Editor);
     props.submit(fullName);
   }
 
@@ -39,7 +39,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
     }
   };
 
-  const onBlur = async () => {
+  const onBlur = React.useCallback(async () => {
     if (editorUsername !== "") {
       setLock(true);
       let data = await getUserByUserName(editorUsername);
@@ -56,11 +56,11 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
       setValid(false);
       setEditorError("No username input.");
     }
-  }
+  }, [editorUsername]);
 
   useEffect(() => {
     onBlur();
-  }, [brick]);
+  }, [brick, onBlur]);
 
   const renderSendButton = () => {
     return (
@@ -119,7 +119,7 @@ const InviteEditorDialog: React.FC<InviteProps> = ({ brick, ...props }) => {
 }
 
 const mapDispatch = (dispatch: any) => ({
-  assignEditor: (brick: any) => dispatch(actions.assignEditor(brick))
+  assignEditor: (brick: any, editor: any) => dispatch(actions.assignEditor(brick, editor))
 });
 
 const connector = connect(null, mapDispatch);

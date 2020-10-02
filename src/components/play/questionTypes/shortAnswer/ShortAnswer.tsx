@@ -83,6 +83,9 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     if (this.props.isPreview) {
       value = this.props.component.list[index].value;
     }
+    if (this.props.isBookPreview) {
+      return <span>value</span>;
+    }
     return (
       <DocumentWirisEditorComponent
         data={value}

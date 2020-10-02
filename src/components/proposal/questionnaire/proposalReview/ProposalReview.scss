@@ -31,11 +31,13 @@
     left: 14vw;
     color: var(--theme-dark-blue);
 
+    transition: all 1s ease-out;
+
     h1 {
       font-weight: normal !important;
       font-family: $font-family-black;
       letter-spacing: 0.05vw;
-      font-size: 2.8vw;
+      font-size: 2.6vw;
       margin: 0;
       line-height: 1.7;
     }
@@ -48,7 +50,7 @@
     }
     h2 {
       font-weight: normal !important;
-      font-size: 2.6vw;
+      font-size: 2.2vw;
       font-family: $font-family-regular;
       margin: 0;
     }
@@ -124,6 +126,12 @@
       position: relative;
       height: 63.6vh;
       backface-visibility: visible;
+      transition: all 1s ease-in-out;
+
+      &.flat {
+        margin-top: 10vh;
+        height: 80vh;
+      }
     }
 
     .front,
@@ -143,6 +151,7 @@
       left: 0;
       transform-origin: left center;
       transition: transform 1s ease-in-out, box-shadow 0.7s ease-in-out;
+      transition: all 1s ease-out;
     }
 
     .front,
@@ -269,9 +278,19 @@
           font-size: 1.3vw;
 
           .title {
-            font-family: $font-family-bold;
             text-transform: uppercase;
+            font-family: $font-family-bold;
             height: 20vh;
+
+            input {
+              text-transform: uppercase;
+              font-family: $font-family-bold !important;
+            }
+          }
+
+          input {
+            width: 100%;
+            color: var(--theme-orange) !important;
           }
         }
       }
@@ -297,7 +316,8 @@
 
         .edit-icon {
           cursor: pointer;
-          margin-top: 2vh;
+          margin-top: 4%;
+          margin-bottom: 4%;
           height: 3.5vw;
           width: 3.5vw;
           color: var(--theme-dark-blue);
@@ -317,7 +337,11 @@
           margin-top: 1vh;
         }
         .proposal-text {
+          margin-top: 2%;
           margin-left: 1.3vw;
+          &.edit-mode {
+            margin-left: 1vw;
+          }
           margin-bottom: 1vh;
           .document-editor {
             width: 100%;
@@ -338,6 +362,7 @@
             width: calc(100% - 2vw);
             @extend %themeRadius;
             background-color: var(--tab-gray);
+            color: var(--theme-dark-blue);
             padding: 0.5vw 1vw;
           }
         }
@@ -349,7 +374,6 @@
     }
   }
   $scale: 1.15;
-
 
   .book-main-container.hovered {
     width: 50vw;
@@ -403,15 +427,19 @@
 
   .book.flat {
     .front, .page3 {
+      width: 135%;
       transform: rotateY(-180deg) scale($scale);
     }
     .page5 {
+      width: 135%;
       transform: rotateY(-178deg) scale($scale);
     }
     .page6 {
+      width: 135%;
       transform: rotateY(-4deg) scale($scale);
     }
     .page4, .page2, .back {
+      width: 135%;
       transform: rotateY(0deg) scale($scale);
     }
   }

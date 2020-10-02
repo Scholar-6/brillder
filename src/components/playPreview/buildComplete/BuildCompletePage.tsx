@@ -6,15 +6,21 @@ import "./BuildCompletePage.scss";
 import sprite from "assets/img/icons-sprite.svg";
 import { Brick } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
+import brickActions from 'redux/actions/brickActions';
 import actions from 'redux/actions/requestFailed';
 import {setCoreLibrary} from 'components/services/axios/brick';
 
 import Clock from "components/play/baseComponents/Clock";
+import { Redirect } from "react-router-dom";
+import { User } from "model/user";
 
 
 interface BuildCompleteProps {
   history: any;
+  user: User;
   brick: Brick;
+
+  fetchBrick(brickId: number): void;
   requestFailed(e: string): void;
 }
 
@@ -33,6 +39,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
     let success = await setCoreLibrary(this.props.brick.id, this.state.isCore);
     if (success) {
       this.props.brick.isCore = this.state.isCore;
+      await this.props.fetchBrick(this.props.brick.id);
       this.props.history.push(`/play-preview/brick/${this.props.brick.id}/finalStep`);
     } else {
       this.props.requestFailed('Can`t set brick library');
@@ -64,6 +71,10 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
 
   render() {
     const {brick} = this.props;
+    let isCurrentEditor = (brick.editors?.findIndex(e => e.id === this.props.user.id) ?? -1) >= 0;
+    if (isCurrentEditor) {
+      return <Redirect to={`/play-preview/brick/${brick.id}/finalStep`} />;
+    }
     return (
       <div className="brick-container build-complete-page">
         <Grid container direction="row">
@@ -102,7 +113,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                   </svg>
                 </div>
                 <div className="inner-radio-text pointer" onClick={()=> this.setState({isCore: true})}>
-                  All the above and more: submit to a subject specialist, receive editorial feedback,
+                  Submit to a subject specialist, receive editorial feedback,
                   be considered for our core library and paid for your work!
                 </div>
                 <div className="inner-radio-text last-one">
@@ -132,6 +143,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
+  fetchBrick: (id: number) => dispatch(brickActions.fetchBrick(id)),
   requestFailed: (e: string) => dispatch(actions.requestFailed(e)),
 });
 

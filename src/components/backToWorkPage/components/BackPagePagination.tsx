@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface BackPageTitleProps {
   sortedIndex: number;
@@ -36,10 +36,7 @@ const BackPagePagination: React.FC<BackPageTitleProps> = ({
         <button
           className={"btn btn-transparent next-button svgOnHover " + (showNext ? "active" : "")}
           onClick={() => moveNext()}>
-          <svg className="svg w100 h100 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#arrow-down"} />
-          </svg>
+          <SpriteIcon name="arrow-down" className="w100 h100 active" />
         </button>
       );
     }
@@ -51,10 +48,7 @@ const BackPagePagination: React.FC<BackPageTitleProps> = ({
       return (
         <button className={"btn btn-transparent prev-button svgOnHover " + (showPrev ? "active" : "")}
           onClick={() => moveBack()}>
-          <svg className="svg w100 h100 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#arrow-up"} />
-          </svg>
+          <SpriteIcon name="arrow-up" className="w100 h100 active" />
         </button>
       );
     }

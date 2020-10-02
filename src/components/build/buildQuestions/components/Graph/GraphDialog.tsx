@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 //@ts-ignore
 import Desmos from 'desmos';
@@ -17,23 +17,22 @@ interface GraphDialogProps {
 }
 
 const GraphDialog: React.FC<GraphDialogProps> = props => {
-  const graphRef = React.useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if(graphRef && graphRef.current) {
-      var elt = graphRef.current;
+  const graphCallback = React.useCallback(elt => {
+    if(elt) {
       var calculator = Desmos.GraphingCalculator(elt, {
         fontSize: Desmos.FontSizes.VERY_SMALL,
         administerSecretFolders: true
       });
-      if(props.graphState) {
-        calculator.setState(props.graphState);
+      if(initialProps.current.graphState) {
+        calculator.setState(initialProps.current.graphState);
       }
       calculator.observeEvent('change', () => {
-        props.setGraphState(calculator.getState());
+        initialProps.current.setGraphState(calculator.getState());
       });
     }
-  }, [graphRef.current]);
+  }, [])
+
+  const initialProps = React.useRef(props);
 
   return (
   <Dialog
@@ -41,7 +40,7 @@ const GraphDialog: React.FC<GraphDialogProps> = props => {
     onClose={props.close}
     className="dialog-box light-blue graph-dialog"
   >
-    <div className="graph-dialog-desmos" ref={graphRef} />
+    <div className="graph-dialog-desmos" ref={graphCallback} />
   </Dialog>
   );
 };

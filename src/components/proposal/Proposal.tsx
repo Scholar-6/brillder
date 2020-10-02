@@ -159,7 +159,13 @@ class Proposal extends React.Component<ProposalProps, ProposalState> {
     setBrillderTitle();
 
     if (this.state.saved) {
-      history.push(`/build/brick/${this.props.brick.id}/investigation/question`);
+      if (this.props.brick) {
+        history.push(`/build/brick/${this.props.brick.id}/investigation/question`);
+      } else if (this.state.brick.id) {
+        history.push(`/build/brick/${this.state.brick.id}/investigation/question`);
+      } else {
+        history.push('/new-brick/brick-title');
+      }
     }
 
     const localBrick = this.state.brick;
@@ -238,7 +244,6 @@ const mapState = (state: ReduxCombinedState) => ({
 const mapDispatch = (dispatch: any) => ({
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
-  assignEditor: (brick: any) => dispatch(actions.assignEditor(brick)),
 });
 
 const connector = connect(mapState, mapDispatch);

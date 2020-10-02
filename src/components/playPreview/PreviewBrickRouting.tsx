@@ -59,7 +59,6 @@ interface BrickRoutingProps {
   history: any;
   location: any;
   fetchBrick(brickId: number): void;
-  assignEditor(brick: any): void;
 }
 
 const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
@@ -146,7 +145,13 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
     const {user} = props;
     brickAttempt.brickId = brick.id;
     brickAttempt.studentId = user.id;
-    history.push(`/play-preview/brick/${brickId}/build-complete`);
+
+    let isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
+    if (isCurrentEditor) {
+      history.push(`/play-preview/brick/${brickId}/finalStep`);
+    } else {
+      history.push(`/play-preview/brick/${brickId}/build-complete`);
+    }
   }
 
   const moveToBuild = () => {
@@ -290,7 +295,7 @@ const BrickRouting: React.FC<BrickRoutingProps> = (props) => {
               <BuildCompletePage brick={brick} history={history} />
             </Route>
             <Route exac path="/play-preview/brick/:brickId/finalStep">
-              <FinalStep user={props.user} status={status} brick={brick} history={history} location={location} />
+              <FinalStep user={props.user} status={status} history={history} location={location} />
             </Route>
           </Switch>
         </div>
@@ -377,8 +382,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
-  fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
-  assignEditor: (brick: any) => dispatch(actions.assignEditor(brick))
+  fetchBrick: (id: number) => dispatch(actions.fetchBrick(id))
 });
 
 const connector = connect(mapState, mapDispatch);

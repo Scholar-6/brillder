@@ -123,17 +123,21 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   let [synthesis, setSynthesis] = React.useState(initSynthesis);
   /* Synthesis */
 
+  const { startEditing, updateBrick } = props;
+
   // start editing on socket on load.
-  useEffect(() => {props.startEditing(brickId)}, [brickId]);
+  useEffect(() => {
+    startEditing(brickId)
+  }, [brickId, startEditing]);
 
   // update on socket when things change.
   useEffect(() => {
     if (props.brick && !locked) {
-      let { brick } = props;
+      let brick = props.brick;
       prepareBrickToSave(brick, questions, synthesis);
-      props.updateBrick(brick);
+      updateBrick(brick);
     }
-  }, [questions, synthesis]);
+  }, [questions, synthesis, locked, updateBrick, props.brick]);
 
   // parse questions on socket update
   useEffect(() => {
@@ -151,12 +155,12 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         } else {
           parsedQuestions[0].active = true;
         }
-        setQuestions(update(questions, { $set: parsedQuestions }));
-        setStatus(update(loaded, { $set: true }));
+        setQuestions(q => update(q, { $set: parsedQuestions }));
+        setStatus(s => update(s, { $set: true }));
       }
       setSynthesis(props.brick.synthesis);
     }
-  }, [props.brick])
+  }, [props.brick, loaded, locked])
 
   if (!props.brick) {
     return <PageLoader content="...Loading..." />;

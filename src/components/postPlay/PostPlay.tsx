@@ -23,10 +23,10 @@ import { AttemptAnswer, PlayAttempt } from "model/attempt";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { getHours, getMinutes, getFormattedDate } from "components/services/brickService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { Redirect } from "react-router-dom";
 
 enum BookState {
-  Closed,
-  Hovered,
+  Titles,
   QuestionPage,
 }
 
@@ -42,6 +42,8 @@ interface ProposalProps {
 }
 
 interface ProposalState {
+  closeTimeout: number;
+  bookHovered: boolean;
   bookState: BookState;
   questionIndex: number;
   animationRunning: boolean;
@@ -53,11 +55,13 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
   constructor(props: ProposalProps) {
     super(props);
     this.state = {
-      bookState: BookState.Closed,
+      bookState: BookState.Titles,
       questionIndex: 0,
       animationRunning: false,
       mode: false,
-      attempt: null
+      attempt: null,
+      closeTimeout: -1,
+      bookHovered: false
     };
 
     this.loadData();
@@ -74,10 +78,18 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
   openDialog = () => this.setState({});
   closeDialog = () => this.setState({});
 
-  onBookHover() {
-    if (this.state.bookState === BookState.Closed) {
-      this.setState({ bookState: BookState.Hovered });
+  onBookHover() { 
+    clearTimeout(this.state.closeTimeout);
+    if (!this.state.bookHovered) {
+      this.setState({ bookHovered: true });
     }
+  }
+
+  onBookClose() {
+    const closeTimeout = setTimeout(() => {
+      this.setState({ bookHovered: false });
+    }, 400);
+    this.setState({ closeTimeout });
   }
 
   moveToQuestions() {
@@ -114,15 +126,14 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
     const { brick, student, timestamp } = this.state.attempt;
 
-    const reviewCorrect = this.getAttemptStatus(this.state.attempt.answers);
-    const liveCorrect = this.getAttemptStatus(this.state.attempt.liveAnswers);
+    if (!this.state.attempt.liveAnswers) {
+      return <Redirect to="/home" />;
+    }
 
     let answers = this.state.attempt.liveAnswers;
     if (this.state.mode) {
       answers = this.state.attempt.answers;
     }
-
-    console.log(answers);
 
     if (brick.title) {
       setBrillderTitle(brick.title);
@@ -145,10 +156,12 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
 
     let bookClass = "book-main-container";
-    if (this.state.bookState === BookState.Hovered) {
-      bookClass += " expanded hovered";
-    } else if (this.state.bookState === BookState.QuestionPage) {
-      bookClass += ` expanded sheet-1`;
+    if (this.state.bookHovered) {
+      if (this.state.bookState === BookState.Titles) {
+        bookClass += " expanded hovered";
+      } else if (this.state.bookState === BookState.QuestionPage) {
+        bookClass += ` expanded question-attempt`;
+      }
     }
 
     let questions: Question[] = [];
@@ -157,8 +170,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
 
     const renderQuestionPage = (question: Question, i: number) => {
-      const parsedAnswers = JSON.parse(JSON.parse(answers[i].answer));
-      console.log(parsedAnswers, question);
+      let parsedAnswers = null;
+      try {
+        parsedAnswers = JSON.parse(JSON.parse(answers[i].answer));
+      } catch {}
+
       return (
         <div
           className={`page3 ${i === 0 ? 'first' : ''}`}
@@ -202,13 +218,16 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             <div className="col">
               <h3 className="centered">Investigation</h3>
               <div className="centered">
-                {liveCorrect
+                {this.state.attempt?.liveAnswers[i].correct
                   ? <SpriteIcon name="ok" className="text-theme-green" />
                   : <SpriteIcon name="cancel" className="text-theme-orange" />
                 }
                 {
                   this.state.mode
-                    ? <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={() => this.setState({mode: false})} />
+                    ? <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={e => {
+                        e.stopPropagation();
+                        this.setState({mode: false});
+                      }} />
                     : <SpriteIcon name="eye-on" className="text-theme-dark-blue" />
                 }
               </div>
@@ -216,14 +235,17 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             <div className="col">
               <h3 className="centered">Review</h3>
               <div className="centered">
-                {reviewCorrect
+                {this.state.attempt?.answers[i].correct
                   ? <SpriteIcon name="ok" className="text-theme-green" />
                   : <SpriteIcon name="cancel" className="text-theme-orange" />
                 }
                 {
                   this.state.mode
                     ? <SpriteIcon name="eye-on" className="text-theme-dark-blue" />
-                    : <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={() => this.setState({mode: true})} />
+                    : <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={e => {
+                        e.stopPropagation();
+                        this.setState({mode: true})
+                      }} />
                 }
               </div>
             </div>
@@ -234,7 +256,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     const getQuestionStyle = (index: number) => {
       const scale = 1.15;
-      if (this.state.bookState === BookState.QuestionPage) {
+      if (this.state.bookHovered && this.state.bookState === BookState.QuestionPage) {
         if (index === this.state.questionIndex) {
           return { transform: `rotateY(-178deg) scale(${scale})` }
         } else if (index < this.state.questionIndex) {
@@ -248,7 +270,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     const getQuestionCoverStyle = (index: number) => {
       const scale = 1.15;
-      if (this.state.bookState === BookState.QuestionPage) {
+      if (this.state.bookHovered && this.state.bookState === BookState.QuestionPage) {
         if (index === this.state.questionIndex) {
           return { transform: `rotateY(-178.1deg) scale(${scale})` }
         } else if (index < this.state.questionIndex) {
@@ -262,7 +284,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
     const getResultStyle = (index: number) => {
       const scale = 1.15;
-      if (this.state.bookState === BookState.QuestionPage) {
+      if (this.state.bookHovered && this.state.bookState === BookState.QuestionPage) {
         if (index === this.state.questionIndex) {
           return { transform: `rotateY(-4deg) scale(${scale})` }
         } else if (index < this.state.questionIndex) {
@@ -289,7 +311,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             <h2>a summary of your results.</h2>
           </Grid>
           <div className={bookClass}>
-            <div className="book-container">
+            <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>
               <div className="book" onMouseOver={this.onBookHover.bind(this)}>
                 <div className="back"></div>
                 <div className="page1">
@@ -324,13 +346,17 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                   </div>
                 </div>
                 {questions.map((q, i) => {
-                  return (
-                    <div key={i}>
-                      {i === 0 ? <div className="page3-cover first" style={getQuestionCoverStyle(i)}></div> : ""}
-                      {renderQuestionPage(q, i)}
-                      {renderAnswersPage(i)}
-                    </div>
-                  );
+                  if (i <= this.state.questionIndex + 1 && i >= this.state.questionIndex - 1) {
+                    return (
+                      <div key={i}>
+                        {i === 0 ? <div className="page3-cover first" style={getQuestionCoverStyle(i)}></div> : ""}
+                        {renderQuestionPage(q, i)}
+                        {renderAnswersPage(i)}
+                      </div>
+                    );
+                  } else {
+                    return <div key={i}></div>
+                  }
                 })}
 
                 <div className="page6"></div>
