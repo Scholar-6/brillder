@@ -45,7 +45,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   let isAdmin = checkAdmin(user.roles);
   let isEditor = false;
   try {
-    isEditor = brick.editor?.id === user.id;
+    isEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
   } catch {}
   
   let isAuthor = false;

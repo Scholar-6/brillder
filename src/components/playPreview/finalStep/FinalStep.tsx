@@ -67,8 +67,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
   } catch {}
 
   const isPublisher = checkPublisher(user, brick);
-  let isCurrentEditor = brick.editor?.id === user.id;
-  console.log('isEditor', isCurrentEditor, 'isPublisher', isPublisher, 'editor', brick.editor, 'userId', user.id);
+  let isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
   const link = `/play/brick/${brick.id}/intro`;
 
   const publish = async (brickId: number) => {
