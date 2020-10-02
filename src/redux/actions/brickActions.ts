@@ -114,12 +114,12 @@ const assignEditorFailure = (errorMessage:string) => {
   } as Action
 }
 
-const assignEditor = (brick: any) => {
+const assignEditor = (brick: any, editor: any) => {
   return function (dispatch: Dispatch) {
     brick.type = 1;
     return axios.put(
       `${process.env.REACT_APP_BACKEND_HOST}/brick/assignEditor`,
-      { brickId: brick.id, editorId: brick.editor.id }, {withCredentials: true}
+      { brickId: brick.id, editorId: editor.id }, {withCredentials: true}
     ).then(response => {
       const brick = response.data as Brick;
       dispatch(assignEditorSuccess(brick));

@@ -71,7 +71,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
 
   const isAdmin = checkAdmin(user.roles);
   const isPublisher = checkPublisher(user, brick);
-  let isCurrentEditor = brick.editor?.id === user.id;
+  let isCurrentEditor = (brick.editors?.findIndex(e => e.id === user.id) ?? -1) >= 0;
   const link = `/play/brick/${brick.id}/intro`;
 
   if (!isAuthor && !isCurrentEditor && !isPublisher) {
