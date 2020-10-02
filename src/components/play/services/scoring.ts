@@ -31,6 +31,8 @@ export const scoreFunctions: ScoreFunctionMap = {
 
 export const mark = <C extends QuestionComponent, A>(questionType: QuestionTypeEnum, component: C, attempt: ComponentAttempt<A>) => {
   const scoreFunction = scoreFunctions[questionType];
+
+  console.log(attempt);
   
   if(scoreFunction) {
     return scoreFunction(component, attempt);
@@ -60,6 +62,5 @@ export const calcBrickLiveAttempt = (brick: Brick, answers: ComponentAttempt<any
 export const calcBrickReviewAttempt = (brick: Brick, answers: ComponentAttempt<any>[], brickAttempt: BrickAttempt) => {
   let score = getScore(answers);
   let maxScore = getMaxScore(answers);
-  console.log(score);
   return { brick, score, oldScore: brickAttempt.score, maxScore, student: null, answers, liveAnswers: brickAttempt.answers } as BrickAttempt;
 }
