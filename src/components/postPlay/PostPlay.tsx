@@ -227,7 +227,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 }
                 {
                   this.state.mode
-                    ? <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={() => this.setState({mode: false})} />
+                    ? <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={e => {
+                        e.stopPropagation();
+                        this.setState({mode: false});
+                      }} />
                     : <SpriteIcon name="eye-on" className="text-theme-dark-blue" />
                 }
               </div>
@@ -242,7 +245,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 {
                   this.state.mode
                     ? <SpriteIcon name="eye-on" className="text-theme-dark-blue" />
-                    : <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={() => this.setState({mode: true})} />
+                    : <SpriteIcon name="eye-off" className="text-tab-gray active" onClick={e => {
+                        e.stopPropagation();
+                        this.setState({mode: true})
+                      }} />
                 }
               </div>
             </div>
