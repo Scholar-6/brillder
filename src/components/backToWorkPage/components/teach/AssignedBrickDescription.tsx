@@ -6,6 +6,7 @@ import { TeachClassroom, Assignment, StudentStatus } from "model/classroom";
 import { Subject } from "model/brick";
 import { getFormattedDate } from "components/services/brickService";
 import { getSubjectColor } from "components/services/subject";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface AssignedDescriptionProps {
   subjects: Subject[];
@@ -39,10 +40,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
         <div className="brick-top" style={{ background: color }}></div>
         <div className="brick-top-middle" style={{ background: color }}></div>
         <div className="brick-middle" style={{ background: color }}>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + (isExpanded ? "#minimize" : "#maximize")} />
-          </svg>
+          <SpriteIcon name={isExpanded ? "minimize" : "maximize")} className="active" />
         </div>
         <div className="brick-bottom-middle" style={{ background: color }}></div>
         <div className="brick-bottom" style={{ background: color }}></div>
@@ -54,12 +52,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
   renderStatus(studentStatus: StudentStatus[]) {
     let {length} = this.props.classroom.students;
     if (length !== studentStatus.length) {
-      return (
-        <svg className="svg active reminder-icon">
-          {/*eslint-disable-next-line*/}
-          <use href={sprite + "#reminder"} />
-        </svg>
-      );
+      return <SpriteIcon name="reminder" className="active reminder-icon" />;
     }
   }
 
@@ -105,9 +98,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps> {
         <div className="assignment-second-part">
           <div className="users-complete-count">
             <span>{second}/{studentsCount}</span>
-            <svg className="svg active">
-              <use href={sprite + "#users"} className="text-theme-dark-blue" />
-            </svg>
+            <SpriteIcon name="users" className="text-theme-dark-blue" />
           </div>
           <div className="average">
             Avg: {average}
