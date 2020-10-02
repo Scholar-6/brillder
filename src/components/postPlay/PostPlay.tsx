@@ -23,6 +23,7 @@ import { AttemptAnswer, PlayAttempt } from "model/attempt";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { getHours, getMinutes, getFormattedDate } from "components/services/brickService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { Redirect } from "react-router-dom";
 
 enum BookState {
   Closed,
@@ -113,6 +114,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       return <PageLoader content="...Getting Attempt..." />;
     }
     const { brick, student, timestamp } = this.state.attempt;
+
+    if (!this.state.attempt.liveAnswers) {
+      return <Redirect to="/home" />;
+    }
 
     const reviewCorrect = this.getAttemptStatus(this.state.attempt.answers);
     const liveCorrect = this.getAttemptStatus(this.state.attempt.liveAnswers);
