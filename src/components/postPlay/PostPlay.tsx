@@ -344,7 +344,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 </div>
                 {questions.map((q, i) => {
                   if (i <= this.state.questionIndex + 1 && i >= this.state.questionIndex - 1) {
-                    console.log(i);
                     return (
                       <div key={i}>
                         {i === 0 ? <div className="page3-cover first" style={getQuestionCoverStyle(i)}></div> : ""}
