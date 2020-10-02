@@ -130,9 +130,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       return <Redirect to="/home" />;
     }
 
-    const reviewCorrect = this.getAttemptStatus(this.state.attempt.answers);
-    const liveCorrect = this.getAttemptStatus(this.state.attempt.liveAnswers);
-
     let answers = this.state.attempt.liveAnswers;
     if (this.state.mode) {
       answers = this.state.attempt.answers;
