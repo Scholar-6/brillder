@@ -10,6 +10,7 @@ import { getSubjectColor } from "components/services/subject";
 import AssignedBrickDescription from "./AssignedBrickDescription";
 import { ApiAssignemntStats, AssignmentStudent } from "model/stats";
 import map from "components/map";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 enum SortBy {
   None,
@@ -70,33 +71,21 @@ class ExpandedAssignment extends Component<
     if (studentStatus) {
       return this.renderAvgScore(studentStatus);
     }
-    return (
-      <svg className="svg active reminder-icon">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#reminder"} />
-      </svg>
-    );
+    return <SpriteIcon name="reminder" className="active reminder-icon" />;
   }
 
   renderCommentIcon() {
-    return (
-      <svg className="svg active comment-icon">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#message-square"} />
-      </svg>
-    );
+    return <SpriteIcon name="message-square" className="active comment-icon" />;
   }
 
   renderBookIcon(studentId: number) {
     const {history, assignment} = this.props;
     return (
-      <svg
-        className="svg active book-open-icon"
+      <SpriteIcon
+        name="book-open"
+        className="active book-open-icon"
         onClick={() => history.push(map.postPlay(assignment.brick.id, studentId))}
-      >
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#book-open"} />
-      </svg>
+      />
     );
   }
 
@@ -108,11 +97,7 @@ class ExpandedAssignment extends Component<
     if (studentResult && studentStatus) {
       const attempt = studentResult.attempts[0].answers[questionNumber];
       if (attempt.correct === true) {
-        return (
-          <svg>
-            <use href={sprite + "#check-icon-thin"} className="text-theme-green" />
-          </svg>
-        );
+        return <SpriteIcon name="check-icon-thin" className="text-theme-green" />;
       }
       if (attempt.marks < 3) {
         return (
@@ -122,24 +107,12 @@ class ExpandedAssignment extends Component<
         );
       }
       if (attempt.marks >= attempt.maxMarks) {
-        return (
-          <svg>
-            <use href={sprite + "#check-icon-thin"} className="text-theme-green" />
-          </svg>
-        );
+        return <SpriteIcon name="check-icon-thin" className="text-theme-green" />;
       }
       if (attempt.marks < 5) {
-        return (
-          <svg>
-            <use href={sprite + "#cancel"} className="text-yellow" />
-          </svg>
-        );
+        return <SpriteIcon name="cancel" className="text-yellow" />;
       }
-      return (
-        <svg>
-          <use href={sprite + "#check-icon-thin"} className="text-yellow" />
-        </svg>
-      );
+      return <SpriteIcon name="check-icon-thin" className="text-yellow" />;
     }
     return "";
   }
@@ -194,18 +167,14 @@ class ExpandedAssignment extends Component<
                 className="btn btn-transparent svgOnHover btn-grey-circle"
                 onClick={() => this.setState({ sortBy: SortBy.AvgDecreasing })}
               >
-                <svg className="svg active">
-                  <use href={sprite + "#arrow-down"} className="text-theme-dark-blue" />
-                </svg>
+                <SpriteIcon name="arrow-down" className="active text-theme-dark-blue" />
               </button>
             </div>
           </th>
           <th>
             <div className="center">
               <button className="btn btn-transparent svgOnHover btn-grey-circle">
-                <svg className="svg active">
-                  <use href={sprite + "#arrow-right"} className="text-theme-dark-blue" />
-                </svg>
+                <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
               </button>
             </div>
           </th>
