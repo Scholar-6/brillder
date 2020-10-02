@@ -176,15 +176,15 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
                   {this.renderEditButton()}
                 </Grid>
                 <p className="text-title">2. Ideally, every brick should point to a bigger question.</p>
-                <div className="proposal-text">
+                <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
                   {this.renderEditableField(BrickFieldNames.openQuestion)}
                 </div>
                 <p className="text-title">3. Outline the purpose of your brick.</p>
-                <div className="proposal-text">
+                <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
                   {this.renderMathField(BrickFieldNames.brief)}
                 </div>
                 <p className="text-title">4. Create an engaging and relevant preparatory task.</p>
-                <div className="proposal-text">
+                <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
                   {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
                 </div>
                 <p className="text-title brick-length">
