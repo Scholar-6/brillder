@@ -7,6 +7,15 @@
   width: 100%;
   .ck-toolbar {
     width: calc(100% - 2vw) !important;
+    .ck.ck-toolbar__items {
+      .ck-button {
+        $size: 1.56vw;
+        height: $size;
+        width: $size;
+        min-width: $size;
+        max-width: $size;
+      }
+    }
   }
   .ck-editor {
     width: 100% !important;

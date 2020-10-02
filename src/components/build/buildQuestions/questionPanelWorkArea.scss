@@ -23,6 +23,17 @@
     margin: 0;
   }
 
+  .help-arrow-text {
+    position: absolute;
+    top: calc(10vh - 2vw);
+    left: 8.2vw;
+    width: 7vw;
+    color: var(--theme-orange);
+    text-align: center;
+    font-family: $font-family-regular;
+    font-size: 1.2vw;
+  }
+
   .help-arrow {
     position: absolute;
     top: 10vh;
