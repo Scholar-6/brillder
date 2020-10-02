@@ -8,7 +8,14 @@ class CompComponent<Props extends CompQuestionProps, State> extends React.Compon
   getAnswer() { };
 
   getAttempt(isReview: boolean): ComponentAttempt<any> {
-    let att = this.mark(this.props.component, { answer: this.getAnswer(), attempted: true, correct: false, marks: 0, maxMarks: 0 });
+    let att = this.mark(this.props.component, {
+      answer: this.getAnswer(),
+      attempted: true,
+      correct: false,
+      marks: 0, 
+      maxMarks: 0,
+      questionId: this.props.question.id
+    });
 
     if (att.correct === true) {
       if (isReview) {
@@ -26,7 +33,7 @@ class CompComponent<Props extends CompQuestionProps, State> extends React.Compon
   }
 
   mark(component: any, attempt: ComponentAttempt<any>) {
-    console.log("marking...");
+    console.log(attempt);
     this.prepareAttempt(component, attempt);
     return markAttempt(this.props.question.type, component, attempt);
   }
