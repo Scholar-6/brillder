@@ -31,6 +31,8 @@
     left: 14vw;
     color: var(--theme-dark-blue);
 
+    transition: all 1s ease-out;
+
     h1 {
       font-weight: normal !important;
       font-family: $font-family-black;
@@ -124,6 +126,12 @@
       position: relative;
       height: 63.6vh;
       backface-visibility: visible;
+      transition: all 1s ease-in-out;
+
+      &.flat {
+        margin-top: 10vh;
+        height: 74vh;
+      }
     }
 
     .front,
@@ -143,6 +151,7 @@
       left: 0;
       transform-origin: left center;
       transition: transform 1s ease-in-out, box-shadow 0.7s ease-in-out;
+      transition: all 1s ease-out;
     }
 
     .front,
@@ -404,15 +413,19 @@
 
   .book.flat {
     .front, .page3 {
+      width: 135%;
       transform: rotateY(-180deg) scale($scale);
     }
     .page5 {
+      width: 135%;
       transform: rotateY(-178deg) scale($scale);
     }
     .page6 {
+      width: 135%;
       transform: rotateY(-4deg) scale($scale);
     }
     .page4, .page2, .back {
+      width: 135%;
       transform: rotateY(0deg) scale($scale);
     }
   }

@@ -235,7 +235,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           <Grid className="back-button-container" container alignContent="center">
             <div className="back-button" onClick={() => this.props.history.push(map.ProposalPrep)} />
           </Grid>
-          <Grid className="main-text-container">
+          <Grid className="main-text-container" style={{opacity: this.state.mode === true ? '0' : '1'}}>
             <h1>Your proposal has been saved!</h1>
             <h1>We've made a booklet for you</h1>
             <h1>to check all is in order.</h1>
@@ -249,7 +249,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
             <div className="book-container" onMouseOut={() => this.onBookClose()}>
               {renderBook()}
             </div>
-            <Grid className="next-button-container" container alignContent="center">
+            <Grid className="next-button-container" container onMouseOver={() => this.onBookHover()} alignContent="center">
               {
                 this.state.bookHovered ? (
                   <div>
