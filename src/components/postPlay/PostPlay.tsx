@@ -138,8 +138,6 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       answers = this.state.attempt.answers;
     }
 
-    console.log(answers);
-
     if (brick.title) {
       setBrillderTitle(brick.title);
     }
@@ -175,8 +173,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
 
     const renderQuestionPage = (question: Question, i: number) => {
-      const parsedAnswers = JSON.parse(JSON.parse(answers[i].answer));
-      console.log(parsedAnswers, question);
+      let parsedAnswers = null;
+      try {
+        parsedAnswers = JSON.parse(JSON.parse(answers[i].answer));
+      } catch {}
+
       return (
         <div
           className={`page3 ${i === 0 ? 'first' : ''}`}
@@ -342,13 +343,18 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                   </div>
                 </div>
                 {questions.map((q, i) => {
-                  return (
-                    <div key={i}>
-                      {i === 0 ? <div className="page3-cover first" style={getQuestionCoverStyle(i)}></div> : ""}
-                      {renderQuestionPage(q, i)}
-                      {renderAnswersPage(i)}
-                    </div>
-                  );
+                  if (i <= this.state.questionIndex + 1 && i >= this.state.questionIndex - 1) {
+                    console.log(i);
+                    return (
+                      <div key={i}>
+                        {i === 0 ? <div className="page3-cover first" style={getQuestionCoverStyle(i)}></div> : ""}
+                        {renderQuestionPage(q, i)}
+                        {renderAnswersPage(i)}
+                      </div>
+                    );
+                  } else {
+                    return <div key={i}></div>
+                  }
                 })}
 
                 <div className="page6"></div>
