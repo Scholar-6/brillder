@@ -117,6 +117,25 @@ export const deleteComment = async (brickId: number, commentId: number) => {
   }
 }
 
+export const returnToAuthor = async (brickId: number) => {
+  try {
+    await post<Brick>(`/brick/returnToAuthor`, { brickId });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export const returnToEditor = async (brickId: number) => {
+  try {
+    await post<any>(`/brick/returnToEditor`, { brickId });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+
 export default {
   sendToPublisher
 }

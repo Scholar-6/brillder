@@ -25,6 +25,7 @@ const fetchBrick = (id: number) => {
       .then(res => {
         let brick = res.data as Brick;
         brick.questions.sort((q1, q2) => q1.order - q2.order);
+        console.log('fetch brick success');
         dispatch(fetchBrickSuccess(brick));
         dispatch(comments.getComments(brick.id));
       })
