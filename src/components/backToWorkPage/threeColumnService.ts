@@ -38,7 +38,7 @@ export const getThreeColumnName = (status: BrickStatus) => {
   let name = ThreeColumnNames.Red;
   if (status === BrickStatus.Publish) {
     name = ThreeColumnNames.Green;
-  } else if (status === BrickStatus.Review) {
+  } else if (status === BrickStatus.Review || status === BrickStatus.Build) {
     name = ThreeColumnNames.Yellow;
   }
   return name;
