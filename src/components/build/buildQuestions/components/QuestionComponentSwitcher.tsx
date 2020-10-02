@@ -89,7 +89,7 @@ const SwitchQuestionComponent: React.FC<SwitchQuestionProps> = ({
             validationRequired={validationRequired}
             updateComponent={updateComponent}
             openSameAnswerDialog={props.openSameAnswerDialog}
-          />/
+          />
           <HintComponent
             index={props.questionIndex}
             status={hint.status}
