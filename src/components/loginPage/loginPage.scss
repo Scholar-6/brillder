@@ -174,11 +174,12 @@
 
 .mobile-button-box {
   @include phone_and_tabletP {
+    $margin-top: 34px;
     background-color: $button-box;
     border-top-right-radius: 10vw;
     overflow: hidden;
-    margin-top: 34px;
-    height: calc(58% - 60px);
+    margin-top: $margin-top;
+    height: calc(58% - 60px - #{$margin-top});
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-end;
