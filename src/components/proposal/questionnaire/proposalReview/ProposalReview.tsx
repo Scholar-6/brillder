@@ -165,6 +165,69 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       );
     }
 
+    const renderBook = () => {
+      return (
+        <div className={`book ${this.state.mode === true ? 'flat' : ''}`} onMouseOver={() => this.onBookHover()}>
+          <div className="back"></div>
+          <div className="page6">
+            <div className="normal-page">
+              <div className="normal-page-container">
+                <Grid container justify="center">
+                  {this.renderEditButton()}
+                </Grid>
+                <p className="text-title">2. Ideally, every brick should point to a bigger question.</p>
+                <div className="proposal-text">
+                  {this.renderEditableField(BrickFieldNames.openQuestion)}
+                </div>
+                <p className="text-title">3. Outline the purpose of your brick.</p>
+                <div className="proposal-text">
+                  {this.renderMathField(BrickFieldNames.brief)}
+                </div>
+                <p className="text-title">4. Create an engaging and relevant preparatory task.</p>
+                <div className="proposal-text">
+                  {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
+                </div>
+                <p className="text-title brick-length">
+                  5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="page5">
+            <div className="flipped-page">
+              <Grid container justify="center">
+                <FiberManualRecordIcon className="circle-icon" />
+              </Grid>
+              <div className="proposal-titles">
+                <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
+                <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
+                <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
+              </div>
+            </div>
+          </div>
+          <div className="page4"></div>
+          <div className="page3"></div>
+          <div className="page2"></div>
+          <div className="front">
+            <div className="page-stitch">
+              <div className="vertical-line"></div>
+              <div className="horizontal-line top-line-1"></div>
+              <div className="horizontal-line top-line-2"></div>
+              <div className="horizontal-line bottom-line-1"></div>
+              <div className="horizontal-line bottom-line-2"></div>
+            </div>
+            <Grid container justify="center" alignContent="center" style={{ height: '100%' }}>
+              <div>
+                <img alt="" src="/images/choose-login/logo.png" />
+                <div className="white-text">PROPOSAL</div>
+                {renderAuthorRow()}
+              </div>
+            </Grid>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="proposal-page">
         {renderPlayButton()}
@@ -184,64 +247,7 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           </Grid>
           <div className={`book-main-container ${this.state.bookHovered ? 'hovered' : ''}`}>
             <div className="book-container" onMouseOut={() => this.onBookClose()}>
-              <div className={`book ${this.state.mode === true ? 'flat' : ''}`} onMouseOver={() => this.onBookHover()}>
-                <div className="back"></div>
-                <div className="page6">
-                  <div className="normal-page">
-                    <div className="normal-page-container">
-                      <Grid container justify="center">
-                        {this.renderEditButton()}
-                      </Grid>
-                      <p className="text-title">2. Ideally, every brick should point to a bigger question.</p>
-                      <div className="proposal-text">
-                        {this.renderEditableField(BrickFieldNames.openQuestion)}
-                      </div>
-                      <p className="text-title">3. Outline the purpose of your brick.</p>
-                      <div className="proposal-text">
-                        {this.renderMathField(BrickFieldNames.brief)}
-                      </div>
-                      <p className="text-title">4. Create an engaging and relevant preparatory task.</p>
-                      <div className="proposal-text">
-                        {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
-                      </div>
-                      <p className="text-title brick-length">
-                        5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="page5">
-                  <div className="flipped-page">
-                    <Grid container justify="center">
-                      <FiberManualRecordIcon className="circle-icon" />
-                    </Grid>
-                    <div className="proposal-titles">
-                      <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
-                      <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
-                      <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="page4"></div>
-                <div className="page3"></div>
-                <div className="page2"></div>
-                <div className="front">
-                  <div className="page-stitch">
-                    <div className="vertical-line"></div>
-                    <div className="horizontal-line top-line-1"></div>
-                    <div className="horizontal-line top-line-2"></div>
-                    <div className="horizontal-line bottom-line-1"></div>
-                    <div className="horizontal-line bottom-line-2"></div>
-                  </div>
-                  <Grid container justify="center" alignContent="center" style={{ height: '100%' }}>
-                    <div>
-                      <img alt="" src="/images/choose-login/logo.png" />
-                      <div className="white-text">PROPOSAL</div>
-                      {renderAuthorRow()}
-                    </div>
-                  </Grid>
-                </div>
-              </div>
+              {renderBook()}
             </div>
             <Grid className="next-button-container" container alignContent="center">
               {
