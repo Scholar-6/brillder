@@ -238,7 +238,6 @@ const mapState = (state: ReduxCombinedState) => ({
 const mapDispatch = (dispatch: any) => ({
   saveBrick: (brick: any) => dispatch(actions.saveBrick(brick)),
   createBrick: (brick: any) => dispatch(actions.createBrick(brick)),
-  assignEditor: (brick: any) => dispatch(actions.assignEditor(brick)),
 });
 
 const connector = connect(mapState, mapDispatch);
