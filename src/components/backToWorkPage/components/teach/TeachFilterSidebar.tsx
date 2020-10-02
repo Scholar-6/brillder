@@ -3,7 +3,7 @@ import { Grid, FormControlLabel, Radio } from "@material-ui/core";
 
 import { TeachClassroom } from "model/classroom";
 import { TeachFilters } from '../../model';
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 enum TeachFilterFields {
   Assigned = 'assigned',
@@ -81,17 +81,11 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
         <div className={"index-box " + (c.active ? "active" : "")} onClick={() => this.toggleClassroom(c)}>
           <div className="classroom-name svgOnHover">
             <span>{c.name}</span>
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + (c.active ? "#arrow-down" : "#arrow-right")} />
-            </svg>
+            <SpriteIcon name={c.active ? "arrow-down" : "arrow-right"} className="active" />
           </div>
           <div className="right-index">
             {c.students.length}
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#users"} />
-            </svg>
+            <SpriteIcon name="users" className="active" />
             <div className="white-box">
               {c.assignments.length}
             </div>
@@ -128,10 +122,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
             View All Classes
             <div className="right-index">
               {totalCount}
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#users"} />
-              </svg>
+              <SpriteIcon name="users" className="active" />
               <div className="white-box">
                 {totalBricks}
               </div>

@@ -116,7 +116,7 @@ class FilterSidebar extends Component<FilterSidebarProps, FilterSidebarState> {
     }
 
     for (let b of this.props.rawBricks) {
-      if (b.status === BrickStatus.Review) {
+      if (b.status === BrickStatus.Review || b.status === BrickStatus.Build) {
         review += 1;
       }
     }

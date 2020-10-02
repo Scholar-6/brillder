@@ -2,7 +2,6 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { History } from 'history';
-import sprite from "assets/img/icons-sprite.svg";
 
 import './ProposalReview.scss';
 import { Brick } from "model/brick";
@@ -15,6 +14,7 @@ import YoutubeAndMathInHtml from "components/play/baseComponents/YoutubeAndMath"
 import { BrickFieldNames, PlayButtonStatus } from '../../model';
 import map from 'components/map';
 import PlayButton from "components/build/baseComponents/PlayButton";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface ProposalProps {
@@ -29,6 +29,7 @@ interface ProposalProps {
 
 interface ProposalState {
   bookHovered: boolean;
+  closeTimeout: number;
   mode: boolean; // true - edit mode, false - view mode
 }
 
@@ -37,12 +38,25 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     super(props);
     this.state = {
       mode: false,
-      bookHovered: false
+      bookHovered: false,
+      closeTimeout: -1
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.state.closeTimeout);
+  }
+
   onBookHover() { 
-    setTimeout(() => this.setState({ bookHovered: true }), 200);
+    clearTimeout(this.state.closeTimeout);
+    this.setState({ bookHovered: true });
+  }
+
+  onBookClose() {
+    const closeTimeout = setTimeout(() => {
+      this.setState({ bookHovered: false, mode: false });
+    }, 400);
+    this.setState({ closeTimeout });
   }
 
   switchMode() {
@@ -56,18 +70,13 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
     if (this.state.mode) {
       className += " active";
     }
-    return <button onClick={() => this.switchMode()} className={"btn btn-transparent svgOnHover " + className}>
-      <svg className="svg w100 h100 active">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#edit-outline"} />
-      </svg>
-    </button>;
+    return <SpriteIcon onClick={() => this.switchMode()} name="edit-outline" className={className} />;
   }
 
   renderEditableField(name: BrickFieldNames) {
     const { brick } = this.props;
     if (this.state.mode) {
-      return <input onChange={e => this.props.setBrickField(name, e.target.value)} value={brick[name]} />
+      return <input onChange={e => this.props.setBrickField(name, e.target.value)} value={brick[name]} />;
     }
     return brick[name];
   }
@@ -156,6 +165,69 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
       );
     }
 
+    const renderBook = () => {
+      return (
+        <div className={`book ${this.state.mode === true ? 'flat' : ''}`} onMouseOver={() => this.onBookHover()}>
+          <div className="back"></div>
+          <div className="page6">
+            <div className="normal-page">
+              <div className="normal-page-container">
+                <Grid container justify="center">
+                  {this.renderEditButton()}
+                </Grid>
+                <p className="text-title">2. Ideally, every brick should point to a bigger question.</p>
+                <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
+                  {this.renderEditableField(BrickFieldNames.openQuestion)}
+                </div>
+                <p className="text-title">3. Outline the purpose of your brick.</p>
+                <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
+                  {this.renderMathField(BrickFieldNames.brief)}
+                </div>
+                <p className="text-title">4. Create an engaging and relevant preparatory task.</p>
+                <div className={`proposal-text ${this.state.mode ? 'edit-mode' : ''}`}>
+                  {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
+                </div>
+                <p className="text-title brick-length">
+                  5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="page5">
+            <div className="flipped-page">
+              <Grid container justify="center">
+                <FiberManualRecordIcon className="circle-icon" />
+              </Grid>
+              <div className="proposal-titles">
+                <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
+                <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
+                <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
+              </div>
+            </div>
+          </div>
+          <div className="page4"></div>
+          <div className="page3"></div>
+          <div className="page2"></div>
+          <div className="front">
+            <div className="page-stitch">
+              <div className="vertical-line"></div>
+              <div className="horizontal-line top-line-1"></div>
+              <div className="horizontal-line top-line-2"></div>
+              <div className="horizontal-line bottom-line-1"></div>
+              <div className="horizontal-line bottom-line-2"></div>
+            </div>
+            <Grid container justify="center" alignContent="center" style={{ height: '100%' }}>
+              <div>
+                <img alt="" src="/images/choose-login/logo.png" />
+                <div className="white-text">PROPOSAL</div>
+                {renderAuthorRow()}
+              </div>
+            </Grid>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="proposal-page">
         {renderPlayButton()}
@@ -163,78 +235,21 @@ class ProposalReview extends React.Component<ProposalProps, ProposalState> {
           <Grid className="back-button-container" container alignContent="center">
             <div className="back-button" onClick={() => this.props.history.push(map.ProposalPrep)} />
           </Grid>
-          <Grid className="main-text-container">
+          <Grid className="main-text-container" style={{opacity: this.state.mode === true ? '0' : '1'}}>
             <h1>Your proposal has been saved!</h1>
             <h1>We've made a booklet for you</h1>
             <h1>to check all is in order.</h1>
             <div className="text-line-1"></div>
             <h2>Slide your mouse over the cover to</h2>
-            <h2>open it. &nbsp;Click back to edit.</h2>
+            <h2>open it. &nbsp;Click the icon at the top of the page to edit.</h2>
             <div className="text-line-2"></div>
             <h2>When you're ready, start building!</h2>
           </Grid>
           <div className={`book-main-container ${this.state.bookHovered ? 'hovered' : ''}`}>
-            <div className="book-container">
-              <div className={`book ${this.state.mode === true ? 'flat' : ''}`} onMouseOver={() => this.onBookHover()}>
-                <div className="back"></div>
-                <div className="page6">
-                  <div className="normal-page">
-                    <div className="normal-page-container">
-                      <Grid container justify="center">
-                        {this.renderEditButton()}
-                      </Grid>
-                      <p className="text-title">2. Ideally, every brick should point to a bigger question.</p>
-                      <div className="proposal-text">
-                        {this.renderEditableField(BrickFieldNames.openQuestion)}
-                      </div>
-                      <p className="text-title">3. Outline the purpose of your brick.</p>
-                      <div className="proposal-text">
-                        {this.renderMathField(BrickFieldNames.brief)}
-                      </div>
-                      <p className="text-title">4. Create an engaging and relevant preparatory task.</p>
-                      <div className="proposal-text">
-                        {this.renderYoutubeAndMathField(BrickFieldNames.prep)}
-                      </div>
-                      <p className="text-title brick-length">
-                        5. Brick Length: <span className="brickLength">{brick.brickLength} mins.</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="page5">
-                  <div className="flipped-page">
-                    <Grid container justify="center">
-                      <FiberManualRecordIcon className="circle-icon" />
-                    </Grid>
-                    <div className="proposal-titles">
-                      <div className="title">{this.renderEditableField(BrickFieldNames.title)}</div>
-                      <div>{this.renderEditableField(BrickFieldNames.subTopic)}</div>
-                      <div>{this.renderEditableField(BrickFieldNames.alternativeTopics)}</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="page4"></div>
-                <div className="page3"></div>
-                <div className="page2"></div>
-                <div className="front">
-                  <div className="page-stitch">
-                    <div className="vertical-line"></div>
-                    <div className="horizontal-line top-line-1"></div>
-                    <div className="horizontal-line top-line-2"></div>
-                    <div className="horizontal-line bottom-line-1"></div>
-                    <div className="horizontal-line bottom-line-2"></div>
-                  </div>
-                  <Grid container justify="center" alignContent="center" style={{ height: '100%' }}>
-                    <div>
-                      <img alt="" src="/images/choose-login/logo.png" />
-                      <div className="white-text">PROPOSAL</div>
-                      {renderAuthorRow()}
-                    </div>
-                  </Grid>
-                </div>
-              </div>
+            <div className="book-container" onMouseOut={() => this.onBookClose()}>
+              {renderBook()}
             </div>
-            <Grid className="next-button-container" container alignContent="center">
+            <Grid className="next-button-container" container onMouseOver={() => this.onBookHover()} alignContent="center">
               {
                 this.state.bookHovered ? (
                   <div>

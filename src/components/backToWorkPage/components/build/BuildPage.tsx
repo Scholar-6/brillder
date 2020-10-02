@@ -11,6 +11,7 @@ import { User } from "model/user";
 import { checkAdmin, checkTeacher, checkEditor } from "components/services/brickService";
 import { ThreeColumns, Filters, SortBy } from '../../model';
 import { getBricks, searchBricks, getCurrentUserBricks } from "components/services/axios/brick";
+import { Notification } from 'model/notifications';
 import {
   filterByStatus, filterBricks, removeInboxFilters, removeAllFilters,
   removeBrickFromLists, sortBricks, hideBricks, expandBrick
@@ -38,6 +39,7 @@ interface BuildProps {
   setTab(t: ActiveTab): void;
 
   // redux
+  notifications: Notification[] | null;
   requestFailed(e: string): void;
 }
 
@@ -116,6 +118,17 @@ class BuildPage extends Component<BuildProps, BuildState> {
     this.getBricks();
   }
 
+  // load bricks when notification come
+  componentDidUpdate(prevProps: BuildProps) {
+    const {notifications} = this.props;
+    const oldNotifications = prevProps.notifications;
+    if (notifications && oldNotifications) {
+      if (notifications.length > oldNotifications.length) {
+        this.getBricks();
+      }
+    }
+  }
+
   componentWillReceiveProps(nextProps: BuildProps) {
     if (nextProps.isSearching) {
       searchBricks(nextProps.searchString).then(bricks => {
@@ -142,7 +155,7 @@ class BuildPage extends Component<BuildProps, BuildState> {
       getBricks().then(bricks => {
         if (bricks) {
           let bs = bricks.sort((a, b) => (new Date(b.updated).getTime() < new Date(a.updated).getTime()) ? -1 : 1);
-          bs = bs.sort(b => (b.editor && b.editor.id === this.props.user.id) ? -1 : 1);
+          bs = bs.sort(b => (b.editors && b.editors.find(e => e.id === this.props.user.id)) ? -1 : 1);
           bs = bs.sort((a, b) => (b.hasNotifications === true && new Date(b.updated).getTime() > new Date(a.updated).getTime()) ? -1 : 1);
           this.setBricks(bs);
         } else {
@@ -434,7 +447,10 @@ class BuildPage extends Component<BuildProps, BuildState> {
   }
 }
 
-const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+  notifications: state.notifications.notifications
+});
 
 const mapDispatch = (dispatch: any) => ({
   requestFailed: (e: string) => dispatch(actions.requestFailed(e))

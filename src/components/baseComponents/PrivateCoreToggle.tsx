@@ -45,12 +45,12 @@ const PrivateCoreToggle: React.FC<ToggleProps> = props => {
   return (
     <div className="private-core-toggle">
       <button className="btn btn btn-transparent ">
-        <span className={isCore ? 'bold' : 'regular'}>Core</span>
+        <span className={isCore ? 'bold' : 'regular'}>Public</span>
         <div className="svgOnHover" onClick={props.onSwitch}>
           {renderCoreIcon()}
           {renderPrivateIcon()}
         </div>
-        <span className={!isCore ? 'bold' : 'regular'}>Private</span>
+        <span className={!isCore ? 'bold' : 'regular'}>Personal</span>
       </button>
     </div>
   );

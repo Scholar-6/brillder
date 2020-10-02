@@ -34,10 +34,10 @@ interface BuildBricksProps {
 class BuildBricks extends Component<BuildBricksProps> {
   renderGroupedBricks = (data: any[]) => {
     return data.map(item => {
-      const {brick} = item;
+      const {brick}: {brick: Brick} = item;
       let circleIcon = '';
       let iconColor = '';
-      if (brick.editor && brick.editor.id === this.props.user.id) {
+      if (brick.editors && brick.editors.findIndex(e => e.id === this.props.user.id) >= 0) {
         circleIcon="edit-outline";
         iconColor = 'text-theme-dark-blue';
       }

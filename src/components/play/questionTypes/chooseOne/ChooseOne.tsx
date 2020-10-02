@@ -31,15 +31,28 @@ interface ChooseOneState {
 class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   constructor(props: ChooseOneProps) {
     super(props);
+    const activeItem = this.getActiveItem(props);
+    this.state = { activeItem };
+  }
 
+  getActiveItem(props: ChooseOneProps) {
     let activeItem = -1;
     if (props.answers >= 0) {
       activeItem = props.answers;
     } else if (props.attempt && props.attempt.answer >= 0) {
       activeItem = props.attempt.answer;
     }
+    return activeItem;
+  }
 
-    this.state = { activeItem };
+  componentDidUpdate(prevProp: ChooseOneProps) {
+    if (this.props.isBookPreview) {
+      if (this.props.answers !== prevProp.answers) {
+        console.log(this.props.attempt);
+        const activeItem = this.getActiveItem(this.props);
+        this.setState({activeItem});
+      }
+    }
   }
 
   setActiveItem(activeItem: number) {
@@ -84,8 +97,34 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       className += " active";
     }
 
+    if (choice.answerType === QuestionValueType.Image) {
+      className += " image-choice";
+    }
+
+    // book preview
+    if (this.props.isBookPreview) {
+      if (index === activeItem) {
+        if (isCorrect) {
+          className += " correct";
+        } else if (isCorrect === false) {
+          className += " wrong";
+        }
+      }
+      return (
+        <Button className={className} key={index}>
+          {this.renderData(choice)}
+          <ReviewEachHint
+            isPhonePreview={this.props.isPreview}
+            isReview={this.props.isReview}
+            isCorrect={isCorrect}
+            index={index}
+            hint={this.props.question.hint}
+          />
+        </Button>
+      );
+    }
     // if review show correct or wrong else just make answers active
-    if (attempt && index === activeItem) {
+    else if (attempt && index === activeItem) {
       let { answer } = attempt;
       if (answer >= 0 && answer === index) {
         if (this.props.isReview) {
@@ -98,10 +137,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       } else {
         className += " active";
       }
-    }
-
-    if (choice.answerType === QuestionValueType.Image) {
-      className += " image-choice";
     }
 
     return (

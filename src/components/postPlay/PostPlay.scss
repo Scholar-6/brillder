@@ -422,7 +422,7 @@
       }
     }
 
-    &.sheet-1 {
+    &.question-attempt {
       .front {
         transform: rotateY(-181deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
@@ -481,6 +481,9 @@
       .back {
         transform: rotateY(0.5deg) scale($scale);
       }
+    }
+    .wrong {
+      background: var(--theme-orange) !important;
     }
   }
   //#endregion

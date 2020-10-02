@@ -5,6 +5,7 @@ import { Action, Dispatch } from 'redux';
 
 import {LoginModel} from 'model/auth';
 import { socketLogout } from './socket';
+import notificationActions from './notifications';
 
 const loginSuccess = () => {
   return { type: types.LOGIN_SUCCESS } as Action
@@ -75,6 +76,7 @@ const logout = () => {
       if (data === "OK") {
         dispatch(logoutSuccess());
         dispatch(socketLogout());
+        dispatch(notificationActions.notificationReset());
         return;
       }
       let {msg} = data;
