@@ -221,7 +221,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             <div className="col">
               <h3 className="centered">Investigation</h3>
               <div className="centered">
-                {liveCorrect
+                {this.state.attempt?.liveAnswers[i].correct
                   ? <SpriteIcon name="ok" className="text-theme-green" />
                   : <SpriteIcon name="cancel" className="text-theme-orange" />
                 }
@@ -238,7 +238,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             <div className="col">
               <h3 className="centered">Review</h3>
               <div className="centered">
-                {reviewCorrect
+                {this.state.attempt?.answers[i].correct
                   ? <SpriteIcon name="ok" className="text-theme-green" />
                   : <SpriteIcon name="cancel" className="text-theme-orange" />
                 }
