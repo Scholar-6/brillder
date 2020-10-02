@@ -10,17 +10,12 @@ interface ImageProps {
 }
 
 const GraphLive: React.FC<ImageProps> = ({ component }) => {
-  const graphRef = React.useRef<HTMLDivElement>(null);
   const [calculator, setCalculator] = React.useState<any>(null);
 
-  useEffect(() => {
+  const graphCallback = React.useCallback(elt => {
     const state = component.graphState;
     const settings = component.graphSettings;
-    if(graphRef && graphRef.current) {
-      if(calculator) {
-        calculator.destroy();
-      }
-      var elt = graphRef.current;
+    if(elt) {
       const desmos = Desmos.GraphingCalculator(elt, {
         fontSize: Desmos.FontSizes.VERY_SMALL,
         expressions: settings?.showSidebar ?? false,
@@ -30,9 +25,14 @@ const GraphLive: React.FC<ImageProps> = ({ component }) => {
         trace: settings?.trace ?? false
       });
       desmos.setState(state);
-      setCalculator(desmos);
+      setCalculator((calc: any) => {
+        if(calc) {
+          calc.destroy();
+        }
+        return desmos;
+      });
     }
-  }, [graphRef.current])
+  }, [component.graphState, component.graphSettings])
 
   useEffect(() => {
     const state = component.graphState;
@@ -47,12 +47,12 @@ const GraphLive: React.FC<ImageProps> = ({ component }) => {
         trace: settings?.trace ?? false
       })
     }
-  }, [component.graphState, component.graphSettings]);
+  }, [component.graphState, component.graphSettings, calculator]);
 
   if (component.graphState) {
     return (
     <div className="graph-component-container">
-      <div className="graph-component" ref={graphRef} />
+      <div className="graph-component" ref={graphCallback} />
     </div>
     );
   }
