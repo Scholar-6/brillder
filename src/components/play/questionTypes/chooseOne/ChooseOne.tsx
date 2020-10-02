@@ -84,8 +84,34 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       className += " active";
     }
 
+    if (choice.answerType === QuestionValueType.Image) {
+      className += " image-choice";
+    }
+
+    // book preview
+    if (this.props.isBookPreview) {
+      if (index === activeItem) {
+        if (isCorrect) {
+          className += " correct";
+        } else if (isCorrect === false) {
+          className += " wrong";
+        }
+      }
+      return (
+        <Button className={className} key={index}>
+          {this.renderData(choice)}
+          <ReviewEachHint
+            isPhonePreview={this.props.isPreview}
+            isReview={this.props.isReview}
+            isCorrect={isCorrect}
+            index={index}
+            hint={this.props.question.hint}
+          />
+        </Button>
+      );
+    }
     // if review show correct or wrong else just make answers active
-    if (attempt && index === activeItem) {
+    else if (attempt && index === activeItem) {
       let { answer } = attempt;
       if (answer >= 0 && answer === index) {
         if (this.props.isReview) {
@@ -98,10 +124,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
       } else {
         className += " active";
       }
-    }
-
-    if (choice.answerType === QuestionValueType.Image) {
-      className += " image-choice";
     }
 
     return (
