@@ -278,9 +278,18 @@
           font-size: 1.3vw;
 
           .title {
-            font-family: $font-family-bold;
             text-transform: uppercase;
+            font-family: $font-family-bold;
             height: 20vh;
+
+            input {
+              text-transform: uppercase;
+              font-family: $font-family-bold !important;
+            }
+          }
+
+          input {
+            color: var(--theme-orange) !important;
           }
         }
       }
