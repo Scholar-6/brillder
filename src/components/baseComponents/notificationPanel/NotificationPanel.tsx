@@ -43,29 +43,25 @@ class NotificationPanel extends Component<NotificationPanelProps> {
     if (history) {
       if (notification.type === NotificationType.BrickPublished) {
         history.push(map.ViewAllPage);
-      } else if (
-        notification.type === NotificationType.AssignedToEdit ||
-        notification.type === NotificationType.BrickSubmittedForReview
-      ) {
-        if (notification.type === NotificationType.AssignedToEdit) {
-          if (notification.brick && notification.brick.id) {
-            this.props.fetchBrick(notification.brick.id);
-            history.push(map.ProposalReview);
+      } else if (notification.type === NotificationType.BrickSubmittedForReview) {
+        history.push(map.BackToWorkPage);
+      }
+
+      if (notification.brick && notification.brick.id) {
+        const {brick} = notification;
+        if (notification.type === NotificationType.NewCommentOnBrick) {
+          if (notification.question && notification.question.id >= 1) {
+            history.push(map.investigationQuestionSuggestions(brick.id, notification.question.id));
           }
-        } else {
-          history.push(map.BackToWorkPage);
-        }
-      } else if (notification.type === NotificationType.NewCommentOnBrick) {
-        if (notification.brick && notification.brick.id >= 1 && notification.question && notification.question.id >= 1) {
-          history.push(map.investigationQuestionSuggestions(notification.brick.id, notification.question.id));
-        }
-      } else if (notification.type === NotificationType.InvitedToPlayBrick) {
-        if (notification.brick && notification.brick.id >= 1) {
-          history.push(map.playIntro(notification.brick.id));
-        }
-      } else if (notification.type === NotificationType.BrickAttemptSaved) {
-        if (notification.brick && notification.brick.id) {
-          history.push(map.postPlay(notification.brick.id, this.props.user.id));
+        } else if (notification.type === NotificationType.InvitedToPlayBrick) {
+          history.push(map.playIntro(brick.id));
+        } else if (notification.type === NotificationType.BrickAttemptSaved) {
+          history.push(map.postPlay(brick.id, this.props.user.id));
+        } else if (notification.type === NotificationType.ReturnedToAuthor) {
+          history.push(map.InvestigationBuild(brick.id));
+        } else if (notification.type === NotificationType.AssignedToEdit) {
+          this.props.fetchBrick(notification.brick.id);
+          history.push(map.ProposalReview);
         }
       }
     }
