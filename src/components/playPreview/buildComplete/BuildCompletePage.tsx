@@ -3,7 +3,6 @@ import { Grid, Radio } from "@material-ui/core";
 import { connect } from 'react-redux';
 
 import "./BuildCompletePage.scss";
-import sprite from "assets/img/icons-sprite.svg";
 import { Brick } from "model/brick";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from 'redux/actions/brickActions';

@@ -4,7 +4,6 @@ import DropNCrop from '@synapsestudios/react-drop-n-crop';
 import Dialog from "@material-ui/core/Dialog";
 import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
 
-import sprite from "assets/img/icons-sprite.svg";
 import { uploadFile } from "components/services/uploadFile";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 

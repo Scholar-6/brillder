@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import sprite from "assets/img/icons-sprite.svg";
 import './TutorialPreview.scss';
 import { TutorialStep } from './TutorialPanelWorkArea';
 import PhonePreview from "components/build/baseComponents/phonePreview/PhonePreview";

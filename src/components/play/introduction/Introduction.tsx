@@ -15,6 +15,7 @@ import { PlayMode } from "../model";
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/proposal/model';
 import queryString from 'query-string';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 const moment = require("moment");
 

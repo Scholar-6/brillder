@@ -6,8 +6,6 @@ import Hyphenated from 'react-hyphen';
 //@ts-ignore
 import gb from 'hyphenated-en-gb';
 
-import sprite from "assets/img/icons-sprite.svg";
-
 import { Comment } from 'model/comments';
 import { Brick } from 'model/brick';
 import { User } from 'model/user';

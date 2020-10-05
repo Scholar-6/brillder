@@ -5,8 +5,6 @@ import { Grid, Hidden } from "@material-ui/core";
 import 'swiper/swiper.scss';
 
 import "./mainPage.scss";
-import sprite from 'assets/img/icons-sprite.svg';
-
 import actions from "redux/actions/auth";
 import brickActions from "redux/actions/brickActions";
 import { User } from "model/user";

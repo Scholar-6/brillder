@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import './ManageClassrooms.scss';
-import sprite from "assets/img/icons-sprite.svg";
 
 import { User } from "model/user";
 import { MUser } from "../interface";
