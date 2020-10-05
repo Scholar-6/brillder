@@ -47,7 +47,7 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         if (notification.type === NotificationType.AssignedToEdit) {
           if (notification.brick && notification.brick.id) {
             this.props.fetchBrick(notification.brick.id);
-            history.push(map.ProposalTitle);
+            history.push(map.ProposalReview);
           }
           //window.location.href = map.BackToWorkBuildTab;
         } else {
