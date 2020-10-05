@@ -63,15 +63,16 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       closeTimeout: -1,
       bookHovered: false
     };
-
     this.loadData();
   }
 
   async loadData() {
     const {userId, brickId} = this.props.match.params;
     let attempts = await getAttempts(brickId, userId);
-    if (attempts) {
-      this.setState({attempt: attempts[attempts.length - 1]})
+    if (attempts && attempts.length > 0) {
+      const attempt = attempts[0];
+      attempt.brick.questions = attempt.brick.questions.sort((a, b) => a.order - b.order);
+      this.setState({attempt: attempts[0]})
     }
   }
 

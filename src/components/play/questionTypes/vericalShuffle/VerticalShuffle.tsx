@@ -8,6 +8,7 @@ import CompComponent from '../Comp';
 import ReviewEachHint from 'components/play/baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
 import MathInHtml from '../../baseComponents/MathInHtml';
+import { getValidationClassName } from '../service';
 
 
 interface VerticalShuffleChoice {
@@ -107,12 +108,12 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
 
     if (!this.props.isPreview && this.props.attempt && this.props.isReview) {
       if (this.state.status !== DragAndDropStatus.Changed) {
-        if (isCorrect === true) {
-          className += " correct";
-        } else {
-          className += " wrong";
-        }
+        className += getValidationClassName(isCorrect);
       }
+    }
+
+    if (this.props.isBookPreview) {
+      className += getValidationClassName(isCorrect);
     }
     
     return (
@@ -133,24 +134,28 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     );
   }
 
+  renderAnswers() {
+    return this.state.userAnswers.map((answer, i) => this.renderAnswer(answer, i));
+  }
+
   render() {
     return (
       <div className="question-unique-play vertical-shuffle-play">
         <p className="help-text">Drag to rearrange.</p>
-        <ReactSortable
-          list={this.state.userAnswers}
-          animation={150}
-          className="verical-shuffle-sort-list"
-          style={{display:"inline-block"}}
-          group={{ name: "cloning-group-name" }}
-          setList={(choices) => this.setUserAnswers(choices)}
-        >
-          {
-            this.state.userAnswers.map((answer, i) => (
-              this.renderAnswer(answer, i)
-            ))
-          }
-        </ReactSortable>
+        {this.props.isBookPreview ? (
+          <div>{this.renderAnswers()}</div>
+        ) : (
+          <ReactSortable
+            list={this.state.userAnswers}
+            animation={150}
+            className="verical-shuffle-sort-list"
+            style={{display:"inline-block"}}
+            group={{ name: "cloning-group-name" }}
+            setList={(choices) => this.setUserAnswers(choices)}
+          >
+            {this.renderAnswers()}
+          </ReactSortable>
+        )}
         <ReviewGlobalHint
           isReview={this.props.isReview}
           attempt={this.props.attempt}
