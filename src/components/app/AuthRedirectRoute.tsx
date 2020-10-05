@@ -15,8 +15,8 @@ interface AuthRedirectProps {
   isAuthenticated: isAuthenticated;
   user: User;
   location: any;
-  getUser():void;
-  isAuthorized():void;
+  getUser(): void;
+  isAuthorized(): void;
 }
 
 const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
@@ -28,7 +28,7 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
 
     const values = queryString.parse(props.location.search)
     if (values.userType) {
-      let userType:UserLoginType = parseInt(values.userType as string);
+      let userType: UserLoginType = parseInt(values.userType as string);
       if (userType === UserLoginType.Student) {
         return <Redirect to="/play/dashboard" />
       } else if (userType === UserLoginType.Builder) {
@@ -37,7 +37,7 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
     }
     let path = props.location.pathname;
 
-    let isAdmin = user.roles.some((role:any) => role.roleId === UserType.Admin);
+    let isAdmin = user.roles.some((role: any) => role.roleId === UserType.Admin);
 
     if (isAdmin) {
       if (path === '/home') {
@@ -47,8 +47,8 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
       }
     }
 
-    let canBuild = user.roles.some((role:any) =>
-      role.roleId === UserType.Admin || role.roleId === UserType.Builder || role.roleId === UserType.Editor
+    let canBuild = user.roles.some((role: any) =>
+      role.roleId === UserType.Admin || role.roleId === UserType.Builder || role.roleId === UserType.Publisher
     );
 
     if (canBuild) {

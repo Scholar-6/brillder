@@ -50,7 +50,7 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({ component: Component, ...r
 
     const isBuilder = user.roles.some(role => {
       const { roleId } = role;
-      return roleId === UserType.Builder || roleId === UserType.Editor || roleId === UserType.Admin;
+      return roleId === UserType.Builder || roleId === UserType.Publisher || roleId === UserType.Admin;
     });
     if (isBuilder) {
       return <Route {...rest} render={props => {

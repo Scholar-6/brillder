@@ -6,7 +6,7 @@ import actions from '../../redux/actions/auth';
 import userActions from '../../redux/actions/user';
 import { isAuthenticated } from 'model/brick';
 import { User, UserType } from 'model/user';
-import {setBrillderTitle} from 'components/services/titleService';
+import { setBrillderTitle } from 'components/services/titleService';
 import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
 import map from 'components/map';
@@ -19,8 +19,8 @@ interface BuildRouteProps {
   isRedirectedToProfile: boolean;
   user: User;
   location: any;
-  getUser():void;
-  isAuthorized():void;
+  getUser(): void;
+  isAuthorized(): void;
 }
 
 const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }) => {
@@ -36,17 +36,17 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
       return <PageLoader content="...Getting User..." />;
     }
 
-    let {user} = rest;
+    let { user } = rest;
 
     if (!rest.isRedirectedToProfile) {
-      if(!user.firstName || !user.lastName) {
+      if (!user.firstName || !user.lastName) {
         return <Redirect to="/user-profile" />
       }
     }
 
     const isBuilder = user.roles.some(role => {
-      const {roleId} = role;
-      return roleId === UserType.Builder || roleId === UserType.Editor || roleId === UserType.Admin;
+      const { roleId } = role;
+      return roleId === UserType.Builder || roleId === UserType.Publisher || roleId === UserType.Admin;
     });
     if (isBuilder) {
       return <Route {...rest} render={(props) => <Component {...props} />} />;
