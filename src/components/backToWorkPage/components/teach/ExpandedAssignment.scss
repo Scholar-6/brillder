@@ -63,6 +63,10 @@
             height: 1vw;
             width: 1vw;
           }
+
+          &.active {
+            background: var(--blue) !important;
+          }
         }
       }
     }
