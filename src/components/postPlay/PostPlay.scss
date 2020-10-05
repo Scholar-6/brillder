@@ -381,10 +381,25 @@
       background: #f5f5f5;
     }
   }
+  $scale: 1.15;
+
+  .bookmark {
+    z-index: 1000;
+    position: fixed;
+    height: $real-book-height + 0vh;
+    left: -2vh;
+    width: 4vh;
+    top: 1.3vh;
+    transform-style: preserve-3d;
+    transform: translate3d(0,0,100px) scale($scale);
+
+    &.hidden {
+      opacity: 0;
+    }
+  }
 
   //#region book animations
   .book-main-container {
-    $scale: 1.15;
 
     &.expanded {
       width: 50vw;
