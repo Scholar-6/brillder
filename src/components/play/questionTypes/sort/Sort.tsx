@@ -14,6 +14,7 @@ import { DragAndDropStatus } from '../pairMatch/interface';
 
 import ReviewEachHint from '../../baseComponents/ReviewEachHint';
 import ReviewGlobalHint from '../../baseComponents/ReviewGlobalHint';
+import { getValidationClassName } from '../service';
 
 
 interface UserCategory {
@@ -185,13 +186,14 @@ class Sort extends CompComponent<SortProps, SortState> {
     }
     if (!this.props.isPreview && this.props.attempt && this.props.isReview) {
       if (this.state.status !== DragAndDropStatus.Changed) {
-        if (isCorrect) {
-          className += " correct";
-        } else {
-          className+= " wrong";
-        }
+        className += getValidationClassName(isCorrect);
       }
     }
+
+    if (this.props.isBookPreview) {
+      className += getValidationClassName(isCorrect);
+    }
+
     return (
       <div className={className} key={i}>
         <ListItem>
@@ -213,10 +215,8 @@ class Sort extends CompComponent<SortProps, SortState> {
     )
   }
 
-
   render() {
     let count = -1;
-
     const incrementCount = () => count++;
 
     return (
@@ -226,18 +226,27 @@ class Sort extends CompComponent<SortProps, SortState> {
             <div key={i}>
               <div className="sort-category" dangerouslySetInnerHTML={{ __html: cat.name}} />
               <div className="sort-category-list-container">
-                <ReactSortable
-                  list={cat.choices as any[]}
-                  animation={150}
-                  className="sortable-list"
-                  group={{ name: "cloning-group-name"}}
-                  setList={(list) => this.updateCategory(list, i)}
-                >
-                  {cat.choices.map((choice, i) => {
-                    incrementCount();
-                    return this.renderChoice(choice, i, count);
-                  })}
-                </ReactSortable>
+                {this.props.isBookPreview ? (
+                  <div className="sortable-list">
+                    {cat.choices.map((choice, i) => {
+                      incrementCount();
+                      return this.renderChoice(choice, i, count);
+                    })}
+                  </div>
+                ): (
+                  <ReactSortable
+                    list={cat.choices as any[]}
+                    animation={150}
+                    className="sortable-list"
+                    group={{ name: "cloning-group-name"}}
+                    setList={(list) => this.updateCategory(list, i)}
+                  >
+                    {cat.choices.map((choice, i) => {
+                      incrementCount();
+                      return this.renderChoice(choice, i, count);
+                    })}
+                  </ReactSortable>
+                )}
               </div>
             </div>
           ))
