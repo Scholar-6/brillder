@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 
 import "./ExpandedAssignment.scss";
-import sprite from "assets/img/icons-sprite.svg";
 import { Subject } from "model/brick";
 import { UserBase } from "model/user";
-import { Assignment, StudentStatus, TeachClassroom } from "model/classroom";
+import { Assignment, StudentStatus, TeachClassroom, TeachStudent } from "model/classroom";
 import { getSubjectColor } from "components/services/subject";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
@@ -21,6 +20,8 @@ enum SortBy {
 interface AssignemntExpandedState {
   sortBy: SortBy;
   questionCount: number;
+  studentsPrepared: boolean;
+  students: TeachStudent[];
 }
 
 interface AssignmentBrickProps {
@@ -49,7 +50,51 @@ class ExpandedAssignment extends Component<
     this.state = {
       sortBy: SortBy.None,
       questionCount: questionCount,
+      studentsPrepared: false,
+      students: this.prepareStudents()
     };
+  }
+
+  prepareStudents() {
+    const { students } = this.props.classroom;
+
+    students.forEach(student => {
+      student.studentResult = this.props.stats.byStudent
+        .find(s => s.studentId === student.id);
+    
+      student.studentStatus = this.props.assignment.studentStatus
+        .find(s => s.studentId === student.id);
+    });
+
+    return students;
+  }
+
+  toggleSort() {
+    if (this.state.sortBy === SortBy.None) {
+      this.sort(SortBy.AvgDecreasing);
+    } else if (this.state.sortBy === SortBy.AvgDecreasing) {
+      this.sort(SortBy.AvgIncreasing);
+    } else {
+      this.sort(SortBy.AvgDecreasing);
+    }
+  }
+
+  sort(sortBy: SortBy) {
+    let students = this.state.students;
+    if (sortBy == SortBy.AvgDecreasing) {
+      students = this.state.students.sort((a, b) => {
+        if (!a.studentStatus) { return 1; }
+        if (!b.studentStatus) { return -1; }
+        return b.studentStatus?.avgScore  - a.studentStatus?.avgScore;
+      });
+    } else {
+      students = this.state.students.sort((a, b) => {
+        if (!a.studentStatus) { return -1; }
+        if (!b.studentStatus) { return 1; }
+        return a.studentStatus?.avgScore  - b.studentStatus?.avgScore;
+      });
+    }
+    this.setState({ students, sortBy });
   }
 
   renderAvgScore(studentStatus: StudentStatus) {
@@ -96,7 +141,6 @@ class ExpandedAssignment extends Component<
   ) {
     if (studentResult && studentStatus) {
       const attempt = studentResult.attempts[0].answers[questionNumber];
-      console.log(attempt);
       if (attempt.correct === true) {
         return <SpriteIcon name="check-icon-thin" className="text-theme-green" />;
       }
@@ -114,15 +158,8 @@ class ExpandedAssignment extends Component<
     return "";
   }
 
-  renderStudent(student: UserBase, i: number) {
-    console.log(this.props.stats.byStudent);
-    let studentResult = this.props.stats.byStudent.find(
-      (s) => s.studentId === student.id
-    );
-    const studentStatus = this.props.assignment.studentStatus.find(
-      (s) => s.studentId === student.id
-    );
-
+  renderStudent(student: TeachStudent, i: number) {
+    const {studentStatus, studentResult} = student;
     return (
       <tr className="user-row" key={i}>
         <td className="padding-left-column"></td>
@@ -159,7 +196,7 @@ class ExpandedAssignment extends Component<
             <div className="center">
               <button
                 className="btn btn-transparent svgOnHover btn-grey-circle"
-                onClick={() => this.setState({ sortBy: SortBy.AvgDecreasing })}
+                onClick={() => this.toggleSort()}
               >
                 <SpriteIcon name="arrow-down" className="active text-theme-dark-blue" />
               </button>
@@ -184,10 +221,10 @@ class ExpandedAssignment extends Component<
 
   render() {
     const { assignment, classroom, startIndex, pageSize } = this.props;
-    let { students } = classroom;
+    let { students } = this.state;
+    
     students = students.slice(startIndex, startIndex + pageSize);
-    if (this.state.sortBy !== SortBy.None) {
-    }
+
     return (
       <div className="expanded-assignment classroom-list">
         <div className="classroom-title first">{classroom.name}</div>
