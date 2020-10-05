@@ -19,6 +19,7 @@ import { checkTeacherOrAdmin } from "components/services/brickService";
 import WelcomeComponent from './WelcomeComponent';
 import MainPageMenu from "components/baseComponents/pageHeader/MainPageMenu";
 import PolicyDialog from "components/baseComponents/policyDialog/PolicyDialog";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -83,10 +84,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       <div className="view-item-container zoom-item" onClick={() => this.props.history.push("/play/dashboard")}>
         <div className="eye-glass-icon">
           <div className="svgOnHover">
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#glasses-home"} className="text-theme-orange" />
-            </svg>
+            <SpriteIcon name="glasses-home" className="active text-theme-orange" />
           </div>
           <div className="glass-eyes-left svgOnHover">
             <svg className="svg active" viewBox="0 0 24 24" fill="currentColor" stroke="none">
@@ -110,10 +108,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return (
       <div className="create-item-container" onClick={() => this.creatingBrick()}>
         <button className="btn btn-transparent zoom-item svgOnHover">
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#trowel-home"} className="text-theme-orange" />
-          </svg>
+          <SpriteIcon name="trowel-home" className="active text-theme-orange" />
           <span className="item-description">Start Building</span>
         </button>
       </div>
@@ -124,10 +119,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
     return (
       <div className="back-item-container" onClick={() => this.props.history.push("/back-to-work")}>
         <button className="btn btn-transparent zoom-item svgOnHover">
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#roller-home"} className="text-theme-orange" />
-          </svg>
+          <SpriteIcon name="roller-home" className="active text-theme-orange" />
           <span className="item-description">Back To Work</span>
         </button>
       </div>
@@ -151,10 +143,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <div className="mobile-main-page">
           <button className="btn btn-transparent prev-image svgOnHover" onClick={() => this.swipePrev()}>
-            <svg className="svg w100 h100 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#arrow-up"} className="text-white" />
-            </svg>
+            <SpriteIcon name="arrow-up" className="w100 h100 active text-white" />
           </button>
           <Swiper
             slidesPerView={3}
@@ -170,10 +159,7 @@ class MainPage extends Component<MainPageProps, MainPageState> {
             <SwiperSlide>{this.renderWorkButton()}</SwiperSlide>
           </Swiper>
           <button className="btn btn-transparent next-image svgOnHover" onClick={() => this.swipeNext()}>
-            <svg className="svg w100 h100 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#arrow-down"} className="text-white" />
-            </svg>
+            <SpriteIcon name="arrow-down" className="w100 h100 active text-white" />
           </button>
         </div>
       </Hidden>

@@ -12,6 +12,7 @@ import {
 } from "components/build/buildQuestions/questionTypes/shortAnswerBuild/interface";
 import { stripHtml } from "components/build/questionService/ConvertService";
 import DocumentWirisEditorComponent from "components/baseComponents/ckeditor/DocumentWirisEditor";
+import MathInHtml from "components/play/baseComponents/MathInHtml";
 
 export type ShortAnswerAnswer = string[];
 
@@ -42,6 +43,14 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     this.state = { userAnswers } as ShortAnswerState;
   }
 
+  componentDidUpdate(prevProps: ShortAnswerProps) {
+    if (this.props.isBookPreview) {
+      if (this.props.answers !== prevProps.answers) {
+        this.setState({userAnswers: this.props.answers});
+      }
+    }
+  }
+
   setUserAnswer(value: string, index: number) {
     let userAnswers = this.state.userAnswers;
     userAnswers[index] = value;
@@ -60,7 +69,12 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   checkAttemptAnswer(answer: ShortAnswerItem, index: number) {
     const answerValue = stripHtml(answer.value);
     if (this.props.attempt.answer) {
-      const attepmtValue = this.props.attempt.answer[index];
+      let attepmtValue = this.props.attempt.answer[index];
+
+      if (this.props.isBookPreview) {
+        attepmtValue = stripHtml(attepmtValue);
+      }
+
       if (
         this.props.attempt &&
         this.props.attempt.answer &&
@@ -74,7 +88,6 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
 
   prepareAttempt(component: ShortAnswerData, attempt: ComponentAttempt<ShortAnswerAnswer>) {
     attempt.answer = this.state.userAnswers;
-
     return attempt;
   }
 
@@ -84,7 +97,7 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
       value = this.props.component.list[index].value;
     }
     if (this.props.isBookPreview) {
-      return <span>value</span>;
+      return <MathInHtml value={value} />;
     }
     return (
       <DocumentWirisEditorComponent

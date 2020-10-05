@@ -1,6 +1,6 @@
 import React from "react";
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ButtonProps {
   onClick(): void;
@@ -9,14 +9,8 @@ interface ButtonProps {
 const LivePrevButton: React.FC<ButtonProps> = ({ onClick }) => {
   return (
     <button className="play-preview svgOnHover play-white" onClick={onClick}>
-      <svg className="svg w80 h80 svg-default m-0">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#arrow-left"} className="text-gray" />
-      </svg>
-      <svg className="svg w80 h80 colored m-0">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#arrow-left"} className="text-white" />
-      </svg>
+      <SpriteIcon name="arrow-left" className="w80 h80 svg-default m-0 text-gray" />
+      <SpriteIcon name="arrow-left" className="w80 h80 colored m-0 text-white" />
     </button>
   );
 };

@@ -33,7 +33,6 @@ class CompComponent<Props extends CompQuestionProps, State> extends React.Compon
   }
 
   mark(component: any, attempt: ComponentAttempt<any>) {
-    console.log(attempt);
     this.prepareAttempt(component, attempt);
     return markAttempt(this.props.question.type, component, attempt);
   }

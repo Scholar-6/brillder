@@ -24,6 +24,7 @@ import CreateClassDialog from './components/CreateClassDialog';
 import DeleteClassDialog from './components/DeleteClassDialog';
 import UnassignStudentDialog from './components/UnassignStudentDialog';
 import RoleDescription from 'components/baseComponents/RoleDescription';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
@@ -292,10 +293,7 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
         View All
         <div className="right-index">
           {this.state.users.length}
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#users"} />
-          </svg>
+          <SpriteIcon name="users" className="active" />
           <div className="classrooms-box">
             {this.state.classrooms.length}
           </div>
@@ -328,14 +326,12 @@ class ManageClassrooms extends Component<UsersListProps, UsersListState> {
                 {c.name}
                 <div className="right-index">
                   {c.students.length}
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#users"} />
-                  </svg>
-                  <svg className="svg active" onClick={() => this.onDeleteClass(c)}>
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#trash-outline"} className="text-white" />
-                  </svg>
+                  <SpriteIcon name="users" className="active" />
+                  <SpriteIcon
+                    name="trash-outline" 
+                    className="active text-white"
+                    onClick={() => this.onDeleteClass(c)}
+                  />
                 </div>
               </div>
             );

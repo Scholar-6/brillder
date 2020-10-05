@@ -2,10 +2,10 @@ import React from "react";
 import moment from "moment";
 import { IconButton, SvgIcon } from "@material-ui/core";
 
-import sprite from "assets/img/icons-sprite.svg";
 import { Comment } from "model/comments";
 import { Brick } from "model/brick";
 import { User } from "model/user";
+import SpriteIcon from "../SpriteIcon";
 
 export interface CommentChildProps {
   comment: Comment;
@@ -28,7 +28,7 @@ const CommentChild: React.FC<CommentChildProps> = (props) => {
           {
             props.comment.author?.profileImage
               ? <img alt="profile" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
-              : <svg><use href={sprite + "#user"} /></svg>
+              : <SpriteIcon name="user" />
           }
         </div>
       </div>
@@ -44,10 +44,7 @@ const CommentChild: React.FC<CommentChildProps> = (props) => {
             onClick={() => props.onDelete(props.currentBrick.id, props.comment.id)}
           >
             <SvgIcon fontSize="inherit">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#trash-outline"} />
-              </svg>
+              <SpriteIcon name="trash-outline" className="active" />
             </SvgIcon>
           </IconButton>
         )}

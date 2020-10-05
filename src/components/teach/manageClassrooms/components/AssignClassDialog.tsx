@@ -4,10 +4,10 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
 import './AssignClassDialog.scss';
-import sprite from 'assets/img/icons-sprite.svg';
 
 import { User } from "model/user";
 import { ClassroomApi } from 'components/teach/service';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface AssignClassProps {
   users: User[];
@@ -61,11 +61,8 @@ const AssignClassDialog: React.FC<AssignClassProps> = props => {
         <div className="title">{title}</div>
         <div className="students-box">
           <div className="students-count-box">
-          {props.users.length}
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#users"} />
-          </svg>
+            {props.users.length}
+            <SpriteIcon name="users" className="active" />
           </div>
           <div className="student-names">Selected: {renderUserFullNames()}</div>
         </div>

@@ -5,6 +5,7 @@ import sprite from "assets/img/icons-sprite.svg";
 
 import { MUser } from "../../interface";
 import { UserSortBy } from '../ManageClassrooms';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface StudentTableProps {
   users: MUser[];
@@ -50,10 +51,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
     if (props.selectedUsers.length >= 1) {
       return (
         <div className="class-assign-button svgOnHover" onClick={props.assignToClass}>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#plus"} />
-          </svg>
+          <SpriteIcon name="plus" className="active" />
         </div>
       )
     }
@@ -83,10 +81,7 @@ const StudentTable: React.FC<StudentTableProps> = props => {
           {renderAssignButton()}
           <div className="selected-label svgOnHover">
             <span className="selected-count">{props.selectedUsers.length}</span>
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#users"} />
-            </svg>
+            <SpriteIcon name="users" className="active" />
             <span>Selected</span>
           </div>
         </th>
@@ -109,8 +104,8 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                 </td>
                 <td>
                   <div className="classroom-names">
-                    {user.studyClassrooms ? user.studyClassrooms.map((classroom, i) =>
-                      <div key={i} className="classroom-name">{classroom.name}</div>) : ""
+                    {user.studyClassrooms && user.studyClassrooms.map((classroom, i) =>
+                      <div key={i} className="classroom-name">{classroom.name}</div>)
                     }
                   </div>
                 </td>
@@ -120,18 +115,12 @@ const StudentTable: React.FC<StudentTableProps> = props => {
                 <td className="selected-column">
                   <div className="action-buttons">
                     <div className="edit-button svgOnHover">
-                      <svg className="svg active">
-                        {/*eslint-disable-next-line*/}
-                        <use href={sprite + "#edit-outline"} />
-                      </svg>
+                      <SpriteIcon name="edit-outline" className="active" />
                     </div>
-                    {props.isClassroom ?
+                    {props.isClassroom &&
                       <div className="trash-button  svgOnHover" onClick={() => props.unassign(user)}>
-                        <svg className="svg active">
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#trash-outline"} />
-                        </svg>
-                      </div> : ""
+                        <SpriteIcon name="trash-outline" className="active" />
+                      </div>
                     }
                   </div>
                 </td>

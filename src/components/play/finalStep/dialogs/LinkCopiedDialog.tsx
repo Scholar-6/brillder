@@ -8,6 +8,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import './LinkCopiedDialog.scss';
 
 import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ProfileSavedProps {
   isOpen: boolean;
@@ -27,10 +28,7 @@ const LinkCopiedDialog: React.FC<ProfileSavedProps> = props => {
           <ListItemText primary="Link copied!" className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-check">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#link"} className="text-white" />
-              </svg>
+              <SpriteIcon name="link" className="active text-white" />
             </Avatar>
           </ListItemAvatar>
         </ListItem>

@@ -160,14 +160,8 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
             className={state.prepExpanded ? "play-preview svgOnHover play-green" : "play-preview svgOnHover play-gray"}
             onClick={startBrick}
           >
-            <svg className="svg w80 h80 svg-default">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#play-thin"} />
-            </svg>
-            <svg className="svg w80 h80 colored">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#play-thick"} />
-            </svg>
+            <SpriteIcon name="play-thin" className="w80 h80 svg-default" />
+            <SpriteIcon name="play-thick" className="w80 h80 colored" />
           </button>
         </div>
       </div>

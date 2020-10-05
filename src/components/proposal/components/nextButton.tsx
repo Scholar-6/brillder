@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 
 import { ProposalStep } from "../model";
 import './nextButton.scss';
-import sprite from "assets/img/icons-sprite.svg";
 import map from 'components/map';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface NextButtonProps {
   isActive: boolean
@@ -43,9 +43,10 @@ const NextButton:React.FC<NextButtonProps> = (
 
   return (
     <button className="btn btn-transparent tut-next svgOnHover" onClick={next}>
-      <svg className="svg active h100 w100">
-        <use href={ sprite + "#arrow-down"} className={isActive ? "text-theme-orange":"text-gray" } />
-      </svg>
+      <SpriteIcon
+        name="arrow-down"
+        className={`active h100 w100 ${isActive ? "text-theme-orange":"text-gray" }`}
+      />
     </button>
   );
 }

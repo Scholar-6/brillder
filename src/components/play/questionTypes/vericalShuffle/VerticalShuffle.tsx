@@ -57,6 +57,14 @@ class VerticalShuffle extends CompComponent<VerticalShuffleProps, VerticalShuffl
     };
   }
 
+  componentDidUpdate(prevProp: VerticalShuffleProps) {
+    if (this.props.isBookPreview) {
+      if (this.props.answers !== prevProp.answers) {
+        this.setState({userAnswers: this.props.answers as any});
+      }
+    }
+  }
+
   setUserAnswers(userAnswers: any[]) {
     if (this.props.isTimeover) { return; }
     let status = DragAndDropStatus.Changed;

@@ -13,6 +13,7 @@ import { Brick } from 'model/brick';
 import { User } from 'model/user';
 
 import ReplyCommentPanel from './ReplyCommentPanel';
+import SpriteIcon from '../SpriteIcon';
 
 interface CommentItemProps {
   currentUser: User;
@@ -36,7 +37,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
               {
                 props.comment.author?.profileImage
                   ? <img alt="" src={`${process.env.REACT_APP_BACKEND_HOST}/files/${props.comment.author.profileImage}`} />
-                  : <svg><use href={sprite + "#user"} /></svg>
+                  : <SpriteIcon name="user" />
                 }
             </div>
           </div>
@@ -45,10 +46,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
           </Grid>
           <div className="buttons-container">
           <button aria-label="reply" className="message-button svgOnHover" onClick={() => setReplyPanelShown(!replyPanelShown)}>
-            <svg className="svg active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#corner-up-left"} />
-            </svg>
+            <SpriteIcon name="corner-up-left" className="active" />
           </button>
             {props.isAuthor &&
               <button
@@ -56,10 +54,7 @@ const CommentItem: React.FC<CommentItemProps> = props => {
                 className="cancel-button svgOnHover"
                 onClick={() => props.onDelete(props.currentBrick.id, props.comment.id)}
               >
-                <svg className="svg active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#trash-outline"} />
-                </svg>
+                <SpriteIcon name="trash-outline" className="active" />
               </button>
             }
           </div>
