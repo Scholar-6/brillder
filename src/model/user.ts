@@ -32,6 +32,7 @@ export interface UserBase {
 
 export interface User extends UserBase {
   roles: UserRole[];
+  rolePreference?: UserRole;
 }
 
 export interface UserProfile extends UserBase {
