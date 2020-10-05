@@ -30,7 +30,7 @@ class LineHighlighting extends CompComponent<
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProp.answers) {
         const lines = this.props.component.lines.map((l: any, i:number) => {
-          this.props.answers.map(a => {
+          this.props.answers.forEach(a => {
             if (a === i) {
               l.selected = true;
             }

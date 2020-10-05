@@ -31,7 +31,7 @@ class WordHighlighting extends CompComponent<
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProp.answers) {
         const words = this.props.component.words.map((w, i) => {
-          this.props.answers.map(a => {
+          this.props.answers.forEach(a => {
             if (a === i) {
               w.selected = true;
             }

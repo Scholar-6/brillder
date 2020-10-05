@@ -7,7 +7,7 @@ import brickActions from "redux/actions/brickActions";
 
 import userActions from '../../redux/actions/user';
 import { isAuthenticated, Brick } from 'model/brick';
-import { User, UserType } from 'model/user';
+import { User } from 'model/user';
 import { setBrillderTitle } from 'components/services/titleService';
 import { ReduxCombinedState } from 'redux/reducers';
 import PageLoader from 'components/baseComponents/loaders/pageLoader';
