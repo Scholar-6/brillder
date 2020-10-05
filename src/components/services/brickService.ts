@@ -19,8 +19,7 @@ export function getYear(date: Date) {
 
 export function getMonth(date: Date) {
   const month = date.getMonth() + 1;
-  var twoLastDigits = month % 10;
-  return formatTwoLastDigits(twoLastDigits);
+  return formatTwoLastDigits(month);
 }
 
 export function getDate(date: Date) {
