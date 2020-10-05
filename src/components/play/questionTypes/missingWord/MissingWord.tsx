@@ -25,6 +25,11 @@ interface MissingWordState {
 class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   constructor(props: MissingWordProps) {
     super(props);
+    let userAnswers = this.getUserAnswers(props);
+    this.state = { userAnswers, choices: props.component.choices };
+  }
+
+  getUserAnswers(props: MissingWordProps) {
     let userAnswers: any[] = [];
     if (props.answers && props.answers.length > 0) {
       userAnswers = props.answers;
@@ -33,8 +38,16 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
     } else {
       props.component.choices.forEach(() => userAnswers.push({ value: -1 }));
     }
+    return userAnswers;
+  }
 
-    this.state = { userAnswers, choices: props.component.choices };
+  componentDidUpdate(prevProp: MissingWordProps) {
+    if (this.props.isBookPreview) {
+      if (this.props.answers !== prevProp.answers) {
+        const userAnswers = this.getUserAnswers(this.props);
+        this.setState({userAnswers});
+      }
+    }
   }
 
   UNSAFE_componentWillReceiveProps(props: MissingWordProps) {
@@ -70,7 +83,9 @@ class MissingWord extends CompComponent<MissingWordProps, MissingWordState> {
   }
 
   renderSelect(choice: any, index: number) {
-    if (!this.state.userAnswers[index]) { return <PageLoader content="...Loading..." />;}
+    if (!this.state.userAnswers[index]) {
+      return <PageLoader content="...Loading..." />;
+    }
     let {value} = this.state.userAnswers[index];
     if (value === -1) value = '';
     return (

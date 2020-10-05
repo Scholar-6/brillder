@@ -48,7 +48,6 @@ class ChooseOne extends CompComponent<ChooseOneProps, ChooseOneState> {
   componentDidUpdate(prevProp: ChooseOneProps) {
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProp.answers) {
-        console.log(this.props.attempt);
         const activeItem = this.getActiveItem(this.props);
         this.setState({activeItem});
       }

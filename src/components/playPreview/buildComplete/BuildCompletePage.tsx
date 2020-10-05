@@ -13,6 +13,7 @@ import {setCoreLibrary} from 'components/services/axios/brick';
 import Clock from "components/play/baseComponents/Clock";
 import { Redirect } from "react-router-dom";
 import { User } from "model/user";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface BuildCompleteProps {
@@ -59,10 +60,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
             className="play-preview svgOnHover play-green"
             onClick={() => this.moveNext()}
           >
-            <svg className="svg w80 h80 active m-l-02">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#arrow-right"} />
-            </svg>
+            <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
           </button>
         </div>
       </div>
@@ -83,10 +81,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
               <div className="intro-header">
                 <div className="left-brick-circle">
                   <div className="round-button">
-                    <svg className="svg active">
-                      {/*eslint-disable-next-line*/}
-                      <use href={sprite + "#trowel"} />
-                    </svg>
+                    <SpriteIcon name="trowel" className="active" />
                   </div>
                 </div>
                 <h2>You’ve just built a brick!</h2>
@@ -96,10 +91,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                 <div className="radio-container" onClick={() => this.setState({isCore: false})}>
                   <Radio checked={this.state.isCore === false} />
                   <span className="radio-text pointer">Keep Control</span>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#key"} />
-                  </svg>
+                  <SpriteIcon name="key" className="active" />
                 </div>
                 <div className="inner-radio-text pointer" onClick={() => this.setState({isCore: false})}>
                   Share on your favourite platforms, invite anyone to play or comment
@@ -107,10 +99,7 @@ class BuildCompletePage extends Component<BuildCompleteProps, BuildCompleteState
                 <div className="radio-container pointer" onClick={()=> this.setState({isCore: true})} >
                   <Radio checked={this.state.isCore === true} />
                   <span className="radio-text">Educate the World</span>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use href={sprite + "#globe"} />
-                  </svg>
+                  <SpriteIcon name="globe" className="active" />
                 </div>
                 <div className="inner-radio-text pointer" onClick={()=> this.setState({isCore: true})}>
                   Submit to a subject specialist, receive editorial feedback,

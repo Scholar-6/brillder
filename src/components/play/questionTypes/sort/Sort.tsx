@@ -60,16 +60,33 @@ class Sort extends CompComponent<SortProps, SortState> {
       userCats.push({choices: choices, name: 'Unsorted'});
     } else {
       userCats.push({ choices: [], name: "Unsorted" });
-      if (!this.props.isBookPreview) {
       Object.keys(props.attempt.answer).forEach((value) => {
         if (props.attempt) {
           userCats[props.attempt.answer[value]].choices.push({value} as SortAnswer);
         }
       });
-      }
     }
 
     this.state = { status: DragAndDropStatus.None, userCats, choices: this.getChoices() };
+  }
+
+  componentDidUpdate(prevProp: SortProps) {
+    if (this.props.isBookPreview && this.props.attempt) {
+      if (this.props.answers !== prevProp.answers) {
+        let userCats:UserCategory[] = [];
+
+        for (let cat of this.props.component.categories) {
+          userCats.push({choices: [], name: cat.name});
+        }
+    
+        userCats.push({ choices: [], name: "Unsorted" });
+        const {answer} = this.props.attempt;
+        Object.keys(answer).forEach(value => {
+          userCats[answer[value]].choices.push({value} as SortAnswer);
+        });
+        this.setState({userCats});
+      }
+    }
   }
 
   UNSAFE_componentWillReceiveProps(props: SortProps) {

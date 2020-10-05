@@ -13,6 +13,7 @@ import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/proposal/model';
 import { getPlayPath, getAssignQueryString } from '../service';
 import BrickCounter from '../baseComponents/BrickCounter';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 const moment = require('moment');
 
 interface SynthesisProps {
@@ -72,10 +73,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
         </div>
         <div>
           <button type="button" className="play-preview svgOnHover play-green" onClick={reviewBrick}>
-            <svg className="svg w80 h80 active m-l-02">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#arrow-right"} />
-            </svg>
+            <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
           </button>
         </div>
       </div>

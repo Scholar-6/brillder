@@ -50,10 +50,7 @@ const ProfileSavedDialog: React.FC<ProfileSavedProps> = props => {
           <ListItemText primary="Profile saved" />
           <ListItemAvatar>
             <Avatar className="circle-check">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#check-icon"} className="text-white" />
-              </svg>
+              <SpriteIcon name="check-icon" clssName="active text-white" />
             </Avatar>
           </ListItemAvatar>
         </ListItem>

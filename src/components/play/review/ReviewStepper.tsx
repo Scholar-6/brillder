@@ -4,6 +4,7 @@ import { Question } from "model/question";
 import { ComponentAttempt } from "../model";
 
 import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ReviewStepperProps {
   attempts: ComponentAttempt<any>[];
@@ -30,10 +31,7 @@ const ReviewStepper: React.FC<ReviewStepperProps> = ({
       return (
         <div className="step" key={key} onClick={handleStep(index - 1)}>
           <span className={isEnd ? "blue" : ""}>{questionIndex}</span>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#cancel"} className="text-theme-orange" />
-          </svg>
+          <SpriteIcon name="cancel" className="active text-theme-orange" />
         </div>
       );
     }

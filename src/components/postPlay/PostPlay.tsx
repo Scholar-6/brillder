@@ -17,7 +17,7 @@ import {
   ApiQuestion,
   parseQuestion,
 } from "components/build/questionService/QuestionService";
-import { Question } from "model/question";
+import { Question, QuestionTypeEnum } from "model/question";
 import { getAttempts } from "components/services/axios/attempt";
 import { AttemptAnswer, PlayAttempt } from "model/attempt";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
@@ -175,6 +175,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
         parsedAnswers = JSON.parse(JSON.parse(answers[i].answer));
       } catch {}
 
+      let attempt = Object.assign({}, this.state.attempt) as any;
+      attempt.answer = parsedAnswers;
+
       return (
         <div
           className={`page3 ${i === 0 ? 'first' : ''}`}
@@ -190,7 +193,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 <h2>Investigation</h2>
                 <QuestionPlay
                   question={question}
-                  attempt={this.state.attempt as any}
+                  attempt={attempt}
                   isBookPreview={true}
                   answers={parsedAnswers}
                 />
@@ -337,10 +340,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                         onClick={this.moveToQuestions.bind(this)}
                       >
                         View Questions
-                        <svg>
-                          {/*eslint-disable-next-line*/}
-                          <use href={sprite + "#arrow-right"} />
-                        </svg>
+                        <SpriteIcon name="arrow-right" />
                       </div>
                     </div>
                   </div>

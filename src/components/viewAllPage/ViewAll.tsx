@@ -26,6 +26,7 @@ import ViewAllFilter, { SortBy } from "./ViewAllFilter";
 import ViewAllPagination from "./ViewAllPagination";
 import PrivateCoreToggle from "components/baseComponents/PrivateCoreToggle";
 import BrickBlock from "components/baseComponents/BrickBlock";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface BricksListProps {
@@ -618,10 +619,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
     return (
       <div className="page-navigation">
         <div className="btn btn-transparent glasses svgOnHover">
-          <svg className="svg w100 h100 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#glasses"} className="text-theme-dark-blue" />
-          </svg>
+          <SpriteIcon name="glasses" className="w100 h100 active text-theme-dark-blue" />
         </div>
         <div className="breadcrumbs">All</div>
       </div>

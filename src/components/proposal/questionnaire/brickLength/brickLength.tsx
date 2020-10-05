@@ -2,14 +2,15 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
-import sprite from "assets/img/icons-sprite.svg";
-import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import './brickLength.scss';
-import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
-import Navigation from 'components/proposal/components/navigation/Navigation';
 import { ProposalStep, PlayButtonStatus } from "components/proposal/model";
 import { BrickLengthEnum } from 'model/brick';
 import map from 'components/map';
+
+import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
+import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
+import Navigation from 'components/proposal/components/navigation/Navigation';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 const BrickLengthPreviewComponent: React.FC<any> = ({ data }) => {
@@ -32,10 +33,7 @@ const BrickLengthPreviewComponent: React.FC<any> = ({ data }) => {
 
   return (
     <Grid container justify="center" className="phone-preview-component">
-      <svg className={data === 0 ? "big" : ""}>
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#clock"} />
-      </svg>
+      <SpriteIcon name="clock" className={data === 0 ? "big" : ""} />
       <div className="">{data === 0 ? "" : data + ' minutes'}</div>
       {data !== 0 ? 
       <div className="preview-length-list">

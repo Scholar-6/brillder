@@ -3,30 +3,32 @@ import { Grid, Radio, FormControlLabel } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import { connect } from "react-redux";
 
-import sprite from "assets/img/icons-sprite.svg";
+import { ReduxCombinedState } from "redux/reducers";
 import actions from 'redux/actions/requestFailed';
 import brickActions from "redux/actions/brickActions";
 import userActions from "redux/actions/user";
 import authActions from "redux/actions/auth";
+
+import "./UserProfile.scss";
+
 import { getGeneralSubject, loadSubjects } from 'components/services/subject';
 import { UpdateUserStatus, UserProfileField, UserRoleItem } from './model';
 import { getUserById, createUser, updateUser, saveProfileImageName } from 'components/services/axios/user';
 import { isValid,  getUserProfile, newStudentProfile } from './service';
-
-import "./UserProfile.scss";
 import { User, UserType, UserStatus, UserProfile } from "model/user";
-import PhonePreview from "../build/baseComponents/phonePreview/PhonePreview";
 import { Subject } from "model/brick";
-import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import { checkAdmin, canBuild, canEdit } from "components/services/brickService";
+
+import SubjectAutocomplete from "./components/SubjectAutoCompete";
 import SubjectDialog from "./components/SubjectDialog";
-import { ReduxCombinedState } from "redux/reducers";
+import PhonePreview from "../build/baseComponents/phonePreview/PhonePreview";
 import SaveProfileButton from "./components/SaveProfileButton";
 import ProfileSavedDialog from "./components/ProfileSavedDialog";
 import ProfileImage from "./components/ProfileImage";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
 import ValidationFailedDialog from "components/baseComponents/dialogs/ValidationFailedDialog";
 import UserProfilePreview from "./components/UserProfilePreview";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 const mapState = (state: ReduxCombinedState) => ({ user: state.user.user });
 
@@ -455,9 +457,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
             <div style={{display: 'flex'}}>
               {this.renderSubjects(user)}
               <div className="centered">
-                <svg className={`svg red-circle ${this.state.previewAnimationFinished ? '' : 'hidden'}`}>
-                  <use href={sprite + "#arrow-left-2"} />
-                </svg>
+                <SpriteIcon
+                  name="arrow-left-2"
+                  className={`svg red-circle ${this.state.previewAnimationFinished ? '' : 'hidden'}`}
+                />
               </div>
             </div>
             <Grid container direction="row" className="big-input-container">

@@ -193,10 +193,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 <div className="intro-header">
                   <div className="left-brick-circle">
                     <div className="round-button">
-                      <svg className="svg active">
-                        {/*eslint-disable-next-line*/}
-                        <use href={sprite + "#check-icon-thin"} />
-                      </svg>
+                      <SpriteIcon name="check-icon-thin" className="active" />
                     </div>
                   </div>
                   {isCurrentEditor ?
