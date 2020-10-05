@@ -57,8 +57,12 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
   }
 
   renderCircle(color: string) {
+    let className="left-brick-circle";
+    if (color === "color3") {
+      className += ' skip-top-left-border';
+    }
     return (
-      <div className="left-brick-circle">
+      <div className={className}>
         <div className="round-button" style={{ background: `${color}` }}>
           {this.renderIcon()}
         </div>
@@ -74,9 +78,12 @@ class ShortBrickDescription extends Component<ShortDescriptionProps> {
       </div>
     )
   }
-
+  
   render() {
     const { color, brick, isMobile, isExpanded, index } = this.props;
+    if (color === "color3") {
+      console.log(color, brick.title, brick)
+    }
     let className = "short-description";
 
     if (isMobile && isExpanded) {

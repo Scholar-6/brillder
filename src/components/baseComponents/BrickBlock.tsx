@@ -5,7 +5,7 @@ import { Box } from "@material-ui/core";
 import { Brick, BrickStatus } from "model/brick";
 import { User, UserType } from "model/user";
 
-import ShortBrickDecsiption from "components/baseComponents/ShortBrickDescription";
+import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
 import ExpandedBrickDecsiption from "components/baseComponents/ExpandedBrickDescription";
 
 interface BrickBlockProps {
@@ -93,7 +93,12 @@ const BrickBlockComponent: React.FC<BrickBlockProps> = ({ brick, index, row = 0,
                 onDelete={(brickId) => props.handleDeleteOpen(brickId)}
               />
             ) : (
-              <ShortBrickDecsiption circleIcon={props.circleIcon} iconColor={props.iconColor} color={color} brick={brick} />
+              <ShortBrickDescription
+                circleIcon={props.circleIcon}
+                iconColor={props.iconColor}
+                color={color}
+                brick={brick}
+              />
             )}
           </div>
         </Box>

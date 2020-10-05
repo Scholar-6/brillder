@@ -562,11 +562,11 @@
           &.color3 {
             .round-button,
             .right-index {
-              background: white !important;
+              background: var(--theme-yellow) !important;
             }
 
             svg {
-              color: white;
+              color: var(--theme-yellow);
             }
           }
 
@@ -644,12 +644,23 @@
                 > div {
                   height: 2.1vw;
                   width: 2.1vw;
-                  border-radius: 20vw;
+                  border-radius: 50%;
                   background-color: var(--gray);
 
                   @include phone_and_tabletP {
                     height: 9.5vw;
                     width: 9.5vw;
+                  }
+                }
+                &.skip-top-left-border {
+                  background: red;
+                  border-radius: 50%;
+                  padding: 0.15vw;
+                  border-top-left-radius: 0;
+
+                  > div {
+                    height: 1.8vw;
+                    width: 1.8vw;
                   }
                 }
               }
