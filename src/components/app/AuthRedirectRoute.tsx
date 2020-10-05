@@ -47,15 +47,7 @@ const AuthRedirect: React.FC<AuthRedirectProps> = ({ user, ...props }) => {
       }
     }
 
-    let canBuild = user.roles.some((role: any) =>
-      role.roleId === UserType.Admin || role.roleId === UserType.Builder || role.roleId === UserType.Publisher
-    );
-
-    if (canBuild) {
-      return <Redirect to="/home" />
-    } else {
-      return <Redirect to="/play/dashboard" />
-    }
+    return <Redirect to="/home" />
   } else if (props.isAuthenticated === isAuthenticated.None) {
     props.isAuthorized();
     return <PageLoader content="...Checking rights..." />;

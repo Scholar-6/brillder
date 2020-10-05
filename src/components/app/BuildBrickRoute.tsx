@@ -48,25 +48,14 @@ const BuildBrickRoute: React.FC<BuildRouteProps> = ({ component: Component, ...r
       }
     }
 
-    const isBuilder = user.roles.some(role => {
-      const { roleId } = role;
-      return roleId === UserType.Builder || roleId === UserType.Publisher || roleId === UserType.Admin;
-    });
-    if (isBuilder) {
-      return <Route {...rest} render={props => {
-        const brickId = parseInt(props.match.params.brickId);
-        if (!rest.brick || !rest.brick.author || rest.brick.id !== brickId) {
-          rest.fetchBrick(brickId);
-          return <PageLoader content="...Getting Brick..." />;
-        }
-        return <Component {...props} />
-      }} />;
-    }
-    const isStudent = user.roles.some(role => role.roleId === UserType.Student);
-    if (isStudent) {
-      return <Redirect to="/play" />
-    }
-    return <Redirect to="/" />
+    return <Route {...rest} render={props => {
+      const brickId = parseInt(props.match.params.brickId);
+      if (!rest.brick || !rest.brick.author || rest.brick.id !== brickId) {
+        rest.fetchBrick(brickId);
+        return <PageLoader content="...Getting Brick..." />;
+      }
+      return <Component {...props} />
+    }} />;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized()
     return <PageLoader content="...Checking rights..." />;

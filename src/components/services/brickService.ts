@@ -103,14 +103,8 @@ export function checkAdmin(roles: UserRole[]) {
 
 export function canEditBrick(brick: any, user: User) {
   let isAdmin = checkAdmin(user.roles);
-  if (isAdmin) {
+  if (isAdmin || brick.author?.id === user.id) {
     return true;
-  }
-  let isBuilder = checkBuilder(user.roles);
-  if (isBuilder) {
-    if (brick.author?.id === user.id) {
-      return true;
-    }
   }
   return false;
 }
