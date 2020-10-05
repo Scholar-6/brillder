@@ -27,6 +27,7 @@ import { Redirect } from "react-router-dom";
 
 enum BookState {
   Titles,
+  Attempts,
   QuestionPage,
 }
 
@@ -49,6 +50,8 @@ interface ProposalState {
   bookState: BookState;
   questionIndex: number;
   animationRunning: boolean;
+  activeAttemptIndex: number;
+  attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
   mode: boolean; // live - false, review - true
 }
@@ -61,28 +64,41 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       questionIndex: 0,
       animationRunning: false,
       mode: false,
+      activeAttemptIndex: 0,
       attempt: null,
       closeTimeout: -1,
       bookHovered: false,
       isFirstHover: true,
+      attempts: [],
       firstHoverTimeout: -1
     };
     this.loadData();
+  }
+
+  prepareAttempt(attempt: PlayAttempt) {
+    attempt.brick.questions = attempt.brick.questions.sort((a, b) => a.order - b.order);
   }
 
   async loadData() {
     const {userId, brickId} = this.props.match.params;
     let attempts = await getAttempts(brickId, userId);
     if (attempts && attempts.length > 0) {
-      const attempt = attempts[0];
-      attempt.brick.questions = attempt.brick.questions.sort((a, b) => a.order - b.order);
-      this.setState({attempt: attempts[0]})
+      const attempt = attempts[this.state.activeAttemptIndex];
+      this.prepareAttempt(attempt);
+      this.setState({attempt: attempt, attempts});
     }
+  }
+
+  setActiveAttempt(attempt: PlayAttempt, i: number) {
+    try {
+      this.prepareAttempt(attempt);
+      this.setState({attempt, activeAttemptIndex: i});
+    } catch {}
   }
 
   componentDidCatch(error: any, info: any) {
     console.log(error, info);
-    this.props.history.push('/');
+    this.props.history.push('/home');
   }
 
   openDialog = () => this.setState({});
@@ -111,6 +127,14 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.setState({ closeTimeout });
   }
 
+  moveToTitles() {
+    this.setState({ bookState: BookState.Titles });
+  }
+
+  moveToAttempts() {
+    this.setState({ bookState: BookState.Attempts });
+  }
+
   moveToQuestions() {
     this.setState({ bookState: BookState.QuestionPage, questionIndex: 0 });
   }
@@ -129,6 +153,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     if (this.state.animationRunning) {
       return;
     }
+    if (this.state.questionIndex === 0) {
+      this.setState({ bookState: BookState.Attempts});
+    }
     if (this.state.questionIndex > 0) {
       this.setState({ questionIndex: this.state.questionIndex - 1, animationRunning: true });
       setTimeout(() => this.setState({ animationRunning: false }), 1200);
@@ -137,6 +164,68 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   getAttemptStatus(answers: AttemptAnswer[]) {
     return !answers.find(a => a.correct === false);
+  }
+
+  renderFirstPage(brick: Brick, color: string) {
+    return (
+      <div className="page1">
+        <div className="flipped-page">
+          <Grid container justify="center">
+            <div className="circle-icon" style={{ background: color }} />
+          </Grid>
+          <div className="proposal-titles">
+            <div className="title">{brick.title}</div>
+            <div>{brick.subTopic}</div>
+            <div>{brick.alternativeTopics}</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderSecondPage() {
+    return (
+      <div className="page2">
+        <div className="normal-page">
+          <div className="normal-page-container">
+            <h2>OVERALL</h2>
+            <h2>STATS, AVGs</h2>
+            <h2>etc.</h2>
+            <div className="bottom-button" onClick={this.moveToAttempts.bind(this)}>
+              View Questions
+              <SpriteIcon name="arrow-right" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderThirdPage() {
+    return <div className="page3-empty" onClick={this.moveToTitles.bind(this)}></div>;
+  }
+
+  renderFourthPage() {
+    return (
+      <div className="page4-attempts" onClick={this.moveToQuestions.bind(this)}>
+        {this.state.attempts.map((a, i) =>
+          {
+            const percentages = Math.round(a.score * 100 / a.maxScore);
+            return (
+              <div
+                className={`attempt-info ${i === this.state.activeAttemptIndex ? 'active' : ''}`}
+                onClick={e => {
+                  e.stopPropagation();
+                  this.setActiveAttempt(a, i);
+                }}
+              >
+                <div className="percentage">{percentages}</div> Attempt {i + 1}
+              </div>
+            );
+          }
+        )}
+      </div>
+    );
   }
 
   render() {
@@ -178,6 +267,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     if (this.state.bookHovered) {
       if (this.state.bookState === BookState.Titles) {
         bookClass += " expanded hovered";
+      } else if (this.state.bookState === BookState.Attempts) {
+        bookClass += " expanded attempts-list";
       } else if (this.state.bookState === BookState.QuestionPage) {
         bookClass += ` expanded question-attempt`;
       }
@@ -336,34 +427,10 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
             <div className="book-container" onMouseOut={this.onBookClose.bind(this)}>
               <div className="book" onMouseOver={this.onBookHover.bind(this)}>
                 <div className="back"></div>
-                <div className="page1">
-                  <div className="flipped-page">
-                    <Grid container justify="center">
-                      <div className="circle-icon" style={{ background: color }} />
-                    </Grid>
-                    <div className="proposal-titles">
-                      <div className="title">{brick.title}</div>
-                      <div>{brick.subTopic}</div>
-                      <div>{brick.alternativeTopics}</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="page2">
-                  <div className="normal-page">
-                    <div className="normal-page-container">
-                      <h2>OVERALL</h2>
-                      <h2>STATS, AVGs</h2>
-                      <h2>etc.</h2>
-                      <div
-                        className="bottom-button"
-                        onClick={this.moveToQuestions.bind(this)}
-                      >
-                        View Questions
-                        <SpriteIcon name="arrow-right" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {this.renderFirstPage(brick, color)}
+                {this.renderSecondPage()}
+                {this.renderThirdPage()}
+                {this.renderFourthPage()}
                 {questions.map((q, i) => {
                   if (i <= this.state.questionIndex + 1 && i >= this.state.questionIndex - 1) {
                     return (
