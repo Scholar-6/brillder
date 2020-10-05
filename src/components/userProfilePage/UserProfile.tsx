@@ -14,7 +14,7 @@ import "./UserProfile.scss";
 import { getGeneralSubject, loadSubjects } from 'components/services/subject';
 import { UpdateUserStatus, UserProfileField, UserRoleItem } from './model';
 import { getUserById, createUser, updateUser, saveProfileImageName } from 'components/services/axios/user';
-import { isValid,  getUserProfile, newStudentProfile } from './service';
+import { isValid, getUserProfile, newStudentProfile } from './service';
 import { User, UserType, UserStatus, UserProfile } from "model/user";
 import { Subject } from "model/brick";
 import { checkAdmin, canBuild, canEdit } from "components/services/brickService";
@@ -143,7 +143,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         { roleId: UserType.Student, name: "Student", disabled: !isBuilder },
         { roleId: UserType.Teacher, name: "Teacher", disabled: !isAdmin },
         { roleId: UserType.Builder, name: "Builder", disabled: !isBuilder },
-        { roleId: UserType.Editor, name: "Editor", disabled: !isEditor },
+        { roleId: UserType.Publisher, name: "Publisher", disabled: !isEditor },
         { roleId: UserType.Admin, name: "Admin", disabled: !isAdmin },
       ],
       noSubjectDialogOpen: false,
@@ -167,7 +167,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
         { roleId: UserType.Student, name: "Student", disabled: false },
         { roleId: UserType.Teacher, name: "Teacher", disabled: false },
         { roleId: UserType.Builder, name: "Builder", disabled: false },
-        { roleId: UserType.Editor, name: "Editor", disabled: false },
+        { roleId: UserType.Publisher, name: "Publisher", disabled: false },
         { roleId: UserType.Admin, name: "Admin", disabled: false },
       ],
       noSubjectDialogOpen: false,
@@ -278,10 +278,10 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
     user[name] = e.target.value;
     this.setState({ user });
   }
-  
+
   onEmailChanged(e: React.ChangeEvent<HTMLInputElement>) {
     const { user } = this.state;
-    const {value} = e.target;
+    const { value } = e.target;
     user.email = value;
     let emailInvalid = false;
     if (!/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
@@ -391,7 +391,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
   }
 
   previewAnimationFinished() {
-    this.setState({previewAnimationFinished: true})
+    this.setState({ previewAnimationFinished: true })
   }
 
   render() {
@@ -454,7 +454,7 @@ class UserProfilePage extends Component<UserProfileProps, UserProfileState> {
                 </Grid>
               </div>
             </div>
-            <div style={{display: 'flex'}}>
+            <div style={{ display: 'flex' }}>
               {this.renderSubjects(user)}
               <div className="centered">
                 <SpriteIcon
