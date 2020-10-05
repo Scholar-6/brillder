@@ -52,6 +52,7 @@ interface ProposalState {
   questionIndex: number;
   animationRunning: boolean;
   activeAttemptIndex: number;
+  pageFlipDelay: number;
   subjects: Subject[];
   attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
@@ -71,6 +72,7 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       closeTimeout: -1,
       bookHovered: false,
       isFirstHover: true,
+      pageFlipDelay: 1200,
       attempts: [],
       subjects: [],
       firstHoverTimeout: -1
@@ -131,38 +133,45 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     this.setState({ closeTimeout });
   }
 
+  
+  animationFlipRelease() {
+    setTimeout(() => this.setState({ animationRunning: false }), this.state.pageFlipDelay);
+  }
+
   moveToTitles() {
-    this.setState({ bookState: BookState.Titles });
+    if (this.state.animationRunning) { return; }
+    this.setState({ bookState: BookState.Titles, animationRunning: true });
+    this.animationFlipRelease();
   }
 
   moveToAttempts() {
-    this.setState({ bookState: BookState.Attempts });
+    if (this.state.animationRunning) { return; }
+    this.setState({ bookState: BookState.Attempts, animationRunning: true });
+    this.animationFlipRelease();
   }
 
   moveToQuestions() {
-    this.setState({ bookState: BookState.QuestionPage, questionIndex: 0 });
+    if (this.state.animationRunning) { return; }
+    this.setState({ bookState: BookState.QuestionPage, questionIndex: 0, animationRunning: true });
+    this.animationFlipRelease();
   }
 
   nextQuestion(brick: Brick) {
-    if (this.state.animationRunning) {
-      return;
-    }
+    if (this.state.animationRunning) { return; }
     if (this.state.questionIndex < brick.questions.length - 1) {
       this.setState({ questionIndex: this.state.questionIndex + 1, animationRunning: true });
-      setTimeout(() => this.setState({ animationRunning: false }), 1200);
+      this.animationFlipRelease();
     }
   }
 
   prevQuestion() {
-    if (this.state.animationRunning) {
-      return;
-    }
+    if (this.state.animationRunning) { return; }
     if (this.state.questionIndex === 0) {
       this.setState({ bookState: BookState.Attempts});
     }
     if (this.state.questionIndex > 0) {
       this.setState({ questionIndex: this.state.questionIndex - 1, animationRunning: true });
-      setTimeout(() => this.setState({ animationRunning: false }), 1200);
+      this.animationFlipRelease();
     }
   }
 
@@ -437,6 +446,12 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
                 {this.renderFirstPage(brick, color)}
                 {this.renderSecondPage()}
                 {this.renderThirdPage()}
+                {this.state.bookHovered && this.state.bookState === BookState.QuestionPage &&
+                  <SpriteIcon
+                    name="custom-bookmark"
+                    className={`bookmark ${this.state.animationRunning ? "hidden" : ""}`}
+                  />
+                }
                 {this.renderFourthPage()}
                 {questions.map((q, i) => {
                   if (i <= this.state.questionIndex + 1 && i >= this.state.questionIndex - 1) {
