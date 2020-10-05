@@ -35,6 +35,7 @@ import BrickWrapper from './BrickWrapper';
 import { setBrillderTitle } from 'components/services/titleService';
 import { setupZendesk } from 'components/services/zendesk';
 import map from 'components/map';
+import UserPreferencePage from 'components/userProfilePage/userPreferencePage/UserPreferencePage';
 
 
 const App: React.FC = () => {
@@ -87,7 +88,7 @@ const App: React.FC = () => {
         <StudentRoute path="/play/dashboard/:categoryId" component={MobileCategory} />
         <StudentRoute path={map.ViewAllPage} component={ViewAll} />
 
-        <BuildRoute path="/manage-classrooms" component={ManageClassrooms} location={location} /> 
+        <BuildRoute path="/manage-classrooms" component={ManageClassrooms} location={location} />
         <BuildRoute path="/classroom-stats/:classroomId" component={ClassStatisticsPage} location={location} />
 
         <BuildBrickRoute path="/play-preview/brick/:brickId" component={PlayPreviewRouting} location={location} />
@@ -98,6 +99,7 @@ const App: React.FC = () => {
         <BuildRoute path="/users" component={UsersListPage} location={location} />
         <BuildRoute path="/user-profile/:userId" component={UserProfilePage} location={location} />
         <AllUsersRoute path="/user-profile" component={UserProfilePage} />
+        <AllUsersRoute path="/user/preference" component={UserPreferencePage} />
         <BuildRoute path="/home" component={MainPage} location={location} />
 
         <AuthRoute path="/login/:privacy" component={LoginPage} />
