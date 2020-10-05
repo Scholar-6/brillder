@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import sprite from "assets/img/icons-sprite.svg";
 import "./PostPlay.scss";
 import { ReduxCombinedState } from "redux/reducers";
-import { Brick } from "model/brick";
+import { Brick, Subject } from "model/brick";
 import { User } from "model/user";
 import { setBrillderTitle } from "components/services/titleService";
 
@@ -24,6 +24,7 @@ import PageLoader from "components/baseComponents/loaders/pageLoader";
 import { getHours, getMinutes, getFormattedDate } from "components/services/brickService";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Redirect } from "react-router-dom";
+import { loadSubjects } from "components/services/subject";
 
 enum BookState {
   Titles,
@@ -51,6 +52,7 @@ interface ProposalState {
   questionIndex: number;
   animationRunning: boolean;
   activeAttemptIndex: number;
+  subjects: Subject[];
   attempts: PlayAttempt[];
   attempt: PlayAttempt | null;
   mode: boolean; // live - false, review - true
@@ -70,22 +72,24 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       bookHovered: false,
       isFirstHover: true,
       attempts: [],
+      subjects: [],
       firstHoverTimeout: -1
     };
     this.loadData();
   }
 
-  prepareAttempt(attempt: PlayAttempt) {
+  prepareAttempt(attempt:  PlayAttempt) {
     attempt.brick.questions = attempt.brick.questions.sort((a, b) => a.order - b.order);
   }
 
   async loadData() {
     const {userId, brickId} = this.props.match.params;
+    const subjects = await loadSubjects();
     let attempts = await getAttempts(brickId, userId);
-    if (attempts && attempts.length > 0) {
+    if (subjects && attempts && attempts.length > 0) {
       const attempt = attempts[this.state.activeAttemptIndex];
       this.prepareAttempt(attempt);
-      this.setState({attempt: attempt, attempts});
+      this.setState({attempt: attempt, attempts, subjects});
     }
   }
 
@@ -259,8 +263,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     };
 
     let color = "#B0B0AD";
-    if (brick.subject) {
-      color = brick.subject.color;
+    if (brick.subjectId) {
+      const subject = this.state.subjects.find(s => s.id === brick.subjectId);
+      if (subject) {
+        color = subject.color;
+      }
     }
 
     let bookClass = "book-main-container";
