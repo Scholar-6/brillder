@@ -6,8 +6,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import './ProfileSavedDialog.scss';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
-import sprite from "assets/img/icons-sprite.svg";
 
 interface ProfileSavedProps {
   isAdmin: boolean;
@@ -50,7 +50,7 @@ const ProfileSavedDialog: React.FC<ProfileSavedProps> = props => {
           <ListItemText primary="Profile saved" />
           <ListItemAvatar>
             <Avatar className="circle-check">
-              <SpriteIcon name="check-icon" clssName="active text-white" />
+              <SpriteIcon name="check-icon" className="active text-white" />
             </Avatar>
           </ListItemAvatar>
         </ListItem>

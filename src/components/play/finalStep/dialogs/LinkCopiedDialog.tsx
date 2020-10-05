@@ -7,7 +7,6 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import './LinkCopiedDialog.scss';
 
-import sprite from "assets/img/icons-sprite.svg";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ProfileSavedProps {

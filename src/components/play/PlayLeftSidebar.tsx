@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import { connect } from 'react-redux';
 
 import { ReduxCombinedState } from 'redux/reducers';
-import sprite from "assets/img/icons-sprite.svg";
 import { PlayMode } from './model';
 import CommingSoonDialog from 'components/baseComponents/dialogs/CommingSoon';
 import AssignPersonOrClassDialog from 'components/baseComponents/dialogs/AssignPersonOrClass';

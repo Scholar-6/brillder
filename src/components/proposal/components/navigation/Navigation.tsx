@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { Grid, Hidden } from "@material-ui/core";
 import { connect } from 'react-redux';
 
-import sprite from "assets/img/icons-sprite.svg";
 import './Navigation.scss';
 import { ReduxCombinedState } from 'redux/reducers';
 import { ProposalStep, PlayButtonStatus } from "../../model";

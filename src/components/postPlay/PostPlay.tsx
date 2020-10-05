@@ -17,7 +17,7 @@ import {
   ApiQuestion,
   parseQuestion,
 } from "components/build/questionService/QuestionService";
-import { Question, QuestionTypeEnum } from "model/question";
+import { Question } from "model/question";
 import { getAttempts } from "components/services/axios/attempt";
 import { AttemptAnswer, PlayAttempt } from "model/attempt";
 import PageLoader from "components/baseComponents/loaders/pageLoader";

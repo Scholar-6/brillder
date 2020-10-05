@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Hidden } from '@material-ui/core';
+import moment from 'moment';
 
 import './Synthesis.scss';
 import { Brick } from 'model/brick';
@@ -7,14 +8,12 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { PlayStatus } from '../model';
 import { BrickLengthEnum } from 'model/brick';
 import TimerWithClock from "../baseComponents/TimerWithClock";
-import sprite from "assets/img/icons-sprite.svg";
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/proposal/model';
 import { getPlayPath, getAssignQueryString } from '../service';
 import BrickCounter from '../baseComponents/BrickCounter';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-const moment = require('moment');
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
