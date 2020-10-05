@@ -13,6 +13,7 @@ import {
 import { stripHtml } from "components/build/questionService/ConvertService";
 import DocumentWirisEditorComponent from "components/baseComponents/ckeditor/DocumentWirisEditor";
 import MathInHtml from "components/play/baseComponents/MathInHtml";
+import { getValidationClassName } from "../service";
 
 export type ShortAnswerAnswer = string[];
 
@@ -116,12 +117,19 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     if (this.props.attempt) {
       isCorrect = this.checkAttemptAnswer(answer, index);
     }
+
+    let className = 'short-answer-input';
+
+    if (this.props.isBookPreview) {
+      className += getValidationClassName(isCorrect);
+    } else {
+      if (isCorrect) {
+        className += ' correct';
+      }
+    }
+
     return (
-      <div
-        key={index}
-        className={`short-answer-input ${isCorrect ? "correct" : ""}`}
-        style={{ width: `${width}%` }}
-      >
+      <div key={index} className={className} style={{ width: `${width}%` }}>
         {this.renderCkeditor(index)}
         <ReviewEachHint
           isPhonePreview={this.props.isPreview}
