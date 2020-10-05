@@ -96,15 +96,12 @@ class ExpandedAssignment extends Component<
   ) {
     if (studentResult && studentStatus) {
       const attempt = studentResult.attempts[0].answers[questionNumber];
+      console.log(attempt);
       if (attempt.correct === true) {
         return <SpriteIcon name="check-icon-thin" className="text-theme-green" />;
       }
       if (attempt.marks < 3) {
-        return (
-          <svg>
-            <use href={sprite + "#cancel"} style={{strokeWidth: 2}} className="text-theme-orange" />
-          </svg>
-        );
+        return <SpriteIcon name="cancel" className="text-theme-orange stroke-2" />;
       }
       if (attempt.marks >= attempt.maxMarks) {
         return <SpriteIcon name="check-icon-thin" className="text-theme-green" />;
@@ -133,24 +130,21 @@ class ExpandedAssignment extends Component<
           <div>{this.renderStatus(studentStatus)}</div>
         </td>
         <td className="student-book">
-          {studentStatus ? <div className="centered">{this.renderBookIcon(student.id)}</div> : ""}
+          {studentStatus && <div className="centered">{this.renderBookIcon(student.id)}</div>}
         </td>
         <td className={`assigned-student-name`}>
           {student.firstName} {student.lastName}
         </td>
         {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
-          (a, i) => {
-            return (
-              <td key={i} className="icon-container">
-                <div className="centered">
-                  {this.renderQuestionAttemptIcon(studentResult, studentStatus, i)}
-                </div>
-              </td>
-            );
-          }
+          (a, i) =>
+            <td key={i} className="icon-container">
+              <div className="centered">
+                {this.renderQuestionAttemptIcon(studentResult, studentStatus, i)}
+              </div>
+            </td>
         )}
         <td>
-          {studentStatus ? <div className="centered">{this.renderCommentIcon()}</div> : ""}
+          {studentStatus && <div className="centered">{this.renderCommentIcon()}</div>}
         </td>
       </tr>
     );
@@ -180,9 +174,7 @@ class ExpandedAssignment extends Component<
           </th>
           <th></th>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
-            (a, i) => (
-              <th key={i}><div className="centered">{i + 1}</div></th>
-            )
+            (a, i) => <th key={i}><div className="centered">{i + 1}</div></th>
           )}
           <th></th>
         </tr>
