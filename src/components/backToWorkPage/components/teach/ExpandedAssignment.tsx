@@ -189,10 +189,7 @@ class ExpandedAssignment extends Component<
 
   renderTableHead() {
     const {sortBy} = this.state;
-    let name = "arrow-down";
-    if (sortBy === SortBy.AvgIncreasing) {
-      name = "arrow-up";
-    }
+    const name = sortBy === SortBy.AvgIncreasing ? "arrow-up" : "arrow-down";
     
     let className = "btn btn-transparent svgOnHover btn-grey-circle";
     if (sortBy === SortBy.AvgIncreasing || sortBy === SortBy.AvgDecreasing) {
