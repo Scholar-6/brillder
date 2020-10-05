@@ -121,7 +121,8 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       }
     } else {
       if (!this.state.bookHovered) {
-        this.setState({ bookHovered: true });
+        this.setState({ bookHovered: true, animationRunning: true });
+        setTimeout(() => { this.setState({animationRunning: false}) }, this.state.pageFlipDelay);
       }
     }
   }
