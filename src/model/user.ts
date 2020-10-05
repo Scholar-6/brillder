@@ -3,7 +3,7 @@ export enum UserType {
   Teacher,
   Builder,
   Admin,
-  Editor,
+  Publisher,
 }
 
 export enum UserStatus {
