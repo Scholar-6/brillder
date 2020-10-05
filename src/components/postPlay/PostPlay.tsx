@@ -42,6 +42,8 @@ interface ProposalProps {
 }
 
 interface ProposalState {
+  isFirstHover: boolean;
+  firstHoverTimeout: number;
   closeTimeout: number;
   bookHovered: boolean;
   bookState: BookState;
@@ -61,7 +63,9 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
       mode: false,
       attempt: null,
       closeTimeout: -1,
-      bookHovered: false
+      bookHovered: false,
+      isFirstHover: true,
+      firstHoverTimeout: -1
     };
     this.loadData();
   }
@@ -86,8 +90,17 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
 
   onBookHover() { 
     clearTimeout(this.state.closeTimeout);
-    if (!this.state.bookHovered) {
-      this.setState({ bookHovered: true });
+    if (this.state.isFirstHover) {
+      if (this.state.firstHoverTimeout === -1) {
+        const firstHoverTimeout = setTimeout(() => {
+          this.setState({firstHoverTimeout: -1, isFirstHover: false, bookHovered: true });
+        }, 600);
+        this.setState({ firstHoverTimeout });
+      }
+    } else {
+      if (!this.state.bookHovered) {
+        this.setState({ bookHovered: true });
+      }
     }
   }
 
