@@ -83,7 +83,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         { name: "Student", type: UserType.Student, checked: false },
         { name: "Teacher", type: UserType.Teacher, checked: false },
         { name: "Builder", type: UserType.Builder, checked: false },
-        { name: "Editor", type: UserType.Editor, checked: false },
+        { name: "Publisher", type: UserType.Publisher, checked: false },
         { name: "Admin", type: UserType.Admin, checked: false },
       ],
 
@@ -441,8 +441,8 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
         type += "A";
       } else if (role.roleId === UserType.Builder) {
         type += "B";
-      } else if (role.roleId === UserType.Editor) {
-        type += "E";
+      } else if (role.roleId === UserType.Publisher) {
+        type += "P";
       } else if (role.roleId === UserType.Student) {
         type += "S";
       } else if (role.roleId === UserType.Teacher) {

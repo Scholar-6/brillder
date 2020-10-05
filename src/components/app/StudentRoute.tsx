@@ -17,8 +17,8 @@ interface StudentRouteProps {
   isAuthenticated: isAuthenticated;
   isRedirectedToProfile: boolean;
   user: User;
-  getUser():void;
-  isAuthorized():void;
+  getUser(): void;
+  isAuthorized(): void;
 }
 
 const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, innerComponent, user, ...rest }) => {
@@ -29,20 +29,12 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, inner
     }
 
     if (!rest.isRedirectedToProfile) {
-      if(!user.firstName || !user.lastName) {
+      if (!user.firstName || !user.lastName) {
         return <Redirect to="/user-profile" />
       }
     }
-    const {roles} = user;
-    let can = roles.some((role: any) => {
-      const {roleId} = role
-      return roleId === UserType.Student || roleId === UserType.Admin || roleId === UserType.Builder || roleId === UserType.Editor;
-    });
-    if (can) {
-      return <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />;
-    } else {
-      return <PageLoader content="...Forbidden..." />;
-    }
+
+    return <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized()
     return <PageLoader content="...Checking rights..." />;
