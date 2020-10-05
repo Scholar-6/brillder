@@ -76,6 +76,11 @@ class PostPlay extends React.Component<ProposalProps, ProposalState> {
     }
   }
 
+  componentDidCatch(error: any, info: any) {
+    console.log(error, info);
+    this.props.history.push('/');
+  }
+
   openDialog = () => this.setState({});
   closeDialog = () => this.setState({});
 
