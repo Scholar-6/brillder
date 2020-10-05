@@ -188,17 +188,24 @@ class ExpandedAssignment extends Component<
   }
 
   renderTableHead() {
+    const {sortBy} = this.state;
+    let name = "arrow-down";
+    if (sortBy === SortBy.AvgIncreasing) {
+      name = "arrow-up";
+    }
+    
+    let className = "btn btn-transparent svgOnHover btn-grey-circle";
+    if (sortBy === SortBy.AvgIncreasing || sortBy === SortBy.AvgDecreasing) {
+      className += " active";
+    }
     return (
       <thead>
         <tr>
           <th></th>
           <th>
             <div className="center">
-              <button
-                className="btn btn-transparent svgOnHover btn-grey-circle"
-                onClick={() => this.toggleSort()}
-              >
-                <SpriteIcon name="arrow-down" className="active text-theme-dark-blue" />
+              <button className={className} onClick={() => this.toggleSort()}>
+                <SpriteIcon name={name} className="active text-theme-dark-blue" />
               </button>
             </div>
           </th>
