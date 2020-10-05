@@ -9,6 +9,7 @@ import moment from 'moment';
 import './NotificationPanel.scss';
 
 import map from 'components/map';
+import actions from 'redux/actions/brickActions';
 import { isMobile } from 'react-device-detect';
 import { checkTeacherEditorOrAdmin } from 'components/services/brickService';
 import { User } from 'model/user';
@@ -18,15 +19,22 @@ const mapState = (state: ReduxCombinedState) => ({
   notifications: state.notifications.notifications
 });
 
-const connector = connect(mapState);
+const mapDispatch = (dispatch: any) => ({
+  fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
+});
+
+const connector = connect(mapState, mapDispatch);
 
 interface NotificationPanelProps {
-  user: User;
   shown: boolean;
-  notifications: Notification[] | null;
   handleClose(): void;
   anchorElement: any;
   history?: any;
+
+  // redux
+  user: User;
+  notifications: Notification[] | null;
+  fetchBrick(brickId: number): void;
 }
 
 class NotificationPanel extends Component<NotificationPanelProps> {
@@ -37,7 +45,11 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         history.push(map.ViewAllPage);
       } else if (notification.type === NotificationType.AssignedToEdit || notification.type === NotificationType.BrickSubmittedForReview) {
         if (notification.type === NotificationType.AssignedToEdit) {
-          window.location.href = map.BackToWorkBuildTab;
+          if (notification.brick && notification.brick.id) {
+            this.props.fetchBrick(notification.brick.id);
+            history.push(map.ProposalTitle);
+          }
+          //window.location.href = map.BackToWorkBuildTab;
         } else {
           history.push(map.BackToWorkPage);
         }
