@@ -33,16 +33,8 @@ const StudentRoute: React.FC<StudentRouteProps> = ({ component: Component, inner
         return <Redirect to="/user-profile" />
       }
     }
-    const { roles } = user;
-    let can = roles.some((role: any) => {
-      const { roleId } = role
-      return roleId === UserType.Student || roleId === UserType.Admin || roleId === UserType.Builder || roleId === UserType.Publisher;
-    });
-    if (can) {
-      return <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />;
-    } else {
-      return <PageLoader content="...Forbidden..." />;
-    }
+
+    return <Route {...rest} render={(props) => <Component component={innerComponent} {...props} />} />;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized()
     return <PageLoader content="...Checking rights..." />;

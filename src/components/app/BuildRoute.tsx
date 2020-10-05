@@ -44,18 +44,7 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
       }
     }
 
-    const isBuilder = user.roles.some(role => {
-      const { roleId } = role;
-      return roleId === UserType.Builder || roleId === UserType.Publisher || roleId === UserType.Admin;
-    });
-    if (isBuilder) {
-      return <Route {...rest} render={(props) => <Component {...props} />} />;
-    }
-    const isStudent = user.roles.some(role => role.roleId === UserType.Student);
-    if (isStudent) {
-      return <Redirect to="/play" />
-    }
-    return <Redirect to="/" />
+    return <Route {...rest} render={(props) => <Component {...props} />} />;
   } else if (rest.isAuthenticated === isAuthenticated.None) {
     rest.isAuthorized()
     return <PageLoader content="...Checking rights..." />;
