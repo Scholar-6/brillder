@@ -267,6 +267,7 @@
 
     .page4-attempts {
       padding-top: 5vh;
+      overflow-y: auto;
       .attempt-info {
         cursor: pointer;
         padding-top: 0.5vh;
