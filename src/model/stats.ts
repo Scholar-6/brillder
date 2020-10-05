@@ -20,6 +20,7 @@ export interface AssignmentAttepmtAnswer {
 
 export interface AttemptStats {
     answers: AssignmentAttepmtAnswer[];
+    liveAnswers: AssignmentAttepmtAnswer[];
     score: number;
     oldScore: number;
     maxScore: number;

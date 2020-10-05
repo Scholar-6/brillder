@@ -141,19 +141,20 @@ class ExpandedAssignment extends Component<
   ) {
     if (studentResult && studentStatus) {
       const attempt = studentResult.attempts[0].answers[questionNumber];
-      if (attempt.correct === true) {
+      const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
+
+      // yellow tick
+      if (attempt.correct === true && liveAttempt.correct === false) {
+        return <SpriteIcon name="check-icon-thin" className="text-yellow" />;
+      } else if (attempt.correct === false && liveAttempt.correct === true) {
+        return <SpriteIcon name="check-icon-thin" className="text-yellow" />;
+      }
+
+      if (attempt.correct === true && liveAttempt.correct === true) {
         return <SpriteIcon name="check-icon-thin" className="text-theme-green" />;
       }
-      if (attempt.marks < 3) {
-        return <SpriteIcon name="cancel" className="text-theme-orange stroke-2" />;
-      }
-      if (attempt.marks >= attempt.maxMarks) {
-        return <SpriteIcon name="check-icon-thin" className="text-theme-green" />;
-      }
-      if (attempt.marks < 5) {
-        return <SpriteIcon name="cancel" className="text-yellow" />;
-      }
-      return <SpriteIcon name="check-icon-thin" className="text-yellow" />;
+
+      return <SpriteIcon name="cancel" className="text-theme-orange stroke-2" />;
     }
     return "";
   }
