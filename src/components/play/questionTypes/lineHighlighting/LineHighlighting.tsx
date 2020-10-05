@@ -26,8 +26,24 @@ class LineHighlighting extends CompComponent<
     this.state = { userAnswers: [], lines: props.component.lines };
   }
 
-  UNSAFE_componentWillReceiveProps(props: LineHighlightingProps) {
-    this.setState({ lines: props.component.lines });
+  componentDidUpdate(prevProp: LineHighlightingProps) {
+    if (this.props.isBookPreview) {
+      if (this.props.answers !== prevProp.answers) {
+        const lines = this.props.component.lines.map((l: any, i:number) => {
+          this.props.answers.map(a => {
+            if (a === i) {
+              l.selected = true;
+            }
+          });
+          return l;
+        })
+        this.setState({lines});
+      }
+    } else {
+      if (this.state.lines !== this.props.component.lines) {
+        this.setState({ lines: this.props.component.lines });
+      }
+    }
   }
 
   getAnswer(): number[] {
@@ -66,9 +82,19 @@ class LineHighlighting extends CompComponent<
       className += " active";
     }
 
-    if (this.props.attempt && line.selected && this.props.isReview) {
-      let status = this.props.attempt.answer.indexOf(index);
-      if (status !== -1) {
+    if (line.selected) {
+      if (this.props.attempt && this.props.isReview) {
+        let status = this.props.attempt.answer.indexOf(index);
+        if (status !== -1) {
+          if (line.checked === true) {
+            className += " correct";
+          } else {
+            className += " wrong";
+          }
+        }
+      }
+
+      if (this.props.isBookPreview) {
         if (line.checked === true) {
           className += " correct";
         } else {
