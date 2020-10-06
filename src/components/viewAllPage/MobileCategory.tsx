@@ -4,20 +4,20 @@ import { Box, Grid, Grow } from "@material-ui/core";
 import axios from "axios";
 import { connect } from "react-redux";
 import PageHeadWithMenu, { PageEnum } from "components/baseComponents/pageHeader/PageHeadWithMenu";
-
-import sprite from "assets/img/icons-sprite.svg";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
 
 import { Brick, BrickStatus } from "model/brick";
 import { User } from "model/user";
-import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
-import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
 import { ReduxCombinedState } from "redux/reducers";
 import brickActions from "redux/actions/brickActions";
 import actions from 'redux/actions/requestFailed';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import map from 'components/map';
-import 'swiper/swiper.scss';
 import { getAssignmentIcon } from "components/services/brickService";
+
+import ShortBrickDescription from "components/baseComponents/ShortBrickDescription";
+import ExpandedMobileBrick from "components/baseComponents/ExpandedMobileBrickDescription";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 const mapState = (state: ReduxCombinedState) => ({
@@ -230,10 +230,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
       <div className="main-listing dashboard-page mobile-category">
         <div className="page-navigation">
           <div className="btn btn-transparent glasses svgOnHover">
-            <svg className="svg w100 h100 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#glasses"} className="text-theme-dark-blue" />
-            </svg>
+            <SpriteIcon name="glasses" className="w100 h100 active text-theme-dark-blue" />
           </div>
           <div className="breadcrumbs">New</div>
         </div>
@@ -253,10 +250,7 @@ class MobileCategoryPage extends Component<BricksListProps, BricksListState> {
             <div className="brick-row-title" onClick={() => this.props.history.push('/play/dashboard')}>
               <button className="btn btn-transparent svgOnHover">
                 <span>New</span>
-                <svg className="svg active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#arrow-down"} className="text-theme-dark-blue" />
-                </svg>
+                <SpriteIcon name="arrow-down" className="active text-theme-dark-blue" />
               </button>
             </div>
             <div className="bricks-list-container">

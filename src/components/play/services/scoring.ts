@@ -32,8 +32,6 @@ export const scoreFunctions: ScoreFunctionMap = {
 export const mark = <C extends QuestionComponent, A>(questionType: QuestionTypeEnum, component: C, attempt: ComponentAttempt<A>) => {
   const scoreFunction = scoreFunctions[questionType];
 
-  console.log(attempt);
-  
   if(scoreFunction) {
     return scoreFunction(component, attempt);
   } else {
@@ -56,11 +54,15 @@ const getMaxScore = (attempts: ComponentAttempt<any>[]) => {
 export const calcBrickLiveAttempt = (brick: Brick, answers: ComponentAttempt<any>[]) => {
   const score = getScore(answers);
   const maxScore = getMaxScore(answers);
-  return { brick, score, maxScore, student: null, answers } as BrickAttempt;
+  return {
+    brick, score, maxScore, student: null, answers, liveAnswers: JSON.parse(JSON.stringify(answers))
+  } as BrickAttempt;
 }
 
 export const calcBrickReviewAttempt = (brick: Brick, answers: ComponentAttempt<any>[], brickAttempt: BrickAttempt) => {
   let score = getScore(answers);
   let maxScore = getMaxScore(answers);
-  return { brick, score, oldScore: brickAttempt.score, maxScore, student: null, answers, liveAnswers: brickAttempt.answers } as BrickAttempt;
+  return {
+    brick, score, oldScore: brickAttempt.score, maxScore, student: null, answers, liveAnswers: brickAttempt.liveAnswers
+  } as BrickAttempt;
 }

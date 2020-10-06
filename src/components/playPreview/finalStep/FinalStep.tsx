@@ -6,7 +6,6 @@ import map from 'components/map';
 import actions from 'redux/actions/requestFailed';
 import brickActions from 'redux/actions/brickActions';
 import "./FinalStep.scss";
-import sprite from "assets/img/icons-sprite.svg";
 import { User } from "model/user";
 import { Brick, BrickStatus } from "model/brick";
 import { PlayStatus } from "components/play/model";
@@ -28,6 +27,7 @@ import CustomColumn from "./CustomColumn";
 import { ReduxCombinedState } from "redux/reducers";
 import SendPublisherSuccessDialog from "./SendPublisherSuccess";
 import { Redirect } from "react-router-dom";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 enum PublishStatus {
   None,
@@ -193,10 +193,7 @@ const FinalStep: React.FC<FinalStepProps> = ({
                 <div className="intro-header">
                   <div className="left-brick-circle">
                     <div className="round-button">
-                      <svg className="svg active">
-                        {/*eslint-disable-next-line*/}
-                        <use href={sprite + "#check-icon-thin"} />
-                      </svg>
+                      <SpriteIcon name="check-icon-thin" className="active" />
                     </div>
                   </div>
                   {isCurrentEditor ?

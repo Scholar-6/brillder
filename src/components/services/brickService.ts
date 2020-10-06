@@ -3,7 +3,7 @@ import { User, UserType, UserRole } from 'model/user';
 
 function formatTwoLastDigits(twoLastDigits: number) {
   var formatedTwoLastDigits = "";
-  if (twoLastDigits < 10 ) {
+  if (twoLastDigits < 10) {
     formatedTwoLastDigits = "0" + twoLastDigits;
   } else {
     formatedTwoLastDigits = "" + twoLastDigits;
@@ -12,15 +12,14 @@ function formatTwoLastDigits(twoLastDigits: number) {
 }
 
 export function getYear(date: Date) {
-  var currentYear =  date.getFullYear();   
+  var currentYear = date.getFullYear();
   var twoLastDigits = currentYear % 100;
   return formatTwoLastDigits(twoLastDigits);
 }
 
 export function getMonth(date: Date) {
   const month = date.getMonth() + 1;
-  var twoLastDigits = month % 10;
-  return formatTwoLastDigits(twoLastDigits);
+  return formatTwoLastDigits(month);
 }
 
 export function getDate(date: Date) {
@@ -53,7 +52,7 @@ export function getAuthorRow(brick: Brick) {
   const month = getMonth(created);
   const date = getDate(created);
   if (brick.author) {
-    const {author} = brick;
+    const { author } = brick;
     if (author.firstName || author.firstName) {
       row += `${author.firstName} ${author.lastName} | `
     }
@@ -71,7 +70,7 @@ export function checkTeacherOrAdmin(roles: UserRole[]) {
 }
 
 export function checkEditor(roles: UserRole[]) {
-  return roles.some(role => role.roleId === UserType.Editor);
+  return roles.some(role => role.roleId === UserType.Publisher);
 }
 
 export function checkPublisher(user: User, brick: Brick) {
@@ -103,14 +102,8 @@ export function checkAdmin(roles: UserRole[]) {
 
 export function canEditBrick(brick: any, user: User) {
   let isAdmin = checkAdmin(user.roles);
-  if (isAdmin) {
+  if (isAdmin || brick.author?.id === user.id) {
     return true;
-  }
-  let isBuilder = checkBuilder(user.roles);
-  if (isBuilder) {
-    if (brick.author?.id === user.id) {
-      return true;
-    }
   }
   return false;
 }
@@ -118,21 +111,21 @@ export function canEditBrick(brick: any, user: User) {
 export function canBuild(user: User) {
   return user.roles.some(role => {
     const { roleId } = role;
-    return (roleId === UserType.Builder || roleId === UserType.Editor || roleId === UserType.Admin);
+    return (roleId === UserType.Builder || roleId === UserType.Publisher || roleId === UserType.Admin);
   });
 }
 
 export function canEdit(user: User) {
   return user.roles.some(role => {
     const { roleId } = role;
-    return roleId === UserType.Editor || roleId === UserType.Admin;
+    return roleId === UserType.Publisher || roleId === UserType.Admin;
   });
 }
 
 export function checkTeacherEditorOrAdmin(user: User) {
   return user.roles.some(role => {
     const { roleId } = role;
-    return roleId === UserType.Teacher || roleId === UserType.Editor || roleId === UserType.Admin;
+    return roleId === UserType.Teacher || roleId === UserType.Publisher || roleId === UserType.Admin;
   });
 }
 

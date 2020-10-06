@@ -9,6 +9,7 @@ import moment from 'moment';
 import './NotificationPanel.scss';
 
 import map from 'components/map';
+import actions from 'redux/actions/brickActions';
 import { isMobile } from 'react-device-detect';
 import { checkTeacherEditorOrAdmin } from 'components/services/brickService';
 import { User } from 'model/user';
@@ -18,40 +19,52 @@ const mapState = (state: ReduxCombinedState) => ({
   notifications: state.notifications.notifications
 });
 
-const connector = connect(mapState);
+const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(actions.forgetBrick()),
+  fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
+});
+
+const connector = connect(mapState, mapDispatch);
 
 interface NotificationPanelProps {
-  user: User;
   shown: boolean;
-  notifications: Notification[] | null;
   handleClose(): void;
   anchorElement: any;
   history?: any;
+
+  // redux
+  user: User;
+  notifications: Notification[] | null;
+  forgetBrick(): void;
+  fetchBrick(brickId: number): Promise<void>;
 }
 
 class NotificationPanel extends Component<NotificationPanelProps> {
-  move(notification: Notification) {
+  async move(notification: Notification) {
     const { history } = this.props;
     if (history) {
       if (notification.type === NotificationType.BrickPublished) {
         history.push(map.ViewAllPage);
-      } else if (notification.type === NotificationType.AssignedToEdit || notification.type === NotificationType.BrickSubmittedForReview) {
-        if (notification.type === NotificationType.AssignedToEdit) {
-          window.location.href = map.BackToWorkBuildTab;
-        } else {
-          history.push(map.BackToWorkPage);
-        }
-      } else if (notification.type === NotificationType.NewCommentOnBrick) {
-        if (notification.brick && notification.brick.id >= 1 && notification.question && notification.question.id >= 1) {
-          history.push(map.investigationQuestionSuggestions(notification.brick.id, notification.question.id));
-        }
-      } else if (notification.type === NotificationType.InvitedToPlayBrick) {
-        if (notification.brick && notification.brick.id >= 1) {
-          history.push(map.playIntro(notification.brick.id));
-        }
-      } else if (notification.type === NotificationType.BrickAttemptSaved) {
-        if (notification.brick && notification.brick.id) {
-          history.push(map.postPlay(notification.brick.id, this.props.user.id));
+      } else if (notification.type === NotificationType.BrickSubmittedForReview) {
+        history.push(map.BackToWorkPage);
+      }
+
+      if (notification.brick && notification.brick.id) {
+        const {brick} = notification;
+        if (notification.type === NotificationType.NewCommentOnBrick) {
+          if (notification.question && notification.question.id >= 1) {
+            history.push(map.investigationQuestionSuggestions(brick.id, notification.question.id));
+          }
+        } else if (notification.type === NotificationType.InvitedToPlayBrick) {
+          history.push(map.playIntro(brick.id));
+        } else if (notification.type === NotificationType.BrickAttemptSaved) {
+          history.push(map.postPlay(brick.id, this.props.user.id));
+        } else if (notification.type === NotificationType.ReturnedToAuthor) {
+          history.push(map.InvestigationBuild(brick.id));
+        } else if (notification.type === NotificationType.AssignedToEdit) {
+          this.props.forgetBrick();
+          await this.props.fetchBrick(notification.brick.id);
+          history.push(map.ProposalReview);
         }
       }
     }
@@ -108,60 +121,51 @@ class NotificationPanel extends Component<NotificationPanelProps> {
               {/* eslint-disable-next-line */}
               {(this.props.notifications && this.props.notifications.length != 0) ? this.props.notifications.map((notification) => (
                 <li key={notification.id}>
-                  <div className={"left-brick-circle svgOnHover " + notificationTypeColors[notification.type]}
-                    onClick={() => this.move(notification)}>
-                    {notification.type === NotificationType.Generic ?
-                      ""
-                      :
-                      ""
-                    }
-                    {notification.type === NotificationType.BrickSubmittedForReview ?
+                  <div
+                    className={"left-brick-circle svgOnHover " + notificationTypeColors[notification.type]}
+                    onClick={() => this.move(notification)}
+                  >
+                    {notification.type === NotificationType.BrickSubmittedForReview &&
                       <svg className="svg w60 h60 active text-theme-dark-blue">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#message-square"} />
                       </svg>
-                      :
-                      ""
                     }
-                    {notification.type === NotificationType.AssignedToEdit ?
+                    {notification.type === NotificationType.AssignedToEdit &&
                       <svg className="svg w60 h60 active text-theme-dark-blue">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#edit-outline"}/>
                       </svg>
-                      :
-                      ""
                     }
-                    {notification.type === NotificationType.BrickPublished ?
+                    {notification.type === NotificationType.BrickPublished &&
                       <svg className="svg w60 h60 active text-theme-dark-blue">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#award"} style={{strokeWidth: 2}} />
                       </svg>
-                      :
-                      ""
                     }
-                    {notification.type === NotificationType.NewCommentOnBrick ?
+                    {notification.type === NotificationType.NewCommentOnBrick &&
                       <svg className="svg w60 h60 active text-theme-dark-blue">
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#message-square-thick"} />
                       </svg>
-                      :
-                      ""
                     }
-                    {notification.type === NotificationType.InvitedToPlayBrick ?
+                    {notification.type === NotificationType.InvitedToPlayBrick &&
                       <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginLeft: '0.2vw'}}>
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#play-thick"} />
                       </svg>
-                      :
-                      ""
                     }
-                    {notification.type === NotificationType.BrickAttemptSaved ?
+                    {notification.type === NotificationType.BrickAttemptSaved &&
                       <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginRight: '0vw', strokeWidth: 2}}>
                         {/*eslint-disable-next-line*/}
                         <use href={sprite + "#book-open"} />
                       </svg>
-                      :
-                      ""
+                    }
+                    {notification.type === NotificationType.ReturnedToAuthor &&
+                      <svg className="svg w60 h60 active text-theme-dark-blue" style={{marginRight: '0vw', strokeWidth: 2}}>
+                        {/*eslint-disable-next-line*/}
+                        <use href={sprite + "#repeat"} />
+                      </svg>
                     }
                   </div>
                   <div className="content-box" onClick={() => this.move(notification)}>

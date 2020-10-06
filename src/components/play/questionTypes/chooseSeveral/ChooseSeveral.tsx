@@ -27,14 +27,27 @@ class ChooseSeveral extends CompComponent<ChooseSeveralProps, ChooseSeveralState
   constructor(props: ChooseSeveralProps) {
     super(props);
 
+    let activeItems = this.getActiveItems(props);
+    this.state = { activeItems };
+  }
+
+  getActiveItems(props: ChooseSeveralProps) {
     let activeItems: number[] = [];
     if (props.answers && props.answers.length > 0) {
       activeItems = props.answers;
     } else if (props.attempt?.answer.length > 0) {
       activeItems = Object.assign([], props.attempt.answer);
     }
+    return activeItems;
+  }
 
-    this.state = { activeItems };
+  componentDidUpdate(prevProp: ChooseSeveralProps) {
+    if (this.props.isBookPreview) {
+      if (this.props.answers !== prevProp.answers) {
+        const activeItems = this.getActiveItems(this.props);
+        this.setState({activeItems});
+      }
+    }
   }
 
   setActiveItem(activeItem: number) {

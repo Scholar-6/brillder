@@ -1,7 +1,6 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
-import sprite from "assets/img/icons-sprite.svg";
 import './openQuestion.scss';
 import { ProposalStep, PlayButtonStatus } from "../../model";
 import map from 'components/map';
@@ -10,6 +9,7 @@ import { enterPressed } from "components/services/key";
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/proposal/components/navigation/Navigation';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface OpenQuestionProps {
   selectedQuestion: any;
@@ -22,10 +22,7 @@ interface OpenQuestionProps {
 const HeadComponent: React.FC<any> = ({ data }) => {
   return (
     <Grid container justify="center" className="phone-preview-component">
-      <svg className={data ? "" : "big"}>
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#help-circle"} />
-      </svg>
+      <SpriteIcon name="help-circle" className={data ? "" : "big"} />
       <div className="typing-text">
         <p>{data}</p>
       </div>

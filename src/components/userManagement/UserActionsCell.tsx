@@ -1,6 +1,6 @@
 import React from 'react';
 
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface UserActionsCellProps {
   isAdmin: boolean;
@@ -18,16 +18,10 @@ const UserActionsCell: React.FC<UserActionsCellProps> = props => {
     <td className="user-actions-cell">
       <div>
         <div className="delete-button svgOnHover" onClick={() => props.onDelete(props.userId)}>
-          <svg className="svg w100 h100 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#trash-outline"} className="text-theme-dark-blue" />
-          </svg>
+          <SpriteIcon name="trash-outline" className="w100 h100 active text-theme-dark-blue" />
         </div>
         <div className="edit-button" onClick={() => props.history.push(`/user-profile/${props.userId}`)}>
-          <svg className="svg w100 h100 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#edit-outline"} className="text-theme-dark-blue" />
-          </svg>
+          <SpriteIcon name="edit-outline" className="w100 h100 active text-theme-dark-blue" />
         </div>
       </div>
     </td>

@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 
 import "./ExpandedAssignment.scss";
-import sprite from "assets/img/icons-sprite.svg";
 import { Subject } from "model/brick";
-import { UserBase } from "model/user";
-import { Assignment, StudentStatus, TeachClassroom } from "model/classroom";
+import { Assignment, StudentStatus, TeachClassroom, TeachStudent } from "model/classroom";
 import { getSubjectColor } from "components/services/subject";
 
 import AssignedBrickDescription from "./AssignedBrickDescription";
@@ -21,6 +19,8 @@ enum SortBy {
 interface AssignemntExpandedState {
   sortBy: SortBy;
   questionCount: number;
+  studentsPrepared: boolean;
+  students: TeachStudent[];
 }
 
 interface AssignmentBrickProps {
@@ -49,7 +49,51 @@ class ExpandedAssignment extends Component<
     this.state = {
       sortBy: SortBy.None,
       questionCount: questionCount,
+      studentsPrepared: false,
+      students: this.prepareStudents()
     };
+  }
+
+  prepareStudents() {
+    const { students } = this.props.classroom;
+
+    students.forEach(student => {
+      student.studentResult = this.props.stats.byStudent
+        .find(s => s.studentId === student.id);
+    
+      student.studentStatus = this.props.assignment.studentStatus
+        .find(s => s.studentId === student.id);
+    });
+
+    return students;
+  }
+
+  toggleSort() {
+    if (this.state.sortBy === SortBy.None) {
+      this.sort(SortBy.AvgDecreasing);
+    } else if (this.state.sortBy === SortBy.AvgDecreasing) {
+      this.sort(SortBy.AvgIncreasing);
+    } else {
+      this.sort(SortBy.AvgDecreasing);
+    }
+  }
+
+  sort(sortBy: SortBy) {
+    let students = this.state.students;
+    if (sortBy === SortBy.AvgDecreasing) {
+      students = this.state.students.sort((a, b) => {
+        if (!a.studentStatus) { return 1; }
+        if (!b.studentStatus) { return -1; }
+        return b.studentStatus?.avgScore  - a.studentStatus?.avgScore;
+      });
+    } else {
+      students = this.state.students.sort((a, b) => {
+        if (!a.studentStatus) { return -1; }
+        if (!b.studentStatus) { return 1; }
+        return a.studentStatus?.avgScore  - b.studentStatus?.avgScore;
+      });
+    }
+    this.setState({ students, sortBy });
   }
 
   renderAvgScore(studentStatus: StudentStatus) {
@@ -96,36 +140,26 @@ class ExpandedAssignment extends Component<
   ) {
     if (studentResult && studentStatus) {
       const attempt = studentResult.attempts[0].answers[questionNumber];
-      if (attempt.correct === true) {
+      const liveAttempt = studentResult.attempts[0].liveAnswers[questionNumber];
+
+      // yellow tick
+      if (attempt.correct === true && liveAttempt.correct === false) {
+        return <SpriteIcon name="check-icon-thin" className="text-yellow" />;
+      } else if (attempt.correct === false && liveAttempt.correct === true) {
+        return <SpriteIcon name="check-icon-thin" className="text-yellow" />;
+      }
+
+      if (attempt.correct === true && liveAttempt.correct === true) {
         return <SpriteIcon name="check-icon-thin" className="text-theme-green" />;
       }
-      if (attempt.marks < 3) {
-        return (
-          <svg>
-            <use href={sprite + "#cancel"} style={{strokeWidth: 2}} className="text-theme-orange" />
-          </svg>
-        );
-      }
-      if (attempt.marks >= attempt.maxMarks) {
-        return <SpriteIcon name="check-icon-thin" className="text-theme-green" />;
-      }
-      if (attempt.marks < 5) {
-        return <SpriteIcon name="cancel" className="text-yellow" />;
-      }
-      return <SpriteIcon name="check-icon-thin" className="text-yellow" />;
+
+      return <SpriteIcon name="cancel" className="text-theme-orange stroke-2" />;
     }
     return "";
   }
 
-  renderStudent(student: UserBase, i: number) {
-    console.log(this.props.stats.byStudent);
-    let studentResult = this.props.stats.byStudent.find(
-      (s) => s.studentId === student.id
-    );
-    const studentStatus = this.props.assignment.studentStatus.find(
-      (s) => s.studentId === student.id
-    );
-
+  renderStudent(student: TeachStudent, i: number) {
+    const {studentStatus, studentResult} = student;
     return (
       <tr className="user-row" key={i}>
         <td className="padding-left-column"></td>
@@ -133,41 +167,42 @@ class ExpandedAssignment extends Component<
           <div>{this.renderStatus(studentStatus)}</div>
         </td>
         <td className="student-book">
-          {studentStatus ? <div className="centered">{this.renderBookIcon(student.id)}</div> : ""}
+          {studentStatus && <div className="centered">{this.renderBookIcon(student.id)}</div>}
         </td>
         <td className={`assigned-student-name`}>
           {student.firstName} {student.lastName}
         </td>
         {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
-          (a, i) => {
-            return (
-              <td key={i} className="icon-container">
-                <div className="centered">
-                  {this.renderQuestionAttemptIcon(studentResult, studentStatus, i)}
-                </div>
-              </td>
-            );
-          }
+          (a, i) =>
+            <td key={i} className="icon-container">
+              <div className="centered">
+                {this.renderQuestionAttemptIcon(studentResult, studentStatus, i)}
+              </div>
+            </td>
         )}
         <td>
-          {studentStatus ? <div className="centered">{this.renderCommentIcon()}</div> : ""}
+          {studentStatus && <div className="centered">{this.renderCommentIcon()}</div>}
         </td>
       </tr>
     );
   }
 
   renderTableHead() {
+    const {sortBy} = this.state;
+    const name = sortBy === SortBy.AvgIncreasing ? "arrow-up" : "arrow-down";
+    
+    let className = "btn btn-transparent svgOnHover btn-grey-circle";
+    if (sortBy === SortBy.AvgIncreasing || sortBy === SortBy.AvgDecreasing) {
+      className += " active";
+    }
     return (
       <thead>
         <tr>
           <th></th>
           <th>
             <div className="center">
-              <button
-                className="btn btn-transparent svgOnHover btn-grey-circle"
-                onClick={() => this.setState({ sortBy: SortBy.AvgDecreasing })}
-              >
-                <SpriteIcon name="arrow-down" className="active text-theme-dark-blue" />
+              <button className={className} onClick={() => this.toggleSort()}>
+                <SpriteIcon name={name} className="active text-theme-dark-blue" />
               </button>
             </div>
           </th>
@@ -180,9 +215,7 @@ class ExpandedAssignment extends Component<
           </th>
           <th></th>
           {Array.from(new Array(this.state.questionCount), (x, i) => i).map(
-            (a, i) => (
-              <th key={i}><div className="centered">{i + 1}</div></th>
-            )
+            (a, i) => <th key={i}><div className="centered">{i + 1}</div></th>
           )}
           <th></th>
         </tr>
@@ -192,10 +225,10 @@ class ExpandedAssignment extends Component<
 
   render() {
     const { assignment, classroom, startIndex, pageSize } = this.props;
-    let { students } = classroom;
+    let { students } = this.state;
+    
     students = students.slice(startIndex, startIndex + pageSize);
-    if (this.state.sortBy !== SortBy.None) {
-    }
+
     return (
       <div className="expanded-assignment classroom-list">
         <div className="classroom-title first">{classroom.name}</div>

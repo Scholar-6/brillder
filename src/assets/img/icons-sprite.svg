@@ -447,4 +447,7 @@
     <polyline points="9 14 4 9 9 4"></polyline>
     <path d="M20 20v-7a4 4 0 0 0-4-4H4"></path>
   </svg>
+  <svg id="custom-bookmark" viewBox="0 0 32 987">
+    <path d="M39.5,991.5,23.642,963.719,7.5,991.5V114.167C7.5,53.6,9.547,4.5,12.071,4.5H34.929c2.525,0,4.571,49.1,4.571,109.667Z" transform="translate(-7.5 -4.5)" fill="#c43c30"/>
+  </svg>
 </svg>

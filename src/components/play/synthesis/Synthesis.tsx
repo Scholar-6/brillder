@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Hidden } from '@material-ui/core';
+import moment from 'moment';
 
 import './Synthesis.scss';
 import { Brick } from 'model/brick';
@@ -7,13 +8,12 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { PlayStatus } from '../model';
 import { BrickLengthEnum } from 'model/brick';
 import TimerWithClock from "../baseComponents/TimerWithClock";
-import sprite from "assets/img/icons-sprite.svg";
 import { PlayMode } from '../model';
 import HighlightHtml from '../baseComponents/HighlightHtml';
 import { BrickFieldNames } from 'components/proposal/model';
 import { getPlayPath, getAssignQueryString } from '../service';
 import BrickCounter from '../baseComponents/BrickCounter';
-const moment = require('moment');
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface SynthesisProps {
   isPlayPreview?: boolean;
@@ -72,10 +72,7 @@ const PlaySynthesisPage: React.FC<SynthesisProps> = ({ status, brick, ...props }
         </div>
         <div>
           <button type="button" className="play-preview svgOnHover play-green" onClick={reviewBrick}>
-            <svg className="svg w80 h80 active m-l-02">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#arrow-right"} />
-            </svg>
+            <SpriteIcon name="arrow-right" className="w80 h80 active m-l-02" />
           </button>
         </div>
       </div>

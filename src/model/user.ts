@@ -3,7 +3,7 @@ export enum UserType {
   Teacher,
   Builder,
   Admin,
-  Editor,
+  Publisher,
 }
 
 export enum UserStatus {
@@ -32,6 +32,7 @@ export interface UserBase {
 
 export interface User extends UserBase {
   roles: UserRole[];
+  rolePreference?: UserRole;
 }
 
 export interface UserProfile extends UserBase {

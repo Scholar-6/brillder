@@ -1,15 +1,16 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
 
-import sprite from "assets/img/icons-sprite.svg";
 import './prep.scss';
+import { ProposalStep, PlayButtonStatus } from "../../model";
+import map from 'components/map';
+
 import NavigationButtons from '../../components/navigationButtons/NavigationButtons';
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import ProposalPhonePreview from "components/build/baseComponents/phonePreview/proposalPhonePreview/ProposalPhonePreview";
 import Navigation from 'components/proposal/components/navigation/Navigation';
-import { ProposalStep, PlayButtonStatus } from "../../model";
 import YoutubeAndMath from 'components/play/baseComponents/YoutubeAndMath';
-import map from 'components/map';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface PrepProps {
@@ -23,10 +24,7 @@ interface PrepProps {
 const PrepPreviewComponent: React.FC<any> = ({ data }) => {
   return (
     <Grid container justify="center" alignContent="flex-start" className="phone-preview-component">
-      <svg className={data ? "" : "big"}>
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#file-text"} />
-      </svg>
+      <SpriteIcon name="file-text" className={data ? "" : "big"} />
       <div className="typing-text">
         <YoutubeAndMath value={data} />
       </div>

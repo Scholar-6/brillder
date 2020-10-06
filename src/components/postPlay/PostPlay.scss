@@ -104,7 +104,7 @@
     height: 100%;
     width: 38vw;
     top: 16.1vh;
-    left: 14vw;
+    left: 16vw;
     margin-top: 2vh;
 
     h1 {
@@ -158,6 +158,8 @@
     .page3,
     .page3-cover,
     .page4-cover,
+    .page3-empty,
+    .page4-attempts,
     .page4,
     .page5,
     .page6 {
@@ -170,6 +172,8 @@
       left: 0;
       transform-origin: left center;
       transition: transform 1s ease-in-out, box-shadow 0.7s ease-in-out;
+      border-bottom-right-radius: $book-radius;
+      border-top-right-radius: $book-radius;
     }
 
     .front,
@@ -178,25 +182,6 @@
       width: 30.5vw;
       height: $real-book-height;
       background: var(--theme-dark-blue);
-    }
-
-    .front,
-    .front-cover,
-    .page1,
-    .page1-cover,
-    .page3-cover,
-    .page3,
-    .page5 {
-      border-bottom-right-radius: $book-radius;
-      border-top-right-radius: $book-radius;
-    }
-
-    .back,
-    .page2,
-    .page4,
-    .page6 {
-      border-bottom-right-radius: $book-radius;
-      border-top-right-radius: $book-radius;
     }
 
     .front {
@@ -272,8 +257,46 @@
       }
     }
 
-    .page1 {
+    .page1, .page3-empty, .page4-attempts {
       background: #fafafa;
+    }
+
+    .page3-empty, .page4-attempts {
+      color: #d3d4d5;
+    }
+
+    .page4-attempts {
+      padding-top: 5vh;
+      overflow-y: auto;
+      .attempt-info {
+        cursor: pointer;
+        padding-top: 0.5vh;
+        padding-bottom: 0.5vh;
+        margin-left: 3vw;
+        display: flex;
+        align-items: center;
+        line-height: 1;
+        font-size: 2vw;
+
+        .percentage {
+          @extend %flexCenter;
+          font-size: 1.5vw;
+          width: 2.5vw;
+          height: 2.5vw;
+          color: var(--white);
+          margin-right: 1vw;
+          background: var(--theme-green);
+          border-radius: 50%;
+        }
+
+        &.active {
+          color: var(--theme-dark-blue);
+        }
+      }
+    }
+    
+
+    .page1 {
       .flipped-page {
         .circle-icon {
           margin-top: 2vh;
@@ -358,10 +381,25 @@
       background: #f5f5f5;
     }
   }
+  $scale: 1.15;
+
+  .bookmark {
+    z-index: 1000;
+    position: fixed;
+    height: $real-book-height + 0vh;
+    left: -2vh;
+    width: 4vh;
+    top: 1.3vh;
+    transform-style: preserve-3d;
+    transform: translate3d(0,0,100px) scale($scale);
+
+    &.hidden {
+      opacity: 0;
+    }
+  }
 
   //#region book animations
   .book-main-container {
-    $scale: 1.15;
 
     &.expanded {
       width: 50vw;
@@ -395,6 +433,44 @@
         transform: rotateY(-50deg) scale($scale);
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 4;
+      }
+
+      .page3-empty {
+        transform: rotateY(-49.8deg) scale($scale);
+      }
+
+      .page4-attempts {
+        transform: rotateY(-31deg) scale($scale);
+      }
+
+      .page6 {
+        transform: rotateY(-30deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 8;
+      }
+    }
+
+    &.attempts-list {
+      .page2 {
+        transform: rotateY(-130.2deg) scale($scale);
+      }
+      .page3-empty {
+        transform: rotateY(-130deg) scale($scale);
+        box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
+        z-index: 5;
+      }
+
+      .page4-attempts {
+        transform: rotateY(-50deg) scale($scale);
+      }
+      .front {
+        transform: rotateY(-180deg) scale($scale);
+      }
+      .page1-cover {
+        transform: rotateY(-179deg) scale($scale);
+      }
+      .page1 {
+        transform: rotateY(-159.5deg) scale($scale);
       }
 
       .page3 {
@@ -434,6 +510,10 @@
         box-shadow: 0 1em 3em 0 rgba(0, 0, 0, 0.2);
         z-index: 10;
         background: #efefef;
+      }
+
+      .page3-empty, .page4-attempts {
+        transform: rotateY(-178.3deg) scale($scale);
       }
 
       .back {

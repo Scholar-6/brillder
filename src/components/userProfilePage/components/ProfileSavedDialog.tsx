@@ -6,8 +6,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import './ProfileSavedDialog.scss';
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
-import sprite from "assets/img/icons-sprite.svg";
 
 interface ProfileSavedProps {
   isAdmin: boolean;
@@ -50,10 +50,7 @@ const ProfileSavedDialog: React.FC<ProfileSavedProps> = props => {
           <ListItemText primary="Profile saved" />
           <ListItemAvatar>
             <Avatar className="circle-check">
-              <svg className="svg active">
-                {/*eslint-disable-next-line*/}
-                <use href={sprite + "#check-icon"} className="text-white" />
-              </svg>
+              <SpriteIcon name="check-icon" className="active text-white" />
             </Avatar>
           </ListItemAvatar>
         </ListItem>

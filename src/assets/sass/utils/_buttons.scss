@@ -70,9 +70,18 @@
 }
 
 .play-preview {
+  position: fixed;
+
+  @include tabletP {
+    top: 1.4vw;
+    right: 1.4vw;
+  }
+}
+
+.play-preview,
+.user-preference-next {
   width: 4.5vw;
   height: 4.5vw;
-  position: fixed;
   font-size: 1.15vw;
 
   letter-spacing: 0.05vw;
@@ -87,12 +96,8 @@
     bottom: calc(85px);
     right: 5vw;
   }
-  @include tabletP {
-    top: 1.4vw;
-    right: 1.4vw;
-  }
   &:after {
-    content: '';
+    content: "";
     @extend %floatToCenter;
     @extend %radCircle;
     z-index: -1;
@@ -170,4 +175,8 @@
   .hidden {
     opacity: 0;
   }
+}
+
+.stroke-2 {
+  stroke-width: 2;
 }

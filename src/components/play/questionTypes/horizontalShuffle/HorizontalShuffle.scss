@@ -5,11 +5,20 @@
 .horizontal-shuffle-play {
   .horizontal-shuffle-answer {
     display: inline-block;
-    padding: 14px;
+    padding: 0;
     margin: 2px;
     font-size: 10px;
+    border-radius: 0.6vw;
     background: var(--tab-gray);
     box-shadow: none !important;
+    .answer {
+      padding-left: 1vw;
+      padding-right: 1vw;
+      text-align: center;
+    }
+    .question-hint {
+      text-align: center;
+    }
   }
   .MuiCard-root {
     cursor: pointer;

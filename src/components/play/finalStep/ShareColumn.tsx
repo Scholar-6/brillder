@@ -1,9 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 
-
-
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ShareProps {
   size?: 3 | 4 | 5 | 6 | 7 | 8;
@@ -15,10 +13,7 @@ const ShareColumn: React.FC<ShareProps> = props => {
     <Grid container item xs={props.size ? props.size : 5} justify="center">
       <div>
         <div className="button-container">
-          <svg className="svg active" onClick={props.onClick}>
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#share"} />
-          </svg>
+          <SpriteIcon name="share" className="active" onClick={props.onClick} />
         </div>
         <div className="link-text">Share</div>
         <div className="link-description">with external users via</div>
