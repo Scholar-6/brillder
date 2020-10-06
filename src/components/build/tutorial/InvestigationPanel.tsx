@@ -28,10 +28,10 @@ const InvestigationPanel: React.FC<TutorialProps> = (props) => {
         <div className="proposal-box">
           <h2>2. The Investigation</h2>
           <p>
-            Having submitted the brief and prep in your proposal, your questions will guide learners through a cognitive journey. While the former should serve as a springboard to introduce a topic, you shouldn’t feel obliged to stick to this material exclusively.
+            Having submitted the brief and prep in your proposal, your questions will guide learners through an interactive journey.
           </p>
           <p className="last-text">
-            <span className="bold">Who dares wins:</span> we want to give all our users the freedom to ‘go beyond’, taking a broad and etymological view of ‘education’.
+            The challenge is to ask questions which make students think, not questions which merely test their knowledge.
           </p>
         </div>
       </div>

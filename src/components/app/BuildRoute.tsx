@@ -38,6 +38,10 @@ const BuildRoute: React.FC<BuildRouteProps> = ({ component: Component, ...rest }
 
     let { user } = rest;
 
+    if (!user.rolePreference) {
+      return <Redirect to="/user/preference" />
+    }
+
     if (!rest.isRedirectedToProfile) {
       if (!user.firstName || !user.lastName) {
         return <Redirect to="/user-profile" />
