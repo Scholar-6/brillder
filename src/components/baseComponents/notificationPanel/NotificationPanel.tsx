@@ -20,6 +20,7 @@ const mapState = (state: ReduxCombinedState) => ({
 });
 
 const mapDispatch = (dispatch: any) => ({
+  forgetBrick: () => dispatch(actions.forgetBrick()),
   fetchBrick: (id: number) => dispatch(actions.fetchBrick(id)),
 });
 
@@ -34,11 +35,12 @@ interface NotificationPanelProps {
   // redux
   user: User;
   notifications: Notification[] | null;
-  fetchBrick(brickId: number): void;
+  forgetBrick(): void;
+  fetchBrick(brickId: number): Promise<void>;
 }
 
 class NotificationPanel extends Component<NotificationPanelProps> {
-  move(notification: Notification) {
+  async move(notification: Notification) {
     const { history } = this.props;
     if (history) {
       if (notification.type === NotificationType.BrickPublished) {
@@ -60,7 +62,8 @@ class NotificationPanel extends Component<NotificationPanelProps> {
         } else if (notification.type === NotificationType.ReturnedToAuthor) {
           history.push(map.InvestigationBuild(brick.id));
         } else if (notification.type === NotificationType.AssignedToEdit) {
-          this.props.fetchBrick(notification.brick.id);
+          this.props.forgetBrick();
+          await this.props.fetchBrick(notification.brick.id);
           history.push(map.ProposalReview);
         }
       }
