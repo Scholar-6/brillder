@@ -693,7 +693,9 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         />
       </Hidden>
       <Hidden only={['md', 'lg', 'xl']}>
-        <DesktopVersionDialog history={history} />
+        <div className="blue-page">
+          <DesktopVersionDialog history={history} />
+        </div>
       </Hidden>
     </div>
   );
