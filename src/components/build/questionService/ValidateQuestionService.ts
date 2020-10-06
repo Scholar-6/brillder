@@ -41,7 +41,7 @@ const validateHint = (hint: Hint) => {
 }
 
 export const isHintEmpty = (hint: Hint) => {
-  if (hint.status === HintStatus.Each && hint.list.length > 1) {
+  if (hint.status === HintStatus.Each) {
     const emptyHint = !hint.list.some(h => h !== "");
     return emptyHint;
   } else {
