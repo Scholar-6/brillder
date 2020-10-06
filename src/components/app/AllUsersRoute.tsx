@@ -16,8 +16,9 @@ interface AllUsersRouteProps {
   component: any;
   isAuthenticated: isAuthenticated;
   user: User;
-  getUser():void;
-  isAuthorized():void;
+  isPreferencePage?: boolean;
+  getUser(): void;
+  isAuthorized(): void;
 }
 
 const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, user, ...rest }) => {
@@ -28,8 +29,11 @@ const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, use
       rest.getUser();
       return <PageLoader content="...Getting User..." />;
     }
-    if(user.firstName === "" || user.lastName === "") {
-      if(location.pathname !== "/user-profile") { // Only redirect to the user profile if we're not already there.
+    if (!user.rolePreference && !rest.isPreferencePage) {
+      return <Redirect to="/user/preference" />
+    }
+    if (user.firstName === "" || user.lastName === "") {
+      if (location.pathname !== "/user-profile") { // Only redirect to the user profile if we're not already there.
         return <Redirect to="/user-profile" />
       }
     }
