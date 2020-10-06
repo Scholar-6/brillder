@@ -125,6 +125,11 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const { startEditing, updateBrick } = props;
 
+  let isAuthor = false;
+  try {
+    isAuthor = props.brick.author.id === props.user.id;
+  } catch {}
+
   // start editing on socket on load.
   useEffect(() => {
     startEditing(brickId)
@@ -489,6 +494,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         question={activeQuestion}
         canEdit={canEdit}
         locked={locked}
+        isAuthor={isAuthor}
         validationRequired={validationRequired}
         initSuggestionExpanded={initSuggestionExpanded}
         updateFirstComponent={updateFirstComponent}
