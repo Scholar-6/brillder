@@ -153,7 +153,7 @@ class TeachFilterSidebar extends Component<FilterSidebarProps, FilterSidebarStat
     return (
       <div className="sort-box">
         <div className="filter-header">
-          OVERVIEW
+          LIVE OVERVIEW
           <button
             className={
               "btn-transparent filter-icon " +
