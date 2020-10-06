@@ -20,20 +20,20 @@ const TabComponent: React.FC<TabProps> = ({ isTeach, activeTab, setTab }) => {
           className={activeTab === ActiveTab.Teach ? 'active' : ''}
           onClick={() => setTab(ActiveTab.Teach)}
         >
-          Teach
+          <span>Teach</span>
         </div> : ""
       }
       <div
         className={activeTab === ActiveTab.Build ? 'active' : ''}
         onClick={() => setTab(ActiveTab.Build)}
       >
-        Build
+        <span>Build</span>
       </div>
       <div
         className={activeTab === ActiveTab.Play ? 'active' : ''}
         onClick={() => setTab(ActiveTab.Play)}
       >
-        Learn
+        <span>Learn</span>
       </div>
     </div>
   )
