@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core';
 
 import './horizontalShuffleBuild.scss'
-import sprite from "assets/img/icons-sprite.svg";
 import { UniqueComponentProps } from '../types';
 import { showSameAnswerPopup } from '../service/questionBuild';
 
 import DocumentWirisCKEditor from 'components/baseComponents/ckeditor/DocumentWirisEditor';
 import AddAnswerButton from 'components/build/baseComponents/addAnswerButton/AddAnswerButton';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
@@ -60,10 +60,7 @@ const HorizontalShuffleBuildComponent: React.FC<UniqueComponentProps> = ({
           {
             (state.list.length > 3)
               ? <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(i)}>
-                <svg className="svg active back-button">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#trash-outline"} className="theme-orange" />
-                </svg>
+                <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
               </button>
               : ""
           }

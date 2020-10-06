@@ -27,7 +27,7 @@ const ValidationFailedDialog: React.FC<ValidationFailedProps> = props => {
           <ListItemText primary={props.header} className="bold" style={{ minWidth: '30vw' }} />
           <ListItemAvatar>
             <Avatar className="circle-check alert-icon">
-              <svg className="svg active" style={{strokeWidth: 2, marginBottom: '0.3vw'}}>
+              <svg className="svg active stroke-2" style={{marginBottom: '0.3vw'}}>
                 {/*eslint-disable-next-line*/}
                 <use href={sprite + "#alert-triangle"} />
               </svg>

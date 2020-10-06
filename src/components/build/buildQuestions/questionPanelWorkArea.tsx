@@ -4,7 +4,6 @@ import { MenuItem } from "material-ui";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ReactSortable } from "react-sortablejs";
 
-import sprite from "assets/img/icons-sprite.svg";
 import QuestionComponents from './questionComponents/questionComponents';
 import { getNonEmptyComponent } from '../questionService/ValidateQuestionService';
 import './questionPanelWorkArea.scss';
@@ -19,6 +18,7 @@ import { ReduxCombinedState } from 'redux/reducers';
 import { connect } from 'react-redux';
 import { User } from 'model/user';
 import { TextComponentObj } from './components/Text/interface';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 
 function SplitByCapitalLetters(element: string): string {
@@ -131,10 +131,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
       return (
         <div className={"comment-button " + (numberOfReplies > 0 ? "has-replied" : "active") + " animated pulse-red iteration-2 duration-1s"} onClick={() => setCommentsShown(!commentsShown)}>
           <div className="comments-icon svgOnHover">
-            <svg className="svg w60 h60 active">
-              {/*eslint-disable-next-line*/}
-              <use href={sprite + "#message-square"} />
-            </svg>
+            <SpriteIcon name="message-square" className="w60 h60 active" />
           </div>
           <div className="comments-count">
             {numberOfReplies > 0 ? numberOfReplies : -numberOfReplies}
@@ -145,16 +142,10 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
     return (
       <div className={"comment-button"} onClick={() => setCommentsShown(!commentsShown)}>
         <div className="comments-icon svgOnHover">
-          <svg className="svg w60 h60 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#message-square"} />
-          </svg>
+          <SpriteIcon name="message-square" className="w60 h60 active" />
         </div>
         <div className="comments-plus svgOnHover">
-          <svg className="svg w60 h60 active">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#plus"} />
-          </svg>
+          <SpriteIcon name="plus" className="w60 h60 active" />
         </div>
       </div>
     );
@@ -169,10 +160,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
           <div className="top-button-container">
             {
               scrollShown ? <button className="btn btn-transparent svgOnHover" onClick={scrollUp}>
-                <svg className="svg active">
-                  {/*eslint-disable-next-line*/}
-                  <use href={sprite + "#arrow-up"} className="text-theme-orange" />
-                </svg>
+                <SpriteIcon name="arrow-up" className="active text-theme-orange" />
               </button> : ""
             }
           </div>
@@ -286,16 +274,12 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
             scrollShown
               ? <div className="bottom-button-container">
                 <button className="btn btn-transparent svgOnHover" onClick={scrollDown}>
-                  <svg className="svg active">
-                    <use href={sprite + "#arrow-down"} className="text-theme-orange" />
-                  </svg>
+                  <SpriteIcon name="arrow-down" className="active text-theme-orange" />
                 </button>
                 <div className="scroll-text">
                   <span>Click again to hide</span>
                   <button className="btn btn-transparent svgOnHover" onClick={hideScrollArrows}>
-                    <svg className="svg active">
-                      <use href={sprite + "#eye-on"} className="text-theme-orange" />
-                    </svg>
+                    <SpriteIcon name="eye-on" className="active text-theme-orange" />
                   </button>
                 </div>
               </div>
@@ -304,9 +288,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
                 <div className="scroll-text">
                   <span>Trouble scrolling? Click the eye to show up/down arrows</span>
                   <button className="btn btn-transparent svgOnHover" onClick={showScrollArrows}>
-                    <svg className="svg active">
-                      <use href={sprite + "#eye-off"} className="text-gray" />
-                    </svg>
+                    <SpriteIcon name="eye-off" className="active text-gray" />
                   </button>
                 </div>
               </div>

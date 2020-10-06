@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 
 import "./shortAnswerBuild.scss";
-import sprite from "assets/img/icons-sprite.svg";
 import { UniqueComponentProps } from "../types";
 import { ShortAnswerData, ShortAnswerItem } from "./interface";
 
 import { stripHtml } from "components/build/questionService/ConvertService";
 import DocumentWirisCKEditor from "components/baseComponents/ckeditor/DocumentWirisEditor";
 import AddAnswerButton from "components/build/baseComponents/addAnswerButton/AddAnswerButton";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 export interface ShortAnswerBuildProps extends UniqueComponentProps {
@@ -75,10 +75,7 @@ const ShortAnswerBuildComponent: React.FC<ShortAnswerBuildProps> = ({
     if (state.list.length > 1) {
       return (
         <button className="btn btn-transparent right-top-icon svgOnHover" onClick={() => removeFromList(index)}>
-          <svg className="svg active back-button">
-            {/*eslint-disable-next-line*/}
-            <use href={sprite + "#trash-outline"} className="theme-orange" />
-          </svg>
+          <SpriteIcon name="trash-outline" className="active back-button theme-orange" />
         </button>
       )
     }

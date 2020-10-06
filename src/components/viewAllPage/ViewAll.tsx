@@ -6,8 +6,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
 
 import "./ViewAll.scss";
-import sprite from "assets/img/icons-sprite.svg";
-
 import { User } from "model/user";
 import { Notification } from 'model/notifications';
 import { Brick, BrickStatus } from "model/brick";
@@ -603,13 +601,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
       <div className="brick-row-title">
         <button className="btn btn-transparent svgOnHover">
           <span>{name}</span>
-          <svg className="svg active">
-            {/*eslint-disable-next-line*/}
-            <use
-              href={sprite + "#arrow-right"}
-              className="text-theme-dark-blue"
-            />
-          </svg>
+          <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
         </button>
       </div>
     );
@@ -681,13 +673,7 @@ class ViewAllPage extends Component<BricksListProps, BricksListState> {
               >
                 <button className="btn btn-transparent svgOnHover">
                   <span>New</span>
-                  <svg className="svg active">
-                    {/*eslint-disable-next-line*/}
-                    <use
-                      href={sprite + "#arrow-right"}
-                      className="text-theme-dark-blue"
-                    />
-                  </svg>
+                  <SpriteIcon name="arrow-right" className="active text-theme-dark-blue" />
                 </button>
               </div>
             </Hidden>

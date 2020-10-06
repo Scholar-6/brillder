@@ -1,5 +1,5 @@
 import React from "react";
-import sprite from "assets/img/icons-sprite.svg";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface RegisterButtonProps {
   onClick(): void;
@@ -8,10 +8,7 @@ interface RegisterButtonProps {
 const RegisterButton: React.FC<RegisterButtonProps> = props => {
   return (
     <button className="email-button svgOnHover" onClick={props.onClick}>
-      <svg className="svg active">
-        {/*eslint-disable-next-line*/}
-        <use href={sprite + "#email"} />
-      </svg>
+      <SpriteIcon name="email" className="active" />
       <span>Register &nbsp;|&nbsp; Sign in with email</span>
     </button>
   );
