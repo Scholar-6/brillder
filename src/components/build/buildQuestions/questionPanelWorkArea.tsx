@@ -35,6 +35,7 @@ export interface QuestionProps {
   validationRequired: boolean;
   comments: Comment[] | null;
   currentUser: User;
+  isAuthor: boolean;
   initSuggestionExpanded: boolean;
   saveBrick(): void;
   setQuestion(index: number, question: Question): void;
@@ -78,7 +79,7 @@ const QuestionPanelWorkArea: React.FC<QuestionProps> = ({
   let index = getQuestionIndex(question);
 
   let showHelpArrow = false;
-  if (index === 0) {
+  if (index === 0 && props.isAuthor) {
     showHelpArrow = getNonEmptyComponent(question.components);
   }
 
