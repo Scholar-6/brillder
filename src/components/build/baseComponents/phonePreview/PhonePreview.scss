@@ -72,11 +72,14 @@
       color: var(--theme-dark-blue);
     }
     > div {
-      p {
+      p,
+      ol,
+      ul {
         margin: 0.1vh 0.2vw;
         font-size: 1vw;
         color: var(--theme-dark-blue);
       }
+
       padding-top: 2vh;
       padding-left: 1vw;
       padding-right: 1vw;
