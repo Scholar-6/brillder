@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import sprite from "assets/img/icons-sprite.svg";
 import { isMobile } from "react-device-detect";
@@ -27,7 +26,7 @@ interface IntroductionProps {
   location: any;
 
   setStartTime(startTime: any): void;
-  moveNext?(): void;
+  moveNext(): void;
 
   // only real play
   mode?: PlayMode;
@@ -53,7 +52,6 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
   if (values.resume === 'true') {
     resume = true;
   }
-  const history = useHistory();
   const [state, setState] = React.useState({
     prepExpanded: initPrepExpanded,
     isStopped: false,
@@ -104,15 +102,7 @@ const IntroductionPage: React.FC<IntroductionProps> = ({ brick, ...props }) => {
       let time = moment().subtract(state.duration);
       props.setStartTime(time);
     }
-    if (props.isPlayPreview) {
-      // for play preview just redirect
-      history.push(`/play-preview/brick/${brick.id}/live`);
-    } else {
-      // for play need update parent state
-      if (props.moveNext) {
-        props.moveNext();
-      }
-    }
+    props.moveNext();
   };
 
   let color = "#B0B0AD";
